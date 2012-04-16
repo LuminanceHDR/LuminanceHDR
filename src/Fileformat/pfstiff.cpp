@@ -30,9 +30,9 @@
 #include <QObject>
 #include <QSysInfo>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QDebug>
 #include <iostream>
-#include <stdexcept>
 #include <assert.h>
 #ifdef USE_LCMS2
 #	include <lcms2.h>
@@ -127,10 +127,6 @@ cmsHPROFILE GetTIFFProfile(TIFF* in)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-static int cms_error_handler(int ErrorCode, const char *ErrorText)
-{
-	throw std::runtime_error(ErrorText);
-}
                
 TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wod)
 {
@@ -141,7 +137,7 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
 
     tif = TIFFOpen(filename, "r");
     if( !tif )
-		throw std::runtime_error("TIFF: could not open file for reading.");
+        throw pfs::Exception("TIFF: could not open file for reading.");
 
     //--- image size
     TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &width);
@@ -150,7 +146,7 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
     if ( width*height<=0 )
     {
         TIFFClose(tif);
-		throw std::runtime_error("TIFF: illegal image size.");
+        throw pfs::Exception("TIFF: illegal image size");
     }
 
     //--- image parameters
@@ -159,7 +155,7 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
 
     // type of photometric data
     if(!TIFFGetFieldDefaulted(tif, TIFFTAG_PHOTOMETRIC, &phot))
-		throw std::runtime_error("TIFF: unspecified photometric type");
+        throw pfs::Exception("TIFF: unspecified photometric type");
 
     uint16 * extra_sample_types=0;
     uint16 extra_samples_per_pixel=0;
@@ -170,7 +166,7 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
         if (comp != COMPRESSION_SGILOG && comp != COMPRESSION_SGILOG24)
         {
             TIFFClose(tif);
-            throw std::runtime_error("TIFF: only support SGILOG compressed LogLuv data");
+            throw pfs::Exception("TIFF: only support SGILOG compressed LogLuv data");
         }
         TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
         TIFFSetField(tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
@@ -193,13 +189,13 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
         {
             qDebug("TIFF: unsupported samples per pixel for RGB");
             TIFFClose(tif);
-            throw std::runtime_error("TIFF: unsupported samples per pixel for RGB");
+            throw pfs::Exception("TIFF: unsupported samples per pixel for RGB");
         }
         if (!TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bps) || (bps!=8 && bps!=16 && bps!=32))
         {
             qDebug("TIFF: unsupported bits per sample for RGB");
             TIFFClose(tif);
-            throw std::runtime_error("TIFF: unsupported bits per sample for RGB");
+            throw pfs::Exception("TIFF: unsupported bits per sample for RGB");
         }
 
         if( bps==8 )
@@ -221,7 +217,7 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
     default:
         //qFatal("Unsupported photometric type: %d",phot);
         TIFFClose(tif);
-        throw std::runtime_error("TIFF: unsupported photometric type");
+        throw pfs::Exception("TIFF: unsupported photometric type");
     }
 
     if (!TIFFGetField(tif, TIFFTAG_STONITS, &stonits))
@@ -236,8 +232,6 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 
 	cmsHPROFILE hIn, hsRGB;
 	cmsHTRANSFORM xform = NULL;
-	cmsErrorAction(LCMS_ERROR_SHOW);
-	cmsSetErrorHandler(cms_error_handler);
 
 	if (camera_profile_opt == 1) { // embedded	
 
@@ -247,18 +241,19 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 			qDebug() << "Found ICC profile";
 			
 			doTransform = true;
-			try {
-				hsRGB = cmsCreate_sRGBProfile();
-    	    	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
-				qDebug() << "Created transform";
-			}
-			catch(const std::runtime_error& err)
-			{
-				qDebug() << err.what();
+			hsRGB = cmsCreate_sRGBProfile();
+        	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
+			qDebug() << "Created transform";
+
+        	if (xform == NULL) {
+            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform."), QMessageBox::Ok, QMessageBox::NoButton);
             	cmsCloseProfile(hIn);
-            	throw std::runtime_error(err.what());
+            	return NULL;
         	}
 
+			#ifndef USE_LCMS2
+        		cmsErrorAction(LCMS_ERROR_SHOW);
+			#endif
             cmsCloseProfile(hIn);
 		}
 		else {
@@ -275,28 +270,29 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 		
 			ba = profile_fname.toUtf8();
 
-			try {
-				hsRGB = cmsCreate_sRGBProfile();
-				hIn = cmsOpenProfileFromFile(ba.data(), "r");
-			}
-			catch (const std::runtime_error& err) 
-			{
-				qDebug() << err.what();
-            	throw std::runtime_error(err.what());
+			#ifndef USE_LCMS2
+				cmsErrorAction(LCMS_ERROR_SHOW);
+			#endif
+
+			hsRGB = cmsCreate_sRGBProfile();
+			hIn = cmsOpenProfileFromFile(ba.data(), "r");
+
+			if (hIn == NULL) {
+				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+				return NULL;
 			}
 
 			doTransform = true;
-			try {
-	        	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
-			}
-			catch (const std::runtime_error& err)
-			{
-				qDebug() << err.what();
+        	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
+			qDebug() << "Created transform";
+
+        	if (xform == NULL) {
+            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different camera profile."), QMessageBox::Ok, QMessageBox::NoButton);
             	cmsCloseProfile(hIn);
-            	throw std::runtime_error(err.what());
+            	return NULL;
+
         	}
 
-			qDebug() << "Created transform";
         	cmsCloseProfile(hIn);
 		}
 	}
@@ -333,7 +329,7 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
     {
         data = new uchar[width*height*4]; //this will contain the image data linearly remapped to 8bit per channel,  data must be 32-bit aligned, in Format: 0xffRRGGBB
         if (data == NULL)
-            throw std::runtime_error("TIFF: Memory error");
+            throw pfs::Exception("TIFF: Memory error");
     }
 
     //--- image scanline size
@@ -348,7 +344,6 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
     //--- read scan lines
     const int image_width = width; //X->getCols();
     //for(uint32 row = 0; row < imagelength; row++)
- try {
     for(uint32 row = 0; row < height; row++)
     {
 		//qDebug() << row;
@@ -395,14 +390,6 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
         }
         emit nextstep( row ); //for QProgressDialog
     }
-  }
-  catch (const std::runtime_error& err)
-  {
-	qDebug() << err.what();
-	cmsDeleteTransform(xform);
-	_TIFFfree(outbuf);
-	throw std::runtime_error(err.what());
-  }
 	if (doTransform) {
 		cmsDeleteTransform(xform);
 		_TIFFfree(outbuf);
@@ -438,8 +425,6 @@ QImage* TiffReader::readIntoQImage()
 
 	cmsHPROFILE hIn, hsRGB;
 	cmsHTRANSFORM xform = NULL;
-	cmsErrorAction(LCMS_ERROR_SHOW);
-	cmsSetErrorHandler(cms_error_handler);
 
 	if (camera_profile_opt == 1) { // embedded	
 
@@ -449,17 +434,18 @@ QImage* TiffReader::readIntoQImage()
 			qDebug() << "Found ICC profile";
 			
 			doTransform = true;
-			try {
-				hsRGB = cmsCreate_sRGBProfile();
-    	    	xform = cmsCreateTransform(hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
-			}
-			catch (const std::runtime_error& err)
-			{
-				qDebug() << err.what();
-            	cmsCloseProfile(hIn);
-            	throw std::runtime_error(err.what());
-        	}
+			hsRGB = cmsCreate_sRGBProfile();
+        	xform = cmsCreateTransform(hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
 			qDebug() << "Created transform";
+
+        	if (xform == NULL) {
+            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform."), QMessageBox::Ok, QMessageBox::NoButton);
+            	cmsCloseProfile(hIn);
+            	throw pfs::Exception("TIFF: I cannot perform the color transform");
+        	}
+			#ifndef USE_LCMS2
+				cmsErrorAction(LCMS_ERROR_SHOW);
+			#endif
 
             cmsCloseProfile(hIn);
 		}
@@ -477,26 +463,29 @@ QImage* TiffReader::readIntoQImage()
 		
 			ba = profile_fname.toUtf8();
 
-			try {
-				hsRGB = cmsCreate_sRGBProfile();
-				hIn = cmsOpenProfileFromFile(ba.data(), "r");
-			}
-			catch (const std::runtime_error& err)
-			{
-				qDebug() << err.what();	
-            	throw std::runtime_error(err.what());
+			#ifndef USE_LCMS2
+				cmsErrorAction(LCMS_ERROR_SHOW);
+			#endif
+
+			hsRGB = cmsCreate_sRGBProfile();
+			hIn = cmsOpenProfileFromFile(ba.data(), "r");
+
+			if (hIn == NULL) {
+				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+            	throw pfs::Exception("TIFF: I cannot open camera profile");
+				
 			}
 
 			doTransform = true;
-			try {
-	        	xform = cmsCreateTransform(hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
-			}
-			catch (const std::runtime_error& err)
-			{
-            	cmsCloseProfile(hIn);
-            	throw std::runtime_error(err.what());
-			}
+        	xform = cmsCreateTransform(hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
 			qDebug() << "Created transform";
+
+        	if (xform == NULL) {
+            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different camera profile."), QMessageBox::Ok, QMessageBox::NoButton);
+            	cmsCloseProfile(hIn);
+            	throw pfs::Exception("TIFF: I cannot perform the color transform");
+
+        	}
 
         	cmsCloseProfile(hIn);
 		}
@@ -548,15 +537,7 @@ QImage* TiffReader::readIntoQImage()
 	QImage *toreturn;
 	if (doTransform) {
     	uchar *dataout = new uchar[width*height*4];
-		try {
-			cmsDoTransform(xform, data, dataout, width*height);
-		}
-		catch (const std::runtime_error& err)
-		{
-			qDebug() << err.what();
-			delete [] dataout;
-			throw std::runtime_error(err.what());
-		}
+		cmsDoTransform(xform, data, dataout, width*height);
     	toreturn = new QImage(const_cast<uchar *>(dataout),width,height,QImage::Format_RGB32);
 	}
 	else
@@ -577,7 +558,7 @@ TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL
     // 	qDebug("width=%d, heigh=%d",width,height);
     tif = TIFFOpen(filename, "w");
     if( !tif )
-        throw std::runtime_error("TIFF: could not open file for writing.");
+        throw pfs::Exception("TIFF: could not open file for writing.");
 
     TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
     TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
@@ -594,7 +575,7 @@ TiffWriter::TiffWriter( const char* filename, const quint16 *pix, int w, int h) 
 
     tif = TIFFOpen(filename, "w");
     if( !tif )
-        throw std::runtime_error("TIFF: could not open file for writing.");
+        throw pfs::Exception("TIFF: could not open file for writing.");
 
     TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
     TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
@@ -611,7 +592,7 @@ TiffWriter::TiffWriter( const char* filename, QImage *f ) : tif((TIFF *)NULL)
     tif = TIFFOpen(filename, "w");
 
     if( !tif )
-        throw std::runtime_error("TIFF: could not open file for writing.");
+        throw pfs::Exception("TIFF: could not open file for writing.");
 
     TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, f->width());
     TIFFSetField (tif, TIFFTAG_IMAGELENGTH, f->height());
@@ -636,7 +617,7 @@ int TiffWriter::writeFloatTiff()
     tstrip_t strips_num = TIFFNumberOfStrips (tif);
     float* strip_buf = (float*)_TIFFmalloc(strip_size); //enough space for a strip (row)
     if (!strip_buf)
-        throw std::runtime_error("TIFF: error allocating buffer.");
+        throw pfs::Exception("TIFF: error allocating buffer.");
 
     emit maximumValue( strips_num );  // for QProgressDialog
 
@@ -679,7 +660,7 @@ int TiffWriter::writeLogLuvTiff()
     tstrip_t strips_num = TIFFNumberOfStrips (tif);
     float* strip_buf=(float*)_TIFFmalloc(strip_size); //enough space for a strip
     if (!strip_buf)
-        throw std::runtime_error("TIFF: error allocating buffer.");
+        throw pfs::Exception("TIFF: error allocating buffer.");
 
     emit maximumValue( strips_num ); // for QProgressDialog
 
@@ -710,7 +691,7 @@ int TiffWriter::writeLogLuvTiff()
 int TiffWriter::write8bitTiff()
 {
     if (ldrimage == NULL)
-        throw std::runtime_error("TIFF: QImage was not set correctly");
+        throw pfs::Exception("TIFF: QImage was not set correctly");
 
 	cmsHPROFILE hsRGB;
 	LPBYTE EmbedBuffer;
@@ -735,7 +716,7 @@ int TiffWriter::write8bitTiff()
 
     char* strip_buf=(char*)_TIFFmalloc(strip_size); //enough space for a strip
     if (!strip_buf)
-        throw std::runtime_error("TIFF: error allocating buffer");
+        throw pfs::Exception("TIFF: error allocating buffer");
 
     QRgb *ldrpixels = reinterpret_cast<QRgb*>(ldrimage->bits());
 
@@ -771,7 +752,7 @@ int TiffWriter::write8bitTiff()
 int TiffWriter::write16bitTiff()
 {
     if (pixmap == NULL)
-        throw std::runtime_error("TIFF: 16 bits pixmap was not set correctly");
+        throw pfs::Exception("TIFF: 16 bits pixmap was not set correctly");
 
 	cmsHPROFILE hsRGB;
 	LPBYTE EmbedBuffer;
@@ -796,7 +777,7 @@ int TiffWriter::write16bitTiff()
 
     quint16* strip_buf = (quint16*)_TIFFmalloc(strip_size); //enough space for a strip
     if (!strip_buf)
-        throw std::runtime_error("TIFF: error allocating buffer");
+        throw pfs::Exception("TIFF: error allocating buffer");
 
     emit maximumValue( strips_num ); // for QProgressDialog
 
@@ -822,4 +803,3 @@ int TiffWriter::write16bitTiff()
     TIFFClose(tif);
     return 0;
 }
-
