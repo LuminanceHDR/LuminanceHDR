@@ -523,7 +523,7 @@ pfs::Frame * TiffReader::readIntoPfsFrame ()
       QImage remapped (const_cast < uchar * >(data), image_width, imagelength, QImage::Format_RGB32);
 
       QFileInfo fi (fileName);
-      QString fname = fi.baseName () + ".thumb.jpg";
+      QString fname = fi.completeBaseName () + ".thumb.jpg";
 //#ifndef QT_NO_DEBUG
 //        std::cout << qPrintable(fileName) << std::endl;
 //        std::cout << qPrintable(fname) << std::endl;
@@ -616,9 +616,9 @@ TiffReader::readIntoQImage ()
 	  try
 	  {
 	    if (ColorSpace == RGB && TypeOfData == BYTE)
-	      xform = cmsCreateTransform (hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
+	      xform = cmsCreateTransform (hIn, TYPE_RGBA_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
 	    else if (ColorSpace == CMYK && TypeOfData == BYTE)
-	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
+	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
 	  }
 	  catch (const std::runtime_error & err)
 	  {
@@ -690,7 +690,10 @@ TiffReader::readIntoQImage ()
     }
   //--- free buffers and close files
   if (doTransform)
+     {
      _TIFFfree (bpout);
+     cmsDeleteTransform (xform);
+     }
 
   _TIFFfree (bp);
   TIFFClose (tif);

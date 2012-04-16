@@ -682,7 +682,7 @@ void HdrWizard::inputHdrFileSelected(int i) {
 	else { // load preview from thumbnail previously created on disk
 		QString fname = hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-                QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
+        QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
 
         if (QFile::exists(thumb_name))
         {
