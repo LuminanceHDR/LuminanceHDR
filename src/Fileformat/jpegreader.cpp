@@ -294,6 +294,13 @@ QImage *JpegReader::readJpegIntoQImage()
 	qDebug() << "Readed JPEG headers";
 	qDebug() << cinfo.jpeg_color_space;
 
+	if (cinfo.jpeg_color_space == JCS_GRAYSCALE) {
+		qDebug() << "Unsuported color space: grayscale";
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		throw std::runtime_error("Unsuported color space: grayscale");
+	}		
+
 	if (cinfo.jpeg_color_space == JCS_YCCK) {
 		qDebug() << "Converting to CMYK";
 		cinfo.out_color_space = JCS_CMYK;
