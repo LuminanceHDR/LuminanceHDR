@@ -199,14 +199,14 @@ TiffReader::TiffReader (const char *filename, const char *tempfilespath, bool wo
       throw std::runtime_error ("TIFF: unsupported planar configuration");
     }
 
-  uint32 tileWidth;
-  TIFFGetField(tif, TIFFTAG_TILEWIDTH, &tileWidth);
-  qDebug() << "tileWidth: " << tileWidth;
-  if (tileWidth != 0)
+  /*uint16 nTiles = TIFFNumberOfTiles (tif);
+  qDebug() << "nTiles: " << nTiles;
+  if (nTiles != 1)
     {
       TIFFClose (tif);
       throw std::runtime_error ("TIFF: unsupported tiled image");
     }
+  */
 
   if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &comp))	// compression type
     comp = COMPRESSION_NONE;
