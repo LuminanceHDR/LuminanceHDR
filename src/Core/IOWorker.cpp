@@ -196,6 +196,23 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
             emit write_ldr_failed();
 		}
 	}
+	else if (qfi.suffix().toUpper().startsWith("PNG")) {
+        QImage *image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
+		PngWriter writer(image, filename, quality);
+		if (writer.writeQImageToPng()) 
+		{
+			if (tmopts != NULL)
+				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+
+			emit write_ldr_success(ldr_input, filename);
+			delete image;
+		}
+		else
+		{
+            status = false;
+            emit write_ldr_failed();
+		}
+	}
     else
     {
         // QScopedPointer will call delete when this object goes out of scope

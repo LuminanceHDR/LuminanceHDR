@@ -1,9 +1,7 @@
 /**
- * @brief Header file for pfs file format IO
- *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006 Davide Anastasia
+ * Copyright (C) 2012 Franco Comida
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,30 +18,31 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */
 
-#ifndef __PFS_FILE_FORMAT_H__
-#define __PFS_FILE_FORMAT_H__
+#ifndef PNGWRITER_H
+#define PNGWRITER_H
 
-#include "Fileformat/rgbeio.h"
-#include "Fileformat/pfstiff.h"
-#include "Fileformat/pfsoutldrimage.h"
-#include "Fileformat/pfsinraw.h"
-#include "Fileformat/jpegwriter.h"
-#include "Fileformat/jpegreader.h"
-#include "Fileformat/pngwriter.h"
+#include <QObject>
+#include <QImage>
+#include <QString>
 
-// Forward declaration
-namespace pfs {
-    class Frame;
-}
+#include <png.h>
 
-pfs::Frame* readEXRfile(const char * filename);
-void writeEXRfile(pfs::Frame* inpfsframe, const char* outfilename);
+class PngWriter : public QObject
+{
+  Q_OBJECT
+	
+	const QImage *m_out_qimage;
+	QString m_fname;
+	int m_quality;
 
-pfs::Frame* readRGBEfile(const char * filename);
-void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename);
+public:
+	PngWriter(const QImage *, QString, int);
+	~PngWriter() {}
+	bool writeQImageToPng();
+};
 
 #endif
