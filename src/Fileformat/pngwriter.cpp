@@ -163,12 +163,14 @@ bool PngWriter::writeQImageToPng()
 	for (png_uint_32 row = 0; row < height; row++)
 		memcpy(row_pointers[row], m_out_qimage->scanLine( row ), png_get_rowbytes(png_ptr, info_ptr));
 
-	qDebug() << m_out_qimage->bytesPerLine();
-	qDebug() << png_get_rowbytes(png_ptr, info_ptr);
-
 	png_write_image(png_ptr, row_pointers);
 
 	png_write_end(png_ptr, info_ptr);
+
+	for (png_uint_32 row = 0; row < height; row++)
+		png_free(png_ptr, row_pointers[row]);
+	
+	png_free(png_ptr, row_pointers);
 
 	png_destroy_write_struct(&png_ptr, &info_ptr);
 
