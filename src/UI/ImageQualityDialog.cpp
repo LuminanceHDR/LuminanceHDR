@@ -31,6 +31,7 @@
 #include "ui_ImageQualityDialog.h"
 
 #include "Fileformat/jpegwriter.h"
+#include "Fileformat/pngwriter.h"
 
 ImageQualityDialog::~ImageQualityDialog() {}
 
@@ -60,6 +61,12 @@ void ImageQualityDialog::on_getSizeButton_clicked()
     {
         JpegWriter writer(image, quality);
         writer.writeQImageToJpeg();
+        size = writer.getFileSize();
+	}
+    else if (format.startsWith("png"))
+    {
+        PngWriter writer(image, quality);
+        writer.writeQImageToPng();
         size = writer.getFileSize();
 	}
     else

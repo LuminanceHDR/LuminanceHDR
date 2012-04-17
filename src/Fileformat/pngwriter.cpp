@@ -23,20 +23,35 @@
  */
 
 #include <QDebug>
-
+#include <QSharedPointer>
+#include <vector>
+#include <algorithm>
 #include <lcms.h>
 #include <stdio.h>
+
+#if defined(WIN32) || defined(__APPLE__)
+#include <QTemporaryFile>
+#endif
+
 #include "pngwriter.h"
 
-PngWriter::PngWriter(const QImage *image, QString filename, int quality) :
-	m_out_qimage(image),
+PngWriter::PngWriter(const QImage *out_qimage, QString filename, int quality) :
+	m_out_qimage(out_qimage),
 	m_fname(filename),
 	m_quality(quality)
 {
 }
 
+PngWriter::PngWriter(const QImage *out_qimage, int quality):
+	m_out_qimage(out_qimage),
+	m_quality(quality)
+{}
+
 bool PngWriter::writeQImageToPng()
 {
+	png_uint_32 width = m_out_qimage->width();
+	png_uint_32 height = m_out_qimage->height();
+
 	png_uint_32 profile_size = 0;	
 
     cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
@@ -48,15 +63,52 @@ bool PngWriter::writeQImageToPng()
 
 	qDebug() << "sRGB profile size: " << profile_size;
 
-	QByteArray ba;
-	ba = m_fname.toUtf8();
-	qDebug() << "writeQImageIntoPng: filename: " << ba.data();
+    // I protecte the output file into a QSharedPointer with custom Deleter,
+    // so I don't have to close it whenever it goes out of scope!
+    QSharedPointer<FILE> outfile;
 
-	FILE *fp = fopen(ba.data(), "wb");
-	if (!fp)
-	{
-		qDebug() << "PNG: Failed to open file";
-		return false;
+#if defined(WIN32) || defined(__APPLE__)
+    QTemporaryFile output_temp_file;
+#else
+    std::vector<char> outbuf;
+#endif
+    if ( !m_fname.isEmpty() )         // we are writing to file
+    {
+        QByteArray ba( m_fname.toUtf8() );
+		qDebug() << "writeQImageToPng: filename: " << ba.data();
+
+        outfile = QSharedPointer<FILE>(fopen(ba.data(), "wb"), fclose);
+
+        if (outfile.data() == NULL)
+        {
+			qDebug() << "can't open " << m_fname;
+    	    return false;
+		}
+	} 
+    else                            // we are writing to memory buffer
+    {
+#if defined(WIN32) || defined(__APPLE__)
+        if ( !output_temp_file.open() ) return false; // could not open the temporary file!
+
+        QByteArray output_temp_filename = QFile::encodeName( output_temp_file.fileName() );
+        output_temp_file.close();
+        outfile = QSharedPointer<FILE>(fopen(output_temp_filename.constData(), "w+"), fclose);
+
+        if ( outfile.data() == NULL ) return false;
+#else
+		std::vector<char> t(width * height * 4 + (width * height * 4) * 0.1);
+		outbuf.swap( t );
+        // reset all element of the vector to zero!
+        std::fill(outbuf.begin(), outbuf.end(), 0);
+
+		qDebug() << "outbuf size: " << outbuf.size();
+
+        outfile = QSharedPointer<FILE>(fmemopen(outbuf.data(), outbuf.size(), "w+"), fclose);
+		if (outfile == NULL) {
+			qDebug() << "Failed opening file on memory";
+			return false;
+		}
+#endif
 	}
 
 	png_structp png_ptr = png_create_write_struct
@@ -65,7 +117,6 @@ bool PngWriter::writeQImageToPng()
     if (!png_ptr)
 	{
 		qDebug() << "PNG: Failed to create write struct";
-		fclose(fp);
 		return false;
 	}
 
@@ -75,7 +126,6 @@ bool PngWriter::writeQImageToPng()
 		qDebug() << "PNG: Failed to create info struct";
 		png_destroy_write_struct(&png_ptr,
          (png_infopp)NULL);
-		fclose(fp);
 		return false;
     }
 
@@ -83,14 +133,10 @@ bool PngWriter::writeQImageToPng()
 	{
 		qDebug() << "PNG: Error writing file";
 		png_destroy_write_struct(&png_ptr, &info_ptr);
-		fclose(fp);
 		return false;
 	}
 
-	png_init_io(png_ptr, fp);
-
-	png_uint_32 width = m_out_qimage->width();
-	png_uint_32 height = m_out_qimage->height();
+	png_init_io(png_ptr, outfile.data());
 
 	png_set_IHDR(png_ptr, info_ptr, width, height,
        8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE,
@@ -124,9 +170,29 @@ bool PngWriter::writeQImageToPng()
 	png_write_end(png_ptr, info_ptr);
 
 	png_destroy_write_struct(&png_ptr, &info_ptr);
-	
-	fclose(fp);
 
+    if ( m_fname.isEmpty() )
+    {
+#if defined(WIN32) || defined(__APPLE__)
+        fflush(outfile.data());
+        fseek(outfile.data(), 0, SEEK_END);
+        m_filesize = ftell(outfile.data());
+#else
+        png_uint_32 size = outbuf.size() - 1;
+        for (; size > 0; --size)
+        {
+            if (outbuf[size] != 0)
+                break;
+        }
+        m_filesize = size;
+		qDebug() << "File size: " << m_filesize;
+#endif
+    }
+	
 	return true;
 }
 
+int PngWriter::getFileSize()
+{
+	return m_filesize;
+}
