@@ -170,8 +170,6 @@ bool PngWriter::writeQImageToPng()
 	for (png_uint_32 row = 0; row < height; row++)
 		png_free(png_ptr, row_pointers[row]);
 	
-	png_free(png_ptr, row_pointers);
-
 	png_destroy_write_struct(&png_ptr, &info_ptr);
 
 	if ( m_fname.isEmpty() )
