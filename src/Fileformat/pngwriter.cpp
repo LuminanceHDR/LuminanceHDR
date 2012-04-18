@@ -148,7 +148,7 @@ bool PngWriter::writeQImageToPng()
 
 	char profileName[5] = "sRGB";
 	png_set_iCCP(png_ptr, info_ptr, profileName, 0,
-					  profile_buffer.data(), profile_size);
+					  profile_buffer.data(), (png_uint_32)profile_size);
 
 	png_write_info(png_ptr, info_ptr);
 
@@ -176,7 +176,7 @@ bool PngWriter::writeQImageToPng()
 	if ( m_fname.isEmpty() )
 	{
 #if defined(WIN32) || defined(__APPLE__)
-		fflush(outfile());
+		fflush(outfile);
 		fseek(outfile, 0, SEEK_END);
 		m_filesize = ftell(outfile);
 #else
