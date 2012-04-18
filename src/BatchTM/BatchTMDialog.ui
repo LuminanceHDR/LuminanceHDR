@@ -36,91 +36,86 @@
          <number>2</number>
         </property>
         <item>
+         <widget class="QListWidget" name="listWidget_HDRs">
+          <property name="toolTip">
+           <string>List of HDRs that will be tone mapped</string>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::ContiguousSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QVBoxLayout" name="_3">
           <item>
-           <widget class="QPushButton" name="add_dir_HDRs_Button">
-            <property name="minimumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
+           <widget class="QToolButton" name="add_dir_HDRs_Button">
             <property name="toolTip">
-             <string>Add all the HDRs in a directory to the list</string>
+             <string>Add Directory (Alt+D)</string>
             </property>
             <property name="text">
-             <string>Add &amp;Directory</string>
+             <string>...</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
-            <property name="autoDefault">
-             <bool>true</bool>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
-            <property name="default">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
+            <property name="shortcut">
+             <string>Alt+D</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="add_HDRs_Button">
-            <property name="minimumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
+           <widget class="QToolButton" name="add_HDRs_Button">
             <property name="toolTip">
-             <string>Add single HDR files to the list</string>
+             <string>Add Files (Alt+F)</string>
             </property>
             <property name="text">
-             <string>&amp;Add Files</string>
+             <string>...</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+F</string>
+            </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="remove_HDRs_Button">
-            <property name="minimumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
+           <widget class="QToolButton" name="remove_HDRs_Button">
             <property name="toolTip">
-             <string>Remove single HDR files to the list</string>
+             <string>Remove Files (Alt+R)</string>
             </property>
             <property name="text">
-             <string>&amp;Remove Files</string>
+             <string>...</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+R</string>
             </property>
            </widget>
           </item>
@@ -138,19 +133,6 @@
            </spacer>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QListWidget" name="listWidget_HDRs">
-          <property name="toolTip">
-           <string>List of HDRs that will be tone mapped</string>
-          </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::ContiguousSelection</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -170,112 +152,94 @@
         <item>
          <layout class="QVBoxLayout" name="_4">
           <item>
-           <widget class="QPushButton" name="add_dir_TMopts_Button">
-            <property name="minimumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
+           <widget class="QToolButton" name="add_dir_TMopts_Button">
             <property name="toolTip">
-             <string>Add all the Tone Mapping Setting files in a directory to the list</string>
+             <string>Add Directory (Alt+I)</string>
             </property>
             <property name="text">
-             <string>Add D&amp;irectory</string>
+             <string>...</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
-            <property name="flat">
-             <bool>false</bool>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+I</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="add_TMopts_Button">
-            <property name="minimumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
+           <widget class="QToolButton" name="add_TMopts_Button">
             <property name="toolTip">
-             <string>Add single Tone Mapping Setting files to the list</string>
+             <string>Add Files (Alt+L)</string>
             </property>
             <property name="text">
-             <string>Add Fi&amp;les</string>
+             <string>...</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
-            <property name="flat">
-             <bool>false</bool>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+L</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="from_Database_Button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>32</height>
-             </size>
+           <widget class="QToolButton" name="from_Database_Button">
+            <property name="toolTip">
+             <string>Add from Database (Alt+B)</string>
             </property>
             <property name="text">
-             <string>From Data&amp;base</string>
+             <string>...</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/draganddrop.png</normaloff>:/new/prefix1/images/draganddrop.png</iconset>
+              <normaloff>:/new/prefix1/images/vcs_add.png</normaloff>:/new/prefix1/images/vcs_add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+B</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="remove_TMOpts_Button">
-            <property name="minimumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>160</width>
-              <height>32</height>
-             </size>
-            </property>
+           <widget class="QToolButton" name="remove_TMOpts_Button">
             <property name="toolTip">
-             <string>Remove single Tone Mapping Setting files to the list</string>
+             <string>Remove Settings (Alt+M)</string>
             </property>
             <property name="text">
-             <string>R&amp;emove</string>
+             <string>...</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
             </property>
-            <property name="flat">
-             <bool>false</bool>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+M</string>
             </property>
            </widget>
           </item>
@@ -624,12 +588,27 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>add_dir_HDRs_Button</tabstop>
+  <tabstop>add_HDRs_Button</tabstop>
   <tabstop>remove_HDRs_Button</tabstop>
+  <tabstop>add_dir_TMopts_Button</tabstop>
+  <tabstop>add_TMopts_Button</tabstop>
+  <tabstop>from_Database_Button</tabstop>
+  <tabstop>remove_TMOpts_Button</tabstop>
+  <tabstop>listWidget_HDRs</tabstop>
+  <tabstop>listWidget_TMopts</tabstop>
+  <tabstop>horizontalSlider_Width</tabstop>
+  <tabstop>spinBox_Width</tabstop>
+  <tabstop>horizontalSlider_Quality</tabstop>
+  <tabstop>spinBox_Quality</tabstop>
+  <tabstop>out_folder_widgets</tabstop>
+  <tabstop>out_folder_Button</tabstop>
   <tabstop>filterComboBox</tabstop>
+  <tabstop>filterLineEdit</tabstop>
+  <tabstop>clearTextToolButton</tabstop>
+  <tabstop>Log_Widget</tabstop>
   <tabstop>cancelbutton</tabstop>
   <tabstop>BatchGoButton</tabstop>
-  <tabstop>listWidget_HDRs</tabstop>
-  <tabstop>out_folder_widgets</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>

@@ -15,3 +15,6 @@ SET OPTION_LUPDATE_NOOBSOLETE=0
 
 REM Optional variables
 REM SET L_BOOST_DIR=C:\Data\Develop\libhdrStuff
+
+REM should the Luminance git repo be updated (defaulting to true for read-only git download)
+SET UPDATE_REPO_LUMINANCE=1

@@ -1786,6 +1786,9 @@ void MainWindow::updateSoftProofing(int i)
 	QWidget *wgt = m_tabwidget->widget(i);
 	GenericViewer *g_v = (GenericViewer *)wgt;
 
+	if (g_v == NULL)
+		return;
+
 	if ( !g_v->isHDR() )
 	{
 		LdrViewer *l_v = static_cast<LdrViewer*>(g_v);

@@ -1517,17 +1517,17 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="0" margin="0"/>
  <tabstops>
-  <tabstop>EVSlider</tabstop>
-  <tabstop>ImageEVdsb</tabstop>
+  <tabstop>NextFinishButton</tabstop>
+  <tabstop>cancelButton</tabstop>
   <tabstop>loadImagesButton</tabstop>
   <tabstop>removeImageButton</tabstop>
   <tabstop>clearListButton</tabstop>
+  <tabstop>tableWidget</tabstop>
+  <tabstop>EVSlider</tabstop>
+  <tabstop>ImageEVdsb</tabstop>
   <tabstop>alignCheckBox</tabstop>
   <tabstop>ais_radioButton</tabstop>
   <tabstop>mtb_radioButton</tabstop>
-  <tabstop>tableWidget</tabstop>
-  <tabstop>NextFinishButton</tabstop>
-  <tabstop>cancelButton</tabstop>
   <tabstop>predefConfigsComboBox</tabstop>
   <tabstop>lineEdit_showWeight</tabstop>
   <tabstop>lineEdit_show_resp</tabstop>
@@ -1539,14 +1539,14 @@ p, li { white-space: pre-wrap; }
   <tabstop>triGaussPlateauComboBox</tabstop>
   <tabstop>predefRespCurveRadioButton</tabstop>
   <tabstop>gammaLinLogComboBox</tabstop>
-  <tabstop>modelComboBox</tabstop>
-  <tabstop>RespCurveFileLoadedLineEdit</tabstop>
   <tabstop>loadRespCurveFromFileCheckbox</tabstop>
+  <tabstop>RespCurveFileLoadedLineEdit</tabstop>
   <tabstop>loadRespCurveFileButton</tabstop>
   <tabstop>recoverRespCurveRadio</tabstop>
   <tabstop>saveRespCurveFileButton</tabstop>
-  <tabstop>saveRespCurveToFileCheckbox</tabstop>
   <tabstop>CurveFileNameSaveLineEdit</tabstop>
+  <tabstop>modelComboBox</tabstop>
+  <tabstop>saveRespCurveToFileCheckbox</tabstop>
   <tabstop>textEdit</tabstop>
  </tabstops>
  <resources>

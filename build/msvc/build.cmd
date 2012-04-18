@@ -105,6 +105,24 @@ IF NOT EXIST zlib-1.2.5 (
 	popd
 )
 
+REM zlib copy for libpng
+IF NOT EXIST zlib (
+	mkdir zlib
+	copy zlib-1.2.5\*.h zlib
+	copy zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.lib zlib
+	copy zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.dll zlib
+)
+
+IF NOT EXIST %TEMP_DIR%\lpng1510.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng1510.zip http://prdownloads.sourceforge.net/libpng/lpng1510.zip?download
+)
+IF NOT EXIST lpng1510 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng1510.zip
+	pushd lpng1510
+	nmake /f scripts\makefile.vcwin32
+	popd
+)
+
 IF NOT EXIST %TEMP_DIR%\expat-2.0.1.tar (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/expat-2.0.1.tar.gz http://sourceforge.net/projects/expat/files/expat/2.0.1/expat-2.0.1.tar.gz/download
 	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/expat-2.0.1.tar.gz
@@ -175,11 +193,11 @@ IF NOT EXIST %TEMP_DIR%\tiff-4.0.1.zip (
 IF NOT EXIST tiff-4.0.1 (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-4.0.1.zip
 
-	echo.JPEG_SUPPORT=^0> tiff-4.0.1\qtpfsgui_commands.in
+	echo.JPEG_SUPPORT=^1> tiff-4.0.1\qtpfsgui_commands.in
 	echo.JPEGDIR=..\..\libjpeg>> tiff-4.0.1\qtpfsgui_commands.in
 	echo.JPEG_INCLUDE=-I$^(JPEGDIR^)>> tiff-4.0.1\qtpfsgui_commands.in
 	echo.JPEG_LIB=$^(JPEGDIR^)\libjpeg.lib>> tiff-4.0.1\qtpfsgui_commands.in
-	echo.ZIP_SUPPORT=^0>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.ZIP_SUPPORT=^1>> tiff-4.0.1\qtpfsgui_commands.in
 	echo.ZLIBDIR=..\..\zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%>> tiff-4.0.1\qtpfsgui_commands.in
 	echo.ZLIB_INCLUDE=-I..\..\zlib-1.2.5>> tiff-4.0.1\qtpfsgui_commands.in
 	echo.ZLIB_LIB=$^(ZLIBDIR^)\zlibwapi.lib>> tiff-4.0.1\qtpfsgui_commands.in
@@ -199,16 +217,21 @@ IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-0.14.5.zip (
 IF NOT EXIST LibRaw-demosaic-pack-GPL2-0.14.5 (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.5.zip
 )
+
 IF NOT EXIST LibRaw-0.14.5 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.5.zip
+	rem %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.5.zip
+	%CYGWIN_DIR%\bin\git.exe clone git://github.com/LibRaw/LibRaw.git LibRaw-0.14.5
+	
 	
 	pushd LibRaw-0.14.5
 	
 	echo.COPT="/arch:SSE2 /openmp">> qtpfsgui_commands.in
 	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.5> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
-	echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-2.3\include">> qtpfsgui_commands.in
-	echo.LCMS_LIB="..\lcms2-2.3\bin\lcms2_dll.lib">> qtpfsgui_commands.in
+	rem echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-2.3\include">> qtpfsgui_commands.in
+	rem echo.LCMS_LIB="..\lcms2-2.3\bin\lcms2_dll.lib">> qtpfsgui_commands.in
+	echo.LCMS_DEF="/DUSE_LCMS /DCMS_DLL /I..\lcms-1.19\include">> qtpfsgui_commands.in
+	echo.LCMS_LIB="..\lcms-1.19\bin\lcms.lib">> qtpfsgui_commands.in
 
 	nmake /f Makefile.msvc @qtpfsgui_commands.in clean
 	nmake /f Makefile.msvc @qtpfsgui_commands.in bin\libraw.dll
@@ -371,18 +394,26 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	mkdir bin
 	popd
 	
-	for %%v in ("libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
+	for %%v in ("libpng", "libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
 		mkdir LuminanceHdrStuff\DEPs\include\%%v
 		mkdir LuminanceHdrStuff\DEPs\lib\%%v
 		mkdir LuminanceHdrStuff\DEPs\bin\%%v
 	)
 	
+
+	copy lpng1510\*.h   LuminanceHdrStuff\DEPs\include\libpng
+	copy lpng1510\*.lib LuminanceHdrStuff\DEPs\lib\libpng
+	rem copy lpng1510\*.dll LuminanceHdrStuff\DEPs\bin\libpng
 	
 	copy libjpeg\*.h LuminanceHdrStuff\DEPs\include\libjpeg
 	
-	copy lcms2-2.3\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
-	copy lcms2-2.3\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
-	copy lcms2-2.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
+	rem copy lcms2-2.3\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
+	rem copy lcms2-2.3\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
+	rem copy lcms2-2.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
+
+	copy lcms-1.19\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
+	copy lcms-1.19\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
+	copy lcms-1.19\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
 	
 	copy exiv2-trunk\msvc64\include\* LuminanceHdrStuff\DEPs\include\exiv2
 	copy exiv2-trunk\msvc64\include\exiv2\* LuminanceHdrStuff\DEPs\include\exiv2
@@ -462,7 +493,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
 			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("lcms2\lcms2_DLL.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
+			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd

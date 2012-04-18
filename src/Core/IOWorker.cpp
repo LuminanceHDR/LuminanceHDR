@@ -30,10 +30,9 @@
 #include <QFileInfo>
 #include <QString>
 #include <QByteArray>
-#ifdef QT_DEBUG
 #include <QDebug>
-#endif
 #include <QScopedPointer>
+#include <stdexcept>
 
 #include "Core/IOWorker.h"
 #include "Fileformat/pfs_file_format.h"
@@ -197,6 +196,23 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
             emit write_ldr_failed();
 		}
 	}
+	else if (qfi.suffix().toUpper().startsWith("PNG")) {
+        QImage *image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
+		PngWriter writer(image, filename, quality);
+		if (writer.writeQImageToPng()) 
+		{
+			if (tmopts != NULL)
+				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+
+			emit write_ldr_success(ldr_input, filename);
+			delete image;
+		}
+		else
+		{
+            status = false;
+            emit write_ldr_failed();
+		}
+	}
     else
     {
         // QScopedPointer will call delete when this object goes out of scope
@@ -301,6 +317,12 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
             return NULL;
         }
     }
+	catch (const std::runtime_error& err)
+	{
+		qDebug() << err.what();
+		emit read_hdr_failed(err.what()); 
+		return NULL;
+	}
     catch (...)
     {
         qDebug("TH: catched exception");

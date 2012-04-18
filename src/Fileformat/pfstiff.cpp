@@ -30,9 +30,9 @@
 #include <QObject>
 #include <QSysInfo>
 #include <QFileInfo>
-#include <QMessageBox>
 #include <QDebug>
 #include <iostream>
+#include <stdexcept>
 #include <assert.h>
 #ifdef USE_LCMS2
 #	include <lcms2.h>
@@ -54,752 +54,975 @@
 //
 //
 
-cmsHPROFILE GetTIFFProfile(TIFF* in)
-{    
-    cmsCIExyYTRIPLE Primaries;
-	float* chr;
-    cmsCIExyY WhitePoint;
-    float* wp;
-    int i;       
-    LPGAMMATABLE Gamma[3]; 
-    LPWORD gmr, gmg, gmb;
-    cmsHPROFILE hProfile;
-    //DWORD EmbedLen;
-    uint32 EmbedLen;
-    LPBYTE EmbedBuffer;
+cmsHPROFILE
+GetTIFFProfile (TIFF * in)
+{
+  cmsCIExyYTRIPLE Primaries;
+  float *chr;
+  cmsCIExyY WhitePoint;
+  float *wp;
+  int i;
+  LPGAMMATABLE Gamma[3];
+  LPWORD gmr, gmg, gmb;
+  cmsHPROFILE hProfile;
+  //DWORD EmbedLen;
+  uint32 EmbedLen;
+  LPBYTE EmbedBuffer;
 
-       if (TIFFGetField(in, TIFFTAG_ICCPROFILE, &EmbedLen, &EmbedBuffer)) {
-			qDebug() << "EmbedLen: " << EmbedLen;
-              hProfile = cmsOpenProfileFromMem(EmbedBuffer, EmbedLen);
-   
-              //if (hProfile != NULL && SaveEmbedded != NULL)
-              //    SaveMemoryBlock(EmbedBuffer, EmbedLen, SaveEmbedded);
+  if (TIFFGetField (in, TIFFTAG_ICCPROFILE, &EmbedLen, &EmbedBuffer))
+    {
+      qDebug () << "EmbedLen: " << EmbedLen;
+      hProfile = cmsOpenProfileFromMem (EmbedBuffer, EmbedLen);
 
-              if (hProfile) return hProfile;
-       }
+      //if (hProfile != NULL && SaveEmbedded != NULL)
+      //    SaveMemoryBlock(EmbedBuffer, EmbedLen, SaveEmbedded);
 
-        // Try to see if "colorimetric" tiff
+      if (hProfile)
+	return hProfile;
+    }
 
-       if (TIFFGetField(in, TIFFTAG_PRIMARYCHROMATICITIES, &chr)) {
-                      
-           Primaries.Red.x   =  chr[0];
-           Primaries.Red.y   =  chr[1];
-           Primaries.Green.x =  chr[2];
-           Primaries.Green.y =  chr[3];
-           Primaries.Blue.x  =  chr[4];
-           Primaries.Blue.y  =  chr[5];
-           
-           Primaries.Red.Y = Primaries.Green.Y = Primaries.Blue.Y = 1.0;
-                      
-           if (TIFFGetField(in, TIFFTAG_WHITEPOINT, &wp)) {
-               
-               WhitePoint.x = wp[0];
-               WhitePoint.y = wp[1];
-               WhitePoint.Y = 1.0;
-                                             
-               // Transferfunction is a bit harder....
-               
-               for (i=0; i < 3; i++)
-                   Gamma[i] = cmsAllocGamma(256);
-                                            
-               TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION,
-                   &gmr, 
-                   &gmg,
-                   &gmb);
-               
-               CopyMemory(Gamma[0]->GammaTable, gmr, 256*sizeof(WORD));
-               CopyMemory(Gamma[1]->GammaTable, gmg, 256*sizeof(WORD));
-               CopyMemory(Gamma[2]->GammaTable, gmb, 256*sizeof(WORD));
-               
-               hProfile = cmsCreateRGBProfile(&WhitePoint, &Primaries, Gamma);
-               
-               for (i=0; i < 3; i++)
-                   cmsFreeGamma(Gamma[i]);
+  // Try to see if "colorimetric" tiff
 
-               return hProfile;
-           }
-       }
+  if (TIFFGetField (in, TIFFTAG_PRIMARYCHROMATICITIES, &chr))
+    {
 
-       return NULL;
+      Primaries.Red.x = chr[0];
+      Primaries.Red.y = chr[1];
+      Primaries.Green.x = chr[2];
+      Primaries.Green.y = chr[3];
+      Primaries.Blue.x = chr[4];
+      Primaries.Blue.y = chr[5];
+
+      Primaries.Red.Y = Primaries.Green.Y = Primaries.Blue.Y = 1.0;
+
+      if (TIFFGetField (in, TIFFTAG_WHITEPOINT, &wp))
+	{
+
+	  WhitePoint.x = wp[0];
+	  WhitePoint.y = wp[1];
+	  WhitePoint.Y = 1.0;
+
+	  // Transferfunction is a bit harder....
+
+	  for (i = 0; i < 3; i++)
+	    Gamma[i] = cmsAllocGamma (256);
+
+	  TIFFGetFieldDefaulted (in, TIFFTAG_TRANSFERFUNCTION, &gmr, &gmg, &gmb);
+
+	  CopyMemory (Gamma[0]->GammaTable, gmr, 256 * sizeof (WORD));
+	  CopyMemory (Gamma[1]->GammaTable, gmg, 256 * sizeof (WORD));
+	  CopyMemory (Gamma[2]->GammaTable, gmb, 256 * sizeof (WORD));
+
+	  hProfile = cmsCreateRGBProfile (&WhitePoint, &Primaries, Gamma);
+
+	  for (i = 0; i < 3; i++)
+	    cmsFreeGamma (Gamma[i]);
+
+	  return hProfile;
+	}
+    }
+
+  return NULL;
 }
+
 //
 // End of code form tifficc.c
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-               
-TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wod)
+static void
+transform_to_rgb (unsigned char *ScanLineIn, unsigned char *ScanLineOut, uint32 size, int nSamples)
 {
-    // read header containing width and height from file
-    fileName = QString(filename);
-    tempFilesPath = QString(tempfilespath);
-    writeOnDisk = wod;
-
-    tif = TIFFOpen(filename, "r");
-    if( !tif )
-        throw pfs::Exception("TIFF: could not open file for reading.");
-
-    //--- image size
-    TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &width);
-    TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &height);
-
-    if ( width*height<=0 )
+  for (uint32 i = 0; i < size; i += nSamples)
     {
-        TIFFClose(tif);
-        throw pfs::Exception("TIFF: illegal image size");
+      unsigned char C = *(ScanLineIn + i + 0);
+      unsigned char M = *(ScanLineIn + i + 1);
+      unsigned char Y = *(ScanLineIn + i + 2);
+      unsigned char K = *(ScanLineIn + i + 3);
+      *(ScanLineOut + i + 0) = ((255 - C) * (255 - K)) / 255;
+      *(ScanLineOut + i + 1) = ((255 - M) * (255 - K)) / 255;
+      *(ScanLineOut + i + 2) = ((255 - Y) * (255 - K)) / 255;
+      *(ScanLineOut + i + 3) = 255;
     }
-
-    //--- image parameters
-    if (!TIFFGetField(tif, TIFFTAG_COMPRESSION, &comp)) // compression type
-        comp = COMPRESSION_NONE;
-
-    // type of photometric data
-    if(!TIFFGetFieldDefaulted(tif, TIFFTAG_PHOTOMETRIC, &phot))
-        throw pfs::Exception("TIFF: unspecified photometric type");
-
-    uint16 * extra_sample_types=0;
-    uint16 extra_samples_per_pixel=0;
-    switch(phot)
-    {
-    case PHOTOMETRIC_LOGLUV:
-        qDebug("Photometric data: LogLuv");
-        if (comp != COMPRESSION_SGILOG && comp != COMPRESSION_SGILOG24)
-        {
-            TIFFClose(tif);
-            throw pfs::Exception("TIFF: only support SGILOG compressed LogLuv data");
-        }
-        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
-        TIFFSetField(tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
-        TypeOfData = FLOATLOGLUV;
-        break;
-    case PHOTOMETRIC_RGB:
-        //       qDebug("Photometric data: RGB");
-        // read extra samples (# of alpha channels)
-        if (TIFFGetField( tif, TIFFTAG_EXTRASAMPLES,
-                          &extra_samples_per_pixel, &extra_sample_types )!=1)
-        {
-            extra_samples_per_pixel=0;
-        }
-        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
-        bps = nSamples - extra_samples_per_pixel;
-        has_alpha=(extra_samples_per_pixel==1);
-        //       qDebug("nSamples=%d extra_samples_per_pixel=%d",nSamples,extra_samples_per_pixel);
-        //       qDebug("has alpha? %s", has_alpha ? "true" : "false");
-        if (bps!=3)
-        {
-            qDebug("TIFF: unsupported samples per pixel for RGB");
-            TIFFClose(tif);
-            throw pfs::Exception("TIFF: unsupported samples per pixel for RGB");
-        }
-        if (!TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bps) || (bps!=8 && bps!=16 && bps!=32))
-        {
-            qDebug("TIFF: unsupported bits per sample for RGB");
-            TIFFClose(tif);
-            throw pfs::Exception("TIFF: unsupported bits per sample for RGB");
-        }
-
-        if( bps==8 )
-        {
-            TypeOfData = BYTE;
-            qDebug("8bit per channel");
-        }
-        else if( bps==16 )
-        {
-            TypeOfData = WORD;
-            qDebug("16bit per channel");
-        }
-        else
-        {
-            TypeOfData = FLOAT;
-            qDebug("32bit float per channel");
-        }
-        break;
-    default:
-        //qFatal("Unsupported photometric type: %d",phot);
-        TIFFClose(tif);
-        throw pfs::Exception("TIFF: unsupported photometric type");
-    }
-
-    if (!TIFFGetField(tif, TIFFTAG_STONITS, &stonits))
-        stonits = 1.;
 }
 
-pfs::Frame* TiffReader::readIntoPfsFrame()
+static void
+transform_to_rgb_16 (uint16 *ScanLineIn, uint16 *ScanLineOut, uint32 size, int nSamples)
 {
-	bool doTransform = false;
-	LuminanceOptions luminance_opts;
-	int camera_profile_opt = luminance_opts.getCameraProfile();
-
-	cmsHPROFILE hIn, hsRGB;
-	cmsHTRANSFORM xform = NULL;
-
-	if (camera_profile_opt == 1) { // embedded	
-
-		hIn = GetTIFFProfile(tif);
-	
-		if (hIn) {
-			qDebug() << "Found ICC profile";
-			
-			doTransform = true;
-			hsRGB = cmsCreate_sRGBProfile();
-        	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
-			qDebug() << "Created transform";
-
-        	if (xform == NULL) {
-            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform."), QMessageBox::Ok, QMessageBox::NoButton);
-            	cmsCloseProfile(hIn);
-            	return NULL;
-        	}
-
-			#ifndef USE_LCMS2
-        		cmsErrorAction(LCMS_ERROR_SHOW);
-			#endif
-            cmsCloseProfile(hIn);
-		}
-		else {
-			qDebug() << "No embedded profile found";
-		}
-	}
-	else if (camera_profile_opt == 2) { // from file
-		
-		QString profile_fname = luminance_opts.getCameraProfileFileName();
-		qDebug() << "Camera profile: " << profile_fname;
-		QByteArray ba;
-
-		if (!profile_fname.isEmpty()) {
-		
-			ba = profile_fname.toUtf8();
-
-			#ifndef USE_LCMS2
-				cmsErrorAction(LCMS_ERROR_SHOW);
-			#endif
-
-			hsRGB = cmsCreate_sRGBProfile();
-			hIn = cmsOpenProfileFromFile(ba.data(), "r");
-
-			if (hIn == NULL) {
-				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
-				return NULL;
-			}
-
-			doTransform = true;
-        	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
-			qDebug() << "Created transform";
-
-        	if (xform == NULL) {
-            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different camera profile."), QMessageBox::Ok, QMessageBox::NoButton);
-            	cmsCloseProfile(hIn);
-            	return NULL;
-
-        	}
-
-        	cmsCloseProfile(hIn);
-		}
-	}
- 
-    //--- scanline buffer with pointers to different data types
-    union {
-        float* fp;
-        uint16* wp;
-        uint8* bp;
-        void* vp;
-    } buf;
-
-	uint16* outbuf = NULL;
-    uchar *data = NULL; // ?
-
-    //pfs::DOMIO pfsio;
-    //pfs::Frame *frame = pfsio.createFrame( width, height );
-    pfs::Frame *frame = new pfs::Frame(width, height);
-
-    pfs::Channel *Xc, *Yc, *Zc;
-    frame->createXYZChannels( Xc, Yc, Zc );
-
-    float * X = Xc->getRawData();
-    float * Y = Yc->getRawData();
-    float * Z = Zc->getRawData();
-
-    //--- image length
-    uint32 imagelength;
-    TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imagelength);
-
-    emit maximumValue( imagelength ); //for QProgressDialog
-
-    if (writeOnDisk)
+  for (uint32 i = 0; i < size/2; i += nSamples)
     {
-        data = new uchar[width*height*4]; //this will contain the image data linearly remapped to 8bit per channel,  data must be 32-bit aligned, in Format: 0xffRRGGBB
-        if (data == NULL)
-            throw pfs::Exception("TIFF: Memory error");
+      uint16 C = *(ScanLineIn + i + 0);
+      uint16 M = *(ScanLineIn + i + 1);
+      uint16 Y = *(ScanLineIn + i + 2);
+      uint16 K = *(ScanLineIn + i + 3);
+      *(ScanLineOut + i + 0) = ((65535 - C) * (65535 - K)) / 65535;
+      *(ScanLineOut + i + 1) = ((65535 - M) * (65535 - K)) / 65535;
+      *(ScanLineOut + i + 2) = ((65535 - Y) * (65535 - K)) / 65535;
+      *(ScanLineOut + i + 3) = 65535;
+    }
+}
+
+static int
+cms_error_handler (int ErrorCode, const char *ErrorText)
+{
+  throw std::runtime_error (ErrorText);
+}
+
+TiffReader::TiffReader (const char *filename, const char *tempfilespath, bool wod)
+{
+  // read header containing width and height from file
+  fileName = QString (filename);
+  tempFilesPath = QString (tempfilespath);
+  writeOnDisk = wod;
+
+  tif = TIFFOpen (filename, "r");
+  if (!tif)
+    throw std::runtime_error ("TIFF: could not open file for reading.");
+
+  //--- image size
+  TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &width);
+  TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &height);
+
+  if (width * height <= 0)
+    {
+      TIFFClose (tif);
+      throw std::runtime_error ("TIFF: illegal image size.");
     }
 
-    //--- image scanline size
-    uint32 scanlinesize = TIFFScanlineSize(tif);
-	buf.vp = _TIFFmalloc(scanlinesize);
-	
-	if (doTransform) {
-		outbuf = (uint16 *) _TIFFmalloc(scanlinesize); 
-	}
-	
-	qDebug() << scanlinesize;
-    //--- read scan lines
-    const int image_width = width; //X->getCols();
-    //for(uint32 row = 0; row < imagelength; row++)
-    for(uint32 row = 0; row < height; row++)
+  //--- image parameters
+  uint16 planar;
+  TIFFGetField (tif, TIFFTAG_PLANARCONFIG, &planar);
+  qDebug() << "Planar configuration: " << planar;
+  if (planar != PLANARCONFIG_CONTIG)
     {
-		//qDebug() << row;
-        switch(TypeOfData)
+      TIFFClose (tif);
+      throw std::runtime_error ("TIFF: unsupported planar configuration");
+    }
+
+  /*uint16 nTiles = TIFFNumberOfTiles (tif);
+  qDebug() << "nTiles: " << nTiles;
+  if (nTiles != 1)
+    {
+      TIFFClose (tif);
+      throw std::runtime_error ("TIFF: unsupported tiled image");
+    }
+  */
+
+  if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &comp))	// compression type
+    comp = COMPRESSION_NONE;
+
+  // type of photometric data
+  if (!TIFFGetFieldDefaulted (tif, TIFFTAG_PHOTOMETRIC, &phot)) 
+    {
+      TIFFClose (tif);
+      throw std::runtime_error ("TIFF: unspecified photometric type");
+    }
+
+  qDebug () << "Photometric type : " << phot;
+
+  uint16 *extra_sample_types = 0;
+  uint16 extra_samples_per_pixel = 0;
+  switch (phot)
+    {
+    case PHOTOMETRIC_LOGLUV:
+      qDebug ("Photometric data: LogLuv");
+      if (comp != COMPRESSION_SGILOG && comp != COMPRESSION_SGILOG24)
+	{
+	  TIFFClose (tif);
+	  throw std::runtime_error ("TIFF: only support SGILOG compressed LogLuv data");
+	}
+      TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
+      TIFFSetField (tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
+      TypeOfData = FLOATLOGLUV;
+      break;
+    case PHOTOMETRIC_RGB:
+      //       qDebug("Photometric data: RGB");
+      // read extra samples (# of alpha channels)
+      if (TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra_samples_per_pixel, &extra_sample_types) != 1)
+	{
+	  extra_samples_per_pixel = 0;
+	}
+      TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
+      bps = nSamples - extra_samples_per_pixel;
+      has_alpha = (extra_samples_per_pixel == 1);
+      //       qDebug("nSamples=%d extra_samples_per_pixel=%d",nSamples,extra_samples_per_pixel);
+      //       qDebug("has alpha? %s", has_alpha ? "true" : "false");
+      if (bps != 3)
+	{
+	  qDebug ("TIFF: unsupported samples per pixel for RGB");
+	  TIFFClose (tif);
+	  throw std::runtime_error ("TIFF: unsupported samples per pixel for RGB");
+	}
+      if (!TIFFGetField (tif, TIFFTAG_BITSPERSAMPLE, &bps) || (bps != 8 && bps != 16 && bps != 32))
+	{
+	  qDebug ("TIFF: unsupported bits per sample for RGB");
+	  TIFFClose (tif);
+	  throw std::runtime_error ("TIFF: unsupported bits per sample for RGB");
+	}
+
+      if (bps == 8)
+	{
+	  TypeOfData = BYTE;
+	  qDebug ("8bit per channel");
+	}
+      else if (bps == 16)
+	{
+	  TypeOfData = WORD;
+	  qDebug ("16bit per channel");
+	}
+      else
+	{
+	  TypeOfData = FLOAT;
+	  qDebug ("32bit float per channel");
+	}
+      ColorSpace = RGB;
+      break;
+    case PHOTOMETRIC_SEPARATED:
+      TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
+      qDebug () << "nSamples: " << nSamples;
+      TIFFGetField (tif, TIFFTAG_BITSPERSAMPLE, &bps);
+      if (bps == 8)
+	{
+	  TypeOfData = BYTE;
+	  qDebug ("8bit per channel");
+	}
+      else if (bps == 16)
+	{
+	  TypeOfData = WORD;
+	  qDebug ("16bit per channel");
+	}
+      else
+	{
+	  TypeOfData = FLOAT;
+	  qDebug ("32bit float per channel");
+	}
+      ColorSpace = CMYK;
+      break;
+    default:
+      //qFatal("Unsupported photometric type: %d",phot);
+      TIFFClose (tif);
+      throw std::runtime_error ("TIFF: unsupported photometric type");
+    }
+
+  if (!TIFFGetField (tif, TIFFTAG_STONITS, &stonits))
+    stonits = 1.;
+}
+
+pfs::Frame * TiffReader::readIntoPfsFrame ()
+{
+  bool doTransform = false;
+  LuminanceOptions luminance_opts;
+  int
+    camera_profile_opt = luminance_opts.getCameraProfile ();
+
+  cmsHPROFILE hIn, hsRGB;
+  cmsHTRANSFORM xform = NULL;
+  cmsErrorAction (LCMS_ERROR_SHOW);
+  cmsSetErrorHandler (cms_error_handler);
+
+  if (camera_profile_opt == 1)
+    {				// embedded      
+
+      hIn = GetTIFFProfile (tif);
+
+      if (hIn)
+	{
+	  qDebug () << "Found ICC profile";
+
+	  doTransform = true;
+	  try
+	  {
+	    hsRGB = cmsCreate_sRGBProfile ();
+	    if (ColorSpace == RGB && TypeOfData == WORD)
+	      xform = cmsCreateTransform (hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
+	    else if (ColorSpace == RGB && TypeOfData == BYTE)
+	      xform = cmsCreateTransform (hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+	    else if (ColorSpace == CMYK && TypeOfData == WORD)
+	      xform = cmsCreateTransform (hIn, TYPE_CMYK_16, hsRGB, TYPE_RGBA_16, INTENT_PERCEPTUAL, 0);
+	    else
+	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+	    qDebug () << "Created transform";
+	  }
+	  catch (const std::runtime_error & err)
+	  {
+	    qDebug () << err.what ();
+	    cmsCloseProfile (hIn);
+        TIFFClose (tif);
+	    throw std::runtime_error (err.what ());
+	  }
+
+	  cmsCloseProfile (hIn);
+	}
+      else
+	{
+	  qDebug () << "No embedded profile found";
+	}
+    }
+  else if (camera_profile_opt == 2)
+    {				// from file
+
+      QString profile_fname = luminance_opts.getCameraProfileFileName ();
+      qDebug () << "Camera profile: " << profile_fname;
+      QByteArray ba;
+
+      if (!profile_fname.isEmpty ())
+	{
+
+	  ba = profile_fname.toUtf8 ();
+
+	  try
+	  {
+	    hsRGB = cmsCreate_sRGBProfile ();
+	    hIn = cmsOpenProfileFromFile (ba.data (), "r");
+	  }
+	  catch (const std::runtime_error & err)
+	  {
+	    qDebug () << err.what ();
+        TIFFClose (tif);
+	    throw std::runtime_error (err.what ());
+	  }
+
+	  doTransform = true;
+	  try
+	  {
+	    if (ColorSpace == RGB && TypeOfData == WORD)
+	      xform = cmsCreateTransform (hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
+	    else if (ColorSpace == RGB && TypeOfData == BYTE)
+	      xform = cmsCreateTransform (hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+	    else if (ColorSpace == CMYK && TypeOfData == WORD)
+	      xform = cmsCreateTransform (hIn, TYPE_CMYK_16, hsRGB, TYPE_RGBA_16, INTENT_PERCEPTUAL, 0);
+	    else
+	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+	  }
+	  catch (const std::runtime_error & err)
+	  {
+	    qDebug () << err.what ();
+	    cmsCloseProfile (hIn);
+        TIFFClose (tif);
+	    throw std::runtime_error (err.what ());
+	  }
+
+	  qDebug () << "Created transform";
+	  cmsCloseProfile (hIn);
+	}
+    }
+
+  //--- scanline buffer with pointers to different data types
+  union
+  {
+    float *
+      fp;
+    uint16 *
+      wp;
+    uint8 *
+      bp;
+    void *
+      vp;
+  } buf;
+
+  union
+  {
+    uint16 *
+      wp;
+    uint8 *
+      bp;
+    void *
+      vp;
+  } outbuf;
+
+  uchar *
+    data = NULL;		// ?
+
+  //pfs::DOMIO pfsio;
+  //pfs::Frame *frame = pfsio.createFrame( width, height );
+  pfs::Frame * frame = new pfs::Frame (width, height);
+
+  pfs::Channel * Xc, *Yc, *Zc;
+  frame->createXYZChannels (Xc, Yc, Zc);
+
+  float *
+    X = Xc->getRawData ();
+  float *
+    Y = Yc->getRawData ();
+  float *
+    Z = Zc->getRawData ();
+
+  //--- image length
+  uint32 imagelength;
+  TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imagelength);
+
+  emit maximumValue (imagelength);	//for QProgressDialog
+
+  if (writeOnDisk)
+    {
+      data = new uchar[width * height * 4];	//this will contain the image data linearly remapped to 8bit per channel,  data must be 32-bit aligned, in Format: 0xffRRGGBB
+      if (data == NULL)
         {
-        case FLOAT:
-        case FLOATLOGLUV:
-            TIFFReadScanline(tif, buf.fp, row);
-            for( int i = 0; i < image_width; i++ )
-            {
-                X[row*image_width + i] = buf.fp[i*nSamples];
-                Y[row*image_width + i] = buf.fp[i*nSamples+1];
-                Z[row*image_width + i] = buf.fp[i*nSamples+2];
-            }
-            break;
-      	case WORD:
-            TIFFReadScanline(tif, buf.wp, row);
-			if (doTransform) {
-				cmsDoTransform(xform, buf.wp, outbuf, image_width);
-			}
-            for( int i=0; i < image_width; i++ )
-            {
-                X[row*image_width + i] = !doTransform ? buf.wp[i*nSamples]   : outbuf[i*nSamples];
-                Y[row*image_width + i] = !doTransform ? buf.wp[i*nSamples+1] : outbuf[i*nSamples+1];
-                Z[row*image_width + i] = !doTransform ? buf.wp[i*nSamples+2] : outbuf[i*nSamples+2];;
-                if (writeOnDisk)
-                {
-                    *(data     + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples+2]/256.0 : outbuf[i*nSamples+2]/256.0;
-                    *(data + 1 + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples+1]/256.0 : outbuf[i*nSamples+1]/256.0;
-                    *(data + 2 + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples]/256.0   : outbuf[i*nSamples]/256.0;
-                    *(data + 3 + (row*width+i)*4) = 0xff;
-                }
-            }
-            break;
-      case BYTE:
-            TIFFReadScanline(tif, buf.bp, row);
-            for( int i=0; i<image_width; i++ )
-            {
-                X[row*image_width + i] = pow( buf.bp[i*nSamples]/255.0, 2.2 );
-                Y[row*image_width + i] = pow( buf.bp[i*nSamples+1]/255.0, 2.2 );
-                Z[row*image_width + i] = pow( buf.bp[i*nSamples+2]/255.0, 2.2 );
-            }
-            break;
+      TIFFClose (tif);
+	  throw std::runtime_error ("TIFF: Memory error");
         }
-        emit nextstep( row ); //for QProgressDialog
     }
-	if (doTransform) {
-		cmsDeleteTransform(xform);
-		_TIFFfree(outbuf);
-	}
 
-    if (writeOnDisk) 
-    {	
-	    QImage remapped(const_cast<uchar *>(data),image_width,imagelength,QImage::Format_RGB32);
+  //--- image scanline size
+  uint32 scanlinesize = TIFFScanlineSize (tif);
+  buf.vp = _TIFFmalloc (scanlinesize);
 
-        QFileInfo fi(fileName);
-        QString fname = fi.baseName() + ".thumb.jpg";
+  if (doTransform)
+    {
+      outbuf.vp = _TIFFmalloc (scanlinesize);
+    }
+
+  qDebug () << "scanlinesize: " << scanlinesize;
+  //--- read scan lines
+  const int
+    image_width = width;	//X->getCols();
+  //for(uint32 row = 0; row < imagelength; row++)
+  try
+  {
+    for (uint32 row = 0; row < height; row++)
+      {
+	//qDebug() << row;
+	switch (TypeOfData)
+	  {
+	  case FLOAT:
+	  case FLOATLOGLUV:
+	    TIFFReadScanline (tif, buf.fp, row);
+	    for (int i = 0; i < image_width; i++)
+	      {
+		X[row * image_width + i] = buf.fp[i * nSamples];
+		Y[row * image_width + i] = buf.fp[i * nSamples + 1];
+		Z[row * image_width + i] = buf.fp[i * nSamples + 2];
+	      }
+	    break;
+	  case WORD:
+	    TIFFReadScanline (tif, buf.wp, row);
+	    if (doTransform)
+	      {
+		cmsDoTransform (xform, buf.wp, outbuf.wp, image_width);
+	      }
+	    else if (ColorSpace == CMYK)
+	      {
+        outbuf.vp = _TIFFmalloc (scanlinesize);
+        transform_to_rgb_16 (buf.wp, outbuf.wp, scanlinesize, nSamples);
+        memcpy (buf.wp, outbuf.wp, scanlinesize);
+        _TIFFfree (outbuf.vp);
+	      }
+	    for (int i = 0; i < image_width; i++)
+	      {
+		X[row * image_width + i] = !doTransform ? buf.wp[i * nSamples] : outbuf.wp[i * nSamples];
+		Y[row * image_width + i] = !doTransform ? buf.wp[i * nSamples + 1] : outbuf.wp[i * nSamples + 1];
+		Z[row * image_width + i] = !doTransform ? buf.wp[i * nSamples + 2] : outbuf.wp[i * nSamples + 2];;
+		if (writeOnDisk)
+		  {
+		    *(data + (row * width + i) * 4) = !doTransform ? buf.wp[i * nSamples + 2] / 256.0 : outbuf.wp[i * nSamples + 2] / 256.0;
+		    *(data + 1 + (row * width + i) * 4) = !doTransform ? buf.wp[i * nSamples + 1] / 256.0 : outbuf.wp[i * nSamples + 1] / 256.0;
+		    *(data + 2 + (row * width + i) * 4) = !doTransform ? buf.wp[i * nSamples] / 256.0 : outbuf.wp[i * nSamples] / 256.0;
+		    *(data + 3 + (row * width + i) * 4) = 0xff;
+		  }
+	      }
+	    break;
+	  case BYTE:
+	    TIFFReadScanline (tif, buf.bp, row);
+	    if (doTransform)
+	      {
+		cmsDoTransform (xform, buf.bp, outbuf.bp, image_width);
+	      }
+	    else if (ColorSpace == CMYK)
+	      {
+		outbuf.vp = _TIFFmalloc (scanlinesize);
+		transform_to_rgb (buf.bp, outbuf.bp, scanlinesize, nSamples);
+		memcpy (buf.bp, outbuf.bp, scanlinesize);
+        _TIFFfree (outbuf.vp);
+	      }
+	    for (int i = 0; i < image_width; i++)
+	      {
+		X[row * image_width + i] = pow (!doTransform ? buf.bp[i * nSamples] / 255.0 : outbuf.bp[i * nSamples] / 255.0, 2.2);
+		Y[row * image_width + i] = pow (!doTransform ? buf.bp[i * nSamples + 1] / 255.0 : outbuf.bp[i * nSamples + 1] / 255.0, 2.2);
+		Z[row * image_width + i] = pow (!doTransform ? buf.bp[i * nSamples + 2] / 255.0 : outbuf.bp[i * nSamples + 2] / 255.0, 2.2);
+	      }
+	    break;
+	  }
+	emit nextstep (row);	//for QProgressDialog
+      }
+  }
+  catch (const std::runtime_error & err)
+  {
+    qDebug () << err.what ();
+    cmsDeleteTransform (xform);
+    _TIFFfree (outbuf.vp);
+    TIFFClose (tif);
+    throw std::runtime_error (err.what ());
+  }
+  if (doTransform)
+    {
+      cmsDeleteTransform (xform);
+      _TIFFfree (outbuf.vp);
+    }
+
+  if (writeOnDisk)
+    {
+      QImage remapped (const_cast < uchar * >(data), image_width, imagelength, QImage::Format_RGB32);
+
+      QFileInfo fi (fileName);
+      QString fname = fi.completeBaseName () + ".thumb.jpg";
 //#ifndef QT_NO_DEBUG
 //        std::cout << qPrintable(fileName) << std::endl;
 //        std::cout << qPrintable(fname) << std::endl;
 //        std::cout << qPrintable(tempFilesPath) << std::endl;
 //#endif
-        remapped.scaledToHeight(imagelength/10).save(tempFilesPath + "/" + fname);
+      remapped.scaledToHeight (imagelength / 10).save (tempFilesPath + "/" + fname);
     }
-    //--- free buffers and close files
-    _TIFFfree(buf.vp);
-    TIFFClose(tif);
-    //if (TypeOfData==FLOATLOGLUV)
-    //  pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
-    return frame;
+  //--- free buffers and close files
+  _TIFFfree (buf.vp);
+  TIFFClose (tif);
+  //if (TypeOfData==FLOATLOGLUV)
+  //  pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
+  return frame;
 }
 
 //given for granted that users of this function call it only after checking that TypeOfData==BYTE
-QImage* TiffReader::readIntoQImage()
+QImage *
+TiffReader::readIntoQImage ()
 {
-	bool doTransform = false;
-	LuminanceOptions luminance_opts;
-	int camera_profile_opt = luminance_opts.getCameraProfile();
+  bool doTransform = false;
+  LuminanceOptions luminance_opts;
+  int camera_profile_opt = luminance_opts.getCameraProfile ();
 
-	cmsHPROFILE hIn, hsRGB;
-	cmsHTRANSFORM xform = NULL;
+  cmsHPROFILE hIn, hsRGB;
+  cmsHTRANSFORM xform = NULL;
+  cmsErrorAction (LCMS_ERROR_SHOW);
+  cmsSetErrorHandler (cms_error_handler);
 
-	if (camera_profile_opt == 1) { // embedded	
+  if (camera_profile_opt == 1)
+    {				// embedded      
 
-		hIn = GetTIFFProfile(tif);
-	
-		if (hIn) {
-			qDebug() << "Found ICC profile";
-			
-			doTransform = true;
-			hsRGB = cmsCreate_sRGBProfile();
-        	xform = cmsCreateTransform(hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
-			qDebug() << "Created transform";
+      hIn = GetTIFFProfile (tif);
 
-        	if (xform == NULL) {
-            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform."), QMessageBox::Ok, QMessageBox::NoButton);
-            	cmsCloseProfile(hIn);
-            	throw pfs::Exception("TIFF: I cannot perform the color transform");
-        	}
-			#ifndef USE_LCMS2
-				cmsErrorAction(LCMS_ERROR_SHOW);
-			#endif
+      if (hIn)
+	{
+	  qDebug () << "Found ICC profile";
 
-            cmsCloseProfile(hIn);
-		}
-		else {
-			qDebug() << "No embedded profile found";
-		}
+	  doTransform = true;
+	  try
+	  {
+	    hsRGB = cmsCreate_sRGBProfile ();
+	    if (ColorSpace == RGB && TypeOfData == BYTE && has_alpha == true)
+	      xform = cmsCreateTransform (hIn, TYPE_RGBA_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+	    else if (ColorSpace == RGB && TypeOfData == BYTE && has_alpha == false)
+	      xform = cmsCreateTransform (hIn, TYPE_RGB_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+	    else if (ColorSpace == CMYK && TypeOfData == BYTE)
+	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+	  }
+	  catch (const std::runtime_error & err)
+	  {
+	    qDebug () << err.what ();
+	    cmsCloseProfile (hIn);
+        TIFFClose (tif);
+	    throw std::runtime_error (err.what ());
+	  }
+	  qDebug () << "Created transform";
+
+	  cmsCloseProfile (hIn);
 	}
-	else if (camera_profile_opt == 2) { // from file
-		
-		QString profile_fname = luminance_opts.getCameraProfileFileName();
-		qDebug() << "Camera profile: " << profile_fname;
-		QByteArray ba;
-
-		if (!profile_fname.isEmpty()) {
-		
-			ba = profile_fname.toUtf8();
-
-			#ifndef USE_LCMS2
-				cmsErrorAction(LCMS_ERROR_SHOW);
-			#endif
-
-			hsRGB = cmsCreate_sRGBProfile();
-			hIn = cmsOpenProfileFromFile(ba.data(), "r");
-
-			if (hIn == NULL) {
-				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
-            	throw pfs::Exception("TIFF: I cannot open camera profile");
-				
-			}
-
-			doTransform = true;
-        	xform = cmsCreateTransform(hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
-			qDebug() << "Created transform";
-
-        	if (xform == NULL) {
-            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different camera profile."), QMessageBox::Ok, QMessageBox::NoButton);
-            	cmsCloseProfile(hIn);
-            	throw pfs::Exception("TIFF: I cannot perform the color transform");
-
-        	}
-
-        	cmsCloseProfile(hIn);
-		}
+      else
+	{
+	  qDebug () << "No embedded profile found";
 	}
- 
-    uchar *data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
-    // 	qDebug("pfstiff, w=%d h=%d",width,height);
-    assert(TypeOfData==BYTE);
-
-    //--- image length
-    uint32 imagelength;
-    TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imagelength);
-
-    //--- image scanline size
-    uint32 scanlinesize = TIFFScanlineSize(tif);
-    uint8* bp = (uint8 *)_TIFFmalloc(scanlinesize);
-
-    //--- read scan lines
-    for (uint y = 0; y < height; y++)
-    {
-        TIFFReadScanline(tif, bp, y);
-        for ( uint x=0; x<width; x++ )
-        {
-            if (QSysInfo::ByteOrder==QSysInfo::LittleEndian)
-            {
-                *(data + 0 + (y*width+x)*4) = bp[x*nSamples+2] ;
-                *(data + 1 + (y*width+x)*4) = bp[x*nSamples+1] ;
-                *(data + 2 + (y*width+x)*4) = bp[x*nSamples] ;
-                if (has_alpha)
-                    *(data + 3 + (y*width+x)*4) = bp[x*nSamples+3];
-                else
-                    *(data + 3 + (y*width+x)*4) = 0xff;
-            }
-            else
-            {
-                *(data + 3 + (y*width+x)*4) = bp[x*nSamples+2];
-                *(data + 2 + (y*width+x)*4) = bp[x*nSamples+1];
-                *(data + 1 + (y*width+x)*4) = bp[x*nSamples];
-                if (has_alpha)
-                    *(data + 0 + (y*width+x)*4) = bp[x*nSamples+3];
-                else
-                    *(data + 0 + (y*width+x)*4) = 0xff;
-            }
-        }
     }
-    //--- free buffers and close files
-    _TIFFfree(bp);
-    TIFFClose(tif);
-	QImage *toreturn;
-	if (doTransform) {
-    	uchar *dataout = new uchar[width*height*4];
-		cmsDoTransform(xform, data, dataout, width*height);
-    	toreturn = new QImage(const_cast<uchar *>(dataout),width,height,QImage::Format_RGB32);
+  else if (camera_profile_opt == 2)
+    {				// from file
+
+      QString profile_fname = luminance_opts.getCameraProfileFileName ();
+      qDebug () << "Camera profile: " << profile_fname;
+      QByteArray ba;
+
+      if (!profile_fname.isEmpty ())
+	{
+
+	  ba = profile_fname.toUtf8 ();
+
+	  try
+	  {
+	    hsRGB = cmsCreate_sRGBProfile ();
+	    hIn = cmsOpenProfileFromFile (ba.data (), "r");
+	  }
+	  catch (const std::runtime_error & err)
+	  {
+	    qDebug () << err.what ();
+        TIFFClose (tif);
+	    throw std::runtime_error (err.what ());
+	  }
+
+	  doTransform = true;
+	  try
+	  {
+	    if (ColorSpace == RGB && TypeOfData == BYTE)
+	      xform = cmsCreateTransform (hIn, TYPE_RGBA_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+	    else if (ColorSpace == CMYK && TypeOfData == BYTE)
+	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+	  }
+	  catch (const std::runtime_error & err)
+	  {
+	    cmsCloseProfile (hIn);
+        TIFFClose (tif);
+	    throw std::runtime_error (err.what ());
+	  }
+	  qDebug () << "Created transform";
+
+	  cmsCloseProfile (hIn);
 	}
-	else
-    	toreturn = new QImage(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
-    return toreturn;
+    }
+
+  uchar *data = new uchar[width * height * 4];	//this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
+  //  qDebug("pfstiff, w=%d h=%d",width,height);
+  assert (TypeOfData == BYTE);
+
+  //--- image length
+  uint32 imagelength;
+  TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imagelength);
+
+  //--- image scanline size
+  uint32 scanlinesize = TIFFScanlineSize (tif);
+  uint8 *bp = (uint8 *) _TIFFmalloc (scanlinesize);
+  uint8 *bpout;
+  if (doTransform)
+     bpout = (uint8 *) _TIFFmalloc (scanlinesize);
+
+  //--- read scan lines
+  for (uint y = 0; y < height; y++)
+    {
+      TIFFReadScanline (tif, bp, y);
+      if (doTransform)
+         {
+	     cmsDoTransform (xform, bp, bpout, width);
+         memcpy(bp, bpout, scanlinesize);
+         }
+       else if (!doTransform && ColorSpace == CMYK)
+	     {
+	     qDebug () << "Convert to RGB";
+	     uchar *rgb_bp = new uchar[scanlinesize];
+	     transform_to_rgb (bp, rgb_bp, scanlinesize, nSamples);
+         memcpy(bp, rgb_bp, scanlinesize);
+         delete[]rgb_bp;
+	     }
+      for (uint x = 0; x < width; x++)
+	{
+	  if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) 
+	    {
+	      *(data + 0 + (y * width + x) * 4) = bp[x * nSamples + 2];
+	      *(data + 1 + (y * width + x) * 4) = bp[x * nSamples + 1];
+	      *(data + 2 + (y * width + x) * 4) = bp[x * nSamples];
+	      if (has_alpha)
+		*(data + 3 + (y * width + x) * 4) = bp[x * nSamples + 3];
+	      else
+		*(data + 3 + (y * width + x) * 4) = 0xff;
+	    }
+      else if (QSysInfo::ByteOrder == QSysInfo::BigEndian)
+	    {
+	      *(data + 3 + (y * width + x) * 4) = bp[x * nSamples + 2];
+	      *(data + 2 + (y * width + x) * 4) = bp[x * nSamples + 1];
+	      *(data + 1 + (y * width + x) * 4) = bp[x * nSamples];
+	      if (has_alpha)
+		*(data + 0 + (y * width + x) * 4) = bp[x * nSamples + 3];
+	      else
+		*(data + 0 + (y * width + x) * 4) = 0xff;
+	    }
+	}
+    }
+  //--- free buffers and close files
+  if (doTransform)
+     {
+     _TIFFfree (bpout);
+     cmsDeleteTransform (xform);
+     }
+
+  _TIFFfree (bp);
+  TIFFClose (tif);
+  QImage *toreturn = new QImage (const_cast < uchar * >(data), width, height, QImage::Format_RGB32);
+
+  return toreturn;
 }
 
-TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL)
+TiffWriter::TiffWriter (const char *filename, pfs::Frame * f):tif ((TIFF *) NULL)
 {
-    f->getXYZChannels(Xc, Yc, Zc);
-    width   = Xc->getWidth();
-    height  = Yc->getHeight();
+  f->getXYZChannels (Xc, Yc, Zc);
+  width = Xc->getWidth ();
+  height = Yc->getHeight ();
 
-    //X = Xc->getChannelData();
-    //Y = Yc->getChannelData();
-    //Z = Zc->getChannelData();
+  //X = Xc->getChannelData();
+  //Y = Yc->getChannelData();
+  //Z = Zc->getChannelData();
 
-    // 	qDebug("width=%d, heigh=%d",width,height);
-    tif = TIFFOpen(filename, "w");
-    if( !tif )
-        throw pfs::Exception("TIFF: could not open file for writing.");
+  //  qDebug("width=%d, heigh=%d",width,height);
+  tif = TIFFOpen (filename, "w");
+  if (!tif)
+    throw std::runtime_error ("TIFF: could not open file for writing.");
 
-    TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
-    TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
-    TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-    TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
+  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
+  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
 }
 
-TiffWriter::TiffWriter( const char* filename, const quint16 *pix, int w, int h) : tif((TIFF *)NULL)
+TiffWriter::TiffWriter (const char *filename, const quint16 * pix, int w, int h):
+tif ((TIFF *) NULL)
 {
-	pixmap = pix;
-    width   = w;
-    height  = h;
+  pixmap = pix;
+  width = w;
+  height = h;
 
-    tif = TIFFOpen(filename, "w");
-    if( !tif )
-        throw pfs::Exception("TIFF: could not open file for writing.");
+  tif = TIFFOpen (filename, "w");
+  if (!tif)
+    throw std::runtime_error ("TIFF: could not open file for writing.");
 
-    TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
-    TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
-    TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-    TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
+  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
+  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
 }
 
-TiffWriter::TiffWriter( const char* filename, QImage *f ) : tif((TIFF *)NULL)
+TiffWriter::TiffWriter (const char *filename, QImage * f):
+tif ((TIFF *) NULL)
 {
-    ldrimage=f;
-    width   =f->width();
-    height  =f->height();
-    tif = TIFFOpen(filename, "w");
+  ldrimage = f;
+  width = f->width ();
+  height = f->height ();
+  tif = TIFFOpen (filename, "w");
 
-    if( !tif )
-        throw pfs::Exception("TIFF: could not open file for writing.");
+  if (!tif)
+    throw std::runtime_error ("TIFF: could not open file for writing.");
 
-    TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, f->width());
-    TIFFSetField (tif, TIFFTAG_IMAGELENGTH, f->height());
-    TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-    TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, EXTRASAMPLE_ASSOCALPHA);
-    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 4);
-    TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, f->width ());
+  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, f->height ());
+  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+  TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, EXTRASAMPLE_ASSOCALPHA);
+  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 4);
+  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
 }
 
 //write 32 bit float Tiff from pfs::Frame
-int TiffWriter::writeFloatTiff()
-{ 
-    TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?
-    TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 32);
+int
+TiffWriter::writeFloatTiff ()
+{
+  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 32);
 
-    const float* X = Xc->getRawData();
-    const float* Y = Yc->getRawData();
-    const float* Z = Zc->getRawData();
+  const float *X = Xc->getRawData ();
+  const float *Y = Yc->getRawData ();
+  const float *Z = Zc->getRawData ();
 
-    tsize_t strip_size = TIFFStripSize (tif);
-    tstrip_t strips_num = TIFFNumberOfStrips (tif);
-    float* strip_buf = (float*)_TIFFmalloc(strip_size); //enough space for a strip (row)
-    if (!strip_buf)
-        throw pfs::Exception("TIFF: error allocating buffer.");
-
-    emit maximumValue( strips_num );  // for QProgressDialog
-
-    for (unsigned int s = 0; s < strips_num; s++)
+  tsize_t strip_size = TIFFStripSize (tif);
+  tstrip_t strips_num = TIFFNumberOfStrips (tif);
+  float *strip_buf = (float *) _TIFFmalloc (strip_size);	//enough space for a strip (row)
+  if (!strip_buf) 
     {
-        for (unsigned int col = 0; col < width; col++)
-        {
-            strip_buf[3*col + 0] = X[s*width + col]; //(*X)(col,s);
-            strip_buf[3*col + 1] = Y[s*width + col]; //(*Y)(col,s);
-            strip_buf[3*col + 2] = Z[s*width + col]; //(*Z)(col,s);
-        }
-        if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-        {
-            qDebug("error writing strip");
-            return -1;
-        }
-        else
-        {
-            emit nextstep( s );  // for QProgressDialog
-        }
+    TIFFClose (tif);
+    throw std::runtime_error ("TIFF: error allocating buffer.");
     }
-    _TIFFfree(strip_buf);
-    TIFFClose(tif);
-    return 0;
+
+  emit maximumValue (strips_num);	// for QProgressDialog
+
+  for (unsigned int s = 0; s < strips_num; s++)
+    {
+      for (unsigned int col = 0; col < width; col++)
+	{
+	  strip_buf[3 * col + 0] = X[s * width + col];	//(*X)(col,s);
+	  strip_buf[3 * col + 1] = Y[s * width + col];	//(*Y)(col,s);
+	  strip_buf[3 * col + 2] = Z[s * width + col];	//(*Z)(col,s);
+	}
+      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
+	{
+	  qDebug ("error writing strip");
+      TIFFClose (tif);
+	  return -1;
+	}
+      else
+	{
+	  emit nextstep (s);	// for QProgressDialog
+	}
+    }
+  _TIFFfree (strip_buf);
+  TIFFClose (tif);
+  return 0;
 }
 
 //write LogLUv Tiff from pfs::Frame
-int TiffWriter::writeLogLuvTiff()
-{ 
-    TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_SGILOG);
-    TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_LOGLUV);
-    TIFFSetField(tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
-    TIFFSetField(tif, TIFFTAG_STONITS, 1.);   /* not known */
+int
+TiffWriter::writeLogLuvTiff ()
+{
+  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_SGILOG);
+  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_LOGLUV);
+  TIFFSetField (tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
+  TIFFSetField (tif, TIFFTAG_STONITS, 1.);	/* not known */
 
-    const float* X = Xc->getRawData();
-    const float* Y = Yc->getRawData();
-    const float* Z = Zc->getRawData();
+  const float *X = Xc->getRawData ();
+  const float *Y = Yc->getRawData ();
+  const float *Z = Zc->getRawData ();
 
-    tsize_t strip_size = TIFFStripSize (tif);
-    tstrip_t strips_num = TIFFNumberOfStrips (tif);
-    float* strip_buf=(float*)_TIFFmalloc(strip_size); //enough space for a strip
-    if (!strip_buf)
-        throw pfs::Exception("TIFF: error allocating buffer.");
-
-    emit maximumValue( strips_num ); // for QProgressDialog
-
-    for (unsigned int s=0; s<strips_num; s++)
+  tsize_t strip_size = TIFFStripSize (tif);
+  tstrip_t strips_num = TIFFNumberOfStrips (tif);
+  float *strip_buf = (float *) _TIFFmalloc (strip_size);	//enough space for a strip
+  if (!strip_buf)
     {
-        for (unsigned int col=0; col<width; col++)
-        {
-            strip_buf[3*col + 0] = X[s*width + col]; //(*X)(col,s);
-            strip_buf[3*col + 1] = Y[s*width + col]; //(*Y)(col,s);
-            strip_buf[3*col + 2] = Z[s*width + col]; //(*Z)(col,s);
-        }
-        if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-        {
-            qDebug("error writing strip");
-            return -1;
-        }
-        else
-        {
-            emit nextstep( s ); // for QProgressDialog
-        }
+    TIFFClose (tif);
+    throw std::runtime_error ("TIFF: error allocating buffer.");
     }
 
-    _TIFFfree(strip_buf);
-    TIFFClose(tif);
-    return 0;
+  emit maximumValue (strips_num);	// for QProgressDialog
+
+  for (unsigned int s = 0; s < strips_num; s++)
+    {
+      for (unsigned int col = 0; col < width; col++)
+	{
+	  strip_buf[3 * col + 0] = X[s * width + col];	//(*X)(col,s);
+	  strip_buf[3 * col + 1] = Y[s * width + col];	//(*Y)(col,s);
+	  strip_buf[3 * col + 2] = Z[s * width + col];	//(*Z)(col,s);
+	}
+      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
+	{
+	  qDebug ("error writing strip");
+      TIFFClose (tif);
+	  return -1;
+	}
+      else
+	{
+	  emit nextstep (s);	// for QProgressDialog
+	}
+    }
+
+  _TIFFfree (strip_buf);
+  TIFFClose (tif);
+  return 0;
 }
 
-int TiffWriter::write8bitTiff()
+int
+TiffWriter::write8bitTiff ()
 {
-    if (ldrimage == NULL)
-        throw pfs::Exception("TIFF: QImage was not set correctly");
+  if (ldrimage == NULL)
+    throw std::runtime_error ("TIFF: QImage was not set correctly");
 
-	cmsHPROFILE hsRGB;
-	LPBYTE EmbedBuffer;
-	size_t profile_size = 0;	
+  cmsHPROFILE hsRGB;
+  LPBYTE EmbedBuffer;
+  size_t profile_size = 0;
 
-	hsRGB = cmsCreate_sRGBProfile();
-	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size); // get the size
+  hsRGB = cmsCreate_sRGBProfile ();
+  _cmsSaveProfileToMem (hsRGB, NULL, &profile_size);	// get the size
 
-	EmbedBuffer = (LPBYTE) _cmsMalloc(profile_size);
+  EmbedBuffer = (LPBYTE) _cmsMalloc (profile_size);
 
-	_cmsSaveProfileToMem(hsRGB, EmbedBuffer, &profile_size);
+  _cmsSaveProfileToMem (hsRGB, EmbedBuffer, &profile_size);
 
-	TIFFSetField(tif, TIFFTAG_ICCPROFILE, profile_size, EmbedBuffer);
-	free(EmbedBuffer);
+  TIFFSetField (tif, TIFFTAG_ICCPROFILE, profile_size, EmbedBuffer);
+  free (EmbedBuffer);
 
-    TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?
-    TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 8);
+  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 8);
 
-    tsize_t strip_size = TIFFStripSize (tif);
-    tstrip_t strips_num = TIFFNumberOfStrips (tif);
+  tsize_t strip_size = TIFFStripSize (tif);
+  tstrip_t strips_num = TIFFNumberOfStrips (tif);
 
-    char* strip_buf=(char*)_TIFFmalloc(strip_size); //enough space for a strip
-    if (!strip_buf)
-        throw pfs::Exception("TIFF: error allocating buffer");
-
-    QRgb *ldrpixels = reinterpret_cast<QRgb*>(ldrimage->bits());
-
-    emit maximumValue( strips_num ); // for QProgressDialog
-    for (unsigned int s=0; s<strips_num; s++)
+  char *strip_buf = (char *) _TIFFmalloc (strip_size);	//enough space for a strip
+  if (!strip_buf) 
     {
-        for (unsigned int col=0; col<width; col++)
-        {
-            //qRed  (*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
-            strip_buf[4*col+0] = qRed(ldrpixels[width*s + col]);
-            //qGreen(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
-            strip_buf[4*col+1] = qGreen(ldrpixels[width*s + col]);
-            //qBlue (*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
-            strip_buf[4*col+2] = qBlue(ldrpixels[width*s + col]);
-            //qAlpha(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
-            strip_buf[4*col+3] = qAlpha(ldrpixels[width*s + col]);
-        }
-        if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-        {
-            qDebug("error writing strip");
-            return -1;
-        }
-        else
-        {
-            emit nextstep( s ); // for QProgressDialog
-        }
+    TIFFClose (tif);
+    throw std::runtime_error ("TIFF: error allocating buffer");
     }
-    _TIFFfree(strip_buf);
-    TIFFClose(tif);
-    return 0;
+
+  QRgb *ldrpixels = reinterpret_cast < QRgb * >(ldrimage->bits ());
+
+  emit maximumValue (strips_num);	// for QProgressDialog
+  for (unsigned int s = 0; s < strips_num; s++)
+    {
+      for (unsigned int col = 0; col < width; col++)
+	{
+	  //qRed  (*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
+	  strip_buf[4 * col + 0] = qRed (ldrpixels[width * s + col]);
+	  //qGreen(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
+	  strip_buf[4 * col + 1] = qGreen (ldrpixels[width * s + col]);
+	  //qBlue (*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
+	  strip_buf[4 * col + 2] = qBlue (ldrpixels[width * s + col]);
+	  //qAlpha(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
+	  strip_buf[4 * col + 3] = qAlpha (ldrpixels[width * s + col]);
+	}
+      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
+	{
+	  qDebug ("error writing strip");
+      TIFFClose (tif);
+	  return -1;
+	}
+      else
+	{
+	  emit nextstep (s);	// for QProgressDialog
+	}
+    }
+  _TIFFfree (strip_buf);
+  TIFFClose (tif);
+  return 0;
 }
 
-int TiffWriter::write16bitTiff()
+int
+TiffWriter::write16bitTiff ()
 {
-    if (pixmap == NULL)
-        throw pfs::Exception("TIFF: 16 bits pixmap was not set correctly");
-
-	cmsHPROFILE hsRGB;
-	LPBYTE EmbedBuffer;
-	size_t profile_size = 0;	
-
-	hsRGB = cmsCreate_sRGBProfile();
-	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size); // get the size
-
-	EmbedBuffer = (LPBYTE) _cmsMalloc(profile_size);
-
-	_cmsSaveProfileToMem(hsRGB, EmbedBuffer, &profile_size);
-
-	TIFFSetField(tif, TIFFTAG_ICCPROFILE, profile_size, EmbedBuffer);
-	free(EmbedBuffer);
-
-    TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?
-    TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 16);
-
-    tsize_t strip_size = TIFFStripSize (tif);
-    tstrip_t strips_num = TIFFNumberOfStrips (tif);
-
-    quint16* strip_buf = (quint16*)_TIFFmalloc(strip_size); //enough space for a strip
-    if (!strip_buf)
-        throw pfs::Exception("TIFF: error allocating buffer");
-
-    emit maximumValue( strips_num ); // for QProgressDialog
-
-    for (unsigned int s = 0; s < strips_num; s++)
+  if (pixmap == NULL)
     {
-        for (unsigned int col = 0; col < width; col++)
-        {
-            strip_buf[3*col] = pixmap[3*(width*s + col)];
-            strip_buf[3*col + 1] = pixmap[3*(width*s + col) + 1];
-            strip_buf[3*col + 2] = pixmap[3*(width*s + col) + 2];
-        }
-        if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-        {
-            qDebug("error writing strip");
-            return -1;
-        }
-        else
-        {
-            emit nextstep( s ); // for QProgressDialog
-        }
+    TIFFClose (tif);
+    throw std::runtime_error ("TIFF: 16 bits pixmap was not set correctly");
     }
-    _TIFFfree(strip_buf);
-    TIFFClose(tif);
-    return 0;
+
+  cmsHPROFILE hsRGB;
+  LPBYTE EmbedBuffer;
+  size_t profile_size = 0;
+
+  hsRGB = cmsCreate_sRGBProfile ();
+  _cmsSaveProfileToMem (hsRGB, NULL, &profile_size);	// get the size
+
+  EmbedBuffer = (LPBYTE) _cmsMalloc (profile_size);
+
+  _cmsSaveProfileToMem (hsRGB, EmbedBuffer, &profile_size);
+
+  TIFFSetField (tif, TIFFTAG_ICCPROFILE, profile_size, EmbedBuffer);
+  free (EmbedBuffer);
+
+  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 16);
+
+  tsize_t strip_size = TIFFStripSize (tif);
+  tstrip_t strips_num = TIFFNumberOfStrips (tif);
+
+  quint16 *strip_buf = (quint16 *) _TIFFmalloc (strip_size);	//enough space for a strip
+  if (!strip_buf)
+    {
+    TIFFClose (tif);
+    throw std::runtime_error ("TIFF: error allocating buffer");
+    }
+
+  emit maximumValue (strips_num);	// for QProgressDialog
+
+  for (unsigned int s = 0; s < strips_num; s++)
+    {
+      for (unsigned int col = 0; col < width; col++)
+	{
+	  strip_buf[3 * col] = pixmap[3 * (width * s + col)];
+	  strip_buf[3 * col + 1] = pixmap[3 * (width * s + col) + 1];
+	  strip_buf[3 * col + 2] = pixmap[3 * (width * s + col) + 2];
+	}
+      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
+	{
+	  qDebug ("error writing strip");
+      TIFFClose (tif);
+	  return -1;
+	}
+      else
+	{
+	  emit nextstep (s);	// for QProgressDialog
+	}
+    }
+  _TIFFfree (strip_buf);
+  TIFFClose (tif);
+  return 0;
 }
