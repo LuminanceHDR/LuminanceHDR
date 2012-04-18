@@ -55,7 +55,7 @@ bool PngWriter::writeQImageToPng()
 	cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
 	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size);			// get the size
 
-	std::vector<unsigned char> profile_buffer(profile_size);
+    std::vector<char> profile_buffer(profile_size);
 
 	_cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);	  //
 
