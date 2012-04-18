@@ -99,7 +99,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	histogram=new HistogramLDR(this);
         histogram->setData( original_ldrlist.at(1) );
 	histogram->adjustSize();
-	((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
+	//((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
+	((QGridLayout*)(groupBoxHistogram->layout()))->addWidget(histogram);
 	previewWidget->setFocus();
 
 	selectionTool = new SelectionTool(previewWidget);
