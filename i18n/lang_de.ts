@@ -87,7 +87,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2012, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -195,20 +195,8 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <translation>Ordner mit Aufnahmen der Belichtungsreihe (alphabetisch sortiert)</translation>
     </message>
     <message>
-        <source>Select &amp;Input Folder</source>
-        <translation type="obsolete">&amp;Quellordner wählen</translation>
-    </message>
-    <message>
         <source>Folder where created HDRs are saved</source>
         <translation>Ordner zum Speichern der erzeugten HDR-Bilder</translation>
-    </message>
-    <message>
-        <source>Select &amp;Output Folder</source>
-        <translation type="obsolete">&amp;Ausgabeordner wählen</translation>
-    </message>
-    <message>
-        <source>Messages</source>
-        <translation type="obsolete">Meldungen</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -221,10 +209,6 @@ In der Dokumentation findest du weitere Informationen.</translation>
     <message>
         <source>&amp;Close</source>
         <translation>S&amp;chließen</translation>
-    </message>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="obsolete">Ordner wählen</translation>
     </message>
     <message>
         <source>Started processing...</source>
@@ -264,45 +248,47 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <source>Total number of pictures must be a multiple of number of bracketed images.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anzahl der Bilder muss einem Vielfachen der Anzahl der Aufnahmen der Belichtungsreihe entsprechen.</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished">Ausgabe</translation>
+        <translation>Ausgabe</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortschritt</translation>
     </message>
     <message>
         <source>Select...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen ...</translation>
     </message>
     <message>
         <source>Input folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>Quellordner:</translation>
     </message>
     <message>
         <source>Output folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabeordner:</translation>
     </message>
     <message>
         <source>Choose a source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Quellordner wählen</translation>
     </message>
     <message>
         <source>Choose a output directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabeordner wählen</translation>
     </message>
     <message>
         <source>The chosen output directory contains HDR files. Those files might be overwritten. 
 
 Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Der gewählte Ausgabeordner enthält HDR-Dateien. Diese könnten überschrieben werden.
+
+Fortfahren?</translation>
     </message>
 </context>
 <context>
@@ -312,40 +298,12 @@ Continue?</source>
         <translation>Stapel-Dynamikkompression</translation>
     </message>
     <message>
-        <source>Add &amp;Directory</source>
-        <translation>&amp;Ordner hinzufügen</translation>
-    </message>
-    <message>
-        <source>&amp;Add Files</source>
-        <translation>Dateien &amp;hinzufügen</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Files</source>
-        <translation>Dateien &amp;entfernen</translation>
-    </message>
-    <message>
         <source>List of HDRs that will be tone mapped</source>
         <translation>Liste von HDR-Bildern, die dynamikkomprimiert werden</translation>
     </message>
     <message>
-        <source>Add D&amp;irectory</source>
-        <translation>O&amp;rdner hinzufügen</translation>
-    </message>
-    <message>
-        <source>Add Fi&amp;les</source>
-        <translation>D&amp;ateien hinzufügen</translation>
-    </message>
-    <message>
-        <source>R&amp;emove Files</source>
-        <translation type="obsolete">Dateien e&amp;ntfernen</translation>
-    </message>
-    <message>
         <source>Output</source>
         <translation>Ausgabe</translation>
-    </message>
-    <message>
-        <source>Select &amp;Output Folder...</source>
-        <translation type="obsolete">A&amp;usgabeordner wählen ...</translation>
     </message>
     <message>
         <source>&amp;Show only:</source>
@@ -368,10 +326,6 @@ Continue?</source>
         <translation>Abbre&amp;chen</translation>
     </message>
     <message>
-        <source>Saving using file format: %1, (quality - if applicable): %2</source>
-        <translation type="obsolete">Speichere im Dateiformat: %1, (Qualität - falls möglich): %2</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation>Ordner wählen</translation>
     </message>
@@ -389,39 +343,11 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Done</source>
-        <translation>&amp;Fertig</translation>
+        <translation>F&amp;ertig</translation>
     </message>
     <message>
         <source>HDR Images to Convert</source>
         <translation>Zu konvertierende HDR-Bilder</translation>
-    </message>
-    <message>
-        <source>Add all the HDRs in a directory to the list</source>
-        <translation>Alle in einem Ordner befindlichen HDR-Dateien der Liste hinzufügen</translation>
-    </message>
-    <message>
-        <source>Add single HDR files to the list</source>
-        <translation>Einzelne HDR-Dateien der Liste hinzufügen</translation>
-    </message>
-    <message>
-        <source>Remove single HDR files to the list</source>
-        <translation>Einzelne HDR-Dateien aus der Liste entfernen</translation>
-    </message>
-    <message>
-        <source>Tone Mapping Settings Files</source>
-        <translation type="obsolete">Dateien mit Dynamikkompressionsvorgaben</translation>
-    </message>
-    <message>
-        <source>Add all the Tone Mapping Setting files in a directory to the list</source>
-        <translation>Alle in einem Ordner befindlichen Dateien mit Dynamikkompressionsvorgaben der Liste hinzufügen</translation>
-    </message>
-    <message>
-        <source>Add single Tone Mapping Setting files to the list</source>
-        <translation>Einzelne Datei mit Dynamikkompressionsvorgaben der Liste hinzufügen</translation>
-    </message>
-    <message>
-        <source>Remove single Tone Mapping Setting files to the list</source>
-        <translation>Einzelne Datei mit Dynamikkompressionsvorgaben aus der Liste entfernen</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
@@ -493,39 +419,91 @@ Continue?</source>
     </message>
     <message>
         <source>Tone Mapping Settings</source>
-        <translation type="unfinished">Dynamikkompressionsvorgaben</translation>
-    </message>
-    <message>
-        <source>R&amp;emove</source>
-        <translation type="unfinished"></translation>
+        <translation>Dynamikkompressionsvorgaben</translation>
     </message>
     <message>
         <source> %</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Output Image Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualität des Ausgabebildes</translation>
     </message>
     <message>
         <source>Saving using file format: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>From Data&amp;base</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere im Dateiformat: %1</translation>
     </message>
     <message>
         <source>Ouput Image Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite des Ausgabebildes:</translation>
     </message>
     <message>
         <source>Output Folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabeordner:</translation>
     </message>
     <message>
         <source>Selec&amp;t...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wählen ...</translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+D)</source>
+        <translation>Ordner hinzufügen (Alt+D)</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+F)</source>
+        <translation>Dateien hinzufügen (Alt+F)</translation>
+    </message>
+    <message>
+        <source>Alt+F</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Remove Files (Alt+R)</source>
+        <translation>Dateien entfernen (Alt+R)</translation>
+    </message>
+    <message>
+        <source>Alt+R</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+I)</source>
+        <translation>Ordner hinzufügen (Alt+I)</translation>
+    </message>
+    <message>
+        <source>Alt+I</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+L)</source>
+        <translation>Dateien hinzufügen (Alt+L)</translation>
+    </message>
+    <message>
+        <source>Alt+L</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Add from Database (Alt+B)</source>
+        <translation>Aus Datenbank hinzufügen (Alt+B)</translation>
+    </message>
+    <message>
+        <source>Alt+B</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Remove Settings (Alt+M)</source>
+        <translation>Einstellungen entfernen (Alt+M)</translation>
+    </message>
+    <message>
+        <source>Alt+M</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -769,7 +747,7 @@ Continue?</source>
     </message>
     <message>
         <source>Failed loading images</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder konnten nicht geladen werden</translation>
     </message>
 </context>
 <context>
@@ -1108,6 +1086,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wenn das gleiche Bild in beiden Listen ausgewählt ist, wird in diesem Bereich das Bild selbst dargestellt.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Durch Klicken und Halten der linken Maustaste kann eine Fläche zum Zuschneiden festgelegt werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>Histogram</source>
+        <translation>Histogramm</translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1144,6 +1126,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ERROR: Failed Loading file: %1</source>
         <translation>FEHLER: Datei konnte nicht geladen werden: %1</translation>
+    </message>
+    <message>
+        <source>ERROR loading %1</source>
+        <translation>FEHLER beim Laden von %1</translation>
     </message>
 </context>
 <context>
@@ -1856,26 +1842,6 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
         <source>LDR image [%1 x %2]</source>
         <translation>LDR-Bild [%1 x %2]</translation>
     </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I cannot open monitor profile. Please select a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I cannot open printer profile. Please select a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please select a printer profile .</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelsDialog</name>
@@ -2177,26 +2143,6 @@ p, li { white-space: pre-wrap; }
         <translation>Aus&amp;wahl aufheben</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translation type="obsolete">Nächstes</translation>
-    </message>
-    <message>
-        <source>Next Image</source>
-        <translation type="obsolete">Nächstes Bild</translation>
-    </message>
-    <message>
-        <source>Show Next Image</source>
-        <translation type="obsolete">Nächstes Bild anzeigen</translation>
-    </message>
-    <message>
-        <source>Ctrl+PgDown</source>
-        <translation type="obsolete">Strg+Bild ab</translation>
-    </message>
-    <message>
-        <source>Ctrl+PgUp</source>
-        <translation type="obsolete">Strg+Bild auf</translation>
-    </message>
-    <message>
         <source>Lock Viewers</source>
         <translation>Ansicht angleichen</translation>
     </message>
@@ -2219,18 +2165,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Ctrl+H</source>
         <translation>Strg+H</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="obsolete">Vorheriges</translation>
-    </message>
-    <message>
-        <source>Previous Image</source>
-        <translation type="obsolete">Vorheriges Bild</translation>
-    </message>
-    <message>
-        <source>Show Previous Image</source>
-        <translation type="obsolete">Vorheriges Bild anzeigen</translation>
     </message>
     <message>
         <source>Lock the images for sync view</source>
@@ -2566,18 +2500,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Soft Proofing</source>
-        <translation type="unfinished"></translation>
+        <translation>Softproofing</translation>
     </message>
     <message>
         <source>Gamut Check</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ParametersDialog</name>
-    <message>
-        <source>Saved Parameters</source>
-        <translation type="obsolete">Gespeicherte Parameter</translation>
+        <translation>Farbumfang-Prüfung</translation>
     </message>
 </context>
 <context>
@@ -2691,10 +2618,6 @@ p, li { white-space: pre-wrap; }
         <translation>Negative Werte anzeigen als:</translation>
     </message>
     <message>
-        <source>C&amp;hoose</source>
-        <translation type="obsolete">Wä&amp;hlen</translation>
-    </message>
-    <message>
         <source>Which LDR image format to save to</source>
         <translation>Auswahl des zu speichernden LDR-Bildformats</translation>
     </message>
@@ -2775,10 +2698,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Batch Tonemapping Number of Threads</source>
         <translation>Anzahl Threads für Stapel-Dynamikkompression</translation>
-    </message>
-    <message>
-        <source>Batch Tonemapping Default Output Quality</source>
-        <translation type="obsolete">Standardausgabequalität für Stapel-Dynamikkompression</translation>
     </message>
     <message>
         <source>General</source>
@@ -3200,40 +3119,6 @@ p, li { white-space: pre-wrap; }
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Workspace&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the output color space used to decode RAW data.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Raw (linear)&lt;/span&gt;: in this mode, no output color space is used during RAW decoding.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;sRGB&lt;/span&gt;: this is a RGB color space, created cooperatively by Hewlett-Packard and Microsoft. It is the best choice for images destined for the Web and portrait photography.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adobe RGB&lt;/span&gt;: this color space is an extended RGB color space, developed by Adobe. It is used for photography applications such as advertising and fine art.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wide Gamut&lt;/span&gt;: this color space is an expanded version of the Adobe RGB color space.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro-Photo&lt;/span&gt;: this color space is an RGB color space, developed by Kodak, that offers an especially large gamut designed for use with photographic outputs in mind.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom output color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Farbraum&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Auswahl des Ausgabefarbraums zur Dekodierung der RAW-Daten.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;RAW (linear)&lt;/span&gt;: zur RAW-Dekodierung wird kein Ausgabefarbprofil verwendet.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;sRGB&lt;/span&gt;: ein von Hewlett-Packard und Microsoft gemeinsam entwickelter RGB-Farbraum, der für Web und Portraitfotografie am besten geeignet ist.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adobe RGB&lt;/span&gt;: ein von Adobe entwickelter erweiterter RGB-Farbraum für fotografische Anwendungen wie Werbung und Kunst.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Breiter Gamut&lt;/span&gt;: eine Erweiterung des Adobe-RGB-Farbraums.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ProPhoto&lt;/span&gt;: ein von Kodak entwickelter RGB-Farbraum mit besonders großem Gamut, der für fotografische Ausgaben gedacht ist.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Eigenes&lt;/span&gt;: ein eigenes Ausgabefarbprofil wird verwendet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Wide Gamut</source>
-        <translation type="obsolete">Breiter Gamut</translation>
-    </message>
-    <message>
-        <source>Pro Photo</source>
-        <translation type="obsolete">ProPhoto</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3255,16 +3140,8 @@ p, li { white-space: pre-wrap; }
         <translation>Blauanteil</translation>
     </message>
     <message>
-        <source>Camera Profile</source>
-        <translation type="obsolete">Kameraprofil</translation>
-    </message>
-    <message>
         <source>Camera profile</source>
         <translation>Kameraprofil</translation>
-    </message>
-    <message>
-        <source>Color Space</source>
-        <translation type="obsolete">Farbraum</translation>
     </message>
     <message>
         <source>align_image_stack command line arguments</source>
@@ -3288,35 +3165,39 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color Management</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbverwaltung</translation>
     </message>
     <message>
         <source>Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirm</translation>
     </message>
     <message>
         <source>Monitor Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmprofil</translation>
     </message>
     <message>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucker</translation>
     </message>
     <message>
         <source>Printer profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Druckerprofil</translation>
     </message>
     <message>
         <source>Open ICC Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>ICC-Profil öffnen</translation>
     </message>
     <message>
         <source>Color profile (*.icc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbprofil (*.icc)</translation>
     </message>
     <message>
         <source>&amp;Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Durchsuchen ...</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Durchsuchen ...</translation>
     </message>
 </context>
 <context>
@@ -3529,19 +3410,43 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung</translation>
     </message>
     <message>
-        <source>I cannot perform the color transform.</source>
-        <translation type="unfinished"></translation>
+        <source>Error Opening RAW File</source>
+        <translation>Fehler beim Laden der RAW-Datei</translation>
     </message>
     <message>
-        <source>I cannot open camera profile. Please select a different one.</source>
-        <translation type="unfinished"></translation>
+        <source>Error Unpacking RAW File</source>
+        <translation>Fehler beim Entpacken der RAW-Datei</translation>
     </message>
     <message>
-        <source>I cannot perform the color transform. Please select a different camera profile.</source>
-        <translation type="unfinished"></translation>
+        <source>Error Processing RAW File</source>
+        <translation>Fehler beim Verarbeiten der RAW-Datei</translation>
+    </message>
+    <message>
+        <source>Memory Error in processing RAW File</source>
+        <translation>Speicherfehler beim Verarbeiten der RAW-Datei</translation>
+    </message>
+    <message>
+        <source>Error Creating PFS Frame</source>
+        <translation>Fehler beim Erzeugen des PFS-Frames</translation>
+    </message>
+    <message>
+        <source>I cannot open monitor profile. Please select a different one.</source>
+        <translation>Bildschirmprofil konnte nicht geöffnet werden. Bitte anderes wählen.</translation>
+    </message>
+    <message>
+        <source>I cannot open printer profile. Please select a different one.</source>
+        <translation>Druckerprofil konnte nicht geöffnet werden. Bitte anderes wählen.</translation>
+    </message>
+    <message>
+        <source>Please select a printer profile .</source>
+        <translation>Bitte ein Druckerprofil wählen.</translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
+        <translation>Farbraumkonvertierung konnte nicht durchgeführt werden. Bitte anderes Bildschirmprofil wählen.</translation>
     </message>
 </context>
 <context>
@@ -3596,277 +3501,154 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>SavedParameters</name>
-    <message>
-        <source>Simple</source>
-        <translation type="obsolete">Einfach</translation>
-    </message>
-    <message>
-        <source>Local Contrast Threshold</source>
-        <translation type="obsolete">Schwellenwert für lokalen Kontrast</translation>
-    </message>
-    <message>
-        <source>Pre-gamma</source>
-        <translation type="obsolete">Pre-Gamma</translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="obsolete">Kommentar</translation>
-    </message>
-    <message>
-        <source>Base Contrast</source>
-        <translation type="obsolete">Basiskontrast</translation>
-    </message>
-    <message>
-        <source>Color Saturation</source>
-        <translation type="obsolete">Farbsättigung</translation>
-    </message>
-    <message>
-        <source>Noise Reduction</source>
-        <translation type="obsolete">Rauschunterdrückung</translation>
-    </message>
-    <message>
-        <source>Old Fattal</source>
-        <translation type="obsolete">altes Fattal</translation>
-    </message>
-    <message>
-        <source>Contrast Equalization</source>
-        <translation type="obsolete">Kontrastausgleich</translation>
-    </message>
-    <message>
-        <source>Contrast Factor</source>
-        <translation type="obsolete">Kontrastfaktor</translation>
-    </message>
-    <message>
-        <source>Saturation Factor</source>
-        <translation type="obsolete">Sättigungsfaktor</translation>
-    </message>
-    <message>
-        <source>Detail Factor</source>
-        <translation type="obsolete">Detailfaktor</translation>
-    </message>
-    <message>
-        <source>Contrast Enhancement</source>
-        <translation type="obsolete">Kontrasterhöhung</translation>
-    </message>
-    <message>
-        <source>Luminance Level</source>
-        <translation type="obsolete">Helligkeit</translation>
-    </message>
-    <message>
-        <source>Manual Luminance Level</source>
-        <translation type="obsolete">Manuelle Helligkeit</translation>
-    </message>
-    <message>
-        <source>Cone and Rod based on Luminance</source>
-        <translation type="obsolete">Zapfen und Stäbchen basierend auf Helligkeit</translation>
-    </message>
-    <message>
-        <source>Local Tonemapping</source>
-        <translation type="obsolete">Lokale Dynamikkompression</translation>
-    </message>
-    <message>
-        <source>Cone Level</source>
-        <translation type="obsolete">Zapfen-Level</translation>
-    </message>
-    <message>
-        <source>Rod Level</source>
-        <translation type="obsolete">Stäbchen-Level</translation>
-    </message>
-    <message>
-        <source>Multiplier</source>
-        <translation type="obsolete">Multiplikator</translation>
-    </message>
-    <message>
-        <source>Use Scales</source>
-        <translation type="obsolete">Skalen verwenden</translation>
-    </message>
-    <message>
-        <source>Key Value</source>
-        <translation type="obsolete">Hauptwert</translation>
-    </message>
-    <message>
-        <source>Phi Value</source>
-        <translation type="obsolete">Phi-Wert</translation>
-    </message>
-    <message>
-        <source>Range</source>
-        <translation type="obsolete">Bereich</translation>
-    </message>
-    <message>
-        <source>Lower Scale</source>
-        <translation type="obsolete">Untere Skala</translation>
-    </message>
-    <message>
-        <source>Upper Scale</source>
-        <translation type="obsolete">Obere Skala</translation>
-    </message>
-    <message>
-        <source>Brightness</source>
-        <translation type="obsolete">Helligkeit</translation>
-    </message>
-    <message>
-        <source>Chromatic Adaptation</source>
-        <translation type="obsolete">Chromatische Anpassung</translation>
-    </message>
-    <message>
-        <source>Light Adaptation</source>
-        <translation type="obsolete">Lichtanpassung</translation>
-    </message>
-    <message>
-        <source>TM Operator</source>
-        <translation type="obsolete">Dynamikkompressionsoperator</translation>
-    </message>
-</context>
-<context>
     <name>SavedParametersDialog</name>
     <message>
         <source>Saved Parameters</source>
-        <translation type="unfinished">Gespeicherte Parameter</translation>
+        <translation>Gespeicherte Parameter</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished">Kommentar</translation>
+        <translation>Kommentar</translation>
     </message>
     <message>
         <source>TM Operator</source>
-        <translation type="unfinished">Dynamikkompressionsoperator</translation>
+        <translation>Dynamikkompressionsoperator</translation>
     </message>
     <message>
         <source>Simple</source>
-        <translation type="unfinished">Einfach</translation>
+        <translation>Einfach</translation>
     </message>
     <message>
         <source>Equation 2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Local Contrast Threshold</source>
-        <translation type="unfinished">Schwellenwert für lokalen Kontrast</translation>
+        <translation>Schwellenwert für lokalen Kontrast</translation>
     </message>
     <message>
         <source>Pre-gamma</source>
-        <translation type="unfinished">Pre-Gamma</translation>
+        <translation>Pre-Gamma</translation>
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Base Contrast</source>
-        <translation type="unfinished">Basiskontrast</translation>
+        <translation>Basiskontrast</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Farbsättigung</translation>
+        <translation>Farbsättigung</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
-        <translation type="unfinished">Rauschunterdrückung</translation>
+        <translation>Rauschunterdrückung</translation>
     </message>
     <message>
         <source>Old Fattal</source>
-        <translation type="unfinished">altes Fattal</translation>
+        <translation>Altes Fattal</translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Kontrastausgleich</translation>
+        <translation>Kontrastausgleich</translation>
     </message>
     <message>
         <source>Contrast Factor</source>
-        <translation type="unfinished">Kontrastfaktor</translation>
+        <translation>Kontrastfaktor</translation>
     </message>
     <message>
         <source>Saturation Factor</source>
-        <translation type="unfinished">Sättigungsfaktor</translation>
+        <translation>Sättigungsfaktor</translation>
     </message>
     <message>
         <source>Detail Factor</source>
-        <translation type="unfinished">Detailfaktor</translation>
+        <translation>Detailfaktor</translation>
     </message>
     <message>
         <source>Contrast Enhancement</source>
-        <translation type="unfinished">Kontrasterhöhung</translation>
+        <translation>Kontrasterhöhung</translation>
     </message>
     <message>
         <source>Luminance Level</source>
-        <translation type="unfinished">Helligkeit</translation>
+        <translation>Helligkeit</translation>
     </message>
     <message>
         <source>Manual Luminance Level</source>
-        <translation type="unfinished">Manuelle Helligkeit</translation>
+        <translation>Manuelle Helligkeit</translation>
     </message>
     <message>
         <source>Cone and Rod based on Luminance</source>
-        <translation type="unfinished">Zapfen und Stäbchen basierend auf Helligkeit</translation>
+        <translation>Zapfen und Stäbchen basierend auf Helligkeit</translation>
     </message>
     <message>
         <source>Local Tonemapping</source>
-        <translation type="unfinished">Lokale Dynamikkompression</translation>
+        <translation>Lokale Dynamikkompression</translation>
     </message>
     <message>
         <source>Cone Level</source>
-        <translation type="unfinished">Zapfen-Level</translation>
+        <translation>Zapfen-Level</translation>
     </message>
     <message>
         <source>Rod Level</source>
-        <translation type="unfinished">Stäbchen-Level</translation>
+        <translation>Stäbchen-Level</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Multiplikator</translation>
+        <translation>Multiplikator</translation>
     </message>
     <message>
         <source>Use Scales</source>
-        <translation type="unfinished">Skalen verwenden</translation>
+        <translation>Skalen verwenden</translation>
     </message>
     <message>
         <source>Key Value</source>
-        <translation type="unfinished">Hauptwert</translation>
+        <translation>Hauptwert</translation>
     </message>
     <message>
         <source>Phi Value</source>
-        <translation type="unfinished">Phi-Wert</translation>
+        <translation>Phi-Wert</translation>
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Bereich</translation>
+        <translation>Bereich</translation>
     </message>
     <message>
         <source>Lower Scale</source>
-        <translation type="unfinished">Untere Skala</translation>
+        <translation>Untere Skala</translation>
     </message>
     <message>
         <source>Upper Scale</source>
-        <translation type="unfinished">Obere Skala</translation>
+        <translation>Obere Skala</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Helligkeit</translation>
+        <translation>Helligkeit</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Chromatische Anpassung</translation>
+        <translation>Chromatische Anpassung</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Lichtanpassung</translation>
+        <translation>Lichtanpassung</translation>
     </message>
 </context>
 <context>
@@ -4361,34 +4143,6 @@ Willst du ihn dennoch anwenden?</translation>
         <translation>&amp;Fertig</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;From:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Quelle:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;To:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Ziel:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Log:</source>
-        <translation>Protokoll:</translation>
-    </message>
-    <message>
         <source>Exif operations report</source>
         <translation>Bericht zur EXIF-Verarbeitung</translation>
     </message>
@@ -4431,6 +4185,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>All Supported formats</source>
         <translation>Alle unterstützten Formate</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation>Quelle</translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation>Ziel</translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation>Protokoll</translation>
     </message>
 </context>
 <context>
