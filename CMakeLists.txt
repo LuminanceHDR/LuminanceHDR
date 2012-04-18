@@ -64,9 +64,10 @@ IF(WIN32)
     SET(GSL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
     SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
     SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
-    SET(LCMS2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
-    SET(LIBJPEG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libjpeg")
-		
+    SET(LCMS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
+    SET(JPEGLIB_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libjpeg")
+    SET(LIBPNG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libpng")
+	
     # Enable multi processor compilation
     ADD_DEFINITIONS(/MP)
 
@@ -94,15 +95,13 @@ IF(WIN32)
 	
     SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
     #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
-    SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms.lib")
+    SET(LCMS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms.lib")
     #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2_dll.lib")
     ADD_DEFINITIONS(-DCMS_DLL)
     #ADD_DEFINITIONS(-DUSE_LCMS2)
     
-    # Todo check
-    SET(LIBS ${LIBS} ${LCMS2_LIBRARIES})
-    SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${LIBJPEG_INCLUDE_DIR})
-    SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${LCMS2_INCLUDE_DIR})
+    SET(LIBPNG_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libpng/libpng.lib")
+    
 ELSE()
 
     # Unix & Apple part

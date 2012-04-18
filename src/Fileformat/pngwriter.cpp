@@ -50,7 +50,7 @@ bool PngWriter::writeQImageToPng()
 	png_uint_32 width = m_out_qimage->width();
 	png_uint_32 height = m_out_qimage->height();
 
-	png_uint_32 profile_size = 0;	
+	size_t profile_size = 0;
 
 	cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
 	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size);			// get the size
@@ -175,9 +175,9 @@ bool PngWriter::writeQImageToPng()
 	if ( m_fname.isEmpty() )
 	{
 #if defined(WIN32) || defined(__APPLE__)
-		fflush(outfile.data());
-		fseek(outfile.data(), 0, SEEK_END);
-		m_filesize = ftell(outfile.data());
+		fflush(outfile());
+		fseek(outfile, 0, SEEK_END);
+		m_filesize = ftell(outfile);
 #else
 		png_uint_32 size = outbuf.size() - 1;
 		for (; size > 0; --size)
