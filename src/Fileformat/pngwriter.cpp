@@ -151,19 +151,19 @@ bool PngWriter::writeQImageToPng()
 
 	png_write_info(png_ptr, info_ptr);
 
-	png_byte *row_pointers[height];
+	std::vector<png_bytep> row_pointers(height);
 
 	for (png_uint_32 row = 0; row < height; row++)
 		row_pointers[row] = NULL;
 
 	for (png_uint_32 row = 0; row < height; row++)
-		row_pointers[row] = (png_byte *) png_malloc(png_ptr, png_get_rowbytes(png_ptr,
+		row_pointers[row] = (png_bytep) png_malloc(png_ptr, png_get_rowbytes(png_ptr,
 		 info_ptr));
 
-	for (png_uint_32 row = 0; row < height; row++)
+	for (png_uint_32 row = 0; row < height; row++) {
 		memcpy(row_pointers[row], m_out_qimage->scanLine( row ), png_get_rowbytes(png_ptr, info_ptr));
-
-	png_write_image(png_ptr, row_pointers);
+		png_write_row(png_ptr, row_pointers[row]);
+	}
 
 	png_write_end(png_ptr, info_ptr);
 
