@@ -94,6 +94,7 @@ public:
   int write16bitTiff(); //write 16bit Tiff from 16 bits pixmap
   int writeFloatTiff(); //write 32bit float Tiff from pfs::Frame
   int writeLogLuvTiff(); //write LogLuv Tiff from pfs::Frame
+  int writePFSFrame16bitTiff(); //write 16bit Tiff from pfs::Frame
 signals: //For ProgressDialog
   void maximumValue(int);
   void nextstep(int);

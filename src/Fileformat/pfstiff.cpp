@@ -1026,3 +1026,50 @@ TiffWriter::write16bitTiff ()
   TIFFClose (tif);
   return 0;
 }
+
+int
+TiffWriter::writePFSFrame16bitTiff ()
+{
+  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 16);
+
+  const float *X = Xc->getRawData ();
+  const float *Y = Yc->getRawData ();
+  const float *Z = Zc->getRawData ();
+
+  tsize_t strip_size = TIFFStripSize (tif);
+  tstrip_t strips_num = TIFFNumberOfStrips (tif);
+  quint16 *strip_buf = (quint16 *) _TIFFmalloc (strip_size);	//enough space for a strip (row)
+  if (!strip_buf) 
+    {
+    TIFFClose (tif);
+    throw std::runtime_error ("TIFF: error allocating buffer.");
+    }
+
+  emit maximumValue (strips_num);	// for QProgressDialog
+
+  for (unsigned int s = 0; s < strips_num; s++)
+    {
+      for (unsigned int col = 0; col < width; col++)
+	{
+	  strip_buf[3 * col + 0] = (qint16) X[s * width + col];	//(*X)(col,s);
+	  strip_buf[3 * col + 1] = (qint16) Y[s * width + col];	//(*Y)(col,s);
+	  strip_buf[3 * col + 2] = (qint16) Z[s * width + col];	//(*Z)(col,s);
+	}
+      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
+	{
+	  qDebug ("error writing strip");
+      TIFFClose (tif);
+	  return -1;
+	}
+      else
+	{
+	  emit nextstep (s);	// for QProgressDialog
+	}
+    }
+  _TIFFfree (strip_buf);
+  TIFFClose (tif);
+  return 0;
+}
+

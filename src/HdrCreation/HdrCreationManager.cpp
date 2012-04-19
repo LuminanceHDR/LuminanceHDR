@@ -641,3 +641,22 @@ void HdrCreationManager::readData()
 	QByteArray data = ais->readAll();
 	emit aisDataReady(data);
 }
+
+void HdrCreationManager::saveMDRs(QString filename)
+{
+	qDebug() << "HdrCreationManager::saveMDRs";
+	pfs::DOMIO pfsio;
+	int origlistsize = listmdrR.size();
+	for (int idx = 0; idx < origlistsize; idx++) {
+		QString fname = filename + QString("_%1").arg(idx) + ".tiff";
+		pfs::Frame *frame = pfsio.createFrame( m_mdrWidth, m_mdrHeight );
+		pfs::Channel *Xc, *Yc, *Zc;
+		frame->createXYZChannels( Xc, Yc, Zc );
+		Xc->setChannelData(listmdrR[idx]);	
+		Yc->setChannelData(listmdrG[idx]);	
+		Zc->setChannelData(listmdrB[idx]);	
+		TiffWriter writer(fname.toLatin1().constData(), frame);
+		writer.writePFSFrame16bitTiff();
+		pfsio.freeFrame(frame);
+	}
+}

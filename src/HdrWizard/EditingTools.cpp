@@ -44,8 +44,10 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 
 	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
 		original_ldrlist=hcm->getLDRList();
-	else
+	else {
 		original_ldrlist=hcm->getMDRList();
+		antighostToolButton->setEnabled(false);
+	}
 
 	filelist=hcm->getFileList();
 	this->hcm=hcm;
@@ -257,10 +259,13 @@ void EditingTools::crop_stack() {
 }
 
 void EditingTools::nextClicked() {
+	Next_Finishbutton->setEnabled(false);
+	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
 		hcm->applyShiftsToImageStack(HV_offsets);
 	else
 		hcm->applyShiftsToMdrImageStack(HV_offsets);
+	QApplication::restoreOverrideCursor();
 	emit accept();
 }
 
@@ -432,11 +437,17 @@ void EditingTools::saveImagesButtonClicked() {
 	luminanceOptions.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
 
 	if (test.isWritable() && test.exists() && test.isDir()) {
-		int counter=0;
-		foreach(QImage *p, original_ldrlist) {
-			TiffWriter tiffwriter( QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))), p);
-			tiffwriter.write8bitTiff();
-			counter++;
+		if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
+			int counter=0;
+			foreach(QImage *p, original_ldrlist) {
+				TiffWriter tiffwriter( QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))), p);
+				tiffwriter.write8bitTiff();
+				counter++;
+			}
+		}
+		else {
+			hcm->applyShiftsToMdrImageStack(HV_offsets);
+			hcm->saveMDRs(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
 		}
 	}
 }
