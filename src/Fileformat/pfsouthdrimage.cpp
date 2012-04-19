@@ -59,7 +59,7 @@ inline int clamp_and_offset_to_8bits(float value, const float& min, const float&
 
     value = (value - min)/(max - min);
 	
-	value = pow(value, 1.0/2.2f);
+	value = pow(value, 1.0f/2.2f);
 
     return (quint16) (value*255.f + 0.5f);
 }
