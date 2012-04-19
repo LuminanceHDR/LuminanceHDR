@@ -46,6 +46,11 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 
 	pfs::Array2D *temp = new pfs::Array2D(width, height);	
 	pfs::Array2D *out = new pfs::Array2D(width, height);	
+	
+	for (int j = 0; j < height; j++) 
+        for (int i = 0; i < width; i++) 
+			(*temp)(i, j) = 0;
+
 	// x-shift
 	for (int j = 0; j < height; j++) {
 		for (int i = 0; i < width; i++) {

@@ -313,12 +313,6 @@ int debevec_applyResponse( const float * arrayofexptime,
                     index_for_blackB=mB;
                     maxti=ti;
                 }
-				if (mR < 0)
-					mR = 0;
-				if (mG < 0)
-					mG = 0;
-				if (mB < 0)
-					mB = 0;
                 float w_average=(w[mR]+w[mG]+w[mB])/3.0f;
                 sumR += w_average * Ir[mR] / float(ti);
                 divR += w_average;
