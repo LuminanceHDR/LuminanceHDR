@@ -46,7 +46,7 @@ const config_triple predef_confs[6]= {
 class HdrCreationManager : public QObject {
 Q_OBJECT
 public:
-	HdrCreationManager();
+	HdrCreationManager(bool = false);
 	~HdrCreationManager();
 
     void setConfig(config_triple &);
@@ -104,7 +104,7 @@ signals:
 
 	void fileLoaded(int index, QString fname, float expotime);
 
-	void finishedAligning();
+	void finishedAligning(int);
 	void expotimeValueChanged(float,int);
 	void ais_failed(QProcess::ProcessError);
 	void aisDataReady(QByteArray data);
@@ -113,6 +113,7 @@ signals:
 	void nextstep(int);
 
 	void processed();
+	void mdrSaved();
 
 private:
 	//List of input files (absolute pathnames)
@@ -157,9 +158,12 @@ private:
 	bool mdrsHaveSameSize(int,int);
 
 	int m_mdrWidth, m_mdrHeight;
+	
+	bool fromCommandLine;
 
 private slots:
 	void ais_finished(int,QProcess::ExitStatus);
+	void ais_failed_slot(QProcess::ProcessError);
 	void ldrReady(    QImage *, int, float, QString, bool);
 	void mdrReady(pfs::Frame *, int, float, QString);
 	void loadFailed(QString fname, int index);

@@ -152,7 +152,7 @@ void HdrWizard::setupConnections()
 	connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
 	connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
 	connect(hdrCreationManager,SIGNAL(expotimeValueChanged(float,int)),this, SLOT(updateGraphicalEVvalue(float,int)));
-	connect(hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(finishedAligning()));
+	connect(hdrCreationManager, SIGNAL(finishedAligning(int)), this, SLOT(finishedAligning(int)));
 	connect(hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 	connect(hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
 
@@ -366,8 +366,10 @@ void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table) {
 	}
 }
 
-void HdrWizard::finishedAligning() {
+void HdrWizard::finishedAligning(int exitcode) {
 	QApplication::restoreOverrideCursor();
+	if (exitcode != 0)
+		QMessageBox::warning(this,tr("Error..."),tr("align_image_stack failed to align images."));
 	m_Ui->NextFinishButton->setEnabled(true);
 	m_Ui->pagestack->setCurrentIndex(2);
 	m_Ui->progressBar->hide();

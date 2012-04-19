@@ -84,7 +84,7 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 	return out;
 }
 
-HdrCreationManager::HdrCreationManager(): m_shift(0) {
+HdrCreationManager::HdrCreationManager(bool fromCommandLine): m_shift(0), fromCommandLine(fromCommandLine) {
 	ais = NULL;
 	chosen_config = predef_confs[0];
 	inputType = UNKNOWN_INPUT_TYPE;
@@ -296,13 +296,14 @@ bool HdrCreationManager::mdrsHaveSameSize(int currentWidth, int currentHeight) {
 
 void HdrCreationManager::align_with_mtb() {
 	mtb_alignment(ldrImagesList,tiffLdrList);
-	emit finishedAligning();
+	emit finishedAligning(0);
 }
 
 void HdrCreationManager::align_with_ais() {
 	ais = new QProcess(this);
 	if (ais == NULL) //TODO: exit gracefully
 		exit(1);
+	if (!fromCommandLine)
 		ais->setWorkingDirectory(m_luminance_options.getTempDir());
 	QStringList env = QProcess::systemEnvironment();
 	#ifdef WIN32
@@ -314,6 +315,7 @@ void HdrCreationManager::align_with_ais() {
 	ais->setEnvironment(env);
 	connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
 	connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
+	connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
 	connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
 	
 	QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
@@ -330,10 +332,12 @@ void HdrCreationManager::align_with_ais() {
 	#else
 	ais->start("align_image_stack", ais_parameters );
 	#endif
+	qDebug() << "ais started";
 }
 
 void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitstatus) {
 	if (exitstatus != QProcess::NormalExit) {
+		qDebug() << "ais failed";
 		//emit ais_failed(QProcess::Crashed);
 		return;
 	}
@@ -343,7 +347,11 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 		clearlists(false);
 		for (int i = 0; i < fileList.size(); i++) {
 			//align_image_stack can only output tiff files
-			QString filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+			QString filename;
+			if (!fromCommandLine)
+				filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+			else
+				filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
 			QByteArray fname = QFile::encodeName(filename);
 			//qDebug("HCM: Loading back file name=%s", fname);
 			TiffReader reader(fname, "", false);
@@ -373,9 +381,18 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 			qDebug() << "void HdrCreationManager::ais_finished: remove " << fname;
 			QFile::remove(fname);
 		}
-				QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
-		emit finishedAligning();
+		QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
+		emit finishedAligning(exitcode);
 	}
+	else {
+		qDebug() << "align_image_stack exited with exit code " << exitcode;
+		emit finishedAligning(exitcode);
+	}
+}
+
+void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
+{
+	qDebug() <<	"align_image_stack failed";
 }
 
 void HdrCreationManager::removeTempFiles()
@@ -658,4 +675,5 @@ void HdrCreationManager::saveMDRs(QString filename)
 		TiffWriter writer(fname.toLatin1().constData(), frame);
 		writer.writePFSFrame16bitTiff();
 	}
+	emit mdrSaved();
 }

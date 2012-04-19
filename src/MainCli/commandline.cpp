@@ -451,9 +451,9 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
             printIfVerbose(QObject::tr("Using %1 threads.").arg(luminance_options.getNumThreads()), verbose);
         }
 
-        hdrCreationManager.reset( new HdrCreationManager() );
+        hdrCreationManager.reset( new HdrCreationManager(true) );
         connect(hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
-        connect(hdrCreationManager.data(), SIGNAL(finishedAligning()), this, SLOT(createHDR()));
+        connect(hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(createHDR(int)));
         connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 		connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
         hdrCreationManager->setConfig(hdrcreationconfig);
@@ -502,7 +502,7 @@ void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLac
     }
     else if (alignMode == NO_ALIGN)
     {
-        createHDR();
+        createHDR(0);
     }
 }
 
@@ -511,8 +511,10 @@ void CommandLineInterfaceManager::ais_failed(QProcess::ProcessError)
     printErrorAndExit( tr("Failed executing align_image_stack"));
 }
 
-void CommandLineInterfaceManager::createHDR()
+void CommandLineInterfaceManager::createHDR(int errorcode)
 {
+	if (errorcode != 0)
+		printIfVerbose( tr("Failed aligning images.") , verbose);
     hdrCreationManager->removeTempFiles();
 
     printIfVerbose( tr("Creating (in memory) the HDR.") , verbose);

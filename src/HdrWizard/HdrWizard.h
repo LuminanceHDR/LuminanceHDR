@@ -87,7 +87,7 @@ private slots:
 	void errorWhileLoading(QString errormessage);
 
 	void updateGraphicalEVvalue(float expotime, int index_in_table);
-	void finishedAligning();
+	void finishedAligning(int);
 
 	void loadImagesButtonClicked();
 	void removeImageButtonClicked();

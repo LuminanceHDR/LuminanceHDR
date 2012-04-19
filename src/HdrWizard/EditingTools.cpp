@@ -153,6 +153,8 @@ void EditingTools::setupConnections() {
 	connect(selectionTool,SIGNAL(selectionReady(bool)),cropButton,SLOT(setEnabled(bool)));
 	connect(selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
 	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
+
+	connect(hcm, SIGNAL(mdrSaved()), this, SLOT(restoreSaveImagesButtonState()));
 }
 
 void EditingTools::slotCornerButtonPressed() {
@@ -425,6 +427,8 @@ void EditingTools::blendModeCBIndexChanged(int newindex) {
 }
 
 void EditingTools::saveImagesButtonClicked() {
+	saveImagesButton->setEnabled(false);
+	Next_Finishbutton->setEnabled(false);
 	QString fnameprefix=QFileDialog::getSaveFileName(
 				this,
 				tr("Choose a directory and a prefix"),
@@ -438,6 +442,7 @@ void EditingTools::saveImagesButtonClicked() {
 	luminanceOptions.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
 
 	if (test.isWritable() && test.exists() && test.isDir()) {
+		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 		if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
 			int counter=0;
 			foreach(QImage *p, original_ldrlist) {
@@ -460,3 +465,9 @@ void EditingTools::updateScrollBars(QPoint diff) {
 	scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + diff.x());
 }
 
+void EditingTools::restoreSaveImagesButtonState()
+{
+	saveImagesButton->setEnabled(true);
+	Next_Finishbutton->setEnabled(true);
+	QApplication::restoreOverrideCursor();
+}

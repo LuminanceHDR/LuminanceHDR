@@ -99,6 +99,7 @@ private slots:
 	void blendModeCBIndexChanged(int);
 	void setupConnections();
 	void updateScrollBars(QPoint diff);
+	void restoreSaveImagesButtonState();
 };
 
 
