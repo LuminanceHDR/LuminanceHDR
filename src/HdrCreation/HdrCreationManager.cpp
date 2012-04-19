@@ -3,19 +3,19 @@
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program; if not, write to the Free Software
+ *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
@@ -29,12 +29,46 @@
 #include <QApplication>
 #include <QFileInfo>
 
+#include "Libpfs/domio.h"
 #include "Fileformat/pfstiff.h"
+#include "Fileformat/pfsouthdrimage.h"
+#include "Filter/pfscut.h"
 #include "Exif/ExifOperations.h"
 #include "Threads/HdrInputLoader.h"
 #include "mtb_alignment.h"
 #include "HdrCreationManager.h"
 #include "arch/math.h"
+
+pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
+{
+	int width = in->getCols();
+	int height = in->getRows();
+
+	pfs::Array2D *temp = new pfs::Array2D(width, height);	
+	pfs::Array2D *out = new pfs::Array2D(width, height);	
+	// x-shift
+	for (int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++) {
+			if ((i+dx) < 0)
+				continue;
+			if ((i+dx) >= width)
+				break;
+			(*temp)(i, j) = (*in)(i+dx, j);
+		}
+	}
+	// y-shift
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			if ((j+dy) < 0)
+				continue;
+			if ((j+dy) >= height)
+				break;
+			(*out)(i, j) = (*temp)(i, j+dy);
+		}
+	}
+	delete temp;
+	return out;
+}
 
 HdrCreationManager::HdrCreationManager(): m_shift(0) {
 	ais = NULL;
@@ -43,7 +77,7 @@ HdrCreationManager::HdrCreationManager(): m_shift(0) {
 }
 
 void HdrCreationManager::setConfig(config_triple &c) {
-    chosen_config = c;
+	chosen_config = c;
 }
 
 void HdrCreationManager::setFileList(QStringList &l) {
@@ -130,6 +164,7 @@ void HdrCreationManager::mdrReady(pfs::Frame *newFrame, int index, float expotim
 		emit processed();
 		return;
 	}
+	mdrImagesList.append(fromHDRPFStoQImage(newFrame));
 	//newFrame is in CS_RGB but channel names remained X Y Z
 	pfs::Channel *R, *G, *B;
 	newFrame->getXYZChannels( R, G, B);
@@ -147,13 +182,14 @@ void HdrCreationManager::mdrReady(pfs::Frame *newFrame, int index, float expotim
 		emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
 		return;
 	}
-
+	m_mdrWidth = R->getWidth();
+	m_mdrHeight = R->getHeight();
 	// fill with image data
 	listmdrR[index] = R->getChannelData();
 	listmdrG[index] = G->getChannelData();
 	listmdrB[index] = B->getChannelData();
 	//perform some housekeeping
-        //pfs::DOMIO pfsio;
+		//pfs::DOMIO pfsio;
 	//pfsio.freeFrame(newFrame);
 	newResult(index,expotime,newfname);
 	//continue with the loading process
@@ -253,7 +289,7 @@ void HdrCreationManager::align_with_ais() {
 	ais = new QProcess(this);
 	if (ais == NULL) //TODO: exit gracefully
 		exit(1);
-        ais->setWorkingDirectory(m_luminance_options.getTempDir());
+		ais->setWorkingDirectory(m_luminance_options.getTempDir());
 	QStringList env = QProcess::systemEnvironment();
 	#ifdef WIN32
 	QString separator(";");
@@ -294,7 +330,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 		for (int i = 0; i < fileList.size(); i++) {
 			//align_image_stack can only output tiff files
 			QString filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-            QByteArray fname = QFile::encodeName(filename);
+			QByteArray fname = QFile::encodeName(filename);
 			//qDebug("HCM: Loading back file name=%s", fname);
 			TiffReader reader(fname, "", false);
 			//if 8bit ldr tiff
@@ -317,27 +353,27 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 				listmdrR.push_back(R->getChannelData());
 				listmdrG.push_back(G->getChannelData());
 				listmdrB.push_back(B->getChannelData());
-        			//pfs::DOMIO pfsio;
+					//pfs::DOMIO pfsio;
 				//pfsio.freeFrame(newFrame);
 			}
 			qDebug() << "void HdrCreationManager::ais_finished: remove " << fname;
 			QFile::remove(fname);
 		}
-                QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
+				QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
 		emit finishedAligning();
 	}
 }
 
 void HdrCreationManager::removeTempFiles()
 {
-    foreach (QString tempfname, filesToRemove)
-    {
-        qDebug() << "void HdrCreationManager::removeTempFiles(): " << qPrintable(tempfname);
-        if (!tempfname.isEmpty())
-        {
-            QFile::remove(tempfname);
-        }
-    }
+	foreach (QString tempfname, filesToRemove)
+	{
+		qDebug() << "void HdrCreationManager::removeTempFiles(): " << qPrintable(tempfname);
+		if (!tempfname.isEmpty())
+		{
+			QFile::remove(tempfname);
+		}
+	}
 	filesToRemove.clear();
 }
 
@@ -384,9 +420,9 @@ void HdrCreationManager::setEV(float new_ev, int image_idx) {
 pfs::Frame* HdrCreationManager::createHdr(bool ag, int iterations) {
 	//CREATE THE HDR
 	if (inputType == LDR_INPUT_TYPE)
-        return createHDR(expotimes.data(), &chosen_config, ag, iterations, true, &ldrImagesList );
+		return createHDR(expotimes.data(), &chosen_config, ag, iterations, true, &ldrImagesList );
 	else
-        return createHDR(expotimes.data(), &chosen_config, ag, iterations, false, &listmdrR, &listmdrG, &listmdrB );
+		return createHDR(expotimes.data(), &chosen_config, ag, iterations, false, &listmdrR, &listmdrG, &listmdrB );
 }
 
 HdrCreationManager::~HdrCreationManager() {
@@ -423,6 +459,10 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell) {
 			delete *itR; delete *itG; delete *itB;
 		}
 		listmdrR.clear(); listmdrG.clear(); listmdrB.clear();
+		qDeleteAll(mdrImagesList);
+		mdrImagesList.clear();
+		qDeleteAll(mdrImagesToRemove);
+		mdrImagesToRemove.clear();
 	}
 }
 
@@ -463,6 +503,24 @@ void HdrCreationManager::applyShiftsToImageStack(QList< QPair<int,int> > HV_offs
 	}
 }
 
+void HdrCreationManager::applyShiftsToMdrImageStack(QList< QPair<int,int> > HV_offsets) {
+	qDebug() << "HdrCreationManager::applyShiftsToMdrImageStack";
+	int originalsize = mdrImagesList.count();
+	for (int i = 0; i < originalsize; i++) {
+		if (HV_offsets[i].first == HV_offsets[i].second && HV_offsets[i].first == 0)
+			continue;
+		pfs::Array2D *shiftedR = shiftPfsArray2D(listmdrR[i], HV_offsets[i].first, HV_offsets[i].second);
+		pfs::Array2D *shiftedG = shiftPfsArray2D(listmdrG[i], HV_offsets[i].first, HV_offsets[i].second);
+		pfs::Array2D *shiftedB = shiftPfsArray2D(listmdrB[i], HV_offsets[i].first, HV_offsets[i].second);
+		delete listmdrR[i];
+		delete listmdrG[i];
+		delete listmdrB[i];
+		listmdrR[i] = shiftedR;
+		listmdrG[i] = shiftedG;
+		listmdrB[i] = shiftedB;
+	}
+}
+
 
 void HdrCreationManager::cropLDR (QRect ca) {
 	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
@@ -478,7 +536,35 @@ void HdrCreationManager::cropLDR (QRect ca) {
 		delete ldrImagesList.takeAt(0);
 		tiffLdrList.removeAt(0);
 		tiffLdrList.append(false);
+	}
+}
 
+void HdrCreationManager::cropMDR (QRect ca) {
+	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
+	//crop all the images
+	pfs::DOMIO pfsio;
+	int origlistsize = listmdrR.size();
+	for (int idx = 0; idx < origlistsize; idx++) {
+		pfs::Frame *frame = pfsio.createFrame( m_mdrWidth, m_mdrHeight );
+		pfs::Channel *Xc, *Yc, *Zc;
+		frame->createXYZChannels( Xc, Yc, Zc );
+		Xc->setChannelData(listmdrR[idx]);	
+		Yc->setChannelData(listmdrG[idx]);	
+		Zc->setChannelData(listmdrB[idx]);	
+		int x_ul, y_ul, x_br, y_br;
+		ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+		pfs::Frame *cropped_frame = pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
+		pfsio.freeFrame(frame);
+		pfs::Channel *R, *G, *B;
+		cropped_frame->getXYZChannels( R, G, B);
+		listmdrR[idx] = R->getChannelData();
+		listmdrG[idx] = G->getChannelData();
+		listmdrB[idx] = B->getChannelData();
+		QImage *newimage = new QImage(mdrImagesList.at(0)->copy(ca));
+		if (newimage == NULL)
+			exit(1); // TODO: exit gracefully
+		mdrImagesList.append(newimage);
+		mdrImagesToRemove.append(mdrImagesList.takeAt(0));
 	}
 }
 
@@ -494,17 +580,17 @@ void HdrCreationManager::reset() {
 
 void HdrCreationManager::remove(int index) {
 	switch (inputType) {
-		case LDR_INPUT_TYPE:
-    {
-			if (tiffLdrList[index]) {
-				delete [] ldrImagesList[index]->bits();
-			}				
-			ldrImagesList.removeAt(index);			
-			tiffLdrList.removeAt(index);
-    }
+	case LDR_INPUT_TYPE:
+	{
+		if (tiffLdrList[index]) {
+			delete [] ldrImagesList[index]->bits();
+		}				
+		ldrImagesList.removeAt(index);			
+		tiffLdrList.removeAt(index);
+	}
 		break;
-		case MDR_INPUT_TYPE:
-    {
+	case MDR_INPUT_TYPE:
+	{
 			Array2DList::iterator itR = listmdrR.begin() + index;
 			delete *itR;
 			listmdrR.erase(itR);
@@ -517,15 +603,18 @@ void HdrCreationManager::remove(int index) {
 			delete *itB;
 			listmdrB.erase(itB);
 			
+			delete mdrImagesList[index];			
+			mdrImagesList.removeAt(index);			
+			
 			QString fname = filesToRemove.at(index);
 			qDebug() << "void HdrCreationManager::remove(int index): filename " << fname;
 			QFile::remove(fname);
-    }
+	}
 		break;
-        // ...in this case, do nothing!
-    case UNKNOWN_INPUT_TYPE:
-    default:{}
-        break;
+		// ...in this case, do nothing!
+	case UNKNOWN_INPUT_TYPE:
+	default:{}
+		break;
 	}
 	fileList.removeAt(index);
 	filesToRemove.remove(index);

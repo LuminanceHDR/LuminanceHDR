@@ -109,6 +109,7 @@ namespace pfs
       virtual std::string getName() const;
 
       Array2D* getChannelData();
+      void setChannelData(Array2D *);
   };
 
   //------------------------------------------------------------------------------

@@ -545,10 +545,12 @@ void HdrWizard::currentPageChangedInto(int newindex) {
         m_Ui->NextFinishButton->setText(tr("&Finish"));
 		//when at least 2 LDR inputs perform Manual Alignment
 		int numldrs = hdrCreationManager->getLDRList().size();
-		if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
+		//if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
+		if (numldrs >= 2) {
 			this->setDisabled(true);
 			//fix for some platforms/Qt versions: makes sure LDR images have alpha channel
-			hdrCreationManager->makeSureLDRsHaveAlpha();
+			if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
+				hdrCreationManager->makeSureLDRsHaveAlpha();
 			EditingTools *editingtools = new EditingTools(hdrCreationManager);
 			if (editingtools->exec() == QDialog::Accepted) {
 				this->setDisabled(false);

@@ -1,7 +1,7 @@
 /**
- * @brief Writing QImage from PFS stream (which is a tonemapped LDR)
+ * @brief Writing QImage from PFS stream 
  *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006 Giuseppe Rota
  * Copyright (C) 2010, 2011 Davide Anastasia
@@ -30,6 +30,7 @@
  *
  */
 
+#include <QDebug>
 #include <QImage>
 #include <QSysInfo>
 #include <iostream>
@@ -57,12 +58,12 @@ inline int clamp_and_offset_to_8bits(float value, const float& min, const float&
 
     value = (value - min)/(max - min);
 
-    return (quint16)(value*255.f + 0.5f);
+    return (quint16) (value*255.f + 0.5f);
 }
 
 }
 
-QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_luminance)
+QImage* fromHDRPFStoQImage(pfs::Frame* in_frame)
 {
 #ifdef TIMER_PROFILING
     msec_timer __timer;
@@ -71,6 +72,7 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_
 
     assert( in_frame != NULL );
 
+	float min_luminance, max_luminance;
     pfs::Channel *Xc, *Yc, *Zc;
     in_frame->getXYZChannels( Xc, Yc, Zc );
     assert( Xc != NULL && Yc != NULL && Zc != NULL );
@@ -86,6 +88,35 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_
 
     QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
 
+	max_luminance = p_R[0];
+	for (int idx = 1; idx < height*width; ++idx)
+		if (p_R[idx] > max_luminance)
+			max_luminance = p_R[idx];
+
+	for (int idx = 0; idx < height*width; ++idx)
+		if (p_G[idx] > max_luminance)
+			max_luminance = p_G[idx];
+	
+	for (int idx = 0; idx < height*width; ++idx)
+		if (p_B[idx] > max_luminance)
+			max_luminance = p_B[idx];
+
+	min_luminance = p_R[0];
+	for (int idx = 1; idx < height*width; ++idx)
+		if (p_R[idx] < min_luminance)
+			min_luminance = p_R[idx];
+
+	for (int idx = 0; idx < height*width; ++idx)
+		if (p_G[idx] < min_luminance)
+			min_luminance = p_G[idx];
+	
+	for (int idx = 0; idx < height*width; ++idx)
+		if (p_B[idx] < min_luminance)
+			min_luminance = p_B[idx];
+
+	qDebug() << "max luminance: " << max_luminance;
+	qDebug() << "min luminance: " << min_luminance;
+
 #pragma omp parallel for shared(pixels)
     for (int idx = 0; idx < height*width; ++idx)
     {
@@ -96,7 +127,7 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_
 
 #ifdef TIMER_PROFILING
     __timer.stop_and_update();
-    std::cout << "fromLDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
+    std::cout << "fromHDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
 #endif
 
     return temp_qimage;

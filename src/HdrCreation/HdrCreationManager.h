@@ -67,6 +67,7 @@ public:
 	void align_with_mtb();
 
 	QList<QImage*> getLDRList() const {return ldrImagesList;}
+	QList<QImage*> getMDRList() const {return mdrImagesList;}
 	QStringList getFileList() const {return fileList;}
 	bool inputImageType() const {return inputType;}
 	const QStringList getFilesLackingExif() const {return filesLackingExif;}
@@ -87,7 +88,9 @@ public:
 	void checkEVvalues();
 	void makeSureLDRsHaveAlpha();
 	void applyShiftsToImageStack(QList< QPair<int,int> > HV_offsets);
+	void applyShiftsToMdrImageStack(QList< QPair<int,int> > HV_offsets);
 	void cropLDR (QRect ca);
+	void cropMDR (QRect ca);
 	void reset();
 	void remove(int index);
 	void setShift(int shift) { m_shift = shift; }
@@ -115,6 +118,8 @@ private:
 	QStringList fileList;
 	//data structures that hold the input images' payload
 	QList<QImage*> ldrImagesList;  //ldr input
+	QList<QImage*> mdrImagesList;  //QImages rappresenting a PFS frame for editing tools
+	QList<QImage*> mdrImagesToRemove;  //QImages need to be deleted
 	QList<bool> tiffLdrList;  //tiff ldr input
 	Array2DList listmdrR,listmdrG,listmdrB; //mdr input
 	//if startedProcessing[i]==true, we started a thread for the i-th file
@@ -149,6 +154,8 @@ private:
 
 	bool ldrsHaveSameSize(int,int);
 	bool mdrsHaveSameSize(int,int);
+
+	int m_mdrWidth, m_mdrHeight;
 
 private slots:
 	void ais_finished(int,QProcess::ExitStatus);

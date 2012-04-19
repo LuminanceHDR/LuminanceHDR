@@ -129,6 +129,13 @@ namespace pfs
     {
         return channel_impl;
     }
+	
+	void Channel::setChannelData(Array2D *array)
+	{
+		if (channel_impl)
+			delete channel_impl;
+		channel_impl = array;
+	}
 
 }
 

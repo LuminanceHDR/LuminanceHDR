@@ -3,19 +3,19 @@
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program; if not, write to the Free Software
+ *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
  * Original Work
@@ -42,15 +42,19 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 {
 	setupUi(this);
 
-	original_ldrlist=hcm->getLDRList();
+	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
+		original_ldrlist=hcm->getLDRList();
+	else
+		original_ldrlist=hcm->getMDRList();
+
 	filelist=hcm->getFileList();
 	this->hcm=hcm;
 
 	toolOptionsFrame->setVisible(false);
 	maskColorButton->setVisible(false);
-        QColor maskcolor=QColor(luminanceOptions.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
-        Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) luminanceOptions.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
-        maskColorButton->setStyleSheet(QString("background: rgb("+QString(maskcolor.red())+","+QString(maskcolor.green())+","+QString(maskcolor.blue())+")"));
+	QColor maskcolor=QColor(luminanceOptions.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
+	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) luminanceOptions.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
+	maskColorButton->setStyleSheet(QString("background: rgb("+QString(maskcolor.red())+","+QString(maskcolor.green())+","+QString(maskcolor.blue())+")"));
 	assert(original_ldrlist.size()==filelist.size());
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
@@ -63,7 +67,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	previewWidget->update();
 
 	cornerButton=new QToolButton(this);
-        cornerButton->setToolTip(tr("Pan the image to a region"));
+	cornerButton->setToolTip(tr("Pan the image to a region"));
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 	scrollArea->setCornerWidget(cornerButton);
 
@@ -97,7 +101,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	}
 
 	histogram=new HistogramLDR(this);
-        histogram->setData( original_ldrlist.at(1) );
+		histogram->setData( original_ldrlist.at(1) );
 	histogram->adjustSize();
 	//((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
 	((QGridLayout*)(groupBoxHistogram->layout()))->addWidget(histogram);
@@ -172,16 +176,16 @@ void EditingTools::slotCornerButtonPressed() {
 }
 
 void EditingTools::slotPanIconSelectionMoved(QRect gotopos) {
-		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*previewWidget->getScaleFactor()));
-		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*previewWidget->getScaleFactor()));
+	scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*previewWidget->getScaleFactor()));
+	scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*previewWidget->getScaleFactor()));
 }
 
 void EditingTools::slotPanIconHidden()
 {
 	panIconWidget->close();
-    cornerButton->blockSignals(true);
-    cornerButton->animateClick();
-    cornerButton->blockSignals(false);
+	cornerButton->blockSignals(true);
+	cornerButton->animateClick();
+	cornerButton->blockSignals(false);
 }
 
 EditingTools::~EditingTools() {
@@ -221,17 +225,26 @@ void EditingTools::crop_stack() {
 	//zoom the image to 1:1, so that the crop area is in a one-to-one relationship with the pixel coordinates.
 	origSize();
 
-	hcm->applyShiftsToImageStack(HV_offsets);
+	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
+		hcm->applyShiftsToImageStack(HV_offsets);
+	else
+		hcm->applyShiftsToMdrImageStack(HV_offsets);
 
 	resetAll();
 	QRect ca=selectionTool->getSelectionRect();
-	if(ca.width()<=0|| ca.height()<=0)
+	if(ca.width()<=0 || ca.height()<=0)
 		return;
 
-	hcm->cropLDR(ca);
+	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
+		hcm->cropLDR(ca);
+		original_ldrlist=hcm->getLDRList();
+	}
+	else {
+		hcm->cropMDR(ca);
+		original_ldrlist=hcm->getMDRList();
+	}
+	
 	selectionTool->removeSelection();
-
-	original_ldrlist=hcm->getLDRList();
 
 	previewWidget->setMovable(original_ldrlist[movableListWidget->currentRow()]);
 	previewWidget->setPivot(original_ldrlist[referenceListWidget->currentRow()]);
@@ -244,7 +257,10 @@ void EditingTools::crop_stack() {
 }
 
 void EditingTools::nextClicked() {
-	hcm->applyShiftsToImageStack(HV_offsets);
+	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
+		hcm->applyShiftsToImageStack(HV_offsets);
+	else
+		hcm->applyShiftsToMdrImageStack(HV_offsets);
 	emit accept();
 }
 
@@ -259,7 +275,7 @@ void EditingTools::updateMovable(int newidx) {
 	vertShiftSB->setValue(HV_offsets[newidx].second);
 	vertShiftSB->blockSignals(false);
 	previewWidget->update();
-        histogram->setData(original_ldrlist[newidx]);
+	histogram->setData(original_ldrlist[newidx]);
 	histogram->update();
 }
 
@@ -379,8 +395,8 @@ void EditingTools::origSize() {
 }
 
 void EditingTools::antighostToolButtonToggled(bool toggled) {
-// 	if (toggled)
-// 		blendModeCB->setCurrentIndex(4);
+//	if (toggled)
+//		blendModeCB->setCurrentIndex(4);
 	prevBothButton->setDisabled(toggled);
 	nextBothButton->setDisabled(toggled);
 	label_reference_list->setDisabled(toggled);
@@ -394,7 +410,7 @@ void EditingTools::maskColorButtonClicked() {
 	if (returned.isValid()) {
 		previewWidget->setBrushColor(returned);
 		maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
-                luminanceOptions.setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
+		luminanceOptions.setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
 	}
 }
 
@@ -406,19 +422,19 @@ void EditingTools::saveImagesButtonClicked() {
 	QString fnameprefix=QFileDialog::getSaveFileName(
 				this,
 				tr("Choose a directory and a prefix"),
-                                luminanceOptions.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString());
+								luminanceOptions.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString());
 	if (fnameprefix.isEmpty())
 		return;
 
 	QFileInfo qfi(fnameprefix);
 	QFileInfo test(qfi.path());
 
-        luminanceOptions.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
+	luminanceOptions.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
 
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		int counter=0;
 		foreach(QImage *p, original_ldrlist) {
-                        TiffWriter tiffwriter( QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))), p);
+			TiffWriter tiffwriter( QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))), p);
 			tiffwriter.write8bitTiff();
 			counter++;
 		}
@@ -426,7 +442,7 @@ void EditingTools::saveImagesButtonClicked() {
 }
 
 void EditingTools::updateScrollBars(QPoint diff) {
-        scrollArea->verticalScrollBar()->setValue(scrollArea->verticalScrollBar()->value() + diff.y());
-        scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + diff.x());
+	scrollArea->verticalScrollBar()->setValue(scrollArea->verticalScrollBar()->value() + diff.y());
+	scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + diff.x());
 }
 
