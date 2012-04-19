@@ -657,6 +657,5 @@ void HdrCreationManager::saveMDRs(QString filename)
 		Zc->setChannelData(listmdrB[idx]);	
 		TiffWriter writer(fname.toLatin1().constData(), frame);
 		writer.writePFSFrame16bitTiff();
-		pfsio.freeFrame(frame);
 	}
 }

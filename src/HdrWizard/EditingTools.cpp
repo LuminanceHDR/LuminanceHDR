@@ -38,7 +38,7 @@
 #include "HdrWizard/EditingTools.h"
 
 
-EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(parent), additional_shift_value(0)
+EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(parent), additional_shift_value(0), m_MdrSaved(false)
 {
 	setupUi(this);
 
@@ -263,8 +263,9 @@ void EditingTools::nextClicked() {
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
 		hcm->applyShiftsToImageStack(HV_offsets);
-	else
-		hcm->applyShiftsToMdrImageStack(HV_offsets);
+	else 
+		if (!m_MdrSaved)
+			hcm->applyShiftsToMdrImageStack(HV_offsets);
 	QApplication::restoreOverrideCursor();
 	emit accept();
 }
@@ -446,6 +447,8 @@ void EditingTools::saveImagesButtonClicked() {
 			}
 		}
 		else {
+			m_MdrSaved = true;
+	
 			hcm->applyShiftsToMdrImageStack(HV_offsets);
 			hcm->saveMDRs(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
 		}

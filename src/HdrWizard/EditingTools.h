@@ -64,8 +64,8 @@ private:
 	PanIconWidget *panIconWidget;
 	QToolButton *cornerButton;
 	SelectionTool *selectionTool;
-
-        LuminanceOptions luminanceOptions;
+	bool m_MdrSaved;
+	LuminanceOptions luminanceOptions;
 private slots:
 	void slotPanIconSelectionMoved(QRect);
 	void slotPanIconHidden();
