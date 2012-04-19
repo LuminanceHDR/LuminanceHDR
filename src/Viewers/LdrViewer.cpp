@@ -168,25 +168,22 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
     // I am safe
     LdrViewer::setTonemappingOptions(opts);
 
-	LuminanceOptions luminance_opts; 
+    // LuminanceOptions luminance_opts;
 
-    //QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
-	QImage *temp_qimage(fromLDRPFStoQImage(getFrame()));	
-
-	QImage *xformed_qimage = doCMSTransform(temp_qimage, false, false);
+    QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(getFrame()) );
+    QScopedPointer<QImage> xformed_qimage( doCMSTransform(temp_qimage.data(), false, false) );
 
 	if (xformed_qimage == NULL)
+    {
 		setQImage(*temp_qimage);
-	else {
+    }
+    else
+    {
 		setQImage(*xformed_qimage);
-		delete xformed_qimage;
 	}
 
     updateView();
-
     retranslateUi();
-	
-	delete temp_qimage;
 }
 
 LdrViewer::~LdrViewer()
