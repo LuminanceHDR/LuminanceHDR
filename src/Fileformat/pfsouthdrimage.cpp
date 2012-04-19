@@ -35,6 +35,7 @@
 #include <QSysInfo>
 #include <iostream>
 #include <assert.h>
+#include <math.h>
 
 #include "Libpfs/frame.h"
 #include "Common/msec_timer.h"
@@ -57,6 +58,8 @@ inline int clamp_and_offset_to_8bits(float value, const float& min, const float&
     else if (value >= max) value = max;
 
     value = (value - min)/(max - min);
+	
+	value = pow(value, 1.0/2.2f);
 
     return (quint16) (value*255.f + 0.5f);
 }

@@ -53,7 +53,12 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 				continue;
 			if ((i+dx) >= width)
 				break;
-			(*temp)(i, j) = (*in)(i+dx, j);
+			if ((*in)(i+dx, j) > 65535)
+				(*temp)(i, j) = 65535;
+			else if ((*in)(i+dx, j) < 0)
+				(*temp)(i, j) = 0;
+			else
+				(*temp)(i, j) = (*in)(i+dx, j);
 		}
 	}
 	// y-shift
@@ -63,10 +68,14 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 				continue;
 			if ((j+dy) >= height)
 				break;
-			(*out)(i, j) = (*temp)(i, j+dy);
+			if ((*temp)(i, j+dy) > 65535)
+				(*out)(i, j) = 65535;
+			else if ((*temp)(i, j+dy) < 0)
+				(*out)(i, j) = 0;
+			else
+				(*out)(i, j) = (*temp)(i, j+dy);
 		}
 	}
-	delete temp;
 	return out;
 }
 
