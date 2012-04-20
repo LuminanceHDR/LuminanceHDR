@@ -38,20 +38,28 @@
 #include "mtb_alignment.h"
 #include "HdrCreationManager.h"
 #include "arch/math.h"
+#include "Common/msec_timer.h"
 
 pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 {
+#ifdef TIMER_PROFILING
+    msec_timer __timer;
+    __timer.start();
+#endif
+
 	int width = in->getCols();
 	int height = in->getRows();
 
 	pfs::Array2D *temp = new pfs::Array2D(width, height);	
 	pfs::Array2D *out = new pfs::Array2D(width, height);	
 	
+#pragma omp parallel for shared(temp)
 	for (int j = 0; j < height; j++) 
         for (int i = 0; i < width; i++) 
 			(*temp)(i, j) = 0;
 
 	// x-shift
+#pragma omp parallel for shared(in)
 	for (int j = 0; j < height; j++) {
 		for (int i = 0; i < width; i++) {
 			if ((i+dx) < 0)
@@ -67,6 +75,7 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 		}
 	}
 	// y-shift
+#pragma omp parallel for shared(out)
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			if ((j+dy) < 0)
@@ -81,6 +90,11 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 				(*out)(i, j) = (*temp)(i, j+dy);
 		}
 	}
+#ifdef TIMER_PROFILING
+    __timer.stop_and_update();
+    std::cout << "shiftPfsArray2D = " << __timer.get_time() << " msec" << std::endl;
+#endif
+
 	return out;
 }
 
