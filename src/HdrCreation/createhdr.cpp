@@ -234,6 +234,10 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
             robertson02_getResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, false, listhdrG);
             robertson02_getResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, false, listhdrB);
         }
+		if (chosen_config->SaveCurveToFilename != "") {
+			FILE* respfile = fopen(QFile::encodeName(chosen_config->SaveCurveToFilename).constData(),"w");
+			responseSave(respfile, w.data(), M, QFile::encodeName(chosen_config->SaveCurveToFilename).constData());
+		} 
         break;
     }
 
