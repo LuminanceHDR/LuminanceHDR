@@ -31,7 +31,7 @@
 namespace ExifOperations
 {
   
-  void writeExifData(const std::string& filename, const std::string& comment)
+  void writeExifData(const std::string& filename, const std::string& comment, float expotime)
   {
     Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
     image->readMetadata();
@@ -39,6 +39,14 @@ namespace ExifOperations
     exifData["Exif.Image.Software"]="Created with opensource tool Luminance HDR, http://qtpfsgui.sourceforge.net";
     exifData["Exif.Image.ImageDescription"]=comment;
     exifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
+	if (expotime != 100.0f) {
+		const Exiv2::ValueType<float> v(expotime*12.07488f/100);	
+		const Exiv2::ValueType<Exiv2::Rational> r(v.toRational());
+		exifData["Exif.Photo.ExposureTime"] = r;
+		const Exiv2::ValueType<float> f(1.0);	
+		const Exiv2::ValueType<Exiv2::Rational> fr(f.toRational());
+		exifData["Exif.Photo.FNumber"] = fr;
+	}
     image->setExifData(exifData);
     image->writeMetadata();
   }

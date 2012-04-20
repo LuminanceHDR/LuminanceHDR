@@ -178,7 +178,6 @@ void HdrCreationManager::mdrReady(pfs::Frame *newFrame, int index, float expotim
 		emit processed();
 		return;
 	}
-	mdrImagesList.append(fromHDRPFStoQImage(newFrame));
 	//newFrame is in CS_RGB but channel names remained X Y Z
 	pfs::Channel *R, *G, *B;
 	newFrame->getXYZChannels( R, G, B);
@@ -196,6 +195,8 @@ void HdrCreationManager::mdrReady(pfs::Frame *newFrame, int index, float expotim
 		emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
 		return;
 	}
+	if (!fromCommandLine)
+		mdrImagesList.append(fromHDRPFStoQImage(newFrame));
 	m_mdrWidth = R->getWidth();
 	m_mdrHeight = R->getHeight();
 	// fill with image data
@@ -674,6 +675,11 @@ void HdrCreationManager::saveMDRs(QString filename)
 		Zc->setChannelData(listmdrB[idx]);	
 		TiffWriter writer(fname.toLatin1().constData(), frame);
 		writer.writePFSFrame16bitTiff();
+
+		QFileInfo qfi(filename);
+		QString absoluteFileName = qfi.absoluteFilePath();
+		QByteArray encodedName = QFile::encodeName(absoluteFileName + QString("_%1").arg(idx) + ".tiff");
+		ExifOperations::writeExifData(encodedName.constData(), "", expotimes[idx]);	
 	}
 	emit mdrSaved();
 }
