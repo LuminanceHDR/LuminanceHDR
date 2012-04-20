@@ -749,6 +749,10 @@ Fortfahren?</translation>
         <source>Failed loading images</source>
         <translation>Bilder konnten nicht geladen werden</translation>
     </message>
+    <message>
+        <source>Failed aligning images.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DnDOption</name>
@@ -1610,6 +1614,10 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     <message>
         <source>Weights: </source>
         <translation>Gewichte: </translation>
+    </message>
+    <message>
+        <source>align_image_stack failed to align images.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

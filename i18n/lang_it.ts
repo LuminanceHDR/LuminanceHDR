@@ -331,15 +331,15 @@ Continuare?</translation>
     </message>
     <message>
         <source>Add &amp;Directory</source>
-        <translation>Aggiungi &amp;Cartella</translation>
+        <translation type="obsolete">Aggiungi &amp;Cartella</translation>
     </message>
     <message>
         <source>&amp;Add Files</source>
-        <translation>&amp;Aggiungi File</translation>
+        <translation type="obsolete">&amp;Aggiungi File</translation>
     </message>
     <message>
         <source>&amp;Remove Files</source>
-        <translation>&amp;Rimuovi File</translation>
+        <translation type="obsolete">&amp;Rimuovi File</translation>
     </message>
     <message>
         <source>List of HDRs that will be tone mapped</source>
@@ -347,11 +347,11 @@ Continuare?</translation>
     </message>
     <message>
         <source>Add D&amp;irectory</source>
-        <translation>Aggiungi Ca&amp;rtella</translation>
+        <translation type="obsolete">Aggiungi Ca&amp;rtella</translation>
     </message>
     <message>
         <source>Add Fi&amp;les</source>
-        <translation>Aggiungi Fi&amp;le</translation>
+        <translation type="obsolete">Aggiungi Fi&amp;le</translation>
     </message>
     <message>
         <source>R&amp;emove Files</source>
@@ -411,15 +411,15 @@ Continuare?</translation>
     </message>
     <message>
         <source>Add all the HDRs in a directory to the list</source>
-        <translation>Aggiungi tutti gli HDR in una directory alla lista</translation>
+        <translation type="obsolete">Aggiungi tutti gli HDR in una directory alla lista</translation>
     </message>
     <message>
         <source>Add single HDR files to the list</source>
-        <translation>Aggiungi singoli file HDR alla lista</translation>
+        <translation type="obsolete">Aggiungi singoli file HDR alla lista</translation>
     </message>
     <message>
         <source>Remove single HDR files to the list</source>
-        <translation>Rimuovi singoli file HDR dalla lista</translation>
+        <translation type="obsolete">Rimuovi singoli file HDR dalla lista</translation>
     </message>
     <message>
         <source>Tone Mapping Settings Files</source>
@@ -427,15 +427,15 @@ Continuare?</translation>
     </message>
     <message>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
-        <translation>Aggiungi tutti i file di impostazioni di tone mapping presenti in una directory alla lista</translation>
+        <translation type="obsolete">Aggiungi tutti i file di impostazioni di tone mapping presenti in una directory alla lista</translation>
     </message>
     <message>
         <source>Add single Tone Mapping Setting files to the list</source>
-        <translation>Aggiungi dei singoli file di impostazioni di tone mapping alla lista</translation>
+        <translation type="obsolete">Aggiungi dei singoli file di impostazioni di tone mapping alla lista</translation>
     </message>
     <message>
         <source>Remove single Tone Mapping Setting files to the list</source>
-        <translation>Rimuovi file di impostazioni di tone mapping dalla lista</translation>
+        <translation type="obsolete">Rimuovi file di impostazioni di tone mapping dalla lista</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
@@ -519,7 +519,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>R&amp;emove</source>
-        <translation>R&amp;imuovi</translation>
+        <translation type="obsolete">R&amp;imuovi</translation>
     </message>
     <message>
         <source>Ouput Image Width</source>
@@ -539,7 +539,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>From Data&amp;base</source>
-        <translation>Da Data&amp;base</translation>
+        <translation type="obsolete">Da Data&amp;base</translation>
     </message>
     <message>
         <source>Ouput Image Width:</source>
@@ -552,6 +552,66 @@ Continuare?</translation>
     <message>
         <source>Selec&amp;t...</source>
         <translation>Sele&amp;ziona...</translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+D)</source>
+        <translation>Aggiungi una directory (Alt+D)</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation>Alt+D</translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+F)</source>
+        <translation>Aggiungi dei files (Alt+F)</translation>
+    </message>
+    <message>
+        <source>Alt+F</source>
+        <translation>Alt+F</translation>
+    </message>
+    <message>
+        <source>Remove Files (Alt+R)</source>
+        <translation>Rimuovi dei files (Alt+R)</translation>
+    </message>
+    <message>
+        <source>Alt+R</source>
+        <translation>Alt+R</translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+I)</source>
+        <translation>Aggiungi una directory (Alt+I)</translation>
+    </message>
+    <message>
+        <source>Alt+I</source>
+        <translation>Alt+I</translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+L)</source>
+        <translation>Aggiungi dei files (Alt+L)</translation>
+    </message>
+    <message>
+        <source>Alt+L</source>
+        <translation>Alt+L</translation>
+    </message>
+    <message>
+        <source>Add from Database (Alt+B)</source>
+        <translation>Aggiungi dal database (Alt+B)</translation>
+    </message>
+    <message>
+        <source>Alt+B</source>
+        <translation>Alt+B</translation>
+    </message>
+    <message>
+        <source>Remove Settings (Alt+M)</source>
+        <translation>Rimuovi impostazioni (Alt+M)</translation>
+    </message>
+    <message>
+        <source>Alt+M</source>
+        <translation>Alt+M</translation>
     </message>
 </context>
 <context>
@@ -808,6 +868,10 @@ Continuare?</translation>
     <message>
         <source>Failed loading images</source>
         <translation>Caricamento immagini fallito</translation>
+    </message>
+    <message>
+        <source>Failed aligning images.</source>
+        <translation>Allineamento immagini fallito.</translation>
     </message>
 </context>
 <context>
@@ -1146,6 +1210,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Se la stessa immagine e&apos; selezionata in entrambe le liste, questa area mostrera&apos; tale immagine.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cliccando e tenendo premuto il pulsante sinistro del mouse e&apos; possibile selezionare una area di taglio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>Histogram</source>
+        <translation>Istogramma</translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1182,6 +1250,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ERROR: Failed Loading file: %1</source>
         <translation>ERRORE: Impossibile caricare il file: %1</translation>
+    </message>
+    <message>
+        <source>ERROR loading %1</source>
+        <translation>ERRORE caricando %1</translation>
     </message>
 </context>
 <context>
@@ -1665,6 +1737,10 @@ i seguenti dati EXIF: 		&lt;ul&gt;&lt;li&gt;Velocità otturatore (secondi)&lt;/l
         <source>Weights: </source>
         <translation>Pesi: </translation>
     </message>
+    <message>
+        <source>align_image_stack failed to align images.</source>
+        <translation>align_image_stack ha fallito nell&apos;allineare le immagini.</translation>
+    </message>
 </context>
 <context>
     <name>HelpBrowser</name>
@@ -1897,23 +1973,23 @@ Vuoi aprire il link con l&apos; applicazione predefinita associata con il protoc
     </message>
     <message>
         <source>Warning</source>
-        <translation>Attenzione</translation>
+        <translation type="obsolete">Attenzione</translation>
     </message>
     <message>
         <source>I cannot open monitor profile. Please select a different one.</source>
-        <translation>Non posso aprire il profilo del monitor. Selezionarne uno differente.</translation>
+        <translation type="obsolete">Non posso aprire il profilo del monitor. Selezionarne uno differente.</translation>
     </message>
     <message>
         <source>I cannot open printer profile. Please select a different one.</source>
-        <translation>Non posso aprire il profilo della stampante. Selezionarne uno differente.</translation>
+        <translation type="obsolete">Non posso aprire il profilo della stampante. Selezionarne uno differente.</translation>
     </message>
     <message>
         <source>Please select a printer profile .</source>
-        <translation>Selezionare un profilo della stampante.</translation>
+        <translation type="obsolete">Selezionare un profilo della stampante.</translation>
     </message>
     <message>
         <source>I cannot perform the color transform. Please select a different monitor profile.</source>
-        <translation>Non posso eseguire la trasformazione di colore. Selezionare un profilo del monitor differente.</translation>
+        <translation type="obsolete">Non posso eseguire la trasformazione di colore. Selezionare un profilo del monitor differente.</translation>
     </message>
 </context>
 <context>
@@ -3370,6 +3446,10 @@ p, li { white-space: pre-wrap; }
         <source>&amp;Browse...</source>
         <translation>&amp;Sfoglia...</translation>
     </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Sfoglia...</translation>
+    </message>
 </context>
 <context>
     <name>PreviewPanel</name>
@@ -3584,15 +3664,51 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>I cannot perform the color transform.</source>
-        <translation>Non posso eseguire la trasformazioe di colore.</translation>
+        <translation type="obsolete">Non posso eseguire la trasformazioe di colore.</translation>
     </message>
     <message>
         <source>I cannot open camera profile. Please select a different one.</source>
-        <translation>Non posso aprire il profilo della fotocamera. Selezionarne uno differente.</translation>
+        <translation type="obsolete">Non posso aprire il profilo della fotocamera. Selezionarne uno differente.</translation>
     </message>
     <message>
         <source>I cannot perform the color transform. Please select a different camera profile.</source>
-        <translation>Non posso eseguire la trasformazione di colore. Selezionare un profilo della fotocamera differente.</translation>
+        <translation type="obsolete">Non posso eseguire la trasformazione di colore. Selezionare un profilo della fotocamera differente.</translation>
+    </message>
+    <message>
+        <source>Error Opening RAW File</source>
+        <translation>Errore nell&apos;apertura del file RAW</translation>
+    </message>
+    <message>
+        <source>Error Unpacking RAW File</source>
+        <translation>Errore nello scompattare il file RAW</translation>
+    </message>
+    <message>
+        <source>Error Processing RAW File</source>
+        <translation>Errore nel processare il file RAW</translation>
+    </message>
+    <message>
+        <source>Memory Error in processing RAW File</source>
+        <translation>Errore di memoria nel processare il file RAW</translation>
+    </message>
+    <message>
+        <source>Error Creating PFS Frame</source>
+        <translation>Errore nel creare il frame PFS</translation>
+    </message>
+    <message>
+        <source>I cannot open monitor profile. Please select a different one.</source>
+        <translation>Non posso aprire il profilo del monitor. Selezionarne uno differente.</translation>
+    </message>
+    <message>
+        <source>I cannot open printer profile. Please select a different one.</source>
+        <translation>Non posso aprire il profilo della stampante. Selezionarne uno differente.</translation>
+    </message>
+    <message>
+        <source>Please select a printer profile .</source>
+        <translation>Selezionare un profilo della stampante.</translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
+        <translation>Non posso eseguire la trasformazione di colore. Selezionare un profilo del monitor differente.</translation>
     </message>
 </context>
 <context>
@@ -4451,7 +4567,7 @@ Vuoi continuare?</translation>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;From:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -4463,7 +4579,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;To:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -4471,7 +4587,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Log:</source>
-        <translation>Log:</translation>
+        <translation type="obsolete">Log:</translation>
     </message>
     <message>
         <source>Exif operations report</source>
@@ -4516,6 +4632,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>All Supported formats</source>
         <translation>Tutti i formati supportati</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation>Da</translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation>A</translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation>Log</translation>
     </message>
 </context>
 <context>

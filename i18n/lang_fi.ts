@@ -305,27 +305,27 @@ Kuvaerän tonemappaus</translation>
     </message>
     <message>
         <source>Add all the HDRs in a directory to the list</source>
-        <translation type="unfinished">Lisää kaikki hakemiston HDR-kuvat listaan</translation>
+        <translation type="obsolete">Lisää kaikki hakemiston HDR-kuvat listaan</translation>
     </message>
     <message>
         <source>Add &amp;Directory</source>
-        <translation type="unfinished">Lisää &amp;Hakemisto</translation>
+        <translation type="obsolete">Lisää &amp;Hakemisto</translation>
     </message>
     <message>
         <source>Add single HDR files to the list</source>
-        <translation type="unfinished">Lisää HDR-kuva listalle</translation>
+        <translation type="obsolete">Lisää HDR-kuva listalle</translation>
     </message>
     <message>
         <source>&amp;Add Files</source>
-        <translation type="unfinished">&amp;Lisää tiedostot</translation>
+        <translation type="obsolete">&amp;Lisää tiedostot</translation>
     </message>
     <message>
         <source>Remove single HDR files to the list</source>
-        <translation type="unfinished">Poista yksittäisiä HDR-kuvia listalta</translation>
+        <translation type="obsolete">Poista yksittäisiä HDR-kuvia listalta</translation>
     </message>
     <message>
         <source>&amp;Remove Files</source>
-        <translation type="unfinished">&amp;Poista Tiedostot</translation>
+        <translation type="obsolete">&amp;Poista Tiedostot</translation>
     </message>
     <message>
         <source>List of HDRs that will be tone mapped</source>
@@ -337,23 +337,23 @@ Kuvaerän tonemappaus</translation>
     </message>
     <message>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
-        <translation type="unfinished">Lisää kaikki tonemappauksen asetustiedostot hakemistosta listalle</translation>
+        <translation type="obsolete">Lisää kaikki tonemappauksen asetustiedostot hakemistosta listalle</translation>
     </message>
     <message>
         <source>Add D&amp;irectory</source>
-        <translation type="unfinished">Lisää &amp;Hakemisto</translation>
+        <translation type="obsolete">Lisää &amp;Hakemisto</translation>
     </message>
     <message>
         <source>Add single Tone Mapping Setting files to the list</source>
-        <translation type="unfinished">Lisää yksittäinen tonemappauksen asetustiedosto listalle</translation>
+        <translation type="obsolete">Lisää yksittäinen tonemappauksen asetustiedosto listalle</translation>
     </message>
     <message>
         <source>Add Fi&amp;les</source>
-        <translation type="unfinished">&amp;Lisää tiedostot</translation>
+        <translation type="obsolete">&amp;Lisää tiedostot</translation>
     </message>
     <message>
         <source>Remove single Tone Mapping Setting files to the list</source>
-        <translation type="unfinished">Poista yksittäisiä tonemappauksen asetustiedostoja listalta</translation>
+        <translation type="obsolete">Poista yksittäisiä tonemappauksen asetustiedostoja listalta</translation>
     </message>
     <message>
         <source>R&amp;emove Files</source>
@@ -480,10 +480,6 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">Tonemappauksen asetukset</translation>
     </message>
     <message>
-        <source>R&amp;emove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> %</source>
         <translation type="unfinished"></translation>
     </message>
@@ -496,10 +492,6 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>From Data&amp;base</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ouput Image Width:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -509,6 +501,66 @@ Kuvaerän tonemappaus</translation>
     </message>
     <message>
         <source>Selec&amp;t...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+D)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+F)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Files (Alt+R)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+I)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+L)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+L</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add from Database (Alt+B)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Settings (Alt+M)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+M</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -760,6 +812,10 @@ Kuvaerän tonemappaus</translation>
     </message>
     <message>
         <source>Failed loading images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed aligning images.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1099,6 +1155,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jos sama kuva on valittu sekä muokattavien ja vertailukuvien listassa, tämä alue näyttää itse kuvan.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Klikkaamalla ja pitämällä pohjassa hiiren vasenta nappia näet rajattavan alueen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>Histogram</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1135,6 +1195,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ERROR: Failed Loading file: %1</source>
         <translation type="unfinished">VIRHE: Tiedoston lataus epäonnistui: %1</translation>
+    </message>
+    <message>
+        <source>ERROR loading %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1615,6 +1679,10 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <source>Weights: </source>
         <translation>Painoarvot: </translation>
     </message>
+    <message>
+        <source>align_image_stack failed to align images.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HelpBrowser</name>
@@ -1845,26 +1913,6 @@ joka on liitetty protokollaan?</translation>
     <message>
         <source>LDR image [%1 x %2]</source>
         <translation type="unfinished">LDR-kuva [%1 x %2]</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I cannot open monitor profile. Please select a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I cannot open printer profile. Please select a different one.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please select a printer profile .</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3285,6 +3333,10 @@ p, li { white-space: pre-wrap; }
         <source>&amp;Browse...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreviewPanel</name>
@@ -3498,15 +3550,39 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I cannot perform the color transform.</source>
+        <source>Error Opening RAW File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I cannot open camera profile. Please select a different one.</source>
+        <source>Error Unpacking RAW File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I cannot perform the color transform. Please select a different camera profile.</source>
+        <source>Error Processing RAW File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory Error in processing RAW File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error Creating PFS Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open monitor profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open printer profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a printer profile .</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4328,7 +4404,7 @@ Haluatko jatkaa?</translation>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;From:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -4340,7 +4416,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;To:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -4348,7 +4424,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Log:</source>
-        <translation type="unfinished">Loki:</translation>
+        <translation type="obsolete">Loki:</translation>
     </message>
     <message>
         <source>Exif operations report</source>
@@ -4401,6 +4477,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Done</source>
         <translation type="unfinished">&amp;Valmis</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation type="unfinished">Loki</translation>
     </message>
 </context>
 <context>
