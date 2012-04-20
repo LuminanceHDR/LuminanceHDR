@@ -478,12 +478,17 @@ void LuminanceOptions::setBatchTmLdrFormat(QString s)
 QString LuminanceOptions::getTempDir()
 {
     QString temp_dir_name = value(KEY_TEMP_RESULT_PATH, QDir::temp().absolutePath()).toString();
+	QFile testfile(temp_dir_name + "/test.txt");
     QDir dir(temp_dir_name);
-    QFileInfo test_temp_dir_name(dir.absoluteFilePath("file"));
+	testfile.open(QIODevice::WriteOnly);
+	testfile.write("test", 5);
+	testfile.close();
+    QFileInfo test_temp_dir_name(dir.absoluteFilePath("test.txt"));
     if ( dir.exists() &&
          test_temp_dir_name.isWritable() )
     {
         // directory choosen by the user (or the default one) is usable
+        testfile.remove();
         return temp_dir_name;
     }
     else
