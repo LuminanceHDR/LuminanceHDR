@@ -66,6 +66,7 @@ private:
 	SelectionTool *selectionTool;
 	bool m_MdrSaved;
 	LuminanceOptions luminanceOptions;
+	QVector<float> expotimes;
 private slots:
 	void slotPanIconSelectionMoved(QRect);
 	void slotPanIconHidden();

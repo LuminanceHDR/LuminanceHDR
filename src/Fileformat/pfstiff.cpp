@@ -789,16 +789,19 @@ tif ((TIFF *) NULL)
   ldrimage = f;
   width = f->width ();
   height = f->height ();
+  uint16 extras[1];
+  extras[0] = EXTRASAMPLE_ASSOCALPHA;
+  
   tif = TIFFOpen (filename, "w");
 
   if (!tif)
     throw std::runtime_error ("TIFF: could not open file for writing.");
 
-  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, f->width ());
-  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, f->height ());
+  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
+  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
   TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-  TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, EXTRASAMPLE_ASSOCALPHA);
   TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 4);
+  TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, &extras);
   TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
 }
 

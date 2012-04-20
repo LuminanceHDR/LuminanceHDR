@@ -679,7 +679,7 @@ void HdrCreationManager::saveMDRs(QString filename)
 		QFileInfo qfi(filename);
 		QString absoluteFileName = qfi.absoluteFilePath();
 		QByteArray encodedName = QFile::encodeName(absoluteFileName + QString("_%1").arg(idx) + ".tiff");
-		ExifOperations::writeExifData(encodedName.constData(), "", expotimes[idx]);	
+		ExifOperations::writeExifData(encodedName.constData(), "Edited Images", expotimes[idx]);	
 	}
 	emit mdrSaved();
 }

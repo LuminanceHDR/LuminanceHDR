@@ -68,6 +68,7 @@ public:
 
 	QList<QImage*> getLDRList() const {return ldrImagesList;}
 	QList<QImage*> getMDRList() const {return mdrImagesList;}
+	QVector<float> getExpotimes() const {return expotimes;}
 	QStringList getFileList() const {return fileList;}
 	bool inputImageType() const {return inputType;}
 	const QStringList getFilesLackingExif() const {return filesLackingExif;}

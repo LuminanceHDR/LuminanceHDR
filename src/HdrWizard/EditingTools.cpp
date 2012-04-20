@@ -36,14 +36,17 @@
 #include "Viewers/PanIconWidget.h"
 #include "Fileformat/pfstiff.h"
 #include "HdrWizard/EditingTools.h"
+#include "Exif/ExifOperations.h"
 
 
 EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(parent), additional_shift_value(0), m_MdrSaved(false)
 {
 	setupUi(this);
 
-	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
+	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
 		original_ldrlist=hcm->getLDRList();
+		expotimes = hcm->getExpotimes();
+	}
 	else {
 		original_ldrlist=hcm->getMDRList();
 		antighostToolButton->setEnabled(false);
@@ -448,8 +451,12 @@ void EditingTools::saveImagesButtonClicked() {
 			foreach(QImage *p, original_ldrlist) {
 				TiffWriter tiffwriter( QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))), p);
 				tiffwriter.write8bitTiff();
+				ExifOperations::writeExifData(QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))).constData(), "Edited Images", expotimes[counter]);	
 				counter++;
 			}
+			saveImagesButton->setEnabled(true);
+			Next_Finishbutton->setEnabled(true);
+			QApplication::restoreOverrideCursor();
 		}
 		else {
 			m_MdrSaved = true;
