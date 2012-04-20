@@ -28,9 +28,9 @@
 #include "Exif/ExifOperations.h"
 #include "Libpfs/frame.h"
 #include "Filter/pfscut.h"
+#include "Filter/pfsgamma.h"
 #include "Core/IOWorker.h"
 #include "Common/LuminanceOptions.h"
-#include "Core/IOWorker.h"
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "TonemappingEngine/TonemapOperator.h"
@@ -80,8 +80,6 @@ void BatchTMJob::run()
 
             opts->tonemapSelection = false; // just to be sure!
             opts->origxsize = reference_frame->getWidth();
-            //opts->xsize = 400; // DEBUG
-            //opts->xsize = opts->origxsize;
 
 			opts->xsize = (int) opts->origxsize * opts->xsize_percent / 100;
 
@@ -90,6 +88,11 @@ void BatchTMJob::run()
                 temporary_frame.reset( pfs::pfscopy(reference_frame.data()) );
             else
                 temporary_frame.reset( pfs::resizeFrame(reference_frame.data(), opts->xsize) );
+
+			if ( opts->pregamma != 1.0f )
+			{
+				pfs::applyGammaOnFrame(temporary_frame.data(), opts->pregamma );
+			}
 
             QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(opts->tmoperator) );
 
