@@ -28,11 +28,10 @@
  *
  */
 
-//#include <QTextStream>
-//#include <QApplication>
 #include <QString>
 #include <QLocale>
 #include <QFile>
+#include <QDebug>
 
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
@@ -475,22 +474,68 @@ void LuminanceOptions::setBatchTmLdrFormat(QString s)
     setValue(KEY_BATCH_TM_LDR_FORMAT, s);
 }
 
+
+namespace
+{
+#ifdef QT_DEBUG
+struct PrintTempDir
+{
+    PrintTempDir(QString& str):
+        str_(str)
+    {}
+
+    ~PrintTempDir()
+    {
+        qDebug() << "Temporary directory: " << str_;
+    }
+
+private:
+    QString& str_;
+};
+#endif // QT_DEBUG
+
+}
+
+
 QString LuminanceOptions::getTempDir()
 {
-    QString temp_dir_name = value(KEY_TEMP_RESULT_PATH, QDir::temp().absolutePath()).toString();
-    QFileInfo dir(temp_dir_name);
-    if ( dir.exists() &&
-         dir.isWritable() )
+    QString os_temp_dir_name = QDir::temp().absolutePath();
+    QString temp_dir_name = value(KEY_TEMP_RESULT_PATH,
+                                  QDir::temp().absolutePath()).toString();
+#ifdef QT_DEBUG
+    PrintTempDir print_temp_dir(temp_dir_name);
+#endif
+    if ( temp_dir_name == os_temp_dir_name )
     {
-        // directory choosen by the user (or the default one) is usable
-        //testfile.remove();
+        // temporary directory is equal to the OS's
         return temp_dir_name;
     }
-    else
+
+    QDir temp_dir(temp_dir_name);
+    if ( !temp_dir.exists() )
     {
-        // return default temporary directory
-        return QDir::temp().absolutePath();
+        // directory doesn't exist!
+        qDebug() << "Candidate temporary directory does not exist";
+        // reset to OS temporary directory;
+        temp_dir_name = os_temp_dir_name;
+        remove(KEY_TEMP_RESULT_PATH);
+        return temp_dir_name;
     }
+
+    // directory exists...
+    // let's check whether I can create a file or not!
+    QFile file(temp_dir.filePath("test_write.txt"));
+    if ( !file.open(QIODevice::ReadWrite) )
+    {
+        // directory is not writtable
+        qDebug() << "Candidate temporary directory is not writtable";
+        // reset to OS temporary directory;
+        temp_dir_name = os_temp_dir_name;
+        remove(KEY_TEMP_RESULT_PATH);
+        // return temp_dir_name;
+    }
+
+    return temp_dir_name;
 }
 
 void LuminanceOptions::setTempDir(QString path)
