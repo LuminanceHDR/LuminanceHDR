@@ -733,7 +733,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>-c --config            HDR creation config. Possible values: </source>
-        <translation>-c --config            Configurazione per la creazione di HDR. alori possibili:  </translation>
+        <translation>-c --config            Configurazione per la creazione di HDR. Valori possibili:  </translation>
     </message>
     <message>
         <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
@@ -745,11 +745,11 @@ Continuare?</translation>
     </message>
     <message>
         <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
-        <translation>-g --gamma VALUE       Valore di gamma da usare per il tone mapping. (default: 1) </translation>
+        <translation>-g --gamma VALORE       Valore di gamma da usare per il tone mapping. (default: 1) </translation>
     </message>
     <message>
         <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation>-r --resize VALUE      Larghezza a cui viene ridimensionato l&apos;HDR (ridimensionato prima del gamma e tone mapping) </translation>
+        <translation>-r --resize VALORE      Larghezza a cui viene ridimensionato l&apos;HDR (ridimensionato prima del gamma e tone mapping) </translation>
     </message>
     <message>
         <source>-t --tmo               Tone mapping operator. Legal values are: </source>
@@ -761,7 +761,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)</source>
-        <translation>contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (per mantiuk06)</translation>
+        <translation>contrast=VALORE:saturation=VALORE:detail=VALORE:equalization=true|false (per mantiuk06)</translation>
     </message>
     <message>
         <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
@@ -787,31 +787,31 @@ Continuare?</translation>
     </message>
     <message>
         <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
-        <translation>alpha=VALORE:beta=VALORE:color=VALORE:noise=VALORE:new=true|false (for fattal)</translation>
+        <translation>alpha=VALORE:beta=VALORE:color=VALORE:noise=VALORE:new=true|false (per fattal)</translation>
     </message>
     <message>
         <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
-        <translation>localcontrast=VALORE:eq=2|4:simple=true|false (for ashikhmin)</translation>
+        <translation>localcontrast=VALORE:eq=2|4:simple=true|false (per ashikhmin)</translation>
     </message>
     <message>
         <source>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</source>
-        <translation>sigma_s=VALORE:sigma_r=VALORE:base=VALORE (for durand)</translation>
+        <translation>sigma_s=VALORE:sigma_r=VALORE:base=VALORE (per durand)</translation>
     </message>
     <message>
         <source>bias=VALUE (for drago)</source>
-        <translation>bias=VALORE (for drago)</translation>
+        <translation>bias=VALORE (per drago)</translation>
     </message>
     <message>
         <source>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</source>
-        <translation>local=true|false:autolum=true|false:cone=VALORE:rod=VALORE:multiplier=VALORE (for pattanaik)</translation>
+        <translation>local=true|false:autolum=true|false:cone=VALORE:rod=VALORE:multiplier=VALORE (per pattanaik)</translation>
     </message>
     <message>
         <source>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</source>
-        <translation>scales=true|false:key=VALORE:phi=VALORE:num=VALORE:low=VALORE:high=VALORE (for reinhard02)</translation>
+        <translation>scales=true|false:key=VALORE:phi=VALORE:num=VALORE:low=VALORE:high=VALORE (per reinhard02)</translation>
     </message>
     <message>
         <source>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</source>
-        <translation>brightness=VALORE:chroma=VALORE:lightness=VALORE (for reinhard05)</translation>
+        <translation>brightness=VALORE:chroma=VALORE:lightness=VALORE (per reinhard05)</translation>
     </message>
     <message>
         <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
