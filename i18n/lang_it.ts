@@ -3648,7 +3648,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Using %1 threads.</source>
-        <translation>Utilizzande %1 threads.</translation>
+        <translation>Utilizzando %1 threads.</translation>
     </message>
     <message>
         <source>Loading file %1</source>
