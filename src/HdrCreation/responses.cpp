@@ -136,23 +136,22 @@ void responseLog10( float* I, int M )
 }
 
 
-void responseSave( FILE* file, const float* I, int M, const char* name)
+void responseSave( FILE* file, const float* Ir, const float* Ig, const float* Ib, int M)
 {
   // response curve matrix header
-  fprintf(file, "# Camera response curve, channel %s\n", name);
-  fprintf(file, "# data layout: log10(response) | camera output | response\n");
-  fprintf(file, "# name: %s\n", name);
+  fprintf(file, "# Camera response curve, channels Ir, Ig, Ib \n");
+  fprintf(file, "# data layout: camera output | log10(response Ir) | response Ir | log10(response Ig) | response Ig | log10(response Ib) | response Ib \n");
   fprintf(file, "# type: matrix\n");
   fprintf(file, "# rows: %d\n", M);
-  fprintf(file, "# columns: 3\n");
+  fprintf(file, "# columns: 7\n");
 
   // save response
-  for( int m=0 ; m<M ; m++ )
-    if( I[m]!=0.0f )
-      fprintf(file, " %15.9f %4d %15.9f\n", log10f(I[m]), m, I[m]);
-    else
-      fprintf(file, " %15.9f %4d %15.9f\n", -6.0f, m, I[m]);
-  
+  for( int m=0 ; m<M ; m++ ) {
+     float logR = Ir[m] == 0.0f ? -6.0f : log10f(Ir[m]);
+     float logG = Ig[m] == 0.0f ? -6.0f : log10f(Ig[m]);
+     float logB = Ib[m] == 0.0f ? -6.0f : log10f(Ib[m]);
+     fprintf(file, " %4d %15.9f %15.9f %15.9f %15.9f %15.9f %15.9f \n", m, logR, Ir[m], logG, Ig[m], logB, Ib[m]);
+  }
   fprintf(file, "\n");
 }
 
@@ -175,7 +174,7 @@ void weightsSave( FILE* file, const float* w, int M, const char* name)
 }
 
 
-bool responseLoad( FILE* file, float* I, int M)
+bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M)
 {
   char line[1024];
   int m=0,c=0;
@@ -193,21 +192,24 @@ bool responseLoad( FILE* file, float* I, int M)
   while( fgets(line, 1024, file) )
     if( sscanf(line, "# columns: %d\n", &c) == 1 )
       break;
-  if( c!=3 )
+  if( c!=7 )
     return false;
   
   // read response
-  float ignore;
+  float ignoreR, ignoreG, ignoreB;
   for( int i=0 ; i<M ; i++ )
   {
-    float val;
-    if( fscanf(file, " %f %d %f\n", &ignore, &m, &val) !=3 )
+    float valR, valG, valB;
+    if( fscanf(file, " %d %f %f %f %f %f %f \n", &m, &ignoreR, &valR, &ignoreG, &valG, &ignoreB, &valB) !=7 )
       return false;
     if( m<0 || m>M )
       std::cerr << "response: camera value out of range,"
                 << " m=" << m << std::endl;
-    else
-      I[m] = val;
+    else {
+      Ir[m] = valR;
+      Ig[m] = valG;
+      Ib[m] = valB;
+	}
   }
   
   return true;

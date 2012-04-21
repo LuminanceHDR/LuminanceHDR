@@ -115,7 +115,7 @@ void responseLog10( float* I, int M );
  * @param M number of camera output levels
  * @param name matrix name for use in Octave or Matlab
  */
-void responseSave( FILE* file, const float* I, int M, const char* name);
+void responseSave( FILE* file, const float* Ir, const float* Ig, const float* Ib, int M);
 
 
 /**
@@ -137,7 +137,7 @@ void weightsSave( FILE* file, const float* w, int M, const char* name);
  * @param M number of camera output levels
  * @return false means file has different output levels or is wrong for some other reason
  */
-bool responseLoad( FILE* file, float* I, int M);
+bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M);
 
 
 /**

@@ -192,12 +192,10 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
     {
         FILE* respfile = fopen(QFile::encodeName(chosen_config->LoadCurveFromFilename).constData(),"r");
         // read camera response from file
-        bool loadR_ok = responseLoad(respfile, Ir.data(), M);
-        bool loadG_ok = responseLoad(respfile, Ig.data(), M);
-        bool loadB_ok = responseLoad(respfile, Ib.data(), M);
+        bool load_ok = responseLoad(respfile, Ir.data(), Ig.data(), Ib.data(), M);
         fclose(respfile);
 
-        if ( !loadR_ok || !loadG_ok || !loadB_ok )
+        if ( !load_ok)
         {
             responseGamma(Ir.data(), M);
             responseGamma(Ig.data(), M);
@@ -234,12 +232,15 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
             robertson02_getResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, false, listhdrG);
             robertson02_getResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, false, listhdrB);
         }
-		if (chosen_config->SaveCurveToFilename != "") {
-			FILE* respfile = fopen(QFile::encodeName(chosen_config->SaveCurveToFilename).constData(),"w");
-			responseSave(respfile, w.data(), M, QFile::encodeName(chosen_config->SaveCurveToFilename).constData());
-		} 
         break;
     }
+
+	//save response curves if required (variable not empty)
+	if (chosen_config->SaveCurveToFilename != "") {
+		FILE * respfile=fopen(QFile::encodeName(chosen_config->SaveCurveToFilename).constData(), "w");
+		responseSave(respfile, Ir.data(), Ig.data(), Ib.data(), M);
+		fclose(respfile);
+	}
 
     //3) apply model to generate hdr.
     switch ( opt_model )
