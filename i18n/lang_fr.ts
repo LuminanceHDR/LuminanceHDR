@@ -3961,7 +3961,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
-        <translation type="unfinished">Fichier texte de paramètre tonemapping de LuminanceHDR</translation>
+        <translation type="unfinished">Fichier texte de paramètre tonemapping de LuminanceHDR (*.txt)</translation>
     </message>
     <message>
         <source>Aborting...</source>
