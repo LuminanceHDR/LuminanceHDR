@@ -35,6 +35,7 @@ v2.0.1 20111006 rsz Added default constructor value.
 #include <assert.h>
 
 #ifdef WIN32
+#define _WINSOCKAPI_    // stops windows.h including winsock.h
 #include <windows.h>
 #else
 #include <sys/time.h>
