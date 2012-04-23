@@ -93,6 +93,7 @@ private slots:
     void execCommandLineParamsSlot();
 	void setProgressBar(int);
 	void updateProgressBar(int);
+	void readData(QByteArray);
 
 signals:
     void finishedParsing();

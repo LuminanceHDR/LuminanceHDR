@@ -68,13 +68,14 @@ using namespace std;
 
 //--------------------------------------------------------------------
 
-void downSample(pfs::Array2D* A, pfs::Array2D* B)
+void downSample(pfs::Array2D* A, pfs::Array2D* B, ProgressHelper *ph)
 {
   const int width = B->getCols();
   const int height = B->getRows();
 
 #pragma omp parallel for
-  for( int y=0 ; y<height ; y++ )
+  for( int y=0 ; y<height ; y++ ) {
+	ph->newValue(100*y/height);
     for( int x=0 ; x<width ; x++ )
     {
       float p = 0.0f;
@@ -84,9 +85,10 @@ void downSample(pfs::Array2D* A, pfs::Array2D* B)
       p += (*A)(2*x+1,2*y+1);
       (*B)(x,y) = p / 4.0f;
     }	
+  }
 }
 	
-void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
+void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L, ProgressHelper *ph)
 {
   const int width = I->getCols();
   const int height = I->getRows();
@@ -97,6 +99,7 @@ void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
 #pragma omp parallel for shared(I, T)
   for( int y=0 ; y<height ; y++ )
   {
+	ph->newValue(100*y/height);
     for( int x=1 ; x<width-1 ; x++ )
     {
       float t = 2*(*I)(x,y);
@@ -112,6 +115,7 @@ void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
 #pragma omp parallel for shared(T, L)
   for( int x=0 ; x<width ; x++ )
   {
+	ph->newValue(100*x/width);
     for( int y=1 ; y<height-1 ; y++ )
     {
       float t = 2*(*T)(x,y);
@@ -126,7 +130,7 @@ void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
   delete T;
 }
 
-void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels )
+void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels, ProgressHelper *ph)
 {
   int width = H->getCols();
   int height = H->getRows();
@@ -138,18 +142,18 @@ void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nleve
     (*pyramids[0])(i) = (*H)(i);
 
   pfs::Array2D* L = new pfs::Array2D(width,height);
-  gaussianBlur( pyramids[0], L );
+  gaussianBlur( pyramids[0], L, ph );
 	
   for( int k=1 ; k<nlevels ; k++ )
   {
     width /= 2;
     height /= 2;		
     pyramids[k] = new pfs::Array2D(width,height);
-    downSample(L, pyramids[k]);
+    downSample(L, pyramids[k], ph);
     
     delete L;
     L = new pfs::Array2D(width,height);
-    gaussianBlur( pyramids[k], L );
+    gaussianBlur( pyramids[k], L, ph );
   }
 
   delete L;
@@ -157,7 +161,7 @@ void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nleve
 
 //--------------------------------------------------------------------
 
-float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
+float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k, ProgressHelper *ph)
 {
   const int width = H->getCols();
   const int height = H->getRows();
@@ -167,6 +171,7 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 #pragma omp parallel for shared(G,H) reduction(+:avgGrad)
   for( int y=0 ; y<height ; y++ )
   {
+	ph->newValue(100*y/height);
     for( int x=0 ; x<width ; x++ )
     {
       float gx, gy;
@@ -190,7 +195,7 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 
 //--------------------------------------------------------------------
 
-void upSample(pfs::Array2D* A, pfs::Array2D* B)
+void upSample(pfs::Array2D* A, pfs::Array2D* B, ProgressHelper *ph)
 {
   const int width = B->getCols();
   const int height = B->getRows();
@@ -198,7 +203,8 @@ void upSample(pfs::Array2D* A, pfs::Array2D* B)
   const int aheight = A->getRows();
 
 #pragma omp parallel for shared(A, B)
-  for( int y=0 ; y<height ; y++ )
+  for( int y=0 ; y<height ; y++ ) {
+	ph->newValue(100*y/height);
     for( int x=0 ; x<width ; x++ )
     {
       int ax = x/2;
@@ -208,6 +214,7 @@ void upSample(pfs::Array2D* A, pfs::Array2D* B)
       
       (*B)(x,y) = (*A)(ax,ay);
     }
+  }
 //--- this code below produces 'use of uninitialized value error'
 //   int width = A->getCols();
 //   int height = A->getRows();
@@ -225,7 +232,7 @@ void upSample(pfs::Array2D* A, pfs::Array2D* B)
 
 void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
   float avgGrad[], int nlevels,
-  float alfa, float beta, float noise, bool newfattal)
+  float alfa, float beta, float noise, bool newfattal, ProgressHelper *ph)
 {
   int width = gradients[nlevels-1]->getCols();
   int height = gradients[nlevels-1]->getRows();
@@ -239,6 +246,9 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
   
   for( int k=nlevels-1 ; k>=0 ; k-- )
   {
+	ph->newValue(100*(nlevels - k)/nlevels);
+	if (ph->isTerminationRequested())
+      return;
     width = gradients[k]->getCols();
     height = gradients[k]->getRows();
 
@@ -270,8 +280,8 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
 
     if( k>0  && newfattal )
     {
-      upSample(fi[k], fi[k-1]);		// upsample to next level
-      gaussianBlur(fi[k-1],fi[k-1]);
+      upSample(fi[k], fi[k-1], ph);		// upsample to next level
+      gaussianBlur(fi[k-1],fi[k-1], ph);
     }
   }
 	
@@ -285,14 +295,18 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
 
 static void findMaxMinPercentile(pfs::Array2D* I,
                                  float minPrct, float& minLum,
-                                 float maxPrct, float& maxLum)
+                                 float maxPrct, float& maxLum, ProgressHelper *ph)
 {
   int size = I->getRows() * I->getCols();
   std::vector<float> vI;
 
-  for( int i=0 ; i<size ; i++ )
+  for( int i=0 ; i<size ; i++ ) {
+	ph->newValue(100*i/size);
+	if (ph->isTerminationRequested())
+		return;
     if( (*I)(i)!=0.0f )
       vI.push_back((*I)(i));
+  }
       
   std::sort(vI.begin(), vI.end());
 
@@ -309,6 +323,8 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 {
   const pfs::Array2D* Y = new pfs::Array2D(width, height, const_cast<float*>(nY));
   pfs::Array2D* L = new pfs::Array2D(width, height, nL);
+  pfs::Array2D* U = NULL;
+  pfs::Array2D* DivG = NULL;
 
   const int MSIZE = 32;         // minimum size of gaussian pyramid
 	
@@ -342,7 +358,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   if (nlevels == 0) nlevels = 1;
 
   pfs::Array2D** pyramids = new pfs::Array2D*[nlevels];
-  createGaussianPyramids(H, pyramids, nlevels);
+  createGaussianPyramids(H, pyramids, nlevels, ph);
 
   // calculate gradients and its average values on pyramid levels
   pfs::Array2D** gradients = new pfs::Array2D*[nlevels];
@@ -350,12 +366,12 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   for( k=0 ; k<nlevels ; k++ )
   {
     gradients[k] = new pfs::Array2D(pyramids[k]->getCols(), pyramids[k]->getRows());
-    avgGrad[k] = calculateGradients(pyramids[k],gradients[k], k);
+    avgGrad[k] = calculateGradients(pyramids[k],gradients[k], k, ph);
   }
 
   // calculate fi matrix
   pfs::Array2D* FI = new pfs::Array2D(width, height);
-  calculateFiMatrix(FI, gradients, avgGrad, nlevels, alfa, beta, noise, newfattal);
+  calculateFiMatrix(FI, gradients, avgGrad, nlevels, alfa, beta, noise, newfattal, ph);
 
 //  dumpPFS( "FI.pfs", FI, "Y" );
 
@@ -367,7 +383,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   for( y=0 ; y<height ; y++ ) {
 	ph->newValue(100*y/height);
 	if (ph->isTerminationRequested())
-	  break; 
+	  goto end; 
     
     for( x=0 ; x<width ; x++ )
     {
@@ -383,13 +399,13 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 //   dumpPFS( "Gy.pfs", Gy, "Y" );
   
   // calculate divergence
-  pfs::Array2D* DivG = new pfs::Array2D(width, height);
+  DivG = new pfs::Array2D(width, height);
   //#pragma omp parallel for shared(ph, DivG, Gx, Gy)
   //FIXME: Only update ph in thread 0
   for( y=0 ; y<height ; y++ ) {
 	ph->newValue(100*y/height);
 	if (ph->isTerminationRequested())
-	  break; 
+	  goto end;
     
     for( x=0 ; x<width ; x++ )
     {
@@ -402,24 +418,24 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 //  dumpPFS( "DivG.pfs", DivG, "Y" );
   
   // solve pde and exponentiate (ie recover compressed image)
-  pfs::Array2D* U = new pfs::Array2D(width, height);
-  solve_pde_multigrid( DivG, U );
+  U = new pfs::Array2D(width, height);
+  solve_pde_multigrid( DivG, U, ph);
 
   for( y=0 ; y<height ; y++ ) {
 	ph->newValue(100*y/height);
 	if (ph->isTerminationRequested())
-	  break; 
+	  goto end; 
     for( x=0 ; x<width ; x++ )
       (*L)(x,y) = exp( (*U)(x,y) ) - 1e-4;
   }
 	
   // remove percentile of min and max values and renormalize
-  findMaxMinPercentile(L, 0.001f, minLum, 0.995f, maxLum);
+  findMaxMinPercentile(L, 0.001f, minLum, 0.995f, maxLum, ph);
   maxLum -= minLum;
   for( y=0 ; y<height ; y++ ) {
 	ph->newValue(100*y/height);
 	if (ph->isTerminationRequested())
-	  break; 
+	  goto end; 
     for( x=0 ; x<width ; x++ )
     {
       (*L)(x,y) = ((*L)(x,y)-minLum) / maxLum;
@@ -429,6 +445,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   }
 
   // clean up
+  end:
   delete H;
   for( i=0 ; i<nlevels ; i++ )
   {
@@ -441,8 +458,10 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   delete FI;
   delete Gx;
   delete Gy;
-  delete DivG;
-  delete U;
+  if (DivG)
+  	delete DivG;
+  if (U)
+  	delete U;
 
   delete L;
   delete Y;

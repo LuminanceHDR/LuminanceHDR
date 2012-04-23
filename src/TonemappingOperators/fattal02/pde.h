@@ -33,6 +33,7 @@
 #define _fmg_pde_h_
 
 #include "TonemappingOperators/pfstmo.h"
+#include "Common/ProgressHelper.h"
 
 /**
  * @brief solve pde using full multrigrid algorithm
@@ -40,7 +41,7 @@
  * @param F array with divergence
  * @param U [out] sollution
  */
-void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U);
+void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph);
 
 #endif
 

@@ -458,6 +458,8 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
 		connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
 		//connect(hdrCreationManager.data(), SIGNAL(maximumValue(int)),this, SLOT(setProgressBar(int)));
 		//connect(hdrCreationManager.data(), SIGNAL(nextstep(int)),this, SLOT(updateProgressBar(int)));
+		connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
+			
         hdrCreationManager->setConfig(hdrcreationconfig);
         hdrCreationManager->setFileList(inputFiles);
         hdrCreationManager->loadInputFiles();
@@ -646,9 +648,11 @@ void CommandLineInterfaceManager::updateProgressBar(int value)
 {
 	if (verbose) {
 		if (value < oldValue) {
-			progressBar.reset();
-			progressBar.n = maximum;
-			progressBar.start();
+			//progressBar.reset();
+			//progressBar.n = maximum;
+			//progressBar.start();
+			progressBar.cur = value;
+			progressBar.setPct( ((float)value)/maximum );
 		}
 		if (started) {
 			started = false;
@@ -657,8 +661,15 @@ void CommandLineInterfaceManager::updateProgressBar(int value)
 		for (int i = 0; i < value - oldValue; i++)
 			++progressBar;
 		oldValue = value;
-		if (value == progressBar.n) {
-			std::cout << std::endl;
-		}
+		//if (value == progressBar.n) {
+		//	std::cout << std::endl;
+		//}
 	}
 }
+
+void CommandLineInterfaceManager::readData(QByteArray data)
+{
+	if (verbose)
+		std::cout << data.constData() << std::endl;
+}
+

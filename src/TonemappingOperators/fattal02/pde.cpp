@@ -327,7 +327,7 @@ static void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
 }
 
 
-void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
+void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
 {
   int xmax = F->getCols();
   int ymax = F->getRows();
@@ -382,6 +382,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
   // 3. nested iterations
   for( k=levels-1; k>=0 ; k-- )
   {
+  	ph->newValue(100*(levels - k)/levels);
     // 4. interpolate sollution from last coarse-grid to finer-grid
     // interpolate from level k+1 to level k (finer-grid)
     prolongate( IU[k+1], IU[k] );
@@ -461,6 +462,8 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
 
   pfs::copyArray( IU[0], U );
   
+  ph->newValue(99);
+
   delete VF[0];
   delete IU[0];
 
