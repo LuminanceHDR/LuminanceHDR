@@ -456,6 +456,8 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         connect(hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(createHDR(int)));
         connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 		connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
+		//connect(hdrCreationManager.data(), SIGNAL(maximumValue(int)),this, SLOT(setProgressBar(int)));
+		//connect(hdrCreationManager.data(), SIGNAL(nextstep(int)),this, SLOT(updateProgressBar(int)));
         hdrCreationManager->setConfig(hdrcreationconfig);
         hdrCreationManager->setFileList(inputFiles);
         hdrCreationManager->loadInputFiles();
@@ -563,6 +565,8 @@ void  CommandLineInterfaceManager::startTonemap()
 
         // Build TMWorker
         TMWorker tm_worker;
+		connect(&tm_worker, SIGNAL(tonemapSetMaximum(int)), this, SLOT(setProgressBar(int)));
+		connect(&tm_worker, SIGNAL(tonemapSetValue(int)), this, SLOT(updateProgressBar(int)));
 
         // Build a new TM frame
         // The scoped pointer will free the memory automatically later on
@@ -627,4 +631,34 @@ void CommandLineInterfaceManager::printHelp(char * progname)
             "\t" + tr("                       (No tonemapping is performed unless -o is specified).") + "\n\n" +
             tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
     printErrorAndExit(help);
+}
+
+void CommandLineInterfaceManager::setProgressBar(int max)
+{
+	maximum = max;
+	progressBar.reset();
+	progressBar.n = max;
+	std::cout << std::endl;
+	started = true;
+}
+
+void CommandLineInterfaceManager::updateProgressBar(int value)
+{
+	if (verbose) {
+		if (value < oldValue) {
+			progressBar.reset();
+			progressBar.n = maximum;
+			progressBar.start();
+		}
+		if (started) {
+			started = false;
+			progressBar.start();
+		}
+		for (int i = 0; i < value - oldValue; i++)
+			++progressBar;
+		oldValue = value;
+		if (value == progressBar.n) {
+			std::cout << std::endl;
+		}
+	}
 }

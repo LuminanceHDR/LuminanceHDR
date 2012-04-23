@@ -36,6 +36,7 @@
 #include "Core/TonemappingOptions.h"
 #include "HdrCreation/HdrCreationManager.h"
 #include "Libpfs/frame.h"
+#include "ezETAProgressBar.hpp"
 
 namespace pfs {
     class Frame;
@@ -76,6 +77,10 @@ private:
     config_triple hdrcreationconfig;
     QString loadHdrFilename;
     QStringList inputFiles;
+	ez::ezETAProgressBar progressBar;
+	int oldValue;
+	int maximum;
+	bool started;
 
     void startTonemap();
 
@@ -86,6 +91,8 @@ private slots:
     void createHDR(int);
     void parseArgs();
     void execCommandLineParamsSlot();
+	void setProgressBar(int);
+	void updateProgressBar(int);
 
 signals:
     void finishedParsing();
