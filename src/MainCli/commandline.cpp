@@ -140,6 +140,7 @@ static struct option cmdLineOptions[] = {
     { "tmo", required_argument, NULL, 't' },
     { "tmoptions", required_argument, NULL, 'p' },
     { "output", required_argument, NULL, 'o' },
+    { "quality", required_argument, NULL, 'q' },
     { NULL, 0, NULL, 0 }
 };
 
@@ -149,7 +150,8 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     operationMode(UNKNOWN_MODE),
     alignMode(NO_ALIGN),
     tmopts(TMOptionsOperations::getDefaultTMOptions()),
-    verbose(false)
+    verbose(false),
+	quality(100)
 {
     hdrcreationconfig.weights = TRIANGULAR;
     hdrcreationconfig.response_curve = LINEAR;
@@ -169,7 +171,7 @@ void CommandLineInterfaceManager::parseArgs()
 //        cliOptions += cmdLineOptions[i].val;
 //    }
 
-    while( (c = getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:u", cmdLineOptions, &optionIndex)) != -1 )
+    while( (c = getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:u:q:", cmdLineOptions, &optionIndex)) != -1 )
     {
         switch ( c )
         {
@@ -398,6 +400,11 @@ void CommandLineInterfaceManager::parseArgs()
         case 'o':
             saveLdrFilename=QString(optarg);
             break;
+        case 'q':
+            quality = QString(optarg).toInt();
+			if (quality < 0 || quality > 100)
+            	printErrorAndExit(tr("Error: Quality must be in the range [0-100]."));
+            break;
         case '?':
             printErrorAndExit(tr("Error: Unknown option %1.").arg(optopt));
         case ':':
@@ -575,7 +582,7 @@ void  CommandLineInterfaceManager::startTonemap()
         QScopedPointer<pfs::Frame> tm_frame( tm_worker.computeTonemap(HDR.data(), tmopts.data()) );
 
         // Create an ad-hoc IOWorker to save the file
-        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename, 100, tmopts.data()) )
+        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename, quality, tmopts.data()) )
         {
             // File save successful
             printIfVerbose( tr("Image %1 saved successfully").arg(saveLdrFilename) , verbose);
@@ -630,6 +637,7 @@ void CommandLineInterfaceManager::printHelp(char * progname)
             "\t\t" + tr("brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)") + "\n" +
             "\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
             "\t" + tr("-o --output LDR_FILE   File name you want to save your tone mapped LDR to.") + "\n" +
+            "\t" + tr("-q --quality VALUE   Quality of the saved tone mapped file (0-100).") + "\n" +
             "\t" + tr("                       (No tonemapping is performed unless -o is specified).") + "\n\n" +
             tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
     printErrorAndExit(help);

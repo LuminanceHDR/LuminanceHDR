@@ -81,6 +81,7 @@ private:
 	int oldValue;
 	int maximum;
 	bool started;
+	int quality;
 
     void startTonemap();
 
