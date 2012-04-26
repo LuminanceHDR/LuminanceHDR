@@ -51,8 +51,11 @@ namespace
 void printErrorAndExit(const QString& error_str)
 {
 	#if defined(_MSC_VER)
-		_setmode(_fileno(stderr), _O_U16TEXT);
+		// if the filemode isn't restored afterwards, a normal std::cout segfaults
+		int oldMode = _setmode(_fileno(stderr), _O_U16TEXT);
 		std::wcerr << qPrintable(error_str) << std::endl;
+		if (oldMode >= 0)
+			_setmode(_fileno(stderr), oldMode);
 	#else
 		std::cerr << qPrintable(error_str) << std::endl;
 	#endif
@@ -64,8 +67,11 @@ void printIfVerbose(const QString& str, bool verbose)
     if ( verbose )
     {
 		#if defined(_MSC_VER)
-			_setmode(_fileno(stdout), _O_U16TEXT);
+    		// if the filemode isn't restored afterwards, a normal std::cout segfaults
+			int oldMode = _setmode(_fileno(stdout), _O_U16TEXT);
 			std::wcout << qPrintable(str) << std::endl;
+			if (oldMode >= 0)
+				_setmode(_fileno(stdout), oldMode);
 		#else
     		std::cout << qPrintable(str) << std::endl;
 		#endif
