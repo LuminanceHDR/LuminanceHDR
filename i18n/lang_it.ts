@@ -873,6 +873,14 @@ Continuare?</translation>
         <source>Failed aligning images.</source>
         <translation>Allineamento immagini fallito.</translation>
     </message>
+    <message>
+        <source>Error: Quality must be in the range [0-100].</source>
+        <translation>Errore: La qualità deve essere nell&apos;intervallo [0-100].</translation>
+    </message>
+    <message>
+        <source>-q --quality VALUE   Quality of the saved tone mapped file (0-100).</source>
+        <translation>-q --quality VALORE   Qualità del file che viene salvato (0-100).</translation>
+    </message>
 </context>
 <context>
     <name>DnDOption</name>
