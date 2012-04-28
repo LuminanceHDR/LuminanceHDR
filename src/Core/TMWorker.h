@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __TM_WORKER_H__
-#define __TM_WORKER_H__
+#ifndef TMWORKER_H
+#define TMWORKER_H
 
 #include <QObject>
 #include <QString>
@@ -76,4 +76,4 @@ private:
     ProgressHelper* m_Callback;
 };
 
-#endif
+#endif // TMWORKER_H

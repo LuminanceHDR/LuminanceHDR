@@ -8,10 +8,10 @@
  * $Id: tmo_reinhard02.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
-#ifndef _tmo_reinhard02_h_
-#define _tmo_reinhard02_h_
+#ifndef TMO_REINHARD02_H
+#define TMO_REINHARD02_H
 
-#include "Common/ProgressHelper.h"
+class ProgressHelper;
 
 /**
  * Used to achieve temporal coherence
@@ -136,4 +136,4 @@ private:
 	void build_pyramid(double **, int, int);
 	void clean_pyramid();
 };
-#endif /* _tmo_reinhard02_h_ */
+#endif // TMO_REINHARD02_H

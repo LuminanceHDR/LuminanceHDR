@@ -34,8 +34,8 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 
-
 #define ROUNDING_ERROR 0.000001
+
 namespace pfs
 {
 class ResampleFilter

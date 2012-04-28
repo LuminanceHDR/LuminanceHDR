@@ -32,16 +32,17 @@
  * $Id: pde.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
-#include <iostream>
+#include "pde.h"
 
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 #include "Libpfs/vex.h"
 #include "Libpfs/array2d.h"
-
-#include "pde.h"
+#include "TonemappingOperators/pfstmo.h"
+#include "Common/ProgressHelper.h"
 
 using namespace std;
 

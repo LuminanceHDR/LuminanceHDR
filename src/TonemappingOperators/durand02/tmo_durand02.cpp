@@ -38,6 +38,7 @@
 #include <math.h>
 
 #include "TonemappingOperators/pfstmo.h"
+#include "Common/ProgressHelper.h"
 
 //#undef HAVE_FFTW3F
 

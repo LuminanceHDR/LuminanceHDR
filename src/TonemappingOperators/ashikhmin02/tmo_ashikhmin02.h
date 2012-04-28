@@ -26,12 +26,16 @@
  * $Id: tmo_ashikhmin02.h,v 1.4 2004/11/16 13:40:46 yoshida Exp $
  */
 
-#ifndef _tmo_ashikhmin02_h_
-#define _tmo_ashikhmin02_h_
+#ifndef TMO_ASHIKHMIN02_H
+#define TMO_ASHIKHMIN02_H
 
-#include "Libpfs/array2d.h"
-#include "Libpfs/frame.h"
-#include "Common/ProgressHelper.h"
+// Forward declaration
+namespace pfs {
+    class Array2D;
+    class Frame;
+}
+
+class ProgressHelper;
 
 /**
  * @brief Michael Ashikhmin tone mapping operator
@@ -47,4 +51,5 @@
 int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float avLum, bool simple_flag, float lc_value, int eq, ProgressHelper *ph);
 
 void pfstmo_ashikhmin02(pfs::Frame* inhdrframe, bool simple, float lc_value, int eq, ProgressHelper *ph);
-#endif
+
+#endif // TMO_ASHIKHMIN02_H

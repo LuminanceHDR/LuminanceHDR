@@ -28,10 +28,11 @@
  */
 
 #include <iostream>
-
 #include <fftw3.h>
 #include <math.h>
 
+#include "Libpfs/array2d.h"
+#include "Common/ProgressHelper.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "fastbilateral.h"
 

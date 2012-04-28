@@ -25,18 +25,19 @@
  * $Id: pfssize.h,v 1.4 2009/01/29 00:44:30 rafm Exp $
  */
 
-#ifndef __PFSSIZE_H__
-#define __PFSSIZE_H__
-
-#include "Libpfs/frame.h"
+#ifndef PFSSIZE_H
+#define PFSSIZE_H
 
 namespace pfs
 {
-  pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize);
-  
-  void downsampleArray(const pfs::Array2D *from, pfs::Array2D *to);
+    // forward declaration
+    class Frame;
+    class Array2D;
+
+    Frame* resizeFrame(Frame* frame,
+                            int xSize);
+    void downsampleArray(const Array2D *from,
+                         Array2D *to);
 }
 
-
-
-#endif
+#endif // PFSSIZE_H

@@ -30,7 +30,9 @@
 #include <math.h>
 #include <assert.h>
 
+#include "Common/ProgressHelper.h"
 #include "Libpfs/array2d.h"
+#include "Libpfs/frame.h"
 #include "tmo_ashikhmin02.h"
 #include "pyramid.h"
 

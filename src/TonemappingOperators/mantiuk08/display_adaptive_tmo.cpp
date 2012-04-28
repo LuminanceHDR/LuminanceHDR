@@ -150,7 +150,7 @@ static inline float safe_log10( float x, const float min_x = MIN_PHVAL, const fl
   else return log10( x );
 }
 
-#ifdef __USE_SSE__
+#ifdef LUMINANCE_USE_SSE
 
 #define LOG2_10 3.3219280948874f
 #define LOG2_10__1 (1.0f/LOG2_10)
@@ -441,7 +441,7 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
   
   // Compute log10 of an image
 #pragma omp parallel for default(none) shared(LP_high_raw, L)
-#ifndef __USE_SSE__
+#ifndef LUMINANCE_USE_SSE
   for( int i=0; i < pix_count; i++ )
     LP_high_raw[i] = safe_log10( L[i], min_val );
 #else
@@ -1025,7 +1025,7 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
     float L_fix = clamp_channel(L_in[i]);
     const float L_out = tc_lut.interp( log10(L_fix) );
     const float s = cc_lut.interp( log10(L_fix) ); // color correction
-#ifdef __USE_SSE__
+#ifdef LUMINANCE_USE_SSE
     v4sf vec = _mm_set_ps(R_in[i], G_in[i], B_in[i], 0) / _mm_set1_ps(L_fix);
     vec = _mm_max_ps(vec, _mm_set1_ps(MIN_PHVAL));
     vec = _mm_pow_ps(vec, _mm_set1_ps(s));

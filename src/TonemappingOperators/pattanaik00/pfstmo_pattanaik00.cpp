@@ -31,12 +31,14 @@
  * $Id: pfstmo_pattanaik00.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
+#include "tmo_pattanaik00.h"
+
 #include <iostream>
 #include <cmath>
 
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
-#include "tmo_pattanaik00.h"
+#include "Common/ProgressHelper.h"
 
 void multiplyChannels( pfs::Array2D* X, pfs::Array2D* Y, pfs::Array2D* Z, float mult );
 

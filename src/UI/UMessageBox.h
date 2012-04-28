@@ -25,8 +25,8 @@
  *
  */
 
-#ifndef __UNIVERSAL_MESSAGE_BOX__
-#define __UNIVERSAL_MESSAGE_BOX__
+#ifndef UMESSAGEBOX_H
+#define UMESSAGEBOX_H
 
 #include <QMessageBox>
 #include <QString>
@@ -68,4 +68,4 @@ public:
   static void donationSplashMB(QWidget* parent);
 };
 
-#endif
+#endif // UMESSAGEBOX_H

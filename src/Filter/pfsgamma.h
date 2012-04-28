@@ -25,16 +25,22 @@
  * $Id: pfsgamma.h,v 1.3 2008/07/29 16:14:29 rafm Exp $
  */
 
-#ifndef __PFSGAMMA_H__
-#define __PFSGAMMA_H__
+#ifndef PFSGAMMA_H
+#define PFSGAMMA_H
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
 
 namespace pfs
 {
-  void applyGamma(pfs::Array2D *array, const float exponent, const float multiplier);
-  pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma);
+    // Note: passing basic types by "const" copy is completely useless,
+    // and shows a wrong design either [Davide: 2012.04.28]
+    void applyGamma(pfs::Array2D *array,
+                    const float exponent,
+                    const float multiplier);
+
+    pfs::Frame* applyGammaOnFrame(pfs::Frame* frame,
+                                  const float gamma);
 }
 
-#endif
+#endif // PFSGAMMA_H

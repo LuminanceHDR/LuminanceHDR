@@ -28,11 +28,15 @@
  */
 
 
-#ifndef _fastbilateral_h_
-#define _fastbilateral_h_
+#ifndef FASTBILATERAL_H
+#define FASTBILATERAL_H
 
-#include "Libpfs/array2d.h"
-#include "Common/ProgressHelper.h"
+class ProgressHelper;
+
+namespace pfs {
+    class Array2D;
+}
+
 
 /**
  * @brief Fast bilateral filtering

@@ -25,8 +25,8 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
  
-#ifndef __CHANNEL_H__
-#define __CHANNEL_H__
+#ifndef CHANNEL_H
+#define CHANNEL_H
 
 #include <string>
 #include <map>
@@ -168,5 +168,5 @@ namespace pfs
 }
 
 
-#endif //__CHANNEL_H__
+#endif // CHANNEL_H
 

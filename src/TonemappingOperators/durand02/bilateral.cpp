@@ -31,6 +31,8 @@
 #include "arch/math.h"
 
 #include "TonemappingOperators/pfstmo.h"
+#include "Common/ProgressHelper.h"
+#include "Libpfs/array2d.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)

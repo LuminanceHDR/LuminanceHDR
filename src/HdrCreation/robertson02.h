@@ -27,8 +27,8 @@
  * $Id: robertson02.h,v 1.3 2006/09/13 11:52:56 gkrawczyk Exp $
  */
 
-#ifndef _robertson02_h_
-#define _robertson02_h_
+#ifndef ROBERTSON02_H
+#define ROBERTSON02_H
 
 #include <QList>
 #include <QImage>
@@ -60,4 +60,4 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
 int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
   float* I, const float* w, const int M, const int chan, const bool ldrinput, ... );
 
-#endif /* #ifndef _robertson02_h_ */
+#endif // ROBERTSON02_H

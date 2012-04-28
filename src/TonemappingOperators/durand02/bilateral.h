@@ -29,11 +29,15 @@
  */
 
 
-#ifndef _bilateral_h_
-#define _bilateral_h_
+#ifndef BILATERAL_H
+#define BILATERAL_H
 
-#include "Common/progressHelper.h"
-#include "Libpfs/array2d.h"
+// forward declaration
+class ProgressHelper;
+
+namespace pfs {
+    class Array2D;
+}
 
 /**
  * @brief Bilateral filtering

@@ -91,7 +91,7 @@ float DisplayFunctionGGBA::display( float pix )
   return pow( pix, gamma ) * (L_max-L_black) + L_offset;
 }
 
-#ifdef __USE_SSE__
+#ifdef LUMINANCE_USE_SSE
 
 v4sf DisplayFunctionGGBA::inv_display( v4sf L )
 {

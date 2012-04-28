@@ -28,8 +28,8 @@
  * $Id: colorspace.h,v 1.6 2007/07/18 08:49:25 rafm Exp $
  */
 
-#ifndef __COLORSPACE_H__
-#define __COLORSPACE_H__
+#ifndef COLORSPACE_H
+#define COLORSPACE_H
 
 #include "array2d.h"
 
@@ -86,4 +86,4 @@ namespace pfs
   
 }
 
-#endif // __COLORSPACE_H__
+#endif // COLORSPACE_H

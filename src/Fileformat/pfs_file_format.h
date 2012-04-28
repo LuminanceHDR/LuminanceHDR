@@ -24,8 +24,8 @@
  *
  */
 
-#ifndef __PFS_FILE_FORMAT_H__
-#define __PFS_FILE_FORMAT_H__
+#ifndef PFS_FILE_FORMAT_H
+#define PFS_FILE_FORMAT_H
 
 #include "Fileformat/rgbeio.h"
 #include "Fileformat/pfstiff.h"
@@ -46,4 +46,4 @@ void writeEXRfile(pfs::Frame* inpfsframe, const char* outfilename);
 pfs::Frame* readRGBEfile(const char * filename);
 void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename);
 
-#endif
+#endif // PFS_FILE_FORMAT_H

@@ -25,8 +25,11 @@
  * $Id: tmo_drago03.h,v 1.3 2008/09/04 12:46:48 julians37 Exp $
  */
 
-#ifndef _tmo_drago03_h_
-#define _tmo_drago03_h_
+#ifndef TMO_DRAGO03_H
+#define TMO_DRAGO03_H
+
+// forward declaration
+class ProgressHelper;
 
 /**
  * @brief Frederic Drago Logmapping Algorithm
@@ -42,8 +45,6 @@
  * @param avLum logarithmic average of luminance in the image
  * @param bias bias parameter of tone mapping algorithm (eg 0.85)
  */
-
-#include "Common/ProgressHelper.h"
 
 void tmo_drago03(unsigned int width, unsigned int height,
   const float* Y, float* L,

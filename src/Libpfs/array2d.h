@@ -33,8 +33,8 @@
  *
  */
 
-#ifndef __ARRAY2D_H__
-#define __ARRAY2D_H__
+#ifndef ARRAY2D_H
+#define ARRAY2D_H
 
 namespace pfs
 { 
@@ -204,4 +204,4 @@ namespace pfs
     void divideArray(Array2D *z, const Array2D *x, const Array2D *y);
 }
 
-#endif // __ARRAY2D_H__
+#endif // ARRAY2D_H

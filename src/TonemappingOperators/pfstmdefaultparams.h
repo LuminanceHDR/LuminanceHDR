@@ -24,8 +24,8 @@
  *
  */
 
-#ifndef __TonemappingOptionsDefault_H__
-#define __TonemappingOptionsDefault_H__
+#ifndef PFSTMDEFAULTPARAMS_H
+#define PFSTMDEFAULTPARAMS_H
 
 // Ashikhmin
 #define ASHIKHMIN_SIMPLE false
@@ -79,4 +79,4 @@
 #define REINHARD05_CHROMATIC_ADAPTATION 0.0
 #define REINHARD05_LIGHT_ADAPTATION 1.0
 
-#endif
+#endif // PFSTMDEFAULTPARAMS_H

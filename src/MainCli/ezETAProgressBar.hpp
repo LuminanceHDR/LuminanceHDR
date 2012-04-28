@@ -47,7 +47,7 @@ namespace ez {
 // 90% [##################################################     ] ETA 12d 23h 56s
 class ezETAProgressBar {
 public:
-	ezETAProgressBar(unsigned int _n=0) : n(_n), pct(0), cur(0), width(80) {}
+    ezETAProgressBar(unsigned int p_n=0) : n(p_n), pct(0), cur(0), width(80) {}
 	void reset() { pct = 0; cur = 0; }
 	void start() { 
 		#ifdef WIN32

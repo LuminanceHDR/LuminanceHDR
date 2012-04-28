@@ -25,8 +25,8 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
 
-#ifndef __DOMIO_H__
-#define __DOMIO_H__
+#ifndef DOMIO_H
+#define DOMIO_H
 
 #include "frame.h"
 
@@ -92,7 +92,7 @@ namespace pfs
 
 }
 
-#endif // __DOMIO_H__
+#endif // DOMIO_H
 
 
 

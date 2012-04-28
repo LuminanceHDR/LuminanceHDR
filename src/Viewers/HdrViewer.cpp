@@ -114,7 +114,7 @@ public:
 
     void getMapping(float r, float g, float b, QRgb& pixel)
     {
-#ifdef __USE_SSE__
+#ifdef LUMINANCE_USE_SSE
         v4sf rgb = (_mm_set_ps(0, b, g, r) - _mm_set1_ps(m_MinValue)) / _mm_set1_ps(m_Range);
 
         switch ( m_MappingMethod )
@@ -195,8 +195,8 @@ public:
     QImage mapFrameToImage(pfs::Frame* in_frame)
     {
 #ifdef TIMER_PROFILING
-        msec_timer __timer;
-        __timer.start();
+        msec_timer stop_watch;
+        stop_watch.start();
 #endif
 
         // Channels X Y Z contain R G B data
@@ -231,8 +231,8 @@ public:
         }
 
 #ifdef TIMER_PROFILING
-        __timer.stop_and_update();
-        std::cout << "HdrViewer::mapFrameToImage() [NEW]= " << __timer.get_time() << " msec" << std::endl;
+        stop_watch.stop_and_update();
+        std::cout << "HdrViewer::mapFrameToImage() [NEW]= " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 
         return return_qimage;

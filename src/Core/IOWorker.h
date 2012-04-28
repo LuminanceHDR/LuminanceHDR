@@ -27,8 +27,8 @@
  *
  */
 
-#ifndef __IO_WORKER_H__
-#define __IO_WORKER_H__
+#ifndef IOWORKER_H
+#define IOWORKER_H
 
 #ifdef __APPLE__
 #include <libraw.h>
@@ -93,4 +93,4 @@ signals:
     void IO_finish();
 };
 
-#endif
+#endif // IOWORKER_H

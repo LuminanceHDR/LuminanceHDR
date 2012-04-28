@@ -22,11 +22,11 @@
  *  
  */
  
- #ifndef _ARCH_STRING_H
-#define _ARCH_STRING_H
+#ifndef ARCH_STRING_H
+#define ARCH_STRING_H
 
-	#if defined(_MSC_VER)
-		#define strcasecmp _stricmp 
-	#endif
-
+#if defined(_MSC_VER)
+#define strcasecmp _stricmp
 #endif
+
+#endif  //  ARCH_STRING_H

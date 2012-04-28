@@ -65,8 +65,8 @@ inline int clamp_and_offset_to_8bits(float value, const float& min, const float&
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_luminance)
 {
 #ifdef TIMER_PROFILING
-    msec_timer __timer;
-    __timer.start();
+    msec_timer stop_watch;
+    stop_watch.start();
 #endif
 
     assert( in_frame != NULL );
@@ -95,8 +95,8 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_
     }
 
 #ifdef TIMER_PROFILING
-    __timer.stop_and_update();
-    std::cout << "fromLDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
+    stop_watch.stop_and_update();
+    std::cout << "fromLDRPFStoQImage() = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 
     return temp_qimage;

@@ -31,6 +31,7 @@
  */
 
 #include "TonemappingOperators/pfstmo.h"
+#include "Common/ProgressHelper.h"
 #include "tmo_reinhard05.h"
 
 #include <assert.h>

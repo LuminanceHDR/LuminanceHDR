@@ -69,8 +69,8 @@ inline int clamp_and_offset_to_8bits(float value, const float& min, const float&
 QImage* fromHDRPFStoQImage(pfs::Frame* in_frame)
 {
 #ifdef TIMER_PROFILING
-    msec_timer __timer;
-    __timer.start();
+    msec_timer stop_watch;
+    stop_watch.start();
 #endif
 
     assert( in_frame != NULL );
@@ -129,8 +129,8 @@ QImage* fromHDRPFStoQImage(pfs::Frame* in_frame)
     }
 
 #ifdef TIMER_PROFILING
-    __timer.stop_and_update();
-    std::cout << "fromHDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
+    stop_watch.stop_and_update();
+    std::cout << "fromHDRPFStoQImage() = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 
     return temp_qimage;

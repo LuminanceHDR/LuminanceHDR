@@ -29,11 +29,14 @@
  * $Id: pde.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
-#ifndef _fmg_pde_h_
-#define _fmg_pde_h_
+#ifndef FMG_PDE_H
+#define FMG_PDE_H
 
-#include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
+class ProgressHelper;
+
+namespace pfs {
+    class Array2D;
+}
 
 /**
  * @brief solve pde using full multrigrid algorithm

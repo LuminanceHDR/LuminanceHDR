@@ -25,8 +25,8 @@
  *
  */
 
-#ifndef __BATCH_TM_JOB__
-#define __BATCH_TM_JOB__
+#ifndef BATCHTMJOB_H
+#define BATCHTMJOB_H
 
 #include <QThread>
 
@@ -56,4 +56,4 @@ private:
     QString         m_ldr_output_format;
 };
 
-#endif // __BATCH_TM_JOB__
+#endif // BATCHTMJOB_H

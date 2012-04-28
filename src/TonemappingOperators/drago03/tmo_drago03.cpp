@@ -29,16 +29,15 @@
  * $Id: tmo_drago03.cpp,v 1.4 2008/11/04 23:43:08 rafm Exp $
  */
 
-#include <math.h>
-
-#include "TonemappingOperators/pfstmo.h"
 #include "tmo_drago03.h"
 
+#include <math.h>
 #include <assert.h>
+#include "TonemappingOperators/pfstmo.h"
+#include "Common/ProgressHelper.h"
 
 /// Type of algorithm
 #define FAST 0
-
 
 inline float biasFunc(float b, float x)
 {

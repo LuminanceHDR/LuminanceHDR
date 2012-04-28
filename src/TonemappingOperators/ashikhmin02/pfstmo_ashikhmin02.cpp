@@ -36,6 +36,7 @@
 
 #include "Libpfs/colorspace.h"
 #include "Libpfs/frame.h"
+#include "Common/ProgressHelper.h"
 #include "tmo_ashikhmin02.h"
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum);

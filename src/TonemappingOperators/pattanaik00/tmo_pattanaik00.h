@@ -32,12 +32,15 @@
  */
 
 
-#ifndef _tmo_pattanaik00_h_
-#define _tmo_pattanaik00_h_
+#ifndef TMO_PATTANAIK00_H
+#define TMO_PATTANAIK00_H
 
-#include "Libpfs/pfs.h"
-#include "Common/ProgressHelper.h"
+namespace pfs {
+    class Array2D;
+    class Frame;
+}
 
+class ProgressHelper;
 class VisualAdaptationModel;
 
 /**
@@ -122,19 +125,27 @@ public:
 
   /// Get cone adaptation level
   float getAcone()
-  { return Acone; };
+  {
+      return Acone;
+  }
 
   /// Get rod adaptation level
   float getArod()
-  { return Arod; };
+  {
+      return Arod;
+  }
 
   /// Get cone bleaching term
   float getBcone()
-  { return Bcone; };
+  {
+      return Bcone;
+  }
 
   /// Get rod bleaching term
   float getBrod()
-  { return Brod; };
+  {
+      return Brod;
+  }
 
 };
 

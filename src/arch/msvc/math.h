@@ -22,8 +22,8 @@
  *  
  */
 
-#ifndef _MSVC_MATH_H
-#define _MSVC_MATH_H
+#ifndef MSVC_MATH_H
+#define MSVC_MATH_H
 
 #define _USE_MATH_DEFINES
 #include <math.h> // re-include here
@@ -50,4 +50,4 @@
 	#define snprintf sprintf_s
 #endif
 
-#endif
+#endif  // MSVC_MATH_H

@@ -26,8 +26,8 @@
  * $Id: pfsrotate.h,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
 
-#ifndef __PFSROTATE_H__
-#define __PFSROTATE_H__
+#ifndef PFSROTATE_H
+#define PFSROTATE_H
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
@@ -38,4 +38,4 @@ namespace pfs
   pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise);
 }
 
-#endif 
+#endif // PFSROTATE_H

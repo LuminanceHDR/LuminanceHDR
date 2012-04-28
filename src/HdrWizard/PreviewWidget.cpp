@@ -353,10 +353,10 @@ void PreviewWidget::requestedBlendMode(int newindex) {
 	this->update();
 }
 
-void PreviewWidget::setPivot(QImage *p, int _px, int _py) {
+void PreviewWidget::setPivot(QImage *p, int p_px, int p_py) {
 	pivotImage=p;
-	px=_px;
-	py=_py;
+    px=p_px;
+    py=p_py;
 	prev_computed=QRegion();
 }
 
@@ -364,10 +364,10 @@ void PreviewWidget::setPivot(QImage *p) {
 	pivotImage = p;
 }
 
-void PreviewWidget::setMovable(QImage *m, int _mx, int _my) {
+void PreviewWidget::setMovable(QImage *m, int p_mx, int p_my) {
 	movableImage=m;
-	mx=_mx;
-	my=_my;
+    mx=p_mx;
+    my=p_my;
 	prev_computed=QRegion();
 }
 

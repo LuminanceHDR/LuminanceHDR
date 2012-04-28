@@ -34,6 +34,7 @@
 #include <iostream>
 
 #include "Libpfs/frame.h"
+#include "Common/ProgressHelper.h"
 #include "tmo_drago03.h"
 
 void pfstmo_drago03(pfs::Frame *frame, float biasValue, ProgressHelper *ph)

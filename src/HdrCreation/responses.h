@@ -28,8 +28,8 @@
  * $Id: responses.cpp,v 1.6 2006/09/13 14:27:06 gkrawczyk Exp $
  */
 
-#ifndef _std_responses_h_
-#define _std_responses_h_
+#ifndef RESPONSES_H
+#define RESPONSES_H
 
 #include <stdio.h>
 
@@ -150,4 +150,4 @@ bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M);
  */
 bool weightsLoad( FILE* file, float* w, int M);
 
-#endif
+#endif  // RESPONSES_H

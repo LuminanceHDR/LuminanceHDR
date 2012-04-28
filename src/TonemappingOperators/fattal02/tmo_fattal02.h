@@ -30,8 +30,10 @@
  * $Id: tmo_fattal02.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
-#ifndef _tmo_fattal02_h_
-#define _tmo_fattal02_h_
+#ifndef TMO_FATTAL02_H
+#define TMO_FATTAL02_H
+
+class ProgressHelper;
 
 /**
  * @brief Gradient Domain High Dynamic Range Compression
@@ -47,8 +49,6 @@
  * @param beta parameter beta (refer to the paper)
  * @param noise gradient level of noise (extra parameter)
  */
-
-#include "Common/ProgressHelper.h"
 
 void tmo_fattal02(unsigned int width, unsigned int height, const float* Y, float* L, float alfa, float beta, float noise, bool newfattal, ProgressHelper *ph);
 

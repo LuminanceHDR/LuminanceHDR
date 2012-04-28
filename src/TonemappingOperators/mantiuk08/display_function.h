@@ -47,7 +47,7 @@ public:
    */
   virtual float display( float pix ) = 0;
 
-#ifdef __USE_SSE__
+#ifdef LUMINANCE_USE_SSE
   virtual v4sf inv_display( v4sf L ) = 0;
   virtual v4sf display( v4sf L ) = 0;
 #endif
@@ -75,7 +75,7 @@ public:
   float inv_display( float L );
   float display( float pix );
 
-#ifdef __USE_SSE__
+#ifdef LUMINANCE_USE_SSE
   virtual v4sf inv_display( v4sf L );
   virtual v4sf display( v4sf L );
 #endif

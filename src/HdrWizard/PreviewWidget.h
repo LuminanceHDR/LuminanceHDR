@@ -49,9 +49,9 @@ public:
 		renderPreviewImage(blendmode);
                 return previewImage;
 	}
-	void setPivot(QImage *p, int _px, int _py);
+    void setPivot(QImage *p, int p_px, int p_py);
 	void setPivot(QImage *p);
-	void setMovable(QImage *m, int _mx, int _my);
+    void setMovable(QImage *m, int p_mx, int p_my);
 	void setMovable(QImage *m);
 	void updateVertShiftMovable(int v);
 	void updateHorizShiftMovable(int h);

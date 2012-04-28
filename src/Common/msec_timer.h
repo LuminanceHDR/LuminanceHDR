@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __TIMING_C_H__
-#define __TIMING_C_H__
+#ifndef MSEC_TIMER_H
+#define MSEC_TIMER_H
 
 #if defined(_WIN32) || defined(__CYGWIN__)
 #define WIN_TIMER
@@ -85,4 +85,4 @@ public:
 
 double convert_to_gigaflops(double, double);
 
-#endif // __TIMING_C_H__
+#endif // MSEC_TIMER_H

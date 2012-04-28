@@ -26,8 +26,8 @@
  *   Frame definition split from pfs.cpp
  */
 
-#ifndef __PFS_FRAME_H__
-#define __PFS_FRAME_H__
+#ifndef PFS_FRAME_H
+#define PFS_FRAME_H
 
 #include <string>
 
@@ -175,4 +175,4 @@ namespace pfs
     };
 }
 
-#endif // __FRAME_H__
+#endif // PFS_FRAME_H

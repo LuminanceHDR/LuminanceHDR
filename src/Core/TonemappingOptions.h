@@ -29,8 +29,8 @@
  *
  */
 
-#ifndef __TonemappingOptions_H__
-#define __TonemappingOptions_H__
+#ifndef TONEMAPPINGOPTIONS_H
+#define TONEMAPPINGOPTIONS_H
 
 #include <QString>
 
@@ -143,4 +143,4 @@ private:
         const TonemappingOptions* opts;
 };
 
-#endif
+#endif // TONEMAPPINGOPTIONS_H

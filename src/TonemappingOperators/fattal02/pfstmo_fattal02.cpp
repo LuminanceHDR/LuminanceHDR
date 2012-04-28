@@ -31,11 +31,13 @@
  * $Id: pfstmo_fattal02.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
+#include "tmo_fattal02.h"
+
 #include <cmath>
 #include <iostream>
 
 #include "Libpfs/frame.h"
-#include "tmo_fattal02.h"
+#include "Common/ProgressHelper.h"
 
 void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal, ProgressHelper *ph)
 {  

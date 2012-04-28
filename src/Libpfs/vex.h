@@ -22,15 +22,15 @@
  *
  */
 
-#ifndef __VEX_H__
-#define __VEX_H__
+#ifndef VEX_H
+#define VEX_H
 
 #ifdef __SSE__
 
 //#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
 //#include <ppc_intrinsics.h>
 #if __i386__ || __x86_64__
-#define __USE_SSE__
+#define LUMINANCE_USE_SSE
 #include <mm_malloc.h>
 #include <xmmintrin.h>
 #include <mm_malloc.h>
@@ -46,12 +46,12 @@
 // C[i] = A[i] - B[i]
 void VEX_vsub(const float* A, const float* B, float* C, const int N);
 // C[i] = A[i] - val * B[i]
-void VEX_vsubs(const float* A, const float val, const float* B, float* C, const int N);
+void VEX_vsubs(const float* A, const float premultiplier, const float* B, float* C, const int N);
 
 // C[i] = A[i] + B[i]
 void VEX_vadd(const float* A, const float* B, float* C, const int N);
 // C[i] = A[i] + val * B[i]
-void VEX_vadds(const float* A, const float val, const float* B, float* C, const int N);
+void VEX_vadds(const float* A, const float premultiplier, const float* B, float* C, const int N);
 
 // C[i] = A[i] * B[i]
 void VEX_vmul(const float* A, const float* B, float* C, const int N);
@@ -64,8 +64,8 @@ void VEX_vdiv(const float* A, const float* B, float* C, const int N);
 // O[i] = i[i]
 void VEX_vcopy(const float* I, float* O, const int N);
 
-// IO[i] = val
-void VEX_vset(float* IO, const float val, const int N);
+// IO[i] = value
+void VEX_vset(float* IO, const float value, const int N);
 
 // IO[i] = 0.0f
 void VEX_vreset(float* IO, const int N);
@@ -74,7 +74,7 @@ void VEX_dotpr(const float* I1, const float* I2, float& val, const int N);
 
 //void mm_3x3(float i1, float i2, float i3, float &o1, float &o2, float &o3, const float mat[3][3]);
 
-#ifdef __USE_SSE__
+#ifdef LUMINANCE_USE_SSE
 typedef __v4sf v4sf;
 v4sf _mm_log2_ps(v4sf);
 v4sf _mm_exp2_ps(v4sf);

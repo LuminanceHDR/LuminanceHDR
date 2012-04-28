@@ -39,6 +39,7 @@
 #include <assert.h>
 
 #include "TonemappingOperators/pfstmo.h"
+#include "Common/ProgressHelper.h"
 #include "pde.h"
 #include "tmo_fattal02.h"
 

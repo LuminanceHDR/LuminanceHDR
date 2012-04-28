@@ -31,13 +31,15 @@
  * $Id: pfstmo_reinhard05.cpp,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
+#include "tmo_reinhard05.h"
+
 #include <iostream>
 #include <sstream>
 #include <cmath>
 
-#include "tmo_reinhard05.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
+#include "Common/ProgressHelper.h"
 
 void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation, ProgressHelper *ph)
 {  

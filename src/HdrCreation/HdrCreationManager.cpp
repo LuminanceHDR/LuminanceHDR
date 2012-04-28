@@ -43,8 +43,8 @@
 pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 {
 #ifdef TIMER_PROFILING
-    msec_timer __timer;
-    __timer.start();
+    msec_timer stop_watch;
+    stop_watch.start();
 #endif
 
 	int width = in->getCols();
@@ -91,8 +91,8 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 		}
 	}
 #ifdef TIMER_PROFILING
-    __timer.stop_and_update();
-    std::cout << "shiftPfsArray2D = " << __timer.get_time() << " msec" << std::endl;
+    stop_watch.stop_and_update();
+    std::cout << "shiftPfsArray2D = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 
 	return out;

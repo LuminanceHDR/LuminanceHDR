@@ -22,20 +22,20 @@
  *  
  */
  
- #ifndef _ARCH_MINMAX_H
-#define _ARCH_MINMAX_H
+#ifndef ARCH_MINMAX_H
+#define ARCH_MINMAX_H
 
 
-	#if defined(_MSC_VER)
-		#include <minmax.h>
-	#else
-		#ifndef max
-			#define max(a,b)            (((a) > (b)) ? (a) : (b))
-			#endif
-
-			#ifndef min
-			#define min(a,b)            (((a) < (b)) ? (a) : (b))
-			#endif
-	#endif
-
+#if defined(_MSC_VER)
+#include <minmax.h>
+#else
+#ifndef max
+#define max(a,b)            (((a) > (b)) ? (a) : (b))
 #endif
+
+#ifndef min
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
+#endif
+
+#endif // ARCH_MINMAX_H

@@ -25,8 +25,8 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
  
-#ifndef __PFS_TAG_H__
-#define __PFS_TAG_H__
+#ifndef PFS_TAG_H
+#define PFS_TAG_H
 
 #include <list>
 #include <string>
@@ -177,6 +177,6 @@ namespace pfs
 
 }
 
-#endif // __PFS_TAG_H__
+#endif // PFS_TAG_H
 
 

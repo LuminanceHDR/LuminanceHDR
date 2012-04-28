@@ -30,8 +30,10 @@
  * $Id: tmo_reinhard05.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
-#ifndef _tmo_reinhard05_h_
-#define _tmo_reinhard05_h_
+#ifndef TMO_REINHARD05_H
+#define TMO_REINHARD05_H
+
+class ProgressHelper;
 
 /**
  * @brief: Tone mapping algorithm [Reinhard2005]
@@ -46,11 +48,8 @@
  * @param ca amount of chromatic adaptation 0:1 (saturation, def 0)
  * @param la amount of light adaptation 0:1 (local/global, def 1)
  */
-
-#include "Common/ProgressHelper.h"
-
 void tmo_reinhard05(unsigned int width, unsigned int height,
   float* R, float* G, float* B, 
   const float* Y, float br, float ca, float la, ProgressHelper *ph );
 
-#endif
+#endif // TMO_REINHARD05_H

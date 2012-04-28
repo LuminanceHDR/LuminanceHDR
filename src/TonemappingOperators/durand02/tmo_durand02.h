@@ -32,13 +32,12 @@
  * $Id: tmo_durand02.h,v 1.4 2009/02/23 19:09:41 rafm Exp $
  */
 
-#ifndef _tmo_durand02_h_
-#define _tmo_durand02_h_
+#ifndef TMO_DURAND02_H
+#define TMO_DURAND02_H
 
-#include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
+class ProgressHelper;
 
-/*
+/**
  * @brief Fast bilateral filtering
  *
  * @param width image width
@@ -59,4 +58,4 @@ void tmo_durand02(unsigned int width, unsigned int height,
   ProgressHelper *ph = 0);
 
 
-#endif /* _tmo_durand02_h_ */
+#endif // TMO_DURAND02_H
