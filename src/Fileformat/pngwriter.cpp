@@ -55,7 +55,7 @@ bool PngWriter::writeQImageToPng()
 	cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
 	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size);			// get the size
 
-#ifdef __APPLE__
+#if PNG_LIBPNG_VER_MINOR < 5
     std::vector<char> profile_buffer(profile_size);
 #else
     std::vector<unsigned char> profile_buffer(profile_size);
@@ -152,7 +152,7 @@ bool PngWriter::writeQImageToPng()
 
 	char profileName[5] = "sRGB";
 	png_set_iCCP(png_ptr, info_ptr, profileName, 0,
-				reinterpret_cast<char*>(profile_buffer.data()), (png_uint_32)profile_size);
+				profile_buffer.data(), (png_uint_32)profile_size);
 
 	png_write_info(png_ptr, info_ptr);
 
