@@ -225,7 +225,8 @@ IF NOT EXIST tiff-4.0.1 (
 
 
 IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.6.tar (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.6.tar.gz http://www.libraw.org/data/LibRaw-0.14.6.tar.gz
+	rem %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.6.tar.gz http://www.libraw.org/data/LibRaw-0.14.6.tar.gz
+	rem %CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-0.14.6.tar.gz
 )
 IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz http://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
@@ -237,20 +238,20 @@ IF NOT EXIST LibRaw-demosaic-pack-GPL2-0.14.6 (
 )
 
 IF NOT EXIST LibRaw-0.14.6 (
-	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-0.14.6.tar.gz
-	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/LibRaw-0.14.6.tar
+	rem %CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-0.14.6.tar.gz
+	rem %CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/LibRaw-0.14.6.tar
 	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.6.zip
-	rem %CYGWIN_DIR%\bin\git.exe clone git://github.com/LibRaw/LibRaw.git LibRaw-0.14.6
+	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/LibRaw.git LibRaw-0.14.6
 	
 	
 	pushd LibRaw-0.14.6
 	
-	echo.COPT="/arch:SSE2 /openmp">> qtpfsgui_commands.in
-	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.6> qtpfsgui_commands.in
+	echo.COPT_OPT="/arch:SSE2 /openmp"> qtpfsgui_commands.in
+	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.6>> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
 	rem echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-2.3\include">> qtpfsgui_commands.in
 	rem echo.LCMS_LIB="..\lcms2-2.3\bin\lcms2_dll.lib">> qtpfsgui_commands.in
-	echo.LCMS_DEF="/DUSE_LCMS /DCMS_DLL /I..\lcms-1.19\include">> qtpfsgui_commands.in
+	echo.LCMS_DEF="/DUSE_LCMS /DLCMS_DLL /I..\lcms-1.19\include">> qtpfsgui_commands.in
 	echo.LCMS_LIB="..\lcms-1.19\bin\lcms.lib">> qtpfsgui_commands.in
 
 	nmake /f Makefile.msvc @qtpfsgui_commands.in clean
