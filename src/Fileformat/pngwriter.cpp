@@ -152,7 +152,7 @@ bool PngWriter::writeQImageToPng()
 
 	char profileName[5] = "sRGB";
 	png_set_iCCP(png_ptr, info_ptr, profileName, 0,
-					  profile_buffer.data(), (png_uint_32)profile_size);
+				reinterpret_cast<char*>(profile_buffer.data()), (png_uint_32)profile_size);
 
 	png_write_info(png_ptr, info_ptr);
 
