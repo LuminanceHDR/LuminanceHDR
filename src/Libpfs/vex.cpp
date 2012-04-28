@@ -152,7 +152,7 @@ void VEX_vsubs(const float* A, const float premultiplier, const float* B, float*
 #pragma omp parallel for
   for (int idx = 0; idx < N; ++idx )
   {
-    C[idx] = A[idx] - val * B[idx];
+    C[idx] = A[idx] - premultiplier * B[idx];
   }
 #endif
 }
@@ -274,7 +274,7 @@ void VEX_vadds(const float* A, const float premultiplier, const float* B, float*
 #pragma omp parallel for
   for (int idx = 0; idx < N; ++idx )
   {
-    C[idx] = A[idx] + val * B[idx];
+    C[idx] = A[idx] + premultiplier * B[idx];
   }
 #endif
 }
@@ -326,7 +326,7 @@ void VEX_vsmul(const float* I, const float premultiplier, float* O, const int N)
 #pragma omp parallel for
   for(int idx = 0; idx < N; ++idx)
   {
-    O[idx] = val * I[idx];
+    O[idx] = premultiplier * I[idx];
   }
 #endif
 }
@@ -515,7 +515,7 @@ void VEX_vset(float* IO, const float premultiplier, const int N)
 #pragma omp parallel for
   for(int idx = 0; idx < N; ++idx)
   {
-    IO[idx] = val;
+    IO[idx] = premultiplier;
   }
 #endif
 }
