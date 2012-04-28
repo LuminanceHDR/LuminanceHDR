@@ -228,12 +228,13 @@ IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.6.tar (
 	rem %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.6.tar.gz http://www.libraw.org/data/LibRaw-0.14.6.tar.gz
 	rem %CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-0.14.6.tar.gz
 )
-IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz (
+IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-0.14.6.tar (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz http://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
+	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
 )
 IF NOT EXIST LibRaw-demosaic-pack-GPL2-0.14.6 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
-	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
+	rem %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
+	
 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar
 )
 
