@@ -1,8 +1,5 @@
 #include "Common/config.h"
 
-//#define LUMINANCE_VER 2,3,0
-//#define LUMINANCE_VER_STR "2.3.0"
-
 #define PRODUCTNAME_STR "Luminance HDR"
 IDI_ICON1               ICON    DISCARDABLE     "luminance.ico"
 //See for more information MSDN: http://msdn.microsoft.com/en-us/library/aa381049(VS.85).aspx

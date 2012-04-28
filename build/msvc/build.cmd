@@ -134,7 +134,7 @@ IF NOT EXIST expat-2.0.1 (
 
 IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
-	%CYGWIN_DIR%\bin\svn.exe co -r 2672 svn://dev.exiv2.org/svn/trunk exiv2-trunk
+	%CYGWIN_DIR%\bin\svn.exe co -r 2732 svn://dev.exiv2.org/svn/trunk exiv2-trunk
 ) ELSE (
 	rem svn update exiv2-trunk
 	rem set exiv2-compile=true
@@ -171,20 +171,36 @@ IF NOT EXIST libjpeg (
 	popd
 )
 
+
+IF NOT EXIST %TEMP_DIR%\lcms-1.19.VC10.x64x86.zip (
+	REM Custom download for having Visual Studio Solution with x64 support configured
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip qtpfsgui.sourceforge.net/win/lcms-1.19.VC10.x64x86.zip
+)
+
+IF NOT EXIST lcms-1.19 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip
+	
+	pushd lcms-1.19
+	devenv Projects\VC2008\lcms.sln /Upgrade
+	devenv Projects\VC2008\lcms.sln /build "%Configuration%|%Platform%"  /Project lcmsdll
+	copy Lib\MS\lcmsdll.lib bin\lcms.lib
+	popd
+)
+
 REM IF NOT EXIST %TEMP_DIR%\lcms2-2.3.zip (
 REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-2.3.zip http://sourceforge.net/projects/lcms/files/lcms/2.3/lcms2-2.3.zip/download
 REM )
 
 
-IF NOT EXIST lcms2-2.3 (
-	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/Little-CMS.git lcms2-2.3
-	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-2.3.zip
-	
-	pushd lcms2-2.3
-	devenv Projects\VC2010\lcms2.sln /Upgrade
-	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
-	popd
-)
+REM IF NOT EXIST lcms2-2.3 (
+REM 	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/Little-CMS.git lcms2-2.3
+REM 	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-2.3.zip
+REM 	
+REM 	pushd lcms2-2.3
+REM 	devenv Projects\VC2010\lcms2.sln /Upgrade
+REM 	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
+REM 	popd
+REM )
 
 IF NOT EXIST %TEMP_DIR%\tiff-4.0.1.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.1.zip http://download.osgeo.org/libtiff/tiff-4.0.1.zip
@@ -208,25 +224,29 @@ IF NOT EXIST tiff-4.0.1 (
 )
 
 
-IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.5.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.5.zip http://www.libraw.org/data/LibRaw-0.14.5.zip
+IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.6.tar (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.6.tar.gz http://www.libraw.org/data/LibRaw-0.14.6.tar.gz
 )
-IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-0.14.5.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.5.zip http://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.14.5.zip
+IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz http://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
 )
-IF NOT EXIST LibRaw-demosaic-pack-GPL2-0.14.5 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.5.zip
+IF NOT EXIST LibRaw-demosaic-pack-GPL2-0.14.6 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
+	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
+	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar
 )
 
-IF NOT EXIST LibRaw-0.14.5 (
-	rem %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.5.zip
-	%CYGWIN_DIR%\bin\git.exe clone git://github.com/LibRaw/LibRaw.git LibRaw-0.14.5
+IF NOT EXIST LibRaw-0.14.6 (
+	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-0.14.6.tar.gz
+	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/LibRaw-0.14.6.tar
+	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.6.zip
+	rem %CYGWIN_DIR%\bin\git.exe clone git://github.com/LibRaw/LibRaw.git LibRaw-0.14.6
 	
 	
-	pushd LibRaw-0.14.5
+	pushd LibRaw-0.14.6
 	
 	echo.COPT="/arch:SSE2 /openmp">> qtpfsgui_commands.in
-	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.5> qtpfsgui_commands.in
+	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.6> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
 	rem echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-2.3\include">> qtpfsgui_commands.in
 	rem echo.LCMS_LIB="..\lcms2-2.3\bin\lcms2_dll.lib">> qtpfsgui_commands.in
@@ -303,23 +323,24 @@ IF DEFINED openexr-compile (
 )
 
 IF %Platform% EQU Win32 (
-	IF NOT EXIST %TEMP_DIR%\fftw-3.3-dll32.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3-dll32.zip
+	IF NOT EXIST %TEMP_DIR%\fftw-3.3.1.pl1-dll32.zip (
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.1.pl1-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.1.pl1-dll32.zip
 	)
 ) ELSE (
-	IF NOT EXIST %TEMP_DIR%\fftw-3.3-dll64.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3-dll64.zip
+	IF NOT EXIST %TEMP_DIR%\fftw-3.3.1-dll64.zip (
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.1-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.1-dll64.zip
+		
 	)
 )
 
-IF NOT EXIST fftw-3.3-dll (
+IF NOT EXIST fftw-3.3.1-dll (
 	IF %Platform% EQU Win32 (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3-dll %TEMP_DIR%/fftw-3.3-dll32.zip
+		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3.1-dll %TEMP_DIR%/fftw-3.3.1.pl1-dll32.zip
 	) ELSE (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3-dll %TEMP_DIR%/fftw-3.3-dll64.zip
+		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3.1-dll %TEMP_DIR%/fftw-3.3.1-dll64.zip
 	)
 
-	pushd fftw-3.3-dll
+	pushd fftw-3.3.1-dll
 	lib /def:libfftw3-3.def
 	lib /def:libfftw3f-3.def
 	lib /def:libfftw3l-3.def
@@ -426,17 +447,17 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	copy tiff-4.0.1\libtiff\*.dll LuminanceHdrStuff\DEPs\bin\libtiff
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-0.14.5\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-0.14.5\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
-	copy LibRaw-0.14.5\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
+	copy LibRaw-0.14.6\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
+	copy LibRaw-0.14.6\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
+	copy LibRaw-0.14.6\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
 	
 	copy OpenExrStuff\Deploy\include\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
 	copy OpenExrStuff\Deploy\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
 	copy OpenExrStuff\Deploy\bin\%Platform%\%Configuration%\*.dll LuminanceHdrStuff\DEPs\bin\OpenEXR
 
-	copy fftw-3.3-dll\*.h LuminanceHdrStuff\DEPs\include\fftw3
-	copy fftw-3.3-dll\*.lib LuminanceHdrStuff\DEPs\lib\fftw3
-	copy fftw-3.3-dll\*.dll LuminanceHdrStuff\DEPs\bin\fftw3
+	copy fftw-3.3.1-dll\*.h LuminanceHdrStuff\DEPs\include\fftw3
+	copy fftw-3.3.1-dll\*.lib LuminanceHdrStuff\DEPs\lib\fftw3
+	copy fftw-3.3.1-dll\*.dll LuminanceHdrStuff\DEPs\bin\fftw3
 
 	mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
 	copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
