@@ -255,9 +255,9 @@ QImage *JpegReader::readJpegIntoQImage()
 	unsigned int EmbedLen;
 	JOCTET * EmbedBuffer;
 
-	JSAMPROW ScanLineIn;
-	JSAMPROW ScanLineTemp;
-	unsigned char *ScanLineOut;
+    JSAMPROW ScanLineIn = 0;
+    JSAMPROW ScanLineTemp = 0;
+    unsigned char *ScanLineOut = 0;
 
 	cinfo.err = jpeg_std_error(&ErrorHandler.pub);
 	ErrorHandler.pub.error_exit      = my_error_handler;	
@@ -421,6 +421,10 @@ QImage *JpegReader::readJpegIntoQImage()
 					ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
 					ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * cinfo.num_components);
 					break;
+                default:
+                    // This case should never happen, but at least the compiler
+                    // stops complaining!
+                    break;
 			}
 		}
 		catch(const std::runtime_error& err)
@@ -465,6 +469,10 @@ QImage *JpegReader::readJpegIntoQImage()
 						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * (cinfo.num_components - 1));
 						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * cinfo.num_components);
 						break;
+                    default:
+                        // This case should never happen, but at least the compiler
+                        // stops complaining!
+                        break;
 				}			
             }
             else {
@@ -480,6 +488,10 @@ QImage *JpegReader::readJpegIntoQImage()
 						transform_to_rgb(ScanLineIn, ScanLineOut, cinfo.output_width * cinfo.num_components);
 						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * cinfo.num_components);
 						break;
+                    default:
+                        // This case should never happen, but at least the compiler
+                        // stops complaining!
+                        break;
 				}			
 			}
         }
