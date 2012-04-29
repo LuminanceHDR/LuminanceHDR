@@ -247,8 +247,8 @@ IF NOT EXIST LibRaw-0.14.6 (
 	
 	pushd LibRaw-0.14.6
 	
-	echo.COPT_OPT="/arch:SSE2 /openmp"> qtpfsgui_commands.in
-	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.6>> qtpfsgui_commands.in
+	rem echo.COPT_OPT="/openmp"> qtpfsgui_commands.in
+	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.6> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
 	rem echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-2.3\include">> qtpfsgui_commands.in
 	rem echo.LCMS_LIB="..\lcms2-2.3\bin\lcms2_dll.lib">> qtpfsgui_commands.in
