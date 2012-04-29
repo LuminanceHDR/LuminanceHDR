@@ -1,3 +1,11 @@
+Changes 2.3.0-beta1
+* NEW: colour management system
+The new colour management system allows to load colour profile for screen and printer so that users can double-check the final quality of their HDR images before being saved to JPEG or PNG.
+* Windows: new task bar progress report
+* Improved load/save of calculated profile for the merge operator
+* Improved JPG, PNG and TIFF reader and writer
+* 
+
 Changes 2.2.1
 * NEW: splitted executable luminance-hdr-cli for commandline mode
 * NEW: Windows Installer optionally registers file associations
@@ -17,7 +25,7 @@ Changes 2.2.0
 * NEW: Speed improvement due to OpenMP 
 * More speed improvements: tone-mapping (Mantiuk 06/08, Fattal, Reinhard)
 * NEW: image viewers with improved crop/selection tool
-* Improvement and optimized level and gamma control (new histogram)
+* Improvement and optimised level and gamma control (new histogram)
 * Improved UI: Tonemapping Panel, Preference Dialog and Mainwindow
 * Revert HDR merge algorithms to Qtpfsgui 1.8.12
 * Supporting better portrait HDRs
