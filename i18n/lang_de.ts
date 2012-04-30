@@ -751,15 +751,15 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Failed aligning images.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder konnten nicht ausgerichtet werden.</translation>
     </message>
     <message>
         <source>Error: Quality must be in the range [0-100].</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: Qualität muss im Bereich [0-100] liegen.</translation>
     </message>
     <message>
         <source>-q --quality VALUE   Quality of the saved tone mapped file (0-100).</source>
-        <translation type="unfinished"></translation>
+        <translation>-q --quality VALUE   Qualität der gespeicherten dynamikkomprimierten Datei (0-100).</translation>
     </message>
 </context>
 <context>
@@ -1625,7 +1625,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>align_image_stack failed to align images.</source>
-        <translation type="unfinished"></translation>
+        <translation>align_image_stack konnte die Bilder nicht ausrichten.</translation>
     </message>
 </context>
 <context>
