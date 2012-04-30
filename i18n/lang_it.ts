@@ -3458,6 +3458,14 @@ p, li { white-space: pre-wrap; }
         <source>Browse...</source>
         <translation>Sfoglia...</translation>
     </message>
+    <message>
+        <source>Chinese</source>
+        <translation>Cinese</translation>
+    </message>
+    <message>
+        <source>Hindi</source>
+        <translation>Hindi</translation>
+    </message>
 </context>
 <context>
     <name>PreviewPanel</name>

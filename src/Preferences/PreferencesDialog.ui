@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>686</width>
+    <width>786</width>
     <height>617</height>
    </rect>
   </property>
@@ -284,6 +284,11 @@
              </item>
              <item>
               <property name="text">
+               <string>Chinese</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>English</string>
               </property>
              </item>
@@ -300,6 +305,16 @@
              <item>
               <property name="text">
                <string>German</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Hindi</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Hungarian</string>
               </property>
              </item>
              <item>
@@ -335,11 +350,6 @@
              <item>
               <property name="text">
                <string>Turkish</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Hungarian</string>
               </property>
              </item>
             </widget>
