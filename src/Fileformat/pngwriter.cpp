@@ -74,7 +74,7 @@ bool PngWriter::writeQImageToPng()
 #endif
 	if ( !m_fname.isEmpty() )		  // we are writing to file
 	{
-		QByteArray ba( m_fname.toUtf8() );
+        QByteArray ba( QFile::encodeName(m_fname) );
 		qDebug() << "writeQImageToPng: filename: " << ba.data();
 
 		outfile = fopen(ba.data(), "wb");

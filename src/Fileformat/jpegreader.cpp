@@ -266,7 +266,7 @@ QImage *JpegReader::readJpegIntoQImage()
 	FILE * infile;
 
 	QByteArray ba;
-	ba = fname.toUtf8();
+    ba = QFile::encodeName(fname);
 	qDebug() << "readJpegIntoQImage: filename: " << ba.data();
 
 	if ((infile = fopen(ba.data(), "rb")) == NULL) {
@@ -335,9 +335,9 @@ QImage *JpegReader::readJpegIntoQImage()
 		QString profile_fname = luminance_opts.getCameraProfileFileName();
 		qDebug() << "Camera profile: " << profile_fname;
 
-		if (!profile_fname.isEmpty()) {
-		
-			ba = profile_fname.toUtf8();
+        if (!profile_fname.isEmpty())
+        {
+            ba = QFile::encodeName(profile_fname);
 
 			hsRGB = cmsCreate_sRGBProfile();
 			try {

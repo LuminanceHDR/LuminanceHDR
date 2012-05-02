@@ -228,7 +228,7 @@ bool JpegWriter::writeQImageToJpeg()
 #endif
     if ( !m_fname.isEmpty() )         // we are writing to file
     {
-        QByteArray ba( m_fname.toUtf8() );
+        QByteArray ba( QFile::encodeName(m_fname) );
 		qDebug() << "writeQImageToJpeg: filename: " << ba.data();
 
         outfile = QSharedPointer<FILE>(fopen(ba.data(), "wb"), fclose);

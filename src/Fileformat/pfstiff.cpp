@@ -368,7 +368,7 @@ pfs::Frame * TiffReader::readIntoPfsFrame ()
       if (!profile_fname.isEmpty ())
 	{
 
-	  ba = profile_fname.toUtf8 ();
+      ba = QFile::encodeName( profile_fname );
 
 	  try
 	  {
@@ -639,7 +639,7 @@ TiffReader::readIntoQImage ()
       if (!profile_fname.isEmpty ())
 	{
 
-	  ba = profile_fname.toUtf8 ();
+      ba = QFile::encodeName( profile_fname );
 
 	  try
 	  {
@@ -684,7 +684,7 @@ TiffReader::readIntoQImage ()
   //--- image scanline size
   uint32 scanlinesize = TIFFScanlineSize (tif);
   uint8 *bp = (uint8 *) _TIFFmalloc (scanlinesize);
-  uint8 *bpout;
+  uint8 *bpout = 0;
   if (doTransform)
      bpout = (uint8 *) _TIFFmalloc (scanlinesize);
 
