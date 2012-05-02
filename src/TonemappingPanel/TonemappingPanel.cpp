@@ -402,77 +402,78 @@ void TonemappingPanel::on_applyButton_clicked()
     fillToneMappingOptions();
     setupUndo();
 
-    emit startTonemapping(&toneMappingOptions);
+    emit startTonemapping(toneMappingOptions);
 }
 
 void TonemappingPanel::fillToneMappingOptions()
-{
-    toneMappingOptions.origxsize = sizes[0];
-    toneMappingOptions.xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
-    toneMappingOptions.pregamma = pregammaGang->v();
-    //toneMappingOptions.tonemapSelection = checkBoxSelection->isChecked();
-    //toneMappingOptions.tonemapOriginal = checkBoxOriginal->isChecked();
+{	
+	toneMappingOptions = new TonemappingOptions;
+    toneMappingOptions->origxsize = sizes[0];
+    toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
+    toneMappingOptions->pregamma = pregammaGang->v();
+    //toneMappingOptions->tonemapSelection = checkBoxSelection->isChecked();
+    //toneMappingOptions->tonemapOriginal = checkBoxOriginal->isChecked();
     switch (currentTmoOperator) {
     case ashikhmin:
-        toneMappingOptions.tmoperator = ashikhmin;
-        toneMappingOptions.operator_options.ashikhminoptions.simple=simpleGang->isCheckBox1Checked();
-        toneMappingOptions.operator_options.ashikhminoptions.eq2=eq2Gang->isRadioButton1Checked();
-        toneMappingOptions.operator_options.ashikhminoptions.lct=contrastGang->v();
+        toneMappingOptions->tmoperator = ashikhmin;
+        toneMappingOptions->operator_options.ashikhminoptions.simple=simpleGang->isCheckBox1Checked();
+        toneMappingOptions->operator_options.ashikhminoptions.eq2=eq2Gang->isRadioButton1Checked();
+        toneMappingOptions->operator_options.ashikhminoptions.lct=contrastGang->v();
         break;
     case drago:
-        toneMappingOptions.tmoperator = drago;
-        toneMappingOptions.operator_options.dragooptions.bias=biasGang->v();
+        toneMappingOptions->tmoperator = drago;
+        toneMappingOptions->operator_options.dragooptions.bias=biasGang->v();
         break;
     case durand:
-        toneMappingOptions.tmoperator = durand;
-        toneMappingOptions.operator_options.durandoptions.spatial=spatialGang->v();
-        toneMappingOptions.operator_options.durandoptions.range=rangeGang->v();
-        toneMappingOptions.operator_options.durandoptions.base=baseGang->v();
+        toneMappingOptions->tmoperator = durand;
+        toneMappingOptions->operator_options.durandoptions.spatial=spatialGang->v();
+        toneMappingOptions->operator_options.durandoptions.range=rangeGang->v();
+        toneMappingOptions->operator_options.durandoptions.base=baseGang->v();
         break;
     case fattal:
-        toneMappingOptions.tmoperator = fattal;
-        toneMappingOptions.operator_options.fattaloptions.alpha=alphaGang->v();
-        toneMappingOptions.operator_options.fattaloptions.beta=betaGang->v();
-        toneMappingOptions.operator_options.fattaloptions.color=saturation2Gang->v();
-        toneMappingOptions.operator_options.fattaloptions.noiseredux=noiseGang->v();
-        toneMappingOptions.operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
+        toneMappingOptions->tmoperator = fattal;
+        toneMappingOptions->operator_options.fattaloptions.alpha=alphaGang->v();
+        toneMappingOptions->operator_options.fattaloptions.beta=betaGang->v();
+        toneMappingOptions->operator_options.fattaloptions.color=saturation2Gang->v();
+        toneMappingOptions->operator_options.fattaloptions.noiseredux=noiseGang->v();
+        toneMappingOptions->operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
         break;
     case mantiuk06:
-        toneMappingOptions.tmoperator = mantiuk06;
-        toneMappingOptions.operator_options.mantiuk06options.contrastfactor=contrastfactorGang->v();
-        toneMappingOptions.operator_options.mantiuk06options.saturationfactor=saturationfactorGang->v();
-        toneMappingOptions.operator_options.mantiuk06options.detailfactor=detailfactorGang->v();
-        toneMappingOptions.operator_options.mantiuk06options.contrastequalization=contrastfactorGang->isCheckBox1Checked();
+        toneMappingOptions->tmoperator = mantiuk06;
+        toneMappingOptions->operator_options.mantiuk06options.contrastfactor=contrastfactorGang->v();
+        toneMappingOptions->operator_options.mantiuk06options.saturationfactor=saturationfactorGang->v();
+        toneMappingOptions->operator_options.mantiuk06options.detailfactor=detailfactorGang->v();
+        toneMappingOptions->operator_options.mantiuk06options.contrastequalization=contrastfactorGang->isCheckBox1Checked();
         break;
     case mantiuk08:
-        toneMappingOptions.tmoperator = mantiuk08;
-        toneMappingOptions.operator_options.mantiuk08options.colorsaturation=colorSaturationGang->v();
-        toneMappingOptions.operator_options.mantiuk08options.contrastenhancement=contrastEnhancementGang->v();
-        toneMappingOptions.operator_options.mantiuk08options.luminancelevel=luminanceLevelGang->v();
-        toneMappingOptions.operator_options.mantiuk08options.setluminance=luminanceLevelGang->isCheckBox1Checked();
+        toneMappingOptions->tmoperator = mantiuk08;
+        toneMappingOptions->operator_options.mantiuk08options.colorsaturation=colorSaturationGang->v();
+        toneMappingOptions->operator_options.mantiuk08options.contrastenhancement=contrastEnhancementGang->v();
+        toneMappingOptions->operator_options.mantiuk08options.luminancelevel=luminanceLevelGang->v();
+        toneMappingOptions->operator_options.mantiuk08options.setluminance=luminanceLevelGang->isCheckBox1Checked();
         break;
     case pattanaik:
-        toneMappingOptions.tmoperator = pattanaik;
-        toneMappingOptions.operator_options.pattanaikoptions.autolum=autoYGang->isCheckBox1Checked();
-        toneMappingOptions.operator_options.pattanaikoptions.local=pattalocalGang->isCheckBox1Checked();
-        toneMappingOptions.operator_options.pattanaikoptions.cone=coneGang->v();
-        toneMappingOptions.operator_options.pattanaikoptions.rod=rodGang->v();
-        toneMappingOptions.operator_options.pattanaikoptions.multiplier=multiplierGang->v();
+        toneMappingOptions->tmoperator = pattanaik;
+        toneMappingOptions->operator_options.pattanaikoptions.autolum=autoYGang->isCheckBox1Checked();
+        toneMappingOptions->operator_options.pattanaikoptions.local=pattalocalGang->isCheckBox1Checked();
+        toneMappingOptions->operator_options.pattanaikoptions.cone=coneGang->v();
+        toneMappingOptions->operator_options.pattanaikoptions.rod=rodGang->v();
+        toneMappingOptions->operator_options.pattanaikoptions.multiplier=multiplierGang->v();
         break;
     case reinhard02:
-        toneMappingOptions.tmoperator = reinhard02;
-        toneMappingOptions.operator_options.reinhard02options.scales=usescalesGang->isCheckBox1Checked();
-        toneMappingOptions.operator_options.reinhard02options.key=keyGang->v();
-        toneMappingOptions.operator_options.reinhard02options.phi=phiGang->v();
-        toneMappingOptions.operator_options.reinhard02options.range=(int)range2Gang->v();
-        toneMappingOptions.operator_options.reinhard02options.lower=(int)lowerGang->v();
-        toneMappingOptions.operator_options.reinhard02options.upper=(int)upperGang->v();
+        toneMappingOptions->tmoperator = reinhard02;
+        toneMappingOptions->operator_options.reinhard02options.scales=usescalesGang->isCheckBox1Checked();
+        toneMappingOptions->operator_options.reinhard02options.key=keyGang->v();
+        toneMappingOptions->operator_options.reinhard02options.phi=phiGang->v();
+        toneMappingOptions->operator_options.reinhard02options.range=(int)range2Gang->v();
+        toneMappingOptions->operator_options.reinhard02options.lower=(int)lowerGang->v();
+        toneMappingOptions->operator_options.reinhard02options.upper=(int)upperGang->v();
         break;
     case reinhard05:
-        toneMappingOptions.tmoperator = reinhard05;
-        toneMappingOptions.operator_options.reinhard05options.brightness=brightnessGang->v();
-        toneMappingOptions.operator_options.reinhard05options.chromaticAdaptation=chromaticGang->v();
-        toneMappingOptions.operator_options.reinhard05options.lightAdaptation=lightGang->v();
+        toneMappingOptions->tmoperator = reinhard05;
+        toneMappingOptions->operator_options.reinhard05options.brightness=brightnessGang->v();
+        toneMappingOptions->operator_options.reinhard05options.chromaticAdaptation=chromaticGang->v();
+        toneMappingOptions->operator_options.reinhard05options.lightAdaptation=lightGang->v();
         break;
     }
 }

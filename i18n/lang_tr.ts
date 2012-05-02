@@ -3074,6 +3074,14 @@ p, li { white-space: pre-wrap; }
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Chinese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hindi</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreviewPanel</name>
