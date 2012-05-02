@@ -702,7 +702,7 @@ p, li { white-space: pre-wrap; }
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>128</number>
+                    <number>64</number>
                    </property>
                    <property name="value">
                     <number>32</number>
@@ -757,7 +757,7 @@ p, li { white-space: pre-wrap; }
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>128</number>
+                    <number>64</number>
                    </property>
                    <property name="value">
                     <number>32</number>

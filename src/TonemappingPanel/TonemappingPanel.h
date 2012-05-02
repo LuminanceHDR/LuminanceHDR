@@ -91,7 +91,7 @@ protected:
             *pregammaGang;
 
     TMOperator currentTmoOperator;
-    TonemappingOptions toneMappingOptions;
+    TonemappingOptions *toneMappingOptions;
     QVector<int> sizes;
     void fillToneMappingOptions();
     void setupUndo();
