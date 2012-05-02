@@ -36,12 +36,9 @@ PreviewWidget::PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage 
 	setFocusPolicy(Qt::StrongFocus);
 	previewImage=new QImage(movableImage->size(),QImage::Format_ARGB32);
 	previewImage->fill(qRgba(255,0,0,255));
-	rubberband=QRect();
 	blendmode=&PreviewWidget::computeDiffRgba;
-	//track mouse position to draw specific cursor when on rubberband
+	leftButtonMode=LB_nomode;
 	setMouseTracking(true);
-	dragging_mode=DRAGGING_NONE;
-	leftButtonMode=LB_croppingmode;
 	//set internal brush values to their default
 	brushAddMode=true;
 	setBrushSize(32);
@@ -70,15 +67,6 @@ void PreviewWidget::paintEvent(QPaintEvent * event) {
 		prev_computed+=QRegion(srcrect);
 	}
 	p.drawImage(paintrect, *previewImage, srcrect);
-	if (!rubberband.isNull()) {
-		QRegion outsidearea = QRegion(0, 0, int(previewImage->size().width()*scaleFactor), int(previewImage->size().height()*scaleFactor)) - QRegion(rubberband);
-		p.setBrush(QBrush(Qt::black,Qt::Dense3Pattern));
-		p.setPen(Qt::NoPen);
-		p.drawRects(outsidearea.rects());
-		p.setBrush(QBrush());
-		p.setPen(QPen(Qt::blue, 1, Qt::SolidLine));
-		p.drawRect(rubberband);
-	}
 }
 
 QRgb outofbounds=qRgba(0,0,0,255);
@@ -153,15 +141,6 @@ void PreviewWidget::resizeEvent(QResizeEvent *event) {
 		scaleFactor=1; //done to prevent first spurious widget size (upon construction)
 	else
 		scaleFactor=(float)(event->size().width())/(float)(previewImage->size().width());
-
-	if (!rubberband.isNull()) {
-		float newoldratioW = (float)(event->size().width())/(float)(event->oldSize().width());
-		rubberband.setTopLeft(rubberband.topLeft()*newoldratioW);
-		rubberband.setBottomRight(rubberband.bottomRight()*newoldratioW);
-		if (rubberband.isNull()) {
-			hideRubberBand();
-		}
-	}
 }
 
 void PreviewWidget::mousePressEvent(QMouseEvent *event) {
@@ -172,102 +151,14 @@ void PreviewWidget::mousePressEvent(QMouseEvent *event) {
 
 	QPoint mousepos=event->pos();
 	if (event->buttons()==Qt::LeftButton) {
-		switch (leftButtonMode) {
-			case LB_croppingmode:
-			//detect if we are starting a drag
-			if (rubberband.contains(mousepos) && !rubberband.contains(mousepos,true)) {
-				int x=event->pos().x(); int y=event->pos().y();
-				if ((x==rubberband.left())&&(y==rubberband.top()))
-					dragging_mode=DRAGGING_TOPLEFT;
-				else if ((x==rubberband.right())&&(y==rubberband.top()))
-					dragging_mode=DRAGGING_TOPRIGHT;
-				else if ((x==rubberband.right())&&(y==rubberband.bottom()))
-					dragging_mode=DRAGGING_BOTTOMRIGHT;
-				else if ((x==rubberband.left())&&(y==rubberband.bottom()))
-					dragging_mode=DRAGGING_BOTTOMLEFT;
-				else if (x==rubberband.left())
-					dragging_mode=DRAGGING_LEFT;
-				else if (x==rubberband.right())
-					dragging_mode=DRAGGING_RIGHT;
-				else if (y==rubberband.bottom())
-					dragging_mode=DRAGGING_BOTTOM;
-				else if (y==rubberband.top())
-					dragging_mode=DRAGGING_TOP;
-			} else {
-				//single left-click, initialize the coordinates:
-				//topleft=bottomright=mousepos. This makes the rubberband have 0-size
-				QApplication::setOverrideCursor( QCursor(Qt::CrossCursor) );
-				rubberbandInitialCreationPoint=event->pos();
-				rubberband.setTopLeft(rubberbandInitialCreationPoint);
-				rubberband.setBottomRight(rubberbandInitialCreationPoint+QPoint(-1,-1));
-				emit validCropArea(false);
-			}
-			break;
-			case LB_antighostingmode:
-			if (scaleFactor!=1)
-				break;
-			else
-				timerid=this->startTimer(0);
-			break;
-		}
+		if (leftButtonMode ==  LB_antighostingmode && scaleFactor == 1)
+			timerid=this->startTimer(0);
 	}
 	event->ignore();
 }
 
 void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
-	if (event->buttons()==Qt::LeftButton) {
-		int x=event->pos().x(); int y=event->pos().y();
-		switch (leftButtonMode) {
-			case LB_croppingmode:
-			if (dragging_mode==DRAGGING_TOPLEFT) {
-				rubberband.setLeft(x);
-				rubberband.setTop(y);
-			} else if (dragging_mode==DRAGGING_TOPRIGHT) {
-				rubberband.setTop(y);
-				rubberband.setRight(x-1);
-			} else if (dragging_mode==DRAGGING_BOTTOMRIGHT) {
-				rubberband.setBottom(y-1);
-				rubberband.setRight(x-1);
-			} else if (dragging_mode==DRAGGING_BOTTOMLEFT) {
-				rubberband.setBottom(y-1);
-				rubberband.setLeft(x);
-			} else if (dragging_mode==DRAGGING_LEFT)
-				rubberband.setLeft(x);
-			else if (dragging_mode==DRAGGING_RIGHT)
-				rubberband.setRight(x-1);
-			else if (dragging_mode==DRAGGING_TOP)
-				rubberband.setTop(y);
-			else if (dragging_mode==DRAGGING_BOTTOM)
-				rubberband.setBottom(y-1);
-			else {//creating a new selection
-				rubberband=QRect(rubberbandInitialCreationPoint,event->pos());
-			}
-			rubberband=rubberband.normalized();
-			update();
-			break;
-			case LB_antighostingmode:
-			break;
-		}
-	} if (event->buttons()==Qt::NoButton) {
-		//if mouse is over rubberband draw appropriate cursor
-		QPoint mousepos=event->pos();
-		if (rubberband.contains(mousepos) && !rubberband.contains(mousepos,true)) {
-			int x=event->pos().x(); int y=event->pos().y();
-			int left=rubberband.left();
-			int right=rubberband.right();
-			int bottom=rubberband.bottom();
-			int top=rubberband.top();
-			if ((x==left && y==top) || (x==right && y==bottom))
-				QApplication::setOverrideCursor( QCursor(Qt::SizeFDiagCursor) );
-			else if ((x==right && y==top) || (x==left && y==bottom))
-				QApplication::setOverrideCursor( QCursor(Qt::SizeBDiagCursor) );
-			else if (x==left || x==right)
-				QApplication::setOverrideCursor( QCursor(Qt::SizeHorCursor) );
-			else if (y==bottom || y==top)
-				QApplication::setOverrideCursor( QCursor(Qt::SizeVerCursor) );
-		} else
-			QApplication::restoreOverrideCursor();
-	} else if (event->buttons()==Qt::MidButton) {
+	if (event->buttons()==Qt::MidButton) {
 		//moving mouse with middle button pans the preview
 		QPoint diff = (event->globalPos() - mousePos);
 		if (event->modifiers()==Qt::ShiftModifier)
@@ -282,33 +173,12 @@ void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
 
 void PreviewWidget::mouseReleaseEvent(QMouseEvent *event) {
 	if (event->button()==Qt::LeftButton) {
-		switch (leftButtonMode) {
-			case LB_croppingmode:
-			dragging_mode=DRAGGING_NONE;
-			rubberband=rubberband.normalized();
-
-			if (!rubberband.isNull())
-				emit validCropArea(true);
-			rubberband.setLeft(qMax(0,rubberband.left()));
-			rubberband.setRight(qMin(size().width()-2,rubberband.right()));
-			rubberband.setTop(qMax(rubberband.top(),0));
-			rubberband.setBottom(qMin(size().height()-2,rubberband.bottom()));
-			QApplication::restoreOverrideCursor();
-			update();
-			break;
-			case LB_antighostingmode:
-			if (scaleFactor==1)
-				this->killTimer(timerid);
-			break;
-		}
-	}
-	else if (event->button()==Qt::MidButton) {
-		QApplication::restoreOverrideCursor();
+		if (leftButtonMode == LB_antighostingmode && scaleFactor == 1)
+			this->killTimer(timerid);
 	}
 }
 
 void PreviewWidget::timerEvent(QTimerEvent *) {
-	assert(leftButtonMode!=LB_croppingmode);
 	if (scaleFactor!=1)
 		return;
 
@@ -399,18 +269,12 @@ void PreviewWidget::updateHorizShiftPivot(int h) {
 	prev_computed=QRegion();
 }
 
-void PreviewWidget::hideRubberBand() {
-	rubberband=QRect();
-	emit validCropArea(false);
-}
-
 void PreviewWidget::switchAntighostingMode(bool ag) {
 	if (ag) {
-		hideRubberBand();
 		leftButtonMode=LB_antighostingmode;
 		this->setCursor(*agcursor_pixmap);
 	} else {
-		leftButtonMode=LB_croppingmode;
+		leftButtonMode=LB_nomode;
 		this->unsetCursor();
 	}
 }

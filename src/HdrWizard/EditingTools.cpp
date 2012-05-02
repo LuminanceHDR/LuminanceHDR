@@ -49,7 +49,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	}
 	else {
 		original_ldrlist=hcm->getMDRList();
-		antighostToolButton->setEnabled(false);
+		//antighostToolButton->setEnabled(false);
 	}
 
 	filelist=hcm->getFileList();
@@ -106,7 +106,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	}
 
 	histogram=new HistogramLDR(this);
-		histogram->setData( original_ldrlist.at(1) );
+	histogram->setData( original_ldrlist.at(1) );
 	histogram->adjustSize();
 	//((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
 	((QGridLayout*)(groupBoxHistogram->layout()))->addWidget(histogram);
@@ -260,7 +260,6 @@ void EditingTools::crop_stack() {
 		fitPreview(true);
 	//and start it up
 	previewWidget->update();
-	previewWidget->hideRubberBand();
 }
 
 void EditingTools::nextClicked() {

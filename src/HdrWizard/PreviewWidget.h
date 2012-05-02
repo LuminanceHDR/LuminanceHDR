@@ -42,12 +42,9 @@ public:
 	float getScaleFactor() {
 		return scaleFactor;
 	}
-	QRect getCropArea() const {
-		return rubberband;
-	}
-        QImage * getPreviewImage() {
+	QImage * getPreviewImage() {
 		renderPreviewImage(blendmode);
-                return previewImage;
+		return previewImage;
 	}
     void setPivot(QImage *p, int p_px, int p_py);
 	void setPivot(QImage *p);
@@ -57,7 +54,6 @@ public:
 	void updateHorizShiftMovable(int h);
 	void updateHorizShiftPivot(int h);
 	void updateVertShiftPivot(int v);
-	void hideRubberBand();
 
 public slots:
 	void requestedBlendMode(int);
@@ -151,10 +147,6 @@ private:
 
 	//for panning with mid-button
 	QPoint mousePos;
-	//for cropping
-	QRect rubberband;
-	//assigned when starting to create a rubberband
-	QPoint rubberbandInitialCreationPoint;
 	//used for additional painting
 	int timerid;
 	QPixmap *agcursor_pixmap;
@@ -164,8 +156,7 @@ private:
 	bool brushAddMode;//false means brush is in remove mode.
 	void fillAntiGhostingCursorPixmap();
 
-	enum dragging_mode {DRAGGING_LEFT, DRAGGING_RIGHT, DRAGGING_TOP, DRAGGING_BOTTOM, DRAGGING_TOPLEFT, DRAGGING_TOPRIGHT, DRAGGING_BOTTOMRIGHT, DRAGGING_BOTTOMLEFT, DRAGGING_NONE } dragging_mode;
-	enum {LB_croppingmode,LB_antighostingmode} leftButtonMode;
+	enum {LB_nomode,LB_antighostingmode} leftButtonMode;
 };
 
 #endif
