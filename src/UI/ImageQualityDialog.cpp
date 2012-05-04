@@ -74,7 +74,7 @@ void ImageQualityDialog::on_getSizeButton_clicked()
     	QByteArray ba;
     	QBuffer buffer(&ba);
 	    buffer.open(QIODevice::WriteOnly);
-    	image->save(&buffer, (const char *) format.toLatin1(), quality);
+        image->save(&buffer, (const char *) format.toLatin1(), quality);
 		size = ba.size();
 	}
     QLocale def;

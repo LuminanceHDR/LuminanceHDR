@@ -28,6 +28,7 @@
 
 #include <QApplication>
 #include <QFileInfo>
+#include <QFile>
 
 #include "Libpfs/domio.h"
 #include "Fileformat/pfstiff.h"
@@ -687,7 +688,7 @@ void HdrCreationManager::saveMDRs(QString filename)
 		Xc->setChannelData(listmdrR[idx]);	
 		Yc->setChannelData(listmdrG[idx]);	
 		Zc->setChannelData(listmdrB[idx]);	
-		TiffWriter writer(fname.toLatin1().constData(), frame);
+        TiffWriter writer(QFile::encodeName(fname).constData(), frame);
 		writer.writePFSFrame16bitTiff();
 
 		QFileInfo qfi(filename);
