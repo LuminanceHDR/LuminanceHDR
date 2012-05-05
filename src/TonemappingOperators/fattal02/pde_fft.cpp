@@ -39,7 +39,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <cassert>
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 #include <vector>
 #include <fftw3.h>
 
@@ -195,7 +197,11 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
 
   // activate parallel execution of fft routines
   fftwf_init_threads();
-  fftwf_plan_with_nthreads( 2 ); // omp_get_max_threads());
+#ifdef _OPENMP
+  fftwf_plan_with_nthreads( omp_get_max_threads() );
+#else
+  fftwf_plan_with_nthreads( 2 );
+#endif
 
   // in general there might not be a solution to the Poisson pde
   // with Neumann boundary conditions unless the boundary satisfies
