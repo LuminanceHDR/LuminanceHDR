@@ -19,26 +19,34 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef RESOURCEHANDLERCOMMON_H
-#define RESOURCEHANDLERCOMMON_H
+#ifndef RESOURCEHANDLERLCMS_H
+#define RESOURCEHANDLERLCMS_H
 
-//! \file ResourceHandlerCommon.h
-//! \brief This file contains simple resource handlers
+//! \file ResourceHandlerLcms.h
+//! \brief This file contains simple resource handlers for LCMS2 library
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \date 2012 05 05
 //! \since 2.3.0-beta1
 
-#include <QScopedPointer>
-#include <stdio.h>
+#include "ResourceHandler.h"
+#include <lcms2.h>
 
-struct ResourceHandlerTraitsStdIoFile
+struct CleanUpCmsProfile
 {
-    static
-    void cleanup(FILE* p)
+    static inline void cleanup(cmsHPROFILE profile)
     {
-        fclose(p);
+        cmsCloseProfile(profile);
     }
 };
-typedef QScopedPointer<FILE, ResourceHandlerTraitsStdIoFile> ResouceHandlerFile;
+typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
+
+struct CleanUpCmsTransform
+{
+    static inline void cleanup(cmsHTRANSFORM transform)
+    {
+        cmsDeleteTransform(transform);
+    }
+};
+typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;
 
 #endif

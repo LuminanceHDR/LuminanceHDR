@@ -38,7 +38,7 @@
 #include "Libpfs/frame.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "Common/LuminanceOptions.h"
-#include "Common/ResourceHandler.h"
+#include "Common/ResourceHandlerLcms.h"
 
 namespace
 {
@@ -56,24 +56,6 @@ void parseOptions(const TonemappingOptions *opts, QString& caption)
         //exif_comment = tmopts.getExifComment();
     }
 }
-
-struct CleanUpCmsProfile
-{
-    static inline void cleanup(cmsHPROFILE profile)
-    {
-        cmsCloseProfile(profile);
-    }
-};
-typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
-
-struct CleanUpCmsTransform
-{
-    static inline void cleanup(cmsHTRANSFORM transform)
-    {
-        cmsDeleteTransform(transform);
-    }
-};
-typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;
 
 QImage* doCMSTransform(QImage* input_qimage, bool doProof, bool doGamutCheck)
 {
