@@ -97,7 +97,7 @@ QImage* doCMSTransform(QImage* input_qimage, bool doProof, bool doGamutCheck)
         ScopedCmsProfile hProof;
         ScopedCmsTransform xform;
 
-        cmsErrorAction(LCMS_ERROR_SHOW);
+        // cmsErrorAction(LCMS_ERROR_SHOW); // TODO!
 
         hsRGB.reset( cmsCreate_sRGBProfile() );
         hOut.reset( cmsOpenProfileFromFile(ba.data(), "r") );
@@ -128,7 +128,10 @@ QImage* doCMSTransform(QImage* input_qimage, bool doProof, bool doGamutCheck)
         if (doProof)
         {
             quint32 dwFlags = doGamutCheck ? cmsFLAGS_SOFTPROOFING | cmsFLAGS_GAMUTCHECK : cmsFLAGS_SOFTPROOFING;
-            cmsSetAlarmCodes(255, 0, 0);
+            cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0 };
+            alarmCodes[1] = 0xFFFF;
+            cmsSetAlarmCodes(alarmCodes);
+            // cmsSetAlarmCodes(255, 0, 0);
             xform.reset( cmsCreateProofingTransform(hsRGB.data(), TYPE_RGBA_8,
                                                     hOut.data(), TYPE_RGBA_8,
                                                     hProof.data(), INTENT_PERCEPTUAL, INTENT_ABSOLUTE_COLORIMETRIC, dwFlags) );
@@ -270,7 +273,7 @@ float LdrViewer::getMinLuminanceValue()
 
 void LdrViewer::doSoftProofing(bool doGamutCheck)
 {
-    ResourceHandler<QImage> src_image( fromLDRPFStoQImage(getFrame()) );
+    QScopedPointer<QImage> src_image( fromLDRPFStoQImage(getFrame()) );
     QScopedPointer<QImage> image( doCMSTransform(src_image.data(), true, doGamutCheck) );
     if (image.data() != NULL)
     {
@@ -280,7 +283,7 @@ void LdrViewer::doSoftProofing(bool doGamutCheck)
 
 void LdrViewer::undoSoftProofing()
 {
-    ResourceHandler<QImage> src_image( fromLDRPFStoQImage(getFrame()) );
+    QScopedPointer<QImage> src_image( fromLDRPFStoQImage(getFrame()) );
     QScopedPointer<QImage> image( doCMSTransform(src_image.data(), false, false) );
     if (image.data() != NULL)
     {

@@ -1,7 +1,7 @@
-/**
- * This file is a part of Luminance HDR package.
+/*
+ * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Franco Comida
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,32 +17,29 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Franco Comida <fcomida@users.sourceforge.net>
- *
  */
 
-#ifndef JPEGREADER_H
-#define JPEGREADER_H
+#ifndef RESOURCEHANDLERCOMMON_H
+#define RESOURCEHANDLERCOMMON_H
 
-#include <QObject>
-#include <QImage>
-#include <QString>
+//! \file ResourceHandlerCommon.h
+//! \brief This file contains simple resource handlers
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \date 2012 05 05
+//! \since 2.3.0-beta1
 
-#include <jpeglib.h>
+#include "Common/ResourceHandler.h"
+#include <stdio.h>
 
-class JpegReader : public QObject
+template<>
+struct ResourceHandlerTraits<FILE>
 {
-    Q_OBJECT
-	
-	QString fname;
-	struct jpeg_decompress_struct cinfo;
-
-public:
-    JpegReader(const QString& filename);
-    ~JpegReader();
-
-	QImage *readJpegIntoQImage();
+    static
+    void cleanup(FILE* p)
+    {
+        fclose(p);
+    }
 };
+typedef ResourceHandler<FILE> ResouceHandlerFile;
 
 #endif

@@ -28,18 +28,12 @@
 #include <vector>
 #include <algorithm>
 
-#ifdef USE_LCMS2
-#include <lcms2.h>
-#else
-#include <lcms.h>
-#endif
-
 #include <stdio.h>
+#include <lcms2.h>
 #include <jpeglib.h>
 
 #if defined(WIN32) || defined(__APPLE__)
 #include <QTemporaryFile>
-// #include <io.h>
 #endif
 
 #include "jpegwriter.h"
@@ -133,11 +127,10 @@ write_icc_profile (j_compress_ptr cinfo,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-static struct my_error_mgr { 
-
+static struct my_error_mgr
+{
 	struct  jpeg_error_mgr pub;  // "public" fields 
-	LPVOID  Cargo;               // "private" fields 
-
+//	LPVOID  Cargo;               // "private" fields
 } ErrorHandler; 
 
 void my_writer_error_handler (j_common_ptr cinfo)
@@ -179,16 +172,15 @@ JpegWriter::JpegWriter(const QImage *out_qimage, int quality):
 
 bool JpegWriter::writeQImageToJpeg()
 {
-	size_t profile_size = 0;	
-
+    cmsUInt32Number profile_size = 0;
     cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-    _cmsSaveProfileToMem(hsRGB, NULL, &profile_size);           // get the size
+    cmsSaveProfileToMem(hsRGB, NULL, &profile_size);           // get the size
 
     std::vector<JOCTET> profile_buffer(profile_size);
 
-    _cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);    //
+    cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);    //
 
-	qDebug() << "sRGB profile size: " << profile_size;
+    qDebug() << "sRGB profile size: " << profile_size;
 
 	struct jpeg_compress_struct cinfo;
 	cinfo.err = jpeg_std_error(&ErrorHandler.pub);

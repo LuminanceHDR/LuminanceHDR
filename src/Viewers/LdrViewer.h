@@ -30,11 +30,7 @@
 
 #include <QLabel>
 
-#ifdef USE_LCMS2
-#	include <lcms2.h>
-#else
-#	include <lcms.h>
-#endif
+#include <lcms2.h>
 
 #include "GenericViewer.h"
 

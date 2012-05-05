@@ -25,7 +25,7 @@
 #include <QDebug>
 #include <vector>
 #include <algorithm>
-#include <lcms.h>
+#include <lcms2.h>
 #include <stdio.h>
 
 #if defined(WIN32) || defined(__APPLE__)
@@ -50,10 +50,10 @@ bool PngWriter::writeQImageToPng()
 	png_uint_32 width = m_out_qimage->width();
 	png_uint_32 height = m_out_qimage->height();
 
-	size_t profile_size = 0;
+    cmsUInt32Number profile_size = 0;
 
 	cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size);			// get the size
+    cmsSaveProfileToMem(hsRGB, NULL, &profile_size);			// get the size
 
 #if PNG_LIBPNG_VER_MINOR < 5
     std::vector<char> profile_buffer(profile_size);
@@ -61,7 +61,7 @@ bool PngWriter::writeQImageToPng()
     std::vector<unsigned char> profile_buffer(profile_size);
 #endif
 
-	_cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);	  //
+    cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);	  //
 
 	qDebug() << "sRGB profile size: " << profile_size;
 

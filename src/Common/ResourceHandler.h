@@ -1,6 +1,3 @@
-#ifndef RESOURCEHANDLER_H
-#define RESOURCEHANDLER_H
-
 /*
  * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
@@ -22,6 +19,9 @@
  * ----------------------------------------------------------------------
  */
 
+#ifndef RESOURCEHANDLER_H
+#define RESOURCEHANDLER_H
+
 template<typename T>
 struct ResourceHandlerTraits
 {
@@ -36,7 +36,7 @@ struct ResourceHandlerTraits
 //! however, it doesn't provide and operator*(), which allow to store
 //! a pointer to void
 template<typename T, typename Traits = ResourceHandlerTraits<T> >
-class ResourceHandler
+class ResourceHandler // : boost::noncopyable
 {
 public:
     ResourceHandler(T* p = 0):

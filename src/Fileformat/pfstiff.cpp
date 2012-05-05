@@ -26,22 +26,19 @@
  * added color management support by Franco Comida <fcomida@sourceforge.net>
  */
 
-#include <cmath>
+#include "pfstiff.h"
+
 #include <QObject>
 #include <QSysInfo>
 #include <QFileInfo>
 #include <QDebug>
+
+#include <cmath>
 #include <iostream>
+#include <vector>
 #include <stdexcept>
 #include <assert.h>
-#ifdef USE_LCMS2
-#	include <lcms2.h>
-#else
-#	include <lcms.h>
-#endif
-
-
-#include "pfstiff.h"
+#include <lcms2.h>
 
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
@@ -49,85 +46,71 @@
 #include "Common/LuminanceOptions.h"
 
 ///////////////////////////////////////////////////////////////////////////////////
-//
-// This code is taken from tifficc.c from libcms distribution and sligthly modified
-//
-//
-
+// \brief This code is taken from tifficc.c from libcms distribution and sligthly modified
+// \ref http://svn.ghostscript.com/ghostscript/trunk/gs/lcms2/utils/tificc/tificc.c
 cmsHPROFILE
 GetTIFFProfile (TIFF * in)
 {
-  cmsCIExyYTRIPLE Primaries;
-  float *chr;
-  cmsCIExyY WhitePoint;
-  float *wp;
-  int i;
-  LPGAMMATABLE Gamma[3];
-  LPWORD gmr, gmg, gmb;
-  cmsHPROFILE hProfile;
-  //DWORD EmbedLen;
-  uint32 EmbedLen;
-  LPBYTE EmbedBuffer;
+    cmsHPROFILE hProfile;
+    void* iccProfilePtr;
+    cmsUInt32Number iccProfileSize;
 
-  if (TIFFGetField (in, TIFFTAG_ICCPROFILE, &EmbedLen, &EmbedBuffer))
+    if (TIFFGetField(in, TIFFTAG_ICCPROFILE, &iccProfileSize, &iccProfilePtr))
     {
-      qDebug () << "EmbedLen: " << EmbedLen;
-      hProfile = cmsOpenProfileFromMem (EmbedBuffer, EmbedLen);
+        qDebug () << "iccProfileSize: " << iccProfileSize;
+        hProfile = cmsOpenProfileFromMem(iccProfilePtr, iccProfileSize);
 
-      //if (hProfile != NULL && SaveEmbedded != NULL)
-      //    SaveMemoryBlock(EmbedBuffer, EmbedLen, SaveEmbedded);
-
-      if (hProfile)
-	return hProfile;
+        if (hProfile) return hProfile;
     }
 
-  // Try to see if "colorimetric" tiff
+    // Try to see if "colorimetric" tiff
+    cmsCIExyYTRIPLE primaries;
+    cmsCIExyY whitePoint;
+    cmsToneCurve* curve[3];
 
-  if (TIFFGetField (in, TIFFTAG_PRIMARYCHROMATICITIES, &chr))
+    cmsFloat32Number* chr;
+    if (TIFFGetField(in, TIFFTAG_PRIMARYCHROMATICITIES, &chr))
     {
+        primaries.Red.x     = chr[0];
+        primaries.Red.y     = chr[1];
+        primaries.Green.x   = chr[2];
+        primaries.Green.y   = chr[3];
+        primaries.Blue.x    = chr[4];
+        primaries.Blue.y    = chr[5];
 
-      Primaries.Red.x = chr[0];
-      Primaries.Red.y = chr[1];
-      Primaries.Green.x = chr[2];
-      Primaries.Green.y = chr[3];
-      Primaries.Blue.x = chr[4];
-      Primaries.Blue.y = chr[5];
+        primaries.Red.Y = primaries.Green.Y = primaries.Blue.Y = 1.0;
 
-      Primaries.Red.Y = Primaries.Green.Y = Primaries.Blue.Y = 1.0;
+        cmsFloat32Number* wp;
+        if (TIFFGetField (in, TIFFTAG_WHITEPOINT, &wp))
+        {
+            whitePoint.x = wp[0];
+            whitePoint.y = wp[1];
+            whitePoint.Y = 1.0;
 
-      if (TIFFGetField (in, TIFFTAG_WHITEPOINT, &wp))
-	{
+            // Transferfunction is a bit harder....
+            cmsUInt16Number *gmr;
+            cmsUInt16Number *gmg;
+            cmsUInt16Number *gmb;
 
-	  WhitePoint.x = wp[0];
-	  WhitePoint.y = wp[1];
-	  WhitePoint.Y = 1.0;
+            TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION, &gmr, &gmg, &gmb);
 
-	  // Transferfunction is a bit harder....
+            curve[0] = cmsBuildTabulatedToneCurve16(NULL, 256, gmr);
+            curve[1] = cmsBuildTabulatedToneCurve16(NULL, 256, gmg);
+            curve[2] = cmsBuildTabulatedToneCurve16(NULL, 256, gmb);
 
-	  for (i = 0; i < 3; i++)
-	    Gamma[i] = cmsAllocGamma (256);
+            hProfile = cmsCreateRGBProfile (&whitePoint, &primaries, curve);
 
-	  TIFFGetFieldDefaulted (in, TIFFTAG_TRANSFERFUNCTION, &gmr, &gmg, &gmb);
+            cmsFreeToneCurve(curve[0]);
+            cmsFreeToneCurve(curve[1]);
+            cmsFreeToneCurve(curve[2]);
 
-	  CopyMemory (Gamma[0]->GammaTable, gmr, 256 * sizeof (WORD));
-	  CopyMemory (Gamma[1]->GammaTable, gmg, 256 * sizeof (WORD));
-	  CopyMemory (Gamma[2]->GammaTable, gmb, 256 * sizeof (WORD));
-
-	  hProfile = cmsCreateRGBProfile (&WhitePoint, &Primaries, Gamma);
-
-	  for (i = 0; i < 3; i++)
-	    cmsFreeGamma (Gamma[i]);
-
-	  return hProfile;
-	}
+            return hProfile;
+        }
     }
 
-  return NULL;
+    return NULL;
 }
-
-//
 // End of code form tifficc.c
-//
 ///////////////////////////////////////////////////////////////////////////////
 
 static void
@@ -317,8 +300,8 @@ pfs::Frame * TiffReader::readIntoPfsFrame ()
 
   cmsHPROFILE hIn, hsRGB;
   cmsHTRANSFORM xform = NULL;
-  cmsErrorAction (LCMS_ERROR_SHOW);
-  cmsSetErrorHandler (cms_error_handler);
+  // cmsErrorAction (LCMS_ERROR_SHOW);          // TODO
+  // cmsSetErrorHandler (cms_error_handler);    // TODO
 
   if (camera_profile_opt == 1)
     {				// embedded      
@@ -590,8 +573,8 @@ TiffReader::readIntoQImage ()
 
   cmsHPROFILE hIn, hsRGB;
   cmsHTRANSFORM xform = NULL;
-  cmsErrorAction (LCMS_ERROR_SHOW);
-  cmsSetErrorHandler (cms_error_handler);
+  //cmsErrorAction (LCMS_ERROR_SHOW);           // TODO
+  //cmsSetErrorHandler (cms_error_handler);     // TODO
 
   if (camera_profile_opt == 1)
     {				// embedded      
@@ -904,31 +887,30 @@ TiffWriter::writeLogLuvTiff ()
 int
 TiffWriter::write8bitTiff ()
 {
-  if (ldrimage == NULL)
-    throw std::runtime_error ("TIFF: QImage was not set correctly");
+    if (ldrimage == NULL)
+      throw std::runtime_error ("TIFF: QImage was not set correctly");
 
-  cmsHPROFILE hsRGB;
-  LPBYTE EmbedBuffer;
-  size_t profile_size = 0;
+  cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
+  cmsUInt32Number profileSize = 0;
+  cmsSaveProfileToMem (hsRGB, NULL, &profileSize);	// get the size
 
-  hsRGB = cmsCreate_sRGBProfile ();
-  _cmsSaveProfileToMem (hsRGB, NULL, &profile_size);	// get the size
+  std::vector<char> embedBuffer(profileSize);
 
-  EmbedBuffer = (LPBYTE) _cmsMalloc (profile_size);
+  cmsSaveProfileToMem(hsRGB,
+                      reinterpret_cast<void*>(embedBuffer.data()),
+                      &profileSize);
 
-  _cmsSaveProfileToMem (hsRGB, EmbedBuffer, &profile_size);
+  TIFFSetField(tif, TIFFTAG_ICCPROFILE, profileSize,
+               reinterpret_cast<void*>(embedBuffer.data()) );
 
-  TIFFSetField (tif, TIFFTAG_ICCPROFILE, profile_size, EmbedBuffer);
-  free (EmbedBuffer);
+  TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+  TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+  TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, 8);
 
-  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
-  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 8);
+  tsize_t strip_size = TIFFStripSize(tif);
+  tstrip_t strips_num = TIFFNumberOfStrips(tif);
 
-  tsize_t strip_size = TIFFStripSize (tif);
-  tstrip_t strips_num = TIFFNumberOfStrips (tif);
-
-  char *strip_buf = (char *) _TIFFmalloc (strip_size);	//enough space for a strip
+  char *strip_buf = (char *)_TIFFmalloc (strip_size);	//enough space for a strip
   if (!strip_buf) 
     {
     TIFFClose (tif);
@@ -938,33 +920,30 @@ TiffWriter::write8bitTiff ()
   QRgb *ldrpixels = reinterpret_cast < QRgb * >(ldrimage->bits ());
 
   emit maximumValue (strips_num);	// for QProgressDialog
-  for (unsigned int s = 0; s < strips_num; s++)
+    for (unsigned int s = 0; s < strips_num; s++)
     {
-      for (unsigned int col = 0; col < width; col++)
+        for (unsigned int col = 0; col < width; col++)
+        {
+            strip_buf[4 * col + 0] = qRed (ldrpixels[width * s + col]);
+            strip_buf[4 * col + 1] = qGreen (ldrpixels[width * s + col]);
+            strip_buf[4 * col + 2] = qBlue (ldrpixels[width * s + col]);
+            strip_buf[4 * col + 3] = qAlpha (ldrpixels[width * s + col]);
+        }
+    if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
 	{
-	  //qRed  (*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
-	  strip_buf[4 * col + 0] = qRed (ldrpixels[width * s + col]);
-	  //qGreen(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
-	  strip_buf[4 * col + 1] = qGreen (ldrpixels[width * s + col]);
-	  //qBlue (*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
-	  strip_buf[4 * col + 2] = qBlue (ldrpixels[width * s + col]);
-	  //qAlpha(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
-	  strip_buf[4 * col + 3] = qAlpha (ldrpixels[width * s + col]);
-	}
-      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
+        qDebug ("error writing strip");
+        TIFFClose (tif);
+        return -1;
+    }
+    else
 	{
-	  qDebug ("error writing strip");
-      TIFFClose (tif);
-	  return -1;
-	}
-      else
-	{
-	  emit nextstep (s);	// for QProgressDialog
+        emit nextstep (s);	// for QProgressDialog
 	}
     }
-  _TIFFfree (strip_buf);
-  TIFFClose (tif);
-  return 0;
+    _TIFFfree (strip_buf);
+    TIFFClose (tif);
+
+    return 0;
 }
 
 int
@@ -976,23 +955,22 @@ TiffWriter::write16bitTiff ()
     throw std::runtime_error ("TIFF: 16 bits pixmap was not set correctly");
     }
 
-  cmsHPROFILE hsRGB;
-  LPBYTE EmbedBuffer;
-  size_t profile_size = 0;
+  cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
+  cmsUInt32Number profileSize = 0;
+  cmsSaveProfileToMem (hsRGB, NULL, &profileSize);	// get the size
 
-  hsRGB = cmsCreate_sRGBProfile ();
-  _cmsSaveProfileToMem (hsRGB, NULL, &profile_size);	// get the size
+  std::vector<char> embedBuffer(profileSize);
 
-  EmbedBuffer = (LPBYTE) _cmsMalloc (profile_size);
+  cmsSaveProfileToMem(hsRGB,
+                      reinterpret_cast<void*>(embedBuffer.data()),
+                      &profileSize);
 
-  _cmsSaveProfileToMem (hsRGB, EmbedBuffer, &profile_size);
+  TIFFSetField(tif, TIFFTAG_ICCPROFILE, profileSize,
+               reinterpret_cast<void*>(embedBuffer.data()) );
 
-  TIFFSetField (tif, TIFFTAG_ICCPROFILE, profile_size, EmbedBuffer);
-  free (EmbedBuffer);
-
-  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
-  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 16);
+  TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+  TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+  TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, 16);
 
   tsize_t strip_size = TIFFStripSize (tif);
   tstrip_t strips_num = TIFFNumberOfStrips (tif);
