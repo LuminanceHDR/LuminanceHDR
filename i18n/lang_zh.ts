@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/UI/about.ui" line="14"/>
         <source>About Luminance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关于:Luminance</translation>
     </message>
     <message>
         <location filename="../src/UI/about.ui" line="61"/>
@@ -20,7 +20,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/UI/about.ui" line="78"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;关于</translation>
     </message>
     <message utf8="true">
         <location filename="../src/UI/about.ui" line="89"/>
@@ -35,7 +35,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/UI/about.ui" line="108"/>
         <source>A&amp;uthors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;作者</translation>
     </message>
     <message utf8="true">
         <location filename="../src/UI/about.ui" line="154"/>

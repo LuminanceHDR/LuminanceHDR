@@ -27,11 +27,7 @@
 
 #include "PreviewWidget.h"
 
-PreviewWidget::PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage *p) : QWidget(parent), movableImage(m), pivotImage(p), prev_computed(), agcursor_pixmap(NULL) {
-// 	this->setAttribute(Qt::WA_PaintOnScreen);
-// 	this->setAttribute(Qt::WA_StaticContents);
-// 	this->setAttribute(Qt::WA_OpaquePaintEvent);
-// 	this->setAttribute(Qt::WA_NoSystemBackground);
+PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) : QWidget(parent), movableImage(m), pivotImage(p), prev_computed() {
 	mx=my=px=py=0;
 	setFocusPolicy(Qt::StrongFocus);
 	previewImage=new QImage(movableImage->size(),QImage::Format_ARGB32);
@@ -39,19 +35,10 @@ PreviewWidget::PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage 
 	blendmode=&PreviewWidget::computeDiffRgba;
 	leftButtonMode=LB_nomode;
 	setMouseTracking(true);
-	//set internal brush values to their default
-	brushAddMode=true;
-	setBrushSize(32);
-	previousPixmapSize=-1;
-	setBrushStrength(255);
-	previousPixmapStrength=-1;
-	previousPixmapColor=QColor();
-	fillAntiGhostingCursorPixmap();
 }
 
 PreviewWidget::~PreviewWidget() {
 	delete previewImage;
-	delete agcursor_pixmap;
 }
 
 void PreviewWidget::paintEvent(QPaintEvent * event) {
@@ -128,7 +115,7 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 			else
 				PivVal=&piv_line[j-px];
 
-			if (pivotImage==movableImage && blendmode != & PreviewWidget::computeAntiGhostingMask)
+			if (pivotImage==movableImage)
 				out[j]=*MovVal;
 			else
 				out[j]= (this->*rendermode)(MovVal,PivVal);
@@ -148,13 +135,6 @@ void PreviewWidget::mousePressEvent(QMouseEvent *event) {
 		QApplication::setOverrideCursor( QCursor(Qt::ClosedHandCursor) );
 		mousePos = event->globalPos();
 	}
-
-	QPoint mousepos=event->pos();
-	if (event->buttons()==Qt::LeftButton) {
-		if (leftButtonMode ==  LB_antighostingmode && scaleFactor == 1)
-			timerid=this->startTimer(0);
-	}
-	event->ignore();
 }
 
 void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
@@ -164,47 +144,9 @@ void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
 		if (event->modifiers()==Qt::ShiftModifier)
 			diff*=5;
 		emit moved(diff);
-		//scrollArea->verticalScrollBar()->setValue(scrollArea->verticalScrollBar()->value() + diff.y());
-		//scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + diff.x());
 		mousePos=event->globalPos();
 	}
 	event->ignore();
-}
-
-void PreviewWidget::mouseReleaseEvent(QMouseEvent *event) {
-	if (event->button()==Qt::LeftButton) {
-		if (leftButtonMode == LB_antighostingmode && scaleFactor == 1)
-			this->killTimer(timerid);
-	}
-}
-
-void PreviewWidget::timerEvent(QTimerEvent *) {
-	if (scaleFactor!=1)
-		return;
-
-	QPoint relativeToWidget=mapFromGlobal(QCursor::pos());
-
-	QPoint imagereferredPoint= relativeToWidget/scaleFactor -QPoint(mx,my+1);
-
-	QPoint halfsize((int)(requestedPixmapSize/(2*scaleFactor)), (int)(requestedPixmapSize/(2*scaleFactor)));
-
-	QRect imagereferredBoundingRect( imagereferredPoint-halfsize, imagereferredPoint+halfsize );
-// 	QRect localBoundingRect ( localPoint-QPoint(requestedPixmapSize/2,requestedPixmapSize/2), localPoint+QPoint(requestedPixmapSize/2,requestedPixmapSize/2) );
-
-	QRegion imagereferredBrushArea(imagereferredBoundingRect,QRegion::Ellipse);
-
-	for (int row=qMax(0,imagereferredBoundingRect.top()); row <= qMin(movableImage->size().height()-1,imagereferredBoundingRect.bottom()); row++) {
-		for (int col=qMax(0,imagereferredBoundingRect.left()); col <= qMin(movableImage->size().width()-1,imagereferredBoundingRect.right()); col++) {
-			QPoint p(col,row);
-			if (imagereferredBrushArea.contains(p)) {
-				QColor pxval= QColor::fromRgba(movableImage->pixel(p.x(),p.y()));
-				pxval.setAlpha(qMin(255,qMax(0,pxval.alpha()-requestedPixmapStrength)));
-				movableImage->setPixel(p.x(), p.y(), pxval.rgba());
-			}
-		}
-	}
-	prev_computed-=imagereferredBrushArea.translated(mx,my);
-	update();
 }
 
 void PreviewWidget::requestedBlendMode(int newindex) {
@@ -216,8 +158,6 @@ void PreviewWidget::requestedBlendMode(int newindex) {
 		blendmode=& PreviewWidget::computeOnlyMovable;
 	else if (newindex==3)
 		blendmode=& PreviewWidget::computeOnlyPivot;
-	else if (newindex==4)
-		blendmode=& PreviewWidget::computeAntiGhostingMask;
 
 	prev_computed=QRegion();
 	this->update();
@@ -269,57 +209,3 @@ void PreviewWidget::updateHorizShiftPivot(int h) {
 	prev_computed=QRegion();
 }
 
-void PreviewWidget::switchAntighostingMode(bool ag) {
-	if (ag) {
-		leftButtonMode=LB_antighostingmode;
-		this->setCursor(*agcursor_pixmap);
-	} else {
-		leftButtonMode=LB_nomode;
-		this->unsetCursor();
-	}
-}
-
-void PreviewWidget::setBrushSize (const int newsize) {
-	requestedPixmapSize=newsize;
-}
-
-void PreviewWidget::setBrushMode(bool removemode) {
-	requestedPixmapStrength *= -1;
-	brushAddMode=!removemode;
-}
-
-void PreviewWidget::setBrushStrength (const int newstrength) {
-	requestedPixmapStrength=newstrength;
-	requestedPixmapColor.setAlpha(qMax(60,requestedPixmapStrength));
-	requestedPixmapStrength *= (!brushAddMode) ? -1 : 1;
-}
-
-void PreviewWidget::setBrushColor (const QColor newcolor) {
-	requestedPixmapColor=newcolor;
-	prev_computed=QRegion();
-	update();
-}
-
-void PreviewWidget::enterEvent(QEvent *) {
-	if (leftButtonMode==LB_antighostingmode) {
-		fillAntiGhostingCursorPixmap();
-		this->unsetCursor();
-		this->setCursor(*agcursor_pixmap);
-	}
-}
-
-void PreviewWidget::fillAntiGhostingCursorPixmap() {
-	if (requestedPixmapSize != previousPixmapSize || requestedPixmapStrength != previousPixmapStrength || requestedPixmapColor.rgb() != previousPixmapColor.rgb()) {
-		if (agcursor_pixmap)
-			delete agcursor_pixmap;
-		previousPixmapSize=requestedPixmapSize;
-		previousPixmapStrength=requestedPixmapStrength;
-		previousPixmapColor=requestedPixmapColor;
-		agcursor_pixmap=new QPixmap(requestedPixmapSize,requestedPixmapSize);
-		agcursor_pixmap->fill(Qt::transparent);
-		QPainter painter(agcursor_pixmap);
-		painter.setPen(Qt::NoPen);
-		painter.setBrush(QBrush(requestedPixmapColor,Qt::SolidPattern));
-		painter.drawEllipse(0,0,requestedPixmapSize,requestedPixmapSize);
-	}
-}

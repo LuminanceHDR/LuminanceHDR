@@ -53,6 +53,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	}
 
 	filelist=hcm->getFileList();
+	antiGhostingMasksList = hcm->getAntiGhostingMasksList();
 	this->hcm=hcm;
 
 	toolOptionsFrame->setVisible(false);
@@ -67,9 +68,12 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 
 	scrollArea = new QScrollArea(previewImageFrame);
 	previewWidget = new PreviewWidget(this,original_ldrlist[1],original_ldrlist[0]);
-	previewWidget->setBrushColor(maskcolor);
 	previewWidget->adjustSize();
 	previewWidget->update();
+	agWidget = new AntiGhostingWidget(previewWidget, antiGhostingMasksList[1]);
+	agWidget->setBrushColor(maskcolor);
+	agWidget->adjustSize();
+	agWidget->update();
 
 	cornerButton=new QToolButton(this);
 	cornerButton->setToolTip(tr("Pan the image to a region"));
@@ -144,18 +148,18 @@ void EditingTools::setupConnections() {
 	connect(blendModeCB,SIGNAL(currentIndexChanged(int)),previewWidget,SLOT(requestedBlendMode(int)));
 	connect(blendModeCB,SIGNAL(currentIndexChanged(int)),this,SLOT(blendModeCBIndexChanged(int)));
 	connect(antighostToolButton,SIGNAL(toggled(bool)),toolOptionsFrame,SLOT(setVisible(bool)));
-	connect(antighostToolButton,SIGNAL(toggled(bool)),previewWidget,SLOT(switchAntighostingMode(bool)));
+	connect(antighostToolButton,SIGNAL(toggled(bool)),agWidget,SLOT(switchAntighostingMode(bool)));
 	connect(antighostToolButton,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonToggled(bool)));
-	connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushSize(int)));
-	connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushStrength(int)));
+	connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),agWidget,SLOT(setBrushSize(int)));
+	connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),agWidget,SLOT(setBrushStrength(int)));
 	connect(maskColorButton,SIGNAL(clicked()),this,SLOT(maskColorButtonClicked()));
 
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
-	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
 	connect(previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
+	connect(agWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
 	connect(selectionTool,SIGNAL(selectionReady(bool)),cropButton,SLOT(setEnabled(bool)));
 	connect(selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
-	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
+	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),agWidget,SLOT(setBrushMode(bool)));
 
 	connect(hcm, SIGNAL(mdrSaved()), this, SLOT(restoreSaveImagesButtonState()));
 }
@@ -251,10 +255,13 @@ void EditingTools::crop_stack() {
 		original_ldrlist=hcm->getMDRList();
 	}
 	
+	antiGhostingMasksList = hcm->getAntiGhostingMasksList();
+		
 	selectionTool->removeSelection();
 
 	previewWidget->setMovable(original_ldrlist[movableListWidget->currentRow()]);
 	previewWidget->setPivot(original_ldrlist[referenceListWidget->currentRow()]);
+	agWidget->setMask(antiGhostingMasksList[movableListWidget->currentRow()]);
 	//restore fit
 	if (fitButton->isChecked())
 		fitPreview(true);
@@ -265,11 +272,15 @@ void EditingTools::crop_stack() {
 void EditingTools::nextClicked() {
 	Next_Finishbutton->setEnabled(false);
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
+	if (hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) { 
 		hcm->applyShiftsToImageStack(HV_offsets);
-	else 
+		hcm->doAntiGhosting();
+	}
+	else {
 		if (!m_MdrSaved)
 			hcm->applyShiftsToMdrImageStack(HV_offsets);
+		hcm->doAntiGhosting();
+	}
 	QApplication::restoreOverrideCursor();
 	emit accept();
 }
@@ -277,6 +288,8 @@ void EditingTools::nextClicked() {
 void EditingTools::updateMovable(int newidx) {
 	//inform display_widget of the change
 	previewWidget->setMovable(original_ldrlist[newidx], HV_offsets[newidx].first, HV_offsets[newidx].second);
+	agWidget->setMask(antiGhostingMasksList[newidx]);
+	agWidget->setHV_offset(HV_offsets[newidx]);
 	//prevent a change in the spinboxes to start a useless calculation
 	horizShiftSB->blockSignals(true);
 	horizShiftSB->setValue(HV_offsets[newidx].first);
@@ -310,12 +323,16 @@ void EditingTools::leftClicked() {
 void EditingTools::vertShiftChanged(int v) {
 	HV_offsets[movableListWidget->currentRow()].second=v;
 	previewWidget->updateVertShiftMovable(v);
+	agWidget->updateVertShift(v);
 	previewWidget->update();
+	agWidget->update();
 }
 void EditingTools::horizShiftChanged(int v) {
 	HV_offsets[movableListWidget->currentRow()].first=v;
 	previewWidget->updateHorizShiftMovable(v);
+	agWidget->updateHorizShift(v);
 	previewWidget->update();
+	agWidget->update();
 }
 
 void EditingTools::resetCurrent() {
@@ -377,11 +394,13 @@ void EditingTools::enterWhatsThis() {
 
 void EditingTools::zoomIn() {
 	previewWidget->resize(previewWidget->size()*1.25f);
+	agWidget->resize(previewWidget->size()*1.25f);
 	zoomOutButton->setEnabled(true);
 	zoomInButton->setEnabled(previewWidget->getScaleFactor() < 6.0);
 }
 void EditingTools::zoomOut() {
 	previewWidget->resize(previewWidget->size()*0.8f);
+	agWidget->resize(previewWidget->size()*0.8f);
 	zoomInButton->setEnabled(true);
 	zoomOutButton->setEnabled(previewWidget->getScaleFactor() > 0.166);
 }
@@ -394,14 +413,17 @@ void EditingTools::fitPreview(bool checked) {
 		QSize fillWinSize=original_ldrlist.at(0)->size();
 		fillWinSize.scale(scrollArea->maximumViewportSize(),Qt::KeepAspectRatio);
 		previewWidget->resize(fillWinSize);
+		agWidget->resize(fillWinSize);
 	} else {
 		previewWidget->resize(previousPreviewWidgetSize);
+		agWidget->resize(previousPreviewWidgetSize);
 	}
 }
 void EditingTools::origSize() {
 	zoomInButton->setEnabled(true);
 	zoomOutButton->setEnabled(true);
 	previewWidget->resize(original_ldrlist.at(0)->size());
+	agWidget->resize(original_ldrlist.at(0)->size());
 }
 
 void EditingTools::antighostToolButtonToggled(bool toggled) {
@@ -413,12 +435,16 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
 	referenceListWidget->setDisabled(toggled);
 	previewWidget->update();
 	toggled ? selectionTool->disable() : selectionTool->enable();
+	if (toggled)
+		setAntiGhostingWidget(antiGhostingMasksList[movableListWidget->currentRow()], HV_offsets[movableListWidget->currentRow()]);
+	else
+		unsetAntiGhostingWidget();
 }
 
 void EditingTools::maskColorButtonClicked() {
 	QColor returned=QColorDialog::getColor();
 	if (returned.isValid()) {
-		previewWidget->setBrushColor(returned);
+		agWidget->setBrushColor(returned);
 		maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
 		luminanceOptions.setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
 	}
@@ -477,3 +503,16 @@ void EditingTools::restoreSaveImagesButtonState()
 	Next_Finishbutton->setEnabled(true);
 	QApplication::restoreOverrideCursor();
 }
+
+void EditingTools::setAntiGhostingWidget(QImage *mask, QPair<int, int> HV_offset)
+{
+	agWidget->setMask(mask);
+	agWidget->setHV_offset(HV_offset);
+	agWidget->show();
+}
+
+void EditingTools::unsetAntiGhostingWidget()
+{
+	agWidget->hide();
+}
+

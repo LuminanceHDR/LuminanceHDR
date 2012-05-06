@@ -33,6 +33,7 @@
 #include "Viewers/SelectionTool.h"
 #include "HdrCreation/HdrCreationManager.h"
 #include "PreviewWidget.h"
+#include "AntiGhostingWidget.h"
 #include "Common/LuminanceOptions.h"
 
 class HistogramLDR;
@@ -52,11 +53,13 @@ protected:
 	void keyReleaseEvent(QKeyEvent *);
 private:
 	QList<QImage*> original_ldrlist;
+	QList<QImage*> antiGhostingMasksList;
 	QStringList filelist;
 	HdrCreationManager *hcm;
 
 	QScrollArea *scrollArea;
 	PreviewWidget *previewWidget;
+	AntiGhostingWidget *agWidget;
 	int additional_shift_value;
 	QList< QPair<int,int> > HV_offsets;
 	HistogramLDR *histogram;
@@ -67,6 +70,8 @@ private:
 	bool m_MdrSaved;
 	LuminanceOptions luminanceOptions;
 	QVector<float> expotimes;
+	void setAntiGhostingWidget(QImage *, QPair<int, int>);
+	void unsetAntiGhostingWidget();
 private slots:
 	void slotPanIconSelectionMoved(QRect);
 	void slotPanIconHidden();

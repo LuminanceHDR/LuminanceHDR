@@ -30,11 +30,13 @@
 #include <QScrollArea>
 #include <QImage>
 
+#include "AntiGhostingWidget.h"
+
 class PreviewWidget : public QWidget
 {
 Q_OBJECT
 public:
-	PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage *p);
+	PreviewWidget(QWidget *parent, QImage *m, const QImage *p);
 	~PreviewWidget();
 	QSize sizeHint () const {
 		return previewImage->size();
@@ -57,22 +59,13 @@ public:
 
 public slots:
 	void requestedBlendMode(int);
-	void switchAntighostingMode(bool);
-	void setBrushSize(const int);
-	void setBrushStrength(const int);
-	void setBrushColor(const QColor);
-	void setBrushMode(bool);
 signals:
-	void validCropArea(bool);
 	void moved(QPoint diff);
 protected:
 	void paintEvent( QPaintEvent * );
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
 	void resizeEvent(QResizeEvent *event);
-	void timerEvent(QTimerEvent *event);
-	void enterEvent(QEvent *event);
 
 private:
 	//5 blending modes
@@ -116,19 +109,7 @@ private:
 		//the output image still has alpha=255 (opaque)
 		return qRgba(ro,go,bo,255);
 	}
-	inline QRgb computeAntiGhostingMask(const QRgb *Mrgba, const QRgb */*Prgba*/) const {
-		int ro,go,bo;
-		int Mred   = qRed(*Mrgba);
-		int Mgreen = qGreen(*Mrgba);
-		int Mblue  = qBlue(*Mrgba);
-		int Malpha = qAlpha(*Mrgba);
-		//blend samples using alphas as weights
-		ro = ( requestedPixmapColor.red()*(255-Malpha) + Mred*Malpha )/255;
-		go = ( requestedPixmapColor.green()*(255-Malpha) + Mgreen*Malpha )/255;
-		bo = ( requestedPixmapColor.blue()*(255-Malpha) + Mblue*Malpha )/255;
-		//the output image still has alpha=255 (opaque)
-		return qRgba(ro,go,bo,255);
-	}
+
 	QRgb(PreviewWidget::*blendmode)(const QRgb*,const QRgb*)const;
 	void renderPreviewImage(QRgb(PreviewWidget::*f)(const QRgb*,const QRgb*)const,const QRect a = QRect());
 
@@ -147,14 +128,6 @@ private:
 
 	//for panning with mid-button
 	QPoint mousePos;
-	//used for additional painting
-	int timerid;
-	QPixmap *agcursor_pixmap;
-	int requestedPixmapSize,previousPixmapSize;
-	int requestedPixmapStrength,previousPixmapStrength;
-	QColor requestedPixmapColor,previousPixmapColor;
-	bool brushAddMode;//false means brush is in remove mode.
-	void fillAntiGhostingCursorPixmap();
 
 	enum {LB_nomode,LB_antighostingmode} leftButtonMode;
 };
