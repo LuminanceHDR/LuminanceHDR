@@ -33,18 +33,20 @@
 
 struct CleanUpCmsProfile
 {
-    static inline void cleanup(cmsHPROFILE profile)
+    static inline
+    void cleanup(cmsHPROFILE profile)
     {
-        cmsCloseProfile(profile);
+        if ( profile ) cmsCloseProfile(profile);
     }
 };
 typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
 
 struct CleanUpCmsTransform
 {
-    static inline void cleanup(cmsHTRANSFORM transform)
+    static inline
+    void cleanup(cmsHTRANSFORM transform)
     {
-        cmsDeleteTransform(transform);
+        if ( transform ) cmsDeleteTransform(transform);
     }
 };
 typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;

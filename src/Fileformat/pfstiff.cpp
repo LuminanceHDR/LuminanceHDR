@@ -31,25 +31,30 @@
 #include <QObject>
 #include <QSysInfo>
 #include <QFileInfo>
+#include <QFile>
 #include <QDebug>
+#include <QScopedPointer>
 
 #include <cmath>
 #include <iostream>
 #include <vector>
 #include <stdexcept>
 #include <assert.h>
-#include <lcms2.h>
+#include "Common/ResourceHandlerLcms.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 
 #include "Common/LuminanceOptions.h"
 
+namespace
+{
+
 ///////////////////////////////////////////////////////////////////////////////////
 // \brief This code is taken from tifficc.c from libcms distribution and sligthly modified
 // \ref http://svn.ghostscript.com/ghostscript/trunk/gs/lcms2/utils/tificc/tificc.c
 cmsHPROFILE
-GetTIFFProfile (TIFF * in)
+GetTIFFProfile(TIFF * in)
 {
     cmsHPROFILE hProfile;
     void* iccProfilePtr;
@@ -113,8 +118,8 @@ GetTIFFProfile (TIFF * in)
 // End of code form tifficc.c
 ///////////////////////////////////////////////////////////////////////////////
 
-static void
-transform_to_rgb (unsigned char *ScanLineIn, unsigned char *ScanLineOut, uint32 size, int nSamples)
+void
+transform_to_rgb(unsigned char *ScanLineIn, unsigned char *ScanLineOut, uint32 size, int nSamples)
 {
   for (uint32 i = 0; i < size; i += nSamples)
     {
@@ -129,8 +134,8 @@ transform_to_rgb (unsigned char *ScanLineIn, unsigned char *ScanLineOut, uint32 
     }
 }
 
-static void
-transform_to_rgb_16 (uint16 *ScanLineIn, uint16 *ScanLineOut, uint32 size, int nSamples)
+void
+transform_to_rgb_16(uint16 *ScanLineIn, uint16 *ScanLineOut, uint32 size, int nSamples)
 {
   for (uint32 i = 0; i < size/2; i += nSamples)
     {
@@ -145,426 +150,373 @@ transform_to_rgb_16 (uint16 *ScanLineIn, uint16 *ScanLineOut, uint32 size, int n
     }
 }
 
-static int
-cms_error_handler (int ErrorCode, const char *ErrorText)
-{
-  throw std::runtime_error (ErrorText);
+const float DIV_255 = 1.f/255.f;
+const float DIV_256 = 1.f/256.f;
 }
 
-TiffReader::TiffReader (const char *filename, const char *tempfilespath, bool wod)
+TiffReader::TiffReader(const char *filename, const char *tempfilespath, bool wod):
+    tif( TIFFOpen(filename, "r") ),
+    writeOnDisk(wod),
+    fileName(filename),
+    tempFilesPath(tempfilespath)
 {
-  // read header containing width and height from file
-  fileName = QString (filename);
-  tempFilesPath = QString (tempfilespath);
-  writeOnDisk = wod;
+    if (!tif)
+        throw std::runtime_error ("TIFF: could not open file for reading.");
+    // read header containing width and height from file
+    //--- image size
+    TIFFGetField (tif.data(), TIFFTAG_IMAGEWIDTH, &width);
+    TIFFGetField (tif.data(), TIFFTAG_IMAGELENGTH, &height);
 
-  tif = TIFFOpen (filename, "r");
-  if (!tif)
-    throw std::runtime_error ("TIFF: could not open file for reading.");
-
-  //--- image size
-  TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &width);
-  TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &height);
-
-  if (width * height <= 0)
+    if (width * height <= 0)
     {
-      TIFFClose (tif);
-      throw std::runtime_error ("TIFF: illegal image size.");
+        throw std::runtime_error ("TIFF: illegal image size.");
     }
 
-  //--- image parameters
-  uint16 planar;
-  TIFFGetField (tif, TIFFTAG_PLANARCONFIG, &planar);
-  qDebug() << "Planar configuration: " << planar;
-  if (planar != PLANARCONFIG_CONTIG)
+    //--- image parameters
+    uint16 planar;
+    TIFFGetField(tif.data(), TIFFTAG_PLANARCONFIG, &planar);
+    qDebug() << "Planar configuration: " << planar;
+    if (planar != PLANARCONFIG_CONTIG)
     {
-      TIFFClose (tif);
-      throw std::runtime_error ("TIFF: unsupported planar configuration");
+        throw std::runtime_error ("TIFF: unsupported planar configuration");
     }
 
-  /*uint16 nTiles = TIFFNumberOfTiles (tif);
-  qDebug() << "nTiles: " << nTiles;
-  if (nTiles != 1)
-    {
-      TIFFClose (tif);
-      throw std::runtime_error ("TIFF: unsupported tiled image");
-    }
-  */
+    if (!TIFFGetField(tif.data(), TIFFTAG_COMPRESSION, &comp))	// compression type
+        comp = COMPRESSION_NONE;
 
-  if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &comp))	// compression type
-    comp = COMPRESSION_NONE;
-
-  // type of photometric data
-  if (!TIFFGetFieldDefaulted (tif, TIFFTAG_PHOTOMETRIC, &phot)) 
+    // type of photometric data
+    if (!TIFFGetFieldDefaulted (tif.data(), TIFFTAG_PHOTOMETRIC, &phot))
     {
-      TIFFClose (tif);
-      throw std::runtime_error ("TIFF: unspecified photometric type");
+        throw std::runtime_error ("TIFF: unspecified photometric type");
     }
 
-  qDebug () << "Photometric type : " << phot;
+    qDebug () << "Photometric type : " << phot;
 
-  uint16 *extra_sample_types = 0;
-  uint16 extra_samples_per_pixel = 0;
-  switch (phot)
+    uint16 *extra_sample_types = 0;
+    uint16 extra_samples_per_pixel = 0;
+    switch (phot)
     {
     case PHOTOMETRIC_LOGLUV:
-      qDebug ("Photometric data: LogLuv");
-      if (comp != COMPRESSION_SGILOG && comp != COMPRESSION_SGILOG24)
-	{
-	  TIFFClose (tif);
-	  throw std::runtime_error ("TIFF: only support SGILOG compressed LogLuv data");
-	}
-      TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
-      TIFFSetField (tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
-      TypeOfData = FLOATLOGLUV;
-      break;
+    {
+        qDebug ("Photometric data: LogLuv");
+        if (comp != COMPRESSION_SGILOG && comp != COMPRESSION_SGILOG24)
+        {
+            throw std::runtime_error ("TIFF: only support SGILOG compressed LogLuv data");
+        }
+        TIFFGetField(tif.data(), TIFFTAG_SAMPLESPERPIXEL, &nSamples);
+        TIFFSetField(tif.data(), TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
+        TypeOfData = FLOATLOGLUV;
+    }
+        break;
     case PHOTOMETRIC_RGB:
-      //       qDebug("Photometric data: RGB");
-      // read extra samples (# of alpha channels)
-      if (TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra_samples_per_pixel, &extra_sample_types) != 1)
-	{
-	  extra_samples_per_pixel = 0;
-	}
-      TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
-      bps = nSamples - extra_samples_per_pixel;
-      has_alpha = (extra_samples_per_pixel == 1);
-      //       qDebug("nSamples=%d extra_samples_per_pixel=%d",nSamples,extra_samples_per_pixel);
-      //       qDebug("has alpha? %s", has_alpha ? "true" : "false");
-      if (bps != 3)
-	{
-	  qDebug ("TIFF: unsupported samples per pixel for RGB");
-	  TIFFClose (tif);
-	  throw std::runtime_error ("TIFF: unsupported samples per pixel for RGB");
-	}
-      if (!TIFFGetField (tif, TIFFTAG_BITSPERSAMPLE, &bps) || (bps != 8 && bps != 16 && bps != 32))
-	{
-	  qDebug ("TIFF: unsupported bits per sample for RGB");
-	  TIFFClose (tif);
-	  throw std::runtime_error ("TIFF: unsupported bits per sample for RGB");
-	}
+    {
+        // qDebug("Photometric data: RGB");
+        // read extra samples (# of alpha channels)
+        if (TIFFGetField(tif.data(), TIFFTAG_EXTRASAMPLES, &extra_samples_per_pixel, &extra_sample_types) != 1)
+        {
+            extra_samples_per_pixel = 0;
+        }
+        TIFFGetField(tif.data(), TIFFTAG_SAMPLESPERPIXEL, &nSamples);
+        bps = nSamples - extra_samples_per_pixel;
+        has_alpha = (extra_samples_per_pixel == 1);
+        // qDebug("nSamples=%d extra_samples_per_pixel=%d",nSamples,extra_samples_per_pixel);
+        // qDebug("has alpha? %s", has_alpha ? "true" : "false");
+        if (bps != 3)
+        {
+            qDebug ("TIFF: unsupported samples per pixel for RGB");
+            throw std::runtime_error ("TIFF: unsupported samples per pixel for RGB");
+        }
+        if (!TIFFGetField(tif.data(), TIFFTAG_BITSPERSAMPLE, &bps) || (bps != 8 && bps != 16 && bps != 32))
+        {
+            qDebug ("TIFF: unsupported bits per sample for RGB");
+            throw std::runtime_error ("TIFF: unsupported bits per sample for RGB");
+        }
 
-      if (bps == 8)
-	{
-	  TypeOfData = BYTE;
-	  qDebug ("8bit per channel");
-	}
-      else if (bps == 16)
-	{
-	  TypeOfData = WORD;
-	  qDebug ("16bit per channel");
-	}
-      else
-	{
-	  TypeOfData = FLOAT;
-	  qDebug ("32bit float per channel");
-	}
-      ColorSpace = RGB;
-      break;
+        switch (bps)
+        {
+        case 8:
+            TypeOfData = BYTE;
+            qDebug ("8bit per channel");
+            break;
+        case 16:
+            TypeOfData = WORD;
+            qDebug ("16bit per channel");
+            break;
+        default:
+            TypeOfData = FLOAT;
+            qDebug ("32bit float per channel");
+            break;
+        }
+        ColorSpace = RGB;
+    }
+        break;
     case PHOTOMETRIC_SEPARATED:
-      TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
-      qDebug () << "nSamples: " << nSamples;
-      TIFFGetField (tif, TIFFTAG_BITSPERSAMPLE, &bps);
-      if (bps == 8)
-	{
-	  TypeOfData = BYTE;
-	  qDebug ("8bit per channel");
-	}
-      else if (bps == 16)
-	{
-	  TypeOfData = WORD;
-	  qDebug ("16bit per channel");
-	}
-      else
-	{
-	  TypeOfData = FLOAT;
-	  qDebug ("32bit float per channel");
-	}
-      ColorSpace = CMYK;
-      break;
+    {
+        TIFFGetField(tif.data(), TIFFTAG_SAMPLESPERPIXEL, &nSamples);
+        qDebug() << "nSamples: " << nSamples;
+        TIFFGetField(tif.data(), TIFFTAG_BITSPERSAMPLE, &bps);
+
+        switch (bps)
+        {
+        case 8:
+            TypeOfData = BYTE;
+            qDebug ("8bit per channel");
+            break;
+        case 16:
+            TypeOfData = WORD;
+            qDebug ("16bit per channel");
+            break;
+        default:
+            TypeOfData = FLOAT;
+            qDebug ("32bit float per channel");
+            break;
+        }
+        ColorSpace = CMYK;
+    }
+        break;
     default:
-      //qFatal("Unsupported photometric type: %d",phot);
-      TIFFClose (tif);
-      throw std::runtime_error ("TIFF: unsupported photometric type");
+        //qFatal("Unsupported photometric type: %d",phot);
+        throw std::runtime_error ("TIFF: unsupported photometric type");
     }
 
-  if (!TIFFGetField (tif, TIFFTAG_STONITS, &stonits))
-    stonits = 1.;
+    if (!TIFFGetField(tif.data(), TIFFTAG_STONITS, &stonits))
+        stonits = 1.;
 }
 
-pfs::Frame * TiffReader::readIntoPfsFrame ()
+pfs::Frame*
+TiffReader::readIntoPfsFrame()
 {
-  bool doTransform = false;
-  LuminanceOptions luminance_opts;
-  int
-    camera_profile_opt = luminance_opts.getCameraProfile ();
+    qDebug() << "TiffReader::readIntoPfsFrame()";
 
-  cmsHPROFILE hIn, hsRGB;
-  cmsHTRANSFORM xform = NULL;
-  // cmsErrorAction (LCMS_ERROR_SHOW);          // TODO
-  // cmsSetErrorHandler (cms_error_handler);    // TODO
+    bool doTransform = false;
+    // LuminanceOptions luminance_opts;
+    // int camera_profile_opt = luminance_opts.getCameraProfile ();
 
-  if (camera_profile_opt == 1)
-    {				// embedded      
+    // will get automatigically cleaned on return of this function!
+    ScopedCmsTransform xform;
 
-      hIn = GetTIFFProfile (tif);
+//    if (camera_profile_opt == 1) // embedded
+//    {
+    ScopedCmsProfile hIn( GetTIFFProfile(tif.data()) );
 
-      if (hIn)
-	{
-	  qDebug () << "Found ICC profile";
-
-	  doTransform = true;
-	  try
-	  {
-	    hsRGB = cmsCreate_sRGBProfile ();
-	    if (ColorSpace == RGB && TypeOfData == WORD)
-	      xform = cmsCreateTransform (hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
-	    else if (ColorSpace == RGB && TypeOfData == BYTE)
-	      xform = cmsCreateTransform (hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-	    else if (ColorSpace == CMYK && TypeOfData == WORD)
-	      xform = cmsCreateTransform (hIn, TYPE_CMYK_16, hsRGB, TYPE_RGBA_16, INTENT_PERCEPTUAL, 0);
-	    else
-	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
-	    qDebug () << "Created transform";
-	  }
-	  catch (const std::runtime_error & err)
-	  {
-	    qDebug () << err.what ();
-	    cmsCloseProfile (hIn);
-        TIFFClose (tif);
-	    throw std::runtime_error (err.what ());
-	  }
-
-	  cmsCloseProfile (hIn);
-	}
-      else
-	{
-	  qDebug () << "No embedded profile found";
-	}
-    }
-  else if (camera_profile_opt == 2)
-    {				// from file
-
-      QString profile_fname = luminance_opts.getCameraProfileFileName ();
-      qDebug () << "Camera profile: " << profile_fname;
-      QByteArray ba;
-
-      if (!profile_fname.isEmpty ())
-	{
-
-      ba = QFile::encodeName( profile_fname );
-
-	  try
-	  {
-	    hsRGB = cmsCreate_sRGBProfile ();
-	    hIn = cmsOpenProfileFromFile (ba.data (), "r");
-	  }
-	  catch (const std::runtime_error & err)
-	  {
-	    qDebug () << err.what ();
-        TIFFClose (tif);
-	    throw std::runtime_error (err.what ());
-	  }
-
-	  doTransform = true;
-	  try
-	  {
-	    if (ColorSpace == RGB && TypeOfData == WORD)
-	      xform = cmsCreateTransform (hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
-	    else if (ColorSpace == RGB && TypeOfData == BYTE)
-	      xform = cmsCreateTransform (hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-	    else if (ColorSpace == CMYK && TypeOfData == WORD)
-	      xform = cmsCreateTransform (hIn, TYPE_CMYK_16, hsRGB, TYPE_RGBA_16, INTENT_PERCEPTUAL, 0);
-	    else
-	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
-	  }
-	  catch (const std::runtime_error & err)
-	  {
-	    qDebug () << err.what ();
-	    cmsCloseProfile (hIn);
-        TIFFClose (tif);
-	    throw std::runtime_error (err.what ());
-	  }
-
-	  qDebug () << "Created transform";
-	  cmsCloseProfile (hIn);
-	}
-    }
-
-  //--- scanline buffer with pointers to different data types
-  union
-  {
-    float *
-      fp;
-    uint16 *
-      wp;
-    uint8 *
-      bp;
-    void *
-      vp;
-  } buf;
-
-  union
-  {
-    uint16 *
-      wp;
-    uint8 *
-      bp;
-    void *
-      vp;
-  } outbuf;
-
-  uchar *
-    data = NULL;		// ?
-
-  //pfs::DOMIO pfsio;
-  //pfs::Frame *frame = pfsio.createFrame( width, height );
-  pfs::Frame * frame = new pfs::Frame (width, height);
-
-  pfs::Channel * Xc, *Yc, *Zc;
-  frame->createXYZChannels (Xc, Yc, Zc);
-
-  float *
-    X = Xc->getRawData ();
-  float *
-    Y = Yc->getRawData ();
-  float *
-    Z = Zc->getRawData ();
-
-  //--- image length
-  uint32 imagelength;
-  TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imagelength);
-
-  emit maximumValue (imagelength);	//for QProgressDialog
-
-  if (writeOnDisk)
+    if (hIn)
     {
-      data = new uchar[width * height * 4];	//this will contain the image data linearly remapped to 8bit per channel,  data must be 32-bit aligned, in Format: 0xffRRGGBB
-      if (data == NULL)
+        qDebug () << "Found ICC profile";
+
+        ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
+
+        cmsUInt32Number cmsInputFormat = TYPE_CMYK_8;
+        cmsUInt32Number cmsOutputFormat = TYPE_RGBA_8;
+        cmsUInt32Number cmsIntent = INTENT_PERCEPTUAL;
+
+        if (ColorSpace == RGB && TypeOfData == WORD)
         {
-      TIFFClose (tif);
-	  throw std::runtime_error ("TIFF: Memory error");
+            cmsInputFormat = TYPE_RGB_16;
+            cmsOutputFormat = TYPE_RGB_16;
+        }
+        else if (ColorSpace == RGB && TypeOfData == BYTE)
+        {
+            cmsInputFormat = TYPE_RGB_8;
+            cmsOutputFormat = TYPE_RGB_8;
+        }
+        else if (ColorSpace == CMYK && TypeOfData == WORD)
+        {
+            cmsInputFormat = TYPE_CMYK_16;
+            cmsOutputFormat = TYPE_RGBA_16;
+        }
+        else
+        {
+            cmsInputFormat = TYPE_CMYK_8;
+            cmsOutputFormat = TYPE_RGBA_8;
+        }
+
+        xform.reset( cmsCreateTransform (hIn.data(), cmsInputFormat, hsRGB.data(), cmsOutputFormat, cmsIntent, 0) );
+        if (xform)
+        {
+            doTransform = true;
+            qDebug () << "Created transform";
         }
     }
-
-  //--- image scanline size
-  uint32 scanlinesize = TIFFScanlineSize (tif);
-  buf.vp = _TIFFmalloc (scanlinesize);
-
-  if (doTransform)
+#ifdef QT_DEBUG
+    else
     {
-      outbuf.vp = _TIFFmalloc (scanlinesize);
+        qDebug () << "No embedded profile found";
+    }
+#endif
+//    }
+//    else if (camera_profile_opt == 2)   // from file
+//    {
+//        QString profile_fname = luminance_opts.getCameraProfileFileName ();
+//        qDebug () << "Camera profile: " << profile_fname;
+
+//        if (!profile_fname.isEmpty ())
+//        {
+//            QByteArray ba( QFile::encodeName( profile_fname ) );
+
+//            ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
+//            ScopedCmsProfile hIn( cmsOpenProfileFromFile (ba.data (), "r") );
+
+//            if ( hsRGB && hIn )
+//            {
+//                if (ColorSpace == RGB && TypeOfData == WORD)
+//                    xform.reset( cmsCreateTransform (hIn.data(), TYPE_RGB_16, hsRGB.data(), TYPE_RGB_16, INTENT_PERCEPTUAL, 0) );
+//                else if (ColorSpace == RGB && TypeOfData == BYTE)
+//                    xform.reset( cmsCreateTransform (hIn.data(), TYPE_RGB_8, hsRGB.data(), TYPE_RGB_8, INTENT_PERCEPTUAL, 0) );
+//                else if (ColorSpace == CMYK && TypeOfData == WORD)
+//                    xform.reset( cmsCreateTransform (hIn.data(), TYPE_CMYK_16, hsRGB.data(), TYPE_RGBA_16, INTENT_PERCEPTUAL, 0) );
+//                else
+//                    xform.reset( cmsCreateTransform (hIn.data(), TYPE_CMYK_8, hsRGB.data(), TYPE_RGBA_8, INTENT_PERCEPTUAL, 0) );
+//            }
+//            doTransform = true;
+
+//            qDebug () << "Created transform";
+//        }
+//    }
+
+    pfs::Frame* frame = new pfs::Frame (width, height);
+
+    pfs::Channel* Xc;
+    pfs::Channel* Yc;
+    pfs::Channel* Zc;
+    frame->createXYZChannels (Xc, Yc, Zc);
+
+    float* X = Xc->getRawData();
+    float* Y = Yc->getRawData();
+    float* Z = Zc->getRawData();
+
+    //--- image length
+    uint32 imagelength;
+    TIFFGetField(tif.data(), TIFFTAG_IMAGELENGTH, &imagelength);
+
+    emit maximumValue(imagelength);	//for QProgressDialog
+
+    //--- image scanline size
+    uint32 scanlinesize = TIFFScanlineSize(tif.data());
+    std::vector<uchar> buf( scanlinesize );
+    std::vector<uchar> buf2;
+    if ( xform )
+    {
+        buf2.resize( scanlinesize );
     }
 
-  qDebug () << "scanlinesize: " << scanlinesize;
-  //--- read scan lines
-  const int
-    image_width = width;	//X->getCols();
-  //for(uint32 row = 0; row < imagelength; row++)
-  try
-  {
+    qDebug () << "scanlinesize: " << scanlinesize;
+    //--- read scan lines
+    const int  image_width = width;
+
     for (uint32 row = 0; row < height; row++)
-      {
-	//qDebug() << row;
-	switch (TypeOfData)
-	  {
-	  case FLOAT:
-	  case FLOATLOGLUV:
-	    TIFFReadScanline (tif, buf.fp, row);
-	    for (int i = 0; i < image_width; i++)
-	      {
-		X[row * image_width + i] = buf.fp[i * nSamples];
-		Y[row * image_width + i] = buf.fp[i * nSamples + 1];
-		Z[row * image_width + i] = buf.fp[i * nSamples + 2];
-	      }
-	    break;
-	  case WORD:
-	    TIFFReadScanline (tif, buf.wp, row);
-	    if (doTransform)
-	      {
-		cmsDoTransform (xform, buf.wp, outbuf.wp, image_width);
-	      }
-	    else if (ColorSpace == CMYK)
-	      {
-        outbuf.vp = _TIFFmalloc (scanlinesize);
-        transform_to_rgb_16 (buf.wp, outbuf.wp, scanlinesize, nSamples);
-        memcpy (buf.wp, outbuf.wp, scanlinesize);
-        _TIFFfree (outbuf.vp);
-	      }
-	    for (int i = 0; i < image_width; i++)
-	      {
-		X[row * image_width + i] = !doTransform ? buf.wp[i * nSamples] : outbuf.wp[i * nSamples];
-		Y[row * image_width + i] = !doTransform ? buf.wp[i * nSamples + 1] : outbuf.wp[i * nSamples + 1];
-		Z[row * image_width + i] = !doTransform ? buf.wp[i * nSamples + 2] : outbuf.wp[i * nSamples + 2];;
-		if (writeOnDisk)
-		  {
-		    *(data + (row * width + i) * 4) = !doTransform ? buf.wp[i * nSamples + 2] / 256.0 : outbuf.wp[i * nSamples + 2] / 256.0;
-		    *(data + 1 + (row * width + i) * 4) = !doTransform ? buf.wp[i * nSamples + 1] / 256.0 : outbuf.wp[i * nSamples + 1] / 256.0;
-		    *(data + 2 + (row * width + i) * 4) = !doTransform ? buf.wp[i * nSamples] / 256.0 : outbuf.wp[i * nSamples] / 256.0;
-		    *(data + 3 + (row * width + i) * 4) = 0xff;
-		  }
-	      }
-	    break;
-	  case BYTE:
-	    TIFFReadScanline (tif, buf.bp, row);
-	    if (doTransform)
-	      {
-		cmsDoTransform (xform, buf.bp, outbuf.bp, image_width);
-	      }
-	    else if (ColorSpace == CMYK)
-	      {
-		outbuf.vp = _TIFFmalloc (scanlinesize);
-		transform_to_rgb (buf.bp, outbuf.bp, scanlinesize, nSamples);
-		memcpy (buf.bp, outbuf.bp, scanlinesize);
-        _TIFFfree (outbuf.vp);
-	      }
-	    for (int i = 0; i < image_width; i++)
-	      {
-		X[row * image_width + i] = pow (!doTransform ? buf.bp[i * nSamples] / 255.0 : outbuf.bp[i * nSamples] / 255.0, 2.2);
-		Y[row * image_width + i] = pow (!doTransform ? buf.bp[i * nSamples + 1] / 255.0 : outbuf.bp[i * nSamples + 1] / 255.0, 2.2);
-		Z[row * image_width + i] = pow (!doTransform ? buf.bp[i * nSamples + 2] / 255.0 : outbuf.bp[i * nSamples + 2] / 255.0, 2.2);
-	      }
-	    break;
-	  }
-	emit nextstep (row);	//for QProgressDialog
-      }
-  }
-  catch (const std::runtime_error & err)
-  {
-    qDebug () << err.what ();
-    cmsDeleteTransform (xform);
-    _TIFFfree (outbuf.vp);
-    TIFFClose (tif);
-    throw std::runtime_error (err.what ());
-  }
-  if (doTransform)
     {
-      cmsDeleteTransform (xform);
-      _TIFFfree (outbuf.vp);
+        switch (TypeOfData)
+        {
+        case FLOAT:
+        case FLOATLOGLUV:
+        {
+            float* buf_fp = reinterpret_cast<float*>(buf.data());
+
+            TIFFReadScanline (tif.data(), buf_fp, row);
+            for (int i = 0; i < image_width; i++)
+            {
+                X[row * image_width + i] = buf_fp[i * nSamples];
+                Y[row * image_width + i] = buf_fp[i * nSamples + 1];
+                Z[row * image_width + i] = buf_fp[i * nSamples + 2];
+            }
+        }
+            break;
+        case WORD:
+        {
+            uint16* buf_wp = reinterpret_cast<uint16*>(buf.data());
+
+            TIFFReadScanline(tif.data(), buf_wp, row);
+            if (doTransform)
+            {
+                uint16* buf_wp_2 = reinterpret_cast<uint16*>(buf2.data());
+
+                cmsDoTransform(xform.data(), buf_wp, buf_wp_2, image_width);
+
+                ::std::swap(buf_wp, buf_wp_2);
+            }
+            else if (ColorSpace == CMYK)
+            {
+                transform_to_rgb_16(buf_wp, buf_wp, scanlinesize, nSamples);
+            }
+            for (int i = 0; i < image_width; i++)
+            {
+                X[row * image_width + i] = buf_wp[i * nSamples];
+                Y[row * image_width + i] = buf_wp[i * nSamples + 1];
+                Z[row * image_width + i] = buf_wp[i * nSamples + 2];
+            }
+        }
+            break;
+        case BYTE:
+        {
+            uint8* buf_bp = reinterpret_cast<uint8*>(buf.data());
+
+            TIFFReadScanline(tif.data(), buf_bp, row);
+            if (doTransform)
+            {
+                uint8* buf_bp_2 = reinterpret_cast<uint8*>(buf2.data());
+
+                cmsDoTransform(xform.data(), buf_bp, buf_bp_2, image_width);
+
+                ::std::swap(buf_bp, buf_bp_2);
+            }
+            else if (ColorSpace == CMYK)
+            {
+                transform_to_rgb(buf_bp, buf_bp, scanlinesize, nSamples);
+            }
+            for (int i = 0; i < image_width; i++)
+            {
+                X[row * image_width + i] = powf(buf_bp[i * nSamples] * DIV_255, 2.2f); // why?
+                Y[row * image_width + i] = powf(buf_bp[i * nSamples + 1] * DIV_255, 2.2f); // why?
+                Z[row * image_width + i] = powf(buf_bp[i * nSamples + 2] * DIV_255, 2.2f); // why?
+            }
+        }
+            break;
+        }
+        emit nextstep (row);	//for QProgressDialog
     }
 
-  if (writeOnDisk)
+    if (writeOnDisk)
     {
-      QImage remapped (const_cast < uchar * >(data), image_width, imagelength, QImage::Format_RGB32);
+        assert (TypeOfData != FLOAT);
+        assert (TypeOfData != FLOATLOGLUV);
 
-      QFileInfo fi (fileName);
-      QString fname = fi.completeBaseName () + ".thumb.jpg";
-//#ifndef QT_NO_DEBUG
-//        std::cout << qPrintable(fileName) << std::endl;
-//        std::cout << qPrintable(fname) << std::endl;
-//        std::cout << qPrintable(tempFilesPath) << std::endl;
-//#endif
-      remapped.scaledToHeight (imagelength / 10).save (tempFilesPath + "/" + fname);
+        float scaleFactor = DIV_256;
+        if ( TypeOfData == BYTE) scaleFactor = 1.0f;
+
+        pfs::Channel *Xc, *Yc, *Zc;
+        frame->createXYZChannels (Xc, Yc, Zc);
+
+        float* X = Xc->getRawData();
+        float* Y = Yc->getRawData();
+        float* Z = Zc->getRawData();
+
+        QImage remapped( image_width, imagelength, QImage::Format_RGB32);
+
+        for (uint32 row = 0; row < height; ++row)
+        {
+            QRgb* line =  reinterpret_cast<QRgb*>(remapped.scanLine(row));
+            for (uint32 col = 0; col < width; ++col)
+            {
+                line[col] = qRgb(static_cast<char>(*X * scaleFactor),
+                                 static_cast<char>(*Y * scaleFactor),
+                                 static_cast<char>(*Z * scaleFactor));
+
+                X++; Y++; Z++;
+            }
+        }
+        QFileInfo fi (fileName);
+        QString fname = fi.completeBaseName () + ".thumb.jpg";
+
+        remapped.scaledToHeight(imagelength / 10).save(tempFilesPath + "/" + fname);
     }
-  //--- free buffers and close files
-  _TIFFfree (buf.vp);
-  TIFFClose (tif);
-  //if (TypeOfData==FLOATLOGLUV)
-  //  pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
-  return frame;
+
+    //if (TypeOfData==FLOATLOGLUV)
+    //  pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
+    return frame;
 }
 
 //given for granted that users of this function call it only after checking that TypeOfData==BYTE
-QImage *
+QImage*
 TiffReader::readIntoQImage ()
 {
   bool doTransform = false;
@@ -579,7 +531,7 @@ TiffReader::readIntoQImage ()
   if (camera_profile_opt == 1)
     {				// embedded      
 
-      hIn = GetTIFFProfile (tif);
+      hIn = GetTIFFProfile (tif.data());
 
       if (hIn)
 	{
@@ -600,7 +552,7 @@ TiffReader::readIntoQImage ()
 	  {
 	    qDebug () << err.what ();
 	    cmsCloseProfile (hIn);
-        TIFFClose (tif);
+
 	    throw std::runtime_error (err.what ());
 	  }
 	  qDebug () << "Created transform";
@@ -632,7 +584,7 @@ TiffReader::readIntoQImage ()
 	  catch (const std::runtime_error & err)
 	  {
 	    qDebug () << err.what ();
-        TIFFClose (tif);
+
 	    throw std::runtime_error (err.what ());
 	  }
 
@@ -647,7 +599,7 @@ TiffReader::readIntoQImage ()
 	  catch (const std::runtime_error & err)
 	  {
 	    cmsCloseProfile (hIn);
-        TIFFClose (tif);
+
 	    throw std::runtime_error (err.what ());
 	  }
 	  qDebug () << "Created transform";
@@ -662,10 +614,10 @@ TiffReader::readIntoQImage ()
 
   //--- image length
   uint32 imagelength;
-  TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &imagelength);
+  TIFFGetField (tif.data(), TIFFTAG_IMAGELENGTH, &imagelength);
 
   //--- image scanline size
-  uint32 scanlinesize = TIFFScanlineSize (tif);
+  uint32 scanlinesize = TIFFScanlineSize (tif.data());
   uint8 *bp = (uint8 *) _TIFFmalloc (scanlinesize);
   uint8 *bpout = 0;
   if (doTransform)
@@ -674,7 +626,7 @@ TiffReader::readIntoQImage ()
   //--- read scan lines
   for (uint y = 0; y < height; y++)
     {
-      TIFFReadScanline (tif, bp, y);
+      TIFFReadScanline (tif.data(), bp, y);
       if (doTransform)
          {
 	     cmsDoTransform (xform, bp, bpout, width);
@@ -720,7 +672,7 @@ TiffReader::readIntoQImage ()
      }
 
   _TIFFfree (bp);
-  TIFFClose (tif);
+
   QImage *toreturn = new QImage (const_cast < uchar * >(data), width, height, QImage::Format_RGB32);
 
   return toreturn;

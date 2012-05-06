@@ -33,10 +33,10 @@
 
 struct ResourceHandlerTraitsStdIoFile
 {
-    static
+    static inline
     void cleanup(FILE* p)
     {
-        fclose(p);
+        if ( p ) fclose(p);
     }
 };
 typedef QScopedPointer<FILE, ResourceHandlerTraitsStdIoFile> ResouceHandlerFile;
