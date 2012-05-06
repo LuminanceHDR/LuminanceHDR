@@ -37,7 +37,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include "arch/math.h"
 #include <cassert>
 #ifdef _OPENMP
 #include <omp.h>
