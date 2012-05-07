@@ -23,6 +23,7 @@
  */
 
 #include <QDebug>
+#include <QFile>
 #include <QSharedPointer>
 #include <stdexcept>
 #include <vector>

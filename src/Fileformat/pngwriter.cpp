@@ -23,6 +23,7 @@
  */
 
 #include <QDebug>
+#include <QFile>
 #include <vector>
 #include <algorithm>
 #include <lcms.h>

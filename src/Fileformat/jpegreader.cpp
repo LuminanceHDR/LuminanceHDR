@@ -24,6 +24,7 @@
 
 #include <QByteArray>
 #include <QDebug>
+#include <QFile>
 #include <stdexcept>
 
 #ifdef USE_LCMS2

@@ -30,6 +30,7 @@
 #include <QObject>
 #include <QSysInfo>
 #include <QFileInfo>
+#include <QFile>
 #include <QDebug>
 #include <iostream>
 #include <stdexcept>
