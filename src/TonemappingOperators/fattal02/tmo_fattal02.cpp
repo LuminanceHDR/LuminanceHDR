@@ -31,6 +31,7 @@
  */
 
 
+#include <cstdio>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -234,6 +235,7 @@ void upSample(pfs::Array2D* A, pfs::Array2D* B)
 //     }	
 }
 
+
 void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
   float avgGrad[], int nlevels, int detail_level,
   float alfa, float beta, float noise, bool newfattal)
@@ -243,10 +245,11 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
   pfs::Array2D** fi = new pfs::Array2D*[nlevels];
 
   fi[nlevels-1] = new pfs::Array2D(width,height);
-  if (newfattal)
+  if (newfattal){
 //#pragma omp parallel for shared(fi)
-	for( int k=0 ; k<width*height ; k++ )
-    	(*fi[nlevels-1])(k) = 1.0f;
+    for( int k=0 ; k<width*height ; k++ )
+      (*fi[nlevels-1])(k) = 1.0f;
+  }
   
   for( int k=nlevels-1 ; k>=0 ; k-- )
   {
@@ -254,7 +257,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
     height = gradients[k]->getRows();
 
     // only apply gradients to levels>=detail_level but at least to the coarsest
-    if(k>=detail_level || k==nlevels-1)
+    if(k>=detail_level || k==nlevels-1 || newfattal==false)
     {    
       //DEBUG_STR << "calculateFiMatrix: apply gradient to level " << k << endl;
 //#pragma omp parallel for shared(fi,avgGrad)
@@ -265,11 +268,15 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
           float a = alfa * avgGrad[k];
 
           float value=1.0;
-          //TODO: simpler: value = pow((grad+noise)/a, beta-1.0f);
-          //TODO: non-continuous cutoff, better: if( grad<=1e-4 ) grad=1e-4;
-          if( grad>1e-4 )
-            value = a/(grad+noise) * pow((grad+noise)/a, beta);
-          (*fi[k])(x,y) *= value;
+          if( grad<1e-4 )
+            grad=1e-4;
+
+          value = pow((grad+noise)/a, beta-1.0f);
+          
+          if (newfattal)
+            (*fi[k])(x,y) *= value;
+          else
+	    (*fi[k])(x,y) = value;
         }
     }
 
@@ -307,8 +314,7 @@ static void findMaxMinPercentile(pfs::Array2D* I,
   std::vector<float> vI;
 
   for( int i=0 ; i<size ; i++ ) {
-    if( (*I)(i)!=0.0f )          //TODO: remove this, no point ignoring 0's
-      vI.push_back((*I)(i));
+    vI.push_back((*I)(i));
   }
       
   std::sort(vI.begin(), vI.end());
@@ -328,15 +334,13 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   bool fftsolver=true;
   float black_point=0.1;
   float white_point=0.5;
-  float gamma=1.0;
-  int detail_level=2;
+  float gamma=0.8;
+  int detail_level=3;
 
-  ph->newValue(2); // if (ph->isTerminationRequested()) goto end;
+  ph->newValue(2);
+  if (ph->isTerminationRequested()) return;
 
   const pfs::Array2D* Y = new pfs::Array2D(width, height, const_cast<float*>(nY));
-  pfs::Array2D* L = new pfs::Array2D(width, height, nL);
-  pfs::Array2D* U = NULL;
-  pfs::Array2D* DivG = NULL;
 
   int MSIZE = 32;         // minimum size of gaussian pyramid
   // I believe a smaller value than 32 results in slightly better overall
@@ -362,6 +366,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 //#pragma omp parallel for private(i) shared(H, Y, maxLum)
   for( i=0 ; i<size ; i++ )
     (*H)(i) = log( 100.0f*(*Y)(i)/maxLum + 1e-4 );
+  delete Y;
   ph->newValue(4); 
 
   // create gaussian pyramids
@@ -393,9 +398,22 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   // calculate fi matrix
   pfs::Array2D* FI = new pfs::Array2D(width, height);
   calculateFiMatrix(FI, gradients, avgGrad, nlevels, detail_level, alfa, beta, noise, newfattal);
-  ph->newValue(16);
-
 //  dumpPFS( "FI.pfs", FI, "Y" );
+  for( i=0 ; i<nlevels ; i++ )
+  {
+    delete pyramids[i];
+    delete gradients[i];
+  }
+  delete[] pyramids;
+  delete[] gradients;
+  delete[] avgGrad;
+  ph->newValue(16);
+  if (ph->isTerminationRequested()){
+    delete FI;
+    delete H;
+    return;
+  }
+
 
   // attenuate gradients
   pfs::Array2D* Gx = new pfs::Array2D(width, height);
@@ -427,6 +445,8 @@ void tmo_fattal02(unsigned int width, unsigned int height,
         (*Gx)(x,y) = ((*H)(e,y)-(*H)(x,y)) * (*FI)(x,y);        
         (*Gy)(x,y) = ((*H)(x,s)-(*H)(x,y)) * (*FI)(x,y);      
       }
+  delete H;
+  delete FI;
   ph->newValue(18);
 
 
@@ -435,7 +455,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   
 
   // calculate divergence
-  DivG = new pfs::Array2D(width, height);
+  pfs::Array2D* DivG = new pfs::Array2D(width, height);
   for( y=0 ; y<height ; y++ )
     for( x=0 ; x<width ; x++ )
     {
@@ -450,24 +470,38 @@ void tmo_fattal02(unsigned int width, unsigned int height,
       }
 
     }
+  delete Gx;
+  delete Gy;
   ph->newValue(20);
+  if (ph->isTerminationRequested()){
+    delete DivG;
+    return;
+  }
 
 
 //  dumpPFS( "DivG.pfs", DivG, "Y" );
   
   // solve pde and exponentiate (ie recover compressed image)
-  U = new pfs::Array2D(width, height);
+  pfs::Array2D* U = new pfs::Array2D(width, height);
   if(fftsolver){
     solve_pde_fft(DivG, U, ph);
   } else {
     solve_pde_multigrid( DivG, U, ph);
   }
+  printf("pde residual error: %f\n", residual_pde(U, DivG));
+  delete DivG;
+  ph->newValue(90); 
+  if (ph->isTerminationRequested()){
+    delete U;
+    return;
+  }
 
-
+  pfs::Array2D* L = new pfs::Array2D(width, height, nL);
   for( y=0 ; y<height ; y++ ) {
     for( x=0 ; x<width ; x++ )
-      (*L)(x,y) = exp( gamma * (*U)(x,y) ) - 1e-4;     //TODO: remove  1e-4
+      (*L)(x,y) = exp( gamma * (*U)(x,y) ); 
   }
+  delete U;
   ph->newValue(95); 
 	
   // remove percentile of min and max values and renormalize
@@ -480,31 +514,11 @@ void tmo_fattal02(unsigned int width, unsigned int height,
     {
       (*L)(x,y) = ((*L)(x,y)-minLum) / (maxLum-minLum);
       if( (*L)(x,y)<=0.0f )
-        (*L)(x,y) = 1e-4f;     //TODO: set to 0.0
+        (*L)(x,y) = 0.0;
       // note, we intentionally do not cut off values > 1.0
     }
   }
+  delete L;
   ph->newValue(96); 
 
-  // clean up
-//  end:
-  delete H;
-  for( i=0 ; i<nlevels ; i++ )
-  {
-    delete pyramids[i];
-    delete gradients[i];
-  }
-  delete[] pyramids;
-  delete[] gradients;
-  delete[] avgGrad;
-  delete FI;
-  delete Gx;
-  delete Gy;
-  if (DivG)
-  	delete DivG;
-  if (U)
-  	delete U;
-
-  delete L;
-  delete Y;
 }

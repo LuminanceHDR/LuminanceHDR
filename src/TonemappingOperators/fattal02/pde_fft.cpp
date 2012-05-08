@@ -37,7 +37,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include "arch/math.h"
 #include <cassert>
 #ifdef _OPENMP
 #include <omp.h>
@@ -219,7 +219,11 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
   transform_normal2ev(F, F_tr);
   // TODO: F no longer needed so could release memory, but as it is an
   // input parameter we won't do that
-   ph->newValue(50); 
+  ph->newValue(50);
+  if (ph->isTerminationRequested()){
+    delete F_tr;
+    return;
+  }
   
   //DEBUG_STR << "solve_pde_fft: F_tr(0,0) = " << (*F_tr)(0,0);
   //DEBUG_STR << " (must be 0 for solution to exist)" << std::endl;
@@ -262,8 +266,8 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
     (*U)(i)-=max;
 
 
-  // fft parallel threads cleanup, better handled outside this function
-  // fftwf_cleanup_threads();
+  // fft parallel threads cleanup, better handled outside this function?
+  fftwf_cleanup_threads();
 
   ph->newValue(90); 
   //DEBUG_STR << "solve_pde_fft: done" << std::endl;

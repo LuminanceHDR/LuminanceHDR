@@ -48,13 +48,19 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 
+// tune the multi-level solver
 #define MODYF 0 /* 1 or 0 (1 is better) */
 #define MINS 16	/* minimum size 4 6 or 100 */
-
 //#define MODYF_SQRT -1.0f /* -1 or 0 */
-#define SMOOTH_IT 1 /* minimum 1  */
-#define BCG_STEPS 20
-#define V_CYCLE 2 /* number of v-cycles  */
+#define SMOOTH_IT 1              // orig: 1
+#define BCG_STEPS 20             // orig: 20
+#define BCG_TOL 1e-3             // orig: 1e-3
+#define V_CYCLE 2                // orig: 2
+// post improvement of the solution using additional cg-iterations
+#define BCG_POST_IMPROVE false
+#define BCG_POST_STEPS 1000      // very slow if > 100, only use on small image
+#define BCG_POST_TOL 1e-7
+
 
 // precision
 #define EPS 1.0e-12
@@ -253,7 +259,7 @@ static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
   int iter;
   float err;
         
-  linbcg( n, F->getRawData(), U->getRawData(), 0.001, BCG_STEPS, &iter, &err, rows, cols);
+  linbcg( n, F->getRawData(), U->getRawData(), BCG_TOL, BCG_STEPS, &iter, &err, rows, cols);
 
 //   fprintf( stderr, "." );
 
@@ -462,6 +468,19 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
 //   }  
 
   pfs::copyArray( IU[0], U );
+
+  // further improvement of the solution
+  if(BCG_POST_IMPROVE) {
+    int iter;
+    float err;
+    //DEBUG_STR << "FMG: cg post improving ..., maxiter=" << BCG_POST_STEPS;
+    //DEBUG_STR << ", tol=" << BCG_POST_TOL << std::endl;
+    linbcg( xmax*ymax, F->getRawData(), U->getRawData(),
+               BCG_POST_TOL, BCG_POST_STEPS, &iter, &err,ymax,xmax);
+    //DEBUG_STR << "FMG: cg post improvement: iter=" << iter << ", err=" << err;
+    //DEBUG_STR << std::endl;
+  }
+
   
   ph->newValue(90);
 

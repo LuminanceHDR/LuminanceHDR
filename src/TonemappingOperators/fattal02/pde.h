@@ -55,6 +55,14 @@ void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph);
  */
 void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph, bool adjust_bound=false);
 
+/**
+ * @brief returns the residual error of the solution U, ie norm(Laplace U - F) 
+ *
+ * @param F [in] right hand side
+ * @param U [in] solution
+ */
+float residual_pde(pfs::Array2D *U, pfs::Array2D *F);
+
 
 #endif
 
