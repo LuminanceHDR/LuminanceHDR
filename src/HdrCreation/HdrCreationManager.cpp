@@ -483,29 +483,39 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell) {
 	startedProcessing.clear();
 	filesLackingExif.clear();
 
-	if (deleteExpotimeAsWell) {
+    if (deleteExpotimeAsWell)
+    {
 		fileList.clear();
 		expotimes.clear();
 	}
-	if (ldrImagesList.size() != 0) {
+    if (ldrImagesList.size() != 0)
+    {
 		//qDebug("HCM: clearlists: cleaning LDR exposures list");
-		for(int i = 0 ; i < ldrImagesList.size(); i++) {
-			if (tiffLdrList[i]) {
+        for (int i = 0 ; i < ldrImagesList.size(); i++)
+        {
+            if (tiffLdrList[i])
+            {
 				//qDebug("HCM: clearlists: freeing ldr tiffs' payload.");
-				delete [] ldrImagesList[i]->bits();
+                //delete [] ldrImagesList[i]->bits();
 			}
 		}
 		qDeleteAll(ldrImagesList);
 		ldrImagesList.clear();
 		tiffLdrList.clear();
 	}
-	if (listmdrR.size()!=0 && listmdrG.size()!=0 && listmdrB.size()!=0) {
+    if (listmdrR.size()!=0 && listmdrG.size()!=0 && listmdrB.size()!=0)
+    {
 		//qDebug("HCM: cleaning HDR exposures list");
 		Array2DList::iterator itR=listmdrR.begin(), itG=listmdrG.begin(), itB=listmdrB.begin();
-		for (; itR!=listmdrR.end(); itR++,itG++,itB++ ){
-			delete *itR; delete *itG; delete *itB;
+        for (; itR!=listmdrR.end(); itR++,itG++,itB++ )
+        {
+            delete *itR;
+            delete *itG;
+            delete *itB;
 		}
-		listmdrR.clear(); listmdrG.clear(); listmdrB.clear();
+        listmdrR.clear();
+        listmdrG.clear();
+        listmdrB.clear();
 		qDeleteAll(mdrImagesList);
 		mdrImagesList.clear();
 		qDeleteAll(mdrImagesToRemove);
@@ -522,7 +532,7 @@ void HdrCreationManager::makeSureLDRsHaveAlpha() {
 				exit(1); // TODO: exit gracefully;
 			ldrImagesList.append(newimage);
 			if (tiffLdrList[0]) {
-				delete [] ldrImagesList[0]->bits();
+                //delete [] ldrImagesList[0]->bits();
 			}
 			delete ldrImagesList.takeAt(0);
 			tiffLdrList.removeAt(0);
@@ -541,7 +551,7 @@ void HdrCreationManager::applyShiftsToImageStack(QList< QPair<int,int> > HV_offs
 		//qDebug("shifting image %d of (%d,%d)",i, HV_offsets[i].first, HV_offsets[i].second);
 		QImage *shifted = shiftQImage(ldrImagesList[i], HV_offsets[i].first, HV_offsets[i].second);
 		if (tiffLdrList[i]) {
-			delete [] ldrImagesList[i]->bits();
+            //delete [] ldrImagesList[i]->bits();
 		}
 		delete ldrImagesList.takeAt(i);
 		ldrImagesList.insert(i, shifted);
@@ -579,7 +589,9 @@ void HdrCreationManager::cropLDR (QRect ca) {
 			exit(1); // TODO: exit gracefully
 		ldrImagesList.append(newimage);
 		if (tiffLdrList[0])
-			delete [] ldrImagesList[0]->bits();
+        {
+            //delete [] ldrImagesList[0]->bits();
+        }
 		delete ldrImagesList.takeAt(0);
 		tiffLdrList.removeAt(0);
 		tiffLdrList.append(false);
@@ -630,7 +642,7 @@ void HdrCreationManager::remove(int index) {
 	case LDR_INPUT_TYPE:
 	{
 		if (tiffLdrList[index]) {
-			delete [] ldrImagesList[index]->bits();
+            // delete [] ldrImagesList[index]->bits();
 		}				
 		ldrImagesList.removeAt(index);			
 		tiffLdrList.removeAt(index);

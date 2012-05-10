@@ -39,7 +39,7 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
-#include <assert.h>
+#include <cassert>
 #include "Common/ResourceHandlerLcms.h"
 
 #include "Libpfs/frame.h"
@@ -54,7 +54,7 @@ namespace
 // \brief This code is taken from tifficc.c from libcms distribution and sligthly modified
 // \ref http://svn.ghostscript.com/ghostscript/trunk/gs/lcms2/utils/tificc/tificc.c
 cmsHPROFILE
-GetTIFFProfile(TIFF * in)
+GetTIFFProfile(TIFF* in)
 {
     cmsHPROFILE hProfile;
     void* iccProfilePtr;
@@ -210,7 +210,7 @@ TiffReader::TiffReader(const char *filename, const char *tempfilespath, bool wod
         break;
     case PHOTOMETRIC_RGB:
     {
-        // qDebug("Photometric data: RGB");
+        qDebug("Photometric data: RGB");
         // read extra samples (# of alpha channels)
         if (TIFFGetField(tif.data(), TIFFTAG_EXTRASAMPLES, &extra_samples_per_pixel, &extra_sample_types) != 1)
         {
@@ -252,6 +252,7 @@ TiffReader::TiffReader(const char *filename, const char *tempfilespath, bool wod
         break;
     case PHOTOMETRIC_SEPARATED:
     {
+        qDebug("Photometric data: CMYK");
         TIFFGetField(tif.data(), TIFFTAG_SAMPLESPERPIXEL, &nSamples);
         qDebug() << "nSamples: " << nSamples;
         TIFFGetField(tif.data(), TIFFTAG_BITSPERSAMPLE, &bps);
@@ -515,167 +516,150 @@ TiffReader::readIntoPfsFrame()
     return frame;
 }
 
-//given for granted that users of this function call it only after checking that TypeOfData==BYTE
+// given for granted that users of this function call it only after checking that TypeOfData==BYTE
 QImage*
-TiffReader::readIntoQImage ()
+TiffReader::readIntoQImage()
 {
-  bool doTransform = false;
-  LuminanceOptions luminance_opts;
-  int camera_profile_opt = luminance_opts.getCameraProfile ();
+    assert(TypeOfData == BYTE);
 
-  cmsHPROFILE hIn, hsRGB;
-  cmsHTRANSFORM xform = NULL;
-  //cmsErrorAction (LCMS_ERROR_SHOW);           // TODO
-  //cmsSetErrorHandler (cms_error_handler);     // TODO
+    // qDebug() << "TiffReader::readIntoQImage()";
 
-  if (camera_profile_opt == 1)
-    {				// embedded      
+    bool doTransform = false;
+    // LuminanceOptions luminance_opts;
+    // int camera_profile_opt = luminance_opts.getCameraProfile ();
 
-      hIn = GetTIFFProfile (tif.data());
+    ScopedCmsProfile hIn( GetTIFFProfile(tif.data()) );
+    ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
 
-      if (hIn)
-	{
-	  qDebug () << "Found ICC profile";
+    ScopedCmsTransform xform;
 
-	  doTransform = true;
-	  try
-	  {
-	    hsRGB = cmsCreate_sRGBProfile ();
-	    if (ColorSpace == RGB && TypeOfData == BYTE && has_alpha == true)
-	      xform = cmsCreateTransform (hIn, TYPE_RGBA_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
-	    else if (ColorSpace == RGB && TypeOfData == BYTE && has_alpha == false)
-	      xform = cmsCreateTransform (hIn, TYPE_RGB_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
-	    else if (ColorSpace == CMYK && TypeOfData == BYTE)
-	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
-	  }
-	  catch (const std::runtime_error & err)
-	  {
-	    qDebug () << err.what ();
-	    cmsCloseProfile (hIn);
-
-	    throw std::runtime_error (err.what ());
-	  }
-	  qDebug () << "Created transform";
-
-	  cmsCloseProfile (hIn);
-	}
-      else
-	{
-	  qDebug () << "No embedded profile found";
-	}
-    }
-  else if (camera_profile_opt == 2)
-    {				// from file
-
-      QString profile_fname = luminance_opts.getCameraProfileFileName ();
-      qDebug () << "Camera profile: " << profile_fname;
-      QByteArray ba;
-
-      if (!profile_fname.isEmpty ())
-	{
-
-      ba = QFile::encodeName( profile_fname );
-
-	  try
-	  {
-	    hsRGB = cmsCreate_sRGBProfile ();
-	    hIn = cmsOpenProfileFromFile (ba.data (), "r");
-	  }
-	  catch (const std::runtime_error & err)
-	  {
-	    qDebug () << err.what ();
-
-	    throw std::runtime_error (err.what ());
-	  }
-
-	  doTransform = true;
-	  try
-	  {
-	    if (ColorSpace == RGB && TypeOfData == BYTE)
-	      xform = cmsCreateTransform (hIn, TYPE_RGBA_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
-	    else if (ColorSpace == CMYK && TypeOfData == BYTE)
-	      xform = cmsCreateTransform (hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
-	  }
-	  catch (const std::runtime_error & err)
-	  {
-	    cmsCloseProfile (hIn);
-
-	    throw std::runtime_error (err.what ());
-	  }
-	  qDebug () << "Created transform";
-
-	  cmsCloseProfile (hIn);
-	}
-    }
-
-  uchar *data = new uchar[width * height * 4];	//this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
-  //  qDebug("pfstiff, w=%d h=%d",width,height);
-  assert (TypeOfData == BYTE);
-
-  //--- image length
-  uint32 imagelength;
-  TIFFGetField (tif.data(), TIFFTAG_IMAGELENGTH, &imagelength);
-
-  //--- image scanline size
-  uint32 scanlinesize = TIFFScanlineSize (tif.data());
-  uint8 *bp = (uint8 *) _TIFFmalloc (scanlinesize);
-  uint8 *bpout = 0;
-  if (doTransform)
-     bpout = (uint8 *) _TIFFmalloc (scanlinesize);
-
-  //--- read scan lines
-  for (uint y = 0; y < height; y++)
+    //    if (camera_profile_opt == 1) // embedded
+    //    {
+    if (hIn)
     {
-      TIFFReadScanline (tif.data(), bp, y);
-      if (doTransform)
-         {
-	     cmsDoTransform (xform, bp, bpout, width);
-         memcpy(bp, bpout, scanlinesize);
-         }
-       else if (!doTransform && ColorSpace == CMYK)
-	     {
-	     qDebug () << "Convert to RGB";
-	     uchar *rgb_bp = new uchar[scanlinesize];
-	     transform_to_rgb (bp, rgb_bp, scanlinesize, nSamples);
-         memcpy(bp, rgb_bp, scanlinesize);
-         delete[]rgb_bp;
-	     }
-      for (uint x = 0; x < width; x++)
-	{
-	  if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) 
-	    {
-	      *(data + 0 + (y * width + x) * 4) = bp[x * nSamples + 2];
-	      *(data + 1 + (y * width + x) * 4) = bp[x * nSamples + 1];
-	      *(data + 2 + (y * width + x) * 4) = bp[x * nSamples];
-	      if (has_alpha)
-		*(data + 3 + (y * width + x) * 4) = bp[x * nSamples + 3];
-	      else
-		*(data + 3 + (y * width + x) * 4) = 0xff;
-	    }
-      else if (QSysInfo::ByteOrder == QSysInfo::BigEndian)
-	    {
-	      *(data + 3 + (y * width + x) * 4) = bp[x * nSamples + 2];
-	      *(data + 2 + (y * width + x) * 4) = bp[x * nSamples + 1];
-	      *(data + 1 + (y * width + x) * 4) = bp[x * nSamples];
-	      if (has_alpha)
-		*(data + 0 + (y * width + x) * 4) = bp[x * nSamples + 3];
-	      else
-		*(data + 0 + (y * width + x) * 4) = 0xff;
-	    }
-	}
+        qDebug () << "Found ICC profile";
+
+        cmsUInt32Number cmsInputFormat = TYPE_CMYK_8;
+        cmsUInt32Number cmsOutputFormat = TYPE_RGBA_8;
+        cmsUInt32Number cmsIntent = INTENT_PERCEPTUAL;
+
+        if (has_alpha && ColorSpace == RGB && TypeOfData == BYTE)
+        {
+            cmsInputFormat = TYPE_RGBA_8;
+            cmsOutputFormat = TYPE_RGBA_8;
+        }
+        else if (!has_alpha && ColorSpace == RGB && TypeOfData == BYTE)
+        {
+            cmsInputFormat = TYPE_RGB_8;
+            cmsOutputFormat = TYPE_RGBA_8;
+        }
+        else if (ColorSpace == CMYK && TypeOfData == BYTE)
+        {
+            cmsInputFormat = TYPE_CMYK_8;
+            cmsOutputFormat = TYPE_RGBA_8;
+        }
+
+        xform.reset( cmsCreateTransform (hIn.data(), cmsInputFormat, hsRGB.data(), cmsOutputFormat, cmsIntent, 0) );
+        if ( xform ) doTransform = true;
     }
-  //--- free buffers and close files
-  if (doTransform)
-     {
-     _TIFFfree (bpout);
-     cmsDeleteTransform (xform);
-     }
+#ifdef QT_DEBUG
+    else
+    {
+        qDebug () << "No embedded profile found";
+    }
+#endif
+//    }
+//    else if (camera_profile_opt == 2) // from file
+//    {
+//        QString profile_fname = luminance_opts.getCameraProfileFileName ();
+//        qDebug () << "Camera profile: " << profile_fname;
 
-  _TIFFfree (bp);
+//        if (!profile_fname.isEmpty ())
+//        {
+//            QByteArray ba( QFile::encodeName( profile_fname ) );
 
-  QImage *toreturn = new QImage (const_cast < uchar * >(data), width, height, QImage::Format_RGB32);
+//            hsRGB.reset( cmsCreate_sRGBProfile () );
+//            hIn.reset( cmsOpenProfileFromFile (ba.data (), "r") );
 
-  return toreturn;
+//            if ( hIn )
+//            {
+//                if (ColorSpace == RGB && TypeOfData == BYTE)
+//                    xform.reset( cmsCreateTransform (hIn.data(), TYPE_RGBA_8, hsRGB.data(), TYPE_RGBA_8, INTENT_PERCEPTUAL, 0) );
+//                else if (ColorSpace == CMYK && TypeOfData == BYTE)
+//                    xform.reset( cmsCreateTransform (hIn.data(), TYPE_CMYK_8, hsRGB.data(), TYPE_RGBA_8, INTENT_PERCEPTUAL, 0) );
+
+//                if ( xform ) doTransform = true;
+//            }
+//        }
+//    }
+
+    QScopedPointer<QImage> toReturn( new QImage(width, height, QImage::Format_ARGB32) );
+
+    //--- image length
+    uint32 imagelength;
+    TIFFGetField (tif.data(), TIFFTAG_IMAGELENGTH, &imagelength);
+
+    //--- image scanline size
+    uint32 scanlinesize = TIFFScanlineSize(tif.data());
+
+    qDebug() << "Scanlinesize:" << scanlinesize;
+
+    std::vector<uint8> buffer(scanlinesize);
+    std::vector<uint8> bufferConverted;
+    if ( doTransform )
+    {
+        bufferConverted.resize((width << 2));
+    }
+
+    qDebug() << "Do Transform: " << doTransform;
+
+    //--- read scan lines
+    for (uint y = 0; y < height; y++)
+    {
+        QRgb* qImageData = reinterpret_cast<QRgb*>(toReturn->scanLine(y));
+        uchar* pBuffer = buffer.data();
+
+        TIFFReadScanline(tif.data(), pBuffer, y);
+        if ( doTransform )
+        {
+            uchar* pBufferConverted = bufferConverted.data();
+
+            cmsDoTransform(xform.data(), pBuffer, pBufferConverted, width);
+            ::std::swap( pBuffer, pBufferConverted );
+        }
+        else if (!doTransform && ColorSpace == CMYK)
+        {
+            qDebug () << "Convert to RGB";
+
+            transform_to_rgb(pBuffer, pBuffer, scanlinesize, nSamples);
+        }
+
+        if ( doTransform )
+        {
+            qDebug() << "write into QImage";
+            // If I have the CMS transform, I always have 4 components as output
+            for (uint x = 0; x < width; x++)
+            {
+                size_t index = (x << 2);
+                qImageData[x] = qRgba(pBuffer[index],
+                                      pBuffer[index + 1],
+                                      pBuffer[index + 2],
+                                      has_alpha ? pBuffer[index + 3] : 0xFF);
+            }
+        }
+        else
+        {
+            for (uint x = 0; x < width; x++)
+            {
+                qImageData[x] = qRgba(pBuffer[(x * nSamples)],
+                                      pBuffer[(x * nSamples) + 1],
+                                      pBuffer[(x * nSamples) + 2],
+                                      has_alpha ? pBuffer[(x * nSamples) + 3] : 0xFF);
+            }
+        }
+    }
+
+    return toReturn.take();
 }
 
 TiffWriter::TiffWriter (const char *filename, pfs::Frame * f):tif ((TIFF *) NULL)
@@ -742,7 +726,7 @@ tif ((TIFF *) NULL)
 
 //write 32 bit float Tiff from pfs::Frame
 int
-TiffWriter::writeFloatTiff ()
+TiffWriter::writeFloatTiff()
 {
   TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);

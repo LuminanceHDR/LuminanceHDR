@@ -46,6 +46,7 @@ public:
     inline
     void reset(T* p = 0)
     {
+        if (p == p_) return;
         if (p_ != 0)
         {
             Traits::cleanup(p_);
@@ -53,12 +54,12 @@ public:
         p_ = p;
     }
 
+    inline
     ~ResourceHandler()
     {
-        if (p_ != NULL)
-        {
-            Traits::cleanup(p_);
-        }
+        T *oldD = this->p_;
+        Traits::cleanup(oldD);
+        this->p_ = 0;
     }
 
     inline

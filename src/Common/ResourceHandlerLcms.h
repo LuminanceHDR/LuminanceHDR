@@ -29,26 +29,40 @@
 //! \since 2.3.0-beta1
 
 #include "ResourceHandler.h"
+#include <QScopedPointer>
 #include <lcms2.h>
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif
 
 struct CleanUpCmsProfile
 {
     static inline
     void cleanup(cmsHPROFILE profile)
     {
+#ifdef QT_DEBUG
+        qDebug() << "CleanUpCmsProfile::cleanup()";
+#endif
+
         if ( profile ) cmsCloseProfile(profile);
     }
 };
 typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
+// typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
 
 struct CleanUpCmsTransform
 {
     static inline
     void cleanup(cmsHTRANSFORM transform)
     {
+#ifdef QT_DEBUG
+        qDebug() << "CleanUpCmsTransform::cleanup()";
+#endif
         if ( transform ) cmsDeleteTransform(transform);
+
     }
 };
 typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;
+//typedef QScopedPointer<char, CleanUpCmsTransform> ScopedCmsTransformV2;
 
 #endif

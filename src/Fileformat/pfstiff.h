@@ -43,7 +43,7 @@ struct QScopedPointerDeleter<TIFF>
     inline static
     void cleanup(TIFF* p)
     {
-        TIFFClose(p);
+        if ( p ) TIFFClose(p);
     }
 };
 typedef QScopedPointer<TIFF> ScopedTiffHandler;
