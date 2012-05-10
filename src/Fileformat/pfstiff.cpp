@@ -636,7 +636,6 @@ TiffReader::readIntoQImage()
 
         if ( doTransform )
         {
-            qDebug() << "write into QImage";
             // If I have the CMS transform, I always have 4 components as output
             for (uint x = 0; x < width; x++)
             {
@@ -662,200 +661,213 @@ TiffReader::readIntoQImage()
     return toReturn.take();
 }
 
-TiffWriter::TiffWriter (const char *filename, pfs::Frame * f):tif ((TIFF *) NULL)
-{
-  f->getXYZChannels (Xc, Yc, Zc);
-  width = Xc->getWidth ();
-  height = Yc->getHeight ();
+TiffWriter::TiffWriter (const char *filename, pfs::Frame* f):
+    tif(TIFFOpen (filename, "w")),
+    ldrimage(0),
+    pixmap(0),
+    pfsFrame(f),
+    width(f->getWidth()),
+    height(f->getHeight())
+{ 
+    if (!tif)
+    {
+        throw std::runtime_error ("TIFF: could not open file for writing.");
+    }
 
-  //X = Xc->getChannelData();
-  //Y = Yc->getChannelData();
-  //Z = Zc->getChannelData();
-
-  //  qDebug("width=%d, heigh=%d",width,height);
-  tif = TIFFOpen (filename, "w");
-  if (!tif)
-    throw std::runtime_error ("TIFF: could not open file for writing.");
-
-  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
-  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
-  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+    TIFFSetField (tif.data(), TIFFTAG_IMAGEWIDTH, width);
+    TIFFSetField (tif.data(), TIFFTAG_IMAGELENGTH, height);
+    TIFFSetField (tif.data(), TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+    TIFFSetField (tif.data(), TIFFTAG_SAMPLESPERPIXEL, 3);
+    TIFFSetField (tif.data(), TIFFTAG_ROWSPERSTRIP, 1);
 }
 
 TiffWriter::TiffWriter (const char *filename, const quint16 * pix, int w, int h):
-tif ((TIFF *) NULL)
+    tif(TIFFOpen (filename, "w")),
+    ldrimage(0),
+    pixmap(pix),
+    pfsFrame(0),
+    width(w),
+    height(h)
 {
-  pixmap = pix;
-  width = w;
-  height = h;
+    if (!tif)
+    {
+        throw std::runtime_error ("TIFF: could not open file for writing.");
+    }
 
-  tif = TIFFOpen (filename, "w");
-  if (!tif)
-    throw std::runtime_error ("TIFF: could not open file for writing.");
-
-  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
-  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
-  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+    TIFFSetField (tif.data(), TIFFTAG_IMAGEWIDTH, width);
+    TIFFSetField (tif.data(), TIFFTAG_IMAGELENGTH, height);
+    TIFFSetField (tif.data(), TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+    TIFFSetField (tif.data(), TIFFTAG_SAMPLESPERPIXEL, 3);
+    TIFFSetField (tif.data(), TIFFTAG_ROWSPERSTRIP, 1);
 }
 
 TiffWriter::TiffWriter (const char *filename, QImage * f):
-tif ((TIFF *) NULL)
+    tif(TIFFOpen (filename, "w")),
+    ldrimage(f),
+    pixmap(0),
+    pfsFrame(0),
+    width(f->width()),
+    height(f->height())
 {
-  ldrimage = f;
-  width = f->width ();
-  height = f->height ();
-  uint16 extras[1];
-  extras[0] = EXTRASAMPLE_ASSOCALPHA;
-  
-  tif = TIFFOpen (filename, "w");
+    if (!tif)
+    {
+        throw std::runtime_error ("TIFF: could not open file for writing.");
+    }
 
-  if (!tif)
-    throw std::runtime_error ("TIFF: could not open file for writing.");
+    uint16 extras[1];
+    extras[0] = EXTRASAMPLE_ASSOCALPHA;
 
-  TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
-  TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
-  TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-  TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 4);
-  TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, &extras);
-  TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+    TIFFSetField (tif.data(), TIFFTAG_IMAGEWIDTH, width);
+    TIFFSetField (tif.data(), TIFFTAG_IMAGELENGTH, height);
+    TIFFSetField (tif.data(), TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+    TIFFSetField (tif.data(), TIFFTAG_SAMPLESPERPIXEL, 4);
+    TIFFSetField (tif.data(), TIFFTAG_EXTRASAMPLES, 1, &extras);
+    TIFFSetField (tif.data(), TIFFTAG_ROWSPERSTRIP, 1);
 }
 
 //write 32 bit float Tiff from pfs::Frame
 int
 TiffWriter::writeFloatTiff()
 {
-  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
-  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 32);
+    assert(pfsFrame != 0);
 
-  const float *X = Xc->getRawData ();
-  const float *Y = Yc->getRawData ();
-  const float *Z = Zc->getRawData ();
+    TIFFSetField (tif.data(), TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+    TIFFSetField (tif.data(), TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+    TIFFSetField (tif.data(), TIFFTAG_BITSPERSAMPLE, 32);
 
-  tsize_t strip_size = TIFFStripSize (tif);
-  tstrip_t strips_num = TIFFNumberOfStrips (tif);
-  float *strip_buf = (float *) _TIFFmalloc (strip_size);	//enough space for a strip (row)
-  if (!strip_buf) 
+    pfs::Channel* Xc;
+    pfs::Channel* Yc;
+    pfs::Channel* Zc;
+
+    pfsFrame->getXYZChannels(Xc, Yc, Zc);
+
+    const float *X = Xc->getRawData ();
+    const float *Y = Yc->getRawData ();
+    const float *Z = Zc->getRawData ();
+
+    tsize_t strip_size = TIFFStripSize (tif.data());
+    tstrip_t strips_num = TIFFNumberOfStrips (tif.data());
+    float *strip_buf = (float *) _TIFFmalloc (strip_size);	//enough space for a strip (row)
+    if (!strip_buf)
     {
-    TIFFClose (tif);
-    throw std::runtime_error ("TIFF: error allocating buffer.");
+        throw std::runtime_error ("TIFF: error allocating buffer.");
     }
 
-  emit maximumValue (strips_num);	// for QProgressDialog
+    emit maximumValue (strips_num);	// for QProgressDialog
 
-  for (unsigned int s = 0; s < strips_num; s++)
+    for (unsigned int s = 0; s < strips_num; s++)
     {
-      for (unsigned int col = 0; col < width; col++)
-	{
-	  strip_buf[3 * col + 0] = X[s * width + col];	//(*X)(col,s);
-	  strip_buf[3 * col + 1] = Y[s * width + col];	//(*Y)(col,s);
-	  strip_buf[3 * col + 2] = Z[s * width + col];	//(*Z)(col,s);
-	}
-      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-	{
-	  qDebug ("error writing strip");
-      TIFFClose (tif);
-	  return -1;
-	}
-      else
-	{
-	  emit nextstep (s);	// for QProgressDialog
-	}
+        for (unsigned int col = 0; col < width; col++)
+        {
+            strip_buf[3 * col + 0] = X[s * width + col];	//(*X)(col,s);
+            strip_buf[3 * col + 1] = Y[s * width + col];	//(*Y)(col,s);
+            strip_buf[3 * col + 2] = Z[s * width + col];	//(*Z)(col,s);
+        }
+        if (TIFFWriteEncodedStrip(tif.data(), s, strip_buf, strip_size) == 0)
+        {
+            qDebug ("error writing strip");
+
+            return -1;
+        }
+        else
+        {
+            emit nextstep (s);	// for QProgressDialog
+        }
     }
-  _TIFFfree (strip_buf);
-  TIFFClose (tif);
-  return 0;
+    _TIFFfree (strip_buf);
+    return 0;
 }
 
 //write LogLUv Tiff from pfs::Frame
 int
 TiffWriter::writeLogLuvTiff ()
 {
-  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_SGILOG);
-  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_LOGLUV);
-  TIFFSetField (tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
-  TIFFSetField (tif, TIFFTAG_STONITS, 1.);	/* not known */
+    assert(pfsFrame != 0);
 
-  const float *X = Xc->getRawData ();
-  const float *Y = Yc->getRawData ();
-  const float *Z = Zc->getRawData ();
+    TIFFSetField (tif.data(), TIFFTAG_COMPRESSION, COMPRESSION_SGILOG);
+    TIFFSetField (tif.data(), TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_LOGLUV);
+    TIFFSetField (tif.data(), TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
+    TIFFSetField (tif.data(), TIFFTAG_STONITS, 1.);	/* not known */
 
-  tsize_t strip_size = TIFFStripSize (tif);
-  tstrip_t strips_num = TIFFNumberOfStrips (tif);
-  float *strip_buf = (float *) _TIFFmalloc (strip_size);	//enough space for a strip
-  if (!strip_buf)
+    pfs::Channel* Xc;
+    pfs::Channel* Yc;
+    pfs::Channel* Zc;
+
+    pfsFrame->getXYZChannels(Xc, Yc, Zc);
+
+    const float *X = Xc->getRawData ();
+    const float *Y = Yc->getRawData ();
+    const float *Z = Zc->getRawData ();
+
+    tsize_t strip_size = TIFFStripSize (tif.data());
+    tstrip_t strips_num = TIFFNumberOfStrips (tif.data());
+    float *strip_buf = (float *) _TIFFmalloc (strip_size);	// enough space for a strip
+    if (!strip_buf)
     {
-    TIFFClose (tif);
-    throw std::runtime_error ("TIFF: error allocating buffer.");
+        throw std::runtime_error ("TIFF: error allocating buffer.");
     }
 
-  emit maximumValue (strips_num);	// for QProgressDialog
+    emit maximumValue (strips_num);	// for QProgressDialog
 
-  for (unsigned int s = 0; s < strips_num; s++)
+    for (unsigned int s = 0; s < strips_num; s++)
     {
-      for (unsigned int col = 0; col < width; col++)
-	{
-	  strip_buf[3 * col + 0] = X[s * width + col];	//(*X)(col,s);
-	  strip_buf[3 * col + 1] = Y[s * width + col];	//(*Y)(col,s);
-	  strip_buf[3 * col + 2] = Z[s * width + col];	//(*Z)(col,s);
-	}
-      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-	{
-	  qDebug ("error writing strip");
-      TIFFClose (tif);
-	  return -1;
-	}
-      else
-	{
-	  emit nextstep (s);	// for QProgressDialog
-	}
+        for (unsigned int col = 0; col < width; col++)
+        {
+            strip_buf[3 * col + 0] = X[s * width + col];	//(*X)(col,s);
+            strip_buf[3 * col + 1] = Y[s * width + col];	//(*Y)(col,s);
+            strip_buf[3 * col + 2] = Z[s * width + col];	//(*Z)(col,s);
+        }
+        if (TIFFWriteEncodedStrip(tif.data(), s, strip_buf, strip_size) == 0)
+        {
+            qDebug ("error writing strip");
+            return -1;
+        }
+        else
+        {
+            emit nextstep (s);	// for QProgressDialog
+        }
     }
 
-  _TIFFfree (strip_buf);
-  TIFFClose (tif);
-  return 0;
+    _TIFFfree (strip_buf);
+    return 0;
 }
 
 int
 TiffWriter::write8bitTiff ()
 {
+    assert(ldrimage != NULL);
     if (ldrimage == NULL)
-      throw std::runtime_error ("TIFF: QImage was not set correctly");
+        throw std::runtime_error ("TIFF: QImage was not set correctly");
 
-  cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-  cmsUInt32Number profileSize = 0;
-  cmsSaveProfileToMem (hsRGB, NULL, &profileSize);	// get the size
+    ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
+    cmsUInt32Number profileSize = 0;
+    cmsSaveProfileToMem (hsRGB.data(), NULL, &profileSize);	// get the size
 
-  std::vector<char> embedBuffer(profileSize);
+    std::vector<char> embedBuffer(profileSize);
 
-  cmsSaveProfileToMem(hsRGB,
-                      reinterpret_cast<void*>(embedBuffer.data()),
-                      &profileSize);
+    cmsSaveProfileToMem(hsRGB.data(),
+                        reinterpret_cast<void*>(embedBuffer.data()),
+                        &profileSize);
 
-  TIFFSetField(tif, TIFFTAG_ICCPROFILE, profileSize,
-               reinterpret_cast<void*>(embedBuffer.data()) );
+    TIFFSetField(tif.data(), TIFFTAG_ICCPROFILE, profileSize,
+                 reinterpret_cast<void*>(embedBuffer.data()) );
 
-  TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
-  TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-  TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, 8);
+    TIFFSetField(tif.data(), TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+    TIFFSetField(tif.data(), TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+    TIFFSetField(tif.data(), TIFFTAG_BITSPERSAMPLE, 8);
 
-  tsize_t strip_size = TIFFStripSize(tif);
-  tstrip_t strips_num = TIFFNumberOfStrips(tif);
+    tsize_t strip_size = TIFFStripSize(tif.data());
+    tstrip_t strips_num = TIFFNumberOfStrips(tif.data());
 
-  char *strip_buf = (char *)_TIFFmalloc (strip_size);	//enough space for a strip
-  if (!strip_buf) 
+    char *strip_buf = (char *)_TIFFmalloc (strip_size);	//enough space for a strip
+    if (!strip_buf)
     {
-    TIFFClose (tif);
-    throw std::runtime_error ("TIFF: error allocating buffer");
+        throw std::runtime_error ("TIFF: error allocating buffer");
     }
 
-  QRgb *ldrpixels = reinterpret_cast < QRgb * >(ldrimage->bits ());
+    QRgb *ldrpixels = reinterpret_cast<QRgb*>(ldrimage->bits ());
 
-  emit maximumValue (strips_num);	// for QProgressDialog
+    emit maximumValue (strips_num);	// for QProgressDialog
     for (unsigned int s = 0; s < strips_num; s++)
     {
         for (unsigned int col = 0; col < width; col++)
@@ -865,19 +877,17 @@ TiffWriter::write8bitTiff ()
             strip_buf[4 * col + 2] = qBlue (ldrpixels[width * s + col]);
             strip_buf[4 * col + 3] = qAlpha (ldrpixels[width * s + col]);
         }
-    if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-	{
-        qDebug ("error writing strip");
-        TIFFClose (tif);
-        return -1;
-    }
-    else
-	{
-        emit nextstep (s);	// for QProgressDialog
-	}
+        if (TIFFWriteEncodedStrip(tif.data(), s, strip_buf, strip_size) == 0)
+        {
+            qDebug ("error writing strip");
+            return -1;
+        }
+        else
+        {
+            emit nextstep (s);	// for QProgressDialog
+        }
     }
     _TIFFfree (strip_buf);
-    TIFFClose (tif);
 
     return 0;
 }
@@ -885,108 +895,115 @@ TiffWriter::write8bitTiff ()
 int
 TiffWriter::write16bitTiff ()
 {
-  if (pixmap == NULL)
+    assert(pixmap != NULL);
+
+    if (pixmap == NULL)
     {
-    TIFFClose (tif);
-    throw std::runtime_error ("TIFF: 16 bits pixmap was not set correctly");
+        throw std::runtime_error ("TIFF: 16 bits pixmap was not set correctly");
     }
 
-  cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-  cmsUInt32Number profileSize = 0;
-  cmsSaveProfileToMem (hsRGB, NULL, &profileSize);	// get the size
+    ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
+    cmsUInt32Number profileSize = 0;
+    cmsSaveProfileToMem (hsRGB.data(), NULL, &profileSize);	// get the size
 
-  std::vector<char> embedBuffer(profileSize);
+    std::vector<char> embedBuffer(profileSize);
 
-  cmsSaveProfileToMem(hsRGB,
-                      reinterpret_cast<void*>(embedBuffer.data()),
-                      &profileSize);
+    cmsSaveProfileToMem(hsRGB.data(),
+                        reinterpret_cast<void*>(embedBuffer.data()),
+                        &profileSize);
 
-  TIFFSetField(tif, TIFFTAG_ICCPROFILE, profileSize,
-               reinterpret_cast<void*>(embedBuffer.data()) );
+    TIFFSetField(tif.data(), TIFFTAG_ICCPROFILE, profileSize,
+                 reinterpret_cast<void*>(embedBuffer.data()) );
 
-  TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
-  TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-  TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, 16);
+    TIFFSetField(tif.data(), TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+    TIFFSetField(tif.data(), TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+    TIFFSetField(tif.data(), TIFFTAG_BITSPERSAMPLE, 16);
 
-  tsize_t strip_size = TIFFStripSize (tif);
-  tstrip_t strips_num = TIFFNumberOfStrips (tif);
+    tsize_t strip_size = TIFFStripSize (tif.data());
+    tstrip_t strips_num = TIFFNumberOfStrips (tif.data());
 
-  quint16 *strip_buf = (quint16 *) _TIFFmalloc (strip_size);	//enough space for a strip
-  if (!strip_buf)
+    quint16 *strip_buf = (quint16 *) _TIFFmalloc (strip_size);	//enough space for a strip
+    if (!strip_buf)
     {
-    TIFFClose (tif);
-    throw std::runtime_error ("TIFF: error allocating buffer");
+        throw std::runtime_error ("TIFF: error allocating buffer");
     }
 
-  emit maximumValue (strips_num);	// for QProgressDialog
+    emit maximumValue (strips_num);	// for QProgressDialog
 
-  for (unsigned int s = 0; s < strips_num; s++)
+    for (unsigned int s = 0; s < strips_num; s++)
     {
-      for (unsigned int col = 0; col < width; col++)
-	{
-	  strip_buf[3 * col] = pixmap[3 * (width * s + col)];
-	  strip_buf[3 * col + 1] = pixmap[3 * (width * s + col) + 1];
-	  strip_buf[3 * col + 2] = pixmap[3 * (width * s + col) + 2];
-	}
-      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-	{
-	  qDebug ("error writing strip");
-      TIFFClose (tif);
-	  return -1;
-	}
-      else
-	{
-	  emit nextstep (s);	// for QProgressDialog
-	}
+        for (unsigned int col = 0; col < width; col++)
+        {
+            strip_buf[3 * col] = pixmap[3 * (width * s + col)];
+            strip_buf[3 * col + 1] = pixmap[3 * (width * s + col) + 1];
+            strip_buf[3 * col + 2] = pixmap[3 * (width * s + col) + 2];
+        }
+        if (TIFFWriteEncodedStrip(tif.data(), s, strip_buf, strip_size) == 0)
+        {
+            qDebug ("error writing strip");
+
+            return -1;
+        }
+        else
+        {
+            emit nextstep (s);	// for QProgressDialog
+        }
     }
-  _TIFFfree (strip_buf);
-  TIFFClose (tif);
-  return 0;
+    _TIFFfree (strip_buf);
+
+    return 0;
 }
 
 int
-TiffWriter::writePFSFrame16bitTiff ()
+TiffWriter::writePFSFrame16bitTiff()
 {
-  TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
-  TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-  TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 16);
+    assert (pfsFrame != 0);
 
-  const float *X = Xc->getRawData ();
-  const float *Y = Yc->getRawData ();
-  const float *Z = Zc->getRawData ();
+    TIFFSetField (tif.data(), TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+    TIFFSetField (tif.data(), TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+    TIFFSetField (tif.data(), TIFFTAG_BITSPERSAMPLE, 16);
 
-  tsize_t strip_size = TIFFStripSize (tif);
-  tstrip_t strips_num = TIFFNumberOfStrips (tif);
-  quint16 *strip_buf = (quint16 *) _TIFFmalloc (strip_size);	//enough space for a strip (row)
-  if (!strip_buf) 
+    pfs::Channel* Xc;
+    pfs::Channel* Yc;
+    pfs::Channel* Zc;
+
+    pfsFrame->getXYZChannels(Xc, Yc, Zc);
+
+    const float *X = Xc->getRawData ();
+    const float *Y = Yc->getRawData ();
+    const float *Z = Zc->getRawData ();
+
+    tsize_t strip_size = TIFFStripSize (tif.data());
+    tstrip_t strips_num = TIFFNumberOfStrips (tif.data());
+    quint16 *strip_buf = (quint16 *) _TIFFmalloc (strip_size);	//enough space for a strip (row)
+    if (!strip_buf)
     {
-    TIFFClose (tif);
-    throw std::runtime_error ("TIFF: error allocating buffer.");
+        throw std::runtime_error ("TIFF: error allocating buffer.");
     }
 
-  emit maximumValue (strips_num);	// for QProgressDialog
+    emit maximumValue (strips_num);	// for QProgressDialog
 
-  for (unsigned int s = 0; s < strips_num; s++)
+    for (unsigned int s = 0; s < strips_num; s++)
     {
-      for (unsigned int col = 0; col < width; col++)
-	{
-	  strip_buf[3 * col + 0] = (qint16) X[s * width + col];	//(*X)(col,s);
-	  strip_buf[3 * col + 1] = (qint16) Y[s * width + col];	//(*Y)(col,s);
-	  strip_buf[3 * col + 2] = (qint16) Z[s * width + col];	//(*Z)(col,s);
-	}
-      if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
-	{
-	  qDebug ("error writing strip");
-      TIFFClose (tif);
-	  return -1;
-	}
-      else
-	{
-	  emit nextstep (s);	// for QProgressDialog
-	}
+        for (unsigned int col = 0; col < width; col++)
+        {
+            strip_buf[3 * col + 0] = (qint16) X[s * width + col];	//(*X)(col,s);
+            strip_buf[3 * col + 1] = (qint16) Y[s * width + col];	//(*Y)(col,s);
+            strip_buf[3 * col + 2] = (qint16) Z[s * width + col];	//(*Z)(col,s);
+        }
+        if (TIFFWriteEncodedStrip(tif.data(), s, strip_buf, strip_size) == 0)
+        {
+            qDebug ("error writing strip");
+
+            return -1;
+        }
+        else
+        {
+            emit nextstep (s);	// for QProgressDialog
+        }
     }
-  _TIFFfree (strip_buf);
-  TIFFClose (tif);
-  return 0;
+    _TIFFfree (strip_buf);
+
+    return 0;
 }
 

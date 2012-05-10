@@ -52,7 +52,6 @@ class TiffReader : public QObject
 {
     Q_OBJECT
 
-    //TIFF* tif;
     ScopedTiffHandler tif;
     uint32 width, height;
 
@@ -89,29 +88,38 @@ signals: //For ProgressDialog
     void nextstep(int);
 };
 
-class TiffWriter : public QObject {
-  Q_OBJECT
-  
+class TiffWriter : public QObject
+{
+    Q_OBJECT
+
 private:
-  TIFF* tif;
-  pfs::Channel *Xc, *Yc, *Zc;
-  
-  QImage *ldrimage;
-  const quint16 *pixmap;
-  uint32 width,height;
+    ScopedTiffHandler tif;
+
+    QImage *ldrimage;
+    const quint16 *pixmap;
+    pfs::Frame* pfsFrame;
+    uint32 width;
+    uint32 height;
+
 public:
-  TiffWriter( const char* filename, pfs::Frame *f );
-  TiffWriter( const char* filename, QImage *ldrimage );
-  TiffWriter( const char* filename, const quint16 *pixmap, int w, int h);
-  
-  int write8bitTiff(); //write 8bit Tiff from QImage
-  int write16bitTiff(); //write 16bit Tiff from 16 bits pixmap
-  int writeFloatTiff(); //write 32bit float Tiff from pfs::Frame
-  int writeLogLuvTiff(); //write LogLuv Tiff from pfs::Frame
-  int writePFSFrame16bitTiff(); //write 16bit Tiff from pfs::Frame
+    TiffWriter( const char* filename, pfs::Frame *f );
+    TiffWriter( const char* filename, QImage *ldrimage );
+    TiffWriter( const char* filename, const quint16 *pixmap, int w, int h);
+
+    //! \brief write 8bit Tiff from QImage
+    int write8bitTiff();
+    //! \brief write 16bit Tiff from 16 bits pixmap
+    int write16bitTiff();
+    //! \brief write 32bit float Tiff from pfs::Frame
+    int writeFloatTiff();
+    //! \brief write LogLuv Tiff from pfs::Frame
+    int writeLogLuvTiff();
+    //! \brief write 16bit Tiff from pfs::Frame
+    int writePFSFrame16bitTiff();
+
 signals: //For ProgressDialog
-  void maximumValue(int);
-  void nextstep(int);
+    void maximumValue(int);
+    void nextstep(int);
 };
 
 #endif
