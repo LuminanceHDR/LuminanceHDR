@@ -29,17 +29,14 @@
 #define EDITINGTOOLS_H
 
 #include "ui_EditingTools.h"
+#include "PreviewWidget.h"
 #include "Common/global.h"
 #include "Viewers/SelectionTool.h"
 #include "HdrCreation/HdrCreationManager.h"
-#include "PreviewWidget.h"
 #include "Common/LuminanceOptions.h"
 
 class HistogramLDR;
 class PanIconWidget;
-
-//defined in mtb_alignment.cpp
-QImage* shiftQImage(const QImage *in, int dx, int dy);
 
 class EditingTools : public QDialog, private Ui::EditingToolsDialog
 {

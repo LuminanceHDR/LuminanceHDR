@@ -54,7 +54,8 @@ QImage* shiftQImage(const QImage *in, int dx, int dy)
 	return out;
 }
 
-void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input)
+void mtb_alignment(QList<QImage*>& ImagePtrList)
+//                   QList<bool>& /*ldr_tiff_input*/)
 {
 	assert(ImagePtrList.size()>=2);
 	int width=ImagePtrList.at(0)->width();
@@ -75,9 +76,9 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input)
 	}
 	
 	//qDebug("::mtb_alignment: now shifting the images");
-	int originalsize=ImagePtrList.size();
+    int originalsize = ImagePtrList.size();
 	//shift the images (apply the shifts starting from the second (index=1))
-	for (int i=1; i<originalsize; i++)
+    for (int i = 1; i < originalsize; i++)
 	{
 		int cumulativeX=0;
 		int cumulativeY=0;
@@ -90,16 +91,17 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input)
 		}
 		//qDebug("::mtb_alignment: Cumulative shift for image %d = (%d,%d)",i,cumulativeX,cumulativeY);
 		QImage *shifted=shiftQImage(ImagePtrList[1], cumulativeX, cumulativeY);
-		if (ldr_tiff_input[1]) {
-			delete [] ImagePtrList[1]->bits();
-		}
+//		if (ldr_tiff_input[1]) {
+//			delete [] ImagePtrList[1]->bits();
+//		}
 		delete ImagePtrList[1];
 		ImagePtrList.removeAt(1);
 		ImagePtrList.append(shifted);
-		ldr_tiff_input.removeAt(1);
-		ldr_tiff_input.append(false);
+//		ldr_tiff_input.removeAt(1);
+//		ldr_tiff_input.append(false);
 	}
-	delete [] shiftsX; delete [] shiftsY;
+    delete [] shiftsX;
+    delete [] shiftsY;
 }
 
 

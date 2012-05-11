@@ -37,9 +37,12 @@
 #include "Fileformat/pfstiff.h"
 #include "HdrWizard/EditingTools.h"
 #include "Exif/ExifOperations.h"
+#include "HdrCreation/mtb_alignment.h"
 
-
-EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(parent), additional_shift_value(0), m_MdrSaved(false)
+EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
+    QDialog(parent),
+    additional_shift_value(0),
+    m_MdrSaved(false)
 {
 	setupUi(this);
 
