@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Franco Comida
+ * Copyright (C) 2012 Franco Comida, Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
  * ----------------------------------------------------------------------
  *
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Original work
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * clean up memory management
  *
  */
 
@@ -37,6 +40,8 @@
 #endif
 
 #include "jpegwriter.h"
+#include "Common/ResourceHandlerCommon.h"
+#include "Common/ResourceHandlerLcms.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -172,15 +177,16 @@ JpegWriter::JpegWriter(const QImage *out_qimage, int quality):
 
 bool JpegWriter::writeQImageToJpeg()
 {
-    cmsUInt32Number profile_size = 0;
-    cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-    cmsSaveProfileToMem(hsRGB, NULL, &profile_size);           // get the size
+    cmsUInt32Number cmsProfileSize = 0;
+    ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
 
-    std::vector<JOCTET> profile_buffer(profile_size);
+    cmsSaveProfileToMem(hsRGB.data(), NULL, &cmsProfileSize);           // get the size
 
-    cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);    //
+    std::vector<JOCTET> cmsOutputProfile(cmsProfileSize);
 
-    qDebug() << "sRGB profile size: " << profile_size;
+    cmsSaveProfileToMem(hsRGB.data(), cmsOutputProfile.data(), &cmsProfileSize);    //
+
+    qDebug() << "sRGB profile size: " << cmsProfileSize;
 
 	struct jpeg_compress_struct cinfo;
 	cinfo.err = jpeg_std_error(&ErrorHandler.pub);
@@ -209,9 +215,7 @@ bool JpegWriter::writeQImageToJpeg()
 		}
 	}
 
-    // I protecte the output file into a QSharedPointer with custom Deleter,
-    // so I don't have to close it whenever it goes out of scope!
-    QSharedPointer<FILE> outfile;
+    ResouceHandlerFile outfile;
 
 #if defined(WIN32) || defined(__APPLE__)
     QTemporaryFile output_temp_file;
@@ -223,7 +227,7 @@ bool JpegWriter::writeQImageToJpeg()
         QByteArray ba( QFile::encodeName(m_fname) );
 		qDebug() << "writeQImageToJpeg: filename: " << ba.data();
 
-        outfile = QSharedPointer<FILE>(fopen(ba.data(), "wb"), fclose);
+        outfile.reset( fopen(ba.data(), "wb") );
 
         if (outfile.data() == NULL)
         {
@@ -238,7 +242,7 @@ bool JpegWriter::writeQImageToJpeg()
 
         QByteArray output_temp_filename = QFile::encodeName( output_temp_file.fileName() );
         output_temp_file.close();
-        outfile = QSharedPointer<FILE>(fopen(output_temp_filename.constData(), "w+"), fclose);
+        outfile.reset(fopen(output_temp_filename.constData(), "w+"));
 
         if ( outfile.data() == NULL ) return false;
 #else
@@ -247,7 +251,7 @@ bool JpegWriter::writeQImageToJpeg()
         // reset all element of the vector to zero!
         std::fill(outbuf.begin(), outbuf.end(), 0);
 
-        outfile = QSharedPointer<FILE>(fmemopen(outbuf.data(), outbuf.size(), "w+"), fclose);
+        outfile.reset( fmemopen(outbuf.data(), outbuf.size(), "w+") );
 #endif
 	}
 
@@ -256,10 +260,7 @@ bool JpegWriter::writeQImageToJpeg()
         jpeg_stdio_dest(&cinfo, outfile.data());
         jpeg_start_compress(&cinfo, true);
 
-        write_icc_profile(&cinfo, profile_buffer.data(), profile_size);
-
-        // unecessary zelous!
-        profile_buffer.clear();
+        write_icc_profile(&cinfo, cmsOutputProfile.data(), cmsProfileSize);
 
         // If an exception is raised, this buffer gets automatically destructed!
         std::vector<JSAMPLE> ScanLineOut(cinfo.image_width * cinfo.num_components);

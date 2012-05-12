@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Franco Comida
+ * Copyright (C) 2012 Franco Comida, Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
  * ----------------------------------------------------------------------
  *
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Original work
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * clean up memory management
  *
  */
 
