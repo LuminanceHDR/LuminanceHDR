@@ -27,6 +27,7 @@
 
 #include <QByteArray>
 #include <QDebug>
+#include <QFile>
 #include <stdexcept>
 #include <stdio.h>
 #include <lcms2.h>
