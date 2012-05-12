@@ -58,7 +58,7 @@ QDialog(p),
 	connect(m_Ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
 
 	connect(m_hdrCreationManager, SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(align(QStringList)));
-	connect(m_hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(create_hdr()));
+	connect(m_hdrCreationManager, SIGNAL(finishedAligning(int)), this, SLOT(create_hdr(int)));
 	connect(m_hdrCreationManager, SIGNAL(errorWhileLoading(QString)), this, SLOT(error_while_loading(QString)));
 	connect(m_hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
 	connect(m_hdrCreationManager, SIGNAL(processed()), this, SLOT(processed()));
@@ -279,10 +279,10 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 			m_hdrCreationManager->align_with_mtb();
 	}
 	else
-		create_hdr();
+		create_hdr(0);
 }
 
-void BatchHDRDialog::create_hdr()
+void BatchHDRDialog::create_hdr(int)
 {
 	qDebug() << "BatchHDRDialog::create_hdr()";
 	QString suffix = m_Ui->formatComboBox->currentText();
