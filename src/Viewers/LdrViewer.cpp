@@ -121,14 +121,15 @@ QImage* doCMSTransform(QImage* input_qimage, bool doProof, bool doGamutCheck)
         cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0 };
         alarmCodes[1] = 0xFFFF;
         cmsSetAlarmCodes(alarmCodes);
-        xform.reset( cmsCreateProofingTransform(hsRGB.data(), TYPE_RGBA_8,
-                                                hOut.data(), TYPE_RGBA_8,
+        xform.reset( cmsCreateProofingTransform(hsRGB.data(), TYPE_BGRA_8, //TYPE_RGBA_8,
+                                                hOut.data(), TYPE_BGRA_8, //TYPE_RGBA_8,
                                                 hProof.data(), INTENT_PERCEPTUAL, INTENT_ABSOLUTE_COLORIMETRIC, dwFlags) );
     }
     else
     {
-        xform.reset( cmsCreateTransform(hsRGB.data(), TYPE_RGBA_8,
-                                        hOut.data(), TYPE_RGBA_8, INTENT_PERCEPTUAL, 0) );
+        xform.reset( cmsCreateTransform(hsRGB.data(), TYPE_BGRA_8, //TYPE_RGBA_8,
+                                        hOut.data(), TYPE_BGRA_8, //TYPE_RGBA_8,
+                                        INTENT_PERCEPTUAL, 0) );
     }
 
     if ( !xform )
