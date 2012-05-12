@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Franco Comida
+ * Copyright (C) 2012 Franco Comida, Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
  * ----------------------------------------------------------------------
  *
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Original implementation
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * Code refactory
  *
  */
 
@@ -32,6 +35,10 @@
 
 #include "Common/LuminanceOptions.h"
 #include "Common/ResourceHandlerCommon.h"
+#include "Common/ResourceHandlerLcms.h"
+
+namespace
+{
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -182,11 +189,6 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//int cms_error_handler(int ErrorCode, const char *ErrorText)
-//{
-//	throw std::runtime_error(ErrorText);
-//}
-
 static struct my_error_mgr
 {
 	struct  jpeg_error_mgr pub;  // "public" fields 
@@ -232,6 +234,7 @@ void transform_to_rgb(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
 		*(ScanLineOut + i + 3) = 255;
 	}
 }
+}
 
 JpegReader::JpegReader(const QString& filename) :
 	fname(filename)
@@ -240,21 +243,9 @@ JpegReader::JpegReader(const QString& filename) :
 JpegReader::~JpegReader()
 {}
 
-QImage *JpegReader::readJpegIntoQImage() 
+QImage* JpegReader::readJpegIntoQImage()
 {
 	bool doTransform = false;
-
-	cmsHPROFILE hsRGB, hIn;
-	cmsHTRANSFORM xform = NULL;
-    //cmsErrorAction(LCMS_ERROR_SHOW);              // TODO
-    //cmsSetErrorHandler(cms_error_handler);        // TODO
-	
-    unsigned int EmbedLen;
-    JOCTET * EmbedBuffer;
-
-    std::vector<JSAMPLE> ScanLineIn;
-    std::vector<JSAMPLE> ScanLineTemp;
-    std::vector<unsigned char> ScanLineOut;
 
 	cinfo.err = jpeg_std_error(&ErrorHandler.pub);
 	ErrorHandler.pub.error_exit      = my_error_handler;	
@@ -284,13 +275,14 @@ QImage *JpegReader::readJpegIntoQImage()
 		qDebug() << err.what();
 		jpeg_destroy_decompress(&cinfo);
 
-		throw err;
+        throw;
 	}
 
 	qDebug() << "Readed JPEG headers";
-	qDebug() << cinfo.jpeg_color_space;
+    qDebug() << "cinfo.jpeg_color_space" << cinfo.jpeg_color_space;
 
-	if (cinfo.jpeg_color_space == JCS_GRAYSCALE) {
+    if (cinfo.jpeg_color_space == JCS_GRAYSCALE)
+    {
 		qDebug() << "Unsuported color space: grayscale";
 		jpeg_destroy_decompress(&cinfo);
 
@@ -302,13 +294,8 @@ QImage *JpegReader::readJpegIntoQImage()
 		cinfo.out_color_space = JCS_CMYK;
 	}
 
-	qDebug() << cinfo.num_components;
+    qDebug() << "cinfo.num_components" << cinfo.num_components;
 	
-	//if (cinfo.jpeg_color_space == JCS_RGB || cinfo.jpeg_color_space == JCS_YCbCr)
-	//	cinfo.out_color_space = JCS_RGB;
-	//else
-	//	cinfo.out_color_space = JCS_CMYK;
-
 	try {
 		jpeg_start_decompress(&cinfo);
 	}
@@ -316,212 +303,153 @@ QImage *JpegReader::readJpegIntoQImage()
 	{
 		qDebug() << err.what();
 		jpeg_destroy_decompress(&cinfo);
-		throw err;
+        throw;
 	}
 	
-	LuminanceOptions luminance_opts;
-	int camera_profile_opt = luminance_opts.getCameraProfile();
-	
-    //cmsSetErrorHandler(cms_error_handler);        // TODO
-    //cmsErrorAction(LCMS_ERROR_SHOW);              // TODO
+    ScopedCmsProfile hsRGB;
+    ScopedCmsProfile hIn;
+    ScopedCmsTransform xform;
 
-    // from file
-    if (camera_profile_opt == 2)
+    unsigned int cmsProfileLength;
+    JOCTET * cmsProfileBuffer;
+
+    if ( read_icc_profile(&cinfo, &cmsProfileBuffer, &cmsProfileLength) == true )
     {
-		QString profile_fname = luminance_opts.getCameraProfileFileName();
-		qDebug() << "Camera profile: " << profile_fname;
-
-        if (!profile_fname.isEmpty())
-        {
-            ba = QFile::encodeName(profile_fname);
-
-			hsRGB = cmsCreate_sRGBProfile();
-			try {
-                hIn = cmsOpenProfileFromFile(ba.constData(), "r");
-			}
-			catch (const std::runtime_error& err) {
-				qDebug() << err.what();
-				jpeg_destroy_decompress(&cinfo);
-				throw err;
-			}
-			
-            if (!(cmsGetColorSpace(hIn) == cmsSigRgbData ||
-                  cmsGetColorSpace(hIn) == cmsSigCmykData))
-            {
-				jpeg_destroy_decompress(&cinfo);
-				throw std::runtime_error("ERROR: Wrong colorspace");
-			}	
-			
-			doTransform = true;
-			
-            try
-            {
-                if (cmsGetColorSpace(hIn) == cmsSigRgbData)
-	        		xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-				else
-	        		xform = cmsCreateTransform(hIn, TYPE_YUVK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-			}
-			catch (const std::runtime_error& err) {
-				qDebug() << err.what();
-				jpeg_destroy_decompress(&cinfo);
-				cmsCloseProfile(hIn);
-				throw err;
-			}
-			qDebug() << "Created transform";
-
-        	cmsCloseProfile(hIn);
-		}
-	}
-	
-    if (camera_profile_opt == 1 &&
-            read_icc_profile(&cinfo, &EmbedBuffer, &EmbedLen) == true)
-    {
+#ifdef QT_DEBUG
 		qDebug() << "Found embedded profile";
-		try {
-			hsRGB = cmsCreate_sRGBProfile();
-			hIn = cmsOpenProfileFromMem(EmbedBuffer, EmbedLen);
-		}
-		catch (const std::runtime_error& err)
-		{
-			qDebug() << err.what();
-			jpeg_destroy_decompress(&cinfo);
-			free(EmbedBuffer);
-			throw err;
-		}
+#endif
+        hsRGB.reset( cmsCreate_sRGBProfile() );
+        hIn.reset( cmsOpenProfileFromMem(cmsProfileBuffer, cmsProfileLength) );
+        free(cmsProfileBuffer);
+    }
+//    else
+//    {
+//#ifdef QT_DEBUG
+//        qDebug() << "Assign default profile (sRGB)";
+//#endif
+//        hsRGB.reset( cmsCreate_sRGBProfile() );
+//        hIn.reset( cmsCreate_sRGBProfile() );
+//    }
+
+    if ( hIn && hsRGB )
+    {
 
 #ifdef QT_DEBUG
-        if (cmsGetColorSpace(hIn) == cmsSigRgbData)
-			qDebug() << "Embedded colorspace = sRGB";
-        else if (cmsGetColorSpace(hIn) == cmsSigCmykData)
-			qDebug() << "Embedded colorspace = CMYK";
-        else if (cmsGetColorSpace(hIn) == cmsSigYCbCrData)
-			qDebug() << "Embedded colorspace = YCbCr";
-        else if (cmsGetColorSpace(hIn) == cmsSigLuvKData)
-            qDebug() << "Embedded colorspace = LuvK";
+        if (cmsGetColorSpace(hIn.data()) == cmsSigRgbData)
+            qDebug() << "Image format = sRGB";
+        else if (cmsGetColorSpace(hIn.data()) == cmsSigCmykData)
+            qDebug() << "Image format = CMYK";
+        else if (cmsGetColorSpace(hIn.data()) == cmsSigYCbCrData)
+            qDebug() << "Image format = YCbCr";
+        else if (cmsGetColorSpace(hIn.data()) == cmsSigLuvKData)
+            qDebug() << "Image format = LuvK";
 #endif
 
-		doTransform = true;
-		try {
-			switch (cinfo.jpeg_color_space)
-			{
-				case JCS_RGB:	
-				case JCS_YCbCr:
-					qDebug() << "Transform colorspace = sRGB";
-					xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-                    ScanLineIn.reserve(cinfo.output_width * cinfo.num_components);
-                    ScanLineTemp.reserve(cinfo.output_width * cinfo.num_components);
-                    ScanLineOut.reserve(cinfo.output_width * (cinfo.num_components + 1));
-					break;
-				case JCS_CMYK:		
-				case JCS_YCCK:
-					qDebug() << "Transform colorspace = CMYK";
-					xform = cmsCreateTransform(hIn, TYPE_YUVK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-                    ScanLineIn.reserve(cinfo.output_width * cinfo.num_components);
-                    ScanLineTemp.reserve(cinfo.output_width * cinfo.num_components);
-                    ScanLineOut.reserve(cinfo.output_width * cinfo.num_components);
-					break;
-                default:
-                    // This case should never happen, but at least the compiler
-                    // stops complaining!
-                    break;
-			}
-		}
-        catch (const std::runtime_error& err)
-		{
-			qDebug() << err.what();
-			jpeg_destroy_decompress(&cinfo);
-			free(EmbedBuffer);
-			throw err;
-		}
-		qDebug() << "Created transform";
+        switch (cinfo.jpeg_color_space)
+        {
+        case JCS_RGB:
+        case JCS_YCbCr:
+        {
+            qDebug() << "Transform colorspace = sRGB";
+            xform.reset( cmsCreateTransform(hIn.data(), TYPE_RGB_8,
+                                            hsRGB.data(), TYPE_BGRA_8,
+                                            INTENT_PERCEPTUAL, 0) );
 
-		free(EmbedBuffer);
-	}
+        } break;
+        case JCS_CMYK:
+        case JCS_YCCK:
+        {
+            qDebug() << "Transform colorspace = CMYK";
+            xform.reset( cmsCreateTransform(hIn.data(), TYPE_YUVK_8,
+                                            hsRGB.data(), TYPE_BGRA_8,
+                                            INTENT_PERCEPTUAL, 0) );
+        } break;
+        default:
+            // This case should never happen, but at least the compiler
+            // stops complaining!
+            break;
+        }
+
+        if ( xform ) {
+#ifdef QT_DEBUG
+            qDebug() << "Created transform";
+#endif
+            doTransform = true;
+        } else
+        {
+            doTransform = false;
+        }
+    }
     else
     {
-        ScanLineIn.reserve(cinfo.output_width * cinfo.num_components);
-        ScanLineTemp.reserve(cinfo.output_width * cinfo.num_components);
-        if ( (cinfo.jpeg_color_space == JCS_RGB ||
-              cinfo.jpeg_color_space == JCS_YCbCr) )
+        doTransform = false;
+    }
+
+    try
+    {
+        QScopedPointer<QImage> out_qimage( new QImage(cinfo.output_width, cinfo.output_height, QImage::Format_RGB32) );
+        std::vector<JSAMPLE> ScanLineIn(cinfo.output_width * cinfo.num_components);
+        JSAMPROW ScanLineOutArray[1] = { ScanLineIn.data() };
+
+        if ( doTransform )
         {
-            ScanLineOut.reserve(cinfo.output_width * (cinfo.num_components + 1));
+            // CMS branch
+            for (int i = 0; cinfo.output_scanline < cinfo.output_height; ++i)
+            {
+                jpeg_read_scanlines(&cinfo, ScanLineOutArray, 1);
+
+                cmsDoTransform(xform.data(),
+                               ScanLineIn.data(),       // from temporary buffer
+                               out_qimage->scanLine(i), // write directly inside the final QImage
+                               cinfo.output_width);
+            }
         }
         else
         {
-            ScanLineOut.reserve(cinfo.output_width * cinfo.num_components);
-        }
-	}
-	
-	QImage *out_qimage = new QImage(cinfo.output_width, cinfo.output_height, QImage::Format_RGB32);
-    try
-    {
-        JSAMPROW ScanLineOutArray[1] = { ScanLineIn.data() };
-        for (int i = 0; cinfo.output_scanline < cinfo.output_height; ++i)
-        {
-            jpeg_read_scanlines(&cinfo, ScanLineOutArray, 1);
+            switch (cinfo.jpeg_color_space)
+            {
+            case JCS_RGB:
+            case JCS_YCbCr:
+            {
+                for (int i = 0; cinfo.output_scanline < cinfo.output_height; ++i)
+                {
+                    jpeg_read_scanlines(&cinfo, ScanLineOutArray, 1);
 
-            if (doTransform) {
-                cmsDoTransform(xform, ScanLineIn.data(), ScanLineTemp.data(), cinfo.output_width);
-				switch (cinfo.jpeg_color_space)
-				{
-					case JCS_RGB:
-					case JCS_YCbCr:
-                        addAlphaValues(ScanLineTemp.data(), ScanLineOut.data(), cinfo.output_width * cinfo.num_components);
-                        memcpy(out_qimage->scanLine( i ), ScanLineOut.data(), cinfo.output_width * (cinfo.num_components + 1));
-						break;
-					case JCS_CMYK:
-					case JCS_YCCK:
-                        addAlphaValues(ScanLineTemp.data(), ScanLineOut.data(), cinfo.output_width * (cinfo.num_components - 1));
-                        memcpy(out_qimage->scanLine( i ), ScanLineOut.data(), cinfo.output_width * cinfo.num_components);
-						break;
-                    default:
-                        // This case should never happen, but at least the compiler
-                        // stops complaining!
-                        break;
-				}			
+                    addAlphaValues(ScanLineIn.data(),
+                                   out_qimage->scanLine( i ),
+                                   cinfo.output_width * cinfo.num_components);
+                }
+            } break;
+            case JCS_CMYK:
+            case JCS_YCCK:
+            {
+                for (int i = 0; cinfo.output_scanline < cinfo.output_height; ++i)
+                {
+                    jpeg_read_scanlines(&cinfo, ScanLineOutArray, 1);
+
+                    transform_to_rgb(ScanLineIn.data(),
+                                     out_qimage->scanLine( i ),
+                                     cinfo.output_width * cinfo.num_components);
+                }
+            } break;
+            default:
+                // This case should never happen, but at least the compiler
+                // stops complaining!
+                break;
             }
-            else {
-				switch (cinfo.jpeg_color_space)
-				{
-					case JCS_RGB:
-					case JCS_YCbCr:
-                        addAlphaValues(ScanLineIn.data(), ScanLineOut.data(), cinfo.output_width * cinfo.num_components);
-                        memcpy(out_qimage->scanLine( i ), ScanLineOut.data(), cinfo.output_width * (cinfo.num_components + 1));
-						break;
-					case JCS_CMYK:
-					case JCS_YCCK:
-                        transform_to_rgb(ScanLineIn.data(), ScanLineOut.data(), cinfo.output_width * cinfo.num_components);
-                        memcpy(out_qimage->scanLine( i ), ScanLineOut.data(), cinfo.output_width * cinfo.num_components);
-						break;
-                    default:
-                        // This case should never happen, but at least the compiler
-                        // stops complaining!
-                        break;
-				}			
-			}
         }
+
+        jpeg_finish_decompress(&cinfo);
+        jpeg_destroy_decompress(&cinfo);
+
+        return out_qimage.take();
     }
     catch (const std::runtime_error& err)
     {
         qDebug() << err.what();
         jpeg_destroy_decompress(&cinfo);
-        //_cmsFree(ScanLineIn);
-        //_cmsFree(ScanLineTemp);
-        //_cmsFree(ScanLineOut);
-		cmsDeleteTransform(xform);
-		throw err;
+
+        throw;
     }
-
-	if (doTransform)
-		cmsDeleteTransform(xform);
-	
-    //_cmsFree(ScanLineIn);
-    //_cmsFree(ScanLineTemp);
-    //_cmsFree(ScanLineOut);
-
-	jpeg_finish_decompress(&cinfo);
-	jpeg_destroy_decompress(&cinfo);
-
-	return out_qimage;
 }
 

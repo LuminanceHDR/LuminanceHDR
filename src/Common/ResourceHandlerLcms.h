@@ -40,11 +40,13 @@ struct CleanUpCmsProfile
     static inline
     void cleanup(cmsHPROFILE profile)
     {
+        if ( profile )
+        {
 #ifdef QT_DEBUG
-        qDebug() << "CleanUpCmsProfile::cleanup()";
+            qDebug() << "CleanUpCmsProfile::cleanup()";
 #endif
-
-        if ( profile ) cmsCloseProfile(profile);
+            cmsCloseProfile(profile);
+        }
     }
 };
 typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
@@ -55,11 +57,13 @@ struct CleanUpCmsTransform
     static inline
     void cleanup(cmsHTRANSFORM transform)
     {
+        if ( transform )
+        {
 #ifdef QT_DEBUG
-        qDebug() << "CleanUpCmsTransform::cleanup()";
+            qDebug() << "CleanUpCmsTransform::cleanup()";
 #endif
-        if ( transform ) cmsDeleteTransform(transform);
-
+            cmsDeleteTransform(transform);
+        }
     }
 };
 typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;
