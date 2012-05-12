@@ -5,6 +5,7 @@
  * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2006 Giuseppe Rota
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -113,7 +114,7 @@ GetTIFFProfile(TIFF* in)
         }
     }
 
-    return NULL;
+    return 0;
 }
 // End of code form tifficc.c
 ///////////////////////////////////////////////////////////////////////////////
@@ -147,6 +148,28 @@ transform_to_rgb_16(uint16 *ScanLineIn, uint16 *ScanLineOut, uint32 size, int nS
       *(ScanLineOut + i + 1) = ((65535 - M) * (65535 - K)) / 65535;
       *(ScanLineOut + i + 2) = ((65535 - Y) * (65535 - K)) / 65535;
       *(ScanLineOut + i + 3) = 65535;
+    }
+}
+
+// The way QRgb is stored is a bit weird, hence the strange way to store the
+// final value
+void
+cmyk_to_bgra_qimage(const unsigned char *inVector, unsigned char *outVector,
+                    uint32 size, int nSamples)
+{
+    for (uint32 i = 0; i < size; i += nSamples)
+    {
+        unsigned char C = *(inVector + 0);
+        unsigned char M = *(inVector + 1);
+        unsigned char Y = *(inVector + 2);
+        unsigned char K = *(inVector + 3);
+        *(outVector + 2) = ((255 - C) * (255 - K)) / 255;   // RED
+        *(outVector + 1) = ((255 - M) * (255 - K)) / 255;   // GREEN
+        *(outVector + 0) = ((255 - Y) * (255 - K)) / 255;   // BLUE
+        *(outVector + 3) = 255;
+
+        inVector += 4;
+        outVector += 4;
     }
 }
 
@@ -520,80 +543,63 @@ TiffReader::readIntoPfsFrame()
 QImage*
 TiffReader::readIntoQImage()
 {
+#ifdef QT_DEBUG
+    qDebug() << "TiffReader::readIntoQImage()";
+#endif
     assert(TypeOfData == BYTE);
 
-    // qDebug() << "TiffReader::readIntoQImage()";
-
     bool doTransform = false;
-    // LuminanceOptions luminance_opts;
-    // int camera_profile_opt = luminance_opts.getCameraProfile ();
 
     ScopedCmsProfile hIn( GetTIFFProfile(tif.data()) );
     ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
 
     ScopedCmsTransform xform;
 
-    //    if (camera_profile_opt == 1) // embedded
-    //    {
-    if (hIn)
+    if ( hIn && hsRGB )
     {
         qDebug () << "Found ICC profile";
 
         cmsUInt32Number cmsInputFormat = TYPE_CMYK_8;
-        cmsUInt32Number cmsOutputFormat = TYPE_RGBA_8;
-        cmsUInt32Number cmsIntent = INTENT_PERCEPTUAL;
+        const cmsUInt32Number cmsOutputFormat = TYPE_BGRA_8; // RGBA_8;
+        const cmsUInt32Number cmsIntent = INTENT_PERCEPTUAL;
 
         if (has_alpha && ColorSpace == RGB && TypeOfData == BYTE)
         {
             cmsInputFormat = TYPE_RGBA_8;
-            cmsOutputFormat = TYPE_RGBA_8;
         }
         else if (!has_alpha && ColorSpace == RGB && TypeOfData == BYTE)
         {
             cmsInputFormat = TYPE_RGB_8;
-            cmsOutputFormat = TYPE_RGBA_8;
         }
         else if (ColorSpace == CMYK && TypeOfData == BYTE)
         {
             cmsInputFormat = TYPE_CMYK_8;
-            cmsOutputFormat = TYPE_RGBA_8;
+        } else
+        {
+            throw std::runtime_error("TiffReader: Unsupported colorspace combination");
         }
 
-        xform.reset( cmsCreateTransform (hIn.data(), cmsInputFormat, hsRGB.data(), cmsOutputFormat, cmsIntent, 0) );
-        if ( xform ) doTransform = true;
+        xform.reset( cmsCreateTransform (hIn.data(), cmsInputFormat,
+                                         hsRGB.data(), cmsOutputFormat,
+                                         cmsIntent, 0) );
+        if ( xform )
+        {
+            doTransform = true;
+        }
+        else
+        {
+            doTransform = false;
+        }
     }
-#ifdef QT_DEBUG
     else
     {
+        doTransform = false;
+#ifdef QT_DEBUG
         qDebug () << "No embedded profile found";
-    }
 #endif
-//    }
-//    else if (camera_profile_opt == 2) // from file
-//    {
-//        QString profile_fname = luminance_opts.getCameraProfileFileName ();
-//        qDebug () << "Camera profile: " << profile_fname;
+    }
 
-//        if (!profile_fname.isEmpty ())
-//        {
-//            QByteArray ba( QFile::encodeName( profile_fname ) );
-
-//            hsRGB.reset( cmsCreate_sRGBProfile () );
-//            hIn.reset( cmsOpenProfileFromFile (ba.data (), "r") );
-
-//            if ( hIn )
-//            {
-//                if (ColorSpace == RGB && TypeOfData == BYTE)
-//                    xform.reset( cmsCreateTransform (hIn.data(), TYPE_RGBA_8, hsRGB.data(), TYPE_RGBA_8, INTENT_PERCEPTUAL, 0) );
-//                else if (ColorSpace == CMYK && TypeOfData == BYTE)
-//                    xform.reset( cmsCreateTransform (hIn.data(), TYPE_CMYK_8, hsRGB.data(), TYPE_RGBA_8, INTENT_PERCEPTUAL, 0) );
-
-//                if ( xform ) doTransform = true;
-//            }
-//        }
-//    }
-
-    QScopedPointer<QImage> toReturn( new QImage(width, height, QImage::Format_ARGB32) );
+    QScopedPointer<QImage> toReturn( new QImage(width, height, QImage::Format_RGB32) );
 
     //--- image length
     uint32 imagelength;
@@ -614,47 +620,53 @@ TiffReader::readIntoQImage()
     qDebug() << "Do Transform: " << doTransform;
 
     //--- read scan lines
-    for (uint y = 0; y < height; y++)
+    if ( doTransform )
     {
-        QRgb* qImageData = reinterpret_cast<QRgb*>(toReturn->scanLine(y));
-        uchar* pBuffer = buffer.data();
-
-        TIFFReadScanline(tif.data(), pBuffer, y);
-        if ( doTransform )
+        // color-converted branch!
+        for (uint y = 0; y < height; ++y)
         {
-            uchar* pBufferConverted = bufferConverted.data();
+            TIFFReadScanline(tif.data(), buffer.data(), y);
 
-            cmsDoTransform(xform.data(), pBuffer, pBufferConverted, width);
-            ::std::swap( pBuffer, pBufferConverted );
+            cmsDoTransform(xform.data(),
+                           buffer.data(),
+                           toReturn->scanLine(y), width);
         }
-        else if (!doTransform && ColorSpace == CMYK)
+    }
+    else
+    {
+        // no color-conversion
+        switch (ColorSpace)
         {
-            qDebug () << "Convert to RGB";
-
-            transform_to_rgb(pBuffer, pBuffer, scanlinesize, nSamples);
-        }
-
-        if ( doTransform )
+        case CMYK:
         {
-            // If I have the CMS transform, I always have 4 components as output
-            for (uint x = 0; x < width; x++)
+            for (uint y = 0; y < height; ++y)
             {
-                size_t index = (x << 2);
-                qImageData[x] = qRgba(pBuffer[index],
-                                      pBuffer[index + 1],
-                                      pBuffer[index + 2],
-                                      has_alpha ? pBuffer[index + 3] : 0xFF);
+                TIFFReadScanline(tif.data(), buffer.data(), y);
+
+                cmyk_to_bgra_qimage(buffer.data(),
+                                    toReturn->scanLine(y),
+                                    scanlinesize,
+                                    nSamples);
             }
-        }
-        else
+        } break;
+        case RGB:
         {
-            for (uint x = 0; x < width; x++)
+            for (uint y = 0; y < height; ++y)
             {
-                qImageData[x] = qRgba(pBuffer[(x * nSamples)],
-                                      pBuffer[(x * nSamples) + 1],
-                                      pBuffer[(x * nSamples) + 2],
-                                      has_alpha ? pBuffer[(x * nSamples) + 3] : 0xFF);
+                QRgb* qImageData = reinterpret_cast<QRgb*>(toReturn->scanLine(y));
+                TIFFReadScanline(tif.data(), buffer.data(), y);
+
+                // it's not really efficient, but I hope it doesn't get used
+                // too many times in a real world scenario!
+                for (uint x = 0; x < width; x++)
+                {
+                    qImageData[x] = qRgba(buffer[(x * nSamples)],
+                                          buffer[(x * nSamples) + 1],
+                                          buffer[(x * nSamples) + 2],
+                                          has_alpha ? buffer[(x * nSamples) + 3] : 0xFF);
+                }
             }
+        } break;
         }
     }
 
