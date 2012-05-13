@@ -391,7 +391,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>Processing...</source>
-        <translation>Stò processando...</translation>
+        <translation>Sto processando...</translation>
     </message>
     <message>
         <source>Start processing...</source>
@@ -1663,11 +1663,11 @@ i seguenti dati EXIF: 		&lt;ul&gt;&lt;li&gt;Velocità otturatore (secondi)&lt;/l
     </message>
     <message>
         <source>Aligning...</source>
-        <translation>Stò allineando...</translation>
+        <translation>Sto allineando...</translation>
     </message>
     <message>
         <source>Processing...</source>
-        <translation>Stò processando...</translation>
+        <translation>Sto processando...</translation>
     </message>
     <message>
         <source>Load a camera response curve file</source>
