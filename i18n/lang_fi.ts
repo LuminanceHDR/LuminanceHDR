@@ -110,7 +110,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Choose one of the creation predefined profiles. 
-See documentation for more informations.</source>
+See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -638,7 +638,7 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">Virhe: EV-arvojen annettu määrä poikkeaa syötettyjen tiedostojen määrästä.</translation>
     </message>
     <message>
-        <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
+        <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation type="unfinished">Virhe: Exif-tiedot puuttuvat kuvista ja EV-arvoja ei ole määrittety komentorivillä, poistutaan.</translation>
     </message>
     <message>
@@ -2511,7 +2511,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Syncronize viewers mode (fit, fill or 1:1).</source>
+        <source>Synchronize viewers mode (fit, fill or 1:1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

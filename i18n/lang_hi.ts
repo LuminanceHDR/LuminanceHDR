@@ -162,7 +162,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="143"/>
         <source>Choose one of the creation predefined profiles. 
-See documentation for more informations.</source>
+See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -728,7 +728,7 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="502"/>
-        <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
+        <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2943,7 +2943,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="833"/>
-        <source>Syncronize viewers mode (fit, fill or 1:1).</source>
+        <source>Synchronize viewers mode (fit, fill or 1:1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
