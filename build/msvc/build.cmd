@@ -172,35 +172,35 @@ IF NOT EXIST libjpeg (
 )
 
 
-IF NOT EXIST %TEMP_DIR%\lcms-1.19.VC10.x64x86.zip (
-	REM Custom download for having Visual Studio Solution with x64 support configured
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip qtpfsgui.sourceforge.net/win/lcms-1.19.VC10.x64x86.zip
-)
-
-IF NOT EXIST lcms-1.19 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip
-	
-	pushd lcms-1.19
-	devenv Projects\VC2008\lcms.sln /Upgrade
-	devenv Projects\VC2008\lcms.sln /build "%Configuration%|%Platform%"  /Project lcmsdll
-	copy Lib\MS\lcmsdll.lib bin\lcms.lib
-	popd
-)
-
-REM IF NOT EXIST %TEMP_DIR%\lcms2-2.3.zip (
-REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-2.3.zip http://sourceforge.net/projects/lcms/files/lcms/2.3/lcms2-2.3.zip/download
+REM IF NOT EXIST %TEMP_DIR%\lcms-1.19.VC10.x64x86.zip (
+REM 	REM Custom download for having Visual Studio Solution with x64 support configured
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip qtpfsgui.sourceforge.net/win/lcms-1.19.VC10.x64x86.zip
 REM )
-
-
-REM IF NOT EXIST lcms2-2.3 (
-REM 	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/Little-CMS.git lcms2-2.3
-REM 	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-2.3.zip
+REM 
+REM IF NOT EXIST lcms-1.19 (
+REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip
 REM 	
-REM 	pushd lcms2-2.3
-REM 	devenv Projects\VC2010\lcms2.sln /Upgrade
-REM 	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
+REM 	pushd lcms-1.19
+REM 	devenv Projects\VC2008\lcms.sln /Upgrade
+REM 	devenv Projects\VC2008\lcms.sln /build "%Configuration%|%Platform%"  /Project lcmsdll
+REM 	copy Lib\MS\lcmsdll.lib bin\lcms.lib
 REM 	popd
 REM )
+
+IF NOT EXIST %TEMP_DIR%\lcms2-2.3.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-2.3.zip http://sourceforge.net/projects/lcms/files/lcms/2.3/lcms2-2.3.zip/download
+)
+
+
+IF NOT EXIST lcms2-2.3 (
+	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/Little-CMS.git lcms2-2.3
+	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-2.3.zip
+	
+	pushd lcms2-2.3
+	devenv Projects\VC2010\lcms2.sln /Upgrade
+	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
+	popd
+)
 
 IF NOT EXIST %TEMP_DIR%\tiff-4.0.1.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.1.zip http://download.osgeo.org/libtiff/tiff-4.0.1.zip
@@ -430,13 +430,13 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	
 	copy libjpeg\*.h LuminanceHdrStuff\DEPs\include\libjpeg
 	
-	rem copy lcms2-2.3\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
-	rem copy lcms2-2.3\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
-	rem copy lcms2-2.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
+	copy lcms2-2.3\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
+	copy lcms2-2.3\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
+	copy lcms2-2.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
 
-	copy lcms-1.19\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
-	copy lcms-1.19\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
-	copy lcms-1.19\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
+	REM copy lcms-1.19\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
+	REM copy lcms-1.19\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
+	REM copy lcms-1.19\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
 	
 	copy exiv2-trunk\msvc64\include\* LuminanceHdrStuff\DEPs\include\exiv2
 	copy exiv2-trunk\msvc64\include\exiv2\* LuminanceHdrStuff\DEPs\include\exiv2
