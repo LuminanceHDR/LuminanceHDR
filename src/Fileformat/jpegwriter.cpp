@@ -38,7 +38,7 @@
 #include <stdio.h>
 #include <jpeglib.h>
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 #include <QTemporaryFile>
 // #include <io.h>
 #endif
@@ -222,7 +222,7 @@ bool JpegWriter::writeQImageToJpeg()
     // so I don't have to close it whenever it goes out of scope!
     QSharedPointer<FILE> outfile;
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
     QTemporaryFile output_temp_file;
 #else
     std::vector<char> outbuf;
@@ -242,7 +242,7 @@ bool JpegWriter::writeQImageToJpeg()
 	} 
     else                            // we are writing to memory buffer
     {
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
         if ( !output_temp_file.open() ) return false; // could not open the temporary file!
 
         QByteArray output_temp_filename = QFile::encodeName( output_temp_file.fileName() );
@@ -295,7 +295,7 @@ bool JpegWriter::writeQImageToJpeg()
 
     if ( m_fname.isEmpty() )
     {
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
         fflush(outfile.data());
         fseek(outfile.data(), 0, SEEK_END);
         m_filesize = ftell(outfile.data());

@@ -29,7 +29,7 @@
 #include <lcms.h>
 #include <stdio.h>
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 #include <QTemporaryFile>
 #endif
 
@@ -68,7 +68,7 @@ bool PngWriter::writeQImageToPng()
 
 	FILE *outfile;
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 	QTemporaryFile output_temp_file;
 #else
 	std::vector<char> outbuf;
@@ -88,7 +88,7 @@ bool PngWriter::writeQImageToPng()
 	} 
 	else							// we are writing to memory buffer
 	{
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 		if ( !output_temp_file.open() ) return false; // could not open the temporary file!
 
 		QByteArray output_temp_filename = QFile::encodeName( output_temp_file.fileName() );
@@ -180,7 +180,7 @@ bool PngWriter::writeQImageToPng()
 
 	if ( m_fname.isEmpty() )
 	{
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 		fflush(outfile);
 		fseek(outfile, 0, SEEK_END);
 		m_filesize = ftell(outfile);
