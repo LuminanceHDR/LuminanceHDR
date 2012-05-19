@@ -140,6 +140,8 @@ IF NOT EXIST exiv2-trunk (
 	rem set exiv2-compile=true
 )
 
+set exiv2-compile=true
+
 IF DEFINED exiv2-compile (
 	REM msvc64 is the right one for Win32 too
 	pushd exiv2-trunk\msvc64 		
