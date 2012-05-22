@@ -92,6 +92,7 @@ protected:
 
     TMOperator currentTmoOperator;
     TonemappingOptions *toneMappingOptions;
+	QList<TonemappingOptions *> toneMappingOptionsToDelete;
     QVector<int> sizes;
     void fillToneMappingOptions();
     void setupUndo();
