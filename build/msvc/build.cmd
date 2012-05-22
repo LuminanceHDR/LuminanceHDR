@@ -91,12 +91,12 @@ IF NOT EXIST %TEMP_DIR%\align_image_stack_%RawPlatform%.exe (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/align_image_stack_%RawPlatform%.exe qtpfsgui.sourceforge.net/win/align_image_stack_%RawPlatform%.exe
 )
 
-IF NOT EXIST %TEMP_DIR%\zlib125.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib125.zip http://prdownloads.sourceforge.net/libpng/zlib125.zip?download
+IF NOT EXIST %TEMP_DIR%\zlib127.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib127.zip http://zlib.net/zlib127.zip
 )
-IF NOT EXIST zlib-1.2.5 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib125.zip
-	pushd zlib-1.2.5\contrib\masmx64
+IF NOT EXIST zlib-1.2.7 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib127.zip
+	pushd zlib-1.2.7\contrib\masmx64
 	call bld_ml64.bat
 	cd ..\masmx86
 	call bld_ml32.bat
@@ -108,9 +108,9 @@ IF NOT EXIST zlib-1.2.5 (
 REM zlib copy for libpng
 IF NOT EXIST zlib (
 	mkdir zlib
-	copy zlib-1.2.5\*.h zlib
-	copy zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.lib zlib
-	copy zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.dll zlib
+	copy zlib-1.2.7\*.h zlib
+	copy zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.lib zlib
+	copy zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.dll zlib
 )
 
 IF NOT EXIST %TEMP_DIR%\lpng1510.zip (
@@ -123,22 +123,24 @@ IF NOT EXIST lpng1510 (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\expat-2.0.1.tar (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/expat-2.0.1.tar.gz http://sourceforge.net/projects/expat/files/expat/2.0.1/expat-2.0.1.tar.gz/download
-	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/expat-2.0.1.tar.gz
+IF NOT EXIST %TEMP_DIR%\expat-2.1.0.tar (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/expat-2.1.0.tar.gz http://sourceforge.net/projects/expat/files/expat/2.1.0/expat-2.1.0.tar.gz/download
+	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/expat-2.1.0.tar.gz
 )
-IF NOT EXIST expat-2.0.1 (
-	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/expat-2.0.1.tar
+IF NOT EXIST expat-2.1.0 (
+	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/expat-2.1.0.tar
 )
 
 
 IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
-	%CYGWIN_DIR%\bin\svn.exe co -r 2732 svn://dev.exiv2.org/svn/trunk exiv2-trunk
+	%CYGWIN_DIR%\bin\svn.exe co -r 2744 svn://dev.exiv2.org/svn/trunk exiv2-trunk
 ) ELSE (
 	rem svn update exiv2-trunk
 	rem set exiv2-compile=true
 )
+
+set exiv2-compile=true
 
 IF DEFINED exiv2-compile (
 	REM msvc64 is the right one for Win32 too
@@ -172,35 +174,35 @@ IF NOT EXIST libjpeg (
 )
 
 
-IF NOT EXIST %TEMP_DIR%\lcms-1.19.VC10.x64x86.zip (
-	REM Custom download for having Visual Studio Solution with x64 support configured
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip qtpfsgui.sourceforge.net/win/lcms-1.19.VC10.x64x86.zip
-)
-
-IF NOT EXIST lcms-1.19 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip
-	
-	pushd lcms-1.19
-	devenv Projects\VC2008\lcms.sln /Upgrade
-	devenv Projects\VC2008\lcms.sln /build "%Configuration%|%Platform%"  /Project lcmsdll
-	copy Lib\MS\lcmsdll.lib bin\lcms.lib
-	popd
-)
-
-REM IF NOT EXIST %TEMP_DIR%\lcms2-2.3.zip (
-REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-2.3.zip http://sourceforge.net/projects/lcms/files/lcms/2.3/lcms2-2.3.zip/download
+REM IF NOT EXIST %TEMP_DIR%\lcms-1.19.VC10.x64x86.zip (
+REM 	REM Custom download for having Visual Studio Solution with x64 support configured
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip qtpfsgui.sourceforge.net/win/lcms-1.19.VC10.x64x86.zip
 REM )
-
-
-REM IF NOT EXIST lcms2-2.3 (
-REM 	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/Little-CMS.git lcms2-2.3
-REM 	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-2.3.zip
+REM 
+REM IF NOT EXIST lcms-1.19 (
+REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms-1.19.VC10.x64x86.zip
 REM 	
-REM 	pushd lcms2-2.3
-REM 	devenv Projects\VC2010\lcms2.sln /Upgrade
-REM 	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
+REM 	pushd lcms-1.19
+REM 	devenv Projects\VC2008\lcms.sln /Upgrade
+REM 	devenv Projects\VC2008\lcms.sln /build "%Configuration%|%Platform%"  /Project lcmsdll
+REM 	copy Lib\MS\lcmsdll.lib bin\lcms.lib
 REM 	popd
 REM )
+
+IF NOT EXIST %TEMP_DIR%\lcms2-2.3.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-2.3.zip http://sourceforge.net/projects/lcms/files/lcms/2.3/lcms2-2.3.zip/download
+)
+
+
+IF NOT EXIST lcms2-2.3 (
+	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/Little-CMS.git lcms2-2.3
+	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-2.3.zip
+	
+	pushd lcms2-2.3
+	devenv Projects\VC2010\lcms2.sln /Upgrade
+	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
+	popd
+)
 
 IF NOT EXIST %TEMP_DIR%\tiff-4.0.1.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.1.zip http://download.osgeo.org/libtiff/tiff-4.0.1.zip
@@ -214,8 +216,8 @@ IF NOT EXIST tiff-4.0.1 (
 	echo.JPEG_INCLUDE=-I$^(JPEGDIR^)>> tiff-4.0.1\qtpfsgui_commands.in
 	echo.JPEG_LIB=$^(JPEGDIR^)\libjpeg.lib>> tiff-4.0.1\qtpfsgui_commands.in
 	echo.ZIP_SUPPORT=^1>> tiff-4.0.1\qtpfsgui_commands.in
-	echo.ZLIBDIR=..\..\zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%>> tiff-4.0.1\qtpfsgui_commands.in
-	echo.ZLIB_INCLUDE=-I..\..\zlib-1.2.5>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.ZLIBDIR=..\..\zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.ZLIB_INCLUDE=-I..\..\zlib-1.2.7>> tiff-4.0.1\qtpfsgui_commands.in
 	echo.ZLIB_LIB=$^(ZLIBDIR^)\zlibwapi.lib>> tiff-4.0.1\qtpfsgui_commands.in
 
 	pushd tiff-4.0.1
@@ -250,10 +252,10 @@ IF NOT EXIST LibRaw-0.14.6 (
 	rem echo.COPT_OPT="/openmp"> qtpfsgui_commands.in
 	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.6> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
-	rem echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-2.3\include">> qtpfsgui_commands.in
-	rem echo.LCMS_LIB="..\lcms2-2.3\bin\lcms2_dll.lib">> qtpfsgui_commands.in
-	echo.LCMS_DEF="/DUSE_LCMS /DLCMS_DLL /I..\lcms-1.19\include">> qtpfsgui_commands.in
-	echo.LCMS_LIB="..\lcms-1.19\bin\lcms.lib">> qtpfsgui_commands.in
+	echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-2.3\include">> qtpfsgui_commands.in
+	echo.LCMS_LIB="..\lcms2-2.3\bin\lcms2_dll.lib">> qtpfsgui_commands.in
+	rem echo.LCMS_DEF="/DUSE_LCMS /DLCMS_DLL /I..\lcms-1.19\include">> qtpfsgui_commands.in
+	rem echo.LCMS_LIB="..\lcms-1.19\bin\lcms.lib">> qtpfsgui_commands.in
 
 	nmake /f Makefile.msvc @qtpfsgui_commands.in clean
 	nmake /f Makefile.msvc @qtpfsgui_commands.in bin\libraw.dll
@@ -292,9 +294,9 @@ IF NOT EXIST OpenExrStuff (
 	)
 	popd
 	
-	copy zlib-1.2.5\*.h OpenExrStuff\Deploy\include
-	copy zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
-	copy zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
+	copy zlib-1.2.7\*.h OpenExrStuff\Deploy\include
+	copy zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
+	copy zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
 )
 	
 pushd OpenExrStuff\openexr-cvs
@@ -430,13 +432,13 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	
 	copy libjpeg\*.h LuminanceHdrStuff\DEPs\include\libjpeg
 	
-	rem copy lcms2-2.3\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
-	rem copy lcms2-2.3\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
-	rem copy lcms2-2.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
+	copy lcms2-2.3\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
+	copy lcms2-2.3\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
+	copy lcms2-2.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
 
-	copy lcms-1.19\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
-	copy lcms-1.19\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
-	copy lcms-1.19\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
+	REM copy lcms-1.19\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
+	REM copy lcms-1.19\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
+	REM copy lcms-1.19\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
 	
 	copy exiv2-trunk\msvc64\include\* LuminanceHdrStuff\DEPs\include\exiv2
 	copy exiv2-trunk\msvc64\include\exiv2\* LuminanceHdrStuff\DEPs\include\exiv2
@@ -520,6 +522,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd
+			ren LuminanceHdrStuff\qtpfsgui.build\%Configuration%\lcms2_DLL.dll lcms2.dll
 		)
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n\ (
 			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
