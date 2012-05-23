@@ -30,29 +30,17 @@
 
 #include <QObject>
 #include <QImage>
-#include <QScopedPointer>
 #include <tiffio.h>
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
 
-//! \brief Custom deleter for TIFF
-template<>
-struct QScopedPointerDeleter<TIFF>
-{
-    inline static
-    void cleanup(TIFF* p)
-    {
-        if ( p ) TIFFClose(p);
-    }
-};
-typedef QScopedPointer<TIFF> ScopedTiffHandler;
-
 class TiffReader : public QObject
 {
     Q_OBJECT
 
-    ScopedTiffHandler tif;
+    TIFF *tif;
+
     uint32 width;
     uint32 height;
 
@@ -104,7 +92,7 @@ class TiffWriter : public QObject
     Q_OBJECT
 
 private:
-    ScopedTiffHandler tif;
+	TIFF *tif;
 
     QImage *ldrimage;
     const quint16 *pixmap;
