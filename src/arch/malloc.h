@@ -25,5 +25,11 @@
 #if defined(_MSC_VER)
 	#include <malloc.h>
 #else
+#if defined(__i386__) || defined(__x86_64__)
 	#include <mm_malloc.h>
+#else
+	#define _mm_malloc(a,b)	malloc(a)
+	#define _mm_free(a)	free(a)
+	#include <stdlib.h>
+#endif
 #endif
