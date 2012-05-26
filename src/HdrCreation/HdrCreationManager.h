@@ -34,6 +34,7 @@
 #include "arch/math.h"
 #include "HdrCreation/createhdr.h"
 
+// Some other file expect this to be available
 const config_triple predef_confs[6]= {
 {TRIANGULAR, LINEAR,DEBEVEC,"",""},
 {TRIANGULAR, GAMMA, DEBEVEC,"",""},
@@ -49,13 +50,17 @@ public:
 	HdrCreationManager(bool = false);
 	~HdrCreationManager();
 
-    void setConfig(config_triple &);
+    void setConfig(const config_triple& cfg);
 
 	//LDR is a  8 bit format (jpeg, 8bit tiff, raw->8bit tiff)
 	//MDR is a 16 bit format (16bit tiff, raw->16bit tiff)
-	enum {LDR_INPUT_TYPE,MDR_INPUT_TYPE,UNKNOWN_INPUT_TYPE} inputType;
+    enum {
+        LDR_INPUT_TYPE = 0,
+        MDR_INPUT_TYPE = 1,
+        UNKNOWN_INPUT_TYPE = 2
+    } inputType;
 	//initialize internal structures before actually loading the files
-	void setFileList(QStringList &);
+    void setFileList(const QStringList&);
 	//load files listed in fileList in a threaded way
 	void loadInputFiles();
 	//clear lists used internally
@@ -88,27 +93,30 @@ public:
 	//the EV values cannot cover more than 20EV values
 	void checkEVvalues();
 	void makeSureLDRsHaveAlpha();
-	void applyShiftsToImageStack(QList< QPair<int,int> > HV_offsets);
-	void applyShiftsToMdrImageStack(QList< QPair<int,int> > HV_offsets);
-	void cropLDR (QRect ca);
-	void cropMDR (QRect ca);
+    void applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets);
+    void applyShiftsToMdrImageStack(const QList< QPair<int,int> >& HV_offsets);
+    void cropLDR(const QRect& ca);
+    void cropMDR(const QRect& ca);
 	void reset();
 	void remove(int index);
-	void setShift(int shift) { m_shift = shift; }
-	void saveMDRs(QString);
+    void setShift(int shift)
+    {
+        m_shift = shift;
+    }
+    void saveMDRs(const QString&);
 public slots:
 	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
 	void removeTempFiles();
 signals:
-	void finishedLoadingInputFiles(QStringList filesLackingExif);
-	void errorWhileLoading(QString message); //also for !valid size
+    void finishedLoadingInputFiles(const QStringList& filesLackingExif);
+    void errorWhileLoading(const QString& message); //also for !valid size
 
-	void fileLoaded(int index, QString fname, float expotime);
+    void fileLoaded(int index, const QString& fname, float expotime);
 
 	void finishedAligning(int);
 	void expotimeValueChanged(float,int);
 	void ais_failed(QProcess::ProcessError);
-	void aisDataReady(QByteArray data);
+    void aisDataReady(const QByteArray& data);
 
 	void maximumValue(int);
 	void nextstep(int);
@@ -117,57 +125,64 @@ signals:
 	void mdrSaved();
 
 private:
-	//List of input files (absolute pathnames)
+    // List of input files (absolute pathnames)
 	QStringList fileList;
-	//data structures that hold the input images' payload
-	QList<QImage*> ldrImagesList;  //ldr input
-	QList<QImage*> mdrImagesList;  //QImages rappresenting a PFS frame for editing tools
-	QList<QImage*> mdrImagesToRemove;  //QImages need to be deleted
-	QList<bool> tiffLdrList;  //tiff ldr input
-	Array2DList listmdrR,listmdrG,listmdrB; //mdr input
-	//if startedProcessing[i]==true, we started a thread for the i-th file
+    // data structures that hold the input images' payload
+    // ldr input
+    QList<QImage*> ldrImagesList;
+    // QImages rappresenting a PFS frame for editing tools
+    QList<QImage*> mdrImagesList;
+    //QImages need to be deleted
+    QList<QImage*> mdrImagesToRemove;
+    // QList<bool> tiffLdrList;  //tiff ldr input
+    Array2DList listmdrR;
+    Array2DList listmdrG;
+    Array2DList listmdrB; //mdr input
+    // if startedProcessing[i]==true, we started a thread for the i-th file
 	QList<bool> startedProcessing;
-	//time equivalent array (from exif data)
-	//float *expotimes;
+    // time equivalent array (from exif data)
+    // float *expotimes;
 	QVector<float> expotimes;
 
-	//Filled on every successful load and left untouched afterwards.
-	//Value emitted after all the loading has been completed
+    // Filled on every successful load and left untouched afterwards.
+    // Value emitted after all the loading has been completed
 	QStringList filesLackingExif;
-	//Filled when we have raw files as input.
-	//QStringList filesToRemove;
+    // Filled when we have raw files as input.
+    // QStringList filesToRemove;
 	QVector<QString>  filesToRemove;
-	//set to true as soon as we find out that we cannot load a file or when we find out that a file has a different width/height than the other previously loaded ones.
-	//This variable prevents "incoming" threads to do anything.
+    // set to true as soon as we find out that we cannot load a file or when we find out that a file has a different width/height than the other previously loaded ones.
+    // This variable prevents "incoming" threads to do anything.
 	bool loadingError;
 
-	//number of running threads at any given time
+    // number of running threads at any given time
 	int runningThreads;
-	//cumulative number of successfully loaded files
+    // cumulative number of successfully loaded files
 	int processedFiles;
-	//once a new LDR or MDR pops up, the slots call this function to perform some housekeeping
-	void newResult(int index, float expotime, QString);
 
     LuminanceOptions m_luminance_options;
 
-	//align_image_stack
+    // align_image_stack
 	QProcess *ais;
 
 	int m_shift;
 
-	bool ldrsHaveSameSize(int,int);
-	bool mdrsHaveSameSize(int,int);
-
-	int m_mdrWidth, m_mdrHeight;
+    int m_mdrWidth;
+    int m_mdrHeight;
 	
 	bool fromCommandLine;
+
+    // once a new LDR or MDR pops up, the slots call this function to perform some housekeeping
+    void newResult(int index, float expotime, const QString&);
+
+    bool ldrsHaveSameSize(int, int);
+    bool mdrsHaveSameSize(int, int);
 
 private slots:
 	void ais_finished(int,QProcess::ExitStatus);
 	void ais_failed_slot(QProcess::ProcessError);
-	void ldrReady(    QImage *, int, float, QString, bool);
-	void mdrReady(pfs::Frame *, int, float, QString);
-	void loadFailed(QString fname, int index);
+    void ldrReady(QImage*, int, float, const QString&, bool);
+    void mdrReady(pfs::Frame*, int, float, const QString&);
+    void loadFailed(const QString& fname, int index);
 	void readData();
 };
 #endif

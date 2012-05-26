@@ -198,13 +198,15 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   QString fname;
   QByteArray ba;
   
-  if (options->getCameraProfile() == 1)
+  fname = options->getCameraProfileFileName();
+
+  if (fname.isEmpty())
   {
+      qDebug() << "Camera profile: embedded";
       OUT.camera_profile = (char*)"embed";
   }
-  else if (options->getCameraProfile() == 2)
+  else 
   {
-      fname = options->getCameraProfileFileName();
       ba = QFile::encodeName( fname );
       OUT.camera_profile = ba.data();
       qDebug() << "Camera profile: " << fname;

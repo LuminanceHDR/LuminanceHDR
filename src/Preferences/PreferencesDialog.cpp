@@ -278,9 +278,7 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setRawAber2( m_Ui->blue_doubleSpinBox->value() );
 
 	// --- Color Management
-	luminance_options.setCameraProfile( m_Ui->camera_comboBox->currentIndex() );
-	if ( m_Ui->camera_comboBox->currentIndex() == 2) // Custom profile
-		luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
+	luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
 	luminance_options.setMonitorProfileFileName( m_Ui->monitor_lineEdit->text() );
 	luminance_options.setPrinterProfileFileName( m_Ui->printer_lineEdit->text() );
 
@@ -672,15 +670,7 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->blue_toolButton->setEnabled( luminance_options.value(KEY_BLUE_TOOLBUTTON).toBool());
     m_Ui->green_toolButton->setEnabled( luminance_options.value(KEY_GREEN_TOOLBUTTON).toBool());
 	
-	int index = luminance_options.getCameraProfile();
-	m_Ui->camera_comboBox->setCurrentIndex( index );
-	if (index == 2) { // custom profile
-		m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
-		m_Ui->camera_lineEdit->setEnabled(true);
-		m_Ui->camera_toolButton->setEnabled(true);
-	}
-	if (index != 0)
-		m_Ui->camera_toolButton_reset->setEnabled(true);
+	m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
 	m_Ui->monitor_lineEdit->setText( luminance_options.getMonitorProfileFileName() );
 	m_Ui->printer_lineEdit->setText( luminance_options.getPrinterProfileFileName() );
 }
@@ -703,13 +693,6 @@ void PreferencesDialog::enterWhatsThis()
 	QWhatsThis::enterWhatsThisMode();
 }
 
-void PreferencesDialog::on_camera_comboBox_currentIndexChanged(int i)
-{
-	m_Ui->camera_lineEdit->setEnabled(i == 2);
-	m_Ui->camera_toolButton->setEnabled(i == 2);
-	m_Ui->camera_toolButton_reset->setEnabled(i != 0);
-}
-
 void PreferencesDialog::on_camera_toolButton_clicked()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
@@ -719,14 +702,6 @@ void PreferencesDialog::on_camera_toolButton_clicked()
 	if (!fileName.isEmpty()) {
 		m_Ui->camera_lineEdit->setText(fileName);
 	}
-}
-
-void PreferencesDialog::on_camera_toolButton_reset_clicked()
-{
-	m_Ui->camera_comboBox->setCurrentIndex(0);
-	m_Ui->camera_lineEdit->setEnabled(false);
-	m_Ui->camera_toolButton->setEnabled(false);
-	m_Ui->camera_toolButton_reset->setEnabled(false);	
 }
 
 void PreferencesDialog::on_monitor_toolButton_clicked()
