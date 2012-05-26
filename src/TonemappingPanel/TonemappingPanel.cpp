@@ -195,6 +195,8 @@ TonemappingPanel::~TonemappingPanel()
     delete lightGang;
     delete pregammaGang;
 
+	qDeleteAll(toneMappingOptionsToDelete);
+
 	QSqlDatabase db = QSqlDatabase::database();
 	db.close();
 }
@@ -408,6 +410,7 @@ void TonemappingPanel::on_applyButton_clicked()
 void TonemappingPanel::fillToneMappingOptions()
 {	
 	toneMappingOptions = new TonemappingOptions;
+	toneMappingOptionsToDelete.push_back(toneMappingOptions);
     toneMappingOptions->origxsize = sizes[0];
     toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
     toneMappingOptions->pregamma = pregammaGang->v();

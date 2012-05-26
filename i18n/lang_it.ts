@@ -118,7 +118,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Choose one of the creation predefined profiles. 
-See documentation for more informations.</source>
+See documentation for more information.</source>
         <translation>Scegli uno dei profili predefiniti per la creazione degli HDR.
 Vedi la documentazione per maggiori informazioni.</translation>
     </message>
@@ -391,7 +391,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>Processing...</source>
-        <translation>Stò processando...</translation>
+        <translation>Sto processando...</translation>
     </message>
     <message>
         <source>Start processing...</source>
@@ -684,7 +684,7 @@ Continuare?</translation>
         <translation>Errore: Il numero di valori EV specificati e&apos; differente dal numero di file di input.</translation>
     </message>
     <message>
-        <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
+        <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation>Errore: Dati Exif mancanti nelle immagini e valori EV non specificati manualmente.</translation>
     </message>
     <message>
@@ -1663,11 +1663,11 @@ i seguenti dati EXIF: 		&lt;ul&gt;&lt;li&gt;Velocità otturatore (secondi)&lt;/l
     </message>
     <message>
         <source>Aligning...</source>
-        <translation>Stò allineando...</translation>
+        <translation>Sto allineando...</translation>
     </message>
     <message>
         <source>Processing...</source>
-        <translation>Stò processando...</translation>
+        <translation>Sto processando...</translation>
     </message>
     <message>
         <source>Load a camera response curve file</source>
@@ -2657,7 +2657,7 @@ p, li { white-space: pre-wrap; }
         <translation>Sincronizza i visualizzatori</translation>
     </message>
     <message>
-        <source>Syncronize viewers mode (fit, fill or 1:1).</source>
+        <source>Synchronize viewers mode (fit, fill or 1:1).</source>
         <translation>Modalità di sincronizza delle anteprima (adatta, riempi o 1:1).</translation>
     </message>
     <message>

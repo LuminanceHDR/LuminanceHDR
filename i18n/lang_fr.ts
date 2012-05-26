@@ -110,7 +110,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Choose one of the creation predefined profiles. 
-See documentation for more informations.</source>
+See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -633,7 +633,7 @@ Continue?</source>
         <translation type="unfinished">Erreur : le nombre de valeurs d&apos;exposition est différent du nombre de fichiers en entrée.</translation>
     </message>
     <message>
-        <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
+        <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation type="unfinished">Erreur : les données exif manquantes et les valeurs d&apos;exposition ne sont pas renseignées dans la ligne de commande, abandon.</translation>
     </message>
     <message>
@@ -2182,7 +2182,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Get verbose information about user interface elements</source>
-        <translation type="unfinished">Obtenir des informations détaillées sur les éléments de l&apos;interface graphique</translation>
+        <translation type="unfinished">Obtenir des information détaillées sur les éléments de l&apos;interface graphique</translation>
     </message>
     <message>
         <source>About &amp;Luminance HDR</source>
@@ -2190,11 +2190,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show information about Luminance HDR</source>
-        <translation type="unfinished">Afficher les informations à propos de Luminance HDR</translation>
+        <translation type="unfinished">Afficher les information à propos de Luminance HDR</translation>
     </message>
     <message>
         <source>Show information about Luminance HDR, its authors and contributors</source>
-        <translation type="unfinished">Afficher les informations à propos de Luminance HDR, ses auteurs et contributeurs</translation>
+        <translation type="unfinished">Afficher les information à propos de Luminance HDR, ses auteurs et contributeurs</translation>
     </message>
     <message>
         <source>Save HDR image &amp;preview...</source>
@@ -2410,11 +2410,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show information about Qt</source>
-        <translation type="unfinished">Afficher les informations sur Qt</translation>
+        <translation type="unfinished">Afficher les information sur Qt</translation>
     </message>
     <message>
         <source>Show information about Qt library that is used by Luminance</source>
-        <translation type="unfinished">Afficher les informations sur la librairie Qt utilisée par Luminance</translation>
+        <translation type="unfinished">Afficher les information sur la librairie Qt utilisée par Luminance</translation>
     </message>
     <message>
         <source>Text &amp;under Icons</source>
@@ -2521,7 +2521,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Syncronize viewers mode (fit, fill or 1:1).</source>
+        <source>Synchronize viewers mode (fit, fill or 1:1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

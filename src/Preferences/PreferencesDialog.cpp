@@ -57,6 +57,8 @@
 
 #ifdef WIN32
 	#define ICC_PATH "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+#elif defined __APPLE__
+	#define ICC_PATH "/Library/ColorSync/Profiles/"
 #else
 	#define ICC_PATH "/usr/share/color/icc"
 #endif
@@ -695,7 +697,7 @@ void PreferencesDialog::on_camera_toolButton_clicked()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
 		ICC_PATH,
-		tr("Color profile (*.icc)")
+		tr("Color profile (*.icc *.ICC *.icm *.ICM)")
 	);
 	if (!fileName.isEmpty()) {
 		m_Ui->camera_lineEdit->setText(fileName);

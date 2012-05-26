@@ -110,7 +110,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Choose one of the creation predefined profiles. 
-See documentation for more informations.</source>
+See documentation for more information.</source>
         <translation type="unfinished">Alege unul dinte profilurile predefinite.
 Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
@@ -654,7 +654,7 @@ Continue?</source>
         <translation type="unfinished">Eroare: Numărul de valori EV specificat este diferit de numărul de fișiere sursă.</translation>
     </message>
     <message>
-        <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
+        <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation type="unfinished">Eroare: Informațiile Exif lipsesc din imagini și valorile EV nu sunt specificate în linia de comandă, renunțând.</translation>
     </message>
     <message>
@@ -2467,7 +2467,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Blochează Vizualizatori</translation>
     </message>
     <message>
-        <source>Syncronize viewers mode (fit, fill or 1:1).</source>
+        <source>Synchronize viewers mode (fit, fill or 1:1).</source>
         <translation type="unfinished">Sincronizează vizualizatori - mod (fit, fill ori 1:1).</translation>
     </message>
     <message>

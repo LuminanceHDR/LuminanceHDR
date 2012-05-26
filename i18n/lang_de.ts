@@ -110,7 +110,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Choose one of the creation predefined profiles. 
-See documentation for more informations.</source>
+See documentation for more information.</source>
         <translation>Eines der vordefinierten Profile wählen. 
 In der Dokumentation findest du weitere Informationen.</translation>
     </message>
@@ -576,7 +576,7 @@ Fortfahren?</translation>
         <translation>Fehler: Die Anzahl der angegebenen EV-Werte unterscheidet sich von der Anzahl der Quelldateien.</translation>
     </message>
     <message>
-        <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
+        <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation>Fehler: In den Bildern sind keine EXIF-Daten vorhanden und in der Kommandozeile wurden keine EV-Werte angegeben. Breche ab.</translation>
     </message>
     <message>
@@ -2163,7 +2163,7 @@ p, li { white-space: pre-wrap; }
         <translation>Ansicht angleichen</translation>
     </message>
     <message>
-        <source>Syncronize viewers mode (fit, fill or 1:1).</source>
+        <source>Synchronize viewers mode (fit, fill or 1:1).</source>
         <translation>Ansicht synchronisieren (anpassen, füllen, 1:1).</translation>
     </message>
     <message>

@@ -55,7 +55,7 @@ protected slots:
 	void on_startButton_clicked();
 	void batch_hdr();
 	void align(QStringList);
-	void create_hdr();
+	void create_hdr(int);
 	void error_while_loading(QString);
 	void writeAisData(QByteArray);
 	void check_start_button();

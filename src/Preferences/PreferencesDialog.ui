@@ -279,77 +279,152 @@
              </property>
              <item>
               <property name="text">
-               <string>Czech</string>
+               <string notr="true">český</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/CZEC0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Chinese</string>
+               <string notr="true">中文</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/CHIN0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>English</string>
+               <string notr="true">English</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/UNKG0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Finnish</string>
+               <string notr="true">Suomi</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/FINL0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>French</string>
+               <string notr="true">Français</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/FRAN0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>German</string>
+               <string notr="true">Deutsch</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/GERM0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Hindi</string>
+               <string notr="true">हिंदी</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/INDA0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Hungarian</string>
+               <string notr="true">Magyar</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/HUNG0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Indonesian</string>
+               <string notr="true">Indonesia</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/INDN0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Italian</string>
+               <string notr="true">Italiano</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/ITAL0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Polish</string>
+               <string notr="true">Polski</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/POLA0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Romanian</string>
+               <string notr="true">Română</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/RMNA0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Russian</string>
+               <string notr="true">Русский</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/RUSS0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Spanish</string>
+               <string notr="true">Español</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/SPAN0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Turkish</string>
+               <string notr="true">Türk</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/TURK0001.PNG</normalon>
+               </iconset>
               </property>
              </item>
             </widget>

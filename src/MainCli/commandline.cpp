@@ -499,7 +499,7 @@ void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLac
 {
     if (filesLackingExif.size()!=0 && ev.isEmpty())
     {
-        printErrorAndExit(tr("Error: Exif data missing in images and EV values not specifed on the commandline, bailing out."));
+        printErrorAndExit(tr("Error: Exif data missing in images and EV values not specified on the commandline, bailing out."));
     }
     if (!ev.isEmpty())
     {

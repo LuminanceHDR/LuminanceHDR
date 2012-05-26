@@ -187,7 +187,6 @@ LdrViewer::~LdrViewer()
 #ifdef QT_DEBUG
     qDebug() << "LdrViewer::~LdrViewer()";
 #endif
-	delete mTonemappingOptions;
 }
 
 void LdrViewer::retranslateUi()

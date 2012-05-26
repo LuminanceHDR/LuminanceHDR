@@ -141,7 +141,7 @@
                <widget class="QComboBox" name="profileComboBox">
                 <property name="toolTip">
                  <string>Choose one of the creation predefined profiles. 
-See documentation for more informations.</string>
+See documentation for more information.</string>
                 </property>
                 <property name="currentIndex">
                  <number>0</number>

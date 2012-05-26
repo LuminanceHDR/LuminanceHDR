@@ -830,7 +830,7 @@
     <string>Lock Viewers</string>
    </property>
    <property name="toolTip">
-    <string>Syncronize viewers mode (fit, fill or 1:1).</string>
+    <string>Synchronize viewers mode (fit, fill or 1:1).</string>
    </property>
    <property name="whatsThis">
     <string>Lock the images for sync view</string>
