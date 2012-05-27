@@ -581,20 +581,22 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-    try {
-        HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(g_v);
 
+    if (!g_v->isHDR()) return;
+    try
+    {
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
-        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + hdr_v->getFileNamePostFix() + ".jpg", this);
+        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + g_v->getFileNamePostFix() + ".jpg", this);
 
         if ( outfname.isEmpty() ) return;
 
         QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
-                                  Q_ARG(GenericViewer*, hdr_v),
+                                  Q_ARG(GenericViewer*, g_v),
                                   Q_ARG(QString, outfname),
                                   Q_ARG(int, 100));
-    } catch (...)
+    }
+    catch (...)
     {
         return;
     }
@@ -613,7 +615,7 @@ void MainWindow::updateActions( int w )
     updateMagnificationButtons(g_v); // g_v ? g_v : 0
 
     m_Ui->fileSaveAsAction->setEnabled(hasImage);
-    m_Ui->actionSave_Hdr_Preview->setEnabled(hasImage);
+    m_Ui->actionSave_Hdr_Preview->setEnabled(hasImage && isHdr);
     m_Ui->fileSaveAllAction->setEnabled(hasImage && curr_num_ldr_open >= 2);
 
     // Histogram
