@@ -1,7 +1,6 @@
 SET(FILES_UI
 ${CMAKE_CURRENT_SOURCE_DIR}/SavingParametersDialog.ui
-${CMAKE_CURRENT_SOURCE_DIR}/TonemappingPanel.ui
-${CMAKE_CURRENT_SOURCE_DIR}/TonemappingWarnDialog.ui)
+${CMAKE_CURRENT_SOURCE_DIR}/TonemappingPanel.ui)
 SET(FILES_H
 ${CMAKE_CURRENT_SOURCE_DIR}/SavingParametersDialog.h
 ${CMAKE_CURRENT_SOURCE_DIR}/TMOProgressIndicator.h

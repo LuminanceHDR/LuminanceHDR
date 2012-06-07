@@ -1,7 +1,8 @@
-/**
- * This file is a part of LuminanceHDR package.
+/*
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2010 Elizabeth Oldham
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,45 +20,51 @@
  * ----------------------------------------------------------------------
  *
  * @author Elizabeth Oldham <bethatthehug@users.sourceforge.net>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *  Refactoring
+ *
  */
 
-#include <QFileDialog>
-#include <QWhatsThis>
-#include <QMessageBox>
+#include <QDebug>
 
-#include "Common/config.h"
 #include "TonemappingWarnDialog.h"
-#include "ui_TonemappingWarnDialog.h"
+#include "Common/LuminanceOptions.h"
 
 TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p):
-    QDialog(p),
-    yes(false),
-    m_Ui(new Ui::TonemappingWarningDialog)
+    UMessageBox(p),
+    m_showAgainCheckBox(new QCheckBox( tr("Ask again"), p ))
 {
-    m_Ui->setupUi(this);
+    this->setText( tr("Fattal Warning") );
+    this->setInformativeText( tr("This tonemapping operator depends on the size of the input "\
+                                 " image. Applying this operator on the full size image will "\
+                                 "most probably result in a different image. "\
+                                 "\n\nDo you want to continue?") );
+    this->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    this->setDefaultButton(QMessageBox::No);
+    this->setIcon(QMessageBox::Warning);
 
-    m_Ui->plainText->setPlainText(tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"));
+    QGridLayout* layout = reinterpret_cast<QGridLayout*>(this->layout());
 
-    m_Ui->checkBoxAskAgain->setChecked(luminance_options.isShowFattalWarning());
+    m_showAgainCheckBox->setChecked( LuminanceOptions().isShowFattalWarning() );
 
-    connect(m_Ui->buttonBox,SIGNAL(accepted()),this,SLOT(accepted()));
+    // fix this to display correctly the checkbox
+    layout->addWidget(m_showAgainCheckBox,
+                      layout->rowCount()-3,
+                      layout->columnCount()-1);
+
+    connect(m_showAgainCheckBox, SIGNAL(clicked(bool)),
+            this, SLOT(checkBoxChecked(bool)));
 }
-
-void TonemappingWarningDialog::accepted()
-{
-    luminance_options.setShowFattalWarning( m_Ui->checkBoxAskAgain->isChecked() );
-
-    accept();
-
-    yes = true;
-}
-
-bool TonemappingWarningDialog::wasAccepted()
-{
-    return (yes);
-}
-
 
 TonemappingWarningDialog::~TonemappingWarningDialog()
+{}
+
+void TonemappingWarningDialog::checkBoxChecked(bool checked)
 {
+#ifdef QT_DEBUG
+    qDebug() << "Clicked: " << checked;
+#endif
+
+    LuminanceOptions().setShowFattalWarning(checked);
 }
+

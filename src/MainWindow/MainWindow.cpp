@@ -1383,9 +1383,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         {
             TonemappingWarningDialog tonemapping_warning_dialog(this);
 
-            tonemapping_warning_dialog.exec();
-
-            if ( !tonemapping_warning_dialog.wasAccepted() ) return;
+            if ( QMessageBox::No ==  tonemapping_warning_dialog.exec() ) return;
         }
     }
 

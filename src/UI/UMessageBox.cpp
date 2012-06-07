@@ -40,9 +40,8 @@ const int UMESSAGEBOX_WIDTH = 450; // pixel
 
 void UMessageBox::init()
 {
-    m_horizontalSpacer = new QSpacerItem(UMESSAGEBOX_WIDTH, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    m_layout = (QGridLayout*)this->layout();
-    m_layout->addItem(m_horizontalSpacer, m_layout->rowCount(), 0, 1, m_layout->columnCount());
+    QGridLayout* layout = reinterpret_cast<QGridLayout*>(this->layout());
+    layout->addItem(m_horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
 
     this->setWindowTitle("Luminance HDR "LUMINANCEVERSION);
 #ifdef Q_WS_MAC
@@ -50,24 +49,39 @@ void UMessageBox::init()
 #endif
 }
 
-UMessageBox::UMessageBox(QWidget *parent) : QMessageBox(parent)
+UMessageBox::UMessageBox(QWidget *parent) :
+    QMessageBox(parent),
+    m_horizontalSpacer(new QSpacerItem(UMESSAGEBOX_WIDTH,
+                                       0,
+                                       QSizePolicy::Minimum,
+                                       QSizePolicy::Expanding))
 {
     init();
 }
 
-UMessageBox::UMessageBox(const QString &title, const QString &text, Icon icon,
-             int button0, int button1, int button2,
-             QWidget *parent,
-             Qt::WindowFlags f) :
-QMessageBox(title, text, icon, button0, button1, button2, parent, f)
+UMessageBox::~UMessageBox()
+{}
+
+UMessageBox::UMessageBox(const QString &title,
+                         const QString &text, Icon icon,
+                         int button0,
+                         int button1,
+                         int button2,
+                         QWidget *parent,
+                         Qt::WindowFlags f) :
+    QMessageBox(title, text, icon, button0, button1, button2, parent, f),
+    m_horizontalSpacer(new QSpacerItem(UMESSAGEBOX_WIDTH,
+                                       0,
+                                       QSizePolicy::Minimum,
+                                       QSizePolicy::Expanding))
 {
     init();
 }
 
-void UMessageBox::showEvent(QShowEvent *event)
-{
-  QMessageBox::showEvent(event);
-}
+//void UMessageBox::showEvent(QShowEvent *event)
+//{
+//    QMessageBox::showEvent(event);
+//}
 
 void UMessageBox::about(QWidget* parent)
 {
