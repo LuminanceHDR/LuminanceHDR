@@ -1376,27 +1376,26 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     qDebug() << "Start Tone Mapping";
 #endif
 
-    if ( opts->tmoperator == fattal && luminance_options.isShowFattalWarning() )
+    // Warning when using size dependent TMOs with smaller sizes
+    if ( opts->tmoperator == fattal &&
+         opts->xsize != opts->origxsize &&
+         luminance_options.isShowFattalWarning() )
     {
-        // Warning when using size dependent TMOs with smaller sizes
-        if ( opts->xsize != opts->origxsize )
-        {
-            TonemappingWarningDialog tonemappingWarningDialog(this);
+        TonemappingWarningDialog tonemappingWarningDialog(this);
 
-            switch ( tonemappingWarningDialog.exec() )
-            {
-            case QMessageBox::Yes :
-            {} break;
-            case QMessageBox::YesAll :
-            {
-                luminance_options.setShowFattalWarning(false);
-            } break;
-            case QMessageBox::No :
-            default:
-            {
-                return;
-            }
-            }
+        switch ( tonemappingWarningDialog.exec() )
+        {
+        case QMessageBox::Yes :
+        {} break;
+        case QMessageBox::YesAll :
+        {
+            luminance_options.setShowFattalWarning(false);
+        } break;
+        case QMessageBox::No :
+        default:
+        {
+            return;
+        }
         }
     }
 
