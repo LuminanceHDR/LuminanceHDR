@@ -1381,9 +1381,22 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         // Warning when using size dependent TMOs with smaller sizes
         if ( opts->xsize != opts->origxsize )
         {
-            TonemappingWarningDialog tonemapping_warning_dialog(this);
+            TonemappingWarningDialog tonemappingWarningDialog(this);
 
-            if ( QMessageBox::No ==  tonemapping_warning_dialog.exec() ) return;
+            switch ( tonemappingWarningDialog.exec() )
+            {
+            case QMessageBox::Yes :
+            {} break;
+            case QMessageBox::YesAll :
+            {
+                luminance_options.setShowFattalWarning(false);
+            } break;
+            case QMessageBox::No :
+            default:
+            {
+                return;
+            }
+            }
         }
     }
 

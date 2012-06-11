@@ -37,12 +37,6 @@ class TonemappingWarningDialog : public UMessageBox
 public:
     TonemappingWarningDialog(QWidget *p = 0);
     ~TonemappingWarningDialog();
-
-private:
-    QCheckBox* m_showAgainCheckBox;
-
-private slots:
-    void checkBoxChecked(bool);
 };
 
 #endif

@@ -31,40 +31,18 @@
 #include "Common/LuminanceOptions.h"
 
 TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p):
-    UMessageBox(p),
-    m_showAgainCheckBox(new QCheckBox( tr("Ask again"), p ))
+    UMessageBox(p)
 {
     this->setText( tr("Fattal Warning") );
     this->setInformativeText( tr("This tonemapping operator depends on the size of the input "\
                                  " image. Applying this operator on the full size image will "\
                                  "most probably result in a different image. "\
                                  "\n\nDo you want to continue?") );
-    this->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    this->setStandardButtons(QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No);
     this->setDefaultButton(QMessageBox::No);
     this->setIcon(QMessageBox::Warning);
-
-    QGridLayout* layout = reinterpret_cast<QGridLayout*>(this->layout());
-
-    m_showAgainCheckBox->setChecked( LuminanceOptions().isShowFattalWarning() );
-
-    // fix this to display correctly the checkbox
-    layout->addWidget(m_showAgainCheckBox,
-                      layout->rowCount()-3,
-                      layout->columnCount()-1);
-
-    connect(m_showAgainCheckBox, SIGNAL(clicked(bool)),
-            this, SLOT(checkBoxChecked(bool)));
 }
 
 TonemappingWarningDialog::~TonemappingWarningDialog()
 {}
-
-void TonemappingWarningDialog::checkBoxChecked(bool checked)
-{
-#ifdef QT_DEBUG
-    qDebug() << "Clicked: " << checked;
-#endif
-
-    LuminanceOptions().setShowFattalWarning(checked);
-}
 
