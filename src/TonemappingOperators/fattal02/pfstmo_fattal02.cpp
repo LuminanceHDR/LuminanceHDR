@@ -39,13 +39,16 @@
 #include "Libpfs/frame.h"
 #include "Common/ProgressHelper.h"
 
-void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal, ProgressHelper *ph)
+void pfstmo_fattal02(pfs::Frame* frame,
+                     float opt_alpha,
+                     float opt_beta,
+                     float opt_saturation,
+                     float opt_noise,
+                     bool newfattal,
+                     bool fftsolver,
+                     ProgressHelper *ph)
 {  
   //--- default tone mapping parameters;
-  //float opt_alpha = 1.0f;
-  //float opt_beta = 0.9f;
-  //float opt_saturation=0.8f;
-  //float opt_noise = -1.0f; // not set!
   
   // adjust noise floor if not set by user
   if ( opt_noise <= 0.0f )
@@ -65,7 +68,6 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
   frame->getTags()->setString("LUMINANCE", "RELATIVE");
   //---
   
-  
   if ( Y==NULL || X==NULL || Z==NULL )
   {
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
@@ -79,8 +81,10 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
   int w = Y->getWidth();
   int h = Y->getHeight();
   
-  pfs::Array2D* L = new pfs::Array2D(w,h);
-  tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, newfattal, ph);
+  pfs::Array2D L(w,h);
+  tmo_fattal02(w, h, Y->getRawData(), L.getRawData(),
+               opt_alpha, opt_beta, opt_noise, newfattal, fftsolver,
+               ph);
 
   if ( !ph->isTerminationRequested() )
   {
@@ -88,14 +92,12 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
     {
       for( int y=0 ; y<h ; y++ )
       {
-        (*Xr)(x,y) = powf( (*Xr)(x,y)/(*Yr)(x,y), opt_saturation ) * (*L)(x,y);
-        (*Zr)(x,y) = powf( (*Zr)(x,y)/(*Yr)(x,y), opt_saturation ) * (*L)(x,y);
-        (*Yr)(x,y) = (*L)(x,y);
+        (*Xr)(x,y) = powf( (*Xr)(x,y)/(*Yr)(x,y), opt_saturation ) * L(x,y);
+        (*Zr)(x,y) = powf( (*Zr)(x,y)/(*Yr)(x,y), opt_saturation ) * L(x,y);
+        (*Yr)(x,y) = L(x,y);
       }
     }
     
     ph->newValue( 100 );
   }
-  
-  delete L;
 }

@@ -324,18 +324,21 @@ static void findMaxMinPercentile(pfs::Array2D* I,
 }
 
 //--------------------------------------------------------------------
-
-void tmo_fattal02(unsigned int width, unsigned int height,
-                  const float* nY, float* nL, 
-                  float alfa, float beta, float noise, bool newfattal, 
+void tmo_fattal02(unsigned int width,
+                  unsigned int height,
+                  const float* nY,
+                  float* nL,
+                  float alfa,
+                  float beta,
+                  float noise,
+                  bool newfattal,
+                  bool fftsolver,
                   ProgressHelper *ph)
 {
-
-  bool fftsolver=true;
-  float black_point=0.1;
-  float white_point=0.5;
-  float gamma=0.8;
-  int detail_level=3;
+    static const float black_point = 0.1f;
+    static const float white_point = 0.5f;
+    static const float gamma = 0.8f;
+    static const int   detail_level = 3;
 
   ph->newValue(2);
   if (ph->isTerminationRequested()) return;
@@ -347,8 +350,10 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   // quality but I'm only applying this if the newly implemented fft solver
   // is used in order not to change behaviour of the old version
   // TODO: best let the user decide this value
-  if(fftsolver)
+  if (fftsolver)
+  {
      MSIZE=8;
+  }
 	
   int size = width*height;
   unsigned int x,y;
@@ -365,7 +370,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   pfs::Array2D* H = new pfs::Array2D(width, height);
 //#pragma omp parallel for private(i) shared(H, Y, maxLum)
   for( i=0 ; i<size ; i++ )
-    (*H)(i) = log( 100.0f*(*Y)(i)/maxLum + 1e-4 );
+    (*H)(i) = logf( 100.0f*(*Y)(i)/maxLum + 1e-4 );
   delete Y;
   ph->newValue(4); 
 

@@ -225,7 +225,7 @@
            <enum>QFrame::Plain</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page_mantiuk06">
            <property name="sizePolicy">
@@ -1165,31 +1165,6 @@ Luminace Level</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="1">
-               <widget class="QCheckBox" name="oldFattalCheckBox">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>28</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>28</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Version Pre 1.8.4</string>
-                </property>
-               </widget>
-              </item>
               <item row="5" column="1">
                <spacer name="verticalSpacer_5">
                 <property name="orientation">
@@ -1202,6 +1177,22 @@ Luminace Level</string>
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item row="4" column="1">
+               <widget class="QCheckBox" name="fftVersionCheckBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>28</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Version 2.3.0 (FFT)</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -3417,7 +3408,6 @@ Luminace Level</string>
   <tabstop>saturation2dsb</tabstop>
   <tabstop>noiseSlider</tabstop>
   <tabstop>noisedsb</tabstop>
-  <tabstop>oldFattalCheckBox</tabstop>
   <tabstop>biasSlider</tabstop>
   <tabstop>biasdsb</tabstop>
   <tabstop>baseSlider</tabstop>

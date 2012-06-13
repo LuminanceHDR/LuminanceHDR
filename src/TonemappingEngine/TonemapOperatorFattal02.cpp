@@ -54,6 +54,7 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
                     opts->operator_options.fattaloptions.color,
                     opts->operator_options.fattaloptions.noiseredux,
                     opts->operator_options.fattaloptions.newfattal,
+                    opts->operator_options.fattaloptions.fftsolver,
                     &ph);
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),

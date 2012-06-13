@@ -50,6 +50,10 @@ class ProgressHelper;
  * @param noise gradient level of noise (extra parameter)
  */
 
-void tmo_fattal02(unsigned int width, unsigned int height, const float* Y, float* L, float alfa, float beta, float noise, bool newfattal, ProgressHelper *ph);
+void tmo_fattal02(unsigned int width, unsigned int height,
+                  const float* Y, float* L,
+                  float alfa, float beta,
+                  float noise, bool newfattal, bool fftsolver,
+                  ProgressHelper *ph);
 
 #endif
