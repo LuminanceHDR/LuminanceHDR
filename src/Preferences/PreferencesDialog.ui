@@ -427,6 +427,16 @@
                </iconset>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string notr="true">slovenský</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/flags/images/SVKA0001.PNG</normalon>
+               </iconset>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="1" column="0">
