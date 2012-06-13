@@ -28,6 +28,8 @@
  *
  */
 
+#include <iostream>
+
 #include "TonemappingEngine/TonemapOperatorFattal02.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
@@ -48,12 +50,28 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
     pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
+    float ratio = opts->origxsize / opts->xsize;
+    int detail_level = 0;
+    if ( ratio < 2 )
+        detail_level = 3;
+    else if ( ratio < 4 )
+        detail_level = 2;
+    else if ( ratio < 8 )
+        detail_level = 1;
+    else
+        detail_level = 0;
+
+    std::cout << "RATIO = " << ratio << ", ";
+    std::cout << "DETAIL_LEVEL = " << detail_level << std::endl;
+
     pfstmo_fattal02(workingframe,
                     opts->operator_options.fattaloptions.alpha,
                     opts->operator_options.fattaloptions.beta,
                     opts->operator_options.fattaloptions.color,
                     opts->operator_options.fattaloptions.noiseredux,
                     opts->operator_options.fattaloptions.newfattal,
+                    opts->operator_options.fattaloptions.fftsolver,
+                    detail_level,
                     &ph);
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),

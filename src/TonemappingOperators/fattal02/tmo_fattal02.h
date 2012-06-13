@@ -33,6 +33,10 @@
 #ifndef TMO_FATTAL02_H
 #define TMO_FATTAL02_H
 
+namespace pfs {
+class Array2D;
+}
+
 class ProgressHelper;
 
 /**
@@ -50,6 +54,13 @@ class ProgressHelper;
  * @param noise gradient level of noise (extra parameter)
  */
 
-void tmo_fattal02(unsigned int width, unsigned int height, const float* Y, float* L, float alfa, float beta, float noise, bool newfattal, ProgressHelper *ph);
+void tmo_fattal02(unsigned int width, unsigned int height,
+                  //const float* Y, float* L,
+                  const pfs::Array2D& Y,
+                  pfs::Array2D& L,
+                  float alfa, float beta,
+                  float noise, bool newfattal,
+                  bool fftsolver, int detail_level,
+                  ProgressHelper *ph);
 
 #endif
