@@ -225,7 +225,7 @@
            <enum>QFrame::Plain</enum>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_mantiuk06">
            <property name="sizePolicy">
@@ -898,6 +898,9 @@ Luminace Level</string>
               </item>
               <item row="0" column="1">
                <widget class="QSlider" name="alphaSlider">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
@@ -911,6 +914,9 @@ Luminace Level</string>
               </item>
               <item row="0" column="2">
                <widget class="QDoubleSpinBox" name="alphadsb">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>60</width>

@@ -90,6 +90,9 @@ TonemappingPanel::TonemappingPanel(QWidget *parent):
     // oldFattalGang = new Gang(NULL,NULL, m_Ui->oldFattalCheckBox);
     fftSolverGang = new Gang(NULL, NULL,m_Ui->fftVersionCheckBox);
 
+    connect(m_Ui->fftVersionCheckBox, SIGNAL(toggled(bool)), m_Ui->alphaSlider, SLOT(setDisabled(bool)));
+    connect(m_Ui->fftVersionCheckBox, SIGNAL(toggled(bool)), m_Ui->alphadsb, SLOT(setDisabled(bool)));
+
     // ashikhmin02
     contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
 
