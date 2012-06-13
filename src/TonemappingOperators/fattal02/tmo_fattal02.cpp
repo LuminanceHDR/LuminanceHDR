@@ -326,24 +326,27 @@ static void findMaxMinPercentile(pfs::Array2D* I,
 //--------------------------------------------------------------------
 void tmo_fattal02(unsigned int width,
                   unsigned int height,
-                  const float* nY,
-                  float* nL,
+                  const pfs::Array2D& Y,
+                  //const float* nY,
+                  pfs::Array2D& L,
+                  //float* nL,
                   float alfa,
                   float beta,
                   float noise,
                   bool newfattal,
                   bool fftsolver,
+                  int detail_level,
                   ProgressHelper *ph)
 {
     static const float black_point = 0.1f;
     static const float white_point = 0.5f;
     static const float gamma = 0.8f;
-    static const int   detail_level = 3;
+    // static const int   detail_level = 3;
+    if ( detail_level < 0 ) detail_level = 0;
+    if ( detail_level > 3 ) detail_level = 3;
 
   ph->newValue(2);
   if (ph->isTerminationRequested()) return;
-
-  const pfs::Array2D* Y = new pfs::Array2D(width, height, const_cast<float*>(nY));
 
   int MSIZE = 32;         // minimum size of gaussian pyramid
   // I believe a smaller value than 32 results in slightly better overall
@@ -352,32 +355,38 @@ void tmo_fattal02(unsigned int width,
   // TODO: best let the user decide this value
   if (fftsolver)
   {
-     MSIZE=8;
+     MSIZE = 8;
+  }
+
+  if (fftsolver)
+  {
+    alfa = 1.f;
   }
 	
   int size = width*height;
-  unsigned int x,y;
-  int i, k;
+  // unsigned int x,y;
+  // int i, k;
 
   // find max & min values, normalize to range 0..100 and take logarithm
-  float minLum = (*Y)(0,0);
-  float maxLum = (*Y)(0,0);
-  for( i=0 ; i<size ; i++ )
+  float minLum = Y(0,0);
+  float maxLum = Y(0,0);
+  for ( int i=0 ; i<size ; i++ )
   {
-    minLum = ( (*Y)(i)<minLum ) ? (*Y)(i) : minLum;
-    maxLum = ( (*Y)(i)>maxLum ) ? (*Y)(i) : maxLum;
+      minLum = ( Y(i)<minLum ) ? Y(i) : minLum;
+      maxLum = ( Y(i)>maxLum ) ? Y(i) : maxLum;
   }
   pfs::Array2D* H = new pfs::Array2D(width, height);
-//#pragma omp parallel for private(i) shared(H, Y, maxLum)
-  for( i=0 ; i<size ; i++ )
-    (*H)(i) = logf( 100.0f*(*Y)(i)/maxLum + 1e-4 );
-  delete Y;
-  ph->newValue(4); 
+  //#pragma omp parallel for private(i) shared(H, Y, maxLum)
+  for ( int i=0 ; i<size ; i++ )
+  {
+      (*H)(i) = logf( 100.0f* Y(i)/maxLum + 1e-4 );
+  }
+  ph->newValue(4);
 
   // create gaussian pyramids
   int mins = (width<height) ? width : height;	// smaller dimension
   int nlevels = 0;
-  while( mins>=MSIZE )
+  while ( mins >= MSIZE )
   {
     nlevels++;
     mins /= 2;
@@ -393,7 +402,7 @@ void tmo_fattal02(unsigned int width,
   // calculate gradients and its average values on pyramid levels
   pfs::Array2D** gradients = new pfs::Array2D*[nlevels];
   float* avgGrad = new float[nlevels];
-  for( k=0 ; k<nlevels ; k++ )
+  for ( int k=0 ; k<nlevels ; k++ )
   {
     gradients[k] = new pfs::Array2D(pyramids[k]->getCols(), pyramids[k]->getRows());
     avgGrad[k] = calculateGradients(pyramids[k],gradients[k], k);
@@ -404,7 +413,7 @@ void tmo_fattal02(unsigned int width,
   pfs::Array2D* FI = new pfs::Array2D(width, height);
   calculateFiMatrix(FI, gradients, avgGrad, nlevels, detail_level, alfa, beta, noise, newfattal);
 //  dumpPFS( "FI.pfs", FI, "Y" );
-  for( i=0 ; i<nlevels ; i++ )
+  for ( int i=0 ; i<nlevels ; i++ )
   {
     delete pyramids[i];
     delete gradients[i];
@@ -429,8 +438,8 @@ void tmo_fattal02(unsigned int width,
   // side accordingly (basically fft solver assumes U(-1) = U(1), whereas zero
   // Neumann conditions assume U(-1)=U(0)), see also divergence calculation
   if(fftsolver)
-    for( y=0 ; y<height ; y++ )
-      for( x=0 ; x<width ; x++ )
+    for( int y=0 ; y<height ; y++ )
+      for( int x=0 ; x<width ; x++ )
       {
         // sets index+1 based on the boundary assumption H(N+1)=H(N-1)
         unsigned int yp1 = (y+1 >= height ? height-2 : y+1);
@@ -440,8 +449,8 @@ void tmo_fattal02(unsigned int width,
         (*Gy)(x,y) = ((*H)(x,yp1)-(*H)(x,y)) * 0.5*((*FI)(x,yp1)+(*FI)(x,y));
       }
   else
-    for( y=0 ; y<height ; y++ )
-      for( x=0 ; x<width ; x++ )
+    for( int y=0 ; y<height ; y++ )
+      for( int x=0 ; x<width ; x++ )
       {
         int s, e;
         s = (y+1 == height ? y : y+1);
@@ -461,8 +470,8 @@ void tmo_fattal02(unsigned int width,
 
   // calculate divergence
   pfs::Array2D* DivG = new pfs::Array2D(width, height);
-  for( y=0 ; y<height ; y++ )
-    for( x=0 ; x<width ; x++ )
+  for( int y=0 ; y<height ; y++ )
+    for( int x=0 ; x<width ; x++ )
     {
       (*DivG)(x,y) = (*Gx)(x,y) + (*Gy)(x,y);
       if( x > 0 ) (*DivG)(x,y) -= (*Gx)(x-1,y);
@@ -489,7 +498,7 @@ void tmo_fattal02(unsigned int width,
   // solve pde and exponentiate (ie recover compressed image)
   pfs::Array2D* U = new pfs::Array2D(width, height);
   if(fftsolver){
-    solve_pde_fft(DivG, U, ph);
+    solve_pde_fft(DivG, U, ph, true);
   } else {
     solve_pde_multigrid( DivG, U, ph);
   }
@@ -501,29 +510,33 @@ void tmo_fattal02(unsigned int width,
     return;
   }
 
-  pfs::Array2D* L = new pfs::Array2D(width, height, nL);
-  for( y=0 ; y<height ; y++ ) {
-    for( x=0 ; x<width ; x++ )
-      (*L)(x,y) = exp( gamma * (*U)(x,y) ); 
+  for ( int y=0 ; y<height ; y++ )
+  {
+      for ( int x=0 ; x<width ; x++ )
+      {
+          L(x,y) = expf( gamma * (*U)(x,y) );
+      }
   }
   delete U;
   ph->newValue(95); 
 	
   // remove percentile of min and max values and renormalize
-  float cut_min=0.01f*black_point;
-  float cut_max=1.0f-0.01f*white_point;
+  float cut_min = 0.01f * black_point;
+  float cut_max = 1.0f - 0.01f * white_point;
   assert(cut_min>=0.0f && (cut_max<=1.0f) && (cut_min<cut_max));
-  findMaxMinPercentile(L, cut_min, minLum, cut_max, maxLum);
-  for( y=0 ; y<height ; y++ ) {
-    for( x=0 ; x<width ; x++ )
-    {
-      (*L)(x,y) = ((*L)(x,y)-minLum) / (maxLum-minLum);
-      if( (*L)(x,y)<=0.0f )
-        (*L)(x,y) = 0.0;
-      // note, we intentionally do not cut off values > 1.0
-    }
+  findMaxMinPercentile(&L, cut_min, minLum, cut_max, maxLum);
+  for ( int y=0 ; y<height ; y++ )
+  {
+      for ( int x=0 ; x<width ; x++ )
+      {
+          L(x,y) = (L(x,y)-minLum) / (maxLum-minLum);
+          if ( L(x,y) <= 0.0f )
+          {
+              L(x,y) = 0.0;
+          }
+          // note, we intentionally do not cut off values > 1.0
+      }
   }
-  delete L;
-  ph->newValue(96); 
 
+  ph->newValue(96); 
 }

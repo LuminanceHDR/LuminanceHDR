@@ -46,6 +46,7 @@ void pfstmo_fattal02(pfs::Frame* frame,
                      float opt_noise,
                      bool newfattal,
                      bool fftsolver,
+                     int detail_level,
                      ProgressHelper *ph)
 {  
   //--- default tone mapping parameters;
@@ -53,7 +54,7 @@ void pfstmo_fattal02(pfs::Frame* frame,
   // adjust noise floor if not set by user
   if ( opt_noise <= 0.0f )
   {
-    opt_noise = opt_alpha*0.01f;
+      opt_noise = opt_alpha * 0.01f;
   }
   
   std::cout << "pfstmo_fattal02 (";
@@ -70,34 +71,33 @@ void pfstmo_fattal02(pfs::Frame* frame,
   
   if ( Y==NULL || X==NULL || Z==NULL )
   {
-    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
   
-  pfs::Array2D* Xr = X->getChannelData();
-  pfs::Array2D* Yr = Y->getChannelData();
-  pfs::Array2D* Zr = Z->getChannelData();
+  pfs::Array2D& Xr = *X->getChannelData();
+  pfs::Array2D& Yr = *Y->getChannelData();
+  pfs::Array2D& Zr = *Z->getChannelData();
   
   // tone mapping
   int w = Y->getWidth();
   int h = Y->getHeight();
   
   pfs::Array2D L(w,h);
-  tmo_fattal02(w, h, Y->getRawData(), L.getRawData(),
-               opt_alpha, opt_beta, opt_noise, newfattal, fftsolver,
+
+  tmo_fattal02(w, h, Yr, L,
+               opt_alpha, opt_beta, opt_noise, newfattal,
+               fftsolver, detail_level,
                ph);
 
   if ( !ph->isTerminationRequested() )
   {
-    for( int x=0 ; x<w ; x++ )
-    {
-      for( int y=0 ; y<h ; y++ )
+      for ( int idx = 0; idx < w*h; ++idx )
       {
-        (*Xr)(x,y) = powf( (*Xr)(x,y)/(*Yr)(x,y), opt_saturation ) * L(x,y);
-        (*Zr)(x,y) = powf( (*Zr)(x,y)/(*Yr)(x,y), opt_saturation ) * L(x,y);
-        (*Yr)(x,y) = L(x,y);
+          Xr(idx) = powf( Xr(idx)/Yr(idx), opt_saturation ) * L(idx);
+          Zr(idx) = powf( Zr(idx)/Yr(idx), opt_saturation ) * L(idx);
+          Yr(idx) = L(idx);
       }
-    }
-    
-    ph->newValue( 100 );
+
+      ph->newValue( 100 );
   }
 }
