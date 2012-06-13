@@ -61,8 +61,8 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
     else
         detail_level = 0;
 
-    std::cout << "RATIO = " << ratio << ", ";
-    std::cout << "DETAIL_LEVEL = " << detail_level << std::endl;
+//    std::cout << "RATIO = " << ratio << ", ";
+//    std::cout << "DETAIL_LEVEL = " << detail_level << std::endl;
 
     pfstmo_fattal02(workingframe,
                     opts->operator_options.fattaloptions.alpha,

@@ -324,8 +324,8 @@ static void findMaxMinPercentile(pfs::Array2D* I,
 }
 
 //--------------------------------------------------------------------
-void tmo_fattal02(unsigned int width,
-                  unsigned int height,
+void tmo_fattal02(size_t width,
+                  size_t height,
                   const pfs::Array2D& Y,
                   //const float* nY,
                   pfs::Array2D& L,
@@ -360,7 +360,8 @@ void tmo_fattal02(unsigned int width,
 
   if (fftsolver)
   {
-    alfa = 1.f;
+      alfa = 1.f;
+      newfattal = true; // let's make sure, prudence is never enough!
   }
 	
   int size = width*height;
@@ -372,8 +373,8 @@ void tmo_fattal02(unsigned int width,
   float maxLum = Y(0,0);
   for ( int i=0 ; i<size ; i++ )
   {
-      minLum = ( Y(i)<minLum ) ? Y(i) : minLum;
-      maxLum = ( Y(i)>maxLum ) ? Y(i) : maxLum;
+      minLum = ( Y(i) < minLum ) ? Y(i) : minLum;
+      maxLum = ( Y(i) > maxLum ) ? Y(i) : maxLum;
   }
   pfs::Array2D* H = new pfs::Array2D(width, height);
   //#pragma omp parallel for private(i) shared(H, Y, maxLum)
@@ -437,9 +438,9 @@ void tmo_fattal02(unsigned int width,
   // boundary conditions, so we need to adjust the assembly of the right hand
   // side accordingly (basically fft solver assumes U(-1) = U(1), whereas zero
   // Neumann conditions assume U(-1)=U(0)), see also divergence calculation
-  if(fftsolver)
-    for( int y=0 ; y<height ; y++ )
-      for( int x=0 ; x<width ; x++ )
+  if (fftsolver)
+    for ( size_t y=0 ; y<height ; y++ )
+      for ( size_t x=0 ; x<width ; x++ )
       {
         // sets index+1 based on the boundary assumption H(N+1)=H(N-1)
         unsigned int yp1 = (y+1 >= height ? height-2 : y+1);
@@ -449,8 +450,8 @@ void tmo_fattal02(unsigned int width,
         (*Gy)(x,y) = ((*H)(x,yp1)-(*H)(x,y)) * 0.5*((*FI)(x,yp1)+(*FI)(x,y));
       }
   else
-    for( int y=0 ; y<height ; y++ )
-      for( int x=0 ; x<width ; x++ )
+    for ( size_t y=0 ; y<height ; y++ )
+      for ( size_t x=0 ; x<width ; x++ )
       {
         int s, e;
         s = (y+1 == height ? y : y+1);
@@ -467,57 +468,60 @@ void tmo_fattal02(unsigned int width,
 //   dumpPFS( "Gx.pfs", Gx, "Y" );
 //   dumpPFS( "Gy.pfs", Gy, "Y" );
   
-
   // calculate divergence
-  pfs::Array2D* DivG = new pfs::Array2D(width, height);
-  for( int y=0 ; y<height ; y++ )
-    for( int x=0 ; x<width ; x++ )
-    {
-      (*DivG)(x,y) = (*Gx)(x,y) + (*Gy)(x,y);
-      if( x > 0 ) (*DivG)(x,y) -= (*Gx)(x-1,y);
-      if( y > 0 ) (*DivG)(x,y) -= (*Gy)(x,y-1);
-
-      if(fftsolver)
+  pfs::Array2D DivG(width, height);
+  for ( size_t y = 0; y < height; ++y )
+  {
+      for ( size_t x = 0; x < width; ++x )
       {
-        if(x==0) (*DivG)(x,y) += (*Gx)(x,y);
-        if(y==0) (*DivG)(x,y) += (*Gy)(x,y);
-      }
+          DivG(x,y) = (*Gx)(x,y) + (*Gy)(x,y);
+          if ( x > 0 ) DivG(x,y) -= (*Gx)(x-1,y);
+          if ( y > 0 ) DivG(x,y) -= (*Gy)(x,y-1);
 
-    }
+          if (fftsolver)
+          {
+              if (x==0) DivG(x,y) += (*Gx)(x,y);
+              if (y==0) DivG(x,y) += (*Gy)(x,y);
+          }
+
+      }
+  }
   delete Gx;
   delete Gy;
   ph->newValue(20);
-  if (ph->isTerminationRequested()){
-    delete DivG;
-    return;
+  if (ph->isTerminationRequested())
+  {
+      return;
   }
-
 
 //  dumpPFS( "DivG.pfs", DivG, "Y" );
   
   // solve pde and exponentiate (ie recover compressed image)
-  pfs::Array2D* U = new pfs::Array2D(width, height);
-  if(fftsolver){
-    solve_pde_fft(DivG, U, ph, true);
-  } else {
-    solve_pde_multigrid( DivG, U, ph);
+  {
+  pfs::Array2D U(width, height);
+  if (fftsolver)
+  {
+      solve_pde_fft(&DivG, &U, ph);
   }
-  printf("pde residual error: %f\n", residual_pde(U, DivG));
-  delete DivG;
+  else
+  {
+      solve_pde_multigrid(&DivG, &U, ph);
+  }
+  printf("pde residual error: %f\n", residual_pde(&U, &DivG));
   ph->newValue(90); 
-  if (ph->isTerminationRequested()){
-    delete U;
-    return;
+  if ( ph->isTerminationRequested() )
+  {
+      return;
   }
 
-  for ( int y=0 ; y<height ; y++ )
+  for ( size_t y=0 ; y<height ; y++ )
   {
-      for ( int x=0 ; x<width ; x++ )
+      for ( size_t x=0 ; x<width ; x++ )
       {
-          L(x,y) = expf( gamma * (*U)(x,y) );
+          L(x,y) = expf( gamma * U(x,y) );
       }
   }
-  delete U;
+  }
   ph->newValue(95); 
 	
   // remove percentile of min and max values and renormalize
@@ -525,11 +529,11 @@ void tmo_fattal02(unsigned int width,
   float cut_max = 1.0f - 0.01f * white_point;
   assert(cut_min>=0.0f && (cut_max<=1.0f) && (cut_min<cut_max));
   findMaxMinPercentile(&L, cut_min, minLum, cut_max, maxLum);
-  for ( int y=0 ; y<height ; y++ )
+  for ( size_t y=0 ; y<height ; y++ )
   {
-      for ( int x=0 ; x<width ; x++ )
+      for ( size_t x=0 ; x<width ; x++ )
       {
-          L(x,y) = (L(x,y)-minLum) / (maxLum-minLum);
+          L(x,y) = (L(x,y) - minLum) / (maxLum - minLum);
           if ( L(x,y) <= 0.0f )
           {
               L(x,y) = 0.0;
