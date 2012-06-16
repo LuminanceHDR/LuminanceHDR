@@ -35,6 +35,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <sstream>
 
 #include "Libpfs/frame.h"
 #include "Common/ProgressHelper.h"
@@ -48,20 +49,26 @@ void pfstmo_fattal02(pfs::Frame* frame,
                      bool fftsolver,
                      int detail_level,
                      ProgressHelper *ph)
-{  
-  //--- default tone mapping parameters;
-  
-  // adjust noise floor if not set by user
+{
+  if (fftsolver)
+  {
+      opt_alpha = 1.f;
+      newfattal = true; // let's make sure, prudence is never enough!
+  }
+
   if ( opt_noise <= 0.0f )
   {
       opt_noise = opt_alpha * 0.01f;
   }
   
-  std::cout << "pfstmo_fattal02 (";
-  std::cout << "alpha: " << opt_alpha;
-  std::cout << ", beta: " << opt_beta;
-  std::cout << ". saturation: " <<  opt_saturation;
-  std::cout << ", noise: " <<  opt_noise << ")" << std::endl;
+  std::stringstream ss;
+  ss << "pfstmo_fattal02 (";
+  ss << "alpha: " << opt_alpha;
+  ss << ", beta: " << opt_beta;
+  ss << ". saturation: " <<  opt_saturation;
+  ss << ", noise: " <<  opt_noise;
+  ss << ", fftsolver: " << fftsolver << ")";
+  std::cout << ss.str();
   
   //Store RGB data temporarily in XYZ channels
   pfs::Channel *X, *Y, *Z;

@@ -357,12 +357,6 @@ void tmo_fattal02(size_t width,
   {
      MSIZE = 8;
   }
-
-  if (fftsolver)
-  {
-      alfa = 1.f;
-      newfattal = true; // let's make sure, prudence is never enough!
-  }
 	
   int size = width*height;
   // unsigned int x,y;
