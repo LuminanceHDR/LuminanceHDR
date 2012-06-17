@@ -46,5 +46,23 @@ namespace pfs {
  */
 void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph);
 
+/**
+ * @brief solve poisson pde (Laplace U = F) using discrete cosine transform
+ *
+ * @param F array of the right hand side (contains div G in this example)
+ * @param U [out] solution
+ * @param adjust_bound, adjust boundary values of F to make pde solvable 
+ */
+void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph, bool adjust_bound=false);
+
+/**
+ * @brief returns the residual error of the solution U, ie norm(Laplace U - F) 
+ *
+ * @param F [in] right hand side
+ * @param U [in] solution
+ */
+float residual_pde(pfs::Array2D *U, pfs::Array2D *F);
+
+
 #endif
 

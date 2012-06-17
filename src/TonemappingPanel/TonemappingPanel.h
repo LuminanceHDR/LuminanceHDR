@@ -59,7 +59,8 @@ protected:
             *betaGang,
             *saturation2Gang,
             *noiseGang,
-            *oldFattalGang,
+            // *oldFattalGang,
+            *fftSolverGang,
             // ashikhmin02
             *contrastGang,
             *simpleGang,

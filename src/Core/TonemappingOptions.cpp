@@ -58,6 +58,7 @@ void TonemappingOptions::setDefaultTonemapParameters()
     operator_options.fattaloptions.color = FATTAL02_COLOR;
     operator_options.fattaloptions.noiseredux = FATTAL02_NOISE_REDUX;
     operator_options.fattaloptions.newfattal = FATTAL02_NEWFATTAL;
+    operator_options.fattaloptions.fftsolver = true;
 
     // Drago
     operator_options.dragooptions.bias = DRAGO03_BIAS;
