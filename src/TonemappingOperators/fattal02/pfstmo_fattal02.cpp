@@ -69,6 +69,7 @@ void pfstmo_fattal02(pfs::Frame* frame,
   ss << ", noise: " <<  opt_noise;
   ss << ", fftsolver: " << fftsolver << ")";
   std::cout << ss.str();
+  std::cout << std::endl;
   
   //Store RGB data temporarily in XYZ channels
   pfs::Channel *X, *Y, *Z;
