@@ -303,27 +303,24 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
   delete[] fi;
 }
 
-//--------------------------------------------------------------------
-
-
-static void findMaxMinPercentile(pfs::Array2D* I,
+inline
+void findMaxMinPercentile(const pfs::Array2D& I,
                                  float minPrct, float& minLum,
                                  float maxPrct, float& maxLum)
 {
-  int size = I->getRows() * I->getCols();
-  std::vector<float> vI;
+    using namespace std;
 
-  for( int i=0 ; i<size ; i++ ) {
-    vI.push_back((*I)(i));
-  }
-      
-  std::sort(vI.begin(), vI.end());
+    const int size = I.getRows() * I.getCols();
+    const float* data = I.getRawData();
+    std::vector<float> vI;
 
-  minLum = vI.at( int(minPrct*vI.size()) );
-  maxLum = vI.at( int(maxPrct*vI.size()) );
+    copy(data, data + size, back_inserter(vI));
+    sort(vI.begin(), vI.end());
+
+    minLum = vI.at( int(minPrct*vI.size()) );
+    maxLum = vI.at( int(maxPrct*vI.size()) );
 }
 
-//--------------------------------------------------------------------
 void tmo_fattal02(size_t width,
                   size_t height,
                   const pfs::Array2D& Y,
@@ -522,7 +519,7 @@ void tmo_fattal02(size_t width,
   float cut_min = 0.01f * black_point;
   float cut_max = 1.0f - 0.01f * white_point;
   assert(cut_min>=0.0f && (cut_max<=1.0f) && (cut_min<cut_max));
-  findMaxMinPercentile(&L, cut_min, minLum, cut_max, maxLum);
+  findMaxMinPercentile(L, cut_min, minLum, cut_max, maxLum);
   for ( size_t y=0 ; y<height ; y++ )
   {
       for ( size_t x=0 ; x<width ; x++ )
