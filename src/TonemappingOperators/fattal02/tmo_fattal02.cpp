@@ -70,67 +70,65 @@ using namespace std;
 
 //--------------------------------------------------------------------
 
-void downSample(pfs::Array2D* A, pfs::Array2D* B)
+void downSample(const pfs::Array2D& A, pfs::Array2D& B)
 {
-  const int width = B->getCols();
-  const int height = B->getRows();
+    const int width = B.getCols();
+    const int height = B.getRows();
 
-// Note, I've uncommented all omp directives. They are all ok but are
-// applied to too small problems and in total don't lead to noticable
-// speed improvements. The main issue is the pde solver and in case of the
-// fft solver uses optimised threaded fftw routines.
-//#pragma omp parallel for
-  for( int y=0 ; y<height ; y++ ) {
-    for( int x=0 ; x<width ; x++ )
+    // Note, I've uncommented all omp directives. They are all ok but are
+    // applied to too small problems and in total don't lead to noticable
+    // speed improvements. The main issue is the pde solver and in case of the
+    // fft solver uses optimised threaded fftw routines.
+    //#pragma omp parallel for
+    for ( int y=0 ; y<height ; y++ )
     {
-      float p = 0.0f;
-      p += (*A)(2*x,2*y);
-      p += (*A)(2*x+1,2*y);
-      p += (*A)(2*x,2*y+1);
-      p += (*A)(2*x+1,2*y+1);
-      (*B)(x,y) = p / 4.0f;
-    }	
-  }
+        for ( int x=0 ; x<width ; x++ )
+        {
+            float p = A(2*x,2*y);
+            p += A(2*x+1,2*y);
+            p += A(2*x,2*y+1);
+            p += A(2*x+1,2*y+1);
+            B(x,y) = p * 0.25f; // p / 4.0f;
+        }
+    }
 }
 	
-void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
+void gaussianBlur(const pfs::Array2D& I, pfs::Array2D& L)
 {
-  const int width = I->getCols();
-  const int height = I->getRows();
+    const int width = I.getCols();
+    const int height = I.getRows();
 
-  pfs::Array2D* T = new pfs::Array2D(width,height);
+    pfs::Array2D T(width,height);
 
-  //--- X blur
-//#pragma omp parallel for shared(I, T)
-  for( int y=0 ; y<height ; y++ )
-  {
-    for( int x=1 ; x<width-1 ; x++ )
+    //--- X blur
+    //#pragma omp parallel for shared(I, T)
+    for ( int y=0 ; y<height ; y++ )
     {
-      float t = 2*(*I)(x,y);
-      t += (*I)(x-1,y);
-      t += (*I)(x+1,y);
-      (*T)(x,y) = t/4.0f;
+        for ( int x=1 ; x<width-1 ; x++ )
+        {
+            float t = 2.f * I(x,y);
+            t += I(x-1,y);
+            t += I(x+1,y);
+            T(x,y) = t * 0.25f; // t / 4.f;
+        }
+        T(0,y) = ( 3.f * I(0,y)+ I(1,y) ) * 0.25f; // / 4.f;
+        T(width-1,y) = ( 3.f * I(width-1,y) + I(width-2,y) ) * 0.25f; // / 4.f;
     }
-    (*T)(0,y) = ( 3*(*I)(0,y)+(*I)(1,y) ) / 4.0f;
-    (*T)(width-1,y) = ( 3*(*I)(width-1,y)+(*I)(width-2,y) ) / 4.0f;
-  }
 
-  //--- Y blur
-//#pragma omp parallel for shared(T, L)
-  for( int x=0 ; x<width ; x++ )
-  {
-    for( int y=1 ; y<height-1 ; y++ )
+    //--- Y blur
+    //#pragma omp parallel for shared(T, L)
+    for ( int x=0 ; x<width ; x++ )
     {
-      float t = 2*(*T)(x,y);
-      t += (*T)(x,y-1);
-      t += (*T)(x,y+1);
-      (*L)(x,y) = t/4.0f;
+        for ( int y=1 ; y<height-1 ; y++ )
+        {
+            float t = 2.f * T(x,y);
+            t += T(x,y-1);
+            t += T(x,y+1);
+            L(x,y) = t * 0.25f; // t/4.0f;
+        }
+        L(x,0) = ( 3.f * T(x,0) + T(x,1) ) * 0.25f; // / 4.0f;
+        L(x,height-1) = ( 3.f * T(x,height-1) + T(x,height-2) ) * 0.25f; // / 4.0f;
     }
-    (*L)(x,0) = ( 3*(*T)(x,0)+(*T)(x,1) ) / 4.0f;
-    (*L)(x,height-1) = ( 3*(*T)(x,height-1)+(*T)(x,height-2) ) / 4.0f;
-  }
-
-  delete T;
 }
 
 void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels)
@@ -145,18 +143,18 @@ void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nleve
     (*pyramids[0])(i) = (*H)(i);
 
   pfs::Array2D* L = new pfs::Array2D(width,height);
-  gaussianBlur( pyramids[0], L);
+  gaussianBlur( *pyramids[0], *L );
 	
-  for( int k=1 ; k<nlevels ; k++ )
+  for ( int k=1 ; k<nlevels ; k++ )
   {
     width /= 2;
     height /= 2;		
     pyramids[k] = new pfs::Array2D(width,height);
-    downSample(L, pyramids[k]);
+    downSample(*L, *pyramids[k]);
     
     delete L;
     L = new pfs::Array2D(width,height);
-    gaussianBlur( pyramids[k], L );
+    gaussianBlur( *pyramids[k], *L );
   }
 
   delete L;
@@ -201,25 +199,26 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 
 //--------------------------------------------------------------------
 
-void upSample(pfs::Array2D* A, pfs::Array2D* B)
+void upSample(const pfs::Array2D& A, pfs::Array2D& B)
 {
-  const int width = B->getCols();
-  const int height = B->getRows();
-  const int awidth = A->getCols();
-  const int aheight = A->getRows();
+    const int width = B.getCols();
+    const int height = B.getRows();
+    const int awidth = A.getCols();
+    const int aheight = A.getRows();
 
-//#pragma omp parallel for shared(A, B)
-  for( int y=0 ; y<height ; y++ ) {
-    for( int x=0 ; x<width ; x++ )
+    //#pragma omp parallel for shared(A, B)
+    for ( int y=0 ; y<height ; y++ )
     {
-      int ax = x/2;
-      int ay = y/2;
-      ax = (ax<awidth) ? ax : awidth-1;
-      ay = (ay<aheight) ? ay : aheight-1;
-      
-      (*B)(x,y) = (*A)(ax,ay);
+        for ( int x=0 ; x<width ; x++ )
+        {
+            int ax = static_cast<int>(x * 0.5f); //x / 2.f;
+            int ay = static_cast<int>(y * 0.5f); //y / 2.f;
+            ax = (ax<awidth) ? ax : awidth-1;
+            ay = (ay<aheight) ? ay : aheight-1;
+
+            B(x,y) = A(ax,ay);
+        }
     }
-  }
 //--- this code below produces 'use of uninitialized value error'
 //   int width = A->getCols();
 //   int height = A->getRows();
@@ -237,70 +236,75 @@ void upSample(pfs::Array2D* A, pfs::Array2D* B)
 
 
 void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
-  float avgGrad[], int nlevels, int detail_level,
-  float alfa, float beta, float noise, bool newfattal)
+                       float avgGrad[], int nlevels, int detail_level,
+                       float alfa, float beta, float noise, bool newfattal)
 {
-  int width = gradients[nlevels-1]->getCols();
-  int height = gradients[nlevels-1]->getRows();
-  pfs::Array2D** fi = new pfs::Array2D*[nlevels];
+    int width = gradients[nlevels-1]->getCols();
+    int height = gradients[nlevels-1]->getRows();
+    pfs::Array2D** fi = new pfs::Array2D*[nlevels];
 
-  fi[nlevels-1] = new pfs::Array2D(width,height);
-  if (newfattal){
-//#pragma omp parallel for shared(fi)
-    for( int k=0 ; k<width*height ; k++ )
-      (*fi[nlevels-1])(k) = 1.0f;
-  }
-  
-  for( int k=nlevels-1 ; k>=0 ; k-- )
-  {
-    width = gradients[k]->getCols();
-    height = gradients[k]->getRows();
-
-    // only apply gradients to levels>=detail_level but at least to the coarsest
-    if(k>=detail_level || k==nlevels-1 || newfattal==false)
-    {    
-      //DEBUG_STR << "calculateFiMatrix: apply gradient to level " << k << endl;
-//#pragma omp parallel for shared(fi,avgGrad)
-      for( int y=0 ; y<height ; y++ )
-        for( int x=0 ; x<width ; x++ )
+    fi[nlevels-1] = new pfs::Array2D(width,height);
+    if (newfattal)
+    {
+        //#pragma omp parallel for shared(fi)
+        for ( int k = 0 ; k < width*height ; k++ )
         {
-          float grad = (*gradients[k])(x,y);
-          float a = alfa * avgGrad[k];
-
-          float value=1.0;
-          if( grad<1e-4 )
-            grad=1e-4;
-
-          value = pow((grad+noise)/a, beta-1.0f);
-          
-          if (newfattal)
-            (*fi[k])(x,y) *= value;
-          else
-	    (*fi[k])(x,y) = value;
+            (*fi[nlevels-1])(k) = 1.0f;
         }
     }
 
-		
-    // create next level
-    if( k>1 )
+    for ( int k = nlevels-1; k >= 0 ; k-- )
     {
-      width = gradients[k-1]->getCols();
-      height = gradients[k-1]->getRows();
-      fi[k-1] = new pfs::Array2D(width,height);
-    }
-    else
-      fi[0] = FI;               // highest level -> result
+        width = gradients[k]->getCols();
+        height = gradients[k]->getRows();
 
-    if( k>0  && newfattal )
-    {
-      upSample(fi[k], fi[k-1]);		// upsample to next level
-      gaussianBlur(fi[k-1],fi[k-1]);
+        // only apply gradients to levels>=detail_level but at least to the coarsest
+        if ( k >= detail_level
+             ||k==nlevels-1
+             || newfattal == false)
+        {
+            //DEBUG_STR << "calculateFiMatrix: apply gradient to level " << k << endl;
+            //#pragma omp parallel for shared(fi,avgGrad)
+            for ( int y = 0; y < height; y++ )
+            {
+                for ( int x = 0; x < width; x++ )
+                {
+                    float grad = ((*gradients[k])(x,y) < 1e-4f) ? 1e-4 : (*gradients[k])(x,y);
+                    float a = alfa * avgGrad[k];
+
+                    float value = powf((grad+noise)/a, beta - 1.0f);
+
+                    if (newfattal)
+                        (*fi[k])(x,y) *= value;
+                    else
+                        (*fi[k])(x,y) = value;
+                }
+            }
+        }
+
+
+        // create next level
+        if ( k>1 )
+        {
+            width = gradients[k-1]->getCols();
+            height = gradients[k-1]->getRows();
+            fi[k-1] = new pfs::Array2D(width,height);
+        }
+        else
+            fi[0] = FI;                         // highest level -> result
+
+        if ( k>0  && newfattal )
+        {
+            upSample(*fi[k], *fi[k-1]);           // upsample to next level
+            gaussianBlur(*fi[k-1], *fi[k-1]);
+        }
     }
-  }
-	
-  for( int k=1 ; k<nlevels ; k++ )
-    delete fi[k];
-  delete[] fi;
+
+    for ( int k=1 ; k<nlevels ; k++ )
+    {
+        delete fi[k];
+    }
+    delete[] fi;
 }
 
 inline
