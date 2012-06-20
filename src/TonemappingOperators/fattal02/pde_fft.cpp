@@ -69,17 +69,17 @@ void transform_ev2normal(pfs::Array2D *A, pfs::Array2D *T)
   // need to scale input values to get the right transformation
   for(int y=1 ; y<height-1 ; y++ )
     for(int x=1 ; x<width-1 ; x++ )
-      (*A)(x,y)*=0.25;
+      (*A)(x,y)*=0.25f;
 
   for(int x=1 ; x<width-1 ; x++ )
   {
-    (*A)(x,0)*=0.5;
-    (*A)(x,height-1)*=0.5;
+    (*A)(x,0)*=0.5f;
+    (*A)(x,height-1)*=0.5f;
   }
   for(int y=1 ; y<height-1 ; y++ )
   {
     (*A)(0,y)*=0.5;
-    (*A)(width-1,y)*=0.5;
+    (*A)(width-1,y)*=0.5f;
   }
 
   // note, fftw provides its own memory allocation routines which
@@ -117,17 +117,17 @@ void transform_normal2ev(pfs::Array2D *A, pfs::Array2D *T)
   // need to scale the output matrix to get the right transform
   for(int y=0 ; y<height ; y++ )
     for(int x=0 ; x<width ; x++ )
-      (*T)(x,y)*=(1.0/((height-1)*(width-1)));
+      (*T)(x,y)*=(1.0f/((height-1)*(width-1)));
 
   for(int x=0 ; x<width ; x++ )
   {
-    (*T)(x,0)*=0.5;
-    (*T)(x,height-1)*=0.5;
+    (*T)(x,0)*=0.5f;
+    (*T)(x,height-1)*=0.5f;
   }
   for(int y=0 ; y<height ; y++ )
   {
-    (*T)(0,y)*=0.5;
-    (*T)(width-1,y)*=0.5;
+    (*T)(0,y)*=0.5f;
+    (*T)(width-1,y)*=0.5f;
   }
 }
 
@@ -136,8 +136,10 @@ std::vector<double> get_lambda(int n)
 {
   assert(n>1);
   std::vector<double> v(n);
-  for(int i=0; i<n; i++)
+  for (int i=0; i<n; i++)
+  {
     v[i]=-4.0*SQR(sin((double)i/(2*(n-1))*M_PI));
+  }
 
   return v;
 }
@@ -295,6 +297,6 @@ float residual_pde(pfs::Array2D* U, pfs::Array2D* F)
                      +(*U)(x,y-1)+(*U)(x,y+1);
       res += SQR( laplace-(*F)(x,y) );
     }
-  return (float) sqrt(res);
+  return static_cast<float>( sqrt(res) );
 }
 
