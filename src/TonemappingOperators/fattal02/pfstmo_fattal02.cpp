@@ -52,7 +52,7 @@ void pfstmo_fattal02(pfs::Frame* frame,
 {
   if (fftsolver)
   {
-      opt_alpha = 1.f;
+      // opt_alpha = 1.f;
       newfattal = true; // let's make sure, prudence is never enough!
   }
 

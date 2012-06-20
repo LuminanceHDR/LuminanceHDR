@@ -79,19 +79,16 @@ TonemappingPanel::TonemappingPanel(QWidget *parent):
     luminanceLevelGang = new Gang(m_Ui->luminanceLevelSlider, m_Ui->luminanceLevelDSB, m_Ui->luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f, MANTIUK08_LUMINANCE_LEVEL);
 
     // fattal02
-    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL,NULL,NULL,NULL, 1e-4, 2.f, FATTAL02_ALPHA, true);
+    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL,NULL,NULL,NULL, 0.05, 2.f, FATTAL02_ALPHA, true);
 
     connect(alphaGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
     connect(alphaGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
     betaGang = new Gang(m_Ui->betaSlider, m_Ui->betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, FATTAL02_BETA);
-    saturation2Gang = new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.f, FATTAL02_COLOR);
+    saturation2Gang = new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.5f, FATTAL02_COLOR);
     noiseGang = new Gang(m_Ui->noiseSlider, m_Ui->noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
     // oldFattalGang = new Gang(NULL,NULL, m_Ui->oldFattalCheckBox);
     fftSolverGang = new Gang(NULL, NULL,m_Ui->fftVersionCheckBox);
-
-    connect(m_Ui->fftVersionCheckBox, SIGNAL(toggled(bool)), m_Ui->alphaSlider, SLOT(setDisabled(bool)));
-    connect(m_Ui->fftVersionCheckBox, SIGNAL(toggled(bool)), m_Ui->alphadsb, SLOT(setDisabled(bool)));
 
     // ashikhmin02
     contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
