@@ -171,6 +171,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromIso639ToGuiIndex["ru"]=12;
 	fromIso639ToGuiIndex["es"]=13;
 	fromIso639ToGuiIndex["tr"]=14;
+	fromIso639ToGuiIndex["sk"]=15;
 
 	fromGuiIndexToIso639[0]="cs";
 	fromGuiIndexToIso639[1]="zh";
@@ -187,6 +188,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromGuiIndexToIso639[12]="ru";
 	fromGuiIndexToIso639[13]="es";
 	fromGuiIndexToIso639[14]="tr";
+	fromGuiIndexToIso639[15]="sk";
 
     negcolor = LuminanceOptions().getViewerNegColor();
     infnancolor = LuminanceOptions().getViewerNanInfColor();

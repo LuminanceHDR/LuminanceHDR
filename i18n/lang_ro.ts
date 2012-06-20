@@ -2646,55 +2646,55 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished">Cehă</translation>
+        <translation type="obsolete">Cehă</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished">Engleză</translation>
+        <translation type="obsolete">Engleză</translation>
     </message>
     <message>
         <source>Finnish</source>
-        <translation type="unfinished">Finlandeză</translation>
+        <translation type="obsolete">Finlandeză</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished">Franceză</translation>
+        <translation type="obsolete">Franceză</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished">Germană</translation>
+        <translation type="obsolete">Germană</translation>
     </message>
     <message>
         <source>Indonesian</source>
-        <translation type="unfinished">Indoneziană</translation>
+        <translation type="obsolete">Indoneziană</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished">Italiană</translation>
+        <translation type="obsolete">Italiană</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished">Poloneză</translation>
+        <translation type="obsolete">Poloneză</translation>
     </message>
     <message>
         <source>Romanian</source>
-        <translation type="unfinished">Română</translation>
+        <translation type="obsolete">Română</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished">Rusă</translation>
+        <translation type="obsolete">Rusă</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished">Spaniolă</translation>
+        <translation type="obsolete">Spaniolă</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished">Turcă</translation>
+        <translation type="obsolete">Turcă</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished">Maghiară</translation>
+        <translation type="obsolete">Maghiară</translation>
     </message>
     <message>
         <source>Default Previews Width</source>
@@ -3120,28 +3120,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Profil Cameră</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Camera Profile&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the input color space used to decode RAW data.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: no input color profile is used during RAW decoding.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Embedded&lt;/span&gt;: use embedded color profile from RAW file if exist.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom input color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>None</source>
-        <translation type="unfinished">Nimic</translation>
+        <translation type="obsolete">Nimic</translation>
     </message>
     <message>
         <source>Built in</source>
-        <translation type="unfinished">Construit în</translation>
+        <translation type="obsolete">Construit în</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">Customizat</translation>
+        <translation type="obsolete">Customizat</translation>
     </message>
     <message>
         <source>RAW</source>
@@ -3228,11 +3216,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chinese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hindi</source>
+        <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4020,7 +4004,7 @@ Nivelul Luminance</translation>
     </message>
     <message>
         <source>Version Pre 1.8.4</source>
-        <translation type="unfinished">Versiunea Pre 1.8.4</translation>
+        <translation type="obsolete">Versiunea Pre 1.8.4</translation>
     </message>
     <message>
         <source>Bias</source>
@@ -4288,24 +4272,38 @@ Eroare: %1</translation>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Version 2.3.0 (FFT)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TonemappingWarningDialog</name>
     <message>
         <source>Attention!</source>
-        <translation type="unfinished">Atenţie!</translation>
+        <translation type="obsolete">Atenţie!</translation>
     </message>
     <message>
         <source>Ask again</source>
-        <translation type="unfinished">Întreabă din nou</translation>
+        <translation type="obsolete">Întreabă din nou</translation>
     </message>
     <message>
         <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
 
 Do you want to continue?</source>
-        <translation type="unfinished">Acest operator de mapare de tonuri depinde de dimensiunea imaginii sursă. Aplicarea acestui operator pe imaginea completă va rezulta cel mai probabil într-o imagine diferită.
+        <translation type="obsolete">Acest operator de mapare de tonuri depinde de dimensiunea imaginii sursă. Aplicarea acestui operator pe imaginea completă va rezulta cel mai probabil într-o imagine diferită.
 
 Vrei să continui?</translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

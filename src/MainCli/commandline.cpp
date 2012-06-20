@@ -661,6 +661,7 @@ void CommandLineInterfaceManager::setProgressBar(int max)
 void CommandLineInterfaceManager::updateProgressBar(int value)
 {
 	if (verbose) {
+		if (value < 0) return;
 		if (value < oldValue) {
 			//progressBar.reset();
 			//progressBar.n = maximum;

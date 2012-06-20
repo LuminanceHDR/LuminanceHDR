@@ -2621,51 +2621,51 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished">Tchèque</translation>
+        <translation type="obsolete">Tchèque</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished">Anglais</translation>
+        <translation type="obsolete">Anglais</translation>
     </message>
     <message>
         <source>Finnish</source>
-        <translation type="unfinished">Finnois</translation>
+        <translation type="obsolete">Finnois</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished">Français</translation>
+        <translation type="obsolete">Français</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished">Allemand</translation>
+        <translation type="obsolete">Allemand</translation>
     </message>
     <message>
         <source>Indonesian</source>
-        <translation type="unfinished">Indonésien</translation>
+        <translation type="obsolete">Indonésien</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished">Italien</translation>
+        <translation type="obsolete">Italien</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished">Polonais</translation>
+        <translation type="obsolete">Polonais</translation>
     </message>
     <message>
         <source>Romanian</source>
-        <translation type="unfinished">Roumain</translation>
+        <translation type="obsolete">Roumain</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished">Russe</translation>
+        <translation type="obsolete">Russe</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished">Espagnol</translation>
+        <translation type="obsolete">Espagnol</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished">Turc</translation>
+        <translation type="obsolete">Turc</translation>
     </message>
     <message>
         <source>HDR Options</source>
@@ -3078,7 +3078,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: no input color profile is used during RAW decoding.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Embedded&lt;/span&gt;: use embedded color profile from RAW file if exist.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom input color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -3090,15 +3090,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Aucun</translation>
+        <translation type="obsolete">Aucun</translation>
     </message>
     <message>
         <source>Built in</source>
-        <translation type="unfinished">Intégré</translation>
+        <translation type="obsolete">Intégré</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">Personnalisé</translation>
+        <translation type="obsolete">Personnalisé</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3164,7 +3164,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished">Hongrois</translation>
+        <translation type="obsolete">Hongrois</translation>
     </message>
     <message>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
@@ -3347,11 +3347,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chinese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hindi</source>
+        <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4334,10 +4330,6 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Version Pre 1.8.4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Auto Cone/Rod</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4373,24 +4365,38 @@ Luminace Level</source>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Version 2.3.0 (FFT)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TonemappingWarningDialog</name>
     <message>
         <source>Attention!</source>
-        <translation type="unfinished">Attention!</translation>
+        <translation type="obsolete">Attention!</translation>
     </message>
     <message>
         <source>Ask again</source>
-        <translation type="unfinished">Redemander</translation>
+        <translation type="obsolete">Redemander</translation>
     </message>
     <message>
         <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
 
 Do you want to continue?</source>
-        <translation type="unfinished">L&apos;effet de cet opérateur de tonemapping varie selon la taille de l&apos;image. L&apos;aspect en pleine résolution sera sans doute différent.
+        <translation type="obsolete">L&apos;effet de cet opérateur de tonemapping varie selon la taille de l&apos;image. L&apos;aspect en pleine résolution sera sans doute différent.
 
 Continuer?</translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2615,47 +2615,47 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished">Tsekki</translation>
+        <translation type="obsolete">Tsekki</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished">Englanti</translation>
+        <translation type="obsolete">Englanti</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished">Ranska</translation>
+        <translation type="obsolete">Ranska</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished">Saksa</translation>
+        <translation type="obsolete">Saksa</translation>
     </message>
     <message>
         <source>Indonesian</source>
-        <translation type="unfinished">Indonesia</translation>
+        <translation type="obsolete">Indonesia</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished">Italia</translation>
+        <translation type="obsolete">Italia</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished">Puola</translation>
+        <translation type="obsolete">Puola</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished">Venäjä</translation>
+        <translation type="obsolete">Venäjä</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished">Espanja</translation>
+        <translation type="obsolete">Espanja</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished">Turkki</translation>
+        <translation type="obsolete">Turkki</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished">Unkari</translation>
+        <translation type="obsolete">Unkari</translation>
     </message>
     <message>
         <source>HDR Options</source>
@@ -3105,7 +3105,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: no input color profile is used during RAW decoding.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Embedded&lt;/span&gt;: use embedded color profile from RAW file if exist.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom input color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -3117,15 +3117,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Ei mitään</translation>
+        <translation type="obsolete">Ei mitään</translation>
     </message>
     <message>
         <source>Built in</source>
-        <translation type="unfinished">Sisäänrakennettu</translation>
+        <translation type="obsolete">Sisäänrakennettu</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">Kustomoitu</translation>
+        <translation type="obsolete">Kustomoitu</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3207,14 +3207,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Finnish</source>
-        <translation type="unfinished">Suomi</translation>
+        <translation type="obsolete">Suomi</translation>
     </message>
     <message>
         <source>RAW Conversion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Romanian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3346,11 +3342,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chinese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hindi</source>
+        <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4333,10 +4325,6 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Version Pre 1.8.4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Auto Cone/Rod</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4372,24 +4360,38 @@ Luminace Level</source>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Version 2.3.0 (FFT)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TonemappingWarningDialog</name>
     <message>
         <source>Attention!</source>
-        <translation type="unfinished">Huomio!</translation>
+        <translation type="obsolete">Huomio!</translation>
     </message>
     <message>
         <source>Ask again</source>
-        <translation type="unfinished">Kysy uudelleen</translation>
+        <translation type="obsolete">Kysy uudelleen</translation>
     </message>
     <message>
         <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
 
 Do you want to continue?</source>
-        <translation type="unfinished">Tämä tonemappausoperaattori on riipuvainen annetun kuvan koosta. Lopputulos on todennäköisesti erilainen, kun operaattoria käytetään täysikokoiseen kuvaan.
+        <translation type="obsolete">Tämä tonemappausoperaattori on riipuvainen annetun kuvan koosta. Lopputulos on todennäköisesti erilainen, kun operaattoria käytetään täysikokoiseen kuvaan.
 
 Haluatko jatkaa?</translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
