@@ -45,7 +45,7 @@ enum LumMappingMethod
 };
 
 //! \brief Private implementation for the class \c FloatRgbToQRgb
-class FloatRgbToQRgbImpl;
+struct FloatRgbToQRgbImpl;
 
 class FloatRgbToQRgb
 {
