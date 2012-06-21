@@ -1180,7 +1180,7 @@ Luminace Level</string>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Version 2.3.0 (FFT)</string>
+                 <string>Version 2.3.0</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
