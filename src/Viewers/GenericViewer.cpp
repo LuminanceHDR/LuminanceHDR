@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2009-2012 Franco Comida, Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing
+ * Original Work
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *  Refactoring for QGraphicsView
  *
  */
 

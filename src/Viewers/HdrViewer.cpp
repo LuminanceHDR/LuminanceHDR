@@ -50,14 +50,6 @@ namespace // anonymous namespace
 // In this way, we let know the compiler it can mess up as much as it wants with the code,
 // because it will only used inside this compilation unit
 
-template<class T>
-inline T clamp( T val, T min, T max )
-{
-    if ( val < min ) return min;
-    if ( val > max ) return max;
-    return val;
-}
-
 const pfs::Array2D* getPrimaryChannel(pfs::Frame* frame)
 {
     assert( frame != NULL );
@@ -67,194 +59,14 @@ const pfs::Array2D* getPrimaryChannel(pfs::Frame* frame)
 
 } // end anonymous namespace
 
-class HdrViewerMapping
-{
-public:
-    HdrViewerMapping(int nan_inf_color = 0, int neg_color = 0, float min_value = 1.0f, float max_value = 1.0f):
-        m_MappingMethod(MAP_GAMMA2_2),
-        m_NanInfColor(nan_inf_color),
-        m_NegColor(neg_color)
-    {
-        setMinMax(min_value, max_value);
-    }
-
-    void setMinMax( float min, float max )
-    {
-        m_MinValue      = min;
-        m_MaxValue      = max;
-        m_Range         = max - min;
-        m_LogRange      = log2f(max/min);
-    }
-
-    void updateErrorColors(int nan_inf_color, int neg_color)
-    {
-        m_NanInfColor   = nan_inf_color;
-        m_NegColor      = neg_color;
-    }
-
-    void setMappingMethod(int method)
-    {
-        m_MappingMethod = static_cast<LumMappingMethod>(method);
-    }
-
-    int getMappingMethod()
-    {
-        return m_MappingMethod;
-    }
-
-    float getMinLuminance()
-    {
-        return m_MinValue;
-    }
-
-    float getMaxLuminance()
-    {
-        return m_MaxValue;
-    }
-
-    void getMapping(float r, float g, float b, QRgb& pixel)
-    {
-#ifdef LUMINANCE_USE_SSE
-        v4sf rgb = (_mm_set_ps(0, b, g, r) - _mm_set1_ps(m_MinValue)) / _mm_set1_ps(m_Range);
-
-        switch ( m_MappingMethod )
-        {
-        case MAP_GAMMA1_4:
-            rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/1.4f));
-            break;
-        case MAP_GAMMA1_8:
-            rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/1.8f));
-            break;
-        case MAP_GAMMA2_2:
-            rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/2.2f));
-            break;
-        case MAP_GAMMA2_6:
-            rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/2.6f));
-            break;
-        case MAP_LOGARITHMIC:
-            // log(x) - log(y) = log(x/y)
-            rgb = _mm_log2_ps(_mm_set_ps(0, b, g, r)/_mm_set1_ps(m_MinValue))
-                    / _mm_set1_ps(m_LogRange);
-            break;
-        default:
-        case MAP_LINEAR:
-            // do nothing
-            // final value is already calculated
-            break;
-        }
-        rgb *= _mm_set1_ps(255.f);
-        rgb = _mm_min_ps(rgb, _mm_set1_ps(255.f));
-        rgb = _mm_max_ps(rgb, _mm_set1_ps(0.f));
-        rgb += _mm_set1_ps(0.5f);
-        float buf[4];
-        _mm_store_ps(buf, rgb);
-        pixel = qRgb( buf[0], buf[1], buf[2] );
-#else
-        float rgb[3] = {
-            (r - m_MinValue)/m_Range,
-            (g - m_MinValue)/m_Range,
-            (b - m_MinValue)/m_Range
-        };
-
-        switch ( m_MappingMethod )
-        {
-        case MAP_GAMMA1_4:
-            for ( int i = 0; i < 3; i++ )
-                rgb[i] = powf(rgb[i], 1.0f/1.4f);
-            break;
-        case MAP_GAMMA1_8:
-            for ( int i = 0; i < 3; i++ )
-                rgb[i] = powf(rgb[i], 1.0f/1.8f);
-            break;
-        case MAP_GAMMA2_2:
-            for ( int i = 0; i < 3; i++ )
-                rgb[i] = powf(rgb[i], 1.0f/2.2f);
-            break;
-        case MAP_GAMMA2_6:
-            for ( int i = 0; i < 3; i++ )
-                rgb[i] = powf(rgb[i], 1.0f/2.6f);
-            break;
-        case MAP_LOGARITHMIC:
-            // log(x) - log(y) = log(x/y)
-            rgb[0] = log2f(r/m_MinValue)/m_LogRange;
-            rgb[1] = log2f(g/m_MinValue)/m_LogRange;
-            rgb[2] = log2f(b/m_MinValue)/m_LogRange;
-            break;
-        default:
-        case MAP_LINEAR:
-            // do nothing
-            // final value is already calculated
-            break;
-        }
-        pixel = qRgb( clamp(rgb[0]*255.f, 0.0f, 255.f) + 0.5f,
-                      clamp(rgb[1]*255.f, 0.0f, 255.f) + 0.5f,
-                      clamp(rgb[2]*255.f, 0.0f, 255.f) + 0.5f );
-#endif
-    }
-
-    QImage mapFrameToImage(pfs::Frame* in_frame)
-    {
-#ifdef TIMER_PROFILING
-        msec_timer stop_watch;
-        stop_watch.start();
-#endif
-
-        // Channels X Y Z contain R G B data
-        pfs::Channel *ChR, *ChG, *ChB;
-        in_frame->getXYZChannels( ChR, ChG, ChB );
-        assert( ChR != NULL && ChG != NULL && ChB != NULL);
-
-        const float* R = ChR->getChannelData()->getRawData();
-        const float* G = ChG->getChannelData()->getRawData();
-        const float* B = ChB->getChannelData()->getRawData();
-
-        assert( R != NULL && G != NULL && B != NULL );
-
-        QImage return_qimage(in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);
-        QRgb *pixels = reinterpret_cast<QRgb*>(return_qimage.bits());
-
-#pragma omp parallel for
-        for ( int index = 0; index < in_frame->getWidth()*in_frame->getHeight(); ++index )
-        {
-            if ( !finite( R[index] ) || !finite( G[index] ) || !finite( B[index] ) )   // x is NaN or Inf
-            {
-                pixels[index] = m_NanInfColor;
-            }
-            else if ( R[index] < 0 || G[index]<0 || B[index]<0 )    // x is negative
-            {
-                pixels[index] = m_NegColor;
-            }
-            else
-            {
-                getMapping(R[index], G[index], B[index], pixels[index]);
-            }
-        }
-
-#ifdef TIMER_PROFILING
-        stop_watch.stop_and_update();
-        std::cout << "HdrViewer::mapFrameToImage() [NEW]= " << stop_watch.get_time() << " msec" << std::endl;
-#endif
-
-        return return_qimage;
-    }
-private:
-    // Current Visualization mode
-    LumMappingMethod m_MappingMethod;
-    float m_MinValue;
-    float m_MaxValue;
-    float m_Range;
-    float m_LogRange;
-
-    //! NaN or Inf color
-    int m_NanInfColor;
-    //! Neg color
-    int m_NegColor;
-}; // end HdrViewerMapping
-
-
-HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns, unsigned int neg, unsigned int naninf):
-    GenericViewer(frame, parent, ns),
-    m_mappingImpl(new HdrViewerMapping(naninf, neg))
+HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns,
+                     unsigned int neg, unsigned int naninf)
+    : GenericViewer(frame, parent, ns)
+    , m_MappingMethod(MAP_GAMMA2_2)
+    , m_MinValue(0.f)
+    , m_MaxValue(1.f)
+    , m_NanInfColor(naninf)
+    , m_NegColor(neg)
 {
     init_ui();
 
@@ -264,10 +76,11 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns, unsigned int n
     m_lumRange->setHistogramImage(getPrimaryChannel(getFrame()));
     m_lumRange->fitToDynamicRange();
 
-    m_mappingImpl->setMinMax(powf( 10.0f, m_lumRange->getRangeWindowMin() ),
-                             powf( 10.0f, m_lumRange->getRangeWindowMax() ));
+    m_MappingMethod = static_cast<LumMappingMethod>( mappingMethodCB->currentIndex() );
+    m_MinValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
+    m_MaxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
 
-    mPixmap->setPixmap(QPixmap::fromImage(m_mappingImpl->mapFrameToImage(getFrame())));
+    mPixmap->setPixmap(QPixmap::fromImage(mapFrameToImage(getFrame())));
 
     updateView();
     m_lumRange->blockSignals(false);
@@ -326,7 +139,7 @@ void HdrViewer::refreshPixmap()
 
     setCursor( Qt::WaitCursor );
 
-    mPixmap->setPixmap(QPixmap::fromImage(m_mappingImpl->mapFrameToImage(getFrame())));
+    mPixmap->setPixmap(QPixmap::fromImage(mapFrameToImage(getFrame())));
 
     unsetCursor();
 }
@@ -360,7 +173,8 @@ void HdrViewer::updateRangeWindow()
 
 void HdrViewer::setRangeWindow( float min, float max )
 {
-    m_mappingImpl->setMinMax(min, max);
+    m_MinValue = min;
+    m_MaxValue = max;
 
     refreshPixmap();
 }
@@ -373,14 +187,15 @@ int HdrViewer::getLumMappingMethod()
 void HdrViewer::setLumMappingMethod( int method )
 {
     mappingMethodCB->setCurrentIndex( method );
-    m_mappingImpl->setMappingMethod(method);
+    m_MappingMethod = static_cast<LumMappingMethod>(method);
 
     refreshPixmap();
 }
 
-void HdrViewer::update_colors(int neg, int naninf )
+void HdrViewer::update_colors(int neg, int naninf)
 {
-    m_mappingImpl->updateErrorColors(naninf, neg);
+    m_NanInfColor = naninf;
+    m_NegColor = neg;
 
     refreshPixmap();
 }
@@ -402,11 +217,65 @@ QString HdrViewer::getExifComment()
 //! \brief returns max value of the handled frame
 float HdrViewer::getMaxLuminanceValue()
 {
-    return m_mappingImpl->getMaxLuminance();
+    return m_MaxValue;
 }
 
 //! \brief returns min value of the handled frame
 float HdrViewer::getMinLuminanceValue()
 {
-    return m_mappingImpl->getMinLuminance();
+    return m_MinValue;
+}
+
+LumMappingMethod HdrViewer::getLuminanceMappingMethod()
+{
+    return m_MappingMethod;
+}
+
+QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+
+    // Channels X Y Z contain R G B data
+    pfs::Channel *ChR, *ChG, *ChB;
+    in_frame->getXYZChannels( ChR, ChG, ChB );
+    assert( ChR != NULL && ChG != NULL && ChB != NULL);
+
+    const float* R = ChR->getChannelData()->getRawData();
+    const float* G = ChG->getChannelData()->getRawData();
+    const float* B = ChB->getChannelData()->getRawData();
+
+    assert( R != NULL && G != NULL && B != NULL );
+
+    QImage return_qimage(in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);
+    QRgb *pixels = reinterpret_cast<QRgb*>(return_qimage.bits());
+
+    FloatRgbToQRgb convertToQRgb(m_MinValue, m_MaxValue, m_MappingMethod);
+
+#pragma omp parallel for
+    for ( int index = 0; index < in_frame->getWidth()*in_frame->getHeight(); ++index )
+    {
+        if ( !finite( R[index] ) || !finite( G[index] ) || !finite( B[index] ) )   // x is NaN or Inf
+        {
+            pixels[index] = m_NanInfColor;
+        }
+        else if ( R[index] < 0 || G[index]<0 || B[index]<0 )    // x is negative
+        {
+            pixels[index] = m_NegColor;
+        }
+        else
+        {
+            pixels[index] = convertToQRgb(R[index], G[index], B[index]);
+            // getMapping(R[index], G[index], B[index], pixels[index]);
+        }
+    }
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "HdrViewer::mapFrameToImage() [NEW]= " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+
+    return return_qimage;
 }

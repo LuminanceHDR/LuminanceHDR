@@ -31,6 +31,7 @@
 #define FROMLDRPFSTOQIMAGE
 
 #include <QImage>
+#include "Common/FloatRgbToQRgb.h"
 
 // forward declaration
 namespace pfs {
@@ -40,6 +41,9 @@ namespace pfs {
 //! \brief Build from a pfs::Frame a QImage of the same size
 //! \param[in] in_frame is a pointer to pfs::Frame*
 //! \return Pointer to QImage containing an 8 bit/channel representation of the input frame
-QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance = 0.0f, float max_luminance = 1.0f);
+QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
+                           float min_luminance = 0.0f,
+                           float max_luminance = 1.0f,
+                           LumMappingMethod mapping_method = MAP_LINEAR);
 
 #endif

@@ -37,6 +37,7 @@
 #include <QScopedPointer>
 
 #include "GenericViewer.h"
+#include "Common/FloatRgbToQRgb.h"
 
 #include <iostream>
 
@@ -47,17 +48,7 @@ namespace pfs {
 }
 
 class LuminanceRangeWidget;     // #include "LuminanceRangeWidget.h"
-class HdrViewerMapping;
-
-enum LumMappingMethod {
-  MAP_LINEAR,
-  MAP_GAMMA1_4,
-  MAP_GAMMA1_8,
-  MAP_GAMMA2_2,
-  MAP_GAMMA2_6,
-  MAP_LOGARITHMIC
-};
-
+// class HdrViewerMapping;
 
 class HdrViewer : public GenericViewer
 {
@@ -85,6 +76,8 @@ public:
     //! \brief returns min value of the handled frame
     float getMinLuminanceValue();
 
+    LumMappingMethod getLuminanceMappingMethod();
+
 public Q_SLOTS:
     void updateRangeWindow();
     int getLumMappingMethod();
@@ -107,8 +100,16 @@ protected:
 private:
     void refreshPixmap();
 
-    //! \brief Smart pointer to PIMPL class
-    QScopedPointer<HdrViewerMapping> m_mappingImpl;
+    LumMappingMethod m_MappingMethod;
+    float m_MinValue;
+    float m_MaxValue;
+
+    //! \brief NaN or Inf color
+    int m_NanInfColor;
+    //! \brief Neg color
+    int m_NegColor;
+
+    QImage mapFrameToImage(pfs::Frame* in_frame);
 };
 
 inline bool HdrViewer::isHDR()

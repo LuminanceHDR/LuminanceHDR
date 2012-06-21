@@ -35,6 +35,7 @@
 #include <iostream>
 #include <assert.h>
 
+#include "pfsoutldrimage.h"
 #include "Libpfs/frame.h"
 #include "Common/msec_timer.h"
 
@@ -62,7 +63,10 @@ inline int clamp_and_offset_to_8bits(float value, const float& min, const float&
 
 }
 
-QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_luminance)
+QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
+                           float min_luminance,
+                           float max_luminance,
+                           LumMappingMethod mapping_method)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
@@ -86,12 +90,12 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_
 
     QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
 
+    FloatRgbToQRgb converter(min_luminance, max_luminance, mapping_method);
+
 #pragma omp parallel for shared(pixels)
     for (int idx = 0; idx < height*width; ++idx)
     {
-        pixels[idx] = qRgb(clamp_and_offset_to_8bits(p_R[idx], min_luminance, max_luminance),
-                           clamp_and_offset_to_8bits(p_G[idx], min_luminance, max_luminance),
-                           clamp_and_offset_to_8bits(p_B[idx], min_luminance, max_luminance));
+        pixels[idx] = converter(p_R[idx], p_G[idx], p_B[idx]);
     }
 
 #ifdef TIMER_PROFILING

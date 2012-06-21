@@ -38,7 +38,8 @@
 
 #include <QObject>
 #include <QString>
-#include <QStringList>
+
+#include "Common/FloatRgbToQRgb.h"
 
 // Forward declaration
 namespace pfs {
@@ -66,25 +67,32 @@ public:
     ~IOWorker();
 
 public Q_SLOTS:
-    pfs::Frame* read_hdr_frame(QString filename);
+    pfs::Frame* read_hdr_frame(const QString& filename);
 
-    bool write_hdr_frame(pfs::Frame *frame, QString filename);
-    bool write_hdr_frame(GenericViewer* frame, QString filename);
+    bool write_hdr_frame(pfs::Frame *frame, const QString& filename);
+    bool write_hdr_frame(GenericViewer* frame, const QString& filename);
 
-    bool write_ldr_frame(pfs::Frame* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL, float min_luminance = 0.0f, float max_luminance = 1.0f);
-    bool write_ldr_frame(GenericViewer* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL);
+    bool write_ldr_frame(pfs::Frame* frame,
+                         const QString& filename, int quality,
+                         TonemappingOptions* tmopts = NULL,
+                         float min_luminance = 0.0f,
+                         float max_luminance = 1.0f,
+                         LumMappingMethod mapping_method = MAP_LINEAR);
+    bool write_ldr_frame(GenericViewer* frame,
+                         const QString& filename, int quality,
+                         TonemappingOptions* tmopts = NULL);
 
 signals:
-    void read_hdr_failed(QString error_message);
-    void read_hdr_success(pfs::Frame*, QString fname);
+    void read_hdr_failed(const QString& error_message);
+    void read_hdr_success(pfs::Frame*, const QString& fname);
 
     void write_hdr_failed();
-    void write_hdr_success(pfs::Frame*, QString);
-    void write_hdr_success(GenericViewer*, QString);
+    void write_hdr_success(pfs::Frame*, const QString&);
+    void write_hdr_success(GenericViewer*, const QString&);
 
     void write_ldr_failed();
-    void write_ldr_success(pfs::Frame*, QString);
-    void write_ldr_success(GenericViewer*, QString);
+    void write_ldr_success(pfs::Frame*, const QString&);
+    void write_ldr_success(GenericViewer*, const QString&);
 
     void setMaximum(int);
     void setValue(int);
