@@ -36,9 +36,16 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 #include "Libpfs/frame.h"
+#include "libpfs/colorspace.h"
 #include "Common/ProgressHelper.h"
+
+namespace
+{
+const float epsilon = 1e-4f;
+}
 
 void pfstmo_fattal02(pfs::Frame* frame,
                      float opt_alpha,
@@ -99,12 +106,24 @@ void pfstmo_fattal02(pfs::Frame* frame,
 
   if ( !ph->isTerminationRequested() )
   {
-      for ( int idx = 0; idx < w*h; ++idx )
+      pfs::Array2D G(w, h);
+      pfs::Array2D& R = Xr;
+      pfs::Array2D& B = Zr;
+
+      pfs::transformColorSpace(pfs::CS_XYZ, &Xr, &Yr, &Zr,
+                               pfs::CS_RGB, &R, &G, &B);
+
+      for (int i=0; i < w*h; i++)
       {
-          Xr(idx) = powf( Xr(idx)/Yr(idx), opt_saturation ) * L(idx);
-          Zr(idx) = powf( Zr(idx)/Yr(idx), opt_saturation ) * L(idx);
-          Yr(idx) = L(idx);
+          float y = std::max( Yr(i), epsilon );
+          float l = std::max( L(i), epsilon );
+          R(i) = powf( std::max(R(i)/y, 0.f), opt_saturation ) * l;
+          G(i) = powf( std::max(G(i)/y, 0.f), opt_saturation ) * l;
+          B(i) = powf( std::max(B(i)/y, 0.f), opt_saturation ) * l;
       }
+
+      pfs::transformColorSpace(pfs::CS_RGB, &R, &G, &B,
+                               pfs::CS_XYZ, &Xr, &Yr, &Zr);
 
       ph->newValue( 100 );
   }
