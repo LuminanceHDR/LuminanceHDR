@@ -3132,15 +3132,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Pattanaik</translation>
     </message>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mantiuk &apos;06</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mantiuk &apos;08</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4092,7 +4092,7 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Version 2.3.0 (FFT)</source>
+        <source>Version 2.3.0</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

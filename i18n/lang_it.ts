@@ -3503,7 +3503,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="obsolete">Form</translation>
     </message>
     <message>
         <source>Mantiuk &apos;06</source>
@@ -3512,6 +3512,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Mantiuk &apos;08</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Anteprima</translation>
     </message>
 </context>
 <context>
@@ -4534,7 +4538,11 @@ automatici</translation>
     </message>
     <message>
         <source>Version 2.3.0 (FFT)</source>
-        <translation>Versione 2.3.0 (FFT)</translation>
+        <translation type="obsolete">Versione 2.3.0 (FFT)</translation>
+    </message>
+    <message>
+        <source>Version 2.3.0</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
