@@ -190,7 +190,7 @@ void GammaAndLevels::refreshLUT()
     QImage previewimage(m_ReferenceQImage.width(), m_ReferenceQImage.height(), QImage::Format_RGB32);
     QRgb* dst = reinterpret_cast<QRgb*>(previewimage.bits());
 
-#pragma omp parallel for default(none) shared(src, dst, LUT)
+#pragma omp parallel for shared(src, dst)
     for (int i=0; i < m_ReferenceQImage.width()*m_ReferenceQImage.height(); ++i)
     {
         float red = static_cast<float>(qRed(src[i]))/255.f;

@@ -3223,10 +3223,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PreviewPanel</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mantiuk &apos;06</source>
         <translation type="unfinished">Mantiuk &apos;06</translation>
     </message>
@@ -3261,6 +3257,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Pattanaik</source>
         <translation type="unfinished">Pattanaik</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

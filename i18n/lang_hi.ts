@@ -3749,7 +3749,7 @@ p, li { white-space: pre-wrap; }
     <name>PreviewPanel</name>
     <message>
         <location filename="../src/PreviewPanel/PreviewPanel.ui" line="20"/>
-        <source>Form</source>
+        <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4802,67 +4802,67 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="235"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="233"/>
         <source>TM Database Problem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="236"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="234"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="666"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="664"/>
         <source>Load a tonemapping settings text file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="668"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="695"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="666"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="693"/>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="674"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="716"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="807"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="827"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="672"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="714"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="805"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="825"/>
         <source>Aborting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="675"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="673"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="693"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="691"/>
         <source>Save tonemapping settings text file to...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="716"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="714"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="807"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="805"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="827"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="825"/>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="952"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="950"/>
         <source>Custom LDR size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="953"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="951"/>
         <source>Enter the width of the new size:</source>
         <translation type="unfinished"></translation>
     </message>

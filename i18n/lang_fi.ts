@@ -3385,8 +3385,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Pattanaik</translation>
     </message>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
+        <source>Preview</source>
+        <translation type="unfinished">Esikatselu</translation>
     </message>
 </context>
 <context>

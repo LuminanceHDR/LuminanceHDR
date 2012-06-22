@@ -39,7 +39,7 @@
 #include <algorithm>
 
 #include "Libpfs/frame.h"
-#include "libpfs/colorspace.h"
+#include "Libpfs/colorspace.h"
 #include "Common/ProgressHelper.h"
 
 namespace

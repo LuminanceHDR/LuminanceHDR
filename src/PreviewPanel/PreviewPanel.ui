@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Preview</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="margin">
@@ -63,8 +63,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>125</width>
-        <height>934</height>
+        <width>124</width>
+        <height>950</height>
        </rect>
       </property>
       <property name="minimumSize">

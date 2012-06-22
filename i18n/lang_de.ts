@@ -3223,11 +3223,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PreviewPanel</name>
     <message>
-        <source>Form</source>
-        <translatorcomment>[Christian Raue] I have no idea if or where this will be shown and what it means. Will leave it as is.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mantiuk &apos;06</source>
         <translation></translation>
     </message>
@@ -3262,6 +3257,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Pattanaik</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Vorschau</translation>
     </message>
 </context>
 <context>

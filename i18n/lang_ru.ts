@@ -3180,7 +3180,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Pattanaik</translation>
     </message>
     <message>
-        <source>Form</source>
+        <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
