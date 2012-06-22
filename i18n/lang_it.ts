@@ -4534,7 +4534,11 @@ automatici</translation>
     </message>
     <message>
         <source>Version 2.3.0 (FFT)</source>
-        <translation>Versione 2.3.0 (FFT)</translation>
+        <translation type="obsolete">Versione 2.3.0 (FFT)</translation>
+    </message>
+    <message>
+        <source>Version 2.3.0</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

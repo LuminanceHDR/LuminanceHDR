@@ -1345,7 +1345,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GenericViewer</name>
     <message>
-        <location filename="../src/Viewers/GenericViewer.cpp" line="101"/>
+        <location filename="../src/Viewers/GenericViewer.cpp" line="103"/>
         <source>Pan the image to a region</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1398,42 +1398,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrViewer</name>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="299"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="112"/>
         <source>&amp;Mapping:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="300"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="113"/>
         <source>Histogram:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="306"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="119"/>
         <source>Linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="307"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="120"/>
         <source>Gamma 1.4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="308"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="121"/>
         <source>Gamma 1.8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="309"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="122"/>
         <source>Gamma 2.2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="310"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="123"/>
         <source>Gamma 2.6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="311"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="124"/>
         <source>Logarithmic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2186,17 +2186,17 @@ associated with the protocol?</source>
 <context>
     <name>IOWorker</name>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="251"/>
+        <location filename="../src/Core/IOWorker.cpp" line="275"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="311"/>
+        <location filename="../src/Core/IOWorker.cpp" line="335"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="329"/>
+        <location filename="../src/Core/IOWorker.cpp" line="353"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4457,204 +4457,204 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="267"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="254"/>
         <source>Contrast Factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="295"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="282"/>
         <source>Saturation Factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="441"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="428"/>
         <source>Detail Factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="528"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="515"/>
         <source>Contrast Equalization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="577"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="564"/>
         <source>Predefined Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="597"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="584"/>
         <source>Lcd Office</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="602"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="589"/>
         <source>Lcd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="607"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="594"/>
         <source>Lcd Bright</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="612"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="599"/>
         <source>CRT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="632"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1045"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="619"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1032"/>
         <source>Color Saturation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="657"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="644"/>
         <source>Contrast Enhancement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="688"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="675"/>
         <source>Enable
 Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="711"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="698"/>
         <source>Luminance Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="889"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="876"/>
         <source>Alpha</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="970"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="957"/>
         <source>Beta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1117"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1104"/>
         <source>Noise Reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1196"/>
-        <source>Version 2.3.0 (FFT)</source>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1183"/>
+        <source>Version 2.3.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1235"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1222"/>
         <source>Bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1343"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1330"/>
         <source>Spatial Kernel Sigma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1427"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1414"/>
         <source>Range Kernel Sigma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1524"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1511"/>
         <source>Base Contrast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1613"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1600"/>
         <source>Key Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1688"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1675"/>
         <source>Phi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1769"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1756"/>
         <source>Use Scales</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1859"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1846"/>
         <source>Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1887"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1874"/>
         <source>Lower Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1977"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1964"/>
         <source>Upper Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2094"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2081"/>
         <source>Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2178"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2165"/>
         <source>Chromatic Adaptation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2259"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2246"/>
         <source>Light Adaptation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2370"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2357"/>
         <source>Local Contrast Threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2454"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2441"/>
         <source>Simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2473"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2460"/>
         <source>Equation Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2494"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2481"/>
         <source>Eqn 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2510"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2497"/>
         <source>Eqn 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2567"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2554"/>
         <source>Multiplier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2651"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2638"/>
         <source>Local Tone Mapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2676"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2663"/>
         <source>Auto Cone/Rod</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2729"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2716"/>
         <source>Cone Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2797"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2784"/>
         <source>Rod Level</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4802,67 +4802,67 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="236"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="235"/>
         <source>TM Database Problem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="237"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="236"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="667"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="666"/>
         <source>Load a tonemapping settings text file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="669"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="696"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="668"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="695"/>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="675"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="717"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="808"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="828"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="674"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="716"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="807"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="827"/>
         <source>Aborting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="676"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="675"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="694"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="693"/>
         <source>Save tonemapping settings text file to...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="717"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="716"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="808"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="807"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="828"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="827"/>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="953"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="952"/>
         <source>Custom LDR size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="954"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="953"/>
         <source>Enter the width of the new size:</source>
         <translation type="unfinished"></translation>
     </message>

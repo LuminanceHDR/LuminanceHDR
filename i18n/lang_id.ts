@@ -4027,7 +4027,7 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Version 2.3.0 (FFT)</source>
+        <source>Version 2.3.0</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
