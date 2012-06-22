@@ -71,7 +71,7 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
 #pragma omp parallel for shared(pixels)
     for (int idx = 0; idx < height*width; ++idx)
     {
-        pixels[idx] = converter(p_R[idx], p_G[idx], p_B[idx]);
+        converter.toQRgb(p_R[idx], p_G[idx], p_B[idx], pixels[idx]);
     }
 
 #ifdef TIMER_PROFILING

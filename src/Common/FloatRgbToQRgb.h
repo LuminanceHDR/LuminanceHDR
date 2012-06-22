@@ -29,6 +29,7 @@
 //! \since Luminance HDR 2.3.0-beta1
 
 #include <cmath>
+#include <QtGlobal>
 #include <QRgb>
 #include <QScopedPointer>
 
@@ -51,7 +52,7 @@ class FloatRgbToQRgb
 {
 public:
     // ctor
-    FloatRgbToQRgb(float min_value = 1.0f,
+    FloatRgbToQRgb(float min_value = 0.0f,
                    float max_value = 1.0f,
                    LumMappingMethod mapping_method = MAP_LINEAR);
 
@@ -62,11 +63,14 @@ public:
     void setMappingMethod(LumMappingMethod method);
 
     // const functions
-    float getMinLuminance() const;
-    float getMaxLuminance() const;
+    //float getMinLuminance() const;
+    //float getMaxLuminance() const;
     LumMappingMethod getMappingMethod() const;
 
-    QRgb operator()(float r, float g, float b);
+    void toQRgb(float r, float g, float b, QRgb& qrgb);
+
+    void toQUint16(float r, float g, float b,
+                   quint16& red, quint16& green, quint16& blue);
 
 private:
     // private implementation, useful to get a more performant implementation

@@ -32,24 +32,10 @@
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Common/msec_timer.h"
 
-namespace
-{
-
-//! \note I pass value by value, so I can use it as a temporary variable inside the function
-//! I will let the compiler do the optimization that it likes
-inline quint16 clamp_and_offset_to_16bits(float value, const float& min, const float& max)
-{
-    if (value <= min) value = min;
-    else if (value >= max) value = max;
-
-    value = (value - min)/(max - min);
-
-    return (quint16)(value*65535.f + 0.5f);
-}
-
-}
-
-quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe, float min_luminance, float max_luminance)
+quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,
+                                  float min_luminance,
+                                  float max_luminance,
+                                  LumMappingMethod mapping_method)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
@@ -72,13 +58,14 @@ quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe, float min_luminance, f
     const float* p_R = Xc->getChannelData()->getRawData();
     const float* p_G = Yc->getChannelData()->getRawData();
     const float* p_B = Zc->getChannelData()->getRawData();
+
+    FloatRgbToQRgb converter(min_luminance, max_luminance, mapping_method);
 	
 #pragma omp parallel for
     for (int idx = 0; idx < height*width; ++idx)
     {
-        temp_pixmap[3*idx] = clamp_and_offset_to_16bits(p_R[idx], min_luminance, max_luminance);
-        temp_pixmap[3*idx + 1] = clamp_and_offset_to_16bits(p_G[idx], min_luminance, max_luminance);
-        temp_pixmap[3*idx + 2] = clamp_and_offset_to_16bits(p_B[idx], min_luminance, max_luminance);
+        converter.toQUint16(p_R[idx], p_G[idx], p_B[idx],
+                            temp_pixmap[3*idx], temp_pixmap[3*idx + 1], temp_pixmap[3*idx + 2]);
     }
 
 #ifdef TIMER_PROFILING

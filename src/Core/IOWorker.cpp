@@ -171,7 +171,12 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
         // QScopedArrayPointer will call delete [] when this object goes out of scope
-        QScopedArrayPointer<quint16> pixmap(fromLDRPFSto16bitsPixmap(ldr_input, min_luminance, max_luminance));
+        QScopedArrayPointer<quint16> pixmap(
+                    fromLDRPFSto16bitsPixmap(ldr_input,
+                                             min_luminance,
+                                             max_luminance,
+                                             mapping_method)
+                    );
         int width = ldr_input->getWidth();
         int height = ldr_input->getHeight();
         try

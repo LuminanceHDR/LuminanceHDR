@@ -75,6 +75,7 @@ QImage* fromHDRPFStoQImage(pfs::Frame* in_frame)
 
     const int width   = in_frame->getWidth();
     const int height  = in_frame->getHeight();
+    // const int elems = width*height;
 
     QImage* temp_qimage = new QImage(width, height, QImage::Format_RGB32);
 

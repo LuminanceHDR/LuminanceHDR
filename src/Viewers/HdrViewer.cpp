@@ -252,7 +252,7 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
     QImage return_qimage(in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);
     QRgb *pixels = reinterpret_cast<QRgb*>(return_qimage.bits());
 
-    FloatRgbToQRgb convertToQRgb(m_MinValue, m_MaxValue, m_MappingMethod);
+    FloatRgbToQRgb converter(m_MinValue, m_MaxValue, m_MappingMethod);
 
 #pragma omp parallel for
     for ( int index = 0; index < in_frame->getWidth()*in_frame->getHeight(); ++index )
@@ -267,8 +267,7 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
         }
         else
         {
-            pixels[index] = convertToQRgb(R[index], G[index], B[index]);
-            // getMapping(R[index], G[index], B[index], pixels[index]);
+            converter.toQRgb(R[index], G[index], B[index], pixels[index]);
         }
     }
 
