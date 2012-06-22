@@ -45,55 +45,57 @@ inline T clamp(const T& v, const T& lower_bound, const T& upper_bound)
     return v;
 }
 
-//! \note I assume that *in* contains only value between [0,1]
-void gamma_levels_array(const pfs::Array2D* in, pfs::Array2D* out,
-                        float black_in, float white_in,
-                        float black_out, float white_out, float gamma)
-{
-    // same formula used inside GammaAndLevels::refreshLUT()
-    //float value = powf( ( ((float)(i)/255.0f) - bin ) / (win-bin), expgamma);
-    //LUT[i] = clamp(blackout+value*(whiteout-blackout),0,255);
+////! \note I assume that *in* contains only value between [0,1]
+//void gamma_levels_array(const pfs::Array2D* in, pfs::Array2D* out,
+//                        float black_in, float white_in,
+//                        float black_out, float white_out, float gamma)
+//{
+//    // same formula used inside GammaAndLevels::refreshLUT()
+//    //float value = powf( ( ((float)(i)/255.0f) - bin ) / (win-bin), expgamma);
+//    //LUT[i] = clamp(blackout+value*(whiteout-blackout),0,255);
 
-    const float* in_vector = in->getRawData();
-    float* out_vector = out->getRawData();
+//    const float* in_vector = in->getRawData();
+//    float* out_vector = out->getRawData();
 
-    const int ELEMS = in->getCols()*in->getRows();
+//    const int ELEMS = in->getCols()*in->getRows();
 
-    if (gamma != 1.0f)
-    {
-#pragma omp parallel for
-        for (int idx = 0; idx < ELEMS; ++idx)
-        {
-            float tmp = (in_vector[idx] - black_in)/(white_in - black_in);
-            tmp = powf(tmp, gamma);
+//    if (gamma != 1.0f)
+//    {
+//#pragma omp parallel for
+//        for (int idx = 0; idx < ELEMS; ++idx)
+//        {
+//            float tmp = (in_vector[idx] - black_in)/(white_in - black_in);
+//            tmp = powf(tmp, gamma);
 
-            tmp = black_out + tmp*(white_out-black_out);
+//            tmp = black_out + tmp*(white_out-black_out);
 
-            out_vector[idx] = clamp(tmp, 0.0f, 1.0f);
-        }
-    }
-    else
-    {
-#pragma omp parallel for
-        for (int idx = 0; idx < ELEMS; ++idx)
-        {
-            float tmp = (in_vector[idx] - black_in)/(white_in - black_in);
-            //tmp = powf(tmp, gamma);
+//            out_vector[idx] = clamp(tmp, 0.0f, 1.0f);
+//        }
+//    }
+//    else
+//    {
+//#pragma omp parallel for
+//        for (int idx = 0; idx < ELEMS; ++idx)
+//        {
+//            float tmp = (in_vector[idx] - black_in)/(white_in - black_in);
+//            //tmp = powf(tmp, gamma);
 
-            tmp = black_out + tmp*(white_out-black_out);
+//            tmp = black_out + tmp*(white_out-black_out);
 
-            out_vector[idx] = clamp(tmp, 0.0f, 1.0f);
-        }
-    }
-}
+//            out_vector[idx] = clamp(tmp, 0.0f, 1.0f);
+//        }
+//    }
+//}
 
 }
 
 namespace pfs
 {
 
-pfs::Frame* gamma_levels(pfs::Frame* inFrame, float black_in, float white_in,
-                         float black_out, float white_out, float gamma)
+pfs::Frame* gamma_levels(pfs::Frame* inFrame,
+                         float black_in, float white_in,
+                         float black_out, float white_out,
+                         float gamma)
 {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
@@ -104,25 +106,51 @@ pfs::Frame* gamma_levels(pfs::Frame* inFrame, float black_in, float white_in,
              << "White in =" << white_in << "white out =" << white_out
              << "Gamma =" << gamma;
 
-    pfs::DOMIO pfsio;
-
     const int outWidth   = inFrame->getWidth();
     const int outHeight  = inFrame->getHeight();
 
-    pfs::Frame *outFrame = pfsio.createFrame(outWidth, outHeight);
+    pfs::Frame* outFrame = new pfs::Frame(outWidth, outHeight);
 
-    pfs::ChannelIterator *it = inFrame->getChannels();
+    pfs::Channel *Xc, *Yc, *Zc;
+    inFrame->getXYZChannels( Xc, Yc, Zc );
+    assert( Xc != NULL && Yc != NULL && Zc != NULL );
 
-    while (it->hasNext())
+    const float* R_i = Xc->getRawData();
+    const float* G_i = Yc->getRawData();
+    const float* B_i = Zc->getRawData();
+
+    outFrame->createXYZChannels( Xc, Yc, Zc );
+    assert( Xc != NULL && Yc != NULL && Zc != NULL );
+
+    float* R_o = Xc->getRawData();
+    float* G_o = Yc->getRawData();
+    float* B_o = Zc->getRawData();
+
+    // float exp_gamma = 1.f/gamma;
+    for (int idx = 0; idx < outWidth*outHeight; ++idx)
     {
-      pfs::Channel *inCh  = it->getNext();
-      pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
+        float red = R_i[idx];
+        float green = G_i[idx];
+        float blue = B_i[idx];
 
-      pfs::Array2D* inArray2D   = inCh->getChannelData();
-      pfs::Array2D* outArray2D  = outCh->getChannelData();
+        float L = 0.2126f * red
+                + 0.7152f * green
+                + 0.0722f * blue; // number between [0..1]
 
-      gamma_levels_array(inArray2D, outArray2D, black_in, white_in,
-                         black_out, white_out, gamma);
+        float c = powf(L, gamma - 1.0f);
+
+        red = (red - black_in) / (white_in - black_in);
+        red *= c;
+
+        green = (green - black_in) / (white_in - black_in);
+        green *= c;
+
+        blue = (blue - black_in) / (white_in - black_in);
+        blue *= c;
+
+        R_o[idx] = clamp(black_out + red * (white_out - black_out), 0.f, 1.f);
+        G_o[idx] = clamp(black_out + green * (white_out - black_out), 0.f, 1.f);
+        B_o[idx] = clamp(black_out + blue * (white_out - black_out), 0.f, 1.f);
     }
 
     pfs::copyTags(inFrame, outFrame);
