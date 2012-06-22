@@ -26,6 +26,7 @@
 //! \since Luminance HDR 2.3.0-beta1
 
 #include "FloatRgbToQRgb.h"
+#include "arch/math.h"
 #include "Libpfs/vex.h"
 #include <algorithm>
 
