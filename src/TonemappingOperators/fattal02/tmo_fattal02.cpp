@@ -272,7 +272,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
                     float grad = ((*gradients[k])(x,y) < 1e-4f) ? 1e-4 : (*gradients[k])(x,y);
                     float a = alfa * avgGrad[k];
 
-                    float value = powf((grad + noise)/a, beta - 1.0f);
+                    float value = powf((grad+noise)/a, beta - 1.0f);
 
                     if (newfattal)
                         (*fi[k])(x,y) *= value;
@@ -341,7 +341,7 @@ void tmo_fattal02(size_t width,
 {
     static const float black_point = 0.1f;
     static const float white_point = 0.5f;
-    static const float gamma = 1.f/.8f;
+    static const float gamma = 0.8f;
     // static const int   detail_level = 3;
     if ( detail_level < 0 ) detail_level = 0;
     if ( detail_level > 3 ) detail_level = 3;
@@ -489,9 +489,10 @@ void tmo_fattal02(size_t width,
       return;
   }
 
-//   dumpPFS( "DivG.pfs", DivG, "Y" );
-
+//  dumpPFS( "DivG.pfs", DivG, "Y" );
+  
   // solve pde and exponentiate (ie recover compressed image)
+  {
   pfs::Array2D U(width, height);
   if (fftsolver)
   {
@@ -507,26 +508,33 @@ void tmo_fattal02(size_t width,
   {
       return;
   }
+
+  for ( size_t y=0 ; y<height ; y++ )
+  {
+      for ( size_t x=0 ; x<width ; x++ )
+      {
+          L(x,y) = expf( gamma * U(x,y) );
+      }
+  }
+  }
   ph->newValue(95); 
 	
   // remove percentile of min and max values and renormalize
-  // Note [2012.06.20] currently black_point and white_point are hardcoded,
-  // however, if I decide to change to external value, I need to improve the
-  // boundary check of cut_min and cut_max
   float cut_min = 0.01f * black_point;
   float cut_max = 1.0f - 0.01f * white_point;
-
   assert(cut_min>=0.0f && (cut_max<=1.0f) && (cut_min<cut_max));
-
-  findMaxMinPercentile(U, cut_min, minLum, cut_max, maxLum);
-
-  // This loop compress the range between 0..1 and then applies a slightly
-  // darkening gamma curve (controlled by the hardcoded "gamma" variable)
-  for ( size_t idx = 0 ; idx < height * width; idx++ )
+  findMaxMinPercentile(L, cut_min, minLum, cut_max, maxLum);
+  for ( size_t y=0 ; y<height ; y++ )
   {
-      L(idx) = (U(idx) - minLum) / (maxLum - minLum);
-      L(idx) = (L(idx) <= 0.f) ? 0.f : powf(L(idx), gamma);
-      // note, we intentionally do not cut off values > 1.0
+      for ( size_t x=0 ; x<width ; x++ )
+      {
+          L(x,y) = (L(x,y) - minLum) / (maxLum - minLum);
+          if ( L(x,y) <= 0.0f )
+          {
+              L(x,y) = 0.0;
+          }
+          // note, we intentionally do not cut off values > 1.0
+      }
   }
 
   ph->newValue(96); 
