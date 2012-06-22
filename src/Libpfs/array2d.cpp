@@ -52,7 +52,7 @@ namespace pfs
         m_cols = cols;
         m_rows = rows;
         // Aligned memory allocation allows faster vectorized access
-        m_data = (float*)_mm_malloc(m_cols*m_rows*sizeof(float), 16);
+        m_data = (float*)_mm_malloc(m_cols*m_rows*sizeof(float), 32);
         m_is_data_owned = true;
     }
 

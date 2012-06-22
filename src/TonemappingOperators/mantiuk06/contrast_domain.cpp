@@ -323,7 +323,7 @@ inline float* matrix_alloc(int size)
 #ifdef __APPLE__
   float* m  = (float*)malloc      (sizeof(float)*size);
 #else
-  float* m    = (float*)_mm_malloc  (sizeof(float)*size, 16);
+  float* m    = (float*)_mm_malloc  (sizeof(float)*size, 32);
 #endif
   if (m == NULL)
   {
