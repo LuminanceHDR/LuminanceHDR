@@ -49,6 +49,9 @@ IGraphicsView::~IGraphicsView()
 
 void IGraphicsView::wheelEvent(QWheelEvent *event)
 {
+    // get the focus!
+    setFocus();
+
     if (event->modifiers() == Qt::ControlModifier)
     {
         if (event->delta() > 0) emit zoomIn();
