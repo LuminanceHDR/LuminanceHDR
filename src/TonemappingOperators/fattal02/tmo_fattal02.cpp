@@ -341,7 +341,7 @@ void tmo_fattal02(size_t width,
 {
     static const float black_point = 0.1f;
     static const float white_point = 0.5f;
-    static const float gamma = 0.8f;
+    static const float gamma = 1.0f; // 0.8f;
     // static const int   detail_level = 3;
     if ( detail_level < 0 ) detail_level = 0;
     if ( detail_level > 3 ) detail_level = 3;
@@ -509,12 +509,9 @@ void tmo_fattal02(size_t width,
       return;
   }
 
-  for ( size_t y=0 ; y<height ; y++ )
+  for ( size_t idx = 0 ; idx < height*width; ++idx )
   {
-      for ( size_t x=0 ; x<width ; x++ )
-      {
-          L(x,y) = expf( gamma * U(x,y) );
-      }
+      L(idx) = expf( gamma * U(idx) );
   }
   }
   ph->newValue(95); 
@@ -524,17 +521,14 @@ void tmo_fattal02(size_t width,
   float cut_max = 1.0f - 0.01f * white_point;
   assert(cut_min>=0.0f && (cut_max<=1.0f) && (cut_min<cut_max));
   findMaxMinPercentile(L, cut_min, minLum, cut_max, maxLum);
-  for ( size_t y=0 ; y<height ; y++ )
+  for ( size_t idx = 0; idx < height*width; ++idx )
   {
-      for ( size_t x=0 ; x<width ; x++ )
+      L(idx) = (L(idx) - minLum) / (maxLum - minLum);
+      if ( L(idx) <= 0.0f )
       {
-          L(x,y) = (L(x,y) - minLum) / (maxLum - minLum);
-          if ( L(x,y) <= 0.0f )
-          {
-              L(x,y) = 0.0;
-          }
-          // note, we intentionally do not cut off values > 1.0
+          L(idx) = 0.0;
       }
+      // note, we intentionally do not cut off values > 1.0
   }
 
   ph->newValue(96); 
