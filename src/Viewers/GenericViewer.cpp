@@ -126,8 +126,8 @@ void GenericViewer::fitToWindow(bool /* checked */)
 
     qreal sf = qMin(w_ratio, h_ratio)/getScaleFactor();
 
-    // update only if the change is below the 0.005%
-    if ( qAbs(sf - 1.0) > 0.005 )
+    // update only if the change is above the 0.05%
+    if ( qAbs(sf - static_cast<qreal>(1.0)) > 0.05 )
     {
 #ifdef QT_DEBUG
         //qDebug() << "void GenericViewer::fitToWindow().sf = " << sf;
@@ -159,8 +159,8 @@ void GenericViewer::fillToWindow()
 
     qreal sf = qMax(w_ratio, h_ratio)/getScaleFactor();
 
-    // update only if the change is below the 0.005%
-    if ( qAbs(sf - 1.0) > 0.005 )
+    // update only if the change is above the 0.05%
+    if ( qAbs(sf - static_cast<qreal>(1.0)) > 0.05 )
     {
 #ifdef QT_DEBUG
         //qDebug() << "void GenericViewer::fillToWindow().sf = " << sf;
