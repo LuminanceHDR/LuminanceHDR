@@ -1377,9 +1377,10 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 #endif
 
     // Warning when using size dependent TMOs with smaller sizes
-    if ( opts->tmoperator == fattal &&
-         opts->xsize != opts->origxsize &&
-         luminance_options.isShowFattalWarning() )
+    if ( (opts->tmoperator == fattal) &&
+         (opts->operator_options.fattaloptions.fftsolver == false) &&
+         (opts->xsize != opts->origxsize) &&
+         (luminance_options.isShowFattalWarning()) )
     {
         TonemappingWarningDialog tonemappingWarningDialog(this);
 
