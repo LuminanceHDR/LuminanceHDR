@@ -30,7 +30,7 @@
 #define LUMINANCEORGANIZATION "Luminance"
 #define LUMINANCEAPPLICATION "Luminance"
 
-#define LUMINANCEVERSION "2.3.0-beta1"
+#define LUMINANCEVERSION "2.3.0"
 #ifdef WIN32
 #define LUMINANCEVERSION_RES 2,3,0 // numeric fileversion for .rc file (format: '0,0,0')
 #endif
