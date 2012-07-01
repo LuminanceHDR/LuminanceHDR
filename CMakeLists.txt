@@ -193,7 +193,6 @@ ADD_SUBDIRECTORY(src)
 
 # translations
 FILE(GLOB LUMINANCE_TS i18n/*.ts)
-FILE(GLOB QT_I18N_QM i18n-qt/*.qm)
 
 IF(UPDATE_TRANSLATIONS)
     IF(LUPDATE_NOOBSOLETE)
@@ -215,13 +214,16 @@ SET(LUMINANCE_FILES
 
 # Apple Mac OS X
 IF(APPLE)
+    FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) # ${QT_TRANSLATIONS_DIR}/qt_*.qm)
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
+
     # icon files to copy in the bundle
     SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
     # set where in the bundle to put the icns files
     SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     # set where in the bundle to put the translation files
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
-    SET_SOURCE_FILES_PROPERTIES(${QT_I18N_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
+    SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QT_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
 
     # include the icns files in the target
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
@@ -239,6 +241,8 @@ IF(APPLE)
     SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
 # Unix
 ELSEIF(UNIX)
+    FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm)
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
@@ -247,7 +251,7 @@ ELSEIF(UNIX)
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
     INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
     INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
-    INSTALL(FILES ${QT_I18N_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+    INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
 
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
