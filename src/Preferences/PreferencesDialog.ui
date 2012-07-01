@@ -339,16 +339,6 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">हिंदी</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/flags/images/INDA0001.PNG</normalon>
-               </iconset>
-              </property>
-             </item>
-             <item>
-              <property name="text">
                <string notr="true">Magyar</string>
               </property>
               <property name="icon">
@@ -424,16 +414,6 @@
               <property name="icon">
                <iconset>
                 <normalon>:/flags/images/TURK0001.PNG</normalon>
-               </iconset>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">slovenský</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/flags/images/SVKA0001.PNG</normalon>
                </iconset>
               </property>
              </item>
