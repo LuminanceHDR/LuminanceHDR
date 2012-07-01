@@ -193,7 +193,7 @@ ADD_SUBDIRECTORY(src)
 
 # translations
 FILE(GLOB LUMINANCE_TS i18n/*.ts)
-#SET(LUMINANCE_TS "i18n/lang_sk.ts")
+FILE(GLOB QT_I18N_QM i18n-qt/*.qm)
 
 IF(UPDATE_TRANSLATIONS)
     IF(LUPDATE_NOOBSOLETE)
@@ -221,6 +221,8 @@ IF(APPLE)
     SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     # set where in the bundle to put the translation files
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
+    SET_SOURCE_FILES_PROPERTIES(${QT_I18N_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
+
     # include the icns files in the target
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
 
@@ -245,6 +247,8 @@ ELSEIF(UNIX)
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
     INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
     INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+    INSTALL(FILES ${QT_I18N_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
     INSTALL(FILES
