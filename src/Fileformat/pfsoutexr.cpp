@@ -88,20 +88,20 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
     //pfs::ChannelIteratorPtr cit( frame->getChannelIterator() );
 
 
-    const pfs::ChannelMap& channels = frame->getChannels();
+    const pfs::ChannelContainer& channels = frame->getChannels();
 
-    for (pfs::ChannelMap::const_iterator ch = channels.begin();
+    for (pfs::ChannelContainer::const_iterator ch = channels.begin();
          ch != channels.end();
          ++ch)
     {
-        pfs::TagIteratorPtr tit( ch->second->getTags()->getIterator() );
+        pfs::TagIteratorPtr tit( (*ch)->getTags()->getIterator() );
         while ( tit->hasNext() )
         {
             const char *tagName = tit->getNext();
-            string channelTagName = ch->second->getName();
+            std::string channelTagName = (*ch)->getName();
             channelTagName += ":";
             channelTagName += tagName;
-            header.insert( channelTagName.c_str(), StringAttribute(ch->second->getTags()->getString( tagName )) );
+            header.insert( channelTagName.c_str(), StringAttribute((*ch)->getTags()->getString( tagName )) );
         }
     }
   }

@@ -51,13 +51,13 @@ namespace pfs
     
     pfs::Frame *outFrame = pfs::DOMIO::createFrame((x_br-x_ul), (y_br-y_ul));
     
-    const ChannelMap& channels = inFrame->getChannels();
+    const ChannelContainer& channels = inFrame->getChannels();
     
-    for ( ChannelMap::const_iterator it = channels.begin();
+    for ( ChannelContainer::const_iterator it = channels.begin();
           it != channels.end();
           ++it)
     {
-        const pfs::Channel* inCh = it->second;
+        const pfs::Channel* inCh = *it;
 
         pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
 
@@ -92,13 +92,13 @@ namespace pfs
     
     pfs::Frame *outFrame = pfs::DOMIO::createFrame(outWidth, outHeight);
     
-    const ChannelMap& channels = inFrame->getChannels();
+    const ChannelContainer& channels = inFrame->getChannels();
 
-    for ( ChannelMap::const_iterator it = channels.begin();
+    for ( ChannelContainer::const_iterator it = channels.begin();
           it != channels.end();
           ++it)
     {
-        const pfs::Channel* inCh = it->second;
+        const pfs::Channel* inCh = *it;
 
         pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
 

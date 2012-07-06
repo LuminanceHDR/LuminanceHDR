@@ -94,25 +94,6 @@ public:
     void setChannelData(Array2D *);
 };
 
-//------------------------------------------------------------------------------
-// Map of channels
-//------------------------------------------------------------------------------
-struct string_cmp : public std::binary_function
-        <
-        const std::string&,
-        const std::string&,
-        bool
-        >
-{
-    bool operator()(const std::string& s1,
-                    const std::string& s2) const
-    {
-        return (s1.compare(s2) < 0);
-    }
-};
-
-typedef std::map<std::string, Channel*, string_cmp> ChannelMap;
-
 } // namespace pfs
 
 

@@ -145,7 +145,7 @@ void writeFrame(const Frame *src_frame, FILE *outputStream )
 
     fwrite( PFSFILEID, 1, 5, outputStream ); // Write header ID
 
-    const ChannelMap& channels = src_frame->getChannels();
+    const ChannelContainer& channels = src_frame->getChannels();
 
     fprintf( outputStream, "%d %d" PFSEOL, src_frame->getWidth(), src_frame->getHeight() );
     //fprintf( outputStream, "%d" PFSEOL, src_frame->channel.size() );
@@ -154,23 +154,23 @@ void writeFrame(const Frame *src_frame, FILE *outputStream )
     writeTags( &src_frame->getTags(), outputStream );
 
     //Write channel IDs and tags
-    for (ChannelMap::const_iterator it = channels.begin();
+    for (ChannelContainer::const_iterator it = channels.begin();
          it != channels.end();
          ++it)
     {
-        fprintf( outputStream, "%s" PFSEOL, it->second->getName().c_str() );
-        writeTags( it->second->getTags(), outputStream );
+        fprintf( outputStream, "%s" PFSEOL, (*it)->getName().c_str() );
+        writeTags( (*it)->getTags(), outputStream );
     }
 
     fprintf( outputStream, "ENDH");
 
     //Write channels
-    for (ChannelMap::const_iterator it = channels.begin();
+    for (ChannelContainer::const_iterator it = channels.begin();
          it != channels.end();
          ++it)
     {
         int size = src_frame->getWidth()*src_frame->getHeight();
-        fwrite( it->second->getRawData(), sizeof( float ), size, outputStream );
+        fwrite( (*it)->getRawData(), sizeof( float ), size, outputStream );
     }
 
     //Very important for pfsoutavi !!!

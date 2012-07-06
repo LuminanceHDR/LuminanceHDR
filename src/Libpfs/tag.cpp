@@ -134,13 +134,13 @@ namespace pfs
     {
         copyTags( &from->getTags(), &to->getTags() );
 
-        const ChannelMap& channels = from->getChannels();
+        const ChannelContainer& channels = from->getChannels();
 
-        for (ChannelMap::const_iterator it = channels.begin();
+        for (ChannelContainer::const_iterator it = channels.begin();
              it != channels.end();
              ++it)
         {
-            const pfs::Channel *fromCh = it->second;
+            const pfs::Channel *fromCh = *it;
             pfs::Channel *toCh = to->getChannel( fromCh->getName() );
 
             // Skip if there is no corresponding channel

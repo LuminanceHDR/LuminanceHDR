@@ -103,13 +103,13 @@ void ProjectionsDialog::okClicked()
 	int ySize=(int)(xSize / transforminfo->dstProjection->getSizeRatio());
     transformed = pfs::DOMIO::createFrame( xSize,ySize );
 
-    const pfs::ChannelMap& channels = original->getChannels();
+    const pfs::ChannelContainer& channels = original->getChannels();
 
-    for (pfs::ChannelMap::const_iterator it = channels.begin();
+    for (pfs::ChannelContainer::const_iterator it = channels.begin();
          it != channels.end();
          ++it)
     {
-        const pfs::Channel *originalCh = it->second;
+        const pfs::Channel *originalCh = *it;
         pfs::Channel *newCh = transformed->createChannel( originalCh->getName() );
 
         transformArray(originalCh->getChannelData(),

@@ -47,13 +47,13 @@ namespace pfs
     int ySize = frame->getWidth();
     pfs::Frame *resizedFrame = pfs::DOMIO::createFrame( xSize, ySize );
     
-    const ChannelMap& channels = frame->getChannels();
+    const ChannelContainer& channels = frame->getChannels();
 
-    for ( ChannelMap::const_iterator it = channels.begin();
+    for ( ChannelContainer::const_iterator it = channels.begin();
           it != channels.end();
           ++it)
     {
-        const pfs::Channel *originalCh = it->second;
+        const pfs::Channel *originalCh = *it;
         pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
 
         rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);

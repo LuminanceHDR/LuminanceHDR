@@ -27,8 +27,7 @@
  */
 
 #include <iostream>
-#include <map>
-#include <list>
+#include <algorithm>
 
 #include "frame.h"
 #include "domio.h"
@@ -41,56 +40,85 @@ namespace pfs
 Frame::Frame( int width, int height )
     : m_width( width )
     , m_height( height )
-{ }
+{}
+
+namespace
+{
+struct ChannelDeleter
+{
+    template <typename T>
+    inline
+    void operator()(T* p)
+    {
+        delete p;
+    }
+};
+}
+
 
 Frame::~Frame()
 {
-    ChannelMap::iterator it = m_channels.begin();
-    while ( it != m_channels.end() )
-    {
-        Channel *ch = it->second;
-
-        // Nasty trick because hashmap
-        // elements point to string that is
-        // freed by the channel
-        ChannelMap::iterator itToDelete = it;
-
-        it++;
-        m_channels.erase( itToDelete );
-        delete ch;
-    }
+    for_each(m_channels.begin(),
+             m_channels.end(),
+             ChannelDeleter());
 }
+
+namespace
+{
+struct FindChannel
+{
+    FindChannel(const std::string& nameChannel)
+        : nameChannel_(nameChannel)
+    {}
+
+    inline
+    bool operator()(const Channel* channel) const
+    {
+        return !(channel->getName().compare( nameChannel_ ));
+    }
+
+    private:
+        const std::string& nameChannel_;
+};
+}
+
 
 void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
 {
-    ChannelMap::iterator it;
-
     // find X
-    it = m_channels.find("X");
+    ChannelContainer::iterator it
+            ( std::find_if(m_channels.begin(),
+                        m_channels.end(),
+                        FindChannel("X"))
+              );
     if ( it == m_channels.end() )
     {
         X = Y = Z = NULL;
         return;
     }
-    X = it->second;
+    X = *it;
 
     // find Y
-    it = m_channels.find("Y");
+    it = std::find_if(m_channels.begin(),
+                   m_channels.end(),
+                   FindChannel("Y"));
     if ( it == m_channels.end() )
     {
         X = Y = Z = NULL;
         return;
     }
-    Y = it->second;
+    Y = *it;
 
     // find Y
-    it = m_channels.find("Z");
+    it = std::find_if(m_channels.begin(),
+                   m_channels.end(),
+                   FindChannel("Z"));
     if ( it == m_channels.end() )
     {
         X = Y = Z = NULL;
         return;
     }
-    Z = it->second;
+    Z = *it;
 }
 
 void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
@@ -102,52 +130,53 @@ void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
 
 Channel* Frame::getChannel(const std::string& name)
 {
-    ChannelMap::iterator it = m_channels.find(name);
+    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
+                                              m_channels.end(),
+                                              FindChannel(name));
     if ( it == m_channels.end() )
         return NULL;
     else
-        return it->second;
+        return *it;
 }
 
 Channel* Frame::createChannel(const std::string& name)
 {
-    ChannelMap::iterator it = m_channels.find(name);
-
+    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
+                                              m_channels.end(),
+                                              FindChannel(name));
     if ( it != m_channels.end() )
     {
-        return it->second; //m_channels[name];
+        return *it;
     }
     else
     {
-        Channel *ch = new Channel( m_width, m_height, name );
-        m_channels.insert( ChannelMap::value_type(name,
-                                                  ch) );
+        Channel* ch = new Channel( m_width, m_height, name );
+
+        m_channels.push_back( ch );
 
         return ch;
     }
 }
 
-void Frame::removeChannel( Channel *ch )
+void Frame::removeChannel(const std::string& channel)
 {
-    if ( ch == NULL ) return;
-
-    ChannelMap::iterator it = m_channels.find( ch->getName() );
-
+    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
+                                              m_channels.end(),
+                                              FindChannel(channel));
     if ( it != m_channels.end() )
     {
-
-
+        Channel* ch = *it;
         m_channels.erase( it );
         delete ch;
     }
 }
 
-ChannelMap& Frame::getChannels()
+ChannelContainer& Frame::getChannels()
 {
     return this->m_channels;
 }
 
-const ChannelMap& Frame::getChannels() const
+const ChannelContainer& Frame::getChannels() const
 {
     return this->m_channels;
 }

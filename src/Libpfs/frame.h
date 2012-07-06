@@ -31,12 +31,15 @@
 #define PFS_FRAME_H
 
 #include <string>
+#include <list>
 
 #include "channel.h"
 #include "tag.h"
 
 namespace pfs
 {
+
+typedef std::list< Channel* > ChannelContainer;
 
 //! Interface representing a single PFS frame. Frame may contain 0
 //! or more channels (e.g. color XYZ, depth channel, alpha
@@ -50,7 +53,7 @@ private:
 
     TagContainer m_tags;
 
-    ChannelMap m_channels;
+    ChannelContainer m_channels;
 
 public:
 
@@ -116,44 +119,15 @@ public:
     //! the ChannelIterator.
     //!
     //! @param channel [in] channel that should be removed.
-    void removeChannel(Channel *ch);
+    void removeChannel(const std::string& channel);
 
-    //! Use ChannelIterator to iterate over all Channels in the Frame.
-    //! ChannelIteratorPtr is a smart pointer, which destructs
-    //! ChannelIterator when ChannelIteratorPtr is destructed. Use ->
-    //! operator to access ChannelIterator members from a
-    //! ChannelIteratorPtr object.
-    //!
-    //! To iterate over all channels, use the following code:
-    //! <code>
-    //! pfs::ChannelIteratorPtr it( frame->getChannelIterator() );
-    //! while( it->hasNext() ) {
-    //!   pfs::Channel *ch = cit->getNext();
-    //!   //Do whatever is needed
-    //! }
-    //! </code>
-    // ChannelIteratorPtr getChannelIterator();
+    //! @return \c ChannelContainer associated to the internal list of \c Channel
+    ChannelContainer& getChannels();
 
-    //! DEPRECATED!!! Use getChannelIterator instead.
-    //!
-    //! Returns iterator for all available channels.
-    //!
-    //! Note that only one iterator for particular frame can be used at
-    //! a time. This method returns each time the same data structure,
-    //! so the iterator from previous call is lost after the call. The
-    //! iterator MUST NOT be deleted after use.
-    //!
-    //! Object ChannelIterator MUST NOT be freed. It's responsibility
-    //! of a Frame object.
-    //!/
-    // TODO: remove this rubbish
-    // ChannelIterator *getChannels();
-    ChannelMap& getChannels();
-
-    const ChannelMap& getChannels() const;
+    const ChannelContainer& getChannels() const;
 
 
-    //! Returns TagContainer that can be used to access or modify
+    //! @brief Returns TagContainer that can be used to access or modify
     //! tags associated with this Frame object.
     TagContainer& getTags();
 
