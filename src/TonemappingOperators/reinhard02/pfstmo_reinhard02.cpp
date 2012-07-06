@@ -40,8 +40,6 @@
 
 void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
 {
-  //pfs::DOMIO pfsio;
-  
   //--- default tone mapping parameters;
   //float key = 0.18;
   //float phi = 1.0;

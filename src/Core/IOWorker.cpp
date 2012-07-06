@@ -34,9 +34,11 @@
 #include <QScopedPointer>
 #include <stdexcept>
 
+
 #include "Core/IOWorker.h"
-#include "Fileformat/pfs_file_format.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
+#include "Fileformat/pfs_file_format.h"
 #include "Viewers/GenericViewer.h"
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
@@ -106,8 +108,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename)
     else if (qfi.suffix().toUpper() == "PFS")
     {
         FILE *fd = fopen(encodedName, "w");
-        pfs::DOMIO pfsio;
-        pfsio.writeFrame(hdr_frame, fd);
+        pfs::DOMIO::writeFrame(hdr_frame, fd);
         fclose(fd);
     }
     else
@@ -302,8 +303,7 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
             FILE *fd = fopen(encodedFileName, "rb");
             if (!fd) throw;
 
-            pfs::DOMIO pfsio;
-            hdrpfsframe = pfsio.readFrame(fd);
+            hdrpfsframe = pfs::DOMIO::readFrame(fd);
             fclose(fd);
         }
         else if (extension.startsWith("TIF"))
@@ -322,7 +322,7 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
 		}
 		catch (QString err)
 		{
-        		qDebug("TH: catched exception");
+            qDebug("TH: catched exception");
 			emit read_hdr_failed((err + " : %1").arg(filename));	
 			return NULL;
 		}

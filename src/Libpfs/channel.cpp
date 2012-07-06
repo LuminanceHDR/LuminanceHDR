@@ -42,8 +42,6 @@ namespace pfs
         : channel_impl( new Array2D( width, height ) )
         , name( channel_name )
     {
-        tags = new TagContainer();
-
         //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
     }
 
@@ -52,18 +50,17 @@ namespace pfs
         //std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
 
         delete channel_impl;
-        delete tags;
     }
 
     // Channel implementation
     TagContainer* Channel::getTags()
     {
-        return tags;
+        return &tags;
     }
 
     const TagContainer* Channel::getTags() const
     {
-        return tags;
+        return &tags;
     }
 
     float* Channel::getRawData()

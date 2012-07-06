@@ -42,12 +42,10 @@ namespace pfs
     msec_timer f_timer;
     f_timer.start();
 #endif
-    
-    pfs::DOMIO pfsio;
-    
+
     int xSize = frame->getHeight();
     int ySize = frame->getWidth();
-    pfs::Frame *resizedFrame = pfsio.createFrame( xSize, ySize );
+    pfs::Frame *resizedFrame = pfs::DOMIO::createFrame( xSize, ySize );
     
     const ChannelMap& channels = frame->getChannels();
 

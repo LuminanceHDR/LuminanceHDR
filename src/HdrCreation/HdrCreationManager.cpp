@@ -261,8 +261,6 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 	listmdrG[index] = G->getChannelData();
 	listmdrB[index] = B->getChannelData();
 	//perform some housekeeping
-    //pfs::DOMIO pfsio;
-	//pfsio.freeFrame(newFrame);
 	newResult(index,expotime,newfname);
 	//continue with the loading process
 	loadInputFiles();
@@ -679,10 +677,10 @@ void HdrCreationManager::cropMDR(const QRect& ca)
 {
 	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
-	pfs::DOMIO pfsio;
 	int origlistsize = listmdrR.size();
-	for (int idx = 0; idx < origlistsize; idx++) {
-		pfs::Frame *frame = pfsio.createFrame( m_mdrWidth, m_mdrHeight );
+    for (int idx = 0; idx < origlistsize; idx++)
+    {
+        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
 		pfs::Channel *Xc, *Yc, *Zc;
 		frame->createXYZChannels( Xc, Yc, Zc );
 		Xc->setChannelData(listmdrR[idx]);	
@@ -691,8 +689,10 @@ void HdrCreationManager::cropMDR(const QRect& ca)
 		int x_ul, y_ul, x_br, y_br;
 		ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 		pfs::Frame *cropped_frame = pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
-		pfsio.freeFrame(frame);
-		pfs::Channel *R, *G, *B;
+
+        pfs::DOMIO::freeFrame(frame);
+
+        pfs::Channel *R, *G, *B;
 		cropped_frame->getXYZChannels( R, G, B);
 		listmdrR[idx] = R->getChannelData();
 		listmdrG[idx] = G->getChannelData();
@@ -769,13 +769,15 @@ void HdrCreationManager::readData()
 
 void HdrCreationManager::saveMDRs(const QString& filename)
 {
-	qDebug() << "HdrCreationManager::saveMDRs";
-	pfs::DOMIO pfsio;
+#ifdef QT_DEBUG
+    qDebug() << "HdrCreationManager::saveMDRs";
+#endif
+
 	int origlistsize = listmdrR.size();
     for (int idx = 0; idx < origlistsize; idx++)
     {
 		QString fname = filename + QString("_%1").arg(idx) + ".tiff";
-		pfs::Frame *frame = pfsio.createFrame( m_mdrWidth, m_mdrHeight );
+        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
 		pfs::Channel *Xc, *Yc, *Zc;
 		frame->createXYZChannels( Xc, Yc, Zc );
 		Xc->setChannelData(listmdrR[idx]);	

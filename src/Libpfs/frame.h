@@ -44,8 +44,6 @@ namespace pfs
 //! also contain additional information in tags (see getTags).
 class Frame
 {
-    friend class DOMIO;
-
 private:
     int m_width;
     int m_height;
@@ -53,7 +51,6 @@ private:
     TagContainer m_tags;
 
     ChannelMap m_channels;
-    // ChannelIterator m_channel_iter;
 
 public:
 
@@ -83,6 +80,8 @@ public:
     //! @param Y [out] a pointer to store Y channel in
     //! @param Z [out] a pointer to store Z channel in
     void getXYZChannels(Channel* &X, Channel* &Y, Channel* &Z);
+
+    void getXYZChannels(const Channel* &X, const Channel* &Y, const Channel* &Z) const;
 
     //! Creates color channels in XYZ color space. If such channels
     //! already exists, returns existing channels, rather than

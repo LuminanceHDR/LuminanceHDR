@@ -49,8 +49,7 @@ namespace pfs
     if (y_br > inFrame->getHeight()) y_br = inFrame->getHeight();
     // ----- 
     
-    pfs::DOMIO pfsio;
-    pfs::Frame *outFrame = pfsio.createFrame((x_br-x_ul), (y_br-y_ul));
+    pfs::Frame *outFrame = pfs::DOMIO::createFrame((x_br-x_ul), (y_br-y_ul));
     
     const ChannelMap& channels = inFrame->getChannels();
     
@@ -88,12 +87,10 @@ namespace pfs
     f_timer.start();
 #endif
     
-    pfs::DOMIO pfsio;
-    
     const int outWidth   = inFrame->getWidth();
     const int outHeight  = inFrame->getHeight();
     
-    pfs::Frame *outFrame = pfsio.createFrame(outWidth, outHeight);
+    pfs::Frame *outFrame = pfs::DOMIO::createFrame(outWidth, outHeight);
     
     const ChannelMap& channels = inFrame->getChannels();
 

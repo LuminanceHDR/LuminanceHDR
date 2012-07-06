@@ -37,139 +37,155 @@ using namespace std;
 
 namespace pfs
 {
-    const char *PFSFILEID="PFS1\x0a";
-
-    DOMIO::DOMIO()
-    { }
-
-    DOMIO::~DOMIO()
-    { }
-
-    Frame* DOMIO::readFrame( FILE *inputStream )
-    {
-        assert( inputStream != NULL );
-
-#ifdef HAVE_SETMODE
-        // Needed under MS windows (text translation IO for stdin/out)
-        int old_mode = setmode( fileno( inputStream ), _O_BINARY );
-#endif
-
-        size_t read;
-
-        char buf[5];
-        read = fread( buf, 1, 5, inputStream );
-        if( read == 0 ) return NULL; // EOF
-
-        if( memcmp( buf, PFSFILEID, 5 ) ) throw Exception( "Incorrect PFS file header" );
-
-        int width, height, channelCount;
-        read = fscanf( inputStream, "%d %d" PFSEOL, &width, &height );
-        if( read != 2 || width <= 0 || width > MAX_RES || height <= 0 || height > MAX_RES )
-            throw Exception( "Corrupted PFS file: missing or wrong 'width', 'height' tags" );
-        read = fscanf( inputStream, "%d" PFSEOL, &channelCount );
-        if( read != 1 || channelCount < 0 || channelCount > MAX_CHANNEL_COUNT )
-            throw Exception( "Corrupted PFS file: missing or wrong 'channelCount' tag" );
-
-        //Frame *frame = (Frame*)createFrame( width, height );
-        Frame* frame = new Frame(width, height);
-
-        readTags( &frame->m_tags, inputStream );
-
-        //Read channel IDs and tags
-        std::list<Channel*> orderedChannel;
-        for( int i = 0; i < channelCount; i++ )
-        {
-            char channelName[MAX_CHANNEL_NAME+1], *rs;
-            rs = fgets( channelName, MAX_CHANNEL_NAME, inputStream );
-            if( rs == NULL )
-                throw Exception( "Corrupted PFS file: missing channel name" );
-            size_t len = strlen( channelName );
-            //      fprintf( stderr, "s = '%s' len = %d\n", channelName, len );
-            if( len < 1 || channelName[len-1] != PFSEOLCH )
-                throw Exception( "Corrupted PFS file: bad channel name" );
-            channelName[len-1] = 0;
-            Channel *ch = frame->createChannel( channelName );
-            readTags( ch->tags, inputStream );
-            orderedChannel.push_back( ch );
-        }
-
-        read = fread( buf, 1, 4, inputStream );
-        if( read == 0 || memcmp( buf, "ENDH", 4 ) )
-            throw Exception( "Corrupted PFS file: missing end of header (ENDH) token" );
-
-
-        //Read channels
-        std::list<Channel*>::iterator it;
-        for ( it = orderedChannel.begin(); it != orderedChannel.end(); it++ )
-        {
-            Channel *ch = *it;
-            unsigned int size = frame->getWidth()*frame->getHeight();
-            read = fread( ch->getRawData(), sizeof( float ), size, inputStream );
-            if ( read != size )
-                throw Exception( "Corrupted PFS file: missing channel data" );
-        }
-#ifdef HAVE_SETMODE
-        setmode( fileno( inputStream ), old_mode );
-#endif
-        return frame;
-    }
-
-
-    Frame* DOMIO::createFrame( int width, int height )
-    {
-        Frame *frame = new Frame( width, height );
-        if ( frame == NULL ) throw Exception( "Out of memory" );
-        return frame;
-    }
-
-
-    void DOMIO::writeFrame( Frame *src_frame, FILE *outputStream )
-    {
-        assert( outputStream != NULL );
-        assert( src_frame != NULL );
-#ifdef HAVE_SETMODE
-        // Needed under MS windows (text translation IO for stdin/out)
-        int old_mode = setmode( fileno( outputStream ), _O_BINARY );
-#endif
-
-        fwrite( PFSFILEID, 1, 5, outputStream ); // Write header ID
-
-        fprintf( outputStream, "%d %d" PFSEOL, src_frame->getWidth(), src_frame->getHeight() );
-        //fprintf( outputStream, "%d" PFSEOL, src_frame->channel.size() );
-        fprintf( outputStream, "%zd" PFSEOL, src_frame->m_channels.size() );
-
-        writeTags( &src_frame->m_tags, outputStream );
-
-        //Write channel IDs and tags
-        for ( ChannelMap::iterator it = src_frame->m_channels.begin(); it != src_frame->m_channels.end(); it++ )
-        {
-            fprintf( outputStream, "%s" PFSEOL, it->second->getName().c_str() );
-            writeTags( it->second->tags, outputStream );
-        }
-
-        fprintf( outputStream, "ENDH");
-
-        //Write channels
-        {
-            for( ChannelMap::iterator it = src_frame->m_channels.begin(); it != src_frame->m_channels.end(); it++ )
-            {
-                int size = src_frame->getWidth()*src_frame->getHeight();
-                fwrite( it->second->getRawData(), sizeof( float ), size, outputStream );
-            }
-        }
-
-        //Very important for pfsoutavi !!!
-        fflush(outputStream);
-#ifdef HAVE_SETMODE
-        setmode( fileno( outputStream ), old_mode );
-#endif
-    }
-
-    void DOMIO::freeFrame( Frame *frame )
-    {
-        delete frame;
-        frame = NULL;
-    }
-
+namespace
+{
+const char *PFSFILEID="PFS1\x0a";
 }
+
+namespace DOMIO
+{
+
+Frame* readFrame( FILE *inputStream )
+{
+    if ( inputStream == NULL ) return NULL;
+
+#ifdef HAVE_SETMODE
+    // Needed under MS windows (text translation IO for stdin/out)
+    int old_mode = setmode( fileno( inputStream ), _O_BINARY );
+#endif
+    char buf[5];
+    size_t read = fread( buf, 1, 5, inputStream );
+    if ( read == 0 ) return NULL; // EOF
+
+    if ( memcmp( buf, PFSFILEID, 5 ) )
+    {
+        throw Exception( "Incorrect PFS file header" );
+    }
+
+    int width, height, channelCount;
+    read = fscanf( inputStream, "%d %d" PFSEOL, &width, &height );
+    if ( read != 2 || width <= 0 || width > MAX_RES || height <= 0 || height > MAX_RES )
+    {
+        throw Exception( "Corrupted PFS file: missing or wrong 'width', 'height' tags" );
+    }
+    read = fscanf( inputStream, "%d" PFSEOL, &channelCount );
+    if ( read != 1 || channelCount < 0 || channelCount > MAX_CHANNEL_COUNT )
+    {
+        throw Exception( "Corrupted PFS file: missing or wrong 'channelCount' tag" );
+    }
+
+    //Frame *frame = (Frame*)createFrame( width, height );
+    Frame* frame = new Frame(width, height);
+
+    readTags( &frame->getTags(), inputStream );
+
+    //Read channel IDs and tags
+    std::list<Channel*> orderedChannel;
+    for ( int i = 0; i < channelCount; i++ )
+    {
+        char channelName[MAX_CHANNEL_NAME+1], *rs;
+        rs = fgets( channelName, MAX_CHANNEL_NAME, inputStream );
+        if ( rs == NULL )
+        {
+            throw Exception( "Corrupted PFS file: missing channel name" );
+        }
+
+        size_t len = strlen( channelName );
+        // fprintf( stderr, "s = '%s' len = %d\n", channelName, len );
+        if ( len < 1 || channelName[len-1] != PFSEOLCH )
+        {
+            throw Exception( "Corrupted PFS file: bad channel name" );
+        }
+
+        channelName[len-1] = 0;
+        Channel *ch = frame->createChannel( channelName );
+        readTags( ch->getTags(), inputStream );
+        orderedChannel.push_back( ch );
+    }
+
+    read = fread( buf, 1, 4, inputStream );
+    if( read == 0 || memcmp( buf, "ENDH", 4 ) )
+    {
+        throw Exception( "Corrupted PFS file: missing end of header (ENDH) token" );
+    }
+
+    //Read channels
+    std::list<Channel*>::iterator it;
+    for ( it = orderedChannel.begin(); it != orderedChannel.end(); ++it )
+    {
+        Channel *ch = *it;
+        unsigned int size = frame->getWidth()*frame->getHeight();
+        read = fread( ch->getRawData(), sizeof( float ), size, inputStream );
+        if ( read != size )
+            throw Exception( "Corrupted PFS file: missing channel data" );
+    }
+#ifdef HAVE_SETMODE
+    setmode( fileno( inputStream ), old_mode );
+#endif
+    return frame;
+}
+
+
+Frame* createFrame( int width, int height )
+{
+    Frame *frame = new Frame( width, height );
+    if ( frame == NULL ) throw Exception( "Out of memory" );
+    return frame;
+}
+
+
+void writeFrame(const Frame *src_frame, FILE *outputStream )
+{
+    assert( outputStream != NULL );
+    assert( src_frame != NULL );
+#ifdef HAVE_SETMODE
+    // Needed under MS windows (text translation IO for stdin/out)
+    int old_mode = setmode( fileno( outputStream ), _O_BINARY );
+#endif
+
+    fwrite( PFSFILEID, 1, 5, outputStream ); // Write header ID
+
+    const ChannelMap& channels = src_frame->getChannels();
+
+    fprintf( outputStream, "%d %d" PFSEOL, src_frame->getWidth(), src_frame->getHeight() );
+    //fprintf( outputStream, "%d" PFSEOL, src_frame->channel.size() );
+    fprintf( outputStream, "%zd" PFSEOL, channels.size() );
+
+    writeTags( &src_frame->getTags(), outputStream );
+
+    //Write channel IDs and tags
+    for (ChannelMap::const_iterator it = channels.begin();
+         it != channels.end();
+         ++it)
+    {
+        fprintf( outputStream, "%s" PFSEOL, it->second->getName().c_str() );
+        writeTags( it->second->getTags(), outputStream );
+    }
+
+    fprintf( outputStream, "ENDH");
+
+    //Write channels
+    for (ChannelMap::const_iterator it = channels.begin();
+         it != channels.end();
+         ++it)
+    {
+        int size = src_frame->getWidth()*src_frame->getHeight();
+        fwrite( it->second->getRawData(), sizeof( float ), size, outputStream );
+    }
+
+    //Very important for pfsoutavi !!!
+    fflush(outputStream);
+#ifdef HAVE_SETMODE
+    setmode( fileno( outputStream ), old_mode );
+#endif
+}
+
+void freeFrame( Frame *frame )
+{
+    delete frame;
+    frame = NULL;
+}
+
+} // namespace DOMIO
+} // namespace pfs
 

@@ -65,8 +65,6 @@ static string escapeString( const string &src )
 
 pfs::Frame * readEXRfile( const char *filename )
 {
-  pfs::DOMIO pfsio;
-  
   InputFile file( filename );
   
   FrameBuffer frameBuffer;
@@ -76,13 +74,13 @@ pfs::Frame * readEXRfile( const char *filename )
   int width  = dw.max.x - dw.min.x + 1;
   int height = dw.max.y - dw.min.y + 1;
   
-  if( (dtw.min.x < dw.min.x && dtw.max.x > dw.max.x) ||
-          (dtw.min.y < dw.min.y && dtw.max.y > dw.max.y) )
+  if ( (dtw.min.x < dw.min.x && dtw.max.x > dw.max.x) ||
+       (dtw.min.y < dw.min.y && dtw.max.y > dw.max.y) )
   {
-    throw pfs::Exception( "No support for OpenEXR files DataWidnow greater than DisplayWindow" );
+      throw pfs::Exception( "No support for OpenEXR files DataWidnow greater than DisplayWindow" );
   }
   
-  pfs::Frame *frame = pfsio.createFrame( width, height );
+  pfs::Frame *frame = pfs::DOMIO::createFrame( width, height );
   
   const ChannelList &channels = file.header().channels();
   

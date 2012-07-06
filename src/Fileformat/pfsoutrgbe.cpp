@@ -25,8 +25,6 @@
  * @author Giuseppe Rota  <grota@users.sourceforge.net>
  */
 
-#include <assert.h>
-
 #include "rgbeio.h"
 
 #include "Libpfs/frame.h"
@@ -34,7 +32,6 @@
 
 void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename)
 {
-	pfs::DOMIO pfsio;
 	FILE *outfp = fopen(outfilename,"wb");
 	RGBEWriter writer(outfp);
 	pfs::Channel *X, *Y, *Z;

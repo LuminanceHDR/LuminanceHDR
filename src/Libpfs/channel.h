@@ -42,13 +42,10 @@ namespace pfs
 //! associated tags.
 class Channel
 {
-    friend class DOMIO;
-
 private:
-
     Array2D* channel_impl;
     std::string name;
-    TagContainer *tags;
+    TagContainer tags;
 
 public:
     Channel(int width, int height, const std::string& channel_name);

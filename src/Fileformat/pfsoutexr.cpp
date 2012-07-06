@@ -44,7 +44,6 @@ using std::string;
 void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
 {  
   Compression exrCompression = PIZ_COMPRESSION;
-  // pfs::DOMIO pfsio;
   bool firstFrame = true;
   half *halfR = NULL;
   half *halfG = NULL;

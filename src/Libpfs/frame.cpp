@@ -120,7 +120,8 @@ Channel* Frame::createChannel(const std::string& name)
     else
     {
         Channel *ch = new Channel( m_width, m_height, name );
-        m_channels.insert( std::pair<std::string, Channel*>(name, ch) );
+        m_channels.insert( ChannelMap::value_type(name,
+                                                  ch) );
 
         return ch;
     }

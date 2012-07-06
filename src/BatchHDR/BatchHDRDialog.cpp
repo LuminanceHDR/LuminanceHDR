@@ -293,8 +293,7 @@ void BatchHDRDialog::create_hdr(int)
 	QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
 	m_IO_Worker->write_hdr_frame(resultHDR, outName);
 	
-	pfs::DOMIO pfsio;
-	pfsio.freeFrame(resultHDR);
+    pfs::DOMIO::freeFrame(resultHDR);
 	
 	QStringList  fnames = m_hdrCreationManager->getFileList();
 	int n = fnames.size();

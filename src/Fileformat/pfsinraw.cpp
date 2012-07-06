@@ -30,9 +30,9 @@
 #include <QDebug>
 #include <QFile>
 
+#include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 #include "Fileformat/pfsinraw.h"
-#include "Libpfs/frame.h"
 #include "Common/LuminanceOptions.h"
 
 /**************************** From UFRAW sourcecode ********************************
@@ -256,8 +256,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   int W = image->width;
   int H = image->height;
   
-  pfs::DOMIO pfsio;
-  pfs::Frame *frame = pfsio.createFrame( W, H );
+  pfs::Frame *frame = pfs::DOMIO::createFrame( W, H );
 
   if (frame == NULL)
   {
