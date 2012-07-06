@@ -46,7 +46,7 @@ class Frame
 {
     friend class DOMIO;
 
-protected:
+private:
     int m_width;
     int m_height;
 
