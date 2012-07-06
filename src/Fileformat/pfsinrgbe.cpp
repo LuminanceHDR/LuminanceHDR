@@ -34,14 +34,16 @@
 pfs::Frame* readRGBEfile (const char * filename)
 {
 	pfs::DOMIO pfsio;
-	FILE *inputRGBEfile=fopen(filename,"rb");
+    FILE *inputRGBEfile = fopen(filename,"rb");
 	RGBEReader reader( inputRGBEfile );
 	pfs::Frame *frame = pfsio.createFrame( reader.getWidth(), reader.getHeight() );
 	pfs::Channel  *X, *Y, *Z;
 	frame->createXYZChannels( X, Y, Z);
 	reader.readImage(X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-	frame->getTags()->setString("LUMINANCE", "RELATIVE");
-	frame->getTags()->setString("FILE_NAME", filename);
-	fclose(inputRGBEfile);
+
+    frame->getTags().setString("LUMINANCE", "RELATIVE");
+    frame->getTags().setString("FILE_NAME", filename);
+
+    fclose(inputRGBEfile);
 	return frame;
 }

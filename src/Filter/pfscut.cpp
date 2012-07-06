@@ -52,17 +52,20 @@ namespace pfs
     pfs::DOMIO pfsio;
     pfs::Frame *outFrame = pfsio.createFrame((x_br-x_ul), (y_br-y_ul));
     
-    pfs::ChannelIterator *it = inFrame->getChannels();
+    const ChannelMap& channels = inFrame->getChannels();
     
-    while (it->hasNext())
+    for ( ChannelMap::const_iterator it = channels.begin();
+          it != channels.end();
+          ++it)
     {
-      pfs::Channel *inCh  = it->getNext();
-      pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
-      
-      pfs::Array2D* inArray2D   = inCh->getChannelData();
-      pfs::Array2D* outArray2D  = outCh->getChannelData();
-      
-      copyArray(inArray2D, outArray2D, x_ul, y_ul, x_br, y_br);
+        const pfs::Channel* inCh = it->second;
+
+        pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
+
+        const pfs::Array2D* inArray2D   = inCh->getChannelData();
+        pfs::Array2D* outArray2D  = outCh->getChannelData();
+
+        copyArray(inArray2D, outArray2D, x_ul, y_ul, x_br, y_br);
     }
     
     pfs::copyTags(inFrame, outFrame);
@@ -92,17 +95,20 @@ namespace pfs
     
     pfs::Frame *outFrame = pfsio.createFrame(outWidth, outHeight);
     
-    pfs::ChannelIterator *it = inFrame->getChannels();
-    
-    while (it->hasNext())
+    const ChannelMap& channels = inFrame->getChannels();
+
+    for ( ChannelMap::const_iterator it = channels.begin();
+          it != channels.end();
+          ++it)
     {
-      pfs::Channel *inCh  = it->getNext();
-      pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
-      
-      pfs::Array2D* inArray2D   = inCh->getChannelData();
-      pfs::Array2D* outArray2D  = outCh->getChannelData();
-      
-      copyArray(inArray2D, outArray2D);
+        const pfs::Channel* inCh = it->second;
+
+        pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
+
+        const pfs::Array2D* inArray2D   = inCh->getChannelData();
+        pfs::Array2D* outArray2D  = outCh->getChannelData();
+
+        copyArray(inArray2D, outArray2D);
     }
     
     pfs::copyTags(inFrame, outFrame);

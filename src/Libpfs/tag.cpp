@@ -130,26 +130,34 @@ namespace pfs
         m_tags.clear();
     }
 
-    void copyTags( Frame *from, Frame *to )
+    void copyTags(const Frame *from, Frame *to)
     {
-        copyTags( from->getTags(), to->getTags() );
-        pfs::ChannelIterator *it = from->getChannels();
-        while ( it->hasNext() )
-        {
-            pfs::Channel *fromCh = it->getNext();
-            pfs::Channel *toCh = to->getChannel( fromCh->getName() );
-            if ( toCh == NULL ) // Skip if there is no corresponding channel
-                continue;
-            copyTags( fromCh->getTags(), toCh->getTags() );
-        }
+        copyTags( &from->getTags(), &to->getTags() );
 
+        const ChannelMap& channels = from->getChannels();
+
+        for (ChannelMap::const_iterator it = channels.begin();
+             it != channels.end();
+             ++it)
+        {
+            const pfs::Channel *fromCh = it->second;
+            pfs::Channel *toCh = to->getChannel( fromCh->getName() );
+
+            // Skip if there is no corresponding channel
+            if ( toCh != NULL )
+            {
+                copyTags( fromCh->getTags(), toCh->getTags() );
+            }
+        }
     }
 
-    void copyTags( const TagContainer *f, TagContainer *t )
+    void copyTags(const TagContainer *f, TagContainer *t)
     {
         t->removeAllTags();
 
-        for ( TagList::const_iterator it = f->tagsBegin(); it != f->tagsEnd(); it++ )
+        for (TagList::const_iterator it = f->tagsBegin();
+             it != f->tagsEnd();
+             it++)
         {
             t->appendTag( *it );
         }

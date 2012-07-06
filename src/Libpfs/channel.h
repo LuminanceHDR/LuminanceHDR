@@ -25,8 +25,8 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
  
-#ifndef CHANNEL_H
-#define CHANNEL_H
+#ifndef PFS_CHANNEL_H
+#define PFS_CHANNEL_H
 
 #include <string>
 #include <map>
@@ -38,49 +38,32 @@
 namespace pfs
 {
 
-/**
-  * TODO: change it!
- * Channel interface represents a 2D rectangular array with
- * associated tags.
- */
-//  class Channel /*: public Array2D */
-//  {
-//  public:
-//    virtual int getWidth() const = 0;
-//    virtual int getHeight() const = 0;
-//    virtual std::string getName() const = 0;
-//    virtual TagContainer *getTags() = 0;
-//    virtual float *getRawData() = 0;
-//    virtual Array2DImpl* getChannelData() = 0;
-//    /* Empty Virtual Destructor for Channel */
-//    virtual ~Channel() { }
-//  };
+//! \brief Channel interface represents a 2D rectangular array with
+//! associated tags.
+class Channel
+{
+    friend class DOMIO;
 
-  //class ChannelImpl: public Channel
-  class Channel
-  {
-      friend class DOMIO;
+private:
 
-      /* width = cols */
-      /* height = rows */
-  protected:
-      std::string name;
-      Array2D* channel_impl;
+    Array2D* channel_impl;
+    std::string name;
+    TagContainer *tags;
 
-      TagContainer *tags;
+public:
+    Channel(int width, int height, const std::string& channel_name);
 
-  public:
-      Channel( int width, int height, std::string n_name);
+    virtual ~Channel();
 
-      virtual ~Channel();
-
-      /**
+    /**
        * Returns TagContainer that can be used to access or modify
        * tags associated with this Channel object.
        */
-      TagContainer *getTags();
+    TagContainer *getTags();
+    const TagContainer *getTags() const;
 
-      /**
+
+    /**
        * For performance reasons, the channels can be accessed as a
        * table of float values. Data is given in row-major order, i.e.
        * it is indexed data[x+y*width]. If performance is not crucial,
@@ -88,85 +71,53 @@ namespace pfs
        *
        * @return a table of floats of the size width*height
        */
-      float *getRawData();
-      const float* getRawData() const;
+    float *getRawData();
+    const float* getRawData() const;
 
-      /**
+    /**
        * Gets width of the channel (in pixels).
        * This is a synonym for Array2D::getCols().
        */
-      virtual int getWidth() const;
+    int getWidth() const;
 
-      /**
+    /**
        * Gets height of the channel (in pixels).
        * This is a synonym for Array2D::getRows().
        */
-      virtual int getHeight() const;
+    int getHeight() const;
 
-      /**
+    /**
        * Gets name of the channel.
        */
-      virtual std::string getName() const;
+    const std::string& getName() const;
 
-      Array2D* getChannelData();
-      void setChannelData(Array2D *);
-  };
+    Array2D* getChannelData();
+    const Array2D* getChannelData() const;
 
-  //------------------------------------------------------------------------------
-  // Map of channels
-  //------------------------------------------------------------------------------
-  struct string_cmp: public std::binary_function<std::string,std::string,bool>
-  {
-      bool operator()(std::string s1, std::string s2) const
-      {
-          return (s1.compare(s2) < 0);
-      }
-  };
+    void setChannelData(Array2D *);
+};
 
-  typedef std::map<std::string, Channel*, string_cmp> ChannelMap; //, str_cmp> ;
+//------------------------------------------------------------------------------
+// Map of channels
+//------------------------------------------------------------------------------
+struct string_cmp : public std::binary_function
+        <
+        const std::string&,
+        const std::string&,
+        bool
+        >
+{
+    bool operator()(const std::string& s1,
+                    const std::string& s2) const
+    {
+        return (s1.compare(s2) < 0);
+    }
+};
 
-  //------------------------------------------------------------------------------
-  // Channel Iterator Interface
-  //------------------------------------------------------------------------------
-  /**
-   * Iterator that allows to get the list of available channels in a frame.
-   */
-  class ChannelIterator
-  {
-      ChannelMap::iterator it;
-      ChannelMap *cm;
-  public:
-      inline ChannelIterator( ChannelMap *cm ) : cm(cm)
-      {
-          reset();
-      }
+typedef std::map<std::string, Channel*, string_cmp> ChannelMap;
 
-      inline void reset()
-      {
-          it = cm->begin();
-      }
-
-      /**
-       * Get next item on the list.
-       */
-      inline Channel *getNext()
-      {
-          if ( !hasNext() ) return NULL;
-          return (it++)->second;
-      }
-
-      /**
-       * Returns true if there is still an item left on the list.
-       */
-      inline bool hasNext() const
-      {
-          return it != cm->end();
-      }
-  };
-
-  typedef SelfDestructPtr<ChannelIterator> ChannelIteratorPtr;
-}
+} // namespace pfs
 
 
-#endif // CHANNEL_H
+#endif // PFS_CHANNEL_H
 

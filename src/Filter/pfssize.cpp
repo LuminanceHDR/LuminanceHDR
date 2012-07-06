@@ -126,15 +126,18 @@ pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize)
   
   pfs::Frame *resizedFrame = pfsio.createFrame( new_x, new_y );
   
-  pfs::ChannelIterator *it = frame->getChannels();
-  while( it->hasNext() )
+  const ChannelMap& channels = frame->getChannels();
+
+  for ( ChannelMap::const_iterator it = channels.begin();
+        it != channels.end();
+        ++it)
   {
-    pfs::Channel *originalCh = it->getNext();
-    pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
-    
-    resampleArray(originalCh->getChannelData(), newCh->getChannelData(), filter);
+      const pfs::Channel* originalCh = it->second;
+      pfs::Channel* newCh = resizedFrame->createChannel( originalCh->getName() );
+
+      resampleArray(originalCh->getChannelData(), newCh->getChannelData(), filter);
   }
-  
+
   pfs::copyTags( frame, resizedFrame );
   delete filter;
  

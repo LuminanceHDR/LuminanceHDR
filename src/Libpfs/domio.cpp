@@ -73,7 +73,7 @@ namespace pfs
         //Frame *frame = (Frame*)createFrame( width, height );
         Frame* frame = new Frame(width, height);
 
-        readTags( frame->m_tags, inputStream );
+        readTags( &frame->m_tags, inputStream );
 
         //Read channel IDs and tags
         std::list<Channel*> orderedChannel;
@@ -138,7 +138,7 @@ namespace pfs
         //fprintf( outputStream, "%d" PFSEOL, src_frame->channel.size() );
         fprintf( outputStream, "%zd" PFSEOL, src_frame->m_channels.size() );
 
-        writeTags( src_frame->m_tags, outputStream );
+        writeTags( &src_frame->m_tags, outputStream );
 
         //Write channel IDs and tags
         for ( ChannelMap::iterator it = src_frame->m_channels.begin(); it != src_frame->m_channels.end(); it++ )

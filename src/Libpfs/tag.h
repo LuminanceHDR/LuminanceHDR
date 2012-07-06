@@ -53,7 +53,8 @@ namespace pfs
         string tagName;
 
     public:
-        inline TagIterator( const TagList &tagList ) : tagList( tagList )
+        TagIterator( const TagList& tagList )
+            : tagList( tagList )
         {
             it = tagList.begin();
         }
@@ -76,7 +77,8 @@ namespace pfs
         /**
         * Returns true if there is still an item left on the list.
         */
-        inline bool hasNext() const
+        inline
+        bool hasNext() const
         {
             return it != tagList.end();
         }
@@ -162,7 +164,7 @@ namespace pfs
     * operation, the destination will contain exactly the same tags as
     * the source.
     */
-    void copyTags( Frame *from, Frame *to );
+    void copyTags( const Frame *from, Frame *to );
 
    /**
     * Copy all tags from one container into another. Note, that all

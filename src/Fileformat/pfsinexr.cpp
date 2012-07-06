@@ -167,7 +167,7 @@ pfs::Frame * readEXRfile( const char *filename )
       
       if( colon == NULL )    // frame tag
       {
-        frame->getTags()->setString( attribName, escapeString(attrib->value()).c_str() );
+        frame->getTags().setString( attribName, escapeString(attrib->value()).c_str() );
       }
       else                // channel tag
       {
@@ -208,14 +208,14 @@ pfs::Frame * readEXRfile( const char *filename )
       }
 /*      const StringAttribute *relativeLum = file.header().findTypedAttribute<StringAttribute>("RELATIVE_LUMINANCE");
  */
-      const char *luminanceTag = frame->getTags()->getString("LUMINANCE");
+      const char *luminanceTag = frame->getTags().getString("LUMINANCE");
       if( luminanceTag == NULL )
       {
-        frame->getTags()->setString("LUMINANCE", "ABSOLUTE");
+        frame->getTags().setString("LUMINANCE", "ABSOLUTE");
       }
     }
   }
-  frame->getTags()->setString( "FILE_NAME", filename );
+  frame->getTags().setString( "FILE_NAME", filename );
   
   return frame;
 }

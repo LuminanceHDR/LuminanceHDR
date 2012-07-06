@@ -49,13 +49,16 @@ namespace pfs
     int ySize = frame->getWidth();
     pfs::Frame *resizedFrame = pfsio.createFrame( xSize, ySize );
     
-    pfs::ChannelIterator *it = frame->getChannels();
-    while( it->hasNext() )
+    const ChannelMap& channels = frame->getChannels();
+
+    for ( ChannelMap::const_iterator it = channels.begin();
+          it != channels.end();
+          ++it)
     {
-      pfs::Channel *originalCh = it->getNext();
-      pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
-      
-      rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);
+        const pfs::Channel *originalCh = it->second;
+        pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
+
+        rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);
     }
     
     pfs::copyTags( frame, resizedFrame );

@@ -58,7 +58,7 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
   R = frame->getChannel( "X" );
   G = frame->getChannel( "Y" );
   B = frame->getChannel( "Z" );
-  const char* luminanceTag = frame->getTags()->getString("LUMINANCE");
+  const char* luminanceTag = frame->getTags().getString("LUMINANCE");
   
   Header header(frame->getWidth(),
                 frame->getHeight(),
@@ -77,28 +77,33 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
   
   // Copy tags to attributes
   {
-    pfs::TagIteratorPtr it( frame->getTags()->getIterator() );
+    pfs::TagIteratorPtr it( frame->getTags().getIterator() );
     
     while( it->hasNext() )
     {
       const char *tagName = it->getNext();
-      header.insert( tagName, StringAttribute(frame->getTags()->getString( tagName )) );
+      header.insert( tagName, StringAttribute(frame->getTags().getString( tagName )) );
     }
     
     //Copy all channel tags
-    pfs::ChannelIteratorPtr cit( frame->getChannelIterator() );
-    while( cit->hasNext() )
+    //pfs::ChannelIteratorPtr cit( frame->getChannelIterator() );
+
+
+    const pfs::ChannelMap& channels = frame->getChannels();
+
+    for (pfs::ChannelMap::const_iterator ch = channels.begin();
+         ch != channels.end();
+         ++ch)
     {
-      pfs::Channel *ch = cit->getNext();
-      pfs::TagIteratorPtr tit( ch->getTags()->getIterator() );
-      while( tit->hasNext() )
-      {
-        const char *tagName = tit->getNext();
-        string channelTagName = ch->getName();
-        channelTagName += ":";
-        channelTagName += tagName;
-        header.insert( channelTagName.c_str(), StringAttribute(ch->getTags()->getString( tagName )) );
-      }
+        pfs::TagIteratorPtr tit( ch->second->getTags()->getIterator() );
+        while ( tit->hasNext() )
+        {
+            const char *tagName = tit->getNext();
+            string channelTagName = ch->second->getName();
+            channelTagName += ":";
+            channelTagName += tagName;
+            header.insert( channelTagName.c_str(), StringAttribute(ch->second->getTags()->getString( tagName )) );
+        }
     }
   }
   FrameBuffer frameBuffer;

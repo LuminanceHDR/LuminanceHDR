@@ -38,11 +38,11 @@ namespace pfs
     // Channel implementation
     //------------------------------------------------------------------------------
 
-    Channel::Channel( int width, int height, std::string n_name)
+    Channel::Channel( int width, int height, const std::string& channel_name)
+        : channel_impl( new Array2D( width, height ) )
+        , name( channel_name )
     {
-        channel_impl = new Array2D( width, height );
         tags = new TagContainer();
-        name = n_name;
 
         //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
     }
@@ -57,6 +57,11 @@ namespace pfs
 
     // Channel implementation
     TagContainer* Channel::getTags()
+    {
+        return tags;
+    }
+
+    const TagContainer* Channel::getTags() const
     {
         return tags;
     }
@@ -100,7 +105,7 @@ namespace pfs
         return channel_impl->getRows();
     }
 
-    std::string Channel::getName() const
+    const std::string& Channel::getName() const
     {
         return name;
     }
@@ -129,7 +134,12 @@ namespace pfs
     {
         return channel_impl;
     }
-	
+
+    const Array2D* Channel::getChannelData() const
+    {
+        return channel_impl;
+    }
+
 	void Channel::setChannelData(Array2D *array)
 	{
 		if (channel_impl)
