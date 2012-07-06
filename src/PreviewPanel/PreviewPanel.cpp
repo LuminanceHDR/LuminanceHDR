@@ -200,13 +200,13 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame)
     QSharedPointer<pfs::Frame> current_frame( pfs::resizeFrame(frame, resized_width));
 
     // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
-    foreach(PreviewLabel* current_label, m_ListPreviewLabel)
-    {
-        PreviewLabelUpdater updater(current_frame);
-        updater(current_label);
-    }
+    //foreach(PreviewLabel* current_label, m_ListPreviewLabel)
+    //{
+    //    PreviewLabelUpdater updater(current_frame);
+    //    updater(current_label);
+    //}
     // 2. (concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
-    //QtConcurrent::map (m_ListPreviewLabel, PreviewLabelUpdater(current_frame) );
+    QtConcurrent::map (m_ListPreviewLabel, PreviewLabelUpdater(current_frame) );
 }
 
 void PreviewPanel::tonemapPreview(TonemappingOptions* opts)
