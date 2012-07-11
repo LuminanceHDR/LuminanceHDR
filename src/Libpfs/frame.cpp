@@ -82,15 +82,15 @@ struct FindChannel
 };
 }
 
-
+//void Frame::getXYZChannels(const Channel* &X, const Channel* &Y, const Channel* &Z ) const
 void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
 {
     // find X
-    ChannelContainer::iterator it
-            ( std::find_if(m_channels.begin(),
-                        m_channels.end(),
-                        FindChannel("X"))
-              );
+    ChannelContainer::const_iterator it(
+                std::find_if(m_channels.begin(),
+                             m_channels.end(),
+                             FindChannel("X"))
+                );
     if ( it == m_channels.end() )
     {
         X = Y = Z = NULL;
@@ -100,8 +100,8 @@ void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
 
     // find Y
     it = std::find_if(m_channels.begin(),
-                   m_channels.end(),
-                   FindChannel("Y"));
+                      m_channels.end(),
+                      FindChannel("Y"));
     if ( it == m_channels.end() )
     {
         X = Y = Z = NULL;
@@ -111,8 +111,8 @@ void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
 
     // find Y
     it = std::find_if(m_channels.begin(),
-                   m_channels.end(),
-                   FindChannel("Z"));
+                      m_channels.end(),
+                      FindChannel("Z"));
     if ( it == m_channels.end() )
     {
         X = Y = Z = NULL;
@@ -120,6 +120,14 @@ void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
     }
     Z = *it;
 }
+
+//void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+//{
+//    // add const to *this's type;
+//    const Frame& f = (static_cast<const Frame&>(*this));
+//
+//    f.getXYZChannels(X, Y, Z);
+//}
 
 void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
 {
