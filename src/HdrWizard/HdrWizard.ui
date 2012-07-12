@@ -534,14 +534,11 @@ p, li { white-space: pre-wrap; }
                     <number>9</number>
                    </property>
                    <item row="0" column="0">
-                    <layout class="QVBoxLayout" name="verticalLayout_2">
-                     <property name="spacing">
-                      <number>6</number>
-                     </property>
+                    <layout class="QGridLayout" name="gridLayout1">
                      <property name="margin">
                       <number>6</number>
                      </property>
-                     <item>
+                     <item row="0" column="0">
                       <widget class="QCheckBox" name="alignCheckBox">
                        <property name="enabled">
                         <bool>false</bool>
@@ -557,7 +554,20 @@ p, li { white-space: pre-wrap; }
                        </property>
                       </widget>
                      </item>
-                     <item>
+                     <item row="0" column="1">
+                      <widget class="QCheckBox" name="autoCropCheckBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>Auto-crop</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="1" column="0" colspan="2">
                       <widget class="QRadioButton" name="ais_radioButton">
                        <property name="text">
                         <string>Hugin's align_image_stack</string>
@@ -567,7 +577,7 @@ p, li { white-space: pre-wrap; }
                        </property>
                       </widget>
                      </item>
-                     <item>
+                     <item row="2" column="0" colspan="2">
                       <widget class="QRadioButton" name="mtb_radioButton">
                        <property name="text">
                         <string>MTB</string>

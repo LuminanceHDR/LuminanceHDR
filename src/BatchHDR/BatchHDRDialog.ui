@@ -192,8 +192,8 @@ See documentation for more information.</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
               <item row="0" column="0">
-               <layout class="QVBoxLayout" name="verticalLayout">
-                <item>
+               <layout class="QGridLayout" name="gridLayout_6">
+                <item row="0" column="0">
                  <widget class="QCheckBox" name="autoAlignCheckBox">
                   <property name="enabled">
                    <bool>false</bool>
@@ -206,7 +206,17 @@ See documentation for more information.</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="autoCropCheckBox">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Auto-crop</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0" colspan="2">
                  <widget class="QRadioButton" name="aisRadioButton">
                   <property name="enabled">
                    <bool>false</bool>
@@ -222,7 +232,7 @@ See documentation for more information.</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item row="2" column="0" colspan="2">
                  <widget class="QRadioButton" name="MTBRadioButton">
                   <property name="enabled">
                    <bool>false</bool>

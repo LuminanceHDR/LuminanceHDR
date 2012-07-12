@@ -60,6 +60,7 @@ protected slots:
 	void writeAisData(QByteArray);
 	void check_start_button();
 	void on_cancelButton_clicked();
+    void on_align_selection_clicked();
 	void processed();
 	void try_to_continue();
 

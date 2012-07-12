@@ -373,6 +373,11 @@ void HdrCreationManager::align_with_mtb()
 	emit finishedAligning(0);
 }
 
+void HdrCreationManager::set_ais_crop_flag(bool flag)
+{
+    ais_crop_flag = flag;
+}
+
 void HdrCreationManager::align_with_ais()
 {
 	ais = new QProcess(this);
@@ -394,6 +399,9 @@ void HdrCreationManager::align_with_ais()
 	connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
 	
 	QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
+    if (ais_crop_flag){
+        ais_parameters << "-C";
+    }
 	if (filesToRemove[0] == "") {
 		ais_parameters << fileList;
 	}
@@ -402,7 +410,7 @@ void HdrCreationManager::align_with_ais()
 			ais_parameters << fname;	
 	}
 	qDebug() << "ais_parameters " << ais_parameters;
-	#ifdef Q_WS_MAC
+    #ifdef Q_WS_MAC
 	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 	#else
 	ais->start("align_image_stack", ais_parameters );
