@@ -152,6 +152,12 @@ void BatchHDRDialog::on_startButton_clicked()
 	if (m_Ui->inputLineEdit->text().isEmpty() || m_Ui->outputLineEdit->text().isEmpty())
 		return;
 
+	if (m_bracketed.count() < m_Ui->spinBox->value()) {
+		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
+		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
+		return;
+	}
+
 	if (m_bracketed.count() % m_Ui->spinBox->value() != 0) {
 		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
 		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
