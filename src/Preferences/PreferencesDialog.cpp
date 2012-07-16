@@ -28,6 +28,7 @@
 #include <QFileDialog>
 #include <QWhatsThis>
 #include <QMessageBox>
+#include <QDebug>
 
 #include <iostream>
 #include <cmath>
@@ -156,6 +157,20 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 {
     m_Ui->setupUi(this);
 
+#ifdef DEMOSAICING_GPL2
+	qDebug() << "PreferencesDialog: Found demosaicing pack GPL2";
+	m_Ui->user_qual_comboBox->addItem("DCB");
+	m_Ui->user_qual_comboBox->addItem("AHD v2");
+	m_Ui->user_qual_comboBox->addItem("AFD");
+	m_Ui->user_qual_comboBox->addItem("VCD");
+	m_Ui->user_qual_comboBox->addItem("VCD & AHD");
+	m_Ui->user_qual_comboBox->addItem("LMMSE");
+#endif
+#ifdef DEMOSAICING_GPL3
+	qDebug() << "PreferencesDialog: Found AMaZE";
+	m_Ui->user_qual_comboBox->addItem("AMaZE");
+#endif
+
 	fromIso639ToGuiIndex["cs"]=0;
 	fromIso639ToGuiIndex["zh"]=1;
 	fromIso639ToGuiIndex["en"]=2;
@@ -260,7 +275,26 @@ void PreferencesDialog::on_okButton_clicked()
     // --- RAW parameters
     luminance_options.setRawFourColorRGB( m_Ui->four_color_rgb_CB->isChecked() );
     luminance_options.setRawDoNotUseFujiRotate( m_Ui->do_not_use_fuji_rotate_CB->isChecked() );
-    luminance_options.setRawUserQuality( m_Ui->user_qual_comboBox->currentIndex() );
+	QString user_qual = m_Ui->user_qual_comboBox->itemText( m_Ui->user_qual_comboBox->currentIndex() );
+	if (user_qual == "Bilinear" ||
+		user_qual == "VNG" ||
+		user_qual == "PPG" ||
+		user_qual == "AHD") 
+			luminance_options.setRawUserQuality( m_Ui->user_qual_comboBox->currentIndex() );
+	else if(user_qual == "DCB")
+			luminance_options.setRawUserQuality( 4 );
+	else if(user_qual == "AHD v2")
+			luminance_options.setRawUserQuality( 5 );
+	else if(user_qual == "AFD")
+			luminance_options.setRawUserQuality( 6 );
+	else if(user_qual == "VCD")
+			luminance_options.setRawUserQuality( 7 );
+	else if(user_qual == "VCD & AHD")
+			luminance_options.setRawUserQuality( 8 );
+	else if(user_qual == "LMMSE")
+			luminance_options.setRawUserQuality( 9 );
+	else if(user_qual == "AMaZE")
+			luminance_options.setRawUserQuality( 10 );
     luminance_options.setRawMedPasses( m_Ui->med_passes_spinBox->value() );
     luminance_options.setRawWhiteBalanceMethod( m_Ui->wb_method_comboBox->currentIndex() );
     luminance_options.setRawTemperatureKelvin( m_Ui->TK_spinBox->value() );
@@ -610,6 +644,26 @@ void PreferencesDialog::from_options_to_gui()
     // RAW Processing
     m_Ui->four_color_rgb_CB->setChecked(luminance_options.isRawFourColorRGB());
     m_Ui->do_not_use_fuji_rotate_CB->setChecked(luminance_options.isRawDoNotUseFujiRotate());
+
+#ifdef DEMOSAICING_GPL2
+	bool GPL2 = true;
+#else
+	bool GPL2 = false;
+#endif
+#ifdef DEMOSAICING_GPL3
+	bool GPL3 = true;
+#else
+	bool GPL3 = false;
+#endif
+
+	int user_quality = luminance_options.getRawUserQuality();
+	if (user_quality < 4)	
+    	m_Ui->user_qual_comboBox->setCurrentIndex( user_quality );
+	else if ((GPL2 && GPL3) || (GPL2 && !GPL3)) // We have both demosaicing packs or only GPL2
+		m_Ui->user_qual_comboBox->setCurrentIndex( user_quality );
+	else // We have only GPL3
+		m_Ui->user_qual_comboBox->setCurrentIndex( 4 );
+
     m_Ui->user_qual_comboBox->setCurrentIndex(luminance_options.getRawUserQuality());
     m_Ui->med_passes_horizontalSlider->setValue(luminance_options.getRawMedPasses());
     m_Ui->med_passes_spinBox->setValue(luminance_options.getRawMedPasses());
