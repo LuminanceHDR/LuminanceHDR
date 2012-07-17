@@ -40,8 +40,6 @@
 
 void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
 {
-  //pfs::DOMIO pfsio;
-  
   //--- default tone mapping parameters;
   //float key = 0.18;
   //float phi = 1.0;
@@ -61,7 +59,7 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   
   pfs::Channel *X, *Y, *Z;
   frame->getXYZChannels( X, Y, Z );
-  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  frame->getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
   if( Y==NULL || X==NULL || Z==NULL)

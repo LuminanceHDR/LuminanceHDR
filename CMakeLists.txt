@@ -214,6 +214,19 @@ SET(LUMINANCE_FILES
 
 # Apple Mac OS X
 IF(APPLE)
+    # TODO
+    # 1. copy help under Resources/help
+    # 2. copy html under Resources/html
+    # 3. deployment align_image_stack
+
+    CONFIGURE_FILE(
+    ${CMAKE_SOURCE_DIR}/build/macosx/create-dmg.sh
+    ${CMAKE_BINARY_DIR}/create-dmg.sh)
+
+    CONFIGURE_FILE(
+    ${CMAKE_SOURCE_DIR}/build/macosx/deploy-cli.sh
+    ${CMAKE_BINARY_DIR}/deploy-cli.sh)
+
     FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) # ${QT_TRANSLATIONS_DIR}/qt_*.qm)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
 
@@ -230,9 +243,9 @@ IF(APPLE)
 
     SET( PROGNAME luminance-hdr )
     SET( MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns" )
-    #SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 0.7-beta2 )
-    #SET( MACOSX_BUNDLE_VERSION 0.7-beta2 )
-    #SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version 0.7-beta2 )
+    SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 2.3.0 )
+    SET( MACOSX_BUNDLE_VERSION 2.3.0 )
+    SET( MACOSX_BUNDLE_LONG_VERSION_STRING Luminance HDR 2.3.0 )
     #SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
 
     ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})

@@ -121,6 +121,9 @@ void HdrWizard::setupConnections()
 	connect(m_Ui->cancelButton,SIGNAL(clicked()),this,SLOT(reject()));
 	connect(m_Ui->pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
 
+    connect(m_Ui->ais_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
+    connect(m_Ui->mtb_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
+
 	connect(m_Ui->predefConfigsComboBox,SIGNAL(activated(int)),this,
 	SLOT(predefConfigsComboBoxActivated(int)));
 	connect(m_Ui->antighostRespCurveCombobox,SIGNAL(activated(int)),this,
@@ -513,6 +516,7 @@ void HdrWizard::NextFinishButtonClicked() {
 			m_Ui->progressBar->show();
 			if (m_Ui->ais_radioButton->isChecked()) {
 				m_Ui->textEdit->show();
+                hdrCreationManager->set_ais_crop_flag(m_Ui->autoCropCheckBox->isChecked());
 				hdrCreationManager->align_with_ais();
 			}
 			else
@@ -735,6 +739,10 @@ void HdrWizard::resizeEvent ( QResizeEvent * )
 	}
 }
 
+void HdrWizard::alignSelectionClicked()
+{
+    m_Ui->autoCropCheckBox->setEnabled(m_Ui->ais_radioButton->isChecked());
+}
 
 void HdrWizard::reject() {
 	QApplication::restoreOverrideCursor();

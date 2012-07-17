@@ -101,7 +101,7 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   if ( !ph->isTerminationRequested() )
   {
     pfs::transformColorSpace( pfs::CS_RGB, Xr, G, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
-    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    frame->getTags().setString("LUMINANCE", "RELATIVE");
   }
   
   delete G;

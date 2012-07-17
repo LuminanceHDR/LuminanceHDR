@@ -42,20 +42,21 @@ namespace pfs
     msec_timer f_timer;
     f_timer.start();
 #endif
-    
-    pfs::DOMIO pfsio;
-    
+
     int xSize = frame->getHeight();
     int ySize = frame->getWidth();
-    pfs::Frame *resizedFrame = pfsio.createFrame( xSize, ySize );
+    pfs::Frame *resizedFrame = pfs::DOMIO::createFrame( xSize, ySize );
     
-    pfs::ChannelIterator *it = frame->getChannels();
-    while( it->hasNext() )
+    const ChannelContainer& channels = frame->getChannels();
+
+    for ( ChannelContainer::const_iterator it = channels.begin();
+          it != channels.end();
+          ++it)
     {
-      pfs::Channel *originalCh = it->getNext();
-      pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
-      
-      rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);
+        const pfs::Channel *originalCh = *it;
+        pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
+
+        rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);
     }
     
     pfs::copyTags( frame, resizedFrame );

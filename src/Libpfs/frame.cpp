@@ -27,8 +27,7 @@
  */
 
 #include <iostream>
-#include <map>
-#include <list>
+#include <algorithm>
 
 #include "frame.h"
 #include "domio.h"
@@ -38,121 +37,168 @@ using namespace std;
 
 namespace pfs
 {    
-    Frame::Frame( int width, int height ): m_width( width ), m_height( height ),
-    m_channel_iter( &m_channels )
+Frame::Frame( int width, int height )
+    : m_width( width )
+    , m_height( height )
+{}
+
+namespace
+{
+struct ChannelDeleter
+{
+    template <typename T>
+    inline
+    void operator()(T* p)
     {
-        m_tags = new TagContainer();
+        delete p;
+    }
+};
+}
+
+
+Frame::~Frame()
+{
+    for_each(m_channels.begin(),
+             m_channels.end(),
+             ChannelDeleter());
+}
+
+namespace
+{
+struct FindChannel
+{
+    FindChannel(const std::string& nameChannel)
+        : nameChannel_(nameChannel)
+    {}
+
+    inline
+    bool operator()(const Channel* channel) const
+    {
+        return !(channel->getName().compare( nameChannel_ ));
     }
 
-    Frame::~Frame()
+    private:
+        const std::string& nameChannel_;
+};
+}
+
+//void Frame::getXYZChannels(const Channel* &X, const Channel* &Y, const Channel* &Z ) const
+void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+{
+    // find X
+    ChannelContainer::const_iterator it(
+                std::find_if(m_channels.begin(),
+                             m_channels.end(),
+                             FindChannel("X"))
+                );
+    if ( it == m_channels.end() )
     {
-        delete m_tags;
-        ChannelMap::iterator it = m_channels.begin();
-        while ( it != m_channels.end() )
-        {
-            Channel *ch = it->second;
-
-            // Nasty trick because hashmap
-            // elements point to string that is
-            // freed by the channel
-            ChannelMap::iterator itToDelete = it;
-
-            it++;
-            m_channels.erase( itToDelete );
-            delete ch;
-        }
+        X = Y = Z = NULL;
+        return;
     }
+    X = *it;
 
-    void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+    // find Y
+    it = std::find_if(m_channels.begin(),
+                      m_channels.end(),
+                      FindChannel("Y"));
+    if ( it == m_channels.end() )
     {
-        ChannelMap::iterator it;
-
-        // find X
-        it = m_channels.find("X");
-        if ( it == m_channels.end() )
-        {
-            X = Y = Z = NULL;
-            return;
-        }
-        X = it->second;
-
-        // find Y
-        it = m_channels.find("Y");
-        if ( it == m_channels.end() )
-        {
-            X = Y = Z = NULL;
-            return;
-        }
-        Y = it->second;
-
-        // find Y
-        it = m_channels.find("Z");
-        if ( it == m_channels.end() )
-        {
-            X = Y = Z = NULL;
-            return;
-        }
-        Z = it->second;
+        X = Y = Z = NULL;
+        return;
     }
+    Y = *it;
 
-    void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+    // find Y
+    it = std::find_if(m_channels.begin(),
+                      m_channels.end(),
+                      FindChannel("Z"));
+    if ( it == m_channels.end() )
     {
-        X = createChannel("X");
-        Y = createChannel("Y");
-        Z = createChannel("Z");
+        X = Y = Z = NULL;
+        return;
     }
+    Z = *it;
+}
 
-    Channel* Frame::getChannel( std::string name )
+//void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+//{
+//    // add const to *this's type;
+//    const Frame& f = (static_cast<const Frame&>(*this));
+//
+//    f.getXYZChannels(X, Y, Z);
+//}
+
+void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+{
+    X = createChannel("X");
+    Y = createChannel("Y");
+    Z = createChannel("Z");
+}
+
+Channel* Frame::getChannel(const std::string& name)
+{
+    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
+                                              m_channels.end(),
+                                              FindChannel(name));
+    if ( it == m_channels.end() )
+        return NULL;
+    else
+        return *it;
+}
+
+Channel* Frame::createChannel(const std::string& name)
+{
+    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
+                                              m_channels.end(),
+                                              FindChannel(name));
+    if ( it != m_channels.end() )
     {
-        ChannelMap::iterator it = m_channels.find(name);
-        if ( it == m_channels.end() )
-            return NULL;
-        else
-            return it->second;
+        return *it;
     }
-
-    Channel* Frame::createChannel( std::string name )
+    else
     {
-        ChannelMap::iterator it = m_channels.find(name);
+        Channel* ch = new Channel( m_width, m_height, name );
 
-        if ( it != m_channels.end() )
-        {
-            return it->second; //m_channels[name];
-        }
-        else
-        {
-            Channel *ch = new Channel( m_width, m_height, name );
-            m_channels.insert( std::pair<std::string, Channel*>(name, ch) );
+        m_channels.push_back( ch );
 
-            return ch;
-        }
+        return ch;
     }
+}
 
-    void Frame::removeChannel( Channel *ch )
+void Frame::removeChannel(const std::string& channel)
+{
+    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
+                                              m_channels.end(),
+                                              FindChannel(channel));
+    if ( it != m_channels.end() )
     {
-        assert( ch != NULL );
-        ChannelMap::iterator it = m_channels.find( ch->getName() );
-        assert( it != m_channels.end() && it->second == ch );
-
+        Channel* ch = *it;
         m_channels.erase( it );
         delete ch;
     }
-
-    ChannelIterator* Frame::getChannels()
-    {
-        m_channel_iter.reset();
-        return &m_channel_iter;
-    }
-
-    ChannelIteratorPtr Frame::getChannelIterator()
-    {
-        return ChannelIteratorPtr( new ChannelIterator( &m_channels ) );
-    }
-
-    TagContainer* Frame::getTags()
-    {
-        return m_tags;
-    }
 }
+
+ChannelContainer& Frame::getChannels()
+{
+    return this->m_channels;
+}
+
+const ChannelContainer& Frame::getChannels() const
+{
+    return this->m_channels;
+}
+
+TagContainer& Frame::getTags()
+{
+    return m_tags;
+}
+
+const TagContainer& Frame::getTags() const
+{
+    return m_tags;
+}
+
+} // namespace pfs
 
 

@@ -62,7 +62,6 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
     float opt_gauss = 8.0f;
     int width=-1;
     int height=-1;
-    pfs::DOMIO pfsio;
 
     TWeight opt_weight = chosen_config->weights;
     TResponse opt_response = chosen_config->response_curve;
@@ -172,7 +171,7 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
         break;
     }
     // create channels for output
-    pfs::Frame *frameout = pfsio.createFrame(width, height);
+    pfs::Frame *frameout = pfs::DOMIO::createFrame(width, height);
     pfs::Channel *Rj_, *Gj_, *Bj_;
     frameout->createXYZChannels( Rj_, Gj_, Bj_ );
 

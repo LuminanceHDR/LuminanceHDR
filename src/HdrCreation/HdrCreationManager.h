@@ -68,6 +68,7 @@ public:
 
 	pfs::Frame* createHdr(bool ag, int iterations);
 
+    void set_ais_crop_flag(bool flag);
 	void align_with_ais();
 	void align_with_mtb();
 
@@ -163,6 +164,8 @@ private:
 
     // align_image_stack
 	QProcess *ais;
+
+    bool ais_crop_flag;
 
 	int m_shift;
 

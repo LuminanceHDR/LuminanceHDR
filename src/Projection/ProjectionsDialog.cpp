@@ -89,11 +89,11 @@ void ProjectionsDialog::anglesAngularDestinationProj(int v) {
 	((AngularProjection*)(transforminfo->dstProjection))->setAngle(v);
 }
 
-void ProjectionsDialog::okClicked() {
+void ProjectionsDialog::okClicked()
+{
 	qDebug("Projective Transformation from %s to %s", transforminfo->srcProjection->getName(), transforminfo->dstProjection->getName());
 
-	//TODO
-	pfs::DOMIO pfsio;
+    // TODO
 	pfs::Channel *R,*G,*B;
 	//original->getRGBChannels( R,G,B );
 	R = original->getChannel("R");
@@ -101,14 +101,22 @@ void ProjectionsDialog::okClicked() {
 	B = original->getChannel("B");
 	int xSize=original->getWidth();
 	int ySize=(int)(xSize / transforminfo->dstProjection->getSizeRatio());
-	transformed = pfsio.createFrame( xSize,ySize );
-	pfs::ChannelIterator *it = original->getChannels();
-	while( it->hasNext() )
-  {
-		pfs::Channel *originalCh = it->getNext();
-		pfs::Channel *newCh = transformed->createChannel( originalCh->getName() );
-		transformArray(originalCh->getChannelData(), newCh->getChannelData(), transforminfo);
-	}
+    transformed = pfs::DOMIO::createFrame( xSize,ySize );
+
+    const pfs::ChannelContainer& channels = original->getChannels();
+
+    for (pfs::ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end();
+         ++it)
+    {
+        const pfs::Channel *originalCh = *it;
+        pfs::Channel *newCh = transformed->createChannel( originalCh->getName() );
+
+        transformArray(originalCh->getChannelData(),
+                       newCh->getChannelData(),
+                       transforminfo);
+    }
+
 	pfs::copyTags( original, transformed );
 	emit accept();
 }

@@ -81,7 +81,7 @@ void pfstmo_fattal02(pfs::Frame* frame,
   //Store RGB data temporarily in XYZ channels
   pfs::Channel *X, *Y, *Z;
   frame->getXYZChannels( X, Y, Z );
-  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  frame->getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
   if ( Y==NULL || X==NULL || Z==NULL )

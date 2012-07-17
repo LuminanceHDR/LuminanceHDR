@@ -261,8 +261,6 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 	listmdrG[index] = G->getChannelData();
 	listmdrB[index] = B->getChannelData();
 	//perform some housekeeping
-    //pfs::DOMIO pfsio;
-	//pfsio.freeFrame(newFrame);
 	newResult(index,expotime,newfname);
 	//continue with the loading process
 	loadInputFiles();
@@ -375,6 +373,11 @@ void HdrCreationManager::align_with_mtb()
 	emit finishedAligning(0);
 }
 
+void HdrCreationManager::set_ais_crop_flag(bool flag)
+{
+    ais_crop_flag = flag;
+}
+
 void HdrCreationManager::align_with_ais()
 {
 	ais = new QProcess(this);
@@ -396,6 +399,9 @@ void HdrCreationManager::align_with_ais()
 	connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
 	
 	QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
+    if (ais_crop_flag){
+        ais_parameters << "-C";
+    }
 	if (filesToRemove[0] == "") {
 		ais_parameters << fileList;
 	}
@@ -404,7 +410,7 @@ void HdrCreationManager::align_with_ais()
 			ais_parameters << fname;	
 	}
 	qDebug() << "ais_parameters " << ais_parameters;
-	#ifdef Q_WS_MAC
+    #ifdef Q_WS_MAC
 	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 	#else
 	ais->start("align_image_stack", ais_parameters );
@@ -679,10 +685,10 @@ void HdrCreationManager::cropMDR(const QRect& ca)
 {
 	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
-	pfs::DOMIO pfsio;
 	int origlistsize = listmdrR.size();
-	for (int idx = 0; idx < origlistsize; idx++) {
-		pfs::Frame *frame = pfsio.createFrame( m_mdrWidth, m_mdrHeight );
+    for (int idx = 0; idx < origlistsize; idx++)
+    {
+        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
 		pfs::Channel *Xc, *Yc, *Zc;
 		frame->createXYZChannels( Xc, Yc, Zc );
 		Xc->setChannelData(listmdrR[idx]);	
@@ -691,8 +697,10 @@ void HdrCreationManager::cropMDR(const QRect& ca)
 		int x_ul, y_ul, x_br, y_br;
 		ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 		pfs::Frame *cropped_frame = pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
-		pfsio.freeFrame(frame);
-		pfs::Channel *R, *G, *B;
+
+        pfs::DOMIO::freeFrame(frame);
+
+        pfs::Channel *R, *G, *B;
 		cropped_frame->getXYZChannels( R, G, B);
 		listmdrR[idx] = R->getChannelData();
 		listmdrG[idx] = G->getChannelData();
@@ -769,13 +777,15 @@ void HdrCreationManager::readData()
 
 void HdrCreationManager::saveMDRs(const QString& filename)
 {
-	qDebug() << "HdrCreationManager::saveMDRs";
-	pfs::DOMIO pfsio;
+#ifdef QT_DEBUG
+    qDebug() << "HdrCreationManager::saveMDRs";
+#endif
+
 	int origlistsize = listmdrR.size();
     for (int idx = 0; idx < origlistsize; idx++)
     {
 		QString fname = filename + QString("_%1").arg(idx) + ".tiff";
-		pfs::Frame *frame = pfsio.createFrame( m_mdrWidth, m_mdrHeight );
+        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
 		pfs::Channel *Xc, *Yc, *Zc;
 		frame->createXYZChannels( Xc, Yc, Zc );
 		Xc->setChannelData(listmdrR[idx]);	
