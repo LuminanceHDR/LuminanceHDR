@@ -200,10 +200,12 @@ bool JpegWriter::writeQImageToJpeg()
 	cinfo.image_height = m_out_qimage->height();
     cinfo.input_components = cinfo.num_components = 3;      // # of color components per pixel
     cinfo.in_color_space = JCS_RGB;                         // colorspace of input image
-	cinfo.jpeg_color_space = JCS_RGB;
+	cinfo.jpeg_color_space = JCS_YCbCr;
+	cinfo.density_unit = 1; // dots/inch
+	cinfo.X_density = cinfo.Y_density = 72;
 
 	jpeg_set_defaults(&cinfo);
-	jpeg_set_colorspace(&cinfo, JCS_RGB);
+	jpeg_set_colorspace(&cinfo, JCS_YCbCr);
 
 	//avoid subsampling on high quality factor
 	jpeg_set_quality(&cinfo, m_quality, 1);
