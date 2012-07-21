@@ -79,25 +79,26 @@ void pfstmo_fattal02(pfs::Frame* frame,
   std::cout << std::endl;
   
   //Store RGB data temporarily in XYZ channels
-  pfs::Channel *X, *Y, *Z;
-  frame->getXYZChannels( X, Y, Z );
+  pfs::Channel *R, *G, *B;
+  frame->getXYZChannels( R, G, B );
   frame->getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
-  if ( Y==NULL || X==NULL || Z==NULL )
+  if ( !R || !G || !B )
   {
       throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
-  
-  pfs::Array2D& Xr = *X->getChannelData();
-  pfs::Array2D& Yr = *Y->getChannelData();
-  pfs::Array2D& Zr = *Z->getChannelData();
-  
+    
   // tone mapping
-  int w = Y->getWidth();
-  int h = Y->getHeight();
+  int w = frame->getWidth();
+  int h = frame->getHeight();
   
+  pfs::Array2D Yr(w,h);
   pfs::Array2D L(w,h);
+
+  pfs::transformRGB2Y(R->getChannelData(), G->getChannelData(), B->getChannelData(),
+                      &Yr);
+
 
   tmo_fattal02(w, h, Yr, L,
                opt_alpha, opt_beta, opt_noise, newfattal,
@@ -106,24 +107,19 @@ void pfstmo_fattal02(pfs::Frame* frame,
 
   if ( !ph->isTerminationRequested() )
   {
-      pfs::Array2D G(w, h);
-      pfs::Array2D& R = Xr;
-      pfs::Array2D& B = Zr;
 
-      pfs::transformColorSpace(pfs::CS_XYZ, &Xr, &Yr, &Zr,
-                               pfs::CS_RGB, &R, &G, &B);
+      pfs::Array2D& arrayRed = *R->getChannelData();
+      pfs::Array2D& arrayGreen = *G->getChannelData();
+      pfs::Array2D& arrayBlue = *B->getChannelData();
 
       for (int i=0; i < w*h; i++)
       {
           float y = std::max( Yr(i), epsilon );
           float l = std::max( L(i), epsilon );
-          R(i) = powf( std::max(R(i)/y, 0.f), opt_saturation ) * l;
-          G(i) = powf( std::max(G(i)/y, 0.f), opt_saturation ) * l;
-          B(i) = powf( std::max(B(i)/y, 0.f), opt_saturation ) * l;
+          arrayRed(i) = std::pow( std::max(arrayRed(i)/y, 0.f), opt_saturation ) * l;
+          arrayGreen(i) = std::pow( std::max(arrayGreen(i)/y, 0.f), opt_saturation ) * l;
+          arrayBlue(i) = std::pow( std::max(arrayBlue(i)/y, 0.f), opt_saturation ) * l;
       }
-
-      pfs::transformColorSpace(pfs::CS_RGB, &R, &G, &B,
-                               pfs::CS_XYZ, &Xr, &Yr, &Zr);
 
       ph->newValue( 100 );
   }

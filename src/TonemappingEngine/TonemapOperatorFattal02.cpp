@@ -44,12 +44,6 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
 {
     ph.emitSetMaximum(100);
 
-    // Convert to CS_XYZ: tm operator now use this colorspace
-    pfs::Channel *X, *Y, *Z;
-    workingframe->getXYZChannels( X, Y, Z );
-    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-
     float ratio = opts->origxsize / opts->xsize;
     int detail_level = 0;
     if ( ratio < 2 )
@@ -73,9 +67,6 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
                     opts->operator_options.fattaloptions.fftsolver,
                     detail_level,
                     &ph);
-
-    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
 TMOperator TonemapOperatorFattal02::getType()
