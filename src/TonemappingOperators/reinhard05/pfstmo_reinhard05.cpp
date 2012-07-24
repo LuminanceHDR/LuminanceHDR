@@ -57,32 +57,36 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
 
     std::cout << ss.str();
 
-    pfs::Channel *X, *Y, *Z;
-    frame->getXYZChannels( X, Y, Z );
+    pfs::Channel *R, *G, *B;
+    frame->getXYZChannels( R, G, B );
     frame->getTags().setString("LUMINANCE", "RELATIVE");
     //---
 
-    if( Y==NULL || X==NULL || Z==NULL)
+    if ( !R || !G || !B )
+    {
         throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-
-    pfs::Array2D* Xr = X->getChannelData();
-    pfs::Array2D* Yr = Y->getChannelData();
-    pfs::Array2D* Zr = Z->getChannelData();
+    }
 
     // tone mapping
-    int w = Y->getWidth();
-    int h = Y->getHeight();
+    const unsigned int width = frame->getWidth();
+    const unsigned int height = frame->getHeight();
 
-    pfs::Array2D R(w,h);
-    pfs::Array2D G(w,h);
-    pfs::Array2D B(w,h);
+    // is there a way to remove this copy as well?
+    // I am pretty sure there is!
+    pfs::Array2D Y(width,height);
 
-    pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, &R, &G, &B );
+    pfs::transformRGB2Y(R->getChannelData(),
+                        G->getChannelData(),
+                        B->getChannelData(),
+                        &Y);
 
-    tmo_reinhard05(w, h, R.getRawData(), G.getRawData(), B.getRawData(), Y->getRawData(), brightness, chromaticadaptation, lightadaptation, ph );
-
-    pfs::transformColorSpace( pfs::CS_RGB, &R, &G, &B, pfs::CS_XYZ, Xr, Yr, Zr );
+    tmo_reinhard05(width, height,
+                   R->getRawData(), G->getRawData(), B->getRawData(),
+                   Y.getRawData(),
+                   brightness, chromaticadaptation, lightadaptation, ph );
 
     if (!ph->isTerminationRequested())
+    {
         ph->newValue( 100 );
+    }
 }
