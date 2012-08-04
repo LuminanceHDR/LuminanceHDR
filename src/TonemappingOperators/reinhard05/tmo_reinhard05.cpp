@@ -45,10 +45,11 @@ using namespace std;
 
 namespace
 {
-class LuminanceEqualization : public std::unary_function<const float&, void>
+class LuminanceEqualization
 {
 private:
-    static float DISPL_F;
+    static const float DISPL_F;
+
 public:
     LuminanceEqualization():
         min_lum_( numeric_limits<float>::max() ),
@@ -70,63 +71,17 @@ public:
     float avg_lum_;
     float adapted_lum_;
 };
-// set class static member
-float LuminanceEqualization::DISPL_F = 2.3e-5f;
 
+const float LuminanceEqualization::DISPL_F = 2.3e-5f;
 
-class ChannelTransformation
+void computeAverage(const float* samples, size_t numSamples, float& average)
 {
-public:
-    ChannelTransformation(float& min_sample, float& max_sample,
-                          const float& ch_average, const float& lum_average,
-                          float brightness,
-                          float contrast,
-                          float chromatic_adaptation,
-                          float light_adaptation):
-        min_sample_(min_sample),
-        max_sample_(max_sample),
-        channel_average_(ch_average),
-        luminance_average_(lum_average),
-        brightness_(brightness),
-        contrast_(contrast),
-        chromatic_adaptation_(chromatic_adaptation),
-        light_adaptation_(light_adaptation)
-    {}
+    float summation = accumulate(samples, samples + numSamples, 0.0f);
+    average = summation/numSamples;
+}
 
-    float operator()(float ch_sample, const float y_sample)
-    {
-        if ( y_sample != 0.0f && ch_sample != 0.0f )
-        {
-            // local light adaptation
-            float Il = chromatic_adaptation_ * ch_sample + (1-chromatic_adaptation_)*y_sample;
-            // global light adaptation
-            float Ig = chromatic_adaptation_*channel_average_ + (1-chromatic_adaptation_)*luminance_average_;
-            // interpolated light adaptation
-            float Ia = light_adaptation_*Il + (1-light_adaptation_)*Ig;
-            // photoreceptor equation
-            ch_sample /= ch_sample + pow(brightness_*Ia, contrast_);
 
-            max_sample_ = std::max(ch_sample, max_sample_);
-            min_sample_ = std::min(ch_sample, min_sample_);
-        }
-        return ch_sample;
-    }
-
-private:
-    // output
-    float& min_sample_;
-    float& max_sample_;
-    // input
-    const float& channel_average_;
-    const float& luminance_average_;
-    // parameters
-    float brightness_;
-    float contrast_;
-    float chromatic_adaptation_;
-    float light_adaptation_;
-};
-
-class Normalizer : public std::unary_function<const float&, void>
+class Normalizer
 {
 private:
     const float& min_;
@@ -145,86 +100,163 @@ public:
 };
 
 
+struct LuminanceProperties
+{
+    float max;
+    float min;
+    float adaptedAverage;
+    float average;
+    float imageKey;
+    float imageContrast;
+    float imageBrightness;
+
+};
+
+void computeLuminanceProperties(const float* samples,
+                                size_t numSamples,
+                                LuminanceProperties& luminanceProperties,
+                                const Reinhard05Params& params)
+{
+    // equalization parameters for the Luminance Channel
+    LuminanceEqualization lum_eq = for_each(samples, samples + numSamples, LuminanceEqualization());
+
+    luminanceProperties.max = std::log(lum_eq.max_lum_);
+    luminanceProperties.min = std::log(lum_eq.min_lum_);
+    luminanceProperties.adaptedAverage = lum_eq.adapted_lum_/numSamples;
+    luminanceProperties.average = lum_eq.avg_lum_/numSamples;
+
+
+    // image key (k)
+    luminanceProperties.imageKey = (luminanceProperties.max - luminanceProperties.adaptedAverage) / (luminanceProperties.max - luminanceProperties.min);
+    // image contrast based on key value (f)
+    luminanceProperties.imageContrast = 0.3f + 0.7f*std::pow(luminanceProperties.imageKey, 1.4f);
+    // image brightness (m?)
+    luminanceProperties.imageBrightness = std::exp(-params.m_brightness);
 }
 
-void tmo_reinhard05(unsigned int width, unsigned int height,
+class ChannelTransformation
+{
+public:
+    ChannelTransformation(float& min_sample, float& max_sample,
+                          const float& channelAverage,
+                          const Reinhard05Params& params,
+                          const LuminanceProperties& lumProps)
+        : min_sample_(min_sample)
+        , max_sample_(max_sample)
+        , channelAverage_(channelAverage)
+        , params_(params)
+        , lumProps_(lumProps)
+    {}
+
+    float operator()(float ch_sample, const float y_sample)
+    {
+        if ( y_sample != 0.0f && ch_sample != 0.0f )
+        {
+            // local light adaptation
+            float Il = (params_.m_chromaticAdaptation * ch_sample)
+                    + ((1.f - params_.m_chromaticAdaptation)*y_sample);
+            // global light adaptation
+            float Ig = (params_.m_chromaticAdaptation*channelAverage_)
+                    + ((1.f - params_.m_chromaticAdaptation)*lumProps_.average);
+            // interpolated light adaptation
+            float Ia = (params_.m_lightAdaptation*Il)
+                    + ((1.f - params_.m_lightAdaptation)*Ig);
+            // photoreceptor equation
+            ch_sample /= ch_sample
+                    + std::pow(lumProps_.imageBrightness*Ia, lumProps_.imageContrast);
+
+            max_sample_ = std::max(ch_sample, max_sample_);
+            min_sample_ = std::min(ch_sample, min_sample_);
+        }
+        return ch_sample;
+    }
+
+private:
+    // output
+    float& min_sample_;
+    float& max_sample_;
+
+    const float& channelAverage_;
+    const Reinhard05Params& params_;
+    const LuminanceProperties& lumProps_;
+};
+
+inline
+void transformChannel(const float* samplesChannel,
+                      const float* samplesLuminance,
+                      float* outputSamples,
+                      size_t numSamples,
+                      float channelAverage,
+                      const Reinhard05Params& params,
+                      const LuminanceProperties& lumProps,
+                      float& minSample, float& maxSample)
+{
+    transform(samplesChannel,
+              samplesChannel + numSamples,
+              samplesLuminance,
+              outputSamples,
+              ChannelTransformation(minSample,
+                                    maxSample,
+                                    channelAverage,
+                                    params,
+                                    lumProps)
+              );
+}
+
+void normalizeChannel(float* samples, size_t numSamples, float min, float max)
+{
+    for_each(samples, samples + numSamples, Normalizer(min, max));
+}
+
+}
+
+void tmo_reinhard05(size_t width, size_t height,
                     float* nR, float* nG, float* nB,
                     const float* nY,
-                    const float br,
-                    const float ca,
-                    const float la,
+                    const Reinhard05Params& params,
                     ProgressHelper *ph)
 {
     float Cav[] = {0.0f, 0.0f, 0.0f};
 
-    const int im_width = width;
-    const int im_height = height;
-    const int im_size = im_width * im_height;
+    const size_t imSize = width * height;
 
-    // Average RED Channel
-    Cav[0] = accumulate(nR, nR + im_size, 0.0f);
-    Cav[0] /= im_size;
-    // Average RED Channel
-    Cav[1] = accumulate(nG, nG + im_size, 0.0f);
-    Cav[1] /= im_size;
-    // Average RED Channel
-    Cav[1] = accumulate(nB, nB + im_size, 0.0f);
-    Cav[1] /= im_size;
+    computeAverage(nR, imSize, Cav[0]);
+    computeAverage(nG, imSize, Cav[1]);
+    computeAverage(nB, imSize, Cav[2]);
 
-    // equalization parameters for the Luminance Channel
-    LuminanceEqualization lum_eq = for_each(nY, nY + im_size, LuminanceEqualization());
-
-    float max_lum = logf(lum_eq.max_lum_);
-    float min_lum = logf(lum_eq.min_lum_);
-    float world_lum = lum_eq.adapted_lum_/im_size;
-    float Lav = lum_eq.avg_lum_/im_size;
-
-    // image key
-    const float k = (max_lum - world_lum) / (max_lum - min_lum);
-    // image contrast based on key value
-    const float m = 0.3f + 0.7f*powf(k, 1.4f);
-    // image brightness
-    const float f = exp(-br);
+    LuminanceProperties luminanceProperties;
+    computeLuminanceProperties(nY, imSize, luminanceProperties, params);
 
     // output
-    float max_col = 0.0f;
-    float min_col = 1.0f;
+    float max_col = std::numeric_limits<float>::min();
+    float min_col = std::numeric_limits<float>::max();
 
-    int xTotal = 0;
+    // transform Red Channel
+    transformChannel(nR, nY, nR, imSize, Cav[0], params, luminanceProperties, min_col, max_col);
+    ph->newValue(22);
 
-    float* temp_red = nR;
-    float* temp_green = nG;
-    float* temp_blue = nB;
-    const float* temp_lum = nY;
+    // transform Green Channel
+    transformChannel(nG, nY, nG, imSize, Cav[1], params, luminanceProperties, min_col, max_col);
+    ph->newValue(44);
 
-    // this loop cannot easily parallelizabile with OpenMP, it will be parallelizabile in LibHDR
-    for (int i = 0; i < im_height; ++i)
-    {
-        // transform Red Channel
-        temp_red = transform(temp_red, temp_red + im_width, temp_lum, temp_red, ChannelTransformation(min_col, max_col, Cav[0], Lav, f, m, ca, la) );
-        // transform Green Channel
-        temp_green = transform(temp_green, temp_green + im_width, temp_lum, temp_green, ChannelTransformation(min_col, max_col, Cav[1], Lav, f, m, ca, la) );
-        // transform Blue Channel
-        temp_blue = transform(temp_blue, temp_blue + im_width, temp_lum, temp_blue, ChannelTransformation(min_col, max_col, Cav[2], Lav, f, m, ca, la) );
-
-        temp_lum += im_width;
-        ph->newValue(66 * (xTotal++) / im_height);
-    }
+    // transform Blue Channel
+    transformChannel(nB, nY, nB, imSize, Cav[2], params, luminanceProperties, min_col, max_col);
+    ph->newValue(66);
 
 
     if (!ph->isTerminationRequested())
     {
         //--- normalize intensities
         // normalize RED channel
-        for_each(nR, nR + im_size, Normalizer(min_col, max_col));
+        normalizeChannel(nR, imSize, min_col, max_col);
         ph->newValue(77);  // done!
 
         // normalize GREEN channel
-        for_each(nG, nG + im_size, Normalizer(min_col, max_col));
+        normalizeChannel(nG, imSize, min_col, max_col);
         ph->newValue(88);
 
         // normalize BLUE channel
-        for_each(nB, nB + im_size, Normalizer(min_col, max_col));
+        normalizeChannel(nB, imSize, min_col, max_col);
         ph->newValue(99);
     }
 }

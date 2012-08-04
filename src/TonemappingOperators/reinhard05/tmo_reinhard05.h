@@ -33,7 +33,27 @@
 #ifndef TMO_REINHARD05_H
 #define TMO_REINHARD05_H
 
+#include <cstring>
+
 class ProgressHelper;
+
+struct Reinhard05Params
+{
+    Reinhard05Params(float brightness,
+                     float chromaticAdaptation,
+                     float lightAdaptation)
+        : m_brightness(brightness)
+        , m_chromaticAdaptation(chromaticAdaptation)
+        , m_lightAdaptation(lightAdaptation)
+    {
+        // ideally double check that parameters are not outside
+        // of the allowed range!
+    }
+
+    float m_brightness;
+    float m_chromaticAdaptation;
+    float m_lightAdaptation;
+};
 
 /**
  * @brief: Tone mapping algorithm [Reinhard2005]
@@ -48,8 +68,10 @@ class ProgressHelper;
  * @param ca amount of chromatic adaptation 0:1 (saturation, def 0)
  * @param la amount of light adaptation 0:1 (local/global, def 1)
  */
-void tmo_reinhard05(unsigned int width, unsigned int height,
-  float* R, float* G, float* B, 
-  const float* Y, float br, float ca, float la, ProgressHelper *ph );
+void tmo_reinhard05(size_t width, size_t height,
+                    float* R, float* G, float* B,
+                    const float* Y,
+                    const Reinhard05Params& params,
+                    ProgressHelper *ph );
 
 #endif // TMO_REINHARD05_H

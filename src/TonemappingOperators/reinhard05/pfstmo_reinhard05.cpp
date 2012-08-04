@@ -83,7 +83,7 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
     tmo_reinhard05(width, height,
                    R->getRawData(), G->getRawData(), B->getRawData(),
                    Y.getRawData(),
-                   brightness, chromaticadaptation, lightadaptation, ph );
+                   Reinhard05Params(brightness, chromaticadaptation, lightadaptation), ph );
 
     if (!ph->isTerminationRequested())
     {
