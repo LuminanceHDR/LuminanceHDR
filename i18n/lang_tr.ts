@@ -34,7 +34,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, 2011, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -66,7 +66,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -169,6 +169,47 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message utf8="true">
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2012, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR görüntüleme iş akışı uygulaması&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, 2011, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {3C?} {4.0/?} {3.?} {40/?} {1&quot;?} {11p?} {400;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {12p?} {600;?} {00007f?} {2006-2009,?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {2010-2012,?} {0000f?}</translation>
+    </message>
+    <message utf8="true">
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main developer QtPfsGui&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main Developers Luminance HDR&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Romanian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Andrei Răcăşan&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Chinese translator&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BatchHDRDialog</name>
@@ -191,7 +232,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Choose one of the creation predefined profiles. 
 See documentation for more informations.</source>
-        <translation type="unfinished">Oluşturmadan önceden tanımlanan profillerden birini seçin.
+        <translation type="obsolete">Oluşturmadan önceden tanımlanan profillerden birini seçin.
 Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
@@ -264,11 +305,11 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation type="unfinished">Mesajlar</translation>
+        <translation type="obsolete">Mesajlar</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation type="unfinished">Bir Dizin Seçin</translation>
+        <translation type="obsolete">Bir Dizin Seçin</translation>
     </message>
     <message>
         <source>Started processing...</source>
@@ -320,11 +361,11 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Select &amp;Input Folder</source>
-        <translation type="unfinished">Girdi &amp;Klasörünü Seç</translation>
+        <translation type="obsolete">Girdi &amp;Klasörünü Seç</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder</source>
-        <translation type="unfinished">Çıktı &amp;Klasörünü Seç</translation>
+        <translation type="obsolete">Çıktı &amp;Klasörünü Seç</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -337,6 +378,61 @@ Detaylı bilgi için belgelere bakın.</translation>
     <message>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Kapat</translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation type="unfinished">Çıktı</translation>
+    </message>
+    <message>
+        <source>Choose one of the creation predefined profiles. 
+See documentation for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a source directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a output directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of pictures must be a multiple of number of bracketed images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The chosen output directory contains HDR files. Those files might be overwritten. 
+
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -351,15 +447,15 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Add &amp;Directory</source>
-        <translation type="unfinished">&amp;Dizin Ekle</translation>
+        <translation type="obsolete">&amp;Dizin Ekle</translation>
     </message>
     <message>
         <source>&amp;Add Files</source>
-        <translation type="unfinished">Dosy&amp;a Ekle</translation>
+        <translation type="obsolete">Dosy&amp;a Ekle</translation>
     </message>
     <message>
         <source>&amp;Remove Files</source>
-        <translation type="unfinished">Dosyala&amp;rı çıkart</translation>
+        <translation type="obsolete">Dosyala&amp;rı çıkart</translation>
     </message>
     <message>
         <source>List of HDRs that will be tone mapped</source>
@@ -371,15 +467,15 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Add D&amp;irectory</source>
-        <translation type="unfinished">&amp;Dizin Ekle</translation>
+        <translation type="obsolete">&amp;Dizin Ekle</translation>
     </message>
     <message>
         <source>Add Fi&amp;les</source>
-        <translation type="unfinished">Dosya Ek&amp;le</translation>
+        <translation type="obsolete">Dosya Ek&amp;le</translation>
     </message>
     <message>
         <source>R&amp;emove Files</source>
-        <translation type="unfinished">Dosyala&amp;rı çıkart</translation>
+        <translation type="obsolete">Dosyala&amp;rı çıkart</translation>
     </message>
     <message>
         <source>Output</source>
@@ -387,7 +483,7 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder...</source>
-        <translation type="unfinished">Çıktı Klasörünü S&amp;eç...</translation>
+        <translation type="obsolete">Çıktı Klasörünü S&amp;eç...</translation>
     </message>
     <message>
         <source>Log:</source>
@@ -455,31 +551,31 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Add all the HDRs in a directory to the list</source>
-        <translation type="unfinished">Tüm HDR&apos;leri bir dizin listesine ekle</translation>
+        <translation type="obsolete">Tüm HDR&apos;leri bir dizin listesine ekle</translation>
     </message>
     <message>
         <source>Add single HDR files to the list</source>
-        <translation type="unfinished">Tek HDR&apos;yi dosya listesine ekle</translation>
+        <translation type="obsolete">Tek HDR&apos;yi dosya listesine ekle</translation>
     </message>
     <message>
         <source>Remove single HDR files to the list</source>
-        <translation type="unfinished">Tek HDR dosyasını listeden çıkart</translation>
+        <translation type="obsolete">Tek HDR dosyasını listeden çıkart</translation>
     </message>
     <message>
         <source>Tone Mapping Settings Files</source>
-        <translation type="unfinished">Ton Eşleme Ayarları dosyası</translation>
+        <translation type="obsolete">Ton Eşleme Ayarları dosyası</translation>
     </message>
     <message>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
-        <translation type="unfinished">Tüm Ton Eşleme Ayar dosyalarını bir dizinde listesine ekle</translation>
+        <translation type="obsolete">Tüm Ton Eşleme Ayar dosyalarını bir dizinde listesine ekle</translation>
     </message>
     <message>
         <source>Add single Tone Mapping Setting files to the list</source>
-        <translation type="unfinished">Tek Ton Eşleme Ayar dosyasını dosya listesine ekle</translation>
+        <translation type="obsolete">Tek Ton Eşleme Ayar dosyasını dosya listesine ekle</translation>
     </message>
     <message>
         <source>Remove single Tone Mapping Setting files to the list</source>
-        <translation type="unfinished">Ton Eşleme Ayarları dosyasını listeden kaldır</translation>
+        <translation type="obsolete">Ton Eşleme Ayarları dosyasını listeden kaldır</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
@@ -555,7 +651,99 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
-        <translation type="unfinished">Dosya biçimini kullanarak kaydet: %1, (kalite - eger var ise): %2</translation>
+        <translation type="obsolete">Dosya biçimini kullanarak kaydet: %1, (kalite - eger var ise): %2</translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+D)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+F)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Files (Alt+R)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tone Mapping Settings</source>
+        <translation type="unfinished">Ton Eşleme Ayarları</translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+I)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+L)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+L</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add from Database (Alt+B)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Settings (Alt+M)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ouput Image Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> %</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Image Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selec&amp;t...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving using file format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -589,7 +777,7 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Error: Wrong HDR creation format</source>
-        <translation type="unfinished">Hata: Yanlış HDR oluşturma biçimi</translation>
+        <translation type="obsolete">Hata: Yanlış HDR oluşturma biçimi</translation>
     </message>
     <message>
         <source>Error: Unknown weight function specified.</source>
@@ -633,7 +821,7 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
-        <translation type="unfinished">Hata: Görüntü Exif verileri eksik ve EV değerleri komut satırında belirlenmemiş.</translation>
+        <translation type="obsolete">Hata: Görüntü Exif verileri eksik ve EV değerleri komut satırında belirlenmemiş.</translation>
     </message>
     <message>
         <source>Failed executing align_image_stack</source>
@@ -645,11 +833,11 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>Cannot convert %1 to a float</source>
-        <translation type="unfinished">%1 dalgalanma için dönüştürülemiyor</translation>
+        <translation type="obsolete">%1 dalgalanma için dönüştürülemiyor</translation>
     </message>
     <message>
         <source>Cannot convert %1 to an integer</source>
-        <translation type="unfinished">%1 bir tamsayıya dönüştürülemiyor</translation>
+        <translation type="obsolete">%1 bir tamsayıya dönüştürülemiyor</translation>
     </message>
     <message>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
@@ -669,7 +857,7 @@ Detaylı bilgi için belgelere bakın.</translation>
     </message>
     <message>
         <source>-u --gui               Start in gui mode with input files.</source>
-        <translation type="unfinished">-u --gui               Girdi dosyaları ile gui modunda başlat.</translation>
+        <translation type="obsolete">-u --gui               Girdi dosyaları ile gui modunda başlat.</translation>
     </message>
     <message>
         <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
@@ -775,6 +963,62 @@ Detaylı bilgi için belgelere bakın.</translation>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
         <translation type="unfinished">Ya mevcut bir HDR dosyası yükleyin (-l seçeneği ile) veya yeni bir HDR oluşturmak için GİRİŞDOSYASI belirtmeniz gerekir.</translation>
+    </message>
+    <message>
+        <source>Error: Wrong HDR creation format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: Quality must be in the range [0-100].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load file %1 failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EV values have been assigned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed aligning images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating (in memory) the HDR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving to file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image %1 saved successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NOT Saving HDR image to file. %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemapping requested, saving to file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed loading images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-q --quality VALUE   Quality of the saved tone mapped file (0-100).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1113,6 +1357,10 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Eğer aynı görüntünün düzenlenebilir ve referans listesi  seçilirse, görüntü bu alanda gösterilecektir.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sol fare tuşuna basılı tutarak bir kırpma alanı seçebilirsiniz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>Histogram</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1149,6 +1397,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ERROR: Failed Loading file: %1</source>
         <translation type="unfinished">ERROR: %1 dosyasını yükleme başarısız</translation>
+    </message>
+    <message>
+        <source>ERROR loading %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1382,7 +1634,7 @@ işlevini seçiniz&lt;/p&gt;</translation>
     </message>
     <message>
         <source>(*) Weights: </source>
-        <translation type="unfinished">(*) Ağırlıkar: </translation>
+        <translation type="obsolete">(*) Ağırlıkar: </translation>
     </message>
     <message>
         <source> - Response curve: </source>
@@ -1701,6 +1953,18 @@ sayısı)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;İPUCU:&lt;/b&gt;Görüntül
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Tüm EV değerleri ayarlandı.&lt;br&gt;Şimdi İleri butonuna tıklayın.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+    </message>
+    <message>
+        <source>Auto-crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>align_image_stack failed to align images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weights: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2874,35 +3138,35 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished">Sonraki</translation>
+        <translation type="obsolete">Sonraki</translation>
     </message>
     <message>
         <source>Next Image</source>
-        <translation type="unfinished">Sonraki Görüntü</translation>
+        <translation type="obsolete">Sonraki Görüntü</translation>
     </message>
     <message>
         <source>Show Next Image</source>
-        <translation type="unfinished">Sonraki Görüntüyü Göster</translation>
+        <translation type="obsolete">Sonraki Görüntüyü Göster</translation>
     </message>
     <message>
         <source>Ctrl+PgDown</source>
-        <translation type="unfinished">Ctrl+PgDown</translation>
+        <translation type="obsolete">Ctrl+PgDown</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation type="unfinished">Önceki</translation>
+        <translation type="obsolete">Önceki</translation>
     </message>
     <message>
         <source>Previous Image</source>
-        <translation type="unfinished">Önceki Görüntü</translation>
+        <translation type="obsolete">Önceki Görüntü</translation>
     </message>
     <message>
         <source>Show Previous Image</source>
-        <translation type="unfinished">Önceki Görüntüyü Göster</translation>
+        <translation type="obsolete">Önceki Görüntüyü Göster</translation>
     </message>
     <message>
         <source>Ctrl+PgUp</source>
-        <translation type="unfinished">Ctrl+PgUp</translation>
+        <translation type="obsolete">Ctrl+PgUp</translation>
     </message>
     <message>
         <source>Lock Viewers</source>
@@ -2910,7 +3174,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Syncronize viewers mode (fit, fill or 1:1).</source>
-        <translation type="unfinished">Görüntüleyici modunu senkronize et (1:1&apos;e sığdır veya doldur)</translation>
+        <translation type="obsolete">Görüntüleyici modunu senkronize et (1:1&apos;e sığdır veya doldur)</translation>
     </message>
     <message>
         <source>Lock the images for sync view</source>
@@ -3024,12 +3288,24 @@ p, li { white-space: pre-wrap; }
         <source>Error: %1</source>
         <translation type="unfinished">Hata: %1</translation>
     </message>
+    <message>
+        <source>Synchronize viewers mode (fit, fill or 1:1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Soft Proofing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gamut Check</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParametersDialog</name>
     <message>
         <source>Saved Parameters</source>
-        <translation type="unfinished">Parametreler Kayıt edildi</translation>
+        <translation type="obsolete">Parametreler Kayıt edildi</translation>
     </message>
 </context>
 <context>
@@ -3180,55 +3456,35 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished">Çekce</translation>
+        <translation type="obsolete">Çekce</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished">İngilizce</translation>
+        <translation type="obsolete">İngilizce</translation>
     </message>
     <message>
         <source>Finnish</source>
-        <translation type="unfinished">Fince</translation>
+        <translation type="obsolete">Fince</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished">Fransızca</translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Indonesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Romanian</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Fransızca</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished">Rusca</translation>
+        <translation type="obsolete">Rusca</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished">İspanyolca</translation>
+        <translation type="obsolete">İspanyolca</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished">Türkçe</translation>
+        <translation type="obsolete">Türkçe</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished">Macarca</translation>
+        <translation type="obsolete">Macarca</translation>
     </message>
     <message>
         <source>Always show Preview Panel</source>
@@ -3264,7 +3520,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>C&amp;hoose</source>
-        <translation type="unfinished">S&amp;eç</translation>
+        <translation type="obsolete">S&amp;eç</translation>
     </message>
     <message>
         <source>Which LDR image format to save to</source>
@@ -3350,7 +3606,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3638,7 +3894,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: no input color profile is used during RAW decoding.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Embedded&lt;/span&gt;: use embedded color profile from RAW file if exist.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom input color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -3650,15 +3906,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Hiçbiri</translation>
+        <translation type="obsolete">Hiçbiri</translation>
     </message>
     <message>
         <source>Built in</source>
-        <translation type="unfinished">Dahili</translation>
+        <translation type="obsolete">Dahili</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished">Özel</translation>
+        <translation type="obsolete">Özel</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3673,7 +3929,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wide Gamut&lt;/span&gt;: this color space is an expanded version of the Adobe RGB color space.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro-Photo&lt;/span&gt;: this color space is an RGB color space, developed by Kodak, that offers an especially large gamut designed for use with photographic outputs in mind.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom output color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -3688,23 +3944,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>RAW</source>
-        <translation type="unfinished">RAW</translation>
+        <translation type="obsolete">RAW</translation>
     </message>
     <message>
         <source>sRGB</source>
-        <translation type="unfinished">sRGB</translation>
+        <translation type="obsolete">sRGB</translation>
     </message>
     <message>
         <source>Adobe RGB</source>
-        <translation type="unfinished">Adobe RGB</translation>
+        <translation type="obsolete">Adobe RGB</translation>
     </message>
     <message>
         <source>Wide Gamut</source>
-        <translation type="unfinished">Geniş Dizi</translation>
+        <translation type="obsolete">Geniş Dizi</translation>
     </message>
     <message>
         <source>Pro Photo</source>
-        <translation type="unfinished">Pro Foto</translation>
+        <translation type="obsolete">Pro Foto</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3724,11 +3980,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please restart...</source>
-        <translation type="unfinished">Lütfen Yeniden başlatın...</translation>
+        <translation type="obsolete">Lütfen Yeniden başlatın...</translation>
     </message>
     <message>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished">Yeni dili kullanmak LuminanceHDR&apos;yi yeniden başlatın:%1</translation>
+        <translation type="obsolete">Yeni dili kullanmak LuminanceHDR&apos;yi yeniden başlatın:%1</translation>
     </message>
     <message>
         <source>Language</source>
@@ -3760,7 +4016,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Batch Tonemapping Default Output Quality</source>
-        <translation type="unfinished">Toplu Ton Eşleme varsayılan Çıktı Kalitesi</translation>
+        <translation type="obsolete">Toplu Ton Eşleme varsayılan Çıktı Kalitesi</translation>
     </message>
     <message>
         <source>General</source>
@@ -3808,7 +4064,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Camera Profile</source>
-        <translation type="unfinished">Kamera Profili</translation>
+        <translation type="obsolete">Kamera Profili</translation>
     </message>
     <message>
         <source>Camera profile</source>
@@ -3816,11 +4072,51 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color Space</source>
-        <translation type="unfinished">Renk  Alanı</translation>
+        <translation type="obsolete">Renk  Alanı</translation>
     </message>
     <message>
         <source>align_image_stack command line arguments</source>
         <translation type="unfinished">yığın_görüntü_hizalama komut satırı argümanları</translation>
+    </message>
+    <message>
+        <source>Color Management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Monitor Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printer profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open ICC Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color profile (*.icc)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3834,10 +4130,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Reinhard &apos;05</translation>
     </message>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mantiuk &apos;06</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3847,23 +4139,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Fattal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fattal</translation>
     </message>
     <message>
         <source>Drago</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Drago</translation>
     </message>
     <message>
         <source>Durand</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Durand</translation>
     </message>
     <message>
         <source>Ashikhmin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ashikhmin</translation>
     </message>
     <message>
         <source>Pattanaik</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Önizle</translation>
     </message>
 </context>
 <context>
@@ -3972,7 +4268,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Kayıt başarısız &lt;b&gt;</translation>
+        <translation type="obsolete">Kayıt başarısız &lt;b&gt;</translation>
     </message>
     <message>
         <source>All LDR formats</source>
@@ -4001,6 +4297,82 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
         <translation type="unfinished">LuminanceHDR  görüntü_yığın_hizalama&apos;yı yürütülecek olan &quot;-v-a hizalama_&quot; seçeneklerini gerektirir. Komut satırı seçenekleri düzeltildi.</translation>
+    </message>
+    <message>
+        <source>Error Opening RAW File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error Unpacking RAW File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error Processing RAW File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory Error in processing RAW File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error Creating PFS Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to a float</source>
+        <translation type="unfinished">%1 dalgalanma için dönüştürülemiyor</translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to an integer</source>
+        <translation type="unfinished">%1 bir tamsayıya dönüştürülemiyor</translation>
+    </message>
+    <message>
+        <source>Input file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running in HDR-creation mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running in Load-HDR mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary directory: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using %1 threads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully loaded file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open monitor profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open printer profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a printer profile .</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4058,7 +4430,170 @@ p, li { white-space: pre-wrap; }
     <name>SavedParameters</name>
     <message>
         <source>Simple</source>
-        <translation type="unfinished">Basit</translation>
+        <translation type="obsolete">Basit</translation>
+    </message>
+    <message>
+        <source>Local Contrast Threshold</source>
+        <translation type="obsolete">Yerel Kontrast Eşiği</translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="obsolete">Sapma</translation>
+    </message>
+    <message>
+        <source>Spatial Kernel Sigma</source>
+        <translation type="obsolete">Uzaysal Çekirdek Sigması</translation>
+    </message>
+    <message>
+        <source>Range Kernel Sigma</source>
+        <translation type="obsolete">Dizi Çekirdek Sigması</translation>
+    </message>
+    <message>
+        <source>Base Contrast</source>
+        <translation type="obsolete">Temel Kontrast</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation type="obsolete">Alfa</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="obsolete">Beta</translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="obsolete">Renk Doygunluğu</translation>
+    </message>
+    <message>
+        <source>Cone and Rod based on Luminance</source>
+        <translation type="obsolete">Işıga dayalı Koni ve Çubuk</translation>
+    </message>
+    <message>
+        <source>Cone Level</source>
+        <translation type="obsolete">Koni Seviyesi</translation>
+    </message>
+    <message>
+        <source>Rod Level</source>
+        <translation type="obsolete">Çubuk Seviyesi</translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="obsolete">Çoklayıcı</translation>
+    </message>
+    <message>
+        <source>Use Scales</source>
+        <translation type="obsolete">Ölçekleri Kullan</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation type="obsolete">Anahtar Değer</translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="obsolete">Sıra</translation>
+    </message>
+    <message>
+        <source>Lower Scale</source>
+        <translation type="obsolete">Düşük Ölçek</translation>
+    </message>
+    <message>
+        <source>Upper Scale</source>
+        <translation type="obsolete">Yüksek Ölçek</translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="obsolete">Parlaklık</translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="obsolete">Denklem 2</translation>
+    </message>
+    <message>
+        <source>Pre-gamma</source>
+        <translation type="obsolete">Pre-gama</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="obsolete">Yorum</translation>
+    </message>
+    <message>
+        <source>Noise Reduction</source>
+        <translation type="obsolete">Gürültü Azaltma</translation>
+    </message>
+    <message>
+        <source>Old Fattal</source>
+        <translation type="obsolete">Old Fattal</translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="obsolete">Kontrast Eşitleme</translation>
+    </message>
+    <message>
+        <source>Contrast Factor</source>
+        <translation type="obsolete">Kontrast Faktörü</translation>
+    </message>
+    <message>
+        <source>Saturation Factor</source>
+        <translation type="obsolete">Doygunluk Faktörü</translation>
+    </message>
+    <message>
+        <source>Detail Factor</source>
+        <translation type="obsolete">Detay Faktörü</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="obsolete">Kontrast Geliştirme</translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="obsolete">Işık Düzeyi</translation>
+    </message>
+    <message>
+        <source>Manual Luminance Level</source>
+        <translation type="obsolete">Işık Düzeyi Kılavuzu</translation>
+    </message>
+    <message>
+        <source>Local Tonemapping</source>
+        <translation type="obsolete">Yerel Ton eşleme</translation>
+    </message>
+    <message>
+        <source>Phi Value</source>
+        <translation type="obsolete">Phi Degeri</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="obsolete">Chromatic Adaptation</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="obsolete">Işık Adaptasyonu</translation>
+    </message>
+    <message>
+        <source>TM Operator</source>
+        <translation type="obsolete">TM Operatörü</translation>
+    </message>
+</context>
+<context>
+    <name>SavedParametersDialog</name>
+    <message>
+        <source>Saved Parameters</source>
+        <translation type="unfinished">Parametreler Kayıt edildi</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished">Yorum</translation>
+    </message>
+    <message>
+        <source>TM Operator</source>
+        <translation type="unfinished">TM Operatörü</translation>
+    </message>
+    <message>
+        <source>Simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished">Denklem 2</translation>
     </message>
     <message>
         <source>Local Contrast Threshold</source>
@@ -4093,58 +4628,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Renk Doygunluğu</translation>
     </message>
     <message>
-        <source>Cone and Rod based on Luminance</source>
-        <translation type="unfinished">Işıga dayalı Koni ve Çubuk</translation>
-    </message>
-    <message>
-        <source>Cone Level</source>
-        <translation type="unfinished">Koni Seviyesi</translation>
-    </message>
-    <message>
-        <source>Rod Level</source>
-        <translation type="unfinished">Çubuk Seviyesi</translation>
-    </message>
-    <message>
-        <source>Multiplier</source>
-        <translation type="unfinished">Çoklayıcı</translation>
-    </message>
-    <message>
-        <source>Use Scales</source>
-        <translation type="unfinished">Ölçekleri Kullan</translation>
-    </message>
-    <message>
-        <source>Key Value</source>
-        <translation type="unfinished">Anahtar Değer</translation>
-    </message>
-    <message>
-        <source>Range</source>
-        <translation type="unfinished">Sıra</translation>
-    </message>
-    <message>
-        <source>Lower Scale</source>
-        <translation type="unfinished">Düşük Ölçek</translation>
-    </message>
-    <message>
-        <source>Upper Scale</source>
-        <translation type="unfinished">Yüksek Ölçek</translation>
-    </message>
-    <message>
-        <source>Brightness</source>
-        <translation type="unfinished">Parlaklık</translation>
-    </message>
-    <message>
-        <source>Equation 2</source>
-        <translation type="unfinished">Denklem 2</translation>
-    </message>
-    <message>
-        <source>Pre-gamma</source>
-        <translation type="unfinished">Pre-gama</translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="unfinished">Yorum</translation>
-    </message>
-    <message>
         <source>Noise Reduction</source>
         <translation type="unfinished">Gürültü Azaltma</translation>
     </message>
@@ -4154,7 +4637,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Kontrast Eşitleme</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Contrast Factor</source>
@@ -4181,24 +4664,64 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Işık Düzeyi Kılavuzu</translation>
     </message>
     <message>
+        <source>Cone and Rod based on Luminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Local Tonemapping</source>
         <translation type="unfinished">Yerel Ton eşleme</translation>
+    </message>
+    <message>
+        <source>Cone Level</source>
+        <translation type="unfinished">Koni Seviyesi</translation>
+    </message>
+    <message>
+        <source>Rod Level</source>
+        <translation type="unfinished">Çubuk Seviyesi</translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Scales</source>
+        <translation type="unfinished">Ölçekleri Kullan</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation type="unfinished">Anahtar Değer</translation>
     </message>
     <message>
         <source>Phi Value</source>
         <translation type="unfinished">Phi Degeri</translation>
     </message>
     <message>
+        <source>Range</source>
+        <translation type="unfinished">Sıra</translation>
+    </message>
+    <message>
+        <source>Lower Scale</source>
+        <translation type="unfinished">Düşük Ölçek</translation>
+    </message>
+    <message>
+        <source>Upper Scale</source>
+        <translation type="unfinished">Yüksek Ölçek</translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="unfinished">Parlaklık</translation>
+    </message>
+    <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Chromatic Adaptation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Light Adaptation</source>
         <translation type="unfinished">Işık Adaptasyonu</translation>
     </message>
     <message>
-        <source>TM Operator</source>
-        <translation type="unfinished">TM Operatörü</translation>
+        <source>Pre-gamma</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4209,7 +4732,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Enter a short comment for the saved parameters</source>
-        <translation type="unfinished">Kayıt edilen parametreler için kısa bir açıklama girin</translation>
+        <translation type="obsolete">Kayıt edilen parametreler için kısa bir açıklama girin</translation>
+    </message>
+    <message>
+        <source>Enter a short comment for the saved parameters:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4546,11 +5073,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Luminance Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Işık Düzeyi</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gürültü Azaltma</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
@@ -4574,7 +5101,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <source>Load saved parameters</source>
@@ -4658,11 +5185,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished">geri al</translation>
+        <translation type="obsolete">geri al</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished">yinele</translation>
+        <translation type="obsolete">yinele</translation>
     </message>
     <message>
         <source>TM Database Problem</source>
@@ -4681,7 +5208,7 @@ Hata: %1
     </message>
     <message>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
-        <translation type="unfinished">Hata, ton eşleme ayarları dosya biçimi değiştirildi. Bu (eski) dosya, Luminance&apos;nin bu sürümü ile kullanılamaz. Yeni bir tane oluşturun.</translation>
+        <translation type="obsolete">Hata, ton eşleme ayarları dosya biçimi değiştirildi. Bu (eski) dosya, Luminance&apos;nin bu sürümü ile kullanılamaz. Yeni bir tane oluşturun.</translation>
     </message>
     <message>
         <source>Enter the width of the new size:</source>
@@ -4707,7 +5234,7 @@ Düzeyini Etkinleştir</translation>
     </message>
     <message>
         <source>Version Pre 1.8.4</source>
-        <translation type="unfinished">Sürüm Pre 1.8.4</translation>
+        <translation type="obsolete">Sürüm Pre 1.8.4</translation>
     </message>
     <message>
         <source>Auto Cone/Rod</source>
@@ -4741,24 +5268,42 @@ Düzeyini Etkinleştir</translation>
         <source>Set Custom Output Size</source>
         <translation type="unfinished">Özel Çıktı Boyutu Ayarla</translation>
     </message>
+    <message>
+        <source>Version 2.3.0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TonemappingWarningDialog</name>
     <message>
         <source>Attention!</source>
-        <translation type="unfinished">Dikkat</translation>
+        <translation type="obsolete">Dikkat</translation>
     </message>
     <message>
         <source>Ask again</source>
-        <translation type="unfinished">Tekrar sor</translation>
+        <translation type="obsolete">Tekrar sor</translation>
     </message>
     <message>
         <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
 
 Do you want to continue?</source>
-        <translation type="unfinished">Ton eşleme uygulaması girdi görüntüsünün boyutuna bağlıdır. Bu işlemi tam buyotlu bir görüntüye uygulamak, muhtemelen farklı bir görüntü ile sonuçlanacaktır.
+        <translation type="obsolete">Ton eşleme uygulaması girdi görüntüsünün boyutuna bağlıdır. Bu işlemi tam buyotlu bir görüntüye uygulamak, muhtemelen farklı bir görüntü ile sonuçlanacaktır.
 
 Devam etmek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4948,7 +5493,7 @@ Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
         <source>Log:</source>
-        <translation type="unfinished">Günlük:</translation>
+        <translation type="obsolete">Günlük:</translation>
     </message>
     <message>
         <source>&amp;Show only:</source>
@@ -4973,22 +5518,6 @@ Devam etmek istiyor musunuz?</translation>
     <message>
         <source>&amp;Start!</source>
         <translation type="obsolete">&amp;Başla!</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;From:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;To:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exif operations report</source>
@@ -5017,6 +5546,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>All Supported formats</source>
         <translation type="unfinished">Desteklenen  tüm biçimler</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation type="unfinished">Günlük</translation>
     </message>
 </context>
 <context>
