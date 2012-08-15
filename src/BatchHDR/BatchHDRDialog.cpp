@@ -27,6 +27,10 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QMessageBox>
+#include <QSqlRecord>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <QSqlError>
 
 #include "arch/math.h"
 #include "BatchHDR/BatchHDRDialog.h"
@@ -34,7 +38,6 @@
 #include "Libpfs/pfs.h"
 #include "Libpfs/domio.h"
 #include "Core/IOWorker.h"
-#include "HdrCreation/HdrCreationManager.h"
 #include "OsIntegration/osintegration.h"
 
 BatchHDRDialog::BatchHDRDialog(QWidget *p):
@@ -72,6 +75,82 @@ QDialog(p),
 
 	m_Ui->inputLineEdit->setText(m_batchHdrInputDir);
 	m_Ui->outputLineEdit->setText(m_batchHdrOutputDir);
+
+    QDir dir(QDir::homePath());
+	
+	QString filename = dir.absolutePath();
+#ifdef WIN32
+	filename += "/LuminanceHDR";
+#else
+	filename += "/.LuminanceHDR";
+#endif
+	
+	filename += "/hdr_parameters.db";
+
+	if (QFile::exists(filename)) {
+		QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "hdr_parameters");
+		db.setDatabaseName(filename);
+		db.setHostName("localhost");
+		bool ok = db.open();
+		if (!ok)
+		{
+			QMessageBox::warning(this,tr("HDR Database Problem"),
+                                  tr("The database used for saving HDR creation parameters cannot be opened.\n"
+									"Error: %1").arg(db.lastError().databaseText()),
+                                  QMessageBox::Ok,QMessageBox::NoButton);
+			return;
+		}
+		qDebug() << "HDR Database opened";
+		QSqlQueryModel model;
+		model.setQuery("SELECT * FROM parameters", db);	
+		for (int i = 0; i < model.rowCount(); i++) {
+			m_Ui->profileComboBox->addItem(tr("Custom config %1").arg(i+1));
+			int weight_ = model.record(i).value("weight").toInt(); 
+			int response_ = model.record(i).value("response").toInt(); 
+			int model_ = model.record(i).value("model").toInt(); 
+			QString filename_ = model.record(i).value("filename").toString(); 
+			config_triple ct;
+			switch (weight_) {
+				case 0:
+					ct.weights = TRIANGULAR;
+					break;
+				case 1:
+					ct.weights = GAUSSIAN;
+					break;
+				case 2:
+					ct.weights = PLATEAU;
+					break;
+			}
+			switch (response_) {
+				case 0:
+					ct.response_curve = FROM_FILE;
+					ct.LoadCurveFromFilename = filename_;
+					ct.SaveCurveToFilename = "";	
+					break;
+				case 1:
+					ct.response_curve = LINEAR;
+					break; 
+				case 2:
+					ct.response_curve = GAMMA;
+					break; 
+				case 3:
+					ct.response_curve = LOG10;
+					break; 
+				case 4:
+					ct.response_curve = FROM_ROBERTSON;
+					break; 
+			}
+			switch (model_) {
+				case 0:
+					ct.model = DEBEVEC;
+					break; 
+				case 1:
+					ct.model = ROBERTSON;
+					break; 
+			}
+			m_CustomConfig.push_back(ct);	
+		}
+	}
     check_start_button();
 }
 
@@ -156,18 +235,6 @@ void BatchHDRDialog::on_startButton_clicked()
 	if (m_Ui->inputLineEdit->text().isEmpty() || m_Ui->outputLineEdit->text().isEmpty())
 		return;
 
-	if (m_bracketed.count() < m_Ui->spinBox->value()) {
-		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
-		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
-		return;
-	}
-
-	if (m_bracketed.count() % m_Ui->spinBox->value() != 0) {
-		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
-		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
-		return;
-	}
-
 	// check for empty output-folder
 	bool foundHDR = false;
 	QDir chosendir(m_batchHdrOutputDir);
@@ -197,6 +264,18 @@ void BatchHDRDialog::on_startButton_clicked()
 	//hack to prepend to this list the path as prefix.
 	m_bracketed.replaceInStrings(QRegExp("(.+)"), chosenInputDir.path()+"/\\1");
 	qDebug() << m_bracketed;
+
+	if (m_bracketed.count() < m_Ui->spinBox->value()) {
+		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
+		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
+		return;
+	}
+
+	if (m_bracketed.count() % m_Ui->spinBox->value() != 0) {
+		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
+		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
+		return;
+	}
 
 	if (doStart) {
 		m_Ui->horizontalSlider->setEnabled(false);
@@ -299,7 +378,14 @@ void BatchHDRDialog::create_hdr(int)
 {
 	qDebug() << "BatchHDRDialog::create_hdr()";
 	QString suffix = m_Ui->formatComboBox->currentText();
-	m_hdrCreationManager->chosen_config = predef_confs[m_Ui->profileComboBox->currentIndex()];
+
+	int idx = m_Ui->profileComboBox->currentIndex();
+	if (idx <= 5) {
+		m_hdrCreationManager->chosen_config = predef_confs[idx];
+	}
+	else  {
+		m_hdrCreationManager->chosen_config = m_CustomConfig[idx - 6];
+	}
 	pfs::Frame* resultHDR = m_hdrCreationManager->createHdr(false, 1);
 
 	int paddingLength = ceil(log10(m_total + 1.0f));
@@ -394,3 +480,4 @@ void BatchHDRDialog::try_to_continue()
 		}
 	}
 }
+

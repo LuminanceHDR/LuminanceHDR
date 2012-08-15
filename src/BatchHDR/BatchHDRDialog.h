@@ -29,6 +29,7 @@
 #include <QDialog>
 
 #include "Common/LuminanceOptions.h"
+#include "HdrCreation/HdrCreationManager.h"
 
 // Forward declaration
 class IOWorker;
@@ -82,6 +83,7 @@ protected:
 	bool m_loading_error;
 	bool m_abort;
 	bool m_processing;
+	QVector<config_triple> m_CustomConfig;
 };
 
 #endif
