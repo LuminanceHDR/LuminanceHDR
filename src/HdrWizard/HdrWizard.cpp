@@ -33,6 +33,10 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QTextStream>
+#include <QSqlRecord>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <QSqlError>
 
 #include "HdrWizard.h"
 #include "ui_HdrWizard.h"
@@ -86,6 +90,82 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files):
 
 		QMetaObject::invokeMethod(this, "loadInputFiles", Qt::QueuedConnection,
 								  Q_ARG(QStringList, files), Q_ARG(int, files.size()));
+	}
+
+    QDir dir(QDir::homePath());
+	
+	QString filename = dir.absolutePath();
+#ifdef WIN32
+	filename += "/LuminanceHDR";
+#else
+	filename += "/.LuminanceHDR";
+#endif
+	
+	filename += "/hdr_parameters.db";
+
+	if (QFile::exists(filename)) {
+		QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "hdr_parameters");
+		db.setDatabaseName(filename);
+		db.setHostName("localhost");
+		bool ok = db.open();
+		if (!ok)
+		{
+			QMessageBox::warning(this,tr("HDR Database Problem"),
+                                  tr("The database used for saving HDR creation parameters cannot be opened.\n"
+									"Error: %1").arg(db.lastError().databaseText()),
+                                  QMessageBox::Ok,QMessageBox::NoButton);
+			return;
+		}
+		qDebug() << "HDR Database opened";
+		QSqlQueryModel model;
+		model.setQuery("SELECT * FROM parameters", db);	
+		for (int i = 0; i < model.rowCount(); i++) {
+			m_Ui->predefConfigsComboBox->addItem(tr("Custom config %1").arg(i+1));
+			int weight_ = model.record(i).value("weight").toInt(); 
+			int response_ = model.record(i).value("response").toInt(); 
+			int model_ = model.record(i).value("model").toInt(); 
+			QString filename_ = model.record(i).value("filename").toString(); 
+			config_triple ct;
+			switch (weight_) {
+				case 0:
+					ct.weights = TRIANGULAR;
+					break;
+				case 1:
+					ct.weights = GAUSSIAN;
+					break;
+				case 2:
+					ct.weights = PLATEAU;
+					break;
+			}
+			switch (response_) {
+				case 0:
+					ct.response_curve = FROM_FILE;
+					ct.LoadCurveFromFilename = filename_;
+					ct.SaveCurveToFilename = "";	
+					break;
+				case 1:
+					ct.response_curve = LINEAR;
+					break; 
+				case 2:
+					ct.response_curve = GAMMA;
+					break; 
+				case 3:
+					ct.response_curve = LOG10;
+					break; 
+				case 4:
+					ct.response_curve = FROM_ROBERTSON;
+					break; 
+			}
+			switch (model_) {
+				case 0:
+					ct.model = DEBEVEC;
+					break; 
+				case 1:
+					ct.model = ROBERTSON;
+					break; 
+			}
+			m_CustomConfig.push_back(ct);	
+		}
 	}
 }
 
@@ -603,7 +683,12 @@ void HdrWizard::saveRespCurveFileButtonClicked() {
 }
 
 void HdrWizard::predefConfigsComboBoxActivated( int index_from_gui ) {
-	hdrCreationManager->chosen_config = predef_confs[index_from_gui];
+	if (index_from_gui <= 5) {
+		hdrCreationManager->chosen_config = predef_confs[index_from_gui];
+	}
+	else {
+		hdrCreationManager->chosen_config = m_CustomConfig[index_from_gui - 6];
+	}
 	m_Ui->lineEdit_showWeight->setText(getQStringFromConfig(1));
 	m_Ui->lineEdit_show_resp->setText(getQStringFromConfig(2));
 	m_Ui->lineEdit_showmodel->setText(getQStringFromConfig(3));
@@ -654,7 +739,7 @@ QString HdrWizard::getQStringFromConfig( int type ) {
 	case FROM_ROBERTSON:
 		return tr("From Calibration");
 	case FROM_FILE:
-		return tr("From File");
+		return tr("From File: ") + hdrCreationManager->chosen_config.LoadCurveFromFilename;
 	}
 	} else if (type == 3) {   //return String for model
 	switch (hdrCreationManager->chosen_config.model) {
@@ -761,5 +846,68 @@ void HdrWizard::writeAisData(QByteArray data)
 {
 	qDebug() << data;
 	m_Ui->textEdit->append(data);
+}
+
+void HdrWizard::on_pushButtonSaveSettings_clicked()
+{
+    QDir dir(QDir::homePath());
+	
+	QString filename = dir.absolutePath();
+#ifdef WIN32
+	filename += "/LuminanceHDR";
+#else
+	filename += "/.LuminanceHDR";
+#endif
+	
+	filename += "/hdr_parameters.db";
+
+	qDebug() << filename;
+
+	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "hdr_parameters");
+	db.setDatabaseName(filename);
+	db.setHostName("localhost");
+	bool ok = db.open();
+	if (!ok)
+	{
+		QMessageBox::warning(this,tr("HDR Database Problem"),
+                                  tr("The database used for saving HDR creation parameters cannot be opened.\n"
+									"Error: %1").arg(db.lastError().databaseText()),
+                                  QMessageBox::Ok,QMessageBox::NoButton);
+		return;
+	}
+	qDebug() << "HDR Database opened";
+
+	QSqlQuery query(db);
+	bool res = query.exec("CREATE TABLE IF NOT EXISTS parameters (weight integer, response integer, model integer, filename varchar(150));");
+	if (res == false)
+		qDebug() << "CREATE TABLE: " << query.lastError();
+	
+	QString response_filename;
+	int weight = m_Ui->triGaussPlateauComboBox->currentIndex();
+	int response;
+	if (m_Ui->predefRespCurveRadioButton->isChecked() && !m_Ui->loadRespCurveFromFileCheckbox->isChecked()) {
+		response = m_Ui->gammaLinLogComboBox->currentIndex();
+	}
+	else if (m_Ui->recoverRespCurveRadio->isChecked()) {
+		response = FROM_ROBERTSON;
+	}
+	else if (m_Ui->loadRespCurveFromFileCheckbox->isChecked()) {
+		response = FROM_FILE;
+		response_filename = m_Ui->RespCurveFileLoadedLineEdit->text();
+	}
+	int model = m_Ui->modelComboBox->currentIndex();
+
+	query.prepare("INSERT INTO parameters (weight, response, model, filename) "
+				"VALUES (:weight, :response, :model, :filename)");
+	qDebug() << "Prepare: " << query.lastError();
+	query.bindValue(":weight", weight);
+	query.bindValue(":response", response);
+	query.bindValue(":model", model);
+	query.bindValue(":filename", response_filename);
+	res = query.exec();
+	if (res == false)
+		qDebug() << "Insert: " << query.lastError();
+	db.close();
+	m_Ui->pushButtonSaveSettings->setEnabled(false);
 }
 

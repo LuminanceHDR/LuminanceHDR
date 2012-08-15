@@ -30,6 +30,7 @@
 
 #include <QDialog>
 #include <QString>
+#include <QVector>
 
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
@@ -75,6 +76,7 @@ private:
 	TResponse responses_in_gui[4];
 	TModel models_in_gui[2];
 	TWeight weights_in_gui[3];
+	QVector<config_triple> m_CustomConfig;
 
     QScopedPointer<Ui::HdrWizard> m_Ui;
 
@@ -113,5 +115,6 @@ private slots:
 	void ais_failed(QProcess::ProcessError);
 	void writeAisData(QByteArray data);
 	void setupConnections();
+	void on_pushButtonSaveSettings_clicked();
 };
 #endif
