@@ -60,8 +60,8 @@ QDialog(p),
 	connect(m_Ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
 	connect(m_Ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
 
-    connect(m_Ui->MTBRadioButton, SIGNAL(clicked()), this, SLOT(on_align_selection_clicked()));
-    connect(m_Ui->aisRadioButton, SIGNAL(clicked()), this, SLOT(on_align_selection_clicked()));
+    connect(m_Ui->MTBRadioButton, SIGNAL(clicked()), this, SLOT(align_selection_clicked()));
+    connect(m_Ui->aisRadioButton, SIGNAL(clicked()), this, SLOT(align_selection_clicked()));
 
 	connect(m_hdrCreationManager, SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(align(QStringList)));
 	connect(m_hdrCreationManager, SIGNAL(finishedAligning(int)), this, SLOT(create_hdr(int)));
@@ -457,7 +457,7 @@ void BatchHDRDialog::on_cancelButton_clicked()
 		this->reject();
 }
 
-void BatchHDRDialog::on_align_selection_clicked()
+void BatchHDRDialog::align_selection_clicked()
 {
     m_Ui->autoCropCheckBox->setEnabled(m_Ui->aisRadioButton->isChecked());
 }

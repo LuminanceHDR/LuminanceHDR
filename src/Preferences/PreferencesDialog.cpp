@@ -130,24 +130,6 @@ QStringList sanitizeAISparams(const QString& input_parameter_string)
     return temp_ais_options;
 }
 
-int mappingBatchTmQStringToInt(const QString& string)
-{
-    if (string == "JPEG")
-        return 0;
-    else if (string == "PNG")
-        return 1;
-    else if (string == "PPM")
-        return 2;
-    else if (string == "PBM")
-        return 3;
-    else if (string == "BMP")
-        return 4;
-    else if (string == "TIFF")
-        return 5;
-    return 0;   // I assume JPEG... at least it doesn't crash! :|
-}
-
-
 }
 
 PreferencesDialog::PreferencesDialog(QWidget *p):
@@ -250,7 +232,6 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setShowFirstPageWizard( m_Ui->checkBoxWizardShowFirstPage->isChecked() );
 
     // --- Batch TM
-    luminance_options.setBatchTmLdrFormat( m_Ui->batchLdrFormatComboBox->currentText() );
     luminance_options.setBatchTmNumThreads( m_Ui->numThreadspinBox->value() );
 
     // --- Other Parameters
@@ -589,9 +570,6 @@ void PreferencesDialog::from_options_to_gui()
     // Temp directory
     m_Ui->lineEditTempPath->setText(luminance_options.getTempDir());
 
-    // Batch TM output format
-    int current_batch_tm_output_type = mappingBatchTmQStringToInt( luminance_options.getBatchTmLdrFormat() );
-    m_Ui->batchLdrFormatComboBox->setCurrentIndex( current_batch_tm_output_type );
 
     m_Ui->numThreadspinBox->setValue( luminance_options.getBatchTmNumThreads() );
 

@@ -42,13 +42,14 @@
 #include <QImage>
 #include <QScopedPointer>
 
-BatchTMJob::BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder):
+BatchTMJob::BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder, QString format):
         m_thread_id(thread_id),
         m_file_name(filename),
         m_tm_options(tm_options),
-        m_output_folder(output_folder)
+        m_output_folder(output_folder),
+		m_ldr_output_format(format)
 {
-    m_ldr_output_format = LuminanceOptions().getBatchTmLdrFormat();
+    //m_ldr_output_format = LuminanceOptions().getBatchTmLdrFormat();
 
     m_output_file_name_base  = m_output_folder + "/" + QFileInfo(m_file_name).completeBaseName();
 }

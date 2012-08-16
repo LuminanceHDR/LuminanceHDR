@@ -464,17 +464,6 @@ void LuminanceOptions::setBatchTmNumThreads(int v)
     setValue(KEY_BATCH_TM_NUM_THREADS, v);
 }
 
-QString LuminanceOptions::getBatchTmLdrFormat()
-{
-    return value(KEY_BATCH_TM_LDR_FORMAT, "JPEG").toString();
-}
-
-void LuminanceOptions::setBatchTmLdrFormat(QString s)
-{
-    setValue(KEY_BATCH_TM_LDR_FORMAT, s);
-}
-
-
 namespace
 {
 #ifdef QT_DEBUG

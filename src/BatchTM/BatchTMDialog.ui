@@ -383,6 +383,47 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Output Format:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxFormat">
+            <item>
+             <property name="text">
+              <string>JPEG</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TIFF (16 bits)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PNG</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>BMP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PPM</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PBM</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Output Folder:</string>

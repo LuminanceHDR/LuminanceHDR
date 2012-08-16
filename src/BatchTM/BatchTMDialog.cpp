@@ -96,7 +96,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     m_is_batch_running  = false;
 
     add_log_message(tr("Using %1 thread(s)").arg(m_max_num_threads));
-    add_log_message(tr("Saving using file format: %1").arg(m_luminance_options.getBatchTmLdrFormat()));
+    //add_log_message(tr("Saving using file format: %1").arg(m_Ui->comboBoxFormat->currentText()));
 }
 
 BatchTMDialog::~BatchTMDialog()
@@ -417,7 +417,8 @@ void BatchTMDialog::start_batch_thread()
             // at least one thread free!
             // start thread
             // I create the thread with NEW, but I let it die on its own, so don't need to store its pointer somewhere
-            BatchTMJob * job_thread = new BatchTMJob(t_id, HDRs_list.at(m_next_hdr_file), &m_tm_options_list, m_Ui->out_folder_widgets->text());
+            BatchTMJob * job_thread = new BatchTMJob(t_id, HDRs_list.at(m_next_hdr_file), &m_tm_options_list, m_Ui->out_folder_widgets->text(),
+				m_Ui->comboBoxFormat->currentText());
 
             // Thread deletes itself when it has done with its job
             connect(job_thread, SIGNAL(finished()),
