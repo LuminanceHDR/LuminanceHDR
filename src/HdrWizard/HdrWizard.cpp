@@ -166,6 +166,7 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files):
 			}
 			m_CustomConfig.push_back(ct);	
 		}
+		db.close();
 	}
 }
 

@@ -150,6 +150,7 @@ QDialog(p),
 			}
 			m_CustomConfig.push_back(ct);	
 		}
+		db.close();
 	}
     check_start_button();
 }
