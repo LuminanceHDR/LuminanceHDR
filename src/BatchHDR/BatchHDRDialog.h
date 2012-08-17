@@ -83,6 +83,6 @@ protected:
 	bool m_loading_error;
 	bool m_abort;
 	bool m_processing;
-	QVector<config_triple> m_CustomConfig;
+	QVector<config_triple> m_customConfig;
 };
 #endif

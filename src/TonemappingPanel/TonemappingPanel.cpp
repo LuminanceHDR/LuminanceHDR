@@ -275,6 +275,10 @@ void TonemappingPanel::createDatabase()
 	res = query.exec(" CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, chromaticAdaptation real, lightAdaptation real, pregamma real, comment varchar(150));");
 	if (res == false)
 		qDebug() << query.lastError();
+    // Hdr creation custom config parameters
+    res = query.exec("CREATE TABLE IF NOT EXISTS parameters (weight integer, response integer, model integer, filename varchar(150));");
+    if (res == false)
+        qDebug() << query.lastError();
 }
 
 void TonemappingPanel::setSizes(int width, int height)

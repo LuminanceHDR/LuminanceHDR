@@ -76,7 +76,7 @@ private:
 	TResponse responses_in_gui[4];
 	TModel models_in_gui[2];
 	TWeight weights_in_gui[3];
-	QVector<config_triple> m_CustomConfig;
+	QVector<config_triple> m_customConfig;
 
     QScopedPointer<Ui::HdrWizard> m_Ui;
 
