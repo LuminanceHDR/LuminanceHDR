@@ -203,6 +203,7 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
                         toreturn->operator_options.fattaloptions.noiseredux=value.toFloat();
                 } else if (field=="OLDFATTAL") {
                         toreturn->operator_options.fattaloptions.newfattal= (value == "NO");
+                        toreturn->operator_options.fattaloptions.fftsolver= (value == "NO");
                 } else if (field=="MULTIPLIER") {
                         toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
                 } else if (field=="LOCAL") {

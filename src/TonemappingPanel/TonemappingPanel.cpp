@@ -320,6 +320,8 @@ void TonemappingPanel::on_defaultButton_clicked()
         betaGang->setDefault();
         saturation2Gang->setDefault();
         noiseGang->setDefault();
+        fftSolverGang->setDefault();
+        m_Ui->fftVersionCheckBox->setChecked(true);
         break;
     case mantiuk06:
         contrastfactorGang->setDefault();
@@ -750,7 +752,7 @@ void TonemappingPanel::fromGui2Txt(QString destination)
         out << "BETA=" << betaGang->v() << endl;
         out << "COLOR=" << saturation2Gang->v() << endl;
         out << "NOISE=" << noiseGang->v() << endl;
-        out << "OLDFATTAL=NO" << endl;
+        out << "OLDFATTAL=" << (m_Ui->fftVersionCheckBox->isChecked() ? "NO" : "YES") << endl;
     }
     else if (current_page == m_Ui->page_ashikhmin)
     {
@@ -911,8 +913,8 @@ void TonemappingPanel::fromTxt2Gui()
             m_Ui->saturation2Slider->setValue(saturation2Gang->v2p(value.toFloat()));
         } else if (field == "NOISE") {
             m_Ui->noiseSlider->setValue(noiseGang->v2p(value.toFloat()));
-//        } else if (field == "OLDFATTAL") {
-//            m_Ui->oldFattalCheckBox->setChecked(value == "YES");
+        } else if (field == "OLDFATTAL") {
+            m_Ui->fftVersionCheckBox->setChecked(value != "YES");
         } else if (field == "MULTIPLIER") {
             m_Ui->multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
         } else if (field == "LOCAL") {
@@ -1109,7 +1111,7 @@ void TonemappingPanel::saveParameters()
 		        beta = betaGang->v();
         		colorSat = saturation2Gang->v();
 		        noiseReduction = noiseGang->v();
-                oldFattal = false; //always false! // oldFattalGang->isCheckBox1Checked();
+                oldFattal = !fftSolverGang->isCheckBox1Checked();
 				execFattalQuery(alpha, beta, colorSat, noiseReduction, oldFattal, comment);
 	        break;
     		case mantiuk06:
@@ -1261,7 +1263,7 @@ void TonemappingPanel::loadParameters()
                 m_Ui->saturation2dsb->setValue(colorSat);
                 m_Ui->noiseSlider->setValue(noiseReduction);
                 m_Ui->noisedsb->setValue(noiseReduction);
-//                m_Ui->oldFattalCheckBox->setChecked(oldFattal);
+                m_Ui->fftVersionCheckBox->setChecked(!oldFattal);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
@@ -1429,7 +1431,7 @@ void TonemappingPanel::loadComments()
                 m_Ui->saturation2dsb->setValue(query.value(2).toFloat());
                 m_Ui->noiseSlider->setValue(query.value(3).toFloat());
                 m_Ui->noisedsb->setValue(query.value(3).toFloat());
-//                m_Ui->oldFattalCheckBox->setChecked(query.value(4).toBool());
+                m_Ui->fftVersionCheckBox->setChecked(!query.value(4).toBool());
                 m_Ui->pregammaSlider->setValue(query.value(5).toFloat());
                 m_Ui->pregammadsb->setValue(query.value(5).toFloat());
 			}

@@ -70,34 +70,34 @@ private slots:
 	void filterComboBoxActivated(int);
 	void abort();
 
-  //fuction that adds a log message to the model
+    //fuction that adds a log message to the model
 	void add_log_message(const QString &);
   
-  void batch_core();
-  void release_thread(int t_id);
-  void start_batch_thread(); 
-  void stop_batch_tm_ui();
-  void increment_progress_bar(int);
+    void batch_core();
+    void release_thread(int t_id);
+    void start_batch_thread(); 
+    void stop_batch_tm_ui();
+    void increment_progress_bar(int);
 
-  void from_database();
+    void from_database();
 
-  void updateQuality(int);
-  void updateWidth(int);
+    void updateQuality(int);
+    void updateWidth(int);
 
 protected:
-  void closeEvent(QCloseEvent *);
+    void closeEvent(QCloseEvent *);
 
 private:
-  //Parses a TM_opts file (return NULL on error)
-  TonemappingOptions* parse_tm_opt_file(QString filename);
+    //Parses a TM_opts file (return NULL on error)
+    TonemappingOptions* parse_tm_opt_file(QString filename);
   
-  //required for the cache path
-  LuminanceOptions m_luminance_options;
+    //required for the cache path
+    LuminanceOptions m_luminance_options;
 
-  //Application-wide settings, loaded via QSettings
-  QString m_batchTmInputDir;
-  QString m_batchTmTmoSettingsDir;
-  QString m_batchTmOutputDir;
+    //Application-wide settings, loaded via QSettings
+    QString m_batchTmInputDir;
+    QString m_batchTmTmoSettingsDir;
+    QString m_batchTmOutputDir;
 
     //selection start/stop left/right
     //TODO: remove this rubbish, thanks!
@@ -106,39 +106,39 @@ private:
     int start_right;
     int stop_right;
   
-  //data structure (model) for left-side list: HDRs
+    //data structure (model) for left-side list: HDRs
 	QStringList HDRs_list;
   
-  // the class that performs regexp filtering
-  QSortFilterProxyModel * log_filter;
+    // the class that performs regexp filtering
+    QSortFilterProxyModel * log_filter;
   
-  // the model that holds the data
+    // the model that holds the data
 	QStringListModel    * full_Log_Model;
 	TonemappingOptions  * opts;
   
-  QMutex          m_add_log_message_mutex;
+    QMutex          m_add_log_message_mutex;
   
-  QList< TonemappingOptions* > m_tm_options_list;
+    QList< TonemappingOptions* > m_tm_options_list;
   
-  // Davide Anastasia <davideanastasia@users.sourceforge.net>
-  //Max number of threads allowed
-  int             m_max_num_threads;
-  QSemaphore      m_thread_slot;
-  QMutex          m_thread_control_mutex;
-  QMutex          m_class_data_mutex;
-  bool            m_is_batch_running;
-  bool        *   m_available_threads;
-  bool        	  m_abort;
-  int             m_next_hdr_file;
+    // Davide Anastasia <davideanastasia@users.sourceforge.net>
+    //Max number of threads allowed
+    int             m_max_num_threads;
+    QSemaphore      m_thread_slot;
+    QMutex          m_thread_control_mutex;
+    QMutex          m_class_data_mutex;
+    bool            m_is_batch_running;
+    bool        *   m_available_threads;
+    bool        	  m_abort;
+    int             m_next_hdr_file;
   
-  int   get_available_thread_id();
+    int   get_available_thread_id();
 
-  void  init_batch_tm_ui();
-  //when removing we cycle through the list to grab the selected interval
+    void  init_batch_tm_ui();
+    //when removing we cycle through the list to grab the selected interval
 	void update_selection_interval(bool left);
-  //updates graphica widget (view) and data structure (model) for HDR list
+    //updates graphica widget (view) and data structure (model) for HDR list
 	void add_view_model_HDRs(QStringList);
-  //updates graphica widget (view) and data structure (model) for TM_opts list
+    //updates graphica widget (view) and data structure (model) for TM_opts list
 	void add_view_model_TM_OPTs(QStringList);
 };
 #endif

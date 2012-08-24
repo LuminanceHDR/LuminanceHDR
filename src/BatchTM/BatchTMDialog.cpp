@@ -172,7 +172,7 @@ void BatchTMDialog::add_TMopts()
     QStringList onlytxts = QFileDialog::getOpenFileNames(this,
                                                          tr("Load tone mapping settings text files..."),
                                                          m_batchTmTmoSettingsDir,
-                                                         tr("LuminanceHDR tone mapping settings text file (*.txt)"));
+                                                         tr("Luminance HDR tone mapping settings text file (*.txt)"));
     add_view_model_TM_OPTs(onlytxts);
 }
 
@@ -510,6 +510,7 @@ void BatchTMDialog::init_batch_tm_ui()
     m_Ui->spinBox_Width->setDisabled(true);
     m_Ui->horizontalSlider_Quality->setDisabled(true);
     m_Ui->spinBox_Quality->setDisabled(true);
+    m_Ui->comboBoxFormat->setDisabled(true);
 
     // mouse pointer to busy
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -649,7 +650,8 @@ void BatchTMDialog::from_database()
 					tm_opt->operator_options.fattaloptions.beta = query.value(1).toFloat();
 					tm_opt->operator_options.fattaloptions.color = query.value(2).toFloat();
 					tm_opt->operator_options.fattaloptions.noiseredux = query.value(3).toFloat();
-					tm_opt->operator_options.fattaloptions.newfattal = query.value(4).toBool();
+					tm_opt->operator_options.fattaloptions.newfattal = !query.value(4).toBool();
+					tm_opt->operator_options.fattaloptions.fftsolver = !query.value(4).toBool();
 					tm_opt->pregamma = query.value(5).toFloat();
 				}
 			}
