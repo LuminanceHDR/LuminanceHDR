@@ -45,12 +45,28 @@
 #include "Libpfs/colorspace.h"
 //#include "Common/msec_timer.h"
 
+namespace
+{
+// decode SRGB into RGB
+template <typename T>
+T decode(T value)
+{
+    if (value <= 0.0031308f )
+    {
+        return (value *= 12.92f);
+    }
+    return (1.055f * powf( value, 1.f/2.4f ) - 0.055f);
+}
+
+template <typename T>
+void decodeVector(T* vector, size_t size)
+{
+    std::transform(vector, vector + size, vector, decode<T>);
+}
+}
+
 void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, ProgressHelper *ph)
 {
-//#ifdef TIMER_PROFILING
-//  msec_timer f_timer;
-//#endif
-  
   //--- default tone mapping parameters;
   //float scaleFactor = 0.1f;
   //float saturationFactor = 0.8f;
@@ -74,38 +90,33 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   std::cout << ", saturationFactor: " << saturationFactor;
   std::cout << ", detailFactor: " << detailFactor << ")" << std::endl;
   
-  pfs::Channel *inX, *inY, *inZ;
-  frame->getXYZChannels(inX, inY, inZ);
+  pfs::Channel *inRed, *inGreen, *inBlue;
+  frame->getXYZChannels(inRed, inGreen, inBlue);
   
   int cols = frame->getWidth();
   int rows = frame->getHeight();
+    
+  pfs::Array2D inY( cols, rows );
+  pfs::transformRGB2Y(inRed->getChannelData(),
+                      inGreen->getChannelData(),
+                      inBlue->getChannelData(),
+                      &inY);
+
+  tmo_mantiuk06_contmap(cols, rows,
+                        inRed->getRawData(),
+                        inGreen->getRawData(),
+                        inBlue->getRawData(),
+                        inY.getRawData(),
+                        scaleFactor, saturationFactor, detailFactor, itmax, tol,
+                        ph);
   
-  pfs::Array2D* Xr = inX->getChannelData();
-  pfs::Array2D* Yr = inY->getChannelData();
-  pfs::Array2D* Zr = inZ->getChannelData();
-  
-  pfs::Array2D* G = new pfs::Array2D( cols, rows );
-   
-  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, G, Zr );
-  
-//#ifdef TIMER_PROFILING
-//  f_timer.start();
-//#endif
-  
-  tmo_mantiuk06_contmap(cols, rows, inX->getRawData(), G->getRawData(), inZ->getRawData(), inY->getRawData(),
-                        scaleFactor, saturationFactor, detailFactor, itmax, tol, ph);
-  
-//#ifdef TIMER_PROFILING
-//  f_timer.stop_and_update();
-//#endif
   if ( !ph->isTerminationRequested() )
   {
-    pfs::transformColorSpace( pfs::CS_RGB, Xr, G, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
-    frame->getTags().setString("LUMINANCE", "RELATIVE");
+      // pfs::transformColorSpace( pfs::CS_RGB, Xr, G, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
+      decodeVector(inRed->getRawData(), cols*rows);
+      decodeVector(inGreen->getRawData(), cols*rows);
+      decodeVector(inBlue->getRawData(), cols*rows);
+
+      frame->getTags().setString("LUMINANCE", "RELATIVE");
   }
-  
-  delete G;
-//#ifdef TIMER_PROFILING
-//  std::cout << "pfstmo_mantiuk06() = " << f_timer.get_time() << " msec" << std::endl;
-//#endif
 }
