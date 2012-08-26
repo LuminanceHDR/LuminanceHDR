@@ -202,7 +202,7 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
                 } else if (field=="NOISE") {
                         toreturn->operator_options.fattaloptions.noiseredux=value.toFloat();
                 } else if (field=="OLDFATTAL") {
-                        toreturn->operator_options.fattaloptions.newfattal= (value == "NO");
+                        toreturn->operator_options.fattaloptions.newfattal= "YES"; // This is the new version of fattal pre FFT (always yes)
                         toreturn->operator_options.fattaloptions.fftsolver= (value == "NO");
                 } else if (field=="MULTIPLIER") {
                         toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
