@@ -41,6 +41,7 @@
 
 #include "array2d.h"
 #include "vex.h"
+#include "vex/vex.h"
 
 using namespace std;
 
@@ -203,13 +204,9 @@ namespace pfs
         assert( x->getRows() == z->getRows() );
         assert( x->getCols() == z->getCols() );
 
-        const float* xv = x->getRawData();
-        const float* yv = y->getRawData();
-        float* zv = z->getRawData();
-
-        const int elements = x->getRows()*x->getCols();
-
-        VEX_vmul(xv, yv, zv, elements);
+        vex::vmul(x->getRawData(), y->getRawData(),
+                  z->getRawData(),
+                  x->getRows()*x->getCols());
     }
 
     /**

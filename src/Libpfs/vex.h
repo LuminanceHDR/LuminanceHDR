@@ -53,8 +53,6 @@ void VEX_vadd(const float* A, const float* B, float* C, const int N);
 // C[i] = A[i] + val * B[i]
 void VEX_vadds(const float* A, const float premultiplier, const float* B, float* C, const int N);
 
-// C[i] = A[i] * B[i]
-void VEX_vmul(const float* A, const float* B, float* C, const int N);
 // O[i] = c * I[i]
 void VEX_vsmul(const float* I, const float c, float* O, const int N);
 
