@@ -196,3 +196,85 @@ TEST(TestMantiuk06, TestMantiuk06AddDivergence)
 
     std::cout << "Speed up: " << ref_t/test_t << std::endl;
 }
+
+namespace reference
+{
+void calculate_gradient(const int COLS, const int ROWS,
+                        const float* lum, float* Gx, float* Gy)
+{
+    int Y_IDX, IDX;
+
+    for (int ky = 0; ky < ROWS-1; ky++)
+    {
+        Y_IDX = ky*COLS;
+        for (int kx = 0; kx < COLS-1; kx++)
+        {
+            IDX = Y_IDX + kx;
+
+            Gx[IDX] = lum[IDX + 1]    - lum[IDX];
+            Gy[IDX] = lum[IDX + COLS] - lum[IDX];
+        }
+
+        Gx[Y_IDX + COLS - 1] = 0.0f; // last columns (kx = COLS - 1)
+        Gy[Y_IDX + COLS - 1] = lum[Y_IDX + COLS - 1 + COLS] - lum[Y_IDX + COLS - 1];
+    }
+
+    // last row (ky = ROWS-1)
+    for (int kx = 0; kx < (COLS-1); kx++)
+    {
+        IDX = (ROWS - 1)*COLS + kx;
+
+        Gx[IDX] = lum[IDX + 1] - lum[IDX];
+        Gy[IDX] = 0.0f;
+    }
+
+    // last row & last col = last element
+    Gx[ROWS*COLS - 1] = 0.0f;
+    Gy[ROWS*COLS - 1] = 0.0f;
+}
+}
+
+void calculate_gradient(const int COLS, const int ROWS,
+                        const float* const lum, float* const Gx, float* const Gy);
+
+TEST(TestMantiuk06, TestMantiuk06CalculateGradient)
+{
+    const size_t cols = 4373;
+    const size_t rows = 2173;
+
+    std::vector<float> input(cols*rows);
+    // fill data with samples between zero and one!
+    generate(input.begin(), input.end(), RandZeroOne());
+
+    // REFERENCE
+    std::vector<float> referenceGx(cols*rows);
+    std::vector<float> referenceGy(cols*rows);
+
+    tbb::tick_count ref_t0 = tbb::tick_count::now();
+    reference::calculate_gradient(cols, rows, input.data(),
+                                  referenceGx.data(), referenceGy.data());
+    tbb::tick_count ref_t1 = tbb::tick_count::now();
+    double ref_t = (ref_t1 - ref_t0).seconds();
+
+    // COMPUTED
+    std::vector<float> computedGx(cols*rows);
+    std::vector<float> computedGy(cols*rows);
+    tbb::tick_count test_t0 = tbb::tick_count::now();
+    calculate_gradient(cols, rows, input.data(),
+                       computedGx.data(), computedGy.data());
+    tbb::tick_count test_t1 = tbb::tick_count::now();
+    double test_t = (test_t1 - test_t0).seconds();
+
+    // CHECK
+    for (size_t idx = 0; idx < referenceGx.size(); ++idx)
+    {
+        EXPECT_NEAR(referenceGx[idx], computedGx[idx], 10e-6f);
+    }
+    for (size_t idx = 0; idx < referenceGy.size(); ++idx)
+    {
+        EXPECT_NEAR(referenceGy[idx], computedGy[idx], 10e-6f);
+    }
+    // EXPECT_GT(ref_t, test_t);
+
+    std::cout << "Speed up: " << ref_t/test_t << std::endl;
+}

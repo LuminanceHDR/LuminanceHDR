@@ -366,8 +366,6 @@ inline
 void matrix_zero(int n, float* m)
 {
     std::fill(m, m + n, 0.f);
-    //bzero(m, n*sizeof(float));
-    memset(m, 0, n*sizeof(float));
 }
 
 // Davide Anastasia <davideanastasia@users.sourceforge.net> (2010 08 31)
@@ -578,41 +576,52 @@ pyramid_t * pyramid_allocate(int cols, int rows)
   return pyramid;
 }
 
+namespace
+{
+void xGradient(size_t ROWS, size_t COLS, const float* lum, float* Gx)
+{
+    for (size_t ky = 0; ky < ROWS; ky++)
+    {
+        float* currGx = Gx + ky*COLS;
+        float* endGx = currGx + COLS - 1;
+        const float* currLum = lum + ky*COLS;
+
+        while ( currGx != endGx )
+        {
+            *currGx++ = *(currLum + 1) - *currLum; currLum++;
+        }
+        *currGx = 0.0f;
+    }
+}
+
+void yGradient(size_t ROWS, size_t COLS, const float* lum, float* Gy)
+{
+
+    for (size_t ky = 0; ky < ROWS; ++ky)
+    {
+        float* currGy = Gy + ky*COLS;
+        float* endGy = currGy + COLS;
+        const float* currLumU = lum + ky*COLS;
+        const float* currLumL = lum + (ky + 1)*COLS;
+
+        while ( currGy != endGy )
+        {
+            *currGy++ = *currLumL++ - *currLumU++;
+        }
+    }
+
+    // ...and last row!
+    float* GyLastRow = Gy + COLS*(ROWS-1);
+    std::fill(GyLastRow, GyLastRow + COLS, 0.0f);
+}
+}
 
 // calculate gradients
 //TODO: check this implementation in Linux, where the OMP is enabled!
-inline void calculate_gradient(const int COLS, const int ROWS, const float* const lum, float* const Gx, float* const Gy)
+void calculate_gradient(const int COLS, const int ROWS, const float* const lum, float* const Gx, float* const Gy)
 { 
-  int Y_IDX, IDX;
-  
-  #pragma omp parallel for schedule(static) private(Y_IDX, IDX)
-  for (int ky = 0; ky < ROWS-1; ky++)
-  {
-    Y_IDX = ky*COLS;
-    for (int kx = 0; kx < COLS-1; kx++)
-    {
-      IDX = Y_IDX + kx;
-  
-      Gx[IDX] = lum[IDX + 1]    - lum[IDX];
-      Gy[IDX] = lum[IDX + COLS] - lum[IDX];
-    }
-    
-    Gx[Y_IDX + COLS - 1] = 0.0f; // last columns (kx = COLS - 1)
-    Gy[Y_IDX + COLS - 1] = lum[Y_IDX + COLS - 1 + COLS] - lum[Y_IDX + COLS - 1];
-  }
-  
-  // last row (ky = ROWS-1)
-  for (int kx = 0; kx < (COLS-1); kx++)
-  {
-    IDX = (ROWS - 1)*COLS + kx;
-    
-    Gx[IDX] = lum[IDX + 1] - lum[IDX];
-    Gy[IDX] = 0.0f;
-  }
-  
-  // last row & last col = last element
-  Gx[ROWS*COLS - 1] = 0.0f;
-  Gy[ROWS*COLS - 1] = 0.0f;
+    xGradient(ROWS, COLS, lum, Gx),
+    yGradient(ROWS, COLS, lum, Gy);
 }
 
 void swap_pointers(float* &pOne, float* &pTwo)
@@ -663,13 +672,13 @@ void pyramid_calculate_gradient(const pyramid_t* pyramid, const float* Y /*lum_t
 }
 
 // x = -0.25 * b
-inline void solveX(const int n, const float* const b, float* const x)
+void solveX(const int n, const float* const b, float* const x)
 {
   VEX_vsmul(b, (-0.25f), x, n);
 }
 
 // divG_sum = A * x = sum(divG(x))
-inline void multiplyA(pyramid_t* px, pyramid_t* pC, const float* const x, float* const divG_sum)
+void multiplyA(pyramid_t* px, pyramid_t* pC, const float* const x, float* const divG_sum)
 {
   pyramid_calculate_gradient(px, x);                // x won't be changed
   pyramid_scale_gradient(px, pC);                   // scale gradients by Cx,Cy from main pyramid
@@ -677,8 +686,8 @@ inline void multiplyA(pyramid_t* px, pyramid_t* pC, const float* const x, float*
 } 
 
 
-// conjugate linear equation solver
-// overwrites pyramid!
+// conjugate linear equation solver overwrites pyramid!
+//
 // This version is a slightly modified version by Davide Anastasia <davideanastasia@users.sourceforge.net>
 // March 25, 2011
 void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph)
@@ -1072,7 +1081,7 @@ inline void transform_to_G(const int n, float* const R, float detail_factor)
 
 
 // transform gradient (Gx,Gy) to R for the whole pyramid
-inline void pyramid_transform_to_R(pyramid_t* pyramid, float detail_factor)
+void pyramid_transform_to_R(pyramid_t* pyramid, float detail_factor)
 {  
   while (pyramid != NULL)
   {    
@@ -1086,7 +1095,7 @@ inline void pyramid_transform_to_R(pyramid_t* pyramid, float detail_factor)
 
 
 // transform from R to G for the pyramid
-inline void pyramid_transform_to_G(pyramid_t* pyramid, float detail_factor)
+void pyramid_transform_to_G(pyramid_t* pyramid, float detail_factor)
 {
   while (pyramid != NULL)
   {
@@ -1098,7 +1107,7 @@ inline void pyramid_transform_to_G(pyramid_t* pyramid, float detail_factor)
 }
 
 // multiply gradient (Gx,Gy) values by float scalar value for the whole pyramid
-inline void pyramid_gradient_multiply(pyramid_t* pyramid, const float val)
+void pyramid_gradient_multiply(pyramid_t* pyramid, const float val)
 {
   while (pyramid != NULL)
   {
