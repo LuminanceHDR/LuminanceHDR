@@ -49,20 +49,22 @@ namespace pfs
     if (y_br > inFrame->getHeight()) y_br = inFrame->getHeight();
     // ----- 
     
-    pfs::DOMIO pfsio;
-    pfs::Frame *outFrame = pfsio.createFrame((x_br-x_ul), (y_br-y_ul));
+    pfs::Frame *outFrame = pfs::DOMIO::createFrame((x_br-x_ul), (y_br-y_ul));
     
-    pfs::ChannelIterator *it = inFrame->getChannels();
+    const ChannelContainer& channels = inFrame->getChannels();
     
-    while (it->hasNext())
+    for ( ChannelContainer::const_iterator it = channels.begin();
+          it != channels.end();
+          ++it)
     {
-      pfs::Channel *inCh  = it->getNext();
-      pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
-      
-      pfs::Array2D* inArray2D   = inCh->getChannelData();
-      pfs::Array2D* outArray2D  = outCh->getChannelData();
-      
-      copyArray(inArray2D, outArray2D, x_ul, y_ul, x_br, y_br);
+        const pfs::Channel* inCh = *it;
+
+        pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
+
+        const pfs::Array2D* inArray2D   = inCh->getChannelData();
+        pfs::Array2D* outArray2D  = outCh->getChannelData();
+
+        copyArray(inArray2D, outArray2D, x_ul, y_ul, x_br, y_br);
     }
     
     pfs::copyTags(inFrame, outFrame);
@@ -85,24 +87,25 @@ namespace pfs
     f_timer.start();
 #endif
     
-    pfs::DOMIO pfsio;
-    
     const int outWidth   = inFrame->getWidth();
     const int outHeight  = inFrame->getHeight();
     
-    pfs::Frame *outFrame = pfsio.createFrame(outWidth, outHeight);
+    pfs::Frame *outFrame = pfs::DOMIO::createFrame(outWidth, outHeight);
     
-    pfs::ChannelIterator *it = inFrame->getChannels();
-    
-    while (it->hasNext())
+    const ChannelContainer& channels = inFrame->getChannels();
+
+    for ( ChannelContainer::const_iterator it = channels.begin();
+          it != channels.end();
+          ++it)
     {
-      pfs::Channel *inCh  = it->getNext();
-      pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
-      
-      pfs::Array2D* inArray2D   = inCh->getChannelData();
-      pfs::Array2D* outArray2D  = outCh->getChannelData();
-      
-      copyArray(inArray2D, outArray2D);
+        const pfs::Channel* inCh = *it;
+
+        pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
+
+        const pfs::Array2D* inArray2D   = inCh->getChannelData();
+        pfs::Array2D* outArray2D  = outCh->getChannelData();
+
+        copyArray(inArray2D, outArray2D);
     }
     
     pfs::copyTags(inFrame, outFrame);

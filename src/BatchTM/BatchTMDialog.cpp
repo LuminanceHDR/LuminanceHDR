@@ -96,7 +96,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     m_is_batch_running  = false;
 
     add_log_message(tr("Using %1 thread(s)").arg(m_max_num_threads));
-    add_log_message(tr("Saving using file format: %1").arg(m_luminance_options.getBatchTmLdrFormat()));
+    //add_log_message(tr("Saving using file format: %1").arg(m_Ui->comboBoxFormat->currentText()));
 }
 
 BatchTMDialog::~BatchTMDialog()
@@ -172,7 +172,7 @@ void BatchTMDialog::add_TMopts()
     QStringList onlytxts = QFileDialog::getOpenFileNames(this,
                                                          tr("Load tone mapping settings text files..."),
                                                          m_batchTmTmoSettingsDir,
-                                                         tr("LuminanceHDR tone mapping settings text file (*.txt)"));
+                                                         tr("Luminance HDR tone mapping settings text file (*.txt)"));
     add_view_model_TM_OPTs(onlytxts);
 }
 
@@ -417,7 +417,8 @@ void BatchTMDialog::start_batch_thread()
             // at least one thread free!
             // start thread
             // I create the thread with NEW, but I let it die on its own, so don't need to store its pointer somewhere
-            BatchTMJob * job_thread = new BatchTMJob(t_id, HDRs_list.at(m_next_hdr_file), &m_tm_options_list, m_Ui->out_folder_widgets->text());
+            BatchTMJob * job_thread = new BatchTMJob(t_id, HDRs_list.at(m_next_hdr_file), &m_tm_options_list, m_Ui->out_folder_widgets->text(),
+				m_Ui->comboBoxFormat->currentText());
 
             // Thread deletes itself when it has done with its job
             connect(job_thread, SIGNAL(finished()),
@@ -509,6 +510,7 @@ void BatchTMDialog::init_batch_tm_ui()
     m_Ui->spinBox_Width->setDisabled(true);
     m_Ui->horizontalSlider_Quality->setDisabled(true);
     m_Ui->spinBox_Quality->setDisabled(true);
+    m_Ui->comboBoxFormat->setDisabled(true);
 
     // mouse pointer to busy
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -648,7 +650,8 @@ void BatchTMDialog::from_database()
 					tm_opt->operator_options.fattaloptions.beta = query.value(1).toFloat();
 					tm_opt->operator_options.fattaloptions.color = query.value(2).toFloat();
 					tm_opt->operator_options.fattaloptions.noiseredux = query.value(3).toFloat();
-					tm_opt->operator_options.fattaloptions.newfattal = query.value(4).toBool();
+					tm_opt->operator_options.fattaloptions.newfattal = !query.value(4).toBool();
+					tm_opt->operator_options.fattaloptions.fftsolver = !query.value(4).toBool();
 					tm_opt->pregamma = query.value(5).toFloat();
 				}
 			}

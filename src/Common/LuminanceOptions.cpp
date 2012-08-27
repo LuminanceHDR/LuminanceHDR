@@ -464,17 +464,6 @@ void LuminanceOptions::setBatchTmNumThreads(int v)
     setValue(KEY_BATCH_TM_NUM_THREADS, v);
 }
 
-QString LuminanceOptions::getBatchTmLdrFormat()
-{
-    return value(KEY_BATCH_TM_LDR_FORMAT, "JPEG").toString();
-}
-
-void LuminanceOptions::setBatchTmLdrFormat(QString s)
-{
-    setValue(KEY_BATCH_TM_LDR_FORMAT, s);
-}
-
-
 namespace
 {
 #ifdef QT_DEBUG
@@ -674,19 +663,9 @@ void LuminanceOptions::setPreviewWidth(int v)
     setValue(KEY_TMOWINDOW_PREVIEWS_WIDTH, v);
 }
 
-int LuminanceOptions::getCameraProfile()
-{
-	return value(KEY_COLOR_CAMERA_PROFILE, 0).toInt();
-}
-
-void LuminanceOptions::setCameraProfile(int index)
-{
-	setValue(KEY_COLOR_CAMERA_PROFILE, index);
-}
-
 QString LuminanceOptions::getCameraProfileFileName()
 {
-	return value(KEY_COLOR_CAMERA_PROFILE_FILENAME).toString();
+	return value(KEY_COLOR_CAMERA_PROFILE_FILENAME, "").toString();
 }
 
 void LuminanceOptions::setCameraProfileFileName(QString fname)

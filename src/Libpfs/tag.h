@@ -34,146 +34,135 @@
 
 #include "pfs.h"
 
-using namespace std;
 
 namespace pfs
 {
-    class Frame;
+class Frame;
 
-    typedef list<string> TagList;
+typedef std::list< std::string > TagList;
 
-    /**
+/**
  * Iterator that allows to get the list of available tags in a
  * TagContainer.
  */
-    class TagIterator
+class TagIterator
+{
+private:
+    TagList::const_iterator it;
+    const TagList &tagList;
+    std::string tagName;
+
+public:
+    TagIterator( const TagList& tagList )
+        : tagList( tagList )
     {
-        TagList::const_iterator it;
-        const TagList &tagList;
-        string tagName;
+        it = tagList.begin();
+    }
 
-    public:
-        inline TagIterator( const TagList &tagList ) : tagList( tagList )
-        {
-            it = tagList.begin();
-        }
-
-        /**
-        * Get next item on the list.
-        *
-        * @return name of the tag
-        */
-        inline const char *getNext()
-        {
-            const string &tag = *(it++);
-            size_t equalSign = tag.find( '=' );
-            //assert( equalSign != -1 );
-            assert( equalSign != string::npos );
-            tagName = string( tag, 0, equalSign );
-            return tagName.c_str();
-        }
-
-        /**
-        * Returns true if there is still an item left on the list.
-        */
-        inline bool hasNext() const
-        {
-            return it != tagList.end();
-        }
-    };
-
-    typedef SelfDestructPtr<TagIterator> TagIteratorPtr;
-
-    //------------------------------------------------------------------------------
-    // TagContainer interface allows to read and modify tags. A tag is "name"="value" pair.
-    // ------------------------------------------------------------------------------
-    class TagContainer
+    //! @brief Get next item on the list
+    //! @return name of the tag
+    inline
+    const char* getNext()
     {
-    protected:
+        const std::string &tag = *(it++);
+        size_t equalSign = tag.find( '=' );
+        //assert( equalSign != -1 );
+        assert( equalSign != std::string::npos );
+        tagName = std::string( tag, 0, equalSign );
+        return tagName.c_str();
+    }
 
-      TagList m_tags;
+    //! @brief Returns true if there is still an item left on the list.
+    inline
+    bool hasNext() const
+    {
+        return it != tagList.end();
+    }
+};
 
-    public:
+typedef SelfDestructPtr<TagIterator> TagIteratorPtr;
 
-      //TagContainer() { }
-      //~TagContainer() { }
+//------------------------------------------------------------------------------
+// TagContainer interface allows to read and modify tags. A tag is "name"="value" pair.
+// ------------------------------------------------------------------------------
+class TagContainer
+{
+private:
+    TagList m_tags;
 
-      TagList::const_iterator tagsBegin() const;
-      TagList::const_iterator tagsEnd() const;
+public:
 
-      int getSize() const;
+    //TagContainer() { }
+    //~TagContainer() { }
 
-      void appendTagEOL( const char *tagValue );
-      void appendTag( const string &tagValue );
+    TagList::const_iterator tagsBegin() const;
+    TagList::const_iterator tagsEnd() const;
 
-      TagList::iterator findTag( const char *tagName );
+    int getSize() const;
 
-      void setTag( const char *tagName, const char *tagValue );
-      const char *getTag( const char *tagName );
+    void appendTagEOL( const char *tagValue );
+    void appendTag( const std::string& tagValue );
 
-     /**
-      * Set or add a string tag of the name tagName.
-      * @param tagName name of the tag to add or set
-      * @param tagValue value of the tag
-      */
-      void setString( const char *tagName, const char *tagValue );
+    TagList::iterator findTag( const char *tagName );
 
-     /**
-      * Get a string tag of the name tagName from the TagContainer.
-      * @param tagName name of the tag to retrieve
-      * @return tag value or NULL if tag was not found
-      */
-      const char* getString( const char *tagName );
+    void setTag( const char *tagName, const char *tagValue );
+    const char *getTag( const char *tagName );
 
-     /**
-      * Removes (if exists) a tag of the name tagName from the TagContainer.
-      * @param tagName name of the tag to remove
-      */
-      void removeTag( const char *tagName );
+    //! @brief Set or add a string tag of the name tagName.
+    //! @param tagName name of the tag to add or set
+    //! @param tagValue value of the tag
+    //!/
+    void setString( const char *tagName, const char *tagValue );
 
-      void removeAllTags();
+    //! @brief Get a string tag of the name tagName from the TagContainer.
+    //! @param tagName name of the tag to retrieve
+    //! @return tag value or NULL if tag was not found
+    //!/
+    const char* getString( const char *tagName );
 
-     /**
-      * Use TagIterator to iterate over all tags in the TagContainer.
-      * TagIteratorPtr is a smart pointer, which destructs
-      * TagIterator when TagIteratorPtr is destructed. Use ->
-      * operator to access TagIterator members from a TagIteratorPtr
-      * object.
-      *
-      * To iterate over all tags, use the following code:
-      * <code>
-      * pfs::TagIteratorPtr it( frame->getTags()->getIterator() );
-      * while( it->hasNext() ) {
-      *   const char *tagName = it->getNext();
-      *   //Do something
-      * }
-      * </code>
-      */
-      TagIteratorPtr getIterator() const;
-  };
+    //! @brief Removes (if exists) a tag of the name tagName from the TagContainer.
+    //! @param tagName name of the tag to remove
+    //!
+    void removeTag( const char *tagName );
 
+    void removeAllTags();
 
-   /**
-    * Copy all tags from both the frame and its channels to the
-    * destination frame. If there is no corresponding destination
-    * channel for a source channel, the tags from that source channel
-    * will not be copied. Note, that all tags in the destination
-    * channel will be removed before copying. Therefore after this
-    * operation, the destination will contain exactly the same tags as
-    * the source.
-    */
-    void copyTags( Frame *from, Frame *to );
+    //! Use TagIterator to iterate over all tags in the TagContainer.
+    //! TagIteratorPtr is a smart pointer, which destructs
+    //! TagIterator when TagIteratorPtr is destructed. Use ->
+    //! operator to access TagIterator members from a TagIteratorPtr
+    //! object.
+    //!
+    //! To iterate over all tags, use the following code:
+    //! <code>
+    //! pfs::TagIteratorPtr it( frame->getTags()->getIterator() );
+    //! while( it->hasNext() ) {
+    //!   const char *tagName = it->getNext();
+    //!   //Do something
+    //! }
+    //! </code>
+    //!/
+    TagIteratorPtr getIterator() const;
+};
 
-   /**
-    * Copy all tags from one container into another. Note, that all
-    * tags in the destination channel will be removed before
-    * copying. Therefore after this operation, the destination will
-    * contain exactly the same tags as the source.
-    */
-    void copyTags( const TagContainer *from, TagContainer *to );
+//! Copy all tags from both the frame and its channels to the
+//! destination frame. If there is no corresponding destination
+//! channel for a source channel, the tags from that source channel
+//! will not be copied. Note, that all tags in the destination
+//! channel will be removed before copying. Therefore after this
+//! operation, the destination will contain exactly the same tags as
+//! the source.
+void copyTags( const Frame *from, Frame *to );
 
-    void writeTags( const TagContainer *tags, FILE *out );
-    void readTags( TagContainer *tags, FILE *in );
+//! Copy all tags from one container into another. Note, that all
+//! tags in the destination channel will be removed before
+//! copying. Therefore after this operation, the destination will
+//! contain exactly the same tags as the source.
+void copyTags( const TagContainer *from, TagContainer *to );
+
+void writeTags( const TagContainer *tags, FILE *out );
+
+void readTags( TagContainer *tags, FILE *in );
 
 }
 

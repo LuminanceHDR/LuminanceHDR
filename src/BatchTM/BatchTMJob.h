@@ -37,7 +37,7 @@ class BatchTMJob : public QThread
 {
     Q_OBJECT
 public:
-    BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder);
+    BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder, QString ldr_output_format);
     virtual ~BatchTMJob();
 signals:
     void done(int thread_id);

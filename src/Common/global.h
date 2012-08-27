@@ -30,12 +30,12 @@
 #include <QStringList>
 #include <QUrl>
 
-//QString saveLDRImage(QWidget *p, const QString initialFileName, const QImage *image, bool batchMode = false);
 bool matchesLdrFilename(QString file);
 bool matchesHdrFilename(QString file);
 bool matchesValidHDRorLDRfilename(QString file);
 QStringList convertUrlListToFilenameList(QList<QUrl> urls);
+
 void installTranslators(bool installQtTranslations);
-void installTranslators(QString lang, bool installQtTranslations);
+void installTranslators(const QString& lang, bool installQtTranslations);
 
 #endif

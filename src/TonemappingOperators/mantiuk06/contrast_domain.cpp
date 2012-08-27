@@ -323,7 +323,7 @@ inline float* matrix_alloc(int size)
 #ifdef __APPLE__
   float* m  = (float*)malloc      (sizeof(float)*size);
 #else
-  float* m    = (float*)_mm_malloc  (sizeof(float)*size, 16);
+  float* m    = (float*)_mm_malloc  (sizeof(float)*size, 32);
 #endif
   if (m == NULL)
   {
@@ -721,7 +721,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   for (; iter < itmax; iter++)
   {
     // TEST
-    ph->newValue( (int) (logf(rdotr_curr/irdotr)*percent_sf) );
+    ph->newValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));    
     // User requested abort
     if (ph->isTerminationRequested() && iter > 0 ) 
     {
@@ -827,7 +827,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   }
   else 
   {
-    ph->newValue(100);
+    ph->newValue( itmax );
   }
   
   matrix_free(x_best);

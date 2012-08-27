@@ -23,12 +23,13 @@
  */
 
 #include <QDebug>
+#include <QFile>
 #include <vector>
 #include <algorithm>
-#include <lcms.h>
+#include <lcms2.h>
 #include <stdio.h>
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 #include <QTemporaryFile>
 #endif
 
@@ -50,10 +51,10 @@ bool PngWriter::writeQImageToPng()
 	png_uint_32 width = m_out_qimage->width();
 	png_uint_32 height = m_out_qimage->height();
 
-	size_t profile_size = 0;
+    cmsUInt32Number profile_size = 0;
 
 	cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size);			// get the size
+    cmsSaveProfileToMem(hsRGB, NULL, &profile_size);			// get the size
 
 #if PNG_LIBPNG_VER_MINOR < 5
     std::vector<char> profile_buffer(profile_size);
@@ -61,20 +62,20 @@ bool PngWriter::writeQImageToPng()
     std::vector<unsigned char> profile_buffer(profile_size);
 #endif
 
-	_cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);	  //
+    cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);	  //
 
 	qDebug() << "sRGB profile size: " << profile_size;
 
 	FILE *outfile;
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 	QTemporaryFile output_temp_file;
 #else
 	std::vector<char> outbuf;
 #endif
 	if ( !m_fname.isEmpty() )		  // we are writing to file
 	{
-		QByteArray ba( m_fname.toUtf8() );
+        QByteArray ba( QFile::encodeName(m_fname) );
 		qDebug() << "writeQImageToPng: filename: " << ba.data();
 
 		outfile = fopen(ba.data(), "wb");
@@ -87,7 +88,7 @@ bool PngWriter::writeQImageToPng()
 	} 
 	else							// we are writing to memory buffer
 	{
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 		if ( !output_temp_file.open() ) return false; // could not open the temporary file!
 
 		QByteArray output_temp_filename = QFile::encodeName( output_temp_file.fileName() );
@@ -179,7 +180,7 @@ bool PngWriter::writeQImageToPng()
 
 	if ( m_fname.isEmpty() )
 	{
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 		fflush(outfile);
 		fseek(outfile, 0, SEEK_END);
 		m_filesize = ftell(outfile);

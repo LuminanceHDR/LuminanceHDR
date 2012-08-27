@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2011 Davide Anastasia
@@ -40,32 +40,34 @@
 
 class UMessageBox : public QMessageBox
 {
+public:
+    explicit UMessageBox(QWidget *parent = 0);
+
+    UMessageBox(const QString &title, const QString &text, Icon icon,
+                int button0, int button1, int button2,
+                QWidget *parent = 0,
+                Qt::WindowFlags f = Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+
+    virtual ~UMessageBox();
+
+    //  virtual void showEvent(QShowEvent *event);
+
+    static void about(QWidget* parent = 0);
+
+    static int warning(QString title, QString description, QWidget* parent = 0);
+
+    static int saveDialog(QString title, QString description, QWidget* parent = 0);
+
+    /*
+   * Function not yet used, it will... :)
+   */
+    static void donationSplashMB(QWidget* parent);
+
 private:
     // workaround to set size
     QSpacerItem* m_horizontalSpacer;
-    QGridLayout* m_layout;
 
     void init();
-public:
-  explicit UMessageBox(QWidget *parent = 0);
-  
-  UMessageBox(const QString &title, const QString &text, Icon icon,
-               int button0, int button1, int button2,
-               QWidget *parent = 0,
-               Qt::WindowFlags f = Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-
-  virtual void showEvent(QShowEvent *event);
-
-  static void about(QWidget* parent = 0);
-
-  static int warning(QString title, QString description, QWidget* parent = 0);
-
-  static int saveDialog(QString title, QString description, QWidget* parent = 0);
-
-  /*
-   * Function not yet used, it will... :)
-   */
-  static void donationSplashMB(QWidget* parent);
 };
 
 #endif // UMESSAGEBOX_H

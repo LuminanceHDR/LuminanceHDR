@@ -59,7 +59,7 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
 
     pfs::Channel *X, *Y, *Z;
     frame->getXYZChannels( X, Y, Z );
-    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    frame->getTags().setString("LUMINANCE", "RELATIVE");
     //---
 
     if( Y==NULL || X==NULL || Z==NULL)

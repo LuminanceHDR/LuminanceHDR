@@ -30,74 +30,95 @@
 
 #include <QObject>
 #include <QImage>
-
 #include <tiffio.h>
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
 
-class TiffReader : public QObject {
-  Q_OBJECT
-  
-  TIFF* tif;
-  uint32 width, height;
-  
-  uint16 comp;                  /// compression type
-  uint16 phot;                  /// type of photometric data
-  enum {FLOATLOGLUV, FLOAT, WORD, BYTE} TypeOfData; //FLOAT is the wasting space one, FLOATLOGLUV is Greg Ward's format
-  enum {RGB, CMYK} ColorSpace;
-  uint16 bps;                   /// bits per sample
-  uint16 nSamples;              /// number of channels in tiff file (only 1-3 are used)
-  bool has_alpha;
-  double stonits;               /// scale factor to get nit values
- 
-  bool writeOnDisk;
-  QString fileName;
-  QString tempFilesPath;
-  
+class TiffReader : public QObject
+{
+    Q_OBJECT
+
+    TIFF *tif;
+
+    uint32 width;
+    uint32 height;
+
+    uint16 comp;                  /// compression type
+    uint16 phot;                  /// type of photometric data
+    enum    //FLOAT is the wasting space one, FLOATLOGLUV is Greg Ward's format
+    {
+        FLOATLOGLUV,
+        FLOAT,
+        WORD,
+        BYTE
+    } TypeOfData;
+    enum
+    {
+        RGB,
+        CMYK
+    } ColorSpace;
+    uint16 bps;                   /// bits per sample
+    uint16 nSamples;              /// number of channels in tiff file (only 1-3 are used)
+    bool has_alpha;
+    double stonits;               /// scale factor to get nit values
+
+    bool writeOnDisk;
+    QString fileName;
+    QString tempFilesPath;
+
 public:
-  TiffReader( const char* filename, const char *tempfilespath, bool writeOnDisk );
-  ~TiffReader() {}
-  
-  int getWidth() const { return width; }
-  int getHeight() const { return height; }
-  
-  bool is8bitTiff() { return TypeOfData==BYTE; }
-  bool is16bitTiff() { return TypeOfData==WORD; }
-  bool is32bitTiff() { return TypeOfData==FLOAT; }
-  bool isLogLuvTiff() { return (TypeOfData==FLOATLOGLUV); }
-  
-  pfs::Frame* readIntoPfsFrame(); //from 8,16,32,logluv TIFF to pfs::Frame
-  QImage* readIntoQImage();
-  
+    TiffReader( const char* filename, const char *tempfilespath, bool writeOnDisk );
+    // ~TiffReader() {}
+
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
+
+    bool is8bitTiff() { return TypeOfData==BYTE; }
+    bool is16bitTiff() { return TypeOfData==WORD; }
+    bool is32bitTiff() { return TypeOfData==FLOAT; }
+    bool isLogLuvTiff() { return (TypeOfData==FLOATLOGLUV); }
+
+    pfs::Frame* readIntoPfsFrame(); //from 8,16,32,logluv TIFF to pfs::Frame
+    QImage* readIntoQImage();
+
 signals: //For ProgressDialog
-  void maximumValue(int);
-  void nextstep(int);
+    void maximumValue(int);
+    void nextstep(int);
 };
 
-class TiffWriter : public QObject {
-  Q_OBJECT
-  
+class TiffWriter : public QObject
+{
+    Q_OBJECT
+
 private:
-  TIFF* tif;
-  pfs::Channel *Xc, *Yc, *Zc;
-  
-  QImage *ldrimage;
-  const quint16 *pixmap;
-  uint32 width,height;
+	TIFF *tif;
+
+    QImage *ldrimage;
+    const quint16 *pixmap;
+    pfs::Frame* pfsFrame;
+    uint32 width;
+    uint32 height;
+
 public:
-  TiffWriter( const char* filename, pfs::Frame *f );
-  TiffWriter( const char* filename, QImage *ldrimage );
-  TiffWriter( const char* filename, const quint16 *pixmap, int w, int h);
-  
-  int write8bitTiff(); //write 8bit Tiff from QImage
-  int write16bitTiff(); //write 16bit Tiff from 16 bits pixmap
-  int writeFloatTiff(); //write 32bit float Tiff from pfs::Frame
-  int writeLogLuvTiff(); //write LogLuv Tiff from pfs::Frame
-  int writePFSFrame16bitTiff(); //write 16bit Tiff from pfs::Frame
+    TiffWriter( const char* filename, pfs::Frame *f );
+    TiffWriter( const char* filename, QImage *ldrimage );
+    TiffWriter( const char* filename, const quint16 *pixmap, int w, int h);
+
+    //! \brief write 8bit Tiff from QImage
+    int write8bitTiff();
+    //! \brief write 16bit Tiff from 16 bits pixmap
+    int write16bitTiff();
+    //! \brief write 32bit float Tiff from pfs::Frame
+    int writeFloatTiff();
+    //! \brief write LogLuv Tiff from pfs::Frame
+    int writeLogLuvTiff();
+    //! \brief write 16bit Tiff from pfs::Frame
+    int writePFSFrame16bitTiff();
+
 signals: //For ProgressDialog
-  void maximumValue(int);
-  void nextstep(int);
+    void maximumValue(int);
+    void nextstep(int);
 };
 
 #endif

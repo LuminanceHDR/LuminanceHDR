@@ -32,6 +32,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
+#include "Common/FloatRgbToQRgb.h"
+
 // Forward declaration
 namespace pfs {
     class Frame;            // #include "Libpfs/frame.h"
@@ -46,8 +48,10 @@ class GenericViewer : public QWidget
 {
     Q_OBJECT
 public:
+
     //! \brief Enum containing the list of possible view mode
-    enum ViewerMode {
+    enum ViewerMode
+    {
         FIT_WINDOW = 0,
         FILL_WINDOW = 1,
         NORMAL_SIZE = 2
@@ -115,7 +119,7 @@ public Q_SLOTS:
 
     //! \brief This function syncronizes scrollbars position and zoom mode
     //! \param[src] GenericViewer to syncronize with
-    void syncViewer(GenericViewer *src);
+    void syncViewer(GenericViewer* src);
 
     //! \brief tells is the viewer holds an LDR or an HDR frame
     virtual bool isHDR() = 0;
@@ -125,6 +129,12 @@ public Q_SLOTS:
 
     //! \brief returns min value of the handled frame
     virtual float getMinLuminanceValue() = 0;
+
+    //! \brief returns the mapping method
+    virtual LumMappingMethod getLuminanceMappingMethod()
+    {
+        return MAP_LINEAR;
+    }
 
     //! \brief returns a filename postfix based on the viewer's content
     virtual QString getFileNamePostFix() = 0;

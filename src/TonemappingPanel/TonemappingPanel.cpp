@@ -79,15 +79,16 @@ TonemappingPanel::TonemappingPanel(QWidget *parent):
     luminanceLevelGang = new Gang(m_Ui->luminanceLevelSlider, m_Ui->luminanceLevelDSB, m_Ui->luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f, MANTIUK08_LUMINANCE_LEVEL);
 
     // fattal02
-    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL,NULL,NULL,NULL, 1e-4, 2.f, FATTAL02_ALPHA, true);
+    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL,NULL,NULL,NULL, 0.05, 2.f, FATTAL02_ALPHA, true);
 
     connect(alphaGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
     connect(alphaGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
     betaGang = new Gang(m_Ui->betaSlider, m_Ui->betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, FATTAL02_BETA);
-    saturation2Gang = new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.f, FATTAL02_COLOR);
+    saturation2Gang = new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.5f, FATTAL02_COLOR);
     noiseGang = new Gang(m_Ui->noiseSlider, m_Ui->noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
-    oldFattalGang = new Gang(NULL,NULL, m_Ui->oldFattalCheckBox);
+    // oldFattalGang = new Gang(NULL,NULL, m_Ui->oldFattalCheckBox);
+    fftSolverGang = new Gang(NULL, NULL,m_Ui->fftVersionCheckBox);
 
     // ashikhmin02
     contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
@@ -195,6 +196,8 @@ TonemappingPanel::~TonemappingPanel()
     delete lightGang;
     delete pregammaGang;
 
+	qDeleteAll(toneMappingOptionsToDelete);
+
 	QSqlDatabase db = QSqlDatabase::database();
 	db.close();
 }
@@ -272,6 +275,10 @@ void TonemappingPanel::createDatabase()
 	res = query.exec(" CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, chromaticAdaptation real, lightAdaptation real, pregamma real, comment varchar(150));");
 	if (res == false)
 		qDebug() << query.lastError();
+    // Hdr creation custom config parameters
+    res = query.exec("CREATE TABLE IF NOT EXISTS parameters (weight integer, response integer, model integer, filename varchar(150));");
+    if (res == false)
+        qDebug() << query.lastError();
 }
 
 void TonemappingPanel::setSizes(int width, int height)
@@ -313,7 +320,8 @@ void TonemappingPanel::on_defaultButton_clicked()
         betaGang->setDefault();
         saturation2Gang->setDefault();
         noiseGang->setDefault();
-        m_Ui->oldFattalCheckBox->setChecked(false);
+        fftSolverGang->setDefault();
+        m_Ui->fftVersionCheckBox->setChecked(true);
         break;
     case mantiuk06:
         contrastfactorGang->setDefault();
@@ -408,11 +416,12 @@ void TonemappingPanel::on_applyButton_clicked()
 void TonemappingPanel::fillToneMappingOptions()
 {	
 	toneMappingOptions = new TonemappingOptions;
+	toneMappingOptionsToDelete.push_back(toneMappingOptions);
     toneMappingOptions->origxsize = sizes[0];
     toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
     toneMappingOptions->pregamma = pregammaGang->v();
-    //toneMappingOptions->tonemapSelection = checkBoxSelection->isChecked();
-    //toneMappingOptions->tonemapOriginal = checkBoxOriginal->isChecked();
+    // toneMappingOptions->tonemapSelection = checkBoxSelection->isChecked();
+    // toneMappingOptions->tonemapOriginal = checkBoxOriginal->isChecked();
     switch (currentTmoOperator) {
     case ashikhmin:
         toneMappingOptions->tmoperator = ashikhmin;
@@ -436,7 +445,8 @@ void TonemappingPanel::fillToneMappingOptions()
         toneMappingOptions->operator_options.fattaloptions.beta=betaGang->v();
         toneMappingOptions->operator_options.fattaloptions.color=saturation2Gang->v();
         toneMappingOptions->operator_options.fattaloptions.noiseredux=noiseGang->v();
-        toneMappingOptions->operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
+//        toneMappingOptions->operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
+        toneMappingOptions->operator_options.fattaloptions.fftsolver=fftSolverGang->isCheckBox1Checked();
         break;
     case mantiuk06:
         toneMappingOptions->tmoperator = mantiuk06;
@@ -500,7 +510,8 @@ void TonemappingPanel::setupUndo()
         betaGang->setupUndo();
         saturation2Gang->setupUndo();
         noiseGang->setupUndo();
-        oldFattalGang->setupUndo();
+//        oldFattalGang->setupUndo();
+        fftSolverGang->setupUndo();
         break;
     case mantiuk06:
         contrastfactorGang->setupUndo();
@@ -557,7 +568,8 @@ void TonemappingPanel::on_undoButton_clicked()
         betaGang->undo();
         saturation2Gang->undo();
         noiseGang->undo();
-        oldFattalGang->undo();
+//        oldFattalGang->undo();
+        fftSolverGang->undo();
         break;
     case mantiuk06:
         contrastfactorGang->undo();
@@ -614,7 +626,8 @@ void TonemappingPanel::on_redoButton_clicked()
         betaGang->redo();
         saturation2Gang->redo();
         noiseGang->redo();
-        oldFattalGang->redo();
+//        oldFattalGang->redo();
+        fftSolverGang->redo();
         break;
     case mantiuk06:
         contrastfactorGang->redo();
@@ -739,7 +752,7 @@ void TonemappingPanel::fromGui2Txt(QString destination)
         out << "BETA=" << betaGang->v() << endl;
         out << "COLOR=" << saturation2Gang->v() << endl;
         out << "NOISE=" << noiseGang->v() << endl;
-        out << "OLDFATTAL=" << (m_Ui->oldFattalCheckBox->isChecked() ? "YES" : "NO") << endl;
+        out << "OLDFATTAL=" << (m_Ui->fftVersionCheckBox->isChecked() ? "NO" : "YES") << endl;
     }
     else if (current_page == m_Ui->page_ashikhmin)
     {
@@ -901,7 +914,7 @@ void TonemappingPanel::fromTxt2Gui()
         } else if (field == "NOISE") {
             m_Ui->noiseSlider->setValue(noiseGang->v2p(value.toFloat()));
         } else if (field == "OLDFATTAL") {
-            m_Ui->oldFattalCheckBox->setChecked(value == "YES");
+            m_Ui->fftVersionCheckBox->setChecked(value != "YES");
         } else if (field == "MULTIPLIER") {
             m_Ui->multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
         } else if (field == "LOCAL") {
@@ -1098,7 +1111,7 @@ void TonemappingPanel::saveParameters()
 		        beta = betaGang->v();
         		colorSat = saturation2Gang->v();
 		        noiseReduction = noiseGang->v();
-        		oldFattal = oldFattalGang->isCheckBox1Checked();
+                oldFattal = !fftSolverGang->isCheckBox1Checked();
 				execFattalQuery(alpha, beta, colorSat, noiseReduction, oldFattal, comment);
 	        break;
     		case mantiuk06:
@@ -1250,7 +1263,7 @@ void TonemappingPanel::loadParameters()
                 m_Ui->saturation2dsb->setValue(colorSat);
                 m_Ui->noiseSlider->setValue(noiseReduction);
                 m_Ui->noisedsb->setValue(noiseReduction);
-                m_Ui->oldFattalCheckBox->setChecked(oldFattal);
+                m_Ui->fftVersionCheckBox->setChecked(!oldFattal);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
@@ -1418,7 +1431,7 @@ void TonemappingPanel::loadComments()
                 m_Ui->saturation2dsb->setValue(query.value(2).toFloat());
                 m_Ui->noiseSlider->setValue(query.value(3).toFloat());
                 m_Ui->noisedsb->setValue(query.value(3).toFloat());
-                m_Ui->oldFattalCheckBox->setChecked(query.value(4).toBool());
+                m_Ui->fftVersionCheckBox->setChecked(!query.value(4).toBool());
                 m_Ui->pregammaSlider->setValue(query.value(5).toFloat());
                 m_Ui->pregammadsb->setValue(query.value(5).toFloat());
 			}
@@ -1620,7 +1633,7 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta, float colorSatur
 	query.bindValue(":beta", beta);
 	query.bindValue(":colorSaturation", colorSaturation);
 	query.bindValue(":noiseReduction", noiseReduction);
-	query.bindValue(":oldFattal", oldFattal);
+    query.bindValue(":oldFattal", oldFattal);
 	query.bindValue(":pregamma", pregamma);
 	query.bindValue(":comment", comment);
 	bool res = query.exec();

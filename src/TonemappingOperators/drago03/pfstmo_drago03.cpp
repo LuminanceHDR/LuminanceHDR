@@ -45,7 +45,7 @@ void pfstmo_drago03(pfs::Frame *frame, float biasValue, ProgressHelper *ph)
     pfs::Channel *X, *Y, *Z;
     frame->getXYZChannels( X, Y, Z );
 
-    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    frame->getTags().setString("LUMINANCE", "RELATIVE");
     //---
 
     if( Y == NULL )

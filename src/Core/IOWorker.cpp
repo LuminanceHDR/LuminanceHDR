@@ -34,9 +34,11 @@
 #include <QScopedPointer>
 #include <stdexcept>
 
+
 #include "Core/IOWorker.h"
-#include "Fileformat/pfs_file_format.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
+#include "Fileformat/pfs_file_format.h"
 #include "Viewers/GenericViewer.h"
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
@@ -55,7 +57,7 @@ IOWorker::~IOWorker()
 #endif
 }
 
-bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer, QString filename)
+bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer, const QString& filename)
 {
     pfs::Frame* hdr_frame = hdr_viewer->getFrame();
 
@@ -70,7 +72,7 @@ bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer, QString filename)
     return status;
 }
 
-bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
+bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename)
 {
     bool status = true;
     emit IO_init();
@@ -106,8 +108,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
     else if (qfi.suffix().toUpper() == "PFS")
     {
         FILE *fd = fopen(encodedName, "w");
-        pfs::DOMIO pfsio;
-        pfsio.writeFrame(hdr_frame, fd);
+        pfs::DOMIO::writeFrame(hdr_frame, fd);
         fclose(fd);
     }
     else
@@ -122,11 +123,18 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
     return status;
 }
 
-bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int quality, TonemappingOptions* tmopts)
+bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
+                               const QString& filename, int quality,
+                               TonemappingOptions* tmopts)
 {
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
 
-    bool status = write_ldr_frame(ldr_frame, filename, quality, tmopts, ldr_viewer->getMinLuminanceValue(), ldr_viewer->getMaxLuminanceValue());
+    bool status = write_ldr_frame(ldr_frame,
+                                  filename, quality,
+                                  tmopts,
+                                  ldr_viewer->getMinLuminanceValue(),
+                                  ldr_viewer->getMaxLuminanceValue(),
+                                  ldr_viewer->getLuminanceMappingMethod());
 
     if ( status )
     {
@@ -140,7 +148,13 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int 
 }
 
 
-bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int quality, TonemappingOptions* tmopts, float min_luminance, float max_luminance)
+bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
+                               const QString& filename,
+                               int quality,
+                               TonemappingOptions* tmopts,
+                               float min_luminance,
+                               float max_luminance,
+                               LumMappingMethod mapping_method)
 {
     bool status = true;
     emit IO_init();
@@ -158,7 +172,12 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
         // QScopedArrayPointer will call delete [] when this object goes out of scope
-        QScopedArrayPointer<quint16> pixmap(fromLDRPFSto16bitsPixmap(ldr_input, min_luminance, max_luminance));
+        QScopedArrayPointer<quint16> pixmap(
+                    fromLDRPFSto16bitsPixmap(ldr_input,
+                                             min_luminance,
+                                             max_luminance,
+                                             mapping_method)
+                    );
         int width = ldr_input->getWidth();
         int height = ldr_input->getHeight();
         try
@@ -173,22 +192,25 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
 
             emit write_ldr_success(ldr_input, filename);
         }
-        catch(...)
+        catch (...)
         {
             status = false;
             emit write_ldr_failed();
         }
     }
-	else if (qfi.suffix().toUpper().startsWith("JP")) {
-        QImage *image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
-		JpegWriter writer(image, filename, quality);
+    else if (qfi.suffix().toUpper().startsWith("JP"))
+    {
+        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input,
+                                                        min_luminance,
+                                                        max_luminance,
+                                                        mapping_method));
+        JpegWriter writer(image.data(), filename, quality);
 		if (writer.writeQImageToJpeg()) 
 		{
 			if (tmopts != NULL)
 				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
 
 			emit write_ldr_success(ldr_input, filename);
-			delete image;
 		}
 		else
 		{
@@ -196,16 +218,19 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
             emit write_ldr_failed();
 		}
 	}
-	else if (qfi.suffix().toUpper().startsWith("PNG")) {
-        QImage *image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
-		PngWriter writer(image, filename, quality);
+    else if (qfi.suffix().toUpper().startsWith("PNG"))
+    {
+        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input,
+                                                        min_luminance,
+                                                        max_luminance,
+                                                        mapping_method));
+        PngWriter writer(image.data(), filename, quality);
 		if (writer.writeQImageToPng()) 
 		{
 			if (tmopts != NULL)
 				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
 
 			emit write_ldr_success(ldr_input, filename);
-			delete image;
 		}
 		else
 		{
@@ -235,7 +260,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
     return status;
 }
 
-pfs::Frame* IOWorker::read_hdr_frame(QString filename)
+pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
 {
     emit IO_init();
 
@@ -278,8 +303,7 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
             FILE *fd = fopen(encodedFileName, "rb");
             if (!fd) throw;
 
-            pfs::DOMIO pfsio;
-            hdrpfsframe = pfsio.readFrame(fd);
+            hdrpfsframe = pfs::DOMIO::readFrame(fd);
             fclose(fd);
         }
         else if (extension.startsWith("TIF"))
@@ -298,7 +322,7 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
 		}
 		catch (QString err)
 		{
-        		qDebug("TH: catched exception");
+            qDebug("TH: catched exception");
 			emit read_hdr_failed((err + " : %1").arg(filename));	
 			return NULL;
 		}

@@ -581,20 +581,22 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-    try {
-        HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(g_v);
 
+    if (!g_v->isHDR()) return;
+    try
+    {
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
-        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + hdr_v->getFileNamePostFix() + ".jpg", this);
+        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + g_v->getFileNamePostFix() + ".jpg", this);
 
         if ( outfname.isEmpty() ) return;
 
         QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
-                                  Q_ARG(GenericViewer*, hdr_v),
+                                  Q_ARG(GenericViewer*, g_v),
                                   Q_ARG(QString, outfname),
                                   Q_ARG(int, 100));
-    } catch (...)
+    }
+    catch (...)
     {
         return;
     }
@@ -613,7 +615,7 @@ void MainWindow::updateActions( int w )
     updateMagnificationButtons(g_v); // g_v ? g_v : 0
 
     m_Ui->fileSaveAsAction->setEnabled(hasImage);
-    m_Ui->actionSave_Hdr_Preview->setEnabled(hasImage);
+    m_Ui->actionSave_Hdr_Preview->setEnabled(hasImage && isHdr);
     m_Ui->fileSaveAllAction->setEnabled(hasImage && curr_num_ldr_open >= 2);
 
     // Histogram
@@ -882,6 +884,7 @@ void MainWindow::setupIO()
     // progress bar
     m_ProgressBar = new QProgressBar(this);
     m_ProgressBar->hide();
+    statusBar()->addWidget(m_ProgressBar);
 
     // Init Object/Thread
     m_IOThread = new QThread;
@@ -923,14 +926,15 @@ void MainWindow::ioBegin()
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
-    statusBar()->addWidget(m_ProgressBar);
+    //  statusBar()->addWidget(m_ProgressBar);
     m_ProgressBar->setMaximum(0);
     m_ProgressBar->show();
 }
 
 void MainWindow::ioEnd()
 {
-    statusBar()->removeWidget(m_ProgressBar);
+    //statusBar()->removeWidget(m_ProgressBar);
+    m_ProgressBar->hide();
     m_ProgressBar->reset();
 
     QApplication::restoreOverrideCursor();
@@ -940,10 +944,13 @@ void MainWindow::ioEnd()
 
 void MainWindow::load_failed(QString error_message)
 {
+    QApplication::restoreOverrideCursor();
+
     // TODO: use unified style?
     QMessageBox::critical(this, tr("Aborting..."), error_message, QMessageBox::Ok, QMessageBox::NoButton);
-    QApplication::restoreOverrideCursor();
+
     m_ProgressBar->hide();
+    m_ProgressBar->reset();
 }
 
 void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool needSaving)
@@ -1315,6 +1322,9 @@ void MainWindow::setupTM()
     tmPanel->setEnabled(false);
 
     m_TMProgressBar = new TMOProgressIndicator;
+    m_TMProgressBar->hide();
+    statusBar()->addWidget(m_TMProgressBar);
+
     connect(this, SIGNAL(destroyed()), m_TMProgressBar, SLOT(deleteLater()));
 
     m_TMWorker = new TMWorker;
@@ -1348,14 +1358,15 @@ void MainWindow::setupTM()
 
 void MainWindow::tonemapBegin()
 {
-    statusBar()->addWidget(m_TMProgressBar);
+    // statusBar()->addWidget(m_TMProgressBar);
     m_TMProgressBar->setMaximum(0);
     m_TMProgressBar->show();
 }
 
 void MainWindow::tonemapEnd()
 {
-    statusBar()->removeWidget(m_TMProgressBar);
+    // statusBar()->removeWidget(m_TMProgressBar);
+    m_TMProgressBar->hide();
     m_TMProgressBar->reset();
 }
 
@@ -1365,16 +1376,27 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     qDebug() << "Start Tone Mapping";
 #endif
 
-    if ( opts->tmoperator == fattal && luminance_options.isShowFattalWarning() )
+    // Warning when using size dependent TMOs with smaller sizes
+    if ( (opts->tmoperator == fattal) &&
+         (opts->operator_options.fattaloptions.fftsolver == false) &&
+         (opts->xsize != opts->origxsize) &&
+         (luminance_options.isShowFattalWarning()) )
     {
-        // Warning when using size dependent TMOs with smaller sizes
-        if ( opts->xsize != opts->origxsize )
+        TonemappingWarningDialog tonemappingWarningDialog(this);
+
+        switch ( tonemappingWarningDialog.exec() )
         {
-            TonemappingWarningDialog tonemapping_warning_dialog(this);
-
-            tonemapping_warning_dialog.exec();
-
-            if ( !tonemapping_warning_dialog.wasAccepted() ) return;
+        case QMessageBox::Yes :
+        {} break;
+        case QMessageBox::YesAll :
+        {
+            luminance_options.setShowFattalWarning(false);
+        } break;
+        case QMessageBox::No :
+        default:
+        {
+            return;
+        }
         }
     }
 

@@ -24,29 +24,19 @@
 #ifndef TMOWARN_IMPL_H
 #define TMOWARN_IMPL_H
 
-#include <QDialog>
+#include <QCheckBox>
 
+#include "UI/UMessageBox.h"
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 
-namespace Ui {
-    class TonemappingWarningDialog;
-}
-
-class TonemappingWarningDialog : public QDialog
+class TonemappingWarningDialog : public UMessageBox
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
-	TonemappingWarningDialog(QWidget *p);
-	bool wasAccepted();
-	~TonemappingWarningDialog();
-private:
-    LuminanceOptions luminance_options;
-	bool yes;
-	
-    QScopedPointer<Ui::TonemappingWarningDialog> m_Ui;
-private slots:
-	void accepted();
+    TonemappingWarningDialog(QWidget *p = 0);
+    ~TonemappingWarningDialog();
 };
 
 #endif

@@ -29,6 +29,7 @@
 #include <QDialog>
 
 #include "Common/LuminanceOptions.h"
+#include "HdrCreation/HdrCreationManager.h"
 
 // Forward declaration
 class IOWorker;
@@ -55,11 +56,12 @@ protected slots:
 	void on_startButton_clicked();
 	void batch_hdr();
 	void align(QStringList);
-	void create_hdr();
+	void create_hdr(int);
 	void error_while_loading(QString);
 	void writeAisData(QByteArray);
 	void check_start_button();
 	void on_cancelButton_clicked();
+    void align_selection_clicked();
 	void processed();
 	void try_to_continue();
 
@@ -81,6 +83,6 @@ protected:
 	bool m_loading_error;
 	bool m_abort;
 	bool m_processing;
+	QVector<config_triple> m_customConfig;
 };
-
 #endif

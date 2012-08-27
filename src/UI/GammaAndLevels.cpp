@@ -34,7 +34,8 @@
 
 namespace
 {
-static inline int clamp(const float& v, const float& minV, const float& maxV)
+static inline
+int clamp(const float& v, const float& minV, const float& maxV)
 {
     if ( v <= minV ) return minV;
     if ( v >= maxV ) return maxV;
@@ -178,33 +179,42 @@ void GammaAndLevels::refreshLUT()
     qDebug() << "Update Look-Up-Table and send update QImage to viewer";
 #endif
 
-    int LUT[256];
-
     //values in 0..1 range
-    float bin=(float)blackin/255.0f;
-    float win=(float)whitein/255.0f;
-    float expgamma=1.0f/gamma;
-
-// it is only 256 values, so it won't really get any improvement from multi threading
-//#pragma omp parallel for
-    for (int i=0; i<256; ++i)
-    {
-        float value = powf( ( ((float)(i)/255.0f) - bin ) / (win-bin), expgamma);
-        LUT[i] = clamp(blackout+value*(whiteout-blackout),0,255);
-    }
+    float bin = static_cast<float>(blackin)/255.0f;
+    float win = static_cast<float>(whitein)/255.0f;
+    float expgamma = 1.0f/gamma;
 
     // Build new QImage from the reference one
-    const QRgb* src = (const QRgb*)m_ReferenceQImage.bits();
+    const QRgb* src = reinterpret_cast<const QRgb*>(m_ReferenceQImage.bits());
 
     QImage previewimage(m_ReferenceQImage.width(), m_ReferenceQImage.height(), QImage::Format_RGB32);
-    QRgb* dst = (QRgb*)previewimage.bits();
+    QRgb* dst = reinterpret_cast<QRgb*>(previewimage.bits());
 
-#pragma omp parallel for default(none) shared(src, dst, LUT)
+#pragma omp parallel for shared(src, dst)
     for (int i=0; i < m_ReferenceQImage.width()*m_ReferenceQImage.height(); ++i)
     {
-        dst[i] = qRgb(LUT[qRed(src[i])],
-                      LUT[qGreen(src[i])],
-                      LUT[qBlue(src[i])]);
+        float red = static_cast<float>(qRed(src[i]))/255.f;
+        float green = static_cast<float>(qGreen(src[i]))/255.f;
+        float blue = static_cast<float>(qBlue(src[i]))/255.f;
+
+        float L = 0.2126f * red
+                + 0.7152f * green
+                + 0.0722f * blue; // number between [0..1]
+
+        float c = powf(L, expgamma - 1.0f);
+
+        red = (red - bin) / (win-bin);
+        red *= c;
+
+        green = (green - bin) / (win-bin);
+        green *= c;
+
+        blue = (blue - bin) / (win-bin);
+        blue *= c;
+
+        dst[i] = qRgb(clamp(blackout+red * (whiteout - blackout), 0.f, 255.f),
+                      clamp(blackout+green * (whiteout - blackout), 0.f, 255.f),
+                      clamp(blackout+blue * (whiteout - blackout), 0.f, 255.f));
     }
 
     emit updateQImage(previewimage);

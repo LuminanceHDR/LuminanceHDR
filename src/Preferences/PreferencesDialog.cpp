@@ -57,6 +57,8 @@
 
 #ifdef WIN32
 	#define ICC_PATH "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+#elif defined __APPLE__
+	#define ICC_PATH "/Library/ColorSync/Profiles/"
 #else
 	#define ICC_PATH "/usr/share/color/icc"
 #endif
@@ -128,24 +130,6 @@ QStringList sanitizeAISparams(const QString& input_parameter_string)
     return temp_ais_options;
 }
 
-int mappingBatchTmQStringToInt(const QString& string)
-{
-    if (string == "JPEG")
-        return 0;
-    else if (string == "PNG")
-        return 1;
-    else if (string == "PPM")
-        return 2;
-    else if (string == "PBM")
-        return 3;
-    else if (string == "BMP")
-        return 4;
-    else if (string == "TIFF")
-        return 5;
-    return 0;   // I assume JPEG... at least it doesn't crash! :|
-}
-
-
 }
 
 PreferencesDialog::PreferencesDialog(QWidget *p):
@@ -160,15 +144,16 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromIso639ToGuiIndex["fi"]=3;
 	fromIso639ToGuiIndex["fr"]=4;
 	fromIso639ToGuiIndex["de"]=5;
-	fromIso639ToGuiIndex["hi"]=6;
-	fromIso639ToGuiIndex["hu"]=7;
-	fromIso639ToGuiIndex["id"]=8;
-	fromIso639ToGuiIndex["it"]=9;
-	fromIso639ToGuiIndex["pl"]=10;
-	fromIso639ToGuiIndex["ro"]=11;
-	fromIso639ToGuiIndex["ru"]=12;
-	fromIso639ToGuiIndex["es"]=13;
-	fromIso639ToGuiIndex["tr"]=14;
+	fromIso639ToGuiIndex["hu"]=6;
+	fromIso639ToGuiIndex["id"]=7;
+	fromIso639ToGuiIndex["it"]=8;
+	fromIso639ToGuiIndex["pl"]=9;
+	fromIso639ToGuiIndex["ro"]=10;
+	fromIso639ToGuiIndex["ru"]=11;
+	fromIso639ToGuiIndex["es"]=12;
+	fromIso639ToGuiIndex["tr"]=13;
+	//fromIso639ToGuiIndex["hi"]=14;
+	//fromIso639ToGuiIndex["sk"]=15;
 
 	fromGuiIndexToIso639[0]="cs";
 	fromGuiIndexToIso639[1]="zh";
@@ -176,15 +161,16 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromGuiIndexToIso639[3]="fi";
 	fromGuiIndexToIso639[4]="fr";
 	fromGuiIndexToIso639[5]="de";
-	fromGuiIndexToIso639[6]="hi";
-	fromGuiIndexToIso639[7]="hu";
-	fromGuiIndexToIso639[8]="id";
-	fromGuiIndexToIso639[9]="it";
-	fromGuiIndexToIso639[10]="pl";
-	fromGuiIndexToIso639[11]="ro";
-	fromGuiIndexToIso639[12]="ru";
-	fromGuiIndexToIso639[13]="es";
-	fromGuiIndexToIso639[14]="tr";
+	fromGuiIndexToIso639[6]="hu";
+	fromGuiIndexToIso639[7]="id";
+	fromGuiIndexToIso639[8]="it";
+	fromGuiIndexToIso639[9]="pl";
+	fromGuiIndexToIso639[10]="ro";
+	fromGuiIndexToIso639[11]="ru";
+	fromGuiIndexToIso639[12]="es";
+	fromGuiIndexToIso639[13]="tr";
+	//fromGuiIndexToIso639[14]="hi";
+	//fromGuiIndexToIso639[15]="sk";
 
     negcolor = LuminanceOptions().getViewerNegColor();
     infnancolor = LuminanceOptions().getViewerNanInfColor();
@@ -246,7 +232,6 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setShowFirstPageWizard( m_Ui->checkBoxWizardShowFirstPage->isChecked() );
 
     // --- Batch TM
-    luminance_options.setBatchTmLdrFormat( m_Ui->batchLdrFormatComboBox->currentText() );
     luminance_options.setBatchTmNumThreads( m_Ui->numThreadspinBox->value() );
 
     // --- Other Parameters
@@ -276,9 +261,7 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setRawAber2( m_Ui->blue_doubleSpinBox->value() );
 
 	// --- Color Management
-	luminance_options.setCameraProfile( m_Ui->camera_comboBox->currentIndex() );
-	if ( m_Ui->camera_comboBox->currentIndex() == 2) // Custom profile
-		luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
+	luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
 	luminance_options.setMonitorProfileFileName( m_Ui->monitor_lineEdit->text() );
 	luminance_options.setPrinterProfileFileName( m_Ui->printer_lineEdit->text() );
 
@@ -587,9 +570,6 @@ void PreferencesDialog::from_options_to_gui()
     // Temp directory
     m_Ui->lineEditTempPath->setText(luminance_options.getTempDir());
 
-    // Batch TM output format
-    int current_batch_tm_output_type = mappingBatchTmQStringToInt( luminance_options.getBatchTmLdrFormat() );
-    m_Ui->batchLdrFormatComboBox->setCurrentIndex( current_batch_tm_output_type );
 
     m_Ui->numThreadspinBox->setValue( luminance_options.getBatchTmNumThreads() );
 
@@ -670,15 +650,7 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->blue_toolButton->setEnabled( luminance_options.value(KEY_BLUE_TOOLBUTTON).toBool());
     m_Ui->green_toolButton->setEnabled( luminance_options.value(KEY_GREEN_TOOLBUTTON).toBool());
 	
-	int index = luminance_options.getCameraProfile();
-	m_Ui->camera_comboBox->setCurrentIndex( index );
-	if (index == 2) { // custom profile
-		m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
-		m_Ui->camera_lineEdit->setEnabled(true);
-		m_Ui->camera_toolButton->setEnabled(true);
-	}
-	if (index != 0)
-		m_Ui->camera_toolButton_reset->setEnabled(true);
+	m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
 	m_Ui->monitor_lineEdit->setText( luminance_options.getMonitorProfileFileName() );
 	m_Ui->printer_lineEdit->setText( luminance_options.getPrinterProfileFileName() );
 }
@@ -701,30 +673,15 @@ void PreferencesDialog::enterWhatsThis()
 	QWhatsThis::enterWhatsThisMode();
 }
 
-void PreferencesDialog::on_camera_comboBox_currentIndexChanged(int i)
-{
-	m_Ui->camera_lineEdit->setEnabled(i == 2);
-	m_Ui->camera_toolButton->setEnabled(i == 2);
-	m_Ui->camera_toolButton_reset->setEnabled(i != 0);
-}
-
 void PreferencesDialog::on_camera_toolButton_clicked()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
 		ICC_PATH,
-		tr("Color profile (*.icc)")
+		tr("Color profile (*.icc *.ICC *.icm *.ICM)")
 	);
 	if (!fileName.isEmpty()) {
 		m_Ui->camera_lineEdit->setText(fileName);
 	}
-}
-
-void PreferencesDialog::on_camera_toolButton_reset_clicked()
-{
-	m_Ui->camera_comboBox->setCurrentIndex(0);
-	m_Ui->camera_lineEdit->setEnabled(false);
-	m_Ui->camera_toolButton->setEnabled(false);
-	m_Ui->camera_toolButton_reset->setEnabled(false);	
 }
 
 void PreferencesDialog::on_monitor_toolButton_clicked()

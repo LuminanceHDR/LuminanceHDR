@@ -35,34 +35,14 @@
 #include <iostream>
 #include <assert.h>
 
+#include "pfsoutldrimage.h"
 #include "Libpfs/frame.h"
 #include "Common/msec_timer.h"
 
-namespace
-{
-
-//inline int clamp_to_8bits(const float& value)
-//{
-//    if (value <= 0.f) return 0;
-//    if (value >= 1.f) return 255;
-//    return (int)(value*255.f + 0.5f);
-//}
-
-//! \note I pass value by value, so I can use it as a temporary variable inside the function
-//! I will let the compiler do the optimization that it likes
-inline int clamp_and_offset_to_8bits(float value, const float& min, const float& max)
-{
-    if (value <= min) value = min;
-    else if (value >= max) value = max;
-
-    value = (value - min)/(max - min);
-
-    return (quint16)(value*255.f + 0.5f);
-}
-
-}
-
-QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_luminance)
+QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
+                           float min_luminance,
+                           float max_luminance,
+                           LumMappingMethod mapping_method)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
@@ -86,12 +66,12 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_
 
     QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
 
+    FloatRgbToQRgb converter(min_luminance, max_luminance, mapping_method);
+
 #pragma omp parallel for shared(pixels)
     for (int idx = 0; idx < height*width; ++idx)
     {
-        pixels[idx] = qRgb(clamp_and_offset_to_8bits(p_R[idx], min_luminance, max_luminance),
-                           clamp_and_offset_to_8bits(p_G[idx], min_luminance, max_luminance),
-                           clamp_and_offset_to_8bits(p_B[idx], min_luminance, max_luminance));
+        converter.toQRgb(p_R[idx], p_G[idx], p_B[idx], pixels[idx]);
     }
 
 #ifdef TIMER_PROFILING

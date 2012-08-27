@@ -65,7 +65,7 @@ void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float base
   pfs::Channel *X, *Y, *Z;
   
   frame->getXYZChannels( X, Y, Z );
-  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  frame->getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
   if( Y==NULL || X==NULL || Z==NULL)

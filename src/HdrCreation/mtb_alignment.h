@@ -29,7 +29,8 @@
 #include <vector>
 using std::vector;
 
-void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input);
+void mtb_alignment(QList<QImage*>& ImagePtrList);
+                   // , QList<bool>& ldr_tiff_input);
 
 QImage* shiftQImage(const QImage *in, int dx, int dy);
 

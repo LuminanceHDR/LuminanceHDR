@@ -69,7 +69,8 @@ public:
             float beta;
             float color;
             float noiseredux;
-            bool  newfattal;
+            bool newfattal;
+            bool fftsolver;
         } fattaloptions;
         struct {
             bool  autolum;

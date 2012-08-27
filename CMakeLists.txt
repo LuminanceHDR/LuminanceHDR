@@ -11,7 +11,7 @@ IF(NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE "RelWithDebInfo" )
 ENDIF()
 
-MESSAGE(${CMAKE_BUILD_TYPE})
+# MESSAGE(${CMAKE_BUILD_TYPE})
 
 IF(${CMAKE_BUILD_TYPE} STREQUAL "Release" OR ${CMAKE_BUILD_TYPE} STREQUAL "MinSizeRel")
 ADD_DEFINITIONS("-DQT_NO_DEBUG_OUTPUT")
@@ -66,7 +66,7 @@ IF(WIN32)
     SET(GSL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
     SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
     SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
-    SET(LCMS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
+    SET(LCMS2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
     SET(JPEGLIB_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libjpeg")
     SET(LIBPNG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libpng")
 	
@@ -97,11 +97,11 @@ IF(WIN32)
 	
     SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
     #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
-    SET(LCMS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms.lib")
-    #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2_dll.lib")
-    ADD_DEFINITIONS(-DLCMS_DLL)
-    #ADD_DEFINITIONS(-DCMS_DLL)
-    #ADD_DEFINITIONS(-DUSE_LCMS2)
+    #SET(LCMS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms.lib")
+    SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2_dll.lib")
+    #ADD_DEFINITIONS(-DLCMS_DLL)
+    ADD_DEFINITIONS(-DCMS_DLL)
+    ADD_DEFINITIONS(-DUSE_LCMS2)
     
     SET(LIBPNG_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libpng/libpng.lib")
     
@@ -115,7 +115,7 @@ ELSE()
     FIND_PACKAGE(GSL REQUIRED)
     FIND_PACKAGE(exiv2 REQUIRED)
     FIND_PACKAGE(libjpeg REQUIRED)
-    FIND_PACKAGE(lcms REQUIRED)
+    FIND_PACKAGE(lcms2 REQUIRED)
     FIND_PACKAGE(libpng REQUIRED)
 
 ENDIF()
@@ -143,8 +143,8 @@ SET(LIBS ${LIBS} ${EXIV2_LIBRARIES})
 SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${JPEGLIB_INCLUDE_DIR})
 SET(LIBS ${LIBS} ${JPEGLIB_LIBRARIES})
 
-SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${LCMS_INCLUDE_DIR})
-SET(LIBS ${LIBS} ${LCMS_LIBRARIES})
+SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${LCMS2_INCLUDE_DIR})
+SET(LIBS ${LIBS} ${LCMS2_LIBRARIES})
 
 SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${LIBPNG_INCLUDE_DIR})
 SET(LIBS ${LIBS} ${LIBPNG_LIBRARIES})
@@ -214,20 +214,38 @@ SET(LUMINANCE_FILES
 
 # Apple Mac OS X
 IF(APPLE)
+    # TODO
+    # 1. copy help under Resources/help
+    # 2. copy html under Resources/html
+    # 3. deployment align_image_stack
+
+    CONFIGURE_FILE(
+    ${CMAKE_SOURCE_DIR}/build/macosx/create-dmg.sh
+    ${CMAKE_BINARY_DIR}/create-dmg.sh)
+
+    CONFIGURE_FILE(
+    ${CMAKE_SOURCE_DIR}/build/macosx/deploy-cli.sh
+    ${CMAKE_BINARY_DIR}/deploy-cli.sh)
+
+    FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) # ${QT_TRANSLATIONS_DIR}/qt_*.qm)
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
+
     # icon files to copy in the bundle
     SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
     # set where in the bundle to put the icns files
     SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     # set where in the bundle to put the translation files
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
+    SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QT_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
+
     # include the icns files in the target
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
 
     SET( PROGNAME luminance-hdr )
     SET( MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns" )
-    #SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 0.7-beta2 )
-    #SET( MACOSX_BUNDLE_VERSION 0.7-beta2 )
-    #SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version 0.7-beta2 )
+    SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 2.3.0 )
+    SET( MACOSX_BUNDLE_VERSION 2.3.0 )
+    SET( MACOSX_BUNDLE_LONG_VERSION_STRING Luminance HDR 2.3.0 )
     #SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
 
     ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})
@@ -236,6 +254,8 @@ IF(APPLE)
     SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
 # Unix
 ELSEIF(UNIX)
+    FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm)
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
@@ -244,6 +264,8 @@ ELSEIF(UNIX)
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
     INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
     INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+    INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
     INSTALL(FILES

@@ -35,67 +35,96 @@
 
 #include <cmath>
 #include <iostream>
+#include <sstream>
+#include <algorithm>
 
 #include "Libpfs/frame.h"
+#include "Libpfs/colorspace.h"
 #include "Common/ProgressHelper.h"
 
-void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal, ProgressHelper *ph)
-{  
-  //--- default tone mapping parameters;
-  //float opt_alpha = 1.0f;
-  //float opt_beta = 0.9f;
-  //float opt_saturation=0.8f;
-  //float opt_noise = -1.0f; // not set!
-  
-  // adjust noise floor if not set by user
+namespace
+{
+const float epsilon = 1e-4f;
+}
+
+void pfstmo_fattal02(pfs::Frame* frame,
+                     float opt_alpha,
+                     float opt_beta,
+                     float opt_saturation,
+                     float opt_noise,
+                     bool newfattal,
+                     bool fftsolver,
+                     int detail_level,
+                     ProgressHelper *ph)
+{
+  if (fftsolver)
+  {
+      // opt_alpha = 1.f;
+      newfattal = true; // let's make sure, prudence is never enough!
+  }
+
   if ( opt_noise <= 0.0f )
   {
-    opt_noise = opt_alpha*0.01f;
+      opt_noise = opt_alpha * 0.01f;
   }
   
-  std::cout << "pfstmo_fattal02 (";
-  std::cout << "alpha: " << opt_alpha;
-  std::cout << ", beta: " << opt_beta;
-  std::cout << ". saturation: " <<  opt_saturation;
-  std::cout << ", noise: " <<  opt_noise << ")" << std::endl;
+  std::stringstream ss;
+  ss << "pfstmo_fattal02 (";
+  ss << "alpha: " << opt_alpha;
+  ss << ", beta: " << opt_beta;
+  ss << ". saturation: " <<  opt_saturation;
+  ss << ", noise: " <<  opt_noise;
+  ss << ", fftsolver: " << fftsolver << ")";
+  std::cout << ss.str();
+  std::cout << std::endl;
   
   //Store RGB data temporarily in XYZ channels
   pfs::Channel *X, *Y, *Z;
   frame->getXYZChannels( X, Y, Z );
-  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  frame->getTags().setString("LUMINANCE", "RELATIVE");
   //---
-  
   
   if ( Y==NULL || X==NULL || Z==NULL )
   {
-    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
   
-  pfs::Array2D* Xr = X->getChannelData();
-  pfs::Array2D* Yr = Y->getChannelData();
-  pfs::Array2D* Zr = Z->getChannelData();
+  pfs::Array2D& Xr = *X->getChannelData();
+  pfs::Array2D& Yr = *Y->getChannelData();
+  pfs::Array2D& Zr = *Z->getChannelData();
   
   // tone mapping
   int w = Y->getWidth();
   int h = Y->getHeight();
   
-  pfs::Array2D* L = new pfs::Array2D(w,h);
-  tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, newfattal, ph);
+  pfs::Array2D L(w,h);
+
+  tmo_fattal02(w, h, Yr, L,
+               opt_alpha, opt_beta, opt_noise, newfattal,
+               fftsolver, detail_level,
+               ph);
 
   if ( !ph->isTerminationRequested() )
   {
-    for( int x=0 ; x<w ; x++ )
-    {
-      for( int y=0 ; y<h ; y++ )
+      pfs::Array2D G(w, h);
+      pfs::Array2D& R = Xr;
+      pfs::Array2D& B = Zr;
+
+      pfs::transformColorSpace(pfs::CS_XYZ, &Xr, &Yr, &Zr,
+                               pfs::CS_RGB, &R, &G, &B);
+
+      for (int i=0; i < w*h; i++)
       {
-        (*Xr)(x,y) = powf( (*Xr)(x,y)/(*Yr)(x,y), opt_saturation ) * (*L)(x,y);
-        (*Zr)(x,y) = powf( (*Zr)(x,y)/(*Yr)(x,y), opt_saturation ) * (*L)(x,y);
-        (*Yr)(x,y) = (*L)(x,y);
+          float y = std::max( Yr(i), epsilon );
+          float l = std::max( L(i), epsilon );
+          R(i) = powf( std::max(R(i)/y, 0.f), opt_saturation ) * l;
+          G(i) = powf( std::max(G(i)/y, 0.f), opt_saturation ) * l;
+          B(i) = powf( std::max(B(i)/y, 0.f), opt_saturation ) * l;
       }
-    }
-    
-    ph->newValue( 100 );
+
+      pfs::transformColorSpace(pfs::CS_RGB, &R, &G, &B,
+                               pfs::CS_XYZ, &Xr, &Yr, &Zr);
+
+      ph->newValue( 100 );
   }
-  
-  delete L;
 }

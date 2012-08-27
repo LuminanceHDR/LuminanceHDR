@@ -51,6 +51,9 @@
            <property name="maximum">
             <number>20</number>
            </property>
+           <property name="value">
+            <number>3</number>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -73,6 +76,9 @@
            <property name="maximum">
             <number>20</number>
            </property>
+           <property name="value">
+            <number>3</number>
+           </property>
           </widget>
          </item>
         </layout>
@@ -90,8 +96,8 @@
            <property name="title">
             <string>Output</string>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="0" column="0">
              <layout class="QGridLayout" name="gridLayout_5">
               <property name="sizeConstraint">
                <enum>QLayout::SetMinimumSize</enum>
@@ -141,7 +147,7 @@
                <widget class="QComboBox" name="profileComboBox">
                 <property name="toolTip">
                  <string>Choose one of the creation predefined profiles. 
-See documentation for more informations.</string>
+See documentation for more information.</string>
                 </property>
                 <property name="currentIndex">
                  <number>0</number>
@@ -192,11 +198,11 @@ See documentation for more informations.</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
               <item row="0" column="0">
-               <layout class="QVBoxLayout" name="verticalLayout">
-                <item>
+               <layout class="QGridLayout" name="gridLayout_6">
+                <item row="0" column="0">
                  <widget class="QCheckBox" name="autoAlignCheckBox">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="toolTip">
                    <string>Auto align the bracketed pictures</string>
@@ -206,10 +212,20 @@ See documentation for more informations.</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item row="0" column="1">
+                 <widget class="QCheckBox" name="autoCropCheckBox">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="text">
+                   <string>Auto-crop</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0" colspan="2">
                  <widget class="QRadioButton" name="aisRadioButton">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="toolTip">
                    <string>Use Hugin's align_image_stack engine</string>
@@ -222,10 +238,10 @@ See documentation for more informations.</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item row="2" column="0" colspan="2">
                  <widget class="QRadioButton" name="MTBRadioButton">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="toolTip">
                    <string>Use MTB (Median Threshold Bitmap) engine</string>

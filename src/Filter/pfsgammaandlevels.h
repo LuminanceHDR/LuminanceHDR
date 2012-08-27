@@ -29,7 +29,9 @@ namespace pfs
 
 class Frame;
 
-pfs::Frame* gamma_levels(pfs::Frame* in, float black_in, float white_in,
-                         float black_out, float white_out, float gamma);
+pfs::Frame* gamma_levels(pfs::Frame* in,
+                         float black_in, float white_in,
+                         float black_out, float white_out,
+                         float gamma);
 
 }

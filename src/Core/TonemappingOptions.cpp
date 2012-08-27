@@ -58,6 +58,7 @@ void TonemappingOptions::setDefaultTonemapParameters()
     operator_options.fattaloptions.color = FATTAL02_COLOR;
     operator_options.fattaloptions.noiseredux = FATTAL02_NOISE_REDUX;
     operator_options.fattaloptions.newfattal = FATTAL02_NEWFATTAL;
+    operator_options.fattaloptions.fftsolver = true;
 
     // Drago
     operator_options.dragooptions.bias = DRAGO03_BIAS;
@@ -201,7 +202,8 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
                 } else if (field=="NOISE") {
                         toreturn->operator_options.fattaloptions.noiseredux=value.toFloat();
                 } else if (field=="OLDFATTAL") {
-                        toreturn->operator_options.fattaloptions.newfattal= (value == "NO");
+                        toreturn->operator_options.fattaloptions.newfattal= true; // This is the new version of fattal pre FFT (always yes)
+                        toreturn->operator_options.fattaloptions.fftsolver= (value == "NO");
                 } else if (field=="MULTIPLIER") {
                         toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
                 } else if (field=="LOCAL") {
@@ -292,10 +294,12 @@ QString TMOptionsOperations::getPostfix() {
                 float beta=opts->operator_options.fattaloptions.beta;
                 float saturation2=opts->operator_options.fattaloptions.color;
                 float noiseredux=opts->operator_options.fattaloptions.noiseredux;
+				bool  fftsolver=opts->operator_options.fattaloptions.fftsolver;
                 postfix+=QString("alpha_%1_").arg(alpha);
                 postfix+=QString("beta_%1_").arg(beta);
                 postfix+=QString("saturation_%1_").arg(saturation2);
-                postfix+=QString("noiseredux_%1").arg(noiseredux);
+                postfix+=QString("noiseredux_%1_").arg(noiseredux);
+                postfix+=QString("fftsolver_%1").arg(fftsolver);
                 }
                 break;
         case ashikhmin: {
@@ -414,11 +418,13 @@ QString TMOptionsOperations::getCaption() {
                 float beta=opts->operator_options.fattaloptions.beta;
                 float saturation2=opts->operator_options.fattaloptions.color;
                 float noiseredux=opts->operator_options.fattaloptions.noiseredux;
+                bool  fftsolver=opts->operator_options.fattaloptions.fftsolver;
                 caption+="Fattal: ~ ";
                 caption+=QString("Alpha=%1 ~ ").arg(alpha);
                 caption+=QString("Beta=%1 ~ ").arg(beta);
                 caption+=QString("Saturation=%1 ~ ").arg(saturation2);
-                caption+=QString("NoiseRedux=%1").arg(noiseredux);
+                caption+=QString("NoiseRedux=%1 ~ ").arg(noiseredux);
+                caption+=QString("FFTSolver=%1").arg(fftsolver);
                 }
                 break;
         case ashikhmin: {

@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Franco Comida
+ * Copyright (C) 2012 Franco Comida, Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,30 +19,30 @@
  * ----------------------------------------------------------------------
  *
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Original work
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * clean up memory management
  *
  */
 
 #include <QDebug>
+#include <QFile>
 #include <QSharedPointer>
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
 
-#ifdef USE_LCMS2
-#include <lcms2.h>
-#else
-#include <lcms.h>
-#endif
-
 #include <stdio.h>
+#include <lcms2.h>
 #include <jpeglib.h>
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
 #include <QTemporaryFile>
-// #include <io.h>
 #endif
 
 #include "jpegwriter.h"
+#include "Common/ResourceHandlerCommon.h"
+#include "Common/ResourceHandlerLcms.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -133,11 +133,10 @@ write_icc_profile (j_compress_ptr cinfo,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-static struct my_error_mgr { 
-
+static struct my_error_mgr
+{
 	struct  jpeg_error_mgr pub;  // "public" fields 
-	LPVOID  Cargo;               // "private" fields 
-
+//	LPVOID  Cargo;               // "private" fields
 } ErrorHandler; 
 
 void my_writer_error_handler (j_common_ptr cinfo)
@@ -179,16 +178,16 @@ JpegWriter::JpegWriter(const QImage *out_qimage, int quality):
 
 bool JpegWriter::writeQImageToJpeg()
 {
-	size_t profile_size = 0;	
+    cmsUInt32Number cmsProfileSize = 0;
+    ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
 
-    cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-    _cmsSaveProfileToMem(hsRGB, NULL, &profile_size);           // get the size
+    cmsSaveProfileToMem(hsRGB.data(), NULL, &cmsProfileSize);           // get the size
 
-    std::vector<JOCTET> profile_buffer(profile_size);
+    std::vector<JOCTET> cmsOutputProfile(cmsProfileSize);
 
-    _cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);    //
+    cmsSaveProfileToMem(hsRGB.data(), cmsOutputProfile.data(), &cmsProfileSize);    //
 
-	qDebug() << "sRGB profile size: " << profile_size;
+    qDebug() << "sRGB profile size: " << cmsProfileSize;
 
 	struct jpeg_compress_struct cinfo;
 	cinfo.err = jpeg_std_error(&ErrorHandler.pub);
@@ -201,10 +200,12 @@ bool JpegWriter::writeQImageToJpeg()
 	cinfo.image_height = m_out_qimage->height();
     cinfo.input_components = cinfo.num_components = 3;      // # of color components per pixel
     cinfo.in_color_space = JCS_RGB;                         // colorspace of input image
-	cinfo.jpeg_color_space = JCS_RGB;
+	cinfo.jpeg_color_space = JCS_YCbCr;
+	cinfo.density_unit = 1; // dots/inch
+	cinfo.X_density = cinfo.Y_density = 72;
 
 	jpeg_set_defaults(&cinfo);
-	jpeg_set_colorspace(&cinfo, JCS_RGB);
+	jpeg_set_colorspace(&cinfo, JCS_YCbCr);
 
 	//avoid subsampling on high quality factor
 	jpeg_set_quality(&cinfo, m_quality, 1);
@@ -217,21 +218,19 @@ bool JpegWriter::writeQImageToJpeg()
 		}
 	}
 
-    // I protecte the output file into a QSharedPointer with custom Deleter,
-    // so I don't have to close it whenever it goes out of scope!
-    QSharedPointer<FILE> outfile;
+    ResouceHandlerFile outfile;
 
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
     QTemporaryFile output_temp_file;
 #else
     std::vector<char> outbuf;
 #endif
     if ( !m_fname.isEmpty() )         // we are writing to file
     {
-        QByteArray ba( m_fname.toUtf8() );
+        QByteArray ba( QFile::encodeName(m_fname) );
 		qDebug() << "writeQImageToJpeg: filename: " << ba.data();
 
-        outfile = QSharedPointer<FILE>(fopen(ba.data(), "wb"), fclose);
+        outfile.reset( fopen(ba.data(), "wb") );
 
         if (outfile.data() == NULL)
         {
@@ -241,12 +240,12 @@ bool JpegWriter::writeQImageToJpeg()
 	} 
     else                            // we are writing to memory buffer
     {
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
         if ( !output_temp_file.open() ) return false; // could not open the temporary file!
 
         QByteArray output_temp_filename = QFile::encodeName( output_temp_file.fileName() );
         output_temp_file.close();
-        outfile = QSharedPointer<FILE>(fopen(output_temp_filename.constData(), "w+"), fclose);
+        outfile.reset(fopen(output_temp_filename.constData(), "w+"));
 
         if ( outfile.data() == NULL ) return false;
 #else
@@ -255,7 +254,7 @@ bool JpegWriter::writeQImageToJpeg()
         // reset all element of the vector to zero!
         std::fill(outbuf.begin(), outbuf.end(), 0);
 
-        outfile = QSharedPointer<FILE>(fmemopen(outbuf.data(), outbuf.size(), "w+"), fclose);
+        outfile.reset( fmemopen(outbuf.data(), outbuf.size(), "w+") );
 #endif
 	}
 
@@ -264,10 +263,7 @@ bool JpegWriter::writeQImageToJpeg()
         jpeg_stdio_dest(&cinfo, outfile.data());
         jpeg_start_compress(&cinfo, true);
 
-        write_icc_profile(&cinfo, profile_buffer.data(), profile_size);
-
-        // unecessary zelous!
-        profile_buffer.clear();
+        write_icc_profile(&cinfo, cmsOutputProfile.data(), cmsProfileSize);
 
         // If an exception is raised, this buffer gets automatically destructed!
         std::vector<JSAMPLE> ScanLineOut(cinfo.image_width * cinfo.num_components);
@@ -294,7 +290,7 @@ bool JpegWriter::writeQImageToJpeg()
 
     if ( m_fname.isEmpty() )
     {
-#if defined(WIN32) || defined(__APPLE__)
+#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
         fflush(outfile.data());
         fseek(outfile.data(), 0, SEEK_END);
         m_filesize = ftell(outfile.data());

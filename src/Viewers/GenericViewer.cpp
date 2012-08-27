@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2009-2012 Franco Comida, Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing
+ * Original Work
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *  Refactoring for QGraphicsView
  *
  */
 
@@ -124,8 +126,8 @@ void GenericViewer::fitToWindow(bool /* checked */)
 
     qreal sf = qMin(w_ratio, h_ratio)/getScaleFactor();
 
-    // update only if the change is below the 0.005%
-    if ( qAbs(sf - 1.0) > 0.005 )
+    // update only if the change is above the 0.05%
+    if ( qAbs(sf - static_cast<qreal>(1.0)) > 0.05 )
     {
 #ifdef QT_DEBUG
         //qDebug() << "void GenericViewer::fitToWindow().sf = " << sf;
@@ -157,8 +159,8 @@ void GenericViewer::fillToWindow()
 
     qreal sf = qMax(w_ratio, h_ratio)/getScaleFactor();
 
-    // update only if the change is below the 0.005%
-    if ( qAbs(sf - 1.0) > 0.005 )
+    // update only if the change is above the 0.05%
+    if ( qAbs(sf - static_cast<qreal>(1.0)) > 0.05 )
     {
 #ifdef QT_DEBUG
         //qDebug() << "void GenericViewer::fillToWindow().sf = " << sf;

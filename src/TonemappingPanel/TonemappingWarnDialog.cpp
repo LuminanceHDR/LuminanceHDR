@@ -1,7 +1,8 @@
-/**
- * This file is a part of LuminanceHDR package.
+/*
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2010 Elizabeth Oldham
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,45 +20,29 @@
  * ----------------------------------------------------------------------
  *
  * @author Elizabeth Oldham <bethatthehug@users.sourceforge.net>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *  Refactoring
+ *
  */
 
-#include <QFileDialog>
-#include <QWhatsThis>
-#include <QMessageBox>
+#include <QDebug>
 
-#include "Common/config.h"
 #include "TonemappingWarnDialog.h"
-#include "ui_TonemappingWarnDialog.h"
+#include "Common/LuminanceOptions.h"
 
 TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p):
-    QDialog(p),
-    yes(false),
-    m_Ui(new Ui::TonemappingWarningDialog)
+    UMessageBox(p)
 {
-    m_Ui->setupUi(this);
-
-    m_Ui->plainText->setPlainText(tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"));
-
-    m_Ui->checkBoxAskAgain->setChecked(luminance_options.isShowFattalWarning());
-
-    connect(m_Ui->buttonBox,SIGNAL(accepted()),this,SLOT(accepted()));
+    this->setText( tr("Fattal Warning") );
+    this->setInformativeText( tr("This tonemapping operator depends on the size of the input "\
+                                 " image. Applying this operator on the full size image will "\
+                                 "most probably result in a different image. "\
+                                 "\n\nDo you want to continue?") );
+    this->setStandardButtons(QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No);
+    this->setDefaultButton(QMessageBox::No);
+    this->setIcon(QMessageBox::Warning);
 }
-
-void TonemappingWarningDialog::accepted()
-{
-    luminance_options.setShowFattalWarning( m_Ui->checkBoxAskAgain->isChecked() );
-
-    accept();
-
-    yes = true;
-}
-
-bool TonemappingWarningDialog::wasAccepted()
-{
-    return (yes);
-}
-
 
 TonemappingWarningDialog::~TonemappingWarningDialog()
-{
-}
+{}
+

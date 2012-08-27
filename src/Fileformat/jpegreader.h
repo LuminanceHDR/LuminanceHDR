@@ -33,14 +33,15 @@
 
 class JpegReader : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 	
 	QString fname;
 	struct jpeg_decompress_struct cinfo;
 
 public:
-	JpegReader(QString);
-	~JpegReader() {}
+    JpegReader(const QString& filename);
+    ~JpegReader();
+
 	QImage *readJpegIntoQImage();
 };
 

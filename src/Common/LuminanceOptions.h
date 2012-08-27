@@ -131,13 +131,11 @@ public Q_SLOTS:
     QString getBatchTmPathTmoSettings();
     QString getBatchTmPathLdrOutput();
     int     getBatchTmNumThreads();
-    QString getBatchTmLdrFormat();
 
     void    setBatchTmPathHdrInput(QString);
     void    setBatchTmPathTmoSettings(QString);
     void    setBatchTmPathLdrOutput(QString);
     void    setBatchTmNumThreads(int);
-    void    setBatchTmLdrFormat(QString);
 
     int     getNumThreads() { return getBatchTmNumThreads(); }
     void    setNumThreads(int i) { setBatchTmNumThreads(i); }
@@ -190,9 +188,6 @@ public Q_SLOTS:
     void    setPreviewWidth(int);
 
 	// Color Management
-	int		getCameraProfile();
-	void	setCameraProfile(int);
-
 	QString getCameraProfileFileName();
 	void	setCameraProfileFileName(QString);
 

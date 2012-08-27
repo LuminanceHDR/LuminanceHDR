@@ -40,7 +40,7 @@ namespace pfs
   {
     float multiplier = 1.0f;
     
-    const char *lum_type = frame->getTags()->getString("LUMINANCE");
+    const char *lum_type = frame->getTags().getString("LUMINANCE");
     if( lum_type )
     {
       if( !strcmp( lum_type, "DISPLAY" ) && gamma > 1.0f )
@@ -83,7 +83,7 @@ namespace pfs
     // throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
     
     //if( opt_setgamma && gamma > 1.0f )
-    frame->getTags()->setString("LUMINANCE", "DISPLAY");
+    frame->getTags().setString("LUMINANCE", "DISPLAY");
     //else if( opt_setgamma && gamma < 1.0f )
     //  frame->getTags()->setString("LUMINANCE", "RELATIVE");
     

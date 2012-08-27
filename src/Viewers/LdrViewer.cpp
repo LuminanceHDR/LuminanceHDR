@@ -38,7 +38,7 @@
 #include "Libpfs/frame.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "Common/LuminanceOptions.h"
-#include "Common/ResourceHandler.h"
+#include "Common/ResourceHandlerLcms.h"
 
 namespace
 {
@@ -57,24 +57,6 @@ void parseOptions(const TonemappingOptions *opts, QString& caption)
     }
 }
 
-struct CleanUpCmsProfile
-{
-    static inline void cleanup(cmsHPROFILE profile)
-    {
-        cmsCloseProfile(profile);
-    }
-};
-typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
-
-struct CleanUpCmsTransform
-{
-    static inline void cleanup(cmsHTRANSFORM transform)
-    {
-        cmsDeleteTransform(transform);
-    }
-};
-typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;
-
 QImage* doCMSTransform(QImage* input_qimage, bool doProof, bool doGamutCheck)
 {
     LuminanceOptions luminance_opts;
@@ -83,73 +65,89 @@ QImage* doCMSTransform(QImage* input_qimage, bool doProof, bool doGamutCheck)
     QString printer_fname = luminance_opts.getPrinterProfileFileName();
     qDebug() << "Printer profile: " << printer_fname;
 
-    QImage *out_qimage = NULL;
+    // CHECK MONITOR PROFILE NAME
+    // TODO: Check inside LuminanceOptions whether the file is on the filesystem
+    // or it has been removed!
+    if ( monitor_fname.isEmpty() ) return NULL;
 
-    if (!monitor_fname.isEmpty())
+    qDebug() << "Transform to Monitor Profile";
+    QByteArray iccProfileMonitor( QFile::encodeName( monitor_fname ) );
+
+    QScopedPointer<QImage> out_qimage( new QImage(input_qimage->width(), input_qimage->height(), QImage::Format_RGB32) );
+
+    ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
+    ScopedCmsProfile hOut( cmsOpenProfileFromFile(iccProfileMonitor.constData(), "r") );
+
+    ScopedCmsProfile hProof;
+    ScopedCmsTransform xform;
+
+    // Check whether the output profile is open
+    if ( !hOut )
     {
-        qDebug() << "Transform to Monitor Profile";
-        QByteArray ba = QFile::encodeName( monitor_fname );
+        QMessageBox::warning(0,
+                             QObject::tr("Warning"),
+                             QObject::tr("I cannot open monitor profile. Please select a different one."),
+                             QMessageBox::Ok, QMessageBox::NoButton);
 
-        out_qimage = new QImage(input_qimage->width(), input_qimage->height(), QImage::Format_RGB32);
-
-        ScopedCmsProfile hsRGB;
-        ScopedCmsProfile hOut;
-        ScopedCmsProfile hProof;
-        ScopedCmsTransform xform;
-
-        cmsErrorAction(LCMS_ERROR_SHOW);
-
-        hsRGB.reset( cmsCreate_sRGBProfile() );
-        hOut.reset( cmsOpenProfileFromFile(ba.data(), "r") );
-
-        if ( !hOut )
-        {
-            QMessageBox::warning(0, QObject::tr("Warning"), QObject::tr("I cannot open monitor profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
-            delete out_qimage;
-            return NULL;
-        }
-
-        if (doProof && !printer_fname.isEmpty())
-        {
-            QByteArray ba = QFile::encodeName( printer_fname );
-            hProof.reset( cmsOpenProfileFromFile(ba.data(), "r") );
-            if ( !hProof )
-            {
-                QMessageBox::warning(0, QObject::tr("Warning"), QObject::tr("I cannot open printer profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
-                doProof = false;
-            }
-        }
-        else if (doProof)
-        {
-            QMessageBox::warning(0, QObject::tr("Warning"), QObject::tr("Please select a printer profile ."), QMessageBox::Ok, QMessageBox::NoButton);
-            doProof = false;
-        }
-
-        if (doProof)
-        {
-            quint32 dwFlags = doGamutCheck ? cmsFLAGS_SOFTPROOFING | cmsFLAGS_GAMUTCHECK : cmsFLAGS_SOFTPROOFING;
-            cmsSetAlarmCodes(255, 0, 0);
-            xform.reset( cmsCreateProofingTransform(hsRGB.data(), TYPE_RGBA_8,
-                                                    hOut.data(), TYPE_RGBA_8,
-                                                    hProof.data(), INTENT_PERCEPTUAL, INTENT_ABSOLUTE_COLORIMETRIC, dwFlags) );
-        }
-        else
-        {
-            xform.reset( cmsCreateTransform(hsRGB.data(), TYPE_RGBA_8,
-                                            hOut.data(), TYPE_RGBA_8, INTENT_PERCEPTUAL, 0) );
-        }
-        if ( !xform )
-        {
-            QMessageBox::warning(0, QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different monitor profile."), QMessageBox::Ok, QMessageBox::NoButton);
-
-            delete out_qimage;
-            return NULL;
-        }
-
-        cmsDoTransform(xform.data(), input_qimage->bits(), out_qimage->bits(), input_qimage->width() * input_qimage->height());
+        return NULL;
     }
 
-    return out_qimage;
+    //
+    if (doProof && !printer_fname.isEmpty())
+    {
+        QByteArray iccProfilePrinter( QFile::encodeName( printer_fname ) );
+        hProof.reset( cmsOpenProfileFromFile(iccProfilePrinter.constData(), "r") );
+        if ( !hProof )
+        {
+            QMessageBox::warning(0,
+                                 QObject::tr("Warning"),
+                                 QObject::tr("I cannot open printer profile. Please select a different one."),
+                                 QMessageBox::Ok, QMessageBox::NoButton);
+            doProof = false;
+        }
+    }
+    else if (doProof)
+    {
+        QMessageBox::warning(0,
+                             QObject::tr("Warning"),
+                             QObject::tr("Please select a printer profile ."),
+                             QMessageBox::Ok, QMessageBox::NoButton);
+        doProof = false;
+    }
+
+    if (doProof)
+    {
+        cmsUInt32Number dwFlags = doGamutCheck ? cmsFLAGS_SOFTPROOFING | cmsFLAGS_GAMUTCHECK : cmsFLAGS_SOFTPROOFING;
+        cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0 };
+        alarmCodes[1] = 0xFFFF;
+        cmsSetAlarmCodes(alarmCodes);
+        xform.reset( cmsCreateProofingTransform(hsRGB.data(), TYPE_BGRA_8, //TYPE_RGBA_8,
+                                                hOut.data(), TYPE_BGRA_8, //TYPE_RGBA_8,
+                                                hProof.data(), INTENT_PERCEPTUAL, INTENT_ABSOLUTE_COLORIMETRIC, dwFlags) );
+    }
+    else
+    {
+        xform.reset( cmsCreateTransform(hsRGB.data(), TYPE_BGRA_8, //TYPE_RGBA_8,
+                                        hOut.data(), TYPE_BGRA_8, //TYPE_RGBA_8,
+                                        INTENT_PERCEPTUAL, 0) );
+    }
+
+    if ( !xform )
+    {
+        QMessageBox::warning(0,
+                             QObject::tr("Warning"),
+                             QObject::tr("I cannot perform the color transform. Please select a different monitor profile."),
+                             QMessageBox::Ok, QMessageBox::NoButton);
+
+        return NULL;
+    }
+
+    cmsDoTransform(xform.data(),
+                   input_qimage->bits(),
+                   out_qimage->bits(),
+                   (input_qimage->width() * input_qimage->height()) );
+
+    return out_qimage.take();
 }
 }
 
@@ -168,19 +166,17 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
     // I am safe
     LdrViewer::setTonemappingOptions(opts);
 
-    // LuminanceOptions luminance_opts;
-
     QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(getFrame()) );
     QScopedPointer<QImage> xformed_qimage( doCMSTransform(temp_qimage.data(), false, false) );
 
-	if (xformed_qimage == NULL)
+    if (xformed_qimage == NULL)
     {
-		setQImage(*temp_qimage);
+        setQImage(*temp_qimage);
     }
     else
     {
-		setQImage(*xformed_qimage);
-	}
+        setQImage(*xformed_qimage);
+    }
 
     updateView();
     retranslateUi();
@@ -191,7 +187,6 @@ LdrViewer::~LdrViewer()
 #ifdef QT_DEBUG
     qDebug() << "LdrViewer::~LdrViewer()";
 #endif
-	delete mTonemappingOptions;
 }
 
 void LdrViewer::retranslateUi()
@@ -232,12 +227,12 @@ void LdrViewer::updatePixmap()
 
     if ( !xformed_qimage )
     {
-    	mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+        mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
     }
     else
     {
-    	mPixmap->setPixmap(QPixmap::fromImage(*xformed_qimage));
-	}
+        mPixmap->setPixmap(QPixmap::fromImage(*xformed_qimage));
+    }
 
     informativeLabel->setText( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()) );
 }
@@ -270,7 +265,7 @@ float LdrViewer::getMinLuminanceValue()
 
 void LdrViewer::doSoftProofing(bool doGamutCheck)
 {
-    ResourceHandler<QImage> src_image( fromLDRPFStoQImage(getFrame()) );
+    QScopedPointer<QImage> src_image( fromLDRPFStoQImage(getFrame()) );
     QScopedPointer<QImage> image( doCMSTransform(src_image.data(), true, doGamutCheck) );
     if (image.data() != NULL)
     {
@@ -280,7 +275,7 @@ void LdrViewer::doSoftProofing(bool doGamutCheck)
 
 void LdrViewer::undoSoftProofing()
 {
-    ResourceHandler<QImage> src_image( fromLDRPFStoQImage(getFrame()) );
+    QScopedPointer<QImage> src_image( fromLDRPFStoQImage(getFrame()) );
     QScopedPointer<QImage> image( doCMSTransform(src_image.data(), false, false) );
     if (image.data() != NULL)
     {

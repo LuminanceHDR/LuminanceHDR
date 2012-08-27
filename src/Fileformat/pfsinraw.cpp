@@ -30,9 +30,9 @@
 #include <QDebug>
 #include <QFile>
 
+#include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 #include "Fileformat/pfsinraw.h"
-#include "Libpfs/frame.h"
 #include "Common/LuminanceOptions.h"
 
 /**************************** From UFRAW sourcecode ********************************
@@ -198,13 +198,15 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   QString fname;
   QByteArray ba;
   
-  if (options->getCameraProfile() == 1)
+  fname = options->getCameraProfileFileName();
+
+  if (fname.isEmpty())
   {
+      qDebug() << "Camera profile: embedded";
       OUT.camera_profile = (char*)"embed";
   }
-  else if (options->getCameraProfile() == 2)
+  else 
   {
-      fname = options->getCameraProfileFileName();
       ba = QFile::encodeName( fname );
       OUT.camera_profile = ba.data();
       qDebug() << "Camera profile: " << fname;
@@ -254,8 +256,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   int W = image->width;
   int H = image->height;
   
-  pfs::DOMIO pfsio;
-  pfs::Frame *frame = pfsio.createFrame( W, H );
+  pfs::Frame *frame = pfs::DOMIO::createFrame( W, H );
 
   if (frame == NULL)
   {

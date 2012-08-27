@@ -1,3 +1,12 @@
+Changes 2.3.0
+* New Fattal02 solver based on FFT (thanks to Tino Kluge)
+* Port of color management system to LCMS2
+* Improved fit between saved files and preview
+* UI improvements (tonemapping warning dialog)
+* Update translations
+* Bug fixes
+
+
 Changes 2.3.0-beta1
 * NEW: colour management system
 The new colour management system allows to load colour profile for screen and printer so that users can double-check the final quality of their HDR images before being saved to JPEG or PNG.

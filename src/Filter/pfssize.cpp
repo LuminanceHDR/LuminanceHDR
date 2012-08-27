@@ -116,28 +116,27 @@ pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize)
   msec_timer f_timer;
   f_timer.start();
 #endif
-  
-  pfs::DOMIO pfsio;
-  
-  ResampleFilter *filter = new LinearFilter();
+
+  LinearFilter filter;
   
   int new_x = xSize;
   int new_y = (int)((float)frame->getHeight() * (float)xSize / (float)frame->getWidth());
   
-  pfs::Frame *resizedFrame = pfsio.createFrame( new_x, new_y );
+  pfs::Frame *resizedFrame = pfs::DOMIO::createFrame( new_x, new_y );
   
-  pfs::ChannelIterator *it = frame->getChannels();
-  while( it->hasNext() )
+  const ChannelContainer& channels = frame->getChannels();
+
+  for ( ChannelContainer::const_iterator it = channels.begin();
+        it != channels.end();
+        ++it)
   {
-    pfs::Channel *originalCh = it->getNext();
-    pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
-    
-    resampleArray(originalCh->getChannelData(), newCh->getChannelData(), filter);
+      const pfs::Channel* originalCh = *it;
+      pfs::Channel* newCh = resizedFrame->createChannel( originalCh->getName() );
+
+      resampleArray(originalCh->getChannelData(), newCh->getChannelData(), &filter);
   }
-  
+
   pfs::copyTags( frame, resizedFrame );
-  delete filter;
- 
   
 #ifdef TIMER_PROFILING
   f_timer.stop_and_update();

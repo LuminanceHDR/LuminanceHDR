@@ -43,13 +43,6 @@
 namespace
 {
 
-inline int clamp_to_8bits(const float& value)
-{
-    if (value <= 0.f) return 0;
-    if (value >= 1.f) return 255;
-    return (int)(value*255.f + 0.5f);
-}
-
 //! \note I pass value by value, so I can use it as a temporary variable inside the function
 //! I will let the compiler do the optimization that it likes
 inline int clamp_and_offset_to_8bits(float value, const float& min, const float& max)
@@ -82,6 +75,7 @@ QImage* fromHDRPFStoQImage(pfs::Frame* in_frame)
 
     const int width   = in_frame->getWidth();
     const int height  = in_frame->getHeight();
+    // const int elems = width*height;
 
     QImage* temp_qimage = new QImage(width, height, QImage::Format_ARGB32);
 

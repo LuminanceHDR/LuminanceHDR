@@ -88,4 +88,22 @@
     <file>images/camera_on_tripod.png</file>
     <file>images/stack.png</file>
   </qresource>
+  <qresource prefix="/flags">
+    <file>images/CHIN0001.PNG</file>
+    <file>images/CZEC0001.PNG</file>
+    <file>images/FINL0001.PNG</file>
+    <file>images/FRAN0001.PNG</file>
+    <file>images/GERM0001.PNG</file>
+    <file>images/HUNG0001.PNG</file>
+    <file>images/INDA0001.PNG</file>
+    <file>images/INDN0001.PNG</file>
+    <file>images/ITAL0001.PNG</file>
+    <file>images/POLA0001.PNG</file>
+    <file>images/RMNA0001.PNG</file>
+    <file>images/RUSS0001.PNG</file>
+    <file>images/SPAN0001.PNG</file>
+    <file>images/TURK0001.PNG</file>
+    <file>images/UNKG0001.PNG</file>
+    <file>images/SVKA0001.PNG</file>
+  </qresource>
 </RCC>
