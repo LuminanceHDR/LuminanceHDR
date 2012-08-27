@@ -111,3 +111,88 @@ TEST(TestMantiuk06, TestMantiuk06UpsampleFull)
 
     std::cout << "Speed up: " << ref_t/test_t << std::endl;
 }
+
+namespace reference
+{
+void calculate_and_add_divergence(size_t COLS, size_t ROWS,
+                                  const float* Gx,
+                                  const float* Gy,
+                                  float* divG)
+{
+    float divGx, divGy;
+
+    // kx = 0 AND ky = 0;
+    divG[0] += Gx[0] + Gy[0];                       // OUT
+
+    // ky = 0
+    for (size_t kx=1; kx < COLS; kx++)
+    {
+        divGx = Gx[kx] - Gx[kx - 1];
+        divGy = Gy[kx];
+        divG[kx] += divGx + divGy;                    // OUT
+    }
+
+    for (size_t ky=1; ky < ROWS; ky++)
+    {
+        // kx = 0
+        divGx = Gx[ky*COLS];
+        divGy = Gy[ky*COLS] - Gy[ky*COLS - COLS];
+        divG[ky*COLS] += divGx + divGy;               // OUT
+
+        // kx > 0
+        for (size_t kx=1; kx<COLS; kx++)
+        {
+            divGx = Gx[kx + ky*COLS] - Gx[kx + ky*COLS-1];
+            divGy = Gy[kx + ky*COLS] - Gy[kx + ky*COLS - COLS];
+            divG[kx + ky*COLS] += divGx + divGy;        // OUT
+        }
+    }
+
+}
+}
+
+void calculate_and_add_divergence(const int COLS, const int ROWS,
+                                  const float* const Gx, const float* const Gy,
+                                  float* const divG);
+
+TEST(TestMantiuk06, TestMantiuk06AddDivergence)
+{
+    const size_t cols = 4373;
+    const size_t rows = 2173;
+
+    std::vector<float> Gx(cols*rows);
+    std::vector<float> Gy(cols*rows);
+
+    // fill data with samples between zero and one!
+    generate(Gx.begin(), Gx.end(), RandZeroOne());
+    generate(Gy.begin(), Gy.end(), RandZeroOne());
+
+    std::vector<float> referenceOutput(cols*rows);
+    std::fill(referenceOutput.begin(), referenceOutput.end(), 0.f);
+
+    tbb::tick_count ref_t0 = tbb::tick_count::now();
+    reference::calculate_and_add_divergence(cols, rows,
+                                            Gx.data(), Gy.data(),
+                                            referenceOutput.data());
+    tbb::tick_count ref_t1 = tbb::tick_count::now();
+    double ref_t = (ref_t1 - ref_t0).seconds();
+
+    std::vector<float> testOutput(cols*rows);
+    std::fill(testOutput.begin(), testOutput.end(), 0.f);
+
+    tbb::tick_count test_t0 = tbb::tick_count::now();
+    calculate_and_add_divergence(cols, rows,
+                                 Gx.data(), Gy.data(),
+                                 testOutput.data());
+    tbb::tick_count test_t1 = tbb::tick_count::now();
+    double test_t = (test_t1 - test_t0).seconds();
+
+    EXPECT_EQ(referenceOutput.size(), testOutput.size());
+    for (size_t idx = 0; idx < testOutput.size(); ++idx)
+    {
+        EXPECT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
+    }
+    EXPECT_GT(ref_t, test_t);
+
+    std::cout << "Speed up: " << ref_t/test_t << std::endl;
+}

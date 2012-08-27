@@ -5,7 +5,7 @@
 using namespace std;
 using namespace boost::assign;  // bring 'operator+=()' into scope
 
-static const size_t V_SIZE = 100;
+static const size_t V_SIZE = 100000;
 
 namespace
 {
@@ -33,9 +33,9 @@ protected:
     TestVexContainer outputComputed;
 
     // helper function
-    static float randZeroOne()
+    static float randMinusOnePlusOne()
     {
-        return (static_cast<float>(rand())/RAND_MAX);
+        return (static_cast<float>(rand())/RAND_MAX)*2.f - 1.f;
     }
 
     TestVex()
@@ -44,8 +44,8 @@ protected:
         , outputReference(V_SIZE)
         , outputComputed(V_SIZE)
     {
-        std::generate(input1.begin(), input1.end(), randZeroOne);
-        std::generate(input2.begin(), input2.end(), randZeroOne);
+        std::generate(input1.begin(), input1.end(), randMinusOnePlusOne);
+        std::generate(input2.begin(), input2.end(), randMinusOnePlusOne);
         std::fill(outputReference.begin(), outputReference.end(), 0.f);
         std::fill(outputComputed.begin(), outputComputed.end(), 0.f);
     }
@@ -63,6 +63,6 @@ TEST_F(TestVex, VMUL)
 
     for (size_t idx = 0; idx < outputComputed.size(); ++idx)
     {
-        EXPECT_NEAR(outputComputed[idx], outputReference[idx], 10e-6);
+        EXPECT_NEAR(outputComputed[idx], outputReference[idx], 10e-9);
     }
 }
