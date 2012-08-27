@@ -67,6 +67,7 @@
 #include "TonemappingOperators/pfstmo.h"
 
 #include "Libpfs/vex.h"
+#include "Libpfs/vex/vex.h"
 #include "Common/msec_timer.h"
 
 typedef struct pyramid_s {
@@ -493,7 +494,7 @@ void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC)
 // G = G * C
 inline void scale_gradient(const int n, float* G, const float* C)
 {
-  VEX_vmul(G, C, G, n);
+    vex::vmul(G, C, G, n);
 }
 
 // scale gradients for the whole one pyramid with the use of (Cx,Cy) from the other pyramid
