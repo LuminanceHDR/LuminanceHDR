@@ -68,10 +68,6 @@ void VEX_vset(float* IO, const float value, const int N);
 // IO[i] = 0.0f
 void VEX_vreset(float* IO, const int N);
 
-void VEX_dotpr(const float* I1, const float* I2, float& val, const int N);
-
-//void mm_3x3(float i1, float i2, float i3, float &o1, float &o2, float &o3, const float mat[3][3]);
-
 #ifdef LUMINANCE_USE_SSE
 typedef __v4sf v4sf;
 v4sf _mm_log2_ps(v4sf);

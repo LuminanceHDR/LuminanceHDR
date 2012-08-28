@@ -68,6 +68,7 @@
 
 #include "Libpfs/vex.h"
 #include "Libpfs/vex/vex.h"
+#include "Libpfs/vex/dotproduct.h"
 #include "Common/msec_timer.h"
 
 typedef struct pyramid_s {
@@ -91,7 +92,6 @@ void matrix_copy(const int n, const float* const a, float* const b);
 void matrix_multiply_const(const int n, float* const a, const float val);
 float* matrix_alloc(const int size);
 void matrix_free(float* m);
-float matrix_DotProduct(const int n, const float* const a, const float* const b);
 void matrix_zero(const int n, float* const m);
 void calculate_and_add_divergence(const int rows, const int cols, const float* const Gx, const float* const Gy, float* const divG);
 void pyramid_calculate_divergence(pyramid_t* pyramid);
@@ -351,14 +351,6 @@ inline void matrix_free(float* m)
   {
     fprintf(stderr, "ERROR: This pointer has already been freed");
   }
-}
-
-// multiply vector by vector (each vector should have one dimension equal to 1)
-float matrix_DotProduct(const int n, const float* const a, const float* const b)
-{
-  float val = 0;
-  VEX_dotpr(a, b, val, n);
-  return val;
 }
 
 // set zeros for matrix elements
@@ -713,14 +705,14 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   float* const Ap = matrix_alloc(n);	
 	
   // bnrm2 = ||b||
-  const float bnrm2 = matrix_DotProduct(n, b, b);
+  const float bnrm2 = vex::dotProduct(b, n);
   
   // r = b - Ax
   multiplyA(pyramid, pC, x, r);     // r = A x
   matrix_subtract(n, b, r);         // r = b - r
   
   // rdotr = r.r
-  rdotr_best = rdotr_curr = matrix_DotProduct(n, r, r);
+  rdotr_best = rdotr_curr = vex::dotProduct(r, n);
 
   // Setup initial vector
   matrix_copy(n, r, p);             // p = r
@@ -745,7 +737,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     multiplyA(pyramid, pC, p, Ap);
     
     // alpha = r.r / (p . Ap)
-    alpha = rdotr_curr / matrix_DotProduct(n, p, Ap);
+    alpha = rdotr_curr / vex::dotProduct(p, Ap, n);
     
     // r = r - alpha Ap
     #pragma omp parallel for schedule(static)
@@ -756,7 +748,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     
     // rdotr = r.r
     rdotr_prev = rdotr_curr;
-    rdotr_curr = matrix_DotProduct(n, r, r);
+    rdotr_curr = vex::dotProduct(r, n);
     
     // Have we gone unstable?
     if (rdotr_curr > rdotr_prev)
@@ -800,7 +792,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
       matrix_subtract(n, b, r);
       
       // rdotr = r.r
-      rdotr_best = rdotr_curr = matrix_DotProduct(n, r, r);
+      rdotr_best = rdotr_curr = vex::dotProduct(r, n);
       
       // p = r
       matrix_copy(n, r, p);
@@ -853,152 +845,6 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   std::cout << "lincg() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
 }
-
-// conjugate linear equation solver
-// overwrites pyramid!
-//void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph)
-//{
-//  const int num_backwards_ceiling = 3;
-//  
-//#ifdef TIMER_PROFILING
-//  //msec_timer f_timer;
-//  //f_timer.start();
-//#endif
-//  
-//  const int rows = pyramid->rows;
-//  const int cols = pyramid->cols;
-//  const int n = rows*cols;
-//  const float tol2 = tol*tol;
-//	
-//  float* const x_save = matrix_alloc(n);
-//  float* const r = matrix_alloc(n);
-//  float* const p = matrix_alloc(n);
-//  float* const Ap = matrix_alloc(n);	
-//	
-//  // bnrm2 = ||b||
-//  const float bnrm2 = matrix_DotProduct(n, b, b);
-//  
-//  // r = b - Ax
-//  multiplyA(pyramid, pC, x, r);
-//  matrix_subtract(n, b, r);
-//  
-//  // rdotr = r.r
-//  float rdotr = matrix_DotProduct(n, r, r);
-//	
-//  // p = r
-//  matrix_copy(n, r, p);
-//  
-//  // Setup initial vector
-//  float saved_rdotr = rdotr;
-//  matrix_copy(n, x, x_save);
-//  
-//  const float irdotr = rdotr;
-//  const float percent_sf = 100.0f/logf(tol2*bnrm2/irdotr);
-//  int iter = 0;
-//  int num_backwards = 0;
-//
-//  for (; iter < itmax; iter++)
-//  {
-//    // TEST
-//    ph->newValue( (int) (logf(rdotr/irdotr)*percent_sf) );    
-//    if (ph->isTerminationRequested() && iter > 0 ) // User requested abort
-//      break;
-//    
-//    // Ap = A p
-//    multiplyA(pyramid, pC, p, Ap);
-//    
-//    // alpha = r.r / (p . Ap)
-//    const float alpha = rdotr / matrix_DotProduct(n, p, Ap);
-//    
-//    // r = r - alpha Ap
-//    VEX_vsubs(r, alpha, Ap, r, n);
-//    
-//    // rdotr = r.r
-//    const float old_rdotr = rdotr;
-//    rdotr = matrix_DotProduct(n, r, r);
-//    
-//    // Have we gone unstable?
-//    if (rdotr > old_rdotr)
-//    {
-//      // Save where we've got to
-//      if (num_backwards == 0 && old_rdotr < saved_rdotr)
-//	    {
-//	      saved_rdotr = old_rdotr;
-//	      matrix_copy(n, x, x_save);
-//	    }
-//      
-//      num_backwards++;
-//    }
-//    else
-//    {
-//      num_backwards = 0;
-//    }
-//    
-//    // x = x + alpha * p
-//    VEX_vadds(x, alpha, p, x, n);
-//    
-//    // Exit if we're done
-//    // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
-//    if (rdotr/bnrm2 < tol2)
-//      break;
-//    
-//    if (num_backwards > num_backwards_ceiling)
-//    {
-//      // Reset
-//      num_backwards = 0;
-//      matrix_copy(n, x_save, x);
-//      
-//      // r = Ax
-//      multiplyA(pyramid, pC, x, r);
-//      
-//      // r = b - r
-//      matrix_subtract(n, b, r);
-//      
-//      // rdotr = r.r
-//      rdotr = matrix_DotProduct(n, r, r);
-//      saved_rdotr = rdotr;
-//      
-//      // p = r
-//      matrix_copy(n, r, p);
-//    }
-//    else
-//    {
-//      // p = r + beta p
-//      const float beta = rdotr/old_rdotr;
-//      VEX_vadds(r, beta, p, p, n);
-//    }
-//  }
-//  
-//  // Use the best version we found
-//  if (rdotr > saved_rdotr)
-//  {
-//    rdotr = saved_rdotr;
-//    matrix_copy(n, x_save, x);
-//  }  
-//  
-//  if (rdotr/bnrm2 > tol2)
-//  {
-//    // Not converged
-//    ph->newValue( (int) (logf(rdotr/irdotr)*percent_sf));    
-//    if (iter == itmax)
-//      fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
-//    else
-//      fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
-//  }
-//  else 
-//    ph->newValue(100);
-//  
-//  matrix_free(x_save);
-//  matrix_free(p);
-//  matrix_free(Ap);
-//  matrix_free(r);
-//  
-//#ifdef TIMER_PROFILING
-//  //f_timer.stop_and_update();
-//  //std::cout << "lincg() = " << f_timer.get_time() << " msec" << std::endl;
-//#endif
-//}
-
 
 // in_tab and out_tab should contain inccreasing float values
 inline float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val)

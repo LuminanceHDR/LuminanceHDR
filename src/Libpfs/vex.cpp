@@ -498,17 +498,6 @@ void VEX_vreset(float* IO, const int N)
 #endif
 }
 
-void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
-{
-  float t_val = 0.0f;
-#pragma omp parallel for reduction(+:t_val)
-  for (int idx = 0; idx < N; ++idx)
-  {
-    t_val += I1[idx] * I2[idx];
-  }
-  val = t_val;
-}
-
 #ifdef LUMINANCE_USE_SSE
 
 /* Implementation lifted from http://jrfonseca.blogspot.com/2008/09/fast-sse2-pow-tables-or-polynomials.html */
