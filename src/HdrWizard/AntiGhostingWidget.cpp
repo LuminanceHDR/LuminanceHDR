@@ -29,156 +29,153 @@
 #include "AntiGhostingWidget.h"
 
 AntiGhostingWidget::AntiGhostingWidget(QWidget *parent, QImage *mask): 
-	QWidget(parent),
-	agMask(mask),
-	agcursor_pixmap(NULL),
-	mx(0),
-	my(0) 
+    QWidget(parent),
+    m_agMask(mask),
+    m_agcursorPixmap(NULL),
+    m_mx(0),
+    m_my(0) 
 {
-	qDebug() << "AntiGhostingWidget::AntiGhostingWidget";
-	//set internal brush values to their default
-	brushAddMode = true;
-	setBrushSize(32);
-	previousPixmapSize = -1;
-	setBrushStrength(255);
-	previousPixmapStrength = -1;
-	previousPixmapColor = QColor();
-	fillAntiGhostingCursorPixmap();
-	setMouseTracking(true);
+    qDebug() << "AntiGhostingWidget::AntiGhostingWidget";
+    //set internal brush values to their default
+    m_brushAddMode = true;
+    setBrushSize(32);
+    m_previousPixmapSize = -1;
+    setBrushStrength(255);
+    m_previousPixmapStrength = -1;
+    m_previousPixmapColor = QColor();
+    fillAntiGhostingCursorPixmap();
+    setMouseTracking(true);
 } 
 
 AntiGhostingWidget::~AntiGhostingWidget()
 {
-	qDebug() << "~AntiGhostingWidget::AntiGhostingWidget";
-	if (agcursor_pixmap)
-		delete agcursor_pixmap;
+    qDebug() << "~AntiGhostingWidget::AntiGhostingWidget";
+    if (m_agcursorPixmap)
+        delete m_agcursorPixmap;
 }
 
 void AntiGhostingWidget::paintEvent(QPaintEvent *event)
 {
-	QRect paintrect = event->rect();
-	QRect srcrect = QRect(paintrect.topLeft().x()/scaleFactor - mx, paintrect.topLeft().y()/scaleFactor - my, paintrect.width()/scaleFactor, paintrect.height()/scaleFactor);
-	QPainter p(this);
-	p.drawImage(paintrect, *agMask, srcrect);
+    QRect paintrect = event->rect();
+    QRect srcrect = QRect(paintrect.topLeft().x()/m_scaleFactor - m_mx, paintrect.topLeft().y()/m_scaleFactor - m_my, paintrect.width()/m_scaleFactor, paintrect.height()/m_scaleFactor);
+    QPainter p(this);
+    p.drawImage(paintrect, *m_agMask, srcrect);
 }
 
 void AntiGhostingWidget::mousePressEvent(QMouseEvent *event)
 {
-	if (event->buttons() == Qt::MidButton) {
-		QApplication::setOverrideCursor( QCursor(Qt::ClosedHandCursor) );
-		mousePos = event->globalPos();
-	}
+    if (event->buttons() == Qt::MidButton) {
+        QApplication::setOverrideCursor( QCursor(Qt::ClosedHandCursor) );
+        m_mousePos = event->globalPos();
+    }
 
-	if (event->buttons() == Qt::LeftButton) {
-		timerid = this->startTimer(0);
-	}
-	event->ignore();
+    if (event->buttons() == Qt::LeftButton) {
+        m_timerid = this->startTimer(0);
+    }
+    event->ignore();
 }
 
 void AntiGhostingWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	if (event->buttons() == Qt::MidButton) {
-		//moving mouse with middle button pans the preview
-		QPoint diff = (event->globalPos() - mousePos);
-		if (event->modifiers() == Qt::ShiftModifier)
-			diff *= 5;
-		emit moved(diff);
-		mousePos = event->globalPos();
-	}
-	event->ignore();
+    if (event->buttons() == Qt::MidButton) {
+        //moving mouse with middle button pans the preview
+        QPoint diff = (event->globalPos() - m_mousePos);
+        if (event->modifiers() == Qt::ShiftModifier)
+            diff *= 5;
+        emit moved(diff);
+        m_mousePos = event->globalPos();
+    }
+    event->ignore();
 }
 
 void AntiGhostingWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton) {
-		this->killTimer(timerid);
-	}
-	else if (event->button() == Qt::MidButton) {
-		QApplication::restoreOverrideCursor();		
-		fillAntiGhostingCursorPixmap();
-		this->unsetCursor();
-		this->setCursor(*agcursor_pixmap);
-	}
-	event->ignore();
+    if (event->button() == Qt::LeftButton) {
+        this->killTimer(m_timerid);
+    }
+    else if (event->button() == Qt::MidButton) {
+        QApplication::restoreOverrideCursor();      
+        fillAntiGhostingCursorPixmap();
+        this->unsetCursor();
+        this->setCursor(*m_agcursorPixmap);
+    }
+    event->ignore();
 }
 
 void AntiGhostingWidget::resizeEvent(QResizeEvent *event)
 {
-	scaleFactor = (float)(event->size().width())/(float)(agMask->size().width());
+    m_scaleFactor = (float)(event->size().width())/(float)(m_agMask->size().width());
 }
 
 void AntiGhostingWidget::timerEvent(QTimerEvent *) 
 {
-	QPoint relativeToWidget = mapFromGlobal(QCursor::pos());
-	int sx = relativeToWidget.x()/scaleFactor - mx;
- 	int sy = relativeToWidget.y()/scaleFactor - my;
-	QPoint scaled(sx,sy);
-	QPainter p(agMask);
-	p.setPen(Qt::NoPen);
-	if (brushAddMode)
-		p.setBrush(QBrush(requestedPixmapColor, Qt::SolidPattern));
-	else
-		p.setBrush(QBrush(qRgba(0,0,0,0), Qt::SolidPattern));
-	int pixSize = requestedPixmapSize/(2*scaleFactor);
-	p.drawEllipse(scaled, pixSize, pixSize);
-	update();
+    QPoint relativeToWidget = mapFromGlobal(QCursor::pos());
+    int sx = relativeToWidget.x()/m_scaleFactor - m_mx;
+    int sy = relativeToWidget.y()/m_scaleFactor - m_my;
+    QPoint scaled(sx,sy);
+    QPainter p(m_agMask);
+    p.setPen(Qt::NoPen);
+    p.setBrush(QBrush(m_requestedPixmapColor, Qt::SolidPattern));
+    if (!m_brushAddMode)
+        p.setCompositionMode(QPainter::CompositionMode_Clear);
+    int pixSize = m_requestedPixmapSize/(2*m_scaleFactor);
+    p.drawEllipse(scaled, pixSize, pixSize);
+    update();
 }
 
 void AntiGhostingWidget::setBrushSize (const int newsize) {
-	requestedPixmapSize = newsize;
+    m_requestedPixmapSize = newsize;
 }
 
 void AntiGhostingWidget::setBrushMode(bool removemode) {
-	requestedPixmapStrength *= -1;
-	brushAddMode = !removemode;
+    m_requestedPixmapStrength *= -1;
+    m_brushAddMode = !removemode;
 }
 
 void AntiGhostingWidget::setBrushStrength (const int newstrength) {
-	requestedPixmapStrength = newstrength;
-	requestedPixmapColor.setAlpha(qMax(60,requestedPixmapStrength));
-	requestedPixmapStrength *= (!brushAddMode) ? -1 : 1;
+    m_requestedPixmapStrength = newstrength;
+    m_requestedPixmapColor.setAlpha(qMax(60,m_requestedPixmapStrength));
+    m_requestedPixmapStrength *= (!m_brushAddMode) ? -1 : 1;
 }
 
 void AntiGhostingWidget::setBrushColor (const QColor newcolor) {
-	requestedPixmapColor = newcolor;
-	update();
+    m_requestedPixmapColor = newcolor;
+    update();
 }
 
 void AntiGhostingWidget::enterEvent(QEvent *) {
-	fillAntiGhostingCursorPixmap();
-	this->unsetCursor();
-	this->setCursor(*agcursor_pixmap);
+    fillAntiGhostingCursorPixmap();
+    this->unsetCursor();
+    this->setCursor(*m_agcursorPixmap);
 }
 
 void AntiGhostingWidget::switchAntighostingMode(bool ag) {
-	if (ag) {
-		this->setCursor(*agcursor_pixmap);
-	} else {
-		this->unsetCursor();
-	}
+    if (ag) {
+        this->setCursor(*m_agcursorPixmap);
+    } else {
+        this->unsetCursor();
+    }
 }
 
 void AntiGhostingWidget::fillAntiGhostingCursorPixmap() {
-//	if (requestedPixmapSize != previousPixmapSize || requestedPixmapStrength != previousPixmapStrength || requestedPixmapColor.rgb() != previousPixmapColor.rgb()) {
-		if (agcursor_pixmap)
-			delete agcursor_pixmap;
-		previousPixmapSize = requestedPixmapSize;
-		previousPixmapStrength = requestedPixmapStrength;
-		previousPixmapColor = requestedPixmapColor;
-		agcursor_pixmap = new QPixmap(requestedPixmapSize,requestedPixmapSize);
-		agcursor_pixmap->fill(Qt::transparent);
-		QPainter painter(agcursor_pixmap);
-		painter.setPen(Qt::NoPen);
-		painter.setBrush(QBrush(requestedPixmapColor,Qt::SolidPattern));
-		painter.drawEllipse(0,0,requestedPixmapSize,requestedPixmapSize);
-//	}
+    if (m_agcursorPixmap)
+        delete m_agcursorPixmap;
+    m_previousPixmapSize = m_requestedPixmapSize;
+    m_previousPixmapStrength = m_requestedPixmapStrength;
+    m_previousPixmapColor = m_requestedPixmapColor;
+    m_agcursorPixmap = new QPixmap(m_requestedPixmapSize,m_requestedPixmapSize);
+    m_agcursorPixmap->fill(Qt::transparent);
+    QPainter painter(m_agcursorPixmap);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QBrush(m_requestedPixmapColor,Qt::SolidPattern));
+    painter.drawEllipse(0,0,m_requestedPixmapSize,m_requestedPixmapSize);
 }
 
 void AntiGhostingWidget::updateVertShift(int v) {
-	my=v;
+    m_my = v;
 }
 
 void AntiGhostingWidget::updateHorizShift(int h) {
-	mx=h;
+    m_mx = h;
 }
 

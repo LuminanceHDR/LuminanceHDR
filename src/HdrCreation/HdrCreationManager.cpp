@@ -310,7 +310,7 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 	if (!fromCommandLine) {
 		mdrImagesList.append(fromHDRPFStoQImage(newFrame));
 		QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
-		img->fill(0x00000000);
+		img->fill(qRgba(0,0,0,0));
 		antiGhostingMasksList.append(img);
 	}
 	m_mdrWidth = R->getWidth();
@@ -354,7 +354,7 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
 	ldrImagesList[index] = newImage;
 	if (!fromCommandLine) {
 		QImage *img = new QImage(newImage->width(),newImage->height(), QImage::Format_ARGB32);
-		img->fill(0x00000000);
+		img->fill(qRgba(0,0,0,0));
 		antiGhostingMasksList.append(img);
 	}
 

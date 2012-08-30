@@ -35,58 +35,58 @@ class AntiGhostingWidget : public QWidget
 {
 Q_OBJECT
 public:
-	AntiGhostingWidget(QWidget *parent, QImage *mask);
-	~AntiGhostingWidget();
-	
-	QSize sizeHint () const {
-		return agMask->size();
-	}
-	
-	void setMask(QImage *mask) {
-		agMask = mask;
-		mx = my = 0;
-	}
+    AntiGhostingWidget(QWidget *parent, QImage *mask);
+    ~AntiGhostingWidget();
+    
+    QSize sizeHint () const {
+        return m_agMask->size();
+    }
+    
+    void setMask(QImage *mask) {
+        m_agMask = mask;
+        m_mx = m_my = 0;
+    }
 
-	void setHV_offset(QPair<int, int> HV_offset) {
-		mx = HV_offset.first;
-		my = HV_offset.second;
-	}
+    void setHV_offset(QPair<int, int> HV_offset) {
+        m_mx = HV_offset.first;
+        m_my = HV_offset.second;
+    }
 
-	void updateVertShift(int);
-	void updateHorizShift(int);
+    void updateVertShift(int);
+    void updateHorizShift(int);
 
 public slots:
-	void switchAntighostingMode(bool);
-	void setBrushSize(const int);
-	void setBrushStrength(const int);
-	void setBrushColor(const QColor);
-	void setBrushMode(bool);
+    void switchAntighostingMode(bool);
+    void setBrushSize(const int);
+    void setBrushStrength(const int);
+    void setBrushColor(const QColor);
+    void setBrushMode(bool);
 
 protected:
-	void paintEvent(QPaintEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void enterEvent(QEvent *event);
-	void timerEvent(QTimerEvent *event);
+    void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent *event);
+    void enterEvent(QEvent *event);
+    void timerEvent(QTimerEvent *event);
 
 private:
-	QImage *agMask;
-	QPoint mousePos;
-	int timerid;
-	QPixmap *agcursor_pixmap;
-	int requestedPixmapSize,previousPixmapSize;
-	int requestedPixmapStrength,previousPixmapStrength;
-	QColor requestedPixmapColor,previousPixmapColor;
-	bool brushAddMode;//false means brush is in remove mode.
-	void fillAntiGhostingCursorPixmap();
-	
-	float scaleFactor;
-	int mx, my;
+    QImage *m_agMask;
+    QPoint m_mousePos;
+    int m_timerid;
+    QPixmap *m_agcursorPixmap;
+    int m_requestedPixmapSize, m_previousPixmapSize;
+    int m_requestedPixmapStrength, m_previousPixmapStrength;
+    QColor m_requestedPixmapColor, m_previousPixmapColor;
+    bool m_brushAddMode;//false means brush is in remove mode.
+    void fillAntiGhostingCursorPixmap();
+    
+    float m_scaleFactor;
+    int m_mx, m_my;
 
 signals:
-	void moved(QPoint diff);
+    void moved(QPoint diff);
 };
 
 #endif
