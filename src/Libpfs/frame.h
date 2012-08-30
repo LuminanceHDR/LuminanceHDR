@@ -31,7 +31,7 @@
 #define PFS_FRAME_H
 
 #include <string>
-#include <list>
+#include <vector>
 
 #include "channel.h"
 #include "tag.h"
@@ -39,7 +39,7 @@
 namespace pfs
 {
 
-typedef std::list< Channel* > ChannelContainer;
+typedef std::vector< Channel* > ChannelContainer;
 
 //! Interface representing a single PFS frame. Frame may contain 0
 //! or more channels (e.g. color XYZ, depth channel, alpha
