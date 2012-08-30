@@ -104,7 +104,7 @@ public:
 	void remove(int index);
 	void setShift(int shift) { m_shift = shift; }
 	void saveMDRs(QString);
-	void doAntiGhosting();
+	void doAntiGhosting(int);
 public slots:
 	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
 	void removeTempFiles();

@@ -112,11 +112,14 @@ void blend(QImage *img1, QImage *img2, QImage *mask)
 	int width = img1->width();
 	int height = img1->height();
 
+    QRgb maskValue, pixValue;
+    float alpha;
+
 	for (int j = 0; j < height; j++) {
 		for (int i = 0; i < width; i++) {
-			QRgb maskValue = mask->pixel(i,j);
-			float alpha = qAlpha(maskValue) / 255;
-			QRgb pixValue = (1.0f - alpha) * img1->pixel(i, j) +  alpha * img2->pixel(i, j);
+			maskValue = mask->pixel(i,j);
+			alpha = qAlpha(maskValue) / 255;
+			pixValue = (1.0f - alpha) * img1->pixel(i, j) +  alpha * img2->pixel(i, j);
 			img1->setPixel(i, j, pixValue);
 		}
 	} 
@@ -126,9 +129,9 @@ void blend(QImage *img1, QImage *img2, QImage *mask)
 #endif
 }
 
-void blend16(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R2, pfs::Array2D *G2, pfs::Array2D *B2, QImage *mask)
+void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R2, pfs::Array2D *G2, pfs::Array2D *B2, QImage *mask)
 {
-	qDebug() << "blend16";
+	qDebug() << "blend MDR";
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
@@ -137,10 +140,13 @@ void blend16(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D 
 	int width = R1->getCols();
 	int height = R1->getRows();
 
+    QRgb maskValue;
+    float alpha;
+
 	for (int j = 0; j < height; j++) {
 		for (int i = 0; i < width; i++) {
-			QRgb maskValue = mask->pixel(i,j);
-			float alpha = qAlpha(maskValue) / 255;
+			maskValue = mask->pixel(i,j);
+			alpha = qAlpha(maskValue) / 255;
 			(*R1)(i, j) = (1.0f - alpha) * (*R1)(i, j) +  alpha * (*R2)(i, j);
 			(*G1)(i, j) = (1.0f - alpha) * (*G1)(i, j) +  alpha * (*G2)(i, j);
 			(*B1)(i, j) = (1.0f - alpha) * (*B1)(i, j) +  alpha * (*B2)(i, j);
@@ -148,7 +154,7 @@ void blend16(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D 
 	} 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
-    std::cout << "blend16 = " << stop_watch.get_time() << " msec" << std::endl;
+    std::cout << "blend MDR = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 }
 }
@@ -862,20 +868,22 @@ void HdrCreationManager::saveMDRs(const QString filename)
 	emit mdrSaved();
 }
 
-void HdrCreationManager::doAntiGhosting()
+void HdrCreationManager::doAntiGhosting(int goodImageIndex)
 {
 	qDebug() << "HdrCreationManager::doAntiGhosting";
 	if (inputType == LDR_INPUT_TYPE) {
 		int origlistsize = ldrImagesList.size();
-		for (int idx = 0; idx < origlistsize - 1; idx++) {
-			blend(ldrImagesList[idx], ldrImagesList[idx+1], antiGhostingMasksList[idx]);
+		for (int idx = 0; idx < origlistsize; idx++) {
+            if (idx == goodImageIndex) continue;
+			blend(ldrImagesList[idx], ldrImagesList[goodImageIndex], antiGhostingMasksList[idx]);
 		}
 	}
 	else {
 		int origlistsize = listmdrR.size();
-		for (int idx = 0; idx < origlistsize - 1; idx++) {
-			blend16(listmdrR[idx], listmdrG[idx], listmdrB[idx], 
-				listmdrR[idx+1], listmdrG[idx+1], listmdrB[idx+1],
+		for (int idx = 0; idx < origlistsize; idx++) {
+            if (idx == goodImageIndex) continue;
+			blend(listmdrR[idx], listmdrG[idx], listmdrB[idx], 
+				listmdrR[goodImageIndex], listmdrG[goodImageIndex], listmdrB[goodImageIndex],
 				antiGhostingMasksList[idx]);
 		}
 	}		

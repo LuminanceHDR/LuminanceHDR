@@ -20,13 +20,15 @@
  *
  * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing
+ * Improvements, bugfixing, anti ghosting
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */
 
 #ifndef EDITINGTOOLS_H
 #define EDITINGTOOLS_H
+
+#include <QMap>
 
 #include "ui_EditingTools.h"
 #include "PreviewWidget.h"
@@ -50,26 +52,28 @@ protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 private:
-	QList<QImage*> original_ldrlist;
-	QList<QImage*> antiGhostingMasksList;
-	QStringList filelist;
-	HdrCreationManager *hcm;
-
-	QScrollArea *scrollArea;
-	PreviewWidget *previewWidget;
-	AntiGhostingWidget *agWidget;
-	int additional_shift_value;
-	QList< QPair<int,int> > HV_offsets;
-	HistogramLDR *histogram;
-	QSize previousPreviewWidgetSize;
-	PanIconWidget *panIconWidget;
-	QToolButton *cornerButton;
-	SelectionTool *selectionTool;
+	QList<QImage*> m_originalImagesList;
+	QList<QImage*> m_antiGhostingMasksList;
+	QStringList m_fileList;
+	HdrCreationManager *m_hcm;
+    QMap<QString, int> m_filesMap;
+	QScrollArea *m_scrollArea;
+	PreviewWidget *m_previewWidget;
+	AntiGhostingWidget *m_agWidget;
+	int m_additionalShiftValue;
+	QList< QPair<int,int> > m_HV_offsets;
+	HistogramLDR *m_histogram;
+	QSize m_previousPreviewWidgetSize;
+	PanIconWidget *m_panIconWidget;
+	QToolButton *m_cornerButton;
+	SelectionTool *m_selectionTool;
 	bool m_MdrSaved;
-	LuminanceOptions luminanceOptions;
-	QVector<float> expotimes;
-	void setAntiGhostingWidget(QImage *, QPair<int, int>);
-	void unsetAntiGhostingWidget();
+    int m_goodImageIndex;
+    bool m_antiGhosting;
+	LuminanceOptions m_luminanceOptions;
+	QVector<float> m_expotimes;
+
+	void setAntiGhostingWidget(QImage*, QPair<int, int>);
 private slots:
 	void slotPanIconSelectionMoved(QRect);
 	void slotPanIconHidden();
@@ -96,7 +100,7 @@ private slots:
 	void zoomOut();
 	void fitPreview(bool);
 	void origSize();
-	void crop_stack();
+	void cropStack();
 	void nextClicked();
 	void maskColorButtonClicked();
 	void antighostToolButtonToggled(bool);
@@ -104,8 +108,9 @@ private slots:
 	void setupConnections();
 	void updateScrollBars(QPoint diff);
 	void restoreSaveImagesButtonState();
+    void addGoodImage();
+    void removeGoodImage();
+    void updateAgMask(int);
 };
-
-
 
 #endif
