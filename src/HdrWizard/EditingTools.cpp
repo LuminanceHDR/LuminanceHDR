@@ -446,6 +446,9 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_previewWidget->hide();
         m_agWidget->show();
         m_agWidget->update();
+        label_editable_list->setText(tr("Maskable"));
+        label_reference_list->setText(tr("Good image"));
+        origSizeButton->setDisabled(true);
         zoomInButton->setDisabled(true);
         zoomOutButton->setDisabled(true);
         saveImagesButton->setDisabled(true);
@@ -479,10 +482,13 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_previewWidget->show();
         m_agWidget->hide();
         disconnect(movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
+        label_editable_list->setText(tr("Ed&itable"));
+        label_reference_list->setText(tr("R&eference"));
         prevBothButton->setIcon(QIcon(":new/prefix1/images/uparrow.png"));  
         nextBothButton->setIcon(QIcon(":new/prefix1/images/downarrow.png"));    
         prevBothButton->setDisabled(false);
         nextBothButton->setDisabled(false);
+        origSizeButton->setDisabled(false);
         zoomInButton->setDisabled(false);
         zoomOutButton->setDisabled(false);
         saveImagesButton->setDisabled(false);

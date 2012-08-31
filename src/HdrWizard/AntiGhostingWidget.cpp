@@ -68,8 +68,7 @@ void AntiGhostingWidget::mousePressEvent(QMouseEvent *event)
         QApplication::setOverrideCursor( QCursor(Qt::ClosedHandCursor) );
         m_mousePos = event->globalPos();
     }
-
-    if (event->buttons() == Qt::LeftButton) {
+    else if (event->buttons() == Qt::LeftButton) {
         m_timerid = this->startTimer(0);
     }
     event->ignore();
@@ -166,7 +165,7 @@ void AntiGhostingWidget::fillAntiGhostingCursorPixmap() {
     m_agcursorPixmap = new QPixmap(m_requestedPixmapSize,m_requestedPixmapSize);
     m_agcursorPixmap->fill(Qt::transparent);
     QPainter painter(m_agcursorPixmap);
-    painter.setPen(Qt::NoPen);
+    painter.setPen(Qt::DashLine);
     painter.setBrush(QBrush(m_requestedPixmapColor,Qt::SolidPattern));
     painter.drawEllipse(0,0,m_requestedPixmapSize,m_requestedPixmapSize);
 }

@@ -141,6 +141,13 @@ void PreviewWidget::mousePressEvent(QMouseEvent *event) {
         QApplication::setOverrideCursor( QCursor(Qt::ClosedHandCursor) );
         m_mousePos = event->globalPos();
     }
+    event->ignore();
+}
+
+void PreviewWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    QApplication::restoreOverrideCursor();      
+    event->ignore();
 }
 
 void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
