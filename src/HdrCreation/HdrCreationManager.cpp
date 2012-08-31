@@ -619,6 +619,7 @@ HdrCreationManager::~HdrCreationManager()
 		ais->kill();
 	}
 	clearlists(true);
+    qDeleteAll(antiGhostingMasksList);
 }
 
 void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
