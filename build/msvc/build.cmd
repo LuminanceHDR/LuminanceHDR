@@ -21,10 +21,15 @@ ml64.exe > NUL
 IF ERRORLEVEL 1 (
 	set Platform=Win32
 	set RawPlatform=x86
+	set CpuPlatform=ia32
 ) ELSE (
 	set Platform=x64
 	set RawPlatform=x64
+	set CpuPlatform=intel64
 )
+
+SET VISUAL_STUDIO_VC_REDIST=%VCINSTALLDIR%\redist\%RawPlatform%
+
 IF DEFINED VS100COMNTOOLS (
 	REM Visual Studio 2010
 	set VS_SHORT=vc10
@@ -44,6 +49,7 @@ IF %Platform% EQU x64 (
 call setenv.cmd
 
 
+IF NOT EXIST %CYGWIN_DIR%\bin\cp.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\cvs.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\git.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\gzip.exe GOTO cygwin_error
@@ -58,6 +64,7 @@ GOTO cygwin_ok
 
 :cygwin_error
 echo ERROR: Cygwin with 
+echo    cp
 echo    cvs
 echo    git 
 echo    gzip 
@@ -87,6 +94,19 @@ echo.
 
 IF NOT EXIST %TEMP_DIR% (
 	mkdir %TEMP_DIR%
+)
+
+
+IF NOT EXIST vcDlls (
+	mkdir vcDlls
+	robocopy "%vcinstalldir%redist\%RawPlatform%" vcDlls /MIR >nul
+)
+
+IF NOT EXIST vcDlls\selected (
+	mkdir vcDlls\selected
+
+	%CYGWIN_DIR%\bin\cp.exe vcDlls/**/vcomp* vcDlls/selected
+	%CYGWIN_DIR%\bin\cp.exe vcDlls/**/msv* vcDlls/selected
 )
 
 IF NOT EXIST %TEMP_DIR%\align_image_stack_%RawPlatform%.exe (
@@ -173,16 +193,16 @@ IF NOT EXIST libjpeg (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\lcms2-9e246e.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-9e246e.zip --no-check-certificate https://github.com/mm2/Little-CMS/zipball/9e246ece55017da090a842e0cf3273483f32afa1
+IF NOT EXIST %TEMP_DIR%\lcms2-493aac.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-493aac.zip --no-check-certificate https://github.com/mm2/Little-CMS/zipball/493aac084b7df46e24ec86ffb6395e5d11cddfba
 )
 
 
-IF NOT EXIST lcms2-9e246e (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-9e246e.zip
-	%CYGWIN_DIR%\bin\mv.exe mm2-Little-CMS-* lcms2-9e246e
+IF NOT EXIST lcms2-493aac (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-493aac.zip
+	%CYGWIN_DIR%\bin\mv.exe mm2-Little-CMS-* lcms2-493aac
 	
-	pushd lcms2-9e246e
+	pushd lcms2-493aac
 	devenv Projects\VC2010\lcms2.sln /Upgrade
 	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
 	popd
@@ -210,34 +230,45 @@ IF NOT EXIST tiff-4.0.2 (
 )
 
 
-IF NOT EXIST %TEMP_DIR%\LibRaw-4ad62bd.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-4ad62bd.zip --no-check-certificate https://github.com/LibRaw/LibRaw/zipball/4ad62bd3a4face10222fec8884e8b21d858aa48b
-)
-IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-0.14.6.tar (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz http://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
-	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
-)
-IF NOT EXIST LibRaw-demosaic-pack-GPL2-0.14.6 (
-	rem %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar.gz
-	
-	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.6.tar
+IF NOT EXIST %TEMP_DIR%\LibRaw-5c9b4fb.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-5c9b4fb.zip --no-check-certificate https://github.com/LibRaw/LibRaw/zipball/5c9b4fb7b6149721cdf4f2099032ac8bdf0dd57c
 )
 
-IF NOT EXIST LibRaw-4ad62bd (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-4ad62bd.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-4ad62bd
+IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-6f851ba.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-6f851ba.zip --no-check-certificate https://github.com/LibRaw/LibRaw-demosaic-pack-GPL2/zipball/6f851babcec79e50506cdda2aa55a6b6daeada3e
+)
+
+IF NOT EXIST LibRaw-demosaic-pack-GPL2-6f851ba (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-6f851ba.zip
+	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-demosaic-pack-GPL2-6f851ba
+)
+
+IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL3-f089589.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-f089589.zip --no-check-certificate https://github.com/LibRaw/LibRaw-demosaic-pack-GPL3/zipball/f0895891fdaa775255af02275fce426a5bf5c9fc
+)
+
+IF NOT EXIST LibRaw-demosaic-pack-GPL3-f089589 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-f089589.zip
+	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-demosaic-pack-GPL3-f089589
+)
+
+IF NOT EXIST LibRaw-5c9b4fb (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-5c9b4fb.zip
+	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-5c9b4fb
 
 	
-	pushd LibRaw-4ad62bd
+	pushd LibRaw-5c9b4fb
 	
 	rem echo.COPT_OPT="/openmp"> qtpfsgui_commands.in
-	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.6> qtpfsgui_commands.in
+	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-6f851ba> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
-	echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-9e246e\include">> qtpfsgui_commands.in
-	echo.LCMS_LIB="..\lcms2-9e246e\bin\lcms2_dll.lib">> qtpfsgui_commands.in
-	rem echo.LCMS_DEF="/DUSE_LCMS /DLCMS_DLL /I..\lcms-1.19\include">> qtpfsgui_commands.in
-	rem echo.LCMS_LIB="..\lcms-1.19\bin\lcms.lib">> qtpfsgui_commands.in
-
+	echo.CFLAGS_DP3=/I..\LibRaw-demosaic-pack-GPL3-f089589>> qtpfsgui_commands.in
+	echo.CFLAGSG3=/DLIBRAW_DEMOSAIC_PACK_GPL3>> qtpfsgui_commands.in
+	echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-493aac\include">> qtpfsgui_commands.in
+	echo.LCMS_LIB="..\lcms2-493aac\bin\lcms2_dll.lib">> qtpfsgui_commands.in
+REM	echo.JPEG_DEF="/DUSE_JPEG /I..\libjpeg">> qtpfsgui_commands.in
+REM	echo.JPEG_LIB="..\libjpeg\libjpeg.lib">> qtpfsgui_commands.in
+	
 	nmake /f Makefile.msvc @qtpfsgui_commands.in clean
 	nmake /f Makefile.msvc @qtpfsgui_commands.in bin\libraw.dll
 	popd
@@ -332,28 +363,41 @@ IF NOT EXIST fftw-3.3.2-dll (
 	popd
 )
 
-REM IF NOT DEFINED L_BOOST_DIR (
-REM 	set L_BOOST_DIR=.
-REM )
+IF NOT EXIST %TEMP_DIR%\tbb40_20120613oss_win.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tbb40_20120613oss_win.zip "http://threadingbuildingblocks.org/uploads/77/187/4.0 update 5/tbb40_20120613oss_win.zip"
+)
+
+IF NOT EXIST tbb40_20120613oss (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tbb40_20120613oss_win.zip
+	
+	REM Everthing is already compiled, nothing to do!
+)
+
+
+IF NOT DEFINED L_BOOST_DIR (
+	set L_BOOST_DIR=.
+)
+
+IF NOT EXIST %TEMP_DIR%\boost_1_50_0.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/boost_1_50_0.zip http://sourceforge.net/projects/boost/files/boost/1.50.0/boost_1_50_0.zip/download
+)
+
+IF NOT EXIST %L_BOOST_DIR%\boost_1_50_0 (
+	echo.Extracting boost. Be patient!
+
+	pushd %L_BOOST_DIR%
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/boost_1_50_0.zip
+	popd
+
+	REM Currently only the header files are required of boost.
+	REM Therefore the following code block is commented out.
+
 REM 
-REM IF NOT EXIST %TEMP_DIR%\boost_1_47_0.tar.gz (
-REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/boost_1_47_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.47.0/boost_1_47_0.tar.gz/download
-REM 	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/boost_1_47_0.tar.gz
-REM 
-REM )
-REM 
-REM IF NOT EXIST %L_BOOST_DIR%\boost_1_47_0 (
-REM 	echo.Extracting boost. Be patient!
-REM 
-REM 	pushd %L_BOOST_DIR%
-REM 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/boost_1_47_0.tar
-REM 	popd
-REM 
-REM 	pushd %L_BOOST_DIR%\boost_1_47_0
+REM 	pushd %L_BOOST_DIR%\boost_1_50_0
 REM 	bootstrap.bat
 REM 	popd
 REM 	
-REM 	pushd %L_BOOST_DIR%\boost_1_47_0
+REM 	pushd %L_BOOST_DIR%\boost_1_50_0
 REM 	IF %Platform% EQU Win32 (
 REM 		IF %Configuration% EQU Release (
 REM 			b2.exe toolset=msvc variant=release
@@ -367,13 +411,13 @@ REM 		) ELSE (
 REM 			b2.exe toolset=msvc variant=debug address-model=64
 REM 		)
 REM 	)
-REM 	popd
-REM )
-REM 
-REM REM Set Boost-directory as ENV variable (needed for CMake)
-REM pushd %L_BOOST_DIR%\boost_1_47_0
-REM SET BOOST_ROOT=%CD%
-REM popd
+	popd
+)
+
+REM Set Boost-directory as ENV variable (needed for CMake)
+pushd %L_BOOST_DIR%\boost_1_50_0
+SET BOOST_ROOT=%CD%
+popd
 
 IF NOT EXIST LuminanceHdrStuff (
 	mkdir LuminanceHdrStuff
@@ -400,7 +444,7 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	mkdir bin
 	popd
 	
-	for %%v in ("libpng", "libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
+	for %%v in ("libpng", "libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl", "tbb") do (
 		mkdir LuminanceHdrStuff\DEPs\include\%%v
 		mkdir LuminanceHdrStuff\DEPs\lib\%%v
 		mkdir LuminanceHdrStuff\DEPs\bin\%%v
@@ -413,10 +457,6 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	
 	copy libjpeg\*.h LuminanceHdrStuff\DEPs\include\libjpeg
 	
-	copy lcms2-9e246e\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
-	copy lcms2-9e246e\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
-	copy lcms2-9e246e\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
-
 	copy exiv2-trunk\msvc64\include\* LuminanceHdrStuff\DEPs\include\exiv2
 	copy exiv2-trunk\msvc64\include\exiv2\* LuminanceHdrStuff\DEPs\include\exiv2
 
@@ -428,10 +468,7 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	copy tiff-4.0.2\libtiff\*.dll LuminanceHdrStuff\DEPs\bin\libtiff
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-4ad62bd\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-4ad62bd\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
-	copy LibRaw-4ad62bd\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
-	
+
 	copy OpenExrStuff\Deploy\include\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
 	copy OpenExrStuff\Deploy\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
 	copy OpenExrStuff\Deploy\bin\%Platform%\%Configuration%\*.dll LuminanceHdrStuff\DEPs\bin\OpenEXR
@@ -444,8 +481,20 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
 	copy gsl-1.15\build.vc10\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\gsl
 	rem copy gsl-1.15\build.vc10\dll\*.dll LuminanceHdrStuff\DEPs\bin\gsl
-	
 )
+
+robocopy LibRaw-5c9b4fb\libraw LuminanceHdrStuff\DEPs\include\libraw\libraw /MIR >nul
+robocopy LibRaw-5c9b4fb\lib LuminanceHdrStuff\DEPs\lib\libraw *.lib /MIR >nul
+robocopy LibRaw-5c9b4fb\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR >nul
+	
+robocopy lcms2-493aac\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
+robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
+robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
+
+robocopy tbb40_20120613oss\include LuminanceHdrStuff\DEPs\include\tbb /MIR >nul
+robocopy tbb40_20120613oss\lib\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\lib\tbb /MIR >nul
+robocopy tbb40_20120613oss\bin\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\bin\tbb /MIR >nul
+
 
 IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build (
 	mkdir LuminanceHdrStuff\qtpfsgui.build
@@ -481,6 +530,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 		)
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe (
 			copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe
+			copy vcDlls\selected\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\
 		)
 		
 		IF EXIST LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\ (
@@ -495,7 +545,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
 			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
+			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "tbb\tbb.dll") do (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd
@@ -508,8 +558,8 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 		)
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help\ (
 			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help
-			xcopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help /D /E /C /R /H /I /K /Y
 		)
+		robocopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help /MIR >nul
 	)
 )
 
