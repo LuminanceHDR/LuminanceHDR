@@ -55,6 +55,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <vector>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -1092,9 +1093,40 @@ void contrast_equalization(pyramid_t *pp, const float contrastFactor)
   free(hist);
 }
 
+namespace
+{
+const float CUT_MARGIN = 0.1f;
+const float disp_dyn_range = 2.3f;
+}
+
+/* Renormalize luminance */
+void renormalizeLuminance(float* Y, size_t size)
+{
+    std::vector<float> temp(size);
+    std::copy(Y, Y + size, temp.begin());
+
+    std::sort(temp.begin(), temp.end());
+
+    float trim = (size - 1) * CUT_MARGIN * 0.01f;
+    float delta = trim - floorf(trim);
+    const float l_min = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);
+
+    trim = (size - 1) * (100.0f - CUT_MARGIN) * 0.01f;
+    delta = trim - floorf(trim);
+    const float l_max = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);
+
+#pragma omp parallel for schedule(static)
+    for (size_t j = 0; j < size; j++)
+    {
+        Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
+    }
+}
 
 // tone mapping
-int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, float detailfactor, const int itmax, const float tol, ProgressHelper *ph)
+int tmo_mantiuk06_contmap(const int c, const int r,
+                          float* const R, float* const G, float* const B,
+                          float* const Y,
+                          const float contrastFactor, const float saturationFactor, float detailfactor, const int itmax, const float tol, ProgressHelper *ph)
 {
   const int n = c*r;
   
@@ -1113,18 +1145,23 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
     if ( unlikely(R[j] < clip_min) ) R[j] = clip_min;
     if ( unlikely(G[j] < clip_min) ) G[j] = clip_min;
     if ( unlikely(B[j] < clip_min) ) B[j] = clip_min;
-    if ( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;    
-  }
-	
-  //TODO: use VEX
-  #pragma omp parallel for schedule(static)
-  for(int j=0;j<n;j++)
-  {
+    if ( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;
+
     R[j] /= Y[j];
     G[j] /= Y[j];
     B[j] /= Y[j];
     Y[j] = log10f(Y[j]);
   }
+	
+//  //TODO: use VEX
+//  #pragma omp parallel for schedule(static)
+//  for(int j=0;j<n;j++)
+//  {
+//    R[j] /= Y[j];
+//    G[j] /= Y[j];
+//    B[j] /= Y[j];
+//    Y[j] = log10f(Y[j]);
+//  }
 	
   pyramid_t* pp = pyramid_allocate(c, r);                 // create pyramid
 
@@ -1145,43 +1182,17 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   transform_to_luminance(pp, Y, ph, itmax, tol);     // transform gradients to luminance Y
   pyramid_free(pp);
   
-  /* Renormalize luminance */
-  float* temp = matrix_alloc(n);
-	
-  matrix_copy(n, Y, temp);                                // copy Y to temp
-  qsort(temp, n, sizeof(float), sort_float);              // sort temp in ascending order
-	
-  // const float median = (temp[(int)((n-1)/2)] + temp[(int)((n-1)/2+1)]) * 0.5f; // calculate median
-  const float CUT_MARGIN = 0.1f;
-	
-  float trim = (n-1) * CUT_MARGIN * 0.01f;
-  float delta = trim - floorf(trim);
-  const float l_min = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);	
-  
-  trim = (n-1) * (100.0f - CUT_MARGIN) * 0.01f;
-  delta = trim - floorf(trim);
-  const float l_max = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);	
-	
-  matrix_free(temp);
-	
-  const float disp_dyn_range = 2.3f;
-  
-  //TODO: is it possible to use VEX?
-  #pragma omp parallel for schedule(static)
-  for(int j=0; j<n; j++)
-  {
-    Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
-  }
+  renormalizeLuminance(Y, n);
   
   //TODO: use VEX
   /* Transform to linear scale RGB */
   #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
   {
-    Y[j] = powf(10, Y[j]);
-    R[j] = powf( R[j], saturationFactor) * Y[j];
-    G[j] = powf( G[j], saturationFactor) * Y[j];
-    B[j] = powf( B[j], saturationFactor) * Y[j];
+    Y[j] = powf( 10, Y[j] );
+    R[j] = powf( R[j], saturationFactor ) * Y[j];
+    G[j] = powf( G[j], saturationFactor ) * Y[j];
+    B[j] = powf( B[j], saturationFactor ) * Y[j];
   }
   
   return PFSTMO_OK;
