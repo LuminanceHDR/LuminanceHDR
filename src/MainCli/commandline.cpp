@@ -587,8 +587,14 @@ void  CommandLineInterfaceManager::startTonemap()
         // The scoped pointer will free the memory automatically later on
         QScopedPointer<pfs::Frame> tm_frame( tm_worker.computeTonemap(HDR.data(), tmopts.data()) );
 
+        QString inputfname; // to copy EXIF tags from 1st input image to saved LDR
+        if (inputFiles.isEmpty())
+            inputfname = "";
+        else
+            inputfname = inputFiles.first();
+
         // Create an ad-hoc IOWorker to save the file
-        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename, quality, tmopts.data()) )
+        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename, quality, inputfname, tmopts.data()) )
         {
             // File save successful
             printIfVerbose( tr("Image %1 saved successfully").arg(saveLdrFilename) , verbose);

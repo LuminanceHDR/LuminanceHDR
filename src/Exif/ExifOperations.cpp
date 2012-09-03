@@ -31,77 +31,97 @@
 namespace ExifOperations
 {
   
-  void writeExifData(const std::string& filename, const std::string& comment, float expotime)
-  {
-    Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
-    image->readMetadata();
-    Exiv2::ExifData &exifData = image->exifData();
-    exifData["Exif.Image.Software"]="Created with opensource tool Luminance HDR, http://qtpfsgui.sourceforge.net";
-    exifData["Exif.Image.ImageDescription"]=comment;
-    exifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
-	if (expotime != 100.0f) {
-		const Exiv2::ValueType<float> v(expotime*12.07488f/100);	
-		const Exiv2::ValueType<Exiv2::Rational> r(v.toRational());
-		exifData["Exif.Photo.ExposureTime"] = r;
-		const Exiv2::ValueType<float> f(1.0);	
-		const Exiv2::ValueType<Exiv2::Rational> fr(f.toRational());
-		exifData["Exif.Photo.FNumber"] = fr;
-	}
-    image->setExifData(exifData);
-    image->writeMetadata();
-  }
+    void writeExifData(const std::string& filename, const std::string& comment, float expotime)
+    {
+        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        image->readMetadata();
+        Exiv2::ExifData &exifData = image->exifData();
+        exifData["Exif.Image.Software"]="Created with opensource tool Luminance HDR, http://qtpfsgui.sourceforge.net";
+        exifData["Exif.Image.ImageDescription"]=comment;
+        exifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
+        if (expotime != 100.0f) {
+            const Exiv2::ValueType<float> v(expotime*12.07488f/100);    
+            const Exiv2::ValueType<Exiv2::Rational> r(v.toRational());
+            exifData["Exif.Photo.ExposureTime"] = r;
+            const Exiv2::ValueType<float> f(1.0);   
+            const Exiv2::ValueType<Exiv2::Rational> fr(f.toRational());
+            exifData["Exif.Photo.FNumber"] = fr;
+        }
+        image->setExifData(exifData);
+        image->writeMetadata();
+    }
   
-  void copyExifData(const std::string& from, const std::string& to, bool dont_overwrite)
-  {
-    std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
-    //get source and destination exif data
-    //THROWS, if opening the file fails or it contains data of an unknown image type.
-    Exiv2::Image::AutoPtr sourceimage = Exiv2::ImageFactory::open(from);
-    Exiv2::Image::AutoPtr destimage = Exiv2::ImageFactory::open(to);
-    //Callers must check the size of individual metadata types before accessing the data.
-    //readMetadata THROWS an exception if opening or reading of the file fails or the image data is not valid (does not look like data of the specific image type).
-    sourceimage->readMetadata();
-    Exiv2::ExifData &src_exifData = sourceimage->exifData();
-    if (src_exifData.empty())
+    void copyExifData(const std::string& from, const std::string& to, const std::string& comment, bool dont_overwrite, bool destIsLDR)
     {
-      throw Exiv2::Error(1, "No exif data found in the image");
-    }
-    if (dont_overwrite)
-    {
-      //doesn't throw anything if it is empty
-      destimage->readMetadata();
-      //doesn't throw anything if it is empty
-      Exiv2::ExifData &dest_exifData = destimage->exifData();
-      //end delimiter for this source image data
-      Exiv2::ExifData::const_iterator end_src = src_exifData.end();
-      //for all the tags in the source exif data
-      for (Exiv2::ExifData::const_iterator i = src_exifData.begin(); i != end_src; ++i)
-      {
-				//check if current source key exists in destination file
-				Exiv2::ExifData::iterator maybe_exists = dest_exifData.findKey( Exiv2::ExifKey(i->key()) );
-				//if exists AND we are told not to overwrite
-				if (maybe_exists != dest_exifData.end())
-        {
-					continue;
-				}
-        else
-        {
-					//here we copy the value
-					//we create a new tag in the destination file, the tag has the key of the source
-					Exiv2::Exifdatum& dest_tag = dest_exifData[i->key()];
-					//now the tag has also the value of the source
-					dest_tag.setValue(&(i->value()));
-				}
-      }
-    }
-    else
-    {
-      destimage->setExifData(src_exifData);
-    }
+        std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
+        //get source and destination exif data
+        //THROWS, if opening the file fails or it contains data of an unknown image type.
+        Exiv2::Image::AutoPtr sourceimage = Exiv2::ImageFactory::open(from);
+        Exiv2::Image::AutoPtr destimage = Exiv2::ImageFactory::open(to);
+        //Callers must check the size of individual metadata types before accessing the data.
+        //readMetadata THROWS an exception if opening or reading of the file fails or the image data is not valid (does not look like data of the specific image type).
+        sourceimage->readMetadata();
+        Exiv2::ExifData &srcExifData = sourceimage->exifData();
+        if (srcExifData.empty())
+            throw Exiv2::Error(1, "No exif data found in the image");
+        if (dont_overwrite) {
+            //doesn't throw anything if it is empty
+            destimage->readMetadata();
+            //doesn't throw anything if it is empty
+            Exiv2::ExifData &dest_exifData = destimage->exifData();
+            //end delimiter for this source image data
+            Exiv2::ExifData::const_iterator end_src = srcExifData.end();
+            //for all the tags in the source exif data
+            for (Exiv2::ExifData::const_iterator i = srcExifData.begin(); i != end_src; ++i) {
+                //check if current source key exists in destination file
+                Exiv2::ExifData::iterator maybe_exists = dest_exifData.findKey( Exiv2::ExifKey(i->key()) );
+                //if exists AND we are told not to overwrite
+                if (maybe_exists != dest_exifData.end())
+                    continue;
+                else {
+                    //here we copy the value
+                    //we create a new tag in the destination file, the tag has the key of the source
+                    Exiv2::Exifdatum& dest_tag = dest_exifData[i->key()];
+                    //now the tag has also the value of the source
+                    dest_tag.setValue(&(i->value()));               }
+                }
+        }
+        else {
+            if (destIsLDR) {
+                //copy all tags from source except exposure time and aperture
+                Exiv2::ExifData destExifData;
+                if (comment != "") {
+                    destExifData["Exif.Image.Software"]="Created with opensource tool Luminance HDR, http://qtpfsgui.sourceforge.net";
+                    destExifData["Exif.Image.ImageDescription"]=comment;
+                    destExifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
+                }
+                Exiv2::ExifData::const_iterator end_src = srcExifData.end();
     
-    //THROWS Exiv2::Error if the operation fails
-    destimage->writeMetadata();
-  }
+                //for all the tags in the source exif data
+                for (Exiv2::ExifData::const_iterator i = srcExifData.begin(); i != end_src; ++i) {
+                    Exiv2::Exifdatum& sourceDatum = srcExifData[i->key()];
+                    if (sourceDatum.key() == "Exif.Photo.FNumber")
+                        continue;
+                    if (sourceDatum.key() == "Exif.Photo.ExposureTime")
+                        continue;
+                    if (comment != "" && sourceDatum.key() == "Exif.Image.Software")
+                        continue;
+                    if (comment != "" && sourceDatum.key() == "Exif.Image.ImageDescription")
+                        continue;
+                    if (comment != "" && sourceDatum.key() == "Exif.Photo.UserComment")
+                        continue;
+                    const Exiv2::ExifKey destKey(i->key());
+                    destExifData.add(destKey, &(i->value()));
+                }
+                destimage->setExifData(destExifData);
+            }
+            else
+                destimage->setExifData(srcExifData);
+        }
+    
+        //THROWS Exiv2::Error if the operation fails
+        destimage->writeMetadata();
+    }
   
   /**
    * This function obtains the "average scene luminance" (cd/m^2) from an image file.
@@ -190,7 +210,7 @@ namespace ExifOperations
       //At this point the three variables have to be != -1
       if (expo!=-1 && iso!=-1 && fnum!=-1)
       {
-        // 		std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << " |returned=" << (expo * iso) / (fnum*fnum*12.07488f) << std::endl;
+        //      std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << " |returned=" << (expo * iso) / (fnum*fnum*12.07488f) << std::endl;
         return ( (expo * iso) / (fnum*fnum*12.07488f) );
       }
       else
@@ -219,35 +239,35 @@ namespace ExifOperations
       if (degrees != exifData.end())
       {
 
-		/*
-			http://jpegclub.org/exif_orientation.html
+        /*
+            http://jpegclub.org/exif_orientation.html
 
 
-		Value	0th Row		0th Column
-			1	top			left side
-			2	top			right side
-			3	bottom		right side
-			4	bottom		left side
-			5	left side	top
-			6	right side	top
-			7	right side	bottom
-			8	left side	bottom
+        Value   0th Row     0th Column
+            1   top         left side
+            2   top         right side
+            3   bottom      right side
+            4   bottom      left side
+            5   left side   top
+            6   right side  top
+            7   right side  bottom
+            8   left side   bottom
 
-		*/
+        */
 
-		float rotation = degrees->toFloat();	 
+        float rotation = degrees->toFloat();     
 
-		switch((int)rotation)
-		{
-		case 3:
-			return 180;
-		case 6:
-			return 90;
-		case 8:
-			return 270;
-		}
+        switch((int)rotation)
+        {
+        case 3:
+            return 180;
+        case 6:
+            return 90;
+        case 8:
+            return 270;
+        }
       }
-	  return 0;
+      return 0;
     }
     catch (Exiv2::AnyError& e)
     {

@@ -125,12 +125,14 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename)
 
 bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
                                const QString& filename, int quality,
+                               const QString& inputFileName,
                                TonemappingOptions* tmopts)
 {
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
 
     bool status = write_ldr_frame(ldr_frame,
                                   filename, quality,
+                                  inputFileName,
                                   tmopts,
                                   ldr_viewer->getMinLuminanceValue(),
                                   ldr_viewer->getMaxLuminanceValue(),
@@ -151,6 +153,7 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
 bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                const QString& filename,
                                int quality,
+                               const QString& inputFileName,
                                TonemappingOptions* tmopts,
                                float min_luminance,
                                float max_luminance,
@@ -253,6 +256,21 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
         {
             status = false;
             emit write_ldr_failed();
+        }
+    }
+    if (inputFileName != "") {
+        QFileInfo fileinfo(inputFileName);
+        QString absoluteInputFileName = fileinfo.absoluteFilePath();
+        QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
+
+        try {
+            ExifOperations::copyExifData(encodedInputFileName.constData(), 
+                                         encodedName.constData(), 
+                                         operations->getExifComment().toStdString(),
+                                         false, true);
+        }
+        catch (...) {
+            qDebug() << "ExifOperations::copyExifData, catched an exception";
         }
     }
     emit IO_finish();

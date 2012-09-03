@@ -48,11 +48,12 @@
 #include "UI/Gang.h"
 #include "HdrCreation/HdrCreationManager.h"
 
-HdrWizard::HdrWizard(QWidget *p, QStringList files):
+HdrWizard::HdrWizard(QWidget *p, QStringList &files, QStringList &inputFilesName) :
     QDialog(p),
     hdrCreationManager(new HdrCreationManager),
     loadcurvefilename(""),
     savecurvefilename(""),
+    m_inputFilesName(inputFilesName),
     m_Ui(new Ui::HdrWizard)
 {
     m_Ui->setupUi(this);
@@ -241,6 +242,9 @@ void HdrWizard::loadImagesButtonClicked() {
     }
     //loadImagesButton->setEnabled(false);
     m_Ui->confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
+    foreach(QString s, files) {
+        m_inputFilesName.push_back(s);
+    }
     loadInputFiles(files, files.count());
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     } //if (!files.isEmpty())

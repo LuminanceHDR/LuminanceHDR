@@ -207,6 +207,8 @@ protected:
 
     HelpBrowser* helpBrowser;
     QStringList inputFiles;
+    QStringList m_inputFilesName;   // this contains the file names of the images loaded by the wizard, they are used to copy EXIF tags to
+                                    // saved LDR images
 
     virtual void dragEnterEvent(QDragEnterEvent *);
     virtual void dropEvent(QDropEvent *);

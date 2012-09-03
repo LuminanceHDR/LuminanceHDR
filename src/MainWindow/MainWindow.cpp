@@ -396,7 +396,7 @@ void MainWindow::on_fileNewAction_triggered()
 
 void MainWindow::createNewHdr(QStringList files)
 {
-    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files) );
+    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files, m_inputFilesName) );
     if (wizard->exec() == QDialog::Accepted)
     {
         emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
@@ -534,11 +534,18 @@ void MainWindow::on_fileSaveAsAction_triggered()
                 else
                     quality = savedFileQuality.getQuality();
             }
+            
+            QString inputfname;
+            if (m_inputFilesName.isEmpty())
+                    inputfname = "";
+            else
+                    inputfname = m_inputFilesName.first();
             // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
             QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                       Q_ARG(GenericViewer*, l_v),
                                       Q_ARG(QString, outfname),
                                       Q_ARG(int, quality),
+                                      Q_ARG(QString, inputfname),  
                                       Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
 
         }
@@ -1599,6 +1606,8 @@ void MainWindow::removeTab(int t)
 			tm_status.curr_tm_options = NULL;
 
 			tmPanel->setEnabled(false);
+
+            m_inputFilesName.clear();
 
 			previewPanel->hide();
         }
