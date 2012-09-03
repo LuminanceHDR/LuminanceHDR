@@ -75,6 +75,7 @@ public Q_SLOTS:
     bool write_ldr_frame(pfs::Frame* frame,
                          const QString& filename, int quality,
                          const QString& inputFileName,
+                         const QVector<float>& expoTimes,
                          TonemappingOptions* tmopts = NULL,
                          float min_luminance = 0.0f,
                          float max_luminance = 1.0f,
@@ -82,6 +83,7 @@ public Q_SLOTS:
     bool write_ldr_frame(GenericViewer* frame,
                          const QString& filename, int quality,
                          const QString& inputFileName,
+                         const QVector<float>& expoTimes,
                          TonemappingOptions* tmopts = NULL);
 
 signals:

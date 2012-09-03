@@ -204,6 +204,7 @@ void MainWindow::init()
         qRegisterMetaType<HdrViewer*>("HdrViewer*");
         qRegisterMetaType<LdrViewer*>("LdrViewer*");
         qRegisterMetaType<GenericViewer*>("GenericViewer*");
+        qRegisterMetaType<QVector<float> >("QVector<float>");
 
         QDir dir(QDir::homePath());
 
@@ -396,7 +397,7 @@ void MainWindow::on_fileNewAction_triggered()
 
 void MainWindow::createNewHdr(QStringList files)
 {
-    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files, m_inputFilesName) );
+    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files, m_inputFilesName, m_inputExpoTimes) );
     if (wizard->exec() == QDialog::Accepted)
     {
         emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
@@ -546,6 +547,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
                                       Q_ARG(QString, outfname),
                                       Q_ARG(int, quality),
                                       Q_ARG(QString, inputfname),  
+                                      Q_ARG(QVector<float>, m_inputExpoTimes),
                                       Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
 
         }

@@ -48,7 +48,7 @@ class HdrWizard : public QDialog
 Q_OBJECT
 
 public:
-	HdrWizard(QWidget *parent, QStringList &files, QStringList &inputFilesName);
+	HdrWizard(QWidget *parent, QStringList &files, QStringList &inputFilesName, QVector<float> &inputExpoTimes);
 	~HdrWizard();
 	pfs::Frame* getPfsFrameHDR() {return PfsFrameHDR;}
 	QString getCaptionTEXT();
@@ -72,6 +72,7 @@ private:
 	pfs::Frame* PfsFrameHDR;
 	QString loadcurvefilename,savecurvefilename;
     QStringList &m_inputFilesName;
+    QVector<float> &m_inputExpoTimes;
 
 	//hdr creation parameters
 	TResponse responses_in_gui[4];

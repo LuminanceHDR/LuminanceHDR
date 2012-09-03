@@ -209,6 +209,7 @@ protected:
     QStringList inputFiles;
     QStringList m_inputFilesName;   // this contains the file names of the images loaded by the wizard, they are used to copy EXIF tags to
                                     // saved LDR images
+    QVector<float> m_inputExpoTimes;  // this contains the exposure times of the images to write to LDR as EXIF comment
 
     virtual void dragEnterEvent(QDragEnterEvent *);
     virtual void dropEvent(QDropEvent *);

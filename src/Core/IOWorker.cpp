@@ -126,6 +126,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename)
 bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
                                const QString& filename, int quality,
                                const QString& inputFileName,
+                               const QVector<float>& expoTimes,
                                TonemappingOptions* tmopts)
 {
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
@@ -133,6 +134,7 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
     bool status = write_ldr_frame(ldr_frame,
                                   filename, quality,
                                   inputFileName,
+                                  expoTimes,
                                   tmopts,
                                   ldr_viewer->getMinLuminanceValue(),
                                   ldr_viewer->getMaxLuminanceValue(),
@@ -154,6 +156,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                const QString& filename,
                                int quality,
                                const QString& inputFileName,
+                               const QVector<float>& expoTimes,
                                TonemappingOptions* tmopts,
                                float min_luminance,
                                float max_luminance,
@@ -258,15 +261,20 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
             emit write_ldr_failed();
         }
     }
-    if (inputFileName != "") {
+    if (inputFileName != "") { // copy EXIF tags from the 1st bracketed image
         QFileInfo fileinfo(inputFileName);
         QString absoluteInputFileName = fileinfo.absoluteFilePath();
         QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
-
+        QString comment = operations->getExifComment();
+        comment += "\nBracketed images exposure times:\n\n";
+        foreach (float e, expoTimes) {
+            QString s = "%1";
+            comment += s.arg(e) + "\n";
+        }
         try {
             ExifOperations::copyExifData(encodedInputFileName.constData(), 
                                          encodedName.constData(), 
-                                         operations->getExifComment().toStdString(),
+                                         comment.toStdString(),
                                          false, true);
         }
         catch (...) {

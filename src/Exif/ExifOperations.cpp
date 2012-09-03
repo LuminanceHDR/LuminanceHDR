@@ -100,8 +100,6 @@ namespace ExifOperations
                 //for all the tags in the source exif data
                 for (Exiv2::ExifData::const_iterator i = srcExifData.begin(); i != end_src; ++i) {
                     Exiv2::Exifdatum& sourceDatum = srcExifData[i->key()];
-                    if (sourceDatum.key() == "Exif.Photo.FNumber")
-                        continue;
                     if (sourceDatum.key() == "Exif.Photo.ExposureTime")
                         continue;
                     if (comment != "" && sourceDatum.key() == "Exif.Image.Software")
