@@ -83,54 +83,24 @@ typedef struct pyramid_s {
 
 #define PYRAMID_MIN_PIXELS      3
 #define LOOKUP_W_TO_R           107
-//#define DEBUG_MANTIUK06
-
-void contrast_equalization( pyramid_t *pp, const float contrastFactor );
-
-void transform_to_luminance(pyramid_t* pyramid, float* const x, ProgressHelper *ph);
-void matrix_subtract(const int n, const float* const a, float* const b);
-void matrix_copy(const int n, const float* const a, float* const b);
-void matrix_multiply_const(const int n, float* const a, const float val);
-float* matrix_alloc(const int size);
-void matrix_free(float* m);
-void matrix_zero(const int n, float* const m);
-void calculate_and_add_divergence(const int rows, const int cols, const float* const Gx, const float* const Gy, float* const divG);
-void pyramid_calculate_divergence(pyramid_t* pyramid);
-void pyramid_calculate_divergence_sum(pyramid_t* pyramid, float* divG_sum);
-void calculate_scale_factor(const int n, const float* const G, float* const C);
-void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC);
-void scale_gradient(const int n, float* G, const float* C);
-void pyramid_scale_gradient(pyramid_t* pyramid, pyramid_t* pC);
-void pyramid_free(pyramid_t* pyramid);
-pyramid_t* pyramid_allocate(const int cols, const int rows);
-void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy);
-void pyramid_calculate_gradient(const pyramid_t* pyramid, const float* lum);
-void solveX(const int n, const float* const b, float* const x);
-void multiplyA(pyramid_t* px, pyramid_t* pyramid, const float* const x, float* const divG_sum);
-void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph);
-float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val);
-void transform_to_R(const int n, float* const G, float detail_factor);
-void pyramid_transform_to_R(pyramid_t* pyramid, float detail_factor);
-void transform_to_G(const int n, float* const R, float detail_factor);
-void pyramid_transform_to_G(pyramid_t* pyramid, float detail_factor);
-void pyramid_gradient_multiply(pyramid_t* pyramid, const float val);
-
-void swap_pointers(float* &pOne, float* &pTwo); // utility function
-
-#ifdef DEBUG_MANTIUK06
-
-void dump_matrix_to_file(const int width, const int height, const float* const m, const char * const file_name);
-void matrix_show(const char* const text, int rows, int cols, const float* const data);
-void pyramid_show(pyramid_t* pyramid);
-
-#endif
 
 static float W_table[] = {0.000000f,0.010000f,0.021180f,0.031830f,0.042628f,0.053819f,0.065556f,0.077960f,0.091140f,0.105203f,0.120255f,0.136410f,0.153788f,0.172518f,0.192739f,0.214605f,0.238282f,0.263952f,0.291817f,0.322099f,0.355040f,0.390911f,0.430009f,0.472663f,0.519238f,0.570138f,0.625811f,0.686754f,0.753519f,0.826720f,0.907041f,0.995242f,1.092169f,1.198767f,1.316090f,1.445315f,1.587756f,1.744884f,1.918345f,2.109983f,2.321863f,2.556306f,2.815914f,3.103613f,3.422694f,3.776862f,4.170291f,4.607686f,5.094361f,5.636316f,6.240338f,6.914106f,7.666321f,8.506849f,9.446889f,10.499164f,11.678143f,13.000302f,14.484414f,16.151900f,18.027221f,20.138345f,22.517282f,25.200713f,28.230715f,31.655611f,35.530967f,39.920749f,44.898685f,50.549857f,56.972578f,64.280589f,72.605654f,82.100619f,92.943020f,105.339358f,119.530154f,135.795960f,154.464484f,175.919088f,200.608905f,229.060934f,261.894494f,299.838552f,343.752526f,394.651294f,453.735325f,522.427053f,602.414859f,695.706358f,804.693100f,932.229271f,1081.727632f,1257.276717f,1463.784297f,1707.153398f,1994.498731f,2334.413424f,2737.298517f,3215.770944f,3785.169959f,4464.187290f,5275.653272f,6247.520102f,7414.094945f,8817.590551f,10510.080619f};
 static float R_table[] = {0.000000f,0.009434f,0.018868f,0.028302f,0.037736f,0.047170f,0.056604f,0.066038f,0.075472f,0.084906f,0.094340f,0.103774f,0.113208f,0.122642f,0.132075f,0.141509f,0.150943f,0.160377f,0.169811f,0.179245f,0.188679f,0.198113f,0.207547f,0.216981f,0.226415f,0.235849f,0.245283f,0.254717f,0.264151f,0.273585f,0.283019f,0.292453f,0.301887f,0.311321f,0.320755f,0.330189f,0.339623f,0.349057f,0.358491f,0.367925f,0.377358f,0.386792f,0.396226f,0.405660f,0.415094f,0.424528f,0.433962f,0.443396f,0.452830f,0.462264f,0.471698f,0.481132f,0.490566f,0.500000f,0.509434f,0.518868f,0.528302f,0.537736f,0.547170f,0.556604f,0.566038f,0.575472f,0.584906f,0.594340f,0.603774f,0.613208f,0.622642f,0.632075f,0.641509f,0.650943f,0.660377f,0.669811f,0.679245f,0.688679f,0.698113f,0.707547f,0.716981f,0.726415f,0.735849f,0.745283f,0.754717f,0.764151f,0.773585f,0.783019f,0.792453f,0.801887f,0.811321f,0.820755f,0.830189f,0.839623f,0.849057f,0.858491f,0.867925f,0.877358f,0.886792f,0.896226f,0.905660f,0.915094f,0.924528f,0.933962f,0.943396f,0.952830f,0.962264f,0.971698f,0.981132f,0.990566f,1.000000f};
 
-inline int imin(int a, int b)
+namespace
 {
-  return a < b ? a : b;
+inline
+int imin(int a, int b)
+{
+    return a < b ? a : b;
+}
+
+void swap_pointers(float* &pOne, float* &pTwo)
+{
+    float* pTemp = pOne;
+    pOne = pTwo;
+    pTwo = pTemp;
+}
 }
 
 // upsample the matrix
@@ -615,13 +585,6 @@ void calculate_gradient(const int COLS, const int ROWS, const float* const lum, 
 { 
     xGradient(ROWS, COLS, lum, Gx),
     yGradient(ROWS, COLS, lum, Gy);
-}
-
-void swap_pointers(float* &pOne, float* &pTwo)
-{
-  float* pTemp = pOne;
-  pOne = pTwo;
-  pTwo = pTemp;
 }
 
 // calculate gradients for the pyramid
@@ -1197,75 +1160,3 @@ int tmo_mantiuk06_contmap(const int c, const int r,
   
   return PFSTMO_OK;
 }
-
-#ifdef DEBUG_MANTIUK06
-
-#define PFSEOL "\x0a"
-void dump_matrix_to_file(const int width, const int height, const float* const m, const char * const file_name)
-{
-  FILE *fh = fopen( file_name, "wb" );
-  // assert( fh != NULL );
-  
-  fprintf( fh, "PFS1" PFSEOL "%d %d" PFSEOL "1" PFSEOL "0" PFSEOL
-          "%s" PFSEOL "0" PFSEOL "ENDH", width, height, "Y");
-  
-  for( int y = 0; y < height; y++ )
-    for( int x = 0; x < width; x++ ) {
-      int idx = x + y*width;
-      fwrite( &(m[idx]), sizeof( float ), 1, fh );
-    }
-  
-  fclose( fh );
-}  
-
-// display matrix in the console (debugging)
-void matrix_show(const char* const text, int cols, int rows, const float* const data)
-{
-  const int _cols = cols;
-  
-  if(rows > 8)
-    rows = 8;
-  if(cols > 8)
-    cols = 8;
-  
-  printf("\n%s\n", text);
-  for(int ky=0; ky<rows; ky++)
-  {
-    for(int kx=0; kx<cols; kx++)
-    {
-      printf("%.06f  ", data[kx + ky*_cols]);
-    }
-    printf("\n");
-  }
-}
-
-// display pyramid in the console (debugging)
-void pyramid_show(pyramid_t* pyramid)
-{
-  char ss[30];
-  
-  while (pyramid->next != NULL)
-  {
-    pyramid = pyramid->next;
-  }
-  
-  while (pyramid != NULL)
-  {
-    printf("\n----- pyramid_t level %d,%d\n", pyramid->cols, pyramid->rows);
-    
-    sprintf(ss, "Gx %p ", pyramid->Gx);
-    if (pyramid->Gx != NULL)
-    {
-      matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gx);
-    }
-    sprintf(ss, "Gy %p ", pyramid->Gy);	
-    if (pyramid->Gy != NULL)
-    {
-      matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gy);
-    }
-    
-    pyramid = pyramid->prev;
-  }
-}
-
-#endif
