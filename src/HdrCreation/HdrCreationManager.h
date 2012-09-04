@@ -74,6 +74,7 @@ public:
 
 	QList<QImage*> getLDRList() const {return ldrImagesList;}
 	QList<QImage*> getMDRList() const {return mdrImagesList;}
+	QList<QImage*> getAntiGhostingMasksList() const {return antiGhostingMasksList;}
 	QVector<float> getExpotimes() const {return expotimes;}
 	QStringList getFileList() const {return fileList;}
 	bool inputImageType() const {return inputType;}
@@ -94,17 +95,16 @@ public:
 	//the EV values cannot cover more than 20EV values
 	void checkEVvalues();
 	void makeSureLDRsHaveAlpha();
-    void applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets);
-    void applyShiftsToMdrImageStack(const QList< QPair<int,int> >& HV_offsets);
-    void cropLDR(const QRect& ca);
-    void cropMDR(const QRect& ca);
+	void applyShiftsToImageStack(QList< QPair<int,int> > HV_offsets);
+	void applyShiftsToMdrImageStack(QList< QPair<int,int> > HV_offsets);
+	void cropLDR (QRect ca);
+	void cropMDR (QRect ca);
+	void cropAgMasks (QRect ca);
 	void reset();
 	void remove(int index);
-    void setShift(int shift)
-    {
-        m_shift = shift;
-    }
-    void saveMDRs(const QString&);
+	void setShift(int shift) { m_shift = shift; }
+	void saveMDRs(QString);
+	void doAntiGhosting(int);
 public slots:
 	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
 	void removeTempFiles();
@@ -128,18 +128,14 @@ signals:
 private:
     // List of input files (absolute pathnames)
 	QStringList fileList;
-    // data structures that hold the input images' payload
-    // ldr input
-    QList<QImage*> ldrImagesList;
-    // QImages rappresenting a PFS frame for editing tools
-    QList<QImage*> mdrImagesList;
-    //QImages need to be deleted
-    QList<QImage*> mdrImagesToRemove;
-    // QList<bool> tiffLdrList;  //tiff ldr input
-    Array2DList listmdrR;
-    Array2DList listmdrG;
-    Array2DList listmdrB; //mdr input
-    // if startedProcessing[i]==true, we started a thread for the i-th file
+	//data structures that hold the input images' payload
+	QList<QImage*> ldrImagesList;  //ldr input
+	QList<QImage*> mdrImagesList;  //QImages rappresenting a PFS frame for editing tools
+	QList<QImage*> mdrImagesToRemove;  //QImages need to be deleted
+	QList<QImage*> antiGhostingMasksList;  //QImages used for manual anti ghosting
+	QList<bool> tiffLdrList;  //tiff ldr input
+	Array2DList listmdrR,listmdrG,listmdrB; //mdr input
+	//if startedProcessing[i]==true, we started a thread for the i-th file
 	QList<bool> startedProcessing;
     // time equivalent array (from exif data)
     // float *expotimes;

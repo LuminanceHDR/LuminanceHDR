@@ -100,6 +100,63 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 
 	return out;
 }
+
+void blend(QImage *img1, QImage *img2, QImage *mask)
+{
+	qDebug() << "blend";
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+
+	int width = img1->width();
+	int height = img1->height();
+
+    QRgb maskValue, pixValue;
+    float alpha;
+
+	for (int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++) {
+			maskValue = mask->pixel(i,j);
+			alpha = qAlpha(maskValue) / 255;
+			pixValue = (1.0f - alpha) * img1->pixel(i, j) +  alpha * img2->pixel(i, j);
+			img1->setPixel(i, j, pixValue);
+		}
+	} 
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
+
+void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R2, pfs::Array2D *G2, pfs::Array2D *B2, QImage *mask)
+{
+	qDebug() << "blend MDR";
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+
+	int width = R1->getCols();
+	int height = R1->getRows();
+
+    QRgb maskValue;
+    float alpha;
+
+	for (int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++) {
+			maskValue = mask->pixel(i,j);
+			alpha = qAlpha(maskValue) / 255;
+			(*R1)(i, j) = (1.0f - alpha) * (*R1)(i, j) +  alpha * (*R2)(i, j);
+			(*G1)(i, j) = (1.0f - alpha) * (*G1)(i, j) +  alpha * (*G2)(i, j);
+			(*B1)(i, j) = (1.0f - alpha) * (*B1)(i, j) +  alpha * (*B2)(i, j);
+		}
+	} 
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "blend MDR = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
 }
 
 HdrCreationManager::HdrCreationManager(bool fromCommandLine) :
@@ -250,10 +307,12 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 		emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
 		return;
 	}
-	if (!fromCommandLine)
-    {
+	if (!fromCommandLine) {
 		mdrImagesList.append(fromHDRPFStoQImage(newFrame));
-    }
+		QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
+		img->fill(qRgba(0,0,0,0));
+		antiGhostingMasksList.append(img);
+	}
 	m_mdrWidth = R->getWidth();
 	m_mdrHeight = R->getHeight();
 	// fill with image data
@@ -293,6 +352,11 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
 
 	// fill with image data
 	ldrImagesList[index] = newImage;
+	if (!fromCommandLine) {
+		QImage *img = new QImage(newImage->width(),newImage->height(), QImage::Format_ARGB32);
+		img->fill(qRgba(0,0,0,0));
+		antiGhostingMasksList.append(img);
+	}
 
 	//perform some housekeeping
 	newResult(index,expotime,newfname);
@@ -555,6 +619,7 @@ HdrCreationManager::~HdrCreationManager()
 		ais->kill();
 	}
 	clearlists(true);
+    qDeleteAll(antiGhostingMasksList);
 }
 
 void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
@@ -621,7 +686,7 @@ void HdrCreationManager::makeSureLDRsHaveAlpha()
 	}
 }
 
-void HdrCreationManager::applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets)
+void HdrCreationManager::applyShiftsToImageStack(const QList< QPair<int,int> > HV_offsets)
 {
 	int originalsize = ldrImagesList.count();
 	//shift the images
@@ -641,7 +706,7 @@ void HdrCreationManager::applyShiftsToImageStack(const QList< QPair<int,int> >& 
 	}
 }
 
-void HdrCreationManager::applyShiftsToMdrImageStack(const QList< QPair<int,int> >& HV_offsets)
+void HdrCreationManager::applyShiftsToMdrImageStack(const QList< QPair<int,int> > HV_offsets)
 {
 	qDebug() << "HdrCreationManager::applyShiftsToMdrImageStack";
 	int originalsize = mdrImagesList.count();
@@ -661,7 +726,7 @@ void HdrCreationManager::applyShiftsToMdrImageStack(const QList< QPair<int,int> 
 }
 
 
-void HdrCreationManager::cropLDR(const QRect& ca)
+void HdrCreationManager::cropLDR(const QRect ca)
 {
 	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
@@ -679,9 +744,10 @@ void HdrCreationManager::cropLDR(const QRect& ca)
 //		tiffLdrList.removeAt(0);
 //		tiffLdrList.append(false);
 	}
+	cropAgMasks(ca);
 }
 
-void HdrCreationManager::cropMDR(const QRect& ca)
+void HdrCreationManager::cropMDR(const QRect ca)
 {
 	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
@@ -711,6 +777,7 @@ void HdrCreationManager::cropMDR(const QRect& ca)
 		mdrImagesList.append(newimage);
 		mdrImagesToRemove.append(mdrImagesList.takeAt(0));
 	}
+	cropAgMasks(ca);
 }
 
 void HdrCreationManager::reset()
@@ -775,7 +842,7 @@ void HdrCreationManager::readData()
 	emit aisDataReady(data);
 }
 
-void HdrCreationManager::saveMDRs(const QString& filename)
+void HdrCreationManager::saveMDRs(const QString filename)
 {
 #ifdef QT_DEBUG
     qDebug() << "HdrCreationManager::saveMDRs";
@@ -791,7 +858,7 @@ void HdrCreationManager::saveMDRs(const QString& filename)
 		Xc->setChannelData(listmdrR[idx]);	
 		Yc->setChannelData(listmdrG[idx]);	
 		Zc->setChannelData(listmdrB[idx]);	
-        TiffWriter writer(QFile::encodeName(fname).constData(), frame);
+		TiffWriter writer(QFile::encodeName(fname).constData(), frame);
 		writer.writePFSFrame16bitTiff();
 
 		QFileInfo qfi(filename);
@@ -800,4 +867,36 @@ void HdrCreationManager::saveMDRs(const QString& filename)
 		ExifOperations::writeExifData(encodedName.constData(), "Edited Images", expotimes[idx]);	
 	}
 	emit mdrSaved();
+}
+
+void HdrCreationManager::doAntiGhosting(int goodImageIndex)
+{
+	qDebug() << "HdrCreationManager::doAntiGhosting";
+	if (inputType == LDR_INPUT_TYPE) {
+		int origlistsize = ldrImagesList.size();
+		for (int idx = 0; idx < origlistsize; idx++) {
+            if (idx == goodImageIndex) continue;
+			blend(ldrImagesList[idx], ldrImagesList[goodImageIndex], antiGhostingMasksList[idx]);
+		}
+	}
+	else {
+		int origlistsize = listmdrR.size();
+		for (int idx = 0; idx < origlistsize; idx++) {
+            if (idx == goodImageIndex) continue;
+			blend(listmdrR[idx], listmdrG[idx], listmdrB[idx], 
+				listmdrR[goodImageIndex], listmdrG[goodImageIndex], listmdrB[goodImageIndex],
+				antiGhostingMasksList[idx]);
+		}
+	}		
+}
+
+void HdrCreationManager::cropAgMasks(QRect ca) {
+	int origlistsize = antiGhostingMasksList.size();
+	for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
+		QImage *newimage = new QImage(antiGhostingMasksList.at(0)->copy(ca));
+		if (newimage == NULL)
+			exit(1); // TODO: exit gracefully
+		antiGhostingMasksList.append(newimage);
+		delete antiGhostingMasksList.takeAt(0);
+	}
 }
