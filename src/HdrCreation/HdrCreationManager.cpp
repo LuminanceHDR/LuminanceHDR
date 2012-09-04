@@ -752,17 +752,19 @@ void HdrCreationManager::cropMDR(const QRect ca)
 	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
 	int origlistsize = listmdrR.size();
+    pfs::Frame *frame;
+	pfs::Channel *Xc, *Yc, *Zc;
+    pfs::Frame *cropped_frame;
     for (int idx = 0; idx < origlistsize; idx++)
     {
-        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
-		pfs::Channel *Xc, *Yc, *Zc;
+        frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
 		frame->createXYZChannels( Xc, Yc, Zc );
 		Xc->setChannelData(listmdrR[idx]);	
 		Yc->setChannelData(listmdrG[idx]);	
 		Zc->setChannelData(listmdrB[idx]);	
 		int x_ul, y_ul, x_br, y_br;
 		ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
-		pfs::Frame *cropped_frame = pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
+		cropped_frame = pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
 
         pfs::DOMIO::freeFrame(frame);
 
@@ -777,6 +779,8 @@ void HdrCreationManager::cropMDR(const QRect ca)
 		mdrImagesList.append(newimage);
 		mdrImagesToRemove.append(mdrImagesList.takeAt(0));
 	}
+    m_mdrWidth = cropped_frame->getWidth();
+    m_mdrHeight = cropped_frame->getHeight();
 	cropAgMasks(ca);
 }
 
