@@ -1610,6 +1610,7 @@ void MainWindow::removeTab(int t)
 			tmPanel->setEnabled(false);
 
             m_inputFilesName.clear();
+            m_inputExpoTimes.clear();
 
 			previewPanel->hide();
         }
