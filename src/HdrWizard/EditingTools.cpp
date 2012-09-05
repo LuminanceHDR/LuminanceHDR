@@ -44,7 +44,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     QDialog(parent),
     m_hcm(hcm),
     m_additionalShiftValue(0),
-    m_MdrSaved(false),
+    m_imagesSaved(false),
     m_goodImageIndex(-1),
     m_antiGhosting(false)
 {
@@ -168,7 +168,7 @@ void EditingTools::setupConnections() {
     connect(m_selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
     connect(removeMaskRadioButton,SIGNAL(toggled(bool)),m_agWidget,SLOT(setBrushMode(bool)));
 
-    connect(m_hcm, SIGNAL(mdrSaved()), this, SLOT(restoreSaveImagesButtonState()));
+    connect(m_hcm, SIGNAL(imagesSaved()), this, SLOT(restoreSaveImagesButtonState()));
 }
 
 void EditingTools::slotCornerButtonPressed() {
@@ -280,12 +280,13 @@ void EditingTools::nextClicked() {
     Next_Finishbutton->setEnabled(false);
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) { 
-        m_hcm->applyShiftsToImageStack(m_HV_offsets);
+        if (!m_imagesSaved)
+            m_hcm->applyShiftsToImageStack(m_HV_offsets);
         if (m_goodImageIndex != -1)
             m_hcm->doAntiGhosting(m_goodImageIndex);
     }
     else {
-        if (!m_MdrSaved)
+        if (!m_imagesSaved)
             m_hcm->applyShiftsToMdrImageStack(m_HV_offsets);
         if (m_goodImageIndex != -1)
             m_hcm->doAntiGhosting(m_goodImageIndex);
@@ -540,20 +541,10 @@ void EditingTools::saveImagesButtonClicked() {
     if (test.isWritable() && test.exists() && test.isDir()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
-            int counter=0;
-            foreach(QImage *p, m_originalImagesList) {
-                TiffWriter tiffwriter( QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))), p);
-                tiffwriter.write8bitTiff();
-                ExifOperations::writeExifData(QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))).constData(), "Edited Images", m_expotimes[counter]);    
-                counter++;
-            }
-            saveImagesButton->setEnabled(true);
-            Next_Finishbutton->setEnabled(true);
-            QApplication::restoreOverrideCursor();
+            m_hcm->applyShiftsToImageStack(m_HV_offsets);
+            m_hcm->saveLDRs(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
         }
         else {
-            m_MdrSaved = true;
-    
             m_hcm->applyShiftsToMdrImageStack(m_HV_offsets);
             m_hcm->saveMDRs(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
         }
@@ -567,9 +558,15 @@ void EditingTools::updateScrollBars(QPoint diff) {
 
 void EditingTools::restoreSaveImagesButtonState()
 {
+    m_imagesSaved = true;
     saveImagesButton->setEnabled(true);
     Next_Finishbutton->setEnabled(true);
     QApplication::restoreOverrideCursor();
+    if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
+        m_originalImagesList=m_hcm->getLDRList();
+        m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
+        m_previewWidget->setPivot(m_originalImagesList[referenceListWidget->currentRow()]);
+    }
 }
 
 void EditingTools::setAntiGhostingWidget(QImage *mask, QPair<int, int> HV_offset)

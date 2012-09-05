@@ -51,24 +51,24 @@ namespace ExifOperations
         image->writeMetadata();
     }
   
-    void copyExifData(const std::string& from, const std::string& to, const std::string& comment, bool dont_overwrite, bool destIsLDR)
+    void copyExifData(const std::string& from, const std::string& to, bool dontOverwrite, const std::string& comment, bool destIsLDR)
     {
         std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
         //get source and destination exif data
         //THROWS, if opening the file fails or it contains data of an unknown image type.
-        Exiv2::Image::AutoPtr sourceimage = Exiv2::ImageFactory::open(from);
-        Exiv2::Image::AutoPtr destimage = Exiv2::ImageFactory::open(to);
+        Exiv2::Image::AutoPtr sourceImage = Exiv2::ImageFactory::open(from);
+        Exiv2::Image::AutoPtr destinationImage = Exiv2::ImageFactory::open(to);
         //Callers must check the size of individual metadata types before accessing the data.
         //readMetadata THROWS an exception if opening or reading of the file fails or the image data is not valid (does not look like data of the specific image type).
-        sourceimage->readMetadata();
-        Exiv2::ExifData &srcExifData = sourceimage->exifData();
+        sourceImage->readMetadata();
+        Exiv2::ExifData &srcExifData = sourceImage->exifData();
         if (srcExifData.empty())
             throw Exiv2::Error(1, "No exif data found in the image");
-        if (dont_overwrite) {
+        if (dontOverwrite) {
             //doesn't throw anything if it is empty
-            destimage->readMetadata();
+            destinationImage->readMetadata();
             //doesn't throw anything if it is empty
-            Exiv2::ExifData &dest_exifData = destimage->exifData();
+            Exiv2::ExifData &dest_exifData = destinationImage->exifData();
             //end delimiter for this source image data
             Exiv2::ExifData::const_iterator end_src = srcExifData.end();
             //for all the tags in the source exif data
@@ -100,8 +100,6 @@ namespace ExifOperations
                 //for all the tags in the source exif data
                 for (Exiv2::ExifData::const_iterator i = srcExifData.begin(); i != end_src; ++i) {
                     Exiv2::Exifdatum& sourceDatum = srcExifData[i->key()];
-                    if (sourceDatum.key() == "Exif.Photo.ExposureTime")
-                        continue;
                     if (comment != "" && sourceDatum.key() == "Exif.Image.Software")
                         continue;
                     if (comment != "" && sourceDatum.key() == "Exif.Image.ImageDescription")
@@ -111,14 +109,14 @@ namespace ExifOperations
                     const Exiv2::ExifKey destKey(i->key());
                     destExifData.add(destKey, &(i->value()));
                 }
-                destimage->setExifData(destExifData);
+                destinationImage->setExifData(destExifData);
             }
             else
-                destimage->setExifData(srcExifData);
+                destinationImage->setExifData(srcExifData);
         }
     
         //THROWS Exiv2::Error if the operation fails
-        destimage->writeMetadata();
+        destinationImage->writeMetadata();
     }
   
   /**

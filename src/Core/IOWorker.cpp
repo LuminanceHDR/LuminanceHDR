@@ -268,14 +268,14 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
         QString comment = operations->getExifComment();
         comment += "\nBracketed images exposure times:\n\n";
         foreach (float e, expoTimes) {
-            QString s = "%1";
-            comment += s.arg(e) + "\n";
+            comment += QString("%1").arg(e) + "\n";
         }
         try {
             ExifOperations::copyExifData(encodedInputFileName.constData(), 
                                          encodedName.constData(), 
+                                         false, 
                                          comment.toStdString(),
-                                         false, true);
+                                         true);
         }
         catch (...) {
             qDebug() << "ExifOperations::copyExifData, catched an exception";

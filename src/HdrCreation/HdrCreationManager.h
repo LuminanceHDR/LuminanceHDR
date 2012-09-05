@@ -103,6 +103,7 @@ public:
 	void reset();
 	void remove(int index);
 	void setShift(int shift) { m_shift = shift; }
+	void saveLDRs(QString);
 	void saveMDRs(QString);
 	void doAntiGhosting(int);
 public slots:
@@ -123,7 +124,7 @@ signals:
 	void nextstep(int);
 
 	void processed();
-	void mdrSaved();
+	void imagesSaved();
 
 private:
     // List of input files (absolute pathnames)

@@ -608,8 +608,14 @@ void HdrWizard::currentPageChangedInto(int newindex) {
     if (newindex == 2) {
         hdrCreationManager->removeTempFiles();
         m_Ui->NextFinishButton->setText(tr("&Finish"));
-        //when at least 2 LDR inputs perform Manual Alignment
-        int numldrs = hdrCreationManager->getLDRList().size();
+        //when at least 2 LDR or MDR inputs perform Manual Alignment
+        int numldrs;
+        if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
+            numldrs = hdrCreationManager->getLDRList().size();
+        else
+            numldrs = hdrCreationManager->getMDRList().size();
+        
+        qDebug() << "numldrs = " << numldrs;
         //if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
         if (numldrs >= 2) {
             this->setDisabled(true);

@@ -167,25 +167,6 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine) :
     fromCommandLine( fromCommandLine )
 {}
 
-//bool loadingError;
-
-//// number of running threads at any given time
-//int runningThreads;
-//// cumulative number of successfully loaded files
-//int processedFiles;
-
-//LuminanceOptions m_luminance_options;
-
-//// align_image_stack
-//QProcess *ais;
-
-//int m_shift;
-
-//int m_mdrWidth;
-//int m_mdrHeight;
-
-//bool fromCommandLine;
-
 void HdrCreationManager::setConfig(const config_triple &c)
 {
 	chosen_config = c;
@@ -255,7 +236,6 @@ void HdrCreationManager::loadInputFiles()
         while ( runningThreads < m_luminance_options.getNumThreads() &&
                 firstNotStarted < startedProcessing.size() )
         {
-			//qDebug("HCM: Creating loadinput thread on %s",qPrintable(fileList[firstNotStarted]));
 			startedProcessing[firstNotStarted] = true;
 			HdrInputLoader *thread = new HdrInputLoader(fileList[firstNotStarted],firstNotStarted);
 			if (thread == NULL)
@@ -276,7 +256,6 @@ void HdrCreationManager::loadInputFiles()
 void HdrCreationManager::loadFailed(const QString& message, int /*index*/)
 {
 	//check for correct image size: update list that will be sent once all is over.
-	//qDebug("HCM: failed loading file: %s.", qPrintable(message));
 	loadingError = true;
 	emit errorWhileLoading(message);
 }
@@ -284,7 +263,6 @@ void HdrCreationManager::loadFailed(const QString& message, int /*index*/)
 void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotime, const QString& newfname)
 {
 	if (loadingError) {
-		//qDebug("HCM: loadingError, bailing out.");
 		emit processed();
 		return;
 	}
@@ -294,7 +272,6 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 
     if (inputType == LDR_INPUT_TYPE)
     {
-		//qDebug("HCM: wrong format, bailing out.");
         loadingError = true;
 		emit errorWhileLoading(tr("The image %1 is an 8 bit format (LDR) while the previous ones are not.").arg(newfname));
 		return;
@@ -302,7 +279,6 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 	inputType = MDR_INPUT_TYPE;
     if (!mdrsHaveSameSize(R->getWidth(),R->getHeight()))
     {
-		//qDebug("HCM: wrong size, bailing out.");
 		loadingError = true;
 		emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
 		return;
@@ -330,13 +306,11 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
 	//qDebug("HCM: ldrReady");
     if (loadingError)
     {
-		//qDebug("HCM: loadingError, bailing out.");
 		emit processed();
 		return;
 	}
     if (inputType==MDR_INPUT_TYPE)
     {
-		//qDebug("HCM: wrong format, bailing out.");
 		loadingError = true;
 		emit errorWhileLoading(tr("The image %1 is an 16 bit format while the previous ones are not.").arg(newfname));
 		return;
@@ -344,7 +318,6 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
 	inputType=LDR_INPUT_TYPE;
     if (!ldrsHaveSameSize(newImage->width(),newImage->height()))
     {
-		//qDebug("HCM: wrong size, bailing out.");
 		loadingError = true;
 		emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
 		return;
@@ -384,7 +357,6 @@ void HdrCreationManager::newResult(int index, float expotime, const QString& new
     if (expotimes[index] == -1)
     {
 		filesLackingExif << "<li>"+qfi.fileName()+"</li>";
-		//qDebug("HCM: new invalid exif. elements: %d", filesLackingExif.size());
 	}
 
 	emit fileLoaded(index,fileList[index],expotimes[index]);
@@ -493,7 +465,6 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
     if (exitcode == 0)
     {
 		//TODO: try-catch 
-		//qDebug("HCM: align_image_stack successfully terminated");
 		clearlists(false);
         for (int i = 0; i < fileList.size(); i++)
         {
@@ -504,17 +475,19 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 			else
 				filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
 			QByteArray fname = QFile::encodeName(filename);
-			//qDebug("HCM: Loading back file name=%s", fname);
 			TiffReader reader(fname, "", false);
 			//if 8bit ldr tiff
             if (reader.is8bitTiff())
             {
 				QImage* resultImage = reader.readIntoQImage();
-                // QImage* oldImage = resultImage;
 				HdrInputLoader::conditionallyRotateImage(QFileInfo(fileList[0]), &resultImage);
 
 				ldrImagesList.append( resultImage );
-                // tiffLdrList.append(oldImage == resultImage);
+			    if (!fromCommandLine) {
+		            QImage *img = new QImage(resultImage->width(),resultImage->height(), QImage::Format_ARGB32);
+		            img->fill(qRgba(0,0,0,0));
+		            antiGhostingMasksList.append(img);
+                }
 			}
 			//if 16bit (tiff) treat as hdr
             else if (reader.is16bitTiff())
@@ -528,8 +501,12 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 				listmdrR.push_back(R->getChannelData());
 				listmdrG.push_back(G->getChannelData());
 				listmdrB.push_back(B->getChannelData());
-                //pfs::DOMIO pfsio;
-				//pfsio.freeFrame(newFrame);
+		        mdrImagesList.append(fromHDRPFStoQImage(newFrame));
+			    if (!fromCommandLine) {
+		            QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
+		            img->fill(qRgba(0,0,0,0));
+		            antiGhostingMasksList.append(img);
+                }
 			}
 			qDebug() << "void HdrCreationManager::ais_finished: remove " << fname;
 			QFile::remove(fname);
@@ -564,7 +541,6 @@ void HdrCreationManager::removeTempFiles()
 
 void HdrCreationManager::checkEVvalues()
 {
-	//qDebug("HCM::checkEVvalues");
 	float max=-20, min=+20;
 	for (int i = 0; i < fileList.size(); i++) {
 		float ev_val = log2f(expotimes[i]);
@@ -592,14 +568,11 @@ void HdrCreationManager::checkEVvalues()
 
 void HdrCreationManager::setEV(float new_ev, int image_idx)
 {
-	//qDebug("HCM::setEV image_idx=%d",image_idx);
 	if (expotimes[image_idx] == -1) {
 		//remove always the first one
 		//after the initial printing we only need to know the size of the list
 		filesLackingExif.removeAt(0);
-		//qDebug("HCM: fixed a expotime");
 	}
-	//qDebug("HCM: setting expotimes[%d]=%f EV=%f", image_idx, exp2f(new_ev), new_ev);
 	expotimes[image_idx] = exp2f(new_ev);
 	emit expotimeValueChanged(exp2f(new_ev), image_idx);
 }
@@ -634,22 +607,13 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
 	}
     if (ldrImagesList.size() != 0)
     {
-		//qDebug("HCM: clearlists: cleaning LDR exposures list");
-        for (int i = 0 ; i < ldrImagesList.size(); i++)
-        {
-//            if (tiffLdrList[i])
-//            {
-//				//qDebug("HCM: clearlists: freeing ldr tiffs' payload.");
-//                //delete [] ldrImagesList[i]->bits();
-//			}
-		}
 		qDeleteAll(ldrImagesList);
 		ldrImagesList.clear();
-//		tiffLdrList.clear();
+        qDeleteAll(antiGhostingMasksList);
+        antiGhostingMasksList.clear();
 	}
     if (listmdrR.size()!=0 && listmdrG.size()!=0 && listmdrB.size()!=0)
     {
-		//qDebug("HCM: cleaning HDR exposures list");
 		Array2DList::iterator itR=listmdrR.begin(), itG=listmdrG.begin(), itB=listmdrB.begin();
         for (; itR!=listmdrR.end(); itR++,itG++,itB++ )
         {
@@ -664,6 +628,8 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
 		mdrImagesList.clear();
 		qDeleteAll(mdrImagesToRemove);
 		mdrImagesToRemove.clear();
+        qDeleteAll(antiGhostingMasksList);
+        antiGhostingMasksList.clear();
 	}
 }
 
@@ -676,12 +642,7 @@ void HdrCreationManager::makeSureLDRsHaveAlpha()
 			if (newimage == NULL)
 				exit(1); // TODO: exit gracefully;
 			ldrImagesList.append(newimage);
-//			if (tiffLdrList[0]) {
-//                //delete [] ldrImagesList[0]->bits();
-//			}
 			delete ldrImagesList.takeAt(0);
-//			tiffLdrList.removeAt(0);
-//			tiffLdrList.append(false);
 		}
 	}
 }
@@ -691,18 +652,11 @@ void HdrCreationManager::applyShiftsToImageStack(const QList< QPair<int,int> > H
 	int originalsize = ldrImagesList.count();
 	//shift the images
 	for (int i = 0; i < originalsize; i++) {
-		//qDebug("%d,%d",HV_offsets[i].first,HV_offsets[i].second);
 		if (HV_offsets[i].first == HV_offsets[i].second && HV_offsets[i].first == 0)
 			continue;
-		//qDebug("shifting image %d of (%d,%d)",i, HV_offsets[i].first, HV_offsets[i].second);
 		QImage *shifted = shiftQImage(ldrImagesList[i], HV_offsets[i].first, HV_offsets[i].second);
-//		if (tiffLdrList[i]) {
-//            //delete [] ldrImagesList[i]->bits();
-//		}
 		delete ldrImagesList.takeAt(i);
 		ldrImagesList.insert(i, shifted);
-//		tiffLdrList.removeAt(i);
-//		tiffLdrList.insert(i,false);
 	}
 }
 
@@ -728,7 +682,6 @@ void HdrCreationManager::applyShiftsToMdrImageStack(const QList< QPair<int,int> 
 
 void HdrCreationManager::cropLDR(const QRect ca)
 {
-	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
 	int origlistsize = ldrImagesList.size();
 	for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
@@ -736,20 +689,13 @@ void HdrCreationManager::cropLDR(const QRect ca)
 		if (newimage == NULL)
 			exit(1); // TODO: exit gracefully
 		ldrImagesList.append(newimage);
-//		if (tiffLdrList[0])
-//        {
-//            //delete [] ldrImagesList[0]->bits();
-//        }
 		delete ldrImagesList.takeAt(0);
-//		tiffLdrList.removeAt(0);
-//		tiffLdrList.append(false);
 	}
 	cropAgMasks(ca);
 }
 
 void HdrCreationManager::cropMDR(const QRect ca)
 {
-	//qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
 	int origlistsize = listmdrR.size();
     pfs::Frame *frame;
@@ -778,6 +724,10 @@ void HdrCreationManager::cropMDR(const QRect ca)
 			exit(1); // TODO: exit gracefully
 		mdrImagesList.append(newimage);
 		mdrImagesToRemove.append(mdrImagesList.takeAt(0));
+		QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
+		img->fill(qRgba(0,0,0,0));
+		antiGhostingMasksList.append(img);
+		antiGhostingMasksList.takeAt(0);
 	}
     m_mdrWidth = cropped_frame->getWidth();
     m_mdrHeight = cropped_frame->getHeight();
@@ -800,11 +750,7 @@ void HdrCreationManager::remove(int index)
 	switch (inputType) {
 	case LDR_INPUT_TYPE:
 	{
-//		if (tiffLdrList[index]) {
-//            // delete [] ldrImagesList[index]->bits();
-//		}
 		ldrImagesList.removeAt(index);			
-//		tiffLdrList.removeAt(index);
 	}
 		break;
 	case MDR_INPUT_TYPE:
@@ -846,6 +792,27 @@ void HdrCreationManager::readData()
 	emit aisDataReady(data);
 }
 
+void HdrCreationManager::saveLDRs(const QString filename)
+{
+#ifdef QT_DEBUG
+    qDebug() << "HdrCreationManager::saveLDRs";
+#endif
+
+	int origlistsize = ldrImagesList.size();
+    for (int idx = 0; idx < origlistsize; idx++)
+    {
+		QString fname = filename + QString("_%1").arg(idx) + ".tiff";
+		TiffWriter writer(QFile::encodeName(fname).constData(), ldrImagesList[idx]);
+		writer.write8bitTiff();
+
+		QFileInfo qfi(filename);
+		QString absoluteFileName = qfi.absoluteFilePath();
+		QByteArray encodedName = QFile::encodeName(absoluteFileName + QString("_%1").arg(idx) + ".tiff");
+		ExifOperations::copyExifData(QFile::encodeName(fileList[idx]).constData(), encodedName.constData(), false);
+	}
+	emit imagesSaved();
+}
+
 void HdrCreationManager::saveMDRs(const QString filename)
 {
 #ifdef QT_DEBUG
@@ -868,9 +835,9 @@ void HdrCreationManager::saveMDRs(const QString filename)
 		QFileInfo qfi(filename);
 		QString absoluteFileName = qfi.absoluteFilePath();
 		QByteArray encodedName = QFile::encodeName(absoluteFileName + QString("_%1").arg(idx) + ".tiff");
-		ExifOperations::writeExifData(encodedName.constData(), "Edited Images", expotimes[idx]);	
+		ExifOperations::copyExifData(QFile::encodeName(fileList[idx]).constData(), encodedName.constData(), false);
 	}
-	emit mdrSaved();
+	emit imagesSaved();
 }
 
 void HdrCreationManager::doAntiGhosting(int goodImageIndex)

@@ -67,7 +67,7 @@ private:
 	PanIconWidget *m_panIconWidget;
 	QToolButton *m_cornerButton;
 	SelectionTool *m_selectionTool;
-	bool m_MdrSaved;
+	bool m_imagesSaved;
     int m_goodImageIndex;
     bool m_antiGhosting;
 	LuminanceOptions m_luminanceOptions;
