@@ -77,8 +77,8 @@ struct FindChannel
         return !(channel->getName().compare( nameChannel_ ));
     }
 
-    private:
-        const std::string& nameChannel_;
+private:
+    std::string nameChannel_;
 };
 }
 
@@ -178,8 +178,8 @@ Channel* Frame::createChannel(const std::string& name)
 void Frame::removeChannel(const std::string& channel)
 {
     ChannelContainer::iterator it = std::find_if(m_channels.begin(),
-                                              m_channels.end(),
-                                              FindChannel(channel));
+                                                 m_channels.end(),
+                                                 FindChannel(channel));
     if ( it != m_channels.end() )
     {
         Channel* ch = *it;

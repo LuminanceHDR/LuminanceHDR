@@ -39,7 +39,7 @@ namespace vex
 //! \param[in] B second input vector
 //! \param[out] C output vector
 //! \param[in] N size of the vectors
-//! \note API user is in charge of properly allocate all the vectors
+//! \note caller is in charge of properly allocate all the vectors
 template <typename _Type>
 void vmul(const _Type* A, const _Type* B, _Type* C, size_t N);
 

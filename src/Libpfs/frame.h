@@ -60,14 +60,14 @@ public:
     Frame(int width, int height);
     ~Frame();
 
-    //! Gets width of the channels (in pixels).
+    //! \return width of the frame (in pixels).
     inline
     int getWidth() const
     {
         return m_width;
     }
 
-    //! Gets height of the channels (in pixels).
+    //! \return height of the frame (in pixels).
     inline
     int getHeight() const
     {
@@ -79,9 +79,9 @@ public:
     //! X, Y, Z are always either all NULLs or valid pointers to
     //! channels.
     //!
-    //! @param X [out] a pointer to store X channel in
-    //! @param Y [out] a pointer to store Y channel in
-    //! @param Z [out] a pointer to store Z channel in
+    //! \param X [out] a pointer to store X channel in
+    //! \param Y [out] a pointer to store Y channel in
+    //! \param Z [out] a pointer to store Z channel in
     void getXYZChannels(Channel* &X, Channel* &Y, Channel* &Z);
 
     void getXYZChannels(const Channel* &X, const Channel* &Y, const Channel* &Z) const;
@@ -91,16 +91,16 @@ public:
     //! creating new ones.  Note, that nothing can be assumed about
     //! the content of each channel.
     //!
-    //! @param X [out] a pointer to store X channel in
-    //! @param Y [out] a pointer to store Y channel in
-    //! @param Z [out] a pointer to store Z channel in
+    //! \param X [out] a pointer to store X channel in
+    //! \param Y [out] a pointer to store Y channel in
+    //! \param Z [out] a pointer to store Z channel in
     void createXYZChannels(Channel* &X, Channel* &Y, Channel* &Z);
 
     //! Gets a named channel.
     //!
-    //! @param name [in] name of the channel. Name must be 8 or less
+    //! \param name [in] name of the channel. Name must be 8 or less
     //! character long.
-    //! @return channel or NULL if the channel does not exist
+    //! \return channel or NULL if the channel does not exist
     Channel* getChannel(const std::string& name);
     const Channel* getChannel(const std::string &name) const;
 
@@ -111,24 +111,24 @@ public:
     //! frame. The channels should not changes for the subsequent
     //! frames of a sequence.
     //!
-    //! @param name [in] name of the channel. Name must be 8 or less
+    //! \param name [in] name of the channel. Name must be 8 or less
     //! character long.
-    //! @return existing or newly created channel
+    //! \return existing or newly created channel
     Channel *createChannel(const std::string& name);
 
     //! Removes a channel. It is safe to remove the channel pointed by
     //! the ChannelIterator.
     //!
-    //! @param channel [in] channel that should be removed.
+    //! \param channel [in] channel that should be removed.
     void removeChannel(const std::string& channel);
 
-    //! @return \c ChannelContainer associated to the internal list of \c Channel
+    //! \return \c ChannelContainer associated to the internal list of \c Channel
     ChannelContainer& getChannels();
 
     const ChannelContainer& getChannels() const;
 
 
-    //! @brief Returns TagContainer that can be used to access or modify
+    //! \brief Returns TagContainer that can be used to access or modify
     //! tags associated with this Frame object.
     TagContainer& getTags();
 
