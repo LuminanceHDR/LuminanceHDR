@@ -494,6 +494,8 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
             {
 				//TODO: get a 16bit TIFF image and test it
                 pfs::Frame *newFrame = reader.readIntoPfsFrame();
+                m_mdrWidth = newFrame->getWidth();
+                m_mdrHeight = newFrame->getHeight();
 				pfs::Channel *R, *G, *B;
 				R = newFrame->getChannel("X");
 				G = newFrame->getChannel("Y");
@@ -501,8 +503,8 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 				listmdrR.push_back(R->getChannelData());
 				listmdrG.push_back(G->getChannelData());
 				listmdrB.push_back(B->getChannelData());
-		        mdrImagesList.append(fromHDRPFStoQImage(newFrame));
 			    if (!fromCommandLine) {
+		            mdrImagesList.append(fromHDRPFStoQImage(newFrame));
 		            QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
 		            img->fill(qRgba(0,0,0,0));
 		            antiGhostingMasksList.append(img);

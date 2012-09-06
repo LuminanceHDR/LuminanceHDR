@@ -53,7 +53,7 @@ namespace ExifOperations
   
     void copyExifData(const std::string& from, const std::string& to, bool dontOverwrite, const std::string& comment, bool destIsLDR)
     {
-        std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
+        //std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
         //get source and destination exif data
         //THROWS, if opening the file fails or it contains data of an unknown image type.
         Exiv2::Image::AutoPtr sourceImage = Exiv2::ImageFactory::open(from);
@@ -105,6 +105,8 @@ namespace ExifOperations
                     if (comment != "" && sourceDatum.key() == "Exif.Image.ImageDescription")
                         continue;
                     if (comment != "" && sourceDatum.key() == "Exif.Photo.UserComment")
+                        continue;
+                    if (comment != "" && sourceDatum.key() == "Exif.Photo.ExposureTime")
                         continue;
                     const Exiv2::ExifKey destKey(i->key());
                     destExifData.add(destKey, &(i->value()));
