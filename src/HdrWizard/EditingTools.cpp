@@ -521,6 +521,10 @@ void EditingTools::maskColorButtonClicked() {
 
 void EditingTools::blendModeCBIndexChanged(int newindex) {
     maskColorButton->setVisible(newindex == 4);
+    if (newindex == 4 && !m_antiGhosting)
+        m_agWidget->show();
+    else if (newindex != 4 && !m_antiGhosting)
+        m_agWidget->hide();
 }
 
 void EditingTools::saveImagesButtonClicked() {
