@@ -28,7 +28,7 @@ namespace vex
 {
 
 template <typename _Type>
-void vmul(const _Type* A, const _Type* B, _Type* C, size_t N)
+void vmul(const _Type* A, const _Type* B, _Type* C, size_t size)
 {
 #pragma omp parallel for
     for (size_t idx = 0; idx < N; idx++)
@@ -37,6 +37,17 @@ void vmul(const _Type* A, const _Type* B, _Type* C, size_t N)
     }
 }
 
+template <typename _Type>
+void vdiv(const _Type* A, const _Type* B, _Type* C, size_t size)
+{
+#pragma omp parallel for
+    for (size_t idx = 0; idx < N; idx++)
+    {
+        C[idx] = A[idx] / B[idx];
+    }
 }
+
+}
+
 
 #endif // VEX_VEX_HXX

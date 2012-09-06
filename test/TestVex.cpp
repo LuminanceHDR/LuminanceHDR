@@ -19,6 +19,15 @@ struct vmul
     }
 };
 
+template <typename T>
+struct vdiv
+{
+    T operator()(const T& t1, const T& t2) const
+    {
+        return (t1 / t2);
+    }
+};
+
 }
 
 class TestVex : public testing::Test
@@ -60,6 +69,22 @@ TEST_F(TestVex, VMUL)
                    input2.begin(),
                    outputReference.begin(),
                    vmul<TestVex::TestVexContainer::value_type>());
+
+    for (size_t idx = 0; idx < outputComputed.size(); ++idx)
+    {
+        EXPECT_NEAR(outputComputed[idx], outputReference[idx], 10e-9);
+    }
+}
+
+TEST_F(TestVex, VDIV)
+{
+    vex::vdiv(input1.data(), input2.data(),
+              outputComputed.data(), outputComputed.size());
+
+    std::transform(input1.begin(), input1.end(),
+                   input2.begin(),
+                   outputReference.begin(),
+                   vdiv<TestVex::TestVexContainer::value_type>());
 
     for (size_t idx = 0; idx < outputComputed.size(); ++idx)
     {

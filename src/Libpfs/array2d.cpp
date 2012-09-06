@@ -163,13 +163,9 @@ void divideArray(Array2D *z, const Array2D *x, const Array2D *y)
     assert( x->getRows() == z->getRows() );
     assert( x->getCols() == z->getCols() );
 
-    const float* xv = x->getRawData();
-    const float* yv = y->getRawData();
-    float* zv = z->getRawData();
-
-    const int elements = x->getRows()*x->getCols();
-
-    VEX_vdiv(xv, yv, zv, elements);
+    vex::vdiv( x->getRawData(), y->getRawData(),
+               z->getRawData(),
+               x->getRows()*x->getCols() );
 }
 }
 

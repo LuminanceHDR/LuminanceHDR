@@ -41,7 +41,12 @@ namespace vex
 //! \param[in] N size of the vectors
 //! \note caller is in charge of properly allocate all the vectors
 template <typename _Type>
-void vmul(const _Type* A, const _Type* B, _Type* C, size_t N);
+void vmul(const _Type* A, const _Type* B, _Type* C, size_t size);
+
+//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! C[i] = A[i] / B[i]
+template <typename _Type>
+void vdiv(const _Type* A, const _Type* B, _Type* C, size_t size);
 
 }
 
