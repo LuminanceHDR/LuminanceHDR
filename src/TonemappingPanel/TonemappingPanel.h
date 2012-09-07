@@ -104,6 +104,7 @@ protected:
 
     float heightToWidthRatio;
     bool adding_custom_size;
+    bool m_isPortable;
 
     void createDatabase();
 
@@ -139,7 +140,7 @@ protected Q_SLOTS:
 	void execReinhard05Query(float, float, float, QString);
 
 public:
-    TonemappingPanel(QWidget *parent = 0);
+    TonemappingPanel(bool isPortable = false, QWidget *parent = 0);
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();

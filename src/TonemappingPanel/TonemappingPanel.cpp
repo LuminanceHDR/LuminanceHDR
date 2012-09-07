@@ -51,9 +51,10 @@
 #include "UI/Gang.h"
 #include "ui_TonemappingPanel.h"
 
-TonemappingPanel::TonemappingPanel(QWidget *parent):
+TonemappingPanel::TonemappingPanel(bool isPortable, QWidget *parent):
     QWidget(parent),
 	adding_custom_size(false),
+    m_isPortable(isPortable),
     m_Ui(new Ui::TonemappingPanel)
 {
     m_Ui->setupUi(this);
@@ -212,13 +213,17 @@ void TonemappingPanel::changeEvent(QEvent *event)
 void TonemappingPanel::createDatabase()
 {
     QDir dir(QDir::homePath());
-	
-	QString filename = dir.absolutePath();
+    QString filename;
+    if (m_isPortable)
+        filename = QDir::currentPath();
+    else {	
+	    filename = dir.absolutePath();
 #ifdef WIN32
-	filename += "/LuminanceHDR";
+    	filename += "/LuminanceHDR";
 #else
-	filename += "/.LuminanceHDR";
+	    filename += "/.LuminanceHDR";
 #endif
+    }
 	
 	filename += "/saved_parameters.db";
 

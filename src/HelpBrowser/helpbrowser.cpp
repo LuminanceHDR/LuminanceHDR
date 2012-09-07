@@ -55,6 +55,8 @@ for which a new license (GPL+exception) is in place.
 #include <QXmlDefaultHandler>
 #include <QDesktopServices>
 
+#include <QDebug>
+
 #include "Common/global.h"
 #include "HelpBrowser/schelptreemodel.h"
 #include "HelpBrowser/LuminancePaths.h"
@@ -141,9 +143,10 @@ HelpBrowser::HelpBrowser(QWidget* parent):
     m_Ui->setupUi(this);
 }
 
-HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QString& guiLanguage, const QString& jumpToSection, const QString& jumpToFile):
+HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const bool portable, const QString& guiLanguage, const QString& jumpToSection, const QString& jumpToFile):
     QMainWindow( parent ),
     zoomFactor(1.0),
+    m_isPortable(portable),
     m_Ui(new Ui::HelpBrowser)
 {
     firstRun=true;
@@ -159,7 +162,13 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
     connect(m_Ui->textBrowser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
 
 	language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
-	finalBaseDir = LuminancePaths::HelpDir();
+    if (m_isPortable) 
+        finalBaseDir = QDir::currentPath () + QDir::separator() + "help" + QDir::separator() + "en" + QDir::separator();
+    else
+    	finalBaseDir = LuminancePaths::HelpDir();
+
+    qDebug() << finalBaseDir;
+
     m_Ui->textBrowser->setHome( QUrl::fromLocalFile( finalBaseDir + "index.html" ));
 	menuModel=NULL;
     loadMenu();
@@ -524,7 +533,10 @@ void HelpBrowser::loadHelp(const QString& filename)
 			toLoad=filename;
 		else
 		{
-			toLoad = LuminancePaths::HelpDir() +"index.html";
+            if (m_isPortable)
+                toLoad = QDir::currentPath() + QDir::separator() + "help" + QDir::separator() + "en" + QDir::separator() + "index.html";
+            else
+    			toLoad = LuminancePaths::HelpDir() +"index.html";
  			language="en";
             //qDebug("Help index: %c", toLoad);
 			fi = QFileInfo(toLoad);
@@ -557,14 +569,18 @@ void HelpBrowser::loadHelp(const QString& filename)
 
 void HelpBrowser::loadMenu()
 {
-	QString baseHelpDir = LuminancePaths::HelpDir();
+    QString baseHelpDir;
+    if (m_isPortable)
+        baseHelpDir = QDir::currentPath() + QDir::separator() + "help" + QDir::separator() + "en" + QDir::separator();
+    else
+        baseHelpDir = LuminancePaths::HelpDir();
 	QString baseHelpMenuFile = baseHelpDir + "menu.xml";
 	QFileInfo baseFi = QFileInfo(baseHelpMenuFile);
 	QString toLoad = baseHelpMenuFile;
 	finalBaseDir=baseFi.path();
-        if (baseFi.exists())
+    if (baseFi.exists())
 	{
-                if (menuModel!=NULL)
+        if (menuModel!=NULL)
 			delete menuModel;
 		menuModel=new ScHelpTreeModel(toLoad, "Topic", "Location", &quickHelpIndex);
 	
@@ -672,12 +688,16 @@ QString HelpBrowser::bookmarkFile()
 	//TODO   MAC OSX
 	//QString appDataDir(typotek::getInstance()->getOwnDir().path() + "/");
 	QString sep(QDir::separator());
+    QString appDataDir;
+    if (m_isPortable)
+        appDataDir = QDir::currentPath() + sep;
+    else 
 #ifdef Q_WS_MAC	
-	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "LuminanceHDR" + sep);
+    	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "LuminanceHDR" + sep);
 #elif WIN32
-	QString appDataDir(QDir::homePath() + sep + "LuminanceHDR" + sep);
+	    QString appDataDir(QDir::homePath() + sep + "LuminanceHDR" + sep);
 #else
-	QString appDataDir(QDir::homePath() + sep + ".LuminanceHDR" + sep);
+	    QString appDataDir(QDir::homePath() + sep + ".LuminanceHDR" + sep);
 #endif
 	QString fname(appDataDir + "HelpBookmarks.xml");
 // 	if (!QFile::exists(fname))
@@ -697,12 +717,16 @@ QString HelpBrowser::historyFile()
 {
 	//QString appDataDir(typotek::getInstance()->getOwnDir().path() + "/");
 	QString sep(QDir::separator());
+    QString appDataDir;
+    if (m_isPortable)
+        appDataDir = QDir::currentPath() + sep;
+    else 
 #ifdef Q_WS_MAC	
-	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "LuminanceHDR" + sep);
+	    QString appDataDir(QDir::homePath() + sep + "Library" + sep + "LuminanceHDR" + sep);
 #elif WIN32
-	QString appDataDir(QDir::homePath() + sep + "LuminanceHDR" + sep);
+    	QString appDataDir(QDir::homePath() + sep + "LuminanceHDR" + sep);
 #else
-	QString appDataDir(QDir::homePath() + sep + ".LuminanceHDR" + sep);
+	    QString appDataDir(QDir::homePath() + sep + ".LuminanceHDR" + sep);
 	//QString fname(appDataDir + "HelpHistory.xml");
 #endif	
 	QString fname(appDataDir + "HelpHistory.xml");

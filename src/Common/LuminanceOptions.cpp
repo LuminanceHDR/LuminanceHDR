@@ -37,7 +37,7 @@
 #include "Common/config.h"
 
 LuminanceOptions::LuminanceOptions():
-    QSettings(LUMINANCEORGANIZATION, LUMINANCEAPPLICATION)
+    QSettings()
 { }
 
 // write system default language the first time around (discard "_country")
