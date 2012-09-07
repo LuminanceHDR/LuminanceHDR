@@ -132,8 +132,9 @@ QStringList sanitizeAISparams(const QString& input_parameter_string)
 
 }
 
-PreferencesDialog::PreferencesDialog(QWidget *p):
+PreferencesDialog::PreferencesDialog(bool isPortable, QWidget *p):
     QDialog(p),
+    m_isPortable(isPortable),
     m_Ui(new Ui::PreferencesDialog)
 {
     m_Ui->setupUi(this);
@@ -219,7 +220,10 @@ void PreferencesDialog::on_okButton_clicked()
     if (luminance_options.getGuiLang() != fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()])
     {
         luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
-        installTranslators(true);
+        if (m_isPortable)
+            installTranslators(true, true);
+        else
+            installTranslators(true);
     }
 
     // UI

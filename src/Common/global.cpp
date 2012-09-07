@@ -75,7 +75,7 @@ ScopedQTranslator lastGuiTranslator;
 ScopedQTranslator lastQtTranslator;
 }
 
-void installTranslators(const QString& lang, bool installQtTranslations)
+void installTranslators(const QString& lang, bool installQtTranslations, bool isPortable)
 {
     if (lastGuiTranslator)
     {
@@ -91,7 +91,10 @@ void installTranslators(const QString& lang, bool installQtTranslations)
     {
         ScopedQTranslator guiTranslator( new QTranslator() );
 
-        guiTranslator->load(QString("lang_") + lang, I18NDIR);
+        if (isPortable)
+            guiTranslator->load(QString("lang_") + lang, QDir::currentPath() + QDir::separator() + "i18n");
+        else
+            guiTranslator->load(QString("lang_") + lang, I18NDIR);
         QCoreApplication::installTranslator(guiTranslator.data());
         lastGuiTranslator.swap( guiTranslator );
 
@@ -99,15 +102,18 @@ void installTranslators(const QString& lang, bool installQtTranslations)
         {
             ScopedQTranslator qtTranslator( new QTranslator() );
 
-			qtTranslator->load(QString("qt_") + lang, I18NDIR);
+            if (isPortable)
+			    qtTranslator->load(QString("qt_") + lang, QDir::currentPath() + QDir::separator() + "i18n");
+            else
+			    qtTranslator->load(QString("qt_") + lang, I18NDIR);
             QCoreApplication::installTranslator(qtTranslator.data());
             lastQtTranslator.swap( qtTranslator );
 	    }
 	}
 }
 
-void installTranslators(bool installQtTranslations)
+void installTranslators(bool installQtTranslations, bool isPortable)
 {
 	LuminanceOptions luminance_options;
-	installTranslators(luminance_options.getGuiLang(), installQtTranslations);
+	installTranslators(luminance_options.getGuiLang(), installQtTranslations, isPortable);
 }
