@@ -111,7 +111,7 @@ int main( int argc, char ** argv )
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
 
-    bool isPortable = application.arguments().at(0).endsWith("portable");
+    bool isPortable = application.arguments().at(0).contains("portable");
 
     if (isPortable) {
         LuminanceOptions::setDefaultFormat(QSettings::IniFormat);
