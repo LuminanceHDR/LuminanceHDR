@@ -40,6 +40,7 @@
 #include <math.h>
 
 #include "Libpfs/vex.h"
+#include "Libpfs/vex/vex.h"
 #include "Libpfs/array2d.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
@@ -606,8 +607,8 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		}
 		else {
 			bk=bknum/bkden;
-			VEX_vadds(z, bk, p, p, n);
-			VEX_vadds(zz, bk, pp, pp, n);
+            vex::vadds(z, bk, p, p, n);
+            vex::vadds(zz, bk, pp, pp, n);
 		}                
 		bkden=bknum;
 		atimes(p,z,rows,cols);
@@ -619,12 +620,12 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
         }
 		ak=bknum/akden;
 		atimes(pp,zz,rows,cols);
-		VEX_vadds(x, ak, p, x, n);
-		VEX_vsubs(r, ak, z, r, n);
-		VEX_vsubs(rr, ak, zz, rr, n);
+        vex::vadds(x, ak, p, x, n);
+        vex::vsubs(r, ak, z, r, n);
+        vex::vsubs(rr, ak, zz, rr, n);
 		asolve(r,z, rows, cols);
-		znrm=1.0;
-		*err=snrm(n,r)/bnrm;
+        znrm = 1.0f;
+        *err = snrm(n,r)/bnrm;
 //		fprintf( stderr, "iter=%4d err=%12.6f\n",*iter,*err);
 	if (*err <= tol) break;
 	}

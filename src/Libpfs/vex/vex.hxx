@@ -28,22 +28,62 @@ namespace vex
 {
 
 template <typename _Type>
-void vmul(const _Type* A, const _Type* B, _Type* C, size_t N)
+void vmul(const _Type* A, const _Type* B, _Type* C, size_t size)
 {
 #pragma omp parallel for
-    for (size_t idx = 0; idx < N; idx++)
+    for (size_t idx = 0; idx < size; idx++)
     {
         C[idx] = A[idx] * B[idx];
     }
 }
 
 template <typename _Type>
-void vdiv(const _Type* A, const _Type* B, _Type* C, size_t N)
+void vdiv(const _Type* A, const _Type* B, _Type* C, size_t size)
 {
 #pragma omp parallel for
-    for (size_t idx = 0; idx < N; idx++)
+    for (size_t idx = 0; idx < size; idx++)
     {
         C[idx] = A[idx] / B[idx];
+    }
+}
+
+template <typename _Type>
+void vadd(const _Type* A, const _Type* B, _Type* C, size_t size)
+{
+#pragma omp parallel for
+    for (size_t idx = 0; idx < size; idx++)
+    {
+        C[idx] = A[idx] + B[idx];
+    }
+}
+
+template <typename _Type>
+void vadds(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size)
+{
+#pragma omp parallel for
+    for (size_t idx = 0; idx < size; idx++)
+    {
+        C[idx] = A[idx] + ( s* B[idx] );
+    }
+}
+
+template <typename _Type>
+void vsub(const _Type* A, const _Type* B, _Type* C, size_t size)
+{
+#pragma omp parallel for
+    for (size_t idx = 0; idx < size; idx++)
+    {
+        C[idx] = A[idx] - B[idx];
+    }
+}
+
+template <typename _Type>
+void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size)
+{
+#pragma omp parallel for
+    for (size_t idx = 0; idx < size; idx++)
+    {
+        C[idx] = A[idx] - ( s* B[idx] );
     }
 }
 

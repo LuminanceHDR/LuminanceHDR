@@ -1,8 +1,8 @@
-/**
- * @brief SSE for high performance vector operations (Vector EXtension - VEX)
- *
+/*
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
+ * Copyright (C) 2011 Davide Anastasia
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,10 +17,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- * 
- * @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
- *
  */
+
+//! @brief SSE for high performance vector operations (Vector EXtension - VEX)
+//! @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
 
 #ifndef VEX_H
 #define VEX_H
@@ -41,17 +41,7 @@
 #error unsupported architecture
 #endif
 
-#endif
-
-// C[i] = A[i] - B[i]
-void VEX_vsub(const float* A, const float* B, float* C, const int N);
-// C[i] = A[i] - val * B[i]
-void VEX_vsubs(const float* A, const float premultiplier, const float* B, float* C, const int N);
-
-// C[i] = A[i] + B[i]
-void VEX_vadd(const float* A, const float* B, float* C, const int N);
-// C[i] = A[i] + val * B[i]
-void VEX_vadds(const float* A, const float premultiplier, const float* B, float* C, const int N);
+#endif // __SSE__
 
 // O[i] = c * I[i]
 void VEX_vsmul(const float* I, const float c, float* O, const int N);

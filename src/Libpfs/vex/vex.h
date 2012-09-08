@@ -48,6 +48,26 @@ void vmul(const _Type* A, const _Type* B, _Type* C, size_t size);
 template <typename _Type>
 void vdiv(const _Type* A, const _Type* B, _Type* C, size_t size);
 
+
+//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! C[i] = A[i] + B[i]
+template <typename _Type>
+void vadd(const _Type* A, const _Type* B, _Type* C, size_t size);
+
+//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! C[i] = A[i] + (s * B[i])
+template <typename _Type>
+void vadds(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size);
+
+//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! C[i] = A[i] - B[i]
+template <typename _Type>
+void vsub(const _Type* A, const _Type* B, _Type* C, size_t size);
+
+//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! C[i] = A[i] - (s * B[i])
+template <typename _Type>
+void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size);
 }
 
 #include "vex.hxx"

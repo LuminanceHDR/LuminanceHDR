@@ -283,9 +283,11 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
 }
 
 // return = a - b
-inline void matrix_subtract(const int n, const float* const a, float* const b)
+inline
+void matrix_subtract(const int n, const float* a, float* b)
+
 {
-  VEX_vsub(a, b, b, n);
+    vex::vsub(a, b, b, n);
 }
 
 // copy matix a to b, return = a 
@@ -715,11 +717,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     alpha = rdotr_curr / vex::dotProduct(p, Ap, n);
     
     // r = r - alpha Ap
-    #pragma omp parallel for schedule(static)
-    for (int i = 0; i < n; i++)
-    {
-      r[i] -= alpha * Ap[i];
-    }
+    vex::vsubs(r, alpha, Ap, r, n);
     
     // rdotr = r.r
     rdotr_prev = rdotr_curr;
@@ -743,11 +741,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     }
     
     // x = x + alpha * p
-    #pragma omp parallel for schedule(static)
-    for (int i = 0; i < n; i++)
-    {
-      x[i] += alpha * p[i];
-    }
+    vex::vadds(x, alpha, p, x, n);
     
     // Exit if we're done
     // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
@@ -777,11 +771,8 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
       // p = r + beta p
       beta = rdotr_curr/rdotr_prev;
       
-      #pragma omp parallel for schedule(static)
-      for (int i = 0; i < n; i++)
-      {
-        p[i] = r[i] + beta*p[i];
-      }
+      // p = r + beta * p
+      vex::vadds(r, beta, p, p, n);
     }
   }
   
