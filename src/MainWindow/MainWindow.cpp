@@ -46,6 +46,7 @@
 #include <QDesktopServices>
 #include <QTimer>
 #include <QString>
+#include <QScrollArea>
 
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DnDOption.h"
@@ -260,8 +261,14 @@ void MainWindow::createUI()
 void MainWindow::createCentralWidget()
 {
     // Central Widget Area
+    m_dockarea = new QMainWindow;
+    m_dockarea->setWindowFlags(Qt::Widget);
+
     m_centralwidget_splitter = new QSplitter; //(this);
+    m_dockarea_splitter = new QSplitter; //(this);
+
     setCentralWidget(m_centralwidget_splitter);
+    m_dockarea->setCentralWidget(m_dockarea_splitter);
 
     // create tonemapping panel
     if (m_isPortable)
@@ -275,19 +282,27 @@ void MainWindow::createCentralWidget()
     m_tabwidget->setTabsClosable(true);
 
     m_centralwidget_splitter->addWidget(tmPanel);
-    m_centralwidget_splitter->addWidget(m_tabwidget);
+    m_centralwidget_splitter->addWidget(m_dockarea);
 
     m_centralwidget_splitter->setStretchFactor(0, 1);
     m_centralwidget_splitter->setStretchFactor(1, 5);
 
     // create preview panel
-    previewPanel = new PreviewPanel(m_centralwidget_splitter);
+    QScrollArea *sa = new QScrollArea;
+    dockWidget = new QDockWidget();
+    connect(dockWidget, SIGNAL(topLevelChanged(bool)), this, SLOT(topLevelChanged(bool)));
+    previewPanel = new PreviewPanel();
+    
+    sa->setWidgetResizable(true);
+    sa->setWidget(previewPanel);
+    dockWidget->setFeatures(QDockWidget::AllDockWidgetFeatures);
+    dockWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
+    dockWidget->setWidget(sa);
+    m_dockarea->addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
 
-    // add panel to central widget
-    m_centralwidget_splitter->addWidget(previewPanel);
-    m_centralwidget_splitter->setStretchFactor(2, 0);
+    m_dockarea_splitter->addWidget(m_tabwidget);
 
-    previewPanel->hide();
+    dockWidget->hide();
 
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
@@ -1538,7 +1553,7 @@ void MainWindow::showPreviewPanel(bool b)
     {
         if (tm_status.is_hdr_ready)
         {
-            previewPanel->show();
+            dockWidget->show();
 
             // ask panel to refresh itself
             previewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
@@ -1551,7 +1566,7 @@ void MainWindow::showPreviewPanel(bool b)
     }
     else
     {
-        previewPanel->hide();
+        dockWidget->hide();
 
         // disconnect signals
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
@@ -1629,7 +1644,7 @@ void MainWindow::removeTab(int t)
             m_inputFilesName.clear();
             m_inputExpoTimes.clear();
 
-			previewPanel->hide();
+			dockWidget->hide();
         }
     }
     else
@@ -1850,4 +1865,18 @@ void MainWindow::updateSoftProofing(int i)
 		else if (m_Ui->actionGamut_Check->isChecked())
 			l_v->doSoftProofing(true);
 	}
+}
+
+void MainWindow::topLevelChanged(bool topLevel) 
+{
+    if (topLevel) {
+        QSize s = previewPanel->getLabelSize();
+        int w = s.width();
+        int h = s.height();
+        dockWidget->widget()->setFixedSize(3*w+50,3*h+50);
+    }
+    else {
+        dockWidget->widget()->setMaximumSize(QWIDGETSIZE_MAX,QWIDGETSIZE_MAX); 
+        dockWidget->widget()->setMinimumSize(0,0);
+    }
 }

@@ -26,7 +26,6 @@
 #include <QSharedPointer>
 
 #include "PreviewPanel.h"
-#include "ui_PreviewPanel.h"
 
 #include "Filter/pfssize.h"
 #include "Filter/pfscut.h"
@@ -35,6 +34,7 @@
 #include "PreviewPanel/PreviewLabel.h"
 #include "TonemappingEngine/TonemapOperator.h"
 #include "Common/LuminanceOptions.h"
+#include "UI/FlowLayout.h"
 
 namespace // anoymous namespace
 {
@@ -110,59 +110,70 @@ private:
 }
 
 PreviewPanel::PreviewPanel(QWidget *parent):
-    QWidget(parent),
-    m_Ui(new Ui::PreviewPanel)
+    QWidget(parent)
 {
     //! \note I need to register the new object to pass this class as parameter inside invokeMethod()
     //! see run() inside PreviewLabelUpdater
     qRegisterMetaType< QSharedPointer<QImage> >("QSharedPointer<QImage>");
 
-    m_Ui->setupUi(this);
-
-    PreviewLabel * labelMantiuk06 = new PreviewLabel(m_Ui->frameMantiuk06, mantiuk06);
+    PreviewLabel * labelMantiuk06 = new PreviewLabel(this, mantiuk06);
     labelMantiuk06->setText("Mantiuk '06");
     m_ListPreviewLabel.push_back(labelMantiuk06);
     connect(labelMantiuk06, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelMantiuk08 = new PreviewLabel(m_Ui->frameMantiuk08, mantiuk08);
+    PreviewLabel * labelMantiuk08 = new PreviewLabel(this, mantiuk08);
     labelMantiuk08->setText("Mantiuk '08");
     m_ListPreviewLabel.push_back(labelMantiuk08);
     connect(labelMantiuk08, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelFattal = new PreviewLabel(m_Ui->frameFattal, fattal);
+    PreviewLabel * labelFattal = new PreviewLabel(this, fattal);
     labelFattal->setText("Fattal");
     m_ListPreviewLabel.push_back(labelFattal);
     connect(labelFattal, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelDrago = new PreviewLabel(m_Ui->frameDrago, drago);
+    PreviewLabel * labelDrago = new PreviewLabel(this, drago);
     labelDrago->setText("Drago");
     m_ListPreviewLabel.push_back(labelDrago);
     connect(labelDrago, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelDurand = new PreviewLabel(m_Ui->frameDurand, durand);
+    PreviewLabel * labelDurand = new PreviewLabel(this, durand);
     labelDurand->setText("Durand");
     m_ListPreviewLabel.push_back(labelDurand);
     connect(labelDurand, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelReinhard02= new PreviewLabel(m_Ui->frameReinhard02, reinhard02);
+    PreviewLabel * labelReinhard02= new PreviewLabel(this, reinhard02);
     labelReinhard02->setText("Reinhard '02");
     m_ListPreviewLabel.push_back(labelReinhard02);
     connect(labelReinhard02, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelReinhard05 = new PreviewLabel(m_Ui->frameReinhard05, reinhard05);
+    PreviewLabel * labelReinhard05 = new PreviewLabel(this, reinhard05);
     labelReinhard05->setText("Reinhard '05");
     m_ListPreviewLabel.push_back(labelReinhard05);
     connect(labelReinhard05, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelAshikhmin = new PreviewLabel(m_Ui->frameAshikhmin, ashikhmin);
+    PreviewLabel * labelAshikhmin = new PreviewLabel(this, ashikhmin);
     labelAshikhmin->setText("Ashikhmin");
     m_ListPreviewLabel.push_back(labelAshikhmin);
     connect(labelAshikhmin, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelPattanaik = new PreviewLabel(m_Ui->framePattanaik, pattanaik);
+    PreviewLabel * labelPattanaik = new PreviewLabel(this, pattanaik);
     labelPattanaik->setText("Pattanaik");
     m_ListPreviewLabel.push_back(labelPattanaik);
     connect(labelPattanaik, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+
+    FlowLayout *flowLayout = new FlowLayout;
+
+    flowLayout->addWidget(labelMantiuk06);
+    flowLayout->addWidget(labelMantiuk08);
+    flowLayout->addWidget(labelFattal);
+    flowLayout->addWidget(labelDrago);
+    flowLayout->addWidget(labelDurand);
+    flowLayout->addWidget(labelReinhard02);
+    flowLayout->addWidget(labelReinhard05);
+    flowLayout->addWidget(labelAshikhmin);
+    flowLayout->addWidget(labelPattanaik);
+
+    setLayout(flowLayout);
 }
 
 PreviewPanel::~PreviewPanel()
@@ -175,7 +186,7 @@ PreviewPanel::~PreviewPanel()
 void PreviewPanel::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
-        m_Ui->retranslateUi(this);
+        //m_Ui->retranslateUi(this);
     }
 
 	QWidget::changeEvent(event);
@@ -219,4 +230,9 @@ void PreviewPanel::tonemapPreview(TonemappingOptions* opts)
     opts->origxsize = original_width_frame;
 
     emit startTonemapping(opts);
+}
+
+QSize PreviewPanel::getLabelSize()
+{
+    return m_ListPreviewLabel.at(0)->pixmap()->size();
 }

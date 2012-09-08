@@ -40,6 +40,7 @@
 #include <QSignalMapper>
 #include <QSplitter>
 #include <QTabWidget>
+#include <QDockWidget>
 #include <QThread>
 #include <QProgressBar>
 
@@ -186,12 +187,17 @@ protected Q_SLOTS:
 	void on_actionGamut_Check_toggled(bool);
 	void updateSoftProofing(int);
 
+    void topLevelChanged(bool);
+
 Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);
 
 protected:
     QSplitter *m_centralwidget_splitter;
+    QSplitter *m_dockarea_splitter;
+    QMainWindow *m_dockarea;
+;
     QTabWidget *m_tabwidget;
 
     QSignalMapper *windowMapper;
@@ -250,6 +256,7 @@ protected:
 
     // Preview Panel
     PreviewPanel *previewPanel;
+    QDockWidget *dockWidget;
 
     void openFiles(const QStringList& files);
 

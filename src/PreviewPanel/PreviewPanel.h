@@ -45,6 +45,7 @@ class PreviewPanel : public QWidget
 public:
     PreviewPanel(QWidget *parent = 0);
     ~PreviewPanel();
+    QSize getLabelSize();
 
 protected:
 	virtual void changeEvent(QEvent* event);
@@ -62,6 +63,6 @@ private:
     int original_width_frame;
     QList<PreviewLabel*> m_ListPreviewLabel;
 
-    QScopedPointer<Ui::PreviewPanel> m_Ui;
+//    QScopedPointer<Ui::PreviewPanel> m_Ui;
 };
 #endif
