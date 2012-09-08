@@ -1,61 +1,8 @@
 #include <gtest/gtest.h>
 #include <stdlib.h>
 #include <vector>
-#include <tbb/tbb.h>
 
-namespace reference
-{
-int imin(int a, int b)
-{
-    return (a > b) ? b : a;
-}
-
-//! \brief Reference implementation of matrix_upsample_full
-void matrix_upsample_full(const size_t outCols, const size_t outRows,
-                          const float* in, float* out)
-{
-    const size_t inRows = outRows/2;
-    const size_t inCols = outCols/2;
-
-    // Transpose of experimental downsampling matrix (theoretically the correct
-    // thing to do)
-
-    const float dx = (float)inCols / ((float)outCols);
-    const float dy = (float)inRows / ((float)outRows);
-    // This gives a genuine upsampling matrix, not the transpose of the
-    // downsampling matrix
-    // Theoretically, this should be the best.
-    // const float factor = 1.0f;
-    const float factor = 1.0f / (dx*dy);
-
-    for (size_t y = 0; y < outRows; y++)
-    {
-        const float sy = y * dy;
-        const int iy1 =      (  y   * inRows) / outRows;
-        const int iy2 = imin(((y+1) * inRows) / outRows, inRows-1);
-
-        for (size_t x = 0; x < outCols; x++)
-        {
-            const float sx = x * dx;
-            const int ix1 =      (  x   * inCols) / outCols;
-            const int ix2 = imin(((x+1) * inCols) / outCols, inCols-1);
-
-            out[x + y*outCols] = (((ix1+1) - sx)*((iy1+1 - sy))
-                                  * in[ix1 + iy1*inCols]
-                                  +
-                                  ((ix1+1) - sx)*(sy+dy - (iy1+1))
-                                  * in[ix1 + iy2*inCols]
-                                  +
-                                  (sx+dx - (ix1+1))*((iy1+1 - sy))
-                                  * in[ix2 + iy1*inCols]
-                                  +
-                                  (sx+dx - (ix1+1))*(sy+dx - (iy1+1))
-                                  * in[ix2 + iy2*inCols])*factor;
-        }
-    }
-}
-
-} // reference
+#include "TestMantiuk06Reference.h"
 
 struct RandZeroOne
 {
@@ -65,20 +12,24 @@ struct RandZeroOne
     }
 };
 
-// header for Mantiuk06
 void matrix_upsample_full(const int outCols, const int outRows,
                           const float* const in, float* const out);
+void matrix_upsample_simple(const int outCols, const int outRows,
+                            const float* const in, float* const out);
 
-TEST(TestMantiuk06, TestMantiuk06UpsampleFull)
+void calculate_gradient(const int COLS, const int ROWS,
+                        const float* const lum, float* const Gx, float* const Gy);
+
+void calculate_and_add_divergence(const int COLS, const int ROWS,
+                                  const float* const Gx, const float* const Gy,
+                                  float* const divG);
+
+TEST(TestMantiuk06, UpsampleFull)
 {
     const size_t outputCols = 4373;
     const size_t outputRows = 2173;
     const size_t inputCols = outputCols/2;
     const size_t inputRows = outputRows/2;
-
-    // checking preconditions!
-    //EXPECT_EQ(inputCols, 35u);
-    //EXPECT_EQ(inputRows, 50u);
 
     std::vector<float> origin(inputCols*inputRows);
 
@@ -87,73 +38,51 @@ TEST(TestMantiuk06, TestMantiuk06UpsampleFull)
 
     std::vector<float> referenceOutput(outputCols*outputRows);
 
-    tbb::tick_count ref_t0 = tbb::tick_count::now();
     reference::matrix_upsample_full(outputCols, outputRows,
                                     origin.data(), referenceOutput.data());
-    tbb::tick_count ref_t1 = tbb::tick_count::now();
-    double ref_t = (ref_t1 - ref_t0).seconds();
 
     std::vector<float> testOutput(outputCols*outputRows);
     std::fill(testOutput.begin(), testOutput.end(), 0.f);
 
-    tbb::tick_count test_t0 = tbb::tick_count::now();
     matrix_upsample_full(outputCols, outputRows,
                          origin.data(), testOutput.data());
-    tbb::tick_count test_t1 = tbb::tick_count::now();
-    double test_t = (test_t1 - test_t0).seconds();
 
     EXPECT_EQ(referenceOutput.size(), testOutput.size());
     for (size_t idx = 0; idx < testOutput.size(); ++idx)
     {
         EXPECT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
     }
-    // EXPECT_GT(ref_t, test_t);
-
-    std::cout << "Speed up: " << ref_t/test_t << std::endl;
 }
 
-namespace reference
+TEST(TestMantiuk06, UpsampleSimple)
 {
-void calculate_and_add_divergence(size_t COLS, size_t ROWS,
-                                  const float* Gx,
-                                  const float* Gy,
-                                  float* divG)
-{
-    float divGx, divGy;
+    const size_t outputCols = 5000;
+    const size_t outputRows = 2600;
+    const size_t inputCols = outputCols >> 1;
+    const size_t inputRows = outputRows >> 1;
 
-    // kx = 0 AND ky = 0;
-    divG[0] += Gx[0] + Gy[0];                       // OUT
+    std::vector<float> origin(inputCols*inputRows);
 
-    // ky = 0
-    for (size_t kx=1; kx < COLS; kx++)
+    // fill data with samples between zero and one!
+    generate(origin.begin(), origin.end(), RandZeroOne());
+
+    std::vector<float> referenceOutput(outputCols*outputRows);
+
+    reference::matrix_upsample_simple(outputCols, outputRows,
+                                      origin.data(), referenceOutput.data());
+
+    std::vector<float> testOutput(outputCols*outputRows);
+    std::fill(testOutput.begin(), testOutput.end(), 0.f);
+
+    matrix_upsample_simple(outputCols, outputRows,
+                           origin.data(), testOutput.data());
+
+    EXPECT_EQ(referenceOutput.size(), testOutput.size());
+    for (size_t idx = 0; idx < testOutput.size(); ++idx)
     {
-        divGx = Gx[kx] - Gx[kx - 1];
-        divGy = Gy[kx];
-        divG[kx] += divGx + divGy;                    // OUT
+        EXPECT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
     }
-
-    for (size_t ky=1; ky < ROWS; ky++)
-    {
-        // kx = 0
-        divGx = Gx[ky*COLS];
-        divGy = Gy[ky*COLS] - Gy[ky*COLS - COLS];
-        divG[ky*COLS] += divGx + divGy;               // OUT
-
-        // kx > 0
-        for (size_t kx=1; kx<COLS; kx++)
-        {
-            divGx = Gx[kx + ky*COLS] - Gx[kx + ky*COLS-1];
-            divGy = Gy[kx + ky*COLS] - Gy[kx + ky*COLS - COLS];
-            divG[kx + ky*COLS] += divGx + divGy;        // OUT
-        }
-    }
-
 }
-}
-
-void calculate_and_add_divergence(const int COLS, const int ROWS,
-                                  const float* const Gx, const float* const Gy,
-                                  float* const divG);
 
 TEST(TestMantiuk06, TestMantiuk06AddDivergence)
 {
@@ -170,72 +99,23 @@ TEST(TestMantiuk06, TestMantiuk06AddDivergence)
     std::vector<float> referenceOutput(cols*rows);
     std::fill(referenceOutput.begin(), referenceOutput.end(), 0.f);
 
-    tbb::tick_count ref_t0 = tbb::tick_count::now();
     reference::calculate_and_add_divergence(cols, rows,
                                             Gx.data(), Gy.data(),
                                             referenceOutput.data());
-    tbb::tick_count ref_t1 = tbb::tick_count::now();
-    double ref_t = (ref_t1 - ref_t0).seconds();
 
     std::vector<float> testOutput(cols*rows);
     std::fill(testOutput.begin(), testOutput.end(), 0.f);
 
-    tbb::tick_count test_t0 = tbb::tick_count::now();
     calculate_and_add_divergence(cols, rows,
                                  Gx.data(), Gy.data(),
                                  testOutput.data());
-    tbb::tick_count test_t1 = tbb::tick_count::now();
-    double test_t = (test_t1 - test_t0).seconds();
 
     EXPECT_EQ(referenceOutput.size(), testOutput.size());
     for (size_t idx = 0; idx < testOutput.size(); ++idx)
     {
         EXPECT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
     }
-    // EXPECT_GT(ref_t, test_t);
-
-    std::cout << "Speed up: " << ref_t/test_t << std::endl;
 }
-
-namespace reference
-{
-void calculate_gradient(const int COLS, const int ROWS,
-                        const float* lum, float* Gx, float* Gy)
-{
-    int Y_IDX, IDX;
-
-    for (int ky = 0; ky < ROWS-1; ky++)
-    {
-        Y_IDX = ky*COLS;
-        for (int kx = 0; kx < COLS-1; kx++)
-        {
-            IDX = Y_IDX + kx;
-
-            Gx[IDX] = lum[IDX + 1]    - lum[IDX];
-            Gy[IDX] = lum[IDX + COLS] - lum[IDX];
-        }
-
-        Gx[Y_IDX + COLS - 1] = 0.0f; // last columns (kx = COLS - 1)
-        Gy[Y_IDX + COLS - 1] = lum[Y_IDX + COLS - 1 + COLS] - lum[Y_IDX + COLS - 1];
-    }
-
-    // last row (ky = ROWS-1)
-    for (int kx = 0; kx < (COLS-1); kx++)
-    {
-        IDX = (ROWS - 1)*COLS + kx;
-
-        Gx[IDX] = lum[IDX + 1] - lum[IDX];
-        Gy[IDX] = 0.0f;
-    }
-
-    // last row & last col = last element
-    Gx[ROWS*COLS - 1] = 0.0f;
-    Gy[ROWS*COLS - 1] = 0.0f;
-}
-}
-
-void calculate_gradient(const int COLS, const int ROWS,
-                        const float* const lum, float* const Gx, float* const Gy);
 
 TEST(TestMantiuk06, TestMantiuk06CalculateGradient)
 {
@@ -250,20 +130,15 @@ TEST(TestMantiuk06, TestMantiuk06CalculateGradient)
     std::vector<float> referenceGx(cols*rows);
     std::vector<float> referenceGy(cols*rows);
 
-    tbb::tick_count ref_t0 = tbb::tick_count::now();
     reference::calculate_gradient(cols, rows, input.data(),
                                   referenceGx.data(), referenceGy.data());
-    tbb::tick_count ref_t1 = tbb::tick_count::now();
-    double ref_t = (ref_t1 - ref_t0).seconds();
 
     // COMPUTED
     std::vector<float> computedGx(cols*rows);
     std::vector<float> computedGy(cols*rows);
-    tbb::tick_count test_t0 = tbb::tick_count::now();
+
     calculate_gradient(cols, rows, input.data(),
                        computedGx.data(), computedGy.data());
-    tbb::tick_count test_t1 = tbb::tick_count::now();
-    double test_t = (test_t1 - test_t0).seconds();
 
     // CHECK
     for (size_t idx = 0; idx < referenceGx.size(); ++idx)
@@ -274,7 +149,4 @@ TEST(TestMantiuk06, TestMantiuk06CalculateGradient)
     {
         EXPECT_NEAR(referenceGy[idx], computedGy[idx], 10e-6f);
     }
-    // EXPECT_GT(ref_t, test_t);
-
-    std::cout << "Speed up: " << ref_t/test_t << std::endl;
 }
