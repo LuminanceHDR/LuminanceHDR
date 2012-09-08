@@ -118,46 +118,55 @@ PreviewPanel::PreviewPanel(QWidget *parent):
 
     PreviewLabel * labelMantiuk06 = new PreviewLabel(this, mantiuk06);
     labelMantiuk06->setText("Mantiuk '06");
+    labelMantiuk06->setToolTip("Mantiuk '06");
     m_ListPreviewLabel.push_back(labelMantiuk06);
     connect(labelMantiuk06, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelMantiuk08 = new PreviewLabel(this, mantiuk08);
     labelMantiuk08->setText("Mantiuk '08");
+    labelMantiuk08->setToolTip("Mantiuk '08");
     m_ListPreviewLabel.push_back(labelMantiuk08);
     connect(labelMantiuk08, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelFattal = new PreviewLabel(this, fattal);
     labelFattal->setText("Fattal");
+    labelFattal->setToolTip("Fattal");
     m_ListPreviewLabel.push_back(labelFattal);
     connect(labelFattal, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelDrago = new PreviewLabel(this, drago);
     labelDrago->setText("Drago");
+    labelDrago->setToolTip("Drago");
     m_ListPreviewLabel.push_back(labelDrago);
     connect(labelDrago, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelDurand = new PreviewLabel(this, durand);
     labelDurand->setText("Durand");
+    labelDurand->setToolTip("Durand");
     m_ListPreviewLabel.push_back(labelDurand);
     connect(labelDurand, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelReinhard02= new PreviewLabel(this, reinhard02);
     labelReinhard02->setText("Reinhard '02");
+    labelReinhard02->setToolTip("Reinhard '02");
     m_ListPreviewLabel.push_back(labelReinhard02);
     connect(labelReinhard02, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelReinhard05 = new PreviewLabel(this, reinhard05);
     labelReinhard05->setText("Reinhard '05");
+    labelReinhard05->setToolTip("Reinhard '05");
     m_ListPreviewLabel.push_back(labelReinhard05);
     connect(labelReinhard05, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelAshikhmin = new PreviewLabel(this, ashikhmin);
     labelAshikhmin->setText("Ashikhmin");
+    labelAshikhmin->setToolTip("Ashikhmin");
     m_ListPreviewLabel.push_back(labelAshikhmin);
     connect(labelAshikhmin, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelPattanaik = new PreviewLabel(this, pattanaik);
     labelPattanaik->setText("Pattanaik");
+    labelPattanaik->setToolTip("Pattanaik");
     m_ListPreviewLabel.push_back(labelPattanaik);
     connect(labelPattanaik, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
