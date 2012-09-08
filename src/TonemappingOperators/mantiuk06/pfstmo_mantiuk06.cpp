@@ -34,89 +34,72 @@
  * $Id: pfstmo_mantiuk06.cpp,v 1.9 2008/06/16 22:09:33 rafm Exp $
  */
 
-#include <stdlib.h>
-#include <fcntl.h>
+#include <cstdlib>
 #include <cmath>
 #include <iostream>
+#include <sstream>
+#include <algorithm>
 
 #include "contrast_domain.h"
 
 #include "Libpfs/pfs.h"
 #include "Libpfs/colorspace.h"
-//#include "Common/msec_timer.h"
+
+
+//--- default tone mapping parameters;
+//float scaleFactor = 0.1f;
+//float saturationFactor = 0.8f;
+//bool cont_map = false, cont_eq = false
+//bool cont_map = false;
 
 namespace
 {
-// decode SRGB into RGB
-template <typename T>
-T decode(T value)
-{
-    if (value <= 0.0031308f )
-    {
-        return (value *= 12.92f);
-    }
-    return (1.055f * powf( value, 1.f/2.4f ) - 0.055f);
-}
-
-template <typename T>
-void decodeVector(T* vector, size_t size)
-{
-    std::transform(vector, vector + size, vector, decode<T>);
-}
+const int itmax = 200;
+const float tol = 1e-3f;
 }
 
 void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, ProgressHelper *ph)
 {
-  //--- default tone mapping parameters;
-  //float scaleFactor = 0.1f;
-  //float saturationFactor = 0.8f;
-  //bool cont_map = false, cont_eq = false
-  //bool cont_map = false;
-  int itmax = 200;
-  float tol = 1e-3f;
-  
-  std::cout << "pfstmo_mantiuk06 (";
-  if (!cont_eq)
-  {
-    std::cout << "Mode: Contrast Mapping, ";
-  }
-  else 
-  {
-    scaleFactor = -scaleFactor;
-    std::cout << "Mode: Contrast Equalization, ";
-  }
-  
-  std::cout << "scaleFactor: " << scaleFactor;
-  std::cout << ", saturationFactor: " << saturationFactor;
-  std::cout << ", detailFactor: " << detailFactor << ")" << std::endl;
-  
-  pfs::Channel *inRed, *inGreen, *inBlue;
-  frame->getXYZChannels(inRed, inGreen, inBlue);
-  
-  int cols = frame->getWidth();
-  int rows = frame->getHeight();
+#ifndef NDEBUG
+    std::stringstream ss;
+
+    ss << "pfstmo_mantiuk06 (";
+    if (!cont_eq)
+    {
+        ss << "Mode: Contrast Mapping, ";
+    }
+    else
+    {
+        scaleFactor = -scaleFactor;
+        ss << "Mode: Contrast Equalization, ";
+    }
+
+    ss << "scaleFactor: " << scaleFactor;
+    ss << ", saturationFactor: " << saturationFactor;
+    ss << ", detailFactor: " << detailFactor << ")" << std::endl;
+
+    std::cout << ss.str();
+#endif
+
+    pfs::Channel *inRed, *inGreen, *inBlue;
+    frame->getXYZChannels(inRed, inGreen, inBlue);
+
+    int cols = frame->getWidth();
+    int rows = frame->getHeight();
     
-  pfs::Array2D inY( cols, rows );
-  pfs::transformRGB2Y(inRed->getChannelData(),
-                      inGreen->getChannelData(),
-                      inBlue->getChannelData(),
-                      &inY);
+    pfs::Array2D inY( cols, rows );
+    pfs::transformRGB2Y(inRed->getChannelData(),
+                        inGreen->getChannelData(),
+                        inBlue->getChannelData(),
+                        &inY);
 
-  tmo_mantiuk06_contmap(cols, rows,
-                        inRed->getRawData(),
-                        inGreen->getRawData(),
-                        inBlue->getRawData(),
-                        inY.getRawData(),
-                        scaleFactor, saturationFactor, detailFactor, itmax, tol,
-                        ph);
-  
-  if ( !ph->isTerminationRequested() )
-  {
-      // pfs::transformColorSpace( pfs::CS_RGB, Xr, G, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
-      decodeVector(inRed->getRawData(), cols*rows);
-      decodeVector(inGreen->getRawData(), cols*rows);
-      decodeVector(inBlue->getRawData(), cols*rows);
+    tmo_mantiuk06_contmap(cols, rows,
+                          inRed->getRawData(),
+                          inGreen->getRawData(),
+                          inBlue->getRawData(),
+                          inY.getRawData(),
+                          scaleFactor, saturationFactor, detailFactor, itmax, tol,
+                          ph);
 
-      frame->getTags().setString("LUMINANCE", "RELATIVE");
-  }
+    frame->getTags().setString("LUMINANCE", "RELATIVE");
 }

@@ -1,13 +1,4 @@
-/**
- * @brief Contrast mapping TMO
- *
- * From:
- * 
- * Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel.
- * A Perceptual Framework for Contrast Processing of High Dynamic Range Images
- * In: ACM Transactions on Applied Perception 3 (3), pp. 286-308, 2006
- * http://www.mpi-inf.mpg.de/~mantiuk/contrast_domain/
- *
+/*
  * This file is a part of Luminance HDR package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2007 Grzegorz Krawczyk
@@ -28,34 +19,51 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  * 
- * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
- * @author Rafal Mantiuk, <mantiuk@gmail.com>
- * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
- *  (more information on the changes:
- *  http://www.damtp.cam.ac.uk/user/ejb48/hdr/index.html)
- * Updated 2008/06/25 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
- *  bug fixes and openMP patches
- *  more on this:
- *  http://groups.google.com/group/pfstools/browse_thread/thread/de2378af98ec6185/0dee5304fc14e99d?hl=en#0dee5304fc14e99d
- *  Optimization improvements by Lebed Dmytry
- *
- * Updated 2008/07/26 by Dejan Beric <dejan.beric@live.com>
- *  Added the detail factor slider which offers more control over contrast in details
- * Update 2010/10/06 by Axel Voitier <axel.voitier@gmail.com>
- *  detail_factor patch in order to remove potential issues in a multithreading environment
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  Improvement & Clean up
- * @author Bruce Guenter <bruce@untroubled.org>
- *  Added trivial downsample and upsample functions when both dimension are even
- *
- * $Id: contrast_domain.cpp,v 1.14 2008/08/26 17:08:49 rafm Exp $
  */
+
+//! \brief Contrast mapping TMO [Mantiuk06]
+//!
+//! From:
+//!
+//! Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel.
+//! A Perceptual Framework for Contrast Processing of High Dynamic Range Images
+//! In: ACM Transactions on Applied Perception 3 (3), pp. 286-308, 2006
+//! \ref http://www.mpi-inf.mpg.de/~mantiuk/contrast_domain/
+//! \author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
+//! \author Rafal Mantiuk, <mantiuk@gmail.com>
+//! Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
+//!  (more information on the changes:
+//!  http://www.damtp.cam.ac.uk/user/ejb48/hdr/index.html)
+//! Updated 2008/06/25 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
+//!  bug fixes and OpenMP patches
+//!  more on this:
+//!  http://tinyurl.com/9plnn8c
+//!  Optimization improvements by Lebed Dmytry
+//! Updated 2008/07/26 by Dejan Beric <dejan.beric@live.com>
+//!  Added the detail factor slider which offers more control over contrast in
+//!  details
+//! Update 2010/10/06 by Axel Voitier <axel.voitier@gmail.com>
+//!  detail_factor patch in order to remove potential issues in a multithreading
+//!  environment
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//!  Improvement & Clean up (August 2011)
+//!  TBB based implementation (September 2012)
+//! \author Bruce Guenter <bruce@untroubled.org>
+//!  Added trivial downsample and upsample functions when both dimension are even
+//!
+//! \note This implementation of Mantiuk06, while originally based on the source
+//! code available in PFSTMO, is different in many ways. For this reason, while
+//! the file mentions the original authors (and history of the file as well,
+//! as above), license applied to this file is uniquely GPL2. If you are looking
+//! for an implementation with a less stringent license, please refer to the
+//! original implementation of this algorithm in PFSTMO.
 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -69,7 +77,9 @@
 
 #include "Libpfs/vex.h"
 #include "Libpfs/vex/vex.h"
+#include "Libpfs/vex/minmax.h"
 #include "Libpfs/vex/dotproduct.h"
+
 #include "Common/msec_timer.h"
 
 typedef struct pyramid_s {
@@ -644,7 +654,8 @@ void multiplyA(pyramid_t* px, pyramid_t* pC, const float* const x, float* const 
 
 // conjugate linear equation solver overwrites pyramid!
 //
-// This version is a slightly modified version by Davide Anastasia <davideanastasia@users.sourceforge.net>
+// This version is a slightly modified version by
+// Davide Anastasia <davideanastasia@users.sourceforge.net>
 // March 25, 2011
 void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph)
 {
@@ -1060,10 +1071,27 @@ namespace
 {
 const float CUT_MARGIN = 0.1f;
 const float disp_dyn_range = 2.3f;
+
+void normalizeLuminanceAndRGB(float* R, float* G, float* B, float* Y, size_t size)
+{
+    const float clip_min = 1e-7f*vex::minElement(Y, size);
+
+    for (size_t idx = 0; idx < size; idx++)
+    {
+        if ( R[idx] < clip_min ) R[idx] = clip_min;
+        if ( G[idx] < clip_min ) G[idx] = clip_min;
+        if ( B[idx] < clip_min ) B[idx] = clip_min;
+        if ( Y[idx] < clip_min ) Y[idx] = clip_min;
+
+        R[idx] /= Y[idx];
+        G[idx] /= Y[idx];
+        B[idx] /= Y[idx];
+        Y[idx] = log10f( Y[idx] );
+    }
 }
 
 /* Renormalize luminance */
-void renormalizeLuminance(float* Y, size_t size)
+void denormalizeLuminance(float* Y, size_t size)
 {
     std::vector<float> temp(size);
     std::copy(Y, Y + size, temp.begin());
@@ -1078,85 +1106,75 @@ void renormalizeLuminance(float* Y, size_t size)
     delta = trim - floorf(trim);
     const float l_max = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);
 
-#pragma omp parallel for schedule(static)
+#pragma omp parallel for
     for (size_t j = 0; j < size; j++)
     {
         Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
     }
 }
 
+template <typename T>
+inline
+T decode(const T& value)
+{
+    if ( value <= 0.0031308f )
+    {
+        return (value * 12.92f);
+    }
+    return (1.055f * std::pow( value, 1.f/2.4f ) - 0.055f);
+}
+
+void denormalizeRGB(float* R, float* G, float* B, const float* Y, size_t size,
+                    float saturationFactor)
+{
+    /* Transform to sRGB */
+#pragma omp parallel for
+    for (size_t j = 0; j < size ; j++)
+    {
+        float myY = std::pow( 10.f, Y[j] );
+        R[j] = decode( std::pow( R[j], saturationFactor ) * myY );
+        G[j] = decode( std::pow( G[j], saturationFactor ) * myY );
+        B[j] = decode( std::pow( B[j], saturationFactor ) * myY );
+    }
+}
+}
+
 // tone mapping
 int tmo_mantiuk06_contmap(const int c, const int r,
-                          float* const R, float* const G, float* const B,
-                          float* const Y,
-                          const float contrastFactor, const float saturationFactor, float detailfactor, const int itmax, const float tol, ProgressHelper *ph)
+                          float* R, float* G, float* B,
+                          float* Y,
+                          const float contrastFactor,
+                          const float saturationFactor,
+                          float detailfactor,
+                          const int itmax,
+                          const float tol,
+                          ProgressHelper *ph)
 {
-  const int n = c*r;
-  
-  /* Normalize */
-  float Ymax = Y[0];
-  for (int j = 1; j < n; j++)
-    if (Y[j] > Ymax)
-      Ymax = Y[j];
-  
-  const float clip_min = 1e-7f*Ymax;
-  
-  //TODO: use VEX, if you can
-  #pragma omp parallel for schedule(static)
-  for (int j = 0; j < n; j++)
-  {
-    if ( unlikely(R[j] < clip_min) ) R[j] = clip_min;
-    if ( unlikely(G[j] < clip_min) ) G[j] = clip_min;
-    if ( unlikely(B[j] < clip_min) ) B[j] = clip_min;
-    if ( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;
+    const size_t n = c*r;
 
-    R[j] /= Y[j];
-    G[j] /= Y[j];
-    B[j] /= Y[j];
-    Y[j] = log10f(Y[j]);
-  }
-	
-//  //TODO: use VEX
-//  #pragma omp parallel for schedule(static)
-//  for(int j=0;j<n;j++)
-//  {
-//    R[j] /= Y[j];
-//    G[j] /= Y[j];
-//    B[j] /= Y[j];
-//    Y[j] = log10f(Y[j]);
-//  }
-	
-  pyramid_t* pp = pyramid_allocate(c, r);                 // create pyramid
+    normalizeLuminanceAndRGB(R, G, B, Y, n);
 
-  pyramid_calculate_gradient(pp, Y);                      // calculate gradients for pyramid (Y won't be changed)
-  pyramid_transform_to_R(pp, detailfactor);               // transform gradients to R
-  
-  /* Contrast map */
-  if (contrastFactor > 0.0f)
-  {
-    pyramid_gradient_multiply(pp, contrastFactor);        // Contrast mapping
-  }
-  else
-  {
-    contrast_equalization(pp, -contrastFactor);           // Contrast equalization
-  }
-	
-  pyramid_transform_to_G(pp, detailfactor);               // transform R to gradients
-  transform_to_luminance(pp, Y, ph, itmax, tol);     // transform gradients to luminance Y
-  pyramid_free(pp);
-  
-  renormalizeLuminance(Y, n);
-  
-  //TODO: use VEX
-  /* Transform to linear scale RGB */
-  #pragma omp parallel for schedule(static)
-  for(int j=0;j<n;j++)
-  {
-    Y[j] = powf( 10, Y[j] );
-    R[j] = powf( R[j], saturationFactor ) * Y[j];
-    G[j] = powf( G[j], saturationFactor ) * Y[j];
-    B[j] = powf( B[j], saturationFactor ) * Y[j];
-  }
-  
-  return PFSTMO_OK;
+    pyramid_t* pp = pyramid_allocate(c, r);                 // create pyramid
+
+    pyramid_calculate_gradient(pp, Y);                      // calculate gradients for pyramid (Y won't be changed)
+    pyramid_transform_to_R(pp, detailfactor);               // transform gradients to R
+
+    /* Contrast map */
+    if (contrastFactor > 0.0f)
+    {
+        pyramid_gradient_multiply(pp, contrastFactor);        // Contrast mapping
+    }
+    else
+    {
+        contrast_equalization(pp, -contrastFactor);           // Contrast equalization
+    }
+
+    pyramid_transform_to_G(pp, detailfactor);               // transform R to gradients
+    transform_to_luminance(pp, Y, ph, itmax, tol);          // transform gradients to luminance Y
+    pyramid_free(pp);
+
+    denormalizeLuminance(Y, n);
+    denormalizeRGB(R, G, B, Y, n, saturationFactor);
+
+    return PFSTMO_OK;
 }
