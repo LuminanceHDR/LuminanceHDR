@@ -25,13 +25,41 @@ TARGET_LINK_LIBRARIES(TestSRGB2Y pfs common
 ADD_TEST(TestSRGB2Y TestSRGB2Y)
 
 # Mantiuk06
-ADD_EXECUTABLE(TestMantiuk06 TestMantiuk06.cpp
-    TestMantiuk06Reference.cpp TestMantiuk06Reference.h)
-TARGET_LINK_LIBRARIES(TestMantiuk06 pfs pfstmo common
-    ${GTEST_BOTH_LIBRARIES}
-    ${CMAKE_THREAD_LIBS_INIT}
-    ${LIBS})
-ADD_TEST(TestMantiuk06 TestMantiuk06)
+ADD_EXECUTABLE(TestMantiuk06Basic
+    TestMantiuk06Basic.cpp
+    mantiuk06/contrast_domain.cpp
+    mantiuk06/contrast_domain.h
+)
+IF(MSVC OR APPLE)
+    TARGET_LINK_LIBRARIES(TestMantiuk06Basic pfs pfstmo common
+        ${GTEST_BOTH_LIBRARIES}
+        ${CMAKE_THREAD_LIBS_INIT}
+        ${LIBS})
+ELSE()
+    TARGET_LINK_LIBRARIES(TestMantiuk06Basic -Xlinker --start-group pfs pfstmo common -Xlinker --end-group
+        ${GTEST_BOTH_LIBRARIES}
+        ${CMAKE_THREAD_LIBS_INIT}
+        ${LIBS} -lrt)
+ENDIF()
+ADD_TEST(TestMantiuk06Basic TestMantiuk06Basic)
+
+ADD_EXECUTABLE(TestMantiuk06Pyramid
+    TestMantiuk06Pyramid.cpp
+    mantiuk06/contrast_domain.cpp
+    mantiuk06/contrast_domain.h
+)
+IF(MSVC OR APPLE)
+    TARGET_LINK_LIBRARIES(TestMantiuk06Pyramid pfs pfstmo common
+        ${GTEST_BOTH_LIBRARIES}
+        ${CMAKE_THREAD_LIBS_INIT}
+        ${LIBS})
+ELSE()
+    TARGET_LINK_LIBRARIES(TestMantiuk06Pyramid -Xlinker --start-group pfs pfstmo common -Xlinker --end-group
+        ${GTEST_BOTH_LIBRARIES}
+        ${CMAKE_THREAD_LIBS_INIT}
+        ${LIBS} -lrt)
+ENDIF()
+ADD_TEST(TestMantiuk06Pyramid TestMantiuk06Pyramid)
 
 ADD_EXECUTABLE(TestVex TestVex.cpp)
 TARGET_LINK_LIBRARIES(TestVex
