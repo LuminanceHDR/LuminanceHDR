@@ -91,6 +91,8 @@ IF(WIN32)
     SET(TIFF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libtiff/libtiff.lib")
 	
     SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
+    ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
+    ADD_DEFINITIONS("-DDEMOSAICING_GPL3")
 	
     SET(GSL_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/gsl.lib")
     SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
