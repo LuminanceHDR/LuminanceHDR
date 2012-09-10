@@ -45,6 +45,7 @@
 #include "Common/config.h"
 #include "TonemappingPanel/TonemappingPanel.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
+#include "TonemappingPanel/TonemappingSettings.h"
 #include "Common/SavedParametersDialog.h"
 #include "TonemappingPanel/SavingParametersDialog.h"
 #include "TonemappingOperators/pfstmdefaultparams.h"
@@ -1162,13 +1163,11 @@ void TonemappingPanel::saveParameters()
 
 void TonemappingPanel::loadParameters()
 {
-	SavedParametersDialog dialog(currentTmoOperator);
+    TonemappingSettings dialog(this, m_currentFrame);
+
 	if (dialog.exec())
 	{
-		QSqlQueryModel *model = dialog.getModel();
-		if (model->rowCount() == 0)
-			return;
-		int selectedRow = dialog.getCurrentIndex().row();
+        TonemappingOptions *tmopts = dialog.getTonemappingOptions();
 		// Ashikhmin
 		bool simple,
 				eq2;
@@ -1184,7 +1183,7 @@ void TonemappingPanel::loadParameters()
 				beta,
 				colorSat,
 				noiseReduction;
-		bool oldFattal;
+		bool fftsolver;
 		// Mantiuk 06
 		bool contrastEqualization;
 		float contrastFactor;
@@ -1215,12 +1214,13 @@ void TonemappingPanel::loadParameters()
 		// Pre-gamma
 		float pregamma;
 
-    	switch (currentTmoOperator) {
+    	switch (tmopts->tmoperator) {
 			case ashikhmin:
-				simple = model->record(selectedRow).value("simple").toBool();
-				eq2 = model->record(selectedRow).value("eq2").toBool();
-				lct = model->record(selectedRow).value("lct").toFloat();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(ashikhmin);
+				simple = tmopts->operator_options.ashikhminoptions.simple;
+				eq2 = tmopts->operator_options.ashikhminoptions.eq2;
+				lct = tmopts->operator_options.ashikhminoptions.lct;
+				pregamma = tmopts->pregamma;
                 m_Ui->simpleCheckBox->setChecked(simple);
 				if (eq2)
                     m_Ui->eq2RadioButton->setChecked(true);
@@ -1232,18 +1232,20 @@ void TonemappingPanel::loadParameters()
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case drago:
-				bias = model->record(selectedRow).value("bias").toFloat();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(drago);
+				bias = tmopts->operator_options.dragooptions.bias;
+				pregamma = tmopts->pregamma;
                 m_Ui->biasSlider->setValue(bias);
                 m_Ui->biasdsb->setValue(bias);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case durand:
-				spatial = model->record(selectedRow).value("spatial").toFloat();
-				range = model->record(selectedRow).value("range").toFloat();
-				base = model->record(selectedRow).value("base").toFloat();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(durand);
+				spatial = tmopts->operator_options.durandoptions.spatial;
+				range = tmopts->operator_options.durandoptions.range;
+				base = tmopts->operator_options.durandoptions.base;
+				pregamma = tmopts->pregamma;
                 m_Ui->spatialSlider->setValue(spatial);
                 m_Ui->spatialdsb->setValue(spatial);
                 m_Ui->rangeSlider->setValue(range);
@@ -1254,12 +1256,13 @@ void TonemappingPanel::loadParameters()
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case fattal:
-				alpha = model->record(selectedRow).value("alpha").toFloat();
-				beta = model->record(selectedRow).value("beta").toFloat();
-				colorSat = model->record(selectedRow).value("colorSaturation").toFloat();
-				noiseReduction = model->record(selectedRow).value("noiseReduction").toFloat();
-				oldFattal = model->record(selectedRow).value("oldFattal").toBool();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(fattal);
+				alpha = tmopts->operator_options.fattaloptions.alpha;
+				beta = tmopts->operator_options.fattaloptions.beta;
+				colorSat = tmopts->operator_options.fattaloptions.color;
+				noiseReduction = tmopts->operator_options.fattaloptions.noiseredux;
+				fftsolver = tmopts->operator_options.fattaloptions.fftsolver;
+				pregamma = tmopts->pregamma;
                 m_Ui->alphaSlider->setValue(alpha);
                 m_Ui->alphadsb->setValue(alpha);
                 m_Ui->betaSlider->setValue(beta);
@@ -1268,16 +1271,17 @@ void TonemappingPanel::loadParameters()
                 m_Ui->saturation2dsb->setValue(colorSat);
                 m_Ui->noiseSlider->setValue(noiseReduction);
                 m_Ui->noisedsb->setValue(noiseReduction);
-                m_Ui->fftVersionCheckBox->setChecked(!oldFattal);
+                m_Ui->fftVersionCheckBox->setChecked(fftsolver);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
     		case mantiuk06:
-				contrastEqualization = model->record(selectedRow).value("contrastEqualization").toBool();		
-				contrastFactor =  model->record(selectedRow).value("contrastFactor").toFloat();	
-				saturationFactor =  model->record(selectedRow).value("saturationFactor").toFloat();	
-				detailFactor =  model->record(selectedRow).value("detailFactor").toFloat();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk06);
+				contrastEqualization = tmopts->operator_options.mantiuk06options.contrastequalization;
+				contrastFactor = tmopts->operator_options.mantiuk06options.contrastfactor;
+				saturationFactor = tmopts->operator_options.mantiuk06options.saturationfactor;
+				detailFactor = tmopts->operator_options.mantiuk06options.detailfactor;
+				pregamma = tmopts->pregamma;
                 m_Ui->contrastEqualizCheckBox->setChecked(contrastEqualization);
                 m_Ui->contrastFactorSlider->setValue(contrastFactor);
                 m_Ui->contrastFactordsb->setValue(contrastFactor);
@@ -1289,11 +1293,12 @@ void TonemappingPanel::loadParameters()
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
     		case mantiuk08:
-				colorSaturation = model->record(selectedRow).value("colorSaturation").toFloat();
-				contrastEnhancement = model->record(selectedRow).value("contrastEnhancement").toFloat();
-				luminanceLevel = model->record(selectedRow).value("luminanceLevel").toFloat();
-				manualLuminanceLevel = model->record(selectedRow).value("manualLuminanceLevel").toBool();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk08);
+				colorSaturation = tmopts->operator_options.mantiuk08options.colorsaturation;
+				contrastEnhancement = tmopts->operator_options.mantiuk08options.contrastenhancement;
+				luminanceLevel = tmopts->operator_options.mantiuk08options.luminancelevel;
+				manualLuminanceLevel = tmopts->operator_options.mantiuk08options.setluminance;
+				pregamma = tmopts->pregamma;
                 m_Ui->colorSaturationSlider->setValue(colorSaturation);
                 m_Ui->colorSaturationDSB->setValue(colorSaturation);
                 m_Ui->contrastEnhancementSlider->setValue(contrastEnhancement);
@@ -1305,12 +1310,13 @@ void TonemappingPanel::loadParameters()
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case pattanaik:
-				multiplier = model->record(selectedRow).value("multiplier").toFloat();
-				rod = model->record(selectedRow).value("rod").toFloat();
-				cone = model->record(selectedRow).value("cone").toFloat();
-				autolum = model->record(selectedRow).value("autolum").toBool();
-				local = model->record(selectedRow).value("local").toBool();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(pattanaik);
+				multiplier = tmopts->operator_options.pattanaikoptions.multiplier;
+				rod = tmopts->operator_options.pattanaikoptions.rod;
+				cone = tmopts->operator_options.pattanaikoptions.cone;
+				autolum = tmopts->operator_options.pattanaikoptions.autolum;
+				local = tmopts->operator_options.pattanaikoptions.local;
+				pregamma = tmopts->pregamma;
                 m_Ui->multiplierSlider->setValue(multiplier);
                 m_Ui->multiplierdsb->setValue(multiplier);
                 m_Ui->coneSlider->setValue(cone);
@@ -1323,13 +1329,14 @@ void TonemappingPanel::loadParameters()
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case reinhard02:
-				scales = model->record(selectedRow).value("scales").toBool();
-				key = model->record(selectedRow).value("key").toFloat();
-				phi = model->record(selectedRow).value("phi").toFloat();
-				irange = model->record(selectedRow).value("range").toInt();
-				lower = model->record(selectedRow).value("lower").toInt();
-				upper = model->record(selectedRow).value("upper").toInt();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(reinhard02);
+				scales = tmopts->operator_options.reinhard02options.scales;
+				key = tmopts->operator_options.reinhard02options.key;
+				phi = tmopts->operator_options.reinhard02options.phi;
+				irange = tmopts->operator_options.reinhard02options.range;
+				lower = tmopts->operator_options.reinhard02options.lower;
+				upper = tmopts->operator_options.reinhard02options.upper;
+				pregamma = tmopts->pregamma;
                 m_Ui->usescalescheckbox->setChecked(scales);
                 m_Ui->keySlider->setValue(key);
                 m_Ui->keydsb->setValue(key);
@@ -1345,10 +1352,11 @@ void TonemappingPanel::loadParameters()
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case reinhard05:
-				brightness = model->record(selectedRow).value("brightness").toFloat();
-				chromaticAdaptation = model->record(selectedRow).value("chromaticAdaptation").toFloat();
-				lightAdaptation = model->record(selectedRow).value("lightAdaptation").toFloat();
-				pregamma = model->record(selectedRow).value("pregamma").toFloat();
+                m_Ui->stackedWidget_operators->setCurrentIndex(reinhard05);
+				brightness = tmopts->operator_options.reinhard05options.brightness;
+				chromaticAdaptation = tmopts->operator_options.reinhard05options.chromaticAdaptation;
+				lightAdaptation = tmopts->operator_options.reinhard05options.lightAdaptation;
+				pregamma = tmopts->pregamma;
                 m_Ui->brightnessSlider->setValue(brightness);
                 m_Ui->brightnessdsb->setValue(brightness);
                 m_Ui->chromaticAdaptSlider->setValue(chromaticAdaptation);
@@ -1708,6 +1716,11 @@ void TonemappingPanel::execReinhard05Query(float brightness, float chromaticAdap
 bool TonemappingPanel::replaceLdr()
 {
     return m_Ui->replaceLdrCheckBox->isChecked();
+}
+
+void TonemappingPanel::setCurrentFrame(pfs::Frame *frame)
+{
+    m_currentFrame = frame;
 }
 
 // ------------------------- // END FILE

@@ -108,6 +108,7 @@ protected:
 
     void createDatabase();
 
+    pfs::Frame *m_currentFrame;
     QScopedPointer<Ui::TonemappingPanel> m_Ui;
 
 protected Q_SLOTS:
@@ -144,6 +145,7 @@ public:
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();
+    void setCurrentFrame(pfs::Frame *frame);
 
 public Q_SLOTS:
     void setEnabled(bool);

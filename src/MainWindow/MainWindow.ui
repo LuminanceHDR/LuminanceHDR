@@ -94,6 +94,13 @@
      <addaction name="actionText_Only"/>
      <addaction name="separator"/>
     </widget>
+    <widget class="QMenu" name="menuPreview_Panel_2">
+     <property name="title">
+      <string>Preview Panel</string>
+     </property>
+     <addaction name="actionShow_on_the_right"/>
+     <addaction name="actionShow_on_the_bottom"/>
+    </widget>
     <addaction name="fitToWindowAct"/>
     <addaction name="actionFill_to_Window"/>
     <addaction name="normalSizeAct"/>
@@ -103,6 +110,7 @@
     <addaction name="menuHDR_Histogram"/>
     <addaction name="separator"/>
     <addaction name="menuToolbars"/>
+    <addaction name="menuPreview_Panel_2"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -984,6 +992,25 @@
    </property>
    <property name="text">
     <string>Gamut Check</string>
+   </property>
+  </action>
+  <action name="actionShow_on_the_right">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show on the right</string>
+   </property>
+  </action>
+  <action name="actionShow_on_the_bottom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show on the bottom</string>
    </property>
   </action>
  </widget>

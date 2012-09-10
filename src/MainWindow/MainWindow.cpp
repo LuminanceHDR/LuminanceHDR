@@ -46,7 +46,6 @@
 #include <QDesktopServices>
 #include <QTimer>
 #include <QString>
-#include <QScrollArea>
 
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DnDOption.h"
@@ -261,14 +260,11 @@ void MainWindow::createUI()
 void MainWindow::createCentralWidget()
 {
     // Central Widget Area
-    m_dockarea = new QMainWindow;
-    m_dockarea->setWindowFlags(Qt::Widget);
-
     m_centralwidget_splitter = new QSplitter; //(this);
-    m_dockarea_splitter = new QSplitter; //(this);
+    m_bottom_splitter = new QSplitter; //(this);
+    m_bottom_splitter->setOrientation(Qt::Vertical);
 
     setCentralWidget(m_centralwidget_splitter);
-    m_dockarea->setCentralWidget(m_dockarea_splitter);
 
     // create tonemapping panel
     if (m_isPortable)
@@ -282,27 +278,66 @@ void MainWindow::createCentralWidget()
     m_tabwidget->setTabsClosable(true);
 
     m_centralwidget_splitter->addWidget(tmPanel);
-    m_centralwidget_splitter->addWidget(m_dockarea);
+    m_centralwidget_splitter->addWidget(m_bottom_splitter);
 
+    m_bottom_splitter->addWidget(m_tabwidget);
+
+    m_bottom_splitter->setStretchFactor(0, 1);
+    m_bottom_splitter->setStretchFactor(1, 0);
     m_centralwidget_splitter->setStretchFactor(0, 1);
     m_centralwidget_splitter->setStretchFactor(1, 5);
 
     // create preview panel
-    QScrollArea *sa = new QScrollArea;
-    dockWidget = new QDockWidget();
-    connect(dockWidget, SIGNAL(topLevelChanged(bool)), this, SLOT(topLevelChanged(bool)));
+    previewscrollArea = new QScrollArea;
+    QWidget *previewscrollAreaWidgetContents;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *verticalSpacer_2;
+
     previewPanel = new PreviewPanel();
+
+    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
+    previewscrollArea->setWidgetResizable(true);
+
+    previewscrollAreaWidgetContents = new QWidget();
+    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
+    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
+    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+    verticalLayout = new QVBoxLayout();
+    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
+
+    verticalLayout->addItem(verticalSpacer);
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer);
+
+    horizontalLayout->addWidget(previewPanel);
+
+    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer_2);
+
+
+    verticalLayout->addLayout(horizontalLayout);
+
+    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
+
+    verticalLayout->addItem(verticalSpacer_2);
+
+
+    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
     
-    sa->setWidgetResizable(true);
-    sa->setWidget(previewPanel);
-    dockWidget->setFeatures(QDockWidget::AllDockWidgetFeatures);
-    dockWidget->setAllowedAreas(Qt::AllDockWidgetAreas);
-    dockWidget->setWidget(sa);
-    m_dockarea->addDockWidget(Qt::BottomDockWidgetArea, dockWidget);
-
-    m_dockarea_splitter->addWidget(m_tabwidget);
-
-    dockWidget->hide();
+    m_centralwidget_splitter->addWidget(previewscrollArea);
 
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
@@ -325,6 +360,8 @@ void MainWindow::createCentralWidget()
     QTabBar* tabBar = m_tabwidget->findChild<QTabBar *>(QLatin1String("qt_tabwidget_tabbar"));
     tabBar->setAutoFillBackground( true );
     tabBar->setBackgroundRole(QPalette::Window);
+
+    previewscrollArea->hide();
 }
 
 void MainWindow::createToolBar()
@@ -341,6 +378,13 @@ void MainWindow::createToolBar()
     connect(m_Ui->actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
     connect(m_Ui->actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
     connect(m_Ui->actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
+
+    // Preview Panel
+    QActionGroup *previewPanelOptsGroup = new QActionGroup(this);
+    previewPanelOptsGroup->addAction(m_Ui->actionShow_on_the_right);
+    previewPanelOptsGroup->addAction(m_Ui->actionShow_on_the_bottom);
+    connect(m_Ui->actionShow_on_the_right, SIGNAL(triggered()), this, SLOT(showPreviewsOnTheRight()));
+    connect(m_Ui->actionShow_on_the_bottom, SIGNAL(triggered()), this, SLOT(showPreviewsOnTheBottom()));
 }
 
 void MainWindow::createMenus()
@@ -1038,6 +1082,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         m_tabwidget->setCurrentWidget(newhdr);
 
         tmPanel->setEnabled(true);
+        tmPanel->setCurrentFrame(new_hdr_frame);
         m_Ui->actionShowPreviewPanel->setEnabled(true);
 
         showPreviewPanel(m_Ui->actionShowPreviewPanel->isChecked());
@@ -1553,7 +1598,7 @@ void MainWindow::showPreviewPanel(bool b)
     {
         if (tm_status.is_hdr_ready)
         {
-            dockWidget->show();
+            previewscrollArea->show();
 
             // ask panel to refresh itself
             previewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
@@ -1566,7 +1611,7 @@ void MainWindow::showPreviewPanel(bool b)
     }
     else
     {
-        dockWidget->hide();
+        previewscrollArea->hide();
 
         // disconnect signals
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
@@ -1644,7 +1689,7 @@ void MainWindow::removeTab(int t)
             m_inputFilesName.clear();
             m_inputExpoTimes.clear();
 
-			dockWidget->hide();
+			previewscrollArea->hide();
         }
     }
     else
@@ -1867,16 +1912,104 @@ void MainWindow::updateSoftProofing(int i)
 	}
 }
 
-void MainWindow::topLevelChanged(bool topLevel) 
+void MainWindow::showPreviewsOnTheRight()
 {
-    if (topLevel) {
-        QSize s = previewPanel->getLabelSize();
-        int w = s.width();
-        int h = s.height();
-        dockWidget->widget()->setFixedSize(3*w+50,3*h+50);
-    }
-    else {
-        dockWidget->widget()->setMaximumSize(QWIDGETSIZE_MAX,QWIDGETSIZE_MAX); 
-        dockWidget->widget()->setMinimumSize(0,0);
-    }
+    QWidget *previewscrollAreaWidgetContents;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *verticalSpacer_2;
+
+    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
+    previewscrollArea->setWidgetResizable(true);
+
+    previewscrollAreaWidgetContents = new QWidget();
+    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
+    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
+    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+    verticalLayout = new QVBoxLayout();
+    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    verticalLayout->addItem(verticalSpacer);
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer);
+
+    horizontalLayout->addWidget(previewPanel);
+
+    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer_2);
+
+
+    verticalLayout->addLayout(horizontalLayout);
+
+    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    verticalLayout->addItem(verticalSpacer_2);
+
+
+    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
+    previewscrollArea->setParent(m_centralwidget_splitter);
+    m_centralwidget_splitter->addWidget(previewscrollArea);
+}
+
+void MainWindow::showPreviewsOnTheBottom()
+{
+    QWidget *previewscrollAreaWidgetContents;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *verticalSpacer_2;
+
+    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
+    previewscrollArea->setWidgetResizable(true);
+
+    previewscrollAreaWidgetContents = new QWidget();
+    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
+    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
+    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+    verticalLayout = new QVBoxLayout();
+    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    verticalLayout->addItem(verticalSpacer);
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer);
+
+    horizontalLayout->addWidget(previewPanel);
+
+    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer_2);
+
+
+    verticalLayout->addLayout(horizontalLayout);
+
+    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    verticalLayout->addItem(verticalSpacer_2);
+
+
+    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
+    previewscrollArea->setParent(m_bottom_splitter);
+    m_bottom_splitter->addWidget(previewscrollArea);
 }

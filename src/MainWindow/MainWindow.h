@@ -43,6 +43,7 @@
 #include <QDockWidget>
 #include <QThread>
 #include <QProgressBar>
+#include <QScrollArea>
 
 #include "Common/LuminanceOptions.h"
 
@@ -142,6 +143,8 @@ protected Q_SLOTS:
     void Icons_Only();
     void Text_Alongside_Icons();
     void Text_Only();
+    void showPreviewsOnTheRight();
+    void showPreviewsOnTheBottom();
 
     // Window Menu Display and Functionalities
     void updateWindowMenu();
@@ -187,16 +190,13 @@ protected Q_SLOTS:
 	void on_actionGamut_Check_toggled(bool);
 	void updateSoftProofing(int);
 
-    void topLevelChanged(bool);
-
 Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);
 
 protected:
     QSplitter *m_centralwidget_splitter;
-    QSplitter *m_dockarea_splitter;
-    QMainWindow *m_dockarea;
+    QSplitter *m_bottom_splitter;
 ;
     QTabWidget *m_tabwidget;
 
@@ -255,8 +255,8 @@ protected:
     bool maybeSave();
 
     // Preview Panel
+    QScrollArea *previewscrollArea;
     PreviewPanel *previewPanel;
-    QDockWidget *dockWidget;
 
     void openFiles(const QStringList& files);
 

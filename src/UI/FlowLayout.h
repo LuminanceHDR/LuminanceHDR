@@ -65,6 +65,7 @@ public:
     void setGeometry(const QRect &rect);
     QSize sizeHint() const;
     QLayoutItem *takeAt(int index);
+    int getSize() { return itemList.size(); }
 
 private:
     int doLayout(const QRect &rect, bool testOnly) const;

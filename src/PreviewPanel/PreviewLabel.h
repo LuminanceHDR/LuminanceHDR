@@ -36,6 +36,7 @@ class PreviewLabel : public QLabel
 
 public:
     PreviewLabel(QWidget *parent = 0, TMOperator tm_operator = mantiuk06);
+    PreviewLabel(QWidget *parent = 0, TonemappingOptions *tonemappingOptions = 0, int index = -1);
     ~PreviewLabel();
 
     TonemappingOptions* getTonemappingOptions();
@@ -48,9 +49,11 @@ protected:
 
 signals:
     void clicked(TonemappingOptions*);
+    void clicked(int);
 
 private:
     TonemappingOptions* m_TMOptions;
+    int m_index;
 };
 
 inline TonemappingOptions* PreviewLabel::getTonemappingOptions()

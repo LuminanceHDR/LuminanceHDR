@@ -25,9 +25,17 @@
 
 PreviewLabel::PreviewLabel(QWidget *parent, TMOperator tm_operator):
     QLabel(parent),
-    m_TMOptions(new TonemappingOptions)
+    m_TMOptions(new TonemappingOptions),
+    m_index(-1)
 {
     m_TMOptions->tmoperator = tm_operator;
+}
+
+PreviewLabel::PreviewLabel(QWidget *parent, TonemappingOptions *tonemappingOptions, int index):
+    QLabel(parent),
+    m_TMOptions(tonemappingOptions),
+    m_index(index)
+{
 }
 
 PreviewLabel::~PreviewLabel()
@@ -40,6 +48,7 @@ void PreviewLabel::mousePressEvent(QMouseEvent *event)
     if (event->buttons() == Qt::LeftButton)
     {
         emit clicked(m_TMOptions);
+        emit clicked(m_index);
     }
 }
 
