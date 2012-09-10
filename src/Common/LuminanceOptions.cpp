@@ -700,3 +700,13 @@ void LuminanceOptions::setPrinterProfileFileName(QString fname)
 {
 	setValue(KEY_COLOR_PRINTER_PROFILE_FILENAME, fname);
 }
+
+int LuminanceOptions::getPreviewPanelMode() // 0 means on the right, 1 on the bottom
+{
+	return value(KEY_PREVIEW_PANEL_MODE).toInt();
+}
+
+void LuminanceOptions::setPreviewPanelMode(int mode) 
+{
+	setValue(KEY_PREVIEW_PANEL_MODE, mode);
+}

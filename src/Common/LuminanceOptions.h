@@ -196,6 +196,9 @@ public Q_SLOTS:
 
 	QString getPrinterProfileFileName();
 	void	setPrinterProfileFileName(QString);
+
+    int  getPreviewPanelMode();
+    void setPreviewPanelMode(int);
 };
 
 #endif

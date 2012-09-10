@@ -177,6 +177,8 @@ MainWindow::~MainWindow()
         luminance_options->setValue("MainWindowGeometry", saveGeometry());
         luminance_options->setValue("MainWindowSplitterState", m_centralwidget_splitter->saveState());
         luminance_options->setValue("MainWindowSplitterGeometry", m_centralwidget_splitter->saveGeometry());
+        luminance_options->setValue("MainWindowBottomSplitterState", m_bottom_splitter->saveState());
+        luminance_options->setValue("MainWindowBottomSplitterGeometry", m_bottom_splitter->saveGeometry());
 
         //wait for the working thread to finish
         m_IOThread->wait(500);
@@ -282,8 +284,8 @@ void MainWindow::createCentralWidget()
 
     m_bottom_splitter->addWidget(m_tabwidget);
 
-    m_bottom_splitter->setStretchFactor(0, 1);
-    m_bottom_splitter->setStretchFactor(1, 0);
+    m_bottom_splitter->setStretchFactor(0, 10);
+    m_bottom_splitter->setStretchFactor(1, 1);
     m_centralwidget_splitter->setStretchFactor(0, 1);
     m_centralwidget_splitter->setStretchFactor(1, 5);
 
@@ -339,6 +341,13 @@ void MainWindow::createCentralWidget()
     
     m_centralwidget_splitter->addWidget(previewscrollArea);
 
+    if (luminance_options->getPreviewPanelMode()) {
+        showPreviewsOnTheBottom();
+    }
+    else {
+        showPreviewsOnTheRight();
+    }
+
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateSoftProofing(int)));
@@ -348,6 +357,8 @@ void MainWindow::createCentralWidget()
 
     m_centralwidget_splitter->restoreState(luminance_options->value("MainWindowSplitterState").toByteArray());
     m_centralwidget_splitter->restoreGeometry(luminance_options->value("MainWindowSplitterGeometry").toByteArray());
+    m_bottom_splitter->restoreState(luminance_options->value("MainWindowBottomSplitterState").toByteArray());
+    m_bottom_splitter->restoreGeometry(luminance_options->value("MainWindowBottomSplitterGeometry").toByteArray());
 
 	QPalette pal = m_tabwidget->palette();
 	pal.setColor(QPalette::Dark, Qt::darkGray);
@@ -449,7 +460,14 @@ void MainWindow::loadOptions()
 	break;
     }
     m_Ui->actionShowPreviewPanel->setChecked(luminance_options->isPreviewPanelActive());
-
+    if (luminance_options->getPreviewPanelMode()) {
+        m_Ui->actionShow_on_the_bottom->setChecked(true);
+        m_Ui->actionShow_on_the_right->setChecked(false);
+    }
+    else {
+        m_Ui->actionShow_on_the_right->setChecked(true);
+        m_Ui->actionShow_on_the_bottom->setChecked(false);
+    }
 }
 
 void MainWindow::on_actionDonate_triggered()
@@ -1961,6 +1979,7 @@ void MainWindow::showPreviewsOnTheRight()
     previewscrollArea->setWidget(previewscrollAreaWidgetContents);
     previewscrollArea->setParent(m_centralwidget_splitter);
     m_centralwidget_splitter->addWidget(previewscrollArea);
+    luminance_options->setPreviewPanelMode(0);
 }
 
 void MainWindow::showPreviewsOnTheBottom()
@@ -2012,4 +2031,5 @@ void MainWindow::showPreviewsOnTheBottom()
     previewscrollArea->setWidget(previewscrollAreaWidgetContents);
     previewscrollArea->setParent(m_bottom_splitter);
     m_bottom_splitter->addWidget(previewscrollArea);
+    luminance_options->setPreviewPanelMode(1);
 }

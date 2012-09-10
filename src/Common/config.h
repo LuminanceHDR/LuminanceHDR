@@ -40,6 +40,7 @@
 #define KEY_TM_TOOLBAR_MODE "TonemappingWindowToolbarVisualizationMode"
 #define KEY_MANUAL_AG_MASK_COLOR "ManualAntiGhostingMaskColor"
 #define KEY_GUI_LANG "UserInterfaceLanguage"
+#define KEY_PREVIEW_PANEL_MODE "MainWindowPreviewPanelVisualizationMode"
 
 #define KEY_EXTERNAL_AIS_OPTIONS "External_Tools_Options/ExternalAlignImageStackOptions"
 
