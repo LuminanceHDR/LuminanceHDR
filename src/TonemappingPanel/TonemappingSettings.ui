@@ -114,14 +114,14 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="applyButton">
               <property name="text">
                <string>Apply</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="cancelButton">
               <property name="text">
                <string>Cancel</string>
               </property>
@@ -141,7 +141,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>cancelButton</sender>
    <signal>clicked()</signal>
    <receiver>TonemappingSettings</receiver>
    <slot>reject()</slot>
@@ -157,7 +157,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>applyButton</sender>
    <signal>clicked()</signal>
    <receiver>TonemappingSettings</receiver>
    <slot>accept()</slot>

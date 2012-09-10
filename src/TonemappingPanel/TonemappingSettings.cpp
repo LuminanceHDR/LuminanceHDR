@@ -50,9 +50,12 @@ TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
     fillPreviews();
 
     if (m_Ui->listWidget->count() != 0) {    
+        m_currentIndex = 0;
         m_Ui->listWidget->setCurrentRow(0);
         m_previewSettings->selectLabel(0);
     }
+    else
+        m_Ui->applyButton->setDisabled(true);
 
     connect(m_Ui->listWidget, SIGNAL(currentRowChanged(int)), this, SLOT(listWidgetChanged(int)));
 }
