@@ -49,6 +49,7 @@ public Q_SLOTS:
 
 protected:
     void mousePressEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 
 signals:
     void clicked(TonemappingOptions*);
@@ -58,6 +59,7 @@ private:
     TonemappingOptions* m_TMOptions;
     int m_index;
     QString m_comment;
+    bool m_isFromPanel;
 };
 
 inline TonemappingOptions* PreviewLabel::getTonemappingOptions()

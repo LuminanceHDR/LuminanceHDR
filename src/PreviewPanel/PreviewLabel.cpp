@@ -28,7 +28,8 @@
 PreviewLabel::PreviewLabel(QWidget *parent, TMOperator tm_operator):
     QLabel(parent),
     m_TMOptions(new TonemappingOptions),
-    m_index(-1)
+    m_index(-1),
+    m_isFromPanel(true)
 {
     m_TMOptions->tmoperator = tm_operator;
 }
@@ -36,7 +37,8 @@ PreviewLabel::PreviewLabel(QWidget *parent, TMOperator tm_operator):
 PreviewLabel::PreviewLabel(QWidget *parent, TonemappingOptions *tonemappingOptions, int index):
     QLabel(parent),
     m_TMOptions(tonemappingOptions),
-    m_index(index)
+    m_index(index),
+    m_isFromPanel(false)
 {
 }
 
@@ -48,14 +50,18 @@ PreviewLabel::~PreviewLabel()
 void PreviewLabel::mousePressEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::LeftButton) {
-        emit clicked(m_TMOptions);
-        emit clicked(m_index);
+        (m_isFromPanel) ? emit clicked(m_TMOptions) : emit clicked(m_index);
     }
     else if (event->buttons() == Qt::RightButton) {
         QMenu menu(this);
         menu.addActions(actions());
         menu.exec(event->globalPos());
     }
+}
+
+void PreviewLabel::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    emit clicked(m_TMOptions);
 }
 
 void PreviewLabel::assignNewQImage(QSharedPointer<QImage> new_qimage)

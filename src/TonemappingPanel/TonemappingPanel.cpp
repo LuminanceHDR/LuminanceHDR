@@ -1367,6 +1367,13 @@ void TonemappingPanel::loadParameters()
                 m_Ui->pregammadsb->setValue(pregamma);
 			break;
 		}
+        if (dialog.wantsTonemap()) {
+            TonemappingOptions *t = new TonemappingOptions(*tmopts);
+	        toneMappingOptionsToDelete.push_back(t);
+            t->origxsize = sizes[0];
+            t->xsize = sizes[0];
+            emit startTonemapping(t);
+        }
 	}
 }
 

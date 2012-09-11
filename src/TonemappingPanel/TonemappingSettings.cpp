@@ -22,6 +22,8 @@
  *
  */
 
+#include <QDebug>
+
 #include <QScrollArea>
 #include <QSqlRecord>
 
@@ -109,6 +111,7 @@ TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
     QDialog(parent),
     m_frame(frame),
     m_modelPreviews(new QSqlQueryModel()),
+    m_wantsTonemap(false),
     m_Ui(new Ui::TonemappingSettings)
 {
     m_Ui->setupUi(this);
@@ -180,6 +183,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelAshikhmin->setComment(comment);
         connect(previewLabelAshikhmin, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelAshikhmin, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelAshikhmin, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelAshikhmin);
         m_Ui->listWidget->addItem(comment);
     }
@@ -206,6 +210,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelDrago->setComment(comment);
         connect(previewLabelDrago, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelDrago, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelDrago, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelDrago);
         m_Ui->listWidget->addItem(comment);
     }
@@ -238,6 +243,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelDurand->setComment(comment);
         connect(previewLabelDurand, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelDurand, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelDurand, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelDurand);
         m_Ui->listWidget->addItem(comment);
     }
@@ -276,6 +282,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelFattal->setComment(comment);
         connect(previewLabelFattal, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelFattal, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelFattal, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelFattal);
         m_Ui->listWidget->addItem(comment);
     }
@@ -311,6 +318,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelMantiuk06->setComment(comment);
         connect(previewLabelMantiuk06, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelMantiuk06, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelMantiuk06, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelMantiuk06);
         m_Ui->listWidget->addItem(comment);
     }
@@ -346,6 +354,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelMantiuk08->setComment(comment);
         connect(previewLabelMantiuk08, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelMantiuk08, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelMantiuk08, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelMantiuk08);
         m_Ui->listWidget->addItem(comment);
     }
@@ -384,6 +393,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelPattanaik->setComment(comment);
         connect(previewLabelPattanaik, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelPattanaik, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelPattanaik, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelPattanaik);
         m_Ui->listWidget->addItem(comment);
     }
@@ -425,6 +435,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelReinhard02->setComment(comment);
         connect(previewLabelReinhard02, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelReinhard02, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelReinhard02, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelReinhard02);
         m_Ui->listWidget->addItem(comment);
     }
@@ -457,6 +468,7 @@ void TonemappingSettings::fillPreviews()
         previewLabelReinhard05->setComment(comment);
         connect(previewLabelReinhard05, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelReinhard05, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
+        connect(previewLabelReinhard05, SIGNAL(clicked(TonemappingOptions *)), this, SLOT(tonemapPreview(TonemappingOptions *)));
         m_previewSettings->addPreviewLabel(previewLabelReinhard05);
         m_Ui->listWidget->addItem(comment);
     }
@@ -495,4 +507,10 @@ void TonemappingSettings::sortPreviews(int index) {
     m_Ui->listWidget->setCurrentRow(0);
     m_previewSettings->selectLabel(0);
     m_currentIndex = 0;
+}
+
+void TonemappingSettings::tonemapPreview(TonemappingOptions* opt)
+{
+    m_wantsTonemap =  true;
+    accept();
 }

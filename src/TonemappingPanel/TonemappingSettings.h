@@ -44,6 +44,7 @@ public:
     TonemappingSettings(QWidget *parent = 0, pfs::Frame *frame = NULL);
     ~TonemappingSettings();
     TonemappingOptions * getTonemappingOptions();
+    bool wantsTonemap() { return m_wantsTonemap; }
 
 protected:
     void fillPreviews();
@@ -52,12 +53,14 @@ protected:
     QSqlQueryModel* m_modelPreviews;
     int m_currentIndex;
     QList<PreviewLabel *> m_previewLabelList;
+    bool m_wantsTonemap;
     QScopedPointer<Ui::TonemappingSettings> m_Ui;
 
 protected slots:
     void listWidgetChanged(int row);
     void updateListView(int);
     void sortPreviews(int);
+    void tonemapPreview(TonemappingOptions *);
 };
 
 #endif
