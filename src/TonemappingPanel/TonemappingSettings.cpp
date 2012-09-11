@@ -58,6 +58,7 @@ TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
         m_Ui->applyButton->setDisabled(true);
 
     connect(m_Ui->listWidget, SIGNAL(currentRowChanged(int)), this, SLOT(listWidgetChanged(int)));
+    connect(m_previewSettings, SIGNAL(triggered()), this, SLOT(accept()));
 }
 
 TonemappingSettings::~TonemappingSettings()

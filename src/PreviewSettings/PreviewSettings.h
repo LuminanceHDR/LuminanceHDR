@@ -58,6 +58,7 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
     void startTonemapping(TonemappingOptions*);
+    void triggered();
 
 private:
     int original_width_frame;

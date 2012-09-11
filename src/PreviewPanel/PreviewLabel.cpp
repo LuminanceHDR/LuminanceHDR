@@ -21,6 +21,8 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
+#include <QMenu>
+
 #include "PreviewLabel.h"
 
 PreviewLabel::PreviewLabel(QWidget *parent, TMOperator tm_operator):
@@ -45,10 +47,14 @@ PreviewLabel::~PreviewLabel()
 
 void PreviewLabel::mousePressEvent(QMouseEvent *event)
 {
-    if (event->buttons() == Qt::LeftButton)
-    {
+    if (event->buttons() == Qt::LeftButton) {
         emit clicked(m_TMOptions);
         emit clicked(m_index);
+    }
+    else if (event->buttons() == Qt::RightButton) {
+        QMenu menu(this);
+        menu.addActions(actions());
+        menu.exec(event->globalPos());
     }
 }
 

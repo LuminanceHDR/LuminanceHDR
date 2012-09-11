@@ -24,6 +24,7 @@
 #include <QDebug>
 #include <QtConcurrentMap>
 #include <QSharedPointer>
+#include <QAction>
 
 #include "PreviewSettings.h"
 
@@ -183,6 +184,70 @@ QSize PreviewSettings::getLabelSize()
 
 void PreviewSettings::addPreviewLabel(PreviewLabel *label)
 {
+    TonemappingOptions *opts = label->getTonemappingOptions();
+    TMOperator op = opts->tmoperator;
+    QString text;
+    switch (op) {
+        case ashikhmin:
+            text = "Operator: Ashikhmin\n\n" + QString("simple = %1\n").arg(opts->operator_options.ashikhminoptions.simple);
+            text += QString("eq2 = %1\n").arg(opts->operator_options.ashikhminoptions.eq2);
+            text += QString("lct = %1\n").arg(opts->operator_options.ashikhminoptions.lct);
+        break;
+        case drago:
+            text = "Operator: Drago\n\n" + QString("bias = %1\n").arg(opts->operator_options.dragooptions.bias);
+        break;
+        case durand:
+            text = "Operator: Durand\n\n" + QString("spatial = %1\n").arg(opts->operator_options.durandoptions.spatial);
+            text += QString("range = %1\n").arg(opts->operator_options.durandoptions.range);
+            text += QString("base = %1\n").arg(opts->operator_options.durandoptions.base);
+        break;
+        case fattal:
+            text = "Operator: Fattal\n\n" + QString("alpha = %1\n").arg(opts->operator_options.fattaloptions.alpha);
+            text += QString("beta = %1\n").arg(opts->operator_options.fattaloptions.beta);
+            text += QString("color = %1\n").arg(opts->operator_options.fattaloptions.color);
+            text += QString("noise reduction = %1\n").arg(opts->operator_options.fattaloptions.noiseredux);
+            text += QString("fftsolver = %1\n").arg(opts->operator_options.fattaloptions.fftsolver);
+        break;
+        case mantiuk06:
+            text = "Operator: Mantiuk '06\n\n" + QString("contrast factor = %1\n").arg(opts->operator_options.mantiuk06options.contrastfactor);
+            text += QString("saturation factor = %1\n").arg(opts->operator_options.mantiuk06options.saturationfactor);
+            text += QString("details factor = %1\n").arg(opts->operator_options.mantiuk06options.detailfactor);
+            text += QString("contrast equalization = %1\n").arg(opts->operator_options.mantiuk06options.contrastequalization);
+        break;
+        case mantiuk08:
+            text = "Operator: Mantiuk '08\n\n" + QString("color saturation = %1\n").arg(opts->operator_options.mantiuk08options.colorsaturation);
+            text += QString("contrast enhancement = %1\n").arg(opts->operator_options.mantiuk08options.contrastenhancement);
+            text += QString("luminance level = %1\n").arg(opts->operator_options.mantiuk08options.luminancelevel);
+            text += QString("enable luminance level = %1\n").arg(opts->operator_options.mantiuk08options.setluminance);
+        break;
+        case pattanaik:
+            text = "Operator: Pattanaik\n\n" + QString("auto cone/rod = %1\n").arg(opts->operator_options.pattanaikoptions.autolum);
+            text += QString("multiplier = %1\n").arg(opts->operator_options.pattanaikoptions.multiplier);
+            text += QString("local tone mapping = %1\n").arg(opts->operator_options.pattanaikoptions.local);
+            text += QString("cone level = %1\n").arg(opts->operator_options.pattanaikoptions.cone);
+            text += QString("rod level = %1\n").arg(opts->operator_options.pattanaikoptions.rod);
+        break;
+        case reinhard02:
+            text = "Operator: Reinhard '02\n\n" + QString("key = %1\n").arg(opts->operator_options.reinhard02options.key);
+            text += QString("phi = %1\n").arg(opts->operator_options.reinhard02options.phi);
+            text += QString("use scales = %1\n").arg(opts->operator_options.reinhard02options.scales);
+            text += QString("range = %1\n").arg(opts->operator_options.reinhard02options.range);
+            text += QString("lower scale = %1\n").arg(opts->operator_options.reinhard02options.lower);
+            text += QString("upper scale = %1\n").arg(opts->operator_options.reinhard02options.upper);
+        break;
+        case reinhard05:
+            text = "Operator: Reinhard '05\n\n" + QString("brightness = %1\n").arg(opts->operator_options.reinhard05options.brightness);
+            text += QString("chromatic adaptation = %1\n").arg(opts->operator_options.reinhard05options.chromaticAdaptation);
+            text += QString("light adaptation = %1\n").arg(opts->operator_options.reinhard05options.lightAdaptation);
+        break;
+    }
+    
+    QAction* pAction = new QAction("Apply", label);
+    label->addAction(pAction);
+    connect(pAction, SIGNAL(triggered()), this, SIGNAL(triggered()));
+
+    label->setToolTip(text);
+
     m_ListPreviewLabel.append(label);
     label->setFrameStyle(QFrame::Box);
     m_flowLayout->addWidget(label);
