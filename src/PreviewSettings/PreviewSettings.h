@@ -44,8 +44,10 @@ public:
     PreviewSettings(QWidget *parent = 0);
     ~PreviewSettings();
     void addPreviewLabel(PreviewLabel *label);
+    PreviewLabel *getPreviewLabel(int index);
     QSize getLabelSize();
-
+    int getSize() { return m_ListPreviewLabel.size(); }
+    void clear();
 protected:
 	virtual void changeEvent(QEvent* event);
 
@@ -62,7 +64,7 @@ Q_SIGNALS:
 
 private:
     int original_width_frame;
-    QVector<PreviewLabel*> m_ListPreviewLabel;
+    QList<PreviewLabel*> m_ListPreviewLabel;
     FlowLayout *m_flowLayout;
 };
 #endif

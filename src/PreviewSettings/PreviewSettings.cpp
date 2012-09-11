@@ -242,9 +242,11 @@ void PreviewSettings::addPreviewLabel(PreviewLabel *label)
         break;
     }
     
-    QAction* pAction = new QAction("Apply", label);
-    label->addAction(pAction);
-    connect(pAction, SIGNAL(triggered()), this, SIGNAL(triggered()));
+    if (label->actions().isEmpty()) {
+        QAction* pAction = new QAction("Apply", label);
+        label->addAction(pAction);
+        connect(pAction, SIGNAL(triggered()), this, SIGNAL(triggered()));
+    }
 
     label->setToolTip(text);
 
@@ -259,4 +261,17 @@ void PreviewSettings::selectLabel(int index) {
         QLabel *l = static_cast<QLabel *>(w);
         l->setLineWidth((i == index) ? 3 : 1); 
     }
+}
+
+PreviewLabel * PreviewSettings::getPreviewLabel(int index) {
+    QWidget *w = m_flowLayout->itemAt(index)->widget();
+    return static_cast<PreviewLabel *>(w);
+}
+
+void PreviewSettings::clear() {
+    int size = m_flowLayout->getSize();
+    for (int i = 0; i < size; i++) {
+        m_flowLayout->takeAt(i);
+    }
+    m_ListPreviewLabel.clear();
 }

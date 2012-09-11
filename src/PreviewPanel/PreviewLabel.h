@@ -40,6 +40,9 @@ public:
     ~PreviewLabel();
 
     TonemappingOptions* getTonemappingOptions();
+    void setComment(QString);
+    QString getComment();
+    void setIndex(int);
 
 public Q_SLOTS:
     void assignNewQImage(QSharedPointer<QImage> new_qimage);
@@ -54,6 +57,7 @@ signals:
 private:
     TonemappingOptions* m_TMOptions;
     int m_index;
+    QString m_comment;
 };
 
 inline TonemappingOptions* PreviewLabel::getTonemappingOptions()

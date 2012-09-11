@@ -59,7 +59,31 @@
              </spacer>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox"/>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Sort by</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <item>
+               <property name="text">
+                <string>Comment</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Operator</string>
+               </property>
+              </item>
+             </widget>
             </item>
            </layout>
           </item>

@@ -25,10 +25,85 @@
 #include <QScrollArea>
 #include <QSqlRecord>
 
+#include <algorithm>
+
 #include "Core/TonemappingOptions.h"
 #include "PreviewPanel/PreviewLabel.h"
 #include "TonemappingSettings.h"
 #include "ui_TonemappingSettings.h"
+
+bool compareByComment(PreviewLabel *l1, PreviewLabel *l2)
+{
+    QString s1 = l1->getComment(), s2 = l2->getComment();
+
+    return s1 < s2;
+}
+
+bool compareByOperator(PreviewLabel *l1, PreviewLabel *l2)
+{
+    TonemappingOptions *opts1 = l1->getTonemappingOptions(), *opts2 = l2->getTonemappingOptions();
+    TMOperator op1 = opts1->tmoperator, op2 = opts2->tmoperator;
+    QString s1, s2;
+    switch (op1) {
+        case ashikhmin:
+            s1 = "ashikmin";
+        break;
+        case drago:
+            s1 = "drago";
+        break;
+        case durand:
+            s1 = "durand";
+        break;
+        case fattal:
+            s1 = "fattal";
+        break;
+        case mantiuk06:
+            s1 = "mantiuk06";
+        break;
+        case mantiuk08:
+            s1 = "mantiuk08";
+        break;
+        case pattanaik:
+            s1 = "pattanaik";
+        break;
+        case reinhard02:
+            s1 = "reinhard02";
+        break;
+        case reinhard05:
+            s1 = "reinhard05";
+        break;
+    }
+    switch (op2) {
+        case ashikhmin:
+            s2 = "ashikmin";
+        break;
+        case drago:
+            s2 = "drago";
+        break;
+        case durand:
+            s2 = "durand";
+        break;
+        case fattal:
+            s2 = "fattal";
+        break;
+        case mantiuk06:
+            s2 = "mantiuk06";
+        break;
+        case mantiuk08:
+            s2 = "mantiuk08";
+        break;
+        case pattanaik:
+            s2 = "pattanaik";
+        break;
+        case reinhard02:
+            s2 = "reinhard02";
+        break;
+        case reinhard05:
+            s2 = "reinhard05";
+        break;
+    }
+    return s1 < s2;
+}
 
 TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
     QDialog(parent),
@@ -57,7 +132,10 @@ TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
     else
         m_Ui->applyButton->setDisabled(true);
 
+    sortPreviews(0); // by comment
+
     connect(m_Ui->listWidget, SIGNAL(currentRowChanged(int)), this, SLOT(listWidgetChanged(int)));
+    connect(m_Ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(sortPreviews(int)));
     connect(m_previewSettings, SIGNAL(triggered()), this, SLOT(accept()));
 }
 
@@ -97,7 +175,7 @@ void TonemappingSettings::fillPreviews()
         tmoAshikhmin->operator_options.ashikhminoptions.lct = lct;
 
         PreviewLabel *previewLabelAshikhmin = new PreviewLabel(0, tmoAshikhmin, index++);
-        previewLabelAshikhmin->setToolTip(comment);
+        previewLabelAshikhmin->setComment(comment);
         connect(previewLabelAshikhmin, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelAshikhmin, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelAshikhmin);
@@ -123,7 +201,7 @@ void TonemappingSettings::fillPreviews()
         tmoDrago->operator_options.dragooptions.bias = bias;
 
         PreviewLabel *previewLabelDrago = new PreviewLabel(0, tmoDrago, index++);
-        previewLabelDrago->setToolTip(comment);
+        previewLabelDrago->setComment(comment);
         connect(previewLabelDrago, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelDrago, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelDrago);
@@ -155,7 +233,7 @@ void TonemappingSettings::fillPreviews()
         tmoDurand->operator_options.durandoptions.base = base;
 
         PreviewLabel *previewLabelDurand = new PreviewLabel(0, tmoDurand, index++);
-        previewLabelDurand->setToolTip(comment);
+        previewLabelDurand->setComment(comment);
         connect(previewLabelDurand, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelDurand, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelDurand);
@@ -193,7 +271,7 @@ void TonemappingSettings::fillPreviews()
         tmoFattal->operator_options.fattaloptions.fftsolver = fftsolver;
 
         PreviewLabel *previewLabelFattal = new PreviewLabel(0, tmoFattal, index++);
-        previewLabelFattal->setToolTip(comment);
+        previewLabelFattal->setComment(comment);
         connect(previewLabelFattal, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelFattal, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelFattal);
@@ -228,7 +306,7 @@ void TonemappingSettings::fillPreviews()
         tmoMantiuk06->operator_options.mantiuk06options.contrastequalization = contrastEqualization;
 
         PreviewLabel *previewLabelMantiuk06 = new PreviewLabel(0, tmoMantiuk06, index++);
-        previewLabelMantiuk06->setToolTip(comment);
+        previewLabelMantiuk06->setComment(comment);
         connect(previewLabelMantiuk06, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelMantiuk06, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelMantiuk06);
@@ -263,7 +341,7 @@ void TonemappingSettings::fillPreviews()
         tmoMantiuk08->operator_options.mantiuk08options.setluminance = manualLuminanceLevel;
 
         PreviewLabel *previewLabelMantiuk08 = new PreviewLabel(0, tmoMantiuk08, index++);
-        previewLabelMantiuk08->setToolTip(comment);
+        previewLabelMantiuk08->setComment(comment);
         connect(previewLabelMantiuk08, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelMantiuk08, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelMantiuk08);
@@ -301,7 +379,7 @@ void TonemappingSettings::fillPreviews()
         tmoPattanaik->operator_options.pattanaikoptions.multiplier = multiplier;
 
         PreviewLabel *previewLabelPattanaik = new PreviewLabel(0, tmoPattanaik, index++);
-        previewLabelPattanaik->setToolTip(comment);
+        previewLabelPattanaik->setComment(comment);
         connect(previewLabelPattanaik, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelPattanaik, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelPattanaik);
@@ -342,7 +420,7 @@ void TonemappingSettings::fillPreviews()
         tmoReinhard02->operator_options.reinhard02options.upper = upper;
 
         PreviewLabel *previewLabelReinhard02 = new PreviewLabel(0, tmoReinhard02, index++);
-        previewLabelReinhard02->setToolTip(comment);
+        previewLabelReinhard02->setComment(comment);
         connect(previewLabelReinhard02, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelReinhard02, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelReinhard02);
@@ -374,7 +452,7 @@ void TonemappingSettings::fillPreviews()
         tmoReinhard05->operator_options.reinhard05options.lightAdaptation = lightAdaptation;
 
         PreviewLabel *previewLabelReinhard05 = new PreviewLabel(0, tmoReinhard05, index++);
-        previewLabelReinhard05->setToolTip(comment);
+        previewLabelReinhard05->setComment(comment);
         connect(previewLabelReinhard05, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelReinhard05, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelReinhard05);
@@ -385,7 +463,6 @@ void TonemappingSettings::fillPreviews()
 }
 
 void TonemappingSettings::listWidgetChanged(int row) {
-
     m_currentIndex = row;
     m_previewSettings->selectLabel(row);
 }
@@ -397,4 +474,23 @@ void TonemappingSettings::updateListView(int row) {
 
 TonemappingOptions *TonemappingSettings::getTonemappingOptions() {
     return m_tonemappingOptions.at(m_currentIndex);
+}
+
+void TonemappingSettings::sortPreviews(int index) {
+    m_Ui->listWidget->clear();
+    QList<PreviewLabel *> l;
+    int listSize = m_previewSettings->getSize();
+    for (int i = 0; i < listSize; i++) {
+        l.append(m_previewSettings->getPreviewLabel(i));
+    }
+    m_previewSettings->clear();
+    std::sort(l.begin(), l.end(), (index == 0) ? compareByComment : compareByOperator);
+    for (int i = 0; i < listSize; i++) {
+        PreviewLabel *pl = l.at(i);
+        pl->setIndex(i);
+        m_previewSettings->addPreviewLabel(pl);
+        m_Ui->listWidget->addItem(pl->getComment());
+    } 
+    m_Ui->listWidget->setCurrentRow(0);
+    m_previewSettings->selectLabel(0);
 }

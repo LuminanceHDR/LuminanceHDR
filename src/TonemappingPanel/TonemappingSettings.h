@@ -57,6 +57,7 @@ protected:
 protected slots:
     void listWidgetChanged(int row);
     void updateListView(int);
+    void sortPreviews(int);
 };
 
 #endif

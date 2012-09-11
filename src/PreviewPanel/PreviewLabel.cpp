@@ -64,3 +64,17 @@ void PreviewLabel::assignNewQImage(QSharedPointer<QImage> new_qimage)
     adjustSize();
 }
 
+void PreviewLabel::setComment(QString comment)
+{
+    m_comment = comment;
+}
+
+QString PreviewLabel::getComment()
+{
+    return m_comment;
+} 
+
+void PreviewLabel::setIndex(int index) 
+{
+    m_index = index;
+}
