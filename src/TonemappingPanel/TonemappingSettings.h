@@ -51,6 +51,7 @@ protected:
     PreviewSettings* m_previewSettings;
     QSqlQueryModel* m_modelPreviews;
     int m_currentIndex;
+    QList<PreviewLabel *> m_previewLabelList;
     QScopedPointer<Ui::TonemappingSettings> m_Ui;
 
 protected slots:

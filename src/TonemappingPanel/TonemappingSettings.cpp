@@ -141,6 +141,7 @@ TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
 
 TonemappingSettings::~TonemappingSettings()
 {
+    qDeleteAll(m_previewLabelList);
 }
 
 void TonemappingSettings::fillPreviews()
@@ -175,6 +176,7 @@ void TonemappingSettings::fillPreviews()
         tmoAshikhmin->operator_options.ashikhminoptions.lct = lct;
 
         PreviewLabel *previewLabelAshikhmin = new PreviewLabel(0, tmoAshikhmin, index++);
+        m_previewLabelList.append(previewLabelAshikhmin);
         previewLabelAshikhmin->setComment(comment);
         connect(previewLabelAshikhmin, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelAshikhmin, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
@@ -200,6 +202,7 @@ void TonemappingSettings::fillPreviews()
         tmoDrago->operator_options.dragooptions.bias = bias;
 
         PreviewLabel *previewLabelDrago = new PreviewLabel(0, tmoDrago, index++);
+        m_previewLabelList.append(previewLabelDrago);
         previewLabelDrago->setComment(comment);
         connect(previewLabelDrago, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelDrago, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
@@ -231,6 +234,7 @@ void TonemappingSettings::fillPreviews()
         tmoDurand->operator_options.durandoptions.base = base;
 
         PreviewLabel *previewLabelDurand = new PreviewLabel(0, tmoDurand, index++);
+        m_previewLabelList.append(previewLabelDurand);
         previewLabelDurand->setComment(comment);
         connect(previewLabelDurand, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelDurand, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
@@ -268,6 +272,7 @@ void TonemappingSettings::fillPreviews()
         tmoFattal->operator_options.fattaloptions.fftsolver = fftsolver;
 
         PreviewLabel *previewLabelFattal = new PreviewLabel(0, tmoFattal, index++);
+        m_previewLabelList.append(previewLabelFattal);
         previewLabelFattal->setComment(comment);
         connect(previewLabelFattal, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelFattal, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
@@ -302,6 +307,7 @@ void TonemappingSettings::fillPreviews()
         tmoMantiuk06->operator_options.mantiuk06options.contrastequalization = contrastEqualization;
 
         PreviewLabel *previewLabelMantiuk06 = new PreviewLabel(0, tmoMantiuk06, index++);
+        m_previewLabelList.append(previewLabelMantiuk06);
         previewLabelMantiuk06->setComment(comment);
         connect(previewLabelMantiuk06, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelMantiuk06, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
@@ -336,6 +342,7 @@ void TonemappingSettings::fillPreviews()
         tmoMantiuk08->operator_options.mantiuk08options.setluminance = manualLuminanceLevel;
 
         PreviewLabel *previewLabelMantiuk08 = new PreviewLabel(0, tmoMantiuk08, index++);
+        m_previewLabelList.append(previewLabelMantiuk08);
         previewLabelMantiuk08->setComment(comment);
         connect(previewLabelMantiuk08, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelMantiuk08, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
@@ -373,6 +380,7 @@ void TonemappingSettings::fillPreviews()
         tmoPattanaik->operator_options.pattanaikoptions.multiplier = multiplier;
 
         PreviewLabel *previewLabelPattanaik = new PreviewLabel(0, tmoPattanaik, index++);
+        m_previewLabelList.append(previewLabelPattanaik);
         previewLabelPattanaik->setComment(comment);
         connect(previewLabelPattanaik, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelPattanaik, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
@@ -413,6 +421,7 @@ void TonemappingSettings::fillPreviews()
         tmoReinhard02->operator_options.reinhard02options.upper = upper;
 
         PreviewLabel *previewLabelReinhard02 = new PreviewLabel(0, tmoReinhard02, index++);
+        m_previewLabelList.append(previewLabelReinhard02);
         previewLabelReinhard02->setComment(comment);
         connect(previewLabelReinhard02, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelReinhard02, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
@@ -444,6 +453,7 @@ void TonemappingSettings::fillPreviews()
         tmoReinhard05->operator_options.reinhard05options.lightAdaptation = lightAdaptation;
 
         PreviewLabel *previewLabelReinhard05 = new PreviewLabel(0, tmoReinhard05, index++);
+        m_previewLabelList.append(previewLabelReinhard05);
         previewLabelReinhard05->setComment(comment);
         connect(previewLabelReinhard05, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelReinhard05, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
