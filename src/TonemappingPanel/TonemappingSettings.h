@@ -50,7 +50,6 @@ protected:
     pfs::Frame *m_frame;
     PreviewSettings* m_previewSettings;
     QSqlQueryModel* m_modelPreviews;
-    QList<TonemappingOptions *> m_tonemappingOptions;
     int m_currentIndex;
     QScopedPointer<Ui::TonemappingSettings> m_Ui;
 

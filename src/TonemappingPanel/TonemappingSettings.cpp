@@ -179,7 +179,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelAshikhmin, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelAshikhmin, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelAshikhmin);
-        m_tonemappingOptions.append(tmoAshikhmin);
         m_Ui->listWidget->addItem(comment);
     }
 
@@ -205,7 +204,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelDrago, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelDrago, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelDrago);
-        m_tonemappingOptions.append(tmoDrago);
         m_Ui->listWidget->addItem(comment);
     }
 
@@ -237,7 +235,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelDurand, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelDurand, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelDurand);
-        m_tonemappingOptions.append(tmoDurand);
         m_Ui->listWidget->addItem(comment);
     }
 
@@ -275,7 +272,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelFattal, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelFattal, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelFattal);
-        m_tonemappingOptions.append(tmoFattal);
         m_Ui->listWidget->addItem(comment);
     }
 
@@ -310,7 +306,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelMantiuk06, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelMantiuk06, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelMantiuk06);
-        m_tonemappingOptions.append(tmoMantiuk06);
         m_Ui->listWidget->addItem(comment);
     }
 
@@ -345,7 +340,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelMantiuk08, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelMantiuk08, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelMantiuk08);
-        m_tonemappingOptions.append(tmoMantiuk08);
         m_Ui->listWidget->addItem(comment);
     }
 
@@ -383,7 +377,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelPattanaik, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelPattanaik, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelPattanaik);
-        m_tonemappingOptions.append(tmoPattanaik);
         m_Ui->listWidget->addItem(comment);
     }
 
@@ -424,7 +417,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelReinhard02, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelReinhard02, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelReinhard02);
-        m_tonemappingOptions.append(tmoReinhard02);
         m_Ui->listWidget->addItem(comment);
     }
 
@@ -456,7 +448,6 @@ void TonemappingSettings::fillPreviews()
         connect(previewLabelReinhard05, SIGNAL(clicked(int)), m_previewSettings, SLOT(selectLabel(int)));
         connect(previewLabelReinhard05, SIGNAL(clicked(int)), this, SLOT(updateListView(int)));
         m_previewSettings->addPreviewLabel(previewLabelReinhard05);
-        m_tonemappingOptions.append(tmoReinhard05);
         m_Ui->listWidget->addItem(comment);
     }
     m_previewSettings->updatePreviews(m_frame);
@@ -473,7 +464,7 @@ void TonemappingSettings::updateListView(int row) {
 }
 
 TonemappingOptions *TonemappingSettings::getTonemappingOptions() {
-    return m_tonemappingOptions.at(m_currentIndex);
+    return m_previewSettings->getPreviewLabel(m_currentIndex)->getTonemappingOptions();
 }
 
 void TonemappingSettings::sortPreviews(int index) {
@@ -493,4 +484,5 @@ void TonemappingSettings::sortPreviews(int index) {
     } 
     m_Ui->listWidget->setCurrentRow(0);
     m_previewSettings->selectLabel(0);
+    m_currentIndex = 0;
 }
