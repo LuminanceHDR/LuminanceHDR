@@ -34,6 +34,11 @@
 #include "TonemappingSettings.h"
 #include "ui_TonemappingSettings.h"
 
+namespace // anoymous namespace
+{
+const int PREVIEW_WIDTH = PREVIEW_WIDTH;
+const int PREVIEW_HEIGHT = 100;
+
 bool compareByComment(PreviewLabel *l1, PreviewLabel *l2)
 {
     QString s1 = l1->getComment(), s2 = l2->getComment();
@@ -173,6 +178,7 @@ bool compareByMostUsefulOperators(PreviewLabel *l1, PreviewLabel *l2)
     return s1 < s2;
 }
 
+}
 
 TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
     QDialog(parent),
@@ -238,7 +244,7 @@ void TonemappingSettings::fillPreviews()
         pregamma = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoAshikhmin->origxsize = origxsize;
-        tmoAshikhmin->xsize = 120;
+        tmoAshikhmin->xsize = PREVIEW_WIDTH;
         tmoAshikhmin->pregamma = pregamma;
         tmoAshikhmin->tmoperator = ashikhmin;
         tmoAshikhmin->operator_options.ashikhminoptions.simple = simple;
@@ -267,7 +273,7 @@ void TonemappingSettings::fillPreviews()
 		pregamma = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoDrago->origxsize = origxsize;
-        tmoDrago->xsize = 120;
+        tmoDrago->xsize = PREVIEW_WIDTH;
         tmoDrago->pregamma = pregamma;
         tmoDrago->tmoperator = drago;
         tmoDrago->operator_options.dragooptions.bias = bias;
@@ -298,7 +304,7 @@ void TonemappingSettings::fillPreviews()
 		pregamma = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoDurand->origxsize = origxsize;
-        tmoDurand->xsize = 120;
+        tmoDurand->xsize = PREVIEW_WIDTH;
         tmoDurand->pregamma = pregamma;
         tmoDurand->tmoperator = durand;
         tmoDurand->operator_options.durandoptions.spatial = spatial;
@@ -335,7 +341,7 @@ void TonemappingSettings::fillPreviews()
 		pregamma       = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoFattal->origxsize = origxsize;
-        tmoFattal->xsize = 120;
+        tmoFattal->xsize = PREVIEW_WIDTH;
         tmoFattal->pregamma = pregamma;
         tmoFattal->tmoperator = fattal;
         tmoFattal->operator_options.fattaloptions.alpha = alpha;
@@ -372,7 +378,7 @@ void TonemappingSettings::fillPreviews()
 		pregamma             = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoMantiuk06->origxsize = origxsize;
-        tmoMantiuk06->xsize = 120;
+        tmoMantiuk06->xsize = PREVIEW_WIDTH;
         tmoMantiuk06->pregamma = pregamma;
         tmoMantiuk06->tmoperator = mantiuk06;
         tmoMantiuk06->operator_options.mantiuk06options.contrastfactor = contrastFactor;
@@ -408,7 +414,7 @@ void TonemappingSettings::fillPreviews()
 		pregamma             = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoMantiuk08->origxsize = origxsize;
-        tmoMantiuk08->xsize = 120;
+        tmoMantiuk08->xsize = PREVIEW_WIDTH;
         tmoMantiuk08->pregamma = pregamma;
         tmoMantiuk08->tmoperator = mantiuk08;
         tmoMantiuk08->operator_options.mantiuk08options.colorsaturation = colorSaturation;
@@ -446,7 +452,7 @@ void TonemappingSettings::fillPreviews()
 		pregamma   = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoPattanaik->origxsize = origxsize;
-        tmoPattanaik->xsize = 120;
+        tmoPattanaik->xsize = PREVIEW_WIDTH;
         tmoPattanaik->pregamma = pregamma;
         tmoPattanaik->tmoperator = pattanaik;
         tmoPattanaik->operator_options.pattanaikoptions.autolum = autolum;
@@ -487,7 +493,7 @@ void TonemappingSettings::fillPreviews()
 		pregamma = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoReinhard02->origxsize = origxsize;
-        tmoReinhard02->xsize = 120;
+        tmoReinhard02->xsize = PREVIEW_WIDTH;
         tmoReinhard02->pregamma = pregamma;
         tmoReinhard02->tmoperator = reinhard02;
         tmoReinhard02->operator_options.reinhard02options.scales = scales;
@@ -523,7 +529,7 @@ void TonemappingSettings::fillPreviews()
 		pregamma            = m_modelPreviews->record(selectedRow).value("pregamma").toFloat();
 
         tmoReinhard05->origxsize = origxsize;
-        tmoReinhard05->xsize = 120;
+        tmoReinhard05->xsize = PREVIEW_WIDTH;
         tmoReinhard05->pregamma = pregamma;
         tmoReinhard05->tmoperator = reinhard05;
         tmoReinhard05->operator_options.reinhard05options.brightness = brightness;
