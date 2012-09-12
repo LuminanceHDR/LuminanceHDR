@@ -143,6 +143,8 @@ protected Q_SLOTS:
 	void execReinhard05Query(float, float, float, QString);
     
     void updatePreviews(double);
+    void updatePreviewsCB(int);
+    void updatePreviewsRB(bool);
 
 public:
     TonemappingPanel(bool isPortable = false, PreviewPanel *p = 0, QWidget *parent = 0);

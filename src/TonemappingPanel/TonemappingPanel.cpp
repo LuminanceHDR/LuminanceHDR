@@ -199,6 +199,21 @@ TonemappingPanel::TonemappingPanel(bool isPortable, PreviewPanel *panel, QWidget
     connect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
     connect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
     connect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    connect(m_Ui->contrastEqualizCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+    connect(m_Ui->luminanceLevelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+    
+    connect(m_Ui->fftVersionCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+    connect(m_Ui->usescalescheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+    connect(m_Ui->simpleCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+    connect(m_Ui->pattalocal, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+    connect(m_Ui->autoYcheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+    connect(m_Ui->eq2RadioButton, SIGNAL(toggled(bool)), this, SLOT(updatePreviewsRB(bool)));
 }
 
 TonemappingPanel::~TonemappingPanel()
@@ -1914,8 +1929,63 @@ void TonemappingPanel::updatePreviews(double v)
         m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
         m_previewPanel->updatePreviews(m_currentFrame, 8);
     }
+}
 
-    
+void TonemappingPanel::updatePreviewsCB(int state)
+{
+    TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
+    fillToneMappingOptions();
+    // Mantiuk06
+    if (sender() == m_Ui->contrastEqualizCheckBox) { 
+        tmopts->operator_options.mantiuk06options.contrastequalization = state;
+        m_previewPanel->getLabel(0)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 0);
+    }
+    // Mantiuk08
+    else if (sender() == m_Ui->luminanceLevelCheckBox) { 
+        tmopts->operator_options.mantiuk08options.luminancelevel = state;
+        m_previewPanel->getLabel(1)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 1);
+    }
+    // Fattal
+    else if (sender() == m_Ui->fftVersionCheckBox) { 
+        tmopts->operator_options.fattaloptions.fftsolver = state;
+        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 2);
+    }
+    // Reinhard02
+    else if (sender() == m_Ui->usescalescheckbox) { 
+        tmopts->operator_options.reinhard02options.scales = state;
+        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 5);
+    }
+    // Ashikhmin
+    else if (sender() == m_Ui->simpleCheckBox) { 
+        tmopts->operator_options.ashikhminoptions.simple = state;
+        m_previewPanel->getLabel(7)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 7);
+    }
+    // Pattanaik
+    else if (sender() == m_Ui->pattalocal) { 
+        tmopts->operator_options.pattanaikoptions.local = state;
+        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 8);
+    }
+    else if (sender() == m_Ui->autoYcheckbox) { 
+        tmopts->operator_options.pattanaikoptions.autolum = state;
+        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 8);
+    }
+}
+
+void TonemappingPanel::updatePreviewsRB(bool toggled)
+{
+    TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
+    fillToneMappingOptions();
+    // Only one sender: Ashikhmin
+    tmopts->operator_options.ashikhminoptions.eq2 = toggled;
+    m_previewPanel->getLabel(7)->setTonemappingOptions(tmopts);
+    m_previewPanel->updatePreviews(m_currentFrame, 7);
 }
 
 // ------------------------- // END FILE
