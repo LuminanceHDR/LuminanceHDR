@@ -46,12 +46,13 @@ public:
     PreviewPanel(QWidget *parent = 0);
     ~PreviewPanel();
     QSize getLabelSize();
+    PreviewLabel *getLabel(int);
 
 protected:
 	virtual void changeEvent(QEvent* event);
 
 public Q_SLOTS:
-    void updatePreviews(pfs::Frame* frame);
+    void updatePreviews(pfs::Frame* frame, int index = -1);
 
 protected Q_SLOTS:
     void tonemapPreview(TonemappingOptions*);

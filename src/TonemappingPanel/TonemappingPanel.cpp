@@ -43,6 +43,7 @@
 
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
+#include "PreviewPanel/PreviewLabel.h"
 #include "TonemappingPanel/TonemappingPanel.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
 #include "TonemappingPanel/TonemappingSettings.h"
@@ -52,10 +53,11 @@
 #include "UI/Gang.h"
 #include "ui_TonemappingPanel.h"
 
-TonemappingPanel::TonemappingPanel(bool isPortable, QWidget *parent):
+TonemappingPanel::TonemappingPanel(bool isPortable, PreviewPanel *panel, QWidget *parent):
     QWidget(parent),
 	adding_custom_size(false),
     m_isPortable(isPortable),
+    m_previewPanel(panel),
     m_Ui(new Ui::TonemappingPanel)
 {
     m_Ui->setupUi(this);
@@ -159,6 +161,44 @@ TonemappingPanel::TonemappingPanel(bool isPortable, QWidget *parent):
     connect(m_Ui->loadCommentsButton, SIGNAL(clicked()), this, SLOT(loadComments()));
 	
     createDatabase();
+
+    fillToneMappingOptions();
+
+    connect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    connect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    connect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    connect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    connect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    connect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    
+    connect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    connect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    connect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+    connect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
 }
 
 TonemappingPanel::~TonemappingPanel()
@@ -1730,6 +1770,152 @@ void TonemappingPanel::setCurrentFrame(pfs::Frame *frame)
     m_currentFrame = frame;
 }
 
+
+void TonemappingPanel::updatePreviews(double v)
+{
+    TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
+    fillToneMappingOptions();
+    // Mantiuk06
+    if (sender() == m_Ui->contrastFactordsb) { 
+        tmopts->operator_options.mantiuk06options.contrastfactor = v;
+        m_previewPanel->getLabel(0)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 0);
+    }
+    else if(sender() == m_Ui->saturationFactordsb) {
+        tmopts->operator_options.mantiuk06options.saturationfactor = v;
+        m_previewPanel->getLabel(0)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 0);
+    }
+    else if(sender() == m_Ui->detailFactordsb) {
+        tmopts->operator_options.mantiuk06options.detailfactor = v;
+        m_previewPanel->getLabel(0)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 0);
+    }
+    // Mantiuk08
+    else if(sender() == m_Ui->colorSaturationDSB) {
+        tmopts->operator_options.mantiuk08options.colorsaturation = v;
+        m_previewPanel->getLabel(1)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 1);
+    }
+    else if(sender() == m_Ui->contrastEnhancementDSB) {
+        tmopts->operator_options.mantiuk08options.contrastenhancement = v;
+        m_previewPanel->getLabel(1)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 1);
+    }
+    else if(sender() == m_Ui->luminanceLevelDSB) {
+        tmopts->operator_options.mantiuk08options.luminancelevel = v;
+        m_previewPanel->getLabel(1)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 1);
+    }
+    // Fattal
+    else if(sender() == m_Ui->alphadsb) {
+        tmopts->operator_options.fattaloptions.alpha = v;
+        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 2);
+    }
+    else if(sender() == m_Ui->betadsb) {
+        tmopts->operator_options.fattaloptions.beta = v;
+        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 2);
+    }
+    else if(sender() == m_Ui->saturation2dsb) {
+        tmopts->operator_options.fattaloptions.color = v;
+        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 2);
+    }
+    else if(sender() == m_Ui->noisedsb) {
+        tmopts->operator_options.fattaloptions.noiseredux = v;
+        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 2);
+    }
+    // Drago
+    else if(sender() == m_Ui->biasdsb) {
+        tmopts->operator_options.dragooptions.bias = v;
+        m_previewPanel->getLabel(3)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 3);
+    }
+    // Durand
+    else if(sender() == m_Ui->basedsb) {
+        tmopts->operator_options.durandoptions.base = v;
+        m_previewPanel->getLabel(4)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 4);
+    }
+    else if(sender() == m_Ui->spatialdsb) {
+        tmopts->operator_options.durandoptions.spatial = v;
+        m_previewPanel->getLabel(4)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 4);
+    }
+    else if(sender() == m_Ui->rangedsb) {
+        tmopts->operator_options.durandoptions.range = v;
+        m_previewPanel->getLabel(4)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 4);
+    }
+    // Reinhard02
+    else if(sender() == m_Ui->keydsb) {
+        tmopts->operator_options.reinhard02options.key = v;
+        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 5);
+    }
+    else if(sender() == m_Ui->phidsb) {
+        tmopts->operator_options.reinhard02options.phi = v;
+        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 5);
+    }
+    else if(sender() == m_Ui->range2dsb) {
+        tmopts->operator_options.reinhard02options.range = (int)v;
+        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 5);
+    }
+    else if(sender() == m_Ui->lowerdsb) {
+        tmopts->operator_options.reinhard02options.lower = (int)v;
+        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 5);
+    }
+    else if(sender() == m_Ui->upperdsb) {
+        tmopts->operator_options.reinhard02options.upper = (int)v;
+        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 5);
+    }
+    // Reinhard05
+    else if(sender() == m_Ui->brightnessdsb) {
+        tmopts->operator_options.reinhard05options.brightness = v;
+        m_previewPanel->getLabel(6)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 6);
+    }
+    else if(sender() == m_Ui->chromaticAdaptdsb) {
+        tmopts->operator_options.reinhard05options.chromaticAdaptation = v;
+        m_previewPanel->getLabel(6)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 6);
+    }
+    else if(sender() == m_Ui->lightAdaptdsb) {
+        tmopts->operator_options.reinhard05options.lightAdaptation = v;
+        m_previewPanel->getLabel(6)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 6);
+    }
+    // Ashikhmin
+    else if(sender() == m_Ui->contrastdsb) {
+        tmopts->operator_options.ashikhminoptions.lct = v;
+        m_previewPanel->getLabel(7)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 7);
+    }
+    // Pattanaik
+    else if(sender() == m_Ui->multiplierdsb) {
+        tmopts->operator_options.pattanaikoptions.multiplier = v;
+        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 8);
+    }
+    else if(sender() == m_Ui->conedsb) {
+        tmopts->operator_options.pattanaikoptions.cone = v;
+        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 8);
+    }
+    else if(sender() == m_Ui->roddsb) {
+        tmopts->operator_options.pattanaikoptions.rod = v;
+        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, 8);
+    }
+
+    
+}
+
 // ------------------------- // END FILE
-
-

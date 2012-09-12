@@ -210,7 +210,7 @@ void PreviewPanel::changeEvent(QEvent *event)
 	QWidget::changeEvent(event);
 }
 
-void PreviewPanel::updatePreviews(pfs::Frame* frame)
+void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)
 {
     if ( frame == NULL ) return;
 
@@ -229,10 +229,16 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame)
     QSharedPointer<pfs::Frame> current_frame( pfs::resizeFrame(frame, resized_width));
 
     // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
-    foreach(PreviewLabel* current_label, m_ListPreviewLabel)
-    {
+    if (index == -1) {
+        foreach(PreviewLabel* current_label, m_ListPreviewLabel)
+        {
+            PreviewLabelUpdater updater(current_frame);
+            updater(current_label);
+        }
+    }
+    else {
         PreviewLabelUpdater updater(current_frame);
-        updater(current_label);
+        updater(m_ListPreviewLabel.at(index));
     }
     // 2. (concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
     //QtConcurrent::map (m_ListPreviewLabel, PreviewLabelUpdater(current_frame) );
@@ -253,4 +259,9 @@ void PreviewPanel::tonemapPreview(TonemappingOptions* opts)
 QSize PreviewPanel::getLabelSize()
 {
     return m_ListPreviewLabel.at(0)->pixmap()->size();
+}
+
+PreviewLabel *PreviewPanel::getLabel(int index)
+{
+    return m_ListPreviewLabel.at(index);
 }

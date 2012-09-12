@@ -268,11 +268,13 @@ void MainWindow::createCentralWidget()
 
     setCentralWidget(m_centralwidget_splitter);
 
+    previewPanel = new PreviewPanel();
+
     // create tonemapping panel
     if (m_isPortable)
-        tmPanel = new TonemappingPanel(true); //(m_centralwidget_splitter);
+        tmPanel = new TonemappingPanel(true, previewPanel); //(m_centralwidget_splitter);
     else
-        tmPanel = new TonemappingPanel; //(m_centralwidget_splitter);
+        tmPanel = new TonemappingPanel(false, previewPanel); //(m_centralwidget_splitter);
 
     m_tabwidget = new QTabWidget; //(m_centralwidget_splitter);
 
@@ -300,7 +302,6 @@ void MainWindow::createCentralWidget()
     QSpacerItem *horizontalSpacer_2;
     QSpacerItem *verticalSpacer_2;
 
-    previewPanel = new PreviewPanel();
 
     previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
     previewscrollArea->setWidgetResizable(true);

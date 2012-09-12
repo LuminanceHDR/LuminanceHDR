@@ -39,6 +39,7 @@ public:
     PreviewLabel(QWidget *parent = 0, TonemappingOptions *tonemappingOptions = 0, int index = -1);
     ~PreviewLabel();
 
+    void setTonemappingOptions(TonemappingOptions *);
     TonemappingOptions* getTonemappingOptions();
     void setComment(QString);
     QString getComment();
@@ -67,4 +68,10 @@ inline TonemappingOptions* PreviewLabel::getTonemappingOptions()
     return m_TMOptions;
 }
 
+inline void PreviewLabel::setTonemappingOptions(TonemappingOptions *tmopts)
+{
+    if (m_TMOptions)
+        delete m_TMOptions;
+    m_TMOptions = tmopts;
+}
 #endif
