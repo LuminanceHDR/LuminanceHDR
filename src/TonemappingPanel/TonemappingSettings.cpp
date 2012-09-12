@@ -107,6 +107,73 @@ bool compareByOperator(PreviewLabel *l1, PreviewLabel *l2)
     return s1 < s2;
 }
 
+bool compareByMostUsefulOperators(PreviewLabel *l1, PreviewLabel *l2)
+{
+    TonemappingOptions *opts1 = l1->getTonemappingOptions(), *opts2 = l2->getTonemappingOptions();
+    TMOperator op1 = opts1->tmoperator, op2 = opts2->tmoperator;
+    QString s1, s2;
+    switch (op1) {
+        case ashikhmin:
+            s1 = "H";
+        break;
+        case drago:
+            s1 = "G";
+        break;
+        case durand:
+            s1 = "F";
+        break;
+        case fattal:
+            s1 = "B";
+        break;
+        case mantiuk06:
+            s1 = "A";
+        break;
+        case mantiuk08:
+            s1 = "C";
+        break;
+        case pattanaik:
+            s1 = "I";
+        break;
+        case reinhard02:
+            s1 = "E";
+        break;
+        case reinhard05:
+            s1 = "D";
+        break;
+    }
+    switch (op2) {
+        case ashikhmin:
+            s2 = "H";
+        break;
+        case drago:
+            s2 = "G";
+        break;
+        case durand:
+            s2 = "F";
+        break;
+        case fattal:
+            s2 = "B";
+        break;
+        case mantiuk06:
+            s2 = "A";
+        break;
+        case mantiuk08:
+            s2 = "C";
+        break;
+        case pattanaik:
+            s2 = "I";
+        break;
+        case reinhard02:
+            s2 = "E";
+        break;
+        case reinhard05:
+            s2 = "D";
+        break;
+    }
+    return s1 < s2;
+}
+
+
 TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
     QDialog(parent),
     m_frame(frame),
@@ -497,7 +564,17 @@ void TonemappingSettings::sortPreviews(int index) {
         l.append(m_previewSettings->getPreviewLabel(i));
     }
     m_previewSettings->clear();
-    std::sort(l.begin(), l.end(), (index == 0) ? compareByComment : compareByOperator);
+    switch (index) {
+        case 0:
+            std::sort(l.begin(), l.end(), compareByComment);
+        break;
+        case 1:
+            std::sort(l.begin(), l.end(), compareByOperator);
+        break;
+        case 2:
+            std::sort(l.begin(), l.end(), compareByMostUsefulOperators);
+        break;
+    }
     for (int i = 0; i < listSize; i++) {
         PreviewLabel *pl = l.at(i);
         pl->setIndex(i);
