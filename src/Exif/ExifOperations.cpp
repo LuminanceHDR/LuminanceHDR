@@ -21,6 +21,8 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#include <QDebug>
+
 #include <image.hpp>
 #include <cmath>
 #include <iostream>
@@ -30,7 +32,7 @@
 
 namespace ExifOperations
 {
-  
+/* 
     void writeExifData(const std::string& filename, const std::string& comment, float expotime)
     {
         Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
@@ -50,14 +52,22 @@ namespace ExifOperations
         image->setExifData(exifData);
         image->writeMetadata();
     }
-  
+*/
     void copyExifData(const std::string& from, const std::string& to, bool dontOverwrite, const std::string& comment, bool destIsLDR)
     {
         //std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
         //get source and destination exif data
         //THROWS, if opening the file fails or it contains data of an unknown image type.
-        Exiv2::Image::AutoPtr sourceImage = Exiv2::ImageFactory::open(from);
-        Exiv2::Image::AutoPtr destinationImage = Exiv2::ImageFactory::open(to);
+        Exiv2::Image::AutoPtr sourceImage;
+        Exiv2::Image::AutoPtr destinationImage;
+        try {
+            sourceImage = Exiv2::ImageFactory::open(from);
+            destinationImage = Exiv2::ImageFactory::open(to);
+        }
+        catch(Exiv2::AnyError& e) {
+            qDebug() << e.what();
+            return;
+        }
         //Callers must check the size of individual metadata types before accessing the data.
         //readMetadata THROWS an exception if opening or reading of the file fails or the image data is not valid (does not look like data of the specific image type).
         sourceImage->readMetadata();
@@ -111,14 +121,32 @@ namespace ExifOperations
                     const Exiv2::ExifKey destKey(i->key());
                     destExifData.add(destKey, &(i->value()));
                 }
-                destinationImage->setExifData(destExifData);
+                try {
+                    destinationImage->setExifData(destExifData);
+                }
+                catch(Exiv2::AnyError& e) {
+                    qDebug() << e.what();
+                    return;
+                }
             }
-            else
-                destinationImage->setExifData(srcExifData);
+            else {
+                try {
+                    destinationImage->setExifData(srcExifData);
+                }
+                catch(Exiv2::AnyError& e) {
+                    qDebug() << e.what();
+                    return;
+                }
+            }
         }
-    
         //THROWS Exiv2::Error if the operation fails
-        destinationImage->writeMetadata();
+        try {
+            destinationImage->writeMetadata();
+        }
+        catch(Exiv2::AnyError& e) {
+            qDebug() << e.what();
+            return;
+        }
     }
   
   /**
