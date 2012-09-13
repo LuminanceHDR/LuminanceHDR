@@ -276,6 +276,10 @@ void MainWindow::createCentralWidget()
     else
         tmPanel = new TonemappingPanel(false, previewPanel); //(m_centralwidget_splitter);
 
+    connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), tmPanel, SLOT(setRealtimePreviews(bool)));
+    connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), luminance_options, SLOT(setRealtimePreviewsActive(bool)));
+    tmPanel->setRealtimePreviews(luminance_options->isRealtimePreviewsActive());
+
     m_tabwidget = new QTabWidget; //(m_centralwidget_splitter);
 
     m_tabwidget->setDocumentMode(true);
@@ -469,6 +473,7 @@ void MainWindow::loadOptions()
         m_Ui->actionShow_on_the_right->setChecked(true);
         m_Ui->actionShow_on_the_bottom->setChecked(false);
     }
+    m_Ui->actionRealtimePreviews->setChecked(luminance_options->isRealtimePreviewsActive());
 }
 
 void MainWindow::on_actionDonate_triggered()

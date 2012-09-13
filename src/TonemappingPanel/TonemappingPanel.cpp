@@ -162,58 +162,6 @@ TonemappingPanel::TonemappingPanel(bool isPortable, PreviewPanel *panel, QWidget
 	
     createDatabase();
 
-    fillToneMappingOptions();
-
-    connect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    connect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    connect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    connect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    connect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    connect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    
-    connect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    connect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    connect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-    connect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-
-    connect(m_Ui->contrastEqualizCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-
-    connect(m_Ui->luminanceLevelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-    
-    connect(m_Ui->fftVersionCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-
-    connect(m_Ui->usescalescheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-
-    connect(m_Ui->simpleCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-
-    connect(m_Ui->pattalocal, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-    connect(m_Ui->autoYcheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-
-    connect(m_Ui->eq2RadioButton, SIGNAL(toggled(bool)), this, SLOT(updatePreviewsRB(bool)));
 }
 
 TonemappingPanel::~TonemappingPanel()
@@ -1988,4 +1936,113 @@ void TonemappingPanel::updatePreviewsRB(bool toggled)
     m_previewPanel->updatePreviews(m_currentFrame, 7);
 }
 
+void TonemappingPanel::setRealtimePreviews(bool toggled)
+{
+    if (toggled) {
+        fillToneMappingOptions();
+
+        connect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        connect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        connect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        connect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        connect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        connect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    
+        connect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        connect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        connect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        connect(m_Ui->contrastEqualizCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        connect(m_Ui->luminanceLevelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+    
+        connect(m_Ui->fftVersionCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        connect(m_Ui->usescalescheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        connect(m_Ui->simpleCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        connect(m_Ui->pattalocal, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        connect(m_Ui->autoYcheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        connect(m_Ui->eq2RadioButton, SIGNAL(toggled(bool)), this, SLOT(updatePreviewsRB(bool)));
+    }
+    else {
+        disconnect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->rangedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->keydsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->phidsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+    
+        disconnect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->chromaticAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->lightAdaptdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->contrastEqualizCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        disconnect(m_Ui->luminanceLevelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+    
+        disconnect(m_Ui->fftVersionCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        disconnect(m_Ui->usescalescheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        disconnect(m_Ui->simpleCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        disconnect(m_Ui->pattalocal, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        disconnect(m_Ui->autoYcheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+
+        disconnect(m_Ui->eq2RadioButton, SIGNAL(toggled(bool)), this, SLOT(updatePreviewsRB(bool)));
+    }
+}
 // ------------------------- // END FILE

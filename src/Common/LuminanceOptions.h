@@ -187,6 +187,10 @@ public Q_SLOTS:
     int     getPreviewWidth();
     void    setPreviewWidth(int);
 
+    // Realtime Previews
+    bool    isRealtimePreviewsActive();
+    void    setRealtimePreviewsActive(bool);
+
 	// Color Management
 	QString getCameraProfileFileName();
 	void	setCameraProfileFileName(QString);

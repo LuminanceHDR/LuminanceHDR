@@ -38,6 +38,7 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="actionShowPreviewPanel"/>
+    <addaction name="actionRealtimePreviews"/>
     <addaction name="separator"/>
     <addaction name="Transplant_Exif_Data_action"/>
     <addaction name="actionBatch_HDR"/>
@@ -1011,6 +1012,17 @@
    </property>
    <property name="text">
     <string>Show on the bottom</string>
+   </property>
+  </action>
+  <action name="actionRealtimePreviews">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Realtime Previews</string>
    </property>
   </action>
  </widget>

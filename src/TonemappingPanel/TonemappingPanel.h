@@ -157,6 +157,7 @@ public Q_SLOTS:
     void setEnabled(bool);
     void updatedHDR(pfs::Frame*);
     void updateTonemappingParams(TonemappingOptions *opts);
+    void setRealtimePreviews(bool);
 
 signals:
     void startTonemapping(TonemappingOptions*);

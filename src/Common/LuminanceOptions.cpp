@@ -661,6 +661,17 @@ void LuminanceOptions::setPreviewPanelActive(bool status)
     setValue(KEY_TMOWINDOW_SHOWPREVIEWPANEL, status);
 }
 
+bool LuminanceOptions::isRealtimePreviewsActive()
+{
+    return value(KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE, true).toBool();
+}
+
+void LuminanceOptions::setRealtimePreviewsActive(bool status)
+{
+    setValue(KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE, status);
+}
+
+
 int  LuminanceOptions::getPreviewWidth()
 {
     return value(KEY_TMOWINDOW_PREVIEWS_WIDTH, 400).toInt();
