@@ -98,6 +98,7 @@ pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
     std::cout << "shiftPfsArray2D = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 
+    delete temp;
 	return out;
 }
 }
