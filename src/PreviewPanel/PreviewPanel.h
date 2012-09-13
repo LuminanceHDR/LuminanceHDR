@@ -48,9 +48,6 @@ public:
     QSize getLabelSize();
     PreviewLabel *getLabel(int);
 
-protected:
-	virtual void changeEvent(QEvent* event);
-
 public Q_SLOTS:
     void updatePreviews(pfs::Frame* frame, int index = -1);
 

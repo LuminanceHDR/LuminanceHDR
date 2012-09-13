@@ -151,7 +151,6 @@ public:
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();
-    void setCurrentFrame(pfs::Frame *frame);
 
 public Q_SLOTS:
     void setEnabled(bool);

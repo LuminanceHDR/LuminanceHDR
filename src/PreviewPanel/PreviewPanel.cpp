@@ -27,6 +27,7 @@
 
 #include "PreviewPanel.h"
 
+#include "Libpfs/domio.h"
 #include "Filter/pfssize.h"
 #include "Filter/pfscut.h"
 #include "Core/TMWorker.h"
@@ -47,7 +48,7 @@ void resetTonemappingOptions(TonemappingOptions* tm_options, const pfs::Frame* f
 {
     tm_options->origxsize          = frame->getWidth();
     tm_options->xsize              = frame->getWidth();
-    tm_options->pregamma           = 1.0f;
+    //tm_options->pregamma           = 1.0f;  //TODO check this
     tm_options->tonemapSelection   = false;
 }
 
@@ -79,17 +80,20 @@ public:
 #endif
         }
 
-        ProgressHelper fake_progress_helper;
+        //ProgressHelper fake_progress_helper;
 
         // Copy Reference Frame
         QSharedPointer<pfs::Frame> temp_frame( pfs::pfscopy(m_ReferenceFrame.data()) );
 
         // Tone Mapping
-        QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
-        tm_operator->tonemapFrame(temp_frame.data(), tm_options, fake_progress_helper);
-
+        //QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
+        //tm_operator->tonemapFrame(temp_frame.data(), tm_options, fake_progress_helper);
+        QScopedPointer<TMWorker> tmWorker(new TMWorker);
+        QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
+        
         // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
-        QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
+        //QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
+        QSharedPointer<QImage> qimage(fromLDRPFStoQImage(frame.data()));
 
         //! \note I cannot use these 2 functions, because setPixmap must run in the GUI thread
         //m_PreviewLabel->setPixmap( QPixmap::fromImage(*qimage) );
@@ -199,15 +203,6 @@ PreviewPanel::~PreviewPanel()
 #ifdef QT_DEBUG
     qDebug() << "PreviewPanel::~PreviewPanel()";
 #endif
-}
-
-void PreviewPanel::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::LanguageChange) {
-        //m_Ui->retranslateUi(this);
-    }
-
-	QWidget::changeEvent(event);
 }
 
 void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)

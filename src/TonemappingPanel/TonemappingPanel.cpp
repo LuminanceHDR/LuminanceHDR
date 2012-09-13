@@ -1033,6 +1033,7 @@ void TonemappingPanel::setEnabled(bool b)
 void TonemappingPanel::updatedHDR(pfs::Frame* f)
 {
     setSizes(f->getWidth(), f->getHeight());
+    m_currentFrame = f;
 }
 
 /*
@@ -1728,212 +1729,214 @@ bool TonemappingPanel::replaceLdr()
     return m_Ui->replaceLdrCheckBox->isChecked();
 }
 
-void TonemappingPanel::setCurrentFrame(pfs::Frame *frame)
-{
-    m_currentFrame = frame;
-}
-
-
 void TonemappingPanel::updatePreviews(double v)
 {
+    int index = m_Ui->stackedWidget_operators->currentIndex();
     TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
     fillToneMappingOptions();
     // Mantiuk06
     if (sender() == m_Ui->contrastFactordsb) { 
         tmopts->operator_options.mantiuk06options.contrastfactor = v;
-        m_previewPanel->getLabel(0)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 0);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->saturationFactordsb) {
         tmopts->operator_options.mantiuk06options.saturationfactor = v;
-        m_previewPanel->getLabel(0)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 0);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->detailFactordsb) {
         tmopts->operator_options.mantiuk06options.detailfactor = v;
-        m_previewPanel->getLabel(0)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 0);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Mantiuk08
     else if(sender() == m_Ui->colorSaturationDSB) {
         tmopts->operator_options.mantiuk08options.colorsaturation = v;
-        m_previewPanel->getLabel(1)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 1);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->contrastEnhancementDSB) {
         tmopts->operator_options.mantiuk08options.contrastenhancement = v;
-        m_previewPanel->getLabel(1)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 1);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->luminanceLevelDSB) {
         tmopts->operator_options.mantiuk08options.luminancelevel = v;
-        m_previewPanel->getLabel(1)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 1);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Fattal
     else if(sender() == m_Ui->alphadsb) {
         tmopts->operator_options.fattaloptions.alpha = v;
-        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 2);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->betadsb) {
         tmopts->operator_options.fattaloptions.beta = v;
-        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 2);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->saturation2dsb) {
         tmopts->operator_options.fattaloptions.color = v;
-        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 2);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->noisedsb) {
         tmopts->operator_options.fattaloptions.noiseredux = v;
-        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 2);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Drago
     else if(sender() == m_Ui->biasdsb) {
         tmopts->operator_options.dragooptions.bias = v;
-        m_previewPanel->getLabel(3)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 3);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Durand
     else if(sender() == m_Ui->basedsb) {
         tmopts->operator_options.durandoptions.base = v;
-        m_previewPanel->getLabel(4)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 4);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->spatialdsb) {
         tmopts->operator_options.durandoptions.spatial = v;
-        m_previewPanel->getLabel(4)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 4);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->rangedsb) {
         tmopts->operator_options.durandoptions.range = v;
-        m_previewPanel->getLabel(4)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 4);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Reinhard02
     else if(sender() == m_Ui->keydsb) {
         tmopts->operator_options.reinhard02options.key = v;
-        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 5);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->phidsb) {
         tmopts->operator_options.reinhard02options.phi = v;
-        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 5);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->range2dsb) {
         tmopts->operator_options.reinhard02options.range = (int)v;
-        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 5);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->lowerdsb) {
         tmopts->operator_options.reinhard02options.lower = (int)v;
-        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 5);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->upperdsb) {
         tmopts->operator_options.reinhard02options.upper = (int)v;
-        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 5);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Reinhard05
     else if(sender() == m_Ui->brightnessdsb) {
         tmopts->operator_options.reinhard05options.brightness = v;
-        m_previewPanel->getLabel(6)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 6);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->chromaticAdaptdsb) {
         tmopts->operator_options.reinhard05options.chromaticAdaptation = v;
-        m_previewPanel->getLabel(6)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 6);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->lightAdaptdsb) {
         tmopts->operator_options.reinhard05options.lightAdaptation = v;
-        m_previewPanel->getLabel(6)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 6);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Ashikhmin
     else if(sender() == m_Ui->contrastdsb) {
         tmopts->operator_options.ashikhminoptions.lct = v;
-        m_previewPanel->getLabel(7)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 7);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Pattanaik
     else if(sender() == m_Ui->multiplierdsb) {
         tmopts->operator_options.pattanaikoptions.multiplier = v;
-        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 8);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->conedsb) {
         tmopts->operator_options.pattanaikoptions.cone = v;
-        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 8);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if(sender() == m_Ui->roddsb) {
         tmopts->operator_options.pattanaikoptions.rod = v;
-        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 8);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
+    }
+    else if(sender() == m_Ui->pregammadsb) {
+        tmopts->pregamma = v;
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
 }
 
 void TonemappingPanel::updatePreviewsCB(int state)
 {
+    int index = m_Ui->stackedWidget_operators->currentIndex();
     TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
     fillToneMappingOptions();
     // Mantiuk06
     if (sender() == m_Ui->contrastEqualizCheckBox) { 
         tmopts->operator_options.mantiuk06options.contrastequalization = state;
-        m_previewPanel->getLabel(0)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 0);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Mantiuk08
     else if (sender() == m_Ui->luminanceLevelCheckBox) { 
         tmopts->operator_options.mantiuk08options.luminancelevel = state;
-        m_previewPanel->getLabel(1)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 1);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Fattal
     else if (sender() == m_Ui->fftVersionCheckBox) { 
         tmopts->operator_options.fattaloptions.fftsolver = state;
-        m_previewPanel->getLabel(2)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 2);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Reinhard02
     else if (sender() == m_Ui->usescalescheckbox) { 
         tmopts->operator_options.reinhard02options.scales = state;
-        m_previewPanel->getLabel(5)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 5);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Ashikhmin
     else if (sender() == m_Ui->simpleCheckBox) { 
         tmopts->operator_options.ashikhminoptions.simple = state;
-        m_previewPanel->getLabel(7)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 7);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     // Pattanaik
     else if (sender() == m_Ui->pattalocal) { 
         tmopts->operator_options.pattanaikoptions.local = state;
-        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 8);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
     else if (sender() == m_Ui->autoYcheckbox) { 
         tmopts->operator_options.pattanaikoptions.autolum = state;
-        m_previewPanel->getLabel(8)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, 8);
+        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+        m_previewPanel->updatePreviews(m_currentFrame, index);
     }
 }
 
 void TonemappingPanel::updatePreviewsRB(bool toggled)
 {
+    int index = m_Ui->stackedWidget_operators->currentIndex();
     TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
     fillToneMappingOptions();
     // Only one sender: Ashikhmin
     tmopts->operator_options.ashikhminoptions.eq2 = toggled;
-    m_previewPanel->getLabel(7)->setTonemappingOptions(tmopts);
-    m_previewPanel->updatePreviews(m_currentFrame, 7);
+    m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+    m_previewPanel->updatePreviews(m_currentFrame, index);
 }
 
 void TonemappingPanel::setRealtimePreviews(bool toggled)
@@ -1977,6 +1980,8 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
         connect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
 
+        connect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
         connect(m_Ui->contrastEqualizCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
 
         connect(m_Ui->luminanceLevelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
@@ -1991,6 +1996,7 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
         connect(m_Ui->autoYcheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
 
         connect(m_Ui->eq2RadioButton, SIGNAL(toggled(bool)), this, SLOT(updatePreviewsRB(bool)));
+
     }
     else {
         disconnect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
@@ -2028,6 +2034,8 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
         disconnect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         disconnect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         disconnect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
 
         disconnect(m_Ui->contrastEqualizCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
 

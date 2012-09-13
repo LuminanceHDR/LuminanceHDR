@@ -1106,7 +1106,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         m_tabwidget->setCurrentWidget(newhdr);
 
         tmPanel->setEnabled(true);
-        tmPanel->setCurrentFrame(new_hdr_frame);
+        tmPanel->updatedHDR(new_hdr_frame);
         m_Ui->actionShowPreviewPanel->setEnabled(true);
 
         showPreviewPanel(m_Ui->actionShowPreviewPanel->isChecked());
