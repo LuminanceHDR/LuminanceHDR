@@ -21,6 +21,39 @@ IF(LIBRAW_FOUND)
   SET( LIBRAW_LIBRARIES ${LIBRAW_LIBRARY} )
   MESSAGE(STATUS "Found LibRAW (LIBRAW_INCLUDE_DIR = ${LIBRAW_INCLUDE_DIR})")
   MESSAGE(STATUS "Found LibRAW (LIBRAW_LIBRARIES = ${LIBRAW_LIBRARIES})")
+  IF(UNIX)
+    IF(APPLE)
+      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/macosx/find_demosaicing_gpl2.sh
+                    ${LIBRAW_LIBRARY} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                    OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
+    ELSE()
+      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/linux/find_demosaicing_gpl2.sh
+                    ${LIBRAW_LIBRARY} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                    OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
+    ENDIF()
+    IF(_output)
+      MESSAGE(STATUS "Found demosaicing pack GPL2")
+      ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
+    ELSE(_output)
+      MESSAGE(STATUS "Demosaicing pack GPL2 not found")
+    ENDIF(_output)
+
+    IF(APPLE)
+      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/macosx/find_demosaicing_gpl3.sh
+                    ${LIBRAW_LIBRARY} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                    OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
+    ELSE()
+      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/linux//find_demosaicing_gpl3.sh
+                    ${LIBRAW_LIBRARY} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                    OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
+    ENDIF()
+    IF(_output)
+      MESSAGE(STATUS "Found demosaicing pack GPL3")
+      ADD_DEFINITIONS("-DDEMOSAICING_GPL3")
+    ELSE(_output)
+      MESSAGE(STATUS "Demosaicing pack GPL3 not found")
+    ENDIF(_output)
+  ENDIF(UNIX)
 ELSE(LIBRAW_FOUND)
   MESSAGE(FATAL_ERROR "Could not find LibRAW")
 ENDIF(LIBRAW_FOUND)

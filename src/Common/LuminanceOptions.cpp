@@ -276,7 +276,15 @@ int LuminanceOptions::getRawUserFlip()
 
 int LuminanceOptions::getRawUserQuality()
 {
-    return value(KEY_USER_QUAL, 0).toInt();
+#ifdef DEMOSAICING_GPL2
+    int defaultUserQuality = 5; // using AHDv2
+#else
+    int defaultUserQuality = 3; // using AHD
+#endif
+#ifdef DEMOSAICING_GPL3
+    defaultUserQuality = 10; // using  AMaZE interpolation
+#endif
+    return value(KEY_USER_QUAL, defaultUserQuality).toInt();
 }
 
 void LuminanceOptions::setRawUserQuality(int v)
