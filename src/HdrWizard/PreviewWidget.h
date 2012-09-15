@@ -30,142 +30,106 @@
 #include <QScrollArea>
 #include <QImage>
 
+#include "AntiGhostingWidget.h"
+
 class PreviewWidget : public QWidget
 {
 Q_OBJECT
 public:
-	PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage *p);
-	~PreviewWidget();
-	QSize sizeHint () const {
-		return previewImage->size();
-	}
-	float getScaleFactor() {
-		return scaleFactor;
-	}
-	QRect getCropArea() const {
-		return rubberband;
-	}
-        QImage * getPreviewImage() {
-		renderPreviewImage(blendmode);
-                return previewImage;
-	}
+    PreviewWidget(QWidget *parent, QImage *m, const QImage *p);
+    ~PreviewWidget();
+    QSize sizeHint () const {
+        return m_previewImage->size();
+    }
+    float getScaleFactor() {
+        return m_scaleFactor;
+    }
+    QImage * getPreviewImage() {
+        renderPreviewImage(blendmode);
+        return m_previewImage;
+    }
     void setPivot(QImage *p, int p_px, int p_py);
-	void setPivot(QImage *p);
+    void setPivot(QImage *p);
     void setMovable(QImage *m, int p_mx, int p_my);
-	void setMovable(QImage *m);
-	void updateVertShiftMovable(int v);
-	void updateHorizShiftMovable(int h);
-	void updateHorizShiftPivot(int h);
-	void updateVertShiftPivot(int v);
-	void hideRubberBand();
+    void setMovable(QImage *m);
+    void updateVertShiftMovable(int v);
+    void updateHorizShiftMovable(int h);
+    void updateHorizShiftPivot(int h);
+    void updateVertShiftPivot(int v);
 
 public slots:
-	void requestedBlendMode(int);
-	void switchAntighostingMode(bool);
-	void setBrushSize(const int);
-	void setBrushStrength(const int);
-	void setBrushColor(const QColor);
-	void setBrushMode(bool);
+    void requestedBlendMode(int);
 signals:
-	void validCropArea(bool);
-	void moved(QPoint diff);
+    void moved(QPoint diff);
 protected:
-	void paintEvent( QPaintEvent * );
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void timerEvent(QTimerEvent *event);
-	void enterEvent(QEvent *event);
+    void paintEvent( QPaintEvent * );
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 private:
-	//5 blending modes
-	inline QRgb computeOnlyMovable(const QRgb *Mrgba, const QRgb */*Prgba*/) const {
-		return *Mrgba;
-	}
-	inline QRgb computeOnlyPivot(const QRgb */*Mrgba*/, const QRgb *Prgba) const {
-		return *Prgba;
-	}
-	inline QRgb computeAddRgba(const QRgb *Mrgba, const QRgb *Prgba) const {
-		int ro,go,bo;
-		int Mred   = qRed(*Mrgba);
-		int Mgreen = qGreen(*Mrgba);
-		int Mblue  = qBlue(*Mrgba);
-		int Malpha = qAlpha(*Mrgba);
-		int Pred   = qRed(*Prgba);
-		int Pgreen = qGreen(*Prgba);
-		int Pblue  = qBlue(*Prgba);
-		int Palpha = qAlpha(*Prgba);
-		//blend samples using alphas as weights
-		ro = ( Pred*Palpha + Mred*Malpha )/510;
-		go = ( Pgreen*Palpha + Mgreen*Malpha )/510;
-		bo = ( Pblue*Palpha + Mblue*Malpha )/510;
-		//the output image still has alpha=255 (opaque)
-		return qRgba(ro,go,bo,255);
-	}
-	inline QRgb computeDiffRgba(const QRgb *Mrgba, const QRgb *Prgba) const {
-		int ro,go,bo;
-		int Mred        = qRed(*Mrgba);
-		int Mgreen      = qGreen(*Mrgba);
-		int Mblue       = qBlue(*Mrgba);
-		int Malpha      = qAlpha(*Mrgba);
-		int Pred        = qRed(*Prgba);
-		int Pgreen      = qGreen(*Prgba);
-		int Pblue       = qBlue(*Prgba);
-		int Palpha      = qAlpha(*Prgba);
-		//blend samples using alphas as weights
-		ro = qAbs( Pred*Palpha - Mred*Malpha )/255;
-		go = qAbs( Pgreen*Palpha - Mgreen*Malpha )/255;
-		bo = qAbs( Pblue*Palpha - Mblue*Malpha )/255;
-		//the output image still has alpha=255 (opaque)
-		return qRgba(ro,go,bo,255);
-	}
-	inline QRgb computeAntiGhostingMask(const QRgb *Mrgba, const QRgb */*Prgba*/) const {
-		int ro,go,bo;
-		int Mred   = qRed(*Mrgba);
-		int Mgreen = qGreen(*Mrgba);
-		int Mblue  = qBlue(*Mrgba);
-		int Malpha = qAlpha(*Mrgba);
-		//blend samples using alphas as weights
-		ro = ( requestedPixmapColor.red()*(255-Malpha) + Mred*Malpha )/255;
-		go = ( requestedPixmapColor.green()*(255-Malpha) + Mgreen*Malpha )/255;
-		bo = ( requestedPixmapColor.blue()*(255-Malpha) + Mblue*Malpha )/255;
-		//the output image still has alpha=255 (opaque)
-		return qRgba(ro,go,bo,255);
-	}
-	QRgb(PreviewWidget::*blendmode)(const QRgb*,const QRgb*)const;
-	void renderPreviewImage(QRgb(PreviewWidget::*f)(const QRgb*,const QRgb*)const,const QRect a = QRect());
+    //5 blending modes
+    inline QRgb computeOnlyMovable(const QRgb *Mrgba, const QRgb */*Prgba*/) const {
+        return *Mrgba;
+    }
+    inline QRgb computeOnlyPivot(const QRgb */*Mrgba*/, const QRgb *Prgba) const {
+        return *Prgba;
+    }
+    inline QRgb computeAddRgba(const QRgb *Mrgba, const QRgb *Prgba) const {
+        int ro,go,bo;
+        int Mred   = qRed(*Mrgba);
+        int Mgreen = qGreen(*Mrgba);
+        int Mblue  = qBlue(*Mrgba);
+        int Malpha = qAlpha(*Mrgba);
+        int Pred   = qRed(*Prgba);
+        int Pgreen = qGreen(*Prgba);
+        int Pblue  = qBlue(*Prgba);
+        int Palpha = qAlpha(*Prgba);
+        //blend samples using alphas as weights
+        ro = ( Pred*Palpha + Mred*Malpha )/510;
+        go = ( Pgreen*Palpha + Mgreen*Malpha )/510;
+        bo = ( Pblue*Palpha + Mblue*Malpha )/510;
+        //the output image still has alpha=255 (opaque)
+        return qRgba(ro,go,bo,255);
+    }
+    inline QRgb computeDiffRgba(const QRgb *Mrgba, const QRgb *Prgba) const {
+        int ro,go,bo;
+        int Mred        = qRed(*Mrgba);
+        int Mgreen      = qGreen(*Mrgba);
+        int Mblue       = qBlue(*Mrgba);
+        int Malpha      = qAlpha(*Mrgba);
+        int Pred        = qRed(*Prgba);
+        int Pgreen      = qGreen(*Prgba);
+        int Pblue       = qBlue(*Prgba);
+        int Palpha      = qAlpha(*Prgba);
+        //blend samples using alphas as weights
+        ro = qAbs( Pred*Palpha - Mred*Malpha )/255;
+        go = qAbs( Pgreen*Palpha - Mgreen*Malpha )/255;
+        bo = qAbs( Pblue*Palpha - Mblue*Malpha )/255;
+        //the output image still has alpha=255 (opaque)
+        return qRgba(ro,go,bo,255);
+    }
 
-	// the out and 2 in images
-	QImage *previewImage;
-	/*const*/ QImage *movableImage;
-	const QImage *pivotImage;
+    QRgb(PreviewWidget::*blendmode)(const QRgb*,const QRgb*)const;
+    void renderPreviewImage(QRgb(PreviewWidget::*f)(const QRgb*,const QRgb*)const,const QRect a = QRect());
 
-	//QScrollArea *scrollArea;
-	QRegion prev_computed;
+    // the out and 2 in images
+    QImage *m_previewImage;
+    QImage *m_movableImage;
+    const QImage *m_pivotImage;
 
-	//movable and pivot's x,y shifts
-	int mx,my,px,py;
-	//zoom factor
-	float scaleFactor;
+    QRegion m_prevComputed;
 
-	//for panning with mid-button
-	QPoint mousePos;
-	//for cropping
-	QRect rubberband;
-	//assigned when starting to create a rubberband
-	QPoint rubberbandInitialCreationPoint;
-	//used for additional painting
-	int timerid;
-	QPixmap *agcursor_pixmap;
-	int requestedPixmapSize,previousPixmapSize;
-	int requestedPixmapStrength,previousPixmapStrength;
-	QColor requestedPixmapColor,previousPixmapColor;
-	bool brushAddMode;//false means brush is in remove mode.
-	void fillAntiGhostingCursorPixmap();
+    //movable and pivot's x,y shifts
+    int m_mx, m_my, m_px, m_py;
+    //zoom factor
+    float m_scaleFactor;
 
-	enum dragging_mode {DRAGGING_LEFT, DRAGGING_RIGHT, DRAGGING_TOP, DRAGGING_BOTTOM, DRAGGING_TOPLEFT, DRAGGING_TOPRIGHT, DRAGGING_BOTTOMRIGHT, DRAGGING_BOTTOMLEFT, DRAGGING_NONE } dragging_mode;
-	enum {LB_croppingmode,LB_antighostingmode} leftButtonMode;
+    //for panning with mid-button
+    QPoint m_mousePos;
+
+    enum {LB_nomode,LB_antighostingmode} m_leftButtonMode;
 };
 
 #endif

@@ -65,7 +65,7 @@ class HelpBrowser : public QMainWindow
 
 public:
 	HelpBrowser(QWidget* parent);
-	HelpBrowser(QWidget* parent, const QString& caption, const QString& guiLangage="en", const QString& jumpToSection="", const QString& jumpToFile="");
+	HelpBrowser(QWidget* parent, const QString& caption, const bool portable = false, const QString& guiLangage="en", const QString& jumpToSection="", const QString& jumpToFile="");
 	~HelpBrowser();
 	
 	
@@ -131,6 +131,8 @@ protected:
 	ScHelpTreeModel* menuModel;
 	QMap<QString, QString> quickHelpIndex;
 	QMap<QString, QPair<QString, QString> > bookmarkIndex;
+
+    bool m_isPortable;
 	
 protected slots:
 	virtual void languageChange();

@@ -29,6 +29,7 @@ ADD_SUBDIRECTORY(TonemappingPanel)
 ADD_SUBDIRECTORY(TransplantExif)
 ADD_SUBDIRECTORY(UI)
 ADD_SUBDIRECTORY(Viewers)
+ADD_SUBDIRECTORY(PreviewSettings)
 
 
 # They need to stay at the bottom of this file!

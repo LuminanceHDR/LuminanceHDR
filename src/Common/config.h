@@ -40,6 +40,7 @@
 #define KEY_TM_TOOLBAR_MODE "TonemappingWindowToolbarVisualizationMode"
 #define KEY_MANUAL_AG_MASK_COLOR "ManualAntiGhostingMaskColor"
 #define KEY_GUI_LANG "UserInterfaceLanguage"
+#define KEY_PREVIEW_PANEL_MODE "MainWindowPreviewPanelVisualizationMode"
 
 #define KEY_EXTERNAL_AIS_OPTIONS "External_Tools_Options/ExternalAlignImageStackOptions"
 
@@ -54,6 +55,7 @@
 #define KEY_TMOWINDOW_MAX "TMOWindow_Options/TMOWindow_Max"
 #define KEY_TMOWINDOW_SHOWPROCESSED "TMOWindow_Options/TMOWindow_ShowProcessed"
 #define KEY_TMOWINDOW_SHOWPREVIEWPANEL "TMOWindow_Options/TMOWindow_ShowPreviewPanel"
+#define KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE "TMOWindow_Options/TMOWindow_RealtimePreviewsActive"
 #define KEY_WIZARD_SHOWFIRSTPAGE "HDR_Wizard_Options/Wizard_ShowFirstPage"
 
 #define KEY_TMOWARNING_FATTALSMALL "TMOWarning_Options/TMOWarning_fattalsmall"

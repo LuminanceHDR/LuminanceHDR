@@ -32,6 +32,7 @@
 
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/frame.h"
+#include "PreviewPanel/PreviewPanel.h"
 
 class Gang;
 
@@ -104,9 +105,12 @@ protected:
 
     float heightToWidthRatio;
     bool adding_custom_size;
+    bool m_isPortable;
+    PreviewPanel *m_previewPanel;
 
     void createDatabase();
 
+    pfs::Frame *m_currentFrame;
     QScopedPointer<Ui::TonemappingPanel> m_Ui;
 
 protected Q_SLOTS:
@@ -137,9 +141,13 @@ protected Q_SLOTS:
 	void execPattanaikQuery(bool, bool, float, float, float, QString);
 	void execReinhard02Query(bool, float, float, int, int, int, QString);
 	void execReinhard05Query(float, float, float, QString);
+    
+    void updatePreviews(double);
+    void updatePreviewsCB(int);
+    void updatePreviewsRB(bool);
 
 public:
-    TonemappingPanel(QWidget *parent = 0);
+    TonemappingPanel(bool isPortable = false, PreviewPanel *p = 0, QWidget *parent = 0);
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();
@@ -148,6 +156,7 @@ public Q_SLOTS:
     void setEnabled(bool);
     void updatedHDR(pfs::Frame*);
     void updateTonemappingParams(TonemappingOptions *opts);
+    void setRealtimePreviews(bool);
 
 signals:
     void startTonemapping(TonemappingOptions*);

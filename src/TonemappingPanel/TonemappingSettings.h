@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Franco Comida
+ * Copyright (C) 2012 Franco Comida
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,46 +19,48 @@
  * ----------------------------------------------------------------------
  *
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
-#ifndef PREVIEWPANEL_IMPL_H
-#define PREVIEWPANEL_IMPL_H
+#ifndef TONEMAPPINGSETTINGS_H
+#define TONEMAPPINGSETTINGS_H
 
-#include <QWidget>
+#include <QDialog>
+#include <QSqlTableModel>
 
-// forward declaration
-namespace pfs {
-    class Frame;            // #include "Libpfs/frame.h"
+#include "PreviewSettings/PreviewSettings.h"
+#include "Libpfs/frame.h"
+
+namespace Ui
+{
+    class TonemappingSettings;
 }
 
-namespace Ui {
-    class PreviewPanel;
-}
-
-class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
-class PreviewLabel;         // #include "PreviewPanel/PreviewLabel.h"
-
-class PreviewPanel : public QWidget
+class TonemappingSettings: public QDialog
 {
     Q_OBJECT
 
 public:
-    PreviewPanel(QWidget *parent = 0);
-    ~PreviewPanel();
-    QSize getLabelSize();
-    PreviewLabel *getLabel(int);
+    TonemappingSettings(QWidget *parent = 0, pfs::Frame *frame = NULL);
+    ~TonemappingSettings();
+    TonemappingOptions * getTonemappingOptions();
+    bool wantsTonemap() { return m_wantsTonemap; }
 
-public Q_SLOTS:
-    void updatePreviews(pfs::Frame* frame, int index = -1);
+protected:
+    void fillPreviews();
+    pfs::Frame *m_frame;
+    PreviewSettings* m_previewSettings;
+    QSqlQueryModel* m_modelPreviews;
+    int m_currentIndex;
+    QList<PreviewLabel *> m_previewLabelList;
+    bool m_wantsTonemap;
+    QScopedPointer<Ui::TonemappingSettings> m_Ui;
 
-protected Q_SLOTS:
-    void tonemapPreview(TonemappingOptions*);
-
-Q_SIGNALS:
-    void startTonemapping(TonemappingOptions*);
-
-private:
-    int original_width_frame;
-    QList<PreviewLabel*> m_ListPreviewLabel;
+protected slots:
+    void listWidgetChanged(int row);
+    void updateListView(int);
+    void sortPreviews(int);
+    void tonemapPreview(TonemappingOptions *);
 };
+
 #endif

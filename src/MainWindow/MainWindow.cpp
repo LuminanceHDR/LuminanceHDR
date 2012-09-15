@@ -144,15 +144,17 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
 
 int MainWindow::sm_NumMainWindows = 0;
 
-MainWindow::MainWindow(QWidget *parent):
+MainWindow::MainWindow(bool isPortable, QWidget *parent):
     QMainWindow(parent),
+    m_isPortable(isPortable),
     m_Ui(new Ui::MainWindow)
 {
     init();
 }
 
-MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent):
+MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, bool isPortable, QWidget *parent):
     QMainWindow(parent),
+    m_isPortable(isPortable),
     m_Ui(new Ui::MainWindow)
 {
     init();
@@ -171,10 +173,12 @@ MainWindow::~MainWindow()
     if ( sm_NumMainWindows == 0 )
     {
         // Last MainWindow is dead...
-        luminance_options.setValue("MainWindowState", saveState());
-        luminance_options.setValue("MainWindowGeometry", saveGeometry());
-        luminance_options.setValue("MainWindowSplitterState", m_centralwidget_splitter->saveState());
-        luminance_options.setValue("MainWindowSplitterGeometry", m_centralwidget_splitter->saveGeometry());
+        luminance_options->setValue("MainWindowState", saveState());
+        luminance_options->setValue("MainWindowGeometry", saveGeometry());
+        luminance_options->setValue("MainWindowSplitterState", m_centralwidget_splitter->saveState());
+        luminance_options->setValue("MainWindowSplitterGeometry", m_centralwidget_splitter->saveGeometry());
+        luminance_options->setValue("MainWindowBottomSplitterState", m_bottom_splitter->saveState());
+        luminance_options->setValue("MainWindowBottomSplitterGeometry", m_bottom_splitter->saveGeometry());
 
         //wait for the working thread to finish
         m_IOThread->wait(500);
@@ -182,11 +186,14 @@ MainWindow::~MainWindow()
     }
 
     clearRecentFileActions();
+    delete luminance_options;
 }
 
 void MainWindow::init()
 {
     OsIntegration::getInstance().init(this);
+
+    luminance_options = new LuminanceOptions();
 
     sm_NumMainWindows++;
 
@@ -204,6 +211,7 @@ void MainWindow::init()
         qRegisterMetaType<HdrViewer*>("HdrViewer*");
         qRegisterMetaType<LdrViewer*>("LdrViewer*");
         qRegisterMetaType<GenericViewer*>("GenericViewer*");
+        qRegisterMetaType<QVector<float> >("QVector<float>");
 
         QDir dir(QDir::homePath());
 
@@ -229,7 +237,7 @@ void MainWindow::init()
     if ( sm_NumMainWindows == 1 )
     {
         // SPLASH SCREEN    ----------------------------------------------------------------------
-        if (luminance_options.value("ShowSplashScreen", true).toBool())
+        if (luminance_options->value("ShowSplashScreen", true).toBool())
         {
             showSplash();
             //UMessageBox::donationSplashMB();
@@ -243,8 +251,8 @@ void MainWindow::createUI()
     m_Ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    restoreState(luminance_options.value("MainWindowState").toByteArray());
-    restoreGeometry(luminance_options.value("MainWindowGeometry").toByteArray());
+    restoreState(luminance_options->value("MainWindowState").toByteArray());
+    restoreGeometry(luminance_options->value("MainWindowGeometry").toByteArray());
 
     setAcceptDrops(true);
     setWindowModified(false);
@@ -255,10 +263,22 @@ void MainWindow::createCentralWidget()
 {
     // Central Widget Area
     m_centralwidget_splitter = new QSplitter; //(this);
+    m_bottom_splitter = new QSplitter; //(this);
+    m_bottom_splitter->setOrientation(Qt::Vertical);
+
     setCentralWidget(m_centralwidget_splitter);
 
+    previewPanel = new PreviewPanel();
+
     // create tonemapping panel
-    tmPanel = new TonemappingPanel; //(m_centralwidget_splitter);
+    if (m_isPortable)
+        tmPanel = new TonemappingPanel(true, previewPanel); //(m_centralwidget_splitter);
+    else
+        tmPanel = new TonemappingPanel(false, previewPanel); //(m_centralwidget_splitter);
+
+    connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), tmPanel, SLOT(setRealtimePreviews(bool)));
+    connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), luminance_options, SLOT(setRealtimePreviewsActive(bool)));
+    tmPanel->setRealtimePreviews(luminance_options->isRealtimePreviewsActive());
 
     m_tabwidget = new QTabWidget; //(m_centralwidget_splitter);
 
@@ -266,19 +286,72 @@ void MainWindow::createCentralWidget()
     m_tabwidget->setTabsClosable(true);
 
     m_centralwidget_splitter->addWidget(tmPanel);
-    m_centralwidget_splitter->addWidget(m_tabwidget);
+    m_centralwidget_splitter->addWidget(m_bottom_splitter);
 
+    m_bottom_splitter->addWidget(m_tabwidget);
+
+    m_bottom_splitter->setStretchFactor(0, 10);
+    m_bottom_splitter->setStretchFactor(1, 1);
     m_centralwidget_splitter->setStretchFactor(0, 1);
     m_centralwidget_splitter->setStretchFactor(1, 5);
 
     // create preview panel
-    previewPanel = new PreviewPanel(m_centralwidget_splitter);
+    previewscrollArea = new QScrollArea;
+    QWidget *previewscrollAreaWidgetContents;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *verticalSpacer_2;
 
-    // add panel to central widget
-    m_centralwidget_splitter->addWidget(previewPanel);
-    m_centralwidget_splitter->setStretchFactor(2, 0);
 
-    previewPanel->hide();
+    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
+    previewscrollArea->setWidgetResizable(true);
+
+    previewscrollAreaWidgetContents = new QWidget();
+    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
+    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
+    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+    verticalLayout = new QVBoxLayout();
+    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
+
+    verticalLayout->addItem(verticalSpacer);
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer);
+
+    horizontalLayout->addWidget(previewPanel);
+
+    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer_2);
+
+
+    verticalLayout->addLayout(horizontalLayout);
+
+    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
+
+    verticalLayout->addItem(verticalSpacer_2);
+
+
+    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
+    
+    m_centralwidget_splitter->addWidget(previewscrollArea);
+
+    if (luminance_options->getPreviewPanelMode()) {
+        showPreviewsOnTheBottom();
+    }
+    else {
+        showPreviewsOnTheRight();
+    }
 
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
@@ -287,8 +360,10 @@ void MainWindow::createCentralWidget()
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
     connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
 
-    m_centralwidget_splitter->restoreState(luminance_options.value("MainWindowSplitterState").toByteArray());
-    m_centralwidget_splitter->restoreGeometry(luminance_options.value("MainWindowSplitterGeometry").toByteArray());
+    m_centralwidget_splitter->restoreState(luminance_options->value("MainWindowSplitterState").toByteArray());
+    m_centralwidget_splitter->restoreGeometry(luminance_options->value("MainWindowSplitterGeometry").toByteArray());
+    m_bottom_splitter->restoreState(luminance_options->value("MainWindowBottomSplitterState").toByteArray());
+    m_bottom_splitter->restoreGeometry(luminance_options->value("MainWindowBottomSplitterGeometry").toByteArray());
 
 	QPalette pal = m_tabwidget->palette();
 	pal.setColor(QPalette::Dark, Qt::darkGray);
@@ -301,6 +376,8 @@ void MainWindow::createCentralWidget()
     QTabBar* tabBar = m_tabwidget->findChild<QTabBar *>(QLatin1String("qt_tabwidget_tabbar"));
     tabBar->setAutoFillBackground( true );
     tabBar->setBackgroundRole(QPalette::Window);
+
+    previewscrollArea->hide();
 }
 
 void MainWindow::createToolBar()
@@ -317,6 +394,13 @@ void MainWindow::createToolBar()
     connect(m_Ui->actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
     connect(m_Ui->actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
     connect(m_Ui->actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
+
+    // Preview Panel
+    QActionGroup *previewPanelOptsGroup = new QActionGroup(this);
+    previewPanelOptsGroup->addAction(m_Ui->actionShow_on_the_right);
+    previewPanelOptsGroup->addAction(m_Ui->actionShow_on_the_bottom);
+    connect(m_Ui->actionShow_on_the_right, SIGNAL(triggered()), this, SLOT(showPreviewsOnTheRight()));
+    connect(m_Ui->actionShow_on_the_bottom, SIGNAL(triggered()), this, SLOT(showPreviewsOnTheBottom()));
 }
 
 void MainWindow::createMenus()
@@ -339,7 +423,7 @@ void MainWindow::createMenus()
     connect(m_Ui->actionMinimize, SIGNAL(triggered()), this, SLOT(showMinimized()));
     connect(m_Ui->actionMaximize, SIGNAL(triggered()), this, SLOT(showMaximized()));
     connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
-    connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), &luminance_options, SLOT(setPreviewPanelActive(bool)));
+    connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), luminance_options, SLOT(setPreviewPanelActive(bool)));
 
     //recent files
     initRecentFileActions();
@@ -362,7 +446,7 @@ void MainWindow::loadOptions()
     //load from settings the path where hdrs have been previously opened/loaded
 
     //load from settings the main toolbar visualization mode
-    switch ( luminance_options.getMainWindowToolBarMode() ) {
+    switch ( luminance_options->getMainWindowToolBarMode() ) {
     case Qt::ToolButtonIconOnly:
         Icons_Only();
         m_Ui->actionIcons_Only->setChecked(true);
@@ -380,8 +464,16 @@ void MainWindow::loadOptions()
         m_Ui->actionText_Under_Icons->setChecked(true);
 	break;
     }
-    m_Ui->actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
-
+    m_Ui->actionShowPreviewPanel->setChecked(luminance_options->isPreviewPanelActive());
+    if (luminance_options->getPreviewPanelMode()) {
+        m_Ui->actionShow_on_the_bottom->setChecked(true);
+        m_Ui->actionShow_on_the_right->setChecked(false);
+    }
+    else {
+        m_Ui->actionShow_on_the_right->setChecked(true);
+        m_Ui->actionShow_on_the_bottom->setChecked(false);
+    }
+    m_Ui->actionRealtimePreviews->setChecked(luminance_options->isRealtimePreviewsActive());
 }
 
 void MainWindow::on_actionDonate_triggered()
@@ -396,7 +488,7 @@ void MainWindow::on_fileNewAction_triggered()
 
 void MainWindow::createNewHdr(QStringList files)
 {
-    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files) );
+    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files, m_inputFilesName, m_inputExpoTimes) );
     if (wizard->exec() == QDialog::Accepted)
     {
         emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
@@ -417,7 +509,7 @@ void MainWindow::on_fileOpenAction_triggered()
 
     QStringList files = QFileDialog::getOpenFileNames(this,
                                                       tr("Load one or more HDR images..."),
-                                                      luminance_options.getDefaultPathHdrInOut(),
+                                                      luminance_options->getDefaultPathHdrInOut(),
                                                       filetypes );
 
     if ( !files.isEmpty() )
@@ -426,7 +518,7 @@ void MainWindow::on_fileOpenAction_triggered()
         // All the files are in the same folder, so I pick the first as reference to update the settings
         QFileInfo qfi(files.first());
 
-        luminance_options.setDefaultPathHdrInOut( qfi.path() );
+        luminance_options->setDefaultPathHdrInOut( qfi.path() );
 
         foreach(QString filename, files)
         {
@@ -443,11 +535,11 @@ void MainWindow::on_fileSaveAllAction_triggered()
 
     QString dir = QFileDialog::getExistingDirectory(this,
                                                     tr("Save files in"),
-                                                    luminance_options.getDefaultPathLdrOut());
+                                                    luminance_options->getDefaultPathLdrOut());
 
     if (!dir.isEmpty())
     {
-        luminance_options.setDefaultPathLdrOut(dir);
+        luminance_options->setDefaultPathLdrOut(dir);
 
         for (int i = 0; i < m_tabwidget->count(); i++)
         {
@@ -459,7 +551,7 @@ void MainWindow::on_fileSaveAllAction_triggered()
                 LdrViewer *l_v = dynamic_cast<LdrViewer*>(g_v);
 
                 QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
-                QString outfname = luminance_options.getDefaultPathLdrOut() + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
+                QString outfname = luminance_options->getDefaultPathLdrOut() + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
 
                 //emit save_ldr_frame(l_v, outfname, 100);
                 QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
@@ -484,7 +576,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
         if ( !fname.isEmpty() )
         {
             // Update working folder
-            luminance_options.setDefaultPathHdrInOut( QFileInfo(fname).path() );
+            luminance_options->setDefaultPathHdrInOut( QFileInfo(fname).path() );
 
             //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
             QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame", Qt::QueuedConnection,
@@ -510,7 +602,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
             QFileInfo qfi(outfname);
             QString format = qfi.suffix();
 
-            luminance_options.setDefaultPathLdrOut( qfi.path() );
+            luminance_options->setDefaultPathLdrOut( qfi.path() );
 
             if ( format.isEmpty() )
             {
@@ -534,11 +626,19 @@ void MainWindow::on_fileSaveAsAction_triggered()
                 else
                     quality = savedFileQuality.getQuality();
             }
+            
+            QString inputfname;
+            if (m_inputFilesName.isEmpty())
+                    inputfname = "";
+            else
+                    inputfname = m_inputFilesName.first();
             // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
             QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                       Q_ARG(GenericViewer*, l_v),
                                       Q_ARG(QString, outfname),
                                       Q_ARG(int, quality),
+                                      Q_ARG(QString, inputfname),  
+                                      Q_ARG(QVector<float>, m_inputExpoTimes),
                                       Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
 
         }
@@ -852,7 +952,7 @@ void MainWindow::on_normalSizeAct_triggered()
 
 void MainWindow::on_documentationAction_triggered()
 {
-    helpBrowser = new HelpBrowser(this,"Luminance HDR Help");
+    helpBrowser = new HelpBrowser(this,"Luminance HDR Help", m_isPortable);
     helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
     connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
     helpBrowser->show();
@@ -957,7 +1057,11 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
 {
     if ( tm_status.is_hdr_ready )
     {
-        MainWindow *other = new MainWindow(new_hdr_frame, new_fname, needSaving);
+        MainWindow *other;
+        if (m_isPortable)
+            other = new MainWindow(new_hdr_frame, new_fname, needSaving, true);
+        else
+            other = new MainWindow(new_hdr_frame, new_fname, needSaving);
         other->move(x() + 40, y() + 40);
         other->show();
     }
@@ -967,7 +1071,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         qDebug() << "Filename: " << new_fname;
 #endif
 
-        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
+        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving, luminance_options->getViewerNegColor(), luminance_options->getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -1002,6 +1106,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         m_tabwidget->setCurrentWidget(newhdr);
 
         tmPanel->setEnabled(true);
+        tmPanel->updatedHDR(new_hdr_frame);
         m_Ui->actionShowPreviewPanel->setEnabled(true);
 
         showPreviewPanel(m_Ui->actionShowPreviewPanel->isChecked());
@@ -1012,13 +1117,18 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
 
 void MainWindow::on_OptionsAction_triggered()
 {
-    unsigned int negcol = luminance_options.getViewerNegColor();
-    unsigned int naninfcol = luminance_options.getViewerNanInfColor();
-    PreferencesDialog *opts = new PreferencesDialog(this);
+    unsigned int negcol = luminance_options->getViewerNegColor();
+    unsigned int naninfcol = luminance_options->getViewerNanInfColor();
+    PreferencesDialog *opts;
+    if (m_isPortable)
+        opts = new PreferencesDialog(true, this);
+    else
+        opts = new PreferencesDialog(false, this);
+        
     opts->setAttribute(Qt::WA_DeleteOnClose);
     if ( opts->exec() == QDialog::Accepted )
     {
-        if (negcol != luminance_options.getViewerNegColor() || naninfcol != luminance_options.getViewerNanInfColor())
+        if (negcol != luminance_options->getViewerNegColor() || naninfcol != luminance_options->getViewerNanInfColor())
         {
             for (int idx = 0; idx < m_tabwidget->count(); idx++)
             {
@@ -1026,11 +1136,11 @@ void MainWindow::on_OptionsAction_triggered()
                 HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(viewer);
                 if ( hdr_v != NULL )
                 {
-                    hdr_v->update_colors(luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
+                    hdr_v->update_colors(luminance_options->getViewerNegColor(), luminance_options->getViewerNanInfColor());
                 }
             }
         }
-        m_Ui->actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
+        m_Ui->actionShowPreviewPanel->setChecked(luminance_options->isPreviewPanelActive());
     }
 }
 
@@ -1079,25 +1189,25 @@ void MainWindow::openFiles(const QStringList& files)
 void MainWindow::Text_Under_Icons()
 {
     m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextUnderIcon);
+    luminance_options->setMainWindowToolBarMode(Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::Icons_Only()
 {
     m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    luminance_options.setMainWindowToolBarMode(Qt::ToolButtonIconOnly);
+    luminance_options->setMainWindowToolBarMode(Qt::ToolButtonIconOnly);
 }
 
 void MainWindow::Text_Alongside_Icons()
 {
     m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextBesideIcon);
+    luminance_options->setMainWindowToolBarMode(Qt::ToolButtonTextBesideIcon);
 }
 
 void MainWindow::Text_Only()
 {
     m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
-    luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextOnly);
+    luminance_options->setMainWindowToolBarMode(Qt::ToolButtonTextOnly);
 }
 
 void MainWindow::showSplash()
@@ -1122,7 +1232,7 @@ void MainWindow::splashShowDonationsPage()
 
 void MainWindow::splashClose()
 {
-    luminance_options.setValue("ShowSplashScreen", false);
+    luminance_options->setValue("ShowSplashScreen", false);
     splash->close();
 }
 
@@ -1285,7 +1395,7 @@ bool MainWindow::maybeSave()
                 {
                     // Update working folder
                     QFileInfo qfi(fname);
-                    luminance_options.setDefaultPathHdrInOut(qfi.path());
+                    luminance_options->setDefaultPathHdrInOut(qfi.path());
 
                     // TODO : can I launch a signal and wait that it gets executed fully?
                     return m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame), fname);
@@ -1380,7 +1490,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     if ( (opts->tmoperator == fattal) &&
          (opts->operator_options.fattaloptions.fftsolver == false) &&
          (opts->xsize != opts->origxsize) &&
-         (luminance_options.isShowFattalWarning()) )
+         (luminance_options->isShowFattalWarning()) )
     {
         TonemappingWarningDialog tonemappingWarningDialog(this);
 
@@ -1390,7 +1500,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         {} break;
         case QMessageBox::YesAll :
         {
-            luminance_options.setShowFattalWarning(false);
+            luminance_options->setShowFattalWarning(false);
         } break;
         case QMessageBox::No :
         default:
@@ -1512,7 +1622,7 @@ void MainWindow::showPreviewPanel(bool b)
     {
         if (tm_status.is_hdr_ready)
         {
-            previewPanel->show();
+            previewscrollArea->show();
 
             // ask panel to refresh itself
             previewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
@@ -1525,7 +1635,7 @@ void MainWindow::showPreviewPanel(bool b)
     }
     else
     {
-        previewPanel->hide();
+        previewscrollArea->hide();
 
         // disconnect signals
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
@@ -1600,7 +1710,10 @@ void MainWindow::removeTab(int t)
 
 			tmPanel->setEnabled(false);
 
-			previewPanel->hide();
+            m_inputFilesName.clear();
+            m_inputExpoTimes.clear();
+
+			previewscrollArea->hide();
         }
     }
     else
@@ -1651,7 +1764,7 @@ void MainWindow::setMainWindowModified(bool b)
  */
 void MainWindow::setCurrentFile(const QString &fileName)
 {
-    QStringList files = luminance_options.value(KEY_RECENT_FILES).toStringList();
+    QStringList files = luminance_options->value(KEY_RECENT_FILES).toStringList();
     files.removeAll(fileName);
     files.prepend(fileName);
     while (files.size() > MAX_RECENT_FILES)
@@ -1659,7 +1772,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
         files.removeLast();
     }
 
-    luminance_options.setValue(KEY_RECENT_FILES, files);
+    luminance_options->setValue(KEY_RECENT_FILES, files);
 
     // Update ALL MainWindow
     foreach (QWidget *widget, QApplication::topLevelWidgets())
@@ -1672,7 +1785,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
 void MainWindow::updateRecentFileActions()
 {
-    QStringList files = luminance_options.value(KEY_RECENT_FILES).toStringList();
+    QStringList files = luminance_options->value(KEY_RECENT_FILES).toStringList();
 
     int numRecentFiles = qMin(files.size(), (int)MAX_RECENT_FILES);
     separatorRecentFiles->setVisible(numRecentFiles > 0);
@@ -1821,4 +1934,108 @@ void MainWindow::updateSoftProofing(int i)
 		else if (m_Ui->actionGamut_Check->isChecked())
 			l_v->doSoftProofing(true);
 	}
+}
+
+void MainWindow::showPreviewsOnTheRight()
+{
+    QWidget *previewscrollAreaWidgetContents;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *verticalSpacer_2;
+
+    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
+    previewscrollArea->setWidgetResizable(true);
+
+    previewscrollAreaWidgetContents = new QWidget();
+    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
+    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
+    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+    verticalLayout = new QVBoxLayout();
+    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    verticalLayout->addItem(verticalSpacer);
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer);
+
+    horizontalLayout->addWidget(previewPanel);
+
+    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer_2);
+
+
+    verticalLayout->addLayout(horizontalLayout);
+
+    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    verticalLayout->addItem(verticalSpacer_2);
+
+
+    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
+    previewscrollArea->setParent(m_centralwidget_splitter);
+    m_centralwidget_splitter->addWidget(previewscrollArea);
+    luminance_options->setPreviewPanelMode(0);
+}
+
+void MainWindow::showPreviewsOnTheBottom()
+{
+    QWidget *previewscrollAreaWidgetContents;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *verticalSpacer_2;
+
+    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
+    previewscrollArea->setWidgetResizable(true);
+
+    previewscrollAreaWidgetContents = new QWidget();
+    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
+    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
+    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+    verticalLayout = new QVBoxLayout();
+    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    verticalLayout->addItem(verticalSpacer);
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer);
+
+    horizontalLayout->addWidget(previewPanel);
+
+    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    horizontalLayout->addItem(horizontalSpacer_2);
+
+
+    verticalLayout->addLayout(horizontalLayout);
+
+    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    verticalLayout->addItem(verticalSpacer_2);
+
+
+    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
+
+    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
+    previewscrollArea->setParent(m_bottom_splitter);
+    m_bottom_splitter->addWidget(previewscrollArea);
+    luminance_options->setPreviewPanelMode(1);
 }

@@ -37,7 +37,7 @@
 #include "Common/config.h"
 
 LuminanceOptions::LuminanceOptions():
-    QSettings(LUMINANCEORGANIZATION, LUMINANCEAPPLICATION)
+    QSettings()
 { }
 
 // write system default language the first time around (discard "_country")
@@ -661,6 +661,17 @@ void LuminanceOptions::setPreviewPanelActive(bool status)
     setValue(KEY_TMOWINDOW_SHOWPREVIEWPANEL, status);
 }
 
+bool LuminanceOptions::isRealtimePreviewsActive()
+{
+    return value(KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE, true).toBool();
+}
+
+void LuminanceOptions::setRealtimePreviewsActive(bool status)
+{
+    setValue(KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE, status);
+}
+
+
 int  LuminanceOptions::getPreviewWidth()
 {
     return value(KEY_TMOWINDOW_PREVIEWS_WIDTH, 400).toInt();
@@ -699,4 +710,14 @@ QString LuminanceOptions::getPrinterProfileFileName()
 void LuminanceOptions::setPrinterProfileFileName(QString fname)
 {
 	setValue(KEY_COLOR_PRINTER_PROFILE_FILENAME, fname);
+}
+
+int LuminanceOptions::getPreviewPanelMode() // 0 means on the right, 1 on the bottom
+{
+	return value(KEY_PREVIEW_PANEL_MODE).toInt();
+}
+
+void LuminanceOptions::setPreviewPanelMode(int mode) 
+{
+	setValue(KEY_PREVIEW_PANEL_MODE, mode);
 }

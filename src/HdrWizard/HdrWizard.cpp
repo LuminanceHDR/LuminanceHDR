@@ -48,11 +48,13 @@
 #include "UI/Gang.h"
 #include "HdrCreation/HdrCreationManager.h"
 
-HdrWizard::HdrWizard(QWidget *p, QStringList files):
+HdrWizard::HdrWizard(QWidget *p, QStringList &files, QStringList &inputFilesName, QVector<float> &inputExpoTimes) :
     QDialog(p),
     hdrCreationManager(new HdrCreationManager),
     loadcurvefilename(""),
     savecurvefilename(""),
+    m_inputFilesName(inputFilesName),
+    m_inputExpoTimes(inputExpoTimes),
     m_Ui(new Ui::HdrWizard)
 {
     m_Ui->setupUi(this);
@@ -232,17 +234,17 @@ void HdrWizard::loadImagesButtonClicked() {
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirInputLDRs, filetypes );
 
     if (!files.isEmpty() ) {
-    QFileInfo qfi(files.at(0));
+        QFileInfo qfi(files.at(0));
         // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the luminance_options.
-    if (RecentDirInputLDRs != qfi.path()) {
-        // update internal field variable
-        RecentDirInputLDRs = qfi.path();
-                luminance_options.setDefaultPathLdrIn(RecentDirInputLDRs);
-    }
-    //loadImagesButton->setEnabled(false);
-    m_Ui->confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
-    loadInputFiles(files, files.count());
-    QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+        if (RecentDirInputLDRs != qfi.path()) {
+            // update internal field variable
+            RecentDirInputLDRs = qfi.path();
+            luminance_options.setDefaultPathLdrIn(RecentDirInputLDRs);
+        }
+        //loadImagesButton->setEnabled(false);
+        m_Ui->confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
+        loadInputFiles(files, files.count());
+        QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     } //if (!files.isEmpty())
 }
 
@@ -336,6 +338,8 @@ void HdrWizard::loadInputFiles(QStringList files, int count) {
 void HdrWizard::fileLoaded(int index, QString fname, float expotime) {
     qDebug("WIZ: fileLoaded, expotimes[%d]=%f --- EV=%f",index,expotime,log2f(expotime));
     updateGraphicalEVvalue(expotime,index);
+    m_inputFilesName.push_back(fname);
+    m_inputExpoTimes.push_back(expotime);
     //fill graphical list
     QFileInfo qfi(fname);
     m_Ui->tableWidget->setItem(index,0,new QTableWidgetItem(qfi.fileName()));
@@ -604,8 +608,14 @@ void HdrWizard::currentPageChangedInto(int newindex) {
     if (newindex == 2) {
         hdrCreationManager->removeTempFiles();
         m_Ui->NextFinishButton->setText(tr("&Finish"));
-        //when at least 2 LDR inputs perform Manual Alignment
-        int numldrs = hdrCreationManager->getLDRList().size();
+        //when at least 2 LDR or MDR inputs perform Manual Alignment
+        int numldrs;
+        if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
+            numldrs = hdrCreationManager->getLDRList().size();
+        else
+            numldrs = hdrCreationManager->getMDRList().size();
+        
+        qDebug() << "numldrs = " << numldrs;
         //if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
         if (numldrs >= 2) {
             this->setDisabled(true);

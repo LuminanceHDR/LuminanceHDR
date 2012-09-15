@@ -26,8 +26,8 @@
 #include <QSharedPointer>
 
 #include "PreviewPanel.h"
-#include "ui_PreviewPanel.h"
 
+#include "Libpfs/domio.h"
 #include "Filter/pfssize.h"
 #include "Filter/pfscut.h"
 #include "Core/TMWorker.h"
@@ -35,6 +35,7 @@
 #include "PreviewPanel/PreviewLabel.h"
 #include "TonemappingEngine/TonemapOperator.h"
 #include "Common/LuminanceOptions.h"
+#include "UI/FlowLayout.h"
 
 namespace // anoymous namespace
 {
@@ -47,7 +48,7 @@ void resetTonemappingOptions(TonemappingOptions* tm_options, const pfs::Frame* f
 {
     tm_options->origxsize          = frame->getWidth();
     tm_options->xsize              = frame->getWidth();
-    tm_options->pregamma           = 1.0f;
+    //tm_options->pregamma           = 1.0f;  //TODO check this
     tm_options->tonemapSelection   = false;
 }
 
@@ -79,17 +80,20 @@ public:
 #endif
         }
 
-        ProgressHelper fake_progress_helper;
+        //ProgressHelper fake_progress_helper;
 
         // Copy Reference Frame
         QSharedPointer<pfs::Frame> temp_frame( pfs::pfscopy(m_ReferenceFrame.data()) );
 
         // Tone Mapping
-        QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
-        tm_operator->tonemapFrame(temp_frame.data(), tm_options, fake_progress_helper);
-
+        //QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
+        //tm_operator->tonemapFrame(temp_frame.data(), tm_options, fake_progress_helper);
+        QScopedPointer<TMWorker> tmWorker(new TMWorker);
+        QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
+        
         // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
-        QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
+        //QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
+        QSharedPointer<QImage> qimage(fromLDRPFStoQImage(frame.data()));
 
         //! \note I cannot use these 2 functions, because setPixmap must run in the GUI thread
         //m_PreviewLabel->setPixmap( QPixmap::fromImage(*qimage) );
@@ -110,59 +114,88 @@ private:
 }
 
 PreviewPanel::PreviewPanel(QWidget *parent):
-    QWidget(parent),
-    m_Ui(new Ui::PreviewPanel)
+    QWidget(parent)
 {
     //! \note I need to register the new object to pass this class as parameter inside invokeMethod()
     //! see run() inside PreviewLabelUpdater
     qRegisterMetaType< QSharedPointer<QImage> >("QSharedPointer<QImage>");
 
-    m_Ui->setupUi(this);
-
-    PreviewLabel * labelMantiuk06 = new PreviewLabel(m_Ui->frameMantiuk06, mantiuk06);
+    PreviewLabel * labelMantiuk06 = new PreviewLabel(this, mantiuk06);
     labelMantiuk06->setText("Mantiuk '06");
+    labelMantiuk06->setToolTip("Mantiuk '06");
+    labelMantiuk06->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelMantiuk06);
     connect(labelMantiuk06, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelMantiuk08 = new PreviewLabel(m_Ui->frameMantiuk08, mantiuk08);
+    PreviewLabel * labelMantiuk08 = new PreviewLabel(this, mantiuk08);
     labelMantiuk08->setText("Mantiuk '08");
+    labelMantiuk08->setToolTip("Mantiuk '08");
+    labelMantiuk08->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelMantiuk08);
     connect(labelMantiuk08, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelFattal = new PreviewLabel(m_Ui->frameFattal, fattal);
+    PreviewLabel * labelFattal = new PreviewLabel(this, fattal);
     labelFattal->setText("Fattal");
+    labelFattal->setToolTip("Fattal");
+    labelFattal->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelFattal);
     connect(labelFattal, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelDrago = new PreviewLabel(m_Ui->frameDrago, drago);
+    PreviewLabel * labelDrago = new PreviewLabel(this, drago);
     labelDrago->setText("Drago");
+    labelDrago->setToolTip("Drago");
+    labelDrago->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelDrago);
     connect(labelDrago, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelDurand = new PreviewLabel(m_Ui->frameDurand, durand);
+    PreviewLabel * labelDurand = new PreviewLabel(this, durand);
     labelDurand->setText("Durand");
+    labelDurand->setToolTip("Durand");
+    labelDurand->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelDurand);
     connect(labelDurand, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelReinhard02= new PreviewLabel(m_Ui->frameReinhard02, reinhard02);
+    PreviewLabel * labelReinhard02= new PreviewLabel(this, reinhard02);
     labelReinhard02->setText("Reinhard '02");
+    labelReinhard02->setToolTip("Reinhard '02");
+    labelReinhard02->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelReinhard02);
     connect(labelReinhard02, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelReinhard05 = new PreviewLabel(m_Ui->frameReinhard05, reinhard05);
+    PreviewLabel * labelReinhard05 = new PreviewLabel(this, reinhard05);
     labelReinhard05->setText("Reinhard '05");
+    labelReinhard05->setToolTip("Reinhard '05");
+    labelReinhard05->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelReinhard05);
     connect(labelReinhard05, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelAshikhmin = new PreviewLabel(m_Ui->frameAshikhmin, ashikhmin);
+    PreviewLabel * labelAshikhmin = new PreviewLabel(this, ashikhmin);
     labelAshikhmin->setText("Ashikhmin");
+    labelAshikhmin->setToolTip("Ashikhmin");
+    labelAshikhmin->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelAshikhmin);
     connect(labelAshikhmin, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelPattanaik = new PreviewLabel(m_Ui->framePattanaik, pattanaik);
+    PreviewLabel * labelPattanaik = new PreviewLabel(this, pattanaik);
     labelPattanaik->setText("Pattanaik");
+    labelPattanaik->setToolTip("Pattanaik");
+    labelPattanaik->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelPattanaik);
     connect(labelPattanaik, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+
+    FlowLayout *flowLayout = new FlowLayout;
+
+    flowLayout->addWidget(labelMantiuk06);
+    flowLayout->addWidget(labelMantiuk08);
+    flowLayout->addWidget(labelFattal);
+    flowLayout->addWidget(labelDrago);
+    flowLayout->addWidget(labelDurand);
+    flowLayout->addWidget(labelReinhard02);
+    flowLayout->addWidget(labelReinhard05);
+    flowLayout->addWidget(labelAshikhmin);
+    flowLayout->addWidget(labelPattanaik);
+
+    setLayout(flowLayout);
 }
 
 PreviewPanel::~PreviewPanel()
@@ -172,16 +205,7 @@ PreviewPanel::~PreviewPanel()
 #endif
 }
 
-void PreviewPanel::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::LanguageChange) {
-        m_Ui->retranslateUi(this);
-    }
-
-	QWidget::changeEvent(event);
-}
-
-void PreviewPanel::updatePreviews(pfs::Frame* frame)
+void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)
 {
     if ( frame == NULL ) return;
 
@@ -200,10 +224,16 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame)
     QSharedPointer<pfs::Frame> current_frame( pfs::resizeFrame(frame, resized_width));
 
     // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
-    foreach(PreviewLabel* current_label, m_ListPreviewLabel)
-    {
+    if (index == -1) {
+        foreach(PreviewLabel* current_label, m_ListPreviewLabel)
+        {
+            PreviewLabelUpdater updater(current_frame);
+            updater(current_label);
+        }
+    }
+    else {
         PreviewLabelUpdater updater(current_frame);
-        updater(current_label);
+        updater(m_ListPreviewLabel.at(index));
     }
     // 2. (concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
     //QtConcurrent::map (m_ListPreviewLabel, PreviewLabelUpdater(current_frame) );
@@ -219,4 +249,14 @@ void PreviewPanel::tonemapPreview(TonemappingOptions* opts)
     opts->origxsize = original_width_frame;
 
     emit startTonemapping(opts);
+}
+
+QSize PreviewPanel::getLabelSize()
+{
+    return m_ListPreviewLabel.at(0)->pixmap()->size();
+}
+
+PreviewLabel *PreviewPanel::getLabel(int index)
+{
+    return m_ListPreviewLabel.at(index);
 }

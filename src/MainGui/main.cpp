@@ -29,6 +29,7 @@
 #include <QStringList>
 
 #include "Common/global.h"
+#include "Common/config.h"
 #include "MainWindow/MainWindow.h"
 
 #ifdef WIN32
@@ -107,8 +108,25 @@ int main( int argc, char ** argv )
     }
 #endif
 
-    installTranslators(true);
-    MainWindow* MW = new MainWindow;
+    QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
+    QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
+
+    bool isPortable = application.arguments().at(0).contains("portable");
+
+    if (isPortable) {
+        LuminanceOptions::setDefaultFormat(QSettings::IniFormat);
+        LuminanceOptions::setPath(QSettings::IniFormat, QSettings::UserScope, QDir::currentPath());
+        installTranslators(true, true);
+    }
+    else
+        installTranslators(true);
+
+    MainWindow* MW;
+
+    if (isPortable)
+        MW = new MainWindow(true);
+    else
+        MW = new MainWindow;
 
     MW->setInputFiles( getCliFiles( application.arguments() ) );
 

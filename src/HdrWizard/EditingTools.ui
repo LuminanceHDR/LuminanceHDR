@@ -302,7 +302,7 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label">
+                 <widget class="QLabel" name="label_editable_list">
                   <property name="text">
                    <string>Ed&amp;itable</string>
                   </property>

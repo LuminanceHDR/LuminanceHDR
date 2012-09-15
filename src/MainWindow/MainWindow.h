@@ -40,8 +40,10 @@
 #include <QSignalMapper>
 #include <QSplitter>
 #include <QTabWidget>
+#include <QDockWidget>
 #include <QThread>
 #include <QProgressBar>
+#include <QScrollArea>
 
 #include "Common/LuminanceOptions.h"
 
@@ -70,9 +72,9 @@ class MainWindow: public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(bool isPortable = false, QWidget *parent = 0);
     // Constructor loading file inside
-    MainWindow(pfs::Frame* curr_frame, QString new_fname, bool needSaving = false, QWidget *parent = 0);
+    MainWindow(pfs::Frame* curr_frame, QString new_fname, bool needSaving = false, bool isPortable = false, QWidget *parent = 0);
     ~MainWindow();
 
 public Q_SLOTS:
@@ -141,6 +143,8 @@ protected Q_SLOTS:
     void Icons_Only();
     void Text_Alongside_Icons();
     void Text_Only();
+    void showPreviewsOnTheRight();
+    void showPreviewsOnTheBottom();
 
     // Window Menu Display and Functionalities
     void updateWindowMenu();
@@ -192,10 +196,12 @@ Q_SIGNALS:
 
 protected:
     QSplitter *m_centralwidget_splitter;
+    QSplitter *m_bottom_splitter;
+;
     QTabWidget *m_tabwidget;
 
     QSignalMapper *windowMapper;
-    LuminanceOptions luminance_options;
+    LuminanceOptions *luminance_options;
     QDialog *splash;
 
     // Recent Files Management
@@ -207,6 +213,9 @@ protected:
 
     HelpBrowser* helpBrowser;
     QStringList inputFiles;
+    QStringList m_inputFilesName;   // this contains the file names of the images loaded by the wizard, they are used to copy EXIF tags to
+                                    // saved LDR images
+    QVector<float> m_inputExpoTimes;  // this contains the exposure times of the images to write to LDR as EXIF comment
 
     virtual void dragEnterEvent(QDragEnterEvent *);
     virtual void dropEvent(QDropEvent *);
@@ -246,6 +255,7 @@ protected:
     bool maybeSave();
 
     // Preview Panel
+    QScrollArea *previewscrollArea;
     PreviewPanel *previewPanel;
 
     void openFiles(const QStringList& files);
@@ -253,6 +263,8 @@ protected:
 	#ifdef Q_WS_WIN
 		bool winEvent(MSG * message, long * result);
 	#endif
+
+    bool m_isPortable;
 
 private:
     static int sm_NumMainWindows;

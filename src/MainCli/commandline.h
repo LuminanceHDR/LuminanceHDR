@@ -82,6 +82,7 @@ private:
 	int maximum;
 	bool started;
 	int quality;
+    QString saveAlignedImagesPrefix;
 
     void startTonemap();
 

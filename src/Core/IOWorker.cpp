@@ -125,12 +125,16 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename)
 
 bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
                                const QString& filename, int quality,
+                               const QString& inputFileName,
+                               const QVector<float>& expoTimes,
                                TonemappingOptions* tmopts)
 {
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
 
     bool status = write_ldr_frame(ldr_frame,
                                   filename, quality,
+                                  inputFileName,
+                                  expoTimes,
                                   tmopts,
                                   ldr_viewer->getMinLuminanceValue(),
                                   ldr_viewer->getMaxLuminanceValue(),
@@ -151,6 +155,8 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
 bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                const QString& filename,
                                int quality,
+                               const QString& inputFileName,
+                               const QVector<float>& expoTimes,
                                TonemappingOptions* tmopts,
                                float min_luminance,
                                float max_luminance,
@@ -187,8 +193,8 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
             connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
             tiffwriter.write16bitTiff();
 
-            if (tmopts != NULL)
-                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+//            if (tmopts != NULL)
+//                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
 
             emit write_ldr_success(ldr_input, filename);
         }
@@ -207,8 +213,8 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
         JpegWriter writer(image.data(), filename, quality);
 		if (writer.writeQImageToJpeg()) 
 		{
-			if (tmopts != NULL)
-				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+//			if (tmopts != NULL)
+//				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
 
 			emit write_ldr_success(ldr_input, filename);
 		}
@@ -227,8 +233,8 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
         PngWriter writer(image.data(), filename, quality);
 		if (writer.writeQImageToPng()) 
 		{
-			if (tmopts != NULL)
-				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+//			if (tmopts != NULL)
+//				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
 
 			emit write_ldr_success(ldr_input, filename);
 		}
@@ -244,8 +250,8 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
         QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
         if ( image->save(filename, format.toLocal8Bit(), quality) )
         {
-            if (tmopts != NULL)
-                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+//            if (tmopts != NULL)
+//                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
 
             emit write_ldr_success(ldr_input, filename);
         }
@@ -254,6 +260,22 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
             status = false;
             emit write_ldr_failed();
         }
+    }
+    if (inputFileName != "") { // copy EXIF tags from the 1st bracketed image
+        QFileInfo fileinfo(inputFileName);
+        QString absoluteInputFileName = fileinfo.absoluteFilePath();
+        QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
+        QString comment = operations->getExifComment();
+        comment += "\nBracketed images exposure times:\n\n";
+        foreach (float e, expoTimes) {
+            comment += QString("%1").arg(e) + "\n";
+        }
+        
+        ExifOperations::copyExifData(encodedInputFileName.constData(), 
+                                     encodedName.constData(), 
+                                     false, 
+                                     comment.toStdString(),
+                                     true);
     }
     emit IO_finish();
 
