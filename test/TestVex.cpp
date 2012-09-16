@@ -1,12 +1,15 @@
 #include <gtest/gtest.h>
-#include <algorithm>
+
+#include <iostream>
 #include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <functional>
+
 #include <Libpfs/vex/vex.h>
 #include <boost/assign/std/vector.hpp> // for 'operator+=()'
 
 using namespace std;
-
-static const size_t V_SIZE = 1000000;
 
 template <typename T>
 class FillValue;
@@ -54,72 +57,54 @@ template<>
 int32_t getConst<int32_t>() { return 5; }
 
 template <typename T>
-struct vmul
+struct SmallSize
 {
-    T operator()(const T& t1, const T& t2) const { return (t1 * t2); }
+    typedef T value_type;
+
+    static size_t elements() { return 1e6; }    // 1Mp
 };
 
 template <typename T>
-struct vdiv
+struct MediumSize
 {
-    T operator()(const T& t1, const T& t2) const { return (t1 / t2); }
+    typedef T value_type;
+
+    static size_t elements() { return 1e7; }    // 10Mp
 };
 
 template <typename T>
-struct vadd
+struct BigSize
 {
-    T operator()(const T& t1, const T& t2) const { return (t1 + t2); }
-};
+    typedef T value_type;
 
-template <typename T>
-struct vadds
-{
-    vadds(const T& s) : s_(s) {}
-    T operator()(const T& t1, const T& t2) const { return (t1 + (s_*t2)); }
-private:
-    T s_;
-};
-
-template <typename T>
-struct vsub
-{
-    T operator()(const T& t1, const T& t2) const { return (t1 - t2); }
-};
-
-template <typename T>
-struct vsubs
-{
-    vsubs(const T& s) : s_(s) {}
-    T operator()(const T& t1, const T& t2) const { return (t1 - (s_*t2)); }
-private:
-    T s_;
+    static size_t elements() { return 24e6; }    // 24Mp
 };
 
 template <class T>
 class TestVex : public testing::Test
 {
 protected:
-    typedef T ValueType;
-    typedef std::vector<T> TestVexContainer;
+    typedef typename T::value_type ValueType;
+    typedef std::vector< ValueType > TestVexContainer;
 
 
     TestVexContainer input1;
     TestVexContainer input2;
     TestVexContainer outputReference;
     TestVexContainer outputComputed;
-    T s_;
+    ValueType s_;
 
     TestVex()
-        : input1(V_SIZE)
-        , input2(V_SIZE)
-        , outputReference(V_SIZE)
-        , outputComputed(V_SIZE)
-        , s_(getConst<T>())
+        : input1( T::elements() )
+        , input2( T::elements() )
+        , outputReference( T::elements() )
+        , outputComputed(  T::elements() )
+        , s_(getConst<ValueType>())
     {
-        std::generate(input1.begin(), input1.end(), FillValue<T>());
-        std::generate(input2.begin(), input2.end(), FillValue<T>());
-        std::fill(outputReference.begin(), outputReference.end(), T());
-        std::fill(outputComputed.begin(), outputComputed.end(), T());
+        std::generate(input1.begin(), input1.end(), FillValue<ValueType>());
+        std::generate(input2.begin(), input2.end(), FillValue<ValueType>());
+        std::fill(outputReference.begin(), outputReference.end(), ValueType());
+        std::fill(outputComputed.begin(), outputComputed.end(), ValueType());
     }
 
     void compareResult()
@@ -138,7 +123,7 @@ protected:
                        this->input1.end(),
                        this->input2.begin(),
                        this->outputReference.begin(),
-                       vmul<ValueType>());
+                       std::multiplies<ValueType>());
     }
 
     void computeVdiv()
@@ -147,7 +132,7 @@ protected:
                        this->input1.end(),
                        this->input2.begin(),
                        this->outputReference.begin(),
-                       vdiv<ValueType>());
+                       std::divides<ValueType>());
     }
 
     void computeVadd()
@@ -156,7 +141,7 @@ protected:
                        this->input1.end(),
                        this->input2.begin(),
                        this->outputReference.begin(),
-                       vadd<ValueType>());
+                       std::plus<ValueType>());
     }
     void computeVadds()
     {
@@ -164,7 +149,7 @@ protected:
                        this->input1.end(),
                        this->input2.begin(),
                        this->outputReference.begin(),
-                       vadds<ValueType>(s_));
+                       vex::numeric::vadds<ValueType>(s_));
     }
 
     void computeVsub()
@@ -173,7 +158,7 @@ protected:
                        this->input1.end(),
                        this->input2.begin(),
                        this->outputReference.begin(),
-                       vsub<ValueType>());
+                       std::minus<ValueType>());
     }
     void computeVsubs()
     {
@@ -181,13 +166,30 @@ protected:
                        this->input1.end(),
                        this->input2.begin(),
                        this->outputReference.begin(),
-                       vsubs<ValueType>(s_));
+                       vex::numeric::vsubs<ValueType>(s_));
+    }
+
+    void compareTime(double timeOld, double timeNew)
+    {
+        std::cout << "Speed up: " << timeOld/timeNew << std::endl;
     }
 };
 
 using testing::Types;
 // The list of types we want to test.
-typedef testing::Types<float, uint8_t, uint16_t, int32_t> Implementations;
+typedef testing::Types<
+    SmallSize<float>,
+    SmallSize<uint8_t>,
+    SmallSize<uint16_t>,
+    SmallSize<int32_t>,
+    MediumSize<float>,
+    MediumSize<uint8_t>,
+    MediumSize<uint16_t>,
+    MediumSize<int32_t>,
+    BigSize<float>,
+    BigSize<uint8_t>,
+    BigSize<uint16_t>,
+    BigSize<int32_t> > Implementations;
 
 TYPED_TEST_CASE(TestVex, Implementations);
 

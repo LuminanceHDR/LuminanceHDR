@@ -28,10 +28,41 @@
 //! \note VEX stays for Vector EXtensions
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <iosfwd> // basic header for size_t
+#include <functional>
+#include <numeric>
 
 namespace vex
 {
+namespace numeric
+{
+
+//! \brief Extension of std::plus to compute A + s*B
+template <typename T>
+struct vadds : std::binary_function <T, T, T>
+{
+    vadds(const T& s)
+        : s_(s) {}
+    T
+    operator()(const T& t1, const T& t2) const
+    { return (t1 + (s_*t2)); }
+private:
+    T s_;
+};
+
+//! \brief Extension of std::minus to compute A - s*B
+template <typename T>
+struct vsubs : std::binary_function <T, T ,T>
+{
+    vsubs(const T& s)
+        : s_(s) {}
+    T
+    operator()(const T& t1, const T& t2) const
+    { return (t1 - (s_*t2)); }
+private:
+    T s_;
+};
+
+} // vex::numeric
 
 //! \brief multiplies element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] * B[i]
@@ -68,7 +99,9 @@ void vsub(const _Type* A, const _Type* B, _Type* C, size_t size);
 //! C[i] = A[i] - (s * B[i])
 template <typename _Type>
 void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size);
-}
+
+
+} // vex
 
 #include "vex.hxx"
 

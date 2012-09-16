@@ -114,6 +114,13 @@ IF(WIN32)
     SET(LIBPNG_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libpng/libpng.lib")
     
 ELSE()
+    IF(APPLE)
+    # optimize for 64-bit core 2 architecture on apple
+    ADD_DEFINITIONS(-march=core2)
+    # ELSE()
+    # optimize for 64-bit prescott architecture on unix
+    # ADD_DEFINITIONS(-march=nocona)
+    ENDIF()
 
     # Unix & Apple part
     FIND_PACKAGE(OpenEXR REQUIRED)
