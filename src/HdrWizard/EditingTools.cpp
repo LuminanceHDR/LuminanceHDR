@@ -40,8 +40,15 @@
 #include "Exif/ExifOperations.h"
 #include "HdrCreation/mtb_alignment.h"
 
+namespace
+{
+// define the number of pixels to count as border of the image, because of the shadow
+static const int BORDER_SIZE = 30;
+}
+
 EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     QDialog(parent),
+    mViewerMode(FIT_WINDOW),
     m_hcm(hcm),
     m_additionalShiftValue(0),
     m_imagesSaved(false),
@@ -58,6 +65,21 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
         m_originalImagesList=m_hcm->getMDRList();
     }
 
+    mScene = new QGraphicsScene(this);
+    mScene->setBackgroundBrush(Qt::darkGray);
+    mView = new IGraphicsView(mScene, this);
+    mView->setCacheMode(QGraphicsView::CacheBackground);
+    mView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+
+    connect(mView, SIGNAL(viewAreaChangedSize()), this, SLOT(updateView()));
+    mView->horizontalScrollBar()->setTracking(true);
+    mView->verticalScrollBar()->setTracking(true);
+    mView->setScene(mScene);
+    
+    gridLayout_3->addWidget(mView, 0, 0, 1, .1);
+    gridLayout_3->addWidget(correctionsGroupBox, 1, 0);
+    gridLayout_3->addWidget(groupBoxHistogram, 1, 1);
+    
     m_fileList=m_hcm->getFileList();
     m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
 
@@ -67,30 +89,16 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) m_luminanceOptions.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
     maskColorButton->setStyleSheet("background: rgb("+QString("%1").arg(maskcolor.red())+","+QString("%1").arg(maskcolor.green())+","+QString("%1").arg(maskcolor.blue())+")");
     assert(m_originalImagesList.size()==m_fileList.size());
-    QVBoxLayout *qvl = new QVBoxLayout;
-    qvl->setMargin(0);
-    qvl->setSpacing(0);
 
-    m_scrollArea = new QScrollArea(previewImageFrame);
-    m_previewWidget = new PreviewWidget(this,m_originalImagesList[1],m_originalImagesList[0]);
-    m_previewWidget->adjustSize();
-    m_previewWidget->update();
-    m_agWidget = new AntiGhostingWidget(m_previewWidget, m_antiGhostingMasksList[1]);
+    m_previewWidget = new PreviewWidget(m_originalImagesList[1],m_originalImagesList[0]);
+    m_agWidget = new AntiGhostingWidget(m_antiGhostingMasksList[1], mView);
     m_agWidget->setBrushColor(maskcolor);
-    m_agWidget->adjustSize();
-    m_agWidget->update();
+    m_agWidget->switchAntighostingMode(false);
 
     m_cornerButton = new QToolButton(this);
     m_cornerButton->setToolTip(tr("Pan the image to a region"));
     m_cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
-    m_scrollArea->setCornerWidget(m_cornerButton);
-
-    m_scrollArea->setFocusPolicy(Qt::NoFocus);
-    m_scrollArea->setBackgroundRole(QPalette::Window);
-    m_scrollArea->setWidget(m_previewWidget);
-
-    qvl->addWidget(m_scrollArea);
-    previewImageFrame->setLayout(qvl);
+    mView->setCornerWidget(m_cornerButton);
 
     int idx = 0;
     foreach(QString s,m_fileList) {
@@ -103,8 +111,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
 
     fitButton->setToolButtonStyle(style);
     origSizeButton->setToolButtonStyle(style);
-    zoomOutButton->setToolButtonStyle(style);
-    zoomInButton->setToolButtonStyle(style);
+    fillButton->setToolButtonStyle(style);
     whatsThisButton->setToolButtonStyle(style);
     cropButton->setToolButtonStyle(style);
     saveImagesButton->setToolButtonStyle(style);
@@ -121,16 +128,24 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     m_histogram->adjustSize();
 
     ((QGridLayout*)(groupBoxHistogram->layout()))->addWidget(m_histogram);
-    m_previewWidget->setFocus();
 
-    m_selectionTool = new SelectionTool(m_previewWidget);
-    m_selectionTool->show();
+    m_selectionTool = new ISelectionTool(mView, m_previewWidget);
     
+    mScene->addItem(m_previewWidget);
+    mScene->addItem(m_agWidget);
+    mScene->addItem(m_selectionTool);
+
     setupConnections();
+    normalSize();
+    fitPreview(true);
+
+    mView->show();
+    m_selectionTool->show();
 } //end of constructor
 
 void EditingTools::setupConnections() {
     connect(m_cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+
     connect(upToolButton,SIGNAL(clicked()),this,SLOT(upClicked()));
     connect(rightToolButton,SIGNAL(clicked()),this,SLOT(rightClicked()));
     connect(downToolButton,SIGNAL(clicked()),this,SLOT(downClicked()));
@@ -147,9 +162,8 @@ void EditingTools::setupConnections() {
 
     connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
     connect(fitButton,SIGNAL(toggled(bool)),this,SLOT(fitPreview(bool)));
-    connect(origSizeButton,SIGNAL(clicked()),this,SLOT(origSize()));
-    connect(zoomOutButton,SIGNAL(clicked()),this,SLOT(zoomOut()));
-    connect(zoomInButton,SIGNAL(clicked()),this,SLOT(zoomIn()));
+    connect(origSizeButton,SIGNAL(clicked()),this,SLOT(normalSize()));
+    connect(fillButton,SIGNAL(clicked()),this,SLOT(fillToWindow()));
     connect(cropButton,SIGNAL(clicked()),this,SLOT(cropStack()));
     connect(saveImagesButton,SIGNAL(clicked()),this,SLOT(saveImagesButtonClicked()));
     connect(blendModeCB,SIGNAL(currentIndexChanged(int)),m_previewWidget,SLOT(requestedBlendMode(int)));
@@ -159,14 +173,11 @@ void EditingTools::setupConnections() {
     connect(antighostToolButton,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonToggled(bool)));
     connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),m_agWidget,SLOT(setBrushSize(int)));
     connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),m_agWidget,SLOT(setBrushStrength(int)));
+    connect(removeMaskRadioButton,SIGNAL(toggled(bool)),m_agWidget,SLOT(setBrushMode(bool)));
     connect(maskColorButton,SIGNAL(clicked()),this,SLOT(maskColorButtonClicked()));
 
     connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
-    connect(m_previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
-    connect(m_agWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
     connect(m_selectionTool,SIGNAL(selectionReady(bool)),cropButton,SLOT(setEnabled(bool)));
-    connect(m_selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
-    connect(removeMaskRadioButton,SIGNAL(toggled(bool)),m_agWidget,SLOT(setBrushMode(bool)));
 
     connect(m_hcm, SIGNAL(imagesSaved()), this, SLOT(restoreSaveImagesButtonState()));
 }
@@ -174,19 +185,19 @@ void EditingTools::setupConnections() {
 void EditingTools::slotCornerButtonPressed() {
     m_panIconWidget=new PanIconWidget;
     m_panIconWidget->setImage(m_previewWidget->getPreviewImage());
-    float zf=m_previewWidget->getScaleFactor();
-    float leftviewpos=(float)(m_scrollArea->horizontalScrollBar()->value());
-    float topviewpos=(float)(m_scrollArea->verticalScrollBar()->value());
-    float wps_w=(float)(m_scrollArea->maximumViewportSize().width());
-    float wps_h=(float)(m_scrollArea->maximumViewportSize().height());
+    float zf=this->getScaleFactor();
+    float leftviewpos=(float)(mView->horizontalScrollBar()->value());
+    float topviewpos=(float)(mView->verticalScrollBar()->value());
+    float wps_w=(float)(mView->maximumViewportSize().width());
+    float wps_h=(float)(mView->maximumViewportSize().height());
     QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
     m_panIconWidget->setRegionSelection(r);
     m_panIconWidget->setMouseFocus();
     connect(m_panIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
     connect(m_panIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
-    QPoint g = m_scrollArea->mapToGlobal(m_scrollArea->viewport()->pos());
-    g.setX(g.x()+ m_scrollArea->viewport()->size().width());
-    g.setY(g.y()+ m_scrollArea->viewport()->size().height());
+    QPoint g = mView->mapToGlobal(mView->viewport()->pos());
+    g.setX(g.x()+ mView->viewport()->size().width());
+    g.setY(g.y()+ mView->viewport()->size().height());
     m_panIconWidget->popup(QPoint(g.x() - m_panIconWidget->width()/2,
                     g.y() - m_panIconWidget->height()/2));
 
@@ -194,8 +205,8 @@ void EditingTools::slotCornerButtonPressed() {
 }
 
 void EditingTools::slotPanIconSelectionMoved(QRect gotopos) {
-    m_scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*m_previewWidget->getScaleFactor()));
-    m_scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*m_previewWidget->getScaleFactor()));
+    mView->horizontalScrollBar()->setValue((int)(gotopos.x()*this->getScaleFactor()));
+    mView->verticalScrollBar()->setValue((int)(gotopos.y()*this->getScaleFactor()));
 }
 
 void EditingTools::slotPanIconHidden()
@@ -241,7 +252,7 @@ void EditingTools::keyReleaseEvent ( QKeyEvent * event ) {
 
 void EditingTools::cropStack() {
     //zoom the image to 1:1, so that the crop area is in a one-to-one relationship with the pixel coordinates.
-    origSize();
+    normalSize();
 
     if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
         m_hcm->applyShiftsToImageStack(m_HV_offsets);
@@ -264,8 +275,6 @@ void EditingTools::cropStack() {
     
     m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
         
-    m_selectionTool->removeSelection();
-
     m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
     m_previewWidget->setPivot(m_originalImagesList[referenceListWidget->currentRow()]);
     m_agWidget->setMask(m_antiGhostingMasksList[movableListWidget->currentRow()]);
@@ -400,45 +409,6 @@ void EditingTools::enterWhatsThis() {
     QWhatsThis::enterWhatsThisMode();
 }
 
-void EditingTools::zoomIn() {
-    m_previewWidget->resize(m_previewWidget->size()*1.25f);
-    m_agWidget->resize(m_previewWidget->size()*1.25f);
-    zoomOutButton->setEnabled(true);
-    zoomInButton->setEnabled(m_previewWidget->getScaleFactor() < 6.0);
-}
-
-void EditingTools::zoomOut() {
-    m_previewWidget->resize(m_previewWidget->size()*0.8f);
-    m_agWidget->resize(m_previewWidget->size()*0.8f);
-    zoomInButton->setEnabled(true);
-    zoomOutButton->setEnabled(m_previewWidget->getScaleFactor() > 0.166);
-}
-
-void EditingTools::fitPreview(bool checked) {
-    if (!m_antiGhosting) {
-        zoomInButton->setEnabled(!checked);
-        zoomOutButton->setEnabled(!checked);
-    }
-    origSizeButton->setEnabled(!checked);
-    if (checked) {
-        m_previousPreviewWidgetSize=m_previewWidget->size();
-        QSize fillWinSize=m_originalImagesList.at(0)->size();
-        fillWinSize.scale(m_scrollArea->maximumViewportSize(),Qt::KeepAspectRatio);
-        m_previewWidget->resize(fillWinSize);
-        m_agWidget->resize(fillWinSize);
-    } else {
-        m_previewWidget->resize(m_previousPreviewWidgetSize);
-        m_agWidget->resize(m_previousPreviewWidgetSize);
-    }
-}
-
-void EditingTools::origSize() {
-    zoomInButton->setEnabled(true);
-    zoomOutButton->setEnabled(true);
-    m_previewWidget->resize(m_originalImagesList.at(0)->size());
-    m_agWidget->resize(m_originalImagesList.at(0)->size());
-}
-
 void EditingTools::antighostToolButtonToggled(bool toggled) {
     m_previewWidget->update();
     toggled ? m_selectionTool->disable() : m_selectionTool->enable();
@@ -449,9 +419,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_agWidget->update();
         label_editable_list->setText(tr("Maskable"));
         label_reference_list->setText(tr("Good image"));
-        origSizeButton->setDisabled(true);
-        zoomInButton->setDisabled(true);
-        zoomOutButton->setDisabled(true);
+        //origSizeButton->setDisabled(true);
+        //fillButton->setDisabled(true);
         saveImagesButton->setDisabled(true);
         prevBothButton->setIcon(QIcon(":new/prefix1/images/forward.png"));  
         nextBothButton->setIcon(QIcon(":new/prefix1/images/back.png")); 
@@ -489,9 +458,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         nextBothButton->setIcon(QIcon(":new/prefix1/images/downarrow.png"));    
         prevBothButton->setDisabled(false);
         nextBothButton->setDisabled(false);
-        origSizeButton->setDisabled(false);
-        zoomInButton->setDisabled(false);
-        zoomOutButton->setDisabled(false);
+        //origSizeButton->setDisabled(false);
+        //fillButton->setDisabled(false);
         saveImagesButton->setDisabled(false);
         movableListWidget->clear();
         referenceListWidget->clear();
@@ -556,8 +524,8 @@ void EditingTools::saveImagesButtonClicked() {
 }
 
 void EditingTools::updateScrollBars(QPoint diff) {
-    m_scrollArea->verticalScrollBar()->setValue(m_scrollArea->verticalScrollBar()->value() + diff.y());
-    m_scrollArea->horizontalScrollBar()->setValue(m_scrollArea->horizontalScrollBar()->value() + diff.x());
+    mView->verticalScrollBar()->setValue(mView->verticalScrollBar()->value() + diff.y());
+    mView->horizontalScrollBar()->setValue(mView->horizontalScrollBar()->value() + diff.x());
 }
 
 void EditingTools::restoreSaveImagesButtonState()
@@ -617,3 +585,139 @@ void EditingTools::updateAgMask(int)
     updateMovable(idx);
 }
 
+void EditingTools::fitPreview(bool checked)
+{
+    if (checked) {
+        //m_previousPreviewWidgetSize=m_previewWidget->boundingRect().size();
+        //QSize fillWinSize=m_originalImagesList.at(0)->size();
+        //fillWinSize.scale(m_previewWidget->boundingRect().size(),Qt::KeepAspectRatio);
+        //m_previewWidget->resize(fillWinSize);
+        //m_agWidget->resize(fillWinSize);
+        mViewerMode = FIT_WINDOW;
+    } else {
+        //m_previewWidget->resize(m_previousPreviewWidgetSize);
+        //m_agWidget->resize(m_previousPreviewWidgetSize);
+    }
+    // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
+    //if ( mViewerMode == FIT_WINDOW ) return;
+
+    mScene->setSceneRect(m_previewWidget->boundingRect());
+
+    const int w = mView->viewport()->size().width() - 2*BORDER_SIZE;
+    const int h = mView->viewport()->size().height() - 2*BORDER_SIZE;
+
+    qreal w_ratio = qreal(w)/m_previewWidget->getWidth();
+    qreal h_ratio = qreal(h)/m_previewWidget->getHeight();
+
+    qreal sf = qMin(w_ratio, h_ratio)/getScaleFactor();
+
+    // update only if the change is above the 0.05%
+    if ( qAbs(sf - static_cast<qreal>(1.0)) > 0.05 )
+    {
+#ifdef QT_DEBUG
+        //qDebug() << "void EditingTools::fitToWindow().sf = " << sf;
+#endif
+        mView->scale(sf,sf);
+        m_selectionTool->setScaleFactor(.7f * getScaleFactor());
+    }
+}
+
+float EditingTools::getScaleFactor()
+{
+    return mView->transform().m11();
+}
+
+void EditingTools::normalSize()
+{
+    //if ( mViewerMode == NORMAL_SIZE ) return;
+    fillButton->setEnabled(true);
+    //m_previewWidget->resize(m_originalImagesList.at(0)->size());
+    //m_agWidget->resize(m_originalImagesList.at(0)->size());
+
+    mScene->setSceneRect(m_previewWidget->boundingRect());
+    mViewerMode = NORMAL_SIZE;
+
+    qreal curr_scale_factor = getScaleFactor();
+    qreal scale_by = 1.0f/curr_scale_factor;
+
+    mView->scale(scale_by, scale_by);
+    m_selectionTool->setScaleFactor(1.0f);
+}
+
+bool EditingTools::isNormalSize()
+{
+    return ((mViewerMode == NORMAL_SIZE) ? true : false);
+}
+
+EditingTools::ViewerMode EditingTools::getViewerMode()
+{
+    return mViewerMode;
+}
+
+void EditingTools::setViewerMode(EditingTools::ViewerMode viewer_mode)
+{
+    switch (viewer_mode)
+    {
+    case NORMAL_SIZE:
+        normalSize();
+        break;
+    case FIT_WINDOW:
+        fitPreview(true);
+        break;
+    case FILL_WINDOW:
+        fillToWindow();
+        break;
+    }
+}
+
+bool EditingTools::isFittedToWindow()
+{
+    return ((mViewerMode == FIT_WINDOW) ? true : false);
+}
+
+void EditingTools::updateView()
+{
+#ifdef QT_DEBUG
+    qDebug() << "void GenericViewer::updateView()";
+#endif
+
+    switch (mViewerMode)
+    {
+    case NORMAL_SIZE:
+        normalSize();
+        break;
+    case FILL_WINDOW:
+        fillToWindow();
+        break;
+    case FIT_WINDOW:
+        fitPreview(true);
+        break;
+    }
+}
+
+void EditingTools::fillToWindow()
+{
+    // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
+    //if ( mViewerMode == FILL_WINDOW ) return;
+
+    mScene->setSceneRect(m_previewWidget->boundingRect());
+    mViewerMode = FILL_WINDOW;
+
+    const int w = mView->viewport()->size().width();
+    const int h = mView->viewport()->size().height();
+
+    qreal w_ratio = qreal(w)/m_previewWidget->getWidth();
+    qreal h_ratio = qreal(h)/m_previewWidget->getHeight();
+
+    qreal sf = qMax(w_ratio, h_ratio)/getScaleFactor();
+
+    // update only if the change is above the 0.05%
+    if ( qAbs(sf - static_cast<qreal>(1.0)) > 0.05 )
+    {
+#ifdef QT_DEBUG
+        //qDebug() << "void GenericViewer::fillToWindow().sf = " << sf;
+#endif
+        mView->scale(sf,sf);
+        m_selectionTool->setScaleFactor(.6f * getScaleFactor());
+    }
+}

@@ -21,44 +21,28 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#include <QDebug>
+
 #include <cassert>
 #include <QPainter>
 #include <QApplication>
 
 #include "PreviewWidget.h"
 
-PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) : 
-    QWidget(parent), 
+PreviewWidget::PreviewWidget(QImage *m, const QImage *p) : 
     m_movableImage(m), 
     m_pivotImage(p), 
     m_prevComputed() 
 {
     m_mx = m_my = m_px = m_py = 0;
-    setFocusPolicy(Qt::StrongFocus);
     m_previewImage = new QImage(m_movableImage->size(),QImage::Format_ARGB32);
     m_previewImage->fill(qRgba(255,0,0,255));
     blendmode = &PreviewWidget::computeDiffRgba;
     m_leftButtonMode = LB_nomode;
-    setMouseTracking(true);
 }
 
 PreviewWidget::~PreviewWidget() {
     delete m_previewImage;
-}
-
-void PreviewWidget::paintEvent(QPaintEvent * event) {
-    if (m_pivotImage == NULL || m_movableImage == NULL)
-        return;
-    assert(m_movableImage->size() == m_pivotImage->size());
-    QRect paintRect = event->rect();
-    QRect srcRect = QRect(paintRect.topLeft()/m_scaleFactor, paintRect.size()/m_scaleFactor);
-    QPainter p(this);
-    QRegion areaToRender=QRegion(srcRect) - m_prevComputed;
-    if (!areaToRender.isEmpty()) {
-        renderPreviewImage(blendmode, areaToRender.boundingRect());
-        m_prevComputed += QRegion(srcRect);
-    }
-    p.drawImage(paintRect, *m_previewImage, srcRect);
 }
 
 QRgb outofbounds = qRgba(0,0,0,255);
@@ -129,39 +113,6 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
     }
 }
 
-void PreviewWidget::resizeEvent(QResizeEvent *event) {
-    if (event->size() == m_previewImage->size())
-        m_scaleFactor = 1; //done to prevent first spurious widget size (upon construction)
-    else
-        m_scaleFactor = (float)(event->size().width())/(float)(m_previewImage->size().width());
-}
-
-void PreviewWidget::mousePressEvent(QMouseEvent *event) {
-    if (event->buttons() == Qt::MidButton) {
-        QApplication::setOverrideCursor( QCursor(Qt::ClosedHandCursor) );
-        m_mousePos = event->globalPos();
-    }
-    event->ignore();
-}
-
-void PreviewWidget::mouseReleaseEvent(QMouseEvent *event)
-{
-    QApplication::restoreOverrideCursor();      
-    event->ignore();
-}
-
-void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
-    if (event->buttons() == Qt::MidButton) {
-        //moving mouse with middle button pans the preview
-        QPoint diff = (event->globalPos() - m_mousePos);
-        if (event->modifiers() == Qt::ShiftModifier)
-            diff *= 5;
-        emit moved(diff);
-        m_mousePos = event->globalPos();
-    }
-    event->ignore();
-}
-
 void PreviewWidget::requestedBlendMode(int newindex) {
     if (newindex == 0)
         blendmode = &PreviewWidget::computeDiffRgba;
@@ -199,7 +150,7 @@ void PreviewWidget::setMovable(QImage *m) {
     //TODO: check this
     delete m_previewImage;
     m_previewImage = new QImage(m_movableImage->size(), QImage::Format_ARGB32);
-    resize(m_movableImage->size());
+    //resize(m_movableImage->size());
 }
 
 void PreviewWidget::updateVertShiftMovable(int v) {
@@ -222,3 +173,17 @@ void PreviewWidget::updateHorizShiftPivot(int h) {
     m_prevComputed = QRegion();
 }
 
+QRectF PreviewWidget::boundingRect() const 
+{
+    return QRectF(QPoint(), m_movableImage->size());
+}
+
+void PreviewWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+                QWidget *widget)
+{
+    if (m_pivotImage == NULL || m_movableImage == NULL)
+        return;
+    assert(m_movableImage->size() == m_pivotImage->size());
+    renderPreviewImage(blendmode, QRect(QPoint(), m_movableImage->size()));
+    painter->drawImage(QPoint(), *m_previewImage);
+}

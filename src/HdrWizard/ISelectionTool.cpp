@@ -1,7 +1,7 @@
 /**
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2012 Franco Comida
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,54 +22,31 @@
  *
  */
 
-
 #include <QDebug>
 
-#include <QPainter> 
 #include <QCursor> 
 
-#include "SelectionTool.h"
+#include "ISelectionTool.h"
 
 namespace {
-bool inRange(int a, int b, int c) {
+bool inRange(qreal a, qreal b, qreal c) {
 	return (a >= (b - c)) && (a <= (b + c));
 }
 }
 //
 //----------------------------------------------------------------------------
 //
-SelectionTool::SelectionTool(QWidget *parent) : 
-	QWidget(parent), m_parent(parent), isSelectionReady(false),  m_action(NOACTION), m_scaleFactor(1.0f)
+ISelectionTool::ISelectionTool(IGraphicsView *view, PreviewWidget* widget, QGraphicsItem* parent) : 
+    QGraphicsItem(parent), m_view(view), m_widget(widget) 
 {
-	setMouseTracking(true); // needed for moving and resizing selection
-	m_parent->installEventFilter(this);
 }
 //
-// SelectionTool::SelectionTool(QWidget *parent) 
+// ISelectionTool::ISelectionTool(QGraphicsView *view, PreviewWidget* widget, QGraphicsItem* parent) 
 //
 
-
-bool SelectionTool::eventFilter(QObject *obj, QEvent *event) 
+void ISelectionTool::mousePressEvent(QGraphicsSceneMouseEvent *e) 
 {
-	if (event->type() == QEvent::Resize) {
-		float scaleFactor = (float) m_parent->width() / (float) width();
-		resize(m_parent->size());
-       	m_selectionRect = QRect(m_selectionRect.topLeft()*scaleFactor, m_selectionRect.size()*scaleFactor);
-		return false; // propagate the event
-	} 
-	else {
-		// standard event processing
-		return QObject::eventFilter(obj, event);
-	}
-}
-//
-// bool SelectionTool::eventFilter(QObject *obj, QEvent *event)
-//
-
-void SelectionTool::mousePressEvent(QMouseEvent *e) 
-{
-	m_mousePos = e->pos();
-	m_origin = e->pos();
+	m_mousePos = m_origin = e->pos();
 	
 	if (e->buttons() == Qt::MidButton) {  
 		m_action = PANNING;
@@ -80,89 +57,90 @@ void SelectionTool::mousePressEvent(QMouseEvent *e)
 	if (e->buttons() == Qt::LeftButton) {  
 		if (!isSelectionReady) {
 			m_action = START_SELECTING;
-			m_selectionRect = QRect(m_origin, QSize());
+			m_selectionRect = QRectF(m_origin, QSize());
 			setCursor(QCursor(Qt::CrossCursor));
 			return;
 		}
 	
-		int x1, y1, x2, y2;
-		int mouseX, mouseY;
+		qreal x1, y1, x2, y2;
+		qreal mouseX, mouseY;
 		const int bw = (int) 5.0f / m_scaleFactor; // border width
 	
 		m_selectionRect.getCoords(&x1, &y1, &x2, &y2);
 
-		mouseX = e->x();
-		mouseY = e->y();
+		mouseX = e->pos().x();
+		mouseY = e->pos().y();
 		
-		QRect innerArea = m_selectionRect;
+		QRectF innerArea = m_selectionRect;
 		innerArea.adjust(bw, bw, -bw, -bw);			
 		
-		if (innerArea.contains(e->pos())) {
+		if (innerArea.contains(m_mousePos)) {
 			m_action = MOVING;	
 			setCursor(QCursor(Qt::SizeAllCursor));
 		}
 		else if ( inRange(mouseX, x1, bw) && inRange(mouseY, y1, bw)) {
 			m_action = RESIZING_XY;
-			m_origin = QPoint(x2, y2);
+			m_origin = QPointF(x2, y2);
 		}
 		else if ( inRange(mouseX, x1, bw) && inRange(mouseY, y2, bw)) {
 			m_action = RESIZING_XY;
-			m_origin = QPoint(x2, y1);
+			m_origin = QPointF(x2, y1);
 		}
 		else if ( inRange(mouseX, x2, bw) && inRange(mouseY, y1, bw)) {
 			m_action = RESIZING_XY;
-			m_origin = QPoint(x1, y2);
+			m_origin = QPointF(x1, y2);
 		}
 		else if ( inRange(mouseX, x2, bw) && inRange(mouseY, y2, bw)) {
 			m_action = RESIZING_XY;
-			m_origin = QPoint(x1, y1);
-		}
+			m_origin = QPointF(x1, y1);
+        }
 		else if ( inRange(mouseX, x1, bw) ) {
 			m_action = RESIZING_LEFT;	
-			m_origin = QPoint(x2, y2);
+			m_origin = QPointF(x2, y2);
 		}
 		else if ( inRange(mouseX, x2, bw) ) {
 			m_action = RESIZING_RIGHT;
-			m_origin = QPoint(x1, y2);
+			m_origin = QPointF(x1, y2);
 		}	
 		else if ( inRange(mouseY, y1, bw) ) {
 			m_action = RESIZING_TOP;	
-			m_origin = QPoint(x2, y2);
+			m_origin = QPointF(x2, y2);
 		}
 		else if ( inRange(mouseY, y2, bw) ) {
 			m_action = RESIZING_BOTTOM;
-			m_origin = QPoint(x1, y1);
+			m_origin = QPointF(x1, y1);
 		}	
 		else { // user clicked outside selected region
 			removeSelection();
 			m_action = START_SELECTING;
-			m_selectionRect = QRect(m_origin, QSize());
+			m_selectionRect = QRectF(m_origin, QSize());
 		}
 	}// if (e->buttons()==Qt::LeftButton) 
+    update(boundingRect());
 }
 //
-// void SelectionTool::mousePressEvent(QMouseEvent *e)
+// void ISelectionTool::mousePressEvent(QMouseEvent *e)
 //
 
-void SelectionTool::mouseMoveEvent(QMouseEvent *e) 
+void ISelectionTool::mouseMoveEvent(QGraphicsSceneMouseEvent *e) 
 {
 	if ((e->buttons() == Qt::NoButton) && (!isSelectionReady)) 
 	  return;	
 
-	int x1, y1, x2, y2;
-	int mouseX, mouseY;
-	const int bw = 5; // border width	
+	qreal x1, y1, x2, y2;
+	qreal mouseX, mouseY;
+	qreal bw = (int) 5.0f / m_scaleFactor; // border width	
  	bool updateMousePosition = true;
 
-	mouseX = e->x();
-	mouseY = e->y();
+	mouseX = e->pos().x();
+	mouseY =  e->pos().y();
 	
-	QPoint diff = (e->pos() - m_mousePos);
+	QPointF diff = (e->pos() - m_mousePos);
 
 	m_selectionRect.getCoords(&x1, &y1, &x2, &y2);
 
 	if (isSelectionReady && m_action == NOACTION ) {
-		QRect innerArea = m_selectionRect;
+		QRectF innerArea = m_selectionRect;
 		innerArea.adjust(bw, bw, -bw, -bw);			
 		if (innerArea.contains(e->pos())) 
 			setCursor(QCursor(Qt::OpenHandCursor));
@@ -188,20 +166,18 @@ void SelectionTool::mouseMoveEvent(QMouseEvent *e)
 		case NOACTION:
 			break;
 		case PANNING: 
-			if (e->modifiers() == Qt::ShiftModifier)
-				diff *= 5;
-			emit moved(diff);	
+			m_view->centerOn(e->pos()); //TODO doesen't work	
 			break;
 		case START_SELECTING: 
 			m_action = SELECTING;
 		case SELECTING: 
-			m_selectionRect = QRect(m_origin, e->pos()).normalized();
+			m_selectionRect = QRectF(m_origin, e->pos()).normalized();
 			break;
 		case MOVING:
 			m_selectionRect.translate(diff);
-			if (!(m_parent->rect().contains(m_selectionRect))) { // stop moving outside pixmap
+			if (!(m_widget->boundingRect().contains(m_selectionRect))) { // stop moving outside pixmap
 				m_selectionRect.translate(-diff);
-				QCursor::setPos(mapToGlobal(m_mousePos));
+				QCursor::setPos(m_view->mapToGlobal((m_view->mapFromScene(e->pos().toPoint()))));
 				updateMousePosition = false;
 			}
 			else { //moving inside pixmap and visible region
@@ -209,88 +185,40 @@ void SelectionTool::mouseMoveEvent(QMouseEvent *e)
 			}
 			break;
 		case RESIZING_LEFT:
-			m_selectionRect = QRect(m_origin, QPoint(mouseX,y1)).normalized();
+			m_selectionRect = QRectF(m_origin, QPointF(mouseX,y1)).normalized();
 			break;
 		case RESIZING_RIGHT:
-			m_selectionRect = QRect(m_origin, QPoint(mouseX,y1)).normalized();
+			m_selectionRect = QRectF(m_origin, QPointF(mouseX,y1)).normalized();
 			break;
 		case RESIZING_TOP:
-			m_selectionRect = QRect(m_origin, QPoint(x1,mouseY)).normalized();
+			m_selectionRect = QRectF(m_origin, QPointF(x1,mouseY)).normalized();
 			break;
 		case RESIZING_BOTTOM:
-			m_selectionRect = QRect(m_origin, QPoint(x2,mouseY)).normalized();
+			m_selectionRect = QRectF(m_origin, QPointF(x2,mouseY)).normalized();
 			break;
 		case RESIZING_XY:
-			m_selectionRect = QRect(m_origin, e->pos()).normalized();
+			m_selectionRect = QRectF(m_origin, QPointF(mouseX, mouseY)).normalized();
 			break;
 	}
-	//
-	//TODO: improve moving selection while mouse outside visible region
-	//
-/*
-	if (!(m_parent->visibleRegion().contains(e->pos()))) {
-		int x1, y1, x2, y2;
-		int dx = 6*diff.x();
-		int dy = 6*diff.y();
-			
-		m_parent->visibleRegion().boundingRect().getCoords(&x1, &y1, &x2, &y2);
-
-		if (m_action == PANNING)
-			return;
-
-		if (m_action != MOVING) {
-
-			if (mouseX < x1) {
-				if (dx == 0) 
-					dx = -20;
-				if ( dx < 0 )
-					emit moved(QPoint(dx,0));
-			}
-			else if (mouseX > x2) {
-				if (dx == 0) 
-					dx = 20;
-				if ( dx > 0 )
-					emit moved(QPoint(dx,0));
-			}
-			if (mouseY < y1) {
-				if (dy == 0) 
-					dy = -20;
-				if ( dy < 0 )
-					emit moved(QPoint(0,dy));
-			}
-			else if (mouseY > y2) {
-				if (dy == 0) 
-					dy = 20;
-				if ( dy > 0 )
-					emit moved(QPoint(0,dy));
-			}
-			QCursor::setPos(m_mousePos);
-			updateMousePosition = false;
-		}
-	} 
-	else if (m_action != MOVING) {
-		updateMousePosition = true;
-	}
-*/
 	if ( !( (m_selectionRect.size() == QSize()) || 
 		    (m_selectionRect.width() == 0) 		|| 
 		    (m_selectionRect.height() == 0) 
 	      )
 	   ) 
 	{ 
-		m_selectionRect = m_parent->rect().intersected(m_selectionRect);
+		m_selectionRect = m_widget->boundingRect().intersected(m_selectionRect);
 	} 
 	if (updateMousePosition)
 		m_mousePos = e->pos();
-	
-	repaint();
+
+    update(boundingRect());
 }
 //
-// void SelectionTool::mouseMoveEvent(QMouseEvent *e) 
+// void ISelectionTool::mouseMoveEvent(QMouseEvent *e) 
 //
 
 
-void SelectionTool::mouseReleaseEvent(QMouseEvent *) 
+void ISelectionTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *) 
 {
 	if ( (m_selectionRect.size() == QSize()) || 
 		(m_selectionRect.width() == 0) || 
@@ -311,104 +239,102 @@ void SelectionTool::mouseReleaseEvent(QMouseEvent *)
 			m_action = NOACTION;  
 	}
 	setCursor(QCursor(Qt::ArrowCursor));
-	repaint();
+    update(boundingRect());
 }
 //
-// void SelectionTool::mouseReleaseEvent(QMouseEvent *e) 
+// void ISelectionTool::mouseReleaseEvent(QMouseEvent *e) 
 //
 
-QRect SelectionTool::getSelectionRect() 
+QRect ISelectionTool::getSelectionRect() 
 {
-	int x1, y1, x2, y2;
-	m_selectionRect.getCoords(&x1, &y1, &x2, &y2);
-	return m_selectionRect;
+    return m_selectionRect.toRect();
 }
 //
-// QRect SelectionTool::getSelectionRect() 
+// QRect ISelectionTool::getSelectionRect() 
 //
 
-void SelectionTool::paintEvent(QPaintEvent *e) 
+void ISelectionTool::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-	if (m_parent == NULL) return;
+	if (m_widget == NULL) return;
 
-	QPainter painter(this);
-	
 	if (!isSelectionReady && m_action != SELECTING) {
-		painter.setPen(Qt::NoPen);
-		painter.setBrush(QColor(127,127,127,0));
-		painter.drawRect(e->rect());
+		painter->setPen(Qt::NoPen);
+		painter->setBrush(QColor(255,127,127,0));
+		painter->drawRect(m_widget->boundingRect());
 		return;
 	}
 
-	int x1, y1, x2, y2; 
-	const int pw = (int) 1.0f / m_scaleFactor; //Pen Width
-	const int mpw = (int) 1.0f / m_scaleFactor; // pw >> 1;
-	const int cw = (int) 6.0f / m_scaleFactor; //Corner Width
+	qreal pw = 1.0f / m_scaleFactor; //Pen Width
+	qreal mpw = 1.0f / m_scaleFactor; // pw >> 1;
+	qreal cw = 6.0f / m_scaleFactor; //Corner Width
 
-	m_selectionRect.getCoords(&x1, &y1, &x2, &y2);
-	QRegion outsideArea = QRegion(rect()) - QRegion(m_selectionRect);
+	QRegion outsideArea = QRegion(m_widget->boundingRect().toRect()) - QRegion(m_selectionRect.toRect());
 
-	painter.setPen(Qt::NoPen);
-	painter.setBrush(QColor(127,127,127,127));
+	painter->setPen(Qt::NoPen);
+	painter->setBrush(QColor(127,127,127,127));
 
-	painter.drawRects(outsideArea.rects());
+	painter->drawRects(outsideArea.rects());
 	
 	QPen pen(Qt::yellow);
 	pen.setWidth(pw);
 	pen.setCapStyle(Qt::RoundCap);
 	pen.setJoinStyle(Qt::MiterJoin);
     pen.setStyle(Qt::DashLine);
-	painter.setPen(pen);
-	painter.setBrush(QBrush());
-	painter.drawRect(m_selectionRect.adjusted(-mpw, -mpw, mpw, mpw));
+	painter->setPen(pen);
+	painter->setBrush(QBrush());
+	painter->drawRect(m_selectionRect.adjusted(-mpw, -mpw, mpw, mpw));
 
-    painter.setPen( Qt::NoPen );
-    painter.setBrush( QBrush(Qt::black, Qt::SolidPattern) );
-    painter.drawEllipse( x1-mpw, y1-mpw, cw, cw);
-    painter.drawEllipse( x2-mpw, y2-mpw, cw, cw);
-    painter.drawEllipse( x1-mpw, y2-mpw, cw, cw);
-    painter.drawEllipse( x2-mpw, y1-mpw, cw, cw);
+	qreal x1, y1, x2, y2; 
+	m_selectionRect.getCoords(&x1, &y1, &x2, &y2);
+    painter->setPen( Qt::NoPen );
+    painter->setBrush( QBrush(Qt::black, Qt::SolidPattern) );
+    painter->drawEllipse( x1-cw/2, y1-cw/2, cw, cw);
+    painter->drawEllipse( x2-cw/2, y2-cw/2, cw, cw);
+    painter->drawEllipse( x1-cw/2, y2-cw/2, cw, cw);
+    painter->drawEllipse( x2-cw/2, y1-cw/2, cw, cw);
 }
 //
-// void SelectionTool::paintEvent(QPaintEvent *e)
+// void ISelectionTool::paintEvent(QPaintEvent *e)
 //
 
-bool SelectionTool::hasSelection() 
+bool ISelectionTool::hasSelection() 
 {
 	return isSelectionReady;
 }
 
-void SelectionTool::removeSelection() 
+void ISelectionTool::removeSelection() 
 {
 	isSelectionReady = false;
 	m_action = NOACTION;
 	emit selectionReady(false);
 	m_selectionRect = QRect();
-	repaint();
 }
 //
-// void SelectionTool::removeSelection() 
+// void ISelectionTool::removeSelection() 
 //
 
-void SelectionTool::enable() 
+void ISelectionTool::enable() 
 {
-	setMouseTracking(true); 
 	show();
 }
 //
-// void SelectionTool::removeSelection() 
+// void ISelectionTool::removeSelection() 
 //
 
-void SelectionTool::disable() 
+void ISelectionTool::disable() 
 {
-	setMouseTracking(false); 
 	hide();
 }
 //
-// void SelectionTool::disable() 
+// void ISelectionTool::disable() 
 //
 
-void SelectionTool::setScaleFactor(qreal sf)
+void ISelectionTool::setScaleFactor(qreal sf)
 {
     m_scaleFactor = sf;
+}
+
+QRectF ISelectionTool::boundingRect() const
+{
+    return m_widget->boundingRect();
 }

@@ -1,7 +1,7 @@
 /**
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2012 Franco Comida
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,41 +22,39 @@
  *
  */
 
-#ifndef SELECTIONTOOL_H
-#define SELECTIONTOOL_H
+#ifndef ISELECTIONTOOL_H
+#define ISELECTIONTOOL_H
 
-#include <QMouseEvent>
-#include <QPaintEvent>
-#include <QResizeEvent>
-#include <QRubberBand>
+#include <QGraphicsSceneMouseEvent>
+#include "PreviewWidget.h"
+#include "Viewers/IGraphicsView.h"
 
-class SelectionTool : public QWidget
+class ISelectionTool : public QObject, public QGraphicsItem
 {
 Q_OBJECT
 public:
-    SelectionTool(QWidget *parent=0);
-    bool setON(bool isON);
+    ISelectionTool(IGraphicsView *view, PreviewWidget *widget, QGraphicsItem *parent = 0);
     QRect getSelectionRect();
     bool hasSelection();
     void removeSelection();
     void enable();
     void disable();
     void setScaleFactor(qreal);
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 signals:
     void selectionReady(bool);
-    void moved(QPoint diff);
     void scroll(int x, int y, int w, int h);
 protected:
-    void mousePressEvent(QMouseEvent *e);
-    void mouseMoveEvent(QMouseEvent *e);
-    void mouseReleaseEvent(QMouseEvent *e);
-    void paintEvent(QPaintEvent *e);
-    bool eventFilter(QObject *obj, QEvent *event);
-    QWidget *m_parent;
-    QRect m_selectionRect;
-    QPoint m_mousePos, m_origin;
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *e);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *e);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
+    QRectF m_selectionRect;
+    QPointF m_mousePos, m_origin;
     bool isSelectionReady;
     enum { NOACTION, PANNING, START_SELECTING, SELECTING, MOVING, RESIZING_LEFT, RESIZING_RIGHT, RESIZING_TOP, RESIZING_BOTTOM, RESIZING_XY} m_action;
     qreal m_scaleFactor;
+    IGraphicsView * m_view;
+    PreviewWidget *m_widget;
 };
 #endif

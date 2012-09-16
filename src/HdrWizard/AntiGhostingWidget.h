@@ -24,18 +24,21 @@
 #ifndef ANTIGHOSTINGWIDGET_H
 #define ANTIGHOSTINGWIDGET_H
 
-#include <QWidget>
+#include <QGraphicsItem>
 #include <QImage>
 #include <QPaintEvent>
-#include <QMouseEvent>
+#include <QGraphicsSceneMouseEvent>
 #include <QResizeEvent>
 #include <QEvent>
 
-class AntiGhostingWidget : public QWidget
+#include "Viewers/IGraphicsView.h"
+
+class AntiGhostingWidget : public QObject, public QGraphicsItem
 {
 Q_OBJECT
+
 public:
-    AntiGhostingWidget(QWidget *parent, QImage *mask);
+    AntiGhostingWidget(QImage *mask, IGraphicsView *view, QGraphicsItem* parent = 0);
     ~AntiGhostingWidget();
     
     QSize sizeHint () const {
@@ -55,7 +58,11 @@ public:
     void updateVertShift(int);
     void updateHorizShift(int);
 
-public slots:
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+                QWidget *widget);
+
+public Q_SLOTS:
     void switchAntighostingMode(bool);
     void setBrushSize(const int);
     void setBrushStrength(const int);
@@ -63,12 +70,9 @@ public slots:
     void setBrushMode(bool);
 
 protected:
-    void paintEvent(QPaintEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void resizeEvent(QResizeEvent *event);
-    void enterEvent(QEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+//    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void timerEvent(QTimerEvent *event);
 
 private:
@@ -76,14 +80,15 @@ private:
     QPoint m_mousePos;
     int m_timerid;
     QPixmap *m_agcursorPixmap;
-    int m_requestedPixmapSize, m_previousPixmapSize;
-    int m_requestedPixmapStrength, m_previousPixmapStrength;
-    QColor m_requestedPixmapColor, m_previousPixmapColor;
+    int m_requestedPixmapSize;
+    int m_requestedPixmapStrength;
+    QColor m_requestedPixmapColor;
     bool m_brushAddMode;//false means brush is in remove mode.
     void fillAntiGhostingCursorPixmap();
     
     float m_scaleFactor;
     int m_mx, m_my;
+    QGraphicsView *m_view;
 
 signals:
     void moved(QPoint diff);

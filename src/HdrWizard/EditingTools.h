@@ -29,15 +29,16 @@
 #define EDITINGTOOLS_H
 
 #include <QMap>
+#include <QGraphicsScene>
 
 #include "ui_EditingTools.h"
-#include "PreviewWidget.h"
 #include "Common/global.h"
-#include "Viewers/SelectionTool.h"
+#include "ISelectionTool.h"
 #include "HdrCreation/HdrCreationManager.h"
 #include "PreviewWidget.h"
 #include "AntiGhostingWidget.h"
 #include "Common/LuminanceOptions.h"
+#include "Viewers/IGraphicsView.h"
 
 class HistogramLDR;
 class PanIconWidget;
@@ -45,6 +46,17 @@ class PanIconWidget;
 class EditingTools : public QDialog, private Ui::EditingToolsDialog
 {
 Q_OBJECT
+
+public:
+
+    //! \brief Enum containing the list of possible view mode
+    enum ViewerMode
+    {
+        FIT_WINDOW = 0,
+        FILL_WINDOW = 1,
+        NORMAL_SIZE = 2
+    };
+
 public:
 	EditingTools(HdrCreationManager *, QWidget *parent=0);
 	~EditingTools();
@@ -52,6 +64,9 @@ protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 private:
+    QGraphicsScene* mScene;
+    IGraphicsView* mView;
+    ViewerMode mViewerMode;
 	QList<QImage*> m_originalImagesList;
 	QList<QImage*> m_antiGhostingMasksList;
 	QStringList m_fileList;
@@ -66,7 +81,7 @@ private:
 	QSize m_previousPreviewWidgetSize;
 	PanIconWidget *m_panIconWidget;
 	QToolButton *m_cornerButton;
-	SelectionTool *m_selectionTool;
+	ISelectionTool *m_selectionTool;
 	bool m_imagesSaved;
     int m_goodImageIndex;
     bool m_antiGhosting;
@@ -74,6 +89,13 @@ private:
 	QVector<float> m_expotimes;
 
 	void setAntiGhostingWidget(QImage*, QPair<int, int>);
+    float getScaleFactor();
+    void fitToWindow(bool);
+    bool isFittedToWindow();
+    bool isNormalSize();
+    EditingTools::ViewerMode getViewerMode();
+    void setViewerMode(EditingTools::ViewerMode);
+
 private slots:
 	void slotPanIconSelectionMoved(QRect);
 	void slotPanIconHidden();
@@ -96,10 +118,10 @@ private slots:
 	void prevRight();
 	void nextRight();
 	void enterWhatsThis();
-	void zoomIn();
-	void zoomOut();
 	void fitPreview(bool);
-	void origSize();
+	void fillToWindow();
+    void normalSize();
+    void updateView();
 	void cropStack();
 	void nextClicked();
 	void maskColorButtonClicked();

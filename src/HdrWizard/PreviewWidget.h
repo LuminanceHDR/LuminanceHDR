@@ -24,25 +24,22 @@
 #ifndef PREVIEWWIDGET_H
 #define PREVIEWWIDGET_H
 
+#include <QGraphicsItem>
 #include <QColor>
 #include <QResizeEvent>
 #include <QScrollBar>
 #include <QScrollArea>
 #include <QImage>
 
-#include "AntiGhostingWidget.h"
-
-class PreviewWidget : public QWidget
+class PreviewWidget :public QObject, public QGraphicsItem
 {
 Q_OBJECT
+
 public:
-    PreviewWidget(QWidget *parent, QImage *m, const QImage *p);
+    PreviewWidget(QImage *m, const QImage *p);
     ~PreviewWidget();
     QSize sizeHint () const {
         return m_previewImage->size();
-    }
-    float getScaleFactor() {
-        return m_scaleFactor;
     }
     QImage * getPreviewImage() {
         renderPreviewImage(blendmode);
@@ -56,16 +53,14 @@ public:
     void updateHorizShiftMovable(int h);
     void updateHorizShiftPivot(int h);
     void updateVertShiftPivot(int v);
-
-public slots:
+    int getWidth() { return m_previewImage->width(); }
+    int getHeight() { return m_previewImage->height(); }
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+                QWidget *widget);
+public Q_SLOTS:
     void requestedBlendMode(int);
-signals:
-    void moved(QPoint diff);
 protected:
-    void paintEvent( QPaintEvent * );
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
 
 private:
@@ -123,8 +118,6 @@ private:
 
     //movable and pivot's x,y shifts
     int m_mx, m_my, m_px, m_py;
-    //zoom factor
-    float m_scaleFactor;
 
     //for panning with mid-button
     QPoint m_mousePos;
