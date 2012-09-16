@@ -37,11 +37,10 @@ class PreferencesDialog : public QDialog
 {
 Q_OBJECT
 private:
-    bool m_isPortable;
     QScopedPointer<Ui::PreferencesDialog> m_Ui;
 
 public:
-	PreferencesDialog(bool isPortable, QWidget *parent);
+	PreferencesDialog(QWidget *parent);
 	~PreferencesDialog();
 private:
     void from_options_to_gui();

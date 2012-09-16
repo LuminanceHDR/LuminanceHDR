@@ -116,10 +116,9 @@ int main( int argc, char ** argv )
     if (isPortable) {
         LuminanceOptions::setDefaultFormat(QSettings::IniFormat);
         LuminanceOptions::setPath(QSettings::IniFormat, QSettings::UserScope, QDir::currentPath());
-        installTranslators(true, true);
     }
-    else
-        installTranslators(true);
+
+    installTranslators(true);
 
     MainWindow* MW;
 

@@ -1119,12 +1119,7 @@ void MainWindow::on_OptionsAction_triggered()
 {
     unsigned int negcol = luminance_options->getViewerNegColor();
     unsigned int naninfcol = luminance_options->getViewerNanInfColor();
-    PreferencesDialog *opts;
-    if (m_isPortable)
-        opts = new PreferencesDialog(true, this);
-    else
-        opts = new PreferencesDialog(false, this);
-        
+    PreferencesDialog *opts = new PreferencesDialog(this);
     opts->setAttribute(Qt::WA_DeleteOnClose);
     if ( opts->exec() == QDialog::Accepted )
     {
