@@ -29,6 +29,7 @@
 #include <QApplication>
 #include <QFileInfo>
 #include <QFile>
+#include <QColor>
 
 #include "Libpfs/domio.h"
 #include "Fileformat/pfstiff.h"
@@ -43,6 +44,127 @@
 
 namespace
 {
+void rgb2hsl(float r, float g, float b, float *h, float *s, float *l)
+{
+    float v, m, vm, r2, g2, b2;
+    *h = 0.0f;
+    *s = 0.0f;
+    *l = 0.0f;
+    v = std::max(r, g);
+    v = std::max(v, b);
+    m = std::min(r, g);
+    m = std::min(m, b);
+    *l = (m + v) / 2.0f;
+    if (*l <= 0.0f)
+        return;
+    vm = v - m;
+    *s = vm;
+    if (*s >= 0.0f)
+        *s /= (*l <= 0.5f) ? (v + m) : (2.0f - v - m);
+    else return;
+    r2 = (v - r) / vm;
+    g2 = (v - g) / vm;
+    b2 = (v - b) / vm;
+    if (r == v)
+        *h = (g == m ? 5.0f + b2 : 1.0f - g2);
+    else if (g == v)
+        *h = (b == m ? 1.0f + r2 : 3.0f - b2);
+    else
+        *h = (r == m ? 3.0f + g2 : 5.0f - r2);
+    *h /= 6.0;
+}
+
+void hsl2rgb(float h, float sl, float l, float *r, float *g, float *b)
+{
+    float v;
+    *r = l;
+    *g = l;
+    *b = l;
+    v = (l <= 0.5f) ? (l * (1.0f + sl)) : (l + sl - l * sl);
+    if (v > 0.0f) {
+        float m;
+        float sv;
+        int sextant;
+        float fract, vsf, mid1, mid2;
+        m = l + l - v;
+        sv = (v - m ) / v;
+        h *= 6.0f;
+        sextant = (int)h;
+        fract = h - sextant;
+        vsf = v * sv * fract;
+        mid1 = m + vsf;
+        mid2 = v - vsf;
+        switch (sextant) {
+            case 0:
+                *r = v;
+                *g = mid1;
+                *b = m;
+             break;
+             case 1:
+                 *r = mid2;
+                 *g = v;
+                 *b = m;
+             break;
+             case 2:
+                 *r = m;
+                 *g = v;
+                 *b = mid1;
+             break;
+             case 3:
+                 *r = m;
+                 *g = mid2;
+                 *b = v;
+             break;
+             case 4:
+                 *r = mid1;
+                 *g = m;
+                 *b = v;
+             break;
+             case 5:
+                 *r = v;
+                 *g = m;
+                 *b = mid2;
+             break;
+         }    
+    } 
+}
+
+qreal averageLightness(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
+{
+    int width = R->getCols();
+    int height = R->getRows();
+
+    qreal avgLum = 0.0f;
+    float h, s, l;
+    
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            rgb2hsl((*R)(i, j), (*G)(i, j), (*B)(i, j), &h, &s, &l);
+            avgLum += l;
+        }
+    } 
+    return avgLum / (width * height);
+}
+
+qreal averageLightness(QImage *img)
+{
+    qreal avgLum = 0.0f;
+    int w = img->width(), h = img->height();
+    QColor color;
+    QRgb rgb;
+    qreal l;
+
+    for (int j = 0; j < h; j++) {
+        for (int i = 0; i < w; i++) {
+            rgb = img->pixel(i, j);
+            color = QColor::fromRgb(rgb);
+            l = color.toHsl().lightnessF();
+            avgLum += l;
+        }
+    }
+    return avgLum / (w * h);
+}
+
 pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
 {
 #ifdef TIMER_PROFILING
@@ -113,14 +235,27 @@ void blend(QImage *img1, QImage *img2, QImage *mask)
     int width = img1->width();
     int height = img1->height();
 
+    QColor color;
     QRgb maskValue, pixValue;
-    float alpha;
+    qreal alpha;
+    qreal avgLight1 = averageLightness(img1);
+    qreal avgLight2 = averageLightness(img2);
+    qreal sf = avgLight1 / avgLight2;
+    int h, s, l;
+    
+    if (sf > 1.0f) sf = 1.0f / sf; 
 
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
             maskValue = mask->pixel(i,j);
             alpha = qAlpha(maskValue) / 255;
-            pixValue = (1.0f - alpha) * img1->pixel(i, j) +  alpha * img2->pixel(i, j);
+            pixValue = img2->pixel(i, j);
+            color = QColor::fromRgb(pixValue).toHsl();
+            color.getHsl(&h, &s, &l);
+            l *= sf;
+            color.setHsl(h, s, l);
+            pixValue = color.rgb();     
+            pixValue = (1.0f - alpha) * img1->pixel(i, j) +  alpha * pixValue;
             img1->setPixel(i, j, pixValue);
         }
     } 
@@ -143,14 +278,37 @@ void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R
 
     QRgb maskValue;
     float alpha;
+    qreal avgLight1 = averageLightness(R1, G1, B1);
+    qreal avgLight2 = averageLightness(R2, G2, B2);
+    qreal sf = avgLight1 / avgLight2;
+    float h, s, l, r1, g1, b1, r2, g2, b2;
 
+    if (sf > 1.0f) sf = 1.0f / sf; 
+    
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
             maskValue = mask->pixel(i,j);
             alpha = qAlpha(maskValue) / 255;
-            (*R1)(i, j) = (1.0f - alpha) * (*R1)(i, j) +  alpha * (*R2)(i, j);
-            (*G1)(i, j) = (1.0f - alpha) * (*G1)(i, j) +  alpha * (*G2)(i, j);
-            (*B1)(i, j) = (1.0f - alpha) * (*B1)(i, j) +  alpha * (*B2)(i, j);
+            r1 = (*R1)(i, j);
+            g1 = (*G1)(i, j);
+            b1 = (*B1)(i, j);
+            if (r1 > 1.0f) r1 = 1.0f / 65536.0f;
+            if (g1 > 1.0f) g1 = 1.0f / 65536.0f;
+            if (b1 > 1.0f) b1 = 1.0f / 65536.0f;
+
+            r2 = (*R2)(i, j);
+            g2 = (*G2)(i, j);
+            b2 = (*B2)(i, j);
+            if (r2 > 1.0f) r2 = 1.0f / 65536.0f;
+            if (g2 > 1.0f) g2 = 1.0f / 65536.0f;
+            if (b2 > 1.0f) b2 = 1.0f / 65536.0f;
+
+            rgb2hsl(r2, g2, b2, &h, &s, &l);
+            l *= sf;
+            hsl2rgb(h, s, l, &r2, &g2, &b2);
+            (*R1)(i, j) = (1.0f - alpha) * r1 +  alpha * r2;
+            (*G1)(i, j) = (1.0f - alpha) * g1 +  alpha * g2;
+            (*B1)(i, j) = (1.0f - alpha) * b1 +  alpha * b2;
         }
     } 
 #ifdef TIMER_PROFILING
@@ -158,6 +316,7 @@ void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R
     std::cout << "blend MDR = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 }
+
 }
 
 HdrCreationManager::HdrCreationManager(bool fromCommandLine) :
