@@ -30,7 +30,13 @@ IF ERRORLEVEL 1 (
 
 SET VISUAL_STUDIO_VC_REDIST=%VCINSTALLDIR%\redist\%RawPlatform%
 
-IF DEFINED VS100COMNTOOLS (
+IF DEFINED VS110COMNTOOLS (
+	REM Visual Studio 2012
+	set VS_SHORT=vc11
+	set VS_CMAKE=Visual Studio 11
+	set VS_PROG_FILES=Microsoft Visual Studio 11.0
+	
+) ELSE IF DEFINED VS100COMNTOOLS (
 	REM Visual Studio 2010
 	set VS_SHORT=vc10
 	set VS_CMAKE=Visual Studio 10
@@ -48,6 +54,12 @@ IF %Platform% EQU x64 (
 
 call setenv.cmd
 
+IF NOT EXIST %CMAKE_DIR%\bin\cmake.exe (
+	echo.
+	echo.ERROR: CMake not found: %CMAKE_DIR%\bin\cmake.exe
+	echo.
+	goto error_end
+)
 
 IF NOT EXIST %CYGWIN_DIR%\bin\cp.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\cvs.exe GOTO cygwin_error
@@ -118,12 +130,12 @@ IF NOT EXIST %TEMP_DIR%\zlib127.zip (
 )
 IF NOT EXIST zlib-1.2.7 (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib127.zip
-	pushd zlib-1.2.7\contrib\masmx64
-	call bld_ml64.bat
-	cd ..\masmx86
-	call bld_ml32.bat
-	cd ..\vstudio\%VS_SHORT%
-	devenv zlibvc.sln /build "%Configuration%|%Platform%"
+
+	REM zlib must be compiled in the source folder, else exiv2 compilation
+	REM fails due to zconf.h rename/compile problems, due to cmake
+	pushd zlib-1.2.7
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"
+	devenv zlib.sln /build "%Configuration%|%Platform%" /Project zlib
 	popd
 )
 
@@ -131,8 +143,8 @@ REM zlib copy for libpng
 IF NOT EXIST zlib (
 	mkdir zlib
 	copy zlib-1.2.7\*.h zlib
-	copy zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.lib zlib
-	copy zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.dll zlib
+	copy zlib-1.2.7\%Configuration%\*.lib zlib
+	copy zlib-1.2.7\%Configuration%\*.dll zlib
 )
 
 IF NOT EXIST %TEMP_DIR%\lpng1511.zip (
@@ -169,7 +181,6 @@ IF DEFINED exiv2-compile (
 	devenv exiv2.sln /build "%Configuration%DLL|%Platform%" /Project exiv2
 	popd
 )
-
 
 IF NOT EXIST %TEMP_DIR%\jpegsr8d.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/jpegsr8d.zip http://www.ijg.org/files/jpegsr8d.zip
@@ -218,17 +229,16 @@ IF NOT EXIST tiff-4.0.2 (
 	echo.JPEG_SUPPORT=^1> tiff-4.0.2\qtpfsgui_commands.in
 	echo.JPEGDIR=..\..\libjpeg>> tiff-4.0.2\qtpfsgui_commands.in
 	echo.JPEG_INCLUDE=-I$^(JPEGDIR^)>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.JPEG_LIB=$^(JPEGDIR^)\libjpeg.lib>> tiff-4.0.2\qtpfsgui_commands.in
+	echo.JPEG_LIB=$^(JPEGDIR^)\jpeg-static.lib>> tiff-4.0.2\qtpfsgui_commands.in
 	echo.ZIP_SUPPORT=^1>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.ZLIBDIR=..\..\zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%>> tiff-4.0.2\qtpfsgui_commands.in
+	echo.ZLIBDIR=..\..\zlib-1.2.7\%Configuration%>> tiff-4.0.2\qtpfsgui_commands.in
 	echo.ZLIB_INCLUDE=-I..\..\zlib-1.2.7>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.ZLIB_LIB=$^(ZLIBDIR^)\zlibwapi.lib>> tiff-4.0.2\qtpfsgui_commands.in
+	echo.ZLIB_LIB=$^(ZLIBDIR^)\zlib.lib>> tiff-4.0.2\qtpfsgui_commands.in
 
 	pushd tiff-4.0.2
 	nmake /s /c /f Makefile.vc @qtpfsgui_commands.in
 	popd
 )
-
 
 IF NOT EXIST %TEMP_DIR%\LibRaw-5c9b4fb.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-5c9b4fb.zip --no-check-certificate https://github.com/LibRaw/LibRaw/zipball/5c9b4fb7b6149721cdf4f2099032ac8bdf0dd57c
@@ -307,8 +317,8 @@ IF NOT EXIST OpenExrStuff (
 	popd
 	
 	copy zlib-1.2.7\*.h OpenExrStuff\Deploy\include
-	copy zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
-	copy zlib-1.2.7\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
+	copy zlib-1.2.7\%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
+	copy zlib-1.2.7\%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
 )
 	
 pushd OpenExrStuff\openexr-cvs
@@ -545,7 +555,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
 			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "tbb\tbb.dll") do (
+			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "tbb\tbb.dll") do (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd
@@ -553,12 +563,16 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 		)
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n\ (
 			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
-			copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\i18n\*.qm LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
-			copy LuminanceHdrStuff\qtpfsgui.build\*.qm LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
 		)
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help\ (
 			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help
 		)
+		
+		
+		
+		robocopy LuminanceHdrStuff\qtpfsgui.build\QtDlls\i18n LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n *.qm >nul
+		robocopy LuminanceHdrStuff\qtpfsgui.build LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n *.qm >nul
+		
 		robocopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help /MIR >nul
 	)
 )
