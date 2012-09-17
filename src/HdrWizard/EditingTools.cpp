@@ -109,6 +109,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     cropButton->setToolButtonStyle(style);
     saveImagesButton->setToolButtonStyle(style);
     antighostToolButton->setToolButtonStyle(style);
+    toolButtonPaint->setToolButtonStyle(style);
+    toolButtonPath->setToolButtonStyle(style);
 
     toolOptionsFrame->hide();
     drawingModeFrame->hide();
@@ -481,6 +483,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
             int idx = m_filesMap[filename];
             updateMovable(idx);
         }
+        if (toolButtonPath->isChecked())
+            toolOptionsFrame->hide();
         connect(movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
     }
     else {

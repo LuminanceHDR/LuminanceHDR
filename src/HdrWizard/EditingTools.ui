@@ -650,7 +650,7 @@ p, li { white-space: pre-wrap; }
                     <string>Brush - Paint the mask using the brush</string>
                    </property>
                    <property name="text">
-                    <string>Paint</string>
+                    <string>Brush</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../icons.qrc">
@@ -674,12 +674,25 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QToolButton" name="toolButtonPath">
                    <property name="toolTip">
                     <string>Lasso - Draw a free hand selection area</string>
                    </property>
                    <property name="text">
-                    <string>Path</string>
+                    <string>Lasso</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../icons.qrc">
