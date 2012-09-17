@@ -31,6 +31,8 @@
 #include <QFile>
 #include <QColor>
 
+#include <algorithm>
+
 #include "Libpfs/domio.h"
 #include "Fileformat/pfstiff.h"
 #include "Fileformat/pfsouthdrimage.h"
@@ -282,6 +284,19 @@ void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R
     qreal avgLight2 = averageLightness(R2, G2, B2);
     qreal sf = avgLight1 / avgLight2;
     float h, s, l, r1, g1, b1, r2, g2, b2;
+    
+    float *maxR1 = std::max_element(R1->getRawData(), R1->getRawData() + width*height);
+    float *maxG1 = std::max_element(G1->getRawData(), G1->getRawData() + width*height);
+    float *maxB1 = std::max_element(B1->getRawData(), B1->getRawData() + width*height);
+    float *maxR2 = std::max_element(R2->getRawData(), R2->getRawData() + width*height);
+    float *maxG2 = std::max_element(G2->getRawData(), G2->getRawData() + width*height);
+    float *maxB2 = std::max_element(B2->getRawData(), B2->getRawData() + width*height);
+
+    float m1[] = {*maxR1, *maxG1, *maxB1};
+    float m2[] = {*maxR2, *maxG2, *maxB2};
+
+    float *max1 = std::max_element(m1, m1+3);
+    float *max2 = std::max_element(m2, m2+3);
 
     if (sf > 1.0f) sf = 1.0f / sf; 
     
@@ -289,19 +304,13 @@ void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R
         for (int i = 0; i < width; i++) {
             maskValue = mask->pixel(i,j);
             alpha = qAlpha(maskValue) / 255;
-            r1 = (*R1)(i, j);
-            g1 = (*G1)(i, j);
-            b1 = (*B1)(i, j);
-            if (r1 > 1.0f) r1 = 1.0f / 65536.0f;
-            if (g1 > 1.0f) g1 = 1.0f / 65536.0f;
-            if (b1 > 1.0f) b1 = 1.0f / 65536.0f;
+            r1 = (*R1)(i, j) / *max1;
+            g1 = (*G1)(i, j) / *max1;
+            b1 = (*B1)(i, j) / *max1;
 
-            r2 = (*R2)(i, j);
-            g2 = (*G2)(i, j);
-            b2 = (*B2)(i, j);
-            if (r2 > 1.0f) r2 = 1.0f / 65536.0f;
-            if (g2 > 1.0f) g2 = 1.0f / 65536.0f;
-            if (b2 > 1.0f) b2 = 1.0f / 65536.0f;
+            r2 = (*R2)(i, j) / *max2;
+            g2 = (*G2)(i, j) / *max2;
+            b2 = (*B2)(i, j) / *max2;
 
             rgb2hsl(r2, g2, b2, &h, &s, &l);
             l *= sf;
