@@ -55,6 +55,8 @@ public:
     void updateVertShift(int);
     void updateHorizShift(int);
 
+    void setDrawWithBrush();
+    void setDrawPath();
 public slots:
     void switchAntighostingMode(bool);
     void setBrushSize(const int);
@@ -81,10 +83,19 @@ private:
     QColor m_requestedPixmapColor, m_previousPixmapColor;
     bool m_brushAddMode;//false means brush is in remove mode.
     void fillAntiGhostingCursorPixmap();
-    
+    void drawWithBrush();
+    void drawPath();
+ 
     float m_scaleFactor;
     int m_mx, m_my;
 
+    QPoint m_firstPoint;
+    QPoint m_lastPoint;
+    QPoint m_currentPoint;
+    QPainterPath m_path;
+    bool m_drawingPathEnded;
+
+    enum {BRUSH, PATH} m_drawingMode;
 signals:
     void moved(QPoint diff);
 };

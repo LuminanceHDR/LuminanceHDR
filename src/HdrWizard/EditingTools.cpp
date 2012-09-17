@@ -110,6 +110,9 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     saveImagesButton->setToolButtonStyle(style);
     antighostToolButton->setToolButtonStyle(style);
 
+    toolOptionsFrame->hide();
+    drawingModeFrame->hide();
+
     QStringList::ConstIterator it = m_fileList.begin();
     while( it != m_fileList.end() ) {
         m_HV_offsets.append(qMakePair(0,0));
@@ -154,9 +157,11 @@ void EditingTools::setupConnections() {
     connect(saveImagesButton,SIGNAL(clicked()),this,SLOT(saveImagesButtonClicked()));
     connect(blendModeCB,SIGNAL(currentIndexChanged(int)),m_previewWidget,SLOT(requestedBlendMode(int)));
     connect(blendModeCB,SIGNAL(currentIndexChanged(int)),this,SLOT(blendModeCBIndexChanged(int)));
-    connect(antighostToolButton,SIGNAL(toggled(bool)),toolOptionsFrame,SLOT(setVisible(bool)));
+    //connect(antighostToolButton,SIGNAL(toggled(bool)),toolOptionsFrame,SLOT(setVisible(bool)));
+    connect(antighostToolButton,SIGNAL(toggled(bool)),drawingModeFrame,SLOT(setVisible(bool)));
     connect(antighostToolButton,SIGNAL(toggled(bool)),m_agWidget,SLOT(switchAntighostingMode(bool)));
     connect(antighostToolButton,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonToggled(bool)));
+    connect(toolButtonPaint,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonPaintToggled(bool)));
     connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),m_agWidget,SLOT(setBrushSize(int)));
     connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),m_agWidget,SLOT(setBrushStrength(int)));
     connect(maskColorButton,SIGNAL(clicked()),this,SLOT(maskColorButtonClicked()));
@@ -617,3 +622,8 @@ void EditingTools::updateAgMask(int)
     updateMovable(idx);
 }
 
+void EditingTools::antighostToolButtonPaintToggled(bool toggled)
+{
+    (toggled) ? m_agWidget->setDrawWithBrush() :  m_agWidget->setDrawPath();
+    (toggled) ? toolOptionsFrame->show() : toolOptionsFrame->hide();
+}

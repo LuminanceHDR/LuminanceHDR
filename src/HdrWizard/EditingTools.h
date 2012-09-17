@@ -111,6 +111,7 @@ private slots:
     void addGoodImage();
     void removeGoodImage();
     void updateAgMask(int);
+    void antighostToolButtonPaintToggled(bool);
 };
 
 #endif

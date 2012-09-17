@@ -67,6 +67,8 @@
     <file>images/vcs_add.png</file>
     <file>images/vcs_commit.png</file>
     <file>images/vcs_update.png</file>
+    <file>images/gimp-lasso.png</file>
+    <file>images/brush_icon.png</file>
   </qresource>
   <qresource prefix="/help">
     <file alias="document-print.png">icons/help/document-print.png</file>
