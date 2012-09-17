@@ -298,7 +298,7 @@ void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R
     float *max1 = std::max_element(m1, m1+3);
     float *max2 = std::max_element(m2, m2+3);
     
-    float max = std::max(max1, max2);
+    float max = std::max(*max1, *max2);
 
     if (sf > 1.0f) sf = 1.0f / sf; 
     
@@ -306,13 +306,13 @@ void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R
         for (int i = 0; i < width; i++) {
             maskValue = mask->pixel(i,j);
             alpha = qAlpha(maskValue) / 255;
-            r1 = (*R1)(i, j) / *max;
-            g1 = (*G1)(i, j) / *max;
-            b1 = (*B1)(i, j) / *max;
+            r1 = (*R1)(i, j) / max;
+            g1 = (*G1)(i, j) / max;
+            b1 = (*B1)(i, j) / max;
 
-            r2 = (*R2)(i, j) / *max;
-            g2 = (*G2)(i, j) / *max;
-            b2 = (*B2)(i, j) / *max;
+            r2 = (*R2)(i, j) / max;
+            g2 = (*G2)(i, j) / max;
+            b2 = (*B2)(i, j) / max;
 
             rgb2hsl(r2, g2, b2, &h, &s, &l);
             l *= sf;
