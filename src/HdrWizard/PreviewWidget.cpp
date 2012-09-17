@@ -185,5 +185,5 @@ void PreviewWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         return;
     assert(m_movableImage->size() == m_pivotImage->size());
     renderPreviewImage(blendmode, QRect(QPoint(), m_movableImage->size()));
-    painter->drawImage(QPoint(), *m_previewImage);
+    painter->drawImage(scene()->sceneRect(), *m_previewImage, scene()->sceneRect());
 }

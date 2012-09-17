@@ -24,6 +24,7 @@
 #ifndef PREVIEWWIDGET_H
 #define PREVIEWWIDGET_H
 
+#include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QColor>
 #include <QResizeEvent>

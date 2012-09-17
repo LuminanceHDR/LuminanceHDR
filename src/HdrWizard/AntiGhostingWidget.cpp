@@ -136,5 +136,5 @@ QRectF AntiGhostingWidget::boundingRect() const
 void AntiGhostingWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                 QWidget *widget)
 {
-    painter->drawImage(QPoint(), *m_agMask);
+    painter->drawImage(scene()->sceneRect(), *m_agMask, scene()->sceneRect());
 }

@@ -260,7 +260,7 @@ void ISelectionTool::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 	if (!isSelectionReady && m_action != SELECTING) {
 		painter->setPen(Qt::NoPen);
 		painter->setBrush(QColor(255,127,127,0));
-		painter->drawRect(m_widget->boundingRect());
+		painter->drawRect(scene()->sceneRect());
 		return;
 	}
 
@@ -268,7 +268,8 @@ void ISelectionTool::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 	qreal mpw = 1.0f / m_scaleFactor; // pw >> 1;
 	qreal cw = 6.0f / m_scaleFactor; //Corner Width
 
-	QRegion outsideArea = QRegion(m_widget->boundingRect().toRect()) - QRegion(m_selectionRect.toRect());
+	//QRegion outsideArea = QRegion(m_widget->boundingRect().toRect()) - QRegion(m_selectionRect.toRect());
+	QRegion outsideArea = QRegion(scene()->sceneRect().toRect()) - QRegion(m_selectionRect.toRect());
 
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QColor(127,127,127,127));
