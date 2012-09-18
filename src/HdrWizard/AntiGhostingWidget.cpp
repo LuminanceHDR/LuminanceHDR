@@ -144,12 +144,14 @@ void AntiGhostingWidget::drawWithBrush()
 void AntiGhostingWidget::drawPath()
 {
     QPainter painter(m_agMask);
-    painter.setPen(QPen(m_requestedPixmapColor, 1, Qt::SolidLine,
+    painter.setPen(QPen(m_requestedPixmapColor, 0, Qt::SolidLine,
                      Qt::FlatCap, Qt::MiterJoin));
     painter.setBrush(QBrush());
 
     if (m_drawingPathEnded) {
+        painter.setCompositionMode(QPainter::CompositionMode_Clear);
         painter.drawPath(m_path);
+        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
         painter.fillPath(m_path, m_requestedPixmapColor);
     }
     else {

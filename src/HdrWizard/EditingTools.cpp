@@ -112,7 +112,6 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     toolButtonPaint->setToolButtonStyle(style);
     toolButtonPath->setToolButtonStyle(style);
 
-    toolOptionsFrame->hide();
     drawingModeFrame->hide();
 
     QStringList::ConstIterator it = m_fileList.begin();
@@ -483,8 +482,6 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
             int idx = m_filesMap[filename];
             updateMovable(idx);
         }
-        if (toolButtonPath->isChecked())
-            toolOptionsFrame->hide();
         connect(movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
     }
     else {
@@ -629,5 +626,4 @@ void EditingTools::updateAgMask(int)
 void EditingTools::antighostToolButtonPaintToggled(bool toggled)
 {
     (toggled) ? m_agWidget->setDrawWithBrush() :  m_agWidget->setDrawPath();
-    (toggled) ? toolOptionsFrame->show() : toolOptionsFrame->hide();
 }
