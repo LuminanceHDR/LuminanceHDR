@@ -54,6 +54,8 @@ AntiGhostingWidget::~AntiGhostingWidget()
     qDebug() << "~AntiGhostingWidget::AntiGhostingWidget";
     if (m_agcursorPixmap)
         delete m_agcursorPixmap;
+    if (m_savedMask)
+        delete m_savedMask;
 }
 
 void AntiGhostingWidget::paintEvent(QPaintEvent *event)
