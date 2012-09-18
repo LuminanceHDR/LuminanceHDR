@@ -62,7 +62,10 @@ public slots:
     void setBrushSize(const int);
     void setBrushStrength(const int);
     void setBrushColor(const QColor);
+    void setLassoColor(const QColor);
     void setBrushMode(bool);
+    void saveAgMask();
+    QImage *getSavedAgMask();
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -75,12 +78,13 @@ protected:
 
 private:
     QImage *m_agMask;
+    QImage *m_savedMask;
     QPoint m_mousePos;
     int m_timerid;
     QPixmap *m_agcursorPixmap;
     int m_requestedPixmapSize, m_previousPixmapSize;
     int m_requestedPixmapStrength, m_previousPixmapStrength;
-    QColor m_requestedPixmapColor, m_previousPixmapColor;
+    QColor m_requestedPixmapColor, m_previousPixmapColor, m_requestedLassoColor;
     bool m_brushAddMode;//false means brush is in remove mode.
     void fillAntiGhostingCursorPixmap();
     void drawWithBrush();

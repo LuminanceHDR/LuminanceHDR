@@ -31,6 +31,7 @@
 AntiGhostingWidget::AntiGhostingWidget(QWidget *parent, QImage *mask): 
     QWidget(parent),
     m_agMask(mask),
+    m_savedMask(NULL),
     m_agcursorPixmap(NULL),
     m_mx(0),
     m_my(0),
@@ -144,15 +145,22 @@ void AntiGhostingWidget::drawWithBrush()
 void AntiGhostingWidget::drawPath()
 {
     QPainter painter(m_agMask);
-    painter.setPen(QPen(m_requestedPixmapColor, 0, Qt::SolidLine,
+    painter.setPen(QPen(m_requestedLassoColor, 0, Qt::SolidLine,
                      Qt::FlatCap, Qt::MiterJoin));
     painter.setBrush(QBrush());
 
     if (m_drawingPathEnded) {
-        painter.setCompositionMode(QPainter::CompositionMode_Clear);
-        painter.drawPath(m_path);
-        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+        painter.setCompositionMode(QPainter::CompositionMode_Clear); // Nasty hack, QPen does not draw semi transparent
+        painter.drawPath(m_path); 
+        if (m_brushAddMode)
+            painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
         painter.fillPath(m_path, m_requestedPixmapColor);
+        if (m_brushAddMode) { // redraw the path
+            painter.setPen(QPen(m_requestedPixmapColor, 0, Qt::SolidLine,
+                             Qt::FlatCap, Qt::MiterJoin));
+            painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+            painter.drawPath(m_path);
+        }
     }
     else {
         m_path.lineTo(m_lastPoint);
@@ -196,6 +204,12 @@ void AntiGhostingWidget::setBrushColor (const QColor newcolor) {
     update();
 }
 
+void AntiGhostingWidget::setLassoColor (const QColor newcolor) {
+    m_requestedLassoColor = newcolor;
+    update();
+}
+
+
 void AntiGhostingWidget::enterEvent(QEvent *) {
     if (m_drawingMode == BRUSH) {
         fillAntiGhostingCursorPixmap();
@@ -237,3 +251,14 @@ void AntiGhostingWidget::updateHorizShift(int h) {
     m_mx = h;
 }
 
+void AntiGhostingWidget::saveAgMask()
+{
+    if (m_savedMask)
+        delete m_savedMask;
+    m_savedMask = new QImage(*m_agMask);
+}
+
+QImage * AntiGhostingWidget::getSavedAgMask()
+{
+    return m_savedMask;
+}

@@ -39,6 +39,7 @@
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
 #define KEY_TM_TOOLBAR_MODE "TonemappingWindowToolbarVisualizationMode"
 #define KEY_MANUAL_AG_MASK_COLOR "ManualAntiGhostingMaskColor"
+#define KEY_MANUAL_AG_LASSO_COLOR "ManualAntiGhostingLassoColor"
 #define KEY_GUI_LANG "UserInterfaceLanguage"
 #define KEY_PREVIEW_PANEL_MODE "MainWindowPreviewPanelVisualizationMode"
 

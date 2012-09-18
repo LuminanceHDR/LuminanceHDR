@@ -103,6 +103,7 @@ private slots:
 	void cropStack();
 	void nextClicked();
 	void maskColorButtonClicked();
+	void lassoColorButtonClicked();
 	void antighostToolButtonToggled(bool);
 	void blendModeCBIndexChanged(int);
 	void setupConnections();
@@ -112,6 +113,8 @@ private slots:
     void removeGoodImage();
     void updateAgMask(int);
     void antighostToolButtonPaintToggled(bool);
+    void saveAgMask();
+    void applySavedAgMask();
 };
 
 #endif

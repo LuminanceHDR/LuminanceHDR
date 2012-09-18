@@ -63,9 +63,12 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
 
     toolOptionsFrame->setVisible(false);
     maskColorButton->setVisible(false);
+    lassoColorButton->setVisible(false);
     QColor maskcolor = QColor(m_luminanceOptions.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
+    QColor lassocolor = QColor(m_luminanceOptions.value(KEY_MANUAL_AG_LASSO_COLOR,0x000000FF).toUInt());
     Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) m_luminanceOptions.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
     maskColorButton->setStyleSheet("background: rgb("+QString("%1").arg(maskcolor.red())+","+QString("%1").arg(maskcolor.green())+","+QString("%1").arg(maskcolor.blue())+")");
+    lassoColorButton->setStyleSheet("background: rgb("+QString("%1").arg(lassocolor.red())+","+QString("%1").arg(lassocolor.green())+","+QString("%1").arg(lassocolor.blue())+")");
     assert(m_originalImagesList.size()==m_fileList.size());
     QVBoxLayout *qvl = new QVBoxLayout;
     qvl->setMargin(0);
@@ -77,6 +80,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     m_previewWidget->update();
     m_agWidget = new AntiGhostingWidget(m_previewWidget, m_antiGhostingMasksList[1]);
     m_agWidget->setBrushColor(maskcolor);
+    m_agWidget->setLassoColor(lassocolor);
     m_agWidget->adjustSize();
     m_agWidget->update();
 
@@ -166,6 +170,10 @@ void EditingTools::setupConnections() {
     connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),m_agWidget,SLOT(setBrushSize(int)));
     connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),m_agWidget,SLOT(setBrushStrength(int)));
     connect(maskColorButton,SIGNAL(clicked()),this,SLOT(maskColorButtonClicked()));
+    connect(lassoColorButton,SIGNAL(clicked()),this,SLOT(lassoColorButtonClicked()));
+    connect(toolButtonSaveMask,SIGNAL(clicked()),m_agWidget,SLOT(saveAgMask()));
+    connect(toolButtonSaveMask,SIGNAL(clicked()),this,SLOT(saveAgMask()));
+    connect(toolButtonApplyMask,SIGNAL(clicked()),this,SLOT(applySavedAgMask()));
 
     connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
     connect(m_previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
@@ -525,8 +533,18 @@ void EditingTools::maskColorButtonClicked() {
     }
 }
 
+void EditingTools::lassoColorButtonClicked() {
+    QColor returned = QColorDialog::getColor();
+    if (returned.isValid()) {
+        m_agWidget->setLassoColor(returned);
+        lassoColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
+        m_luminanceOptions.setValue(KEY_MANUAL_AG_LASSO_COLOR,returned.rgb());
+    }
+}
+
 void EditingTools::blendModeCBIndexChanged(int newindex) {
     maskColorButton->setVisible(newindex == 4);
+    lassoColorButton->setVisible(newindex == 4);
     if (newindex == 4 && !m_antiGhosting)
         m_agWidget->show();
     else if (newindex != 4 && !m_antiGhosting)
@@ -621,6 +639,20 @@ void EditingTools::updateAgMask(int)
     int idx = m_filesMap[filename];
     setAntiGhostingWidget(m_antiGhostingMasksList[idx], m_HV_offsets[idx]);
     updateMovable(idx);
+}
+
+void EditingTools::saveAgMask()
+{
+    toolButtonApplyMask->setEnabled(true);
+}
+
+void EditingTools::applySavedAgMask()
+{
+    QString filename = movableListWidget->currentItem()->text();
+    int idx = m_filesMap[filename];
+    delete m_antiGhostingMasksList[idx];
+    m_antiGhostingMasksList[idx] = new QImage(*m_agWidget->getSavedAgMask());    
+    m_agWidget->update();
 }
 
 void EditingTools::antighostToolButtonPaintToggled(bool toggled)
