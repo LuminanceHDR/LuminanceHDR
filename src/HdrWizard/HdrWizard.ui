@@ -554,19 +554,6 @@ p, li { white-space: pre-wrap; }
                        </property>
                       </widget>
                      </item>
-                     <item row="0" column="1">
-                      <widget class="QCheckBox" name="autoCropCheckBox">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="text">
-                        <string>Auto-crop</string>
-                       </property>
-                      </widget>
-                     </item>
                      <item row="1" column="0" colspan="2">
                       <widget class="QRadioButton" name="ais_radioButton">
                        <property name="text">
@@ -581,6 +568,19 @@ p, li { white-space: pre-wrap; }
                       <widget class="QRadioButton" name="mtb_radioButton">
                        <property name="text">
                         <string>MTB</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="3" column="0">
+                      <widget class="QCheckBox" name="autoCropCheckBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="text">
+                        <string>Auto-crop</string>
                        </property>
                       </widget>
                      </item>
@@ -1030,6 +1030,9 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
            </layout>
+           <zorder>line_2</zorder>
+           <zorder>customConfigCheckBox</zorder>
+           <zorder>settings_label</zorder>
            <zorder></zorder>
           </widget>
          </item>
