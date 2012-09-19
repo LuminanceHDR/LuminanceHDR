@@ -410,8 +410,14 @@ void TonemappingPanel::fillToneMappingOptions()
 {	
 	toneMappingOptions = new TonemappingOptions;
 	toneMappingOptionsToDelete.push_back(toneMappingOptions);
-    toneMappingOptions->origxsize = sizes[0];
-    toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
+    if (sizes.size())
+    {
+        toneMappingOptions->origxsize = sizes[0];
+        toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
+    } else {
+        toneMappingOptions->origxsize = 0;
+        toneMappingOptions->xsize = 0;
+    }
     toneMappingOptions->pregamma = pregammaGang->v();
     // toneMappingOptions->tonemapSelection = checkBoxSelection->isChecked();
     // toneMappingOptions->tonemapOriginal = checkBoxOriginal->isChecked();
