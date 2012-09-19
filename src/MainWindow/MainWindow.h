@@ -72,9 +72,9 @@ class MainWindow: public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(bool isPortable = false, QWidget *parent = 0);
+    MainWindow(QWidget *parent = 0);
     // Constructor loading file inside
-    MainWindow(pfs::Frame* curr_frame, QString new_fname, bool needSaving = false, bool isPortable = false, QWidget *parent = 0);
+    MainWindow(pfs::Frame* curr_frame, QString new_fname, bool needSaving = false, QWidget *parent = 0);
     ~MainWindow();
 
 public Q_SLOTS:
@@ -263,8 +263,6 @@ protected:
 	#ifdef Q_WS_WIN
 		bool winEvent(MSG * message, long * result);
 	#endif
-
-    bool m_isPortable;
 
 private:
     static int sm_NumMainWindows;

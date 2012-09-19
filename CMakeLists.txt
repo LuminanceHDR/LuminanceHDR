@@ -74,7 +74,10 @@ IF(WIN32)
     ADD_DEFINITIONS(/MP)
 
     # Enable SSE2
-    ADD_DEFINITIONS(/arch:SSE2)
+    IF(CMAKE_SIZEOF_VOID_P EQUAL 4)
+        # SSE2 is on by default, on x64 platforms
+        ADD_DEFINITIONS(/arch:SSE2)
+    ENDIF() 
 
     # Don't "Treat WChar_t As Build in Type", in order to be able to use Qts (from|to)StdWString functions
     ADD_DEFINITIONS(/Zc:wchar_t-)

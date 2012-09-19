@@ -144,17 +144,15 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
 
 int MainWindow::sm_NumMainWindows = 0;
 
-MainWindow::MainWindow(bool isPortable, QWidget *parent):
+MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
-    m_isPortable(isPortable),
     m_Ui(new Ui::MainWindow)
 {
     init();
 }
 
-MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, bool isPortable, QWidget *parent):
+MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent):
     QMainWindow(parent),
-    m_isPortable(isPortable),
     m_Ui(new Ui::MainWindow)
 {
     init();
@@ -271,10 +269,7 @@ void MainWindow::createCentralWidget()
     previewPanel = new PreviewPanel();
 
     // create tonemapping panel
-    if (m_isPortable)
-        tmPanel = new TonemappingPanel(true, previewPanel); //(m_centralwidget_splitter);
-    else
-        tmPanel = new TonemappingPanel(false, previewPanel); //(m_centralwidget_splitter);
+    tmPanel = new TonemappingPanel(previewPanel); //(m_centralwidget_splitter);
 
     connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), tmPanel, SLOT(setRealtimePreviews(bool)));
     connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), luminance_options, SLOT(setRealtimePreviewsActive(bool)));
@@ -952,7 +947,7 @@ void MainWindow::on_normalSizeAct_triggered()
 
 void MainWindow::on_documentationAction_triggered()
 {
-    helpBrowser = new HelpBrowser(this,"Luminance HDR Help", m_isPortable);
+    helpBrowser = new HelpBrowser(this,"Luminance HDR Help");
     helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
     connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
     helpBrowser->show();
@@ -1057,11 +1052,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
 {
     if ( tm_status.is_hdr_ready )
     {
-        MainWindow *other;
-        if (m_isPortable)
-            other = new MainWindow(new_hdr_frame, new_fname, needSaving, true);
-        else
-            other = new MainWindow(new_hdr_frame, new_fname, needSaving);
+        MainWindow *other = new MainWindow(new_hdr_frame, new_fname, needSaving);
         other->move(x() + 40, y() + 40);
         other->show();
     }

@@ -108,24 +108,19 @@ int main( int argc, char ** argv )
     }
 #endif
 
-    QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
+    QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
-    bool isPortable = application.arguments().at(0).contains("portable");
+    LuminanceOptions::isCurrentPortableMode = QDir(QApplication::applicationDirPath()).exists("PortableMode.txt");
 
-    if (isPortable) {
-        LuminanceOptions::setDefaultFormat(QSettings::IniFormat);
-        LuminanceOptions::setPath(QSettings::IniFormat, QSettings::UserScope, QDir::currentPath());
+    if (LuminanceOptions::isCurrentPortableMode) {
+        QSettings::setDefaultFormat(QSettings::IniFormat);
+        QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QDir::currentPath());
     }
 
     installTranslators(true);
 
-    MainWindow* MW;
-
-    if (isPortable)
-        MW = new MainWindow(true);
-    else
-        MW = new MainWindow;
+    MainWindow* MW = new MainWindow;
 
     MW->setInputFiles( getCliFiles( application.arguments() ) );
 

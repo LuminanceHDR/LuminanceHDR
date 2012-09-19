@@ -105,7 +105,6 @@ protected:
 
     float heightToWidthRatio;
     bool adding_custom_size;
-    bool m_isPortable;
     PreviewPanel *m_previewPanel;
 
     void createDatabase();
@@ -147,7 +146,7 @@ protected Q_SLOTS:
     void updatePreviewsRB(bool);
 
 public:
-    TonemappingPanel(bool isPortable = false, PreviewPanel *p = 0, QWidget *parent = 0);
+    TonemappingPanel(PreviewPanel *p = 0, QWidget *parent = 0);
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();

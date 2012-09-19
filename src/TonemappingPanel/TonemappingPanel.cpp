@@ -53,10 +53,9 @@
 #include "UI/Gang.h"
 #include "ui_TonemappingPanel.h"
 
-TonemappingPanel::TonemappingPanel(bool isPortable, PreviewPanel *panel, QWidget *parent):
+TonemappingPanel::TonemappingPanel(PreviewPanel *panel, QWidget *parent):
     QWidget(parent),
 	adding_custom_size(false),
-    m_isPortable(isPortable),
     m_previewPanel(panel),
     m_Ui(new Ui::TonemappingPanel)
 {
@@ -216,25 +215,10 @@ void TonemappingPanel::changeEvent(QEvent *event)
 
 void TonemappingPanel::createDatabase()
 {
-    QDir dir(QDir::homePath());
-    QString filename;
-    if (m_isPortable)
-        filename = QDir::currentPath();
-    else {	
-	    filename = dir.absolutePath();
-#ifdef WIN32
-    	filename += "/LuminanceHDR";
-#else
-	    filename += "/.LuminanceHDR";
-#endif
-    }
-	
-	filename += "/saved_parameters.db";
-
-	qDebug() << filename;
+    LuminanceOptions options;
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName(filename);
+    db.setDatabaseName(options.getDatabaseFileName());
 	db.setHostName("localhost");
 	bool ok = db.open();
 	if (!ok)

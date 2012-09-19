@@ -36,11 +36,18 @@
 #include <QStringList>
 #include <QDir>
 
-class LuminanceOptions: public QSettings
+class LuminanceOptions: public QObject
 {
     Q_OBJECT
 public:
     explicit LuminanceOptions();
+    ~LuminanceOptions();
+
+    void setValue(const QString& key, const QVariant& value);
+    QVariant value(const QString & key, const QVariant& defaultValue = QVariant()) const;
+
+    static bool isCurrentPortableMode;
+    QString getDatabaseFileName();
 
 public Q_SLOTS:
     // RAW settings
@@ -203,6 +210,9 @@ public Q_SLOTS:
 
     int  getPreviewPanelMode();
     void setPreviewPanelMode(int);
+
+private:
+    QSettings* m_settingHolder;         
 };
 
 #endif
