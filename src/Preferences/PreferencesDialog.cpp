@@ -229,6 +229,8 @@ void PreferencesDialog::on_ifnanColorButton_clicked()
 
 void PreferencesDialog::on_okButton_clicked()
 {
+    bool restartNeeded = false;
+
     LuminanceOptions luminance_options;
 
     if (luminance_options.getGuiLang() != fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()])
@@ -245,6 +247,12 @@ void PreferencesDialog::on_okButton_clicked()
 
     luminance_options.setPreviewWidth( m_Ui->previewsWidthSpinBox->value() );
     luminance_options.setShowFirstPageWizard( m_Ui->checkBoxWizardShowFirstPage->isChecked() );
+
+    if (m_Ui->chkPortableMode->isChecked() != LuminanceOptions::isCurrentPortableMode)
+    {
+        restartNeeded = true;
+        luminance_options.setPortableMode(m_Ui->chkPortableMode->isChecked());
+    }
 
     // --- Batch TM
     luminance_options.setBatchTmNumThreads( m_Ui->numThreadspinBox->value() );
@@ -314,6 +322,10 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setValue(KEY_BLUE_TOOLBUTTON, m_Ui->blue_toolButton->isEnabled());
     luminance_options.setValue(KEY_GREEN_TOOLBUTTON, m_Ui->green_toolButton->isEnabled());
 
+    if (restartNeeded)
+    {
+        QMessageBox::information(this, tr("Restart"), tr("For the settings to take effect, please restart the application!"));
+    }
     accept();
 }
 
@@ -618,6 +630,14 @@ void PreferencesDialog::from_options_to_gui()
 
     m_Ui->checkBoxTMOWindowsPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
     m_Ui->checkBoxWizardShowFirstPage->setChecked(luminance_options.isShowFirstPageWizard());
+
+    m_Ui->chkPortableMode->setChecked(LuminanceOptions::isCurrentPortableMode);
+
+    QFile file(QDir(QApplication::applicationDirPath()).filePath(".write"));
+    bool dirWritable = file.open(QIODevice::ReadWrite);
+    if (dirWritable)
+        file.remove();
+    m_Ui->chkPortableMode->setEnabled(dirWritable);
 
     // RAW Processing
     m_Ui->four_color_rgb_CB->setChecked(luminance_options.isRawFourColorRGB());

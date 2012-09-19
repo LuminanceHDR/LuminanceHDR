@@ -28,6 +28,7 @@
  *
  */
 
+#include <QApplication>
 #include <QString>
 #include <QLocale>
 #include <QFile>
@@ -41,15 +42,47 @@ bool LuminanceOptions::isCurrentPortableMode = false;
 LuminanceOptions::LuminanceOptions():
     QObject()
 {
-    if (LuminanceOptions::isCurrentPortableMode)
-        m_settingHolder = new QSettings("settings.ini", QSettings::IniFormat);
-    else
-        m_settingHolder = new QSettings();
+    initSettings();
 }
 
 LuminanceOptions::~LuminanceOptions()
 {
     delete m_settingHolder;
+}
+
+void LuminanceOptions::setPortableMode(bool isPortable)
+{
+    if (LuminanceOptions::isCurrentPortableMode != isPortable)
+    {
+        QSettings* oldSettings = m_settingHolder;
+        LuminanceOptions::isCurrentPortableMode = isPortable;
+        initSettings();
+        foreach (QString key, oldSettings->allKeys())
+        {
+            m_settingHolder->setValue(key, oldSettings->value(key));
+        }
+        delete oldSettings;
+
+        QString filePath = QDir(QApplication::applicationDirPath()).relativeFilePath("PortableMode.txt");
+        QFile file(filePath);
+        if (isPortable && !file.exists()) 
+        {
+            if (file.open(QIODevice::WriteOnly))
+                file.close();
+        }
+        else if (!isPortable && file.exists())
+        {
+            file.remove();
+        }
+    }
+}
+
+void LuminanceOptions::initSettings()
+{
+    if (LuminanceOptions::isCurrentPortableMode)
+        m_settingHolder = new QSettings("settings.ini", QSettings::IniFormat);
+    else
+        m_settingHolder = new QSettings();
 }
 
 void LuminanceOptions::setValue(const QString& key, const QVariant& value)

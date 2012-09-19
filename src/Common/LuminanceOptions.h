@@ -48,6 +48,7 @@ public:
 
     static bool isCurrentPortableMode;
     QString getDatabaseFileName();
+    void setPortableMode(bool isPortable);
 
 public Q_SLOTS:
     // RAW settings
@@ -212,6 +213,7 @@ public Q_SLOTS:
     void setPreviewPanelMode(int);
 
 private:
+    void initSettings();
     QSettings* m_settingHolder;         
 };
 

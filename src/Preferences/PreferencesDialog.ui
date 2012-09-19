@@ -254,7 +254,7 @@
          <property name="margin">
           <number>0</number>
          </property>
-         <item row="2" column="0">
+         <item row="0" column="0">
           <layout class="QFormLayout" name="formLayout_7">
            <item row="0" column="0">
             <widget class="QLabel" name="label_9">
@@ -454,7 +454,17 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
+           <item row="4" column="1">
+            <widget class="QCheckBox" name="chkPortableMode">
+             <property name="toolTip">
+              <string>Saves the settings along the program files, to be portable</string>
+             </property>
+             <property name="text">
+              <string>Portable mode</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
             <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
              <property name="text">
               <string>Always show Preview Panel</string>
@@ -464,7 +474,7 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
+           <item row="2" column="1">
             <widget class="QCheckBox" name="checkBoxWizardShowFirstPage">
              <property name="text">
               <string>Always show Wizard first page</string>
@@ -2382,9 +2392,6 @@ p, li { white-space: pre-wrap; }
         <widget class="QPushButton" name="okButton">
          <property name="text">
           <string>&amp;OK</string>
-         </property>
-         <property name="default">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
