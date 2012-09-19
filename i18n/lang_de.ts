@@ -91,7 +91,15 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Changelog</source>
+        <translation>Änderungshistorie</translation>
+    </message>
+    <message>
+        <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -296,7 +304,11 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Auto-crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder automatisch zuschneiden</translation>
+    </message>
+    <message>
+        <source>Custom config %1</source>
+        <translation>Eigene Konfiguration %1</translation>
     </message>
 </context>
 <context>
@@ -414,10 +426,6 @@ Fortfahren?</translation>
         <translation>Lade Dateien mit Dynamikkompressionsvorgaben ...</translation>
     </message>
     <message>
-        <source>LuminanceHDR tone mapping settings text file (*.txt)</source>
-        <translation>Datei mit Dynamikkompressionsvorgaben für Luminance HDR (*.txt)</translation>
-    </message>
-    <message>
         <source>All tasks completed.</source>
         <translation>Alle Aufgaben abgeschlossen.</translation>
     </message>
@@ -436,10 +444,6 @@ Fortfahren?</translation>
     <message>
         <source>Output Image Quality</source>
         <translation>Qualität des Ausgabebildes</translation>
-    </message>
-    <message>
-        <source>Saving using file format: %1</source>
-        <translation>Speichere im Dateiformat: %1</translation>
     </message>
     <message>
         <source>Ouput Image Width:</source>
@@ -512,6 +516,38 @@ Fortfahren?</translation>
     <message>
         <source>Alt+M</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Output Format:</source>
+        <translation>Ausgabeformat:</translation>
+    </message>
+    <message>
+        <source>JPEG</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>TIFF (16 bits)</source>
+        <translation>TIFF (16 Bit)</translation>
+    </message>
+    <message>
+        <source>PNG</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>BMP</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>PPM</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>PBM</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Luminance HDR tone mapping settings text file (*.txt)</source>
+        <translation>Datei mit Dynamikkompressionsvorgaben für Luminance HDR (*.txt)</translation>
     </message>
 </context>
 <context>
@@ -608,64 +644,12 @@ Fortfahren?</translation>
         <translation>Kommandozeilenschnittstelle zu %1.</translation>
     </message>
     <message>
-        <source>-h --help              Display this help.</source>
-        <translation>-h --help              Zeigt diese Hilfe.</translation>
-    </message>
-    <message>
-        <source>-v --verbose           Print more messages during execution.</source>
-        <translation>-v --verbose           Zeigt während der Ausführung mehr Meldungen an.</translation>
-    </message>
-    <message>
-        <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation>-a --align AIS|MTB     Die für die HDR-Erzeugung zu verwendende Ausrichtungsmethode (Standard: keine Ausrichtung).</translation>
-    </message>
-    <message>
-        <source>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).</source>
-        <translation>-e --ev EV1,EV2,...    Gibt die numerischen Belichtungswerte (EV-Werte) an (so viele wie QUELLDATEIEN).</translation>
-    </message>
-    <message>
-        <source>-c --config            HDR creation config. Possible values: </source>
-        <translation>-c --config            Optionen zur HDR-Erzeugung. Mögliche Werte: </translation>
-    </message>
-    <message>
-        <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
-        <translation>-l --load HDR_FILE     Lädt eine HDR-Datei anstatt eine neue zu erzeugen. </translation>
-    </message>
-    <message>
-        <source>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation>-s --save HDR_FILE     Speichert eine HDR-Datei. (Standard: nicht speichern) </translation>
-    </message>
-    <message>
-        <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
-        <translation>-g --gamma VALUE       Gamma-Wert für die Dynamikkompression. (Standard: 1) </translation>
-    </message>
-    <message>
-        <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation>-r --resize VALUE      Breite, auf die das HDR-Bild skaliert wird (geschieht vor Gammakorrektur und Dynamikkompression) </translation>
-    </message>
-    <message>
-        <source>-t --tmo               Tone mapping operator. Legal values are: </source>
-        <translation>-t --tmo               Operator für die Dynamikkompression. Mögliche Werte sind: </translation>
-    </message>
-    <message>
-        <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
-        <translation>-p --tmoptions         Einstellungen für Dynamikkompressionsoperatoren. Mögliche Werte sind: </translation>
-    </message>
-    <message>
         <source>contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)</source>
         <translation>contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (für mantiuk06)</translation>
     </message>
     <message>
         <source>colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</source>
-        <translation>colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (für  mantiuk08)</translation>
-    </message>
-    <message>
-        <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
-        <translation>-o --output LDR_FILE   Dateiname, unter dem das dynamikkomprimierte LDR-Bild gespeichert wird.</translation>
-    </message>
-    <message>
-        <source>                       (No tonemapping is performed unless -o is specified).</source>
-        <translation>                       (Dynamikkompression wird nur ausgeführt, falls -o angegeben ist).</translation>
+        <translation>colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (für mantiuk08)</translation>
     </message>
     <message>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
@@ -766,8 +750,64 @@ Fortfahren?</translation>
         <translation>Fehler: Qualität muss im Bereich [0-100] liegen.</translation>
     </message>
     <message>
-        <source>-q --quality VALUE   Quality of the saved tone mapped file (0-100).</source>
-        <translation>-q --quality VALUE   Qualität der gespeicherten dynamikkomprimierten Datei (0-100).</translation>
+        <source>-h --help               Display this help.</source>
+        <translation>-h --help               Zeigt diese Hilfe.</translation>
+    </message>
+    <message>
+        <source>-v --verbose            Print more messages during execution.</source>
+        <translation>-v --verbose            Zeigt während der Ausführung mehr Meldungen an.</translation>
+    </message>
+    <message>
+        <source>-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).</source>
+        <translation>-a --align AIS|MTB      Die für die HDR-Erzeugung zu verwendende Ausrichtungsmethode (Standard: keine Ausrichtung).</translation>
+    </message>
+    <message>
+        <source>-d --savealigned prefix Save aligned images to files which names start with prefix</source>
+        <translation>-d --savealigned prefix Speichert ausgerichtete Bilder in Dateien, deren Namen mit prefix beginnen</translation>
+    </message>
+    <message>
+        <source>-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).</source>
+        <translation>-e --ev EV1,EV2,...     Gibt die numerischen Belichtungswerte (EV-Werte) an (so viele wie QUELLDATEIEN).</translation>
+    </message>
+    <message>
+        <source>-c --config             HDR creation config. Possible values: </source>
+        <translation>-c --config             Optionen zur HDR-Erzeugung. Mögliche Werte: </translation>
+    </message>
+    <message>
+        <source>-l --load HDR_FILE      Load an HDR instead of creating a new one. </source>
+        <translation>-l --load HDR_FILE      Lädt eine HDR-Datei anstatt eine neue zu erzeugen. </translation>
+    </message>
+    <message>
+        <source>-s --save HDR_FILE      Save to a HDR file format. (default: don&apos;t save) </source>
+        <translation>-s --save HDR_FILE      Speichert eine HDR-Datei. (Standard: nicht speichern) </translation>
+    </message>
+    <message>
+        <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
+        <translation>-g --gamma VALUE        Gamma-Wert für die Dynamikkompression. (Standard: 1) </translation>
+    </message>
+    <message>
+        <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
+        <translation>-r --resize VALUE       Breite, auf die das HDR-Bild skaliert wird (geschieht vor Gammakorrektur und Dynamikkompression) </translation>
+    </message>
+    <message>
+        <source>-t --tmo                Tone mapping operator. Legal values are: </source>
+        <translation>-t --tmo                Operator für die Dynamikkompression. Mögliche Werte sind: </translation>
+    </message>
+    <message>
+        <source>-p --tmoptions          Tone mapping operator options. Legal values are: </source>
+        <translation>-p --tmoptions          Einstellungen für Dynamikkompressionsoperatoren. Mögliche Werte sind: </translation>
+    </message>
+    <message>
+        <source>-o --output LDR_FILE    File name you want to save your tone mapped LDR to.</source>
+        <translation>-o --output LDR_FILE    Dateiname, unter dem das dynamikkomprimierte LDR-Bild gespeichert wird.</translation>
+    </message>
+    <message>
+        <source>-q --quality VALUE      Quality of the saved tone mapped file (0-100).</source>
+        <translation>-q --quality VALUE      Qualität der gespeicherten dynamikkomprimierten Datei (0-100).</translation>
+    </message>
+    <message>
+        <source>                        (No tonemapping is performed unless -o is specified).</source>
+        <translation>                        (Dynamikkompression wird nur ausgeführt, falls -o angegeben ist).</translation>
     </message>
 </context>
 <context>
@@ -814,6 +854,22 @@ Fortfahren?</translation>
     <message>
         <source>Choose a directory and a prefix</source>
         <translation>Verzeichnis und Präfix wählen</translation>
+    </message>
+    <message>
+        <source>Maskable</source>
+        <translation>Maskierbar</translation>
+    </message>
+    <message>
+        <source>Good image</source>
+        <translation>Gutes Bild</translation>
+    </message>
+    <message>
+        <source>Ed&amp;itable</source>
+        <translation>Ed&amp;itierbar</translation>
+    </message>
+    <message>
+        <source>R&amp;eference</source>
+        <translation>R&amp;eferenz</translation>
     </message>
 </context>
 <context>
@@ -1230,44 +1286,6 @@ p, li { white-space: pre-wrap; }
         <translation>Assistent zur HDR-Erzeugung</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool help you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Assistent zur HDR-Erzeugung&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dieses Werkzeug hilft dabei, aus Fotos, die mit unterschiedlicher Belichtung aufgenommen wurden, ein &lt;a href=&quot;http://de.wikipedia.org/wiki/High_Dynamic_Range_Image&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR-Bild&lt;/span&gt;&lt;/a&gt; zu erzeugen. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Die unterschiedlich belichteten Fotos müssen mit derselben Kamera, unter gleichen Bedingungen und möglichst mit einem Stativ aufgenommen werden.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dieser Assistent führt durch alle Schritte: Bildimport, Ausrichtung und Wahl des Profils zur HDR-Erzeugung.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bedingungen:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Alle Bilder müssen dasselbe Ausmaß haben.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Alle Bilder müssen dieselbe Farbtiefe besitzen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Add Images</source>
         <translation>Bilder hinzufügen</translation>
     </message>
@@ -1544,14 +1562,6 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNUNG:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR konnte die relevanten &lt;i&gt;EXIF&lt;/i&gt;-Tags in den folgenden Bildern nicht finden:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;Es kann dennoch ein HDR-Bild erzeugt werden. Dazu müssen die Belichtungswerte (EV) oder die Blendenstufenabstände &lt;b&gt;manuell&lt;/b&gt; festgelegt werden.		&lt;hr&gt;Falls dies &lt;b&gt;automatisch&lt;/b&gt; geschehen soll, müssen in den Bilddateien zumindest die folgenden EXIF-Daten vorhanden sein: 		&lt;ul&gt;&lt;li&gt;Verschlusszeit (in Sekunden)&lt;/li&gt;		&lt;li&gt;Blende (f-Wert)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINWEIS:&lt;/b&gt; EXIF-Daten gehen meist bei der Vorverarbeitung der Bilder verloren.&lt;br&gt;		Zum &lt;b&gt;Kopieren der EXIF-Daten&lt;/b&gt; zwischen zwei Gruppen von Dateien steht der Menüpunkt &lt;i&gt;&lt;b&gt;&quot;Extras -&gt; EXIF-Daten kopieren ...&quot;&lt;/b&gt;&lt;/i&gt; zur Verfügung.</translation>
-    </message>
-    <message>
         <source>Loading Error: </source>
         <translation>Fehler beim Laden: </translation>
     </message>
@@ -1620,10 +1630,6 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation>Von Kalibrierung</translation>
     </message>
     <message>
-        <source>From File</source>
-        <translation>Aus Datei</translation>
-    </message>
-    <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Alle Belichtungswerte (EV) wurden festgelegt.&lt;br&gt;Jetzt auf &quot;Weiter&quot; klicken.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -1637,7 +1643,65 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Auto-crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder automatisch zuschneiden</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool helps you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Assistent zur HDR-Erzeugung&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dieses Werkzeug hilft dabei, aus Fotos, die mit unterschiedlicher Belichtung aufgenommen wurden, ein &lt;a href=&quot;http://de.wikipedia.org/wiki/High_Dynamic_Range_Image&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR-Bild&lt;/span&gt;&lt;/a&gt; zu erzeugen. &lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Die unterschiedlich belichteten Fotos müssen mit derselben Kamera, unter gleichen Bedingungen und möglichst mit einem Stativ aufgenommen werden.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dieser Assistent führt durch alle Schritte: Bildimport, Ausrichtung und Wahl des Profils zur HDR-Erzeugung.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bedingungen:&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Alle Bilder müssen dasselbe Ausmaß haben.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Alle Bilder müssen dieselbe Farbtiefe besitzen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Save Settings</source>
+        <translation>Einstellungen speichern</translation>
+    </message>
+    <message>
+        <source>Custom config %1</source>
+        <translation>Eigene Konfiguration %1</translation>
+    </message>
+    <message>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
+for the following images:
+ &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
+the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNUNG:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR konnte die relevanten &lt;i&gt;EXIF&lt;/i&gt;-Tags in den folgenden Bildern nicht finden:
+ &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;Es kann dennoch ein HDR-Bild erzeugt werden. Dazu müssen die Belichtungswerte (EV) oder die Blendenstufenabstände &lt;b&gt;manuell&lt;/b&gt; festgelegt werden.		&lt;hr&gt;Falls dies &lt;b&gt;automatisch&lt;/b&gt; geschehen soll, müssen in den Bilddateien zumindest die folgenden EXIF-Daten vorhanden sein: 		&lt;ul&gt;&lt;li&gt;Verschlusszeit (in Sekunden)&lt;/li&gt;		&lt;li&gt;Blende (f-Wert)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINWEIS:&lt;/b&gt; EXIF-Daten gehen meist bei der Vorverarbeitung der Bilder verloren.&lt;br&gt;		Zum &lt;b&gt;Kopieren der EXIF-Daten&lt;/b&gt; zwischen zwei Gruppen von Dateien steht der Menüpunkt &lt;i&gt;&lt;b&gt;&quot;Extras -&gt; EXIF-Daten kopieren ...&quot;&lt;/b&gt;&lt;/i&gt; zur Verfügung.</translation>
+    </message>
+    <message>
+        <source>From File: </source>
+        <translation>Aus Datei: </translation>
     </message>
 </context>
 <context>
@@ -2534,6 +2598,22 @@ p, li { white-space: pre-wrap; }
         <source>Gamut Check</source>
         <translation>Farbumfang-Prüfung</translation>
     </message>
+    <message>
+        <source>Preview Panel</source>
+        <translation>Vorschaubereich</translation>
+    </message>
+    <message>
+        <source>Show on the right</source>
+        <translation>Am rechten Rand anzeigen</translation>
+    </message>
+    <message>
+        <source>Show on the bottom</source>
+        <translation>Am unteren Rand anzeigen</translation>
+    </message>
+    <message>
+        <source>Realtime Previews</source>
+        <translation>Echtzeit-Vorschau</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -2544,26 +2624,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>External Tools</source>
         <translation>Externe Programme</translation>
-    </message>
-    <message>
-        <source>JPEG</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>PNG</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>PPM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>PBM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>BMP</source>
-        <translation></translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -2596,10 +2656,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Show negative numbers as:</source>
         <translation>Negative Werte anzeigen als:</translation>
-    </message>
-    <message>
-        <source>Which LDR image format to save to</source>
-        <translation>Auswahl des zu speichernden LDR-Bildformats</translation>
     </message>
     <message>
         <source>Amount of threads to use on multicore/SMP machines</source>
@@ -2666,14 +2722,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Temporary Working Folder</source>
         <translation>Ablageort für temporäre Daten</translation>
-    </message>
-    <message>
-        <source>Batch Tonemapping Default Output Format</source>
-        <translation>Standardausgabeformat für Stapel-Dynamikkompression</translation>
-    </message>
-    <message>
-        <source>TIFF</source>
-        <translation></translation>
     </message>
     <message>
         <source>Batch Tonemapping Number of Threads</source>
@@ -3146,49 +3194,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation>Farbprofil (*.icc *.ICC *.icm *.ICM)</translation>
-    </message>
-</context>
-<context>
-    <name>PreviewPanel</name>
-    <message>
-        <source>Mantiuk &apos;06</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Mantiuk &apos;08</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Fattal</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Drago</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Durand</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Reinhard &apos;02</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Reinhard &apos;05</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Ashikhmin</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Pattanaik</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation>Vorschau</translation>
     </message>
 </context>
 <context>
@@ -4038,6 +4043,37 @@ Luminace Level</source>
     <message>
         <source>Version 2.3.0</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>TonemappingSettings</name>
+    <message>
+        <source>Load Custom Settings</source>
+        <translation>Eigene Einstellungen laden</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Sortieren nach</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>Kommentar</translation>
+    </message>
+    <message>
+        <source>Operator</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Most Useful Operators</source>
+        <translation>Gebräuchlichste Operatoren</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
