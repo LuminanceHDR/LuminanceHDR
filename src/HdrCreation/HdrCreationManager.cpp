@@ -362,8 +362,10 @@ void HdrCreationManager::setFileList(const QStringList& l)
         // i-th==true means we started a thread to load the i-th file
         startedProcessing.append(false);
 
+        mdrImagesList.push_back(NULL);
+        antiGhostingMasksList.push_back(NULL); 
         // ldr payloads
-        ldrImagesList.append(NULL);
+        ldrImagesList.push_back(NULL);
         // mdr payloads
         listmdrR.push_back(NULL);
         listmdrG.push_back(NULL);
@@ -455,10 +457,10 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
         return;
     }
     if (!fromCommandLine) {
-        mdrImagesList.append(fromHDRPFStoQImage(newFrame));
+        mdrImagesList[index] = fromHDRPFStoQImage(newFrame);
         QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
         img->fill(qRgba(0,0,0,0));
-        antiGhostingMasksList.append(img);
+        antiGhostingMasksList[index] = img;
     }
     m_mdrWidth = R->getWidth();
     m_mdrHeight = R->getHeight();
@@ -499,7 +501,7 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
     if (!fromCommandLine) {
         QImage *img = new QImage(newImage->width(),newImage->height(), QImage::Format_ARGB32);
         img->fill(qRgba(0,0,0,0));
-        antiGhostingMasksList.append(img);
+        antiGhostingMasksList[index] = img;
     }
 
     //perform some housekeeping
