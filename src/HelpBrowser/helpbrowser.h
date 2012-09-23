@@ -49,6 +49,9 @@ class ScHelpTreeModel;
 
 #include "HelpSideBar.h"
 
+#define KEY_HELP_BOOKMARK "help/Bookmark"
+#define KEY_HELP_HISTORY "help/History"
+
 //! \brief A structure holding title/file url reference.
 struct histd2 {
 	QString url;
@@ -139,8 +142,6 @@ protected slots:
 	void loadHelp(const QString& filename);
 	void loadMenu();
 	void showLinkContents(const QString &link);
-	QString bookmarkFile();
-	QString historyFile();
 
 	/*! \brief Load doc file when user select filename in content view. */
 	void itemSelected(const QItemSelection & selected, const QItemSelection & deselected);
