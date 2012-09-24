@@ -42,15 +42,6 @@ class TiffWriter : public QObject
 {
     Q_OBJECT
 
-private:
-	TIFF *tif;
-
-    QImage *ldrimage;
-    const quint16 *pixmap;
-    pfs::Frame* pfsFrame;
-    uint32 width;
-    uint32 height;
-
 public:
     TiffWriter( const char* filename, pfs::Frame *f );
     TiffWriter( const char* filename, QImage *ldrimage );
@@ -70,6 +61,18 @@ public:
 signals: //For ProgressDialog
     void maximumValue(int);
     void nextstep(int);
+
+private:
+    void writeCommonHeader();
+
+    TIFF *tif;
+
+    QImage *ldrimage;
+    const quint16 *pixmap;
+    pfs::Frame* pfsFrame;
+
+    uint32 width;
+    uint32 height;
 };
 
 #endif  // PFS_TIFFWRITER_H

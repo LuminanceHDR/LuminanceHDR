@@ -41,12 +41,22 @@
 #include <vector>
 #include <stdexcept>
 #include <cassert>
-#include "Common/ResourceHandlerLcms.h"
+#include <limits>
 
+#include "Common/ResourceHandlerLcms.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/array2d.h"
 
-TiffWriter::TiffWriter (const char *filename, pfs::Frame* f):
+void TiffWriter::writeCommonHeader()
+{
+    TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, (uint32_t)width);
+    TIFFSetField (tif, TIFFTAG_IMAGELENGTH, (uint32_t)height);
+    TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, (uint32_t)1);
+    TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+}
+
+
+TiffWriter::TiffWriter(const char *filename, pfs::Frame* f):
     tif(TIFFOpen (filename, "w")),
     ldrimage(0),
     pixmap(0),
@@ -59,14 +69,12 @@ TiffWriter::TiffWriter (const char *filename, pfs::Frame* f):
         throw std::runtime_error ("TIFF: could not open file for writing.");
     }
 
-    TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
-    TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
-    TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-    TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+    writeCommonHeader();
+
+    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
 }
 
-TiffWriter::TiffWriter (const char *filename, const quint16 * pix, int w, int h):
+TiffWriter::TiffWriter(const char *filename, const quint16 * pix, int w, int h):
     tif(TIFFOpen (filename, "w")),
     ldrimage(0),
     pixmap(pix),
@@ -79,14 +87,12 @@ TiffWriter::TiffWriter (const char *filename, const quint16 * pix, int w, int h)
         throw std::runtime_error ("TIFF: could not open file for writing.");
     }
 
-    TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
-    TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
-    TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-    TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+    writeCommonHeader();
+
+    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
 }
 
-TiffWriter::TiffWriter (const char *filename, QImage * f):
+TiffWriter::TiffWriter(const char *filename, QImage * f):
     tif(TIFFOpen (filename, "w")),
     ldrimage(f),
     pixmap(0),
@@ -99,26 +105,81 @@ TiffWriter::TiffWriter (const char *filename, QImage * f):
         throw std::runtime_error ("TIFF: could not open file for writing.");
     }
 
+    writeCommonHeader();
+
     uint16 extras[1];
     extras[0] = EXTRASAMPLE_ASSOCALPHA;
 
-    TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
-    TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
-    TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 4);
-    TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, &extras);
-    TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)4);
+    TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, (uint16_t)1, &extras);
+}
+
+namespace
+{
+// It can be done much better, but we can keep it for a bit :)
+struct ComputeMinMax
+{
+    ComputeMinMax()
+        : m_min( std::numeric_limits<float>::max() )
+        , m_max( -std::numeric_limits<float>::max() )
+    {}
+
+    void operator()(const float& value)
+    {
+        if ( value > m_max ) m_max = value;
+        else if ( value < m_min ) m_min = value;
+    }
+
+    inline
+    float min()
+    { return m_min; }
+
+    inline
+    float max()
+    { return m_max; }
+
+private:
+    float m_min;
+    float m_max;
+};
+
+struct Normalizer
+{
+    Normalizer(float min, float max)
+        : m_min(min + std::numeric_limits<float>::epsilon())
+        // , m_max(max)
+        , m_normalizer( max - m_min )
+    {}
+
+    float operator()(const float& value) const
+    {
+        return (value - m_min)/m_normalizer;
+    }
+private:
+    float m_min;
+    // float m_max;
+    float m_normalizer;
+};
+
 }
 
 //write 32 bit float Tiff from pfs::Frame
 int
 TiffWriter::writeFloatTiff()
 {
-    assert(pfsFrame != 0);
+    if ( !pfsFrame )
+    {
+        std::runtime_error("TiffWriter: Invalid writeFloatTiff function, "\
+                           "pfsFrame is not set correctly");
+    }
 
-    TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
+    TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
     TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 32);
+    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_IEEEFP);
+    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE,
+                  (uint16_t)8*(uint16_t)sizeof(float));
+
+    size_t numPixels = pfsFrame->getHeight()*pfsFrame->getWidth();
 
     pfs::Channel* Xc;
     pfs::Channel* Yc;
@@ -126,13 +187,25 @@ TiffWriter::writeFloatTiff()
 
     pfsFrame->getXYZChannels(Xc, Yc, Zc);
 
-    const float *X = Xc->getRawData ();
-    const float *Y = Yc->getRawData ();
-    const float *Z = Zc->getRawData ();
+    const float *X = Xc->getRawData();
+    const float *Y = Yc->getRawData();
+    const float *Z = Zc->getRawData();
+
+    ComputeMinMax xMinMax = std::for_each(X, X + numPixels, ComputeMinMax());
+    ComputeMinMax yMinMax = std::for_each(Y, Y + numPixels, ComputeMinMax());
+    ComputeMinMax zMinMax = std::for_each(Z, Z + numPixels, ComputeMinMax());
+
+    Normalizer normalizer(std::min(xMinMax.min(),
+                                   std::min(yMinMax.min(),
+                                            zMinMax.min())),
+                          std::max(xMinMax.max(),
+                                   std::max(yMinMax.max(),
+                                            zMinMax.max())));
 
     tsize_t strip_size = TIFFStripSize (tif);
     tstrip_t strips_num = TIFFNumberOfStrips (tif);
-    float *strip_buf = (float *) _TIFFmalloc (strip_size);	//enough space for a strip (row)
+    // enough space for a strip (row)
+    float *strip_buf = (float *) _TIFFmalloc (strip_size);
     if (!strip_buf)
     {
 		TIFFClose(tif);
@@ -145,9 +218,9 @@ TiffWriter::writeFloatTiff()
     {
         for (unsigned int col = 0; col < width; col++)
         {
-            strip_buf[3 * col + 0] = X[s * width + col];	//(*X)(col,s);
-            strip_buf[3 * col + 1] = Y[s * width + col];	//(*Y)(col,s);
-            strip_buf[3 * col + 2] = Z[s * width + col];	//(*Z)(col,s);
+            strip_buf[3 * col + 0] = normalizer( X[s * width + col] );	//(*X)(col,s);
+            strip_buf[3 * col + 1] = normalizer( Y[s * width + col] );	//(*Y)(col,s);
+            strip_buf[3 * col + 2] = normalizer( Z[s * width + col] );	//(*Z)(col,s);
         }
         if (TIFFWriteEncodedStrip(tif, s, strip_buf, strip_size) == 0)
         {
@@ -167,14 +240,21 @@ TiffWriter::writeFloatTiff()
     return 0;
 }
 
-//write LogLUv Tiff from pfs::Frame
+// write LogLUv Tiff from pfs::Frame
 int
-TiffWriter::writeLogLuvTiff ()
+TiffWriter::writeLogLuvTiff()
 {
-    assert(pfsFrame != 0);
+    if ( !pfsFrame )
+    {
+        std::runtime_error("TiffWriter: Invalid writeLogLuvTiff function, "\
+                           "pfsFrame is not set correctly");
+    }
 
     TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_SGILOG);
     TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_LOGLUV);
+    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_IEEEFP);
+    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE,
+                  (uint16_t)8*(uint16_t)sizeof(float));
     TIFFSetField (tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
     TIFFSetField (tif, TIFFTAG_STONITS, 1.);	/* not known */
 
@@ -184,9 +264,9 @@ TiffWriter::writeLogLuvTiff ()
 
     pfsFrame->getXYZChannels(Xc, Yc, Zc);
 
-    const float *X = Xc->getRawData ();
-    const float *Y = Yc->getRawData ();
-    const float *Z = Zc->getRawData ();
+    const float *X = Xc->getRawData();
+    const float *Y = Yc->getRawData();
+    const float *Z = Zc->getRawData();
 
     tsize_t strip_size = TIFFStripSize (tif);
     tstrip_t strips_num = TIFFNumberOfStrips (tif);
@@ -225,10 +305,9 @@ TiffWriter::writeLogLuvTiff ()
 }
 
 int
-TiffWriter::write8bitTiff ()
+TiffWriter::write8bitTiff()
 {
-    assert(ldrimage != NULL);
-    if (ldrimage == NULL)
+    if ( !ldrimage )
         throw std::runtime_error ("TIFF: QImage was not set correctly");
 
     ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
@@ -244,9 +323,12 @@ TiffWriter::write8bitTiff ()
     TIFFSetField(tif, TIFFTAG_ICCPROFILE, profileSize,
                  reinterpret_cast<void*>(embedBuffer.data()) );
 
+
     TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, 8);
+    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
+    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE,
+                  (uint16_t)8*(uint16_t)sizeof(uint8_t));
 
     tsize_t strip_size = TIFFStripSize(tif);
     tstrip_t strips_num = TIFFNumberOfStrips(tif);
@@ -265,10 +347,10 @@ TiffWriter::write8bitTiff ()
     {
         for (unsigned int col = 0; col < width; col++)
         {
-            strip_buf[4 * col + 0] = qRed (ldrpixels[width * s + col]);
-            strip_buf[4 * col + 1] = qGreen (ldrpixels[width * s + col]);
-            strip_buf[4 * col + 2] = qBlue (ldrpixels[width * s + col]);
-            strip_buf[4 * col + 3] = qAlpha (ldrpixels[width * s + col]);
+            strip_buf[4 * col + 0] = qRed(ldrpixels[width * s + col]);
+            strip_buf[4 * col + 1] = qGreen(ldrpixels[width * s + col]);
+            strip_buf[4 * col + 2] = qBlue(ldrpixels[width * s + col]);
+            strip_buf[4 * col + 3] = qAlpha(ldrpixels[width * s + col]);
         }
         if (TIFFWriteEncodedStrip(tif, s, strip_buf, strip_size) == 0)
         {
@@ -288,7 +370,7 @@ TiffWriter::write8bitTiff ()
 }
 
 int
-TiffWriter::write16bitTiff ()
+TiffWriter::write16bitTiff()
 {
     assert(pixmap != NULL);
 
@@ -313,7 +395,9 @@ TiffWriter::write16bitTiff ()
 
     TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, 16);
+    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
+    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE,
+                  (uint16_t)8*(uint16_t)sizeof(uint16_t));
 
     tsize_t strip_size = TIFFStripSize (tif);
     tstrip_t strips_num = TIFFNumberOfStrips (tif);
@@ -331,9 +415,9 @@ TiffWriter::write16bitTiff ()
     {
         for (unsigned int col = 0; col < width; col++)
         {
-            strip_buf[3 * col] = pixmap[3 * (width * s + col)];
-            strip_buf[3 * col + 1] = pixmap[3 * (width * s + col) + 1];
-            strip_buf[3 * col + 2] = pixmap[3 * (width * s + col) + 2];
+            strip_buf[3 * col]      = pixmap[3 * (width * s + col)];
+            strip_buf[3 * col + 1]  = pixmap[3 * (width * s + col) + 1];
+            strip_buf[3 * col + 2]  = pixmap[3 * (width * s + col) + 2];
         }
         if (TIFFWriteEncodedStrip(tif, s, strip_buf, strip_size) == 0)
         {
@@ -353,6 +437,7 @@ TiffWriter::write16bitTiff ()
     return 0;
 }
 
+// double check this? (Sept 24, 2012)
 int
 TiffWriter::writePFSFrame16bitTiff()
 {
@@ -368,9 +453,9 @@ TiffWriter::writePFSFrame16bitTiff()
 
     pfsFrame->getXYZChannels(Xc, Yc, Zc);
 
-    const float *X = Xc->getRawData ();
-    const float *Y = Yc->getRawData ();
-    const float *Z = Zc->getRawData ();
+    const float *X = Xc->getRawData();
+    const float *Y = Yc->getRawData();
+    const float *Z = Zc->getRawData();
 
     tsize_t strip_size = TIFFStripSize (tif);
     tstrip_t strips_num = TIFFNumberOfStrips (tif);
