@@ -31,7 +31,8 @@
 #include <QFile>
 
 #include "Libpfs/domio.h"
-#include "Fileformat/pfstiff.h"
+#include "Fileformat/tiffreader.h"
+#include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsouthdrimage.h"
 #include "Filter/pfscut.h"
 #include "Exif/ExifOperations.h"

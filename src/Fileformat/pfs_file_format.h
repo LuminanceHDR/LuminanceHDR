@@ -28,7 +28,8 @@
 #define PFS_FILE_FORMAT_H
 
 #include "Fileformat/rgbeio.h"
-#include "Fileformat/pfstiff.h"
+#include "Fileformat/tiffreader.h"
+#include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "Fileformat/pfsinraw.h"
 #include "Fileformat/jpegwriter.h"

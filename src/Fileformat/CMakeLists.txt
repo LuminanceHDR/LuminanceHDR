@@ -1,6 +1,7 @@
 #SET(FILES_UI )
 SET(FILES_H
-${CMAKE_CURRENT_SOURCE_DIR}/pfstiff.h
+${CMAKE_CURRENT_SOURCE_DIR}/tiffreader.h
+${CMAKE_CURRENT_SOURCE_DIR}/tiffwriter.h
 ${CMAKE_CURRENT_SOURCE_DIR}/jpegreader.h
 ${CMAKE_CURRENT_SOURCE_DIR}/jpegwriter.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pngwriter.h
@@ -17,7 +18,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/rgbeio.h
 
 SET(FILES_CPP
 ${CMAKE_CURRENT_SOURCE_DIR}/rgbeio.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pfstiff.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/tiffreader.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/tiffwriter.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutrgbe.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsinrgbe.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.cpp

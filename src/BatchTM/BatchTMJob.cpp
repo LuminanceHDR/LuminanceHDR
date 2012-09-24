@@ -24,7 +24,7 @@
  */
 
 #include "BatchTM/BatchTMJob.h"
-#include "Fileformat/pfstiff.h"
+#include "Fileformat/tiffreader.h"
 #include "Exif/ExifOperations.h"
 #include "Libpfs/frame.h"
 #include "Filter/pfscut.h"

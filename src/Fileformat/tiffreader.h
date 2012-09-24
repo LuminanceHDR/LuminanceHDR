@@ -87,38 +87,4 @@ signals: //For ProgressDialog
     void nextstep(int);
 };
 
-class TiffWriter : public QObject
-{
-    Q_OBJECT
-
-private:
-	TIFF *tif;
-
-    QImage *ldrimage;
-    const quint16 *pixmap;
-    pfs::Frame* pfsFrame;
-    uint32 width;
-    uint32 height;
-
-public:
-    TiffWriter( const char* filename, pfs::Frame *f );
-    TiffWriter( const char* filename, QImage *ldrimage );
-    TiffWriter( const char* filename, const quint16 *pixmap, int w, int h);
-
-    //! \brief write 8bit Tiff from QImage
-    int write8bitTiff();
-    //! \brief write 16bit Tiff from 16 bits pixmap
-    int write16bitTiff();
-    //! \brief write 32bit float Tiff from pfs::Frame
-    int writeFloatTiff();
-    //! \brief write LogLuv Tiff from pfs::Frame
-    int writeLogLuvTiff();
-    //! \brief write 16bit Tiff from pfs::Frame
-    int writePFSFrame16bitTiff();
-
-signals: //For ProgressDialog
-    void maximumValue(int);
-    void nextstep(int);
-};
-
 #endif
