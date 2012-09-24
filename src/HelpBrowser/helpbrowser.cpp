@@ -31,6 +31,7 @@ for which a new license (GPL+exception) is in place.
 #include "ui_HelpSideBar.h"
 
 #include <QAction>
+#include <QBuffer>
 #include <QDir>
 #include <QDomDocument>
 #include <QEvent>
@@ -161,11 +162,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
     connect(m_Ui->textBrowser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
 
 	language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
-    // TODO: better detection of file paths
-    //if (m_isPortable) 
-    //    finalBaseDir = QDir::currentPath () + QDir::separator() + "help" + QDir::separator() + "en" + QDir::separator();
-    //else
-    	finalBaseDir = LuminancePaths::HelpDir();
+   	finalBaseDir = LuminancePaths::HelpDir();
 
     qDebug() << finalBaseDir;
 
@@ -199,39 +196,42 @@ void HelpBrowser::closeEvent(QCloseEvent *)
 
 	// no need to delete child widgets, Qt does it all for us
 	// bookmarks
-	QFile bookFile(bookmarkFile());
-	if (bookFile.open(QIODevice::WriteOnly))
-	{
-		QTextStream stream(&bookFile);
-		stream.setCodec("UTF-8");
-		stream << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-		stream << "<bookmarks>\n";
+    LuminanceOptions options;
+    {
+        QByteArray ba;
+	    QTextStream stream(&ba);
+	    stream.setCodec("UTF-8");
+	    stream << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	    stream << "<bookmarks>\n";
         QTreeWidgetItemIterator it(helpSideBar->m_Ui->bookmarksView);
-		while (*it) 
-		{
-			if (bookmarkIndex.contains((*it)->text(0)))
-			{
-				QString pagetitle(bookmarkIndex.value((*it)->text(0)).first);
-				QString filename(bookmarkIndex.value((*it)->text(0)).second);
-				stream << "\t<item title=\"" << (*it)->text(0) << "\" pagetitle=\"" << pagetitle << "\" url=\"" << filename << "\" />\n";
-			}
-			++it;
-		}
-		stream << "</bookmarks>\n";
-		bookFile.close();
-	}
-	// history
-  	QFile histFile(historyFile());
-	if (histFile.open(QIODevice::WriteOnly))
+	    while (*it) 
+	    {
+		    if (bookmarkIndex.contains((*it)->text(0)))
+		    {
+			    QString pagetitle(bookmarkIndex.value((*it)->text(0)).first);
+			    QString filename(bookmarkIndex.value((*it)->text(0)).second);
+			    stream << "\t<item title=\"" << (*it)->text(0) << "\" pagetitle=\"" << pagetitle << "\" url=\"" << filename << "\" />\n";
+		    }
+		    ++it;
+	    }
+	    stream << "</bookmarks>\n";
+        stream.flush();
+
+        options.setValue(KEY_HELP_BOOKMARK, ba);
+    }
+
+    // history
 	{
-		QTextStream stream(&histFile);
+        QByteArray ba;
+		QTextStream stream(&ba);
 		stream.setCodec("UTF-8");
 		stream << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		stream << "<history>\n";
 		for (QMap<QAction*,histd2>::Iterator it = mHistory.begin() ; it != mHistory.end(); ++it)
 			stream << "\t<item title=\"" << it.value().title << "\" url=\"" << it.value().url << "\" />\n";
 		stream << "</history>\n";
-		histFile.close();
+        stream.flush();
+        options.setValue(KEY_HELP_HISTORY, ba);
 	}
 	// size
 // 	prefs->set("xsize", width());
@@ -453,10 +453,11 @@ void HelpBrowser::bookmarkButton_clicked()
  	if (title.isNull())
  		return;
 	//TODO: start storing full paths
- 	QString toFind(fname.remove(QDir::convertSeparators(finalBaseDir)));
+ 	QString toFind(fname.remove(finalBaseDir));
 	toFind=toFind.mid(1, toFind.length()-1);
 	QMapIterator<QString, QString> i(quickHelpIndex);
-	while (i.hasNext())
+
+    while (i.hasNext())
 	{
 		i.next();
 		if (i.value()==toFind)
@@ -533,11 +534,7 @@ void HelpBrowser::loadHelp(const QString& filename)
 			toLoad=filename;
 		else
 		{
-            // TODO: better detection
-            //if (m_isPortable)
-            //    toLoad = QDir::currentPath() + QDir::separator() + "help" + QDir::separator() + "en" + QDir::separator() + "index.html";
-            //else
-    			toLoad = LuminancePaths::HelpDir() +"index.html";
+   			toLoad = LuminancePaths::HelpDir() + "index.html";
  			language="en";
             //qDebug("Help index: %c", toLoad);
 			fi = QFileInfo(toLoad);
@@ -570,12 +567,7 @@ void HelpBrowser::loadHelp(const QString& filename)
 
 void HelpBrowser::loadMenu()
 {
-    QString baseHelpDir;
-    // TODO: better detection
-    //if (m_isPortable)
-    //    baseHelpDir = QDir::currentPath() + QDir::separator() + "help" + QDir::separator() + "en" + QDir::separator();
-    //else
-        baseHelpDir = LuminancePaths::HelpDir();
+    QString baseHelpDir(LuminancePaths::HelpDir());
 	QString baseHelpMenuFile = baseHelpDir + "menu.xml";
 	QFileInfo baseFi = QFileInfo(baseHelpMenuFile);
 	QString toLoad = baseHelpMenuFile;
@@ -603,12 +595,14 @@ void HelpBrowser::loadMenu()
 
 void HelpBrowser::readBookmarks()
 {
+    LuminanceOptions options;
+    QByteArray ba(options.value(KEY_HELP_BOOKMARK).toByteArray());
+    QBuffer buffer(&ba);
 	BookmarkParser2 handler;
     handler.view = helpSideBar->m_Ui->bookmarksView;
 	handler.quickHelpIndex=&quickHelpIndex;
 	handler.bookmarkIndex=&bookmarkIndex;
-	QFile xmlFile(bookmarkFile());
-	QXmlInputSource source(&xmlFile);
+	QXmlInputSource source(&buffer);
 	QXmlSimpleReader reader;
 	reader.setContentHandler(&handler);
 	reader.parse(source);
@@ -616,13 +610,14 @@ void HelpBrowser::readBookmarks()
 
 void HelpBrowser::readHistory()
 {
- 	HistoryParser2 handler;
- 	handler.helpBrowser = this;
- 	QFile xmlFile(historyFile());
- 	QXmlInputSource source(&xmlFile);
- 	QXmlSimpleReader reader;
- 	reader.setContentHandler(&handler);
- 	reader.parse(source);
+    // TODO: review current history implementation
+ 	//HistoryParser2 handler;
+ 	//handler.helpBrowser = this;
+ 	//QFile xmlFile(historyFile());
+ 	//QXmlInputSource source(&xmlFile);
+ 	//QXmlSimpleReader reader;
+ 	//reader.setContentHandler(&handler);
+ 	//reader.parse(source);
 }
 
 void HelpBrowser::setText(const QString& str)
@@ -679,70 +674,6 @@ void HelpBrowser::itemBookmarkSelected(QTreeWidgetItem *twi, int i)
 		if (!filename.isEmpty())
 			loadHelp(finalBaseDir + "/" + filename);
 	}
-}
-
-/*! \brief Returns the name of the cfg file for bookmarks.
-A helper function.
-\author Petr Vanek <petr@yarpen.cz>
-*/
-QString HelpBrowser::bookmarkFile()
-{
-	//TODO   MAC OSX
-	//QString appDataDir(typotek::getInstance()->getOwnDir().path() + "/");
-	QString sep(QDir::separator());
-    QString appDataDir;
-
-    // TODO: refactor for portable
-    //if (m_isPortable)
-    //    appDataDir = QDir::currentPath() + sep;
-    //else 
-#ifdef Q_WS_MAC	
-    	appDataDir = QString(QDir::homePath() + sep + "Library" + sep + "LuminanceHDR" + sep);
-#elif WIN32
-	    appDataDir = QString(QDir::homePath() + sep + "LuminanceHDR" + sep);
-#else
-	    appDataDir = QString(QDir::homePath() + sep + ".LuminanceHDR" + sep);
-#endif
-	QString fname(appDataDir + "HelpBookmarks.xml");
-// 	if (!QFile::exists(fname))
-// 	{
-// 		QDir d(QDir::convertSeparators(appDataDir));
-// 		d.mkdir("doc");
-// 	}
-	return fname;
-}
-
-
-/*! \brief Returns the name of the cfg file for persistent history.
-A helper function.
-\author Petr Vanek <petr@yarpen.cz>
-*/
-QString HelpBrowser::historyFile()
-{
-	//QString appDataDir(typotek::getInstance()->getOwnDir().path() + "/");
-	QString sep(QDir::separator());
-    QString appDataDir;
-
-    // TODO: better detection
-
-    //if (m_isPortable)
-    //    appDataDir = QDir::currentPath() + sep;
-    //else 
-#ifdef Q_WS_MAC	
-	    appDataDir = QString(QDir::homePath() + sep + "Library" + sep + "LuminanceHDR" + sep);
-#elif WIN32
-    	appDataDir = QString(QDir::homePath() + sep + "LuminanceHDR" + sep);
-#else
-	    appDataDir = QString(QDir::homePath() + sep + ".LuminanceHDR" + sep);
-	//QString fname(appDataDir + "HelpHistory.xml");
-#endif	
-	QString fname(appDataDir + "HelpHistory.xml");
-// 	if (!QFile::exists(fname))
-// 	{
-// 		QDir d(QDir::convertSeparators(appDataDir));
-// 		d.mkdir("doc");
-// 	}
-	return fname;
 }
 
 void HelpBrowser::displayNoHelp()
