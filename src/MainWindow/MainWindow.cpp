@@ -1029,8 +1029,8 @@ void MainWindow::ioBegin()
 void MainWindow::ioEnd()
 {
     //statusBar()->removeWidget(m_ProgressBar);
-    m_ProgressBar->hide();
     m_ProgressBar->reset();
+    m_ProgressBar->hide();
 
     QApplication::restoreOverrideCursor();
 
@@ -1039,13 +1039,13 @@ void MainWindow::ioEnd()
 
 void MainWindow::load_failed(QString error_message)
 {
+    m_ProgressBar->reset();
+    m_ProgressBar->hide();
+
     QApplication::restoreOverrideCursor();
 
     // TODO: use unified style?
     QMessageBox::critical(this, tr("Aborting..."), error_message, QMessageBox::Ok, QMessageBox::NoButton);
-
-    m_ProgressBar->hide();
-    m_ProgressBar->reset();
 }
 
 void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool needSaving)
