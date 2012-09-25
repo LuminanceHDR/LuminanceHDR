@@ -28,10 +28,11 @@
  * $Id: colorspace.cpp,v 1.6 2007/07/18 08:49:25 rafm Exp $
  */
 
-#include <math.h>
-#include <assert.h>
+#include <cassert>
 #include <list>
 #include <iostream>
+
+#include "arch/math.h"
 
 #include "pfs.h"
 #include "array2d.h"
@@ -44,45 +45,30 @@ using namespace std;
 
 namespace pfs 
 {
-  static inline float clamp( const float v, const float min, const float max )
-  {
-    if( v < min ) return min;
-    if( v > max ) return max;
-    return v;
-  }
-  
-  //--- 7 digits approximation of precise values
-  static const float rgb2xyzD65Mat[3][3] =
-  { { 0.412424f, 0.357579f, 0.180464f },
-    { 0.212656f, 0.715158f, 0.072186f },
-    { 0.019332f, 0.119193f, 0.950444f } };
-  
-  static const float xyz2rgbD65Mat[3][3] =
-  { {  3.240708f, -1.537259f, -0.498570f },
-    { -0.969257f,  1.875995f,  0.041555f },
-    {  0.055636f, -0.203996f,  1.057069f } };
-  
-  // //--- precise values for matrix convertion (above float precission)
-  // static const float rgb2xyzD65Mat[3][3] =
-  // { { 0.412424,  0.357579, 0.180464 },
-  //   { 0.212656,  0.715158, 0.0721856 },
-  //   { 0.0193324, 0.119193, 0.950444 } };
-  
-  // static const float xyz2rgbD65Mat[3][3] =
-  // { {  3.24071,   -1.53726,  -0.498571 },
-  //   { -0.969258,   1.87599,   0.0415557 },
-  //   {  0.0556352, -0.203996,  1.05707 } };
-  
-  // //--- original values which lead to mean sq error of above 3 for green channel
-  // static const float rgb2xyzD65Mat[3][3] =
-  // { { 0.4124f, 0.3576f, 0.1805f },
-  //   { 0.2126f, 0.7152f, 0.0722f },
-  //   { 0.0193f, 0.1192f, 0.9505f } };
-  
-  // static const float xyz2rgbD65Mat[3][3] =
-  // { { 3.2406f, -1.5372f, -0.4986f },
-  //   { -0.9689f, 1.8758f,  0.0415f },
-  //   { 0.0557f, -0.2040f,  1.0570f } };
+namespace
+{
+template <typename T>
+inline
+T clamp(T v, T min, T max)
+{
+    if ( v < min ) return min;
+    else if( v > max ) return max;
+    else return v;
+}
+}
+
+//! \brief Basic matrices for the SRGB <-> XYZ conversion
+//! \ref http://www.brucelindbloom.com/Eqn_RGB_XYZ_Matrix.html
+
+static const float rgb2xyzD65Mat[3][3] =
+{ { 0.4124564f, 0.3575761f, 0.1804375f },
+  { 0.2126729f, 0.7151522f, 0.0721750f },
+  { 0.0193339f, 0.1191920f, 0.9503041f } };
+
+static const float xyz2rgbD65Mat[3][3] =
+{ {  3.2404542f, -1.5371385f, -0.4985314f },
+  { -0.9692660f,  1.8760108f,  0.0415560f },
+  {  0.0556434f, -0.2040259f,  1.0572252f } };
   
   //-----------------------------------------------------------
   // sRGB conversion functions
@@ -128,6 +114,44 @@ namespace pfs
       f_timer.stop_and_update();
       std::cout << "transformSRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
+  }
+
+  namespace
+  {
+
+  inline
+  void kernelTrasformSRGB2Y(float red, float green, float blue, float& y)
+  {
+      red = clamp(red, 0.f, 1.f);
+      green = clamp(green, 0.f, 1.f);
+      blue = clamp(blue, 0.f, 1.f);
+
+      red = (red <= 0.04045f ? red / 12.92f : powf( (red + 0.055f) / 1.055f, 2.4f )  );
+      green = (green <= 0.04045f ? green / 12.92f : powf( (green + 0.055f) / 1.055f, 2.4f )  );
+      blue = (blue <= 0.04045f ? blue / 12.92f : powf( (blue + 0.055f) / 1.055f, 2.4f )  );
+
+      y = rgb2xyzD65Mat[1][0]*red
+              + rgb2xyzD65Mat[1][1]*green
+              + rgb2xyzD65Mat[1][2]*blue;
+  }
+
+  }
+
+  void transformSRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                       Array2D *outC1)
+  {
+      const float* r = inC1->getRawData();
+      const float* g = inC2->getRawData();
+      const float* b = inC3->getRawData();
+
+      float* y = outC1->getRawData();
+
+      size_t numPixel = inC1->getCols()*inC1->getRows();
+
+      for ( ; numPixel; numPixel--)
+      {
+          kernelTrasformSRGB2Y(*r++, *g++, *b++, *y++);
+      }
   }
   
   void transformXYZ2SRGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
@@ -285,6 +309,35 @@ namespace pfs
 #endif
   }
   
+  namespace
+  {
+  inline
+  void kernelTrasformRGB2Y(float red, float green, float blue, float& y)
+  {
+      y = rgb2xyzD65Mat[1][0]*red
+              + rgb2xyzD65Mat[1][1]*green
+              + rgb2xyzD65Mat[1][2]*blue;
+  }
+
+  }
+
+  void transformRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                      Array2D *outC1)
+  {
+      const float* r = inC1->getRawData();
+      const float* rEnd = inC1->getRawData() + (inC1->getCols()*inC1->getRows());
+      const float* g = inC2->getRawData();
+      const float* b = inC3->getRawData();
+
+      float* y = outC1->getRawData();
+
+      while ( r != rEnd )
+      {
+          kernelTrasformRGB2Y(*r++, *g++, *b++, *y++);
+      }
+  }
+
+
   void transformXYZ2RGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
                         Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {

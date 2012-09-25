@@ -50,20 +50,34 @@ namespace pfs
     CS_Yxy,              ///< Luminance and normalized chromacities (x=X/(X+Y+Z), y=Y/(X+Y+Z))
     CS_LAST             ///< For internal purposes only
   };
+
+  // SRGB <-> XYZ
+  void transformSRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                         Array2D *outC1, Array2D *outC2, Array2D *outC3);
+  void transformSRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                       Array2D *outY);
+  void transformXYZ2SRGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                         Array2D *outC1, Array2D *outC2, Array2D *outC3);
+
+  // XYZ <-> Yuv
+  void transformXYZ2Yuv(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
+  void transformYuv2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
   
-  void multiplyByMatrix(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3, const float mat[3][3]);
+  // Yxy <-> XYZ
+  void transformYxy2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
+  void transformXYZ2Yxy(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
   
-  void transformSRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  void transformXYZ2SRGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  
-  void transformXYZ2Yuv(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3);  
-  void transformYuv2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  
-  void transformYxy2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  void transformXYZ2Yxy(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  
-  void transformRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  void transformXYZ2RGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3);
+  // RGB <-> XYZ
+  void transformRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
+  void transformRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                      Array2D *outC1);
+  void transformXYZ2RGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
   
   /**
    * Transform color channels from one color space into

@@ -26,8 +26,8 @@
 #define MSVC_MATH_H
 
 #define _USE_MATH_DEFINES
-#include <math.h> // re-include here
-#include <float.h> // for _finite
+#include <math.h>   // re-include here
+#include <float.h>  // for _finite
 
 #define exp2f(x)        (powf(2.0f, x))
 #define log2(x)        (log(x)  / M_LN2)
@@ -47,7 +47,7 @@
 #pragma warning (disable:4996)
 
 #ifndef snprintf
-	#define snprintf sprintf_s
+#define snprintf sprintf_s
 #endif
 
 #endif  // MSVC_MATH_H
