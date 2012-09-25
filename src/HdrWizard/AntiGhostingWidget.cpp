@@ -74,7 +74,11 @@ void AntiGhostingWidget::mousePressEvent(QMouseEvent *event)
     }
     else if (event->buttons() == Qt::LeftButton) {
         if (m_drawingMode == PATH) {
-            m_firstPoint = m_lastPoint = m_currentPoint = event->pos();
+            QPoint relativeToWidget = event->pos();
+            int sx = relativeToWidget.x()/m_scaleFactor - m_mx;
+            int sy = relativeToWidget.y()/m_scaleFactor - m_my;
+            QPoint scaled(sx,sy);
+            m_firstPoint = m_lastPoint = m_currentPoint = scaled;
             m_path = QPainterPath(m_firstPoint);
             m_drawingPathEnded = false;
         }
@@ -94,7 +98,11 @@ void AntiGhostingWidget::mouseMoveEvent(QMouseEvent *event)
         m_mousePos = event->globalPos();
     }
     else if (event->buttons() == Qt::LeftButton && m_drawingMode == PATH) {
-        m_currentPoint = event->pos();
+        QPoint relativeToWidget = event->pos();
+        int sx = relativeToWidget.x()/m_scaleFactor - m_mx;
+        int sy = relativeToWidget.y()/m_scaleFactor - m_my;
+        QPoint scaled(sx,sy);
+        m_currentPoint = scaled;
     }
     event->ignore();
 }
@@ -111,9 +119,15 @@ void AntiGhostingWidget::mouseReleaseEvent(QMouseEvent *event)
     }
     else if (event->button() == Qt::MidButton) {
         QApplication::restoreOverrideCursor();      
-        fillAntiGhostingCursorPixmap();
-        this->unsetCursor();
-        this->setCursor(*m_agcursorPixmap);
+        if (m_drawingMode == BRUSH) {
+            fillAntiGhostingCursorPixmap();
+            this->unsetCursor();
+            this->setCursor(*m_agcursorPixmap);
+        }
+        else {
+            this->unsetCursor();
+            this->setCursor( QCursor(Qt::CrossCursor) );
+        }
     }
     event->ignore();
 }
