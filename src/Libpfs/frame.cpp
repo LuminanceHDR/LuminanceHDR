@@ -82,8 +82,7 @@ struct FindChannel
 };
 }
 
-//void Frame::getXYZChannels(const Channel* &X, const Channel* &Y, const Channel* &Z ) const
-void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+void Frame::getXYZChannels(const Channel* &X, const Channel* &Y, const Channel* &Z ) const
 {
     // find X
     ChannelContainer::const_iterator it(
@@ -121,13 +120,18 @@ void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
     Z = *it;
 }
 
-//void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
-//{
-//    // add const to *this's type;
-//    const Frame& f = (static_cast<const Frame&>(*this));
-//
-//    f.getXYZChannels(X, Y, Z);
-//}
+void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+{
+    const Channel* X_;
+    const Channel* Y_;
+    const Channel* Z_;
+
+    static_cast<const Frame&>(*this).getXYZChannels(X_, Y_, Z_);
+
+    X = const_cast<Channel*>(X_);
+    Y = const_cast<Channel*>(Y_);
+    Z = const_cast<Channel*>(Z_);
+}
 
 void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
 {
@@ -136,15 +140,20 @@ void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
     Z = createChannel("Z");
 }
 
-Channel* Frame::getChannel(const std::string& name)
+const Channel* Frame::getChannel(const std::string &name) const
 {
-    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
+    ChannelContainer::const_iterator it = std::find_if(m_channels.begin(),
                                               m_channels.end(),
                                               FindChannel(name));
     if ( it == m_channels.end() )
         return NULL;
     else
         return *it;
+}
+
+Channel* Frame::getChannel(const std::string& name)
+{
+    return const_cast<Channel*>(static_cast<const Frame&>(*this).getChannel(name));
 }
 
 Channel* Frame::createChannel(const std::string& name)

@@ -56,7 +56,6 @@ QStringList getCliFiles(const QStringList& arguments)
 }
 }
 
-
 #ifdef WIN32
 inline void customMessageHandler(QtMsgType type, const char *msg)
 {

@@ -102,6 +102,7 @@ public:
     //! character long.
     //! @return channel or NULL if the channel does not exist
     Channel* getChannel(const std::string& name);
+    const Channel* getChannel(const std::string &name) const;
 
     //! Creates a named channel. If the channel already exists, returns
     //! existing channel.

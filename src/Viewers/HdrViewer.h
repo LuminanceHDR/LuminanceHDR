@@ -31,15 +31,13 @@
 #ifndef IMAGEHDRVIEWER_H
 #define IMAGEHDRVIEWER_H
 
+#include <iostream>
 #include <QImage>
 #include <QComboBox>
 #include <QLabel>
 #include <QScopedPointer>
 
 #include "GenericViewer.h"
-#include "Common/FloatRgbToQRgb.h"
-
-#include <iostream>
 
 // Forward declaration
 namespace pfs {
@@ -47,17 +45,16 @@ namespace pfs {
     class Frame;
 }
 
-class LuminanceRangeWidget;     // #include "LuminanceRangeWidget.h"
-// class HdrViewerMapping;
+class LuminanceRangeWidget;
 
 class HdrViewer : public GenericViewer
 {
     Q_OBJECT
-private:
-    void init_ui();
 
 public:
-    HdrViewer(pfs::Frame* frame, QWidget *parent = 0, bool ns = false, unsigned int negcol = 0, unsigned int naninfcol = 0);
+    HdrViewer(pfs::Frame* frame, QWidget* parent = 0,
+              bool ns = false,
+              unsigned int negcol = 0, unsigned int naninfcol = 0);
     virtual ~HdrViewer();
 
     LuminanceRangeWidget* lumRange();
@@ -92,22 +89,23 @@ protected:
     void setRangeWindow(float min, float max);
 
     // UI
-    LuminanceRangeWidget *m_lumRange;
-    QComboBox *mappingMethodCB;
-    QLabel *mappingMethodLabel;
-    QLabel *histlabel;
+    LuminanceRangeWidget* m_lumRange;
+    QComboBox* m_mappingMethodCB;
+    QLabel* m_mappingMethodLabel;
+    QLabel* m_histLabel;
 
 private:
+    void initUi();
     void refreshPixmap();
 
-    LumMappingMethod m_MappingMethod;
-    float m_MinValue;
-    float m_MaxValue;
+    LumMappingMethod m_mappingMethod;
+    float m_minValue;
+    float m_maxValue;
 
     //! \brief NaN or Inf color
-    int m_NanInfColor;
+    int m_nanInfColor;
     //! \brief Neg color
-    int m_NegColor;
+    int m_negColor;
 
     QImage mapFrameToImage(pfs::Frame* in_frame);
 };

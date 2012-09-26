@@ -36,6 +36,7 @@
 
 #include "Common/global.h"
 #include "Common/msec_timer.h"
+#include "Common/FloatRgbToQRgb.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/array2d.h"
 #include "Libpfs/channel.h"
@@ -50,11 +51,9 @@ namespace // anonymous namespace
 // In this way, we let know the compiler it can mess up as much as it wants with the code,
 // because it will only used inside this compilation unit
 
-const pfs::Array2D* getPrimaryChannel(pfs::Frame* frame)
+const pfs::Array2D* getPrimaryChannel(const pfs::Frame& frame)
 {
-    assert( frame != NULL );
-
-    return frame->getChannel("Y")->getChannelData();
+    return frame.getChannel("Y")->getChannelData();
 }
 
 } // end anonymous namespace
@@ -62,23 +61,23 @@ const pfs::Array2D* getPrimaryChannel(pfs::Frame* frame)
 HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns,
                      unsigned int neg, unsigned int naninf)
     : GenericViewer(frame, parent, ns)
-    , m_MappingMethod(MAP_GAMMA2_2)
-    , m_MinValue(0.f)
-    , m_MaxValue(1.f)
-    , m_NanInfColor(naninf)
-    , m_NegColor(neg)
+    , m_mappingMethod(MAP_GAMMA2_2)
+    , m_minValue(0.f)
+    , m_maxValue(1.f)
+    , m_nanInfColor(naninf)
+    , m_negColor(neg)
 {
-    init_ui();
+    initUi();
 
     // I prefer to do everything by hand, so the flow of the calls is clear
     m_lumRange->blockSignals(true);
 
-    m_lumRange->setHistogramImage(getPrimaryChannel(getFrame()));
+    m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
     m_lumRange->fitToDynamicRange();
 
-    m_MappingMethod = static_cast<LumMappingMethod>( mappingMethodCB->currentIndex() );
-    m_MinValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
-    m_MaxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
+    m_mappingMethod = static_cast<LumMappingMethod>( m_mappingMethodCB->currentIndex() );
+    m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
+    m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
 
     mPixmap->setPixmap(QPixmap::fromImage(mapFrameToImage(getFrame())));
 
@@ -86,19 +85,19 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns,
     m_lumRange->blockSignals(false);
 }
 
-void HdrViewer::init_ui()
+void HdrViewer::initUi()
 {
-    mappingMethodLabel = new QLabel( mToolBar );
-    mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    mappingMethodCB = new QComboBox( mToolBar );
-    mToolBar->addWidget(mappingMethodLabel);
-    mToolBar->addWidget(mappingMethodCB);
+    m_mappingMethodLabel = new QLabel( mToolBar );
+    m_mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    m_mappingMethodCB = new QComboBox( mToolBar );
+    mToolBar->addWidget(m_mappingMethodLabel);
+    mToolBar->addWidget(m_mappingMethodCB);
     mToolBar->addSeparator();
-    mappingMethodLabel->setBuddy( mappingMethodCB );
+    m_mappingMethodLabel->setBuddy( m_mappingMethodCB );
 
-    histlabel = new QLabel( mToolBar );
+    m_histLabel = new QLabel( mToolBar );
     m_lumRange = new LuminanceRangeWidget( mToolBar );
-    mToolBar->addWidget(histlabel);
+    mToolBar->addWidget(m_histLabel);
     mToolBar->addWidget(m_lumRange);
     mToolBar->addSeparator();
     connect( m_lumRange, SIGNAL( updateRangeWindow() ), this, SLOT( updateRangeWindow() ) );
@@ -109,12 +108,12 @@ void HdrViewer::init_ui()
 
 void HdrViewer::retranslateUi()
 {
-	mappingMethodLabel->setText(tr("&Mapping:"));
-	histlabel->setText(tr("Histogram:"));
+    m_mappingMethodLabel->setText(tr("&Mapping:"));
+    m_histLabel->setText(tr("Histogram:"));
 
-	int oldMappingMethodIndex = mappingMethodCB->currentIndex();
+    int oldMappingMethodIndex = m_mappingMethodCB->currentIndex();
 
-	disconnect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
+    disconnect( m_mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
 	QStringList methods;
 	methods << tr("Linear")
 			<< tr("Gamma 1.4")
@@ -123,10 +122,10 @@ void HdrViewer::retranslateUi()
 			<< tr("Gamma 2.6")
 			<< tr("Logarithmic");
 
-    mappingMethodCB->clear();
-    mappingMethodCB->addItems(methods);
-	mappingMethodCB->setCurrentIndex( oldMappingMethodIndex >= 0 ? oldMappingMethodIndex : 3 );
-	connect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
+    m_mappingMethodCB->clear();
+    m_mappingMethodCB->addItems(methods);
+    m_mappingMethodCB->setCurrentIndex( oldMappingMethodIndex >= 0 ? oldMappingMethodIndex : 3 );
+    connect( m_mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
 
 	GenericViewer::retranslateUi();
 }
@@ -155,7 +154,7 @@ void HdrViewer::updatePixmap()
     refreshPixmap();
 
     // I need to set the histogram again during the setFrame function
-    m_lumRange->setHistogramImage(getPrimaryChannel(getFrame()));
+    m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
     m_lumRange->fitToDynamicRange();
     m_lumRange->blockSignals(false);
 }
@@ -173,29 +172,29 @@ void HdrViewer::updateRangeWindow()
 
 void HdrViewer::setRangeWindow( float min, float max )
 {
-    m_MinValue = min;
-    m_MaxValue = max;
+    m_minValue = min;
+    m_maxValue = max;
 
     refreshPixmap();
 }
 
 int HdrViewer::getLumMappingMethod()
 {
-    return mappingMethodCB->currentIndex();
+    return m_mappingMethodCB->currentIndex();
 }
 
 void HdrViewer::setLumMappingMethod( int method )
 {
-    mappingMethodCB->setCurrentIndex( method );
-    m_MappingMethod = static_cast<LumMappingMethod>(method);
+    m_mappingMethodCB->setCurrentIndex( method );
+    m_mappingMethod = static_cast<LumMappingMethod>(method);
 
     refreshPixmap();
 }
 
 void HdrViewer::update_colors(int neg, int naninf)
 {
-    m_NanInfColor = naninf;
-    m_NegColor = neg;
+    m_nanInfColor = naninf;
+    m_negColor = neg;
 
     refreshPixmap();
 }
@@ -217,18 +216,18 @@ QString HdrViewer::getExifComment()
 //! \brief returns max value of the handled frame
 float HdrViewer::getMaxLuminanceValue()
 {
-    return m_MaxValue;
+    return m_maxValue;
 }
 
 //! \brief returns min value of the handled frame
 float HdrViewer::getMinLuminanceValue()
 {
-    return m_MinValue;
+    return m_minValue;
 }
 
 LumMappingMethod HdrViewer::getLuminanceMappingMethod()
 {
-    return m_MappingMethod;
+    return m_mappingMethod;
 }
 
 QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
@@ -252,18 +251,18 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
     QImage return_qimage(in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);
     QRgb *pixels = reinterpret_cast<QRgb*>(return_qimage.bits());
 
-    FloatRgbToQRgb converter(m_MinValue, m_MaxValue, m_MappingMethod);
+    FloatRgbToQRgb converter(m_minValue, m_maxValue, m_mappingMethod);
 
 #pragma omp parallel for
     for ( int index = 0; index < in_frame->getWidth()*in_frame->getHeight(); ++index )
     {
         if ( !finite( R[index] ) || !finite( G[index] ) || !finite( B[index] ) )   // x is NaN or Inf
         {
-            pixels[index] = m_NanInfColor;
+            pixels[index] = m_nanInfColor;
         }
         else if ( R[index] < 0 || G[index]<0 || B[index]<0 )    // x is negative
         {
-            pixels[index] = m_NegColor;
+            pixels[index] = m_negColor;
         }
         else
         {
