@@ -77,7 +77,10 @@ IF(WIN32)
     ADD_DEFINITIONS(/MP)
 
     # Enable SSE2
-    ADD_DEFINITIONS(/arch:SSE2)
+    IF(CMAKE_SIZEOF_VOID_P EQUAL 4)
+        # SSE2 is on by default, on x64 platforms
+    	ADD_DEFINITIONS(/arch:SSE2)
+    ENDIF() 
 
     # Don't "Treat WChar_t As Build in Type", in order to be able to use Qts (from|to)StdWString functions
     ADD_DEFINITIONS(/Zc:wchar_t-)
@@ -94,6 +97,8 @@ IF(WIN32)
     SET(TIFF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libtiff/libtiff.lib")
 	
     SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
+    ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
+    ADD_DEFINITIONS("-DDEMOSAICING_GPL3")
 	
     SET(GSL_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/gsl.lib")
     SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
@@ -299,14 +304,14 @@ ELSEIF(WIN32)
     )
     FOREACH(dll ${QT_RELEASE_DLLS})
         FILE(COPY "${QT_BINARY_DIR}/${dll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release")
-        STRING(REPLACE "4" "d4" debugdll ${dll})
-        FILE(COPY "${QT_BINARY_DIR}/${debugdll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug")
+        #STRING(REPLACE "4" "d4" debugdll ${dll})
+        #FILE(COPY "${QT_BINARY_DIR}/${debugdll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug")
     ENDFOREACH()
     
     FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpeg4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/imageformats")
-    FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpegd4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/imageformats")
+    #FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpegd4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/imageformats")
     FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlite4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/sqldrivers")
-    FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlited4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/sqldrivers")
+    #FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlited4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/sqldrivers")
 
     FILE(GLOB QtI18nAll "${QT_TRANSLATIONS_DIR}/qt_*.qm")
     FILE(GLOB QtI18nHelp "${QT_TRANSLATIONS_DIR}/qt_help_*.qm")
