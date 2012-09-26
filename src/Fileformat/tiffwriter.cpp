@@ -43,6 +43,7 @@
 #include <cassert>
 #include <limits>
 
+#include <stdint.h>
 #include "Common/ResourceHandlerLcms.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/array2d.h"

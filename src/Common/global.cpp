@@ -91,7 +91,11 @@ void installTranslators(const QString& lang, bool installQtTranslations)
     {
         ScopedQTranslator guiTranslator( new QTranslator() );
 
-        guiTranslator->load(QString("lang_") + lang, I18NDIR);
+        // prefer translation files along the program binaries
+        if (!guiTranslator->load(QString("lang_") + lang, QString("i18n"))) 
+        {
+            guiTranslator->load(QString("lang_") + lang, I18NDIR);
+        }
         QCoreApplication::installTranslator(guiTranslator.data());
         lastGuiTranslator.swap( guiTranslator );
 
@@ -99,7 +103,10 @@ void installTranslators(const QString& lang, bool installQtTranslations)
         {
             ScopedQTranslator qtTranslator( new QTranslator() );
 
-			qtTranslator->load(QString("qt_") + lang, I18NDIR);
+            if (!qtTranslator->load(QString("qt_") + lang, QString("i18n")))
+            {
+    			qtTranslator->load(QString("qt_") + lang, I18NDIR);
+            }
             QCoreApplication::installTranslator(qtTranslator.data());
             lastQtTranslator.swap( qtTranslator );
 	    }
