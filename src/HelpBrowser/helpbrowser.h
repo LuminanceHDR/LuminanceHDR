@@ -95,9 +95,6 @@ protected:
 	\author Petr Vanek <petr@yarpen.cz> */
 	void searchingInDirectory(const QString&);
 
-	/*! \brief Reads saved history of browsing. */
-	void readHistory();
-
 	/*! \brief Tell the user there is no help available */
 	void displayNoHelp();
 	

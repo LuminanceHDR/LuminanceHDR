@@ -173,7 +173,6 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
     if (menuModel!=NULL)
 	{
 		readBookmarks();
-		readHistory();
 		jumpToHelpSection(jumpToSection, jumpToFile );
 		languageChange();
 	}
@@ -606,18 +605,6 @@ void HelpBrowser::readBookmarks()
 	QXmlSimpleReader reader;
 	reader.setContentHandler(&handler);
 	reader.parse(source);
-}
-
-void HelpBrowser::readHistory()
-{
-    // TODO: review current history implementation
- 	//HistoryParser2 handler;
- 	//handler.helpBrowser = this;
- 	//QFile xmlFile(historyFile());
- 	//QXmlInputSource source(&xmlFile);
- 	//QXmlSimpleReader reader;
- 	//reader.setContentHandler(&handler);
- 	//reader.parse(source);
 }
 
 void HelpBrowser::setText(const QString& str)
