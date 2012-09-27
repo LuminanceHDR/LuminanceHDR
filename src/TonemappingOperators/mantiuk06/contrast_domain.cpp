@@ -1,5 +1,5 @@
 /**
- * @Brief Contrast mapping TMO
+ * @brief Contrast mapping TMO
  *
  * From:
  * 
@@ -8,9 +8,10 @@
  * In: ACM Transactions on Applied Perception 3 (3), pp. 286-308, 2006
  * http://www.mpi-inf.mpg.de/~mantiuk/contrast_domain/
  *
- * This file is a part of LuminanceHDR package, based on pfstmo.
+ * This file is a part of Luminance HDR package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2007 Grzegorz Krawczyk
+ * Copyright (C) 2010-2012 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -360,10 +361,12 @@ float matrix_DotProduct(const int n, const float* const a, const float* const b)
 }
 
 // set zeros for matrix elements
-inline void matrix_zero(int n, float* m)
+inline
+void matrix_zero(int n, float* m)
 {
-  //bzero(m, n*sizeof(float));
-  memset(m, 0, n*sizeof(float));
+    std::fill(m, m + n, 0.f);
+    //bzero(m, n*sizeof(float));
+    memset(m, 0, n*sizeof(float));
 }
 
 // Davide Anastasia <davideanastasia@users.sourceforge.net> (2010 08 31)

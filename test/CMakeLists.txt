@@ -24,4 +24,12 @@ TARGET_LINK_LIBRARIES(TestSRGB2Y pfs common
     ${TBB_LIBRARIES})
 ADD_TEST(TestSRGB2Y TestSRGB2Y)
 
+# Mantiuk06
+ADD_EXECUTABLE(TestMantiuk06 TestMantiuk06.cpp)
+TARGET_LINK_LIBRARIES(TestMantiuk06 pfs pfstmo common
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${LIBS})
+ADD_TEST(TestMantiuk06 TestMantiuk06)
+
 ENDIF(GTEST_FOUND)
