@@ -32,4 +32,11 @@ TARGET_LINK_LIBRARIES(TestMantiuk06 pfs pfstmo common
     ${LIBS})
 ADD_TEST(TestMantiuk06 TestMantiuk06)
 
+ADD_EXECUTABLE(TestVex TestVex.cpp)
+TARGET_LINK_LIBRARIES(TestVex
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${TBB_LIBRARIES})
+ADD_TEST(TestVex TestVex)
+
 ENDIF(GTEST_FOUND)
