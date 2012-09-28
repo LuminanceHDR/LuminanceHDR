@@ -111,7 +111,7 @@ IF(WIN32)
     ADD_DEFINITIONS(-DCMS_DLL)
     ADD_DEFINITIONS(-DUSE_LCMS2)
     
-    SET(LIBPNG_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libpng/libpng.lib")
+    SET(LIBPNG_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libpng/libpng15.lib")
     
 ELSE()
 

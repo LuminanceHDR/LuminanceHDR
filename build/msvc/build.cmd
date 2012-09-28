@@ -66,6 +66,7 @@ IF NOT EXIST %CYGWIN_DIR%\bin\cvs.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\git.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\gzip.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\mv.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\svn.exe GOTO cygwin_error
@@ -81,6 +82,7 @@ echo    cvs
 echo    git 
 echo    gzip 
 echo    mv
+echo    nasm
 echo    sed 
 echo    ssh 
 echo    svn 
@@ -125,35 +127,42 @@ IF NOT EXIST %TEMP_DIR%\align_image_stack_%RawPlatform%.exe (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/align_image_stack_%RawPlatform%.exe qtpfsgui.sourceforge.net/win/align_image_stack_%RawPlatform%.exe
 )
 
-IF NOT EXIST %TEMP_DIR%\zlib127.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib127.zip http://zlib.net/zlib127.zip
+IF NOT EXIST %TEMP_DIR%\zlib-aa566e.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib-aa566e.zip --no-check-certificate http://github.com/madler/zlib/zipball/aa566e86c46d2264bf623e51f5840bde642548ad
 )
-IF NOT EXIST zlib-1.2.7 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib127.zip
 
+IF NOT EXIST zlib-1.2.7 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib-aa566e.zip
+	%CYGWIN_DIR%\bin\mv.exe madler-zlib-* zlib-1.2.7
+	
 	REM zlib must be compiled in the source folder, else exiv2 compilation
 	REM fails due to zconf.h rename/compile problems, due to cmake
 	pushd zlib-1.2.7
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"
+	IF errorlevel 1 goto error_end
 	devenv zlib.sln /build "%Configuration%|%Platform%" /Project zlib
+	IF errorlevel 1 goto error_end
 	popd
 )
 
 REM zlib copy for libpng
-IF NOT EXIST zlib (
-	mkdir zlib
-	copy zlib-1.2.7\*.h zlib
-	copy zlib-1.2.7\%Configuration%\*.lib zlib
-	copy zlib-1.2.7\%Configuration%\*.dll zlib
-)
+REM IF NOT EXIST zlibxx (
+REM 	mkdir zlibxx
+REM 	copy zlib-1.2.7\*.h zlibxx
+REM 	copy zlib-1.2.7\%Configuration%\*.lib zlibxx
+REM 	copy zlib-1.2.7\%Configuration%\*.dll zlibxx
+REM )
 
-IF NOT EXIST %TEMP_DIR%\lpng1511.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng1511.zip http://prdownloads.sourceforge.net/libpng/lpng1511.zip?download
+IF NOT EXIST %TEMP_DIR%\lpng1513.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng1513.zip http://sourceforge.net/projects/libpng/files/libpng15/1.5.13/lpng1513.zip/download
 )
-IF NOT EXIST lpng1511 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng1511.zip
-	pushd lpng1511
-	nmake /f scripts\makefile.vcwin32
+IF NOT EXIST lpng1513 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng1513.zip
+	pushd lpng1513
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DZLIB_ROOT=..\zlib-1.2.7;..\zlib-1.2.7\%Configuration%
+	IF errorlevel 1	goto error_end
+	devenv libpng.sln /build "%Configuration%|%Platform%" /Project png15
+	IF errorlevel 1	goto error_end
 	popd
 )
 
@@ -179,6 +188,7 @@ IF DEFINED exiv2-compile (
 	pushd exiv2-trunk\msvc64 		
 	devenv exiv2.sln /upgrade
 	devenv exiv2.sln /build "%Configuration%DLL|%Platform%" /Project exiv2
+	IF errorlevel 1	goto error_end
 	popd
 )
 
@@ -216,6 +226,7 @@ IF NOT EXIST lcms2-493aac (
 	pushd lcms2-493aac
 	devenv Projects\VC2010\lcms2.sln /Upgrade
 	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
+	IF errorlevel 1	goto error_end
 	popd
 )
 
@@ -373,15 +384,14 @@ IF NOT EXIST fftw-3.3.2-dll (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\tbb40_20120613oss_win.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tbb40_20120613oss_win.zip "http://threadingbuildingblocks.org/uploads/77/187/4.0 update 5/tbb40_20120613oss_win.zip"
-)
-
-IF NOT EXIST tbb40_20120613oss (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tbb40_20120613oss_win.zip
-	
-	REM Everthing is already compiled, nothing to do!
-)
+REM IF NOT EXIST %TEMP_DIR%\tbb40_20120613oss_win.zip (
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tbb40_20120613oss_win.zip "http://threadingbuildingblocks.org/uploads/77/187/4.0 update 5/tbb40_20120613oss_win.zip"
+REM )
+REM 
+REM IF NOT EXIST tbb40_20120613oss (
+REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tbb40_20120613oss_win.zip
+REM 	REM Everthing is already compiled, nothing to do!
+REM )
 
 
 IF NOT DEFINED L_BOOST_DIR (
@@ -454,16 +464,11 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	mkdir bin
 	popd
 	
-	for %%v in ("libpng", "libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl", "tbb") do (
+	for %%v in ("libpng", "libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
 		mkdir LuminanceHdrStuff\DEPs\include\%%v
 		mkdir LuminanceHdrStuff\DEPs\lib\%%v
 		mkdir LuminanceHdrStuff\DEPs\bin\%%v
 	)
-	
-
-	copy lpng1511\*.h   LuminanceHdrStuff\DEPs\include\libpng
-	copy lpng1511\*.lib LuminanceHdrStuff\DEPs\lib\libpng
-	rem copy lpng1511\*.dll LuminanceHdrStuff\DEPs\bin\libpng
 	
 	copy libjpeg\*.h LuminanceHdrStuff\DEPs\include\libjpeg
 	
@@ -493,6 +498,11 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	rem copy gsl-1.15\build.vc10\dll\*.dll LuminanceHdrStuff\DEPs\bin\gsl
 )
 
+robocopy lpng1513 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
+robocopy lpng1513\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
+robocopy lpng1513\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
+	
+
 robocopy LibRaw-5c9b4fb\libraw LuminanceHdrStuff\DEPs\include\libraw\libraw /MIR >nul
 robocopy LibRaw-5c9b4fb\lib LuminanceHdrStuff\DEPs\lib\libraw *.lib /MIR >nul
 robocopy LibRaw-5c9b4fb\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR >nul
@@ -501,9 +511,9 @@ robocopy lcms2-493aac\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
 robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
 robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
 
-robocopy tbb40_20120613oss\include LuminanceHdrStuff\DEPs\include\tbb /MIR >nul
-robocopy tbb40_20120613oss\lib\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\lib\tbb /MIR >nul
-robocopy tbb40_20120613oss\bin\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\bin\tbb /MIR >nul
+REM robocopy tbb40_20120613oss\include LuminanceHdrStuff\DEPs\include\tbb /MIR >nul
+REM robocopy tbb40_20120613oss\lib\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\lib\tbb /MIR >nul
+REM robocopy tbb40_20120613oss\bin\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\bin\tbb /MIR >nul
 
 
 IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build (
@@ -529,6 +539,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
 	pushd LuminanceHdrStuff\qtpfsgui.build	
 	devenv luminance-hdr.sln /Upgrade
 	devenv luminance-hdr.sln /build "%Configuration%|%Platform%"
+	IF errorlevel 1	goto error_end
 	popd
 )
 
@@ -555,7 +566,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
 			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "tbb\tbb.dll") do (
+			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "libpng\libpng15.dll") do (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd
