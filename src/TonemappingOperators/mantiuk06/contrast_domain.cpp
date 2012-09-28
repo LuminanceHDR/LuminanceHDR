@@ -572,7 +572,7 @@ void xGradient(size_t ROWS, size_t COLS, const float* lum, float* Gx)
 void yGradient(size_t ROWS, size_t COLS, const float* lum, float* Gy)
 {
 
-    for (size_t ky = 0; ky < ROWS; ++ky)
+    for (size_t ky = 0; ky < ROWS-1; ++ky)
     {
         float* currGy = Gy + ky*COLS;
         float* endGy = currGy + COLS;
