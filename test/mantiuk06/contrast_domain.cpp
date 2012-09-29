@@ -1025,7 +1025,8 @@ void contrast_equalization(pyramid_t *pp, const float contrastFactor)
   
   // Generate histogram
   qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_order);
-  
+  assert( hist[0].size < hist[total_pixels-1].size );
+
   // Calculate cdf
   const float norm = 1.0f / (float) total_pixels;
   #pragma omp parallel for schedule(static)
@@ -1036,7 +1037,10 @@ void contrast_equalization(pyramid_t *pp, const float contrastFactor)
   
   // Recalculate in terms of indexes
   qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_index);
-  
+  assert( hist[0].index < hist[total_pixels-1].index );
+  assert( hist[0].index == 0 );
+
+
   //Remap gradient magnitudes
   l = pp;
   index = 0;

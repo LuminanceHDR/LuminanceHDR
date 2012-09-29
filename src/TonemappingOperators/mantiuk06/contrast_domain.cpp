@@ -64,6 +64,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <cassert>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -238,9 +239,9 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
         if (iter == itmax)
         {
             std::cerr << std::endl << "pfstmo_mantiuk06: Warning: Not "\
-                         " converged (hit maximum iterations), error = "
-                      << std::sqrt(rdotr_curr/bnrm2) << " (should be below "
-                      << tol <<")"
+                         "converged (hit maximum iterations), error = "
+                      << std::sqrt(rdotr_curr/bnrm2)
+                      << " (should be below " << tol <<")"
                       << std::endl;
         }
         else
@@ -279,104 +280,107 @@ void transformToLuminance(PyramidT& pp, float* Y,
     lincg(pp, pC, b.data(), Y, itmax, tol, ph);
 }
 
-/*
-struct hist_data
+struct HistData
 {
-  float size;
-  float cdf;
-  int index;
+    float data;
+    float cdf;
+    size_t index;
 };
 
-int hist_data_order(const void* const v1, const void* const v2)
+struct HistDataCompareData
 {
-  if (((struct hist_data*) v1)->size < ((struct hist_data*) v2)->size)
-    return -1;
-  
-  if (((struct hist_data*) v1)->size > ((struct hist_data*) v2)->size)
-    return 1;
-  
-  return 0;
-}
-
-
-int hist_data_index(const void* const v1, const void* const v2)
-{
-  return ((struct hist_data*) v1)->index - ((struct hist_data*) v2)->index;
-}
-
-
-void contrast_equalization(pyramid_t *pp, const float contrastFactor)
-{
-  // Count sizes
-  int total_pixels = 0;
-  pyramid_t* l = pp;
-  while (l != NULL)
-  {
-    total_pixels += l->rows * l->cols;
-    l = l->next;
-  }
-  
-  // Allocate memory
-  struct hist_data* hist = (struct hist_data*) malloc(sizeof(struct hist_data) * total_pixels);
-  if (hist == NULL)
-  {
-    fprintf(stderr, "ERROR: malloc in contrast_equalization() (size:%zu)", sizeof(struct hist_data) * total_pixels);
-    exit(155);
-  }
-  
-  // Build histogram info
-  l = pp;
-  int index = 0;
-  while ( l != NULL )
-  {
-    const int pixels = l->rows*l->cols;
-    const int offset = index;
-    #pragma omp parallel for schedule(static)
-    for(int c = 0; c < pixels; c++)
+    bool operator()(const HistData& v1, const HistData& v2) const
     {
-      hist[c+offset].size = sqrtf( l->Gx[c]*l->Gx[c] + l->Gy[c]*l->Gy[c] );
-      hist[c+offset].index = c + offset;
-    } 
-    index += pixels;
-    l = l->next;
-  }
-  
-  // Generate histogram
-  qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_order);
-  
-  // Calculate cdf
-  const float norm = 1.0f / (float) total_pixels;
-  #pragma omp parallel for schedule(static)
-  for (int i = 0; i < total_pixels; i++)
-  {
-    hist[i].cdf = ((float) i) * norm;
-  }
-  
-  // Recalculate in terms of indexes
-  qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_index);
-  
-  //Remap gradient magnitudes
-  l = pp;
-  index = 0;
-  while  ( l != NULL )
-  {
-    const int pixels = l->rows*l->cols;
-    const int offset = index;
-    
-    #pragma omp parallel for schedule(static)
-    for( int c = 0; c < pixels; c++)
+        if (v1.data >= v2.data) return false;
+        else return true;
+        // return 0;
+    }
+};
+
+struct HistDataCompareIndex
+{
+    bool operator()(const HistData& v1, const HistData& v2) const
     {
-      const float scale = contrastFactor * hist[c+offset].cdf/hist[c+offset].size;
-      l->Gx[c] *= scale;
-      l->Gy[c] *= scale;        
-    } 
-    index += pixels;
-    l = l->next;
-  }
-  
-  free(hist);
+        if (v1.index >= v2.index) return false;
+        else return true;
+    }
+};
+
+void contrastEqualization(PyramidT& pp, const float contrastFactor)
+{
+    // Count size
+    size_t totalPixels = 0;
+    for ( PyramidT::const_iterator itCurr = pp.begin(), itEnd = pp.end();
+          itCurr != itEnd;
+          ++itCurr)
+    {
+        totalPixels += itCurr->size();
+    }
+
+    // Allocate memory
+    std::vector<HistData> hist(totalPixels);
+
+    // Build histogram info
+    size_t offset = 0;
+    for ( PyramidT::const_iterator itCurr = pp.begin(), itEnd = pp.end();
+          itCurr != itEnd;
+          ++itCurr)
+    {
+        const size_t pixels = itCurr->size();
+
+        const float* gx = itCurr->gX();
+        const float* gy = itCurr->gY();
+
+        for (size_t idx = 0; idx < pixels; idx++, gx++, gy++)
+        {
+            hist[offset + idx].data = std::sqrt(
+                        std::pow(*gx, 2) + std::pow(*gy, 2)
+                        );
+            hist[offset + idx].index = offset + idx;
+        }
+
+        offset += pixels;
+    }
+
+    std::sort( hist.begin(), hist.end(), HistDataCompareData() );
+    assert( hist[0].data < hist[totalPixels-1].data );
+
+    // Calculate cdf
+    const float normalizationFactor = 1.0f/totalPixels;
+    for (size_t idx = 0; idx < totalPixels; ++idx)
+    {
+        hist[idx].cdf = static_cast<float>(idx)*normalizationFactor;
+    }
+
+    // Recalculate in terms of indexes
+    std::sort( hist.begin(), hist.end(), HistDataCompareIndex() );
+    assert( hist[0].index < hist[totalPixels-1].index );
+    assert( hist[0].index == 0 );
+
+    //Remap gradient magnitudes
+    offset = 0;
+    for ( PyramidT::iterator itCurr = pp.begin(), itEnd = pp.end();
+          itCurr != itEnd;
+          ++itCurr)
+    {
+        const size_t pixels = itCurr->size();
+
+        float* gx = itCurr->gX();
+        float* gy = itCurr->gY();
+
+        for (size_t idx = 0; idx < pixels; idx++, gx++, gy++)
+        {
+            float scaleFactor =
+                    contrastFactor +
+                    hist[offset + idx].cdf / hist[offset + idx].data;
+
+            *gx *= scaleFactor;
+            *gy *= scaleFactor;
+        }
+
+        offset += pixels;
+    }
 }
-*/
 
 namespace
 {
@@ -410,17 +414,23 @@ void denormalizeLuminance(float* Y, size_t size)
     std::sort(temp.begin(), temp.end());
 
     float trim = (size - 1) * CUT_MARGIN * 0.01f;
-    float delta = trim - floorf(trim);
-    const float l_min = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);
+    float delta = trim - std::floor(trim);
+    const float lumMin =
+            temp[ static_cast<size_t>(std::floor(trim)) ]*delta +
+            temp[ static_cast<size_t>(std::ceil(trim)) ]*(1.0f - delta);
 
     trim = (size - 1) * (100.0f - CUT_MARGIN) * 0.01f;
-    delta = trim - floorf(trim);
-    const float l_max = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);
+    delta = trim - std::floor(trim);
+    const float lumMax =
+            temp[ static_cast<size_t>(std::floor(trim)) ]*delta +
+            temp[ static_cast<size_t>(std::ceil(trim)) ]*(1.0f - delta);
 
-#pragma omp parallel for
+    const float lumRange = 1.f/(lumMax - lumMin)*DISP_DYN_RANGE;
+
+#pragma omp parallel for // shared(lumRange, lumMin)
     for (size_t j = 0; j < size; j++)
     {
-        Y[j] = (Y[j] - l_min) / (l_max - l_min) * DISP_DYN_RANGE - DISP_DYN_RANGE; // x scaled
+        Y[j] = (Y[j] - lumMin)*lumRange - DISP_DYN_RANGE; // x scaled
     }
 }
 
@@ -472,7 +482,7 @@ int tmo_mantiuk06_contmap(const int c, const int r,
     // transform gradients to R
     pp.transformToR( detailfactor );
 
-    /* Contrast map */
+    // Contrast map
     if ( contrastFactor > 0.0f )
     {
         // Contrast mapping
@@ -481,7 +491,7 @@ int tmo_mantiuk06_contmap(const int c, const int r,
     else
     {
         // Contrast equalization
-        // contrast_equalization(pp, -contrastFactor);
+        contrastEqualization(pp, -contrastFactor);
     }
 
     // transform R to gradients

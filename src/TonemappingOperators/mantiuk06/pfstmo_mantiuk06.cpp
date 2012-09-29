@@ -47,10 +47,10 @@
 
 
 //--- default tone mapping parameters;
-//float scaleFactor = 0.1f;
-//float saturationFactor = 0.8f;
-//bool cont_map = false, cont_eq = false
-//bool cont_map = false;
+// float scaleFactor = 0.1f;
+// float saturationFactor = 0.8f;
+// bool cont_map = false, cont_eq = false
+// bool cont_map = false;
 
 namespace
 {

@@ -42,6 +42,9 @@ public:
 
     //! \brief Allocate a properly sized Pyramid level
     PyramidS(size_t rows, size_t cols);
+    //! \brief copy ctor that does NOT perform deep copy (it does allocate
+    //! all the dimensions properly, but it does not copy the data)
+    PyramidS(const PyramidS& lhs);
 
     size_t getRows() const { return m_rows; }
     size_t getCols() const { return m_cols; }

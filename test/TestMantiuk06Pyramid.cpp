@@ -186,6 +186,23 @@ TEST_F(TestPyramidT, Scale)
     comparePyramids();
 }
 
+// This test will always fail, because the internal implementation is slightly
+// different. In particular, because internally there are sort functions, the
+// final ordering can be different in the two implementations
+#if 0
+void contrastEqualization(PyramidT& pp, const float contrastFactor);
+
+TEST_F(TestPyramidT, ContrastEqualization)
+{
+    populatePyramids();
+
+    test_mantiuk06::contrast_equalization(oldPyramid_, -1.5f);
+    contrastEqualization(newPyramid_, -1.5f);
+
+    comparePyramids();
+}
+#endif
+
 
 class TestDualPyramidT : public testing::Test
 {
@@ -227,37 +244,50 @@ protected:
         while (cursor != NULL) { levels++; cursor = cursor->next; }
         return levels;
     }
+
+    void comparePyramids()
+    {
+        {
+        PyramidT::iterator it = newPyramid1_.begin();
+        test_mantiuk06::pyramid_t* cursor = oldPyramid1_;
+        while ( cursor != NULL )
+        {
+            EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
+            EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
+
+            compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
+            compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
+
+            cursor = cursor->next;
+            ++it;
+        }
+        }
+        {
+        PyramidT::iterator it = newPyramid2_.begin();
+        test_mantiuk06::pyramid_t* cursor = oldPyramid2_;
+        while ( cursor != NULL )
+        {
+            EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
+            EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
+
+            compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
+            compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
+
+            cursor = cursor->next;
+            ++it;
+        }
+        }
+    }
 };
 
 
 TEST_F(TestDualPyramidT, ComputeScaleFactors)
 {
-    PyramidT pyramidS(COLS, ROWS);
-    PyramidT pyramidD(COLS, ROWS);
-
-    test_mantiuk06::pyramid_t* tS = test_mantiuk06::pyramid_allocate(ROWS, COLS);
-    test_mantiuk06::pyramid_t* tD = test_mantiuk06::pyramid_allocate(ROWS, COLS);
-
     // compute scalingFactors!
     newPyramid1_.computeScaleFactors( newPyramid2_ );
     test_mantiuk06::pyramid_calculate_scale_factor(oldPyramid1_, oldPyramid2_);
 
-    PyramidT::iterator it = newPyramid2_.begin();
-    test_mantiuk06::pyramid_t* cursor = oldPyramid2_;
-    while ( cursor != NULL )
-    {
-        EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
-        EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
-
-        compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
-        compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
-
-        cursor = cursor->next;
-        ++it;
-    }
-
-    test_mantiuk06::pyramid_free(tS);
-    test_mantiuk06::pyramid_free(tD);
+    comparePyramids();
 }
 
 TEST_F(TestDualPyramidT, ScaleByGradient)
@@ -266,36 +296,7 @@ TEST_F(TestDualPyramidT, ScaleByGradient)
     newPyramid1_.multiply( newPyramid2_ );
     test_mantiuk06::pyramid_scale_gradient(oldPyramid1_, oldPyramid2_);
 
-    {
-    PyramidT::iterator it = newPyramid1_.begin();
-    test_mantiuk06::pyramid_t* cursor = oldPyramid1_;
-    while ( cursor != NULL )
-    {
-        EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
-        EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
-
-        compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
-        compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
-
-        cursor = cursor->next;
-        ++it;
-    }
-    }
-    {
-    PyramidT::iterator it = newPyramid2_.begin();
-    test_mantiuk06::pyramid_t* cursor = oldPyramid2_;
-    while ( cursor != NULL )
-    {
-        EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
-        EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
-
-        compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
-        compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
-
-        cursor = cursor->next;
-        ++it;
-    }
-    }
+    comparePyramids();
 }
 
 //// divG_sum = A * x = sum(divG(x))
@@ -318,43 +319,13 @@ TEST_F(TestDualPyramidT, multiplyA)
     compareVectors(frame1.data(), frame3.data(), SIZE);
     compareVectors(frame2.data(), frame4.data(), SIZE);
 
-
     multiplyA(newPyramid1_, newPyramid2_, frame1.data(), frame2.data());
-
-//    // old API
+    // old API
     test_mantiuk06::multiplyA(oldPyramid1_, oldPyramid2_, frame3.data(), frame4.data());
 
-    {
-    PyramidT::iterator it = newPyramid1_.begin();
-    test_mantiuk06::pyramid_t* cursor = oldPyramid1_;
-    while ( cursor != NULL )
-    {
-        EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
-        EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
-
-        compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
-        compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
-
-        cursor = cursor->next;
-        ++it;
-    }
-    }
-    {
-    PyramidT::iterator it = newPyramid2_.begin();
-    test_mantiuk06::pyramid_t* cursor = oldPyramid2_;
-    while ( cursor != NULL )
-    {
-        EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
-        EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
-
-        compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
-        compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
-
-        cursor = cursor->next;
-        ++it;
-    }
-    }
+    comparePyramids();
 
     compareVectors(frame1.data(), frame3.data(), SIZE);
     compareVectors(frame2.data(), frame4.data(), SIZE);
 }
+

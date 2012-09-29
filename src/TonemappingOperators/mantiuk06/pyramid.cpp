@@ -56,6 +56,13 @@ PyramidS::PyramidS(size_t rows, size_t cols)
     , m_Gy(rows*cols)
 {}
 
+PyramidS::PyramidS(const PyramidS &lhs)
+    : m_rows(lhs.m_rows)
+    , m_cols(lhs.m_cols)
+    , m_Gx( lhs.m_Gx.size() )
+    , m_Gy( lhs.m_Gy.size() )
+{}
+
 void PyramidS::transformToR(float detailFactor)
 {
     ::transformToR(m_Gx.data(), detailFactor, m_rows*m_cols);
