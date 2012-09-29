@@ -88,7 +88,7 @@ int main( int argc, char ** argv )
     QApplication application( argc, argv );
 
 #ifdef WIN32
-    //qInstallMsgHandler(customMessageHandler);
+    // qInstallMsgHandler(customMessageHandler);
 
     bool found_DLL = false;
     foreach (QString path, application.libraryPaths())
@@ -116,6 +116,8 @@ int main( int argc, char ** argv )
         QSettings::setDefaultFormat(QSettings::IniFormat);
         QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QDir::currentPath());
     }
+
+    LuminanceOptions::conditionallyDoUpgrade();
 
     installTranslators(true);
 

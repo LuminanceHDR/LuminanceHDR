@@ -46,6 +46,8 @@ public:
     void setValue(const QString& key, const QVariant& value);
     QVariant value(const QString & key, const QVariant& defaultValue = QVariant()) const;
 
+    static void conditionallyDoUpgrade();
+
     static bool isCurrentPortableMode;
     QString getDatabaseFileName();
     void setPortableMode(bool isPortable);

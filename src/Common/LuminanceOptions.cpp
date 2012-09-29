@@ -50,6 +50,26 @@ LuminanceOptions::~LuminanceOptions()
     delete m_settingHolder;
 }
 
+void LuminanceOptions::conditionallyDoUpgrade()
+{
+    LuminanceOptions options;
+    int currentVersion = options.value("LuminanceOptionsVersion", 0).toInt();
+
+    // check if update needed
+    if (currentVersion < LUMINANCEVERSION_NUM)
+    {
+        if (currentVersion < 2030099)
+        {
+            options.setRawWhiteBalanceMethod(1);
+#ifdef DEMOSAICING_GPL3
+            options.setRawUserQuality(10); // AMaZE 
+#endif
+        }
+
+        options.setValue("LuminanceOptionsVersion", LUMINANCEVERSION_NUM);
+    }
+}
+
 void LuminanceOptions::setPortableMode(bool isPortable)
 {
     if (LuminanceOptions::isCurrentPortableMode != isPortable)
@@ -310,7 +330,7 @@ void LuminanceOptions::setRawHalfSize(int v)
 
 int LuminanceOptions::getRawWhiteBalanceMethod()
 {
-    return m_settingHolder->value(KEY_WB_METHOD, 0).toInt();
+    return m_settingHolder->value(KEY_WB_METHOD, 1).toInt();
 }
 
 void LuminanceOptions::setRawWhiteBalanceMethod(int v)
