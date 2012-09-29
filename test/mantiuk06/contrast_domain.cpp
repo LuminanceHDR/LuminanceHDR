@@ -53,11 +53,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cmath>
 #include <iostream>
-
-#ifdef _OPENMP
-#include <omp.h>
-#endif
 
 #include "contrast_domain.h"
 #include "arch/malloc.h"
@@ -111,7 +108,6 @@ void matrix_upsample_full(const int outCols, const int outRows, const float* con
   const float factor = 1.0f / (dx*dy); // This gives a genuine upsampling matrix, not the transpose of the downsampling matrix
   // const float factor = 1.0f; // Theoretically, this should be the best.
   
-  #pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
   {
     const float sy = y * dy;
@@ -134,7 +130,6 @@ void matrix_upsample_full(const int outCols, const int outRows, const float* con
 
 void matrix_upsample_simple(const int outCols, const int outRows, const float* const in, float* const out)
 {
-  #pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
   {
     const int iy1 = y / 2;
@@ -182,7 +177,6 @@ void matrix_downsample_full(const int inCols, const int inRows, const float* con
   // (fx2, fy2) is the fraction of the bottom right pixel showing.
   
   const float normalize = 1.0f/(dx*dy);
-#pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
   {
       const int iy1 = (  y   * inRows) / outRows;
@@ -334,9 +328,7 @@ float matrix_DotProduct(const int n, const float* const a, const float* const b)
 void calculate_and_add_divergence(const int COLS, const int ROWS, const float* const Gx, const float* const Gy, float* const divG)
 {
     float divGx, divGy;
-#pragma omp parallel sections private(divGx, divGy)
     {
-#pragma omp section
         {
             // kx = 0 AND ky = 0;
             divG[0] += Gx[0] + Gy[0];                       // OUT
@@ -349,9 +341,7 @@ void calculate_and_add_divergence(const int COLS, const int ROWS, const float* c
                 divG[kx] += divGx + divGy;                    // OUT
             }
         }
-#pragma omp section
         {
-#pragma omp parallel for schedule(static) private(divGx, divGy)
             for (int ky=1; ky<ROWS; ky++)
             {
                 // kx = 0
@@ -419,12 +409,11 @@ void pyramid_calculate_divergence_sum(pyramid_t* pyramid, float* divG_sum)
   const float detectT = 0.001f;
   const float a = 0.038737f;
   const float b = 0.537756f;
-	
-  #pragma omp parallel for schedule(static)
+
   for(int i=0; i<n; i++)
   {
     //#if 1
-    const float g = max( detectT, fabsf(G[i]) );    
+    const float g = std::max( detectT, fabsf(G[i]) );
     C[i] = 1.0f / (a*powf(g,b));
     //#else
     //    if(fabsf(G[i]) < GFIXATE)
@@ -554,12 +543,10 @@ pyramid_t * pyramid_allocate(int cols, int rows)
 
 
 // calculate gradients
-//TODO: check this implementation in Linux, where the OMP is enabled!
  void calculate_gradient(const int COLS, const int ROWS, const float* const lum, float* const Gx, float* const Gy)
 { 
   int Y_IDX, IDX;
   
-  #pragma omp parallel for schedule(static) private(Y_IDX, IDX)
   for (int ky = 0; ky < ROWS-1; ky++)
   {
     Y_IDX = ky*COLS;
@@ -707,7 +694,6 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     alpha = rdotr_curr / matrix_DotProduct(n, p, Ap);
     
     // r = r - alpha Ap
-    #pragma omp parallel for schedule(static)
     for (int i = 0; i < n; i++)
     {
       r[i] -= alpha * Ap[i];
@@ -735,7 +721,6 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     }
     
     // x = x + alpha * p
-    #pragma omp parallel for schedule(static)
     for (int i = 0; i < n; i++)
     {
       x[i] += alpha * p[i];
@@ -769,7 +754,6 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
       // p = r + beta p
       beta = rdotr_curr/rdotr_prev;
       
-      #pragma omp parallel for schedule(static)
       for (int i = 0; i < n; i++)
       {
         p[i] = r[i] + beta*p[i];
@@ -837,7 +821,6 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
 {
   const float log10=2.3025850929940456840179914546844*detail_factor;
   
-  #pragma omp parallel for schedule(static)
   for (int j=0; j<n; j++)
   {    
     // G to W
@@ -867,7 +850,6 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   //here we are actually changing the base of logarithm
   const float log10 = 2.3025850929940456840179914546844*detail_factor; 
   
-#pragma omp parallel for schedule(static)
   for(int j=0; j<n; j++)
   {
     float Curr_R = R[j];
@@ -1013,7 +995,6 @@ void contrast_equalization(pyramid_t *pp, const float contrastFactor)
   {
     const int pixels = l->rows*l->cols;
     const int offset = index;
-    #pragma omp parallel for schedule(static)
     for(int c = 0; c < pixels; c++)
     {
       hist[c+offset].size = sqrtf( l->Gx[c]*l->Gx[c] + l->Gy[c]*l->Gy[c] );
@@ -1029,7 +1010,6 @@ void contrast_equalization(pyramid_t *pp, const float contrastFactor)
 
   // Calculate cdf
   const float norm = 1.0f / (float) total_pixels;
-  #pragma omp parallel for schedule(static)
   for (int i = 0; i < total_pixels; i++)
   {
     hist[i].cdf = ((float) i) * norm;
@@ -1049,7 +1029,6 @@ void contrast_equalization(pyramid_t *pp, const float contrastFactor)
     const int pixels = l->rows*l->cols;
     const int offset = index;
     
-    #pragma omp parallel for schedule(static)
     for( int c = 0; c < pixels; c++)
     {
       const float scale = contrastFactor * hist[c+offset].cdf/hist[c+offset].size;
@@ -1078,7 +1057,6 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   const float clip_min = 1e-7f*Ymax;
   
   //TODO: use VEX, if you can
-  #pragma omp parallel for schedule(static)
   for (int j = 0; j < n; j++)
   {
     if ( unlikely(R[j] < clip_min) ) R[j] = clip_min;
@@ -1086,9 +1064,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
     if ( unlikely(B[j] < clip_min) ) B[j] = clip_min;
     if ( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;    
   }
-	
-  //TODO: use VEX
-  #pragma omp parallel for schedule(static)
+
   for(int j=0;j<n;j++)
   {
     R[j] /= Y[j];
@@ -1137,16 +1113,12 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
 	
   const float disp_dyn_range = 2.3f;
   
-  //TODO: is it possible to use VEX?
-  #pragma omp parallel for schedule(static)
   for(int j=0; j<n; j++)
   {
     Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
   }
   
-  //TODO: use VEX
   /* Transform to linear scale RGB */
-  #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
   {
     Y[j] = powf(10, Y[j]);

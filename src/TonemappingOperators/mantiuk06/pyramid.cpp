@@ -36,6 +36,10 @@
 #include <functional>
 #include <boost/bind.hpp>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 #include "Libpfs/vex.h"
 #include "Libpfs/vex/vex.h"
 
@@ -209,26 +213,32 @@ void PyramidT::computeScaleFactors( PyramidT& result ) const
 
 void PyramidT::transformToR(float detailFactor)
 {
-    std::for_each(
-                m_pyramid.begin(), m_pyramid.end(),
-                boost::bind( &PyramidS::transformToR, _1, detailFactor)
-                );
+    const size_t iEnd = m_pyramid.size();
+#pragma omp parallel for
+    for (size_t i = 0; i < iEnd; i++)
+    {
+        m_pyramid[i].transformToR( detailFactor );
+    }
 }
 
 void PyramidT::transformToG(float detailFactor)
 {
-    std::for_each(
-                m_pyramid.begin(), m_pyramid.end(),
-                boost::bind( &PyramidS::transformToG, _1, detailFactor)
-                );
+    const size_t iEnd = m_pyramid.size();
+#pragma omp parallel for
+    for (size_t i = 0; i < iEnd; i++)
+    {
+        m_pyramid[i].transformToG( detailFactor );
+    }
 }
 
 void PyramidT::scale(float multiplier)
 {
-    std::for_each(
-                m_pyramid.begin(), m_pyramid.end(),
-                boost::bind( &PyramidS::scale, _1, multiplier)
-                );
+    const size_t iEnd = m_pyramid.size();
+#pragma omp parallel for
+    for (size_t i = 0; i < iEnd; i++)
+    {
+        m_pyramid[i].scale( multiplier );
+    }
 }
 
 // scale gradients for the whole one pyramid with the use of (Cx,Cy)
@@ -255,6 +265,7 @@ void matrixDownsampleFull(size_t inCols, size_t inRows,
 
     const float dx = static_cast<float>(inCols) / outCols;
     const float dy = static_cast<float>(inRows) / outRows;
+    const float normalize = 1.0f/(dx*dy);
 
     // New downsampling by Ed Brambley:
     // Experimental downsampling that assumes pixels are square and
@@ -272,7 +283,6 @@ void matrixDownsampleFull(size_t inCols, size_t inRows,
     // (fx1, fy1) is the fraction of the top left pixel showing.
     // (fx2, fy2) is the fraction of the bottom right pixel showing.
 
-    const float normalize = 1.0f/(dx*dy);
 #pragma omp parallel for
     for (size_t y = 0; y < outRows; y++)
     {
@@ -378,7 +388,7 @@ void matrixUpsampleFull(const size_t outCols, const size_t outRows,
     const float factor = 1.0f / (dx*dy); // This gives a genuine upsampling matrix, not the transpose of the downsampling matrix
     // const float factor = 1.0f; // Theoretically, this should be the best.
 
-#pragma omp parallel for schedule(static)
+#pragma omp parallel for
     for (size_t y = 0; y < outRows; y++)
     {
         const float sy = y * dy;
@@ -402,7 +412,7 @@ void matrixUpsampleFull(const size_t outCols, const size_t outRows,
 void matrixUpsampleSimple(const int outCols, const int outRows,
                           const float* const inputData, float* const outputData)
 {
-#pragma omp parallel for schedule(static)
+#pragma omp parallel for
     for (int y = 0; y < outRows; y++)
     {
         const int iy1 = y / 2;
@@ -433,6 +443,7 @@ namespace
 {
 void xGradient(size_t ROWS, size_t COLS, const float* lum, float* Gx)
 {
+#pragma omp parallel for
     for (size_t ky = 0; ky < ROWS; ky++)
     {
         float* currGx = Gx + ky*COLS;
@@ -449,7 +460,7 @@ void xGradient(size_t ROWS, size_t COLS, const float* lum, float* Gx)
 
 void yGradient(size_t ROWS, size_t COLS, const float* lum, float* Gy)
 {
-
+#pragma omp parallel for
     for (size_t ky = 0; ky < ROWS-1; ++ky)
     {
         float* currGy = Gy + ky*COLS;
@@ -547,7 +558,7 @@ void transformToR(float* G, float detailFactor, size_t size)
 {
     const float log10 = 2.3025850929940456840179914546844*detailFactor;
 
-#pragma omp parallel for schedule(static)
+#pragma omp parallel for
     for (size_t j = 0; j < size; j++)
     {
         // G to W
@@ -577,7 +588,7 @@ void transformToG(float* R, float detailFactor, size_t size)
     //here we are actually changing the base of logarithm
     const float log10 = 2.3025850929940456840179914546844*detailFactor;
 
-#pragma omp parallel for schedule(static)
+#pragma omp parallel for
     for (size_t j = 0; j < size; j++)
     {
         float Curr_R = R[j];

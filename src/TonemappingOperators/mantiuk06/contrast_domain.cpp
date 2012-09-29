@@ -293,7 +293,6 @@ struct HistDataCompareData
     {
         if (v1.data >= v2.data) return false;
         else return true;
-        // return 0;
     }
 };
 
@@ -398,10 +397,12 @@ void normalizeLuminanceAndRGB(float* R, float* G, float* B, float* Y, size_t siz
         if ( B[idx] < clip_min ) B[idx] = clip_min;
         if ( Y[idx] < clip_min ) Y[idx] = clip_min;
 
-        R[idx] /= Y[idx];
-        G[idx] /= Y[idx];
-        B[idx] /= Y[idx];
-        Y[idx] = log10f( Y[idx] );
+        float currY = 1.f/Y[idx];
+
+        R[idx] *= currY;
+        G[idx] *= currY;
+        B[idx] *= currY;
+        Y[idx] = std::log10( Y[idx] );
     }
 }
 

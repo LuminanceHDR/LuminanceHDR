@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstddef>
+#include <inttypes.h>
 #include <algorithm>
 #include <numeric>
 #include <functional>
