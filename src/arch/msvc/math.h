@@ -40,10 +40,10 @@
 #define isnan(x) (x != x)
 #define isnanf(x) (x != x)
 
-#define fmax max
-#define fmaxf max
-#define fmin min
-#define fminf min
+#define fmax std::max
+#define fmaxf std::max
+#define fmin std::min
+#define fminf std::min
 #pragma warning (disable:4996)
 
 #ifndef snprintf

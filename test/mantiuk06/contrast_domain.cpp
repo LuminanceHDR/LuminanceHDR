@@ -58,7 +58,6 @@
 
 #include "contrast_domain.h"
 #include "arch/malloc.h"
-#include "arch/minmax.h"
 #include "arch/math.h"
 #include "TonemappingOperators/pfstmo.h"
 

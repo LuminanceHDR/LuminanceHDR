@@ -190,7 +190,6 @@ ENDIF()
 SET(LUMINANCE_HDR_H ${LUMINANCE_HDR_H}
     src/arch/math.h
     src/arch/malloc.h
-    src/arch/minmax.h
     src/arch/string.h
     src/arch/freebsd/math.h
     src/arch/msvc/math.h

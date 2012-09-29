@@ -3,7 +3,6 @@
 #${CMAKE_CURRENT_SOURCE_DIR}/math.h
 #${CMAKE_CURRENT_SOURCE_DIR}/msvc/math.h
 #${CMAKE_CURRENT_SOURCE_DIR}/freebsd/math.h
-#${CMAKE_CURRENT_SOURCE_DIR}/minmax.h
 #${CMAKE_CURRENT_SOURCE_DIR}/string.h)
 
 #IF(MSVC)
