@@ -37,17 +37,13 @@
 #define round(d)       ((d>0) ? int(d+0.5) : int(d-0.5))
 #define finite(x)       (_finite(x))
 
-#define isnan(x) (x != x)
-#define isnanf(x) (x != x)
+#define isnan(x) _isnan(x)
+#define isnanf(x) _isnanf(x)
 
 #define fmax std::max
 #define fmaxf std::max
 #define fmin std::min
 #define fminf std::min
 #pragma warning (disable:4996)
-
-#ifndef snprintf
-#define snprintf sprintf_s
-#endif
 
 #endif  // MSVC_MATH_H
