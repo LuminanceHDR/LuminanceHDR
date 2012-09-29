@@ -28,14 +28,22 @@
 
 #if defined(_MSC_VER)
 #include <minmax.h>
-#else
-#ifndef max
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
-#endif
+//#else
+//#ifndef max
+//template <typename _Type>
+//_Type max(const _Type& a, const _Type& b)
+//{
+//    return ((a > b) ? a : b);
+//}
+//#endif
 
-#ifndef min
-#define min(a,b)            (((a) < (b)) ? (a) : (b))
-#endif
+//#ifndef min
+//template <typename _Type>
+//_Type min(const _Type& a, const _Type& b)
+//{
+//    return ((a < b) ? a : b);
+//}
+//#endif
 #endif
 
 #endif // ARCH_MINMAX_H
