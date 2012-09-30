@@ -68,4 +68,12 @@ TARGET_LINK_LIBRARIES(TestVex
     ${TBB_LIBRARIES})
 ADD_TEST(TestVex TestVex)
 
+ADD_EXECUTABLE(TestFloatRgb TestFloatRgb.cpp)
+TARGET_LINK_LIBRARIES(TestFloatRgb
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${TBB_LIBRARIES}
+    ${LIBS} common pfs)
+ADD_TEST(TestFloatRgb TestFloatRgb)
+
 ENDIF(GTEST_FOUND)
