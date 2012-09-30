@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <stdlib.h>
 #include <vector>
+#include <algorithm>
 
 #include "mantiuk06/contrast_domain.h"
 #include "TonemappingOperators/mantiuk06/pyramid.h"

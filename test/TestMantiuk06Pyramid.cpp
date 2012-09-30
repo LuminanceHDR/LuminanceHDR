@@ -20,6 +20,7 @@
  */
 
 #include <gtest/gtest.h>
+#include <algorithm>
 
 #include "TonemappingOperators/mantiuk06/pyramid.h"
 #include "mantiuk06/contrast_domain.h"

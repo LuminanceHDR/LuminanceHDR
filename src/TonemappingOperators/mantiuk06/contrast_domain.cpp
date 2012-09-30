@@ -65,6 +65,7 @@
 #include <vector>
 #include <cmath>
 #include <cassert>
+#include <algorithm>
 
 #ifdef _OPENMP
 #include <omp.h>
