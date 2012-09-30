@@ -39,6 +39,14 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
 
+
+void calculate_and_add_divergence(const size_t COLS, const size_t ROWS,
+                                  const float* Gx, const float* Gy, float* divG);
+
+void calculate_gradient(const int COLS, const int ROWS,
+                        const float* lum, float* Gx, float* Gy);
+
+
 /**
  * @brief: Tone mapping algorithm [Mantiuk2006]
  *

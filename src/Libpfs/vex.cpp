@@ -1,8 +1,8 @@
-/**
- * @brief SSE for high performance vector operations
+/*
+ * This file is a part of Luminance HDR package
+ * ----------------------------------------------------------------------
+ * Copyright (C) 2011 Davide Anastasia
  *
- * This file is a part of LuminanceHDR package
- * ---------------------------------------------------------------------- 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,13 +16,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
- * @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
- *
+ * ----------------------------------------------------------------------
  */
 
-#include <iostream>
+//! @brief SSE for high performance vector operations (Vector EXtension - VEX)
+//! @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
+
 #include "vex.h"
 
 #ifdef _OPENMP
@@ -34,250 +33,6 @@
 // tune FETCH_DISTANCE according to real world experiments
 #define PREFETCH_T0(addr, nrOfBytesAhead) _mm_prefetch(((char *)(addr))+nrOfBytesAhead, _MM_HINT_T0)
 #define FETCH_DISTANCE        512 
-
-void VEX_vsub(const float* A, const float* B, float* C, const int N)
-{
-#ifdef LUMINANCE_USE_SSE
-  __m128 a, b, c;
-  
-  const int LOOP1       = (N >> 4);
-  const int ELEMS_LOOP1 = (LOOP1 << 4);
-  const int LOOP2       = (N - ELEMS_LOOP1);
-  
-#pragma omp parallel for schedule(static, 5120) private(a,b,c)
-  for (int l = 0; l < ELEMS_LOOP1; l+=16)
-  {
-    PREFETCH_T0(&A[l], FETCH_DISTANCE);
-    PREFETCH_T0(&B[l], FETCH_DISTANCE);
-    PREFETCH_T0(&C[l], FETCH_DISTANCE);
-    
-    a = _mm_load_ps(&A[l]);
-    b = _mm_load_ps(&B[l]);
-    c = _mm_sub_ps(a, b);
-    _mm_store_ps(&C[l], c);
-    
-    a = _mm_load_ps(&A[l+4]);
-    b = _mm_load_ps(&B[l+4]);
-    c = _mm_sub_ps(a, b);
-    _mm_store_ps(&C[l+4], c);
-    
-    a = _mm_load_ps(&A[l+8]);
-    b = _mm_load_ps(&B[l+8]);
-    c = _mm_sub_ps(a, b);
-    _mm_store_ps(&C[l+8], c);
-    
-    a = _mm_load_ps(&A[l+12]);
-    b = _mm_load_ps(&B[l+12]);
-    c = _mm_sub_ps(a, b);
-    _mm_store_ps(&C[l+12], c);
-  }
-  
-  const float* pA = &A[ELEMS_LOOP1];
-  const float* pB = &B[ELEMS_LOOP1];
-  float* pC       = &C[ELEMS_LOOP1];
-  
-  for (int l = 0; l < LOOP2; l++)
-  {
-    a = _mm_load_ss(&pA[l]);
-    b = _mm_load_ss(&pB[l]);
-    c = _mm_sub_ss(a, b);
-    _mm_store_ss(&pC[l], c);
-  }
-#else
-  // plain code
-#pragma omp parallel for
-  for (int idx = 0; idx < N; ++idx )
-  {
-    C[idx] = A[idx] - B[idx];
-  }
-#endif
-}
-
-void VEX_vsubs(const float* A, const float premultiplier, const float* B, float* C, const int N)
-{
-#ifdef LUMINANCE_USE_SSE
-  __m128 a, b, c;
-  const __m128 val = _mm_set1_ps(premultiplier);
-  
-  const int LOOP1       = (N >> 4);
-  const int ELEMS_LOOP1 = (LOOP1 << 4);
-  const int LOOP2       = (N - ELEMS_LOOP1);
-  
-#pragma omp parallel for schedule(static, 5120) private(a,b,c)
-  for (int l = 0; l < ELEMS_LOOP1; l+=16)
-  {
-    PREFETCH_T0(&A[l], FETCH_DISTANCE);
-    PREFETCH_T0(&B[l], FETCH_DISTANCE);
-    PREFETCH_T0(&C[l], FETCH_DISTANCE);
-    
-    a = _mm_load_ps(&A[l]);
-    b = _mm_load_ps(&B[l]);
-    b = _mm_mul_ps(b, val);
-    c = _mm_sub_ps(a, b);
-    _mm_store_ps(&C[l], c);
-    
-    a = _mm_load_ps(&A[l+4]);
-    b = _mm_load_ps(&B[l+4]);
-    b = _mm_mul_ps(b, val);
-    c = _mm_sub_ps(a, b);
-    _mm_store_ps(&C[l+4], c);
-    
-    a = _mm_load_ps(&A[l+8]);
-    b = _mm_load_ps(&B[l+8]);
-    b = _mm_mul_ps(b, val);
-    c = _mm_sub_ps(a, b);
-    _mm_store_ps(&C[l+8], c);
-    
-    a = _mm_load_ps(&A[l+12]);
-    b = _mm_load_ps(&B[l+12]);
-    b = _mm_mul_ps(b, val);
-    c = _mm_sub_ps(a, b);
-    _mm_store_ps(&C[l+12], c);
-  }
-  
-  const float* pA = &A[ELEMS_LOOP1];
-  const float* pB = &B[ELEMS_LOOP1];
-  float* pC       = &C[ELEMS_LOOP1];
-  
-  for (int l = 0; l < LOOP2; l++)
-  {
-    a = _mm_load_ss(&pA[l]);
-    b = _mm_load_ss(&pB[l]);
-    b = _mm_mul_ss(b, val);
-    c = _mm_sub_ss(a, b);
-    _mm_store_ss(&pC[l], c);
-  }
-#else
-  // plain code
-#pragma omp parallel for
-  for (int idx = 0; idx < N; ++idx )
-  {
-    C[idx] = A[idx] - premultiplier * B[idx];
-  }
-#endif
-}
-
-void VEX_vadd(const float* A, const float* B, float* C, const int N)
-{
-#ifdef LUMINANCE_USE_SSE
-  __m128 a, b, c;
-  
-  const int LOOP1       = (N >> 4);
-  const int ELEMS_LOOP1 = (LOOP1 << 4);
-  const int LOOP2       = (N - ELEMS_LOOP1);
-  
-#pragma omp parallel for schedule(static, 5120) private(a,b,c)
-  for (int l = 0; l < ELEMS_LOOP1; l+=16)
-  {
-    PREFETCH_T0(&A[l], FETCH_DISTANCE);
-    PREFETCH_T0(&B[l], FETCH_DISTANCE);
-    PREFETCH_T0(&C[l], FETCH_DISTANCE);
-    
-    a = _mm_load_ps(&A[l]);
-    b = _mm_load_ps(&B[l]);
-    c = _mm_add_ps(a, b);
-    _mm_store_ps(&C[l], c);
-    
-    a = _mm_load_ps(&A[l+4]);
-    b = _mm_load_ps(&B[l+4]);
-    c = _mm_add_ps(a, b);
-    _mm_store_ps(&C[l+4], c);
-    
-    a = _mm_load_ps(&A[l+8]);
-    b = _mm_load_ps(&B[l+8]);
-    c = _mm_add_ps(a, b);
-    _mm_store_ps(&C[l+8], c);
-    
-    a = _mm_load_ps(&A[l+12]);
-    b = _mm_load_ps(&B[l+12]);
-    c = _mm_add_ps(a, b);
-    _mm_store_ps(&C[l+12], c);
-  }
-  
-  const float* pA = &A[ELEMS_LOOP1];
-  const float* pB = &B[ELEMS_LOOP1];
-  float* pC       = &C[ELEMS_LOOP1];
-  
-  for (int l = 0; l < LOOP2; l++)
-  {
-    a = _mm_load_ss(&pA[l]);
-    b = _mm_load_ss(&pB[l]);
-    c = _mm_add_ss(a, b);
-    _mm_store_ss(&pC[l], c);
-  }
-#else
-  // plain code
-#pragma omp parallel for
-  for (int idx = 0; idx < N; ++idx )
-  {
-    C[idx] = A[idx] + B[idx];
-  }
-#endif
-}
-
-void VEX_vadds(const float* A, const float premultiplier, const float* B, float* C, const int N)
-{
-#ifdef LUMINANCE_USE_SSE
-  const __m128 val = _mm_set1_ps(premultiplier);
-  __m128 a, b, c;
-  
-  const int LOOP1       = (N >> 4);
-  const int ELEMS_LOOP1 = (LOOP1 << 4);
-  const int LOOP2       = (N - ELEMS_LOOP1);
-  
-#pragma omp parallel for schedule(static, 5120) private(a,b,c)
-  for (int l = 0; l < ELEMS_LOOP1; l+=16)
-  {
-    PREFETCH_T0(&A[l], FETCH_DISTANCE);
-    PREFETCH_T0(&B[l], FETCH_DISTANCE);
-    PREFETCH_T0(&C[l], FETCH_DISTANCE);
-    
-    a = _mm_load_ps(&A[l]);
-    b = _mm_load_ps(&B[l]);
-    b = _mm_mul_ps(b, val);
-    c = _mm_add_ps(a, b);
-    _mm_store_ps(&C[l], c);
-    
-    a = _mm_load_ps(&A[l+4]);
-    b = _mm_load_ps(&B[l+4]);
-    b = _mm_mul_ps(b, val);
-    c = _mm_add_ps(a, b);
-    _mm_store_ps(&C[l+4], c);
-    
-    a = _mm_load_ps(&A[l+8]);
-    b = _mm_load_ps(&B[l+8]);
-    b = _mm_mul_ps(b, val);
-    c = _mm_add_ps(a, b);
-    _mm_store_ps(&C[l+8], c);
-    
-    a = _mm_load_ps(&A[l+12]);
-    b = _mm_load_ps(&B[l+12]);
-    b = _mm_mul_ps(b, val);
-    c = _mm_add_ps(a, b);
-    _mm_store_ps(&C[l+12], c);
-  }
-  
-  const float* pA = &A[ELEMS_LOOP1];
-  const float* pB = &B[ELEMS_LOOP1];
-  float* pC = &C[ELEMS_LOOP1];
-  
-  for (int l = 0; l < LOOP2; l++)
-  {
-    a = _mm_load_ss(&pA[l]);
-    b = _mm_load_ss(&pB[l]);
-    b = _mm_mul_ss(b, val);
-    c = _mm_add_ss(a, b);
-    _mm_store_ss(&pC[l], c);
-  }
-#else
-  // plain code
-#pragma omp parallel for
-  for (int idx = 0; idx < N; ++idx )
-  {
-    C[idx] = A[idx] + premultiplier * B[idx];
-  }
-#endif
-}
 
 void VEX_vsmul(const float* I, const float premultiplier, float* O, const int N)
 {
@@ -327,122 +82,6 @@ void VEX_vsmul(const float* I, const float premultiplier, float* O, const int N)
   for(int idx = 0; idx < N; ++idx)
   {
     O[idx] = premultiplier * I[idx];
-  }
-#endif
-}
-
-void VEX_vmul(const float* A, const float* B, float* C, const int N)
-{
-#ifdef LUMINANCE_USE_SSE
-  __m128 a, b;
-  
-  const int LOOP1       = (N >> 4);
-  const int ELEMS_LOOP1 = (LOOP1 << 4);
-  const int LOOP2       = (N - ELEMS_LOOP1);
-  
-#pragma omp parallel for schedule(static, 5120) private(a, b)
-  for (int l = 0; l < ELEMS_LOOP1; l+=16)
-  {
-    PREFETCH_T0(&A[l], FETCH_DISTANCE);
-    PREFETCH_T0(&B[l], FETCH_DISTANCE);
-    PREFETCH_T0(&C[l], FETCH_DISTANCE);
-    
-    a = _mm_load_ps(&A[l]);
-    b = _mm_load_ps(&B[l]);
-    a = _mm_mul_ps(a, b);
-    _mm_store_ps(&C[l], a);
-    
-    a = _mm_load_ps(&A[l+4]);
-    b = _mm_load_ps(&B[l+4]);
-    a = _mm_mul_ps(a, b);
-    _mm_store_ps(&C[l+4], a);
-    
-    a = _mm_load_ps(&A[l+8]);
-    b = _mm_load_ps(&B[l+8]);
-    a = _mm_mul_ps(a, b);
-    _mm_store_ps(&C[l+8], a);
-    
-    a = _mm_load_ps(&A[l+12]);
-    b = _mm_load_ps(&B[l+12]);
-    a = _mm_mul_ps(a, b);
-    _mm_store_ps(&C[l+12], a);
-  }
-  
-  const float* pA = &A[ELEMS_LOOP1];
-  const float* pB = &B[ELEMS_LOOP1];
-  float* pC       = &C[ELEMS_LOOP1];
-  
-  for (int l = 0; l < LOOP2; l++)
-  {
-    a = _mm_load_ss(&pA[l]);
-    b = _mm_load_ss(&pB[l]);
-    a = _mm_mul_ss(a, b);
-    _mm_store_ss(&pC[l], a);
-  }
-#else
-  // plain code
-#pragma omp parallel for
-  for (int idx = 0; idx < N; ++idx )
-  {
-    C[idx] = A[idx] * B[idx];
-  }
-#endif
-}
-
-void VEX_vdiv(const float* A, const float* B, float* C, const int N)
-{
-#ifdef LUMINANCE_USE_SSE
-  __m128 a, b;
-  
-  const int LOOP1       = (N >> 4);
-  const int ELEMS_LOOP1 = (LOOP1 << 4);
-  const int LOOP2       = (N - ELEMS_LOOP1);
-  
-#pragma omp parallel for schedule(static, 5120) private(a, b)
-  for (int l = 0; l < ELEMS_LOOP1; l+=16)
-  {
-    PREFETCH_T0(&A[l], FETCH_DISTANCE);
-    PREFETCH_T0(&B[l], FETCH_DISTANCE);
-    PREFETCH_T0(&C[l], FETCH_DISTANCE);
-    
-    a = _mm_load_ps(&A[l]);
-    b = _mm_load_ps(&B[l]);
-    a = _mm_div_ps(a, b);
-    _mm_store_ps(&C[l], a);
-    
-    a = _mm_load_ps(&A[l+4]);
-    b = _mm_load_ps(&B[l+4]);
-    a = _mm_div_ps(a, b);
-    _mm_store_ps(&C[l+4], a);
-    
-    a = _mm_load_ps(&A[l+8]);
-    b = _mm_load_ps(&B[l+8]);
-    a = _mm_div_ps(a, b);
-    _mm_store_ps(&C[l+8], a);
-    
-    a = _mm_load_ps(&A[l+12]);
-    b = _mm_load_ps(&B[l+12]);
-    a = _mm_div_ps(a, b);
-    _mm_store_ps(&C[l+12], a);
-  }
-  
-  const float* pA = &A[ELEMS_LOOP1];
-  const float* pB = &B[ELEMS_LOOP1];
-  float* pC       = &C[ELEMS_LOOP1];
-  
-  for (int l = 0; l < LOOP2; l++)
-  {
-    a = _mm_load_ss(&pA[l]);
-    b = _mm_load_ss(&pB[l]);
-    a = _mm_div_ss(a, b);
-    _mm_store_ss(&pC[l], a);
-  }
-#else
-  // plain code
-#pragma omp parallel for
-  for (int idx = 0; idx < N; ++idx )
-  {
-    C[idx] = A[idx] / B[idx];
   }
 #endif
 }
@@ -554,17 +193,6 @@ void VEX_vreset(float* IO, const int N)
     IO[idx] = 0.0f;
   }
 #endif
-}
-
-void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
-{
-  float t_val = 0.0f;
-#pragma omp parallel for reduction(+:t_val)
-  for (int idx = 0; idx < N; ++idx)
-  {
-    t_val += I1[idx] * I2[idx];
-  }
-  val = t_val;
 }
 
 #ifdef LUMINANCE_USE_SSE

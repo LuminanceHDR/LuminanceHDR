@@ -1,8 +1,8 @@
-/**
- * @brief SSE for high performance vector operations (Vector EXtension - VEX)
- *
+/*
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
+ * Copyright (C) 2011 Davide Anastasia
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,10 +17,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- * 
- * @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
- *
  */
+
+//! @brief SSE for high performance vector operations (Vector EXtension - VEX)
+//! @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
 
 #ifndef VEX_H
 #define VEX_H
@@ -41,25 +41,10 @@
 #error unsupported architecture
 #endif
 
-#endif
+#endif // __SSE__
 
-// C[i] = A[i] - B[i]
-void VEX_vsub(const float* A, const float* B, float* C, const int N);
-// C[i] = A[i] - val * B[i]
-void VEX_vsubs(const float* A, const float premultiplier, const float* B, float* C, const int N);
-
-// C[i] = A[i] + B[i]
-void VEX_vadd(const float* A, const float* B, float* C, const int N);
-// C[i] = A[i] + val * B[i]
-void VEX_vadds(const float* A, const float premultiplier, const float* B, float* C, const int N);
-
-// C[i] = A[i] * B[i]
-void VEX_vmul(const float* A, const float* B, float* C, const int N);
 // O[i] = c * I[i]
 void VEX_vsmul(const float* I, const float c, float* O, const int N);
-
-// C[i] = A[i] / B[i]
-void VEX_vdiv(const float* A, const float* B, float* C, const int N);
 
 // O[i] = i[i]
 void VEX_vcopy(const float* I, float* O, const int N);
@@ -69,10 +54,6 @@ void VEX_vset(float* IO, const float value, const int N);
 
 // IO[i] = 0.0f
 void VEX_vreset(float* IO, const int N);
-
-void VEX_dotpr(const float* I1, const float* I2, float& val, const int N);
-
-//void mm_3x3(float i1, float i2, float i3, float &o1, float &o2, float &o3, const float mat[3][3]);
 
 #ifdef LUMINANCE_USE_SSE
 typedef __v4sf v4sf;

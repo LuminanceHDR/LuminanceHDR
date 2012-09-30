@@ -114,6 +114,13 @@ IF(WIN32)
     SET(LIBPNG_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libpng/libpng15.lib")
     
 ELSE()
+    IF(APPLE)
+    # optimize for 64-bit core 2 architecture on apple
+    ADD_DEFINITIONS(-march=core2)
+    # ELSE()
+    # optimize for 64-bit prescott architecture on unix
+    # ADD_DEFINITIONS(-march=nocona)
+    ENDIF()
 
     # Unix & Apple part
     FIND_PACKAGE(OpenEXR REQUIRED)
@@ -183,7 +190,6 @@ ENDIF()
 SET(LUMINANCE_HDR_H ${LUMINANCE_HDR_H}
     src/arch/math.h
     src/arch/malloc.h
-    src/arch/minmax.h
     src/arch/string.h
     src/arch/freebsd/math.h
     src/arch/msvc/math.h

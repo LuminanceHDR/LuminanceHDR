@@ -26,8 +26,10 @@
  */
 
 #include <cmath>
-#include <assert.h>
+#include <cassert>
 #include <iostream>
+#include <algorithm>
+#include <numeric>
 
 #include "Common/msec_timer.h"
 #include "Libpfs/array2d.h"
@@ -60,7 +62,6 @@ void resize( const pfs::Array2D *src, pfs::Array2D *dest );
 void resampleMitchell( const pfs::Array2D *in, pfs::Array2D *out );
 void resampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *filter );
 
-#include "arch/minmax.h"
 // --------- Filters --------
 
 class MitchellFilter : public ResampleFilter
@@ -175,16 +176,23 @@ void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *f
       float pixVal = 0;
       float weight = 0;
       
-      for( float ix = max( 0, ceilf( sx-filterSize ) ); ix <= min( floorf(sx+filterSize), inCols-1 ); ix++ )
-        for( float iy = max( 0, ceilf( sy-filterSize ) ); iy <= min( floorf( sy+filterSize), inRows-1 ); iy++ ) {
-          float fx = fabs( sx - ix );
-          float fy = fabs( sy - iy );
+      for (float ix = std::max( 0.0f, std::ceil( sx-filterSize ) );
+           ix <= std::min( std::floor(sx+filterSize), inCols-1 );
+           ix++ )
+      {
+        for (float iy = std::max( 0.0f, std::ceil( sy-filterSize ) );
+             iy <= std::min( std::floor( sy+filterSize), inRows-1 );
+             iy++ )
+        {
+          float fx = std::fabs( sx - ix );
+          float fy = std::fabs( sy - iy );
 
           const float fval = filter->getValue( fx )*filter->getValue( fy );
           
           pixVal += (*in)( (int)ix, (int)iy ) * fval;
           weight += fval;
         }
+      }
 
       if( weight == 0 ) {
         fprintf( stderr, "%g %g %g %g\n", sx, sy, dx, dy );
@@ -219,16 +227,16 @@ void downsampleArray(const pfs::Array2D *in, pfs::Array2D *out)
   
   for (y = 0, sy = (dy/2.0f - 0.5f); y < outRows; y++, sy += dy)
   {
-    IY_L = (unsigned int)max( 0, ceilf( sy-dx*filterSize ) );
-    IY_U = (unsigned int)min( floorf(sy+dx*filterSize), inRows-1 );
+    IY_L = static_cast<unsigned int>(std::max( 0.f, std::ceil( sy-dx*filterSize ) ));
+    IY_U = static_cast<unsigned int>(std::min( static_cast<unsigned int>(std::floor(sy+dx*filterSize)), inRows-1 ));
     
     for (x = 0, sx = (dx/2.0f - 0.5f); x < outCols; x++, sx += dx)
     {
       pixVal  = 0.0f;
       w       = 0.0f;
       
-      IX_L = (unsigned int)max( 0, ceilf( sx-dx*filterSize ) );
-      IX_U = (unsigned int)min( floorf(sx+dx*filterSize), inCols-1 );
+      IX_L = static_cast<unsigned int>(std::max( 0.f, std::ceil( sx-dx*filterSize ) ));
+      IX_U = static_cast<unsigned int>(std::min( static_cast<unsigned int>(std::floor(sx+dx*filterSize)), inCols-1 ));
       
       for (unsigned int iy = IY_L; iy <= IY_U; iy++)
       {        
