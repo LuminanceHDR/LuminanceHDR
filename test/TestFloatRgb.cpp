@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <inttypes.h>
 #include <QRgb>
 #include "Common/FloatRgbToQRgb.h"
 
