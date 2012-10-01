@@ -42,6 +42,7 @@
 #include <stdexcept>
 #include <cassert>
 #include <limits>
+#include <algorithm>
 
 #include <stdint.h>
 #include "Common/ResourceHandlerLcms.h"
