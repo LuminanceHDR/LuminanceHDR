@@ -160,6 +160,10 @@ public Q_SLOTS:
 signals:
     void startTonemapping(TonemappingOptions*);
 
+private:
+    void onUndoRedo(bool undo);
+
+
 };
 
 #endif
