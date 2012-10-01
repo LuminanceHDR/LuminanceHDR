@@ -13,7 +13,7 @@
    <string>Scale Image</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../../icons.qrc" >:/new/prefix1/images/luminance.png</iconset>
+   <iconset resource="../../icons.qrc" >:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
   <property name="modal" >
    <bool>true</bool>
