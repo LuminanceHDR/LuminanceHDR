@@ -1,7 +1,13 @@
+# workaround for http://code.google.com/p/googletest/issues/detail?id=408
+if (MSVC_VERSION EQUAL 1700)
+    ADD_DEFINITIONS(-D_VARIADIC_MAX=10)
+endif ()
+
 FIND_PACKAGE(GTest)
 
 IF(GTEST_FOUND)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
+INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
 
 IF(UNIX)
 FIND_PACKAGE(Threads)

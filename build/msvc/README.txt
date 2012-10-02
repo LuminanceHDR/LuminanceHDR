@@ -16,10 +16,10 @@ This build process works for 32 and 64 bit compilation.
 
 This build process requires:
 * Windows
-* MS Visual Studio 2008 or higher
+* MS Visual Studio 2008 or higher, ExpressEditions should work (currently testing with VS2012)
 * Qt for MSVC installed
-  - official 32 bit Qt from: http://qt.nokia.com/downloads/downloads#qt-lib
-  - Qt self compiled
+  - either official 32 bit Qt from: http://qt.nokia.com/downloads/downloads#qt-lib
+  - or Qt self compiled
   ATTENTION: Do not mix the compilation with different versions of MSVC. If you 
              compile Luminance with VC2010 you should also have Qt compiled
              with VC2010. If you don't find any precompiled Qt with a 
@@ -47,7 +47,7 @@ Copy the .cmd files into a new EMPTY folder. Open the Visual Studio
 command prompt (x64 or Win32) and change (cd) to that directory. If 
 there are some problems the batch script should tell you!
 
-Open the setenv.cmd file and adjust the variables paths for your needs.
+Open the setenv.cmd file and adjust the variables paths and options for your needs.
 
 Start the compilation with 
 >	build.cmd
