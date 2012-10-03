@@ -2,8 +2,9 @@
 
 #include <iostream>
 #include <cmath>
+#include "arch/math.h"
 #include <cstddef>
-#include <inttypes.h>
+#include <stdint.h>
 #include <algorithm>
 #include <numeric>
 #include <functional>
@@ -63,7 +64,7 @@ struct SmallSize
 {
     typedef T value_type;
 
-    static size_t elements() { return 1e6; }    // 1Mp
+    static size_t elements() { return static_cast<size_t>(1e6); }    // 1Mp
 };
 
 template <typename T>
@@ -71,7 +72,7 @@ struct MediumSize
 {
     typedef T value_type;
 
-    static size_t elements() { return 1e7; }    // 10Mp
+    static size_t elements() { return static_cast<size_t>(1e7); }    // 10Mp
 };
 
 template <typename T>
@@ -79,7 +80,7 @@ struct BigSize
 {
     typedef T value_type;
 
-    static size_t elements() { return 24e6; }    // 24Mp
+    static size_t elements() { return static_cast<size_t>(24e6); }    // 24Mp
 };
 
 template <class T>

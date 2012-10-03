@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <inttypes.h>
 #include <QRgb>
 #include "Common/FloatRgbToQRgb.h"
 
@@ -11,16 +10,16 @@ TEST(FloatRgbConverter, Uint16_Test1)
     float inGreen = 0.0f;
     float inBlue = 0.0f;
 
-    uint16_t outRed;
-    uint16_t outGreen;
-    uint16_t outBlue;
+    quint16 outRed;
+    quint16 outGreen;
+    quint16 outBlue;
 
     d.toQUint16(inRed, inGreen, inBlue,
                 outRed, outGreen, outBlue);
 
-    EXPECT_EQ(outRed, 65535);
-    EXPECT_EQ(outGreen, 0);
-    EXPECT_EQ(outBlue, 0);
+    EXPECT_EQ(static_cast<int>(outRed), 65535);
+    EXPECT_EQ(static_cast<int>(outGreen), 0);
+    EXPECT_EQ(static_cast<int>(outBlue), 0);
 }
 
 TEST(FloatRgbConverter, Uint16_Test2)
@@ -31,16 +30,16 @@ TEST(FloatRgbConverter, Uint16_Test2)
     float inGreen = 0.0f;
     float inBlue = 0.0f;
 
-    uint16_t outRed;
-    uint16_t outGreen;
-    uint16_t outBlue;
+    quint16 outRed;
+    quint16 outGreen;
+    quint16 outBlue;
 
     d.toQUint16(inRed, inGreen, inBlue,
                 outRed, outGreen, outBlue);
 
-    EXPECT_EQ(outRed, 65535);
-    EXPECT_EQ(outGreen, 0);
-    EXPECT_EQ(outBlue, 0);
+    EXPECT_EQ(static_cast<int>(outRed), 65535);
+    EXPECT_EQ(static_cast<int>(outGreen), 0);
+    EXPECT_EQ(static_cast<int>(outBlue), 0);
 }
 
 TEST(FloatRgbConverter, Uint16_Test3)
@@ -51,16 +50,16 @@ TEST(FloatRgbConverter, Uint16_Test3)
     float inGreen = -0.0f;
     float inBlue = 0.0f;
 
-    uint16_t outRed;
-    uint16_t outGreen;
-    uint16_t outBlue;
+    quint16 outRed;
+    quint16 outGreen;
+    quint16 outBlue;
 
     d.toQUint16(inRed, inGreen, inBlue,
                 outRed, outGreen, outBlue);
 
-    EXPECT_EQ(outRed, 65535);
-    EXPECT_EQ(outGreen, 0);
-    EXPECT_EQ(outBlue, 0);
+    EXPECT_EQ(static_cast<int>(outRed), 65535);
+    EXPECT_EQ(static_cast<int>(outGreen), 0);
+    EXPECT_EQ(static_cast<int>(outBlue), 0);
 }
 
 TEST(FloatRgbConverter, Qrgb_Test1)

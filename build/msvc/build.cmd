@@ -179,8 +179,8 @@ IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
 	%CYGWIN_DIR%\bin\svn.exe co -r 2756 svn://dev.exiv2.org/svn/trunk exiv2-trunk
 ) ELSE (
-	%CYGWIN_DIR%\bin\svn.exe update -r 2756 exiv2-trunk
-	set exiv2-compile=true
+	rem %CYGWIN_DIR%\bin\svn.exe update -r 2756 exiv2-trunk
+	rem set exiv2-compile=true
 )
 
 IF DEFINED exiv2-compile (
@@ -393,6 +393,26 @@ REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tbb40_20120613oss_win.zip
 REM 	REM Everthing is already compiled, nothing to do!
 REM )
 
+REM GTest Patch for VS2012:
+REM in internal_utils.cmake ~60
+REM  if (MSVC_VERSION EQUAL 1700)
+REM  	set(cxx_base_flags "${cxx_base_flags} -D_VARIADIC_MAX=10")
+REM  endif ()
+REM
+REM IF NOT EXIST %TEMP_DIR%\gtest-1.6.0.zip (
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gtest-1.6.0.zip http://googletest.googlecode.com/files/gtest-1.6.0.zip
+REM )
+REM 
+REM IF NOT EXIST gtest-1.6.0 (
+REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/gtest-1.6.0.zip
+REM 	
+REM 	mkdir gtest-1.6.0.build
+REM 	pushd gtest-1.6.0.build
+REM 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\gtest-1.6.0 -DBUILD_SHARED_LIBS=1
+REM 	devenv gtest.sln /build "%Configuration%|%Platform%"
+REM 	popd
+REM )
+
 
 IF NOT DEFINED L_BOOST_DIR (
 	set L_BOOST_DIR=.
@@ -532,12 +552,17 @@ IF %OPTION_LUPDATE_NOOBSOLETE% EQU 1 (
 ) ELSE (
 	set CMAKE_OPTIONS=%CMAKE_OPTIONS% -ULUPDATE_NOOBSOLETE
 )
+
+IF EXIST ..\..\gtest-1.6.0 (
+	SET GTEST_ROOT=%CD%\..\..\gtest-1.6.0
+)
+
 %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
 popd
 
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
 	pushd LuminanceHdrStuff\qtpfsgui.build	
-	devenv luminance-hdr.sln /Upgrade
+	rem devenv luminance-hdr.sln /Upgrade
 	devenv luminance-hdr.sln /build "%Configuration%|%Platform%"
 	IF errorlevel 1	goto error_end
 	popd
