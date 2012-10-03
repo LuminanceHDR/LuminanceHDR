@@ -28,6 +28,8 @@
  *
  */
 
+#include <stdexcept>
+
 #include "TonemappingEngine/TonemapOperatorMantiuk06.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
@@ -54,12 +56,18 @@ void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, Tonemappin
 
     // pfstmo_mantiuk06 not reentrant
     m_Mutex.lock();
-    pfstmo_mantiuk06(workingframe,
-                     opts->operator_options.mantiuk06options.contrastfactor,
-                     opts->operator_options.mantiuk06options.saturationfactor,
-                     opts->operator_options.mantiuk06options.detailfactor,
-                     opts->operator_options.mantiuk06options.contrastequalization,
-                     &ph);
+    try {
+        pfstmo_mantiuk06(workingframe,
+                         opts->operator_options.mantiuk06options.contrastfactor,
+                         opts->operator_options.mantiuk06options.saturationfactor,
+                         opts->operator_options.mantiuk06options.detailfactor,
+                         opts->operator_options.mantiuk06options.contrastequalization,
+                         &ph);
+    }
+    catch (...) {
+        m_Mutex.unlock();
+        throw std::runtime_error("Tonemap Failed");
+    }
     m_Mutex.unlock();
 
 //    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),

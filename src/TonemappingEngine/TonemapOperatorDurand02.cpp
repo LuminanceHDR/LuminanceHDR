@@ -28,6 +28,8 @@
  *
  */
 
+#include <stdexcept>
+
 #include "TonemappingEngine/TonemapOperatorDurand02.h"
 #include "TonemappingOperators/pfstmo.h"	
 #include "Core/TonemappingOptions.h"
@@ -52,11 +54,17 @@ void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
 
     // pfstmo_durand02 not reentrant
     m_Mutex.lock();
-    pfstmo_durand02(workingframe,
-                    opts->operator_options.durandoptions.spatial,
-                    opts->operator_options.durandoptions.range,
-                    opts->operator_options.durandoptions.base,
-                    &ph);
+    try {
+        pfstmo_durand02(workingframe,
+                        opts->operator_options.durandoptions.spatial,
+                        opts->operator_options.durandoptions.range,
+                        opts->operator_options.durandoptions.base,
+                        &ph);
+    }
+    catch (...) {
+        m_Mutex.unlock();
+        throw std::runtime_error("Tonemap Failed");
+    }
     m_Mutex.unlock();
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),

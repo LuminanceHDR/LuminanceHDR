@@ -88,19 +88,27 @@ public:
         // Tone Mapping
         //QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
         //tm_operator->tonemapFrame(temp_frame.data(), tm_options, fake_progress_helper);
-        QScopedPointer<TMWorker> tmWorker(new TMWorker);
-        QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
+        try {
+            QScopedPointer<TMWorker> tmWorker(new TMWorker);
+            QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
         
-        // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
-        //QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
-        QSharedPointer<QImage> qimage(fromLDRPFStoQImage(frame.data()));
+            // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
+            //QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
+            QSharedPointer<QImage> qimage(fromLDRPFStoQImage(frame.data()));
 
-        //! \note I cannot use these 2 functions, because setPixmap must run in the GUI thread
-        //m_PreviewLabel->setPixmap( QPixmap::fromImage(*qimage) );
-        //m_PreviewLabel->adjustSize();
-        //! \note So I queue a SLOT request on the m_PreviewPanel
-        QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
-                                  Q_ARG(QSharedPointer<QImage>, qimage));
+            //! \note I cannot use these 2 functions, because setPixmap must run in the GUI thread
+            //m_PreviewLabel->setPixmap( QPixmap::fromImage(*qimage) );
+            //m_PreviewLabel->adjustSize();
+            //! \note So I queue a SLOT request on the m_PreviewPanel
+            QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
+                                      Q_ARG(QSharedPointer<QImage>, qimage));
+        }
+        catch (...) {
+            qDebug() << "PreviewLabelUpdater: caught exception";
+            QSharedPointer<QImage> qimage(new QImage);
+            QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
+                                      Q_ARG(QSharedPointer<QImage>, qimage));
+        }
 
 #ifdef QT_DEBUG
         //qDebug() << QThread::currentThread() << "done!";

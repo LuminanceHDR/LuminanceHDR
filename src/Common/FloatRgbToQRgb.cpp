@@ -29,6 +29,7 @@
 #include "arch/math.h"
 #include "Libpfs/vex.h"
 #include <algorithm>
+#include <cmath>
 
 namespace
 {
@@ -301,6 +302,10 @@ FloatRgbToQRgb::~FloatRgbToQRgb()
 void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb)
 {
 #ifdef LUMINANCE_USE_SSE
+    if (std::isnan(r)) r = 0.0f;
+    if (std::isnan(g)) g = 0.0f;
+    if (std::isnan(b)) b = 0.0f;
+
     v4sf rgb = (*m_Pimpl)(r,g,b);
 
     rgb = scaleAndRound(rgb, ZERO, TWOFIVEFIVE);
@@ -323,6 +328,10 @@ void FloatRgbToQRgb::toQUint16(float r, float g, float b,
                                quint16& red, quint16& green, quint16& blue)
 {
 #ifdef LUMINANCE_USE_SSE
+    if (std::isnan(r)) r = 0.0f;
+    if (std::isnan(g)) g = 0.0f;
+    if (std::isnan(b)) b = 0.0f;
+
     v4sf rgb = (*m_Pimpl)(r,g,b);
 
     rgb = scaleAndRound(rgb, ZERO, TWOPOWER16);
