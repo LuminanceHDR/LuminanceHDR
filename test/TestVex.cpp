@@ -15,7 +15,7 @@
 using namespace std;
 
 template <typename T>
-class FillValue;
+struct FillValue;
 
 template<>
 struct FillValue<float>
