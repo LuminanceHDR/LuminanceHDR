@@ -28,6 +28,8 @@
  *
  */
 
+#include <stdexcept>
+
 #include "TonemappingEngine/TonemapOperatorReinhard02.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
@@ -51,14 +53,20 @@ void TonemapOperatorReinhard02::tonemapFrame(pfs::Frame* workingframe, Tonemappi
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
     m_Mutex.lock();
-    pfstmo_reinhard02(workingframe,
-                      opts->operator_options.reinhard02options.key,
-                      opts->operator_options.reinhard02options.phi,
-                      opts->operator_options.reinhard02options.range,
-                      opts->operator_options.reinhard02options.lower,
-                      opts->operator_options.reinhard02options.upper,
-                      opts->operator_options.reinhard02options.scales,
-                      &ph);
+    try {
+        pfstmo_reinhard02(workingframe,
+                          opts->operator_options.reinhard02options.key,
+                          opts->operator_options.reinhard02options.phi,
+                          opts->operator_options.reinhard02options.range,
+                          opts->operator_options.reinhard02options.lower,
+                          opts->operator_options.reinhard02options.upper,
+                          opts->operator_options.reinhard02options.scales,
+                          &ph);
+    }
+    catch (...) {
+        m_Mutex.unlock();
+        throw std::runtime_error("Tonemap Failed");
+    }
     m_Mutex.unlock();
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),

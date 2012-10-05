@@ -34,6 +34,7 @@
 #include <QSysInfo>
 #include <iostream>
 #include <assert.h>
+#include <stdexcept>
 
 #include "pfsoutldrimage.h"
 #include "Libpfs/frame.h"
@@ -49,7 +50,9 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     stop_watch.start();
 #endif
 
-    assert( in_frame != NULL );
+    //assert( in_frame != NULL );
+    if (in_frame == NULL)
+        throw std::runtime_error("Null pointer");
 
     pfs::Channel *Xc, *Yc, *Zc;
     in_frame->getXYZChannels( Xc, Yc, Zc );

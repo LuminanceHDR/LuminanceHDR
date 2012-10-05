@@ -1568,8 +1568,8 @@ void MainWindow::tonemapFailed(QString error_msg)
 {
     QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(error_msg),
                           QMessageBox::Ok,QMessageBox::NoButton);
-
     tmPanel->setEnabled(true);
+    m_TMProgressBar->hide();
 }
 
 /*
