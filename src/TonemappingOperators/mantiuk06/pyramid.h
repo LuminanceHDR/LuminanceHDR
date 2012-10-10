@@ -31,6 +31,7 @@
 #ifndef MANTIUK06_PYRAMID_H
 #define MANTIUK06_PYRAMID_H
 
+#include <cstddef>
 #include <vector>
 #include <list>
 
