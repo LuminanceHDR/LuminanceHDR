@@ -30,8 +30,6 @@
 #include <QScrollArea>
 #include <QImage>
 
-#include "AntiGhostingWidget.h"
-
 class PreviewWidget : public QWidget
 {
 Q_OBJECT
