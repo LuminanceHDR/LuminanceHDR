@@ -95,16 +95,18 @@ public:
 	//the EV values cannot cover more than 20EV values
 	void checkEVvalues();
 	void makeSureLDRsHaveAlpha();
-	void applyShiftsToImageStack(QList< QPair<int,int> > HV_offsets);
-	void applyShiftsToMdrImageStack(QList< QPair<int,int> > HV_offsets);
-	void cropLDR (QRect ca);
-	void cropMDR (QRect ca);
-	void cropAgMasks (QRect ca);
-	void reset();
+    void applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets);
+    void applyShiftsToMdrImageStack(const QList< QPair<int,int> >& HV_offsets);
+
+    void cropLDR(const QRect& ca);
+    void cropMDR(const QRect& ca);
+    void cropAgMasks(const QRect& ca);
+
+    void reset();
 	void remove(int index);
 	void setShift(int shift) { m_shift = shift; }
-	void saveLDRs(QString);
-	void saveMDRs(QString);
+    void saveLDRs(const QString& filename);
+    void saveMDRs(const QString& filename);
 	void doAntiGhosting(int);
 public slots:
 	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
