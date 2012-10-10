@@ -55,12 +55,17 @@ public:
     void updateVertShift(int);
     void updateHorizShift(int);
 
+    void setDrawWithBrush();
+    void setDrawPath();
 public slots:
     void switchAntighostingMode(bool);
     void setBrushSize(const int);
     void setBrushStrength(const int);
     void setBrushColor(const QColor);
+    void setLassoColor(const QColor);
     void setBrushMode(bool);
+    void saveAgMask();
+    QImage *getSavedAgMask();
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -73,18 +78,28 @@ protected:
 
 private:
     QImage *m_agMask;
+    QImage *m_savedMask;
     QPoint m_mousePos;
     int m_timerid;
     QPixmap *m_agcursorPixmap;
     int m_requestedPixmapSize, m_previousPixmapSize;
     int m_requestedPixmapStrength, m_previousPixmapStrength;
-    QColor m_requestedPixmapColor, m_previousPixmapColor;
+    QColor m_requestedPixmapColor, m_previousPixmapColor, m_requestedLassoColor;
     bool m_brushAddMode;//false means brush is in remove mode.
     void fillAntiGhostingCursorPixmap();
-    
+    void drawWithBrush();
+    void drawPath();
+ 
     float m_scaleFactor;
     int m_mx, m_my;
 
+    QPoint m_firstPoint;
+    QPoint m_lastPoint;
+    QPoint m_currentPoint;
+    QPainterPath m_path;
+    bool m_drawingPathEnded;
+
+    enum {BRUSH, PATH} m_drawingMode;
 signals:
     void moved(QPoint diff);
 };
