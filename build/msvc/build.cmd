@@ -131,13 +131,13 @@ IF NOT EXIST %TEMP_DIR%\zlib-aa566e.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib-aa566e.zip --no-check-certificate http://github.com/madler/zlib/zipball/aa566e86c46d2264bf623e51f5840bde642548ad
 )
 
-IF NOT EXIST zlib-1.2.7 (
+IF NOT EXIST zlib-aa566e (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib-aa566e.zip
-	%CYGWIN_DIR%\bin\mv.exe madler-zlib-* zlib-1.2.7
+	%CYGWIN_DIR%\bin\mv.exe madler-zlib-* zlib-aa566e
 	
 	REM zlib must be compiled in the source folder, else exiv2 compilation
 	REM fails due to zconf.h rename/compile problems, due to cmake
-	pushd zlib-1.2.7
+	pushd zlib-aa566e
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"
 	IF errorlevel 1 goto error_end
 	devenv zlib.sln /build "%Configuration%|%Platform%" /Project zlib
@@ -145,21 +145,13 @@ IF NOT EXIST zlib-1.2.7 (
 	popd
 )
 
-REM zlib copy for libpng
-REM IF NOT EXIST zlibxx (
-REM 	mkdir zlibxx
-REM 	copy zlib-1.2.7\*.h zlibxx
-REM 	copy zlib-1.2.7\%Configuration%\*.lib zlibxx
-REM 	copy zlib-1.2.7\%Configuration%\*.dll zlibxx
-REM )
-
 IF NOT EXIST %TEMP_DIR%\lpng1513.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng1513.zip http://sourceforge.net/projects/libpng/files/libpng15/1.5.13/lpng1513.zip/download
 )
 IF NOT EXIST lpng1513 (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng1513.zip
 	pushd lpng1513
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DZLIB_ROOT=..\zlib-1.2.7;..\zlib-1.2.7\%Configuration%
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DZLIB_ROOT=..\zlib-aa566e;..\zlib-aa566e\%Configuration%
 	IF errorlevel 1	goto error_end
 	devenv libpng.sln /build "%Configuration%|%Platform%" /Project png15
 	IF errorlevel 1	goto error_end
@@ -172,45 +164,38 @@ IF NOT EXIST %TEMP_DIR%\expat-2.1.0.tar (
 )
 IF NOT EXIST expat-2.1.0 (
 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/expat-2.1.0.tar
-)
-
-
-IF NOT EXIST exiv2-trunk (
-	set exiv2-compile=true
-	%CYGWIN_DIR%\bin\svn.exe co -r 2756 svn://dev.exiv2.org/svn/trunk exiv2-trunk
-) ELSE (
-	rem %CYGWIN_DIR%\bin\svn.exe update -r 2756 exiv2-trunk
-	rem set exiv2-compile=true
-)
-
-IF DEFINED exiv2-compile (
-	REM msvc64 is the right one for Win32 too
-	pushd exiv2-trunk\msvc64 		
-	devenv exiv2.sln /upgrade
-	devenv exiv2.sln /build "%Configuration%DLL|%Platform%" /Project exiv2
-	IF errorlevel 1	goto error_end
+    
+    pushd expat-2.1.0
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"
+	IF errorlevel 1 goto error_end
+	devenv expat.sln /build "%Configuration%|%Platform%" /Project expat
+	IF errorlevel 1 goto error_end
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\jpegsr8d.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/jpegsr8d.zip http://www.ijg.org/files/jpegsr8d.zip
+IF NOT EXIST exiv2-2895 (
+	%CYGWIN_DIR%\bin\svn.exe co -r 2895 svn://dev.exiv2.org/svn/trunk exiv2-2895
+    
+    pushd exiv2-2895
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"  -DZLIB_ROOT=..\zlib-aa566e;..\zlib-aa566e\Release
+	IF errorlevel 1 goto error_end
+	devenv exiv2.sln /build "%Configuration%|%Platform%" /Project exiv2
+	IF errorlevel 1 goto error_end
+    copy bin\%Platform%\Dynamic\*.h include
+	popd  
 )
-IF NOT EXIST libjpeg (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/jpegsr8d.zip
-	ren jpeg-8d libjpeg
 
-	pushd libjpeg
-	copy jconfig.vc jconfig.h
-	copy makejsln.v10 makejsln.sln
-	copy makeasln.v10 makeasln.sln
-	copy makejvcx.v10 jpeg.vcxproj
-	copy makecvcx.v10 cjpeg.vcxproj
-	copy makedvcx.v10 djpeg.vcxproj
-	copy maketvcx.v10 jpegtran.vcxproj
-	copy makewvcx.v10 wrjpgcom.vcxproj
-	copy makervcx.v10 rdjpgcom.vcxpr
-
-	nmake /f makefile.vc
+IF NOT EXIST libjpeg-turbo-867 (
+    %CYGWIN_DIR%\bin\svn.exe co -r 867 svn://svn.code.sf.net/p/libjpeg-turbo/code/trunk libjpeg-turbo-867
+    IF NOT EXIST libjpeg-turbo-867.build (
+        mkdir libjpeg-turbo-867.build
+    )
+	pushd libjpeg-turbo-867.build
+	%CMAKE_DIR%\bin\cmake.exe -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" ..\libjpeg-turbo-867
+	IF errorlevel 1 goto error_end
+	nmake
+	IF errorlevel 1 goto error_end
+    copy jconfig.h ..\libjpeg-turbo-867
 	popd
 )
 
@@ -230,24 +215,25 @@ IF NOT EXIST lcms2-493aac (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\tiff-4.0.2.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.2.zip http://download.osgeo.org/libtiff/tiff-4.0.2.zip
+IF NOT EXIST %TEMP_DIR%\tiff-4.0.3.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.3.zip http://download.osgeo.org/libtiff/tiff-4.0.3.zip
 )
 
-IF NOT EXIST tiff-4.0.2 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-4.0.2.zip
+IF NOT EXIST tiff-4.0.3 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-4.0.3.zip
 
-	echo.JPEG_SUPPORT=^1> tiff-4.0.2\qtpfsgui_commands.in
-	echo.JPEGDIR=..\..\libjpeg>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.JPEG_INCLUDE=-I$^(JPEGDIR^)>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.JPEG_LIB=$^(JPEGDIR^)\jpeg-static.lib>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.ZIP_SUPPORT=^1>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.ZLIBDIR=..\..\zlib-1.2.7\%Configuration%>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.ZLIB_INCLUDE=-I..\..\zlib-1.2.7>> tiff-4.0.2\qtpfsgui_commands.in
-	echo.ZLIB_LIB=$^(ZLIBDIR^)\zlib.lib>> tiff-4.0.2\qtpfsgui_commands.in
+	echo.JPEG_SUPPORT=^1> tiff-4.0.3\qtpfsgui_commands.in
+	echo.JPEGDIR=%CD%\libjpeg-turbo-867>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.JPEG_INCLUDE=-I%CD%\libjpeg-turbo-867>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.JPEG_LIB=%CD%\libjpeg-turbo-867.build\turbojpeg-static.lib>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.ZIP_SUPPORT=^1>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.ZLIBDIR=..\..\zlib-aa566e\%Configuration%>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.ZLIB_INCLUDE=-I..\..\zlib-aa566e>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.ZLIB_LIB=$^(ZLIBDIR^)\zlib.lib>> tiff-4.0.3\qtpfsgui_commands.in
 
-	pushd tiff-4.0.2
+	pushd tiff-4.0.3
 	nmake /s /c /f Makefile.vc @qtpfsgui_commands.in
+	IF errorlevel 1 goto error_end
 	popd
 )
 
@@ -327,9 +313,9 @@ IF NOT EXIST OpenExrStuff (
 	)
 	popd
 	
-	copy zlib-1.2.7\*.h OpenExrStuff\Deploy\include
-	copy zlib-1.2.7\%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
-	copy zlib-1.2.7\%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
+	copy zlib-aa566e\*.h OpenExrStuff\Deploy\include
+	copy zlib-aa566e\%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
+	copy zlib-aa566e\%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
 )
 	
 pushd OpenExrStuff\openexr-cvs
@@ -464,7 +450,7 @@ IF NOT EXIST LuminanceHdrStuff (
 )
 IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 	pushd LuminanceHdrStuff
-	%CYGWIN_DIR%\bin\git.exe clone git://qtpfsgui.git.sourceforge.net/gitroot/qtpfsgui/qtpfsgui qtpfsgui
+	%CYGWIN_DIR%\bin\git.exe clone git://git.code.sf.net/p/qtpfsgui/code qtpfsgui-code
 	popd
 ) ELSE (
 	pushd LuminanceHdrStuff\qtpfsgui
@@ -490,18 +476,6 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 		mkdir LuminanceHdrStuff\DEPs\bin\%%v
 	)
 	
-	copy libjpeg\*.h LuminanceHdrStuff\DEPs\include\libjpeg
-	
-	copy exiv2-trunk\msvc64\include\* LuminanceHdrStuff\DEPs\include\exiv2
-	copy exiv2-trunk\msvc64\include\exiv2\* LuminanceHdrStuff\DEPs\include\exiv2
-
-	copy exiv2-trunk\msvc64\exiv2lib\%Platform%\%Configuration%DLL\*.lib LuminanceHdrStuff\DEPs\lib\exiv2
-	copy exiv2-trunk\msvc64\exiv2lib\%Platform%\%Configuration%DLL\*.dll LuminanceHdrStuff\DEPs\bin\exiv2
-	
-	copy tiff-4.0.2\libtiff\*.h LuminanceHdrStuff\DEPs\include\libtiff
-	copy tiff-4.0.2\libtiff\*.lib LuminanceHdrStuff\DEPs\lib\libtiff
-	copy tiff-4.0.2\libtiff\*.dll LuminanceHdrStuff\DEPs\bin\libtiff
-	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
 
 	copy OpenExrStuff\Deploy\include\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
@@ -518,6 +492,16 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	rem copy gsl-1.15\build.vc10\dll\*.dll LuminanceHdrStuff\DEPs\bin\gsl
 )
 
+robocopy tiff-4.0.3\libtiff LuminanceHdrStuff\DEPs\include\libtiff *.h /MIR >nul
+robocopy tiff-4.0.3\libtiff LuminanceHdrStuff\DEPs\lib\libtiff *.lib /MIR /NJS >nul
+robocopy tiff-4.0.3\libtiff LuminanceHdrStuff\DEPs\bin\libtiff *.dll /MIR /NJS >nul
+
+rem robocopy expat: included indirectly in in exiv2
+rem robocopy zlib: included indirectly in in exiv2
+robocopy exiv2-2895\include LuminanceHdrStuff\DEPs\include\exiv2 *.h /MIR >nul
+robocopy exiv2-2895\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\lib\exiv2 *.lib /MIR >nul
+robocopy exiv2-2895\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\bin\exiv2 *.dll /MIR >nul
+
 robocopy lpng1513 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
 robocopy lpng1513\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
 robocopy lpng1513\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
@@ -530,6 +514,10 @@ robocopy LibRaw-5c9b4fb\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR >nul
 robocopy lcms2-493aac\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
 robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
 robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
+
+robocopy libjpeg-turbo-867 LuminanceHdrStuff\DEPs\include\libjpeg *.h /MIR >nul
+robocopy libjpeg-turbo-867.build LuminanceHdrStuff\DEPs\lib\libjpeg *.lib /MIR /NJS >nul
+robocopy libjpeg-turbo-867.build LuminanceHdrStuff\DEPs\bin\libjpeg *.dll /MIR /NJS >nul
 
 REM robocopy tbb40_20120613oss\include LuminanceHdrStuff\DEPs\include\tbb /MIR >nul
 REM robocopy tbb40_20120613oss\lib\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\lib\tbb /MIR >nul
@@ -552,6 +540,11 @@ IF %OPTION_LUPDATE_NOOBSOLETE% EQU 1 (
 ) ELSE (
 	set CMAKE_OPTIONS=%CMAKE_OPTIONS% -ULUPDATE_NOOBSOLETE
 )
+
+
+set CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-aa566e
+set CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-aa566e\%Configuration%
+set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%CMAKE_LIB%
 
 IF EXIST ..\..\gtest-1.6.0 (
 	SET GTEST_ROOT=%CD%\..\..\gtest-1.6.0
@@ -591,7 +584,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
 			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "libpng\libpng15.dll") do (
+			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\expat.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "libpng\libpng15.dll") do (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd
