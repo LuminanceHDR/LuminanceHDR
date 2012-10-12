@@ -542,9 +542,10 @@ IF %OPTION_LUPDATE_NOOBSOLETE% EQU 1 (
 )
 
 
-set CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-aa566e
-set CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-aa566e\%Configuration%
-set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%CMAKE_LIB%
+set L_CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-aa566e
+set L_CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-aa566e\%Configuration%
+set L_CMAKE_PROGRAM_PATH=%CYGWIN_DIR%\bin
+set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH%
 
 IF EXIST ..\..\gtest-1.6.0 (
 	SET GTEST_ROOT=%CD%\..\..\gtest-1.6.0
@@ -584,7 +585,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
 			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("lcms2\lcms2_DLL.dll", "lcms2\lcms.dll", "exiv2\exiv2.dll", "exiv2\expat.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "libpng\libpng15.dll") do (
+			for %%v in ("lcms2\lcms2_DLL.dll", "exiv2\exiv2.dll", "exiv2\expat.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "libpng\libpng15.dll") do (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd

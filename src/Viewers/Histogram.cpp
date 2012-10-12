@@ -48,8 +48,8 @@ void Histogram::computeLog( const pfs::Array2D *image )
 
   float max, min;               // Find min, max
   {
-    min = 999999999;
-    max = -999999999;
+    min = 999999999.0f;
+    max = -999999999.0f;
     
     for( int i = 0; i < size; i += accuracy ) {
       float v = (*image)(i);

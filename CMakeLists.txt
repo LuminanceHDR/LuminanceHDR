@@ -37,23 +37,9 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
 
 FIND_PACKAGE(Git)
-#FIND_PACKAGE(Git QUIET)
-IF(NOT GIT_FOUND)
-    FIND_FILE(GIT_EXECUTABLE git.exe 
-        $ENV{CYGWIN_DIR}\\bin
-        $ENV{CYGWIN_DIR}
-    )
-    IF (EXISTS ${GIT_EXECUTABLE})
-        SET(GIT_FOUND 1)
-    ENDIF()
-ENDIF()
-
 IF(GIT_FOUND)
     include(GetGitRevisionDescription)
     get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-    message(STATUS "Git found")
-ELSE()
-    message(STATUS "Git not found")
 ENDIF()
 
 IF(WIN32)
