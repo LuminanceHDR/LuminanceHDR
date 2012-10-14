@@ -32,6 +32,7 @@
 #include <QColor>
 
 #include <algorithm>
+#include <iostream>
 
 #include "Libpfs/domio.h"
 #include "Fileformat/tiffreader.h"

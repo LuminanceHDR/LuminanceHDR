@@ -22,10 +22,13 @@
  */
 
 #include <QDebug>
+#include <QString>
 
-#include <image.hpp>
 #include <cmath>
 #include <iostream>
+
+#include <exif.hpp>
+#include <image.hpp>
 
 #include "ExifOperations.h"
 #include "arch/math.h"
