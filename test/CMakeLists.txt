@@ -74,6 +74,13 @@ TARGET_LINK_LIBRARIES(TestVex
     ${TBB_LIBRARIES})
 ADD_TEST(TestVex TestVex)
 
+ADD_EXECUTABLE(TestVexDotProduct TestVexDotProduct.cpp)
+TARGET_LINK_LIBRARIES(TestVexDotProduct
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${TBB_LIBRARIES})
+ADD_TEST(TestVexDotProduct TestVexDotProduct)
+
 ADD_EXECUTABLE(TestFloatRgb TestFloatRgb.cpp)
 TARGET_LINK_LIBRARIES(TestFloatRgb
     ${GTEST_BOTH_LIBRARIES}
