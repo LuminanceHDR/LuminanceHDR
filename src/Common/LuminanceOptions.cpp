@@ -62,7 +62,7 @@ void LuminanceOptions::conditionallyDoUpgrade()
         {
             options.setRawWhiteBalanceMethod(1);
 #ifdef DEMOSAICING_GPL3
-            options.setRawUserQuality(10); // AMaZE 
+            options.setRawUserQuality(10); // AMaZE
 #endif
         }
 
@@ -85,7 +85,7 @@ void LuminanceOptions::setPortableMode(bool isPortable)
 
         QString filePath = QDir(QApplication::applicationDirPath()).relativeFilePath("PortableMode.txt");
         QFile file(filePath);
-        if (isPortable && !file.exists()) 
+        if (isPortable && !file.exists())
         {
             if (file.open(QIODevice::WriteOnly))
                 file.close();
@@ -123,7 +123,7 @@ QString LuminanceOptions::getDatabaseFileName()
         filename = QDir::currentPath();
     }
     else
-    {	
+    {
         filename = QDir(QDir::homePath()).absolutePath();
 #ifdef WIN32
         filename += "/LuminanceHDR";
@@ -587,7 +587,6 @@ private:
     QString& str_;
 };
 #endif // QT_DEBUG
-
 }
 
 
@@ -760,7 +759,7 @@ void LuminanceOptions::setPreviewPanelActive(bool status)
 
 bool LuminanceOptions::isRealtimePreviewsActive()
 {
-    return m_settingHolder->value(KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE, true).toBool();
+    return m_settingHolder->value(KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE, false).toBool();
 }
 
 void LuminanceOptions::setRealtimePreviewsActive(bool status)
@@ -814,7 +813,7 @@ int LuminanceOptions::getPreviewPanelMode() // 0 means on the right, 1 on the bo
 	return m_settingHolder->value(KEY_PREVIEW_PANEL_MODE).toInt();
 }
 
-void LuminanceOptions::setPreviewPanelMode(int mode) 
+void LuminanceOptions::setPreviewPanelMode(int mode)
 {
 	m_settingHolder->setValue(KEY_PREVIEW_PANEL_MODE, mode);
 }
