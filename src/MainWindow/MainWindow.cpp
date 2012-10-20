@@ -87,7 +87,6 @@ namespace
 {
 QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget* parent = 0)
 {
-
     QString filetypes = QObject::tr("All LDR formats");
     filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
     filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
@@ -139,7 +138,6 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
         return g_v->getViewerMode();
     }
 }
-
 }
 
 int MainWindow::sm_NumMainWindows = 0;
@@ -266,10 +264,10 @@ void MainWindow::createCentralWidget()
 
     setCentralWidget(m_centralwidget_splitter);
 
-    previewPanel = new PreviewPanel();
+    m_PreviewPanel = new PreviewPanel();
 
     // create tonemapping panel
-    tmPanel = new TonemappingPanel(previewPanel); //(m_centralwidget_splitter);
+    tmPanel = new TonemappingPanel(m_PreviewPanel); //(m_centralwidget_splitter);
 
     connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), tmPanel, SLOT(setRealtimePreviews(bool)));
     connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), luminance_options, SLOT(setRealtimePreviewsActive(bool)));
@@ -291,55 +289,11 @@ void MainWindow::createCentralWidget()
     m_centralwidget_splitter->setStretchFactor(1, 5);
 
     // create preview panel
-    previewscrollArea = new QScrollArea;
-    QWidget *previewscrollAreaWidgetContents;
-    QGridLayout *gridLayout;
-    QVBoxLayout *verticalLayout;
-    QSpacerItem *verticalSpacer;
-    QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer;
-    QSpacerItem *horizontalSpacer_2;
-    QSpacerItem *verticalSpacer_2;
+    m_PreviewscrollArea = new QScrollArea;
+    m_PreviewscrollArea->setWidgetResizable(true);
+    m_PreviewscrollArea->setWidget(m_PreviewPanel);
 
-
-    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
-    previewscrollArea->setWidgetResizable(true);
-
-    previewscrollAreaWidgetContents = new QWidget();
-    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
-    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
-    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-    verticalLayout = new QVBoxLayout();
-    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
-
-    verticalLayout->addItem(verticalSpacer);
-
-    horizontalLayout = new QHBoxLayout();
-    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-    horizontalLayout->addItem(horizontalSpacer);
-
-    horizontalLayout->addWidget(previewPanel);
-
-    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-    horizontalLayout->addItem(horizontalSpacer_2);
-
-
-    verticalLayout->addLayout(horizontalLayout);
-
-    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
-
-    verticalLayout->addItem(verticalSpacer_2);
-
-
-    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
-
-    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
-    
-    m_centralwidget_splitter->addWidget(previewscrollArea);
+    m_centralwidget_splitter->addWidget(m_PreviewscrollArea);
 
     if (luminance_options->getPreviewPanelMode()) {
         showPreviewsOnTheBottom();
@@ -353,7 +307,7 @@ void MainWindow::createCentralWidget()
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateSoftProofing(int)));
     connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
-    connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed()), m_PreviewPanel, SLOT(deleteLater()));
 
     m_centralwidget_splitter->restoreState(luminance_options->value("MainWindowSplitterState").toByteArray());
     m_centralwidget_splitter->restoreGeometry(luminance_options->value("MainWindowSplitterGeometry").toByteArray());
@@ -372,7 +326,7 @@ void MainWindow::createCentralWidget()
     tabBar->setAutoFillBackground( true );
     tabBar->setBackgroundRole(QPalette::Window);
 
-    previewscrollArea->hide();
+    m_PreviewscrollArea->hide();
 }
 
 void MainWindow::createToolBar()
@@ -460,15 +414,11 @@ void MainWindow::loadOptions()
 	break;
     }
     m_Ui->actionShowPreviewPanel->setChecked(luminance_options->isPreviewPanelActive());
-    if (luminance_options->getPreviewPanelMode()) {
-        m_Ui->actionShow_on_the_bottom->setChecked(true);
-        m_Ui->actionShow_on_the_right->setChecked(false);
-    }
-    else {
-        m_Ui->actionShow_on_the_right->setChecked(true);
-        m_Ui->actionShow_on_the_bottom->setChecked(false);
-    }
     m_Ui->actionRealtimePreviews->setChecked(luminance_options->isRealtimePreviewsActive());
+
+    bool isPreviewPanelRight = luminance_options->getPreviewPanelMode() == 0;
+    m_Ui->actionShow_on_the_bottom->setChecked(!isPreviewPanelRight);
+    m_Ui->actionShow_on_the_right->setChecked(isPreviewPanelRight);
 }
 
 void MainWindow::on_actionDonate_triggered()
@@ -621,7 +571,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
                 else
                     quality = savedFileQuality.getQuality();
             }
-            
+
             QString inputfname;
             if (m_inputFilesName.isEmpty())
                     inputfname = "";
@@ -632,10 +582,9 @@ void MainWindow::on_fileSaveAsAction_triggered()
                                       Q_ARG(GenericViewer*, l_v),
                                       Q_ARG(QString, outfname),
                                       Q_ARG(int, quality),
-                                      Q_ARG(QString, inputfname),  
+                                      Q_ARG(QString, inputfname),
                                       Q_ARG(QVector<float>, m_inputExpoTimes),
                                       Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
-
         }
     }
 }
@@ -1449,7 +1398,6 @@ void MainWindow::setupTM()
 
     // start thread waiting for signals (I/O requests)
     m_TMThread->start();
-
 }
 
 void MainWindow::tonemapBegin()
@@ -1496,7 +1444,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         }
     }
 
-    previewPanel->setEnabled(false);
+    m_PreviewPanel->setEnabled(false);
 
     tm_status.curr_tm_options = opts;
 
@@ -1522,7 +1470,6 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         //CALL m_TMWorker->getTonemappedFrame(hdr_viewer->getHDRPfsFrame(), opts);
         QMetaObject::invokeMethod(m_TMWorker, "computeTonemap", Qt::QueuedConnection,
                                   Q_ARG(pfs::Frame*, hdr_viewer->getFrame()), Q_ARG(TonemappingOptions*,opts));
-
     }
 }
 
@@ -1552,8 +1499,8 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
     }
     m_tabwidget->setCurrentWidget(n);
 
-    previewPanel->setEnabled(true);
-	
+    m_PreviewPanel->setEnabled(true);
+
 	if (m_Ui->actionSoft_Proofing->isChecked()) {
 		LdrViewer *viewer = static_cast<LdrViewer *>(n);
 		viewer->doSoftProofing(false);
@@ -1608,25 +1555,25 @@ void MainWindow::showPreviewPanel(bool b)
     {
         if (tm_status.is_hdr_ready)
         {
-            previewscrollArea->show();
+            m_PreviewscrollArea->show();
 
             // ask panel to refresh itself
-            previewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
+            m_PreviewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
 
             // connect signals
-            connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
-            connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-            connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+            connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
+            connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+            connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
         }
     }
     else
     {
-        previewscrollArea->hide();
+        m_PreviewscrollArea->hide();
 
         // disconnect signals
-        disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
-        disconnect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-        disconnect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+        disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
+        disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+        disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
     }
 }
 
@@ -1699,7 +1646,7 @@ void MainWindow::removeTab(int t)
             m_inputFilesName.clear();
             m_inputExpoTimes.clear();
 
-			previewscrollArea->hide();
+			m_PreviewscrollArea->hide();
         }
     }
     else
@@ -1866,7 +1813,7 @@ void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 	if ( current->isHDR() ) return;
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doProof) {
-		qDebug() << "MainWindow:: do soft proofing"; 
+		qDebug() << "MainWindow:: do soft proofing";
 		if (m_Ui->actionGamut_Check->isChecked())
 			m_Ui->actionGamut_Check->setChecked(false);
 		viewer->doSoftProofing(false);
@@ -1884,13 +1831,13 @@ void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 	if ( current->isHDR() ) return;
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doGamut) {
-		qDebug() << "MainWindow:: do gamut check"; 
+		qDebug() << "MainWindow:: do gamut check";
 		if (m_Ui->actionSoft_Proofing->isChecked())
 			m_Ui->actionSoft_Proofing->setChecked(false);
 		viewer->doSoftProofing(true);
 	}
 	else {
-		qDebug() << "MainWindow:: undo gamut check"; 
+		qDebug() << "MainWindow:: undo gamut check";
 		viewer->undoSoftProofing();
 	}
 }
@@ -1924,104 +1871,12 @@ void MainWindow::updateSoftProofing(int i)
 
 void MainWindow::showPreviewsOnTheRight()
 {
-    QWidget *previewscrollAreaWidgetContents;
-    QGridLayout *gridLayout;
-    QVBoxLayout *verticalLayout;
-    QSpacerItem *verticalSpacer;
-    QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer;
-    QSpacerItem *horizontalSpacer_2;
-    QSpacerItem *verticalSpacer_2;
-
-    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
-    previewscrollArea->setWidgetResizable(true);
-
-    previewscrollAreaWidgetContents = new QWidget();
-    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
-    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
-    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-    verticalLayout = new QVBoxLayout();
-    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-    verticalLayout->addItem(verticalSpacer);
-
-    horizontalLayout = new QHBoxLayout();
-    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-    horizontalLayout->addItem(horizontalSpacer);
-
-    horizontalLayout->addWidget(previewPanel);
-
-    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
-
-    horizontalLayout->addItem(horizontalSpacer_2);
-
-
-    verticalLayout->addLayout(horizontalLayout);
-
-    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-    verticalLayout->addItem(verticalSpacer_2);
-
-
-    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
-
-    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
-    previewscrollArea->setParent(m_centralwidget_splitter);
-    m_centralwidget_splitter->addWidget(previewscrollArea);
+    m_PreviewscrollArea->setParent(m_centralwidget_splitter);
     luminance_options->setPreviewPanelMode(0);
 }
 
 void MainWindow::showPreviewsOnTheBottom()
 {
-    QWidget *previewscrollAreaWidgetContents;
-    QGridLayout *gridLayout;
-    QVBoxLayout *verticalLayout;
-    QSpacerItem *verticalSpacer;
-    QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer;
-    QSpacerItem *horizontalSpacer_2;
-    QSpacerItem *verticalSpacer_2;
-
-    previewscrollArea->setObjectName(QString::fromUtf8("previewscrollArea"));
-    previewscrollArea->setWidgetResizable(true);
-
-    previewscrollAreaWidgetContents = new QWidget();
-    previewscrollAreaWidgetContents->setObjectName(QString::fromUtf8("previewscrollAreaWidgetContents"));
-    gridLayout = new QGridLayout(previewscrollAreaWidgetContents);
-    gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-    verticalLayout = new QVBoxLayout();
-    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-    verticalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-    verticalLayout->addItem(verticalSpacer);
-
-    horizontalLayout = new QHBoxLayout();
-    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-    horizontalSpacer = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-    horizontalLayout->addItem(horizontalSpacer);
-
-    horizontalLayout->addWidget(previewPanel);
-
-    horizontalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-    horizontalLayout->addItem(horizontalSpacer_2);
-
-
-    verticalLayout->addLayout(horizontalLayout);
-
-    verticalSpacer_2 = new QSpacerItem(5, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-    verticalLayout->addItem(verticalSpacer_2);
-
-
-    gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
-
-    previewscrollArea->setWidget(previewscrollAreaWidgetContents);
-    previewscrollArea->setParent(m_bottom_splitter);
-    m_bottom_splitter->addWidget(previewscrollArea);
+    m_PreviewscrollArea->setParent(m_bottom_splitter);
     luminance_options->setPreviewPanelMode(1);
 }

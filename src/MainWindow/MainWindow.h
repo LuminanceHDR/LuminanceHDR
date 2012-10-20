@@ -255,8 +255,8 @@ protected:
     bool maybeSave();
 
     // Preview Panel
-    QScrollArea *previewscrollArea;
-    PreviewPanel *previewPanel;
+    QScrollArea *m_PreviewscrollArea;
+    PreviewPanel *m_PreviewPanel;
 
     void openFiles(const QStringList& files);
 
