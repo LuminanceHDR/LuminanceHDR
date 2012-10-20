@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <vector>
 #include <algorithm>
+#include <tr1/tuple>
+
+#if GTEST_HAS_COMBINE
 
 #include "mantiuk06/contrast_domain.h"
 #include "TonemappingOperators/mantiuk06/pyramid.h"
@@ -10,199 +13,185 @@ struct RandZeroOne
 {
     float operator()()
     {
-        return (static_cast<float>(rand())/RAND_MAX);
+        return (static_cast<float>(rand())/(RAND_MAX))*10000.f - 500.f;
     }
 };
 
-TEST(TestMantiuk06, UpsampleFull)
+typedef std::vector<float> DataBuffer;
+
+using ::testing::TestWithParam;
+using ::testing::Values;
+using ::testing::Combine;
+
+class TestMantiuk06 : public TestWithParam< ::std::tr1::tuple<int, int> >
 {
-    const size_t outputCols = 4373;
-    const size_t outputRows = 2173;
-    const size_t inputCols = (outputCols >> 1);
-    const size_t inputRows = (outputRows >> 1);
-
-    std::vector<float> origin(inputCols*inputRows);
-
-    // fill data with samples between zero and one!
-    generate(origin.begin(), origin.end(), RandZeroOne());
-
-    std::vector<float> referenceOutput(outputCols*outputRows);
-
-    test_mantiuk06::matrix_upsample_full(outputCols, outputRows,
-                                    origin.data(), referenceOutput.data());
-
-    std::vector<float> testOutput(outputCols*outputRows);
-    std::fill(testOutput.begin(), testOutput.end(), 0.f);
-
-    matrixUpsample(outputCols, outputRows,
-                         origin.data(), testOutput.data());
-
-
-    ASSERT_EQ(referenceOutput.size(), testOutput.size());
-    for (size_t idx = 0; idx < testOutput.size(); ++idx)
+public:
+    TestMantiuk06()
+        : m_rows( ::std::tr1::get<1>( GetParam() ))
+        , m_cols( ::std::tr1::get<0>( GetParam() ))
     {
-        ASSERT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
+        // std::cout << "(" << m_rows << "," << m_cols << ")" << std::endl;
     }
-}
 
-TEST(TestMantiuk06, UpsampleSimple)
+    size_t halfCols() const
+    {
+        return (m_cols >> 1);
+    }
+
+    size_t halfRows() const
+    {
+        return (m_rows >> 1);
+    }
+
+    size_t cols() const
+    {
+        return m_cols;
+    }
+
+    size_t rows() const
+    {
+        return m_rows;
+    }
+
+    static void compareVectors(const float* in1, const float* in2, size_t size)
+    {
+        for (size_t idx = 0; idx < size; idx++)
+        {
+            ASSERT_NEAR(in1[idx], in2[idx], 10e-6f);
+        }
+    }
+
+protected:
+    size_t m_rows;
+    size_t m_cols;
+};
+
+
+TEST_P(TestMantiuk06, Upsample)
 {
-    const size_t outputCols = 5000;
-    const size_t outputRows = 2600;
-    const size_t inputCols = (outputCols >> 1);
-    const size_t inputRows = (outputRows >> 1);
+    const size_t outputCols = cols();
+    const size_t outputRows = rows();
+    const size_t inputCols  = halfCols();
+    const size_t inputRows  = halfRows();
 
-    std::vector<float> origin(inputCols*inputRows);
+    DataBuffer origin(inputCols*inputRows);
 
     // fill data with samples between zero and one!
     generate(origin.begin(), origin.end(), RandZeroOne());
 
-    std::vector<float> referenceOutput(outputCols*outputRows);
+    DataBuffer referenceOutput(outputCols*outputRows);
+    DataBuffer testOutput(outputCols*outputRows);
 
-    test_mantiuk06::matrix_upsample_simple(outputCols, outputRows,
-                                      origin.data(), referenceOutput.data());
-
-    std::vector<float> testOutput(outputCols*outputRows);
-    std::fill(testOutput.begin(), testOutput.end(), 0.f);
+    test_mantiuk06::matrix_upsample(outputCols, outputRows,
+                                    origin.data(), referenceOutput.data());
 
     matrixUpsample(outputCols, outputRows,
                    origin.data(), testOutput.data());
 
-    ASSERT_EQ(referenceOutput.size(), testOutput.size());
-    for (size_t idx = 0; idx < testOutput.size(); ++idx)
-    {
-        ASSERT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
-    }
+    compareVectors(referenceOutput.data(), testOutput.data(),
+                   testOutput.size());
 }
 
-TEST(TestMantiuk06, DownsampleFull)
+TEST_P(TestMantiuk06, DownsampleFull)
 {
-    const size_t inputCols = 4373;
-    const size_t inputRows = 2173;
+    const size_t inputCols = cols();
+    const size_t inputRows = rows();
 
-    const size_t outputCols = (inputCols >> 1);
-    const size_t outputRows = (inputRows >> 1);
+    const size_t outputCols = halfCols();
+    const size_t outputRows = halfRows();
 
-    std::vector<float> origin(inputCols*inputRows);
+    DataBuffer origin(inputCols*inputRows);
 
     // fill data with samples between zero and one!
     generate(origin.begin(), origin.end(), RandZeroOne());
 
-    std::vector<float> referenceOutput(outputCols*outputRows);
+    DataBuffer referenceOutput(outputCols*outputRows);
+    DataBuffer testOutput(outputCols*outputRows);
 
-    test_mantiuk06::matrix_downsample_full(inputCols, inputRows,
+    test_mantiuk06::matrix_downsample(inputCols, inputRows,
                                       origin.data(),
                                       referenceOutput.data());
-
-    std::vector<float> testOutput(outputCols*outputRows);
-    std::fill(testOutput.begin(), testOutput.end(), 0.f);
-
     matrixDownsample(inputCols, inputRows,
                      origin.data(),
                      testOutput.data());
 
-    ASSERT_EQ(referenceOutput.size(), testOutput.size());
-    for (size_t idx = 0; idx < testOutput.size(); ++idx)
-    {
-        ASSERT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
-    }
+    compareVectors(referenceOutput.data(), testOutput.data(),
+                   testOutput.size());
 }
 
-TEST(TestMantiuk06, DownsampleSimple)
+TEST_P(TestMantiuk06, TestMantiuk06AddDivergence)
 {
-    const size_t inputCols = 4000;
-    const size_t inputRows = 2000;
+    const size_t inputCols = cols();
+    const size_t inputRows = rows();
 
-    const size_t outputCols = (inputCols >> 1);
-    const size_t outputRows = (inputRows >> 1);
-
-    std::vector<float> origin(inputCols*inputRows);
-
-    // fill data with samples between zero and one!
-    generate(origin.begin(), origin.end(), RandZeroOne());
-
-    std::vector<float> referenceOutput(outputCols*outputRows);
-
-    test_mantiuk06::matrix_downsample_simple(inputCols, inputRows,
-                                             origin.data(), referenceOutput.data());
-
-    std::vector<float> testOutput(outputCols*outputRows);
-    std::fill(testOutput.begin(), testOutput.end(), 0.f);
-
-    matrixDownsample(inputCols, inputRows,
-                     origin.data(),
-                     testOutput.data());
-
-    ASSERT_EQ(referenceOutput.size(), testOutput.size());
-    for (size_t idx = 0; idx < testOutput.size(); ++idx)
-    {
-        ASSERT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
-    }
-}
-
-TEST(TestMantiuk06, TestMantiuk06AddDivergence)
-{
-    const size_t cols = 4373;
-    const size_t rows = 2173;
-
-    std::vector<float> Gx(cols*rows);
-    std::vector<float> Gy(cols*rows);
+    DataBuffer Gx(inputCols*inputRows);
+    DataBuffer Gy(inputCols*inputRows);
 
     // fill data with samples between zero and one!
     generate(Gx.begin(), Gx.end(), RandZeroOne());
     generate(Gy.begin(), Gy.end(), RandZeroOne());
 
-    std::vector<float> referenceOutput(cols*rows);
-    std::fill(referenceOutput.begin(), referenceOutput.end(), 0.f);
+    // data buffer
+    DataBuffer referenceOutput(inputCols*inputRows);
+    DataBuffer testOutput(inputCols*inputRows);
+    // set initial value
+    std::fill(testOutput.begin(), testOutput.end(), 1.f);
+    std::fill(referenceOutput.begin(), referenceOutput.end(), 1.f);
 
-    test_mantiuk06::calculate_and_add_divergence(cols, rows,
-                                            Gx.data(), Gy.data(),
-                                            referenceOutput.data());
+    test_mantiuk06::calculate_and_add_divergence(inputCols, inputRows,
+                                                 Gx.data(), Gy.data(),
+                                                 referenceOutput.data());
+    calculateAndAddDivergence(inputCols, inputRows,
+                              Gx.data(), Gy.data(),
+                              testOutput.data());
 
-    std::vector<float> testOutput(cols*rows);
-    std::fill(testOutput.begin(), testOutput.end(), 0.f);
-
-    calculateAndAddDivergence(cols, rows,
-                                 Gx.data(), Gy.data(),
-                                 testOutput.data());
-
-    ASSERT_EQ(referenceOutput.size(), testOutput.size());
-    for (size_t idx = 0; idx < testOutput.size(); ++idx)
-    {
-        ASSERT_NEAR(referenceOutput[idx], testOutput[idx], 10e-6f);
-    }
+    compareVectors(referenceOutput.data(), testOutput.data(),
+                   testOutput.size());
 }
 
-TEST(TestMantiuk06, TestMantiuk06CalculateGradient)
+TEST_P(TestMantiuk06, TestMantiuk06CalculateGradient)
 {
-    const size_t cols = 4373;
-    const size_t rows = 2173;
+    const size_t inputCols = cols();
+    const size_t inputRows = rows();
 
-    std::vector<float> input(cols*rows);
+    std::vector<float> input(inputCols*inputRows);
     // fill data with samples between zero and one!
     generate(input.begin(), input.end(), RandZeroOne());
 
     // REFERENCE
-    std::vector<float> referenceGx(cols*rows);
-    std::vector<float> referenceGy(cols*rows);
+    DataBuffer referenceGx(inputCols*inputRows);
+    DataBuffer referenceGy(inputCols*inputRows);
 
-    test_mantiuk06::calculate_gradient(cols, rows, input.data(),
+    test_mantiuk06::calculate_gradient(inputCols, inputRows, input.data(),
                                   referenceGx.data(), referenceGy.data());
 
     // COMPUTED
-    std::vector<float> computedGx(cols*rows);
-    std::vector<float> computedGy(cols*rows);
+    DataBuffer computedGx(inputCols*inputRows);
+    DataBuffer computedGy(inputCols*inputRows);
 
-    calculateGradients(cols, rows, input.data(),
+    calculateGradients(inputCols, inputRows, input.data(),
                        computedGx.data(), computedGy.data());
 
     // CHECK
-    for (size_t idx = 0; idx < referenceGx.size(); ++idx)
-    {
-        ASSERT_NEAR(referenceGx[idx], computedGx[idx], 10e-6f);
-    }
-    for (size_t idx = 0; idx < referenceGy.size(); ++idx)
-    {
-        ASSERT_NEAR(referenceGy[idx], computedGy[idx], 10e-6f);
-    }
+    compareVectors(referenceGx.data(), computedGx.data(),
+                   computedGx.size());
+    compareVectors(referenceGy.data(), computedGy.data(),
+                   computedGy.size());
 }
+
+INSTANTIATE_TEST_CASE_P(MeaningfulTestParameters,
+                        TestMantiuk06,
+                        Combine(Values(91, 351, 400, 1023, 2716, 5432),
+                                Values(27, 256, 1333, 2326, 4653))
+                        );
+#else
+
+// Google Test may not support Combine() with some compilers. If we
+// use conditional compilation to compile out all code referring to
+// the gtest_main library, MSVC linker will not link that library at
+// all and consequently complain about missing entry point defined in
+// that library (fatal error LNK1561: entry point must be
+// defined). This dummy test keeps gtest_main linked in.
+TEST(DummyTest, CombineIsNotSupportedOnThisPlatform) {}
+
+#endif  // GTEST_HAS_COMBINE
