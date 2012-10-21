@@ -48,7 +48,7 @@ namespace pfs {
  * @param sigma_s sigma value for spatial kernel
  * @param sigma_r sigma value for range kernel
  */
-void fastBilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
+void fastBilateralFilter( const pfs::Array2D& I, pfs::Array2D& J,
                           float sigma_s, float sigma_r, int downsample,
                           ProgressHelper *ph );
 
