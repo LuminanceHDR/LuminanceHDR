@@ -31,73 +31,72 @@
 
 #include "tmo_drago03.h"
 
-#include <math.h>
-#include <assert.h>
+#include <cmath>
+#include <cassert>
+
 #include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
 
-/// Type of algorithm
-#define FAST 0
-
-inline float biasFunc(float b, float x)
+namespace
 {
-  return pow(x, b);		// pow(x, log(bias)/log(0.5)
+
+inline
+float biasFunc(float b, float x)
+{
+    return std::pow(x, b);		// pow(x, log(bias)/log(0.5)
+}
+
+const float LOG05 = -0.693147f; // log(0.5)
 }
 
 //-------------------------------------------
 
-void calculateLuminance(unsigned int width, unsigned int height, const float* Y, float& avLum, float& maxLum)
+void calculateLuminance(unsigned int width, unsigned int height,
+                        const float* Y, float& avLum, float& maxLum)
 {
-  avLum = 0.0f;
-  maxLum = 0.0f;
+    avLum = 0.0f;
+    maxLum = 0.0f;
 
-  int size = width * height;
+    int size = width * height;
 
-  for( int i=0 ; i<size; i++ )
-  {
-    avLum += log( Y[i] + 1e-4 );
-    maxLum = ( Y[i] > maxLum ) ? Y[i] : maxLum ;
-  }
-  avLum =exp( avLum/ size);
+    for( int i=0 ; i<size; i++ )
+    {
+        avLum += log( Y[i] + 1e-4 );
+        maxLum = ( Y[i] > maxLum ) ? Y[i] : maxLum ;
+    }
+    avLum =exp( avLum/ size);
 }
 
 
-void tmo_drago03(unsigned int width, unsigned int height,
-                 const float* nY, float* nL,
+void tmo_drago03(const pfs::Array2D& Y, pfs::Array2D& L,
                  float maxLum, float avLum, float bias, 
 				 ProgressHelper *ph)
 {
-  const float LOG05 = -0.693147f; // log(0.5)
+    assert(Y.getRows() == L.getRows());
+    assert(Y.getCols() == L.getCols());
 
-  assert(nY!=NULL);
-  assert(nL!=NULL);
+    // normalize maximum luminance by average luminance
+    maxLum /= avLum;
 
-  const pfs::Array2D* Y = new pfs::Array2D(width, height, const_cast<float*>(nY));
-  pfs::Array2D* L = new pfs::Array2D(width, height, nL);
+    float divider = std::log10(maxLum + 1.0f);
+    float biasP = log(bias)/LOG05;
 
-  int nrows = Y->getRows();			// image size
-  int ncols = Y->getCols();
-  assert(nrows==L->getRows() && ncols==L->getCols() );
-
-  maxLum /= avLum;							// normalize maximum luminance by average luminance
-
-  float divider = log10(maxLum+1.0f);
-  float biasP = log(bias)/LOG05;
-
-#if !FAST
-  // Normal tone mapping of every pixel
-  for( int y=0 ; y<nrows; y++) { 
-	ph->newValue(100*y/nrows);
-	if (ph->isTerminationRequested()) 
-	  break; 
-    for( int x=0 ; x<ncols; x++)
+    // Normal tone mapping of every pixel
+    for (int y=0, yEnd = Y.getRows(); y < yEnd; y++)
     {
-      float Yw = (*Y)(x,y) / avLum;
-      float interpol = log (2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
-      (*L)(x,y) = ( log(Yw+1.0f)/interpol ) / divider;
+        ph->newValue(100*y/yEnd);
+        if (ph->isTerminationRequested())
+            break;
+
+        for (int x=0, xEnd = Y.getCols(); x < xEnd; x++)
+        {
+            float Yw = Y(x,y) / avLum;
+            float interpol = std::log (2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
+            L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
+        }
     }
-  }
-#else
+
+#if 0
   // 	Approximation of log(x+1)
   // 		x(6+x)/(6+4x) good if x < 1
   //     x*(6 + 0.7662x)/(5.9897 + 3.7658x) between 1 and 2
@@ -145,9 +144,6 @@ void tmo_drago03(unsigned int width, unsigned int height,
 	  }
       }
     }	
-#endif // #else #ifndef FAST
-
-  delete L;
-  delete Y;
+#endif
 }
 
