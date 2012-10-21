@@ -31,6 +31,11 @@
 // forward declaration
 class ProgressHelper;
 
+namespace pfs
+{
+class Array2D;
+}
+
 /**
  * @brief Frederic Drago Logmapping Algorithm
  *
@@ -46,9 +51,8 @@ class ProgressHelper;
  * @param bias bias parameter of tone mapping algorithm (eg 0.85)
  */
 
-void tmo_drago03(unsigned int width, unsigned int height,
-  const float* Y, float* L,
-  float maxLum, float avLum, float bias, ProgressHelper *ph);
+void tmo_drago03(const pfs::Array2D& Y, pfs::Array2D& L,
+                 float maxLum, float avLum, float bias, ProgressHelper *ph);
 
 /**
  * @brief Find average and maximum luminance in an image
@@ -57,6 +61,7 @@ void tmo_drago03(unsigned int width, unsigned int height,
  * @param avLum [out] average luminance
  * @param maxLum [out] maximum luminance
  */
-void calculateLuminance(unsigned int width, unsigned int height, const float* Y, float& avLum, float& maxLum );
+void calculateLuminance(unsigned int width, unsigned int height,
+                        const float* Y, float& avLum, float& maxLum);
 
 #endif

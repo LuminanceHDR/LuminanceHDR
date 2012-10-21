@@ -31,37 +31,49 @@
  * $Id: pfstmo_durand02.cpp,v 1.5 2009/02/23 19:09:41 rafm Exp $
  */
 
-
 #include <iostream>
+#include <sstream>
 #include <cmath>
 
 #include "Libpfs/colorspace.h"
 #include "Libpfs/frame.h"
 #include "tmo_durand02.h"
 
-void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float baseContrast, ProgressHelper *ph)
+namespace
+{
+const int downsample = 1;
+const bool original_algorithm = false;
+}
+
+//--- default tone mapping parameters;
+//#ifdef HAVE_FFTW3F
+//  float sigma_s = 40.0f;
+//#else
+//float sigma_s = 8.0f;
+//#endif
+//float sigma_r = 0.4f;
+//float baseContrast = 5.0f;
+
+void pfstmo_durand02(pfs::Frame* frame,
+                     float sigma_s, float sigma_r, float baseContrast,
+                     ProgressHelper *ph)
 { 
-  //--- default tone mapping parameters;
-  //#ifdef HAVE_FFTW3F
-  //  float sigma_s = 40.0f;
-  //#else
-  //float sigma_s = 8.0f;
-  //#endif
-  //float sigma_r = 0.4f;
-  //float baseContrast = 5.0f;
-  int downsample=1;
-  bool original_algorithm = false;
-  
-  std::cout << "pfstmo_durand02 (";
-#ifdef HAVE_FFTW3F
-  std::cout << "fftw3f ON";
-#else
-  std::cout << "fftw3f OFF";
+#ifndef NDEBUG
+    std::stringstream ss;
+
+    ss << "pfstmo_durand02 (";
+  #ifdef HAVE_FFTW3F
+    ss << "fftw3f ON";
+  #else
+    ss << "fftw3f OFF";
+  #endif
+    ss << ", sigma_s: " << sigma_s;
+    ss << ", sigma_r: " << sigma_r;
+    ss << ", base contrast: " << baseContrast << ")";
+
+    std::cout << ss.str() << std::endl;
 #endif
-  std::cout << ", sigma_s: " << sigma_s;
-  std::cout << ", sigma_r: " << sigma_r;
-  std::cout << ", base contrast: " << baseContrast << ")" << std::endl;
-  
+
   pfs::Channel *X, *Y, *Z;
   
   frame->getXYZChannels( X, Y, Z );
@@ -71,20 +83,12 @@ void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float base
   if( Y==NULL || X==NULL || Z==NULL)
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   
-  pfs::Array2D* Xr = X->getChannelData();
-  pfs::Array2D* Yr = Y->getChannelData();
-  pfs::Array2D* Zr = Z->getChannelData();
+  pfs::Array2D& R = *X->getChannelData();
+  pfs::Array2D& G = *Y->getChannelData();
+  pfs::Array2D& B = *Z->getChannelData();
   
-  // tone mapping
-  int w = Y->getWidth();
-  int h = Y->getHeight();
-  
-  pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr,
-                           pfs::CS_RGB, Xr, Yr, Zr);
-  
-  tmo_durand02( w, h, X->getRawData(), Y->getRawData(), Z->getRawData(), sigma_s, sigma_r, baseContrast, downsample, !original_algorithm, ph );
-  
-  pfs::transformColorSpace(pfs::CS_RGB, Xr, Yr, Zr,
-                           pfs::CS_XYZ, Xr, Yr, Zr);
+  tmo_durand02(R, G, B,
+               sigma_s, sigma_r, baseContrast, downsample, !original_algorithm,
+               ph);
 }
 

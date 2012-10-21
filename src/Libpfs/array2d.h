@@ -57,8 +57,11 @@ private:
     Array2D(const Array2D& other);
 
 public:
-    Array2D(int cols, int rows);
     Array2D(int cols, int rows, float* data);
+
+public:
+    Array2D(int cols, int rows);
+
 
     //! Each implementing class should provide its own destructor.
     //! It must be virtual to allow derived class to call their destructor

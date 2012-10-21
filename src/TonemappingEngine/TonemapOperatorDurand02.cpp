@@ -42,33 +42,28 @@ TonemapOperatorDurand02::TonemapOperatorDurand02():
     TonemapOperator()
 {}
 
-void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe,
+                                           TonemappingOptions* opts,
+                                           ProgressHelper& ph)
 {
     ph.emitSetMaximum(100);
 
-    // Convert to CS_XYZ: tm operator now use this colorspace
-    pfs::Channel *X, *Y, *Z;
-    workingframe->getXYZChannels( X, Y, Z );
-    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-
     // pfstmo_durand02 not reentrant
     m_Mutex.lock();
-    try {
+    try
+    {
         pfstmo_durand02(workingframe,
                         opts->operator_options.durandoptions.spatial,
                         opts->operator_options.durandoptions.range,
                         opts->operator_options.durandoptions.base,
                         &ph);
     }
-    catch (...) {
+    catch (...)
+    {
         m_Mutex.unlock();
         throw std::runtime_error("Tonemap Failed");
     }
     m_Mutex.unlock();
-
-    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
 TMOperator TonemapOperatorDurand02::getType()

@@ -47,7 +47,7 @@
 //!  environment
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //!  Improvement & Clean up (August 2011)
-//!  TBB based implementation (September 2012)
+//!  Refactoring code structure to improve modularity (September 2012)
 //! \author Bruce Guenter <bruce@untroubled.org>
 //!  Added trivial downsample and upsample functions when both dimension are even
 //!

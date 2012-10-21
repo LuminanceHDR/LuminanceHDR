@@ -37,6 +37,11 @@
 
 class ProgressHelper;
 
+namespace pfs
+{
+class Array2D;
+}
+
 /**
  * @brief Fast bilateral filtering
  *
@@ -51,11 +56,10 @@ class ProgressHelper;
  * @param color_correction enable automatic color correction 
  * @param downsample down sampling factor for speeding up fast-bilateral (1..20)
  */
-void tmo_durand02(unsigned int width, unsigned int height,
-  float *R, float *G, float *B,
-  float sigma_s, float sigma_r, float baseContrast, int downsample,
-  const bool color_correction = true,
-  ProgressHelper *ph = 0);
+void tmo_durand02(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
+                  float sigma_s, float sigma_r, float baseContrast, int downsample,
+                  bool color_correction = true,
+                  ProgressHelper *ph = 0);
 
 
 #endif // TMO_DURAND02_H

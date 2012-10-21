@@ -33,19 +33,12 @@
  *
  * $Id: contrast_domain.h,v 1.7 2008/06/16 22:17:47 rafm Exp $
  */
+
 #ifndef CONTRAST_DOMAIN_H
 #define CONTRAST_DOMAIN_H
 
 #include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
-
-
-void calculate_and_add_divergence(const size_t COLS, const size_t ROWS,
-                                  const float* Gx, const float* Gy, float* divG);
-
-void calculate_gradient(const int COLS, const int ROWS,
-                        const float* lum, float* Gx, float* Gy);
-
 
 /**
  * @brief: Tone mapping algorithm [Mantiuk2006]
