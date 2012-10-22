@@ -181,9 +181,9 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
                 // saturated value is present, and maximum exp time at which
                 // black value is present
                 if( m>maxM )
-                    minti = fminf(minti,ti);
+                    minti = std::min(minti,ti);
                 if( m<minM )
-                    maxti = fmaxf(maxti,ti);
+                    maxti = std::max(maxti,ti);
                 
                 // --- anti ghosting: monotonous increase in time should result
                 // in monotonous increase in intensity; make forward and
@@ -208,9 +208,9 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
                 // saturated value is present, and maximum exp time at which
                 // black value is present
                 if( m>maxM )
-                    minti = fminf(minti,ti);
+                    minti = std::min(minti,ti);
                 if( m<minM )
-                    maxti = fmaxf(maxti,ti);
+                    maxti = std::max(maxti,ti);
                 
                 // --- anti ghosting: monotonous increase in time should result
                 // in monotonous increase in intensity; make forward and
