@@ -28,6 +28,7 @@
 #include <cmath>
 #include <ostream>
 #include <sstream>
+#include "arch/math.h"
 
 using namespace std;
 
@@ -35,13 +36,13 @@ void ImageInspectorStats::operator()(float value)
 {
     m_parsedSamples++;
 
-    if ( std::isnan(value) )
+    if ( isnan(value) )
     {
         m_numNan++;
         return;
     }
 
-    if ( std::isinf(value) )
+    if ( finite(value) )
     {
         m_numInf++;
         return;

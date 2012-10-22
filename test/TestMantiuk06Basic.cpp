@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <vector>
 #include <algorithm>
-#include <tr1/tuple>
+#include <tuple>
+#include "arch/math.h"
+
 
 #if GTEST_HAS_COMBINE
 
