@@ -493,7 +493,7 @@ void calculateGradients(size_t cols, size_t rows,
 
 namespace
 {
-const float LOG10 = 2.3025850929940456840179914546844f;
+const float LOG10FACTOR = 2.3025850929940456840179914546844f;
 const size_t LOOKUP_W_TO_R = 107;
 
 static float W_table[] = {
@@ -556,7 +556,7 @@ float lookup_table(const size_t n,
 // transform gradient (Gx,Gy) to R
 void transformToR(float* G, float detailFactor, size_t size)
 {
-    const float log10 = 2.3025850929940456840179914546844*detailFactor;
+    const float log10 = LOG10FACTOR*detailFactor;
 
 #pragma omp parallel for
     for (int j = 0; j < size; j++)
@@ -566,9 +566,9 @@ void transformToR(float* G, float detailFactor, size_t size)
 
         if (Curr_G < 0.0f)
         {
-            Curr_G = -(powf(10, (-Curr_G) * log10) - 1.0f);
+            Curr_G = -(std::pow(10, (-Curr_G) * log10) - 1.0f);
         } else {
-            Curr_G = (powf(10, Curr_G * log10) - 1.0f);
+            Curr_G = (std::pow(10, Curr_G * log10) - 1.0f);
         }
         // W to RESP
         if (Curr_G < 0.0f)
@@ -586,7 +586,7 @@ void transformToR(float* G, float detailFactor, size_t size)
 void transformToG(float* R, float detailFactor, size_t size)
 {
     //here we are actually changing the base of logarithm
-    const float log10 = 2.3025850929940456840179914546844*detailFactor;
+    const float log10 = LOG10FACTOR*detailFactor;
 
 #pragma omp parallel for
     for (int j = 0; j < size; j++)
@@ -604,9 +604,9 @@ void transformToG(float* R, float detailFactor, size_t size)
         // W to G
         if (Curr_R < 0.0f)
         {
-            Curr_R = -log((-Curr_R) + 1.0f) / log10;
+            Curr_R = -std::log((-Curr_R) + 1.0f) / log10;
         } else {
-            Curr_R = log(Curr_R + 1.0f) / log10;
+            Curr_R = std::log(Curr_R + 1.0f) / log10;
         }
 
         R[j] = Curr_R;

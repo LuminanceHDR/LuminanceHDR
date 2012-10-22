@@ -119,6 +119,58 @@ TEST_P(TestMantiuk06, DownsampleFull)
                    testOutput.size());
 }
 
+TEST_P(TestMantiuk06, TransformToR)
+{
+    const size_t inputCols = cols();
+    const size_t inputRows = rows();
+
+    DataBuffer referenceOutput(inputCols*inputRows);
+    generate(referenceOutput.begin(), referenceOutput.end(),
+             RandZeroOne());
+    DataBuffer testOutput(inputCols*inputRows);
+    copy(referenceOutput.begin(), referenceOutput.end(),
+         testOutput.begin());
+
+    compareVectors(referenceOutput.data(), testOutput.data(),
+                   testOutput.size());
+
+    test_mantiuk06::transform_to_R(inputCols*inputRows,
+                                   referenceOutput.data(),
+                                   M_PI);
+    transformToR(testOutput.data(),
+                 M_PI,
+                 inputCols*inputRows);
+
+    compareVectors(referenceOutput.data(), testOutput.data(),
+                   testOutput.size());
+}
+
+TEST_P(TestMantiuk06, TransformToG)
+{
+    const size_t inputCols = cols();
+    const size_t inputRows = rows();
+
+    DataBuffer referenceOutput(inputCols*inputRows);
+    generate(referenceOutput.begin(), referenceOutput.end(),
+             RandZeroOne());
+    DataBuffer testOutput(inputCols*inputRows);
+    copy(referenceOutput.begin(), referenceOutput.end(),
+         testOutput.begin());
+
+    compareVectors(referenceOutput.data(), testOutput.data(),
+                   testOutput.size());
+
+    test_mantiuk06::transform_to_G(inputCols*inputRows,
+                                   referenceOutput.data(),
+                                   M_PI);
+    transformToG(testOutput.data(),
+                 M_PI,
+                 inputCols*inputRows);
+
+    compareVectors(referenceOutput.data(), testOutput.data(),
+                   testOutput.size());
+}
+
 TEST_P(TestMantiuk06, TestMantiuk06AddDivergence)
 {
     const size_t inputCols = cols();
@@ -181,8 +233,8 @@ TEST_P(TestMantiuk06, TestMantiuk06CalculateGradient)
 
 INSTANTIATE_TEST_CASE_P(MeaningfulTestParameters,
                         TestMantiuk06,
-                        Combine(Values(91, 351, 400, 1023, 2716, 5432),
-                                Values(27, 256, 1333, 2326, 4653))
+                        Combine(Values(91, 352, 403, 1024),
+                                Values(27, 256, 511, 1334))
                         );
 #else
 

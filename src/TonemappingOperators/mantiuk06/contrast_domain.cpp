@@ -140,8 +140,8 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
     rdotr_best = rdotr_curr = vex::dotProduct(r.data(), n);
 
     // Setup initial vector
-    std::copy(r.begin(), r.end(), p.begin());  // p = r
-    std::copy(x, x + n, x_best.begin());
+    std::copy(r.begin(), r.end(), p.begin());   // p = r
+    std::copy(x, x + n, x_best.begin());        // x_best = x
 
     const float irdotr = rdotr_curr;
     const float percent_sf = 100.0f/std::log(tol2*bnrm2/irdotr);
@@ -155,7 +155,8 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
                     static_cast<int>(std::log(rdotr_curr/irdotr)*percent_sf)
                     );
         // User requested abort
-        if (ph->isTerminationRequested() && iter > 0 ) {
+        if ( ph->isTerminationRequested() && iter > 0 )
+        {
             break;
         }
 
@@ -497,7 +498,7 @@ int tmo_mantiuk06_contmap(const int c, const int r,
 
     // transform R to gradients
     pp.transformToG( detailfactor );
-    // transform gradients to luminance Y
+    // transform gradients to luminance Y (pp -> Y)
     transformToLuminance(pp, Y, ph, itmax, tol);
 
     denormalizeLuminance(Y, n);
