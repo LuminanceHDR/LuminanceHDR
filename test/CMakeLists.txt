@@ -34,7 +34,7 @@ ADD_LIBRARY(constrast_domain STATIC
 IF(MSVC OR APPLE)
     TARGET_LINK_LIBRARIES(constrast_domain pfs pfstmo common)
 ELSE()
-    TARGET_LINK_LIBRARIES(TestMantiuk06Basic -Xlinker --start-group pfs pfstmo common -Xlinker --end-group)
+    TARGET_LINK_LIBRARIES(constrast_domain -Xlinker --start-group pfs pfstmo common -Xlinker --end-group)
 ENDIF()
 
 # Mantiuk06
