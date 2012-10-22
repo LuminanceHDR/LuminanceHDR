@@ -24,10 +24,8 @@
 
 #include "minmax.h"
 
-#include <limits>
 #include <algorithm>
 #include <numeric>
-#include <boost/numeric/conversion/bounds.hpp>
 
 namespace vex
 {
@@ -36,6 +34,12 @@ template<typename _Type>
 _Type minElement(const _Type* vector, size_t vectorSize)
 {
     return *std::min_element(vector, vector + vectorSize);
+}
+
+template<typename _Type>
+_Type maxElement(const _Type* vector, size_t vectorSize)
+{
+    return *std::max_element(vector, vector + vectorSize);
 }
 
 } // namespace vex

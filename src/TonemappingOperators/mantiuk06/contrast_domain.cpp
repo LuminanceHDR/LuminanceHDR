@@ -389,7 +389,11 @@ const float DISP_DYN_RANGE = 2.3f;
 
 void normalizeLuminanceAndRGB(float* R, float* G, float* B, float* Y, size_t size)
 {
-    const float clip_min = 1e-7f*vex::minElement(Y, size);
+    const float Ymax = vex::maxElement(Y, size);
+    const float clip_min = 1e-7f*Ymax;
+
+    // std::cout << "clip_min = " << clip_min << std::endl;
+    // std::cout << "Ymax = " << Ymax << std::endl;
 
     for (size_t idx = 0; idx < size; idx++)
     {
