@@ -35,6 +35,8 @@
 #include <iostream>
 
 #include "Libpfs/domio.h"
+#include "Libpfs/manip/shift.h"
+
 #include "Fileformat/tiffreader.h"
 #include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsouthdrimage.h"
@@ -169,79 +171,7 @@ qreal averageLightness(const QImage& qImage)
     return avgLum / (w * h);
 }
 
-pfs::Array2D *shiftPfsArray2D(const pfs::Array2D& in, int dx, int dy)
-{
-#ifdef TIMER_PROFILING
-    msec_timer stop_watch;
-    stop_watch.start();
-#endif
 
-    int width = in.getCols();
-    int height = in.getRows();
-
-    pfs::Array2D temp(width, height);
-    pfs::Array2D *out = new pfs::Array2D(width, height);    
-    
-#pragma omp parallel for shared(temp)
-    for (int i = 0; i < height*width; i++)
-    {
-        temp(i) = 0.f;
-    }
-
-    // x-shift
-#pragma omp parallel for shared(in)
-    for (int j = 0; j < height; j++)
-    {
-        for (int i = 0; i < width; i++)
-        {
-            if ((i+dx) < 0) continue;
-            if ((i+dx) >= width) break;
-
-            if ( in(i+dx, j) > 65535 )
-            {
-                temp(i, j) = 65535;
-            }
-            else if ( in(i+dx, j) < 0)
-            {
-                temp(i, j) = 0;
-            }
-            else
-            {
-                temp(i, j) = in(i+dx, j);
-            }
-        }
-    }
-    // y-shift
-#pragma omp parallel for shared(out)
-    for (int i = 0; i < width; i++)
-    {
-        for (int j = 0; j < height; j++)
-        {
-            if ((j+dy) < 0) continue;
-            if ((j+dy) >= height) break;
-
-            if ( temp(i, j+dy) > 65535 )
-            {
-                (*out)(i, j) = 65535;
-            }
-            else if ( temp(i, j+dy) < 0 )
-            {
-                (*out)(i, j) = 0;
-            }
-            else
-            {
-                (*out)(i, j) = temp(i, j+dy);
-            }
-        }
-    }
-
-#ifdef TIMER_PROFILING
-    stop_watch.stop_and_update();
-    std::cout << "shiftPfsArray2D = " << stop_watch.get_time() << " msec" << std::endl;
-#endif
-
-    return out;
-}
 
 void blend(QImage& img1, const QImage& img2, const QImage& mask)
 {
