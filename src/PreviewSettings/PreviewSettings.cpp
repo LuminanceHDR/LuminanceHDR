@@ -28,6 +28,7 @@
 
 #include "PreviewSettings.h"
 
+#include "Libpfs/frame.h"
 #include "Filter/pfssize.h"
 
 #include "Libpfs/manip/cut.h"

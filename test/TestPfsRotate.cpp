@@ -29,7 +29,9 @@
 #else
 #include <tuple>
 #endif
-#include <Filter/pfsrotate.h>
+
+#include <Libpfs/array2d.h>
+#include <Libpfs/manip/rotate.h>
 
 using ::testing::TestWithParam;
 using ::testing::Values;
@@ -118,7 +120,7 @@ TEST_P(TestPfsRotate, ClockWise)
     rotate_cw(inputVector.getRawData(),
               referenceOutput.getRawData(),
               cols(), rows());
-    pfs::rotateArray(&inputVector,
+    pfs::rotate(&inputVector,
                      &computedOutput,
                      true);
     
@@ -132,7 +134,7 @@ TEST_P(TestPfsRotate, CClockWise)
     rotate_ccw(inputVector.getRawData(),
                referenceOutput.getRawData(),
                cols(), rows());
-    pfs::rotateArray(&inputVector,
+    pfs::rotate(&inputVector,
                 &computedOutput,
                 false);
     

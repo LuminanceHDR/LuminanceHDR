@@ -26,18 +26,22 @@
  * $Id: pfsrotate.cpp,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
 
-#include <assert.h>
+#include "rotate.h"
+
+#include <cassert>
 #include <iostream>
 
-#include "pfsrotate.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/frame.h"
+
 #include "Common/msec_timer.h"
 #include "Libpfs/domio.h"
 
 namespace pfs
 {
   
-  pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise)
-  {
+pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
+{
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
@@ -56,7 +60,8 @@ namespace pfs
         const pfs::Channel *originalCh = *it;
         pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
 
-        rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);
+        rotate(originalCh->getChannelData(), newCh->getChannelData(),
+                    clock_wise);
     }
     
     pfs::copyTags( frame, resizedFrame );
@@ -67,41 +72,41 @@ namespace pfs
 #endif 
     
     return resizedFrame;
-  }
-  
-  void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
-  {
-      const float* Vin  = in->getRawData();
-      float* Vout       = out->getRawData();
-
-      const int I_ROWS = in->getRows();
-      const int I_COLS = in->getCols();
-
-      //const int O_ROWS = out->getRows();
-      const int O_COLS = out->getCols();
-
-      if (clockwise)
-      {
-#pragma omp parallel for
-          for (int j = 0; j < I_ROWS; j++)
-          {
-              for (int i = 0; i < I_COLS; i++)
-              {
-                  Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS + i];
-              }
-          }
-      }
-      else
-      {
-#pragma omp parallel for
-          for (int j = 0; j < I_ROWS; j++)
-          {
-              for (int i = 0; i < I_COLS; i++)
-              {
-                  Vout[(I_COLS - i - 1)*O_COLS + j] = Vin[j*I_COLS + i];
-              }
-          }
-      }
-  }
-  
 }
+  
+void rotate(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
+{
+    const float* Vin  = in->getRawData();
+    float* Vout       = out->getRawData();
+
+    const int I_ROWS  = in->getRows();
+    const int I_COLS  = in->getCols();
+
+    //const int O_ROWS = out->getRows();
+    const int O_COLS = out->getCols();
+
+    if (clockwise)
+    {
+#pragma omp parallel for
+        for (int j = 0; j < I_ROWS; j++)
+        {
+            for (int i = 0; i < I_COLS; i++)
+            {
+                Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS + i];
+            }
+        }
+    }
+    else
+    {
+#pragma omp parallel for
+        for (int j = 0; j < I_ROWS; j++)
+        {
+            for (int i = 0; i < I_COLS; i++)
+            {
+                Vout[(I_COLS - i - 1)*O_COLS + j] = Vin[j*I_COLS + i];
+            }
+        }
+    }
+}
+  
+} // pfs

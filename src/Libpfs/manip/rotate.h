@@ -1,7 +1,5 @@
-/**
- * @brief Resize images in PFS stream
- * 
- * This file is a part of PFSTOOLS package.
+/*
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk,
  *  Alexander Efremov
@@ -21,21 +19,25 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * @author Alexander Efremov, <aefremov@mpi-sb.mpg.de>
- *
- * $Id: pfsrotate.h,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
+
+//! \brief Resize images in PFS stream
+//! \author Alexander Efremov, <aefremov@mpi-sb.mpg.de>
 
 #ifndef PFSROTATE_H
 #define PFSROTATE_H
 
-#include "Libpfs/array2d.h"
-#include "Libpfs/frame.h"
-
 namespace pfs
 {
-  void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise);
-  pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise);
+class Frame;
+class Array2D;
+
+//! \brief rotate \c in inside \c out
+//! \param[in] clockwise true if clockwise rotation, false if counter clockwise
+void rotate(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise);
+
+//! \brief rotate frame into a newly created one
+pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise);
 }
 
 #endif // PFSROTATE_H

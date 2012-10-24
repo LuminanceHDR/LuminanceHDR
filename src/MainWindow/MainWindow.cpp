@@ -55,6 +55,7 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/cut.h"
+#include "Libpfs/manip/rotate.h"
 
 #include "Common/archs.h"
 #include "Common/config.h"
@@ -65,7 +66,7 @@
 #include "BatchTM/BatchTMDialog.h"
 #include "Fileformat/pfs_file_format.h"
 
-#include "Filter/pfsrotate.h"
+
 #include "Filter/pfsgammaandlevels.h"
 #include "TransplantExif/TransplantExifDialog.h"
 #include "Viewers/HdrViewer.h"
@@ -709,7 +710,7 @@ void MainWindow::dispatchrotate(bool clockwise)
     m_Ui->rotatecw->setEnabled(false);
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    pfs::Frame *rotated = pfs::rotateFrame(curr_g_v->getFrame(), clockwise);
+    pfs::Frame *rotated = pfs::rotate(curr_g_v->getFrame(), clockwise);
 
     curr_g_v->setFrame(rotated);
     if ( !curr_g_v->needsSaving() )
