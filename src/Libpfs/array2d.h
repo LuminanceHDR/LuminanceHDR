@@ -23,6 +23,8 @@
 #ifndef ARRAY2D_H
 #define ARRAY2D_H
 
+#include <cstddef>
+
 //! \file array2d.h
 //! \brief general 2d array interface
 //! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
@@ -147,6 +149,38 @@ public:
 
     //! \brief Scale entire 2D array by "value"
     void scale(const float value);
+
+public:
+    typedef float*          Iterator;
+    typedef const float*    ConstIterator;
+
+    inline
+    Iterator begin()
+    { return m_data; }
+    inline
+    Iterator end()
+    { return m_data + m_cols*m_rows; }
+
+    inline
+    ConstIterator begin() const
+    { return m_data; }
+    inline
+    ConstIterator end() const
+    { return m_data + m_cols*m_rows; }
+
+    inline
+    Iterator beginRow(size_t r)
+    { return m_data + r*m_cols; }
+    inline
+    Iterator endRow(size_t r)
+    { return m_data + (r+1)*m_cols; }
+
+    inline
+    ConstIterator beginRow(size_t r) const
+    { return m_data + r*m_cols; }
+    inline
+    ConstIterator endRow(size_t r) const
+    { return m_data + (r+1)*m_cols; }
 };
 
 inline int Array2D::getCols() const { return m_cols; }
