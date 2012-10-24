@@ -22,6 +22,9 @@
 #include "shift.h"
 
 #include <iostream>
+#include <algorithm>
+#include <iterator>
+#include <numeric>
 
 #include "Libpfs/array2d.h"
 #include "Common/msec_timer.h"
@@ -31,68 +34,72 @@ namespace pfs
 
 Array2D *shiftPfsArray2D(const Array2D& in, int dx, int dy)
 {
+    using namespace std;
+
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
 
-    int width = in.getCols();
-    int height = in.getRows();
+    Array2D *out = new Array2D(in.getCols(), in.getRows());
 
-    Array2D temp(width, height);
-    Array2D *out = new Array2D(width, height);
-
-#pragma omp parallel for shared(temp)
-    for (int i = 0; i < height*width; i++)
+    // fill first row... if any!
+    for (int idx = 0; idx < -dy; idx++)
     {
-        temp(i) = 0.f;
+        fill(out->beginRow(idx), out->endRow(idx), 0.0f);
     }
 
-    // x-shift
-#pragma omp parallel for shared(in)
-    for (int j = 0; j < height; j++)
+    // fill middle portion
+    if ( dx < 0 )
     {
-        for (int i = 0; i < width; i++)
+        for (int row = max(0, -dy), rowEnd = in.getRows() - max(0, dy);
+             row < rowEnd;
+             row++)
         {
-            if ((i+dx) < 0) continue;
-            if ((i+dx) >= width) break;
+            // Begin output line
+            Array2D::Iterator itBegin = out->beginRow(row);
+            // Pivot iterator
+            Array2D::Iterator itTh = itBegin - dx;
 
-            if ( in(i+dx, j) > 65535 )
-            {
-                temp(i, j) = 65535;
-            }
-            else if ( in(i+dx, j) < 0)
-            {
-                temp(i, j) = 0;
-            }
-            else
-            {
-                temp(i, j) = in(i+dx, j);
-            }
+            // fill zero at the begin of the line
+            fill(itBegin, itTh, 0.0f);
+            // copy data
+            copy(in.beginRow(row + dy),
+                 in.endRow(row + dy) + dx,
+                 itTh);
         }
     }
-    // y-shift
-#pragma omp parallel for shared(out)
-    for (int i = 0; i < width; i++)
+    else if (dx > 0)
     {
-        for (int j = 0; j < height; j++)
+        for (int row = max(0, -dy), rowEnd = in.getRows() - max(0, dy);
+             row < rowEnd;
+             row++)
         {
-            if ((j+dy) < 0) continue;
-            if ((j+dy) >= height) break;
-
-            if ( temp(i, j+dy) > 65535 )
-            {
-                (*out)(i, j) = 65535;
-            }
-            else if ( temp(i, j+dy) < 0 )
-            {
-                (*out)(i, j) = 0;
-            }
-            else
-            {
-                (*out)(i, j) = temp(i, j+dy);
-            }
+            // copy data
+            copy(in.beginRow(row + dy) + dx, in.endRow(row + dy),
+                 out->beginRow(row));
+            // fill zero
+            fill(out->endRow(row) - dx, out->endRow(row), 0.0f);
         }
+    }
+    else
+    {
+        for (int row = max(0, -dy), rowEnd = in.getRows() - max(0, dy);
+             row < rowEnd;
+             row++)
+        {
+            // copy data
+            copy(in.beginRow(row + dy), in.endRow(row + dy),
+                 out->beginRow(row));
+        }
+    }
+
+    // fill last rows... if any!
+    for (int idx = dy; idx > 0; idx--)
+    {
+        fill(out->beginRow(out->getRows() - idx),
+             out->endRow(out->getRows() - idx),
+             0.0f);
     }
 
 #ifdef TIMER_PROFILING

@@ -85,6 +85,12 @@ TARGET_LINK_LIBRARIES(TestPfsRotate pfs pfsfilter common
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsRotate TestPfsRotate)
 
+ADD_EXECUTABLE(TestPfsShift TestPfsShift.cpp)
+TARGET_LINK_LIBRARIES(TestPfsShift pfs common
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT})
+ADD_TEST(TestPfsShift TestPfsShift)
+
 ADD_EXECUTABLE(TestFloatRgb TestFloatRgb.cpp)
 TARGET_LINK_LIBRARIES(TestFloatRgb
     ${GTEST_BOTH_LIBRARIES}
