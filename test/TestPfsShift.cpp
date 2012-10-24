@@ -28,41 +28,10 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/manip/shift.h"
 
+#include "SeqInt.h"
+#include "PrintArray2D.h"
+
 using namespace pfs;
-
-namespace
-{
-
-struct SeqInt
-{
-    SeqInt()
-        : current_(0)
-    {}
-
-    inline
-    int operator()()
-    { return current_++; }
-
-    int current_;
-};
-
-void print(const Array2D& a2d)
-{
-    for (int r = 0; r < a2d.getRows(); r++)
-    {
-        Array2D::ConstIterator currSample = a2d.beginRow(r);
-        Array2D::ConstIterator endSample = a2d.endRow(r);
-
-        std::cout << "[";
-        while (currSample != endSample)
-        {
-            std::cout << " " << *currSample++ << " ";
-        }
-        std::cout << "]" << std::endl;
-    }
-}
-
-}
 
 TEST(TestPfsShift, MinusMinus)
 {

@@ -1,5 +1,4 @@
 /*
- *
  * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2009 Franco Comida
@@ -20,16 +19,21 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Dorota Zdrojewska, <dzdrojewska@wi.ps.pl>
- * adapted by Franco Comida <fcomida@sourceforge.net> for luminance
- *
  */
+
+//! \author Dorota Zdrojewska, <dzdrojewska@wi.ps.pl>
+//! \author Franco Comida <fcomida@sourceforge.net>
+//! Adapted for Luminance HDR
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! Improved for better performance
 
 #include "cut.h"
 
 #include <climits>
+#include <cassert>
 #include <cstdlib>
 #include <iostream>
+#include <algorithm>
 
 #include "Common/msec_timer.h"
 
@@ -39,35 +43,30 @@
 namespace pfs
 {
 
-void cut(const Array2D *from, Array2D *to,
+void cut(const Array2D* from, Array2D* to,
          int x_ul, int y_ul, int x_br, int y_br)
 {
-    const float* fv = from->getRawData();
-    float* tv       = to->getRawData();
+    using namespace std;
 
-    const int IN_W    = from->getCols();
-    const int IN_H    = from->getRows();
-    const int OUT_W   = to->getCols();
-    const int OUT_H   = to->getRows();
-
-    assert( OUT_H <= IN_H );
-    assert( OUT_H <= IN_H );
     assert( x_ul >= 0 );
     assert( y_ul >= 0 );
-    assert( x_br <= IN_W );
-    assert( y_br <= IN_H );
+    assert( x_br <= from->getCols() );
+    assert( y_br <= from->getRows() );
+    assert( to->getRows() <= from->getRows() );
+    assert( to->getRows() <= from->getRows() );
 
-    // move to row (x_ul, y_ul)
-    fv = &fv[IN_W*y_ul + x_ul];
+    if ( x_ul < 0 ) x_ul = 0;
+    if ( y_ul < 0 ) y_ul = 0;
+    if ( x_br > from->getCols() ) x_br = from->getCols();
+    if ( y_br > from->getRows() ) y_br = from->getRows();
 
+    // update right border
+    x_br = from->getCols() - x_br;
 #pragma omp parallel for
-    for (int r = 0; r < OUT_H; r++)
+    for (int r = 0, rEnd = to->getRows(); r < rEnd; r++)
     {
-        //NOTE: do NOT use VEX_vcopy
-        for (int c = 0; c < OUT_W; c++)
-        {
-            tv[r*OUT_W + c] = fv[r*IN_W + c];
-        }
+        copy(from->beginRow(r + y_ul) + x_ul, from->endRow(r + y_ul) - x_br,
+             to->beginRow(r));
     }
 }
 
@@ -98,10 +97,8 @@ pfs::Frame *cut(const pfs::Frame *inFrame,
 
         pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
 
-        const pfs::Array2D* inArray2D   = inCh->getChannelData();
-        pfs::Array2D* outArray2D  = outCh->getChannelData();
-
-        cut(inArray2D, outArray2D, x_ul, y_ul, x_br, y_br);
+        cut(inCh->getChannelData(), outCh->getChannelData(),
+            x_ul, y_ul, x_br, y_br);
     }
     
     pfs::copyTags(inFrame, outFrame);
