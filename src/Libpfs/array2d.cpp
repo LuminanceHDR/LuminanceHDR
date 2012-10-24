@@ -95,50 +95,6 @@ void Array2D::scale(const float value)
     VEX_vsmul(this->m_data, value, this->m_data, this->m_rows*this->m_cols);
 }
 
-void copyArray(const Array2D *from, Array2D *to)
-{
-    assert( from->getRows() == to->getRows() );
-    assert( from->getCols() == to->getCols() );
-
-    const float* f = from->getRawData();
-    float* t = to->getRawData();
-
-    const int V_ELEMS = from->getRows()*from->getCols();
-
-    VEX_vcopy(f, t, V_ELEMS);
-}
-
-void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br)
-{
-    const float* fv = from->getRawData();
-    float* tv       = to->getRawData();
-
-    const int IN_W    = from->getCols();
-    const int IN_H    = from->getRows();
-    const int OUT_W   = to->getCols();
-    const int OUT_H   = to->getRows();
-
-    assert( OUT_H <= IN_H );
-    assert( OUT_H <= IN_H );
-    assert( x_ul >= 0 );
-    assert( y_ul >= 0 );
-    assert( x_br <= IN_W );
-    assert( y_br <= IN_H );
-
-    // move to row (x_ul, y_ul)
-    fv = &fv[IN_W*y_ul + x_ul];
-
-#pragma omp parallel for
-    for (int r = 0; r < OUT_H; r++)
-    {
-        //NOTE: do NOT use VEX_vcopy
-        for (int c = 0; c < OUT_W; c++)
-        {
-            tv[r*OUT_W + c] = fv[r*IN_W + c];
-        }
-    }
-}
-
 void setArray(Array2D *array, const float value)
 {
     array->reset(value);

@@ -52,6 +52,10 @@
 
 #include "ui_Splash.h"
 #include "ui_MainWindow.h"
+
+#include "Libpfs/frame.h"
+#include "Libpfs/manip/cut.h"
+
 #include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/global.h"
@@ -60,7 +64,7 @@
 #include "BatchHDR/BatchHDRDialog.h"
 #include "BatchTM/BatchTMDialog.h"
 #include "Fileformat/pfs_file_format.h"
-#include "Filter/pfscut.h"
+
 #include "Filter/pfsrotate.h"
 #include "Filter/pfsgammaandlevels.h"
 #include "TransplantExif/TransplantExifDialog.h"
@@ -68,7 +72,7 @@
 #include "Viewers/LuminanceRangeWidget.h"
 #include "Viewers/LdrViewer.h"
 #include "UI/ImageQualityDialog.h"
-#include "Libpfs/frame.h"
+
 #include "UI/UMessageBox.h"
 #include "PreviewPanel/PreviewPanel.h"
 #include "HelpBrowser/helpbrowser.h"
@@ -1261,7 +1265,7 @@ void MainWindow::cropToSelection()
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
     disableCrop();
     pfs::Frame *original_frame = curr_g_v->getFrame();
-    pfs::Frame *cropped_frame = pfs::pfscut(original_frame, x_ul, y_ul, x_br, y_br);
+    pfs::Frame *cropped_frame = pfs::cut(original_frame, x_ul, y_ul, x_br, y_br);
 
     emit load_success(cropped_frame, QString(tr("Cropped Image")), true);
 

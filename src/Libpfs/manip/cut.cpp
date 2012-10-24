@@ -1,8 +1,9 @@
-/**
- * @brief Cut a rectangle out of images in PFS stream
+/*
  *
  * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2009 Franco Comida
+ * Copyrighr (C) 2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,19 +25,55 @@
  *
  */
 
+#include "cut.h"
+
 #include <climits>
 #include <cstdlib>
-
 #include <iostream>
 
-#include "pfscut.h"
 #include "Common/msec_timer.h"
+
 #include "Libpfs/domio.h"
+#include "Libpfs/frame.h"
 
 namespace pfs
 {
-  pfs::Frame *pfscut(pfs::Frame *inFrame, int x_ul, int y_ul, int x_br, int y_br)
-  {
+
+void cut(const Array2D *from, Array2D *to,
+         int x_ul, int y_ul, int x_br, int y_br)
+{
+    const float* fv = from->getRawData();
+    float* tv       = to->getRawData();
+
+    const int IN_W    = from->getCols();
+    const int IN_H    = from->getRows();
+    const int OUT_W   = to->getCols();
+    const int OUT_H   = to->getRows();
+
+    assert( OUT_H <= IN_H );
+    assert( OUT_H <= IN_H );
+    assert( x_ul >= 0 );
+    assert( y_ul >= 0 );
+    assert( x_br <= IN_W );
+    assert( y_br <= IN_H );
+
+    // move to row (x_ul, y_ul)
+    fv = &fv[IN_W*y_ul + x_ul];
+
+#pragma omp parallel for
+    for (int r = 0; r < OUT_H; r++)
+    {
+        //NOTE: do NOT use VEX_vcopy
+        for (int c = 0; c < OUT_W; c++)
+        {
+            tv[r*OUT_W + c] = fv[r*IN_W + c];
+        }
+    }
+}
+
+pfs::Frame *cut(const pfs::Frame *inFrame,
+                int x_ul, int y_ul, int x_br, int y_br)
+{
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
@@ -64,7 +101,7 @@ namespace pfs
         const pfs::Array2D* inArray2D   = inCh->getChannelData();
         pfs::Array2D* outArray2D  = outCh->getChannelData();
 
-        copyArray(inArray2D, outArray2D, x_ul, y_ul, x_br, y_br);
+        cut(inArray2D, outArray2D, x_ul, y_ul, x_br, y_br);
     }
     
     pfs::copyTags(inFrame, outFrame);
@@ -78,43 +115,6 @@ namespace pfs
 #endif 
     
     return outFrame;
-  }
-  
-  pfs::Frame *pfscopy(pfs::Frame *inFrame)
-  {
-#ifdef TIMER_PROFILING
-    msec_timer f_timer;
-    f_timer.start();
-#endif
-    
-    const int outWidth   = inFrame->getWidth();
-    const int outHeight  = inFrame->getHeight();
-    
-    pfs::Frame *outFrame = pfs::DOMIO::createFrame(outWidth, outHeight);
-    
-    const ChannelContainer& channels = inFrame->getChannels();
-
-    for ( ChannelContainer::const_iterator it = channels.begin();
-          it != channels.end();
-          ++it)
-    {
-        const pfs::Channel* inCh = *it;
-
-        pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
-
-        const pfs::Array2D* inArray2D   = inCh->getChannelData();
-        pfs::Array2D* outArray2D  = outCh->getChannelData();
-
-        copyArray(inArray2D, outArray2D);
-    }
-    
-    pfs::copyTags(inFrame, outFrame);
-    
-#ifdef TIMER_PROFILING
-    f_timer.stop_and_update();
-    std::cout << "pfscopy() = " << f_timer.get_time() << " msec" << std::endl;
-#endif 
-    
-    return outFrame;
-  }
 }
+
+} // pfs

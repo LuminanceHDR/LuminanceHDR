@@ -30,10 +30,13 @@
 #endif
 
 #include "Libpfs/frame.h"
-#include "Core/TonemappingOptions.h"
-#include "Filter/pfscut.h"
+#include "Libpfs/manip/copy.h"
+#include "Libpfs/manip/cut.h"
+
 #include "Filter/pfsgamma.h"
 #include "Filter/pfssize.h"
+
+#include "Core/TonemappingOptions.h"
 #include "Common/ProgressHelper.h"
 #include "TonemappingEngine/TonemapOperator.h"
 
@@ -114,11 +117,11 @@ pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOption
         // workingframe = "crop"
         // std::cout << "crop:[" << opts.selection_x_up_left <<", " << opts.selection_y_up_left <<"],";
         // std::cout << "[" << opts.selection_x_bottom_right <<", " << opts.selection_y_bottom_right <<"]" << std::endl;
-        working_frame = pfs::pfscut(input_frame,
-                                   tm_options->selection_x_up_left,
-                                   tm_options->selection_y_up_left,
-                                   tm_options->selection_x_bottom_right,
-                                   tm_options->selection_y_bottom_right);
+        working_frame = pfs::cut(input_frame,
+                                 tm_options->selection_x_up_left,
+                                 tm_options->selection_y_up_left,
+                                 tm_options->selection_x_bottom_right,
+                                 tm_options->selection_y_bottom_right);
     }
     else if ( tm_options->xsize != tm_options->origxsize )
     {
@@ -128,7 +131,7 @@ pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOption
     else
     {
         // workingframe = "full res"
-        working_frame = pfs::pfscopy(input_frame);
+        working_frame = pfs::copy(input_frame);
     }
 
     if ( tm_options->pregamma != 1.0f )

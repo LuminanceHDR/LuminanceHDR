@@ -27,7 +27,7 @@
 #include "Fileformat/tiffreader.h"
 #include "Exif/ExifOperations.h"
 #include "Libpfs/frame.h"
-#include "Filter/pfscut.h"
+#include "Libpfs/manip/copy.h"
 #include "Filter/pfsgamma.h"
 #include "Core/IOWorker.h"
 #include "Common/LuminanceOptions.h"
@@ -86,7 +86,7 @@ void BatchTMJob::run()
 
             QScopedPointer<pfs::Frame> temporary_frame;
             if ( opts->origxsize == opts->xsize )
-                temporary_frame.reset( pfs::pfscopy(reference_frame.data()) );
+                temporary_frame.reset( pfs::copy(reference_frame.data()) );
             else
                 temporary_frame.reset( pfs::resizeFrame(reference_frame.data(), opts->xsize) );
 

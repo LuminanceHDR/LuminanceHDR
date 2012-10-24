@@ -219,15 +219,6 @@ const float& Array2D::operator()( int index ) const
 }
 
 
-//! \brief Copy data from one Array2D to another.
-//! Dimensions of the arrays must be the same.
-//!
-//! \param from array to copy from
-//! \param to array to copy to
-void copyArray(const Array2D *from, Array2D *to);
-void copyArray(const Array2D *from, Array2D *to,
-               int x_ul, int y_ul, int x_br, int y_br);
-
 //! \brief Set all elements of the array to a give value.
 //!
 //! \param array array to modify

@@ -36,11 +36,12 @@
 
 #include "Libpfs/domio.h"
 #include "Libpfs/manip/shift.h"
+#include "Libpfs/manip/cut.h"
 
 #include "Fileformat/tiffreader.h"
 #include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsouthdrimage.h"
-#include "Filter/pfscut.h"
+
 #include "Exif/ExifOperations.h"
 #include "Threads/HdrInputLoader.h"
 #include "mtb_alignment.h"
@@ -850,7 +851,7 @@ void HdrCreationManager::cropMDR(const QRect& ca)
         Zc->setChannelData(listmdrB[idx]);  
         int x_ul, y_ul, x_br, y_br;
         ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
-        cropped_frame = pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
+        cropped_frame = pfs::cut(frame, x_ul, y_ul, x_br, y_br);
 
         pfs::DOMIO::freeFrame(frame);
 

@@ -27,9 +27,11 @@
 
 #include "PreviewPanel.h"
 
+#include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
+#include "Libpfs/manip/copy.h"
+
 #include "Filter/pfssize.h"
-#include "Filter/pfscut.h"
 #include "Core/TMWorker.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"
@@ -83,7 +85,7 @@ public:
         //ProgressHelper fake_progress_helper;
 
         // Copy Reference Frame
-        QSharedPointer<pfs::Frame> temp_frame( pfs::pfscopy(m_ReferenceFrame.data()) );
+        QSharedPointer<pfs::Frame> temp_frame( pfs::copy(m_ReferenceFrame.data()) );
 
         // Tone Mapping
         //QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));

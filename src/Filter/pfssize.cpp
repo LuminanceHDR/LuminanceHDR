@@ -35,6 +35,7 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
+#include "Libpfs/manip/copy.h"
 
 #define ROUNDING_ERROR 0.000001
 
@@ -255,7 +256,7 @@ void resampleArray(const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *fi
 {
   if ( in->getCols() == out->getCols() && in->getRows() == out->getRows() )
   {
-    pfs::copyArray(in, out);
+    pfs::copy(in, out);
   }
   else if( in->getCols() > out->getCols() || in->getRows() > out->getRows() )
   {

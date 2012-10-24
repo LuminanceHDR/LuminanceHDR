@@ -42,6 +42,8 @@
 #include "Libpfs/vex.h"
 #include "Libpfs/vex/vex.h"
 #include "Libpfs/array2d.h"
+#include "Libpfs/manip/copy.h"
+
 #include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
 
@@ -366,7 +368,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
   VF[0] = new pfs::Array2D(xmax,ymax);
   RHS[0] = F;
   IU[0] = new pfs::Array2D(xmax,ymax);
-  pfs::copyArray( U, IU[0] );
+  pfs::copy( U, IU[0] );
 
   int sx=xmax;
   int sy=ymax;
@@ -397,7 +399,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
 
     // 4.1. first target function is the equation target function
     //      (following target functions are the defect)
-    copyArray( RHS[k], VF[k] );
+    pfs::copy( RHS[k], VF[k] );
 
     // 5. V-cycle (twice repeated)
     for( int cycle=0 ; cycle<V_CYCLE ; cycle++ )
@@ -468,7 +470,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
 //     dumpPFS( name, VF[k], "Y" );
 //   }  
 
-  pfs::copyArray( IU[0], U );
+  pfs::copy( IU[0], U );
 
   // further improvement of the solution
   if(BCG_POST_IMPROVE) {
