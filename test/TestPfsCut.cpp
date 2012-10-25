@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <algorithm>
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/manip/cut.h"
