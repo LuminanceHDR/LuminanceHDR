@@ -49,7 +49,7 @@ void compareVectors(const float* a, const float* b, size_t size)
 {
     for (size_t idx = 0; idx < size; ++idx)
     {
-        ASSERT_NEAR(a[idx], b[idx], 0.000001);
+        ASSERT_NEAR(a[idx], b[idx], 0.001); // 0001);
     }
 }
 

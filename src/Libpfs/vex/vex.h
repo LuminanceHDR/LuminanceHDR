@@ -38,7 +38,7 @@ namespace numeric
 
 //! \brief Extension of std::plus to compute A + s*B
 template <typename T>
-struct vadds : std::binary_function <T, T, T>
+struct vadds
 {
     vadds(const T& s)
         : s_(s) {}
@@ -51,7 +51,7 @@ private:
 
 //! \brief Extension of std::minus to compute A - s*B
 template <typename T>
-struct vsubs : std::binary_function <T, T ,T>
+struct vsubs
 {
     vsubs(const T& s)
         : s_(s) {}
@@ -100,6 +100,9 @@ void vsub(const _Type* A, const _Type* B, _Type* C, size_t size);
 template <typename _Type>
 void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size);
 
+//! // O[i] = c * I[i]
+template <typename _Type>
+void vsmul(const _Type* I, float c, _Type* O, size_t size);
 
 } // vex
 

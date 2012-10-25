@@ -92,7 +92,7 @@ void Array2D::reset(const float value)
 void Array2D::scale(const float value)
 {
     // O[i] = c * I[i]
-    VEX_vsmul(this->m_data, value, this->m_data, this->m_rows*this->m_cols);
+    vex::vsmul(this->m_data, value, this->m_data, this->m_rows*this->m_cols);
 }
 
 void setArray(Array2D *array, const float value)

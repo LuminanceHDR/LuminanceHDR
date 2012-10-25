@@ -81,8 +81,8 @@ void PyramidS::transformToG(float detailFactor)
 
 void PyramidS::scale(float multiplier)
 {
-    VEX_vsmul(m_Gx.data(), multiplier, m_Gx.data(), m_rows*m_cols);
-    VEX_vsmul(m_Gy.data(), multiplier, m_Gy.data(), m_rows*m_cols);
+    vex::vsmul(m_Gx.data(), multiplier, m_Gx.data(), m_rows*m_cols);
+    vex::vsmul(m_Gy.data(), multiplier, m_Gy.data(), m_rows*m_cols);
 }
 
 void PyramidS::multiply(const PyramidS& multiplier)
@@ -656,29 +656,31 @@ void calculateAndAddDivergence(size_t COLS, size_t ROWS,
     }   // END PARALLEL SECTIONS
 }
 
-void calculateScaleFactor(const float* G, float* C, size_t size)
+namespace
 {
-    //  float GFIXATE = 0.1f;
-    //  float EDGE_WEIGHT = 0.01f;
-    const float detectT = 0.001f;
-    const float a = 0.038737f;
-    const float b = 0.537756f;
-
-#pragma omp parallel for schedule(static)
-    for (int i = 0; i < static_cast<int>(size); i++)
-    {
-        //#if 1
-        const float g = std::max( detectT, std::fabs(G[i]) );
-        C[i] = 1.0f / (a* std::pow(g,b));
-        //#else
-        //    if(fabsf(G[i]) < GFIXATE)
-        //      C[i] = 1.0f / EDGE_WEIGHT;
-        //    else
-        //      C[i] = 1.0f;
-        //#endif
-    }
+//  float GFIXATE = 0.1f;
+//  float EDGE_WEIGHT = 0.01f;
+const float detectT = 0.001f;
+const float a = 0.038737f;
+const float b = 0.537756f;
 }
 
-
-
-
+void calculateScaleFactor(const float* G, float* C, size_t size)
+{
+#pragma omp parallel for schedule(static) if ( size > 1000000)
+    for (int i = 0; i < static_cast<int>(size); i++)
+    {
+#if 1
+        C[i] = 1.0/(a * std::pow(
+                        std::max( detectT,
+                                  std::fabs( G[i] ) )
+                        , b)
+                    );
+#else
+        if(fabsf(G[i]) < GFIXATE)
+            C[i] = 1.0f / EDGE_WEIGHT;
+        else
+            C[i] = 1.0f;
+#endif
+    }
+}
