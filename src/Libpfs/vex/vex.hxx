@@ -38,7 +38,7 @@ inline
 void op(const _Type* A, const _Type* B, _Type* C, size_t size, const _Op& currOp)
 {
 #pragma omp parallel for
-    for (int idx = 0; idx < size; idx++)
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
     {
         C[idx] = currOp(A[idx], B[idx]);
     }

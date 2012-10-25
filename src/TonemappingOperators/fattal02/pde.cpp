@@ -306,10 +306,10 @@ static void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs:
   int sx = F->getCols();
   int sy = F->getRows();
 
-  float h = 1.0f/sqrt(sx*sy*1.0f);
-  float h2i = 1.0/(h*h);
+  // float h = 1.0f/sqrt(sx*sy*1.0f);
+  // float h2i = 1.0/(h*h);
 
-  h2i = 1;
+  // h2i = 1;
 
   for( int y=0 ; y<sy ; y++ )
     for( int x=0 ; x<sx ; x++ ) {
@@ -562,7 +562,7 @@ static float snrm(unsigned long n, const float sx[])
  */
 static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err, int rows, int cols)
 {	
-	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
+    float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
 	p=new float[n+1];
@@ -593,16 +593,16 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		asolve(rr,zz, rows, cols);
 		bknum=0.0;
 #pragma omp parallel for shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
-        for (long j=0;j<n;j++)
+        for (long j=0;j<static_cast<long>(n);j++)
         {
             bknum += z[j]*rr[j];
         }
 		if (*iter == 1) {
-            for (long j=0;j<n;j++)
+            for (long j=0;j<static_cast<long>(n);j++)
             {
 				p[j]=z[j];
             }
-            for (long j=0;j<n;j++)
+            for (long j=0;j<static_cast<long>(n);j++)
             {
 				pp[j]=zz[j];
             }
@@ -616,7 +616,7 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		atimes(p,z,rows,cols);
 		akden=0.0;
 #pragma omp parallel for shared(z, pp) reduction(+:akden) if (n>OMP_THRESHOLD) schedule(static)
-        for (long j=0;j<n;j++)
+        for (long j=0;j<static_cast<long>(n);j++)
         {
             akden += z[j]*pp[j];
         }

@@ -93,14 +93,8 @@ void ProjectionsDialog::okClicked()
 {
 	qDebug("Projective Transformation from %s to %s", transforminfo->srcProjection->getName(), transforminfo->dstProjection->getName());
 
-    // TODO
-	pfs::Channel *R,*G,*B;
-	//original->getRGBChannels( R,G,B );
-	R = original->getChannel("R");
-	G = original->getChannel("G");
-	B = original->getChannel("B");
-	int xSize=original->getWidth();
-	int ySize=(int)(xSize / transforminfo->dstProjection->getSizeRatio());
+    int xSize = original->getWidth();
+    int ySize = static_cast<int>(xSize / transforminfo->dstProjection->getSizeRatio());
     transformed = pfs::DOMIO::createFrame( xSize,ySize );
 
     const pfs::ChannelContainer& channels = original->getChannels();

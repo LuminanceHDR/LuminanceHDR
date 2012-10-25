@@ -34,7 +34,7 @@ double V1( int x, int y, int level );
 double pyramid_lookup( int x, int y, int level )
   /* PRE:  */
 {
-  int n, s;
+  // int n, s;
   
   /* Level 0 is a special case, the value is just the image */
   if (level == 0) {
@@ -46,8 +46,8 @@ double pyramid_lookup( int x, int y, int level )
 
   /* Compute the size of the slice */
   level--;
-  n = 1 << level;
-  s = PyramidWidth0 >> level;
+  // n = 1 << level;
+  int s = PyramidWidth0 >> level;
   
   //x = x >> level;
   //y = y >> level;

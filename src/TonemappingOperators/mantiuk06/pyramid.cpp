@@ -284,7 +284,7 @@ void matrixDownsampleFull(size_t inCols, size_t inRows,
     // (fx2, fy2) is the fraction of the bottom right pixel showing.
 
 #pragma omp parallel for
-    for (int y = 0; y < outRows; y++)
+    for (int y = 0; y < static_cast<int>(outRows); y++)
     {
         const size_t iy1 = (  y   * inRows) / outRows;
         const size_t iy2 = ((y+1) * inRows) / outRows;
@@ -340,7 +340,7 @@ void matrixDownsampleSimple(size_t inCols, size_t inRows,
     // sampling to a simple average.
 
 #pragma omp parallel for
-    for (int y = 0; y < outRows; y++)
+    for (int y = 0; y < static_cast<int>(outRows); y++)
     {
         const int iy1 = y * 2;
         const float* datap = inputData + iy1 * inCols;
@@ -389,7 +389,7 @@ void matrixUpsampleFull(const size_t outCols, const size_t outRows,
     // const float factor = 1.0f; // Theoretically, this should be the best.
 
 #pragma omp parallel for
-    for (int y = 0; y < outRows; y++)
+    for (int y = 0; y < static_cast<int>(outRows); y++)
     {
         const float sy = y * dy;
         const int iy1 =      (  y   * inRows) / outRows;
@@ -444,7 +444,7 @@ namespace
 void xGradient(size_t ROWS, size_t COLS, const float* lum, float* Gx)
 {
 #pragma omp parallel for
-    for (int ky = 0; ky < ROWS; ky++)
+    for (int ky = 0; ky < static_cast<int>(ROWS); ky++)
     {
         float* currGx = Gx + ky*COLS;
         float* endGx = currGx + COLS - 1;
@@ -461,7 +461,7 @@ void xGradient(size_t ROWS, size_t COLS, const float* lum, float* Gx)
 void yGradient(size_t ROWS, size_t COLS, const float* lum, float* Gy)
 {
 #pragma omp parallel for
-    for (int ky = 0; ky < ROWS-1; ++ky)
+    for (int ky = 0; ky < static_cast<int>(ROWS)-1; ++ky)
     {
         float* currGy = Gy + ky*COLS;
         float* endGy = currGy + COLS;
@@ -559,7 +559,7 @@ void transformToR(float* G, float detailFactor, size_t size)
     const float log10 = LOG10FACTOR*detailFactor;
 
 #pragma omp parallel for
-    for (int j = 0; j < size; j++)
+    for (int j = 0; j < static_cast<int>(size); j++)
     {
         // G to W
         float Curr_G = G[j];
@@ -589,7 +589,7 @@ void transformToG(float* R, float detailFactor, size_t size)
     const float log10 = LOG10FACTOR*detailFactor;
 
 #pragma omp parallel for
-    for (int j = 0; j < size; j++)
+    for (int j = 0; j < static_cast<int>(size); j++)
     {
         float Curr_R = R[j];
 
@@ -637,7 +637,7 @@ void calculateAndAddDivergence(size_t COLS, size_t ROWS,
 #pragma omp section
         {
 #pragma omp parallel for schedule(static) private(divGx, divGy)
-            for (int ky = 1; ky < ROWS; ky++)
+            for (int ky = 1; ky < static_cast<int>(ROWS); ky++)
             {
                 // kx = 0
                 divGx = Gx[ky*COLS];
@@ -665,7 +665,7 @@ void calculateScaleFactor(const float* G, float* C, size_t size)
     const float b = 0.537756f;
 
 #pragma omp parallel for schedule(static)
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < static_cast<int>(size); i++)
     {
         //#if 1
         const float g = std::max( detectT, std::fabs(G[i]) );

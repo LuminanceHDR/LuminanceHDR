@@ -54,7 +54,7 @@ TEST(TestPfsShift, MinusMinus)
     // print(input);
     // print(*output);
 
-    for (int idx = 0; idx < rows*cols; idx++)
+    for (int idx = 0; idx < static_cast<int>(rows*cols); idx++)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -81,7 +81,7 @@ TEST(TestPfsShift, PlusMinus)
     // print(input);
     // print(*output);
 
-    for (int idx = 0; idx < rows*cols; idx++)
+    for (int idx = 0; idx < static_cast<int>(rows*cols); idx++)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -108,7 +108,7 @@ TEST(TestPfsShift, StillMinus)
     // print(input);
     // print(*output);
 
-    for (int idx = 0; idx < rows*cols; idx++)
+    for (int idx = 0; idx < static_cast<int>(rows*cols); idx++)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -134,7 +134,7 @@ TEST(TestPfsShift, MinusPlus)
     // print(input);
     // print(*output);
 
-    for (int idx = 0; idx < rows*cols; idx++)
+    for (int idx = 0; idx < static_cast<int>(rows*cols); idx++)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -161,7 +161,7 @@ TEST(TestPfsShift, PlusPlus)
     // print(input);
     // print(*output);
 
-    for (int idx = 0; idx < rows*cols; idx++)
+    for (int idx = 0; idx < static_cast<int>(rows*cols); idx++)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -188,7 +188,7 @@ TEST(TestPfsShift, StillStill)
     // print(input);
     // print(*output);
 
-    for (int idx = 0; idx < rows*cols; idx++)
+    for (int idx = 0; idx < static_cast<int>(rows*cols); idx++)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }

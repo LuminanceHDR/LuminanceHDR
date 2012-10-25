@@ -22,6 +22,8 @@
 #ifndef VEX_DOTPRODUCT_H
 #define VEX_DOTPRODUCT_H
 
+#include <cstddef>
+
 //! \file dotproduct.h
 //! \brief Multithread function for the calculation of the dot product between
 //! vectors

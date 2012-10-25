@@ -228,7 +228,7 @@ gsl_cqpminimizer_f (gsl_cqpminimizer * minimizer)
 	/* f = 0.5*(x^t)Qx+(q^t)x */
 	double f; 
 	
-	int status;
+    int status;
 	
 	gsl_vector * tmp = gsl_vector_alloc(minimizer->x->size);
 	if(tmp == 0)

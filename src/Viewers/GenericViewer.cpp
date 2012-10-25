@@ -435,5 +435,5 @@ void GenericViewer::startDragging()
 	drag->setMimeData(mimeData);
 	drag->setPixmap(mPixmap->pixmap().scaledToHeight(mPixmap->pixmap().height()/10));
 
-	Qt::DropAction dropAction = drag->exec();
+    /*Qt::DropAction dropAction =*/ drag->exec();
 }

@@ -434,7 +434,7 @@ void denormalizeLuminance(float* Y, size_t size)
     const float lumRange = 1.f/(lumMax - lumMin)*DISP_DYN_RANGE;
 
 #pragma omp parallel for // shared(lumRange, lumMin)
-    for (int j = 0; j < size; j++)
+    for (int j = 0; j < static_cast<int>(size); j++)
     {
         Y[j] = (Y[j] - lumMin)*lumRange - DISP_DYN_RANGE; // x scaled
     }
@@ -456,7 +456,7 @@ void denormalizeRGB(float* R, float* G, float* B, const float* Y, size_t size,
 {
     /* Transform to sRGB */
 #pragma omp parallel for
-    for (int j = 0; j < size ; j++)
+    for (int j = 0; j < static_cast<int>(size); j++)
     {
         float myY = std::pow( 10.f, Y[j] );
         R[j] = decode( std::pow( R[j], saturationFactor ) * myY );
