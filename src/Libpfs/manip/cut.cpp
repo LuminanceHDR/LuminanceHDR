@@ -63,7 +63,7 @@ void cut(const Array2D* from, Array2D* to,
     // update right border
     x_br = from->getCols() - x_br;
 #pragma omp parallel for
-    for (int r = 0, rEnd = to->getRows(); r < rEnd; r++)
+    for (int r = 0; r < to->getRows(); r++)
     {
         copy(from->beginRow(r + y_ul) + x_ul, from->endRow(r + y_ul) - x_br,
              to->beginRow(r));
