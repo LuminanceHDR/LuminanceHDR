@@ -28,7 +28,7 @@ TARGET_LINK_LIBRARIES(TestSRGB2Y pfs common
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestSRGB2Y TestSRGB2Y)
 
-ADD_LIBRARY(constrast_domain STATIC
+ADD_LIBRARY(ContrastDomain STATIC
     mantiuk06/contrast_domain.cpp
     mantiuk06/contrast_domain.h)
 
@@ -36,14 +36,14 @@ ADD_LIBRARY(constrast_domain STATIC
 ADD_EXECUTABLE(TestMantiuk06Basic
     TestMantiuk06Basic.cpp)
 IF(MSVC OR APPLE)
-    TARGET_LINK_LIBRARIES(TestMantiuk06Basic constrast_domain pfs pfstmo common
+    TARGET_LINK_LIBRARIES(TestMantiuk06Basic
+        ContrastDomain pfs pfstmo common
         ${GTEST_BOTH_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
         ${LIBS} )
 ELSE()
     TARGET_LINK_LIBRARIES(TestMantiuk06Basic
-        -Xlinker --start-group constrast_domain pfs pfstmo common
-        -Xlinker --end-group
+        ContrastDomain pfs pfstmo common
         ${GTEST_BOTH_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
         ${LIBS} -lrt)
@@ -57,13 +57,13 @@ IF(MSVC OR APPLE)
     TARGET_LINK_LIBRARIES(TestMantiuk06Pyramid pfs pfstmo common
         ${GTEST_BOTH_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
-        ${LIBS} constrast_domain)
+        ${LIBS} ContrastDomain)
 ELSE()
     TARGET_LINK_LIBRARIES(TestMantiuk06Pyramid
-        -Xlinker --start-group pfs pfstmo common -Xlinker --end-group
+        ContrastDomain pfs pfstmo common
         ${GTEST_BOTH_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
-        ${LIBS} -lrt constrast_domain)
+        ${LIBS} -lrt)
 ENDIF()
 ADD_TEST(TestMantiuk06Pyramid TestMantiuk06Pyramid)
 
