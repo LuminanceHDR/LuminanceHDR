@@ -30,10 +30,10 @@
 
 #include <list>
 #include <string>
-#include <assert.h>
+#include <cassert>
+#include <cstdio>
 
 #include "pfs.h"
-
 
 namespace pfs
 {
