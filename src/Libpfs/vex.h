@@ -30,7 +30,7 @@
 //#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
 //#include <ppc_intrinsics.h>
 #if __i386__ || __x86_64__
-#define LUMINANCE_USE_SSE
+// #define LUMINANCE_USE_SSE
 #include <mm_malloc.h>
 #include <xmmintrin.h>
 #include <mm_malloc.h>

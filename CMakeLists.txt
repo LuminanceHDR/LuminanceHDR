@@ -91,7 +91,7 @@ ELSE()
     # optimize for 64-bit core 2 architecture on apple
     ADD_DEFINITIONS(-march=core2)
     ELSE()
-    ADD_DEFINITIONS(-std=c++0x -ffast-math -msse2)
+    ADD_DEFINITIONS(-std=c++0x -ffast-math -msse2 -msse)
     ENDIF()
 
     # Unix & Apple part

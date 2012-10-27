@@ -30,6 +30,7 @@
 #include "Libpfs/vex.h"
 #include <algorithm>
 
+// #undef LUMINANCE_USE_SSE
 
 namespace
 {

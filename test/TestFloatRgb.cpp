@@ -21,6 +21,7 @@
 
 #include <gtest/gtest.h>
 #include <QRgb>
+#include <QDebug>
 #include "Common/FloatRgbToQRgb.h"
 
 TEST(FloatRgbConverter, Uint16_Test1)
