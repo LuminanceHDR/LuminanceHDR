@@ -83,7 +83,7 @@ public:
     {
         for (size_t idx = 0; idx < size; idx++)
         {
-            ASSERT_NEAR(in1[idx], in2[idx], 10e-6f);
+            ASSERT_NEAR(in1[idx], in2[idx], 10e-2f);
         }
     }
 
@@ -257,7 +257,7 @@ TEST_P(TestMantiuk06, TestMantiuk06CalculateGradient)
                    computedGy.size());
 }
 
-INSTANTIATE_TEST_CASE_P(MeaningfulTestParameters,
+INSTANTIATE_TEST_CASE_P(Mantiuk06,
                         TestMantiuk06,
                         Combine(Values(91, 352, 403, 1024),
                                 Values(27, 256, 511, 1334))
