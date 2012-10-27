@@ -70,9 +70,9 @@ void resizeBilinearGray(const _Type* pixels, _Type* output,
     private(x_diff, y_diff, x, y, index, outputPixel, A, B, C, D)
     {
 #pragma omp for schedule(static, 1)
-        for ( size_t iO = 0; iO < h2; iO += BLOCK_FACTOR )
+        for ( int iO = 0; iO < static_cast<int>(h2); iO += BLOCK_FACTOR )
         {
-            for ( size_t jO = 0; jO < w2; jO += BLOCK_FACTOR )
+            for ( int jO = 0; jO < static_cast<int>(w2); jO += BLOCK_FACTOR )
             {
                 for (size_t i = iO, iEnd = std::min(iO + BLOCK_FACTOR, h2);
                      i < iEnd;
