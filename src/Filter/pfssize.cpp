@@ -1,9 +1,8 @@
-/**
- * @brief Resize images in PFS stream
- * 
- * This file is a part of PFSTOOLS package.
+/*
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2012 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,17 +18,20 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
- * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
- *
- * $Id: pfssize.cpp,v 1.4 2009/01/29 00:44:30 rafm Exp $
  */
+
+//! \brief Resize images in PFS stream
+//! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 #include <cmath>
 #include <cassert>
 #include <iostream>
 #include <algorithm>
 #include <numeric>
+#include <cmath>
+
+#include "pfssize.h"
 
 #include "Common/msec_timer.h"
 #include "Libpfs/array2d.h"
@@ -37,234 +39,129 @@
 #include "Libpfs/domio.h"
 #include "Libpfs/manip/copy.h"
 
-#define ROUNDING_ERROR 0.000001
-
 namespace pfs
 {
-class ResampleFilter
+namespace
 {
-public:
-  /**
-   * Size of the filter in samples.
-   */
-  virtual float getSize() = 0;
-  /**
-   * Get value of the filter for x. x is always positive.
-   */
-  virtual float getValue( const float x ) = 0;
+const size_t BLOCK_FACTOR = 96;
 
-  virtual ~ResampleFilter()
-  {
-  }
-  
-};
-
-void resize( const pfs::Array2D *src, pfs::Array2D *dest );
-void resampleMitchell( const pfs::Array2D *in, pfs::Array2D *out );
-void resampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *filter );
-
-// --------- Filters --------
-
-class MitchellFilter : public ResampleFilter
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \note Code derived from
+//! http://tech-algorithm.com/articles/bilinear-image-scaling/
+//! with added OpenMP support and block based resampling
+template <typename _Type>
+void resizeBilinearGray(const _Type* pixels, _Type* output,
+                        size_t w, size_t h, size_t w2, size_t h2)
 {
-public:
-  float getSize() { return 2; }
-  float getValue( const float x ) 
-  {
-    const float B = 0.3333f, C = 0.3333f;
-    const float x2 = x*x;
-    if( x < 1 )
-      return 1.f/6.f * (
-        (12-9*B-6*C)*x2*x +
-        (-18+12*B+6*C)*x2 +
-        (6-2*B) );
-    if( x >=1 && x < 2 )
-      return 1.f/6.f * (
-        (-B-6*C)*x2*x +
-        (6*B + 30*C)*x2 +
-        (-12*B-48*C)*x +
-        (8*B+24*C) );
-    return 0;
-  }
-};
+    const float x_ratio = static_cast<float>(w - 1)/w2;
+    const float y_ratio = static_cast<float>(h - 1)/h2;
 
-class LinearFilter : public ResampleFilter
+    _Type A, B, C, D;
+    _Type outputPixel;
+    size_t x = 0;
+    size_t y = 0;
+    size_t index = 0;
+
+    float x_diff = 0.0f;
+    float y_diff = 0.0f;
+
+#pragma omp parallel \
+    shared(pixels, output, w, h, w2, h2) \
+    private(x_diff, y_diff, x, y, index, outputPixel, A, B, C, D)
+    {
+#pragma omp for schedule(static, 1)
+        for ( size_t iO = 0; iO < h2; iO += BLOCK_FACTOR )
+        {
+            for ( size_t jO = 0; jO < w2; jO += BLOCK_FACTOR )
+            {
+                for (size_t i = iO, iEnd = std::min(iO + BLOCK_FACTOR, h2);
+                     i < iEnd;
+                     i++)
+                {
+                    y = static_cast<size_t>(y_ratio * i);
+                    y_diff = (y_ratio * i) - y;
+
+                    for (size_t j = jO, jEnd = std::min(jO + BLOCK_FACTOR, w2);
+                         j < jEnd;
+                         j++)
+                    {
+                        x = static_cast<size_t>(x_ratio * j);
+                        x_diff = (x_ratio * j) - x;
+
+                        index = y*w + x;
+
+                        A = pixels[index];
+                        B = pixels[index + 1];
+                        C = pixels[index + w];
+                        D = pixels[index + w + 1];
+
+                        // Y = A(1-w)(1-h) + B(w)(1-h) + C(h)(1-w) + D(w)(h)
+                        outputPixel =
+                                static_cast<_Type>(
+                                    A*(1-x_diff)*(1-y_diff) +
+                                    B*(x_diff)*(1-y_diff) +
+                                    C*(y_diff)*(1-x_diff) +
+                                    D*(x_diff*y_diff) );
+
+                        output[i*w2 + j] = outputPixel;
+                    }
+                }
+            }
+        }
+    } // end parallel region
+}
+
+void resample(const pfs::Array2D *in, pfs::Array2D *out)
 {
-public:
-  float getSize() { return 1; }
-  float getValue( const float x ) 
-  {
-    if( x < 1 ) return 1 - x;
-    return 0;
-  }
-};
+    resizeBilinearGray(in->getRawData(), out->getRawData(),
+                       in->getCols(), in->getRows(),
+                       out->getCols(), out->getRows());
+}
 
-// TODO: double checked! 
-// Davide Anastasia <davideanastasia@users.sourceforge.net>
+} // anonymous
 
-//class BoxFilter : public ResampleFilter
-//{
-//public:
-//  float getSize() { return 0.5; }
-//  float getValue( const float x ) 
-//  {
-//    return 1;
-//  }
-//};
+void resize(const pfs::Array2D *in, pfs::Array2D *out )
+{
+    if ( in->getCols() == out->getCols() && in->getRows() == out->getRows() )
+    {
+        pfs::copy(in, out);
+    }
+    else
+    {
+        resample(in, out);
+    }
+}
 
-pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize)
+Frame* resize(Frame* frame, int xSize)
 {
 #ifdef TIMER_PROFILING
-  msec_timer f_timer;
-  f_timer.start();
+    msec_timer f_timer;
+    f_timer.start();
 #endif
 
-  LinearFilter filter;
-  
-  int new_x = xSize;
-  int new_y = (int)((float)frame->getHeight() * (float)xSize / (float)frame->getWidth());
-  
-  pfs::Frame *resizedFrame = pfs::DOMIO::createFrame( new_x, new_y );
-  
-  const ChannelContainer& channels = frame->getChannels();
+    int new_x = xSize;
+    int new_y = (int)((float)frame->getHeight() * (float)xSize / (float)frame->getWidth());
 
-  for ( ChannelContainer::const_iterator it = channels.begin();
-        it != channels.end();
-        ++it)
-  {
-      const pfs::Channel* originalCh = *it;
-      pfs::Channel* newCh = resizedFrame->createChannel( originalCh->getName() );
+    pfs::Frame *resizedFrame = pfs::DOMIO::createFrame( new_x, new_y );
 
-      resampleArray(originalCh->getChannelData(), newCh->getChannelData(), &filter);
-  }
-
-  pfs::copyTags( frame, resizedFrame );
-  
-#ifdef TIMER_PROFILING
-  f_timer.stop_and_update();
-  std::cout << "resizeFrame() = " << f_timer.get_time() << " msec" << std::endl;
-#endif 
-  
-  return resizedFrame;
-}
-
-
-void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *filter )
-{
-  float dx = (float)in->getCols() / (float)out->getCols();
-  float dy = (float)in->getRows() / (float)out->getRows();
-
-  //float pad;
-  
-  //float filterSamplingX = max( modff( dx, &pad ), 0.01f );
-  //float filterSamplingY = max( modff( dy, &pad ), 0.01f );
-
-  const int outRows = out->getRows();
-  const int outCols = out->getCols();
-
-  const float inRows = (float)in->getRows();
-  const float inCols = (float)in->getCols();
-
-  const float filterSize = filter->getSize();
-
-// TODO: possible optimization: create lookup table for the filter
-  
-  float sx, sy;
-  int x, y;
-  for( y = 0, sy = -0.5f + dy/2; y < outRows; y++, sy += dy )
-    for( x = 0, sx = -0.5f + dx/2; x < outCols; x++, sx += dx ) {
-
-      float pixVal = 0;
-      float weight = 0;
-      
-      for (float ix = std::max( 0.0f, std::ceil( sx-filterSize ) );
-           ix <= std::min( std::floor(sx+filterSize), inCols-1 );
-           ix++ )
-      {
-        for (float iy = std::max( 0.0f, std::ceil( sy-filterSize ) );
-             iy <= std::min( std::floor( sy+filterSize), inRows-1 );
-             iy++ )
-        {
-          float fx = std::fabs( sx - ix );
-          float fy = std::fabs( sy - iy );
-
-          const float fval = filter->getValue( fx )*filter->getValue( fy );
-          
-          pixVal += (*in)( (int)ix, (int)iy ) * fval;
-          weight += fval;
-        }
-      }
-
-      if( weight == 0 ) {
-        fprintf( stderr, "%g %g %g %g\n", sx, sy, dx, dy );
-      }    
-//      assert( weight != 0 );
-      (*out)(x,y) = pixVal / weight;
-
-    } 
-}
-
-void downsampleArray(const pfs::Array2D *in, pfs::Array2D *out)
-{
-  const float* Vin  = in->getRawData();
-  float* Vout       = out->getRawData();
-  
-  const unsigned int inRows = in->getRows();
-  const unsigned int inCols = in->getCols();
-
-  const unsigned int outRows = out->getRows();
-  const unsigned int outCols = out->getCols();
-
-  const float dx = (float)inCols/(float)outCols;
-  const float dy = (float)inRows/(float)outRows;
-  
-  const float filterSize = 0.5;
-  
-  float sx, sy;
-  unsigned int x, y;
-  unsigned int IY_L, IY_U, IX_L, IX_U;
-  
-  float pixVal, w;
-  
-  for (y = 0, sy = (dy/2.0f - 0.5f); y < outRows; y++, sy += dy)
-  {
-    IY_L = static_cast<unsigned int>(std::max( 0.f, std::ceil( sy-dx*filterSize ) ));
-    IY_U = static_cast<unsigned int>(std::min( static_cast<unsigned int>(std::floor(sy+dx*filterSize)), inRows-1 ));
-    
-    for (x = 0, sx = (dx/2.0f - 0.5f); x < outCols; x++, sx += dx)
+    const ChannelContainer& channels = frame->getChannels();
+    for ( ChannelContainer::const_iterator it = channels.begin();
+          it != channels.end();
+          ++it)
     {
-      pixVal  = 0.0f;
-      w       = 0.0f;
-      
-      IX_L = static_cast<unsigned int>(std::max( 0.f, std::ceil( sx-dx*filterSize ) ));
-      IX_U = static_cast<unsigned int>(std::min( static_cast<unsigned int>(std::floor(sx+dx*filterSize)), inCols-1 ));
-      
-      for (unsigned int iy = IY_L; iy <= IY_U; iy++)
-      {        
-        for (unsigned int ix = IX_L; ix <= IX_U; ix++)
-        {
-          pixVal  += Vin[iy*inCols + ix];
-          w       += 1.0f;
-        }
-      }
-      Vout[y*outCols+x] = pixVal/w;
+        const pfs::Channel* originalCh = *it;
+        pfs::Channel* newCh = resizedFrame->createChannel( originalCh->getName() );
+
+        resize( originalCh->getChannelData(), newCh->getChannelData() );
     }
-  }
+    pfs::copyTags( frame, resizedFrame );
+
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "resizeFrame() = " << f_timer.get_time() << " msec" << std::endl;
+#endif 
+
+    return resizedFrame;
 }
 
-void resampleArray(const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *filter )
-{
-  if ( in->getCols() == out->getCols() && in->getRows() == out->getRows() )
-  {
-    pfs::copy(in, out);
-  }
-  else if( in->getCols() > out->getCols() || in->getRows() > out->getRows() )
-  {
-    downsampleArray(in, out);
-  }
-  else
-  {
-    upsampleArray(in, out, filter);
-  }
-}
-}
+} // pfs

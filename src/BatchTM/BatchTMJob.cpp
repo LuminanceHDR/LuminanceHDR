@@ -86,9 +86,13 @@ void BatchTMJob::run()
 
             QScopedPointer<pfs::Frame> temporary_frame;
             if ( opts->origxsize == opts->xsize )
+            {
                 temporary_frame.reset( pfs::copy(reference_frame.data()) );
+            }
             else
-                temporary_frame.reset( pfs::resizeFrame(reference_frame.data(), opts->xsize) );
+            {
+                temporary_frame.reset( pfs::resize(reference_frame.data(), opts->xsize) );
+            }
 
 			if ( opts->pregamma != 1.0f )
 			{

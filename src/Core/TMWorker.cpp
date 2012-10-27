@@ -126,7 +126,7 @@ pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOption
     else if ( tm_options->xsize != tm_options->origxsize )
     {
         // workingframe = "resize"
-        working_frame = pfs::resizeFrame(input_frame, tm_options->xsize);
+        working_frame = pfs::resize(input_frame, tm_options->xsize);
     }
     else
     {

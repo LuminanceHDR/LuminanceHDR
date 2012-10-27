@@ -76,7 +76,7 @@ void ResizeDialog::scaledPressed() {
 		emit reject();
 		return;
 	}
-	resized = pfs::resizeFrame(original,resized_width);
+    resized = pfs::resize(original, resized_width);
 	accept();
 }
 

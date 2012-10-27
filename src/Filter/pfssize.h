@@ -1,9 +1,8 @@
-/**
- * @brief Resize images in PFS stream
- * 
- * This file is a part of PFSTOOLS package.
+/*
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2012 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,25 +18,20 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
- * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
- *
- * $Id: pfssize.h,v 1.4 2009/01/29 00:44:30 rafm Exp $
  */
 
-#ifndef PFSSIZE_H
-#define PFSSIZE_H
+#ifndef PFS_RESIZE_H
+#define PFS_RESIZE_H
 
 namespace pfs
 {
-    // forward declaration
-    class Frame;
-    class Array2D;
+// forward declaration
+class Frame;
+class Array2D;
 
-    Frame* resizeFrame(Frame* frame,
-                            int xSize);
-    void downsampleArray(const Array2D *from,
-                         Array2D *to);
+Frame* resize(Frame* frame, int xSize);
+
+void resize(const Array2D *from, Array2D *to);
 }
 
 #endif // PFSSIZE_H
