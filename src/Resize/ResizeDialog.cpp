@@ -24,8 +24,8 @@
 #include "ResizeDialog.h"
 #include "ui_ResizeDialog.h"
 
-#include "Filter/pfssize.h"
 #include "Libpfs/frame.h"
+#include "Libpfs/manip/resize.h"
 
 ResizeDialog::ResizeDialog(QWidget *parent, pfs::Frame *orig):
     QDialog(parent),

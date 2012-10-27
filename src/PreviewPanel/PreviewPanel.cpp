@@ -30,8 +30,8 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 #include "Libpfs/manip/copy.h"
+#include "Libpfs/manip/resize.h"
 
-#include "Filter/pfssize.h"
 #include "Core/TMWorker.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"

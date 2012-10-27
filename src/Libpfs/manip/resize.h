@@ -23,6 +23,10 @@
 #ifndef PFS_RESIZE_H
 #define PFS_RESIZE_H
 
+//! \brief Resize images in PFS stream
+//! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+
 namespace pfs
 {
 // forward declaration
@@ -34,4 +38,4 @@ Frame* resize(Frame* frame, int xSize);
 void resize(const Array2D *from, Array2D *to);
 }
 
-#endif // PFSSIZE_H
+#endif // PFS_RESIZE_H

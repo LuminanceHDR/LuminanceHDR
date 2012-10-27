@@ -32,9 +32,9 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/cut.h"
+#include "Libpfs/manip/resize.h"
 
 #include "Filter/pfsgamma.h"
-#include "Filter/pfssize.h"
 
 #include "Core/TonemappingOptions.h"
 #include "Common/ProgressHelper.h"

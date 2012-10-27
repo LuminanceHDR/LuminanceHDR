@@ -28,13 +28,14 @@
 #include "Exif/ExifOperations.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/copy.h"
+#include "Libpfs/manip/resize.h"
+
 #include "Filter/pfsgamma.h"
 #include "Core/IOWorker.h"
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "TonemappingEngine/TonemapOperator.h"
-#include "Filter/pfssize.h"
 
 #include <QFileInfo>
 #include <QByteArray>

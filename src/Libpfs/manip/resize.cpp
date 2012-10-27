@@ -31,7 +31,7 @@
 #include <numeric>
 #include <cmath>
 
-#include "pfssize.h"
+#include "resize.h"
 
 #include "Common/msec_timer.h"
 #include "Libpfs/array2d.h"
