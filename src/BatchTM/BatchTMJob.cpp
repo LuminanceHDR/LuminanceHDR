@@ -29,8 +29,8 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/resize.h"
+#include "Libpfs/manip/gamma.h"
 
-#include "Filter/pfsgamma.h"
 #include "Core/IOWorker.h"
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
@@ -97,7 +97,7 @@ void BatchTMJob::run()
 
 			if ( opts->pregamma != 1.0f )
 			{
-				pfs::applyGammaOnFrame(temporary_frame.data(), opts->pregamma );
+                pfs::applyGamma(temporary_frame.data(), opts->pregamma );
 			}
 
             QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(opts->tmoperator) );

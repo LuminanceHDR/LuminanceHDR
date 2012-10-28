@@ -33,8 +33,7 @@
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/resize.h"
-
-#include "Filter/pfsgamma.h"
+#include "Libpfs/manip/gamma.h"
 
 #include "Core/TonemappingOptions.h"
 #include "Common/ProgressHelper.h"
@@ -136,7 +135,7 @@ pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOption
 
     if ( tm_options->pregamma != 1.0f )
     {
-        pfs::applyGammaOnFrame( working_frame, tm_options->pregamma );
+        pfs::applyGamma( working_frame, tm_options->pregamma );
     }
 
     return working_frame;

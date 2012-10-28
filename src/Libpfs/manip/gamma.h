@@ -1,9 +1,8 @@
-/**
- * @brief Apply gamma correction the the pfs stream
- * 
- * This file is a part of PFSTOOLS package.
+/*
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2012 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,28 +18,27 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
- * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
- *
- * $Id: pfsgamma.h,v 1.3 2008/07/29 16:14:29 rafm Exp $
  */
 
-#ifndef PFSGAMMA_H
-#define PFSGAMMA_H
+#ifndef PFS_GAMMA_H
+#define PFS_GAMMA_H
 
-#include "Libpfs/array2d.h"
-#include "Libpfs/frame.h"
+//! \brief Apply gamma correction the the pfs stream
+//! \author Rafal Mantiuk <mantiuk@mpi-sb.mpg.de>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 namespace pfs
 {
-    // Note: passing basic types by "const" copy is completely useless,
-    // and shows a wrong design either [Davide: 2012.04.28]
-    void applyGamma(pfs::Array2D *array,
-                    const float exponent,
-                    const float multiplier);
+class Array2D;
+class Frame;
 
-    pfs::Frame* applyGammaOnFrame(pfs::Frame* frame,
-                                  const float gamma);
+//! \brief Apply \c gamma on the input \c frame
+void applyGamma(pfs::Frame* frame, float gamma);
+
+//! \brief Apply gamma on the input \c array
+void applyGamma(pfs::Array2D *array, float exponent, float multiplier = 1.0f);
+
+
 }
 
 #endif // PFSGAMMA_H
