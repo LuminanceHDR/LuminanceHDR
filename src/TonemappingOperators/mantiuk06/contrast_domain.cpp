@@ -82,7 +82,7 @@
 #include "Libpfs/vex/vex.h"
 #include "Libpfs/vex/minmax.h"
 #include "Libpfs/vex/dotproduct.h"
-#include "Common/msec_timer.h"
+#include "Libpfs/utils/msec_timer.h"
 
 // divG_sum = A * x = sum(divG(x))
 void multiplyA(PyramidT& px, const PyramidT& pC,

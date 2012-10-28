@@ -16,14 +16,14 @@ ENDIF(UNIX)
 # Colorspace test
 # LinearRGB -> Y
 ADD_EXECUTABLE(TestRGB2Y TestRGB2Y.cpp)
-TARGET_LINK_LIBRARIES(TestRGB2Y pfs common
+TARGET_LINK_LIBRARIES(TestRGB2Y pfs
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestRGB2Y TestRGB2Y)
 
 # SRGB -> Y
 ADD_EXECUTABLE(TestSRGB2Y TestSRGB2Y.cpp)
-TARGET_LINK_LIBRARIES(TestSRGB2Y pfs common
+TARGET_LINK_LIBRARIES(TestSRGB2Y pfs
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestSRGB2Y TestSRGB2Y)
@@ -54,10 +54,11 @@ ADD_EXECUTABLE(TestMantiuk06Pyramid
     TestMantiuk06Pyramid.cpp
 )
 IF(MSVC OR APPLE)
-    TARGET_LINK_LIBRARIES(TestMantiuk06Pyramid pfs pfstmo common
+    TARGET_LINK_LIBRARIES(TestMantiuk06Pyramid
+        ContrastDomain pfs pfstmo common
         ${GTEST_BOTH_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
-        ${LIBS} ContrastDomain)
+        ${LIBS} )
 ELSE()
     TARGET_LINK_LIBRARIES(TestMantiuk06Pyramid
         ContrastDomain pfs pfstmo common
@@ -80,28 +81,28 @@ TARGET_LINK_LIBRARIES(TestVexDotProduct
 ADD_TEST(TestVexDotProduct TestVexDotProduct)
 
 ADD_EXECUTABLE(TestPfsRotate TestPfsRotate.cpp)
-TARGET_LINK_LIBRARIES(TestPfsRotate pfs common
+TARGET_LINK_LIBRARIES(TestPfsRotate pfs
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsRotate TestPfsRotate)
 
 ADD_EXECUTABLE(TestPfsShift TestPfsShift.cpp)
-TARGET_LINK_LIBRARIES(TestPfsShift pfs common
+TARGET_LINK_LIBRARIES(TestPfsShift pfs
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsShift TestPfsShift)
 
 ADD_EXECUTABLE(TestPfsCut TestPfsCut.cpp SeqInt.h PrintArray2D.h)
-TARGET_LINK_LIBRARIES(TestPfsCut pfs common
+TARGET_LINK_LIBRARIES(TestPfsCut pfs
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsCut TestPfsCut)
 
 ADD_EXECUTABLE(TestFloatRgb TestFloatRgb.cpp)
-TARGET_LINK_LIBRARIES(TestFloatRgb
+TARGET_LINK_LIBRARIES(TestFloatRgb common pfs
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
-    ${LIBS} common pfs)
+    ${LIBS})
 ADD_TEST(TestFloatRgb TestFloatRgb)
 
 ENDIF(GTEST_FOUND)

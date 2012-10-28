@@ -34,7 +34,7 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
 
-#include "Common/msec_timer.h"
+#include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/domio.h"
 
 namespace pfs

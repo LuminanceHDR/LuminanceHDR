@@ -38,6 +38,8 @@
 #include "Libpfs/manip/shift.h"
 #include "Libpfs/manip/cut.h"
 
+#include "Libpfs/utils/msec_timer.h"
+
 #include "Fileformat/tiffreader.h"
 #include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsouthdrimage.h"
@@ -47,7 +49,7 @@
 #include "mtb_alignment.h"
 #include "HdrCreationManager.h"
 #include "arch/math.h"
-#include "Common/msec_timer.h"
+
 
 namespace
 {

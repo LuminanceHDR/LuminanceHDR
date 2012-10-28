@@ -34,7 +34,7 @@
  * this define enables the timing profile
  * You should comment this define if you want to disable this feature
  */
-#ifndef QT_NO_DEBUG
+#ifndef NDEBUG
 #define TIMER_PROFILING
 #endif
 

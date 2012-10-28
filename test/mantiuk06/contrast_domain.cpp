@@ -64,7 +64,7 @@
 #include "Libpfs/vex.h"
 #include "Libpfs/vex/vex.h"
 #include "Libpfs/vex/dotproduct.h"
-#include "Common/msec_timer.h"
+#include "Libpfs/utils/msec_timer.h"
 
 namespace test_mantiuk06
 {

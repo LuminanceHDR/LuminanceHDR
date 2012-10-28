@@ -38,7 +38,7 @@
 
 #include "pfsoutldrimage.h"
 #include "Libpfs/frame.h"
-#include "Common/msec_timer.h"
+#include "Libpfs/utils/msec_timer.h"
 
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float min_luminance,

@@ -31,19 +31,21 @@
 #include <QDebug>
 
 #include <cmath>
-#include <assert.h>
+#include <cassert>
 #include "arch/math.h"
 
 #include "Common/global.h"
-#include "Common/msec_timer.h"
 #include "Common/FloatRgbToQRgb.h"
+
 #include "Viewers/IGraphicsPixmapItem.h"
+#include "Viewers/LuminanceRangeWidget.h"
+
 #include "Libpfs/array2d.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
-#include "Viewers/LuminanceRangeWidget.h"
 #include "Libpfs/vex.h"
+#include "Libpfs/utils/msec_timer.h"
 
 namespace // anonymous namespace
 {
