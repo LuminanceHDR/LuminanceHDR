@@ -1,5 +1,5 @@
 /*
- * This file is a part of Luminance HDR package.
+ * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2012 Davide Anastasia

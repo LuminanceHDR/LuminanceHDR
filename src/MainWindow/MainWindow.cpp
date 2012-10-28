@@ -56,6 +56,7 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/rotate.h"
+#include "Libpfs/manip/gamma_levels.h"
 
 #include "Common/archs.h"
 #include "Common/config.h"
@@ -66,8 +67,6 @@
 #include "BatchTM/BatchTMDialog.h"
 #include "Fileformat/pfs_file_format.h"
 
-
-#include "Filter/pfsgammaandlevels.h"
 #include "TransplantExif/TransplantExifDialog.h"
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LuminanceRangeWidget.h"
@@ -1781,12 +1780,13 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
         {
             qDebug() << "GammaAndLevels accepted!";
 
-            pfs::Frame* frame = pfs::gamma_levels(current->getFrame(),
-                                                  g_n_l->getBlackPointInput(),
-                                                  g_n_l->getWhitePointInput(),
-                                                  g_n_l->getBlackPointOutput(),
-                                                  g_n_l->getWhitePointOutput(),
-                                                  g_n_l->getGamma());
+            pfs::Frame * frame = current->getFrame();
+            pfs::gammaAndLevels(frame,
+                                g_n_l->getBlackPointInput(),
+                                g_n_l->getWhitePointInput(),
+                                g_n_l->getBlackPointOutput(),
+                                g_n_l->getWhitePointOutput(),
+                                g_n_l->getGamma());
 
             current->setFrame(frame);
         } else {

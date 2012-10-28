@@ -1,8 +1,7 @@
-/**
- * @brief apply gamma and level filtering to a frame
- *
+/*
+ * This file is a part of Luminance HDR package
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2011-2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,16 +17,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia
- * builds a copy of the input frame and applies gamma and in/out black/white points
- *
  */
+
+//! \brief apply gamma and black/white point to the input frame
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 #include <cmath>
 #include <iostream>
-
-#include <QDebug>
 
 #include "Libpfs/frame.h"
 #include "Libpfs/channel.h"
@@ -92,19 +88,22 @@ inline T clamp(const T& v, const T& lower_bound, const T& upper_bound)
 namespace pfs
 {
 
-pfs::Frame* gamma_levels(pfs::Frame* inFrame,
-                         float black_in, float white_in,
-                         float black_out, float white_out,
-                         float gamma)
+void gammaAndLevels(pfs::Frame* inFrame,
+                    float black_in, float white_in,
+                    float black_out, float white_out,
+                    float gamma)
 {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
 
-    qDebug() << "Black in =" << black_in << "black out =" << black_out
-             << "White in =" << white_in << "white out =" << white_out
-             << "Gamma =" << gamma;
+#ifndef NDEBUG
+    std::cerr << "Black in =" << black_in << "black out =" << black_out
+              << "White in =" << white_in << "white out =" << white_out
+              << "Gamma =" << gamma
+              << std::endl;
+#endif
 
     const int outWidth   = inFrame->getWidth();
     const int outHeight  = inFrame->getHeight();
@@ -127,6 +126,7 @@ pfs::Frame* gamma_levels(pfs::Frame* inFrame,
     float* B_o = Zc->getRawData();
 
     // float exp_gamma = 1.f/gamma;
+#pragma omp parallel for
     for (int idx = 0; idx < outWidth*outHeight; ++idx)
     {
         float red = R_i[idx];
@@ -159,8 +159,6 @@ pfs::Frame* gamma_levels(pfs::Frame* inFrame,
     f_timer.stop_and_update();
     std::cout << "gamma_levels() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
-
-    return outFrame;
 }
 
 }

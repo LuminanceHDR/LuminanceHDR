@@ -1,8 +1,7 @@
-/**
- * @brief apply gamma and level filtering to a frame
- *
+/*
+ * This file is a part of Luminance HDR package
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2011-2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,20 +17,18 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia
- * builds a copy of the input frame and applies gamma and in/out black/white points
- *
  */
+
+//! \brief apply gamma and black/white point to the input frame
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 namespace pfs
 {
-
 class Frame;
 
-pfs::Frame* gamma_levels(pfs::Frame* in,
-                         float black_in, float white_in,
-                         float black_out, float white_out,
-                         float gamma);
+void gammaAndLevels(pfs::Frame* in,
+                    float black_in, float white_in,
+                    float black_out, float white_out,
+                    float gamma = 1.0f);
 
 }
