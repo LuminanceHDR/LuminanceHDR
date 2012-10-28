@@ -23,9 +23,10 @@
 
 #include "ProjectionsDialog.h"
 #include "ui_ProjectionsDialog.h"
-#include "Filter/pfspanoramic.h"
+
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
+#include "Libpfs/manip/projection.h"
 
 ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
     QDialog(parent),

@@ -1,7 +1,9 @@
-/**
- * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
- * Copyright (C) 2006,2007 Giuseppe Rota
+/*
+ * This file is a part of Luminance HDR package (based on PFSTOOLS code).
+ * ----------------------------------------------------------------------
+ * Copyright (C) 2003-2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2006-2008 Giuseppe Rota
+ * Copyright (C) 2012 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,23 +20,22 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#ifndef PFSPANORAMIC_H
-#define PFSPANORAMIC_H
+#ifndef PFS_PROJECTION_H
+#define PFS_PROJECTION_H
+
+//! \brief Perform projective transformations of spherical images
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \author Miloslaw Smyk, <thorgal@wfmh.org.pl>
 
 #include <map>
 #include <string>
-#include <cmath>
-#include <stdio.h>
-#include <stdlib.h>
 
-#include "Libpfs/array2d.h"
-#include "arch/math.h"
-
-using std::map;
-using std::string;
+namespace pfs
+{
+class Array2D;
+}
 
 class Vector3D;
 class Point2D;
@@ -71,7 +72,7 @@ class ProjectionFactory
     static ProjectionFactory singleton;
     ProjectionFactory(bool );
   public:
-    map < string, ProjectionCreator > projections;
+    std::map < std::string, ProjectionCreator > projections;
     static void registerProjection(const char *name, ProjectionCreator ptr);
     static Projection *getProjection(char *name);
     static void listProjectionNames(void);
@@ -162,4 +163,4 @@ class TransformInfo
 
 void transformArray( const pfs::Array2D *in, pfs::Array2D *out, TransformInfo *transformInfo);
 
-#endif
+#endif // PFS_PROJECTION_H

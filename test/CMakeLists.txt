@@ -80,7 +80,7 @@ TARGET_LINK_LIBRARIES(TestVexDotProduct
 ADD_TEST(TestVexDotProduct TestVexDotProduct)
 
 ADD_EXECUTABLE(TestPfsRotate TestPfsRotate.cpp)
-TARGET_LINK_LIBRARIES(TestPfsRotate pfs pfsfilter common
+TARGET_LINK_LIBRARIES(TestPfsRotate pfs common
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsRotate TestPfsRotate)

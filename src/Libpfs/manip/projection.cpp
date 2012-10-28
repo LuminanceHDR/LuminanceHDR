@@ -1,10 +1,9 @@
-/**
- * @brief Perform projective transformations of spherical images
- * 
- * This file is a part of LuminanceHDR package (based on pfstool's code).
- * ---------------------------------------------------------------------- 
- * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
- * Copyright (C) 2008 Giuseppe Rota
+/*
+ * This file is a part of Luminance HDR package (based on PFSTOOLS code).
+ * ----------------------------------------------------------------------
+ * Copyright (C) 2003-2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2006-2008 Giuseppe Rota
+ * Copyright (C) 2012 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,13 +20,19 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * @author Miloslaw Smyk, <thorgal@wfmh.org.pl>
- *
- * $Id: pfspanoramic.cpp,v 1.2 2006/11/20 17:52:15 rafm Exp $
  */
 
-#include <string.h>
-#include "pfspanoramic.h"
+#include "projection.h"
+
+#include <cmath>
+// #include <stdio.h>
+// #include <stdlib.h>
+
+#include "Libpfs/array2d.h"
+// #include "arch/math.h"
+
+
+using namespace std;
 
 ProjectionFactory ProjectionFactory::singleton(true);
 
