@@ -33,8 +33,9 @@
 #include <arch/malloc.h>
 
 #include "array2d.h"
-#include "vex.h"
-#include "vex/vex.h"
+
+#include "Libpfs/vex/vex.h"
+#include "Libpfs/vex/sse.h"
 
 using namespace std;
 

@@ -48,7 +48,8 @@
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_interp.h>
 #include "cqp/gsl_cqp.h"
-#include "Libpfs/vex.h"
+
+#include "Libpfs/vex/sse.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)

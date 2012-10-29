@@ -32,9 +32,10 @@
 #ifndef DISPLAY_FUNCTION_H
 #define DISPLAY_FUNCTION_H
 
-#include <stdio.h>
+#include <cstdio>
+
 #include "arch/math.h"
-#include "Libpfs/vex.h"
+#include "Libpfs/vex/sse.h"
 
 class DisplayFunction
 {

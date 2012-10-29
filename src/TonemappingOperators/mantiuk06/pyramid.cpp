@@ -40,7 +40,7 @@
 #include <omp.h>
 #endif
 
-#include "Libpfs/vex.h"
+#include "Libpfs/vex/sse.h"
 #include "Libpfs/vex/vex.h"
 
 namespace

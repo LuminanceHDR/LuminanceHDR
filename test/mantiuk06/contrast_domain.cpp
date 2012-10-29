@@ -61,7 +61,7 @@
 #include "arch/math.h"
 #include "TonemappingOperators/pfstmo.h"
 
-#include "Libpfs/vex.h"
+#include "Libpfs/vex/sse.h"
 #include "Libpfs/vex/vex.h"
 #include "Libpfs/vex/dotproduct.h"
 #include "Libpfs/utils/msec_timer.h"

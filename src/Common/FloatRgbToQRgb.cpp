@@ -27,7 +27,7 @@
 
 #include "FloatRgbToQRgb.h"
 #include "arch/math.h"
-#include "Libpfs/vex.h"
+#include "Libpfs/vex/sse.h"
 #include <algorithm>
 
 // #undef LUMINANCE_USE_SSE

@@ -78,7 +78,7 @@
 
 #include "pyramid.h"
 
-#include "Libpfs/vex.h"
+#include "Libpfs/vex/sse.h"
 #include "Libpfs/vex/vex.h"
 #include "Libpfs/vex/minmax.h"
 #include "Libpfs/vex/dotproduct.h"

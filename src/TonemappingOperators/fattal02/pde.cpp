@@ -39,8 +39,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "Libpfs/vex.h"
 #include "Libpfs/vex/vex.h"
+#include "Libpfs/vex/sse.h"
 #include "Libpfs/array2d.h"
 #include "Libpfs/manip/copy.h"
 

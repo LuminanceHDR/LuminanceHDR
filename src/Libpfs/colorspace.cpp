@@ -39,7 +39,7 @@
 #include "colorspace.h"
 
 #include "Libpfs/utils/msec_timer.h"
-#include "vex.h"
+#include "Libpfs/vex/sse.h"
 
 using namespace std;
 
