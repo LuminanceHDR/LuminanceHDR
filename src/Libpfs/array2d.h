@@ -138,6 +138,8 @@ public:
     //! \brief Get number of rows or, in case of an image, height.
     int getRows() const;
 
+    void resize(int width, int height);
+
     //! \brief Direct access to the raw data
     float*       getRawData();
 

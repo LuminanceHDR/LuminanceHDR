@@ -28,6 +28,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <boost/bind.hpp>
 
 #include "frame.h"
 #include "domio.h"
@@ -61,6 +62,16 @@ Frame::~Frame()
     for_each(m_channels.begin(),
              m_channels.end(),
              ChannelDeleter());
+}
+
+//! \brief Changes the size of the frame
+void Frame::resize(int width, int height)
+{
+    for_each(m_channels.begin(), m_channels.end(),
+             boost::bind(&Channel::resize, _1, width, height));
+
+    m_width = width;
+    m_height = height;
 }
 
 namespace

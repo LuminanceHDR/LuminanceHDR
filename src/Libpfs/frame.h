@@ -52,11 +52,9 @@ private:
     int m_height;
 
     TagContainer m_tags;
-
     ChannelContainer m_channels;
 
 public:
-
     Frame(int width, int height);
     ~Frame();
 
@@ -73,6 +71,9 @@ public:
     {
         return m_height;
     }
+
+    //! \brief Changes the size of the frame
+    void resize(int width, int height);
 
     //! Gets color channels in XYZ color space. May return NULLs
     //! if such channels do not exist. Values assigned to

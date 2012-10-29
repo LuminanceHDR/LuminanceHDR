@@ -77,6 +77,11 @@ int Channel::getHeight() const
     return channel_impl->getRows();
 }
 
+void Channel::resize(int width, int height)
+{
+    channel_impl->resize(width, height);
+}
+
 const std::string& Channel::getName() const
 {
     return name;

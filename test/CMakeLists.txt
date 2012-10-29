@@ -98,6 +98,13 @@ TARGET_LINK_LIBRARIES(TestPfsCut pfs
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsCut TestPfsCut)
 
+ADD_EXECUTABLE(TestFrameArray2D TestFrameArray2D.cpp)
+TARGET_LINK_LIBRARIES(TestFrameArray2D pfs
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${LIBS})
+ADD_TEST(TestFrameArray2D TestFrameArray2D)
+
 ADD_EXECUTABLE(TestFloatRgb TestFloatRgb.cpp)
 TARGET_LINK_LIBRARIES(TestFloatRgb common pfs
     ${GTEST_BOTH_LIBRARIES}

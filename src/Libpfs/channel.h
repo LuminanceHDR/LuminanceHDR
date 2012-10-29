@@ -78,6 +78,8 @@ public:
     //!
     int getHeight() const;
 
+    void resize(int width, int height);
+
     //! Gets name of the channel.
     //!
     const std::string& getName() const;

@@ -84,6 +84,21 @@ Array2D::~Array2D()
     }
 }
 
+void Array2D::resize(int width, int height)
+{
+    if (width*height > m_cols*m_rows)
+    {
+        float* tmp = static_cast<float*>(_mm_malloc(width*height*sizeof(float), 32));
+
+        std::swap(tmp, m_data);
+
+        _mm_free(tmp);
+    }
+    m_cols = width;
+    m_rows = height;
+}
+
+
 void Array2D::reset(const float value)
 {
     VEX_vset(this->m_data, value, this->m_rows*this->m_cols);
