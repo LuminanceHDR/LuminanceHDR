@@ -265,13 +265,13 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
 // copy matix a to b, return = a 
  void matrix_copy(const int n, const float* const a, float* const b)
 {
-  VEX_vcopy(a, b, n);
+     std::copy(a, a + n, b);
 }
 
 // multiply matrix a by scalar val
- void matrix_multiply_const(const int n, float* const a, const float val)
+void matrix_multiply_const(const int n, float* const a, const float val)
 {
-  VEX_vsmul(a, val, a, n);
+     vex::vsmul(a, val, a, n);
 }
 
 // alloc memory for the float table

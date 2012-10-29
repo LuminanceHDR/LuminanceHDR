@@ -99,9 +99,9 @@ void Array2D::resize(int width, int height)
 }
 
 
-void Array2D::reset(const float value)
+void Array2D::reset(float value)
 {
-    VEX_vset(this->m_data, value, this->m_rows*this->m_cols);
+    std::fill(begin(), end(), value);
 }
 
 void Array2D::scale(const float value)

@@ -147,10 +147,10 @@ public:
     const float* getRawData() const;
 
     //! \brief Reset the entire vector data to the value "value"
-    void reset(const float value = 0.0f);
+    void reset(float value = 0.0f);
 
     //! \brief Scale entire 2D array by "value"
-    void scale(const float value);
+    void scale(float value);
 
 public:
     typedef float*          Iterator;
@@ -225,7 +225,7 @@ const float& Array2D::operator()( int index ) const
 //!
 //! \param array array to modify
 //! \param value all elements of the array will be set to this value
-void setArray(Array2D *array, const float value);
+void setArray(Array2D *array, float value);
 
 
 //! \brief Perform element-by-element multiplication: z = x * y.

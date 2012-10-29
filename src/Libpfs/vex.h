@@ -43,18 +43,6 @@
 
 #endif // __SSE__
 
-// O[i] = c * I[i]
-void VEX_vsmul(const float* I, const float c, float* O, const int N);
-
-// O[i] = i[i]
-void VEX_vcopy(const float* I, float* O, const int N);
-
-// IO[i] = value
-void VEX_vset(float* IO, const float value, const int N);
-
-// IO[i] = 0.0f
-void VEX_vreset(float* IO, const int N);
-
 #ifdef LUMINANCE_USE_SSE
 typedef __v4sf v4sf;
 v4sf _mm_log2_ps(v4sf);
