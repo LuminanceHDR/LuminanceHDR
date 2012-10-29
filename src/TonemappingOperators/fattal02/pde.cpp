@@ -222,8 +222,10 @@ static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
   float h = 1.0/sqrt(sx*sy*1.0f);
   float h2 = h*h;
 */
+    U->reset();
 
-    setArray( U, 0.0f); return;   /* also works well?? */
+    /* also works well?? */
+    return;
   
 //   if( sx==3 && sy==3 )
 //   {
@@ -411,7 +413,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
         //    zero for initial guess at smoothing
         //    (except for level k when iu contains prolongated result)
 	if( k2!=k )
-          setArray( IU[k2], 0.0f );
+        IU[k2]->reset();
 
 //        fprintf( stderr, "Level: %d --------\n", k2 );
         

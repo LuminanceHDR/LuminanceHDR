@@ -28,7 +28,7 @@ namespace pfs
 class Array2D;
 
 //! \brief shift
-pfs::Array2D* shiftPfsArray2D(const pfs::Array2D& in, int dx, int dy);
+pfs::Array2D* shift(const pfs::Array2D& in, int dx, int dy);
 
 } // pfs
 

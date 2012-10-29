@@ -225,8 +225,11 @@ const float& Array2D::operator()( int index ) const
 //!
 //! \param array array to modify
 //! \param value all elements of the array will be set to this value
-void setArray(Array2D *array, float value);
-
+inline
+void setArray(Array2D& array, float value)
+{
+    array.reset(value);
+}
 
 //! \brief Perform element-by-element multiplication: z = x * y.
 //! z must be the same as x or y.
@@ -234,7 +237,7 @@ void setArray(Array2D *array, float value);
 //! \param z array where the result is stored
 //! \param x first element of the multiplication
 //! \param y second element of the multiplication
-void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
+void multiplyArray(Array2D& z, const Array2D& x, const Array2D& y);
 
 //! \brief Perform element-by-element division: z = x / y.
 //! z must be the same as x or y.
@@ -242,7 +245,7 @@ void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
 //! \param z array where the result is stored
 //! \param x first element of the division
 //! \param y second element of the division
-void divideArray(Array2D *z, const Array2D *x, const Array2D *y);
+void divideArray(Array2D& z, const Array2D& x, const Array2D& y);
 }
 
 #endif // ARRAY2D_H

@@ -47,7 +47,7 @@ TEST(TestPfsShift, MinusMinus)
     Array2D input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shiftPfsArray2D(input, -2, -1) );
+    boost::scoped_ptr<Array2D> output( shift(input, -2, -1) );
 
     const float* outData = output->getRawData();
 
@@ -74,7 +74,7 @@ TEST(TestPfsShift, PlusMinus)
     Array2D input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shiftPfsArray2D(input, 2, -1) );
+    boost::scoped_ptr<Array2D> output( shift(input, 2, -1) );
 
     const float* outData = output->getRawData();
 
@@ -101,7 +101,7 @@ TEST(TestPfsShift, StillMinus)
     Array2D input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shiftPfsArray2D(input, 0, -1) );
+    boost::scoped_ptr<Array2D> output( shift(input, 0, -1) );
 
     const float* outData = output->getRawData();
 
@@ -127,7 +127,7 @@ TEST(TestPfsShift, MinusPlus)
     Array2D input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shiftPfsArray2D(input, -2, 1) );
+    boost::scoped_ptr<Array2D> output( shift(input, -2, 1) );
 
     const float* outData = output->getRawData();
 
@@ -154,7 +154,7 @@ TEST(TestPfsShift, PlusPlus)
     Array2D input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shiftPfsArray2D(input, 2, 1) );
+    boost::scoped_ptr<Array2D> output( shift(input, 2, 1) );
 
     const float* outData = output->getRawData();
 
@@ -181,7 +181,7 @@ TEST(TestPfsShift, StillStill)
     Array2D input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shiftPfsArray2D(input, 0, 0) );
+    boost::scoped_ptr<Array2D> output( shift(input, 0, 0) );
 
     const float* outData = output->getRawData();
 

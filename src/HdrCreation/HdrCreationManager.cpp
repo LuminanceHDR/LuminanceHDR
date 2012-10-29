@@ -804,15 +804,15 @@ void HdrCreationManager::applyShiftsToMdrImageStack(const QList<QPair<int,int> >
         {
             continue;
         }
-        pfs::Array2D *shiftedR = shiftPfsArray2D(*listmdrR[i],
-                                                 hvOffsets[i].first,
-                                                 hvOffsets[i].second);
-        pfs::Array2D *shiftedG = shiftPfsArray2D(*listmdrG[i],
-                                                 hvOffsets[i].first,
-                                                 hvOffsets[i].second);
-        pfs::Array2D *shiftedB = shiftPfsArray2D(*listmdrB[i],
-                                                 hvOffsets[i].first,
-                                                 hvOffsets[i].second);
+        pfs::Array2D *shiftedR = shift(*listmdrR[i],
+                                       hvOffsets[i].first,
+                                       hvOffsets[i].second);
+        pfs::Array2D *shiftedG = shift(*listmdrG[i],
+                                       hvOffsets[i].first,
+                                       hvOffsets[i].second);
+        pfs::Array2D *shiftedB = shift(*listmdrB[i],
+                                       hvOffsets[i].first,
+                                       hvOffsets[i].second);
         delete listmdrR[i];
         delete listmdrG[i];
         delete listmdrB[i];

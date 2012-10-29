@@ -32,7 +32,7 @@
 namespace pfs
 {
 
-Array2D *shiftPfsArray2D(const Array2D& in, int dx, int dy)
+Array2D *shift(const Array2D& in, int dx, int dy)
 {
     using namespace std;
 

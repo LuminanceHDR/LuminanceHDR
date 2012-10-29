@@ -111,36 +111,28 @@ void Array2D::scale(const float value)
     vex::vsmul(this->m_data, value, this->m_data, this->m_rows*this->m_cols);
 }
 
-void setArray(Array2D *array, const float value)
+void multiplyArray(Array2D& z, const Array2D& x, const Array2D& y)
 {
-    array->reset(value);
+    assert( x.getRows() == y.getRows() );
+    assert( x.getCols() == y.getCols() );
+    assert( x.getRows() == z.getRows() );
+    assert( x.getCols() == z.getCols() );
+
+    vex::vmul(x.getRawData(), y.getRawData(),
+              z.getRawData(),
+              x.getRows()*x.getCols());
 }
 
-void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y)
+void divideArray(Array2D& z, const Array2D& x, const Array2D& y)
 {
-    assert( x->getRows() == y->getRows() );
-    assert( x->getCols() == y->getCols() );
-    assert( x->getRows() == z->getRows() );
-    assert( x->getCols() == z->getCols() );
+    assert( x.getRows() == y.getRows() );
+    assert( x.getCols() == y.getCols() );
+    assert( x.getRows() == z.getRows() );
+    assert( x.getCols() == z.getCols() );
 
-    vex::vmul(x->getRawData(), y->getRawData(),
-              z->getRawData(),
-              x->getRows()*x->getCols());
+    vex::vdiv( x.getRawData(), y.getRawData(),
+               z.getRawData(),
+               x.getRows()*x.getCols() );
 }
 
-void divideArray(Array2D *z, const Array2D *x, const Array2D *y)
-{
-    assert( x->getRows() == y->getRows() );
-    assert( x->getCols() == y->getCols() );
-    assert( x->getRows() == z->getRows() );
-    assert( x->getCols() == z->getCols() );
-
-    vex::vdiv( x->getRawData(), y->getRawData(),
-               z->getRawData(),
-               x->getRows()*x->getCols() );
-}
-}
-
-
-
-
+} // Libpfs
