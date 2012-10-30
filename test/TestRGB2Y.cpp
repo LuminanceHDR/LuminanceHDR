@@ -50,12 +50,14 @@ TEST(TestSRGB2Y, TestSRGB2Y)
     ASSERT_EQ( redInput.size(), blueInput.size() );
     ASSERT_EQ( greenInput.size(), blueInput.size() );
 
-    ColorSpaceSamples yTemp(redInput.size());
+    pfs::Array2D A2DRed(redInput.size(), 1);
+    pfs::Array2D A2DGreen(greenInput.size(), 1);
+    pfs::Array2D A2DBlue(blueInput.size(), 1);
+    pfs::Array2D A2DY(redInput.size(), 1);
 
-    pfs::Array2D A2DRed(redInput.size(), 1, redInput.data());
-    pfs::Array2D A2DGreen(redInput.size(), 1, greenInput.data());
-    pfs::Array2D A2DBlue(redInput.size(), 1, blueInput.data());
-    pfs::Array2D A2DY(redInput.size(), 1, yTemp.data());
+    std::copy(redInput.begin(), redInput.end(), A2DRed.begin());
+    std::copy(greenInput.begin(), greenInput.end(), A2DGreen.begin());
+    std::copy(blueInput.begin(), blueInput.end(), A2DBlue.begin());
 
     // function under unit test!
     pfs::transformRGB2Y( &A2DRed,
@@ -63,9 +65,9 @@ TEST(TestSRGB2Y, TestSRGB2Y)
                          &A2DBlue,
                          &A2DY );
 
-    for (size_t idx = 0; idx < yTemp.size(); ++idx)
+    for (size_t idx = 0; idx < A2DY.size(); ++idx)
     {
-        EXPECT_NEAR(yTemp[idx],
+        EXPECT_NEAR(A2DY(idx),
                     computeLuminance(redInput[idx],
                                      greenInput[idx],
                                      blueInput[idx]),

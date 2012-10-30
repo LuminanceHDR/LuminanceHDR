@@ -35,7 +35,6 @@ TEST(TestSRGB2Y, TestSRGB2Y)
     ColorSpaceSamples redInput;
     ColorSpaceSamples greenInput;
     ColorSpaceSamples blueInput;
-
     ColorSpaceSamples yOutput;
 
     redInput    += 0.f, 1.f, 0.f, 0.f, 0.2f, 1.f;
@@ -48,12 +47,14 @@ TEST(TestSRGB2Y, TestSRGB2Y)
     ASSERT_EQ( redInput.size(), blueInput.size() );
     ASSERT_EQ( greenInput.size(), blueInput.size() );
 
-    ColorSpaceSamples yTemp(yOutput.size());
+    pfs::Array2D A2DRed(redInput.size(), 1);
+    pfs::Array2D A2DGreen(greenInput.size(), 1);
+    pfs::Array2D A2DBlue(blueInput.size(), 1);
+    pfs::Array2D A2DY(yOutput.size(), 1);
 
-    pfs::Array2D A2DRed(yOutput.size(), 1, redInput.data());
-    pfs::Array2D A2DGreen(yOutput.size(), 1, greenInput.data());
-    pfs::Array2D A2DBlue(yOutput.size(), 1, blueInput.data());
-    pfs::Array2D A2DY(yOutput.size(), 1, yTemp.data());
+    std::copy(redInput.begin(), redInput.end(), A2DRed.begin());
+    std::copy(greenInput.begin(), greenInput.end(), A2DGreen.begin());
+    std::copy(blueInput.begin(), blueInput.end(), A2DBlue.begin());
 
     // function under unit test!
     pfs::transformSRGB2Y( &A2DRed,
@@ -61,8 +62,8 @@ TEST(TestSRGB2Y, TestSRGB2Y)
                           &A2DBlue,
                           &A2DY );
 
-    for (size_t idx = 0; idx < yTemp.size(); ++idx)
+    for (size_t idx = 0; idx < A2DY.size(); ++idx)
     {
-        EXPECT_NEAR(yOutput[idx], yTemp[idx], 10e-6);
+        EXPECT_NEAR(yOutput[idx], A2DY(idx), 10e-6);
     }
 }

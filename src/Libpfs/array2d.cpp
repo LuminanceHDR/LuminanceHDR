@@ -29,7 +29,8 @@
 //! \note This version is different then the one in the PFSTOOLS
 
 #include <iostream>
-#include <assert.h>
+#include <cassert>
+#include <vector>
 #include <arch/malloc.h>
 
 #include "array2d.h"
@@ -46,43 +47,11 @@ Array2D::Array2D(int cols, int rows)
     , m_rows(rows)
     // aligned memory allocation allows faster vectorized access
     , m_data( static_cast<float*>(_mm_malloc(cols*rows*sizeof(float), 32)) )
-    , m_isOwned( true )
 {}
-
-Array2D::Array2D(int cols, int rows, float* data)
-    : m_cols(cols)
-    , m_rows(rows)
-    , m_data(data)
-    , m_isOwned( false )
-{}
-
-// copy constructor?
-//Array2D::Array2D(const Array2D& other)
-//{
-//    this->m_cols = other.m_cols;
-//    this->m_rows = other.m_rows;
-//    this->m_data = other.m_data;
-//    this->m_isOwned = false;
-//}
-//
-//// Assignment operator
-//Array2D& Array2D::operator=(const Array2D& other)
-//{
-//    if (m_isOwned) _mm_free(m_data);
-//
-//    this->m_cols = other.m_cols;
-//    this->m_rows = other.m_rows;
-//    this->m_data = other.m_data;
-//    this->m_isOwned = false;
-//    return *this;
-//}
 
 Array2D::~Array2D()
 {
-    if (m_isOwned)
-    {
-        _mm_free(m_data);
-    }
+    _mm_free(m_data);
 }
 
 void Array2D::resize(int width, int height)

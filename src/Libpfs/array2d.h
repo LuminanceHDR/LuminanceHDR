@@ -28,7 +28,6 @@
 //! \file array2d.h
 //! \brief general 2d array interface
 //! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
-//! $Id: array2d.h,v 1.1 2005/06/15 13:36:55 rafm Exp $
 //!
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \note This version is different then the one in the PFSTOOLS
@@ -53,17 +52,12 @@ private:
     int     m_cols;
     int     m_rows;
     float*  m_data;
-    bool    m_isOwned;
 
-    Array2D& operator = (const Array2D& other);
+    Array2D& operator=(const Array2D& other);
     Array2D(const Array2D& other);
 
 public:
-    Array2D(int cols, int rows, float* data);
-
-public:
     Array2D(int cols, int rows);
-
 
     //! Each implementing class should provide its own destructor.
     //! It must be virtual to allow derived class to call their destructor
@@ -137,6 +131,10 @@ public:
 
     //! \brief Get number of rows or, in case of an image, height.
     int getRows() const;
+
+    inline
+    int size() const
+    { return m_rows*m_cols; }
 
     void resize(int width, int height);
 
