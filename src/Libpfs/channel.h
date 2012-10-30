@@ -41,13 +41,10 @@ namespace pfs
 //! associated tags.
 class Channel
 {
-private:
-    Array2D* channel_impl;
-    std::string name;
-    TagContainer tags;
-
 public:
-    Channel(int width, int height, const std::string& channel_name);
+    typedef Array2D<float> ChannelData;
+
+    Channel(size_t width, size_t height, const std::string& channel_name);
 
     virtual ~Channel();
 
@@ -84,10 +81,23 @@ public:
     //!
     const std::string& getName() const;
 
-    Array2D* getChannelData();
-    const Array2D* getChannelData() const;
+    inline
+    ChannelData* getChannelData()
+    {
+        return channel_impl;
+    }
+    inline
+    const ChannelData* getChannelData() const
+    {
+        return channel_impl;
+    }
 
-    void setChannelData(Array2D *);
+    void setChannelData(ChannelData *);
+
+private:
+    ChannelData* channel_impl;
+    std::string name;
+    TagContainer tags;
 };
 
 } // namespace pfs

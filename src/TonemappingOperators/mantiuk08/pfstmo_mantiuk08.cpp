@@ -86,10 +86,10 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   int cols = frame.getWidth();
   int rows = frame.getHeight();
   
-  pfs::Array2D R( cols, rows );
-  pfs::Array2D* Xr = inX->getChannelData();
-  pfs::Array2D* Yr = inY->getChannelData();
-  pfs::Array2D* Zr = inZ->getChannelData();
+  pfs::Array2Df R( cols, rows );
+  pfs::Array2Df* Xr = inX->getChannelData();
+  pfs::Array2Df* Yr = inY->getChannelData();
+  pfs::Array2Df* Zr = inZ->getChannelData();
   
   pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, &R, Zr);
   

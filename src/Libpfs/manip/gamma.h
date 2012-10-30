@@ -23,21 +23,21 @@
 #ifndef PFS_GAMMA_H
 #define PFS_GAMMA_H
 
+#include "Libpfs/array2d.h"
+
 //! \brief Apply gamma correction the the pfs stream
 //! \author Rafal Mantiuk <mantiuk@mpi-sb.mpg.de>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 namespace pfs
 {
-class Array2D;
 class Frame;
 
 //! \brief Apply \c gamma on the input \c frame
 void applyGamma(pfs::Frame* frame, float gamma);
 
 //! \brief Apply gamma on the input \c array
-void applyGamma(pfs::Array2D *array, float exponent, float multiplier = 1.0f);
-
+void applyGamma(pfs::Array2Df *array, float exponent, float multiplier = 1.0f);
 
 }
 

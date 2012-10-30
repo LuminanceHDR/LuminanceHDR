@@ -30,7 +30,10 @@
 
 namespace pfs
 {
+template <typename Type>
 class Array2D;
+typedef Array2D<float> Array2Df;
+
 class Progress;
 }
 
@@ -47,7 +50,7 @@ class Progress;
 //! \param avLum logarithmic average of luminance in the image
 //! \param bias bias parameter of tone mapping algorithm (eg 0.85)
 //!
-void tmo_drago03(const pfs::Array2D& Y, pfs::Array2D& L,
+void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
                  float maxLum, float avLum, float bias, pfs::Progress &ph);
 
 //! \brief Find average and maximum luminance in an image

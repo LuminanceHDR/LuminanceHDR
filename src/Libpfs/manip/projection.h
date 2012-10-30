@@ -32,10 +32,7 @@
 #include <map>
 #include <string>
 
-namespace pfs
-{
-class Array2D;
-}
+#include "Libpfs/array2d.h"
 
 class Vector3D;
 class Point2D;
@@ -161,6 +158,6 @@ class TransformInfo
   }
 };
 
-void transformArray( const pfs::Array2D *in, pfs::Array2D *out, TransformInfo *transformInfo);
+void transformArray( const pfs::Array2Df *in, pfs::Array2Df *out, TransformInfo *transformInfo);
 
 #endif // PFS_PROJECTION_H

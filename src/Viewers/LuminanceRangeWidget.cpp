@@ -265,7 +265,7 @@ void LuminanceRangeWidget::shrinkRange()
   emit updateRangeWindow();
 }
 
-void LuminanceRangeWidget::setHistogramImage( const pfs::Array2D *image )
+void LuminanceRangeWidget::setHistogramImage( const pfs::Array2Df *image )
 {
   histogramImage = image;
   delete histogram;

@@ -69,7 +69,7 @@ void calculateLuminance(unsigned int width, unsigned int height,
 }
 
 
-void tmo_drago03(const pfs::Array2D& Y, pfs::Array2D& L,
+void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
                  float maxLum, float avLum, float bias, 
                  pfs::Progress &ph)
 {

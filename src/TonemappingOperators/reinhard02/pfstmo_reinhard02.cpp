@@ -69,14 +69,14 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
   if ( Y==NULL || X==NULL || Z==NULL)
      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   
-  pfs::Array2D* Xr = X->getChannelData();
-  pfs::Array2D* Yr = Y->getChannelData();
-  pfs::Array2D* Zr = Z->getChannelData();
+  pfs::Array2Df* Xr = X->getChannelData();
+  pfs::Array2Df* Yr = Y->getChannelData();
+  pfs::Array2Df* Zr = Z->getChannelData();
   
   // tone mapping
   int w = Y->getWidth();
   int h = Y->getHeight();
-  pfs::Array2D* L = new pfs::Array2D(w,h);
+  pfs::Array2Df* L = new pfs::Array2Df(w,h);
 
   Reinhard02 tmoperator( Y->getChannelData(), L, use_scales, key, phi, num, low, high, temporal_coherent, ph );
   

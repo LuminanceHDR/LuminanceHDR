@@ -30,19 +30,18 @@
 
 #include "Histogram.h"
 
-Histogram::Histogram( int bins, int accuracy ):
-  bins( bins ), accuracy( accuracy )
-{
-  P = new float[bins];
-}
+Histogram::Histogram( int bins, int accuracy )
+    : bins( bins )
+    , accuracy( accuracy )
+    , P( new float[bins] )
+{}
 
 Histogram::~Histogram()
 {
-  delete[] P;
+    delete[] P;
 }
 
-
-void Histogram::computeLog( const pfs::Array2D *image )
+void Histogram::computeLog( const pfs::Array2Df *image )
 {
   const int size = image->getRows()*image->getCols();
 
@@ -61,7 +60,7 @@ void Histogram::computeLog( const pfs::Array2D *image )
 }
 
 
-void Histogram::computeLog( const pfs::Array2D *image, float min, float max )
+void Histogram::computeLog( const pfs::Array2Df *image, float min, float max )
 {
   const int size = image->getRows()*image->getCols();
   

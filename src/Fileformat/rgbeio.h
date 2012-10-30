@@ -33,8 +33,10 @@
 #include "Libpfs/array2d.h"
 
 void readRadianceHeader( FILE *file, int &width, int &height, float &exposure );
-void readRadiance( FILE *file, int width, int height, float exposure, pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
-void writeRadiance( FILE *file, pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
+void readRadiance( FILE *file, int width, int height, float exposure,
+                   pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z );
+void writeRadiance( FILE *file,
+                    pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z );
 
 class RGBEReader 
 {
@@ -56,7 +58,7 @@ public:
       return height;
     }
 
-  void readImage( pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
+  void readImage( pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z );
     
 };
 
@@ -69,7 +71,7 @@ public:
     {
     }
     
-  void writeImage( pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
+  void writeImage( pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z );
 };
 
 #endif

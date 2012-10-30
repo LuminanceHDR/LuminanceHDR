@@ -32,14 +32,6 @@
 namespace pfs
 {
 
-void copy(const Array2D *from, Array2D *to)
-{
-    assert( from->getRows() == to->getRows() );
-    assert( from->getCols() == to->getCols() );
-
-    std::copy(from->begin(), from->end(), to->begin());
-}
-
 pfs::Frame *copy(const pfs::Frame *inFrame)
 {
 #ifdef TIMER_PROFILING
@@ -62,8 +54,8 @@ pfs::Frame *copy(const pfs::Frame *inFrame)
 
         pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
 
-        const pfs::Array2D* inArray2D   = inCh->getChannelData();
-        pfs::Array2D* outArray2D  = outCh->getChannelData();
+        const pfs::Array2Df* inArray2D   = inCh->getChannelData();
+        pfs::Array2Df* outArray2D  = outCh->getChannelData();
 
         copy(inArray2D, outArray2D);
     }

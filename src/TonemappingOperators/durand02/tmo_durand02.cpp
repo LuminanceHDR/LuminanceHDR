@@ -56,7 +56,7 @@ namespace
  *
  */
 inline
-void findMaxMinPercentile(pfs::Array2D* I,
+void findMaxMinPercentile(pfs::Array2Df* I,
                           float minPrct, float maxPrct,
                           float& minLum, float& maxLum)
 {
@@ -104,7 +104,7 @@ R output = r*exp(log(output intensity)), etc.
 
 */
 
-void tmo_durand02(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
+void tmo_durand02(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
                   float sigma_s, float sigma_r, float baseContrast, int downsample,
                   bool color_correction,
                   pfs::Progress &ph)
@@ -113,9 +113,9 @@ void tmo_durand02(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
     int h = R.getRows();
     int size = w*h;
 
-    pfs::Array2D I(w,h); // intensities
-    pfs::Array2D BASE(w,h); // base layer
-    pfs::Array2D DETAIL(w,h); // detail layer
+    pfs::Array2Df I(w,h); // intensities
+    pfs::Array2Df BASE(w,h); // base layer
+    pfs::Array2Df DETAIL(w,h); // detail layer
 
     float min_pos = 1e10f; // minimum positive value (to avoid log(0))
     for (int i = 0 ; i < size ; i++)

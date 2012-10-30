@@ -1,7 +1,6 @@
 /*
- * This file is a part of Luminance HDR package.
+ * This file is a part of Luminance HDR package
  * ----------------------------------------------------------------------
- * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2011-2012 Davide Anastasia
  *
  *  This library is free software; you can redistribute it and/or
@@ -20,214 +19,146 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef ARRAY2D_H
-#define ARRAY2D_H
+#ifndef PFS_ARRAY2D_H
+#define PFS_ARRAY2D_H
 
 #include <cstddef>
+#include <cassert>
+#include <vector>
+#include <algorithm>
+#include <Libpfs/vex/vex.h>
 
 //! \file array2d.h
 //! \brief general 2d array interface
-//! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
-//!
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//! \note This version is different then the one in the PFSTOOLS
-//! Classes Array2D and Array2DImpl are joined to create a clean class,
-//! which allows faster access to vector data, in order to create high
-//! performance routines. Old access functions are still available.
-//!
+//! \note This version is different then the one in the PFSTOOLS. This version
+//! is inspired by the one in PFSTOOLS, but they are now quite different and
+//! most likely, not compatible
 
 namespace pfs
 { 
 //!
-//! \brief Two dimensional array of floats
+//! \brief Two dimensional array of data
 //!
-//! This class holds 2 dimensional arrays of floats in column-major order.
-//! Allows easy indexing and retrieving array dimensions. It offers an undirect
-//! access to the data (using (x)(y) or (elem) ) or a direct access to the data
-//! (using getRawData()).
+//! This class holds 2 dimensional arrays of an unspecified type in row-major
+//! order. Allows easy indexing and retrieving array dimensions.
+//! It offers an undirect access to the data (using (x)(y) or (elem) ) or a
+//! direct access to the data (using getRawData() or data()).
 //!
+template <typename Type>
 class Array2D
 {
-private:
-    int     m_cols;
-    int     m_rows;
-    float*  m_data;
-
-    Array2D& operator=(const Array2D& other);
-    Array2D(const Array2D& other);
-
 public:
-    Array2D(int cols, int rows);
+    typedef std::vector<Type>                   DataBuffer;
+    typedef typename DataBuffer::value_type     value_type;
+    typedef Array2D<Type>                       self;
 
-    //! Each implementing class should provide its own destructor.
-    //! It must be virtual to allow derived class to call their destructor
-    //! as well.
-    virtual ~Array2D();
+    //! \brief default constructor - empty \c Array2D
+    Array2D();
 
-    //! Access an element of the array for reading and
-    //! writing. Whether the given row and column are checked against
+    //! \brief init \c Array2D with a matrix of \a cols times \a rows
+    Array2D(size_t cols, size_t rows);
+
+    //! \brief copy ctor
+    Array2D(const self& rhs);
+
+    //! \brief virtual destructor
+    virtual ~Array2D() {}
+
+    //! Access an element of the array.
+    //! Whether the given row and column are checked against
     //! array bounds depends on an implementing class.
     //!
-    //! Note, that if an Array2D object is passed as a pointer (what
-    //! is usually the case), to access its elements, you have to use
-    //! somewhat strange syntax: (*array)(row, column).
+    //! \param col number of a column (x) within the range [0, getCols()-1)
+    //! \param row number of a row (y) within the range [0,getRows()-1)
     //!
-    //! \param col number of a column (x) within the range 0..(getCols()-1)
-    //! \param row number of a row (y) within the range 0..(getRows()-1)
-    //!
-    float& operator()( int cols, int rows );
+    Type& operator()( size_t cols, size_t rows );
+    const Type& operator()( size_t cols, size_t rows ) const;
 
-    //! Access an element of the array for reading. Whether the given
-    //! row and column are checked against array bounds depends on an
-    //! implementing class.
+    //! Access an element of the array. This method mocks the subscript operator
+    //! in a vector class
+    //!    //!
+    //! \param index index of an element within the range
+    //! [0, etCols()*getRows()-1)
     //!
-    //! Note, that if an Array2D object is passed as a pointer (what
-    //! is usually the case), to access its elements, you have to use
-    //! somewhat strange syntax: (*array)(row, column).
-    //!
-    //! \param col number of a column (x) within the range 0..(getCols()-1)
-    //! \param row number of a row (y) within the range 0..(getRows()-1)
-    //!
-    const float& operator()( int cols, int rows ) const;
-
-    //! Access an element of the array for reading and writing. This
-    //! is probably faster way of accessing elements than
-    //! operator(col, row). However there is no guarantee on the
-    //! order of elements as it usually depends on an implementing
-    //! class. The only assumption that can be make is that there are
-    //! exactly columns*rows elements and they are all unique.
-    //!
-    //! Whether the given index is checked against array bounds
-    //! depends on an implementing class.
-    //!
-    //! Note, that if an Array2D object is passed as a pointer (what
-    //! is usually the case), to access its elements, you have to use
-    //! somewhat strange syntax: (*array)(index).
-    //!
-    //! \param index index of an element within the range 0..(getCols()*getRows()-1)
-    //!
-    float& operator()( int index );
-
-    //! Access an element of the array for reading. This
-    //! is probably faster way of accessing elements than
-    //! operator(col, row). However there is no guarantee on the
-    //! order of elements as it usually depends on an implementing
-    //! class. The only assumption that can be make is that there are
-    //! exactly columns*rows elements and they are all unique.
-    //!
-    //! Whether the given index is checked against array bounds
-    //! depends on an implementing class.
-    //!
-    //! Note, that if an Array2D object is passed as a pointer (what
-    //! is usually the case), to access its elements, you have to use
-    //! somewhat strange syntax: (*array)(index).
-    //!
-    //! \param index index of an element within the range 0..(getCols()*getRows()-1)
-    //!
-    const float& operator()( int index ) const;
+    Type& operator()( size_t index );
+    const Type& operator()( size_t index ) const;
 
     //! \brief Get number of columns or, in case of an image, width.
-    int getCols() const;
+    size_t getCols() const
+    { return m_cols; }
 
     //! \brief Get number of rows or, in case of an image, height.
-    int getRows() const;
+    size_t getRows() const
+    { return m_rows; }
 
-    inline
-    int size() const
+    size_t size() const
     { return m_rows*m_cols; }
 
-    void resize(int width, int height);
+    void resize(size_t width, size_t height);
 
     //! \brief Direct access to the raw data
-    float*       getRawData();
+    Type*       getRawData()
+    { return m_data.data(); }
 
     //! \brief Direct access to the raw data
-    const float* getRawData() const;
+    const Type* getRawData() const
+    { return m_data.data(); }
+
+    //! \brief Direct access to the raw data
+    Type*       data()
+    { return m_data.data(); }
+
+    //! \brief Direct access to the raw data
+    const Type* data() const
+    { return m_data.data(); }
 
     //! \brief Reset the entire vector data to the value "value"
-    void reset(float value = 0.0f);
+    void reset(const Type& value = Type());
 
-    //! \brief Scale entire 2D array by "value"
-    void scale(float value);
+    //! \brief Swap the content of the current instance with \a other
+    void swap(self& other);
 
 public:
-    typedef float*          Iterator;
-    typedef const float*    ConstIterator;
+    typedef typename DataBuffer::iterator       iterator;
+    typedef typename DataBuffer::const_iterator const_iterator;
 
-    inline
-    Iterator begin()
-    { return m_data; }
-    inline
-    Iterator end()
-    { return m_data + m_cols*m_rows; }
+    iterator begin()
+    { return m_data.begin(); }
+    iterator end()
+    { return m_data.begin() + size(); }
 
-    inline
-    ConstIterator begin() const
-    { return m_data; }
-    inline
-    ConstIterator end() const
-    { return m_data + m_cols*m_rows; }
+    const_iterator begin() const
+    { return m_data.begin(); }
+    const_iterator end() const
+    { return m_data.begin() + size(); }
 
-    inline
-    Iterator beginRow(size_t r)
-    { return m_data + r*m_cols; }
-    inline
-    Iterator endRow(size_t r)
-    { return m_data + (r+1)*m_cols; }
+    iterator beginRow(size_t r)
+    { return m_data.begin() + r*m_cols; }
+    iterator endRow(size_t r)
+    { return m_data.begin() + (r+1)*m_cols; }
 
-    inline
-    ConstIterator beginRow(size_t r) const
-    { return m_data + r*m_cols; }
-    inline
-    ConstIterator endRow(size_t r) const
-    { return m_data + (r+1)*m_cols; }
+    const_iterator beginRow(size_t r) const
+    { return m_data.begin() + r*m_cols; }
+    const_iterator endRow(size_t r) const
+    { return m_data.begin() + (r+1)*m_cols; }
+
+private:
+    size_t     m_cols;
+    size_t     m_rows;
+
+    DataBuffer m_data;
 };
 
-inline int Array2D::getCols() const { return m_cols; }
-inline int Array2D::getRows() const { return m_rows; }
-inline float* Array2D::getRawData() { return m_data; }
-inline const float* Array2D::getRawData() const { return m_data; }
-
-inline
-float& Array2D::operator()( int cols, int rows )
-{
-    //assert( cols >= 0 && cols < m_cols );
-    //assert( rows >= 0 && rows < m_rows );
-    return m_data[ rows*m_cols + cols ];
-}
-
-inline
-const float& Array2D::operator()( int cols, int rows ) const
-{
-    //assert( cols >= 0 && cols < m_cols );
-    //assert( rows >= 0 && rows < m_rows );
-    return m_data[ rows*m_cols + cols ];
-}
-
-inline
-float& Array2D::operator()( int index )
-{
-    //assert( index >= 0 && index < m_rows*m_cols );
-    return m_data[index];
-}
-
-inline
-const float& Array2D::operator()( int index ) const
-{
-    //assert( index >= 0 && index <= m_rows*m_cols );
-    return m_data[index];
-}
-
+//! \brief typedef provided for backward compatibility with the old API
+typedef ::pfs::Array2D<float> Array2Df;
 
 //! \brief Set all elements of the array to a give value.
 //!
 //! \param array array to modify
 //! \param value all elements of the array will be set to this value
-inline
-void setArray(Array2D& array, float value)
-{
-    array.reset(value);
-}
+template <typename Type>
+void setArray(Array2D<Type>& array, const Type& value);
 
 //! \brief Perform element-by-element multiplication: z = x * y.
 //! z must be the same as x or y.
@@ -235,7 +166,8 @@ void setArray(Array2D& array, float value)
 //! \param z array where the result is stored
 //! \param x first element of the multiplication
 //! \param y second element of the multiplication
-void multiplyArray(Array2D& z, const Array2D& x, const Array2D& y);
+template <typename Type>
+void multiplyArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& y);
 
 //! \brief Perform element-by-element division: z = x / y.
 //! z must be the same as x or y.
@@ -243,7 +175,11 @@ void multiplyArray(Array2D& z, const Array2D& x, const Array2D& y);
 //! \param z array where the result is stored
 //! \param x first element of the division
 //! \param y second element of the division
-void divideArray(Array2D& z, const Array2D& x, const Array2D& y);
-}
+template <typename Type>
+void divideArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& y);
 
-#endif // ARRAY2D_H
+} // namespace pfs
+
+#include "array2d.hxx"
+
+#endif // PFS_ARRAY2D_H

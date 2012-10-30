@@ -63,7 +63,7 @@ const float LOG5 = std::log(5.f);
  * @param Acone [out] calculated adaptation for cones
  * @param Arod [out] calculated adaptation for rods
  */
-void calculateLocalAdaptation(const pfs::Array2D& Y, int x, int y, float& Acone, float& Arod)
+void calculateLocalAdaptation(const pfs::Array2Df& Y, int x, int y, float& Acone, float& Arod)
 {
     int width = Y.getCols();
     int height = Y.getRows();
@@ -103,8 +103,8 @@ void calculateLocalAdaptation(const pfs::Array2D& Y, int x, int y, float& Acone,
 }
 
 // tone mapping operator code
-void tmo_pattanaik00(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
-                     const pfs::Array2D& Y,
+void tmo_pattanaik00(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
+                     const pfs::Array2Df& Y,
                      VisualAdaptationModel* am, bool local, pfs::Progress &ph)
 {  
     ///--- initialization of parameters
@@ -345,7 +345,7 @@ void VisualAdaptationModel::calculateAdaptation(float Gcone, float Grod, float d
   Brod += f;
 }
 
-void VisualAdaptationModel::calculateAdaptation(const pfs::Array2D& Y, float dt)
+void VisualAdaptationModel::calculateAdaptation(const pfs::Array2Df& Y, float dt)
 {
   float Acone = calculateLogAvgLuminance(Y);
   calculateAdaptation(Acone, Acone, dt);
@@ -359,13 +359,13 @@ void VisualAdaptationModel::setAdaptation(float Gcone, float Grod)
   Brod = 0.04f/(0.04f+Arod);
 }
 
-void VisualAdaptationModel::setAdaptation(const pfs::Array2D& Y)
+void VisualAdaptationModel::setAdaptation(const pfs::Array2Df& Y)
 {
   float Acone = calculateLogAvgLuminance(Y) * 5.0f;
   setAdaptation(Acone, Acone);
 }
 
-float VisualAdaptationModel::calculateLogAvgLuminance(const pfs::Array2D& Y)
+float VisualAdaptationModel::calculateLogAvgLuminance(const pfs::Array2Df& Y)
 {
   double avLum = 0.0f;
 

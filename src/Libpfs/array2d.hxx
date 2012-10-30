@@ -20,67 +20,128 @@
  * ----------------------------------------------------------------------
  */
 
+#ifndef PFS_ARRAY2D_HXX
+#define PFS_ARRAY2D_HXX
+
 //! \file array2d.cpp
 //! \brief PFS library - general 2d array interface
 //! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
-//! $Id: array2d.h,v 1.1 2005/06/15 13:36:55 rafm Exp $
 //!
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \note This version is different then the one in the PFSTOOLS
 
 #include <iostream>
 #include <cassert>
-#include <vector>
-#include <arch/malloc.h>
 
 #include "array2d.h"
 
 #include "Libpfs/vex/vex.h"
-#include "Libpfs/vex/sse.h"
 
 using namespace std;
 
 namespace pfs
-{  
-Array2D::Array2D(int cols, int rows)
-    : m_cols(cols)
-    , m_rows(rows)
-    // aligned memory allocation allows faster vectorized access
-    , m_data( static_cast<float*>(_mm_malloc(cols*rows*sizeof(float), 32)) )
+{
+template <typename Type>
+Array2D<Type>::Array2D()
+    : m_cols(0)
+    , m_rows(0)
+    , m_data()
 {}
 
-Array2D::~Array2D()
+template <typename Type>
+Array2D<Type>::Array2D(size_t cols, size_t rows)
+    : m_cols(cols)
+    , m_rows(rows)
+    , m_data(cols*rows)
 {
-    _mm_free(m_data);
+    assert( m_data.size() >= m_cols*m_rows);
 }
 
-void Array2D::resize(int width, int height)
+template <typename Type>
+Array2D<Type>::Array2D(const self& rhs)
+    : m_cols(rhs.m_cols)
+    , m_rows(rhs.m_rows)
+    , m_data(rhs.size())
 {
-    if (width*height > m_cols*m_rows)
-    {
-        float* tmp = static_cast<float*>(_mm_malloc(width*height*sizeof(float), 32));
+    assert( m_data.size() >= m_cols*m_rows);
+}
 
-        std::swap(tmp, m_data);
-
-        _mm_free(tmp);
-    }
+template <typename Type>
+void Array2D<Type>::resize(size_t width, size_t height)
+{
+    m_data.resize( width*height );
     m_cols = width;
     m_rows = height;
+
+    assert( m_data.size() >= m_cols*m_rows);
 }
 
-
-void Array2D::reset(float value)
+template <typename Type>
+void Array2D<Type>::swap(self& other)
 {
-    std::fill(begin(), end(), value);
+    std::swap(m_rows, other.m_rows);
+    std::swap(m_cols, other.m_cols);
+    std::swap(m_data, other.m_data);
 }
 
-void Array2D::scale(const float value)
+template <typename Type>
+inline
+Type& Array2D<Type>::operator()( size_t cols, size_t rows )
 {
-    // O[i] = c * I[i]
-    vex::vsmul(this->m_data, value, this->m_data, this->m_rows*this->m_cols);
+#ifndef NDEBUG
+    return m_data.at( rows*m_cols + cols );
+#else
+    return m_data[ rows*m_cols + cols ];
+#endif
 }
 
-void multiplyArray(Array2D& z, const Array2D& x, const Array2D& y)
+template <typename Type>
+inline
+const Type& Array2D<Type>::operator()( size_t cols, size_t rows ) const
+{
+#ifndef NDEBUG
+    return m_data.at( rows*m_cols + cols );
+#else
+    return m_data[ rows*m_cols + cols ];
+#endif
+}
+
+template <typename Type>
+inline
+Type& Array2D<Type>::operator()( size_t index )
+{
+#ifndef NDEBUG
+    return m_data.at( index );
+#else
+    return m_data[index];
+#endif
+}
+
+template <typename Type>
+inline
+const Type& Array2D<Type>::operator()( size_t index ) const
+{
+#ifndef NDEBUG
+    return m_data.at( index );
+#else
+    return m_data[index];
+#endif
+}
+
+template <typename Type>
+void Array2D<Type>::reset(const Type& value)
+{
+    std::fill(m_data.begin(), m_data.end(), value);
+}
+
+template <typename Type>
+void setArray(Array2D<Type>& array, const Type& value)
+{
+    array.reset(value);
+}
+
+template <typename Type>
+void multiplyArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& y)
 {
     assert( x.getRows() == y.getRows() );
     assert( x.getCols() == y.getCols() );
@@ -92,7 +153,8 @@ void multiplyArray(Array2D& z, const Array2D& x, const Array2D& y)
               x.getRows()*x.getCols());
 }
 
-void divideArray(Array2D& z, const Array2D& x, const Array2D& y)
+template <typename Type>
+void divideArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& y)
 {
     assert( x.getRows() == y.getRows() );
     assert( x.getCols() == y.getCols() );
@@ -105,3 +167,5 @@ void divideArray(Array2D& z, const Array2D& x, const Array2D& y)
 }
 
 } // Libpfs
+
+#endif // PFS_ARRAY2D_HXX

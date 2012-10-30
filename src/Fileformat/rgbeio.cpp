@@ -47,7 +47,7 @@ RGBEReader::RGBEReader( FILE *fh ) : fh(fh)
   readRadianceHeader( fh, width, height, exposure );
 }
 
-void RGBEReader::readImage( pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z )
+void RGBEReader::readImage( pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z )
 {
   readRadiance( fh, width, height, exposure, X, Y, Z );
 }
@@ -55,7 +55,7 @@ void RGBEReader::readImage( pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z )
 RGBEReader::~RGBEReader()
 {}
 
-void RGBEWriter::writeImage( pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z )
+void RGBEWriter::writeImage( pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z )
 {
   writeRadiance( fh, X, Y, Z );
 }
@@ -243,7 +243,7 @@ void RLERead( FILE* file, Trgbe* scanline, int size )
 
 
 void readRadiance( FILE *file, int width, int height, float exposure,
-		   pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z )
+           pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z )
 {
   // read image
   // depending on format read either rle or normal (note: only rle supported)
@@ -376,7 +376,7 @@ int RLEWrite( FILE* file, Trgbe* scanline, int size )
 
 
 
-void writeRadiance( FILE *file, pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z )
+void writeRadiance( FILE *file, pfs::Array2Df *X, pfs::Array2Df *Y, pfs::Array2Df *Z )
 {
   int width = X->getCols();
   int height = X->getRows();

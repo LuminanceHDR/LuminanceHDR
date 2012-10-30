@@ -50,10 +50,12 @@ TEST(TestSRGB2Y, TestSRGB2Y)
     ASSERT_EQ( redInput.size(), blueInput.size() );
     ASSERT_EQ( greenInput.size(), blueInput.size() );
 
-    pfs::Array2D A2DRed(redInput.size(), 1);
-    pfs::Array2D A2DGreen(greenInput.size(), 1);
-    pfs::Array2D A2DBlue(blueInput.size(), 1);
-    pfs::Array2D A2DY(redInput.size(), 1);
+    std::cout << redInput.size() << std::endl;
+
+    pfs::Array2Df A2DRed(redInput.size(), 1);
+    pfs::Array2Df A2DGreen(greenInput.size(), 1);
+    pfs::Array2Df A2DBlue(blueInput.size(), 1);
+    pfs::Array2Df A2DY(redInput.size(), 1);
 
     std::copy(redInput.begin(), redInput.end(), A2DRed.begin());
     std::copy(greenInput.begin(), greenInput.end(), A2DGreen.begin());

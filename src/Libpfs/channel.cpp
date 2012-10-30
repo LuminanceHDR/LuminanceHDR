@@ -32,8 +32,8 @@ using namespace std;
 
 namespace pfs
 {
-Channel::Channel( int width, int height, const std::string& channel_name)
-    : channel_impl( new Array2D( width, height ) )
+Channel::Channel( size_t width, size_t height, const std::string& channel_name)
+    : channel_impl( new ChannelData( width, height ) )
     , name( channel_name )
 {
     //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
@@ -87,17 +87,7 @@ const std::string& Channel::getName() const
     return name;
 }
 
-Array2D* Channel::getChannelData()
-{
-    return channel_impl;
-}
-
-const Array2D* Channel::getChannelData() const
-{
-    return channel_impl;
-}
-
-void Channel::setChannelData(Array2D *array)
+void Channel::setChannelData(ChannelData *array)
 {
     if (channel_impl)
         delete channel_impl;

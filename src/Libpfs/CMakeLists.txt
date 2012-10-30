@@ -1,5 +1,6 @@
-# List all .h files in this directory
+# List all .h/.hxx files in this directory
 FILE(GLOB LIBPFS_H *.h)
+FILE(GLOB LIBPFS_HXX *.hxx)
 # List all .cpp files in this directory
 FILE(GLOB LIBPFS_CPP *.cpp)
 
@@ -8,6 +9,6 @@ ADD_SUBDIRECTORY(manip)
 ADD_SUBDIRECTORY(utils)
 ADD_SUBDIRECTORY(tm)
 
-ADD_LIBRARY(pfs ${LIBPFS_H} ${LIBPFS_CPP})
+ADD_LIBRARY(pfs ${LIBPFS_H} ${LIBPFS_HXX} ${LIBPFS_CPP})
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} pfs PARENT_SCOPE)
 SET(LUMINANCE_MODULES_CLI ${LUMINANCE_MODULES_CLI} pfs PARENT_SCOPE)

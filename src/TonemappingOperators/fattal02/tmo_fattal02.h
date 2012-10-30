@@ -37,10 +37,12 @@
 
 namespace pfs
 {
+template <typename Type>
 class Array2D;
+typedef Array2D<float> Array2Df;
+
 class Progress;
 }
-
 
 //! \brief Gradient Domain High Dynamic Range Compression
 //!
@@ -57,8 +59,8 @@ class Progress;
 //!
 void tmo_fattal02(size_t width, size_t height,
                   //const float* Y, float* L,
-                  const pfs::Array2D& Y,
-                  pfs::Array2D& L,
+                  const pfs::Array2Df& Y,
+                  pfs::Array2Df& L,
                   float alfa, float beta,
                   float noise, bool newfattal,
                   bool fftsolver, int detail_level,

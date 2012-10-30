@@ -18,26 +18,30 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
  */
 
 //! \brief Resize images in PFS stream
 //! \author Alexander Efremov, <aefremov@mpi-sb.mpg.de>
 
-#ifndef PFSROTATE_H
-#define PFSROTATE_H
+#ifndef PFS_ROTATE_H
+#define PFS_ROTATE_H
+
+#include "Libpfs/array2d.h"
 
 namespace pfs
 {
 class Frame;
-class Array2D;
-
-//! \brief rotate \c in inside \c out
-//! \param[in] clockwise true if clockwise rotation, false if counter clockwise
-void rotate(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise);
 
 //! \brief rotate frame into a newly created one
 pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise);
+
+//! \brief rotate \c in inside \c out
+//! \param[in] clockwise true if clockwise rotation, false if counter clockwise
+template <typename Type>
+void rotate(const Array2D<Type> *in, Array2D<Type> *out, bool clockwise);
+
 }
+
+#include "rotate.hxx"
 
 #endif // PFSROTATE_H

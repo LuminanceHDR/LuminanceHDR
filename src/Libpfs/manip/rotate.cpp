@@ -73,40 +73,5 @@ pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
     
     return resizedFrame;
 }
-  
-void rotate(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
-{
-    const float* Vin  = in->getRawData();
-    float* Vout       = out->getRawData();
 
-    const int I_ROWS  = in->getRows();
-    const int I_COLS  = in->getCols();
-
-    //const int O_ROWS = out->getRows();
-    const int O_COLS = out->getCols();
-
-    if (clockwise)
-    {
-#pragma omp parallel for
-        for (int j = 0; j < I_ROWS; j++)
-        {
-            for (int i = 0; i < I_COLS; i++)
-            {
-                Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS + i];
-            }
-        }
-    }
-    else
-    {
-#pragma omp parallel for
-        for (int j = 0; j < I_ROWS; j++)
-        {
-            for (int i = 0; i < I_COLS; i++)
-            {
-                Vout[(I_COLS - i - 1)*O_COLS + j] = Vin[j*I_COLS + i];
-            }
-        }
-    }
-}
-  
 } // pfs

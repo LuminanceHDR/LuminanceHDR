@@ -31,7 +31,10 @@
 
 namespace pfs
 {
+template <typename Type>
 class Array2D;
+typedef Array2D<float> Array2Df;
+
 class Frame;
 class Progress;
 }
@@ -46,6 +49,6 @@ class Progress;
 //! \param lc_value local contrast threshold
 //! \param eq chose equation number from the paper (ie equation 2. or 4. )
 //!
-int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float avLum, bool simple_flag, float lc_value, int eq, pfs::Progress &ph);
+int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minLum, float avLum, bool simple_flag, float lc_value, int eq, pfs::Progress &ph);
 
 #endif // TMO_ASHIKHMIN02_H

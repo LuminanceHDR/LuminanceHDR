@@ -94,9 +94,9 @@ protected:
     size_t m_rows;
     size_t m_cols;
 
-    pfs::Array2D inputVector;
-    pfs::Array2D referenceOutput;
-    pfs::Array2D computedOutput;
+    pfs::Array2Df inputVector;
+    pfs::Array2Df referenceOutput;
+    pfs::Array2Df computedOutput;
     
 public:
     TestPfsRotate()

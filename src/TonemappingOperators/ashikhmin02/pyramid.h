@@ -50,7 +50,7 @@ class Pyramid { // each level of a Gaussian pyramid
 
   double lambda;
 
-  pfs::Array2D* GP;
+  pfs::Array2Df* GP;
   int flag;
 
   inline double getPixel(int x, int y) {
@@ -64,11 +64,13 @@ class Pyramid { // each level of a Gaussian pyramid
 
 ////////////////////////////////////////////////////////
 
-class GaussianPyramid {
+class GaussianPyramid
+{
  public:
-  GaussianPyramid() {};
+  GaussianPyramid()
+  {}
 
-  GaussianPyramid(pfs::Array2D* lum_map, int im_height, int im_width) {
+  GaussianPyramid(pfs::Array2Df* lum_map, int im_height, int im_width) {
     // set a=0.4 (considered by Burt and Adelson, 1983).
     // obtained by Outer((0.05, 0.25, 0.4, 0.25, 0.05),(0.05, 0.25, 0.4, 0.25, 0.05))
     g_weights[0][0] = g_weights[0][4] = 0.0025;
@@ -230,11 +232,11 @@ class GaussianPyramid {
     p[index].size = w * h;
     p[index].kernel_size = k_size;
     p[index].lambda = lambda;
-    p[index].GP = new pfs::Array2D(w, h);
+    p[index].GP = new pfs::Array2Df(w, h);
     p[index].flag = 1;
   }
 
-  void constructPyramid(pfs::Array2D* lum_map, int im_width, int im_height) {
+  void constructPyramid(pfs::Array2Df* lum_map, int im_width, int im_height) {
     initializeNewLevel(0, im_width, im_height, 1, 1.0);
     for(int y=0; y<im_height; y++) 
       for(int x=0; x<im_width; x++)

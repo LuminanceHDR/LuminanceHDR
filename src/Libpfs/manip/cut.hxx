@@ -20,29 +20,44 @@
  *
  */
 
+#ifndef PFS_CUT_HXX
+#define PFS_CUT_HXX
+
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#ifndef PFS_COPY_H
-#define PFS_COPY_H
-
-#include "Libpfs/array2d.h"
+#include "cut.h"
 
 namespace pfs
 {
-class Frame;
 
-pfs::Frame* copy(const pfs::Frame *inFrame);
+template <typename Type>
+void cut(const Array2D<Type> *from, Array2D<Type> *to,
+         int x_ul, int y_ul, int x_br, int y_br)
+{
+    using namespace std;
 
-//! \brief Copy data from one Array2D to another.
-//! Dimensions of the arrays must be the same.
-//!
-//! \param from array to copy from
-//! \param to array to copy to
-template<typename Type>
-void copy(const Array2D<Type> *from, Array2D<Type> *to);
+    assert( x_ul >= 0 );
+    assert( y_ul >= 0 );
+    assert( x_br <= from->getCols() );
+    assert( y_br <= from->getRows() );
+    assert( to->getRows() <= from->getRows() );
+    assert( to->getRows() <= from->getRows() );
 
-} // pfs
+    if ( x_ul < 0 ) x_ul = 0;
+    if ( y_ul < 0 ) y_ul = 0;
+    if ( x_br > from->getCols() ) x_br = from->getCols();
+    if ( y_br > from->getRows() ) y_br = from->getRows();
 
-#include "copy.hxx"
+    // update right border
+    x_br = from->getCols() - x_br;
+#pragma omp parallel for
+    for (int r = 0; r < to->getRows(); r++)
+    {
+        copy(from->beginRow(r + y_ul) + x_ul, from->endRow(r + y_ul) - x_br,
+             to->beginRow(r));
+    }
+}
 
-#endif // #ifndef PFS_COPY_H
+}
+
+#endif // PFS_CUT_HXX

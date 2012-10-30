@@ -70,9 +70,9 @@ void applyGamma(pfs::Frame* frame, const float gamma)
     // TODO: applyGamma can be improved in order to use SSE
     if ( X != NULL ) // Color, XYZ
     {
-        pfs::Array2D* Xr = X->getChannelData();
-        pfs::Array2D* Yr = Y->getChannelData();
-        pfs::Array2D* Zr = Z->getChannelData();
+        pfs::Array2Df* Xr = X->getChannelData();
+        pfs::Array2Df* Yr = Y->getChannelData();
+        pfs::Array2Df* Zr = Z->getChannelData();
 
         //pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr,
         //                         pfs::CS_RGB, Xr, Yr, Zr);
@@ -104,7 +104,7 @@ void applyGamma(pfs::Frame* frame, const float gamma)
 }
   
   
-void applyGamma(pfs::Array2D *array, const float exponent, const float multiplier)
+void applyGamma(pfs::Array2Df *array, const float exponent, const float multiplier)
 {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;

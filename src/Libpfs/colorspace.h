@@ -31,7 +31,7 @@
 #ifndef COLORSPACE_H
 #define COLORSPACE_H
 
-#include "array2d.h"
+#include "Libpfs/array2d.h"
 
 namespace pfs
 {
@@ -52,35 +52,34 @@ enum ColorSpace
 };
 
 // XYZ -> *
-void transformXYZ2SRGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                       Array2D *outC1, Array2D *outC2, Array2D *outC3);
-void transformXYZ2RGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
-void transformXYZ2Yxy(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
-void transformXYZ2Yuv(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
+void transformXYZ2SRGB(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                       Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
+void transformXYZ2RGB(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                      Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
+void transformXYZ2Yxy(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                      Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
+void transformXYZ2Yuv(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                      Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
 
 // SRGB -> *
-void transformSRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                       Array2D *outC1, Array2D *outC2, Array2D *outC3);
-void transformSRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                     Array2D *outY);
+void transformSRGB2XYZ(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                       Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
+void transformSRGB2Y(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                     Array2Df*outY);
 
 // RGB -> *
-void transformRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
-void transformRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                    Array2D *outC1);
+void transformRGB2XYZ(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                      Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
+void transformRGB2Y(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                    Array2Df*outC1);
 
 // Yuv -> *
-void transformYuv2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
+void transformYuv2XYZ(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                      Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
 
 // Yxy -> *
-void transformYxy2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
-
+void transformYxy2XYZ(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                      Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
 
 //! \brief Transform color channels from one color space into
 //! another. Input and output channels may point to the same data
@@ -95,10 +94,10 @@ void transformYxy2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *i
 //! \param outC2 second color channel of the output image
 //! \param outC3 third color channel of the output image
 //!
-void transformColorSpace( ColorSpace inCS,
-                          const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                          ColorSpace outCS,
-                          Array2D *outC1, Array2D *outC2, Array2D *outC3 );
+void transformColorSpace(ColorSpace inCS,
+                         const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                         ColorSpace outCS,
+                         Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 );
 
 }
 

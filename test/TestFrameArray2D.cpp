@@ -28,7 +28,7 @@ using namespace pfs;
 
 TEST(TestArray2D, Resize1)
 {
-    Array2D array(100, 200);
+    Array2Df array(100, 200);
 
     EXPECT_EQ(array.getCols(), 100);
     EXPECT_EQ(array.getRows(), 200);
@@ -47,7 +47,7 @@ TEST(TestArray2D, Resize1)
 
 TEST(TestArray2D, Resize2)
 {
-    Array2D array(100, 200);
+    Array2Df array(100, 200);
 
     EXPECT_EQ(array.getCols(), 100);
     EXPECT_EQ(array.getRows(), 200);
