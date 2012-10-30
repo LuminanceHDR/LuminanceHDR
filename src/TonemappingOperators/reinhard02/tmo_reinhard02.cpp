@@ -263,27 +263,27 @@ void Reinhard02::dynamic_range ()
  * @param low size in pixels of smallest scale (should be kept at 1)
  * @param high size in pixels of largest scale (default 1.6^8 = 43)
  */
-Reinhard02::Reinhard02(unsigned int width, unsigned int height,
-	const float *nY, float *nL,
-	bool use_scales, float key, float phi,
-	int num, int low, int high, bool temporal_coherent, ProgressHelper *ph ) :
-m_width(width),
-m_height(height),
-m_use_scales(use_scales),
-m_use_border(false),
-m_key(key),
-m_phi(phi),
-m_white(1e20),
-m_range(num),
-m_scale_low(low),
-m_scale_high(high),
-m_temporal_coherent(temporal_coherent),
-m_alpha(2.),
-m_threshold(0.05),
-m_ph(ph)
+Reinhard02::Reinhard02(const pfs::Array2D *Y, pfs::Array2D* L,
+                       bool use_scales, float key, float phi,
+                       int num, int low, int high, bool temporal_coherent,
+                       ProgressHelper *ph)
+    : m_width(Y->getCols())
+    , m_height(Y->getRows())
+    , m_use_scales(use_scales)
+    , m_use_border(false)
+    , m_key(key)
+    , m_phi(phi)
+    , m_white(1e20)
+    , m_range(num)
+    , m_scale_low(low)
+    , m_scale_high(high)
+    , m_temporal_coherent(temporal_coherent)
+    , m_alpha(2.)
+    , m_threshold(0.05)
+    , m_ph(ph)
 {
-	m_Y = new pfs::Array2D(m_width, m_height, const_cast<float*>(nY));
-	m_L = new pfs::Array2D(m_width, m_height, nL);
+    m_Y = Y;
+    m_L = L;
 }
 
 void Reinhard02::tmo_reinhard02()

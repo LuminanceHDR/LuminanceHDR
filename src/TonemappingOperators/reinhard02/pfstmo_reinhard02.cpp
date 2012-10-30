@@ -38,7 +38,7 @@
 
 #include <iostream>
 
-void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
+void pfstmo_reinhard02(pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
 {
   //--- default tone mapping parameters;
   //float key = 0.18;
@@ -62,8 +62,8 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   frame->getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
-  if( Y==NULL || X==NULL || Z==NULL)
-    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+  if ( Y==NULL || X==NULL || Z==NULL)
+     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   
   pfs::Array2D* Xr = X->getChannelData();
   pfs::Array2D* Yr = Y->getChannelData();
@@ -74,7 +74,7 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   int h = Y->getHeight();
   pfs::Array2D* L = new pfs::Array2D(w,h);
 
-  Reinhard02 tmoperator( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent, ph );
+  Reinhard02 tmoperator( Y->getChannelData(), L, use_scales, key, phi, num, low, high, temporal_coherent, ph );
   
   tmoperator.tmo_reinhard02();
   
