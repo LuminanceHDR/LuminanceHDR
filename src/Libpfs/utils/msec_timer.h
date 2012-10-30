@@ -43,6 +43,7 @@
 
 // TIMER -----
 #ifdef WIN_TIMER
+#define _WINSOCKAPI_    // stops windows.h including winsock.h
 #include <windows.h>
 #elif __APPLE__
 #include <stdint.h>

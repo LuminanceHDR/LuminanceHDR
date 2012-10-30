@@ -34,7 +34,6 @@
 
 #ifdef WIN32
 #include <QMessageBox>
-#include <windows.h>
 #endif
 
 namespace

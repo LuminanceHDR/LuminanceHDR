@@ -29,7 +29,7 @@
 // #include <stdlib.h>
 
 #include "Libpfs/array2d.h"
-// #include "arch/math.h"
+#include "arch/math.h"
 
 
 using namespace std;
