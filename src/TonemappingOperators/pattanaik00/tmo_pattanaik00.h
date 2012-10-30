@@ -55,9 +55,10 @@ class VisualAdaptationModel;
  * @param am pointer to adaptation model
  * @param local false: use global version, true: use local version
  */
-void tmo_pattanaik00( unsigned int width, unsigned int height,
-  float* R, float* G, float* B, 
-  const float* Y, VisualAdaptationModel* am, bool local=false, ProgressHelper *ph = 0);
+void tmo_pattanaik00(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
+                     const pfs::Array2D& Y,
+                     VisualAdaptationModel* am, bool local = false,
+                     ProgressHelper *ph = 0);
 
 
 /**
@@ -81,7 +82,7 @@ private:
   float Brod;
 
   /// calculate logarithmic average of Y
-  float calculateLogAvgLuminance( pfs::Array2D* Y );
+  float calculateLogAvgLuminance( const pfs::Array2D& Y );
 
 public:
 
@@ -106,7 +107,7 @@ public:
    * @param Y luminance map of HDR image
    * @param dt time [s] that passed after last calculation of adaptation
    */
-  void calculateAdaptation(pfs::Array2D *Y, float dt);
+  void calculateAdaptation(const pfs::Array2D& Y, float dt);
 
   /**
    * @brief Set adaptation level to given values
@@ -121,7 +122,7 @@ public:
    *
    * @param Y luminance map of HDR image
    */
-  void setAdaptation(pfs::Array2D *Y);
+  void setAdaptation(const pfs::Array2D& Y);
 
   /// Get cone adaptation level
   float getAcone()
