@@ -286,7 +286,11 @@ static void compute_gaussian_level( const int width, const int height, const pfs
 
   const int kernel_len = 5;
   const int kernel_len_2 = kernel_len/2;
-  const float kernel[kernel_len] = { 0.25 - kernel_a/2, 0.25 , kernel_a, 0.25, 0.25 - kernel_a/2 };
+  const float kernel[kernel_len] = { 0.25f - kernel_a/2.f,
+                                     0.25f,
+                                     kernel_a,
+                                     0.25f,
+                                     0.25f - kernel_a/2.f };
 
   const int step = 1<<level;
 

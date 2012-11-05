@@ -90,6 +90,8 @@ ELSE()
     IF(APPLE)
     # optimize for 64-bit core 2 architecture on apple
     ADD_DEFINITIONS(-march=core2)
+    ADD_DEFINITIONS(-ffast-math -msse2 -msse)
+    SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
     ELSE()
     ADD_DEFINITIONS(-std=c++0x -ffast-math -msse2 -msse)
     ENDIF()
