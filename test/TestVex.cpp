@@ -135,9 +135,12 @@ protected:
     {
         for (size_t idx = 0; idx < this->outputComputed.size(); ++idx)
         {
-            EXPECT_NEAR(this->outputComputed[idx],
-                        this->outputReference[idx],
-                        10e-9);
+            if ( this->outputComputed[idx] != this->outputReference[idx])
+            {
+                EXPECT_NEAR(this->outputComputed[idx],
+                            this->outputReference[idx],
+                            10e-9);
+            }
         }
     }
 
