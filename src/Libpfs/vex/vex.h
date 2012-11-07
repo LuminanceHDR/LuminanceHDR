@@ -30,6 +30,7 @@
 
 #include <functional>
 #include <numeric>
+#include <cstddef>
 
 namespace vex
 {

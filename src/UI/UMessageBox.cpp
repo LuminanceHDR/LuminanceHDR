@@ -43,7 +43,7 @@ void UMessageBox::init()
     QGridLayout* layout = reinterpret_cast<QGridLayout*>(this->layout());
     layout->addItem(m_horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
 
-    this->setWindowTitle("Luminance HDR "LUMINANCEVERSION);
+    this->setWindowTitle("Luminance HDR " LUMINANCEVERSION);
 #ifdef Q_WS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif

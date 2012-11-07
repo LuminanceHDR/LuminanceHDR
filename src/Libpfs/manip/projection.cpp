@@ -25,6 +25,7 @@
 #include "projection.h"
 
 #include <cmath>
+#include <cstring>
 // #include <stdio.h>
 // #include <stdlib.h>
 
