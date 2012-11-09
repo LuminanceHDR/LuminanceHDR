@@ -32,6 +32,9 @@ ADD_LIBRARY(ContrastDomain STATIC
     mantiuk06/contrast_domain.cpp
     mantiuk06/contrast_domain.h)
 
+ADD_LIBRARY(PrintArray2D STATIC
+    PrintArray2D.cpp PrintArray2D.h)
+
 # Mantiuk06
 ADD_EXECUTABLE(TestMantiuk06Basic
     TestMantiuk06Basic.cpp)
@@ -80,7 +83,7 @@ TARGET_LINK_LIBRARIES(TestVexDotProduct
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestVexDotProduct TestVexDotProduct)
 
-ADD_EXECUTABLE(TestPfsRotate TestPfsRotate.cpp)
+ADD_EXECUTABLE(TestPfsRotate TestPfsRotate.cpp CompareVector.h)
 TARGET_LINK_LIBRARIES(TestPfsRotate pfs
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
@@ -92,8 +95,8 @@ TARGET_LINK_LIBRARIES(TestPfsShift pfs
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsShift TestPfsShift)
 
-ADD_EXECUTABLE(TestPfsCut TestPfsCut.cpp SeqInt.h PrintArray2D.h)
-TARGET_LINK_LIBRARIES(TestPfsCut pfs
+ADD_EXECUTABLE(TestPfsCut TestPfsCut.cpp SeqInt.h)
+TARGET_LINK_LIBRARIES(TestPfsCut pfs PrintArray2D
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsCut TestPfsCut)

@@ -19,12 +19,19 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef PRINTARRAY2D_H
-#define PRINTARRAY2D_H
+#ifndef COMPAREVECTOR_H
+#define COMPAREVECTOR_H
 
-#include <iostream>
-#include "Libpfs/array2d.h"
+#include <gtest/gtest.h>
+#include <cstddef>
 
-void print(const pfs::Array2Df& a2d);
+template <typename _Type>
+void compareVectors(_Type referenceOutput, _Type computedOutput, size_t size)
+{
+    for (size_t idx = 0; idx < size; ++idx)
+    {
+        ASSERT_EQ(referenceOutput[idx], computedOutput[idx]);
+    }
+}
 
-#endif // PRINTARRAY2D_H
+#endif

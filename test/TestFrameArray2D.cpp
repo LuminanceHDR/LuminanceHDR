@@ -25,6 +25,7 @@
 #include <Libpfs/frame.h>
 
 #include "SeqInt.h"
+#include "CompareVector.h"
 
 using namespace pfs;
 
@@ -98,4 +99,30 @@ TEST(TestArray2D, DoubleSubscription)
     EXPECT_EQ(array2d[0][0], 0);
     EXPECT_EQ(array2d[1][1], 6);
     EXPECT_EQ(array2d[2][2], 12);
+    EXPECT_EQ(array2d[4][4], 24);
+}
+
+TEST(TestArray2D, Ctor)
+{
+    typedef pfs::Array2D<int> array2d_int_t;
+
+    array2d_int_t array2d(5, 5);
+    array2d_int_t array2d_2(5, 5);
+
+    std::generate(array2d.begin(), array2d.end(), SeqInt());
+    std::generate(array2d_2.begin(), array2d_2.end(), SeqInt());
+
+    {
+        // copy ctor
+        array2d_int_t array2d_v2 = array2d;
+
+        EXPECT_EQ(array2d_v2.size(), array2d.size());
+        compareVectors(array2d_v2.data(), array2d.data(), array2d.size());
+
+        // assignment operator
+        array2d_v2 = array2d_2;
+
+        EXPECT_EQ(array2d_v2.size(), array2d_2.size());
+        compareVectors(array2d_v2.data(), array2d_2.data(), array2d.size());
+    }
 }

@@ -59,11 +59,22 @@ Array2D<Type>::Array2D(size_t cols, size_t rows)
 
 template <typename Type>
 Array2D<Type>::Array2D(const self& rhs)
-    : m_data(rhs.size())
+    : m_data(rhs.m_data)
     , m_cols(rhs.m_cols)
     , m_rows(rhs.m_rows)
 {
     assert( m_data.size() >= m_cols*m_rows);
+}
+
+template <typename Type>
+Array2D<Type>& Array2D<Type>::operator=(const Array2D<Type>& other)
+{
+    using std::swap;
+
+    Array2D<Type> newState(other);
+    swap(*this, newState);
+
+    return *this;
 }
 
 template <typename Type>

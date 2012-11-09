@@ -33,6 +33,9 @@
 #include <Libpfs/array2d.h>
 #include <Libpfs/manip/rotate.h>
 
+#include "CompareVector.h"
+#include "SeqInt.h"
+
 using ::testing::TestWithParam;
 using ::testing::Values;
 using ::testing::Combine;
@@ -65,27 +68,6 @@ void rotate_cw(const InputType* input,
             output[(i+1)*height - 1 - j] = input[j*width + i];
         }
     }
-}
-
-namespace
-{    
-struct SeqInt
-{
-    SeqInt() : current_(0) {}
-
-    int operator()() { return current_++; }
-
-    int current_;
-};
-
-template <typename _Type>
-void compareVectors(_Type referenceOutput, _Type computedOutput, size_t size)
-{
-    for (size_t idx = 0; idx < size; ++idx)
-    {
-        ASSERT_EQ(referenceOutput[idx], computedOutput[idx]);
-    }
-}
 }
 
 class TestPfsRotate : public TestWithParam< ::std::tr1::tuple<size_t, size_t> >

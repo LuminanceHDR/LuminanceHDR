@@ -62,7 +62,12 @@ public:
     Array2D(size_t cols, size_t rows);
 
     //! \brief copy ctor
+    //! \note If you want to build an empty \c Array2D with the same size of the
+    //! source, use the ctor that takes dimension and you will spare the copy
     Array2D(const self& rhs);
+
+    //! \brief assignment operator (always performs deep copy)
+    self& operator=(const self& other);
 
     //! \brief virtual destructor
     virtual ~Array2D() {}
