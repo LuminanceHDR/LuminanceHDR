@@ -43,25 +43,25 @@ namespace pfs
 {
 template <typename Type>
 Array2D<Type>::Array2D()
-    : m_cols(0)
-    , m_rows(0)
-    , m_data()
+    : m_data()
+    , m_cols(0)
+    , m_rows(0) 
 {}
 
 template <typename Type>
 Array2D<Type>::Array2D(size_t cols, size_t rows)
-    : m_cols(cols)
+    : m_data(cols*rows)
+    , m_cols(cols)
     , m_rows(rows)
-    , m_data(cols*rows)
 {
     assert( m_data.size() >= m_cols*m_rows);
 }
 
 template <typename Type>
 Array2D<Type>::Array2D(const self& rhs)
-    : m_cols(rhs.m_cols)
+    : m_data(rhs.size())
+    , m_cols(rhs.m_cols)
     , m_rows(rhs.m_rows)
-    , m_data(rhs.size())
 {
     assert( m_data.size() >= m_cols*m_rows);
 }
@@ -79,8 +79,8 @@ void Array2D<Type>::resize(size_t width, size_t height)
 template <typename Type>
 void Array2D<Type>::swap(self& other)
 {
-    std::swap(m_rows, other.m_rows);
     std::swap(m_cols, other.m_cols);
+    std::swap(m_rows, other.m_rows);
     std::swap(m_data, other.m_data);
 }
 

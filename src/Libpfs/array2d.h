@@ -167,10 +167,10 @@ public:
     { return col_begin(n) + getCols(); }
 
 private:
+    DataBuffer m_data;
+
     size_t     m_cols;
     size_t     m_rows;
-
-    DataBuffer m_data;
 };
 
 //! \brief typedef provided for backward compatibility with the old API
@@ -203,6 +203,15 @@ void divideArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& 
 
 } // namespace pfs
 
-#include "array2d.hxx"
+namespace std
+{
+template<typename T>
+void swap(::pfs::Array2D<T>& a, ::pfs::Array2D<T>& b)
+{
+    a.swap(b);
+}
+}   // namespace std
+
+#include <Libpfs/array2d.hxx>
 
 #endif // PFS_ARRAY2D_H
