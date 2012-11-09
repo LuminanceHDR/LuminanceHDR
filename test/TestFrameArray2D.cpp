@@ -24,6 +24,8 @@
 #include <Libpfs/array2d.h>
 #include <Libpfs/frame.h>
 
+#include "SeqInt.h"
+
 using namespace pfs;
 
 TEST(TestArray2D, Resize1)
@@ -62,4 +64,38 @@ TEST(TestArray2D, Resize2)
     float* d2 = array.getRawData();
 
     EXPECT_EQ(d1, d2);
+}
+
+TEST(TestArray2D, Iterator)
+{
+    typedef pfs::Array2D<int> array2d_int_t;
+
+    array2d_int_t array2d(5, 5);
+
+    std::generate(array2d.begin(), array2d.end(), SeqInt());
+
+    array2d_int_t::col_iterator itBegin = array2d.col_begin(2);
+    array2d_int_t::col_iterator itEnd = array2d.col_end(2);
+
+    int num = 2;
+    while ( itBegin != itEnd )
+    {
+        EXPECT_EQ(*itBegin, num);
+
+        ++itBegin;
+        num += 5;
+    }
+}
+
+TEST(TestArray2D, DoubleSubscription)
+{
+    typedef pfs::Array2D<int> array2d_int_t;
+
+    array2d_int_t array2d(5, 5);
+
+    std::generate(array2d.begin(), array2d.end(), SeqInt());
+
+    EXPECT_EQ(array2d[0][0], 0);
+    EXPECT_EQ(array2d[1][1], 6);
+    EXPECT_EQ(array2d[2][2], 12);
 }

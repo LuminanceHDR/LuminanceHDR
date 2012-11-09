@@ -53,8 +53,8 @@ void cut(const Array2D<Type> *from, Array2D<Type> *to,
 #pragma omp parallel for
     for (int r = 0; r < to->getRows(); r++)
     {
-        copy(from->beginRow(r + y_ul) + x_ul, from->endRow(r + y_ul) - x_br,
-             to->beginRow(r));
+        copy(from->row_begin(r + y_ul) + x_ul, from->row_end(r + y_ul) - x_br,
+             to->row_begin(r));
     }
 }
 

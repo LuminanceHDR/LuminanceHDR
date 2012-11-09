@@ -26,6 +26,8 @@
 #include <cassert>
 #include <vector>
 #include <algorithm>
+
+#include <Libpfs/stride_iterator.h>
 #include <Libpfs/vex/vex.h>
 
 //! \file array2d.h
@@ -120,6 +122,7 @@ public:
     void swap(self& other);
 
 public:
+    // element/row iterator
     typedef typename DataBuffer::iterator       iterator;
     typedef typename DataBuffer::const_iterator const_iterator;
 
@@ -133,15 +136,35 @@ public:
     const_iterator end() const
     { return m_data.begin() + size(); }
 
-    iterator beginRow(size_t r)
+    iterator row_begin(size_t r)
     { return m_data.begin() + r*m_cols; }
-    iterator endRow(size_t r)
+    iterator row_end(size_t r)
     { return m_data.begin() + (r+1)*m_cols; }
 
-    const_iterator beginRow(size_t r) const
+    const_iterator row_begin(size_t r) const
     { return m_data.begin() + r*m_cols; }
-    const_iterator endRow(size_t r) const
+    const_iterator row_end(size_t r) const
     { return m_data.begin() + (r+1)*m_cols; }
+
+    //! \brief subscript operators, returns the row \a n
+    iterator operator[](size_t n)
+    { return row_begin(n); }
+    const_iterator operator[](size_t n) const
+    { return row_begin(n); }
+
+    // column iterator
+    typedef stride_iterator<typename DataBuffer::iterator> col_iterator;
+    typedef stride_iterator<typename DataBuffer::iterator> const_col_iterator;
+
+    col_iterator col_begin(size_t n)
+    { return col_iterator(begin() + n, getCols()); }
+    col_iterator col_end(size_t n)
+    { return col_begin(n) + getCols(); }
+
+    const_col_iterator col_begin(size_t n) const
+    { return const_col_iterator(begin() + n, getCols()); }
+    const_col_iterator col_end(size_t n) const
+    { return col_begin(n) + getCols(); }
 
 private:
     size_t     m_cols;
