@@ -1780,15 +1780,15 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
         {
             qDebug() << "GammaAndLevels accepted!";
 
-            pfs::Frame * frame = current->getFrame();
-            pfs::gammaAndLevels(frame,
+            // pfs::Frame * frame = current->getFrame();
+            pfs::gammaAndLevels(current->getFrame(),
                                 g_n_l->getBlackPointInput(),
                                 g_n_l->getWhitePointInput(),
                                 g_n_l->getBlackPointOutput(),
                                 g_n_l->getWhitePointOutput(),
                                 g_n_l->getGamma());
 
-            current->setFrame(frame);
+            // current->setFrame(frame);
         } else {
             qDebug() << "GammaAndLevels refused!";
 

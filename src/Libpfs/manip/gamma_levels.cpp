@@ -108,8 +108,6 @@ void gammaAndLevels(pfs::Frame* inFrame,
     const int outWidth   = inFrame->getWidth();
     const int outHeight  = inFrame->getHeight();
 
-    pfs::Frame* outFrame = new pfs::Frame(outWidth, outHeight);
-
     pfs::Channel *Xc, *Yc, *Zc;
     inFrame->getXYZChannels( Xc, Yc, Zc );
     assert( Xc != NULL && Yc != NULL && Zc != NULL );
@@ -117,9 +115,6 @@ void gammaAndLevels(pfs::Frame* inFrame,
     const float* R_i = Xc->getRawData();
     const float* G_i = Yc->getRawData();
     const float* B_i = Zc->getRawData();
-
-    outFrame->createXYZChannels( Xc, Yc, Zc );
-    assert( Xc != NULL && Yc != NULL && Zc != NULL );
 
     float* R_o = Xc->getRawData();
     float* G_o = Yc->getRawData();
@@ -152,8 +147,6 @@ void gammaAndLevels(pfs::Frame* inFrame,
         G_o[idx] = clamp(black_out + green * (white_out - black_out), 0.f, 1.f);
         B_o[idx] = clamp(black_out + blue * (white_out - black_out), 0.f, 1.f);
     }
-
-    pfs::copyTags(inFrame, outFrame);
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
