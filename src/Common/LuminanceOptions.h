@@ -93,9 +93,9 @@ public Q_SLOTS:
     int     getRawOutputColor();
     //void    setRawOutputColor(int);
     QString getRawOutputProfile();
-    void    setRawOutputProfile(QString);
+    void    setRawOutputProfile(const QString&);
     QString getRawCameraProfile();
-    void    setRawCameraProfile(QString);
+    void    setRawCameraProfile(const QString&);
     int     getRawUserFlip();
     //void    setRawUserFlip(int);
     int     getRawUserQuality();
@@ -128,13 +128,13 @@ public Q_SLOTS:
     // Language
     // 2-chars ISO 639 language code for Luminance's user interface
     QString getGuiLang();
-    void    setGuiLang(QString);
+    void    setGuiLang(const QString&);
 
     // Batch HDR
-    QString getBatchHdrPathInput(QString defaultPath = QDir::currentPath());
-    QString getBatchHdrPathOutput(QString defaultPath = QDir::currentPath());
-    void    setBatchHdrPathInput(QString);
-    void    setBatchHdrPathOutput(QString);
+    QString getBatchHdrPathInput(const QString& defaultPath = QDir::currentPath());
+    QString getBatchHdrPathOutput(const QString& defaultPath = QDir::currentPath());
+    void    setBatchHdrPathInput(const QString&);
+    void    setBatchHdrPathOutput(const QString&);
 
     // Batch TM
     QString getBatchTmPathHdrInput();
@@ -142,9 +142,9 @@ public Q_SLOTS:
     QString getBatchTmPathLdrOutput();
     int     getBatchTmNumThreads();
 
-    void    setBatchTmPathHdrInput(QString);
-    void    setBatchTmPathTmoSettings(QString);
-    void    setBatchTmPathLdrOutput(QString);
+    void    setBatchTmPathHdrInput(const QString&);
+    void    setBatchTmPathTmoSettings(const QString&);
+    void    setBatchTmPathLdrOutput(const QString&);
     void    setBatchTmNumThreads(int);
 
     int     getNumThreads() { return getBatchTmNumThreads(); }
@@ -163,16 +163,16 @@ public Q_SLOTS:
     QString getDefaultPathLdrOut();
     QString getDefaultPathTmoSettings();
 
-    void    setTempDir(QString path);
-    void    setDefaultPathHdrInOut(QString);
-    void    setDefaultPathLdrIn(QString); // HdrWizard
-    void    setDefaultPathLdrOut(QString);
-    void    setDefaultPathTmoSettings(QString);
+    void    setTempDir(const QString&);
+    void    setDefaultPathHdrInOut(const QString&);
+    void    setDefaultPathLdrIn(const QString&); // HdrWizard
+    void    setDefaultPathLdrOut(const QString&);
+    void    setDefaultPathTmoSettings(const QString&);
 
     // HdrWizard
     // commandline options for align_image_stack
     QStringList getAlignImageStackOptions();
-    void        setAlignImageStackOptions(QStringList);
+    void        setAlignImageStackOptions(const QStringList&);
     // if true always show first page of hdr wizard
     bool    isShowFirstPageWizard();
     void    setShowFirstPageWizard(bool b);
@@ -203,13 +203,13 @@ public Q_SLOTS:
 
 	// Color Management
 	QString getCameraProfileFileName();
-	void	setCameraProfileFileName(QString);
+    void	setCameraProfileFileName(const QString&);
 
 	QString getMonitorProfileFileName();
-	void	setMonitorProfileFileName(QString);
+    void	setMonitorProfileFileName(const QString&);
 
 	QString getPrinterProfileFileName();
-	void	setPrinterProfileFileName(QString);
+    void	setPrinterProfileFileName(const QString&);
 
     int  getPreviewPanelMode();
     void setPreviewPanelMode(int);

@@ -36,24 +36,24 @@
 #include "Common/global.h"
 #include "global.hxx"
 
-bool matchesLdrFilename(QString file)
+bool matchesLdrFilename(const QString& file)
 {
 	QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 	return exp.exactMatch(file);
 }
 
-bool matchesHdrFilename(QString file)
+bool matchesHdrFilename(const QString& file)
 {
 	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 	return exp.exactMatch(file);
 }
 
-bool matchesValidHDRorLDRfilename(QString file)
+bool matchesValidHDRorLDRfilename(const QString& file)
 {
 	return matchesLdrFilename(file) || matchesHdrFilename(file);
 }
 
-QStringList convertUrlListToFilenameList(QList<QUrl> urls)
+QStringList convertUrlListToFilenameList(const QList<QUrl>& urls)
 {
     QStringList files;
     for (int i = 0; i < urls.size(); ++i)
