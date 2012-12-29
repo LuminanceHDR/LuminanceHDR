@@ -153,7 +153,8 @@ MainWindow::MainWindow(QWidget *parent):
     init();
 }
 
-MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent):
+MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
+                       bool needSaving, QWidget *parent):
     QMainWindow(parent),
     m_Ui(new Ui::MainWindow)
 {
@@ -435,9 +436,9 @@ void MainWindow::on_fileNewAction_triggered()
 	createNewHdr(QStringList()); // redirect on createNewHdr-method to avoid moc warning
 }
 
-void MainWindow::createNewHdr(QStringList files)
+void MainWindow::createNewHdr(const QStringList& files)
 {
-    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files, m_inputFilesName, m_inputExpoTimes) );
+    QScopedPointer<HdrWizard> wizard( new HdrWizard(this, files, m_inputFilesName, m_inputExpoTimes) );
     if (wizard->exec() == QDialog::Accepted)
     {
         emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
@@ -461,20 +462,19 @@ void MainWindow::on_fileOpenAction_triggered()
                                                       luminance_options->getDefaultPathHdrInOut(),
                                                       filetypes );
 
-    if ( !files.isEmpty() )
+    if ( files.isEmpty() ) return;
+
+    // Update working folder
+    // All the files are in the same folder, so I pick the first as reference to update the settings
+    QFileInfo qfi(files.first());
+
+    luminance_options->setDefaultPathHdrInOut( qfi.path() );
+
+    foreach (const QString& filename, files)
     {
-        // Update working folder
-        // All the files are in the same folder, so I pick the first as reference to update the settings
-        QFileInfo qfi(files.first());
-
-        luminance_options->setDefaultPathHdrInOut( qfi.path() );
-
-        foreach(QString filename, files)
-        {
-            //emit open_hdr_frame(filename);
-            QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
-                                      Q_ARG(QString, filename));
-        }
+        //emit open_hdr_frame(filename);
+        QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
+                                  Q_ARG(QString, filename));
     }
 }
 
@@ -593,7 +593,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
     }
 }
 
-void MainWindow::save_hdr_success(GenericViewer* saved_hdr, QString fname)
+void MainWindow::save_hdr_success(GenericViewer* saved_hdr, const QString& fname)
 {
     QFileInfo qfi(fname);
 
@@ -610,7 +610,7 @@ void MainWindow::save_hdr_failed()
     // TODO pass the name of the file, so the user know which file didn't save correctly
 }
 
-void MainWindow::save_ldr_success(GenericViewer* saved_ldr, QString fname)
+void MainWindow::save_ldr_success(GenericViewer* saved_ldr, const QString& fname)
 {
     if ( !saved_ldr->isHDR() )
         m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), QFileInfo(fname).fileName());
@@ -987,10 +987,10 @@ void MainWindow::ioEnd()
 
     QApplication::restoreOverrideCursor();
 
-    statusBar()->showMessage(tr("Done!"), 10000);
+    statusBar()->showMessage(tr("Done!"), 800);
 }
 
-void MainWindow::load_failed(QString error_message)
+void MainWindow::load_failed(const QString& errorMessage)
 {
     m_ProgressBar->reset();
     m_ProgressBar->hide();
@@ -998,10 +998,12 @@ void MainWindow::load_failed(QString error_message)
     QApplication::restoreOverrideCursor();
 
     // TODO: use unified style?
-    QMessageBox::critical(this, tr("Aborting..."), error_message, QMessageBox::Ok, QMessageBox::NoButton);
+    QMessageBox::critical(this, tr("Aborting..."), errorMessage,
+                          QMessageBox::Ok, QMessageBox::NoButton);
 }
 
-void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool needSaving)
+void MainWindow::load_success(pfs::Frame* new_hdr_frame,
+                              const QString& new_fname, bool needSaving)
 {
     if ( tm_status.is_hdr_ready )
     {
@@ -1015,29 +1017,36 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         qDebug() << "Filename: " << new_fname;
 #endif
 
-        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving, luminance_options->getViewerNegColor(), luminance_options->getViewerNanInfColor());
+        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving,
+                                          luminance_options->getViewerNegColor(),
+                                          luminance_options->getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
-        connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
-        connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(syncViewers(GenericViewer*)));
-        connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
+        connect(newhdr, SIGNAL(selectionReady(bool)),
+                this, SLOT(enableCrop(bool)));
+        connect(newhdr, SIGNAL(changed(GenericViewer*)),
+                this, SLOT(syncViewers(GenericViewer*)));
+        connect(newhdr, SIGNAL(changed(GenericViewer*)),
+                this, SLOT(updateMagnificationButtons(GenericViewer*)));
 
         newhdr->setViewerMode( getCurrentViewerMode(*m_tabwidget) );
 
         QFileInfo qfileinfo(new_fname);
         if ( !qfileinfo.exists() )
         {
-            // it doesn't exist on the file system,
-            // so I have just got back a file from some creational operation (new hdr, crop...)
+            // it doesn't exist on the file system, so I have just got back a
+            // file from some creational operation (new hdr, crop...)
+
             newhdr->setFileName(QString("untitled"));
-            m_tabwidget->addTab(newhdr, new_fname.prepend("(*) "));
+            m_tabwidget->addTab(newhdr, QString(new_fname).prepend("(*) "));
 
             setMainWindowModified(true);
         }
         else
         {
-            // the new file exists on the file system, so I can use this value to set captions and so on
+            // the new file exists on the file system, so I can use this value
+            // to set captions and so on
             newhdr->setFileName(new_fname);
             m_tabwidget->addTab(newhdr, qfileinfo.fileName());
 
@@ -1055,7 +1064,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
 
         showPreviewPanel(m_Ui->actionShowPreviewPanel->isChecked());
 
-        emit updatedHDR(newhdr->getFrame());  // signal: I have a new HDR open
+        // signal: I have a new HDR open
+        emit updatedHDR(newhdr->getFrame());
     }
 }
 
@@ -1104,23 +1114,30 @@ void MainWindow::dropEvent(QDropEvent *event)
     event->acceptProposedAction();
 }
 
+void MainWindow::openFile(const QString& filename)
+{
+    QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame",
+                              Qt::QueuedConnection,
+                              Q_ARG(QString, filename));
+}
+
 void MainWindow::openFiles(const QStringList& files)
 {
     if (files.size() > 0)
     {
-        switch (DnDOptionDialog::showDndDialog(this, files)) {
+        switch (DnDOptionDialog::showDndDialog(this, files))
+        {
         case DnDOptionDialog::ACTION_NEW_HDR:
-        	createNewHdr(files);
-            break;
+        {
+            createNewHdr(files);
+        } break;
         case DnDOptionDialog::ACTION_OPEN_HDR:
-            foreach (QString filename, files)
+        {
+            foreach (const QString& filename, files)
             {
-                 //qDebug() << filename;
-                 //emit open_hdr_frame(filename);
-                 QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
-                                           Q_ARG(QString, filename));
+                openFile(filename);
             }
-            break;
+        } break;
         }
     }
 }
@@ -1515,10 +1532,12 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 	}
 }
 
-void MainWindow::tonemapFailed(QString error_msg)
+void MainWindow::tonemapFailed(const QString& error_msg)
 {
-    QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(error_msg),
-                          QMessageBox::Ok,QMessageBox::NoButton);
+    QMessageBox::critical(this, tr("Luminance HDR"),
+                          tr("Error: %1").arg(error_msg),
+                          QMessageBox::Ok, QMessageBox::NoButton);
+
     tmPanel->setEnabled(true);
     m_TMProgressBar->hide();
 }
@@ -1800,21 +1819,21 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
     }
 }
 
-void MainWindow::setInputFiles(const QStringList& files)
-{
-    inputFiles = files;
-    QTimer::singleShot(0, this, SLOT(openInputFiles()));
-}
+//void MainWindow::setInputFiles(const QStringList& files)
+//{
+//    inputFiles = files;
+//    QTimer::singleShot(0, this, SLOT(openInputFiles()));
+//}
 
-void MainWindow::openInputFiles()
-{
-    openFiles(inputFiles);
-}
+//void MainWindow::openInputFiles()
+//{
+//    openFiles(inputFiles);
+//}
 
 void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 {
 	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
-	if ( current==NULL ) return;
+    if ( current == NULL ) return;
 	if ( current->isHDR() ) return;
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doProof) {
@@ -1832,7 +1851,7 @@ void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 {
 	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
-	if ( current==NULL ) return;
+    if ( current == NULL ) return;
 	if ( current->isHDR() ) return;
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doGamut) {
@@ -1859,19 +1878,24 @@ void MainWindow::updateSoftProofing(int i)
 	QWidget *wgt = m_tabwidget->widget(i);
 	GenericViewer *g_v = (GenericViewer *)wgt;
 
-	if (g_v == NULL)
-		return;
-
-	if ( !g_v->isHDR() )
-	{
-		LdrViewer *l_v = static_cast<LdrViewer*>(g_v);
-		if (!m_Ui->actionSoft_Proofing->isChecked() && !m_Ui->actionGamut_Check->isChecked())
-			l_v->undoSoftProofing();
-		else if (m_Ui->actionSoft_Proofing->isChecked())
-			l_v->doSoftProofing(false);
-		else if (m_Ui->actionGamut_Check->isChecked())
-			l_v->doSoftProofing(true);
-	}
+    if (g_v == NULL) return;
+    if ( !g_v->isHDR() )
+    {
+        LdrViewer *l_v = static_cast<LdrViewer*>(g_v);
+        if ( !m_Ui->actionSoft_Proofing->isChecked() &&
+             !m_Ui->actionGamut_Check->isChecked())
+        {
+            l_v->undoSoftProofing();
+        }
+        else if (m_Ui->actionSoft_Proofing->isChecked())
+        {
+            l_v->doSoftProofing(false);
+        }
+        else if (m_Ui->actionGamut_Check->isChecked())
+        {
+            l_v->doSoftProofing(true);
+        }
+    }
 }
 
 void MainWindow::showPreviewsOnTheRight()

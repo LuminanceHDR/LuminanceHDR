@@ -111,20 +111,22 @@ int main( int argc, char ** argv )
 
     LuminanceOptions::isCurrentPortableMode = QDir(QApplication::applicationDirPath()).exists("PortableMode.txt");
 
-    if (LuminanceOptions::isCurrentPortableMode) {
+    if (LuminanceOptions::isCurrentPortableMode)
+    {
         QSettings::setDefaultFormat(QSettings::IniFormat);
-        QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, QDir::currentPath());
+        QSettings::setPath(QSettings::IniFormat,
+                           QSettings::UserScope, QDir::currentPath());
     }
 
     LuminanceOptions::conditionallyDoUpgrade();
 
     installTranslators(true);
 
-    MainWindow* MW = new MainWindow;
+    MainWindow* mainWindow = new MainWindow;
 
-    MW->setInputFiles( getCliFiles( application.arguments() ) );
+    mainWindow->show();
+    mainWindow->openFiles( getCliFiles( application.arguments() ) );
 
-    MW->show();
 
     return application.exec();
 }

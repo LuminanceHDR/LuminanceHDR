@@ -105,12 +105,14 @@ void LuminanceOptions::initSettings()
         m_settingHolder = new QSettings();
 }
 
-void LuminanceOptions::setValue(const QString& key, const QVariant& value)
+void LuminanceOptions::setValue(const QString& key,
+                                const QVariant& value)
 {
     m_settingHolder->setValue(key, value);
 }
 
-QVariant LuminanceOptions::value(const QString & key, const QVariant& defaultValue) const
+QVariant LuminanceOptions::value(const QString & key,
+                                 const QVariant& defaultValue) const
 {
     return m_settingHolder->value(key, defaultValue);
 }
@@ -140,7 +142,8 @@ QString LuminanceOptions::getDatabaseFileName()
 // write system default language the first time around (discard "_country")
 QString LuminanceOptions::getGuiLang()
 {
-    return m_settingHolder->value(KEY_GUI_LANG, QLocale::system().name().left(2)).toString();
+    return m_settingHolder->value(KEY_GUI_LANG,
+                                  QLocale::system().name().left(2)).toString();
 }
 
 void LuminanceOptions::setGuiLang(const QString& s)

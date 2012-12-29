@@ -48,11 +48,14 @@
 #include "UI/Gang.h"
 #include "HdrCreation/HdrCreationManager.h"
 
-HdrWizard::HdrWizard(QWidget *p, QStringList &files, QStringList &inputFilesName, QVector<float> &inputExpoTimes) :
+HdrWizard::HdrWizard(QWidget *p,
+                     const QStringList &files,
+                     const QStringList &inputFilesName,
+                     const QVector<float> &inputExpoTimes) :
     QDialog(p),
     hdrCreationManager(new HdrCreationManager),
-    loadcurvefilename(""),
-    savecurvefilename(""),
+    loadcurvefilename(),
+    savecurvefilename(),
     m_inputFilesName(inputFilesName),
     m_inputExpoTimes(inputExpoTimes),
     m_Ui(new Ui::HdrWizard)
@@ -70,7 +73,8 @@ HdrWizard::HdrWizard(QWidget *p, QStringList &files, QStringList &inputFilesName
     models_in_gui[0] = DEBEVEC;
     models_in_gui[1] = ROBERTSON;
 
-    m_Ui->tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Image Filename") << tr("Exposure"));
+    m_Ui->tableWidget->setHorizontalHeaderLabels(
+                QStringList() << tr("Image Filename") << tr("Exposure"));
     m_Ui->tableWidget->resizeColumnsToContents();
     
     EVgang = new Gang(m_Ui->EVSlider, m_Ui->ImageEVdsb, NULL, NULL, NULL,NULL, -10,10,0);
@@ -310,9 +314,10 @@ void HdrWizard::dragEnterEvent(QDragEnterEvent *event) {
         event->acceptProposedAction();
 }
 
-void HdrWizard::dropEvent(QDropEvent *event) {
-
-    if (event->mimeData()->hasUrls()) {
+void HdrWizard::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasUrls())
+    {
         QStringList files = convertUrlListToFilenameList(event->mimeData()->urls());
         if (files.size() > 0)
             loadInputFiles(files, files.size());
@@ -320,7 +325,8 @@ void HdrWizard::dropEvent(QDropEvent *event) {
     event->acceptProposedAction();
 }
 
-void HdrWizard::loadInputFiles(QStringList files, int count) {
+void HdrWizard::loadInputFiles(const QStringList& files, int count)
+{
     int shift = m_Ui->tableWidget->rowCount();
     m_Ui->tableWidget->setEnabled(false);
     m_Ui->tableWidget->setRowCount(shift + count);
@@ -335,22 +341,30 @@ void HdrWizard::loadInputFiles(QStringList files, int count) {
     hdrCreationManager->loadInputFiles();
 }
 
-void HdrWizard::fileLoaded(int index, QString fname, float expotime) {
-    qDebug("WIZ: fileLoaded, expotimes[%d]=%f --- EV=%f",index,expotime,log2f(expotime));
+void HdrWizard::fileLoaded(int index, const QString& fname, float expotime)
+{
+    qDebug("WIZ: fileLoaded, expotimes[%d]=%f --- EV=%f",
+           index, expotime, log2f(expotime));
+
     updateGraphicalEVvalue(expotime,index);
     m_inputFilesName.push_back(fname);
     m_inputExpoTimes.push_back(expotime);
     //fill graphical list
     QFileInfo qfi(fname);
-    m_Ui->tableWidget->setItem(index,0,new QTableWidgetItem(qfi.fileName()));
-    m_Ui->progressBar->setValue(m_Ui->progressBar->value()+1); // increment progressbar
+    m_Ui->tableWidget->setItem(index, 0, new QTableWidgetItem(qfi.fileName()));
+    // increment progressbar
+    m_Ui->progressBar->setValue(m_Ui->progressBar->value()+1);
 }
 
-void HdrWizard::finishedLoadingInputFiles(QStringList filesLackingExif) {
-    if (filesLackingExif.size() == 0) {
+void HdrWizard::finishedLoadingInputFiles(const QStringList& filesLackingExif)
+{
+    if (filesLackingExif.size() == 0)
+    {
         m_Ui->NextFinishButton->setEnabled(true);
         m_Ui->confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b></h3></font></center>"));
-    } else {
+    }
+    else
+    {
         QString warning_message = (QString(tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
         Luminance HDR was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>\
         %1</ul>\
@@ -388,8 +402,11 @@ void HdrWizard::finishedLoadingInputFiles(QStringList filesLackingExif) {
     QApplication::restoreOverrideCursor();
 }
 
-void HdrWizard::errorWhileLoading(QString error) {
-    disconnect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+void HdrWizard::errorWhileLoading(const QString& error)
+{
+    disconnect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)),
+               this, SLOT(inputHdrFileSelected(int)));
+
     m_Ui->tableWidget->clear();
     m_Ui->tableWidget->setRowCount(0);
     m_Ui->tableWidget->setEnabled(true);
@@ -403,13 +420,22 @@ void HdrWizard::errorWhileLoading(QString error) {
     QMessageBox::critical(this,tr("Loading Error: "), error);
     hdrCreationManager->clearlists(true);
     QApplication::restoreOverrideCursor();
-    m_Ui->confirmloadlabel->setText("<center><h3><b>"+tr("Start loading a set of images with different exposure")+"</b></h3></center>");
-    connect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+
+    m_Ui->confirmloadlabel->setText("<center><h3><b>"+
+                                    tr("Start loading a set of images with different exposure") +
+                                    "</b></h3></center>");
+
+    connect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)),
+            this, SLOT(inputHdrFileSelected(int)));
 }
 
-void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table) {
-    qDebug("WIZ: updateGraphicalEVvalue EV[%d]=%f",index_in_table,log2f(expotime));
-    if (expotime != -1) {
+void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table)
+{
+    qDebug("WIZ: updateGraphicalEVvalue EV[%d]=%f",
+           index_in_table, log2f(expotime));
+
+    if (expotime != -1)
+    {
         QString EVdisplay;
         QTextStream ts(&EVdisplay);
         ts.setRealNumberPrecision(2);
@@ -417,7 +443,9 @@ void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table) {
         QTableWidgetItem *tableitem = new QTableWidgetItem(EVdisplay);
         tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         m_Ui->tableWidget->setItem(index_in_table,1,tableitem);
-    } else {
+    }
+    else
+    {
         //if image doesn't contain (the required) exif tags
         QTableWidgetItem *tableitem = new QTableWidgetItem(QString(tr("Unknown")));
         tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -427,28 +455,33 @@ void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table) {
     }
 }
 
-void HdrWizard::finishedAligning(int exitcode) {
+void HdrWizard::finishedAligning(int exitcode)
+{
     QApplication::restoreOverrideCursor();
     if (exitcode != 0)
-        QMessageBox::warning(this,tr("Error..."),tr("align_image_stack failed to align images."));
+    {
+        QMessageBox::warning(this, tr("Error..."),
+                             tr("align_image_stack failed to align images."));
+    }
     m_Ui->NextFinishButton->setEnabled(true);
     m_Ui->pagestack->setCurrentIndex(2);
     m_Ui->progressBar->hide();
 }
 
-void HdrWizard::ais_failed(QProcess::ProcessError e) {
+void HdrWizard::ais_failed(QProcess::ProcessError e)
+{
     switch (e) {
     case QProcess::FailedToStart:
-        QMessageBox::warning(this,tr("Error..."),tr("Failed to start external application \"<em>align_image_stack</em>\".<br>Please read \"Help -> Contents... -> Setting up -> External Tools\" for more information."));
+        QMessageBox::warning(this, tr("Error..."), tr("Failed to start external application \"<em>align_image_stack</em>\".<br>Please read \"Help -> Contents... -> Setting up -> External Tools\" for more information."));
     break;
     case QProcess::Crashed:
-        QMessageBox::warning(this,tr("Error..."),tr("The external application \"<em>align_image_stack</em>\" crashed..."));
+        QMessageBox::warning(this, tr("Error..."), tr("The external application \"<em>align_image_stack</em>\" crashed..."));
     break;
     case QProcess::Timedout:
     case QProcess::ReadError:
     case QProcess::WriteError:
     case QProcess::UnknownError:
-        QMessageBox::warning(this,tr("Error..."),tr("An unknown error occurred while executing the \"<em>align_image_stack</em>\" application..."));
+        QMessageBox::warning(this, tr("Error..."), tr("An unknown error occurred while executing the \"<em>align_image_stack</em>\" application..."));
     break;
     }
     m_Ui->progressBar->hide();
@@ -457,12 +490,17 @@ void HdrWizard::ais_failed(QProcess::ProcessError e) {
     m_Ui->alignGroupBox->setEnabled(true);
     m_Ui->alignCheckBox->setChecked(false);
     m_Ui->NextFinishButton->setEnabled(true);
-    m_Ui->confirmloadlabel->setText("<center><h3><b>"+tr("Now click on next button")+"</b></h3></center>");
+    m_Ui->confirmloadlabel->setText("<center><h3><b>" +
+                                    tr("Now click on next button") +
+                                    "</b></h3></center>");
 }
 
-void HdrWizard::customConfigCheckBoxToggled(bool want_custom) {
-    if (!want_custom) {
-        if (!m_Ui->antighostingCheckBox->isChecked()) {
+void HdrWizard::customConfigCheckBoxToggled(bool want_custom)
+{
+    if (!want_custom)
+    {
+        if (!m_Ui->antighostingCheckBox->isChecked())
+        {
             m_Ui->label_RespCurve_Antighost->setDisabled(true);
             m_Ui->antighostRespCurveCombobox->setDisabled(true);
             m_Ui->label_Iterations->setDisabled(true);
@@ -470,7 +508,8 @@ void HdrWizard::customConfigCheckBoxToggled(bool want_custom) {
             //temporary disable anti-ghosting until it's fixed
             m_Ui->antighostingCheckBox->setDisabled(true);
         }
-        else {
+        else
+        {
             m_Ui->label_predef_configs->setDisabled(true);
             m_Ui->predefConfigsComboBox->setDisabled(true);
             m_Ui->label_weights->setDisabled(true);
@@ -482,12 +521,15 @@ void HdrWizard::customConfigCheckBoxToggled(bool want_custom) {
         }
         predefConfigsComboBoxActivated(m_Ui->predefConfigsComboBox->currentIndex());
         m_Ui->NextFinishButton->setText(tr("&Finish"));
-    } else {
+    }
+    else
+    {
         m_Ui->NextFinishButton->setText(tr("&Next >"));
     }
 }
 
-void HdrWizard::predefRespCurveRadioButtonToggled(bool want_predef_resp_curve) {
+void HdrWizard::predefRespCurveRadioButtonToggled(bool want_predef_resp_curve)
+{
     if (want_predef_resp_curve) {
         //ENABLE load_curve_button and lineedit when "load from file" is checked.
         if (!m_Ui->loadRespCurveFromFileCheckbox->isChecked()) {

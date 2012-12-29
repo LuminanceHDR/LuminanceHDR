@@ -45,13 +45,21 @@ namespace Ui {
 
 class HdrWizard : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-	HdrWizard(QWidget *parent, QStringList &files, QStringList &inputFilesName, QVector<float> &inputExpoTimes);
-	~HdrWizard();
-	pfs::Frame* getPfsFrameHDR() {return PfsFrameHDR;}
-	QString getCaptionTEXT();
+    HdrWizard(QWidget *parent,
+              const QStringList &files,
+              const QStringList &inputFilesName,
+              const QVector<float> &inputExpoTimes);
+    ~HdrWizard();
+
+    //! \brief get the current PFS Frame
+    pfs::Frame* getPfsFrameHDR()
+    { return PfsFrameHDR; }
+
+    //! \brief return the caption text
+    QString getCaptionTEXT();
 
 protected:
 	void resizeEvent(QResizeEvent *);
@@ -71,8 +79,8 @@ private:
 	//the new hdr, returned by the HdrCreationManager class
 	pfs::Frame* PfsFrameHDR;
 	QString loadcurvefilename,savecurvefilename;
-    QStringList &m_inputFilesName;
-    QVector<float> &m_inputExpoTimes;
+    QStringList m_inputFilesName;
+    QVector<float> m_inputExpoTimes;
 
 	//hdr creation parameters
 	TResponse responses_in_gui[4];
@@ -84,11 +92,11 @@ private:
 
 private slots:
 
-    void loadInputFiles(QStringList files, int count);
+    void loadInputFiles(const QStringList& files, int count);
 
-	void fileLoaded(int index, QString fname, float expotime);
-	void finishedLoadingInputFiles(QStringList NoExifFiles);
-	void errorWhileLoading(QString errormessage);
+    void fileLoaded(int index, const QString& fname, float expotime);
+    void finishedLoadingInputFiles(const QStringList& NoExifFiles);
+    void errorWhileLoading(const QString& errormessage);
 
 	void updateGraphicalEVvalue(float expotime, int index_in_table);
 	void finishedAligning(int);

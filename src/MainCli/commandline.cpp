@@ -42,8 +42,8 @@
 #include "TonemappingEngine/TonemapOperator.h"
 
 #if defined(_MSC_VER)
-	#include <fcntl.h>
-	#include <io.h>
+#include <fcntl.h>
+#include <io.h>
 #endif
 
 namespace

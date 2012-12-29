@@ -1,8 +1,8 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006,2007 Giuseppe Rota
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2006-2007 Giuseppe Rota
+ * Copyright (C) 2011-2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@
  * Division of the Central Widget using QSplitter
  */
 
-#ifndef MAINGUI_IMPL_H
-#define MAINGUI_IMPL_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QString>
@@ -74,32 +74,37 @@ class MainWindow: public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     // Constructor loading file inside
-    MainWindow(pfs::Frame* curr_frame, QString new_fname, bool needSaving = false, QWidget *parent = 0);
+    MainWindow(pfs::Frame* curr_frame, const QString& new_fname,
+               bool needSaving = false, QWidget *parent = 0);
     ~MainWindow();
 
 public Q_SLOTS:
 
     // I/O
-    void save_hdr_success(GenericViewer* saved_hdr, QString fname);
+    void save_hdr_success(GenericViewer* saved_hdr, const QString& fname);
     void save_hdr_failed();
-    void save_ldr_success(GenericViewer* saved_ldr, QString fname);
+    void save_ldr_success(GenericViewer* saved_ldr, const QString& fname);
     void save_ldr_failed();
 
-    void load_failed(QString);
-    void load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool needSaving = false);
+    void load_failed(const QString&);
+    void load_success(pfs::Frame* new_hdr_frame, const QString& new_fname,
+                      bool needSaving = false);
 
     void ioBegin();
     void ioEnd();
 
     void setMainWindowModified(bool b);
 
-    void setInputFiles(const QStringList& files);
+    void openFile(const QString& file);
+    void openFiles(const QStringList& files);
 
 protected Q_SLOTS:
-    void on_fileNewAction_triggered();
-    void createNewHdr(QStringList files);
 
-    void on_fileOpenAction_triggered();    //for File->Open, it then calls loadFile()
+    void on_fileNewAction_triggered();
+    void createNewHdr(const QStringList& files);
+
+    //for File->Open, it then calls loadFile()
+    void on_fileOpenAction_triggered();
     void on_fileSaveAsAction_triggered();
     void on_fileSaveAllAction_triggered();
     void on_actionSave_Hdr_Preview_triggered();
@@ -135,8 +140,6 @@ protected Q_SLOTS:
     void on_Transplant_Exif_Data_action_triggered();
 
     void on_actionFix_Histogram_toggled(bool checked);
-
-    void openInputFiles();
 
     // Tool Bar Handling
     void Text_Under_Icons();
@@ -174,7 +177,7 @@ protected Q_SLOTS:
     void tonemapImage(TonemappingOptions *opts);
     void addLdrFrame(pfs::Frame*, TonemappingOptions*);
     //void addLDRResult(QImage*, quint16*);
-    void tonemapFailed(QString);
+    void tonemapFailed(const QString&);
 
     // lock functionalities
     void on_actionLock_toggled(bool);
@@ -197,7 +200,7 @@ Q_SIGNALS:
 protected:
     QSplitter *m_centralwidget_splitter;
     QSplitter *m_bottom_splitter;
-;
+
     QTabWidget *m_tabwidget;
 
     QSignalMapper *windowMapper;
@@ -212,16 +215,20 @@ protected:
     QList<QAction*> openMainWindows;
 
     HelpBrowser* helpBrowser;
-    QStringList inputFiles;
-    QStringList m_inputFilesName;   // this contains the file names of the images loaded by the wizard, they are used to copy EXIF tags to
-                                    // saved LDR images
-    QVector<float> m_inputExpoTimes;  // this contains the exposure times of the images to write to LDR as EXIF comment
 
-    virtual void dragEnterEvent(QDragEnterEvent *);
-    virtual void dropEvent(QDropEvent *);
-	virtual void changeEvent(QEvent* event);
+    //! \brief contains the file names of the images loaded by the wizard,
+    //! they are used to copy EXIF tags to saved LDR images
+    QStringList m_inputFilesName;
+    //! \brief this contains the exposure times of the images to write to LDR
+    //! as EXIF comment
+    QVector<float> m_inputExpoTimes;
 
+    //! \group Event handler
+    void dragEnterEvent(QDragEnterEvent *);
+    void dropEvent(QDropEvent *);
+    void changeEvent(QEvent* event);
     void closeEvent(QCloseEvent *);
+    //!
 
     void dispatchrotate(bool clockwise);
 
@@ -258,11 +265,9 @@ protected:
     QScrollArea *m_PreviewscrollArea;
     PreviewPanel *m_PreviewPanel;
 
-    void openFiles(const QStringList& files);
-
-	#ifdef Q_WS_WIN
-		bool winEvent(MSG * message, long * result);
-	#endif
+#ifdef Q_WS_WIN
+    bool winEvent(MSG * message, long * result);
+#endif
 
 private:
     static int sm_NumMainWindows;
@@ -283,4 +288,4 @@ private:
     TonemappingPanel *tmPanel;
 };
 
-#endif
+#endif // MAINWINDOW_H
