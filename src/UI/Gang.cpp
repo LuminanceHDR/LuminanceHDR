@@ -231,21 +231,22 @@ void Gang::setDefault()
 	//cout << "/Gang::setDefault()" << endl;
 }
 
-QString Gang::flag(const QString f) const
+QString Gang::flag(const QString& f) const
 {
-    if( ! changed() )
-	return "";
+    if ( !changed() ) return "";
+
     return QString(" %1 %2").arg(f).arg(value);
 }
 
-QString Gang::fname(const QString f) const
+QString Gang::fname(const QString& f) const
 {
-    if( ! changed() )
-	return "";
+    if ( !changed() ) return "";
+
     return QString(".%1%2").arg(f).arg(value);
 }
 
-void Gang::setupUndo() {
+void Gang::setupUndo()
+{
 	bool isCbx1Checked = false;
 	bool isCbx2Checked = false;
 	bool isRb1Checked = false;
@@ -283,7 +284,8 @@ void Gang::setupUndo() {
 	//cout << "/Gang::setupUndo()" << endl;
 }
 
-void Gang::undo() {
+void Gang::undo()
+{
 	//cout << "Gang::undo(): size: " << tmoSettingsList->size() << endl;
 	//cout << "Gang::undo(): index: " << tmoSettingsList->index() << endl;
 	if (tmoSettingsList->index() == tmoSettingsList->size() - 1) {

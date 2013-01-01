@@ -112,9 +112,12 @@ void TonemappingOptions::setDefaultParameters()
 }
 
 
-TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
+TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
+{
         QFile file(fname);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || file.size()==0) {
+        if ( !file.open(QIODevice::ReadOnly | QIODevice::Text) ||
+              file.size()==0)
+        {
                 throw (QApplication::tr("ERROR: cannot load Tone Mapping Setting file: ")+fname);
                 return NULL;
         }

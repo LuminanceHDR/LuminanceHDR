@@ -135,7 +135,7 @@ public:
 class TMOptionsOperations {
 public:
         TMOptionsOperations(const TonemappingOptions* opts);
-        static TonemappingOptions* parseFile(QString file);
+        static TonemappingOptions* parseFile(const QString& file);
         static TonemappingOptions* getDefaultTMOptions();
         QString getPostfix();
         QString getCaption();

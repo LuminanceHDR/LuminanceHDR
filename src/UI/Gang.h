@@ -41,27 +41,31 @@ class Gang : public QObject
 {
 	Q_OBJECT
 public:
-	Gang(QSlider* s = 0, QDoubleSpinBox* dsb = 0,
-		QCheckBox *cbx1 = 0, QCheckBox *cbx2 = 0, QRadioButton *rb1 = 0, QRadioButton *rb2 = 0,
-		const float minv = 0.0, const float maxv = 0.0, 
-		const float vv = 0.0, const bool logs = false);
-	~Gang();
-	friend class TmoSettings;
-	float v() const { return value; };
-	bool isCheckBox1Checked() const { return isCbx1Checked; };
-	bool isCheckBox2Checked() const { return isCbx2Checked; };
-	bool isRadioButton1Checked() const { return isRb1Checked; };
-	bool isRadioButton2Checked() const { return isRb2Checked; };
+    friend class TmoSettings;
+
+    Gang(QSlider* s = 0, QDoubleSpinBox* dsb = 0,
+         QCheckBox *cbx1 = 0, QCheckBox *cbx2 = 0,
+         QRadioButton *rb1 = 0, QRadioButton *rb2 = 0,
+         const float minv = 0.0, const float maxv = 0.0,
+         const float vv = 0.0, const bool logs = false);
+    ~Gang();
+
+    float v() const;
+    bool isCheckBox1Checked() const;
+    bool isCheckBox2Checked() const;
+    bool isRadioButton1Checked() const;
+    bool isRadioButton2Checked() const;
 	float p2v(const int p) const;
 	int v2p(const float x) const;
 	void setDefault();
-	bool changed() const { return changed_; };
-	QString flag(const QString f) const;
-	QString fname(const QString f) const;
+    bool changed() const;
+    QString flag(const QString& f) const;
+    QString fname(const QString& f) const;
 	void setupUndo();
 	void undo();
 	void redo();
 	void updateUndoState();
+
 protected slots:
 	void sliderMoved(int p);
 	void sliderValueChanged(int p);
@@ -70,10 +74,12 @@ protected slots:
 	void checkBox2Checked(bool);
 	void radioButton1Checked(bool);
 	void radioButton2Checked(bool);
+
 signals:
 	void finished();
 	void enableUndo(bool);
 	void enableRedo(bool);
+
 private:
 	QSlider *s;
 	QDoubleSpinBox *dsb;
@@ -102,6 +108,24 @@ private:
 	bool redoState;
 	TmoSettingsList *tmoSettingsList;
 };
+
+inline float Gang::v() const
+{ return value; }
+
+inline bool Gang::isCheckBox1Checked() const
+{ return isCbx1Checked; }
+
+inline bool Gang::isCheckBox2Checked() const
+{ return isCbx2Checked; }
+
+inline bool Gang::isRadioButton1Checked() const
+{ return isRb1Checked; }
+
+inline bool Gang::isRadioButton2Checked() const
+{ return isRb2Checked; }
+
+inline bool Gang::changed() const
+{ return changed_; }
 
 //
 //==================================== Undo/Redo ===================================================
