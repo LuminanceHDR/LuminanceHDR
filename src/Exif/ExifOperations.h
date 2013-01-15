@@ -38,7 +38,8 @@ namespace ExifOperations
 void copyExifData(const std::string& from, const std::string& to,
                   bool dont_overwrite,
                   const std::string& comment = std::string(),
-                  bool destIsLDR = false);
+                  bool destIsLDR = false,
+                  bool keepRotation = true);
 //!
 //!
 //!

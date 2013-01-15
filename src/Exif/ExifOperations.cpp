@@ -1,7 +1,9 @@
-/**
+/*
  * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
+ * Copyright (C) 2012 Franco Comida
+ * Copyright (c) 2013 Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,8 +20,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
+
+//! @author Giuseppe Rota <grota@users.sourceforge.net>
+//! @author Franco Comida
+//! @author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 #include <QDebug>
 #include <QString>
@@ -59,7 +64,8 @@ namespace ExifOperations
 
 void copyExifData(const std::string& from, const std::string& to,
                   bool dontOverwrite,
-                  const std::string& comment, bool destIsLDR)
+                  const std::string& comment, bool destIsLDR,
+                  bool keepRotation)
 {
     // std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
     // get source and destination exif data
@@ -110,6 +116,12 @@ void copyExifData(const std::string& from, const std::string& to,
                 dest_tag.setValue(&(i->value()));
             }
         }
+
+        // rotation support
+        if (!keepRotation)
+        {
+            dest_exifData["Exif.Image.Orientation"] = 0;
+        }
     }
     else
     {
@@ -137,7 +149,16 @@ void copyExifData(const std::string& from, const std::string& to,
                 const Exiv2::ExifKey destKey(i->key());
                 destExifData.add(destKey, &(i->value()));
             }
-            try {
+
+            // rotation support
+            if (!keepRotation)
+            {
+                destExifData["Exif.Image.Orientation"] = 0;
+            }
+
+
+            try
+            {
                 destinationImage->setExifData(destExifData);
             }
             catch (Exiv2::AnyError& e)
@@ -302,7 +323,7 @@ int obtain_rotation(const std::string& filename)
         Exiv2::ExifData::const_iterator degrees = exifData.findKey(Exiv2::ExifKey("Exif.Image.Orientation"));
         if (degrees != exifData.end())
         {
-            int rotation = static_cast<int>(degrees->toFloat());
+            long rotation = degrees->toLong();
 
             switch(rotation)
             {

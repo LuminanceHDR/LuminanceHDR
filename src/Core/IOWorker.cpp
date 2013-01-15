@@ -262,7 +262,9 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
             emit write_ldr_failed();
         }
     }
-    if (inputFileName != "") { // copy EXIF tags from the 1st bracketed image
+    // copy EXIF tags from the 1st bracketed image
+    if (inputFileName != "")
+    {
         QFileInfo fileinfo(inputFileName);
         QString absoluteInputFileName = fileinfo.absoluteFilePath();
         QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
@@ -276,7 +278,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                      encodedName.constData(), 
                                      false, 
                                      comment.toStdString(),
-                                     true);
+                                     true, false);
     }
     emit IO_finish();
 
