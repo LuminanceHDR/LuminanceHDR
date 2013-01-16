@@ -35,69 +35,71 @@
 
 namespace pfs
 {
-  /// This enum is used to specify color spaces for transformColorSpace function
-  enum ColorSpace
-  {
-    CS_XYZ = 0,         ///< Absolute XYZ space, reference white - D65, Y is calibrated luminance in cd/m^2
-    CS_RGB,             ///< Absolute XYZ space, reference white - D65
-    CS_SRGB,            ///< sRGB color space for LDR images (see
-    ///www.srgb.com). The possible pixel values
-    ///for R, G and B channel should be within
-    ///range 0-1 (the values above or below this
-    ///range will be clamped). Peak luminance
-    ///level of the display is 80cd/m^2.
-    CS_YUV,             ///< Perceptually uniform u and v color coordinates, Y is calibrated luminance in cd/m^2
-    CS_Yxy,              ///< Luminance and normalized chromacities (x=X/(X+Y+Z), y=Y/(X+Y+Z))
-    CS_LAST             ///< For internal purposes only
-  };
 
-  // SRGB <-> XYZ
-  void transformSRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                         Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  void transformSRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                       Array2D *outY);
-  void transformXYZ2SRGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                         Array2D *outC1, Array2D *outC2, Array2D *outC3);
+//! This enum is used to specify color spaces for transformColorSpace function
+enum ColorSpace
+{
+    CS_XYZ = 0,         //!< Absolute XYZ space, reference white - D65, Y is calibrated luminance in cd/m^2
+    CS_RGB = 1,         //!< Absolute RGB space, reference white - D65
+    CS_SRGB = 2,        //!< sRGB color space for LDR images (see
+                        //!< www.srgb.com). The possible pixel values
+                        //!< for R, G and B channel should be within
+                        //!< range 0-1 (the values above or below this
+                        //!< range will be clamped). Peak luminance
+                        //!< level of the display is 80cd/m^2.
+    CS_YUV = 3,         //!< Perceptually uniform u and v color coordinates, Y is calibrated luminance in cd/m^2
+    CS_Yxy = 4          //!< Luminance and normalized chromacities (x=X/(X+Y+Z), y=Y/(X+Y+Z))
+};
 
-  // XYZ <-> Yuv
-  void transformXYZ2Yuv(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  void transformYuv2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  
-  // Yxy <-> XYZ
-  void transformYxy2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  void transformXYZ2Yxy(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  
-  // RGB <-> XYZ
-  void transformRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  void transformRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                      Array2D *outC1);
-  void transformXYZ2RGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3);
-  
-  /**
-   * Transform color channels from one color space into
-   * another. Input and output channels may point to the same data
-   * for in-memory transform.
-   *
-   * @param inCS input color space
-   * @param inC1 first color channel of the input image
-   * @param inC2 second color channel of the input image
-   * @param inC3 third color channel of the input image
-   * @param outCS output color space
-   * @param outC1 first color channel of the output image
-   * @param outC2 second color channel of the output image
-   * @param outC3 third color channel of the output image
-   */
-  void transformColorSpace( ColorSpace inCS,
-                           const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                           ColorSpace outCS,
-                           Array2D *outC1, Array2D *outC2, Array2D *outC3 );
-  
+// XYZ -> *
+void transformXYZ2SRGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                       Array2D *outC1, Array2D *outC2, Array2D *outC3);
+void transformXYZ2RGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
+void transformXYZ2Yxy(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
+void transformXYZ2Yuv(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
+
+// SRGB -> *
+void transformSRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                       Array2D *outC1, Array2D *outC2, Array2D *outC3);
+void transformSRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                     Array2D *outY);
+
+// RGB -> *
+void transformRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
+void transformRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                    Array2D *outC1);
+
+// Yuv -> *
+void transformYuv2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
+
+// Yxy -> *
+void transformYxy2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                      Array2D *outC1, Array2D *outC2, Array2D *outC3);
+
+
+//! \brief Transform color channels from one color space into
+//! another. Input and output channels may point to the same data
+//! for in-memory transform.
+//!
+//! \param inCS input color space
+//! \param inC1 first color channel of the input image
+//! \param inC2 second color channel of the input image
+//! \param inC3 third color channel of the input image
+//! \param outCS output color space
+//! \param outC1 first color channel of the output image
+//! \param outC2 second color channel of the output image
+//! \param outC3 third color channel of the output image
+//!
+void transformColorSpace( ColorSpace inCS,
+                          const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                          ColorSpace outCS,
+                          Array2D *outC1, Array2D *outC2, Array2D *outC3 );
+
 }
 
 #endif // COLORSPACE_H
