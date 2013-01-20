@@ -30,12 +30,12 @@
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/resize.h"
 #include "Libpfs/manip/gamma.h"
+#include "Libpfs/tm/TonemapOperator.h"
 
 #include "Core/IOWorker.h"
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Fileformat/pfsoutldrimage.h"
-#include "TonemappingEngine/TonemapOperator.h"
 
 #include <QFileInfo>
 #include <QByteArray>

@@ -39,7 +39,8 @@
 
 #include "Core/IOWorker.h"
 #include "Core/TMWorker.h"
-#include "TonemappingEngine/TonemapOperator.h"
+
+#include "Libpfs/tm/TonemapOperator.h"
 
 #if defined(_MSC_VER)
 #include <fcntl.h>

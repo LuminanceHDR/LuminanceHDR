@@ -33,9 +33,11 @@
 #include "Libpfs/manip/resize.h"
 
 #include "Core/TMWorker.h"
+#include "Libpfs/tm/TonemapOperator.h"
+
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"
-#include "TonemappingEngine/TonemapOperator.h"
+
 #include "Common/LuminanceOptions.h"
 #include "UI/FlowLayout.h"
 

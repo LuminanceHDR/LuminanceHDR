@@ -34,10 +34,11 @@
 #include <map>
 #include <boost/assign.hpp>
 
-#include "TonemappingEngine/TonemapOperator.h"
 #include "TonemappingOperators/pfstmo.h"
+
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
+#include "Libpfs/tm/TonemapOperator.h"
 
 using namespace boost::assign;
 

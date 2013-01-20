@@ -32,11 +32,11 @@
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/resize.h"
+#include "Libpfs/tm/TonemapOperator.h"
 
 #include "Core/TMWorker.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"
-#include "TonemappingEngine/TonemapOperator.h"
 #include "Common/LuminanceOptions.h"
 
 namespace // anoymous namespace

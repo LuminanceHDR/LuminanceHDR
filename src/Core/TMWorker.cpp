@@ -34,10 +34,10 @@
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/resize.h"
 #include "Libpfs/manip/gamma.h"
+#include "Libpfs/tm/TonemapOperator.h"
 
 #include "Core/TonemappingOptions.h"
 #include "Common/ProgressHelper.h"
-#include "TonemappingEngine/TonemapOperator.h"
 
 TMWorker::TMWorker(QObject* parent):
     QObject(parent),
