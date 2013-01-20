@@ -32,30 +32,25 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 
-namespace pfs {
-    class Frame;
-}
+//namespace pfs {
+//    class Frame;
+//}
 
-TonemapOperatorReinhard05::TonemapOperatorReinhard05():
-    TonemapOperator()
-{}
+//TonemapOperatorReinhard05::TonemapOperatorReinhard05():
+//    TonemapOperator()
+//{}
 
-void TonemapOperatorReinhard05::tonemapFrame(pfs::Frame* workingframe,
-                                             TonemappingOptions* opts,
-                                             ProgressHelper& ph)
-{
-    ph.emitSetMaximum(100);
+//void TonemapOperatorReinhard05::tonemapFrame(pfs::Frame* workingframe,
+//                                             TonemappingOptions* opts,
+//                                             ProgressHelper& ph)
+//{
+//    ph.emitSetMaximum(100);
 
-    pfstmo_reinhard05(
-                workingframe,
-                opts->operator_options.reinhard05options.brightness,
-                opts->operator_options.reinhard05options.chromaticAdaptation,
-                opts->operator_options.reinhard05options.lightAdaptation,
-                &ph
-                );
-}
-
-TMOperator TonemapOperatorReinhard05::getType()
-{
-    return reinhard05;
-}
+//    pfstmo_reinhard05(
+//                workingframe,
+//                opts->operator_options.reinhard05options.brightness,
+//                opts->operator_options.reinhard05options.chromaticAdaptation,
+//                opts->operator_options.reinhard05options.lightAdaptation,
+//                &ph
+//                );
+//}

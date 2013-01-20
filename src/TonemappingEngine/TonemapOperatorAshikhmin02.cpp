@@ -34,31 +34,26 @@
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-TonemapOperatorAshikhmin02::TonemapOperatorAshikhmin02():
-    TonemapOperator()
-{}
+//TonemapOperatorAshikhmin02::TonemapOperatorAshikhmin02():
+//    TonemapOperator()
+//{}
 
-void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
-{
-    ph.emitSetMaximum(100);
+//void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+//{
+//    ph.emitSetMaximum(100);
 
-    // Convert to CS_XYZ: tm operator now use this colorspace
-    pfs::Channel *X, *Y, *Z;
-    workingframe->getXYZChannels( X, Y, Z );
-    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//    // Convert to CS_XYZ: tm operator now use this colorspace
+//    pfs::Channel *X, *Y, *Z;
+//    workingframe->getXYZChannels( X, Y, Z );
+//    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+//                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    pfstmo_ashikhmin02(workingframe,
-                       opts->operator_options.ashikhminoptions.simple,
-                       opts->operator_options.ashikhminoptions.lct,
-                       (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
-                       &ph);
+//    pfstmo_ashikhmin02(workingframe,
+//                       opts->operator_options.ashikhminoptions.simple,
+//                       opts->operator_options.ashikhminoptions.lct,
+//                       (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
+//                       &ph);
 
-    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-}
-
-TMOperator TonemapOperatorAshikhmin02::getType()
-{
-    return ashikhmin;
-}
+//    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+//                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//}

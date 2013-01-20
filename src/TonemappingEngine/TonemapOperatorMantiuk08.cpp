@@ -28,38 +28,33 @@
  *
  */
 
-#include "TonemappingEngine/TonemapOperatorMantiuk08.h"
-#include "TonemappingOperators/pfstmo.h"
-#include "Core/TonemappingOptions.h"
-#include "Libpfs/channel.h"
-#include "Libpfs/colorspace.h"
+//#include "TonemappingEngine/TonemapOperatorMantiuk08.h"
+//#include "TonemappingOperators/pfstmo.h"
+//#include "Core/TonemappingOptions.h"
+//#include "Libpfs/channel.h"
+//#include "Libpfs/colorspace.h"
 
-TonemapOperatorMantiuk08::TonemapOperatorMantiuk08():
-    TonemapOperator()
-{}
+//TonemapOperatorMantiuk08::TonemapOperatorMantiuk08():
+//    TonemapOperator()
+//{}
 
-void TonemapOperatorMantiuk08::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
-{
-    ph.emitSetMaximum(100);
+//void TonemapOperatorMantiuk08::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+//{
+//    ph.emitSetMaximum(100);
 
-    // Convert to CS_XYZ: tm operator now use this colorspace
-    pfs::Channel *X, *Y, *Z;
-    workingframe->getXYZChannels( X, Y, Z );
-    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//    // Convert to CS_XYZ: tm operator now use this colorspace
+//    pfs::Channel *X, *Y, *Z;
+//    workingframe->getXYZChannels( X, Y, Z );
+//    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+//                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    pfstmo_mantiuk08(workingframe,
-                     opts->operator_options.mantiuk08options.colorsaturation,
-                     opts->operator_options.mantiuk08options.contrastenhancement,
-                     opts->operator_options.mantiuk08options.luminancelevel,
-                     opts->operator_options.mantiuk08options.setluminance,
-                     &ph);
+//    pfstmo_mantiuk08(workingframe,
+//                     opts->operator_options.mantiuk08options.colorsaturation,
+//                     opts->operator_options.mantiuk08options.contrastenhancement,
+//                     opts->operator_options.mantiuk08options.luminancelevel,
+//                     opts->operator_options.mantiuk08options.setluminance,
+//                     &ph);
 
-    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-}
-
-TMOperator TonemapOperatorMantiuk08::getType()
-{
-    return mantiuk08;
-}
+//    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+//                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//}

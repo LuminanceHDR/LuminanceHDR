@@ -31,15 +31,14 @@
 #ifndef TONEMAP_OPERATOR_MANTIUK08_H
 #define TONEMAP_OPERATOR_MANTIUK08_H
 
-#include "TonemappingEngine/TonemapOperator.h"
+//#include "TonemappingEngine/TonemapOperator.h"
 
-class TonemapOperatorMantiuk08: public TonemapOperator
-{
-public:
-    TonemapOperatorMantiuk08();
+//class TonemapOperatorMantiuk08: public TonemapOperator
+//{
+//public:
+//    TonemapOperatorMantiuk08();
 
-    TMOperator getType();
-    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
-};
+//    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
+//};
 
 #endif

@@ -33,48 +33,44 @@
 #include "TonemappingEngine/TonemapOperatorMantiuk06.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
-#include "Libpfs/channel.h"
-#include "Libpfs/colorspace.h"
-#include "Libpfs/channel.h"
-#include "Libpfs/colorspace.h"
 
-QMutex TonemapOperatorMantiuk06::m_Mutex;
+// QMutex TonemapOperatorMantiuk06::m_Mutex;
 
-TonemapOperatorMantiuk06::TonemapOperatorMantiuk06():
-    TonemapOperator()
-{}
+//TonemapOperatorMantiuk06::TonemapOperatorMantiuk06():
+//    TonemapOperator()
+//{}
 
-void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
-{
-    ph.emitSetMaximum(100);
+//void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+//{
+//    ph.emitSetMaximum(100);
 
-    // Convert to CS_XYZ: tm operator now use this colorspace
-//    pfs::Channel *X, *Y, *Z;
-//    workingframe->getXYZChannels( X, Y, Z );
-//    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-//                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//    // Convert to CS_XYZ: tm operator now use this colorspace
+////    pfs::Channel *X, *Y, *Z;
+////    workingframe->getXYZChannels( X, Y, Z );
+////    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+////                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    // pfstmo_mantiuk06 not reentrant
-    m_Mutex.lock();
-    try {
-        pfstmo_mantiuk06(workingframe,
-                         opts->operator_options.mantiuk06options.contrastfactor,
-                         opts->operator_options.mantiuk06options.saturationfactor,
-                         opts->operator_options.mantiuk06options.detailfactor,
-                         opts->operator_options.mantiuk06options.contrastequalization,
-                         &ph);
-    }
-    catch (...) {
-        m_Mutex.unlock();
-        throw std::runtime_error("Tonemap Failed");
-    }
-    m_Mutex.unlock();
+//    // pfstmo_mantiuk06 not reentrant
+//    m_Mutex.lock();
+//    try {
+//        pfstmo_mantiuk06(workingframe,
+//                         opts->operator_options.mantiuk06options.contrastfactor,
+//                         opts->operator_options.mantiuk06options.saturationfactor,
+//                         opts->operator_options.mantiuk06options.detailfactor,
+//                         opts->operator_options.mantiuk06options.contrastequalization,
+//                         &ph);
+//    }
+//    catch (...) {
+//        m_Mutex.unlock();
+//        throw std::runtime_error("Tonemap Failed");
+//    }
+//    m_Mutex.unlock();
 
-//    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-//                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-}
+////    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+////                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//}
 
-TMOperator TonemapOperatorMantiuk06::getType()
-{
-    return mantiuk06;
-}
+//TMOperator TonemapOperatorMantiuk06::getType()
+//{
+//    return mantiuk06;
+//}

@@ -33,14 +33,13 @@
 
 #include "TonemappingEngine/TonemapOperator.h"
 
-class TonemapOperatorFattal02: public TonemapOperator
-{
-public:
-    TonemapOperatorFattal02();
+//class TonemapOperatorFattal02: public TonemapOperator
+//{
+//public:
+//    TonemapOperatorFattal02();
 
-    TMOperator getType();
-    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
+//    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
 
-};
+//};
 
 #endif

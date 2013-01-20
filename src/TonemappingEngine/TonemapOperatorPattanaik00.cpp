@@ -34,34 +34,29 @@
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-TonemapOperatorPattanaik00::TonemapOperatorPattanaik00():
-    TonemapOperator()
-{}
+//TonemapOperatorPattanaik00::TonemapOperatorPattanaik00():
+//    TonemapOperator()
+//{}
 
-void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
-{
-    ph.emitSetMaximum(100);
+//void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+//{
+//    ph.emitSetMaximum(100);
 
-    // Convert to CS_XYZ: tm operator now use this colorspace
-    pfs::Channel *X, *Y, *Z;
-    workingframe->getXYZChannels( X, Y, Z );
-    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//    // Convert to CS_XYZ: tm operator now use this colorspace
+//    pfs::Channel *X, *Y, *Z;
+//    workingframe->getXYZChannels( X, Y, Z );
+//    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+//                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    pfstmo_pattanaik00(workingframe,
-                       opts->operator_options.pattanaikoptions.local,
-                       opts->operator_options.pattanaikoptions.multiplier,
-                       opts->operator_options.pattanaikoptions.cone,
-                       opts->operator_options.pattanaikoptions.rod,
-                       opts->operator_options.pattanaikoptions.autolum,
-                       &ph);
+//    pfstmo_pattanaik00(workingframe,
+//                       opts->operator_options.pattanaikoptions.local,
+//                       opts->operator_options.pattanaikoptions.multiplier,
+//                       opts->operator_options.pattanaikoptions.cone,
+//                       opts->operator_options.pattanaikoptions.rod,
+//                       opts->operator_options.pattanaikoptions.autolum,
+//                       &ph);
 
 
-    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-}
-
-TMOperator TonemapOperatorPattanaik00::getType()
-{
-    return pattanaik;
-}
+//    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+//                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//}

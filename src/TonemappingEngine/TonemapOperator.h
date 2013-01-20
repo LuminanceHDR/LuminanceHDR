@@ -31,7 +31,8 @@
 #ifndef TONEMAP_OPERATOR_H
 #define TONEMAP_OPERATOR_H
 
-#include <QObject>
+
+#include <stdexcept>
 
 #include "Core/TonemappingOptions.h"
 #include "Common/ProgressHelper.h"
@@ -50,7 +51,7 @@ public:
     ///!
     ///! return the underlying type of the TonemapOperator
     ///!
-    virtual TMOperator getType() = 0;
+    virtual TMOperator getType() const = 0;
 
     ///!
     ///! Get a Frame in RGB and processes it.

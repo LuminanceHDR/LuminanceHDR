@@ -35,17 +35,16 @@
 
 #include "TonemappingEngine/TonemapOperator.h"
 
-class TonemapOperatorMantiuk06: public TonemapOperator
-{
-public:
-    TonemapOperatorMantiuk06();
+//class TonemapOperatorMantiuk06: public TonemapOperator
+//{
+//public:
+//    TonemapOperatorMantiuk06();
 
-    TMOperator getType();
-    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
+//    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
 
-private:
-    // It may be removed, because the issue in the race condition of the operator has been solved
-    static QMutex m_Mutex;
-};
+//private:
+//    // It may be removed, because the issue in the race condition of the operator has been solved
+//    static QMutex m_Mutex;
+//};
 
 #endif

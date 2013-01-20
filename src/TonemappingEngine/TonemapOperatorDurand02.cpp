@@ -36,38 +36,33 @@
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-QMutex TonemapOperatorDurand02::m_Mutex;
+//QMutex TonemapOperatorDurand02::m_Mutex;
 
-TonemapOperatorDurand02::TonemapOperatorDurand02():
-    TonemapOperator()
-{}
+//TonemapOperatorDurand02::TonemapOperatorDurand02():
+//    TonemapOperator()
+//{}
 
-void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe,
-                                           TonemappingOptions* opts,
-                                           ProgressHelper& ph)
-{
-    ph.emitSetMaximum(100);
+//void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe,
+//                                           TonemappingOptions* opts,
+//                                           ProgressHelper& ph)
+//{
+//    ph.emitSetMaximum(100);
 
-    // pfstmo_durand02 not reentrant
-    m_Mutex.lock();
-    try
-    {
-        pfstmo_durand02(workingframe,
-                        opts->operator_options.durandoptions.spatial,
-                        opts->operator_options.durandoptions.range,
-                        opts->operator_options.durandoptions.base,
-                        &ph);
-    }
-    catch (...)
-    {
-        m_Mutex.unlock();
-        throw std::runtime_error("Tonemap Failed");
-    }
-    m_Mutex.unlock();
-}
-
-TMOperator TonemapOperatorDurand02::getType()
-{
-    return durand;
-}
+//    // pfstmo_durand02 not reentrant
+//    m_Mutex.lock();
+//    try
+//    {
+//        pfstmo_durand02(workingframe,
+//                        opts->operator_options.durandoptions.spatial,
+//                        opts->operator_options.durandoptions.range,
+//                        opts->operator_options.durandoptions.base,
+//                        &ph);
+//    }
+//    catch (...)
+//    {
+//        m_Mutex.unlock();
+//        throw std::runtime_error("Tonemap Failed");
+//    }
+//    m_Mutex.unlock();
+//}
 

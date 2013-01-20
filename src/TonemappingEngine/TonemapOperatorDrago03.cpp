@@ -30,27 +30,22 @@
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //!
 
-#include "TonemappingEngine/TonemapOperatorDrago03.h"
-#include "TonemappingOperators/pfstmo.h"
-#include "Core/TonemappingOptions.h"
-#include "Libpfs/channel.h"
-#include "Libpfs/colorspace.h"
+//#include "TonemappingEngine/TonemapOperatorDrago03.h"
+//#include "TonemappingOperators/pfstmo.h"
+//#include "Core/TonemappingOptions.h"
+//#include "Libpfs/channel.h"
+//#include "Libpfs/colorspace.h"
 
-TonemapOperatorDrago03::TonemapOperatorDrago03():
-    TonemapOperator()
-{}
+//TonemapOperatorDrago03::TonemapOperatorDrago03():
+//    TonemapOperator()
+//{}
 
-void TonemapOperatorDrago03::tonemapFrame(pfs::Frame* workingframe,
-                                          TonemappingOptions* opts,
-                                          ProgressHelper& ph)
-{
-    ph.emitSetMaximum(100);
+//void TonemapOperatorDrago03::tonemapFrame(pfs::Frame* workingframe,
+//                                          TonemappingOptions* opts,
+//                                          ProgressHelper& ph)
+//{
+//    ph.emitSetMaximum(100);
 
-    pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, &ph);
-}
-
-TMOperator TonemapOperatorDrago03::getType()
-{
-    return drago;
-}
+//    pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, &ph);
+//}
 

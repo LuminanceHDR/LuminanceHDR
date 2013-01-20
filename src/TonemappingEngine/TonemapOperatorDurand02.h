@@ -35,16 +35,15 @@
 
 #include "TonemappingEngine/TonemapOperator.h"
 
-class TonemapOperatorDurand02: public TonemapOperator
-{
-public:
-    TonemapOperatorDurand02();
+//class TonemapOperatorDurand02: public TonemapOperator
+//{
+//public:
+//    TonemapOperatorDurand02();
 
-    TMOperator getType();
-    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
+//    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
 
-private:
-    static QMutex m_Mutex;
-};
+//private:
+//    static QMutex m_Mutex;
+//};
 
 #endif

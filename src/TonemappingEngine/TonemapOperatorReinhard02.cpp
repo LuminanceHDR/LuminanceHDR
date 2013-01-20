@@ -36,45 +36,39 @@
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-QMutex TonemapOperatorReinhard02::m_Mutex;
+//QMutex TonemapOperatorReinhard02::m_Mutex;
 
-TonemapOperatorReinhard02::TonemapOperatorReinhard02():
-    TonemapOperator()
-{}
+//TonemapOperatorReinhard02::TonemapOperatorReinhard02():
+//    TonemapOperator()
+//{}
 
-void TonemapOperatorReinhard02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
-{
-    ph.emitSetMaximum(100);
+//void TonemapOperatorReinhard02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+//{
+//    ph.emitSetMaximum(100);
 
-    // Convert to CS_XYZ: tm operator now use this colorspace
-    pfs::Channel *X, *Y, *Z;
-    workingframe->getXYZChannels( X, Y, Z );
-    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//    // Convert to CS_XYZ: tm operator now use this colorspace
+//    pfs::Channel *X, *Y, *Z;
+//    workingframe->getXYZChannels( X, Y, Z );
+//    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+//                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    m_Mutex.lock();
-    try {
-        pfstmo_reinhard02(workingframe,
-                          opts->operator_options.reinhard02options.key,
-                          opts->operator_options.reinhard02options.phi,
-                          opts->operator_options.reinhard02options.range,
-                          opts->operator_options.reinhard02options.lower,
-                          opts->operator_options.reinhard02options.upper,
-                          opts->operator_options.reinhard02options.scales,
-                          &ph);
-    }
-    catch (...) {
-        m_Mutex.unlock();
-        throw std::runtime_error("Tonemap Failed");
-    }
-    m_Mutex.unlock();
+//    m_Mutex.lock();
+//    try {
+//        pfstmo_reinhard02(workingframe,
+//                          opts->operator_options.reinhard02options.key,
+//                          opts->operator_options.reinhard02options.phi,
+//                          opts->operator_options.reinhard02options.range,
+//                          opts->operator_options.reinhard02options.lower,
+//                          opts->operator_options.reinhard02options.upper,
+//                          opts->operator_options.reinhard02options.scales,
+//                          &ph);
+//    }
+//    catch (...) {
+//        m_Mutex.unlock();
+//        throw std::runtime_error("Tonemap Failed");
+//    }
+//    m_Mutex.unlock();
 
-    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-}
-
-TMOperator TonemapOperatorReinhard02::getType()
-{
-    return reinhard02;
-}
-
+//    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+//                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+//}

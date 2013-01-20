@@ -36,7 +36,18 @@
 
 //----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
 // all is used by SavedParametersDialog to select comments from all operators
-enum TMOperator {mantiuk06,mantiuk08,fattal,drago,durand,reinhard02,reinhard05,ashikhmin,pattanaik};
+enum TMOperator
+{
+    mantiuk06 = 0,
+    mantiuk08 = 1,
+    fattal = 2,
+    drago = 3,
+    durand = 4,
+    reinhard02 = 5,
+    reinhard05 = 6,
+    ashikhmin = 7,
+    pattanaik = 8
+};
 
 class TonemappingOptions
 {
