@@ -35,18 +35,9 @@
 #include <boost/assign.hpp>
 
 #include "TonemappingEngine/TonemapOperator.h"
-#include "TonemappingEngine/TonemapOperatorAshikhmin02.h"
-#include "TonemappingEngine/TonemapOperatorDrago03.h"
-#include "TonemappingEngine/TonemapOperatorDurand02.h"
-#include "TonemappingEngine/TonemapOperatorFattal02.h"
-#include "TonemappingEngine/TonemapOperatorPattanaik00.h"
-#include "TonemappingEngine/TonemapOperatorReinhard02.h"
-#include "TonemappingEngine/TonemapOperatorReinhard05.h"
-
+#include "TonemappingOperators/pfstmo.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
-#include "TonemappingOperators/pfstmo.h"
-
 
 using namespace boost::assign;
 
