@@ -30,30 +30,31 @@
 #include <stdlib.h>
 #include <cmath>
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 
 #include <QFile>
 
-#include "Libpfs/colorspace.h"
+
 #include "Libpfs/frame.h"
-#include "Common/ProgressHelper.h"
+#include "Libpfs/colorspace.h"
+#include "Libpfs/progress.h"
+
 #include "tmo_ashikhmin02.h"
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum);
 
-void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_value, int eq, ProgressHelper *ph)
+void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int eq, pfs::Progress &ph)
 {
-    assert(inpfsframe!=NULL);
-
+#ifndef NDEBUG
     //--- default tone mapping parameters;
-
     std::cout << "pfstmo_ashikhmin02 (";
     std::cout << "simple: " << simple_flag;
     std::cout << ", lc_value: " << lc_value;
     std::cout << ", eq: " << eq << ")" << std::endl;
+#endif
 
     pfs::Channel *X, *Y, *Z;
-    inpfsframe->getXYZChannels(X,Y,Z);
+    frame.getXYZChannels(X,Y,Z);
     assert( X!=NULL && Y!=NULL && Z!=NULL );
 
     pfs::Array2D* Xr = X->getChannelData();
@@ -62,7 +63,7 @@ void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_valu
 
     pfs::transformColorSpace( pfs::CS_RGB, Xr, Yr, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
     float maxLum, avLum, minLum;
-    calculateLuminance( Yr, avLum, maxLum, minLum);
+    calculateLuminance(Yr, avLum, maxLum, minLum);
 
     int w = Yr->getCols();
     int h = Yr->getRows();
@@ -82,8 +83,10 @@ void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_valu
         }
     }
 
-    if (!ph->isTerminationRequested())
-        ph->newValue( 100 );
+    if (!ph.canceled())
+    {
+        ph.setValue( 100 );
+    }
 
     delete L;
 

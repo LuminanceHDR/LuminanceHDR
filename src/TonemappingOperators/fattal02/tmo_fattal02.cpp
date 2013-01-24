@@ -39,8 +39,10 @@
 #include <math.h>
 #include <assert.h>
 
+#include "Libpfs/array2d.h"
+#include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
+
 #include "pde.h"
 #include "tmo_fattal02.h"
 
@@ -337,7 +339,7 @@ void tmo_fattal02(size_t width,
                   bool newfattal,
                   bool fftsolver,
                   int detail_level,
-                  ProgressHelper *ph)
+                  pfs::Progress &ph)
 {
     static const float black_point = 0.1f;
     static const float white_point = 0.5f;
@@ -346,8 +348,8 @@ void tmo_fattal02(size_t width,
     if ( detail_level < 0 ) detail_level = 0;
     if ( detail_level > 3 ) detail_level = 3;
 
-  ph->newValue(2);
-  if (ph->isTerminationRequested()) return;
+  ph.setValue(2);
+  if (ph.canceled()) return;
 
   int MSIZE = 32;         // minimum size of gaussian pyramid
   // I believe a smaller value than 32 results in slightly better overall
@@ -377,7 +379,7 @@ void tmo_fattal02(size_t width,
   {
       (*H)(i) = logf( 100.0f* Y(i)/maxLum + 1e-4 );
   }
-  ph->newValue(4);
+  ph.setValue(4);
 
   // create gaussian pyramids
   int mins = (width<height) ? width : height;	// smaller dimension
@@ -393,7 +395,7 @@ void tmo_fattal02(size_t width,
 
   pfs::Array2D** pyramids = new pfs::Array2D*[nlevels];
   createGaussianPyramids(H, pyramids, nlevels);
-  ph->newValue(8);
+  ph.setValue(8);
 
   // calculate gradients and its average values on pyramid levels
   pfs::Array2D** gradients = new pfs::Array2D*[nlevels];
@@ -403,7 +405,7 @@ void tmo_fattal02(size_t width,
     gradients[k] = new pfs::Array2D(pyramids[k]->getCols(), pyramids[k]->getRows());
     avgGrad[k] = calculateGradients(pyramids[k],gradients[k], k);
   }
-  ph->newValue(12);
+  ph.setValue(12);
 
   // calculate fi matrix
   pfs::Array2D* FI = new pfs::Array2D(width, height);
@@ -417,8 +419,8 @@ void tmo_fattal02(size_t width,
   delete[] pyramids;
   delete[] gradients;
   delete[] avgGrad;
-  ph->newValue(16);
-  if (ph->isTerminationRequested()){
+  ph.setValue(16);
+  if (ph.canceled()){
     delete FI;
     delete H;
     return;
@@ -457,7 +459,7 @@ void tmo_fattal02(size_t width,
       }
   delete H;
   delete FI;
-  ph->newValue(18);
+  ph.setValue(18);
 
 
 //   dumpPFS( "Gx.pfs", Gx, "Y" );
@@ -483,8 +485,8 @@ void tmo_fattal02(size_t width,
   }
   delete Gx;
   delete Gy;
-  ph->newValue(20);
-  if (ph->isTerminationRequested())
+  ph.setValue(20);
+  if (ph.canceled())
   {
       return;
   }
@@ -503,8 +505,8 @@ void tmo_fattal02(size_t width,
       solve_pde_multigrid(&DivG, &U, ph);
   }
   printf("\npde residual error: %f\n", residual_pde(&U, &DivG));
-  ph->newValue(90); 
-  if ( ph->isTerminationRequested() )
+  ph.setValue(90);
+  if ( ph.canceled() )
   {
       return;
   }
@@ -514,7 +516,7 @@ void tmo_fattal02(size_t width,
       L(idx) = expf( gamma * U(idx) );
   }
   }
-  ph->newValue(95); 
+  ph.setValue(95);
 	
   // remove percentile of min and max values and renormalize
   float cut_min = 0.01f * black_point;
@@ -531,5 +533,5 @@ void tmo_fattal02(size_t width,
       // note, we intentionally do not cut off values > 1.0
   }
 
-  ph->newValue(96); 
+  ph.setValue(96);
 }

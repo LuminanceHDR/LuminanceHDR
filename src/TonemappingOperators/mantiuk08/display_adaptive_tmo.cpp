@@ -49,6 +49,8 @@
 #include <gsl/gsl_interp.h>
 #include "cqp/gsl_cqp.h"
 
+#include "Libpfs/progress.h"
+#include "Libpfs/array2d.h"
 #include "Libpfs/vex/sse.h"
 
 #ifdef BRANCH_PREDICTION
@@ -424,9 +426,9 @@ const double conditional_density::l_min = -8.f, conditional_density::l_max = 8.f
 double conditional_density::x_scale[X_COUNT] = { 0 };    // input log luminance scale
 
 
-std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, ProgressHelper *ph)
+std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfs::Progress &ph)
 {
-  ph->newValue( 0 );
+  ph.setValue( 0 );
 
   pfs::Array2D buf_1(width, height);
   pfs::Array2D buf_2(width, height);
@@ -520,8 +522,8 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
     }
     std::swap( LP_low, LP_high );
 
-    ph->newValue( (f+1)*PROGRESS_CDF/C->f_count );  
-	if (ph->isTerminationRequested())
+    ph.setValue( (f+1)*PROGRESS_CDF/C->f_count );
+    if (ph.canceled())
 		break;
   }
 
@@ -747,7 +749,7 @@ static void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_coun
  * a pre-allocated array and has the same size as C->x_scale.
  */
 static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, DisplaySize */*ds*/,
-  float enh_factor, double *y, const float white_y, ProgressHelper *ph = NULL ) {
+  float enh_factor, double *y, const float white_y, pfs::Progress &ph ) {
   
   conditional_density *C = (conditional_density*)C_pub;
   
@@ -974,8 +976,8 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
     if( converged )
       break;    
   }
-  ph->newValue( 95 );    
-  if (ph->isTerminationRequested())
+  ph.setValue( 95 );
+  if (ph.canceled())
 	return PFSTMO_ABORTED; // PFSTMO_OK is right 
   
 //   for( int i=0; i < L; i++ )
@@ -989,7 +991,7 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 
 int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_dens,
   DisplayFunction *df, DisplaySize *ds, const float enh_factor, 
-  const float white_y, ProgressHelper *ph )
+  const float white_y, pfs::Progress &ph )
 {
   conditional_density *C = (conditional_density*)cond_dens;
   tc->init( C->x_count, C->x_scale );

@@ -35,17 +35,18 @@
 #include "pde.h"
 
 #include <iostream>
+#include <cassert>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
+#include "Libpfs/progress.h"
 #include "Libpfs/vex/vex.h"
 #include "Libpfs/vex/sse.h"
 #include "Libpfs/array2d.h"
 #include "Libpfs/manip/copy.h"
 
 #include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
 
 using namespace std;
 
@@ -339,7 +340,7 @@ static void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
 }
 
 
-void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
+void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, pfs::Progress &ph)
 {
   int xmax = F->getCols();
   int ymax = F->getRows();
@@ -394,7 +395,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
   // 3. nested iterations
   for( k=levels-1; k>=0 ; k-- )
   {
-    ph->newValue(20+70*(levels - k)/(levels+1));
+    ph.setValue(20+70*(levels - k)/(levels+1));
     // 4. interpolate sollution from last coarse-grid to finer-grid
     // interpolate from level k+1 to level k (finer-grid)
     prolongate( IU[k+1], IU[k] );
@@ -487,7 +488,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
   }
 
   
-  ph->newValue(90);
+  ph.setValue(90);
 
   delete VF[0];
   delete IU[0];

@@ -26,6 +26,7 @@
 #include "BatchTM/BatchTMJob.h"
 #include "Fileformat/tiffreader.h"
 #include "Exif/ExifOperations.h"
+#include "Libpfs/progress.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/resize.h"
@@ -60,7 +61,7 @@ BatchTMJob::~BatchTMJob()
 
 void BatchTMJob::run()
 {
-    ProgressHelper prog_helper;
+    pfs::Progress prog_helper;
     IOWorker io_worker;
 
     emit add_log_message(tr("[T%1] Start processing %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
@@ -102,7 +103,7 @@ void BatchTMJob::run()
 
             QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(opts->tmoperator) );
 
-            tm_operator->tonemapFrame(temporary_frame.data(), opts, prog_helper);
+            tm_operator->tonemapFrame(*temporary_frame, opts, prog_helper);
 
             TMOptionsOperations operations(opts);
             QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;

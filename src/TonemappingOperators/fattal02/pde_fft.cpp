@@ -76,8 +76,8 @@
 #include <vector>
 #include <fftw3.h>
 
+#include "Libpfs/progress.h"
 #include "Libpfs/array2d.h"
-#include "Common/ProgressHelper.h"
 #include "pde.h"
 
 using namespace std;
@@ -219,10 +219,10 @@ void make_compatible_boundary(pfs::Array2D *F)
 // not modified and the equation might not have a solution but an
 // approximate solution with a minimum error is then calculated
 // double precision version
-void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
+void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, pfs::Progress &ph,
                   bool adjust_bound)
 {
-   ph->newValue(20); 
+   ph.setValue(20);
   //DEBUG_STR << "solve_pde_fft: solving Laplace U = F ..." << std::endl;
   int width = F->getCols();
   int height = F->getRows();
@@ -252,8 +252,9 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
   transform_normal2ev(F, F_tr);
   // TODO: F no longer needed so could release memory, but as it is an
   // input parameter we won't do that
-  ph->newValue(50);
-  if (ph->isTerminationRequested()){
+  ph.setValue(50);
+  if (ph.canceled())
+  {
     delete F_tr;
     return;
   }
@@ -267,6 +268,7 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
   std::vector<double> l1=get_lambda(height);
   std::vector<double> l2=get_lambda(width);
   for(int y=0 ; y<height ; y++ )
+  {
     for(int x=0 ; x<width ; x++ )
     {
       if(x==0 && y==0)
@@ -274,15 +276,16 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
       else
         (*U_tr)(x,y)=(*F_tr)(x,y)/(l1[y]+l2[x]);
     }
+  }
   delete F_tr;    // no longer needed so release memory
-  ph->newValue(55); 
+  ph.setValue(55);
 
 
   // transforms U_tr back to the normal space
   //DEBUG_STR << "solve_pde_fft: transform U_tr to normal space (fft)" << std::endl;
   transform_ev2normal(U_tr, U);
   delete U_tr;    // no longer needed so release memory
-  ph->newValue(85); 
+  ph.setValue(85);
 
   // the solution U as calculated will satisfy something like int U = 0
   // since for any constant c, U-c is also a solution and we are mainly
@@ -302,7 +305,7 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
   // fft parallel threads cleanup, better handled outside this function?
   fftwf_cleanup_threads();
 
-  ph->newValue(90); 
+  ph.setValue(90);
   //DEBUG_STR << "solve_pde_fft: done" << std::endl;
 }
 

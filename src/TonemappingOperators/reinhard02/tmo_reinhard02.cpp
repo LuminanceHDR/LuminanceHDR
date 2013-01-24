@@ -20,9 +20,11 @@
 #include <stdio.h>
 #include "arch/math.h"
 
-#include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
 #include "tmo_reinhard02.h"
+
+#include "Libpfs/progress.h"
+#include "Libpfs/array2d.h"
+#include "TonemappingOperators/pfstmo.h"
 
 #define SIGMA_I(i)       (m_sigma_0 + ((double)i/(double)m_range)*(m_sigma_1 - m_sigma_0))
 #define S_I(i)           (exp (SIGMA_I(i)))
@@ -266,7 +268,7 @@ void Reinhard02::dynamic_range ()
 Reinhard02::Reinhard02(const pfs::Array2D *Y, pfs::Array2D* L,
                        bool use_scales, float key, float phi,
                        int num, int low, int high, bool temporal_coherent,
-                       ProgressHelper *ph)
+                       pfs::Progress &ph)
     : m_width(Y->getCols())
     , m_height(Y->getRows())
     , m_use_scales(use_scales)
@@ -288,7 +290,7 @@ Reinhard02::Reinhard02(const pfs::Array2D *Y, pfs::Array2D* L,
 
 void Reinhard02::tmo_reinhard02()
 {
-  m_ph->newValue( 0 );
+  m_ph.setValue( 0 );
 
   int x,y;
 
@@ -301,8 +303,8 @@ void Reinhard02::tmo_reinhard02()
   compute_bessel();
   allocate_memory ();
 
-  m_ph->newValue( 10 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 10 );
+  if (m_ph.canceled())
 	  goto end;
 
   // reading image
@@ -311,26 +313,26 @@ void Reinhard02::tmo_reinhard02()
       m_image[y][x][0] = (*m_Y)(x,y);
 
   copy_luminance();
-  m_ph->newValue( 20 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 20 );
+  if (m_ph.canceled())
 	  goto end;
   scale_to_midtone();
-  m_ph->newValue( 30 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 30 );
+  if (m_ph.canceled())
 	  goto end;
 
   if( m_use_scales )
   {
     build_pyramid(m_luminance, m_cvts.xmax, m_cvts.ymax);
   }
-  m_ph->newValue( 50 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 50 );
+  if (m_ph.canceled())
 	  goto end;
 
   tonemap_image();
 
-  m_ph->newValue( 85 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 85 );
+  if (m_ph.canceled())
 	  goto end;
   // saving image
   for( y=0 ; y<m_cvts.ymax ; y++ )
@@ -339,16 +341,16 @@ void Reinhard02::tmo_reinhard02()
 
 //  print_parameter_settings();
 
-  m_ph->newValue( 95 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 95 );
+  if (m_ph.canceled())
 	  goto end;
   deallocate_memory();
   if( m_use_scales ) {
       clean_pyramid();
   }
 
-  if (!m_ph->isTerminationRequested())
-    m_ph->newValue( 100 );
+  if (!m_ph.canceled())
+    m_ph.setValue( 100 );
   
   end:
 	;

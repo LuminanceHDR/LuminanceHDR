@@ -37,8 +37,9 @@
 #include <algorithm>
 #include <cmath>
 
+#include "Libpfs/array2d.h"
+#include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
 
 //#undef HAVE_FFTW3F
 
@@ -106,7 +107,7 @@ R output = r*exp(log(output intensity)), etc.
 void tmo_durand02(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
                   float sigma_s, float sigma_r, float baseContrast, int downsample,
                   bool color_correction,
-                  ProgressHelper *ph)
+                  pfs::Progress &ph)
 {
     int w = R.getCols();
     int h = R.getRows();
@@ -185,7 +186,9 @@ void tmo_durand02(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
         }
     }
 
-    if (!ph->isTerminationRequested())
-        ph->newValue( 100 );
+    if (!ph.canceled())
+    {
+        ph.setValue( 100 );
+    }
 }
 

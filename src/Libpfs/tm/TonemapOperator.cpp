@@ -36,8 +36,10 @@
 
 #include "TonemappingOperators/pfstmo.h"
 
+#include "Libpfs/frame.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
+#include "Libpfs/progress.h"
 #include "Libpfs/tm/TonemapOperator.h"
 
 using namespace boost::assign;
@@ -60,9 +62,9 @@ class TonemapOperatorMantiuk06
         : public TonemapOperatorRegister<mantiuk06, TonemapOperatorMantiuk06>
 {
 public:
-    void tonemapFrame(pfs::Frame* workingFrame, TonemappingOptions* opts, ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingFrame, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);
+        ph.setMaximum(100);
 
         // pfstmo_mantiuk06 not reentrant
         m_mutex.lock();
@@ -73,7 +75,7 @@ public:
                              opts->operator_options.mantiuk06options.saturationfactor,
                              opts->operator_options.mantiuk06options.detailfactor,
                              opts->operator_options.mantiuk06options.contrastequalization,
-                             &ph);
+                             ph);
         }
         catch (...)
         {
@@ -94,13 +96,13 @@ QMutex TonemapOperatorMantiuk06::m_mutex;   // static member
 struct TonemapOperatorMantiuk08
         : public TonemapOperatorRegister<mantiuk08, TonemapOperatorMantiuk08>
 {
-    void tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);
+        ph.setMaximum(100);
 
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
-        workingframe->getXYZChannels( X, Y, Z );
+        workingframe.getXYZChannels( X, Y, Z );
         pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                                  pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
@@ -109,7 +111,7 @@ struct TonemapOperatorMantiuk08
                          opts->operator_options.mantiuk08options.contrastenhancement,
                          opts->operator_options.mantiuk08options.luminancelevel,
                          opts->operator_options.mantiuk08options.setluminance,
-                         &ph);
+                         ph);
 
         pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                                  pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
@@ -119,9 +121,9 @@ struct TonemapOperatorMantiuk08
 struct TonemapOperatorFattal02
         : public TonemapOperatorRegister<fattal, TonemapOperatorFattal02>
 {
-    void tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);
+        ph.setMaximum(100);
 
         float ratio = opts->origxsize / opts->xsize;
         int detail_level = 0;
@@ -145,27 +147,29 @@ struct TonemapOperatorFattal02
                         opts->operator_options.fattaloptions.newfattal,
                         opts->operator_options.fattaloptions.fftsolver,
                         detail_level,
-                        &ph);
+                        ph);
     }
 };
 
 struct TonemapOperatorDrago03
         : public TonemapOperatorRegister<drago, TonemapOperatorDrago03>
 {
-    void tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);         // this guy should not be here!
+        ph.setMaximum(100);         // this guy should not be here!
 
-        pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, &ph);
+        pfstmo_drago03(workingframe,
+                       opts->operator_options.dragooptions.bias,
+                       ph);
     }
 };
 
 class TonemapOperatorDurand02
         : public TonemapOperatorRegister<durand, TonemapOperatorDurand02>
 {
-    void tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);
+        ph.setMaximum(100);
 
         // pfstmo_durand02 not reentrant
         m_mutex.lock();
@@ -175,7 +179,7 @@ class TonemapOperatorDurand02
                             opts->operator_options.durandoptions.spatial,
                             opts->operator_options.durandoptions.range,
                             opts->operator_options.durandoptions.base,
-                            &ph);
+                            ph);
         }
         catch (...)
         {
@@ -195,13 +199,13 @@ QMutex TonemapOperatorDurand02::m_mutex;
 struct TonemapOperatorReinhard02
         : public TonemapOperatorRegister<reinhard02, TonemapOperatorReinhard02>
 {
-    void tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);
+        ph.setMaximum(100);
 
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
-        workingframe->getXYZChannels( X, Y, Z );
+        workingframe.getXYZChannels( X, Y, Z );
         pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                                  pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
@@ -214,7 +218,7 @@ struct TonemapOperatorReinhard02
                               opts->operator_options.reinhard02options.lower,
                               opts->operator_options.reinhard02options.upper,
                               opts->operator_options.reinhard02options.scales,
-                              &ph);
+                              ph);
         }
         catch (...) {
             m_mutex.unlock();
@@ -235,30 +239,28 @@ QMutex TonemapOperatorReinhard02::m_mutex;
 struct TonemapOperatorReinhard05
         : public TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05>
 {
-    void tonemapFrame(pfs::Frame* workingframe,
-                      TonemappingOptions* opts,
-                      ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);
+        ph.setMaximum(100);
 
-        pfstmo_reinhard05( workingframe,
-                           opts->operator_options.reinhard05options.brightness,
-                           opts->operator_options.reinhard05options.chromaticAdaptation,
-                           opts->operator_options.reinhard05options.lightAdaptation,
-                           &ph);
+        pfstmo_reinhard05(workingframe,
+                          opts->operator_options.reinhard05options.brightness,
+                          opts->operator_options.reinhard05options.chromaticAdaptation,
+                          opts->operator_options.reinhard05options.lightAdaptation,
+                          ph);
     }
 };
 
 struct TonemapOperatorAshikhmin02
         : public TonemapOperatorRegister<ashikhmin, TonemapOperatorAshikhmin02>
 {
-    void tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);
+        ph.setMaximum(100);
 
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
-        workingframe->getXYZChannels( X, Y, Z );
+        workingframe.getXYZChannels( X, Y, Z );
         pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                                  pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
@@ -266,7 +268,7 @@ struct TonemapOperatorAshikhmin02
                            opts->operator_options.ashikhminoptions.simple,
                            opts->operator_options.ashikhminoptions.lct,
                            (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
-                           &ph);
+                           ph);
 
         pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                                  pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
@@ -276,13 +278,13 @@ struct TonemapOperatorAshikhmin02
 struct TonemapOperatorPattanaik00
         : public TonemapOperatorRegister<pattanaik, TonemapOperatorPattanaik00>
 {
-    void tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
     {
-        ph.emitSetMaximum(100);
+        ph.setMaximum(100);
 
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
-        workingframe->getXYZChannels( X, Y, Z );
+        workingframe.getXYZChannels( X, Y, Z );
         pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                                  pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
@@ -292,7 +294,7 @@ struct TonemapOperatorPattanaik00
                            opts->operator_options.pattanaikoptions.cone,
                            opts->operator_options.pattanaikoptions.rod,
                            opts->operator_options.pattanaikoptions.autolum,
-                           &ph);
+                           ph);
 
 
         pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),

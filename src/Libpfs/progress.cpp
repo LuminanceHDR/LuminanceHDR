@@ -1,7 +1,6 @@
-/**
+/*
  * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2009 Franco Comida
  * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,36 +20,64 @@
  *
  */
 
-//! \author Franco Comida <fcomida@users.sourceforge.net>
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! @author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#ifndef PROGRESSHELPER_H
-#define PROGRESSHELPER_H
+#include "progress.h"
 
-#include <QObject>
-#include "Libpfs/progress.h"
-
-//! \brief glue between pfs::Progress and Qt signal/slot
-class ProgressHelper
-        : public QObject, public pfs::Progress
+namespace pfs
 {
-    Q_OBJECT
-public:
-    ProgressHelper(QObject *p = 0);
 
-    void setValue(int value);
-    void setRange(int minimum, int maximum);
-    void setMaximum(int maximum);
-    void setMinimum(int minimum);
+Progress::Progress()
+    : m_maximum(0)
+    , m_minimum(0)
+    , m_value(0)
+    , m_canceled(false)
+{}
 
-public slots:
-    void qtCancel(bool b = true);
+void Progress::setMaximum(int maximum)
+{
+    m_maximum = maximum;
+}
 
-signals:
-    void qtSetValue(int value);
-    void qtSetRange(int minimum, int maximum);
-    void qtSetMaximum(int max);
-    void qtSetMinimum(int min);
-};
+void Progress::setMinimum(int minimum)
+{
+    m_minimum = minimum;
+}
 
-#endif // PROGRESSHELPER_H
+void Progress::setRange(int minimum, int maximum)
+{
+    setMinimum(minimum);
+    setMaximum(maximum);
+}
+
+int Progress::maximum() const
+{
+    return m_maximum;
+}
+int Progress::minimum() const
+{
+    return m_minimum;
+}
+
+void Progress::setValue(int value)
+{
+    m_value = value;
+}
+
+// int Progress::next();
+
+int Progress::value() const
+{
+    return m_value;
+}
+
+void Progress::cancel(bool b)
+{
+    m_canceled = b;
+}
+bool Progress::canceled() const
+{
+    return m_canceled;
+}
+
+}

@@ -34,8 +34,9 @@
 #include <cmath>
 #include <cassert>
 
+#include "Libpfs/frame.h"
+#include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
 
 namespace
 {
@@ -70,7 +71,7 @@ void calculateLuminance(unsigned int width, unsigned int height,
 
 void tmo_drago03(const pfs::Array2D& Y, pfs::Array2D& L,
                  float maxLum, float avLum, float bias, 
-				 ProgressHelper *ph)
+                 pfs::Progress &ph)
 {
     assert(Y.getRows() == L.getRows());
     assert(Y.getCols() == L.getCols());
@@ -84,8 +85,8 @@ void tmo_drago03(const pfs::Array2D& Y, pfs::Array2D& L,
     // Normal tone mapping of every pixel
     for (int y=0, yEnd = Y.getRows(); y < yEnd; y++)
     {
-        ph->newValue(100*y/yEnd);
-        if (ph->isTerminationRequested())
+        ph.setValue(100*y/yEnd);
+        if (ph.canceled())
             break;
 
         for (int x=0, xEnd = Y.getCols(); x < xEnd; x++)

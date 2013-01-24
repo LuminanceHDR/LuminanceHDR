@@ -39,9 +39,9 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
-#include "Common/ProgressHelper.h"
+#include "Libpfs/progress.h"
 
-void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation, ProgressHelper *ph)
+void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadaptation, float lightadaptation, pfs::Progress &ph)
 {  
     //--- default tone mapping parameters;
     //float brightness = 0.0f;
@@ -58,8 +58,8 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
     std::cout << ss.str();
 
     pfs::Channel *R, *G, *B;
-    frame->getXYZChannels( R, G, B );
-    frame->getTags().setString("LUMINANCE", "RELATIVE");
+    frame.getXYZChannels( R, G, B );
+    frame.getTags().setString("LUMINANCE", "RELATIVE");
     //---
 
     if ( !R || !G || !B )
@@ -68,8 +68,8 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
     }
 
     // tone mapping
-    const unsigned int width = frame->getWidth();
-    const unsigned int height = frame->getHeight();
+    const unsigned int width = frame.getWidth();
+    const unsigned int height = frame.getHeight();
 
     // is there a way to remove this copy as well?
     // I am pretty sure there is!
@@ -83,10 +83,10 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
     tmo_reinhard05(width, height,
                    R->getRawData(), G->getRawData(), B->getRawData(),
                    Y.getRawData(),
-                   Reinhard05Params(brightness, chromaticadaptation, lightadaptation), ph );
+                   Reinhard05Params(brightness, chromaticadaptation, lightadaptation), ph);
 
-    if (!ph->isTerminationRequested())
+    if (!ph.canceled())
     {
-        ph->newValue( 100 );
+        ph.setValue( 100 );
     }
 }

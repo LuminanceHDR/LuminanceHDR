@@ -83,6 +83,7 @@
 #include "Libpfs/vex/minmax.h"
 #include "Libpfs/vex/dotproduct.h"
 #include "Libpfs/utils/msec_timer.h"
+#include "Libpfs/progress.h"
 
 // divG_sum = A * x = sum(divG(x))
 void multiplyA(PyramidT& px, const PyramidT& pC,
@@ -111,7 +112,7 @@ const int NUM_BACKWARDS_CEILING = 3;
 void lincg(PyramidT& pyramid, PyramidT& pC,
            const float* b, float* x,
            const int itmax, const float tol,
-           ProgressHelper *ph)
+           pfs::Progress &ph)
 {
     float rdotr_curr;
     float rdotr_prev;
@@ -151,11 +152,11 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
     for (; iter < itmax; ++iter)
     {
         // TEST
-        ph->newValue(
+        ph.setValue(
                     static_cast<int>(std::log(rdotr_curr/irdotr)*percent_sf)
                     );
         // User requested abort
-        if ( ph->isTerminationRequested() && iter > 0 )
+        if ( ph.canceled() && iter > 0 )
         {
             break;
         }
@@ -234,7 +235,7 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
     if (rdotr_curr/bnrm2 > tol2)
     {
         // Not converged
-        ph->newValue(
+        ph.setValue(
                     static_cast<int>(std::log(rdotr_curr/irdotr)*percent_sf)
                     );
         if (iter == itmax)
@@ -257,12 +258,13 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
     }
     else
     {
-        ph->newValue( itmax );
+        ph.setValue( itmax );
     }
 }
 
 void transformToLuminance(PyramidT& pp, float* Y,
-                          ProgressHelper *ph, const int itmax, const float tol)
+                          const int itmax, const float tol,
+                          pfs::Progress& ph)
 {
     PyramidT pC = pp; // copy ctor
 
@@ -475,7 +477,7 @@ int tmo_mantiuk06_contmap(const int c, const int r,
                           float detailfactor,
                           const int itmax,
                           const float tol,
-                          ProgressHelper *ph)
+                          pfs::Progress &ph)
 {
     const size_t n = c*r;
 
@@ -503,7 +505,7 @@ int tmo_mantiuk06_contmap(const int c, const int r,
     // transform R to gradients
     pp.transformToG( detailfactor );
     // transform gradients to luminance Y (pp -> Y)
-    transformToLuminance(pp, Y, ph, itmax, tol);
+    transformToLuminance(pp, Y, itmax, tol, ph);
 
     denormalizeLuminance(Y, n);
     denormalizeRGB(R, G, B, Y, n, saturationFactor);

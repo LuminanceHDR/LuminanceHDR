@@ -40,14 +40,14 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
-#include "Common/ProgressHelper.h"
+#include "Libpfs/progress.h"
 
 namespace
 {
 const float epsilon = 1e-4f;
 }
 
-void pfstmo_fattal02(pfs::Frame* frame,
+void pfstmo_fattal02(pfs::Frame& frame,
                      float opt_alpha,
                      float opt_beta,
                      float opt_saturation,
@@ -55,7 +55,7 @@ void pfstmo_fattal02(pfs::Frame* frame,
                      bool newfattal,
                      bool fftsolver,
                      int detail_level,
-                     ProgressHelper *ph)
+                     pfs::Progress &ph)
 {
   if (fftsolver)
   {
@@ -67,7 +67,7 @@ void pfstmo_fattal02(pfs::Frame* frame,
   {
       opt_noise = opt_alpha * 0.01f;
   }
-  
+#ifndef NDEBUG
   std::stringstream ss;
   ss << "pfstmo_fattal02 (";
   ss << "alpha: " << opt_alpha;
@@ -75,13 +75,13 @@ void pfstmo_fattal02(pfs::Frame* frame,
   ss << ". saturation: " <<  opt_saturation;
   ss << ", noise: " <<  opt_noise;
   ss << ", fftsolver: " << fftsolver << ")";
-  std::cout << ss.str();
-  std::cout << std::endl;
-  
+  std::cout << ss.str() << std::endl;
+#endif
+
   //Store RGB data temporarily in XYZ channels
   pfs::Channel *R, *G, *B;
-  frame->getXYZChannels( R, G, B );
-  frame->getTags().setString("LUMINANCE", "RELATIVE");
+  frame.getXYZChannels( R, G, B );
+  frame.getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
   if ( !R || !G || !B )
@@ -90,8 +90,8 @@ void pfstmo_fattal02(pfs::Frame* frame,
   }
     
   // tone mapping
-  int w = frame->getWidth();
-  int h = frame->getHeight();
+  int w = frame.getWidth();
+  int h = frame.getHeight();
   
   pfs::Array2D Yr(w,h);
   pfs::Array2D L(w,h);
@@ -105,9 +105,8 @@ void pfstmo_fattal02(pfs::Frame* frame,
                fftsolver, detail_level,
                ph);
 
-  if ( !ph->isTerminationRequested() )
+  if ( !ph.canceled() )
   {
-
       pfs::Array2D& arrayRed = *R->getChannelData();
       pfs::Array2D& arrayGreen = *G->getChannelData();
       pfs::Array2D& arrayBlue = *B->getChannelData();
@@ -121,6 +120,6 @@ void pfstmo_fattal02(pfs::Frame* frame,
           arrayBlue(i) = std::pow( std::max(arrayBlue(i)/y, 0.f), opt_saturation ) * l;
       }
 
-      ph->newValue( 100 );
+      ph.setValue( 100 );
   }
 }

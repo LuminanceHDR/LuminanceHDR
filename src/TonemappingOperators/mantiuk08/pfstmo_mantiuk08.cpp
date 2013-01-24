@@ -36,6 +36,7 @@
 #include <math.h>
 #include <fcntl.h>
 
+#include "Libpfs/progress.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
 #include "display_adaptive_tmo.h"
@@ -45,7 +46,7 @@
 
 using namespace std;
 
-void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, ProgressHelper *ph)
+void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, pfs::Progress &ph)
 {
   //--- default tone mapping parameters;
   //float contrast_enhance_factor = 1.f;
@@ -56,10 +57,10 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   if (!setluminance)
     white_y = -2.f;
   
-  if( contrast_enhance_factor <= 0.0f )
+  if ( contrast_enhance_factor <= 0.0f )
     throw pfs::Exception("incorrect contrast enhancement factor, accepted value is any positive number");
   
-  if( saturation_factor < 0.0f || saturation_factor > 2.0f )
+  if ( saturation_factor < 0.0f || saturation_factor > 2.0f )
     throw pfs::Exception("incorrect saturation factor, accepted range is (0..2)");
   
   std::cout << "pfstmo_mantiuk08 (";
@@ -81,9 +82,9 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   ds->print( stderr );
   
   pfs::Channel *inX, *inY, *inZ;
-  frame->getXYZChannels(inX, inY, inZ);
-  int cols = frame->getWidth();
-  int rows = frame->getHeight();
+  frame.getXYZChannels(inX, inY, inZ);
+  int cols = frame.getWidth();
+  int rows = frame.getHeight();
   
   pfs::Array2D R( cols, rows );
   pfs::Array2D* Xr = inX->getChannelData();
@@ -94,7 +95,7 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   
   if( white_y == -2.f )
   {      
-    const char *white_y_str = frame->getTags().getString( "WHITE_Y" );
+    const char *white_y_str = frame.getTags().getString( "WHITE_Y" );
     if( white_y_str != NULL )
     {
       white_y = strtod( white_y_str, NULL );
@@ -112,7 +113,7 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   else
     fprintf( stderr, "%g\n", white_y );
   
-  const char *lum_data = frame->getTags().getString("LUMINANCE");
+  const char *lum_data = frame.getTags().getString("LUMINANCE");
   if( lum_data != NULL && !strcmp( lum_data, "DISPLAY" )) {
     fprintf( stderr, PROG_NAME " warning: input image should be in linear (not gamma corrected) luminance factor units. Use '--linear' option with pfsin* commands.\n" );
   }
@@ -132,10 +133,10 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   if( res != PFSTMO_OK )
     throw pfs::Exception( "failed to tone-map the image" );
   
-  ph->newValue( 100 );
+  ph.setValue( 100 );
   
   pfs::transformColorSpace( pfs::CS_RGB, Xr, &R, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
-  frame->getTags().setString("LUMINANCE", "DISPLAY");
+  frame.getTags().setString("LUMINANCE", "DISPLAY");
   
   delete df;
   delete ds;

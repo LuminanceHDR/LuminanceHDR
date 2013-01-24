@@ -34,7 +34,7 @@
 #include <iostream>
 
 #include "Libpfs/frame.h"
-#include "Common/ProgressHelper.h"
+#include "Libpfs/progress.h"
 #include "tmo_drago03.h"
 
 namespace
@@ -51,15 +51,15 @@ T decode(const T& value)
 }
 }
 
-void pfstmo_drago03(pfs::Frame *frame, float biasValue, ProgressHelper *ph)
+void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress &ph)
 {
     std::cout << "pfstmo_drago03 (";
     std::cout << "bias: " << biasValue << ")" << std::endl;
 
     pfs::Channel *X, *Y, *Z;
-    frame->getXYZChannels( X, Y, Z );
+    frame.getXYZChannels( X, Y, Z );
 
-    frame->getTags().setString("LUMINANCE", "RELATIVE");
+    frame.getTags().setString("LUMINANCE", "RELATIVE");
     //---
 
     if ( Y == NULL )
@@ -92,9 +92,9 @@ void pfstmo_drago03(pfs::Frame *frame, float biasValue, ProgressHelper *ph)
         }
     }
 
-    if (!ph->isTerminationRequested())
+    if (!ph.canceled())
     {
-        ph->newValue( 100 );
+        ph.setValue( 100 );
     }
 }
 

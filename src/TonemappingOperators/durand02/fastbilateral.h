@@ -31,25 +31,24 @@
 #ifndef FASTBILATERAL_H
 #define FASTBILATERAL_H
 
-class ProgressHelper;
-
-namespace pfs {
-    class Array2D;
+namespace pfs
+{
+class Array2D;
+class Progress;
 }
 
+//!
+//! @brief Fast bilateral filtering
+//!
+//! Pieceweise linear algorithm (fast).
+//!
+//! \param I [in] input array
+//! \param J [out] filtered array
+//! \param sigma_s sigma value for spatial kernel
+//! \param sigma_r sigma value for range kernel
+//!
+void fastBilateralFilter(const pfs::Array2D& I, pfs::Array2D& J,
+                         float sigma_s, float sigma_r, int downsample,
+                         pfs::Progress& ph);
 
-/**
- * @brief Fast bilateral filtering
- *
- * Pieceweise linear algorithm (fast).
- *
- * @param I [in] input array
- * @param J [out] filtered array
- * @param sigma_s sigma value for spatial kernel
- * @param sigma_r sigma value for range kernel
- */
-void fastBilateralFilter( const pfs::Array2D& I, pfs::Array2D& J,
-                          float sigma_s, float sigma_r, int downsample,
-                          ProgressHelper *ph );
-
-#endif /* #ifndef _fastbilateral_h_ */
+#endif /* #ifndef FASTBILATERAL_H */

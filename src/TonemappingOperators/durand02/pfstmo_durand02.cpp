@@ -39,6 +39,11 @@
 #include "Libpfs/frame.h"
 #include "tmo_durand02.h"
 
+namespace pfs
+{
+class Progress;
+}
+
 namespace
 {
 const int downsample = 1;
@@ -54,9 +59,9 @@ const bool original_algorithm = false;
 //float sigma_r = 0.4f;
 //float baseContrast = 5.0f;
 
-void pfstmo_durand02(pfs::Frame* frame,
+void pfstmo_durand02(pfs::Frame& frame,
                      float sigma_s, float sigma_r, float baseContrast,
-                     ProgressHelper *ph)
+                     pfs::Progress &ph)
 { 
 #ifndef NDEBUG
     std::stringstream ss;
@@ -76,11 +81,11 @@ void pfstmo_durand02(pfs::Frame* frame,
 
   pfs::Channel *X, *Y, *Z;
   
-  frame->getXYZChannels( X, Y, Z );
-  frame->getTags().setString("LUMINANCE", "RELATIVE");
+  frame.getXYZChannels( X, Y, Z );
+  frame.getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
-  if( Y==NULL || X==NULL || Z==NULL)
+  if ( Y==NULL || X==NULL || Z==NULL)
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   
   pfs::Array2D& R = *X->getChannelData();

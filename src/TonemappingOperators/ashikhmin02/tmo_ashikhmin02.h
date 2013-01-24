@@ -29,27 +29,23 @@
 #ifndef TMO_ASHIKHMIN02_H
 #define TMO_ASHIKHMIN02_H
 
-// Forward declaration
-namespace pfs {
-    class Array2D;
-    class Frame;
+namespace pfs
+{
+class Array2D;
+class Frame;
+class Progress;
 }
 
-class ProgressHelper;
-
-/**
- * @brief Michael Ashikhmin tone mapping operator
- *
- * @param Y [in] image luminance values
- * @param L [out] tone mapped values
- * @param maxLum maximum luminance in the image
- * @param avLum logarithmic average of luminance in the image
- * @param simple_flag true: use only tone mapping function (global version of the operator)
- * @param lc_value local contrast threshold
- * @param eq chose equation number from the paper (ie equation 2. or 4. )
- */
-int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float avLum, bool simple_flag, float lc_value, int eq, ProgressHelper *ph);
-
-void pfstmo_ashikhmin02(pfs::Frame* inhdrframe, bool simple, float lc_value, int eq, ProgressHelper *ph);
+//! \brief Michael Ashikhmin tone mapping operator
+//!
+//! \param Y [in] image luminance values
+//! \param L [out] tone mapped values
+//! \param maxLum maximum luminance in the image
+//! \param avLum logarithmic average of luminance in the image
+//! \param simple_flag true: use only tone mapping function (global version of the operator)
+//! \param lc_value local contrast threshold
+//! \param eq chose equation number from the paper (ie equation 2. or 4. )
+//!
+int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float avLum, bool simple_flag, float lc_value, int eq, pfs::Progress &ph);
 
 #endif // TMO_ASHIKHMIN02_H

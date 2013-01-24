@@ -28,39 +28,34 @@
 #ifndef TMO_DRAGO03_H
 #define TMO_DRAGO03_H
 
-// forward declaration
-class ProgressHelper;
-
 namespace pfs
 {
 class Array2D;
+class Progress;
 }
 
-/**
- * @brief Frederic Drago Logmapping Algorithm
- *
- * Implementation obtained from source code provided
- * by Frederic Drago on 16 May 2003.
- *
- * @param width image width
- * @param height image height
- * @param Y [in] image luminance values
- * @param L [out] tone mapped values
- * @param maxLum maximum luminance in the image
- * @param avLum logarithmic average of luminance in the image
- * @param bias bias parameter of tone mapping algorithm (eg 0.85)
- */
-
+//! \brief Frederic Drago Logmapping Algorithm
+//!
+//! Original implementation obtained from source code provided
+//! by Frederic Drago on 16 May 2003 (pfstmo)
+//!
+//! \param width image width
+//! \param height image height
+//! \param Y [in] image luminance values
+//! \param L [out] tone mapped values
+//! \param maxLum maximum luminance in the image
+//! \param avLum logarithmic average of luminance in the image
+//! \param bias bias parameter of tone mapping algorithm (eg 0.85)
+//!
 void tmo_drago03(const pfs::Array2D& Y, pfs::Array2D& L,
-                 float maxLum, float avLum, float bias, ProgressHelper *ph);
+                 float maxLum, float avLum, float bias, pfs::Progress &ph);
 
-/**
- * @brief Find average and maximum luminance in an image
- * 
- * @param Y [in] image luminance values
- * @param avLum [out] average luminance
- * @param maxLum [out] maximum luminance
- */
+//! \brief Find average and maximum luminance in an image
+//!
+//! \param Y [in] image luminance values
+//! \param avLum [out] average luminance
+//! \param maxLum [out] maximum luminance
+//!
 void calculateLuminance(unsigned int width, unsigned int height,
                         const float* Y, float& avLum, float& maxLum);
 

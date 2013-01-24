@@ -34,7 +34,11 @@
 
 #include "TonemappingOperators/pfstmo.h"
 #include "Libpfs/pfs.h"
-#include "Common/ProgressHelper.h"
+
+namespace pfs
+{
+class Progress;
+}
 
 class datmoToneCurve
 {
@@ -75,7 +79,7 @@ public:
  * must be freed by the calling application using the 'delete'
  * statement.
  */
-std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, ProgressHelper *ph = NULL );
+std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfs::Progress &ph );
 
 
 /**
@@ -99,8 +103,8 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
  * error was encountered.
  */
 int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_dens,
-  DisplayFunction *df, DisplaySize *ds, const float enh_factor = 1.f, 
-  const float white_y = -1, ProgressHelper *ph = NULL );
+  DisplayFunction *df, DisplaySize *ds, const float enh_factor /*= 1.f*/,
+  const float white_y /*= -1*/, pfs::Progress &ph /*= NULL*/ );
 
 /**
  * Deprectaied: use datmo_apply_tone_curve_cc()

@@ -33,8 +33,7 @@
 #include <fftw3.h>
 
 #include "Libpfs/array2d.h"
-#include "Common/ProgressHelper.h"
-#include "TonemappingOperators/pfstmo.h"
+#include "Libpfs/progress.h"
 #include "fastbilateral.h"
 
 #ifdef BRANCH_PREDICTION
@@ -44,7 +43,6 @@
 #define likely(x)       (x)
 #define unlikely(x)     (x)
 #endif
-
 
 using namespace std;
 
@@ -232,7 +230,7 @@ PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
 
 void fastBilateralFilter(const pfs::Array2D& I, pfs::Array2D& J,
                          float sigma_s, float sigma_r, int /*downsample*/,
-                         ProgressHelper *ph )
+                         pfs::Progress &ph)
 {
   int w = I.getCols();
   int h = I.getRows();
@@ -275,8 +273,8 @@ void fastBilateralFilter(const pfs::Array2D& I, pfs::Array2D& J,
   // piecewise bilateral
   for( int j=0 ; j<NB_SEGMENTS ; j++ )
   {
-    ph->newValue( j * 100 / NB_SEGMENTS );
-	if (ph->isTerminationRequested())
+    ph.setValue( j * 100 / NB_SEGMENTS );
+    if (ph.canceled())
 		break;
 
     float jI = minI + j*stepI;        // current intensity value

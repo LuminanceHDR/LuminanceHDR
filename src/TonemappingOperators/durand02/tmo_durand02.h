@@ -35,31 +35,30 @@
 #ifndef TMO_DURAND02_H
 #define TMO_DURAND02_H
 
-class ProgressHelper;
-
 namespace pfs
 {
 class Array2D;
+class Progress;
 }
 
-/**
- * @brief Fast bilateral filtering
- *
- * @param width image width
- * @param height image height
- * @param R red channel
- * @param G green channel
- * @param B blue channel
- * @param sigma_s sigma for spatial kernel 
- * @param sigma_r sigma for range kernel
- * @param baseContrast contrast of the base layer
- * @param color_correction enable automatic color correction 
- * @param downsample down sampling factor for speeding up fast-bilateral (1..20)
- */
+//!
+//! \brief Fast bilateral filtering
+//!
+//! \param width image width
+//! \param height image height
+//! \param R red channel
+//! \param G green channel
+//! \param B blue channel
+//! \param sigma_s sigma for spatial kernel
+//! \param sigma_r sigma for range kernel
+//! \param baseContrast contrast of the base layer
+//! \param color_correction enable automatic color correction
+//! \param downsample down sampling factor for speeding up fast-bilateral (1..20)
+//!
 void tmo_durand02(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
                   float sigma_s, float sigma_r, float baseContrast, int downsample,
-                  bool color_correction = true,
-                  ProgressHelper *ph = 0);
+                  bool color_correction /*= true*/,
+                  pfs::Progress &ph);
 
 
 #endif // TMO_DURAND02_H

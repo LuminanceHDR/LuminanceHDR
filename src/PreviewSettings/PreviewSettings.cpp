@@ -32,6 +32,7 @@
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/resize.h"
+#include "Libpfs/progress.h"
 #include "Libpfs/tm/TonemapOperator.h"
 
 #include "Core/TMWorker.h"
@@ -82,14 +83,14 @@ public:
 #endif
         }
 
-        ProgressHelper fake_progress_helper;
+        pfs::Progress fake_progress;
 
         // Copy Reference Frame
         QSharedPointer<pfs::Frame> temp_frame( pfs::copy(m_ReferenceFrame.data()) );
 
         // Tone Mapping
         QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
-        tm_operator->tonemapFrame(temp_frame.data(), tm_options, fake_progress_helper);
+        tm_operator->tonemapFrame(*temp_frame, tm_options, fake_progress);
 
         // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
         QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));

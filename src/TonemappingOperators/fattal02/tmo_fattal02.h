@@ -33,29 +33,28 @@
 #ifndef TMO_FATTAL02_H
 #define TMO_FATTAL02_H
 
-#include <cstring>
+#include <cstddef>
 
-namespace pfs {
+namespace pfs
+{
 class Array2D;
+class Progress;
 }
 
-class ProgressHelper;
 
-/**
- * @brief Gradient Domain High Dynamic Range Compression
- *
- * Implementation of Gradient Domain High Dynamic Range Compression
- * by Raanan Fattal, Dani Lischinski, Michael Werman.
- *
- * @param width image width
- * @param height image height
- * @param Y [in] image luminance values
- * @param L [out] tone mapped values
- * @param alfa parameter alfa (refer to the paper)
- * @param beta parameter beta (refer to the paper)
- * @param noise gradient level of noise (extra parameter)
- */
-
+//! \brief Gradient Domain High Dynamic Range Compression
+//!
+//! Implementation of Gradient Domain High Dynamic Range Compression
+//! by Raanan Fattal, Dani Lischinski, Michael Werman.
+//!
+//! \param width image width
+//! \param height image height
+//! \param Y [in] image luminance values
+//! \param L [out] tone mapped values
+//! \param alfa parameter alfa (refer to the paper)
+//! \param beta parameter beta (refer to the paper)
+//! \param noise gradient level of noise (extra parameter)
+//!
 void tmo_fattal02(size_t width, size_t height,
                   //const float* Y, float* L,
                   const pfs::Array2D& Y,
@@ -63,6 +62,6 @@ void tmo_fattal02(size_t width, size_t height,
                   float alfa, float beta,
                   float noise, bool newfattal,
                   bool fftsolver, int detail_level,
-                  ProgressHelper *ph);
+                  pfs::Progress &ph);
 
 #endif

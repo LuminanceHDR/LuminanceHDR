@@ -33,10 +33,12 @@
 
 #include <cmath>
 
+#include "tmo_pattanaik00.h"
+
 #include "TonemappingOperators/pfstmo.h"
 #include "Libpfs/pfs.h"
-#include "Common/ProgressHelper.h"
-#include "tmo_pattanaik00.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/progress.h"
 
 /// sensitivity of human visual system
 float n = 0.73f;
@@ -103,7 +105,7 @@ void calculateLocalAdaptation(const pfs::Array2D& Y, int x, int y, float& Acone,
 // tone mapping operator code
 void tmo_pattanaik00(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
                      const pfs::Array2D& Y,
-                     VisualAdaptationModel* am, bool local, ProgressHelper *ph )
+                     VisualAdaptationModel* am, bool local, pfs::Progress &ph)
 {  
     ///--- initialization of parameters
     /// cones level of adaptation
@@ -203,8 +205,8 @@ void tmo_pattanaik00(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
     int im_height = Y.getRows();
     for ( int x=0 ; x < im_width ; x++ )
     {
-        ph->newValue(100*x/im_width);
-        if (ph->isTerminationRequested())
+        ph.setValue(100*x/im_width);
+        if (ph.canceled())
             break;
         for ( int y=0 ; y < im_height ; y++ )
         {
@@ -213,7 +215,7 @@ void tmo_pattanaik00(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
             float g = G(x,y)/l;
             float b = B(x,y)/l;
 
-            if( local )
+            if ( local )
             {
                 calculateLocalAdaptation(Y,x,y,Acone,Arod);
                 Bcone = 2e6/(2e6+Acone);

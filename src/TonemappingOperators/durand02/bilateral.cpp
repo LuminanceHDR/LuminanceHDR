@@ -31,8 +31,8 @@
 #include "arch/math.h"
 
 #include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
 #include "Libpfs/array2d.h"
+#include "Libpfs/progress.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)
@@ -92,9 +92,9 @@ public:
 
 
 
-void bilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
-                      float sigma_s, float sigma_r,
-                      pfstmo_progress_callback progress_cb )
+void bilateralFilter(const pfs::Array2D *I, pfs::Array2D *J,
+                     float sigma_s, float sigma_r,
+                     pfs::Progress& ph)
 {
   const pfs::Array2D *X1 = I;     // intensity data     // DAVIDE : CHECK THIS!
 
@@ -107,7 +107,7 @@ void bilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
 
   for( int y = 0; y < I->getRows(); y++ )
   {
-    progress_cb( y * 100 / I->getRows() );
+    ph.setValue( y * 100 / I->getRows() );
     
     for( int x = 0; x < I->getCols(); x++ )
     {

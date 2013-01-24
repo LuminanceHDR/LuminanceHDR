@@ -49,10 +49,10 @@ TMWorker::TMWorker(QObject* parent):
 
     connect(this, SIGNAL(destroyed()), m_Callback, SLOT(deleteLater()));
 
-    connect(this, SIGNAL(tonemapRequestTermination()), m_Callback, SLOT(terminate()), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(setValue(int)), this, SIGNAL(tonemapSetValue(int)), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(setMinimum(int)), this, SIGNAL(tonemapSetMinimum(int)), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(setMaximum(int)), this, SIGNAL(tonemapSetMaximum(int)), Qt::DirectConnection);
+    connect(this, SIGNAL(tonemapRequestTermination()), m_Callback, SLOT(qtCancel()), Qt::DirectConnection);
+    connect(m_Callback, SIGNAL(qtSetValue(int)), this, SIGNAL(tonemapSetValue(int)), Qt::DirectConnection);
+    connect(m_Callback, SIGNAL(qtSetMinimum(int)), this, SIGNAL(tonemapSetMinimum(int)), Qt::DirectConnection);
+    connect(m_Callback, SIGNAL(qtSetMaximum(int)), this, SIGNAL(tonemapSetMaximum(int)), Qt::DirectConnection);
 }
 
 TMWorker::~TMWorker()
@@ -79,9 +79,9 @@ pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, Tonemappi
         return NULL;
     }
 
-    if ( m_Callback->isTerminationRequested() )
+    if ( m_Callback->canceled() )
     {
-        m_Callback->terminate(false);
+        m_Callback->cancel(false);      // double check this
         delete working_frame;
         return NULL;
     }
@@ -94,14 +94,14 @@ pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, Tonemappi
 
 void TMWorker::tonemapFrame(pfs::Frame* working_frame, TonemappingOptions* tm_options)
 {
-    m_Callback->terminate(false);
+    m_Callback->cancel(false);
 
     emit tonemapBegin();
     // build tonemap object
     TonemapOperator* tmEngine = TonemapOperator::getTonemapOperator(tm_options->tmoperator);
 
     // build object, pass new frame to it and collect the result
-    tmEngine->tonemapFrame(working_frame, tm_options, *m_Callback);
+    tmEngine->tonemapFrame(*working_frame, tm_options, *m_Callback);
 
     emit tonemapEnd();
     delete tmEngine;

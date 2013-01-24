@@ -14,9 +14,8 @@
 namespace pfs
 {
 class Array2D;
+class Progress;
 }
-
-class ProgressHelper;
 
 /**
  * Used to achieve temporal coherence
@@ -97,7 +96,7 @@ public:
     Reinhard02(const pfs::Array2D *Y, pfs::Array2D* L,
                bool use_scales, float key, float phi,
                int num, int low, int high, bool temporal_coherent,
-               ProgressHelper *ph);
+               pfs::Progress &ph);
 
     ~Reinhard02()
     {}
@@ -121,7 +120,7 @@ private:
 	const double m_alpha;	
 	double m_bbeta;
 	double m_threshold;
-	ProgressHelper *m_ph;
+    pfs::Progress &m_ph;
 
 	double ***Pyramid;
 	int       PyramidHeight;

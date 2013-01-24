@@ -31,14 +31,18 @@
  * $Id: pfstmo_reinhard02.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
+#include <iostream>
 #include <math.h>
 
 #include "Libpfs/frame.h"
 #include "tmo_reinhard02.h"
 
-#include <iostream>
+namespace pfs
+{
+class Progress;
+}
 
-void pfstmo_reinhard02(pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
+void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low, int high, bool use_scales, pfs::Progress &ph )
 {
   //--- default tone mapping parameters;
   //float key = 0.18;
@@ -48,7 +52,7 @@ void pfstmo_reinhard02(pfs::Frame* frame, float key, float phi, int num, int low
   //int high = 43;
   //bool use_scales = false;
   bool temporal_coherent = false;  
-  
+#ifndef NDEBUG
   std::cout << "pfstmo_reinhard02 (";
   std::cout << "key: " << key;
   std::cout << ", phi: " << phi;
@@ -56,10 +60,10 @@ void pfstmo_reinhard02(pfs::Frame* frame, float key, float phi, int num, int low
   std::cout << ", lower scale: " << low;
   std::cout << ", upper scale: " << high;
   std::cout << ", use scales: " << use_scales << ")" << std::endl;
-  
+#endif
   pfs::Channel *X, *Y, *Z;
-  frame->getXYZChannels( X, Y, Z );
-  frame->getTags().setString("LUMINANCE", "RELATIVE");
+  frame.getXYZChannels( X, Y, Z );
+  frame.getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
   if ( Y==NULL || X==NULL || Z==NULL)

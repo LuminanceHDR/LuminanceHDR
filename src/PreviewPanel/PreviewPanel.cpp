@@ -84,8 +84,6 @@ public:
 #endif
         }
 
-        //ProgressHelper fake_progress_helper;
-
         // Copy Reference Frame
         QSharedPointer<pfs::Frame> temp_frame( pfs::copy(m_ReferenceFrame.data()) );
 

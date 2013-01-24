@@ -28,18 +28,18 @@
  *
  */
 
-#ifndef TONEMAP_OPERATOR_H
-#define TONEMAP_OPERATOR_H
-
+#ifndef TONEMAPOPERATOR_H
+#define TONEMAPOPERATOR_H
 
 #include <stdexcept>
 
 #include "Core/TonemappingOptions.h"
-#include "Common/ProgressHelper.h"
 
 // Forward declaration
-namespace pfs {
-    class Frame;
+namespace pfs
+{
+class Progress;
+class Frame;
 }
 
 class TonemapOperator
@@ -48,23 +48,20 @@ public:
     static TonemapOperator* getTonemapOperator(const TMOperator tmo);
     virtual ~TonemapOperator();
 
-    ///!
-    ///! return the underlying type of the TonemapOperator
-    ///!
+    //!
+    //! \return return the underlying type of the TonemapOperator
+    //!
     virtual TMOperator getType() const = 0;
 
-    ///!
-    ///! Get a Frame in RGB and processes it.
-    ///! Frame is MODIFIED.
-    ///! If you want to keep the original frame, make a copy before
-    ///!
-    virtual void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph) = 0;
+    //!
+    //! Get a Frame in RGB and processes it.
+    //! \note input frame is MODIFIED
+    //! If you want to keep the original frame, make a copy before
+    //!
+    virtual void tonemapFrame(pfs::Frame&, TonemappingOptions*, pfs::Progress& ph) = 0;
 
 protected:
     TonemapOperator();
-
 };
 
-
-
-#endif
+#endif // TONEMAPOPERATOR_H

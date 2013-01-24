@@ -30,9 +30,9 @@
 #include <math.h>
 #include <assert.h>
 
-#include "Common/ProgressHelper.h"
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
+#include "Libpfs/progress.h"
 #include "tmo_ashikhmin02.h"
 #include "pyramid.h"
 
@@ -42,7 +42,8 @@
 
 //-------------------------------------------
 
-float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s) {
+float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s)
+{
   float ratio = myPyramid->p[s-1].lambda;  
 
   float newX = (float)x * ratio;
@@ -159,7 +160,7 @@ void Normalize(pfs::Array2D* lum_map, int nrows, int ncols) {
 
 ////////////////////////////////////////////////////////
 
-int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float /*avLum*/, bool simple_flag, float lc_value, int eq, ProgressHelper *ph)
+int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float /*avLum*/, bool simple_flag, float lc_value, int eq, pfs::Progress &ph)
 {
   assert(Y!=NULL);
   assert(L!=NULL);
@@ -193,9 +194,10 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
 
   // LAL calculation
   pfs::Array2D* la = new pfs::Array2D(ncols, nrows);
-  for(int y=0; y<nrows; y++) {
-	ph->newValue(100*y/nrows);
-	if (ph->isTerminationRequested())
+  for(int y=0; y<nrows; y++)
+  {
+    ph.setValue(100*y/nrows);
+    if (ph.canceled())
 		break;
     for(int x=0; x<ncols; x++) {
       (*la)(x,y) = LAL(myPyramid, x, y, lc_value);
@@ -208,16 +210,16 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
   // TM function
   pfs::Array2D* tm = new pfs::Array2D(ncols, nrows);
   for(int y=0; y<nrows; y++) {
-	ph->newValue(100*y/nrows);
-	if (ph->isTerminationRequested())
+    ph.setValue(100*y/nrows);
+    if (ph.canceled())
 		break;
     for(int x=0; x<ncols; x++)
       (*tm)(x,y) = TM((*la)(x,y), maxLum, minLum);
   }
   // final computation for each pixel
   for(int y=0; y<nrows; y++) {
-	ph->newValue(100*y/nrows);
-	if (ph->isTerminationRequested())
+    ph.setValue(100*y/nrows);
+    if (ph.canceled())
 		break;
     for(int x=0; x<ncols; x++)
     {

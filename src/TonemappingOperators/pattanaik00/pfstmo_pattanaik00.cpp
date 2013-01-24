@@ -40,7 +40,7 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
-#include "Common/ProgressHelper.h"
+#include "Libpfs/progress.h"
 
 namespace
 {
@@ -57,10 +57,10 @@ void multiplyChannels( pfs::Array2D& X, pfs::Array2D& Y, pfs::Array2D& Z, float 
 }
 }
 
-void pfstmo_pattanaik00(pfs::Frame* frame,
+void pfstmo_pattanaik00(pfs::Frame& frame,
                         bool local, float multiplier,
                         float Acone, float Arod, bool autolum,
-                        ProgressHelper *ph)
+                        pfs::Progress &ph)
 {  
     //--- default tone mapping parameters;
     bool timedependence = false;
@@ -80,8 +80,8 @@ void pfstmo_pattanaik00(pfs::Frame* frame,
     boost::scoped_ptr<VisualAdaptationModel> am(new VisualAdaptationModel());
 
     pfs::Channel *X, *Y, *Z;
-    frame->getXYZChannels( X, Y, Z );
-    frame->getTags().setString("LUMINANCE", "RELATIVE");
+    frame.getXYZChannels( X, Y, Z );
+    frame.getTags().setString("LUMINANCE", "RELATIVE");
     //---
 
     if ( Y==NULL || X==NULL || Z==NULL)
@@ -121,8 +121,8 @@ void pfstmo_pattanaik00(pfs::Frame* frame,
     tmo_pattanaik00( R, G, B, Yr, am.get(), local, ph );
     pfs::transformColorSpace( pfs::CS_RGB, &R, &G, &B, pfs::CS_XYZ, &Xr, &Yr, &Zr );
 
-    if (!ph->isTerminationRequested())
+    if (!ph.canceled())
     {
-        ph->newValue(100);
+        ph.setValue(100);
     }
 }

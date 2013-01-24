@@ -55,6 +55,7 @@
 #include <cstring>
 #include <cmath>
 #include <iostream>
+#include <cassert>
 
 #include "contrast_domain.h"
 #include "arch/malloc.h"
@@ -679,9 +680,9 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   for (; iter < itmax; iter++)
   {
     // TEST
-    ph->newValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));    
+    ph->setValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));
     // User requested abort
-    if (ph->isTerminationRequested() && iter > 0 ) 
+    if (ph->canceled() && iter > 0 )
     {
       break;
     }
@@ -770,7 +771,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   if (rdotr_curr/bnrm2 > tol2)
   {
     // Not converged
-    ph->newValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));    
+    ph->setValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));
     if (iter == itmax)
     {
       fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(rdotr_curr/bnrm2), tol);
@@ -782,7 +783,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   }
   else 
   {
-    ph->newValue( itmax );
+    ph->setValue( itmax );
   }
   
   matrix_free(x_best);
