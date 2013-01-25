@@ -23,6 +23,7 @@
 #include <boost/assign/std/vector.hpp> // for 'operator+=()'
 #include <boost/assert.hpp>
 
+#include <Libpfs/array2d.h>
 #include <Libpfs/colorspace.h>
 
 typedef std::vector<float> ColorSpaceSamples;

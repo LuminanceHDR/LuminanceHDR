@@ -29,7 +29,7 @@
 
 #include <QFrame>
 #include "Viewers/Histogram.h"
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 class LuminanceRangeWidget : public QFrame {
   Q_OBJECT

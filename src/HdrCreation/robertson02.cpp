@@ -33,8 +33,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <Libpfs/array2d.h>
 
-#include "Libpfs/array2d.h"
 #include "HdrCreation/robertson02.h"
 
 namespace {

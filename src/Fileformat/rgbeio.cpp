@@ -25,14 +25,14 @@
  * $Id: rgbeio.cpp,v 1.6 2006/11/20 11:19:21 gkrawczyk Exp $
  */
 
-#include <iostream>
+#include "rgbeio.h"
 
+#include <iostream>
 #include <math.h>
 #include <assert.h>
 
 #include "Libpfs/pfs.h"
-
-#include "rgbeio.h"
+#include "Libpfs/array2d.h"
 
 using namespace std;
 

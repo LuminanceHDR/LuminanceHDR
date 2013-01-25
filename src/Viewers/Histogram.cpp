@@ -25,10 +25,12 @@
  * $Id: histogram.cpp,v 1.2 2005/09/02 13:10:35 rafm Exp $
  */
 
+#include "Histogram.h"
+
 #include <math.h>
 #include <assert.h>
 
-#include "Histogram.h"
+#include <Libpfs/array2d.h>
 
 Histogram::Histogram( int bins, int accuracy )
     : bins( bins )

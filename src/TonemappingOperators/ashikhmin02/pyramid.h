@@ -30,7 +30,7 @@
 
 #include <stdio.h>
 
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 class Pyramid { // each level of a Gaussian pyramid
  public:
@@ -70,7 +70,8 @@ class GaussianPyramid
   GaussianPyramid()
   {}
 
-  GaussianPyramid(pfs::Array2Df* lum_map, int im_height, int im_width) {
+  GaussianPyramid(pfs::Array2Df* lum_map, int im_height, int im_width)
+  {
     // set a=0.4 (considered by Burt and Adelson, 1983).
     // obtained by Outer((0.05, 0.25, 0.4, 0.25, 0.05),(0.05, 0.25, 0.4, 0.25, 0.05))
     g_weights[0][0] = g_weights[0][4] = 0.0025;
@@ -94,12 +95,13 @@ class GaussianPyramid
     g_weights[4][2] = 0.0200;
 
     constructPyramid(lum_map, im_width, im_height);
-  };
+  }
 
-  ~GaussianPyramid() {
+  ~GaussianPyramid()
+  {
     for( int i=0 ; i< PYRAMID ; i++ )
       delete p[i].GP;
-  };
+  }
 
   double InterpolateLum(double newX, double newY, Pyramid *pl) {
     int X_int = (int)newX;

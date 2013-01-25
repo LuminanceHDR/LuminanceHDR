@@ -29,12 +29,10 @@
 #ifndef TMO_ASHIKHMIN02_H
 #define TMO_ASHIKHMIN02_H
 
+#include <Libpfs/array2d_fwd.h>
+
 namespace pfs
 {
-template <typename Type>
-class Array2D;
-typedef Array2D<float> Array2Df;
-
 class Frame;
 class Progress;
 }

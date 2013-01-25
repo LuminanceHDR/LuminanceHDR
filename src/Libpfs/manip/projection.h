@@ -32,7 +32,7 @@
 #include <map>
 #include <string>
 
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 class Vector3D;
 class Point2D;

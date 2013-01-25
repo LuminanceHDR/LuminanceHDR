@@ -27,6 +27,9 @@
 
 #include "copy.h"
 
+#include <cassert>
+#include <algorithm>
+
 namespace pfs
 {
 

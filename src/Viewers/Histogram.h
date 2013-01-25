@@ -28,7 +28,7 @@
  */
 
 #include <assert.h>
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 class Histogram
 {

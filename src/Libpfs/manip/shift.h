@@ -22,7 +22,7 @@
 #ifndef PFS_SHIFT_H
 #define PFS_SHIFT_H
 
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 namespace pfs
 {

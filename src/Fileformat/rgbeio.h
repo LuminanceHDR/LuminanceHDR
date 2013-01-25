@@ -30,7 +30,7 @@
 
 #include <stdio.h>
 
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 void readRadianceHeader( FILE *file, int &width, int &height, float &exposure );
 void readRadiance( FILE *file, int width, int height, float exposure,

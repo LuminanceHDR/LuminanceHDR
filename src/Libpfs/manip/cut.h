@@ -24,7 +24,7 @@
 #ifndef PFS_CUT_H
 #define PFS_CUT_H
 
-#include <Libpfs/array2d.h>
+#include <Libpfs/array2d_fwd.h>
 
 //! \brief Cut a rectangle out of images in PFS stream
 //! \author Franco Comida <fcomida@users.sourceforge.net>

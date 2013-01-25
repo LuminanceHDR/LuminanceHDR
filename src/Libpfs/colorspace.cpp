@@ -28,15 +28,16 @@
  * $Id: colorspace.cpp,v 1.6 2007/07/18 08:49:25 rafm Exp $
  */
 
+#include "colorspace.h"
+
 #include <cassert>
-#include <list>
 #include <iostream>
+#include <map>
 
 #include "arch/math.h"
 
-#include "pfs.h"
-#include "colorspace.h"
-
+#include "Libpfs/pfs.h"
+#include "Libpfs/array2d.h"
 #include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/vex/sse.h"
 

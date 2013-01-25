@@ -26,7 +26,7 @@
 #define CREATEHDR_COMMON_H
 
 #include <vector>
-#include <Libpfs/array2d.h>
+#include <Libpfs/array2d_fwd.h>
 
 ///! \brief Container for images taken with different exposures
 //struct Exposure

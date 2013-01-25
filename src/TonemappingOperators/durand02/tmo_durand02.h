@@ -35,12 +35,10 @@
 #ifndef TMO_DURAND02_H
 #define TMO_DURAND02_H
 
+#include <Libpfs/array2d_fwd.h>
+
 namespace pfs
 {
-template <typename Type>
-class Array2D;
-typedef Array2D<float> Array2Df;
-
 class Progress;
 }
 

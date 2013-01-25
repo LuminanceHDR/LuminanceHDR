@@ -33,7 +33,6 @@
 
 #include <cstddef>
 #include <vector>
-#include <list>
 
 //! \brief Pyramid item, containing its sizes and X and Y gradients
 class PyramidS

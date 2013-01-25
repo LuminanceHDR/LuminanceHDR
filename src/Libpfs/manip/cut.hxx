@@ -27,6 +27,9 @@
 
 #include "cut.h"
 
+#include <cassert>
+#include <algorithm>
+
 namespace pfs
 {
 
@@ -34,8 +37,6 @@ template <typename Type>
 void cut(const Array2D<Type> *from, Array2D<Type> *to,
          int x_ul, int y_ul, int x_br, int y_br)
 {
-    using namespace std;
-
     assert( x_ul >= 0 );
     assert( y_ul >= 0 );
     assert( x_br <= from->getCols() );
@@ -53,8 +54,9 @@ void cut(const Array2D<Type> *from, Array2D<Type> *to,
 #pragma omp parallel for
     for (int r = 0; r < to->getRows(); r++)
     {
-        copy(from->row_begin(r + y_ul) + x_ul, from->row_end(r + y_ul) - x_br,
-             to->row_begin(r));
+        std::copy(from->row_begin(r + y_ul) + x_ul,
+                  from->row_end(r + y_ul) - x_br,
+                  to->row_begin(r));
     }
 }
 

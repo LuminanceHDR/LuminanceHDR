@@ -26,7 +26,7 @@
 #ifndef PFS_ROTATE_H
 #define PFS_ROTATE_H
 
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 namespace pfs
 {

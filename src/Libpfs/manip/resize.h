@@ -27,7 +27,7 @@
 //! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 namespace pfs
 {

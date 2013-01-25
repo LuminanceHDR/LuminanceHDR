@@ -28,12 +28,10 @@
 #ifndef TMO_DRAGO03_H
 #define TMO_DRAGO03_H
 
+#include <Libpfs/array2d_fwd.h>
+
 namespace pfs
 {
-template <typename Type>
-class Array2D;
-typedef Array2D<float> Array2Df;
-
 class Progress;
 }
 

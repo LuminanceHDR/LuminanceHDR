@@ -23,7 +23,7 @@
 #ifndef PFS_GAMMA_H
 #define PFS_GAMMA_H
 
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 //! \brief Apply gamma correction the the pfs stream
 //! \author Rafal Mantiuk <mantiuk@mpi-sb.mpg.de>

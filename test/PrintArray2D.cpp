@@ -20,6 +20,7 @@
  */
 
 #include "PrintArray2D.h"
+#include <Libpfs/array2d.h>
 
 void print(const pfs::Array2Df& a2d)
 {

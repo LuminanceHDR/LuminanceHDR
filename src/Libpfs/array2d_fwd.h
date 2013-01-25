@@ -1,7 +1,7 @@
 /*
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Davide Anastasia
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,32 +17,20 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
  */
 
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#ifndef PFS_COPY_H
-#define PFS_COPY_H
-
-#include "Libpfs/array2d_fwd.h"
+#ifndef PFS_ARRAY2D_FWD_H
+#define PFS_ARRAY2D_FWD_H
 
 namespace pfs
 {
-class Frame;
+template <typename Type>
+class Array2D;
 
-pfs::Frame* copy(const pfs::Frame *inFrame);
+//! \brief typedef provided for backward compatibility with the old API
+typedef Array2D<float> Array2Df;
+} // namespace pfs
 
-//! \brief Copy data from one Array2D to another.
-//! Dimensions of the arrays must be the same.
-//!
-//! \param from array to copy from
-//! \param to array to copy to
-template<typename Type>
-void copy(const Array2D<Type> *from, Array2D<Type> *to);
-
-} // pfs
-
-#include "copy.hxx"
-
-#endif // #ifndef PFS_COPY_H
+#endif /* PFS_ARRAY2D_FWD_H */

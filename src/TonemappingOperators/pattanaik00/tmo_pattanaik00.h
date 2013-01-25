@@ -35,12 +35,10 @@
 #ifndef TMO_PATTANAIK00_H
 #define TMO_PATTANAIK00_H
 
+#include <Libpfs/array2d_fwd.h>
+
 namespace pfs
 {
-template <typename Type>
-class Array2D;
-typedef Array2D<float> Array2Df;
-
 // class Frame;
 class Progress;
 }
