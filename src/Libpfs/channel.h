@@ -100,6 +100,30 @@ private:
     TagContainer tags;
 };
 
+inline
+int Channel::getWidth() const
+{
+    return channel_impl->getCols();
+}
+
+inline
+int Channel::getHeight() const
+{
+    return channel_impl->getRows();
+}
+
+inline
+float* Channel::getRawData()
+{
+    return channel_impl->getRawData();
+}
+
+inline
+const float* Channel::getRawData() const
+{
+    return channel_impl->getRawData();
+}
+
 } // namespace pfs
 
 

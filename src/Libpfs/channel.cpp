@@ -57,26 +57,6 @@ const TagContainer* Channel::getTags() const
     return &tags;
 }
 
-float* Channel::getRawData()
-{
-    return channel_impl->getRawData();
-}
-
-const float* Channel::getRawData() const
-{
-    return channel_impl->getRawData();
-}
-
-int Channel::getWidth() const
-{
-    return channel_impl->getCols();
-}
-
-int Channel::getHeight() const
-{
-    return channel_impl->getRows();
-}
-
 void Channel::resize(int width, int height)
 {
     channel_impl->resize(width, height);
