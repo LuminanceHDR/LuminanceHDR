@@ -38,10 +38,10 @@ TEST(TestSRGB2Y, TestSRGB2Y)
     ColorSpaceSamples blueInput;
     ColorSpaceSamples yOutput;
 
-    redInput    += 0.f, 1.f, 0.f, 0.f, 0.2f, 1.f;
-    greenInput  += 0.f, 0.f, 1.f, 0.f, 0.3f, 1.f;
-    blueInput   += 0.f, 0.f, 0.f, 1.f, 0.4f, 1.f;
-    yOutput     += 0.f, 0.212673f, 0.715152f, 0.072175f, 0.069007f, 1.f;
+    redInput    += 0.f, 1.f, 0.f, 0.f, 0.2f, 1.f, 1.2f, 1.2f, 2.f;
+    greenInput  += 0.f, 0.f, 1.f, 0.f, 0.3f, 1.f, 0.f, 0.0f, 1.2f;
+    blueInput   += 0.f, 0.f, 0.f, 1.f, 0.4f, 1.f, 0.f, 1.4f, 2.f;
+    yOutput     += 0.f, 0.212673f, 0.715152f, 0.072175f, 0.069007f, 1.f, 0.322590f, 0.478708f, 2.495864;
 
     ASSERT_TRUE( static_cast<bool>(yOutput.size()) );
     ASSERT_EQ( yOutput.size(), blueInput.size() );

@@ -34,7 +34,8 @@
 #include <iostream>
 #include <map>
 
-#include "arch/math.h"
+#include <cmath>
+// #include "arch/math.h"
 
 #include "Libpfs/pfs.h"
 #include "Libpfs/array2d.h"
@@ -62,7 +63,6 @@ T clamp(T v, T min, T max)
 
 //! \brief Basic matrices for the SRGB <-> XYZ conversion
 //! \ref http://www.brucelindbloom.com/Eqn_RGB_XYZ_Matrix.html
-
 static const float rgb2xyzD65Mat[3][3] =
 { { 0.4124564f, 0.3575761f, 0.1804375f },
   { 0.2126729f, 0.7151522f, 0.0721750f },
@@ -122,23 +122,31 @@ static const float xyz2rgbD65Mat[3][3] =
   namespace
   {
 
+  static const float SRGB_INVERSE_COMPANDING_THRESHOLD = 0.04045f;
+  static const float SRGB_INVERSE_DIVIDER_SHADOW = 1.f/12.92f;
+  static const float SRGB_INVERSE_SHIFT = 0.055f;
+  static const float SRGB_INVERSE_DIVIDER_HIGHLIGHT = 1.f/1.055f;
+  static const float SRGB_INVERSE_GAMMA = 2.4f;
+
   inline
-  void kernelTrasformSRGB2Y(float red, float green, float blue, float& y)
+  float inverseSRGBCompanding(float sample)
   {
-      red = clamp(red, 0.f, 1.f);
-      green = clamp(green, 0.f, 1.f);
-      blue = clamp(blue, 0.f, 1.f);
-
-      red = (red <= 0.04045f ? red / 12.92f : powf( (red + 0.055f) / 1.055f, 2.4f )  );
-      green = (green <= 0.04045f ? green / 12.92f : powf( (green + 0.055f) / 1.055f, 2.4f )  );
-      blue = (blue <= 0.04045f ? blue / 12.92f : powf( (blue + 0.055f) / 1.055f, 2.4f )  );
-
-      y = rgb2xyzD65Mat[1][0]*red
-              + rgb2xyzD65Mat[1][1]*green
-              + rgb2xyzD65Mat[1][2]*blue;
+      if ( sample <= SRGB_INVERSE_COMPANDING_THRESHOLD )
+          return sample*SRGB_INVERSE_DIVIDER_SHADOW;
+      else
+          return std::pow( (sample + SRGB_INVERSE_SHIFT)*SRGB_INVERSE_DIVIDER_HIGHLIGHT,
+                             SRGB_INVERSE_GAMMA );
   }
 
+  inline
+  float kernelTrasformSRGB2Y(float red, float green, float blue)
+  {
+      return ( rgb2xyzD65Mat[1][0]*inverseSRGBCompanding(red) +
+               rgb2xyzD65Mat[1][1]*inverseSRGBCompanding(green) +
+               rgb2xyzD65Mat[1][2]*inverseSRGBCompanding(blue) );
   }
+
+  }   // anonymous namespace
 
   void transformSRGB2Y(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
                        Array2Df *outC1)
@@ -152,7 +160,7 @@ static const float xyz2rgbD65Mat[3][3] =
 
       while ( r != rEnd )
       {
-          kernelTrasformSRGB2Y(*r++, *g++, *b++, *y++);
+          *y++ = kernelTrasformSRGB2Y(*r++, *g++, *b++);
       }
   }
   
