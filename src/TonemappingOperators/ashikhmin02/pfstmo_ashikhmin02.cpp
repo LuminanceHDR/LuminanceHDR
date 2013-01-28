@@ -68,15 +68,15 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
     int w = Yr->getCols();
     int h = Yr->getRows();
 
-    pfs::Array2D* L = new pfs::Array2D(w,h);
-    tmo_ashikhmin02(Yr, L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
+    pfs::Array2D L(w,h);
+    tmo_ashikhmin02(Yr, &L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
 
     // TODO: this section can be rewritten using SSE Function
     for ( int x=0 ; x<w ; x++ )
     {
         for ( int y=0 ; y<h ; y++ )
         {
-            float scale = (*L)(x,y) / (*Yr)(x,y);
+            float scale = L(x,y) / (*Yr)(x,y);
             (*Yr)(x,y) = (*Yr)(x,y) * scale;
             (*Xr)(x,y) = (*Xr)(x,y) * scale;
             (*Zr)(x,y) = (*Zr)(x,y) * scale;
@@ -87,8 +87,6 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
     {
         ph.setValue( 100 );
     }
-
-    delete L;
 
     pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, Yr, Zr);
 }

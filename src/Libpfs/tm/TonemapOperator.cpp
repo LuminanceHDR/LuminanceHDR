@@ -258,20 +258,11 @@ struct TonemapOperatorAshikhmin02
     {
         ph.setMaximum(100);
 
-        // Convert to CS_XYZ: tm operator now use this colorspace
-        pfs::Channel *X, *Y, *Z;
-        workingframe.getXYZChannels( X, Y, Z );
-        pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                 pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-
         pfstmo_ashikhmin02(workingframe,
                            opts->operator_options.ashikhminoptions.simple,
                            opts->operator_options.ashikhminoptions.lct,
                            (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
                            ph);
-
-        pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                 pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
     }
 };
 
