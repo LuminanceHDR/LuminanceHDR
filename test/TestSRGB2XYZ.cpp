@@ -33,7 +33,7 @@ typedef std::vector<float> ColorSpaceSamples;
 using namespace std;
 using namespace boost::assign;  // bring 'operator+=()' into scope
 
-TEST(TestSRGB2Y, TestSRGB2Y)
+TEST(TestSRGB2Y, TestSRGB2XYZ)
 {
     ColorSpaceSamples redInput;
     ColorSpaceSamples greenInput;
@@ -80,5 +80,41 @@ TEST(TestSRGB2Y, TestSRGB2Y)
         EXPECT_NEAR(xOutput[idx], A2DX(idx), 10e-6);
         EXPECT_NEAR(yOutput[idx], A2DY(idx), 10e-6);
         EXPECT_NEAR(zOutput[idx], A2DZ(idx), 10e-6);
+    }
+}
+
+TEST(TestSRGB2Y, TestSRGB2Y)
+{
+    ColorSpaceSamples redInput;
+    ColorSpaceSamples greenInput;
+    ColorSpaceSamples blueInput;
+    ColorSpaceSamples yOutput;
+
+    redInput    += 0.f, 1.f, 0.f, 0.f, 0.2f, 1.f, 1.2f, 1.2f, 2.f;
+    greenInput  += 0.f, 0.f, 1.f, 0.f, 0.3f, 1.f, 0.f, 0.0f, 1.2f;
+    blueInput   += 0.f, 0.f, 0.f, 1.f, 0.4f, 1.f, 0.f, 1.4f, 2.f;
+    yOutput     += 0.f, 0.212673f, 0.715152f, 0.072175f, 0.069007f, 1.f, 0.322590f, 0.478708f, 2.495864;
+
+    ASSERT_TRUE( static_cast<bool>(yOutput.size()) );
+    ASSERT_EQ( yOutput.size(), blueInput.size() );
+    ASSERT_EQ( redInput.size(), blueInput.size() );
+    ASSERT_EQ( greenInput.size(), blueInput.size() );
+
+    pfs::Array2Df A2DRed(redInput.size(), 1);
+    pfs::Array2Df A2DGreen(greenInput.size(), 1);
+    pfs::Array2Df A2DBlue(blueInput.size(), 1);
+    pfs::Array2Df A2DY(yOutput.size(), 1);
+
+    std::copy(redInput.begin(), redInput.end(), A2DRed.begin());
+    std::copy(greenInput.begin(), greenInput.end(), A2DGreen.begin());
+    std::copy(blueInput.begin(), blueInput.end(), A2DBlue.begin());
+
+    // function under unit test!
+    pfs::transformSRGB2Y(&A2DRed, &A2DGreen, &A2DBlue,
+                         &A2DY);
+
+    for (size_t idx = 0; idx < A2DY.size(); ++idx)
+    {
+        EXPECT_NEAR(yOutput[idx], A2DY(idx), 10e-6);
     }
 }
