@@ -1,6 +1,15 @@
 @echo off
 SETLOCAL
 
+SET EXIV2_COMMIT=2984
+SET LIBJPEG_COMMIT=921
+SET LIBRAW_COMMIT=968c975
+SET LIBRAW_COMMIT_LONG=968c975e21870df390bca95f801ffef6b477e3ba
+SET LIBRAW_DEMOS2_COMMIT=028c410
+SET LIBRAW_DEMOS2_COMMIT_LONG=028c41031044c8f2bece04c3fb68d2d01368b7ae
+SET LIBRAW_DEMOS3_COMMIT=f089589
+SET LIBRAW_DEMOS3_COMMIT_LONG=f0895891fdaa775255af02275fce426a5bf5c9fc
+
 devenv /? > NUL
 IF ERRORLEVEL 1 (
 	echo.
@@ -173,10 +182,10 @@ IF NOT EXIST expat-2.1.0 (
 	popd
 )
 
-IF NOT EXIST exiv2-2895 (
-	%CYGWIN_DIR%\bin\svn.exe co -r 2895 svn://dev.exiv2.org/svn/trunk exiv2-2895
+IF NOT EXIST exiv2-%EXIV2_COMMIT% (
+	%CYGWIN_DIR%\bin\svn.exe co -r %EXIV2_COMMIT% svn://dev.exiv2.org/svn/trunk exiv2-%EXIV2_COMMIT%
     
-    pushd exiv2-2895
+    pushd exiv2-%EXIV2_COMMIT%
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"  -DZLIB_ROOT=..\zlib-aa566e;..\zlib-aa566e\Release
 	IF errorlevel 1 goto error_end
 	devenv exiv2.sln /build "%Configuration%|%Platform%" /Project exiv2
@@ -185,17 +194,17 @@ IF NOT EXIST exiv2-2895 (
 	popd  
 )
 
-IF NOT EXIST libjpeg-turbo-867 (
-    %CYGWIN_DIR%\bin\svn.exe co -r 867 svn://svn.code.sf.net/p/libjpeg-turbo/code/trunk libjpeg-turbo-867
-    IF NOT EXIST libjpeg-turbo-867.build (
-        mkdir libjpeg-turbo-867.build
+IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
+    %CYGWIN_DIR%\bin\svn.exe co -r %LIBJPEG_COMMIT% svn://svn.code.sf.net/p/libjpeg-turbo/code/trunk libjpeg-turbo-%LIBJPEG_COMMIT%
+    IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT%.build (
+        mkdir libjpeg-turbo-%LIBJPEG_COMMIT%.build
     )
-	pushd libjpeg-turbo-867.build
-	%CMAKE_DIR%\bin\cmake.exe -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" ..\libjpeg-turbo-867
+	pushd libjpeg-turbo-%LIBJPEG_COMMIT%.build
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" -DWITH_JPEG8=TRUE -DWITH_MEM_SRCDST=FALSE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	IF errorlevel 1 goto error_end
-	nmake
+	devenv libjpeg-turbo.sln /build "%Configuration%|%Platform%"
 	IF errorlevel 1 goto error_end
-    copy jconfig.h ..\libjpeg-turbo-867
+    copy jconfig.h ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	popd
 )
 
@@ -223,9 +232,9 @@ IF NOT EXIST tiff-4.0.3 (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-4.0.3.zip
 
 	echo.JPEG_SUPPORT=^1> tiff-4.0.3\qtpfsgui_commands.in
-	echo.JPEGDIR=%CD%\libjpeg-turbo-867>> tiff-4.0.3\qtpfsgui_commands.in
-	echo.JPEG_INCLUDE=-I%CD%\libjpeg-turbo-867>> tiff-4.0.3\qtpfsgui_commands.in
-	echo.JPEG_LIB=%CD%\libjpeg-turbo-867.build\turbojpeg-static.lib>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.JPEGDIR=%CD%\libjpeg-turbo-%LIBJPEG_COMMIT%>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.JPEG_INCLUDE=-I%CD%\libjpeg-turbo-%LIBJPEG_COMMIT%>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.JPEG_LIB=%CD%\libjpeg-turbo-%LIBJPEG_COMMIT%.build\sharedlib\%Configuration%\jpeg.lib>> tiff-4.0.3\qtpfsgui_commands.in
 	echo.ZIP_SUPPORT=^1>> tiff-4.0.3\qtpfsgui_commands.in
 	echo.ZLIBDIR=..\..\zlib-aa566e\%Configuration%>> tiff-4.0.3\qtpfsgui_commands.in
 	echo.ZLIB_INCLUDE=-I..\..\zlib-aa566e>> tiff-4.0.3\qtpfsgui_commands.in
@@ -237,50 +246,49 @@ IF NOT EXIST tiff-4.0.3 (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\LibRaw-5c9b4fb.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-5c9b4fb.zip --no-check-certificate https://github.com/LibRaw/LibRaw/zipball/5c9b4fb7b6149721cdf4f2099032ac8bdf0dd57c
+IF NOT EXIST %TEMP_DIR%\LibRaw-%LIBRAW_COMMIT%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip --no-check-certificate https://github.com/LibRaw/LibRaw/zipball/%LIBRAW_COMMIT_LONG%
 )
 
-IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-6f851ba.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-6f851ba.zip --no-check-certificate https://github.com/LibRaw/LibRaw-demosaic-pack-GPL2/zipball/6f851babcec79e50506cdda2aa55a6b6daeada3e
+IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip --no-check-certificate https://github.com/LibRaw/LibRaw-demosaic-pack-GPL2/zipball/%LIBRAW_DEMOS2_COMMIT_LONG%
 )
 
-IF NOT EXIST LibRaw-demosaic-pack-GPL2-6f851ba (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-6f851ba.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-demosaic-pack-GPL2-6f851ba
+IF NOT EXIST LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT% (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip
+	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%
 )
 
-IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL3-f089589.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-f089589.zip --no-check-certificate https://github.com/LibRaw/LibRaw-demosaic-pack-GPL3/zipball/f0895891fdaa775255af02275fce426a5bf5c9fc
+IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip --no-check-certificate https://github.com/LibRaw/LibRaw-demosaic-pack-GPL3/zipball/%LIBRAW_DEMOS3_COMMIT_LONG%
 )
 
-IF NOT EXIST LibRaw-demosaic-pack-GPL3-f089589 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-f089589.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-demosaic-pack-GPL3-f089589
+IF NOT EXIST LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT% (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip
+	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%
 )
 
-IF NOT EXIST LibRaw-5c9b4fb (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-5c9b4fb.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-5c9b4fb
+IF NOT EXIST LibRaw-%LIBRAW_COMMIT% (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip
+	%CYGWIN_DIR%\bin\mv.exe LibRaw-LibRaw-* LibRaw-%LIBRAW_COMMIT%
 
 	
-	pushd LibRaw-5c9b4fb
+	pushd LibRaw-%LIBRAW_COMMIT%
 	
 	rem echo.COPT_OPT="/openmp"> qtpfsgui_commands.in
-	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-6f851ba> qtpfsgui_commands.in
+	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
-	echo.CFLAGS_DP3=/I..\LibRaw-demosaic-pack-GPL3-f089589>> qtpfsgui_commands.in
+	echo.CFLAGS_DP3=/I..\LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%>> qtpfsgui_commands.in
 	echo.CFLAGSG3=/DLIBRAW_DEMOSAIC_PACK_GPL3>> qtpfsgui_commands.in
 	echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-493aac\include">> qtpfsgui_commands.in
 	echo.LCMS_LIB="..\lcms2-493aac\bin\lcms2_dll.lib">> qtpfsgui_commands.in
-REM	echo.JPEG_DEF="/DUSE_JPEG /I..\libjpeg">> qtpfsgui_commands.in
-REM	echo.JPEG_LIB="..\libjpeg\libjpeg.lib">> qtpfsgui_commands.in
+    echo.JPEG_DEF="/DUSE_JPEG8 /DUSE_JPEG /I..\libjpeg-turbo-%LIBJPEG_COMMIT%">> qtpfsgui_commands.in
+    echo.JPEG_LIB="..\libjpeg-turbo-%LIBJPEG_COMMIT%.build\sharedlib\%Configuration%\jpeg.lib">> qtpfsgui_commands.in
 	
 	nmake /f Makefile.msvc @qtpfsgui_commands.in clean
 	nmake /f Makefile.msvc @qtpfsgui_commands.in bin\libraw.dll
 	popd
 )
-
 IF NOT EXIST %TEMP_DIR%\gsl-1.15.tar (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gsl-1.15.tar.gz ftp://ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz
 	%CYGWIN_DIR%\bin\gzip -d %TEMP_DIR%/gsl-1.15.tar.gz
@@ -346,24 +354,24 @@ IF DEFINED openexr-compile (
 )
 
 IF %Platform% EQU Win32 (
-	IF NOT EXIST %TEMP_DIR%\fftw-3.3.2-dll32.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.2-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.2-dll32.zip
+	IF NOT EXIST %TEMP_DIR%\fftw-3.3.3-dll32.zip (
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.3-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.3-dll32.zip
 	)
 ) ELSE (
-	IF NOT EXIST %TEMP_DIR%\fftw-3.3.2-dll64.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.2-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.2-dll64.zip
+	IF NOT EXIST %TEMP_DIR%\fftw-3.3.3-dll64.zip (
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.3-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.3-dll64.zip
 		
 	)
 )
 
-IF NOT EXIST fftw-3.3.2-dll (
+IF NOT EXIST fftw-3.3.3-dll (
 	IF %Platform% EQU Win32 (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3.2-dll %TEMP_DIR%/fftw-3.3.2-dll32.zip
+		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3.3-dll %TEMP_DIR%/fftw-3.3.3-dll32.zip
 	) ELSE (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3.2-dll %TEMP_DIR%/fftw-3.3.2-dll64.zip
+		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3.3-dll %TEMP_DIR%/fftw-3.3.3-dll64.zip
 	)
 
-	pushd fftw-3.3.2-dll
+	pushd fftw-3.3.3-dll
 	lib /def:libfftw3-3.def
 	lib /def:libfftw3f-3.def
 	lib /def:libfftw3l-3.def
@@ -482,15 +490,16 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	copy OpenExrStuff\Deploy\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
 	copy OpenExrStuff\Deploy\bin\%Platform%\%Configuration%\*.dll LuminanceHdrStuff\DEPs\bin\OpenEXR
 
-	copy fftw-3.3.2-dll\*.h LuminanceHdrStuff\DEPs\include\fftw3
-	copy fftw-3.3.2-dll\*.lib LuminanceHdrStuff\DEPs\lib\fftw3
-	copy fftw-3.3.2-dll\*.dll LuminanceHdrStuff\DEPs\bin\fftw3
-
 	mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
 	copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
 	copy gsl-1.15\build.vc10\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\gsl
 	rem copy gsl-1.15\build.vc10\dll\*.dll LuminanceHdrStuff\DEPs\bin\gsl
 )
+
+robocopy fftw-3.3.3-dll LuminanceHdrStuff\DEPs\include\fftw3 *.h /MIR >nul
+robocopy fftw-3.3.3-dll LuminanceHdrStuff\DEPs\lib\fftw3 *.lib /MIR /NJS >nul
+robocopy fftw-3.3.3-dll LuminanceHdrStuff\DEPs\bin\fftw3 *.dll /MIR /NJS >nul
+
 
 robocopy tiff-4.0.3\libtiff LuminanceHdrStuff\DEPs\include\libtiff *.h /MIR >nul
 robocopy tiff-4.0.3\libtiff LuminanceHdrStuff\DEPs\lib\libtiff *.lib /MIR /NJS >nul
@@ -498,26 +507,26 @@ robocopy tiff-4.0.3\libtiff LuminanceHdrStuff\DEPs\bin\libtiff *.dll /MIR /NJS >
 
 rem robocopy expat: included indirectly in in exiv2
 rem robocopy zlib: included indirectly in in exiv2
-robocopy exiv2-2895\include LuminanceHdrStuff\DEPs\include\exiv2 *.h /MIR >nul
-robocopy exiv2-2895\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\lib\exiv2 *.lib /MIR >nul
-robocopy exiv2-2895\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\bin\exiv2 *.dll /MIR >nul
+robocopy exiv2-%EXIV2_COMMIT%\include LuminanceHdrStuff\DEPs\include\exiv2 *.h *.hpp /MIR >nul
+robocopy exiv2-%EXIV2_COMMIT%\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\lib\exiv2 *.lib /MIR >nul
+robocopy exiv2-%EXIV2_COMMIT%\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\bin\exiv2 *.dll /MIR >nul
 
 robocopy lpng1513 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
 robocopy lpng1513\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
 robocopy lpng1513\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
 	
 
-robocopy LibRaw-5c9b4fb\libraw LuminanceHdrStuff\DEPs\include\libraw\libraw /MIR >nul
-robocopy LibRaw-5c9b4fb\lib LuminanceHdrStuff\DEPs\lib\libraw *.lib /MIR >nul
-robocopy LibRaw-5c9b4fb\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR >nul
+robocopy LibRaw-%LIBRAW_COMMIT%\libraw LuminanceHdrStuff\DEPs\include\libraw\libraw /MIR >nul
+robocopy LibRaw-%LIBRAW_COMMIT%\lib LuminanceHdrStuff\DEPs\lib\libraw *.lib /MIR >nul
+robocopy LibRaw-%LIBRAW_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR >nul
 	
 robocopy lcms2-493aac\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
 robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
 robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
 
-robocopy libjpeg-turbo-867 LuminanceHdrStuff\DEPs\include\libjpeg *.h /MIR >nul
-robocopy libjpeg-turbo-867.build LuminanceHdrStuff\DEPs\lib\libjpeg *.lib /MIR /NJS >nul
-robocopy libjpeg-turbo-867.build LuminanceHdrStuff\DEPs\bin\libjpeg *.dll /MIR /NJS >nul
+robocopy libjpeg-turbo-%LIBJPEG_COMMIT% LuminanceHdrStuff\DEPs\include\libjpeg *.h /MIR >nul
+robocopy libjpeg-turbo-%LIBJPEG_COMMIT%.build\sharedlib\%Configuration% LuminanceHdrStuff\DEPs\lib\libjpeg *.lib /MIR /NJS >nul
+robocopy libjpeg-turbo-%LIBJPEG_COMMIT%.build\sharedlib\%Configuration% LuminanceHdrStuff\DEPs\bin\libjpeg *.dll /MIR /NJS >nul
 
 REM robocopy tbb40_20120613oss\include LuminanceHdrStuff\DEPs\include\tbb /MIR >nul
 REM robocopy tbb40_20120613oss\lib\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\lib\tbb /MIR >nul
@@ -545,7 +554,7 @@ IF %OPTION_LUPDATE_NOOBSOLETE% EQU 1 (
 set L_CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-aa566e
 set L_CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-aa566e\%Configuration%
 set L_CMAKE_PROGRAM_PATH=%CYGWIN_DIR%\bin
-set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH%
+set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include\exiv2 -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH%
 
 IF EXIST ..\..\gtest-1.6.0 (
 	SET GTEST_ROOT=%CD%\..\..\gtest-1.6.0
@@ -585,7 +594,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
 			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("lcms2\lcms2_DLL.dll", "exiv2\exiv2.dll", "exiv2\expat.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "libpng\libpng15.dll") do (
+			for %%v in ("libjpeg\jpeg8.dll", "lcms2\lcms2_DLL.dll", "exiv2\exiv2.dll", "exiv2\expat.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "libpng\libpng15.dll") do (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd
