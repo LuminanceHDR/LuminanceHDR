@@ -39,3 +39,16 @@ void print(const pfs::Array2Df& a2d)
         std::cout << "]" << std::endl;
     }
 }
+
+void print(const std::vector<float>& vecF)
+{
+    std::vector<float>::const_iterator currSample = vecF.begin();
+    std::vector<float>::const_iterator endSample = vecF.end();
+
+    std::cout << "[";
+    while (currSample != endSample)
+    {
+        std::cout << " " << *currSample++ << " ";
+    }
+    std::cout << "]" << std::endl;
+}

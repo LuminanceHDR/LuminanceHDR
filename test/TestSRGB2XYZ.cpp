@@ -42,12 +42,12 @@ TEST(TestSRGB2Y, TestSRGB2XYZ)
     ColorSpaceSamples yOutput;
     ColorSpaceSamples zOutput;
 
-    redInput    += 0.f, 1.f,        0.f,        0.f,        0.2f,       1.f,        1.2f,       1.2f,       2.f;
-    greenInput  += 0.f, 0.f,        1.f,        0.f,        0.3f,       1.f,        0.f,        0.0f,       1.2f;
-    blueInput   += 0.f, 0.f,        0.f,        1.f,        0.4f,       1.f,        0.f,        1.4f,       2.f;
-    xOutput     += 0.f, 0.412456f,  0.357576f,  0.180437f,  0.063817f,  0.950470f,  0.625629f,  1.015924f,  3.479490f;
-    yOutput     += 0.f, 0.212673f,  0.715152f,  0.072175f,  0.069007f,  1.f,        0.322590f,  0.478708f,  2.495864f;
-    zOutput     += 0.f, 0.019334f,  0.119192f,  0.950304f,  0.135635f,  1.088830f,  0.029326f,  2.084876f,  4.984232f;
+    redInput    += 0.f, 1.f,        0.f,        0.f,        0.2f,       1.f,        1.2f,       1.2f,       2.f,        -0.2f;
+    greenInput  += 0.f, 0.f,        1.f,        0.f,        0.3f,       1.f,        0.f,        0.0f,       1.2f,       -0.9f;
+    blueInput   += 0.f, 0.f,        0.f,        1.f,        0.4f,       1.f,        0.f,        1.4f,       2.f,        0.3f;
+    xOutput     += 0.f, 0.412456f,  0.357576f,  0.180437f,  0.063817f,  0.950470f,  0.625629f,  1.015924f,  3.479490f,  -0.281999f;
+    yOutput     += 0.f, 0.212673f,  0.715152f,  0.072175f,  0.069007f,  1.f,        0.322590f,  0.478708f,  2.495864f,  -0.564874f;
+    zOutput     += 0.f, 0.019334f,  0.119192f,  0.950304f,  0.135635f,  1.088830f,  0.029326f,  2.084876f,  4.984232f,  -0.024894f;
 
     ASSERT_TRUE( static_cast<bool>(yOutput.size()) );
     ASSERT_EQ( zOutput.size(), xOutput.size() );
@@ -71,9 +71,12 @@ TEST(TestSRGB2Y, TestSRGB2XYZ)
     // function under unit test!
     pfs::transformSRGB2XYZ(&A2DRed, &A2DGreen, &A2DBlue, &A2DX, &A2DY, &A2DZ);
 
-    // print(A2DX);
-    // print(A2DY);
-    // print(A2DZ);
+    print(A2DX);
+    print(xOutput);
+    print(A2DY);
+    print(yOutput);
+    print(A2DZ);
+    print(zOutput);
 
     for (size_t idx = 0; idx < A2DY.size(); ++idx)
     {
