@@ -71,13 +71,13 @@ pfs::Frame * readEXRfile( const char *filename )
   
   Box2i dw = file.header().displayWindow();
   Box2i dtw = file.header().dataWindow();
-  int width  = dw.max.x - dw.min.x + 1;
-  int height = dw.max.y - dw.min.y + 1;
+  int width  = dtw.max.x - dtw.min.x + 1;
+  int height = dtw.max.y - dtw.min.y + 1;
   
   if ( (dtw.min.x < dw.min.x && dtw.max.x > dw.max.x) ||
        (dtw.min.y < dw.min.y && dtw.max.y > dw.max.y) )
   {
-      throw pfs::Exception( "No support for OpenEXR files DataWidnow greater than DisplayWindow" );
+      throw pfs::Exception( "No support for OpenEXR files DataWindow greater than DisplayWindow" );
   }
   
   pfs::Frame *frame = pfs::DOMIO::createFrame( width, height );
@@ -98,7 +98,7 @@ pfs::Frame * readEXRfile( const char *filename )
       
       frameBuffer.insert( "R",                                // name
                           Slice( FLOAT,                        // type
-                                 (char*)(X->getRawData()),
+                                 (char*)(X->getRawData() - dtw.min.x - dtw.min.y * width),
                                  sizeof(float),                 // xStride
                                  sizeof(float) * width,         // yStride
                                  1, 1,                          // x/y sampling
@@ -106,7 +106,7 @@ pfs::Frame * readEXRfile( const char *filename )
       
       frameBuffer.insert( "G",                                // name
                           Slice( FLOAT,                        // type
-                                 (char*)(Y->getRawData()),
+                                 (char*)(Y->getRawData() - dtw.min.x - dtw.min.y * width),
                                  sizeof(float),                 // xStride
                                  sizeof(float) * width,         // yStride
                                  1, 1,                          // x/y sampling
@@ -114,7 +114,7 @@ pfs::Frame * readEXRfile( const char *filename )
       
       frameBuffer.insert( "B",                                // name
                           Slice( FLOAT,                        // type
-                                 (char*)(Z->getRawData()),
+                                 (char*)(Z->getRawData() - dtw.min.x - dtw.min.y * width),
                                  sizeof(float),                 // xStride
                                  sizeof(float) * width,         // yStride
                                  1, 1,                          // x/y sampling
@@ -142,7 +142,7 @@ pfs::Frame * readEXRfile( const char *filename )
       pfs::Channel *pfsCh = frame->createChannel( channelName );
       frameBuffer.insert( i.name(),                             // name
                           Slice( FLOAT,                          // type
-                                 (char *)pfsCh->getRawData(),
+                                 (char *)(pfsCh->getRawData() - dtw.min.x - dtw.min.y * width),
                                  sizeof(float),                   // xStride
                                  sizeof(float) * width,           // yStride
                                  1, 1,                            // x/y sampling
@@ -183,7 +183,7 @@ pfs::Frame * readEXRfile( const char *filename )
   }
   
   file.setFrameBuffer( frameBuffer );
-  file.readPixels( dw.min.y, dw.max.y );
+  file.readPixels( dtw.min.y, dtw.max.y );
   
   if( processColorChannels )
   {
