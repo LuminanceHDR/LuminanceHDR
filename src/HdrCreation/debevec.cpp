@@ -113,42 +113,48 @@ int debevec_applyResponse( const float * arrayofexptime,
 }
 */
 
+void computeTrustRange(const float* w, int M, int& minM, int& maxM)
+{
+    for ( int m = 0 ; m < M ; ++m ) {
+        if ( w[m] > 0 ) {
+            minM = m;
+            break;
+        }
+    }
+
+    for ( int m = M-1 ; m >= 0 ; --m ) {
+        if ( w[m] > 0 ) {
+            maxM = m;
+            break;
+        }
+    }
+}
+
+
 // LDR version
-int debevec_applyResponse( const float * arrayofexptime,
-                           pfs::Array2D* xj,  pfs::Array2D* yj,  pfs::Array2D* zj,
-                           const float* Ir, const float* Ig, const float* Ib,
-                           const float* w, int M,
-                           QList<QImage*> *list )
+int debevec_applyResponse(pfs::Array2D& xj, pfs::Array2D& yj, pfs::Array2D& zj,
+                          const float* arrayofexptime,
+                          const float* Ir, const float* Ig, const float* Ib,
+                          const float* w, int M,
+                          const QList<QImage*>& list)
 {
 #ifndef NDEBUG
     std::cerr << "debevec fusion, LDR" << std::endl;
 #endif
 
-    assert(list != NULL);
-    assert(xj != NULL);
-    assert(yj != NULL);
-    assert(zj != NULL);
+    assert(list.size() != 0);
     assert(M == 256);
 
-    int N       = list->size();
-    int width   = xj->getCols();
-    int height  = xj->getRows();
+    int N       = list.size();
+    int width   = xj.getCols();
+    int height  = xj.getRows();
 
     // number of saturated pixels
     int saturated_pixels = 0;
-
+    // compute trust area weights
     int minM = 0;
-    for( int m=0 ; m<M ; m++ )
-        if( w[m]>0 ) {
-            minM = m;
-            break;
-        }
     int maxM = M-1;
-    for( int m=M-1 ; m>=0 ; m-- )
-        if( w[m]>0 ) {
-            maxM = m;
-            break;
-        }
+    computeTrustRange(w, M, minM, maxM);
 
     //////////////////////LDR INPUT
     // for all pixels
@@ -165,64 +171,47 @@ int debevec_applyResponse( const float * arrayofexptime,
         float maxti = -1e6f;
         float minti = +1e6f;
 
-        int index_for_whiteR=-1;
-        int index_for_whiteG=-1;
-        int index_for_whiteB=-1;
+        int index_for_whiteR = -1;
+        int index_for_whiteG = -1;
+        int index_for_whiteB = -1;
 
-        int index_for_blackR=-1;
-        int index_for_blackG=-1;
-        int index_for_blackB=-1;
-
-        //     bool saturated_exposure=false;
+        int index_for_blackR = -1;
+        int index_for_blackG = -1;
+        int index_for_blackB = -1;
 
         // for all exposures
-        for( int i=0 ; i<N ; i++ ) {
-            // 		NOT NEEDED ANYMORE, I HOPE.
-            // 		//we don't know yet if this exposure has saturated values or not
-            // 		saturated_exposure=false;
+        for ( int i = 0; i < N; i++ )
+        {
+            QRgb currentPixel = reinterpret_cast<const QRgb*>(list.at(i)->bits())[j];
 
-            //pick the 3 channel values
-            int mR = qRed(* ( (QRgb*)( (list->at(i) )->bits() ) + j ) );
-            int mG = qGreen(* ( (QRgb*)( (list->at(i) )->bits() ) + j ) );
-            int mB = qBlue(* ( (QRgb*)( (list->at(i) )->bits() ) + j ) );
+            // pick the 3 channel values
+            int mR = qRed( currentPixel );
+            int mG = qGreen( currentPixel );
+            int mB = qBlue( currentPixel );
 
             float ti = arrayofexptime[i];
 
-            //if at least one of the color channel's values are in the bright "not-trusted zone" and we have min exposure time
-            if ( (mR>maxM || mG>maxM || mB>maxM) && (ti<minti) ) {
-                //update the indexes_for_whiteRGB, minti
-                index_for_whiteR=mR;
-                index_for_whiteG=mG;
-                index_for_whiteB=mB;
-                minti=ti;
-                // 			saturated_exposure=true;
+            // if at least one of the color channel's values are in the bright
+            // "not-trusted zone" and we have min exposure time
+            if ( (mR > maxM || mG > maxM || mB > maxM) && (ti < minti) ) {
+                // update the indexes_for_whiteRGB, minti
+                index_for_whiteR = mR;
+                index_for_whiteG = mG;
+                index_for_whiteB = mB;
+                minti = ti;
             }
 
-            //if at least one of the color channel's values are in the dim "not-trusted zone" and we have max exposure time
-            if ( (mR<minM || mG<minM || mB<minM) && (ti>maxti) ) {
-                //update the indexes_for_blackRGB, maxti
-                index_for_blackR=mR;
-                index_for_blackG=mG;
-                index_for_blackB=mB;
-                maxti=ti;
-                // 			saturated_exposure=true;
+            // if at least one of the color channel's values are in the dim
+            // "not-trusted zone" and we have max exposure time
+            if ( (mR < minM || mG < minM || mB < minM) && (ti > maxti) ) {
+                // update the indexes_for_blackRGB, maxti
+                index_for_blackR = mR;
+                index_for_blackG = mG;
+                index_for_blackB = mB;
+                maxti = ti;
             }
 
-            // 	NOT NEEDED ANYMORE, I HOPE.
-            // 	      //only if we managed not to end up in the white or black "not-trusted zone" for ALL the R,G and B channels, use the weighted average equation (for this exposure)
-            // 	      if(!saturated_exposure) {
-            // 	        //use (weighted average eq) only if we have a "ti" for the current exposure greater than the previous exposure's "ti" AND the RGB values are greater than those that we had in the previous exposure
-            // 	        bool OK_to_increment=( (ti>prev_exposure_ti) && ( (mR>prev_mR) && (mG>prev_mG) && (mB>prev_mB) ) );
-            // 	        // OR we have a "ti" for the current exposure smaller than the previous exposure's "ti" AND the RGB values are smaller than those that we had in the previous exposure
-            // 	        OK_to_increment=OK_to_increment || ( (ti<prev_exposure_ti) && ( (mR<prev_mR) && (mG<prev_mG) && (mB<prev_mB) ) );
-            // 	        // also, do it if this is the first exposure
-            // 	        OK_to_increment=OK_to_increment || (prev_exposure_ti==-1);
-            //
-            // 	        if ( OK_to_increment) {
-            // 			...
-            // 		}
-
-            float w_average=(w[mR]+w[mG]+w[mB])/3.0f;
+            float w_average=(w[mR] + w[mG] + w[mB])/3.0f;
             sumR += w_average * Ir[mR] / float(ti);
             divR += w_average;
             sumG += w_average * Ig[mG] / float(ti);
@@ -230,17 +219,17 @@ int debevec_applyResponse( const float * arrayofexptime,
             sumB += w_average * Ib[mB] / float(ti);
             divB += w_average;
 
-        } //END for all the exposures
+        } // END for all the exposures
 
-        if( divR==0.0f || divG==0.0f || divB==0.0f ) {
+        if ( divR == 0.0f || divG == 0.0f || divB == 0.0f ) {
             saturated_pixels++;
-            if (maxti>-1e6f) {
+            if (maxti > -1e6f) {
                 sumR = Ir[index_for_blackR] / float(maxti);
                 sumG = Ig[index_for_blackG] / float(maxti);
                 sumB = Ib[index_for_blackB] / float(maxti);
                 divR = divG = divB = 1.0f;
             }
-            if (minti<+1e6f) {
+            if (minti < +1e6f) {
                 sumR = Ir[index_for_whiteR] / float(minti);
                 sumG = Ig[index_for_whiteG] / float(minti);
                 sumB = Ib[index_for_whiteB] / float(minti);
@@ -248,64 +237,52 @@ int debevec_applyResponse( const float * arrayofexptime,
             }
         }
 
-        if( divR!=0.0f && divG!=0.0f && divB!=0.0f ) {
-            (*xj)(j) = sumR/divR;
-            (*yj)(j) = sumG/divG;
-            (*zj)(j) = sumB/divB;
+        if ( divR != 0.0f && divG != 0.0f && divB != 0.0f ) {
+            xj(j) = sumR/divR;
+            yj(j) = sumG/divG;
+            zj(j) = sumB/divB;
         } else {
-            //we shouldn't be here anyway...
-            (*xj)(j) = 0.0f;
-            (*yj)(j) = 0.0f;
-            (*zj)(j) = 0.0f;
+            // we shouldn't be here anyway...
+            xj(j) = 0.0f;
+            yj(j) = 0.0f;
+            zj(j) = 0.0f;
         }
-    }//END for all pixels
+    } // END for all pixels
 
     return saturated_pixels;
 }
 
 // HDR version
-int debevec_applyResponse(const float * arrayofexptime,
-                          pfs::Array2D* xj,  pfs::Array2D* yj,  pfs::Array2D* zj,
+int debevec_applyResponse(pfs::Array2D& xj,  pfs::Array2D& yj, pfs::Array2D& zj,
+                          const float* arrayofexptime,
                           const float* Ir, const float* Ig, const float* Ib,
                           const float* w, int M,
-                          Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB)
+                          const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB)
 {
 #ifndef NDEBUG
     std::cerr << "debevec fusion, HDR" << std::endl;
 #endif
 
-    assert(listhdrR != NULL);
-    assert(listhdrG != NULL);
-    assert(listhdrB != NULL);
-    assert(xj != NULL);
-    assert(yj != NULL);
-    assert(zj != NULL);
+    assert(listhdrR.size() != 0);
+    assert(listhdrB.size() == listhdrG.size());
+    assert(listhdrB.size() == listhdrR.size());
     assert(M == (int)(1 << 16));
 
-    int N       = listhdrR->size();
-    int width   = xj->getCols();
-    int height  = xj->getRows();
+    int N       = listhdrR.size();
+    int width   = xj.getCols();
+    int height  = xj.getRows();
 
     // number of saturated pixels
     int saturated_pixels = 0;
 
+    // compute trust area weights
     int minM = 0;
-    for( int m=0 ; m<M ; m++ )
-        if( w[m]>0 ) {
-            minM = m;
-            break;
-        }
     int maxM = M-1;
-    for( int m=M-1 ; m>=0 ; m-- )
-        if( w[m]>0 ) {
-            maxM = m;
-            break;
-        }
-
+    computeTrustRange(w, M, minM, maxM);
 
     ///////////////////////////////// HDR INPUT
     // for all pixels
-    for ( int j=0 ; j<width*height ; j++ )
+    for (int j = 0 ; j < width*height ; ++j)
     {
         float sumR = 0.0f;
         float sumG = 0.0f;
@@ -315,40 +292,42 @@ int debevec_applyResponse(const float * arrayofexptime,
         float divB = 0.0f;
         float maxti = -1e6f;
         float minti = +1e6f;
-        int index_for_whiteR=-1;
-        int index_for_whiteG=-1;
-        int index_for_whiteB=-1;
-        int index_for_blackR=-1;
-        int index_for_blackG=-1;
-        int index_for_blackB=-1;
+        int index_for_whiteR = -1;
+        int index_for_whiteG = -1;
+        int index_for_whiteB = -1;
+        int index_for_blackR = -1;
+        int index_for_blackG = -1;
+        int index_for_blackB = -1;
 
         // for all exposures
-        for ( int i=0 ; i<N ; i++ )
+        for (int i = 0; i < N; ++i)
         {
-            //pick the 3 channel values
-            int mR = (int) ( ( *( ( (*listhdrR)[i] ) ) ) (j) );
-            int mG = (int) ( ( *( ( (*listhdrG)[i] ) ) ) (j) );
-            int mB = (int) ( ( *( ( (*listhdrB)[i] ) ) ) (j) );
+            // pick the 3 channel values
+            int mR = static_cast<int>( (*(listhdrR[i]))(j) );
+            int mG = static_cast<int>( (*(listhdrG[i]))(j) );
+            int mB = static_cast<int>( (*(listhdrB[i]))(j) );
             float ti = arrayofexptime[i];
 
-            //if at least one of the color channel's values are in the bright "not-trusted zone" and we have min exposure time
-            if ( (mR>maxM || mG>maxM || mB>maxM) && (ti<minti) ) {
-                //update the indexes_for_whiteRGB, minti
-                index_for_whiteR=mR;
-                index_for_whiteG=mG;
-                index_for_whiteB=mB;
-                minti=ti;
+            // if at least one of the color channel's values are in the bright
+            // "not-trusted zone" and we have min exposure time
+            if ( (mR > maxM || mG > maxM || mB > maxM) && (ti < minti) ) {
+                // update the indexes_for_whiteRGB, minti
+                index_for_whiteR = mR;
+                index_for_whiteG = mG;
+                index_for_whiteB = mB;
+                minti = ti;
             }
 
-            //if at least one of the color channel's values are in the dim "not-trusted zone" and we have max exposure time
-            if ( (mR<minM || mG<minM || mB<minM) && (ti>maxti) ) {
-                //update the indexes_for_blackRGB, maxti
-                index_for_blackR=mR;
-                index_for_blackG=mG;
-                index_for_blackB=mB;
-                maxti=ti;
+            // if at least one of the color channel's values are in the dim
+            // "not-trusted zone" and we have max exposure time
+            if ( (mR < minM || mG < minM || mB < minM) && (ti > maxti) ) {
+                // update the indexes_for_blackRGB, maxti
+                index_for_blackR = mR;
+                index_for_blackG = mG;
+                index_for_blackB = mB;
+                maxti = ti;
             }
-            float w_average=(w[mR]+w[mG]+w[mB])/3.0f;
+            float w_average=(w[mR] + w[mG] + w[mB])/3.0f;
             sumR += w_average * Ir[mR] / float(ti);
             divR += w_average;
             sumG += w_average * Ig[mG] / float(ti);
@@ -356,9 +335,9 @@ int debevec_applyResponse(const float * arrayofexptime,
             sumB += w_average * Ib[mB] / float(ti);
             divB += w_average;
 
-        } //END for all the exposures
+        } // END for all the exposures
 
-        if( divR==0.0f || divG==0.0f || divB==0.0f ) {
+        if ( divR==0.0f || divG==0.0f || divB==0.0f ) {
             saturated_pixels++;
             if (maxti>-1e6f) {
                 sumR = Ir[index_for_blackR] / float(maxti);
@@ -374,16 +353,17 @@ int debevec_applyResponse(const float * arrayofexptime,
             }
         }
 
-        if( divR!=0.0f && divG!=0.0f && divB!=0.0f ) {
-            (*xj)(j) = sumR/divR;
-            (*yj)(j) = sumG/divG;
-            (*zj)(j) = sumB/divB;
+        if ( divR != 0.0f && divG != 0.0f && divB != 0.0f ) {
+            xj(j) = sumR/divR;
+            yj(j) = sumG/divG;
+            zj(j) = sumB/divB;
         } else {
-            //we shouldn't be here anyway...
-            (*xj)(j) = 0.0f;
-            (*yj)(j) = 0.0f;
-            (*zj)(j) = 0.0f;
+            // we shouldn't be here anyway...
+            xj(j) = 0.0f;
+            yj(j) = 0.0f;
+            zj(j) = 0.0f;
         }
-    } //END for all pixels
+    } // END for all pixels
+
     return saturated_pixels;
 }

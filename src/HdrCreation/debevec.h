@@ -59,14 +59,14 @@
  * @param M  lenght of w
  */
 //! \brief HDR version
-int debevec_applyResponse( const float * arrayofexptime,
-                           pfs::Array2D* xj,  pfs::Array2D* yj,  pfs::Array2D* zj,
-                           const float* Ir, const float* Ig, const float* Ib,
-                           const float* w, int M,
-                           Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB);
+int debevec_applyResponse(pfs::Array2D& xj,  pfs::Array2D& yj,  pfs::Array2D& zj,
+                          const float* arrayofexptime,
+                          const float* Ir, const float* Ig, const float* Ib,
+                          const float* w, int M,
+                          const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB);
 //! \brief LDR version
-int debevec_applyResponse( const float * arrayofexptime,
-                           pfs::Array2D* xj,  pfs::Array2D* yj,  pfs::Array2D* zj,
-                           const float* Ir, const float* Ig, const float* Ib,
-                           const float* w, int M,
-                           QList<QImage*> *list);
+int debevec_applyResponse(pfs::Array2D& xj, pfs::Array2D& yj, pfs::Array2D& zj,
+                          const float* arrayofexptime,
+                          const float* Ir, const float* Ig, const float* Ib,
+                          const float* w, int M,
+                          const QList<QImage*>& list);
