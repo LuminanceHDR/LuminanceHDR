@@ -38,11 +38,11 @@
  * @param I3 response curve for channel 3, to be found with robertson02
  * @param P  width*height*#exposures array of weights
  */
-int debevec_applyResponse( const float *arrayofexptime,
-			pfs::Array2D* xj, const float* I1,
-			pfs::Array2D* yj, const float* I2,
-			pfs::Array2D* zj, const float* I3,
-			const Array2DList &P, const bool ldrinput, ... );
+//int debevec_applyResponse( const float *arrayofexptime,
+//			pfs::Array2D* xj, const float* I1,
+//			pfs::Array2D* yj, const float* I2,
+//			pfs::Array2D* zj, const float* I3,
+//			const Array2DList &P, const bool ldrinput, ... );
 
 /**
  * @brief Create HDR image by applying response curve to given images using Debevec model, checking for under/over exposed pixel values.
@@ -58,7 +58,15 @@ int debevec_applyResponse( const float *arrayofexptime,
  * @param w  array of weights
  * @param M  lenght of w
  */
+//! \brief HDR version
 int debevec_applyResponse( const float * arrayofexptime,
-			   pfs::Array2D* xj, pfs::Array2D* yj, pfs::Array2D* zj,
-			   const float* Ir, const float* Ig, const float* Ib,
-			   const float *w, int M, const bool ldrinput, ... );
+                           pfs::Array2D* xj,  pfs::Array2D* yj,  pfs::Array2D* zj,
+                           const float* Ir, const float* Ig, const float* Ib,
+                           const float* w, int M,
+                           Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB);
+//! \brief LDR version
+int debevec_applyResponse( const float * arrayofexptime,
+                           pfs::Array2D* xj,  pfs::Array2D* yj,  pfs::Array2D* zj,
+                           const float* Ir, const float* Ig, const float* Ib,
+                           const float* w, int M,
+                           QList<QImage*> *list);

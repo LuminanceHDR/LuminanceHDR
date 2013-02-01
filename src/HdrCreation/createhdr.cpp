@@ -31,6 +31,7 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 
+/*
 inline float max3( float a, float b, float c ) {
   float max = (a>b) ? a : b;
   return (c>max) ? c : max;
@@ -45,6 +46,7 @@ inline float min3( float a, float b, float c ) {
   float min = (a<b) ? a : b;
   return (c<min) ? c : min;
 }
+*/
 
 pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, const bool ldrinput, ...)
 {
@@ -164,7 +166,7 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
         weights_triangle(w.data(), M/*, minResponse, maxResponse*/);
         break;
     case GAUSSIAN:
-        weightsGauss(w.data(), M, minResponse, maxResponse, opt_gauss );
+        weightsGauss(w.data(), M, minResponse, maxResponse, opt_gauss);
         break;
     case PLATEAU:
         exposure_weights_icip06(w.data(), M, minResponse, maxResponse);
@@ -245,8 +247,11 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
     switch ( opt_model )
     {
     case ROBERTSON:
-        // If model is robertson and user preference was to compute response curve from image dataset using robertson algorithm
-        // i.e. to calibrate, we are done, the robertson02_getResponse function has already computed the HDR (i.e. its channels).
+    {
+        // If model is robertson and user preference was to compute response
+        // curve from image dataset using robertson algorithm
+        // i.e. to calibrate, we are done, the robertson02_getResponse function
+        // has already computed the HDR (i.e. its channels).
         if ( opt_response == FROM_ROBERTSON)
             break;
         else {
@@ -261,14 +266,22 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
                 robertson02_applyResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, false, listhdrB);
             }
         }
-        break;
+    } break;
     case DEBEVEC:
+    {
         //apply debevec model
-        if (ldrinput)
-            debevec_applyResponse(arrayofexptime, Rj, Gj, Bj, Ir.data(), Ig.data(), Ib.data(), w.data(), M, true, listldr);
-        else
-            debevec_applyResponse(arrayofexptime, Rj, Gj, Bj, Ir.data(), Ig.data(), Ib.data(), w.data(), M, false, listhdrR, listhdrG, listhdrB);
-        break;
+        if (ldrinput) {
+            debevec_applyResponse(arrayofexptime,
+                                  Rj, Gj, Bj,
+                                  Ir.data(), Ig.data(), Ib.data(),
+                                  w.data(), M, listldr);
+        } else {
+            debevec_applyResponse(arrayofexptime, Rj, Gj, Bj,
+                                  Ir.data(), Ig.data(), Ib.data(),
+                                  w.data(), M,
+                                  listhdrR, listhdrG, listhdrB);
+        }
+    } break;
     } //end switch
 
 	return frameout;
