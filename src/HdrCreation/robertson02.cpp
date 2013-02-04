@@ -29,6 +29,7 @@
 
 #include "arch/math.h"
 
+#include <cassert>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -75,10 +76,17 @@ float normalizeI(float* I, int M)
     return mid;
 }
 
+typedef int (*PixelToChannelMapper)(QRgb);
+
+static PixelToChannelMapper s_pixelToChannel[] = { &qRed, &qGreen, &qBlue };
+
 }
 
 int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
-                               const float* I, const float* w, const int M, const int channelRGB, const bool ldrinput, ... ) {
+                               const float* I, const float* w, int M, int channelRGB, bool ldrinput, ... )
+{
+    assert(channelRGB >= 1);
+    assert(channelRGB <= 3);
     
     QList<QImage*> *listldr=NULL;
     Array2DList *listhdr=NULL;
@@ -103,13 +111,7 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
     }
     va_end(arg_pointer); /* Clean up. */
     
-    int (*ldrfp)(QRgb a)=NULL;
-    if (channelRGB==1) //R
-        ldrfp=&qRed;
-    else if (channelRGB==2) //G
-        ldrfp=&qGreen;
-    else
-        ldrfp=&qBlue;
+    PixelToChannelMapper ldrfp = s_pixelToChannel[channelRGB-1];
     
     // number of saturated pixels
     int saturated_pixels = 0;
@@ -250,16 +252,16 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
 
 ////////////////////////////////     GET RESPONSE    /////////////////////////////////////
 int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
-                             float* I, const float* w, const int M, const int channelRGB, const bool ldrinput, ... )
+                             float* I, const float* w, int M, int channelRGB, bool ldrinput, ... )
 {
     va_list arg_pointer;
     va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
-    QList<QImage*> *listldr=NULL;
-    Array2DList *listhdr=NULL;
+    QList<QImage*> *listldr = NULL;
+    Array2DList *listhdr    = NULL;
 
-    int N=-1;
-    int width=-1;
-    int height=-1;
+    int N       = -1;
+    int width   = -1;
+    int height  = -1;
     
     if (ldrinput)
     {
@@ -281,26 +283,16 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
     }
     va_end(arg_pointer); /* Clean up. */
     
-    int (*ldrfp)(QRgb a)=NULL;
-    if (channelRGB==1) //R
-        ldrfp=&qRed;
-    else if (channelRGB==2) //G
-        ldrfp=&qGreen;
-    else
-        ldrfp=&qBlue;
+    PixelToChannelMapper ldrfp = s_pixelToChannel[channelRGB-1];
     
     // number of saturated pixels
     int saturated_pixels = 0;
-    
-    // indexes
-    int i,j,m;
     
     std::vector<float> Ip(M);       //float* Ip = new float[M]; // previous response
     
     // 0. Initialization
     normalizeI( I, M );
-    for( m=0 ; m<M ; m++ )
-        Ip[m] = I[m];
+    std::copy(I, I + M, Ip.begin()); // for (int m = 0; m < M; ++m) Ip[m] = I[m];
     
     if (ldrinput)
         robertson02_applyResponse( xj, arrayofexptime, I, w, M, channelRGB, true, listldr );
@@ -314,47 +306,52 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
     std::vector<float> sum(M);      // float* sum = new float[M];
     
     int cur_it = 0;
-    float pdelta= 0.0f;
+    float pdelta = 0.0f;
 
     while ( !converged )
     {
         // 1. Minimize with respect to I
-        for( m=0 ; m<M ; m++ ) {
-            cardEm[m]=0;
-            sum[m]=0.0f;
+        for (int m = 0; m < M; ++m) {
+            cardEm[m] = 0;
+            sum[m]    = 0.0f;
         }
         
-        for( i=0 ; i<N ; i++ ) {
+        for (int i = 0 ; i < N ; ++i) {
             float ti = arrayofexptime[i];
             //this is probably uglier than necessary, (I copy th FOR in order not to do the IFs inside them) but I don't know how to improve it.
             if (ldrinput) {
-                for( j=0 ; j<width*height ; j++ )  {
-                    m = ldrfp(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-                    if( m<M && m>=0 ) {
-                        sum[m] += ti * (*xj)(j);
-                        cardEm[m]++;
+                for (int j = 0; j < width*height; ++j)  {
+                    int sample = ldrfp(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
+                    if ( sample < M && sample >= 0 ) {
+                        sum[sample] += ti * (*xj)(j);
+                        cardEm[sample]++;
                     }
+#ifndef NDEBUG
                     else
-                        std::cerr << "robertson02: m out of range: " << m << std::endl;
+                        std::cerr << "robertson02: m out of range: " << sample << std::endl;
+#endif
                 }
             } else {
-                for( j=0 ; j<width*height ; j++ )  {
-                    m = (int) ( ( *( ( (*listhdr)[i] ) ) ) (j) );
-                    if( m<M && m>=0 ) {
-                        sum[m] += ti * (*xj)(j);
-                        cardEm[m]++;
+                for (int j = 0; j < width*height; ++j) {
+                    int sample = (int) ( ( *( ( (*listhdr)[i] ) ) ) (j) );
+                    if ( sample < M && sample >= 0 ) {
+                        sum[sample] += ti * (*xj)(j);
+                        cardEm[sample]++;
                     }
+#ifndef NDEBUG
                     else
-                        std::cerr << "robertson02: m out of range: " << m << std::endl;
+                        std::cerr << "robertson02: m out of range: " << sample << std::endl;
+#endif
                 }
             }
         }
         
-        for( m=0 ; m<M ; m++ )
-            if( cardEm[m]!=0 )
+        for (int m = 0 ; m < M; ++m) {
+            if ( cardEm[m] != 0 )
                 I[m] = sum[m] / cardEm[m];
             else
                 I[m] = 0.0f;
+        }
         
         // 2. Normalize I
         /*float middle_response = */normalizeI( I, M );
@@ -368,38 +365,39 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
         // 4. Check stopping condition
         float delta = 0.0f;
         int hits=0;
-        for ( m=0 ; m<M ; m++ )
-        {
-            if( I[m]!=0.0f )
-            {
-                float diff = I[m]-Ip[m];;
+        for (int m = 0; m < M; ++m) {
+            if ( I[m] != 0.0f ) {
+                float diff = I[m] - Ip[m];
                 delta += diff * diff;
                 Ip[m] = I[m];
                 hits++;
             }
         }
         delta /= hits;
-        
+#ifndef NDEBUG
         std::cerr << " #" << cur_it << " delta=" << delta << " (coverage: " << 100*hits/M << "%)\n";
-        
+#endif
         if ( delta < MAX_DELTA )
         {
-            converged=true;
+            converged = true;
         }
-        else if( isnan(delta) || (cur_it>MAXIT && pdelta<delta) )
+        else if ( isnan(delta) || (cur_it > MAXIT && pdelta < delta) )
         {
+#ifndef NDEBUG
             std::cerr << "algorithm failed to converge, too noisy data in range\n";
+#endif
             break;
         }
         
         pdelta = delta;
         cur_it++;
     }
-    
+#ifndef NDEBUG
     if ( converged )
     {
         std::cerr << " #" << cur_it << " delta=" << pdelta << " <- converged\n";
     }
+#endif
     
     return saturated_pixels;
 }
