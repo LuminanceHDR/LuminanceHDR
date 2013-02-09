@@ -52,27 +52,26 @@ float normalizeI(float* I, int M)
     for (Mmin=0 ; Mmin<M && I[Mmin]==0 ; ++Mmin);
     for (Mmax=M-1 ; Mmax>0 && I[Mmax]==0 ; --Mmax);
 
-    //int Mmin = *std::min_element(I, I+M);
-    //int Mmax = *std::max_element(I, I+M);
-
     int Mmid = Mmin+(Mmax-Mmin)/2;
     float mid = I[Mmid];
 
-    //   std::cerr << "robertson02: middle response, mid=" << mid
-    //             << " [" << Mmid << "]"
-    //             << " " << Mmin << ".." << Mmax << std::endl;
+#ifndef NDEBUG
+    std::cerr << "robertson02: middle response, mid = " << mid
+              << " [" << Mmid << "]"
+              << " " << Mmin << ".." << Mmax << std::endl;
+#endif
 
-    if( mid==0.0f )
-    {
+    if ( mid == 0.0f ) {
         // find first non-zero middle response
-        while( Mmid<Mmax && I[Mmid]==0.0f )
-            Mmid++;
+        while ( Mmid < Mmax && I[Mmid] == 0.0f ) { Mmid++; }
         mid = I[Mmid];
     }
 
-    if( mid!=0.0f )
-        for( int m=0 ; m<M ; m++ )
+    if ( mid != 0.0f ) {
+        for (int m = 0; m < M; ++m) {
             I[m] /= mid;
+        }
+    }
     return mid;
 }
 
@@ -82,8 +81,8 @@ static PixelToChannelMapper s_pixelToChannel[] = { &qRed, &qGreen, &qBlue };
 
 }
 
-int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
-                               const float* I, const float* w, int M, int channelRGB, bool ldrinput, ... )
+int robertson02_applyResponse(pfs::Array2D* xj, const float * arrayofexptime,
+                              const float* I, const float* w, int M, int channelRGB, bool ldrinput, ... )
 {
     assert(channelRGB >= 1);
     assert(channelRGB <= 3);
@@ -118,49 +117,47 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
     
     // --- anti saturation: calculate trusted camera output range
     int minM = 0;
-    for( int m=0 ; m<M ; m++ )
-        if( w[m]>0 ) {
+    for ( int m = 0; m < M; m++ ) {
+        if ( w[m]>0 ) {
             minM = m;
             break;
         }
+    }
     int maxM = M-1;
-    for( int m=M-1 ; m>=0 ; m-- )
+    for ( int m = M-1; m >= 0; m-- ) {
         if( w[m]>0 ) {
             maxM = m;
             break;
         }
+    }
     
     // --- anti ghosting: for each image i, find images with
     // the immediately higher and lower exposure times
     std::vector<int> i_lower(N); // int* i_lower = new int[N];
     std::vector<int> i_upper(N); // int* i_upper = new int[N];
 
-    for( int i=0 ; i<N ; i++ )
+    for ( int i = 0; i < N; ++i )
     {
-        i_lower[i]=-1;
-        i_upper[i]=-1;
-        float ti =  arrayofexptime[i];
-        float ti_upper =  arrayofexptime[0];
+        i_lower[i] = -1;
+        i_upper[i] = -1;
+        float ti = arrayofexptime[i];
+        float ti_upper = arrayofexptime[0];
         float ti_lower = arrayofexptime[0];
         
-        for( int j=0 ; j<N ; j++ )
-            if( i!=j )
-            {
-                if( arrayofexptime[j]>ti && arrayofexptime[j]<ti_upper )
-                {
-                    ti_upper=arrayofexptime[j];
-                    i_upper[i]=j;
+        for ( int j = 0; j < N; ++j ) {
+            if ( i != j ) {
+                if ( arrayofexptime[j] > ti && arrayofexptime[j] < ti_upper ) {
+                    ti_upper = arrayofexptime[j];
+                    i_upper[i] = j;
                 }
-                if(arrayofexptime[j]<ti && arrayofexptime[j]>ti_lower )
-                {
-                    ti_lower=arrayofexptime[j];
-                    i_lower[i]=j;
+                if ( arrayofexptime[j] < ti && arrayofexptime[j] > ti_lower ) {
+                    ti_lower = arrayofexptime[j];
+                    i_lower[i] = j;
                 }
             }
-        if( i_lower[i]==-1 )
-            i_lower[i]=i;
-        if( i_upper[i]==-1 )
-            i_upper[i]=i;
+        }
+        if ( i_lower[i] == -1 ) i_lower[i] = i;
+        if ( i_upper[i] == -1 ) i_upper[i] = i;
     }
     
     // all pixels
@@ -182,9 +179,9 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
                 // --- anti saturation: observe minimum exposure time at which
                 // saturated value is present, and maximum exp time at which
                 // black value is present
-                if( m>maxM )
+                if ( m>maxM )
                     minti = std::min(minti,ti);
-                if( m<minM )
+                if ( m<minM )
                     maxti = std::max(maxti,ti);
                 
                 // --- anti ghosting: monotonous increase in time should result
@@ -201,10 +198,10 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
         }
         else
         {
-            //for all exposures
-            for( int i=0 ; i<N ; i++ )
+            // for all exposures
+            for ( int i=0 ; i<N ; i++ )
             {
-                int m= (int) ( ( *( ( (*listhdr)[i] ) ) ) (j) );
+                int m = (int) ( ( *( ( (*listhdr)[i] ) ) ) (j) );
                 float ti = arrayofexptime[i];
                 // --- anti saturation: observe minimum exposure time at which
                 // saturated value is present, and maximum exp time at which
@@ -220,7 +217,7 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
                 int m_lower = (int) ( ( *( ( (*listhdr)[i_lower[i]] ) ) ) (j) );
                 int m_upper = (int) ( ( *( ( (*listhdr)[i_upper[i]] ) ) ) (j) );
                 
-                if( m_lower>m || m_upper<m)
+                if ( m_lower > m || m_upper < m)
                     continue;
                 
                 sum += w[m] * ti * I[m];
@@ -251,40 +248,14 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
 }
 
 ////////////////////////////////     GET RESPONSE    /////////////////////////////////////
-int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
-                             float* I, const float* w, int M, int channelRGB, bool ldrinput, ... )
+int robertson02_getResponse(pfs::Array2D& xj, const float * arrayofexptime,
+                            float* I, const float* w, int M, int channelRGB,
+                            const Array2DList& listhdr)
 {
-    va_list arg_pointer;
-    va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
-    QList<QImage*> *listldr = NULL;
-    Array2DList *listhdr    = NULL;
-
-    int N       = -1;
-    int width   = -1;
-    int height  = -1;
-    
-    if (ldrinput)
-    {
-        listldr=va_arg(arg_pointer,QList<QImage*>*);
-        // number of exposures
-        N = listldr->count();
-        // frame size
-        width = (listldr->at(0))->width();
-        height = (listldr->at(0))->height();
-    }
-    else
-    {
-        listhdr=va_arg(arg_pointer,Array2DList*);
-        // number of exposures
-        N = listhdr->size();
-        // frame size
-        width= ((*listhdr)[0])->getCols();
-        height=((*listhdr)[0])->getRows();
-    }
-    va_end(arg_pointer); /* Clean up. */
-    
-    PixelToChannelMapper ldrfp = s_pixelToChannel[channelRGB-1];
-    
+    int N       = listhdr.size();
+    int width   = xj.getCols();
+    int height  = xj.getRows();
+        
     // number of saturated pixels
     int saturated_pixels = 0;
     
@@ -294,10 +265,7 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
     normalizeI( I, M );
     std::copy(I, I + M, Ip.begin()); // for (int m = 0; m < M; ++m) Ip[m] = I[m];
     
-    if (ldrinput)
-        robertson02_applyResponse( xj, arrayofexptime, I, w, M, channelRGB, true, listldr );
-    else
-        robertson02_applyResponse( xj, arrayofexptime, I, w, M, channelRGB, false, listhdr );
+    robertson02_applyResponse(&xj, arrayofexptime, I, w, M, channelRGB, false, &listhdr);
     
     // Optimization process
     bool converged = false;
@@ -316,51 +284,37 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
             sum[m]    = 0.0f;
         }
         
-        for (int i = 0 ; i < N ; ++i) {
+        for (int i = 0; i < N; ++i) {
             float ti = arrayofexptime[i];
-            //this is probably uglier than necessary, (I copy th FOR in order not to do the IFs inside them) but I don't know how to improve it.
-            if (ldrinput) {
-                for (int j = 0; j < width*height; ++j)  {
-                    int sample = ldrfp(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-                    if ( sample < M && sample >= 0 ) {
-                        sum[sample] += ti * (*xj)(j);
-                        cardEm[sample]++;
-                    }
-#ifndef NDEBUG
-                    else
-                        std::cerr << "robertson02: m out of range: " << sample << std::endl;
-#endif
+            // this is probably uglier than necessary, (I copy th FOR in order
+            // not to do the IFs inside them) but I don't know how to improve it
+            for (int j = 0; j < width*height; ++j) {
+                int sample = static_cast<int>( (*(listhdr[i])) (j) );
+                if ( sample < M && sample >= 0 ) {
+                    sum[sample] += ti * xj(j);
+                    cardEm[sample]++;
                 }
-            } else {
-                for (int j = 0; j < width*height; ++j) {
-                    int sample = (int) ( ( *( ( (*listhdr)[i] ) ) ) (j) );
-                    if ( sample < M && sample >= 0 ) {
-                        sum[sample] += ti * (*xj)(j);
-                        cardEm[sample]++;
-                    }
 #ifndef NDEBUG
-                    else
-                        std::cerr << "robertson02: m out of range: " << sample << std::endl;
+                else
+                    std::cerr << "robertson02: m out of range: "
+                              << sample << std::endl;
 #endif
-                }
             }
         }
         
         for (int m = 0 ; m < M; ++m) {
-            if ( cardEm[m] != 0 )
+            if ( cardEm[m] != 0 ) {
                 I[m] = sum[m] / cardEm[m];
-            else
+            } else {
                 I[m] = 0.0f;
+            }
         }
         
         // 2. Normalize I
         /*float middle_response = */normalizeI( I, M );
         
         // 3. Apply new response
-        if (ldrinput)
-            saturated_pixels = robertson02_applyResponse( xj, arrayofexptime, I, w, M, channelRGB, true, listldr );
-        else
-            saturated_pixels = robertson02_applyResponse( xj, arrayofexptime, I, w, M, channelRGB, false, listhdr );
+        saturated_pixels = robertson02_applyResponse(&xj, arrayofexptime, I, w, M, channelRGB, false, &listhdr);
         
         // 4. Check stopping condition
         float delta = 0.0f;
@@ -400,4 +354,142 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
 #endif
     
     return saturated_pixels;
+}
+
+int robertson02_getResponse(pfs::Array2D& xj, const float* arrayofexptime,
+                            float* I, const float* w, int M, int channelRGB,
+                            const QList<QImage*>& listldr)
+{
+    int N       = listldr.size();
+    int width   = xj.getCols();
+    int height  = xj.getRows();
+
+    PixelToChannelMapper ldrfp = s_pixelToChannel[channelRGB-1];
+
+    // number of saturated pixels
+    int saturated_pixels = 0;
+
+    std::vector<float> Ip(M);       //float* Ip = new float[M]; // previous response
+
+    // 0. Initialization
+    normalizeI( I, M );
+    std::copy(I, I + M, Ip.begin()); // for (int m = 0; m < M; ++m) Ip[m] = I[m];
+
+    robertson02_applyResponse(&xj, arrayofexptime, I, w, M, channelRGB, true, &listldr);
+
+    // Optimization process
+    bool converged = false;
+
+    std::vector<long> cardEm(M);    // long* cardEm = new long[M];
+    std::vector<float> sum(M);      // float* sum = new float[M];
+
+    int cur_it = 0;
+    float pdelta = 0.0f;
+
+    while ( !converged )
+    {
+        // 1. Minimize with respect to I
+        for (int m = 0; m < M; ++m) {
+            cardEm[m] = 0;
+            sum[m]    = 0.0f;
+        }
+
+        for (int i = 0 ; i < N ; ++i) {
+            float ti = arrayofexptime[i];
+            // this is probably uglier than necessary, (I copy th FOR in order
+            // not to do the IFs inside them) but I don't know how to improve it
+            for (int j = 0; j < width*height; ++j) {
+                int sample = ldrfp( reinterpret_cast<const QRgb*>(listldr.at(i)->bits())[j] );
+                if ( sample < M && sample >= 0 ) {
+                    sum[sample] += ti * xj(j);
+                    cardEm[sample]++;
+                }
+#ifndef NDEBUG
+                else
+                    std::cerr << "robertson02: m out of range: "
+                              << sample << std::endl;
+#endif
+            }
+        }
+
+        for (int m = 0 ; m < M; ++m) {
+            if ( cardEm[m] != 0 ) {
+                I[m] = sum[m] / cardEm[m];
+            } else {
+                I[m] = 0.0f;
+            }
+        }
+
+        // 2. Normalize I
+        /*float middle_response = */normalizeI( I, M );
+
+        // 3. Apply new response
+        saturated_pixels = robertson02_applyResponse(&xj, arrayofexptime, I, w, M, channelRGB, true, &listldr);
+
+        // 4. Check stopping condition
+        float delta = 0.0f;
+        int hits=0;
+        for (int m = 0; m < M; ++m) {
+            if ( I[m] != 0.0f ) {
+                float diff = I[m] - Ip[m];
+                delta += diff * diff;
+                Ip[m] = I[m];
+                hits++;
+            }
+        }
+        delta /= hits;
+#ifndef NDEBUG
+        std::cerr << " #" << cur_it << " delta=" << delta << " (coverage: " << 100*hits/M << "%)\n";
+#endif
+        if ( delta < MAX_DELTA )
+        {
+            converged = true;
+        }
+        else if ( isnan(delta) || (cur_it > MAXIT && pdelta < delta) )
+        {
+#ifndef NDEBUG
+            std::cerr << "algorithm failed to converge, too noisy data in range\n";
+#endif
+            break;
+        }
+
+        pdelta = delta;
+        cur_it++;
+    }
+#ifndef NDEBUG
+    if ( converged )
+    {
+        std::cerr << " #" << cur_it << " delta=" << pdelta << " <- converged\n";
+    }
+#endif
+
+    return saturated_pixels;
+}
+
+int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+                            const float* arrayofexptime,
+                            float* Ir, float* Ig, float* Ib,
+                            const float* w, int M,
+                            const QList<QImage*>& listldr)
+{
+    int saturatedPixels = 0;
+    saturatedPixels += robertson02_getResponse(Rj, arrayofexptime, Ir, w, M, 1, listldr);
+    saturatedPixels += robertson02_getResponse(Gj, arrayofexptime, Ig, w, M, 2, listldr);
+    saturatedPixels += robertson02_getResponse(Bj, arrayofexptime, Ib, w, M, 3, listldr);
+
+    return saturatedPixels;
+}
+
+int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+                            const float* arrayofexptime,
+                            float* Ir, float* Ig, float* Ib,
+                            const float* w, int M,
+                            const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB)
+{
+    int saturatedPixels = 0;
+    saturatedPixels += robertson02_getResponse(Rj, arrayofexptime, Ir, w, M, 1, listhdrR);
+    saturatedPixels += robertson02_getResponse(Gj, arrayofexptime, Ig, w, M, 2, listhdrG);
+    saturatedPixels += robertson02_getResponse(Bj, arrayofexptime, Ib, w, M, 3, listhdrB);
+
+    return saturatedPixels;
 }

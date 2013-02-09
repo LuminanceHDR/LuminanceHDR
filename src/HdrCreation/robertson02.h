@@ -57,7 +57,17 @@ int robertson02_applyResponse(pfs::Array2D* xj, const float * arrayofexptime,
  * @param M max camera output (no of discrete steps)
  * @return number of saturated pixels in the HDR image (0: all OK)
  */
-int robertson02_getResponse(pfs::Array2D* xj, const float * arrayofexptime,
-  float* I, const float* w, int M, int chan, bool ldrinput, ... );
+int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+                            const float* arrayofexptime,
+                            float *Ir, float *Ig, float *Ib,
+                            const float* w, int M,
+                            const QList<QImage*>& list);
+
+int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+                            const float* arrayofexptime,
+                            float *Ir, float *Ig, float *Ib,
+                            const float* w, int M,
+                            const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB);
+
 
 #endif // ROBERTSON02_H

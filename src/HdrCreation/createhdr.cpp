@@ -233,13 +233,16 @@ pfs::Frame* createHDR(const float* arrayofexptime,
         // call robertson02_getResponse method which computes both the Ir,Ig,Ib
         // and the output HDR (i.e. its channels Rj,Gj,Bj).
         if (ldrinput) {
-            robertson02_getResponse(Rj, arrayofexptime, Ir.data(), w.data(), M, 1, true, listldr);
-            robertson02_getResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, true, listldr);
-            robertson02_getResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, true, listldr);
+            robertson02_getResponse(*Rj, *Gj, *Bj,
+                                    arrayofexptime,
+                                    Ir.data(), Ig.data(), Ib.data(),
+                                    w.data(), M, *listldr);
         } else {
-            robertson02_getResponse(Rj, arrayofexptime, Ir.data(), w.data(), M, 1, false, listhdrR);
-            robertson02_getResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, false, listhdrG);
-            robertson02_getResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, false, listhdrB);
+            robertson02_getResponse(*Rj, *Gj, *Bj,
+                                    arrayofexptime,
+                                    Ir.data(), Ig.data(), Ib.data(),
+                                    w.data(), M,
+                                    *listhdrR, *listhdrG, *listhdrB);
         }
     } break;
     }
