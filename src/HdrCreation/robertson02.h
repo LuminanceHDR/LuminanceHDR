@@ -32,31 +32,41 @@
 
 #include <QList>
 #include <QImage>
-#include "responses.h"
 
-/**
- * @brief Create HDR image by applying response curve to given images taken with different exposures
- *
- * @param xj [out] HDR image
- * @param imgs reference to vector containing source exposures
- * @param I camera response function (array size of M)
- * @param w weighting function for camera output values (array size of M)
- * @param M number of camera output levels
- * @return number of saturated pixels in the HDR image (0: all OK)
- */
-int robertson02_applyResponse(pfs::Array2D* xj, const float * arrayofexptime,
-  const float* I, const float* w, int M, int chan, bool ldrinput, ... );
+#include "HdrCreation/createhdr_common.h"
 
-/**
- * @brief Calculate camera response using Robertson02 algorithm
- *
- * @param xj [out]  estimated luminance values
- * @param imgs reference to vector containing source exposures
- * @param I [out] array to put response function
- * @param w weights
- * @param M max camera output (no of discrete steps)
- * @return number of saturated pixels in the HDR image (0: all OK)
- */
+//*
+// * @brief Create HDR image by applying response curve to given images taken with different exposures
+// *
+// * @param xj [out] HDR image
+// * @param imgs reference to vector containing source exposures
+// * @param I camera response function (array size of M)
+// * @param w weighting function for camera output values (array size of M)
+// * @param M number of camera output levels
+// * @return number of saturated pixels in the HDR image (0: all OK)
+//
+int robertson02_applyResponse(pfs::Array2D& Rj,  pfs::Array2D& Gj,  pfs::Array2D& Bj,
+                              const float* arrayofexptime,
+                              const float* Ir, const float* Ig, const float* Ib,
+                              const float* w, int M,
+                              const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB);
+//! \note LDR version
+int robertson02_applyResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+                              const float* arrayofexptime,
+                              const float* Ir, const float* Ig, const float* Ib,
+                              const float* w, int M,
+                              const QList<QImage*>& listldr);
+
+//*
+// * @brief Calculate camera response using Robertson02 algorithm
+// *
+// * @param xj [out]  estimated luminance values
+// * @param imgs reference to vector containing source exposures
+// * @param I [out] array to put response function
+// * @param w weights
+// * @param M max camera output (no of discrete steps)
+// * @return number of saturated pixels in the HDR image (0: all OK)
+//
 int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
                             const float* arrayofexptime,
                             float *Ir, float *Ig, float *Ib,

@@ -35,6 +35,7 @@
 #endif
 
 #include "HdrCreation/debevec.h"
+#include "Libpfs/array2d.h"
 
 /*
 //anti-saturation shouldn't be needed
@@ -122,23 +123,6 @@ int debevec_applyResponse( const float * arrayofexptime,
     return saturated_pixels;
 }
 */
-
-void computeTrustRange(const float* w, int M, int& minM, int& maxM)
-{
-    for (int m = 0; m < M; ++m) {
-        if ( w[m] > 0 ) {
-            minM = m;
-            break;
-        }
-    }
-
-    for (int m = M-1; m >= 0; --m) {
-        if ( w[m] > 0 ) {
-            maxM = m;
-            break;
-        }
-    }
-}
 
 typedef std::vector<int> VectorInt;
 

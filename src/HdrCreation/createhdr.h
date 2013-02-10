@@ -30,10 +30,6 @@
 
 #include <stdarg.h>
 
-#include "HdrCreation/responses.h"
-#include "HdrCreation/robertson02.h"
-#include "HdrCreation/debevec.h"
-
 namespace pfs {
     class Frame;
 }

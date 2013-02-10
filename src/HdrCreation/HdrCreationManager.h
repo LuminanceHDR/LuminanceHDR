@@ -33,6 +33,7 @@
 #include "Common/LuminanceOptions.h"
 #include "arch/math.h"
 #include "HdrCreation/createhdr.h"
+#include "HdrCreation/createhdr_common.h"
 
 // Some other file expect this to be available
 const config_triple predef_confs[6]= {

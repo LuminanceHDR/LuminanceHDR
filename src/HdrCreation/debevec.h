@@ -23,7 +23,7 @@
 
 #include <QList>
 #include <QImage>
-#include "responses.h"
+#include "HdrCreation/createhdr_common.h"
 
 //! \brief Create HDR image by applying response curve to given images using Debevec model, simple model, using array of weights P, not checking for under/over exposed pixel values.
 //!

@@ -27,9 +27,13 @@
 
 #include <QFile>
 
-#include "HdrCreation/createhdr.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
+
+#include "HdrCreation/createhdr.h"
+#include "HdrCreation/responses.h"
+#include "HdrCreation/robertson02.h"
+#include "HdrCreation/debevec.h"
 
 /*
 inline float max3( float a, float b, float c ) {
@@ -268,13 +272,14 @@ pfs::Frame* createHDR(const float* arrayofexptime,
         else {
             //apply robertson model
             if (ldrinput) {
-                robertson02_applyResponse(Rj, arrayofexptime, Ir.data(), w.data(), M, 1, true, listldr);
-                robertson02_applyResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, true, listldr);
-                robertson02_applyResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, true, listldr);
+                robertson02_applyResponse(*Rj, *Gj, *Bj, arrayofexptime,
+                                          Ir.data(), Ig.data(), Ib.data(),
+                                          w.data(), M, *listldr);
             } else {
-                robertson02_applyResponse(Rj, arrayofexptime, Ir.data(), w.data(), M, 1, false, listhdrR);
-                robertson02_applyResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, false, listhdrG);
-                robertson02_applyResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, false, listhdrB);
+                robertson02_applyResponse(*Rj, *Gj, *Bj, arrayofexptime,
+                                          Ir.data(), Ig.data(), Ib.data(),
+                                          w.data(), M,
+                                          *listhdrR, *listhdrG, *listhdrB);
             }
         }
     } break;
