@@ -179,9 +179,9 @@ int robertson02ApplyResponseCore(pfs::Array2D& xj, const float* arrayofexptime,
         float minti = +1e6f;
 
         // for all exposures
-        for ( int i=0 ; i<N ; i++ )
+        for ( int i = 0; i < N; ++i )
         {
-            int m = inputData.getSample(i, j); // static_cast<int>((*(listhdr[i]))(j));
+            int m = inputData.getSample(i, j);
             float ti = arrayofexptime[i];
             // --- anti saturation: observe minimum exposure time at which
             // saturated value is present, and maximum exp time at which
@@ -199,7 +199,11 @@ int robertson02ApplyResponseCore(pfs::Array2D& xj, const float* arrayofexptime,
             int m_lower = inputData.getSample(i_lower[i], j);
             int m_upper = inputData.getSample(i_upper[i], j);
 
-            if ( m_lower > m || m_upper < m ) continue;
+            if ( N > 1) {
+                if ( m_lower > m || m_upper < m ) {
+                    continue;
+                }
+            }
 
             sum += w[m] * ti * I[m];
             div += w[m] * ti * ti;
