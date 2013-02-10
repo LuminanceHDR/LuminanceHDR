@@ -246,9 +246,9 @@ int debevecApplyResponseCore(pfs::Array2D& xj,  pfs::Array2D& yj, pfs::Array2D& 
     VectorInt inputBlue(N);
 
     // for all pixels
-//#pragma omp parallel for reduction(+:saturatedPixels) \
-    private(inputRed, inputGreen, inputBlue) \
-    shared(xj, yj, zj, arrayofexptime, Ir, Ig, Ib, w, M, minM, maxM, N)
+// #pragma omp parallel for reduction(+:saturatedPixels) \
+//    private(inputRed, inputGreen, inputBlue) \
+//    shared(xj, yj, zj, arrayofexptime, Ir, Ig, Ib, w, M, minM, maxM, N)
     for (int j = 0; j < width*height; ++j)
     {
         // accumulate pixel values
