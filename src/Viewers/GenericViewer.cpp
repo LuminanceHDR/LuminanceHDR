@@ -29,6 +29,8 @@
 
 #include <QScrollBar>
 #include <QDebug>
+#include <QDrag>
+#include <QMimeData>
 //#include <QtOpenGL/QGLWidget>
 
 #include "Viewers/GenericViewer.h"

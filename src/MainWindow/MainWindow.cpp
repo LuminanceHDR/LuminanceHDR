@@ -40,6 +40,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QMimeData>
 #include <QWhatsThis>
 #include <QSignalMapper>
 #include <QTextStream>

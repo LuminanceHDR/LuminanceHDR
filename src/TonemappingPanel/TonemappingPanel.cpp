@@ -904,7 +904,7 @@ void TonemappingPanel::fromTxt2Gui()
 void TonemappingPanel::on_addCustomSizeButton_clicked()
 {
     bool ok;
-    int i = QInputDialog::getInteger(this,
+    int i = QInputDialog::getInt(this,
                                      tr("Custom LDR size"),
                                      tr("Enter the width of the new size:"), 0 , 0, 2147483647, 1, &ok);
     if (ok && i > 0)

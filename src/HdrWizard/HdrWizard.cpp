@@ -31,6 +31,7 @@
 #include <QDir>
 #include <QUrl>
 #include <QMessageBox>
+#include <QMimeData>
 #include <QProcess>
 #include <QTextStream>
 #include <QSqlRecord>
