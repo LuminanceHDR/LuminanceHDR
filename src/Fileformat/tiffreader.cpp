@@ -332,23 +332,29 @@ TiffReader::readIntoPfsFrame()
         cmsUInt32Number cmsOutputFormat = TYPE_RGBA_8;
         cmsUInt32Number cmsIntent = INTENT_PERCEPTUAL;
 
-        if (ColorSpace == RGB && TypeOfData == WORD)
-        {
-            cmsInputFormat = TYPE_RGB_16;
-            cmsOutputFormat = TYPE_RGB_16;
+        if (ColorSpace == RGB && TypeOfData == WORD) {
+            if (has_alpha) {
+                cmsInputFormat = TYPE_RGBA_16;
+                cmsOutputFormat = TYPE_RGBA_16;
+            } else {
+                cmsInputFormat = TYPE_RGB_16;
+                cmsOutputFormat = TYPE_RGB_16;
+            }
         }
-        else if (ColorSpace == RGB && TypeOfData == BYTE)
-        {
-            cmsInputFormat = TYPE_RGB_8;
-            cmsOutputFormat = TYPE_RGB_8;
+        else if (ColorSpace == RGB && TypeOfData == BYTE) {
+            if (has_alpha) {
+                cmsInputFormat = TYPE_RGBA_8;
+                cmsOutputFormat = TYPE_RGBA_8;
+            } else {
+                cmsInputFormat = TYPE_RGB_8;
+                cmsOutputFormat = TYPE_RGB_8;
+            }
         }
-        else if (ColorSpace == CMYK && TypeOfData == WORD)
-        {
+        else if (ColorSpace == CMYK && TypeOfData == WORD) {
             cmsInputFormat = TYPE_CMYK_16;
             cmsOutputFormat = TYPE_RGBA_16;
         }
-        else
-        {
+        else {
             cmsInputFormat = TYPE_CMYK_8;
             cmsOutputFormat = TYPE_RGBA_8;
         }
