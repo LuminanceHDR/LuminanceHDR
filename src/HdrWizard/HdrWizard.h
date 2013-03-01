@@ -60,6 +60,7 @@ public:
 
     //! \brief return the caption text
     QString getCaptionTEXT();
+    QStringList getInputFilesNames();
 
 protected:
 	void resizeEvent(QResizeEvent *);

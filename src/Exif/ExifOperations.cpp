@@ -37,6 +37,7 @@
 
 #include "ExifOperations.h"
 #include "arch/math.h"
+#include "Common/config.h"
 
 namespace ExifOperations
 {
@@ -131,7 +132,7 @@ void copyExifData(const std::string& from, const std::string& to,
             Exiv2::ExifData destExifData;
             if (comment != "")
             {
-                destExifData["Exif.Image.Software"]="Created with opensource tool Luminance HDR, http://qtpfsgui.sourceforge.net";
+                destExifData["Exif.Image.Software"]=(QString("Luminance HDR ") + LUMINANCEVERSION).toStdString();
                 destExifData["Exif.Image.ImageDescription"]=comment;
                 destExifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
             }

@@ -63,7 +63,6 @@
 #include "Common/config.h"
 #include "Common/global.h"
 #include "OsIntegration/osintegration.h"
-#include "TonemappingPanel/TonemappingWarnDialog.h"
 #include "BatchHDR/BatchHDRDialog.h"
 #include "BatchTM/BatchTMDialog.h"
 #include "Fileformat/pfs_file_format.h"
@@ -154,14 +153,14 @@ MainWindow::MainWindow(QWidget *parent):
     init();
 }
 
-MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
+MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file, const QStringList& inputFileNames,
                        bool needSaving, QWidget *parent):
     QMainWindow(parent),
     m_Ui(new Ui::MainWindow)
 {
     init();
 
-    emit load_success(curr_frame, new_file, needSaving);
+    emit load_success(curr_frame, new_file, inputFileNames, needSaving);
 }
 
 MainWindow::~MainWindow()
@@ -442,7 +441,7 @@ void MainWindow::createNewHdr(const QStringList& files)
     QScopedPointer<HdrWizard> wizard( new HdrWizard(this, files, m_inputFilesName, m_inputExpoTimes) );
     if (wizard->exec() == QDialog::Accepted)
     {
-        emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
+        emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), wizard->getInputFilesNames(), true);
     }
 }
 
@@ -1004,11 +1003,11 @@ void MainWindow::load_failed(const QString& errorMessage)
 }
 
 void MainWindow::load_success(pfs::Frame* new_hdr_frame,
-                              const QString& new_fname, bool needSaving)
+                              const QString& new_fname, const QStringList& inputFileNames, bool needSaving)
 {
     if ( tm_status.is_hdr_ready )
     {
-        MainWindow *other = new MainWindow(new_hdr_frame, new_fname, needSaving);
+        MainWindow *other = new MainWindow(new_hdr_frame, new_fname, inputFileNames, needSaving);
         other->move(x() + 40, y() + 40);
         other->show();
     }
@@ -1053,6 +1052,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
 
             setCurrentFile(new_fname);
         }
+
+        m_inputFilesName = inputFileNames;
 
         tm_status.is_hdr_ready = true;
         tm_status.curr_tm_frame = newhdr;
@@ -1285,7 +1286,7 @@ void MainWindow::cropToSelection()
     pfs::Frame *original_frame = curr_g_v->getFrame();
     pfs::Frame *cropped_frame = pfs::cut(original_frame, x_ul, y_ul, x_br, y_br);
 
-    emit load_success(cropped_frame, QString(tr("Cropped Image")), true);
+    emit load_success(cropped_frame, QString(tr("Cropped Image")), m_inputFilesName, true);
 
     curr_g_v->removeSelection();
 }
@@ -1448,9 +1449,18 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
          (opts->xsize != opts->origxsize) &&
          (luminance_options->isShowFattalWarning()) )
     {
-        TonemappingWarningDialog tonemappingWarningDialog(this);
+        UMessageBox warningDialog(this);
+        warningDialog.setText( tr("Fattal Warning") );
+        warningDialog.setInformativeText( tr("This tonemapping operator depends on the size of the input "\
+                                " image. Applying this operator on the full size image will "\
+                                "most probably result in a different image. "\
+                                "\n\nDo you want to continue?") );
+        warningDialog.setStandardButtons(QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No);
+        warningDialog.setDefaultButton(QMessageBox::No);
+        warningDialog.setIcon(QMessageBox::Warning);
 
-        switch ( tonemappingWarningDialog.exec() )
+
+        switch ( warningDialog.exec() )
         {
         case QMessageBox::Yes :
         {} break;

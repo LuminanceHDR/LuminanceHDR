@@ -75,7 +75,7 @@ public:
     MainWindow(QWidget *parent = 0);
     // Constructor loading file inside
     MainWindow(pfs::Frame* curr_frame, const QString& new_fname,
-               bool needSaving = false, QWidget *parent = 0);
+        const QStringList& inputFileNames, bool needSaving = false, QWidget *parent = 0);
     ~MainWindow();
 
 public Q_SLOTS:
@@ -88,7 +88,7 @@ public Q_SLOTS:
 
     void load_failed(const QString&);
     void load_success(pfs::Frame* new_hdr_frame, const QString& new_fname,
-                      bool needSaving = false);
+                      const QStringList& inputFileNames = QStringList(), bool needSaving = false);
 
     void ioBegin();
     void ioEnd();
