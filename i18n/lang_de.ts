@@ -915,20 +915,12 @@ Fortfahren?</translation>
         <translation>Ver&amp;kleinern</translation>
     </message>
     <message>
-        <source>Preview &amp;Mode:</source>
-        <translation>Vorschau&amp;modus:</translation>
-    </message>
-    <message>
         <source>Pivot Only (P)</source>
         <translation>Nur Pivot (P)</translation>
     </message>
     <message>
         <source>Antighosting Mask</source>
         <translation>Anti-Ghosting-Maske</translation>
-    </message>
-    <message>
-        <source>Mask Color</source>
-        <translation>Maskierungsfarbe</translation>
     </message>
     <message>
         <source>Images List</source>
@@ -997,20 +989,8 @@ Das Histogramm des Bildes wird im oberen Feld angezeigt.</translation>
         <translation>Strg+S</translation>
     </message>
     <message>
-        <source>A&amp;dd Mask</source>
-        <translation>Maske h&amp;inzufügen</translation>
-    </message>
-    <message>
-        <source>Remove Mas&amp;k</source>
-        <translation>Maske e&amp;ntfernen</translation>
-    </message>
-    <message>
         <source>Size:</source>
         <translation>Größe:</translation>
-    </message>
-    <message>
-        <source> pixels</source>
-        <translation> Pixel</translation>
     </message>
     <message>
         <source>&amp;Strength:</source>
@@ -1165,6 +1145,54 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Histogram</source>
         <translation>Histogramm</translation>
+    </message>
+    <message>
+        <source>&amp;Mode:</source>
+        <translation>&amp;Modus:</translation>
+    </message>
+    <message>
+        <source>Brush</source>
+        <translation>Pinsel</translation>
+    </message>
+    <message>
+        <source>Lasso</source>
+        <translation>Lasso</translation>
+    </message>
+    <message>
+        <source>Mask</source>
+        <translation>Maske</translation>
+    </message>
+    <message>
+        <source>A&amp;dd</source>
+        <translation>H&amp;inzufügen</translation>
+    </message>
+    <message>
+        <source>&amp;Remove</source>
+        <translation>E&amp;ntfernen</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation> px</translation>
+    </message>
+    <message>
+        <source>Lasso - Draw a free hand selection area</source>
+        <translation>Lasso - Einen Bereich freihändig auswählen</translation>
+    </message>
+    <message>
+        <source>Brush - Paint the mask using the brush</source>
+        <translation>Pinsel - Die Maske mit dem Pinsel malen</translation>
+    </message>
+    <message>
+        <source>Save mask</source>
+        <translation>Maske speichern</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Apply saved mask</source>
+        <translation>Gespeicherte Maske anwenden</translation>
     </message>
 </context>
 <context>
@@ -2613,6 +2641,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Realtime Previews</source>
         <translation>Echtzeit-Vorschau</translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation>Fattal-Warnung</translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation>Dieser Dynamikkompressionsoperator hängt von der Größe des Quellbildes ab. Diesen Operator auf ein Bild in Originalgröße anzuwenden, wird höchstwahrscheinlich ein anderes Ergebnis zur Folge haben.
+
+Willst du ihn dennoch anwenden?</translation>
     </message>
 </context>
 <context>
@@ -4090,21 +4130,6 @@ Luminace Level</source>
     <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>TonemappingWarningDialog</name>
-    <message>
-        <source>Fattal Warning</source>
-        <translation>Fattal-Warnung</translation>
-    </message>
-    <message>
-        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
-
-Do you want to continue?</source>
-        <translation>Dieser Dynamikkompressionsoperator hängt von der Größe des Quellbildes ab. Diesen Operator auf ein Bild in Originalgröße anzuwenden, wird höchstwahrscheinlich ein anderes Ergebnis zur Folge haben.
-
-Willst du ihn dennoch anwenden?</translation>
     </message>
 </context>
 <context>
