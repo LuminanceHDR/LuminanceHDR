@@ -3195,6 +3195,22 @@ p, li { white-space: pre-wrap; }
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation>Farbprofil (*.icc *.ICC *.icm *.ICM)</translation>
     </message>
+    <message>
+        <source>Saves the settings along the program files, to be portable</source>
+        <translation>Speichert die Einstellungen zusammen mit den Programmdateien, um portabel zu sein</translation>
+    </message>
+    <message>
+        <source>Portable mode</source>
+        <translation>Portabler Modus</translation>
+    </message>
+    <message>
+        <source>Restart</source>
+        <translation>Neu starten</translation>
+    </message>
+    <message>
+        <source>For the settings to take effect, please restart the application!</source>
+        <translation>Um die Änderungen zu übernehmen, muss die Anwendung neu gestartet werden!</translation>
+    </message>
 </context>
 <context>
     <name>ProjectionsDialog</name>
