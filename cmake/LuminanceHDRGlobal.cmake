@@ -23,3 +23,13 @@ ENDIF()
 
 OPTION(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files (WARNING: make clean will delete the source .ts files! Danger!)")
 OPTION(LUPDATE_NOOBSOLETE "While doing an lupdate, remove obsolete entries.")
+
+IF(NOT CMAKE_BUILD_TYPE)
+SET(CMAKE_BUILD_TYPE "RelWithDebInfo" )
+ENDIF()
+
+# MESSAGE(${CMAKE_BUILD_TYPE})
+
+IF(${CMAKE_BUILD_TYPE} STREQUAL "Release" OR ${CMAKE_BUILD_TYPE} STREQUAL "MinSizeRel")
+ADD_DEFINITIONS("-DQT_NO_DEBUG_OUTPUT")
+ENDIF()
