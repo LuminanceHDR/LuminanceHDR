@@ -2,6 +2,7 @@
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +20,7 @@
  * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
 
 #include <QApplication>
@@ -33,31 +35,29 @@
 #include "Common/TranslatorManager.h"
 #include "MainWindow/MainWindow.h"
 
-#ifdef WIN32
-#include <QMessageBox>
-#endif
-
 namespace
 {
 QStringList getCliFiles(const QStringList& arguments)
 {
-    QStringList return_value;   // empty QStringList;
+    // empty QStringList;
+    QStringList fileList;
 
     // check if any of the parameters is a proper file on the file system
     // I skip the first value of the list because it is the name of the executable
-    for (int i = 1; i < arguments.size(); ++i)
-    {
+    for (int i = 1; i < arguments.size(); ++i) {
         QFile file( arguments.at(i).toLocal8Bit() );
 
-        if ( file.exists() ) return_value.push_back( arguments.at(i).toLocal8Bit() );
+        if ( file.exists() ) {
+            fileList.push_back( arguments.at(i).toLocal8Bit() );
+        }
     }
 
-    return return_value;
+    return fileList;
 }
 }
 
 #ifdef WIN32
-inline void customMessageHandler(QtMsgType type, const char *msg)
+void customMessageHandler(QtMsgType type, const char *msg)
 {
 	QString txt;
 	switch (type) {
@@ -89,28 +89,13 @@ int main( int argc, char ** argv )
 
 #ifdef WIN32
     // qInstallMsgHandler(customMessageHandler);
-
-    bool found_DLL = false;
-    foreach (QString path, application.libraryPaths())
-    {
-        if ( QFile::exists(path+"/imageformats/qjpeg4.dll") )
-        {
-            found_DLL = true;
-        }
-    }
-    if (!found_DLL)
-    {
-        QMessageBox::critical(NULL,
-                              QObject::tr("Aborting..."),
-                              QObject::tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
-        return 1;
-    }
 #endif
 
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
-    LuminanceOptions::isCurrentPortableMode = QDir(QApplication::applicationDirPath()).exists("PortableMode.txt");
+    LuminanceOptions::isCurrentPortableMode =
+            QDir(QApplication::applicationDirPath()).exists("PortableMode.txt");
 
     if (LuminanceOptions::isCurrentPortableMode)
     {
