@@ -112,4 +112,7 @@ TARGET_LINK_LIBRARIES(TestFloatRgb common pfs
     ${LIBS})
 ADD_TEST(TestFloatRgb TestFloatRgb)
 
+ADD_EXECUTABLE(TestImageQualityDialog TestImageQualityDialog.cpp)
+TARGET_LINK_LIBRARIES(TestImageQualityDialog ui fileformat ${LIBS})
+
 ENDIF(GTEST_FOUND)

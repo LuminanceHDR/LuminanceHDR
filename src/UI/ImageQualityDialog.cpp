@@ -35,37 +35,40 @@
 
 ImageQualityDialog::~ImageQualityDialog() {}
 
-ImageQualityDialog::ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent):
-    QDialog(parent),
-    image(img),
-    m_Ui(new Ui::ImgQualityDialog)
+ImageQualityDialog::ImageQualityDialog(const QImage *img, const QString& fmt, QWidget *parent)
+    : QDialog(parent)
+    , m_image(img)
+    , m_format(fmt)
+    , m_ui(new Ui::ImgQualityDialog)
 {
-    m_Ui->setupUi(this);
-    format = fmt;
-    connect(m_Ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
-    connect(m_Ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
+    m_ui->setupUi(this);
+
+    connect(m_ui->spinBox, SIGNAL(valueChanged(int)),
+            this, SLOT(reset(int)));
+    connect(m_ui->horizontalSlider, SIGNAL(valueChanged(int)),
+            this, SLOT(reset(int)));
 }
 
 int ImageQualityDialog::getQuality(void)
 {
-    return m_Ui->spinBox->value();
+    return m_ui->spinBox->value();
 }
 
 void ImageQualityDialog::on_getSizeButton_clicked()
 {
-    qDebug() << format;
+    qDebug() << m_format;
     setCursor(QCursor(Qt::WaitCursor));
-    int quality = m_Ui->spinBox->value();
+    int quality = getQuality();
     int size = 0;
-    if (format.startsWith("jp"))
+    if (m_format.startsWith("jp"))
     {
-        JpegWriter writer(image, quality);
+        JpegWriter writer(m_image, quality);
         writer.writeQImageToJpeg();
         size = writer.getFileSize();
 	}
-    else if (format.startsWith("png"))
+    else if (m_format.startsWith("png"))
     {
-        PngWriter writer(image, quality);
+        PngWriter writer(m_image, quality);
         writer.writeQImageToPng();
         size = writer.getFileSize();
 	}
@@ -74,17 +77,20 @@ void ImageQualityDialog::on_getSizeButton_clicked()
     	QByteArray ba;
     	QBuffer buffer(&ba);
 	    buffer.open(QIODevice::WriteOnly);
-        image->save(&buffer, (const char *) format.toLatin1(), quality);
+        m_image->save(&buffer, m_format.toLatin1().constData(), quality);
 		size = ba.size();
 	}
+
     QLocale def;
-    QString s = def.toString( size );
-    //label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
-    m_Ui->label_filesize->setText( s ); //the JPG on disk differs by 374 more bytes
+    QString s = def.toString(size);
+    // the JPG on disk differs by 374 more bytes
+    // label_filesize->setText(QString::number( ba.size() ));
+    // the JPG on disk differs by 374 more bytes
+    m_ui->label_filesize->setText(s);
     setCursor(QCursor(Qt::ArrowCursor));
 }
 
 void ImageQualityDialog::reset(int)
 {
-    m_Ui->label_filesize->setText(tr("Unknown"));
+    m_ui->label_filesize->setText(tr("Unknown"));
 }

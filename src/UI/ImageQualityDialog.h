@@ -35,17 +35,18 @@ class ImageQualityDialog : public QDialog //, private Ui::ImgQualityDialog
     Q_OBJECT
 
 public:
-    ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent = 0);
+    ImageQualityDialog(const QImage *img, const QString& fmt, QWidget *parent = 0);
     ~ImageQualityDialog();
     int getQuality(void);
+
 protected slots:
     void on_getSizeButton_clicked();
     void reset(int);
 
 protected:
-    const QImage *image;
-    QString format;
+    const QImage*   m_image;
+    QString         m_format;
 
-    QScopedPointer<Ui::ImgQualityDialog> m_Ui;
+    QScopedPointer<Ui::ImgQualityDialog> m_ui;
 };
 #endif
