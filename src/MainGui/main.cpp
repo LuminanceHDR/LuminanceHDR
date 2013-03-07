@@ -30,6 +30,7 @@
 
 #include "Common/global.h"
 #include "Common/config.h"
+#include "Common/TranslatorManager.h"
 #include "MainWindow/MainWindow.h"
 
 #ifdef WIN32
@@ -119,14 +120,12 @@ int main( int argc, char ** argv )
     }
 
     LuminanceOptions::conditionallyDoUpgrade();
-
-    installTranslators(true);
+    TranslatorManager::setLanguage( LuminanceOptions().getGuiLang() );
 
     MainWindow* mainWindow = new MainWindow;
 
     mainWindow->show();
     mainWindow->openFiles( getCliFiles( application.arguments() ) );
-
 
     return application.exec();
 }

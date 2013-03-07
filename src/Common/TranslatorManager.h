@@ -1,8 +1,7 @@
-/**
- * This file is a part of LuminanceHDR package.
+/*
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006,2007 Giuseppe Rota
- * Copyright (C) 2010-2012 Davide Anastasia, Franco Comida, Daniel Kaneider
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,23 +19,30 @@
  * ----------------------------------------------------------------------
  */
 
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//! \author Daniel Kaneider
-//! \author Franco Comida
-//! \author Giuseppe Rota <grota@users.sourceforge.net>
+#ifndef TRANSLATORMANAGER_H
+#define TRANSLATORMANAGER_H
 
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#include <QScopedPointer>
+#include <QTranslator>
 
-#include <QString>
-#include <QWidget>
-#include <QImage>
-#include <QStringList>
-#include <QUrl>
+//! \brief QTranslator context manager
+class TranslatorManager
+{
+public:
+    typedef QScopedPointer<QTranslator> ScopedQTranslator;
 
-bool matchesLdrFilename(const QString& file);
-bool matchesHdrFilename(const QString& file);
-bool matchesValidHDRorLDRfilename(const QString& file);
-QStringList convertUrlListToFilenameList(const QList<QUrl>& urls);
+    static
+    void setLanguage(const QString& lang, bool installQtTranslation = true);
 
-#endif
+private:
+    static void setAppTranslator(const QString& lang);
+    static void setQtTranslator(const QString& lang);
+
+    static void cleanAppTranslator();
+    static void cleanQtTranslator();
+
+    static ScopedQTranslator sm_appTranslator;
+    static ScopedQTranslator sm_qtTranslator;
+};
+
+#endif // TRANSLATORMANAGER_H

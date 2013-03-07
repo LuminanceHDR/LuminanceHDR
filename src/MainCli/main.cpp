@@ -23,13 +23,18 @@
 
 #include <QCoreApplication>
 
+#include "Common/LuminanceOptions.h"
+#include "Common/TranslatorManager.h"
+
 #include "MainCli/commandline.h"
-#include "Common/global.h"
+
 
 int main( int argc, char ** argv )
 {
     QCoreApplication application( argc, argv );
-    installTranslators(false);
+    LuminanceOptions lumOpts;
+
+    TranslatorManager::setLanguage( lumOpts.getGuiLang(), false );
 
     CommandLineInterfaceManager cli( argc, argv );
 

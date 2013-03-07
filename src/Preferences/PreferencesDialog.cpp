@@ -36,6 +36,7 @@
 #include "Common/global.h"
 #include "Common/config.h"
 #include "Common/LuminanceOptions.h"
+#include "Common/TranslatorManager.h"
 #include "Preferences/PreferencesDialog.h"
 
 // UI
@@ -236,7 +237,7 @@ void PreferencesDialog::on_okButton_clicked()
     if (luminance_options.getGuiLang() != fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()])
     {
         luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
-        installTranslators(true);
+        TranslatorManager::setLanguage( luminance_options.getGuiLang() );
     }
 
     // UI

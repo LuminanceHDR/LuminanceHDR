@@ -28,7 +28,9 @@
 #include <QStringList>
 #include <QString>
 
-#include "Common/global.h"
+#include "Common/LuminanceOptions.h"
+#include "Common/TranslatorManager.h"
+
 #include "ImageInspector.h"
 
 using namespace std;
@@ -36,7 +38,9 @@ using namespace std;
 int main( int argc, char ** argv )
 {
     QCoreApplication application( argc, argv );
-    installTranslators(false);
+    LuminanceOptions lumOpts;
+
+    TranslatorManager::setLanguage( lumOpts.getGuiLang(), false );
 
     QStringList arguments = QCoreApplication::arguments();
     if ( arguments.size() <= 1 )
