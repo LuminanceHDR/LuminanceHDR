@@ -48,7 +48,8 @@ QDialog(p),
     m_errors(false),
     m_loading_error(false),
     m_abort(false),
-    m_processing(false)
+    m_processing(false),
+    m_total(0)
 {
     m_Ui->setupUi(this);
 

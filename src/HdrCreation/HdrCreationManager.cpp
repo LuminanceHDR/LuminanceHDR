@@ -287,7 +287,14 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine) :
     chosen_config( predef_confs[0] ),
     ais( NULL ),
     m_shift(0),
-    fromCommandLine( fromCommandLine )
+    fromCommandLine( fromCommandLine ),
+    m_ais_crop_flag(false),
+    m_loadingError(false),
+    m_mdrWidth(0),
+    m_mdrHeight(0),
+    m_processedFiles(0),
+    m_runningThreads(0)
+    
 {}
 
 void HdrCreationManager::setConfig(const config_triple &c)
@@ -297,9 +304,9 @@ void HdrCreationManager::setConfig(const config_triple &c)
 
 void HdrCreationManager::setFileList(const QStringList& l)
 {
-    processedFiles = m_shift;
-    runningThreads = 0;
-    loadingError = false;
+    m_processedFiles = m_shift;
+    m_runningThreads = 0;
+    m_loadingError = false;
 
     fileList.append(l);
 
@@ -343,7 +350,7 @@ void HdrCreationManager::loadInputFiles()
     // called in a queued way by newResult(...).
     if (firstNotStarted == -1)
     {
-        if (processedFiles == fileList.size()) //then it's really over
+        if (m_processedFiles == fileList.size()) //then it's really over
         {
             if (filesLackingExif.size() == 0)
             {
@@ -358,7 +365,7 @@ void HdrCreationManager::loadInputFiles()
     } //if all files already started processing
     else
     { //if we still have to start processing some file
-        while ( runningThreads < m_luminance_options.getNumThreads() &&
+        while ( m_runningThreads < m_luminance_options.getNumThreads() &&
                 firstNotStarted < startedProcessing.size() )
         {
             startedProcessing[firstNotStarted] = true;
@@ -373,7 +380,7 @@ void HdrCreationManager::loadInputFiles()
             connect(thread, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
             thread->start();
             firstNotStarted++;
-            runningThreads++;
+            m_runningThreads++;
         }
     }
 }
@@ -381,13 +388,13 @@ void HdrCreationManager::loadInputFiles()
 void HdrCreationManager::loadFailed(const QString& message, int /*index*/)
 {
     //check for correct image size: update list that will be sent once all is over.
-    loadingError = true;
+    m_loadingError = true;
     emit errorWhileLoading(message);
 }
 
 void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotime, const QString& newfname)
 {
-    if (loadingError) {
+    if (m_loadingError) {
         emit processed();
         return;
     }
@@ -397,14 +404,14 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 
     if (inputType == LDR_INPUT_TYPE)
     {
-        loadingError = true;
+        m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 is an 8 bit format (LDR) while the previous ones are not.").arg(newfname));
         return;
     }
     inputType = MDR_INPUT_TYPE;
     if (!mdrsHaveSameSize(R->getWidth(),R->getHeight()))
     {
-        loadingError = true;
+        m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
         return;
     }
@@ -429,21 +436,21 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, const QString& newfname, bool /*ldrtiff*/)
 {
     //qDebug("HCM: ldrReady");
-    if (loadingError)
+    if (m_loadingError)
     {
         emit processed();
         return;
     }
     if (inputType==MDR_INPUT_TYPE)
     {
-        loadingError = true;
+        m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 is an 16 bit format while the previous ones are not.").arg(newfname));
         return;
     }
     inputType=LDR_INPUT_TYPE;
     if (!ldrsHaveSameSize(newImage->width(),newImage->height()))
     {
-        loadingError = true;
+        m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
         return;
     }
@@ -464,8 +471,8 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
 
 void HdrCreationManager::newResult(int index, float expotime, const QString& newfname)
 {
-    runningThreads--;
-    processedFiles++;
+    m_runningThreads--;
+    m_processedFiles++;
 
     //update filesToRemove
     if ( fileList.at(index) != newfname )
@@ -536,7 +543,7 @@ void HdrCreationManager::align_with_mtb()
 
 void HdrCreationManager::set_ais_crop_flag(bool flag)
 {
-    ais_crop_flag = flag;
+    m_ais_crop_flag = flag;
 }
 
 void HdrCreationManager::align_with_ais()
@@ -560,7 +567,7 @@ void HdrCreationManager::align_with_ais()
     connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
     
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
-    if (ais_crop_flag){
+    if (m_ais_crop_flag){
         ais_parameters << "-C";
     }
     if (filesToRemove[0] == "") {

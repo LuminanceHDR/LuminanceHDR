@@ -35,17 +35,20 @@ class PngWriter : public QObject
 {
   Q_OBJECT
 	
-	const QImage *m_out_qimage;
-	QString m_fname;
-	int m_quality;
-	png_uint_32 m_filesize;
-
 public:
 	PngWriter(const QImage *, QString, int);
 	PngWriter(const QImage *, int);
 	~PngWriter() {}
 	bool writeQImageToPng();
 	int getFileSize();
+	
+private:
+    const QImage *m_out_qimage;
+    QString m_fname;
+    int m_quality;
+    png_uint_32 m_filesize;
+
+
 };
 
 #endif

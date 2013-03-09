@@ -41,7 +41,10 @@ using namespace std;
 
 // RGBE IO classes implementation
 
-RGBEReader::RGBEReader( FILE *fh ) : fh(fh)
+RGBEReader::RGBEReader( FILE *fh ) :
+    fh(fh),
+    width(0),
+    height(0)
 {
   //TODO: read header from radiance file
   readRadianceHeader( fh, width, height, exposure );
