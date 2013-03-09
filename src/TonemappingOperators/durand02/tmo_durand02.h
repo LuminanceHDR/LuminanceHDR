@@ -35,9 +35,10 @@
 #ifndef TMO_DURAND02_H
 #define TMO_DURAND02_H
 
+#include <Libpfs/array2d_fwd.h>
+
 namespace pfs
 {
-class Array2D;
 class Progress;
 }
 
@@ -55,7 +56,7 @@ class Progress;
 //! \param color_correction enable automatic color correction
 //! \param downsample down sampling factor for speeding up fast-bilateral (1..20)
 //!
-void tmo_durand02(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
+void tmo_durand02(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
                   float sigma_s, float sigma_r, float baseContrast, int downsample,
                   bool color_correction /*= true*/,
                   pfs::Progress &ph);

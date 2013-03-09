@@ -73,7 +73,7 @@ using namespace std;
 
 //--------------------------------------------------------------------
 
-void downSample(const pfs::Array2D& A, pfs::Array2D& B)
+void downSample(const pfs::Array2Df& A, pfs::Array2Df& B)
 {
     const int width = B.getCols();
     const int height = B.getRows();
@@ -96,12 +96,12 @@ void downSample(const pfs::Array2D& A, pfs::Array2D& B)
     }
 }
 	
-void gaussianBlur(const pfs::Array2D& I, pfs::Array2D& L)
+void gaussianBlur(const pfs::Array2Df& I, pfs::Array2Df& L)
 {
     const int width = I.getCols();
     const int height = I.getRows();
 
-    pfs::Array2D T(width,height);
+    pfs::Array2Df T(width,height);
 
     //--- X blur
     //#pragma omp parallel for shared(I, T)
@@ -134,29 +134,29 @@ void gaussianBlur(const pfs::Array2D& I, pfs::Array2D& L)
     }
 }
 
-void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels)
+void createGaussianPyramids( pfs::Array2Df* H, pfs::Array2Df** pyramids, int nlevels)
 {
   int width = H->getCols();
   int height = H->getRows();
   const int size = width*height;
 
-  pyramids[0] = new pfs::Array2D(width,height);
+  pyramids[0] = new pfs::Array2Df(width,height);
 //#pragma omp parallel for shared(pyramids, H)
   for( int i=0 ; i<size ; i++ )
     (*pyramids[0])(i) = (*H)(i);
 
-  pfs::Array2D* L = new pfs::Array2D(width,height);
+  pfs::Array2Df* L = new pfs::Array2Df(width,height);
   gaussianBlur( *pyramids[0], *L );
 	
   for ( int k=1 ; k<nlevels ; k++ )
   {
     width /= 2;
     height /= 2;		
-    pyramids[k] = new pfs::Array2D(width,height);
+    pyramids[k] = new pfs::Array2Df(width,height);
     downSample(*L, *pyramids[k]);
     
     delete L;
-    L = new pfs::Array2D(width,height);
+    L = new pfs::Array2Df(width,height);
     gaussianBlur( *pyramids[k], *L );
   }
 
@@ -165,7 +165,7 @@ void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nleve
 
 //--------------------------------------------------------------------
 
-float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
+float calculateGradients(pfs::Array2Df* H, pfs::Array2Df* G, int k)
 {
   const int width = H->getCols();
   const int height = H->getRows();
@@ -202,7 +202,7 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 
 //--------------------------------------------------------------------
 
-void upSample(const pfs::Array2D& A, pfs::Array2D& B)
+void upSample(const pfs::Array2Df& A, pfs::Array2Df& B)
 {
     const int width = B.getCols();
     const int height = B.getRows();
@@ -238,15 +238,15 @@ void upSample(const pfs::Array2D& A, pfs::Array2D& B)
 }
 
 
-void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
+void calculateFiMatrix(pfs::Array2Df* FI, pfs::Array2Df* gradients[],
                        float avgGrad[], int nlevels, int detail_level,
                        float alfa, float beta, float noise, bool newfattal)
 {
     int width = gradients[nlevels-1]->getCols();
     int height = gradients[nlevels-1]->getRows();
-    pfs::Array2D** fi = new pfs::Array2D*[nlevels];
+    pfs::Array2Df** fi = new pfs::Array2Df*[nlevels];
 
-    fi[nlevels-1] = new pfs::Array2D(width,height);
+    fi[nlevels-1] = new pfs::Array2Df(width,height);
     if (newfattal)
     {
         //#pragma omp parallel for shared(fi)
@@ -291,7 +291,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
         {
             width = gradients[k-1]->getCols();
             height = gradients[k-1]->getRows();
-            fi[k-1] = new pfs::Array2D(width,height);
+            fi[k-1] = new pfs::Array2Df(width,height);
         }
         else
             fi[0] = FI;                         // highest level -> result
@@ -311,7 +311,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
 }
 
 inline
-void findMaxMinPercentile(const pfs::Array2D& I,
+void findMaxMinPercentile(const pfs::Array2Df& I,
                                  float minPrct, float& minLum,
                                  float maxPrct, float& maxLum)
 {
@@ -330,10 +330,8 @@ void findMaxMinPercentile(const pfs::Array2D& I,
 
 void tmo_fattal02(size_t width,
                   size_t height,
-                  const pfs::Array2D& Y,
-                  //const float* nY,
-                  pfs::Array2D& L,
-                  //float* nL,
+                  const pfs::Array2Df& Y,
+                  pfs::Array2Df& L,
                   float alfa,
                   float beta,
                   float noise,
@@ -374,7 +372,7 @@ void tmo_fattal02(size_t width,
       minLum = ( Y(i) < minLum ) ? Y(i) : minLum;
       maxLum = ( Y(i) > maxLum ) ? Y(i) : maxLum;
   }
-  pfs::Array2D* H = new pfs::Array2D(width, height);
+  pfs::Array2Df* H = new pfs::Array2Df(width, height);
   //#pragma omp parallel for private(i) shared(H, Y, maxLum)
   for ( int i=0 ; i<size ; i++ )
   {
@@ -394,22 +392,22 @@ void tmo_fattal02(size_t width,
   // The following lines solves a bug with images particularly small
   if (nlevels == 0) nlevels = 1;
 
-  pfs::Array2D** pyramids = new pfs::Array2D*[nlevels];
+  pfs::Array2Df** pyramids = new pfs::Array2Df*[nlevels];
   createGaussianPyramids(H, pyramids, nlevels);
   ph.setValue(8);
 
   // calculate gradients and its average values on pyramid levels
-  pfs::Array2D** gradients = new pfs::Array2D*[nlevels];
+  pfs::Array2Df** gradients = new pfs::Array2Df*[nlevels];
   float* avgGrad = new float[nlevels];
   for ( int k=0 ; k<nlevels ; k++ )
   {
-    gradients[k] = new pfs::Array2D(pyramids[k]->getCols(), pyramids[k]->getRows());
+    gradients[k] = new pfs::Array2Df(pyramids[k]->getCols(), pyramids[k]->getRows());
     avgGrad[k] = calculateGradients(pyramids[k],gradients[k], k);
   }
   ph.setValue(12);
 
   // calculate fi matrix
-  pfs::Array2D* FI = new pfs::Array2D(width, height);
+  pfs::Array2Df* FI = new pfs::Array2Df(width, height);
   calculateFiMatrix(FI, gradients, avgGrad, nlevels, detail_level, alfa, beta, noise, newfattal);
 //  dumpPFS( "FI.pfs", FI, "Y" );
   for ( int i=0 ; i<nlevels ; i++ )
@@ -429,8 +427,8 @@ void tmo_fattal02(size_t width,
 
 
   // attenuate gradients
-  pfs::Array2D* Gx = new pfs::Array2D(width, height);
-  pfs::Array2D* Gy = new pfs::Array2D(width, height);
+  pfs::Array2Df* Gx = new pfs::Array2Df(width, height);
+  pfs::Array2Df* Gy = new pfs::Array2Df(width, height);
 
   // the fft solver solves the Poisson pde but with slightly different
   // boundary conditions, so we need to adjust the assembly of the right hand
@@ -467,7 +465,7 @@ void tmo_fattal02(size_t width,
 //   dumpPFS( "Gy.pfs", Gy, "Y" );
   
   // calculate divergence
-  pfs::Array2D DivG(width, height);
+  pfs::Array2Df DivG(width, height);
   for ( size_t y = 0; y < height; ++y )
   {
       for ( size_t x = 0; x < width; ++x )
@@ -496,7 +494,7 @@ void tmo_fattal02(size_t width,
   
   // solve pde and exponentiate (ie recover compressed image)
   {
-  pfs::Array2D U(width, height);
+  pfs::Array2Df U(width, height);
   if (fftsolver)
   {
       solve_pde_fft(&DivG, &U, ph);

@@ -33,6 +33,8 @@
 #include <QList>
 #include <QImage>
 
+#include "Libpfs/array2d.h"
+
 #include "HdrCreation/createhdr_common.h"
 
 //*
@@ -45,13 +47,13 @@
 // * @param M number of camera output levels
 // * @return number of saturated pixels in the HDR image (0: all OK)
 //
-int robertson02_applyResponse(pfs::Array2D& Rj,  pfs::Array2D& Gj,  pfs::Array2D& Bj,
+int robertson02_applyResponse(pfs::Array2Df& Rj,  pfs::Array2Df& Gj,  pfs::Array2Df& Bj,
                               const float* arrayofexptime,
                               const float* Ir, const float* Ig, const float* Ib,
                               const float* w, int M,
-                              const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB);
+                              const Array2DfList& listhdrR, const Array2DfList& listhdrG, const Array2DfList& listhdrB);
 //! \note LDR version
-int robertson02_applyResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+int robertson02_applyResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
                               const float* arrayofexptime,
                               const float* Ir, const float* Ig, const float* Ib,
                               const float* w, int M,
@@ -67,17 +69,16 @@ int robertson02_applyResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& 
 // * @param M max camera output (no of discrete steps)
 // * @return number of saturated pixels in the HDR image (0: all OK)
 //
-int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+int robertson02_getResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
                             const float* arrayofexptime,
                             float *Ir, float *Ig, float *Ib,
                             const float* w, int M,
                             const QList<QImage*>& list);
 
-int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+int robertson02_getResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
                             const float* arrayofexptime,
                             float *Ir, float *Ig, float *Ib,
                             const float* w, int M,
-                            const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB);
-
+                            const Array2DfList& listhdrR, const Array2DfList& listhdrG, const Array2DfList& listhdrB);
 
 #endif // ROBERTSON02_H

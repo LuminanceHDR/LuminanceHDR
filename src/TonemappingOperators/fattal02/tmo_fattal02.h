@@ -34,13 +34,12 @@
 #define TMO_FATTAL02_H
 
 #include <cstddef>
+#include <Libpfs/array2d_fwd.h>
 
 namespace pfs
 {
-class Array2D;
 class Progress;
 }
-
 
 //! \brief Gradient Domain High Dynamic Range Compression
 //!
@@ -57,8 +56,8 @@ class Progress;
 //!
 void tmo_fattal02(size_t width, size_t height,
                   //const float* Y, float* L,
-                  const pfs::Array2D& Y,
-                  pfs::Array2D& L,
+                  const pfs::Array2Df& Y,
+                  pfs::Array2Df& L,
                   float alfa, float beta,
                   float noise, bool newfattal,
                   bool fftsolver, int detail_level,

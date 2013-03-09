@@ -40,9 +40,9 @@
 #include "GenericViewer.h"
 
 // Forward declaration
-namespace pfs {
-    class Array2D;
-    class Frame;
+namespace pfs
+{
+class Frame;
 }
 
 class LuminanceRangeWidget;

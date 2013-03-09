@@ -33,8 +33,9 @@
 #include <string>
 #include <vector>
 
-#include "channel.h"
-#include "tag.h"
+#include <Libpfs/channel.h>
+#include <Libpfs/tag.h>
+#include <Libpfs/exif/exif_data.hpp>
 
 namespace pfs
 {
@@ -53,6 +54,8 @@ private:
 
     TagContainer m_tags;
     ChannelContainer m_channels;
+
+    ::pfs::exif::exif_data m_exifData;
 
 public:
     Frame(int width, int height);
@@ -136,6 +139,17 @@ public:
     //! Returns TagContainer that can be used to access or modify
     //! tags associated with this Frame object.
     const TagContainer& getTags() const;
+
+    //! \brief exif data for the current \c Frame
+    const ::pfs::exif::exif_data& exif() const
+    {
+        return m_exifData;
+    }
+
+    ::pfs::exif::exif_data& exif()
+    {
+        return m_exifData;
+    }
 };
 
 } // namespace pfs

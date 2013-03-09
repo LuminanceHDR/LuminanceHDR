@@ -265,7 +265,7 @@ void Reinhard02::dynamic_range ()
  * @param low size in pixels of smallest scale (should be kept at 1)
  * @param high size in pixels of largest scale (default 1.6^8 = 43)
  */
-Reinhard02::Reinhard02(const pfs::Array2D *Y, pfs::Array2D* L,
+Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df* L,
                        bool use_scales, float key, float phi,
                        int num, int low, int high, bool temporal_coherent,
                        pfs::Progress &ph)

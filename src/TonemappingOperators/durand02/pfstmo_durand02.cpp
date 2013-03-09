@@ -86,11 +86,13 @@ void pfstmo_durand02(pfs::Frame& frame,
   //---
   
   if ( Y==NULL || X==NULL || Z==NULL)
+  {
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+  }
   
-  pfs::Array2D& R = *X->getChannelData();
-  pfs::Array2D& G = *Y->getChannelData();
-  pfs::Array2D& B = *Z->getChannelData();
+  pfs::Array2Df& R = *X->getChannelData();
+  pfs::Array2Df& G = *Y->getChannelData();
+  pfs::Array2Df& B = *Z->getChannelData();
   
   tmo_durand02(R, G, B,
                sigma_s, sigma_r, baseContrast, downsample, !original_algorithm,

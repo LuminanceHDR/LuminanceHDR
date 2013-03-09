@@ -28,18 +28,16 @@
  * $Id: colorspace.cpp,v 1.6 2007/07/18 08:49:25 rafm Exp $
  */
 
-#include <cassert>
-#include <list>
-#include <iostream>
-
-#include "arch/math.h"
-
-#include "pfs.h"
-#include "array2d.h"
 #include "colorspace.h"
 
+#include <cassert>
+#include <iostream>
+#include <map>
+#include <cmath>
+
+#include "Libpfs/pfs.h"
+#include "Libpfs/array2d.h"
 #include "Libpfs/utils/msec_timer.h"
-#include "Libpfs/vex/sse.h"
 
 #include <boost/assign.hpp>
 
@@ -50,19 +48,8 @@ namespace pfs
 {
 namespace
 {
-template <typename T>
-inline
-T clamp(T v, T min, T max)
-{
-    if ( v < min ) return min;
-    else if( v > max ) return max;
-    else return v;
-}
-}
-
 //! \brief Basic matrices for the SRGB <-> XYZ conversion
 //! \ref http://www.brucelindbloom.com/Eqn_RGB_XYZ_Matrix.html
-
 static const float rgb2xyzD65Mat[3][3] =
 { { 0.4124564f, 0.3575761f, 0.1804375f },
   { 0.2126729f, 0.7151522f, 0.0721750f },
@@ -73,139 +60,239 @@ static const float xyz2rgbD65Mat[3][3] =
   { -0.9692660f,  1.8760108f,  0.0415560f },
   {  0.0556434f, -0.2040259f,  1.0572252f } };
   
-  //-----------------------------------------------------------
-  // sRGB conversion functions
-  //-----------------------------------------------------------
-  void transformSRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                         Array2D *outC1, Array2D *outC2, Array2D *outC3)
-  {
+inline
+float inverseSRGBCompanding(float sample)
+{
+    if ( sample > 0.04045f ) {
+        return std::pow((sample + 0.055f)*(1.f/1.055f), 2.4f);
+    }
+    if ( sample >= -0.04045f )
+    {
+        return sample*(1.f/12.92f);
+    }
+    return -std::pow((0.055f - sample)*(1.f/1.055f), 2.4f);
+}
+
+inline
+float directSRGBCompanding(float sample)
+{
+    if ( sample > 0.0031308f ) {
+        return ((1.055f * std::pow(sample, 1.f/2.4f)) - 0.055f);
+    }
+    if ( sample >= -0.0031308f ) {
+        return (sample * 12.92f);
+    }
+    return ((0.055f - 1.f)*std::pow(-sample, 1.f/2.4f) - 0.055f);
+}
+
+inline
+float kernelTrasformRGB2Y(float red, float green, float blue)
+{
+    return ( rgb2xyzD65Mat[1][0]*red +
+             rgb2xyzD65Mat[1][1]*green +
+             rgb2xyzD65Mat[1][2]*blue );
+}
+
+inline
+float kernelTrasformSRGB2Y(float red, float green, float blue)
+{
+    return ( kernelTrasformRGB2Y(
+                 inverseSRGBCompanding(red),
+                 inverseSRGBCompanding(green),
+                 inverseSRGBCompanding(blue)
+                 ) );
+}
+
+inline
+void kernelTrasformRGB2XYZ(float red, float green, float blue, float& X, float&Y, float& Z)
+{
+    X = rgb2xyzD65Mat[0][0]*red + rgb2xyzD65Mat[0][1]*green + rgb2xyzD65Mat[0][2]*blue;
+    Y = rgb2xyzD65Mat[1][0]*red + rgb2xyzD65Mat[1][1]*green + rgb2xyzD65Mat[1][2]*blue;
+    Z = rgb2xyzD65Mat[2][0]*red + rgb2xyzD65Mat[2][1]*green + rgb2xyzD65Mat[2][2]*blue;
+}
+
+inline
+void kernelTrasformSRGB2XYZ(float red, float green, float blue, float& X, float&Y, float& Z)
+{
+    kernelTrasformRGB2XYZ( inverseSRGBCompanding(red),
+                           inverseSRGBCompanding(green),
+                           inverseSRGBCompanding(blue),
+                           X, Y, Z);
+}
+
+inline
+void kernelTrasformXYZ2RGB(float X, float Y, float Z, float& red, float& green, float& blue)
+{
+    red   = xyz2rgbD65Mat[0][0]*X + xyz2rgbD65Mat[0][1]*Y + xyz2rgbD65Mat[0][2]*Z;
+    green = xyz2rgbD65Mat[1][0]*X + xyz2rgbD65Mat[1][1]*Y + xyz2rgbD65Mat[1][2]*Z;
+    blue  = xyz2rgbD65Mat[2][0]*X + xyz2rgbD65Mat[2][1]*Y + xyz2rgbD65Mat[2][2]*Z;
+}
+
+inline
+void kernelTrasformXYZ2SRGB(float X, float Y, float Z, float& red, float& green, float& blue)
+{
+    kernelTrasformXYZ2RGB(X, Y, Z, X, Y, Z);    // use X, Y and Z as temporary!
+
+    red = directSRGBCompanding(X);
+    green = directSRGBCompanding(Y);
+    blue = directSRGBCompanding(Z);
+}
+
+} // anonymous namespace
+
+
+//-----------------------------------------------------------
+// sRGB conversion functions
+//-----------------------------------------------------------
+void transformSRGB2XYZ(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                       Array2Df *outC1, Array2Df *outC2, Array2Df *outC3)
+{
 #ifdef TIMER_PROFILING
-      msec_timer f_timer;
-      f_timer.start();
+    msec_timer f_timer;
+    f_timer.start();
 #endif
 
-      const float* r = inC1->getRawData();
-      const float* g = inC2->getRawData();
-      const float* b = inC3->getRawData();
+    Array2Df::const_iterator r = inC1->begin();
+    Array2Df::const_iterator rEnd = inC1->end();
+    Array2Df::const_iterator g = inC2->begin();
+    Array2Df::const_iterator b = inC3->begin();
 
-      float* x = outC1->getRawData();
-      float* y = outC2->getRawData();
-      float* z = outC3->getRawData();
+    Array2Df::iterator x = outC1->begin();
+    Array2Df::iterator y = outC2->begin();
+    Array2Df::iterator z = outC3->begin();
 
-      float i1, i2, i3;
-      float t1, t2, t3;
-
-      int elems = inC1->getRows()*inC1->getCols();
-
-#pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
-      for( int idx = 0; idx < elems ; idx++ )
-      {
-          i1 = clamp(r[idx], 0.f, 1.f);
-          i2 = clamp(g[idx], 0.f, 1.f);
-          i3 = clamp(b[idx], 0.f, 1.f);
-
-          t1 = (i1 <= 0.04045f ? i1 / 12.92f : powf( (i1 + 0.055f) / 1.055f, 2.4f )  );
-          t2 = (i2 <= 0.04045f ? i2 / 12.92f : powf( (i2 + 0.055f) / 1.055f, 2.4f )  );
-          t3 = (i3 <= 0.04045f ? i3 / 12.92f : powf( (i3 + 0.055f) / 1.055f, 2.4f )  );
-
-          x[idx] = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
-          y[idx] = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
-          z[idx] = rgb2xyzD65Mat[2][0]*t1 + rgb2xyzD65Mat[2][1]*t2 + rgb2xyzD65Mat[2][2]*t3;
-      }
+    while ( r != rEnd )
+    {
+        kernelTrasformSRGB2XYZ(*r++, *g++, *b++, *x++, *y++, *z++);
+    }
 
 #ifdef TIMER_PROFILING
-      f_timer.stop_and_update();
-      std::cout << "transformSRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
+    f_timer.stop_and_update();
+    std::cout << "transformSRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
-  }
 
-  namespace
-  {
+}
+void transformSRGB2Y(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                     Array2Df *outC1)
+{
+    Array2Df::const_iterator r = inC1->begin();
+    Array2Df::const_iterator rEnd = inC1->end();
+    Array2Df::const_iterator g = inC2->begin();
+    Array2Df::const_iterator b = inC3->begin();
 
-  inline
-  void kernelTrasformSRGB2Y(float red, float green, float blue, float& y)
-  {
-      red = clamp(red, 0.f, 1.f);
-      green = clamp(green, 0.f, 1.f);
-      blue = clamp(blue, 0.f, 1.f);
+    Array2Df::iterator y = outC1->begin();
 
-      red = (red <= 0.04045f ? red / 12.92f : powf( (red + 0.055f) / 1.055f, 2.4f )  );
-      green = (green <= 0.04045f ? green / 12.92f : powf( (green + 0.055f) / 1.055f, 2.4f )  );
-      blue = (blue <= 0.04045f ? blue / 12.92f : powf( (blue + 0.055f) / 1.055f, 2.4f )  );
+    while ( r != rEnd )
+    {
+        *y++ = kernelTrasformSRGB2Y(*r++, *g++, *b++);
+    }
+}
 
-      y = rgb2xyzD65Mat[1][0]*red
-              + rgb2xyzD65Mat[1][1]*green
-              + rgb2xyzD65Mat[1][2]*blue;
-  }
-
-  }
-
-  void transformSRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                       Array2D *outC1)
-  {
-      const float* r = inC1->getRawData();
-      const float* g = inC2->getRawData();
-      const float* b = inC3->getRawData();
-
-      float* y = outC1->getRawData();
-
-      size_t numPixel = inC1->getCols()*inC1->getRows();
-
-      for ( ; numPixel; numPixel--)
-      {
-          kernelTrasformSRGB2Y(*r++, *g++, *b++, *y++);
-      }
-  }
-  
-  void transformXYZ2SRGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                         Array2D *outC1, Array2D *outC2, Array2D *outC3)
-  {
+//-----------------------------------------------------------
+// RGB conversion functions
+//-----------------------------------------------------------
+void transformRGB2XYZ(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                      Array2Df *outC1, Array2Df *outC2, Array2Df *outC3)
+{
 #ifdef TIMER_PROFILING
-      msec_timer f_timer;
-      f_timer.start();
+    msec_timer f_timer;
+    f_timer.start();
 #endif
 
-      const float* x = inC1->getRawData();
-      const float* y = inC2->getRawData();
-      const float* z = inC3->getRawData();
+    Array2Df::const_iterator r = inC1->begin();
+    Array2Df::const_iterator rEnd = inC1->end();
+    Array2Df::const_iterator g = inC2->begin();
+    Array2Df::const_iterator b = inC3->begin();
 
-      float* r = outC1->getRawData();
-      float* g = outC2->getRawData();
-      float* b = outC3->getRawData();
+    Array2Df::iterator x = outC1->begin();
+    Array2Df::iterator y = outC2->begin();
+    Array2Df::iterator z = outC3->begin();
 
-      float i1, i2, i3;
-      float t1, t2, t3;
-
-      const int ELEMS = inC1->getRows()*inC1->getCols();
-
-#pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
-      for( int idx = 0; idx < ELEMS; idx++ )
-      {
-          i1 = x[idx];
-          i2 = y[idx];
-          i3 = z[idx];
-
-          t1 = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
-          t2 = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
-          t3 = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
-
-          t1 = clamp( t1, 0.f, 1.f );
-          t2 = clamp( t2, 0.f, 1.f );
-          t3 = clamp( t3, 0.f, 1.f );
-
-          r[idx] = (t1 <= 0.0031308f ? t1 *= 12.92f : 1.055f * powf( t1, 1.f/2.4f ) - 0.055f);
-          g[idx] = (t2 <= 0.0031308f ? t2 *= 12.92f : 1.055f * powf( t2, 1.f/2.4f ) - 0.055f);
-          b[idx] = (t3 <= 0.0031308f ? t3 *= 12.92f : 1.055f * powf( t3, 1.f/2.4f ) - 0.055f);
-      }
+    while ( r != rEnd )
+    {
+        kernelTrasformRGB2XYZ(*r++, *g++, *b++, *x++, *y++, *z++);
+    }
 
 #ifdef TIMER_PROFILING
-      f_timer.stop_and_update();
-      std::cout << "transformXYZ2SRGB() = " << f_timer.get_time() << " msec" << std::endl;
+    f_timer.stop_and_update();
+    std::cout << "transformRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
-  }
-  
-  void transformXYZ2Yuv( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+}
+
+void transformRGB2Y(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                    Array2Df *outC1)
+{
+    Array2Df::const_iterator r = inC1->begin();
+    Array2Df::const_iterator rEnd = inC1->end();
+    Array2Df::const_iterator g = inC2->begin();
+    Array2Df::const_iterator b = inC3->begin();
+
+    Array2Df::iterator y = outC1->begin();
+
+    while ( r != rEnd )
+    {
+        *y++ = kernelTrasformRGB2Y(*r++, *g++, *b++);
+    }
+}
+
+void transformXYZ2SRGB(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                       Array2Df *outC1, Array2Df *outC2, Array2Df *outC3)
+{
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+
+    Array2Df::const_iterator x = inC1->begin();
+    Array2Df::const_iterator xEnd = inC1->end();
+    Array2Df::const_iterator y = inC2->begin();
+    Array2Df::const_iterator z = inC3->begin();
+
+    Array2Df::iterator r = outC1->begin();
+    Array2Df::iterator g = outC2->begin();
+    Array2Df::iterator b = outC3->begin();
+
+    while ( x != xEnd )
+    {
+        kernelTrasformXYZ2SRGB(*x++, *y++, *z++, *r++, *g++, *b++);
+    }
+
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "transformXYZ2SRGB() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
+}
+
+void transformXYZ2RGB(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                      Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 )
+{
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+
+    Array2Df::const_iterator x = inC1->begin();
+    Array2Df::const_iterator xEnd = inC1->end();
+    Array2Df::const_iterator y = inC2->begin();
+    Array2Df::const_iterator z = inC3->begin();
+
+    Array2Df::iterator r = outC1->begin();
+    Array2Df::iterator g = outC2->begin();
+    Array2Df::iterator b = outC3->begin();
+
+    while ( x != xEnd )
+    {
+        kernelTrasformXYZ2RGB(*x++, *y++, *z++, *r++, *g++, *b++);
+    }
+
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "transformXYZ2RGB() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
+}
+
+  void transformXYZ2Yuv( const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                        Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 )
   {
     const int elems = inC1->getRows()*inC1->getCols();
     for ( int idx = 0; idx < elems; idx++ )
@@ -226,8 +313,8 @@ static const float xyz2rgbD65Mat[3][3] =
     
   }
   
-  void transformYuv2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformYuv2XYZ( const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                        Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 )
   {
     const int elems = inC1->getRows()*inC1->getCols();
     for( int idx = 0; idx < elems ; idx++ )
@@ -244,8 +331,8 @@ static const float xyz2rgbD65Mat[3][3] =
     }
   }
   
-  void transformYxy2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformYxy2XYZ( const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                        Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 )
   {
     const int elems = inC1->getRows()*inC1->getCols();
     for( int idx = 0; idx < elems; idx++ )
@@ -259,8 +346,8 @@ static const float xyz2rgbD65Mat[3][3] =
     }
   }
   
-  void transformXYZ2Yxy( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformXYZ2Yxy( const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                        Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 )
   {
     const int elems = inC1->getRows()*inC1->getCols();
     for( int idx = 0; idx < elems; idx++ )
@@ -275,116 +362,13 @@ static const float xyz2rgbD65Mat[3][3] =
     }
   }
   
-  void transformRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3)
-  {
-#ifdef TIMER_PROFILING
-      msec_timer f_timer;
-      f_timer.start();
-#endif
-
-      const float* r = inC1->getRawData();
-      const float* g = inC2->getRawData();
-      const float* b = inC3->getRawData();
-
-      float* x = outC1->getRawData();
-      float* y = outC2->getRawData();
-      float* z = outC3->getRawData();
-
-      float i1, i2, i3;
-      const int ELEMS = inC1->getRows()*inC1->getCols();
-
-#pragma omp parallel for private(i1,i2,i3)
-      for( int idx = 0; idx < ELEMS; idx++ )
-      {
-          i1 = r[idx];
-          i2 = g[idx];
-          i3 = b[idx];
-
-          x[idx] = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
-          y[idx] = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
-          z[idx] = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
-      }
-
-#ifdef TIMER_PROFILING
-      f_timer.stop_and_update();
-      std::cout << "transformRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
-#endif
-  }
-  
-  namespace
-  {
-  inline
-  void kernelTrasformRGB2Y(float red, float green, float blue, float& y)
-  {
-      y = rgb2xyzD65Mat[1][0]*red
-              + rgb2xyzD65Mat[1][1]*green
-              + rgb2xyzD65Mat[1][2]*blue;
-  }
-
-  }
-
-  void transformRGB2Y(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                      Array2D *outC1)
-  {
-      const float* r = inC1->getRawData();
-      const float* rEnd = inC1->getRawData() + (inC1->getCols()*inC1->getRows());
-      const float* g = inC2->getRawData();
-      const float* b = inC3->getRawData();
-
-      float* y = outC1->getRawData();
-
-      while ( r != rEnd )
-      {
-          kernelTrasformRGB2Y(*r++, *g++, *b++, *y++);
-      }
-  }
-
-
-  void transformXYZ2RGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
-  {
-#ifdef TIMER_PROFILING
-      msec_timer f_timer;
-      f_timer.start();
-#endif
-
-      const float* x = inC1->getRawData();
-      const float* y = inC2->getRawData();
-      const float* z = inC3->getRawData();
-
-      float* r = outC1->getRawData();
-      float* g = outC2->getRawData();
-      float* b = outC3->getRawData();
-
-      float i1, i2, i3;
-      const int ELEMS = inC1->getRows()*inC1->getCols();
-
-#pragma omp parallel for schedule(static, 5120) private(i1,i2,i3)
-      for( int idx = 0; idx < ELEMS; idx++ )
-      {
-          i1 = x[idx];
-          i2 = y[idx];
-          i3 = z[idx];
-
-          r[idx] = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
-          g[idx] = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
-          b[idx] = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
-      }
-
-#ifdef TIMER_PROFILING
-      f_timer.stop_and_update();
-      std::cout << "transformXYZ2RGB() = " << f_timer.get_time() << " msec" << std::endl;
-#endif
-  }
-  
-typedef void (*CSTransformFunc)(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                                Array2D *outC1, Array2D *outC2, Array2D *outC3 );
+typedef void (*CSTransformFunc)(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                                Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 );
 typedef std::pair<ColorSpace, ColorSpace> CSTransformProfile;
 typedef std::map<CSTransformProfile, CSTransformFunc> CSTransformMap;
 
-void transformColorSpace(ColorSpace inCS, const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                         ColorSpace outCS, Array2D *outC1, Array2D *outC2, Array2D *outC3)
+void transformColorSpace(ColorSpace inCS, const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                           ColorSpace outCS, Array2Df *outC1, Array2Df *outC2, Array2Df *outC3)
 {
     assert( inC1->getCols() == inC2->getCols() &&
             inC2->getCols() == inC3->getCols() &&

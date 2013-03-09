@@ -91,7 +91,7 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
     int cols = frame.getWidth();
     int rows = frame.getHeight();
     
-    pfs::Array2D inY( cols, rows );
+    pfs::Array2Df inY( cols, rows );
     pfs::transformRGB2Y(inRed->getChannelData(),
                         inGreen->getChannelData(),
                         inBlue->getChannelData(),

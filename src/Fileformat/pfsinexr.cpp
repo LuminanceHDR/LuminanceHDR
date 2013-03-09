@@ -193,9 +193,9 @@ pfs::Frame * readEXRfile( const char *filename )
       float scaleFactor = whiteLuminance( file.header() );
       int pixelCount = frame->getHeight()*frame->getWidth();
       
-      pfs::Array2D* Xr = X->getChannelData();
-      pfs::Array2D* Yr = Y->getChannelData();
-      pfs::Array2D* Zr = Z->getChannelData();
+      pfs::Array2Df* Xr = X->getChannelData();
+      pfs::Array2Df* Yr = Y->getChannelData();
+      pfs::Array2Df* Zr = Z->getChannelData();
       
       // TODO: convert in SSE
       for( int i = 0; i < pixelCount; i++ )

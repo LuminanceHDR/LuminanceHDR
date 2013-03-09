@@ -53,7 +53,7 @@ namespace // anonymous namespace
 // In this way, we let know the compiler it can mess up as much as it wants with the code,
 // because it will only used inside this compilation unit
 
-const pfs::Array2D* getPrimaryChannel(const pfs::Frame& frame)
+const pfs::Array2Df* getPrimaryChannel(const pfs::Frame& frame)
 {
     return frame.getChannel("Y")->getChannelData();
 }

@@ -138,7 +138,7 @@ private:
 	QList<QImage*> mdrImagesToRemove;  //QImages need to be deleted
 	QList<QImage*> antiGhostingMasksList;  //QImages used for manual anti ghosting
 	QList<bool> tiffLdrList;  //tiff ldr input
-	Array2DList listmdrR,listmdrG,listmdrB; //mdr input
+    Array2DfList listmdrR,listmdrG,listmdrB; //mdr input
 	//if startedProcessing[i]==true, we started a thread for the i-th file
 	QList<bool> startedProcessing;
     // time equivalent array (from exif data)

@@ -31,9 +31,10 @@
 #ifndef FASTBILATERAL_H
 #define FASTBILATERAL_H
 
+#include <Libpfs/array2d_fwd.h>
+
 namespace pfs
 {
-class Array2D;
 class Progress;
 }
 
@@ -47,8 +48,9 @@ class Progress;
 //! \param sigma_s sigma value for spatial kernel
 //! \param sigma_r sigma value for range kernel
 //!
-void fastBilateralFilter(const pfs::Array2D& I, pfs::Array2D& J,
+void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
                          float sigma_s, float sigma_r, int downsample,
                          pfs::Progress& ph);
 
 #endif /* #ifndef FASTBILATERAL_H */
+

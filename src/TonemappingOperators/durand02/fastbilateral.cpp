@@ -72,7 +72,7 @@ public:
   }
 
 
-  void blur( const pfs::Array2D& I, pfs::Array2D& J )
+  void blur( const pfs::Array2Df& I, pfs::Array2Df& J )
   {
     int x,y;
 
@@ -228,7 +228,7 @@ PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
     J=J+Jj .*  InterpolationWeight(I, ij )
 */
 
-void fastBilateralFilter(const pfs::Array2D& I, pfs::Array2D& J,
+void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
                          float sigma_s, float sigma_r, int /*downsample*/,
                          pfs::Progress &ph)
 {
@@ -247,7 +247,7 @@ void fastBilateralFilter(const pfs::Array2D& I, pfs::Array2D& J,
     J(i) = 0.0f;             // zero output
   }
 
-  pfs::Array2D* JJ;
+  pfs::Array2Df* JJ;
 //  if( downsample != 1 )
 //    JJ = new pfs::Array2D(w,h);
   
@@ -257,13 +257,13 @@ void fastBilateralFilter(const pfs::Array2D& I, pfs::Array2D& J,
   int sizeZ = w*h;
 //  pfs::Array2D* Iz = new pfs::Array2D(w,h);
 //  downsampleArray(I,Iz);
-  const pfs::Array2D* Iz = &I;
+  const pfs::Array2Df* Iz = &I;
 //  sigma_s /= downsample;
   
-  pfs::Array2D* jJ = new pfs::Array2D(w,h);
-  pfs::Array2D* jG = new pfs::Array2D(w,h);
-  pfs::Array2D* jK = new pfs::Array2D(w,h);
-  pfs::Array2D* jH = new pfs::Array2D(w,h);
+  pfs::Array2Df* jJ = new pfs::Array2Df(w,h);
+  pfs::Array2Df* jG = new pfs::Array2Df(w,h);
+  pfs::Array2Df* jK = new pfs::Array2Df(w,h);
+  pfs::Array2Df* jH = new pfs::Array2Df(w,h);
 
   const int NB_SEGMENTS = (int)ceil((maxI-minI)/sigma_r);
   float stepI = (maxI-minI)/NB_SEGMENTS;

@@ -142,9 +142,9 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
     }
 }
 
-qreal averageLightness(const pfs::Array2D& R,
-                       const pfs::Array2D& G,
-                       const pfs::Array2D& B)
+qreal averageLightness(const pfs::Array2Df& R,
+                       const pfs::Array2Df& G,
+                       const pfs::Array2Df& B)
 {
     int width = R.getCols();
     int height = R.getRows();
@@ -217,8 +217,8 @@ void blend(QImage& img1, const QImage& img2, const QImage& mask)
 #endif
 }
 
-void blend(pfs::Array2D& R1, pfs::Array2D& G1, pfs::Array2D& B1,
-           const pfs::Array2D& R2, const pfs::Array2D& G2, const pfs::Array2D& B2,
+void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
+           const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
            const QImage& mask)
 {
     qDebug() << "blend MDR";
@@ -516,9 +516,9 @@ bool HdrCreationManager::mdrsHaveSameSize(int currentWidth, int currentHeight)
 {
     for (unsigned int i = 0; i < listmdrR.size(); i++)
     {
-        const pfs::Array2D* Rpointer = listmdrR.at(i);
-        const pfs::Array2D* Gpointer = listmdrG.at(i);
-        const pfs::Array2D* Bpointer = listmdrB.at(i);
+        const pfs::Array2Df* Rpointer = listmdrR.at(i);
+        const pfs::Array2Df* Gpointer = listmdrG.at(i);
+        const pfs::Array2Df* Bpointer = listmdrB.at(i);
         if (Rpointer != NULL && Gpointer != NULL && Bpointer != NULL)
         {
             if ( (Rpointer->getCols() != currentWidth) ||
@@ -748,7 +748,7 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
     }
     if (listmdrR.size()!=0 && listmdrG.size()!=0 && listmdrB.size()!=0)
     {
-        Array2DList::iterator itR=listmdrR.begin(), itG=listmdrG.begin(), itB=listmdrB.begin();
+        Array2DfList::iterator itR=listmdrR.begin(), itG=listmdrG.begin(), itB=listmdrB.begin();
         for (; itR!=listmdrR.end(); itR++,itG++,itB++ )
         {
             delete *itR;
@@ -811,13 +811,13 @@ void HdrCreationManager::applyShiftsToMdrImageStack(const QList<QPair<int,int> >
         {
             continue;
         }
-        pfs::Array2D *shiftedR = shift(*listmdrR[i],
+        pfs::Array2Df *shiftedR = shift(*listmdrR[i],
                                        hvOffsets[i].first,
                                        hvOffsets[i].second);
-        pfs::Array2D *shiftedG = shift(*listmdrG[i],
+        pfs::Array2Df *shiftedG = shift(*listmdrG[i],
                                        hvOffsets[i].first,
                                        hvOffsets[i].second);
-        pfs::Array2D *shiftedB = shift(*listmdrB[i],
+        pfs::Array2Df *shiftedB = shift(*listmdrB[i],
                                        hvOffsets[i].first,
                                        hvOffsets[i].second);
         delete listmdrR[i];
@@ -905,15 +905,15 @@ void HdrCreationManager::remove(int index)
         break;
     case MDR_INPUT_TYPE:
     {
-            Array2DList::iterator itR = listmdrR.begin() + index;
+            Array2DfList::iterator itR = listmdrR.begin() + index;
             delete *itR;
             listmdrR.erase(itR);
 
-            Array2DList::iterator itG = listmdrG.begin() + index;
+            Array2DfList::iterator itG = listmdrG.begin() + index;
             delete *itG;
             listmdrG.erase(itG);
 
-            Array2DList::iterator itB = listmdrB.begin() + index;
+            Array2DfList::iterator itB = listmdrB.begin() + index;
             delete *itB;
             listmdrB.erase(itB);
             

@@ -35,7 +35,6 @@
 namespace pfs
 {
 class Frame;
-class Array2D;
 }
 
 class TiffWriter : public QObject

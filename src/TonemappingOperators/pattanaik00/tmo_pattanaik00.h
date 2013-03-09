@@ -35,9 +35,10 @@
 #ifndef TMO_PATTANAIK00_H
 #define TMO_PATTANAIK00_H
 
+#include <Libpfs/array2d_fwd.h>
+
 namespace pfs
 {
-class Array2D;
 // class Frame;
 class Progress;
 }
@@ -56,11 +57,10 @@ class VisualAdaptationModel;
 //! \param am pointer to adaptation model
 //! \param local false: use global version, true: use local version
 //!
-void tmo_pattanaik00(pfs::Array2D& R, pfs::Array2D& G, pfs::Array2D& B,
-                     const pfs::Array2D& Y,
+void tmo_pattanaik00(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
+                     const pfs::Array2Df& Y,
                      VisualAdaptationModel* am, bool local /*= false*/,
                      pfs::Progress &ph);
-
 
 //!
 //! @brief Time-dependent Visual Adaptation Model
@@ -83,7 +83,7 @@ private:
   float Brod;
 
   //! calculate logarithmic average of Y
-  float calculateLogAvgLuminance( const pfs::Array2D& Y );
+  float calculateLogAvgLuminance( const pfs::Array2Df& Y );
 
 public:
 
@@ -104,7 +104,7 @@ public:
   //!
   //! \param Y luminance map of HDR image
   //! \param dt time [s] that passed after last calculation of adaptation
-  void calculateAdaptation(const pfs::Array2D& Y, float dt);
+  void calculateAdaptation(const pfs::Array2Df& Y, float dt);
 
   //! \brief Set adaptation level to given values
   //! \param Gcone goal adaptation value for cones
@@ -113,7 +113,7 @@ public:
 
   //! @brief Set adaptation level appropriate for given lumiance map
   //! \param Y luminance map of HDR image
-  void setAdaptation(const pfs::Array2D& Y);
+  void setAdaptation(const pfs::Array2Df& Y);
 
   //! Get cone adaptation level
   float getAcone()

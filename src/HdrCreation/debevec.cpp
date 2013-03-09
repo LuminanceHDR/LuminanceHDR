@@ -40,9 +40,9 @@
 /*
 //anti-saturation shouldn't be needed
 int debevec_applyResponse( const float * arrayofexptime,
-                           pfs::Array2D* xj, const float* I1,
-                           pfs::Array2D* yj, const float* I2,
-                           pfs::Array2D* zj, const float* I3,
+                           pfs::Array2Df* xj, const float* I1,
+                           pfs::Array2Df* yj, const float* I2,
+                           pfs::Array2Df* zj, const float* I3,
                            const Array2DList &P,
                            const bool ldrinput, ... )
 {
@@ -222,7 +222,7 @@ int debevecBuildPixel(float& outRed, float& outGreen, float& outBlue,
 }
 
 template <typename InputDataAdapter>
-int debevecApplyResponseCore(pfs::Array2D& xj,  pfs::Array2D& yj, pfs::Array2D& zj,
+int debevecApplyResponseCore(pfs::Array2Df& xj,  pfs::Array2Df& yj, pfs::Array2Df& zj,
                              const float* arrayofexptime,
                              const float* Ir, const float* Ig, const float* Ib,
                              const float* w, int M,
@@ -270,9 +270,9 @@ int debevecApplyResponseCore(pfs::Array2D& xj,  pfs::Array2D& yj, pfs::Array2D& 
 
 struct Array2DListAdapter
 {
-    Array2DListAdapter(const Array2DList& listhdrR,
-                       const Array2DList& listhdrG,
-                       const Array2DList& listhdrB)
+    Array2DListAdapter(const Array2DfList& listhdrR,
+                       const Array2DfList& listhdrG,
+                       const Array2DfList& listhdrB)
         : m_listhdrR(listhdrR)
         , m_listhdrG(listhdrG)
         , m_listhdrB(listhdrB)
@@ -295,9 +295,9 @@ struct Array2DListAdapter
     }
 
 private:
-    const Array2DList& m_listhdrR;
-    const Array2DList& m_listhdrG;
-    const Array2DList& m_listhdrB;
+    const Array2DfList& m_listhdrR;
+    const Array2DfList& m_listhdrG;
+    const Array2DfList& m_listhdrB;
 };
 
 struct QImageQListAdapter
@@ -327,7 +327,7 @@ private:
 };
 
 // LDR version
-int debevec_applyResponse(pfs::Array2D& xj, pfs::Array2D& yj, pfs::Array2D& zj,
+int debevec_applyResponse(pfs::Array2Df& xj, pfs::Array2Df& yj, pfs::Array2Df& zj,
                           const float* arrayofexptime,
                           const float* Ir, const float* Ig, const float* Ib,
                           const float* w, int M,
@@ -347,11 +347,11 @@ int debevec_applyResponse(pfs::Array2D& xj, pfs::Array2D& yj, pfs::Array2D& zj,
 }
 
 // HDR version
-int debevec_applyResponse(pfs::Array2D& xj,  pfs::Array2D& yj, pfs::Array2D& zj,
+int debevec_applyResponse(pfs::Array2Df& xj,  pfs::Array2Df& yj, pfs::Array2Df& zj,
                           const float* arrayofexptime,
                           const float* Ir, const float* Ig, const float* Ib,
                           const float* w, int M,
-                          const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB)
+                          const Array2DfList& listhdrR, const Array2DfList& listhdrG, const Array2DfList& listhdrB)
 {
 #ifndef NDEBUG
     std::cerr << "debevec fusion, HDR\n";

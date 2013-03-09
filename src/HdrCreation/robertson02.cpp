@@ -33,8 +33,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <Libpfs/array2d.h>
 
-#include "Libpfs/array2d.h"
 #include "HdrCreation/robertson02.h"
 
 namespace {
@@ -110,7 +110,7 @@ void pseudoSort(const float* arrayofexptime, int* i_lower, int* i_upper, int N)
 
 struct Array2DListAdapter
 {
-    Array2DListAdapter(const Array2DList& listhdr, int /*channelNum*/)
+    Array2DListAdapter(const Array2DfList& listhdr, int /*channelNum*/)
         : m_listhdr(listhdr)
     {}
 
@@ -123,7 +123,7 @@ struct Array2DListAdapter
     }
 
 private:
-    const Array2DList& m_listhdr;
+    const Array2DfList& m_listhdr;
 };
 
 struct QImageQListAdapter
@@ -147,7 +147,7 @@ private:
 };
 
 template <typename InputDataAdapter>
-int robertson02ApplyResponseCore(pfs::Array2D& xj, const float* arrayofexptime,
+int robertson02ApplyResponseCore(pfs::Array2Df& xj, const float* arrayofexptime,
                                  const float* I, const float* w, int M,
                                  const InputDataAdapter& inputData)
 {
@@ -234,16 +234,16 @@ int robertson02ApplyResponseCore(pfs::Array2D& xj, const float* arrayofexptime,
 }
 
 inline
-int robertson02_applyResponse(pfs::Array2D& xj, const float* arrayofexptime,
+int robertson02_applyResponse(pfs::Array2Df& xj, const float* arrayofexptime,
                               const float* I, const float* w, int M, int channelRGB,
-                              const Array2DList& listhdr)
+                              const Array2DfList& listhdr)
 {
     return robertson02ApplyResponseCore(xj, arrayofexptime, I, w, M,
                                         Array2DListAdapter(listhdr, channelRGB));
 }
 
 inline
-int robertson02_applyResponse(pfs::Array2D& xj, const float* arrayofexptime,
+int robertson02_applyResponse(pfs::Array2Df& xj, const float* arrayofexptime,
                               const float* I, const float* w, int M, int channelRGB,
                               const QList<QImage*>& listldr)
 {
@@ -256,7 +256,7 @@ int robertson02_applyResponse(pfs::Array2D& xj, const float* arrayofexptime,
 
 ////////////////////////////////     GET RESPONSE    /////////////////////////////////////
 template <typename InputDataAdapter>
-int robertson02GetResponseCore(pfs::Array2D& xj, const float * arrayofexptime,
+int robertson02GetResponseCore(pfs::Array2Df& xj, const float* arrayofexptime,
                             float* I, const float* w, int M,
                             const InputDataAdapter& inputData)
 {
@@ -365,16 +365,16 @@ int robertson02GetResponseCore(pfs::Array2D& xj, const float * arrayofexptime,
 }
 
 inline
-int robertson02_getResponse(pfs::Array2D& xj, const float* arrayofexptime,
+int robertson02_getResponse(pfs::Array2Df& xj, const float* arrayofexptime,
                             float* I, const float* w, int M, int channelRGB,
-                            const Array2DList& listhdr)
+                            const Array2DfList& listhdr)
 {
     return robertson02GetResponseCore(xj, arrayofexptime, I, w, M,
                                       Array2DListAdapter(listhdr, channelRGB));
 }
 
 inline
-int robertson02_getResponse(pfs::Array2D& xj, const float* arrayofexptime,
+int robertson02_getResponse(pfs::Array2Df& xj, const float* arrayofexptime,
                             float* I, const float* w, int M, int channelRGB,
                             const QList<QImage*>& listldr)
 {
@@ -385,11 +385,11 @@ int robertson02_getResponse(pfs::Array2D& xj, const float* arrayofexptime,
                                       QImageQListAdapter(listldr, channelRGB));
 }
 
-int robertson02_applyResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+int robertson02_applyResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
                               const float* arrayofexptime,
                               const float* Ir, const float* Ig, const float* Ib,
                               const float* w, int M,
-                              const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB)
+                              const Array2DfList& listhdrR, const Array2DfList& listhdrG, const Array2DfList& listhdrB)
 {
     int saturatedPixels = 0;
     saturatedPixels += robertson02_applyResponse(Rj, arrayofexptime, Ir, w, M, 0, listhdrR);
@@ -400,7 +400,7 @@ int robertson02_applyResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& 
 }
 
 //! \note LDR version
-int robertson02_applyResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+int robertson02_applyResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
                               const float* arrayofexptime,
                               const float* Ir, const float* Ig, const float* Ib,
                               const float* w, int M,
@@ -414,7 +414,7 @@ int robertson02_applyResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& 
     return saturatedPixels;
 }
 
-int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+int robertson02_getResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
                             const float* arrayofexptime,
                             float* Ir, float* Ig, float* Ib,
                             const float* w, int M,
@@ -428,11 +428,11 @@ int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj
     return saturatedPixels;
 }
 
-int robertson02_getResponse(pfs::Array2D& Rj, pfs::Array2D& Gj, pfs::Array2D& Bj,
+int robertson02_getResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
                             const float* arrayofexptime,
                             float* Ir, float* Ig, float* Ib,
                             const float* w, int M,
-                            const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB)
+                            const Array2DfList& listhdrR, const Array2DfList& listhdrG, const Array2DfList& listhdrB)
 {
     int saturatedPixels = 0;
     saturatedPixels += robertson02_getResponse(Rj, arrayofexptime, Ir, w, M, 0, listhdrR);

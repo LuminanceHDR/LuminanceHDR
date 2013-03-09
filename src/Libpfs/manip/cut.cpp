@@ -43,32 +43,7 @@
 namespace pfs
 {
 
-void cut(const Array2D* from, Array2D* to,
-         int x_ul, int y_ul, int x_br, int y_br)
-{
-    using namespace std;
 
-    assert( x_ul >= 0 );
-    assert( y_ul >= 0 );
-    assert( x_br <= from->getCols() );
-    assert( y_br <= from->getRows() );
-    assert( to->getRows() <= from->getRows() );
-    assert( to->getRows() <= from->getRows() );
-
-    if ( x_ul < 0 ) x_ul = 0;
-    if ( y_ul < 0 ) y_ul = 0;
-    if ( x_br > from->getCols() ) x_br = from->getCols();
-    if ( y_br > from->getRows() ) y_br = from->getRows();
-
-    // update right border
-    x_br = from->getCols() - x_br;
-#pragma omp parallel for
-    for (int r = 0; r < to->getRows(); r++)
-    {
-        copy(from->beginRow(r + y_ul) + x_ul, from->endRow(r + y_ul) - x_br,
-             to->beginRow(r));
-    }
-}
 
 pfs::Frame *cut(const pfs::Frame *inFrame,
                 int x_ul, int y_ul, int x_br, int y_br)

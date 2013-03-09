@@ -63,9 +63,9 @@ pfs::Frame* createHDR(const float* arrayofexptime,
     // listldr is used when input is a list of jpegs (and LDR tiffs).
     // listhdr is used when input is a list of hdrs (raw image formats, or HDR tiffs).
     QList<QImage*>* listldr = NULL;
-    Array2DList* listhdrR   = NULL;
-    Array2DList* listhdrG   = NULL;
-    Array2DList* listhdrB   = NULL;
+    Array2DfList* listhdrR   = NULL;
+    Array2DfList* listhdrG   = NULL;
+    Array2DfList* listhdrB   = NULL;
     va_list arg_pointer;
     va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
 
@@ -81,9 +81,9 @@ pfs::Frame* createHDR(const float* arrayofexptime,
     }
     else
     {
-        listhdrR = va_arg(arg_pointer, Array2DList*);
-        listhdrG = va_arg(arg_pointer, Array2DList*);
-        listhdrB = va_arg(arg_pointer, Array2DList*);
+        listhdrR = va_arg(arg_pointer, Array2DfList*);
+        listhdrG = va_arg(arg_pointer, Array2DfList*);
+        listhdrB = va_arg(arg_pointer, Array2DfList*);
         width    = listhdrR->at(0)->getCols();
         height   = listhdrR->at(0)->getRows();
         opt_bpp  = 16;
@@ -184,9 +184,9 @@ pfs::Frame* createHDR(const float* arrayofexptime,
     pfs::Channel *Rj_, *Gj_, *Bj_;
     frameout->createXYZChannels( Rj_, Gj_, Bj_ );
 
-    pfs::Array2D *Rj = Rj_->getChannelData();
-    pfs::Array2D *Gj = Gj_->getChannelData();
-    pfs::Array2D *Bj = Bj_->getChannelData();
+    pfs::Array2Df *Rj = Rj_->getChannelData();
+    pfs::Array2Df *Gj = Gj_->getChannelData();
+    pfs::Array2Df *Bj = Bj_->getChannelData();
 
     // camera response functions for each channel
     std::vector<float> Ir(M);

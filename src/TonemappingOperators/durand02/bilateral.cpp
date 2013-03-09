@@ -51,7 +51,7 @@ inline int min( int a, int b )
 
 // support functions
 
-void gaussianKernel( pfs::Array2D *kern, float sigma )
+void gaussianKernel( pfs::Array2Df *kern, float sigma )
 {
     float sigma2Sqr = 2.0f * sigma * sigma;
     int col_2 = kern->getCols() / 2;
@@ -98,17 +98,17 @@ public:
     }
 };
 
-void bilateralFilter(const pfs::Array2D *I, pfs::Array2D *J,
+void bilateralFilter(const pfs::Array2Df *I, pfs::Array2Df *J,
                      float sigma_s, float sigma_r,
                      pfs::Progress& ph)
 {
-    const pfs::Array2D *X1 = I;     // intensity data     // DAVIDE : CHECK THIS!
+    const pfs::Array2Df *X1 = I;     // intensity data     // DAVIDE : CHECK THIS!
 
     // x +- sigma_s*2 should contain 95% of the Gaussian distrib
     int sKernelSize = (int)( sigma_s*4 + 0.5 ) + 1;
     int sKernelSize_2 = sKernelSize / 2;
 
-    pfs::Array2D sKernel(sKernelSize, sKernelSize);
+    pfs::Array2Df sKernel(sKernelSize, sKernelSize);
     gaussianKernel( &sKernel, sigma_s );
     GaussLookup gauss( sigma_r, 256 );
 

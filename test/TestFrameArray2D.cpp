@@ -24,11 +24,14 @@
 #include <Libpfs/array2d.h>
 #include <Libpfs/frame.h>
 
+#include "SeqInt.h"
+#include "CompareVector.h"
+
 using namespace pfs;
 
 TEST(TestArray2D, Resize1)
 {
-    Array2D array(100, 200);
+    Array2Df array(100, 200);
 
     EXPECT_EQ(array.getCols(), 100);
     EXPECT_EQ(array.getRows(), 200);
@@ -47,7 +50,7 @@ TEST(TestArray2D, Resize1)
 
 TEST(TestArray2D, Resize2)
 {
-    Array2D array(100, 200);
+    Array2Df array(100, 200);
 
     EXPECT_EQ(array.getCols(), 100);
     EXPECT_EQ(array.getRows(), 200);
@@ -62,4 +65,64 @@ TEST(TestArray2D, Resize2)
     float* d2 = array.getRawData();
 
     EXPECT_EQ(d1, d2);
+}
+
+TEST(TestArray2D, Iterator)
+{
+    typedef pfs::Array2D<int> array2d_int_t;
+
+    array2d_int_t array2d(5, 5);
+
+    std::generate(array2d.begin(), array2d.end(), SeqInt());
+
+    array2d_int_t::col_iterator itBegin = array2d.col_begin(2);
+    array2d_int_t::col_iterator itEnd = array2d.col_end(2);
+
+    int num = 2;
+    while ( itBegin != itEnd )
+    {
+        EXPECT_EQ(*itBegin, num);
+
+        ++itBegin;
+        num += 5;
+    }
+}
+
+TEST(TestArray2D, DoubleSubscription)
+{
+    typedef pfs::Array2D<int> array2d_int_t;
+
+    array2d_int_t array2d(5, 5);
+
+    std::generate(array2d.begin(), array2d.end(), SeqInt());
+
+    EXPECT_EQ(array2d[0][0], 0);
+    EXPECT_EQ(array2d[1][1], 6);
+    EXPECT_EQ(array2d[2][2], 12);
+    EXPECT_EQ(array2d[4][4], 24);
+}
+
+TEST(TestArray2D, Ctor)
+{
+    typedef pfs::Array2D<int> array2d_int_t;
+
+    array2d_int_t array2d(5, 5);
+    array2d_int_t array2d_2(5, 5);
+
+    std::generate(array2d.begin(), array2d.end(), SeqInt());
+    std::generate(array2d_2.begin(), array2d_2.end(), SeqInt());
+
+    {
+        // copy ctor
+        array2d_int_t array2d_v2 = array2d;
+
+        EXPECT_EQ(array2d_v2.size(), array2d.size());
+        compareVectors(array2d_v2.data(), array2d.data(), array2d.size());
+
+        // assignment operator
+        array2d_v2 = array2d_2;
+
+        EXPECT_EQ(array2d_v2.size(), array2d_2.size());
+        compareVectors(array2d_v2.data(), array2d_2.data(), array2d.size());
+    }
 }

@@ -44,10 +44,10 @@ TEST(TestPfsShift, MinusMinus)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shift(input, -2, -1) );
+    boost::scoped_ptr<Array2Df> output( shift(input, -2, -1) );
 
     const float* outData = output->getRawData();
 
@@ -71,10 +71,10 @@ TEST(TestPfsShift, PlusMinus)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shift(input, 2, -1) );
+    boost::scoped_ptr<Array2Df> output( shift(input, 2, -1) );
 
     const float* outData = output->getRawData();
 
@@ -98,10 +98,10 @@ TEST(TestPfsShift, StillMinus)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shift(input, 0, -1) );
+    boost::scoped_ptr<Array2Df> output( shift(input, 0, -1) );
 
     const float* outData = output->getRawData();
 
@@ -124,10 +124,10 @@ TEST(TestPfsShift, MinusPlus)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shift(input, -2, 1) );
+    boost::scoped_ptr<Array2Df> output( shift(input, -2, 1) );
 
     const float* outData = output->getRawData();
 
@@ -151,10 +151,10 @@ TEST(TestPfsShift, PlusPlus)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shift(input, 2, 1) );
+    boost::scoped_ptr<Array2Df> output( shift(input, 2, 1) );
 
     const float* outData = output->getRawData();
 
@@ -178,10 +178,10 @@ TEST(TestPfsShift, StillStill)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2D> output( shift(input, 0, 0) );
+    boost::scoped_ptr<Array2Df> output( shift(input, 0, 0) );
 
     const float* outData = output->getRawData();
 

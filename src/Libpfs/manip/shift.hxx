@@ -19,6 +19,9 @@
 * ----------------------------------------------------------------------
 */
 
+#ifndef PFS_SHIFT_HXX
+#define PFS_SHIFT_HXX
+
 #include "shift.h"
 
 #include <iostream>
@@ -32,8 +35,11 @@
 namespace pfs
 {
 
-Array2D *shift(const Array2D& in, int dx, int dy)
+template <typename Type>
+Array2D<Type> *shift(const Array2D<Type>& in, int dx, int dy)
 {
+    typedef Array2D<Type> Array2DType;
+
     using namespace std;
 
 #ifdef TIMER_PROFILING
@@ -41,12 +47,12 @@ Array2D *shift(const Array2D& in, int dx, int dy)
     stop_watch.start();
 #endif
 
-    Array2D *out = new Array2D(in.getCols(), in.getRows());
+    Array2DType *out = new Array2DType(in.getCols(), in.getRows());
 
     // fill first row... if any!
     for (int idx = 0; idx < -dy; idx++)
     {
-        fill(out->beginRow(idx), out->endRow(idx), 0.0f);
+        fill(out->row_begin(idx), out->row_end(idx), 0.0f);
     }
 
     // fill middle portion
@@ -57,15 +63,15 @@ Array2D *shift(const Array2D& in, int dx, int dy)
              row++)
         {
             // Begin output line
-            Array2D::Iterator itBegin = out->beginRow(row);
+            typename Array2DType::iterator itBegin = out->row_begin(row);
             // Pivot iterator
-            Array2D::Iterator itTh = itBegin - dx;
+            typename Array2DType::iterator itTh = itBegin - dx;
 
             // fill zero at the begin of the line
             fill(itBegin, itTh, 0.0f);
             // copy data
-            copy(in.beginRow(row + dy),
-                 in.endRow(row + dy) + dx,
+            copy(in.row_begin(row + dy),
+                 in.row_end(row + dy) + dx,
                  itTh);
         }
     }
@@ -76,10 +82,10 @@ Array2D *shift(const Array2D& in, int dx, int dy)
              row++)
         {
             // copy data
-            copy(in.beginRow(row + dy) + dx, in.endRow(row + dy),
-                 out->beginRow(row));
+            copy(in.row_begin(row + dy) + dx, in.row_end(row + dy),
+                 out->row_begin(row));
             // fill zero
-            fill(out->endRow(row) - dx, out->endRow(row), 0.0f);
+            fill(out->row_end(row) - dx, out->row_end(row), 0.0f);
         }
     }
     else
@@ -89,16 +95,16 @@ Array2D *shift(const Array2D& in, int dx, int dy)
              row++)
         {
             // copy data
-            copy(in.beginRow(row + dy), in.endRow(row + dy),
-                 out->beginRow(row));
+            copy(in.row_begin(row + dy), in.row_end(row + dy),
+                 out->row_begin(row));
         }
     }
 
     // fill last rows... if any!
     for (int idx = dy; idx > 0; idx--)
     {
-        fill(out->beginRow(out->getRows() - idx),
-             out->endRow(out->getRows() - idx),
+        fill(out->row_begin(out->getRows() - idx),
+             out->row_end(out->getRows() - idx),
              0.0f);
     }
 
@@ -111,3 +117,5 @@ Array2D *shift(const Array2D& in, int dx, int dy)
 }
 
 } // pfs
+
+#endif // PFS_SHIFT_HXX

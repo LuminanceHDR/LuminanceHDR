@@ -527,7 +527,7 @@ Point2D* PolarProjection::directionToUV(Vector3D *direction) {
 ///END POLAR
 
 
-void transformArray( const pfs::Array2D *in, pfs::Array2D *out, TransformInfo *transformInfo)
+void transformArray( const pfs::Array2Df *in, pfs::Array2Df *out, TransformInfo *transformInfo)
 {
   const double delta = 1. / transformInfo->oversampleFactor;
   const double offset = 0.5 / transformInfo->oversampleFactor;

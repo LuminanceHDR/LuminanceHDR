@@ -27,15 +27,19 @@
 //! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
+#include "Libpfs/array2d_fwd.h"
+
 namespace pfs
 {
 // forward declaration
 class Frame;
-class Array2D;
 
 Frame* resize(Frame* frame, int xSize);
 
-void resize(const Array2D *from, Array2D *to);
+template <typename Type>
+void resize(const Array2D<Type> *from, Array2D<Type> *to);
 }
+
+#include "resize.hxx"
 
 #endif // PFS_RESIZE_H

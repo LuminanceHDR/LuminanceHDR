@@ -44,7 +44,7 @@
 
 namespace
 {
-void multiplyChannels( pfs::Array2D& X, pfs::Array2D& Y, pfs::Array2D& Z, float mult )
+void multiplyChannels( pfs::Array2Df& X, pfs::Array2Df& Y, pfs::Array2Df& Z, float mult )
 {
     int size = Y.getCols() * Y.getRows();
 
@@ -89,9 +89,9 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
         throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
     }
 
-    pfs::Array2D& Xr = *X->getChannelData();
-    pfs::Array2D& Yr = *Y->getChannelData();
-    pfs::Array2D& Zr = *Z->getChannelData();
+    pfs::Array2Df& Xr = *X->getChannelData();
+    pfs::Array2Df& Yr = *Y->getChannelData();
+    pfs::Array2Df& Zr = *Z->getChannelData();
 
     // adaptation model
     if ( multiplier != 1.0f )
@@ -113,9 +113,9 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
     int w = Y->getWidth();
     int h = Y->getHeight();
 
-    pfs::Array2D R(w,h);
-    pfs::Array2D G(w,h);
-    pfs::Array2D B(w,h);
+    pfs::Array2Df R(w,h);
+    pfs::Array2Df G(w,h);
+    pfs::Array2Df B(w,h);
 
     pfs::transformColorSpace( pfs::CS_XYZ, &Xr, &Yr, &Zr, pfs::CS_RGB, &R, &G, &B );
     tmo_pattanaik00( R, G, B, Yr, am.get(), local, ph );

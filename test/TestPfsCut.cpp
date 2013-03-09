@@ -20,10 +20,10 @@ TEST(TestPfsCut, NoCrop)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    Array2D output(cols, rows);
+    Array2Df output(cols, rows);
     cut(&input, &output, 0, 0, input.getCols(), input.getRows());
 
     const float* outData = output.getRawData();
@@ -47,10 +47,10 @@ TEST(TestPfsCut, Crop_OneOne_ZeroZero)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    Array2D output(cols-1, rows-1);
+    Array2Df output(cols-1, rows-1);
     cut(&input, &output, 1, 1, input.getCols(), input.getRows());
 
     const float* outData = output.getRawData();
@@ -73,10 +73,10 @@ TEST(TestPfsCut, Crop_OneOne_OneOne)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    Array2D output(cols-2, rows-2);
+    Array2Df output(cols-2, rows-2);
     cut(&input, &output, 1, 1, input.getCols()-1, input.getRows()-1);
 
     const float* outData = output.getRawData();
@@ -100,10 +100,10 @@ TEST(TestPfsCut, Crop_ZeroZero_OneOne)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    Array2D output(cols-1, rows-1);
+    Array2Df output(cols-1, rows-1);
     cut(&input, &output, 0, 0, input.getCols()-1, input.getRows()-1);
 
     const float* outData = output.getRawData();
@@ -125,10 +125,10 @@ TEST(TestPfsCut, Crop_OneTwo_TwoOne)
     size_t rows = 5;
     size_t cols = 6;
 
-    Array2D input(cols, rows);
+    Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    Array2D output(cols-3, rows-3);
+    Array2Df output(cols-3, rows-3);
     cut(&input, &output, 1, 2, input.getCols()-2, input.getRows()-1);
 
     const float* outData = output.getRawData();

@@ -26,11 +26,7 @@
 #define CREATEHDR_COMMON_H
 
 #include <vector>
-
-namespace pfs
-{
-class Array2D;
-}
+#include <Libpfs/array2d_fwd.h>
 
 ///! \brief Container for images taken with different exposures
 //struct Exposure
@@ -41,7 +37,7 @@ class Array2D;
 
 ///! @brief Container for a list of exposures
 // typedef std::vector<Exposure> ExposureList;
-typedef std::vector<pfs::Array2D*> Array2DList;
+typedef std::vector<pfs::Array2Df*> Array2DfList;
 
 //! \brief Given a weight function in the vector \c w, computes the minimum
 //! and the maximum index for the trusted range

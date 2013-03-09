@@ -138,9 +138,9 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
     int pixelCount = frame->getHeight()*frame->getWidth();
     
     // Get Array2D from Channel
-    pfs::Array2D* Rr = R->getChannelData();
-    pfs::Array2D* Gr = G->getChannelData();
-    pfs::Array2D* Br = B->getChannelData();
+    pfs::Array2Df* Rr = R->getChannelData();
+    pfs::Array2Df* Gr = G->getChannelData();
+    pfs::Array2Df* Br = B->getChannelData();
     
     // Check if pixel values do not exceed maximum HALF value
     float maxValue = -1;

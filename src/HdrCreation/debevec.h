@@ -57,13 +57,13 @@
 //! \param M  lenght of w
 //!
 //! \note HDR version
-int debevec_applyResponse(pfs::Array2D& xj,  pfs::Array2D& yj,  pfs::Array2D& zj,
+int debevec_applyResponse(pfs::Array2Df& xj,  pfs::Array2Df& yj,  pfs::Array2Df& zj,
                           const float* arrayofexptime,
                           const float* Ir, const float* Ig, const float* Ib,
                           const float* w, int M,
-                          const Array2DList& listhdrR, const Array2DList& listhdrG, const Array2DList& listhdrB);
+                          const Array2DfList& listhdrR, const Array2DfList& listhdrG, const Array2DfList& listhdrB);
 //! \note LDR version
-int debevec_applyResponse(pfs::Array2D& xj, pfs::Array2D& yj, pfs::Array2D& zj,
+int debevec_applyResponse(pfs::Array2Df& xj, pfs::Array2Df& yj, pfs::Array2Df& zj,
                           const float* arrayofexptime,
                           const float* Ir, const float* Ig, const float* Ib,
                           const float* w, int M,

@@ -41,7 +41,25 @@
 
 #include "tmo_ashikhmin02.h"
 
-void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum);
+namespace
+{
+void calculateLuminance( pfs::Array2Df* Y, float& avLum, float& maxLum, float& minLum)
+{
+    avLum = 0.0f;
+    maxLum = 0.0f;
+    minLum = 0.0f;
+
+    int size = Y->getCols() * Y->getRows();
+
+    for ( int i=0 ; i<size; i++ )
+    {
+        avLum += log( (*Y)(i) + 1e-4 );
+        maxLum = ( (*Y)(i) > maxLum ) ? (*Y)(i) : maxLum ;
+        minLum = ( (*Y)(i) < minLum ) ? (*Y)(i) : minLum ;
+    }
+    avLum =exp( avLum/ size);
+}
+}
 
 void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int eq, pfs::Progress &ph)
 {
@@ -57,9 +75,9 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
     frame.getXYZChannels(X,Y,Z);
     assert( X!=NULL && Y!=NULL && Z!=NULL );
 
-    pfs::Array2D* Xr = X->getChannelData();
-    pfs::Array2D* Yr = Y->getChannelData();
-    pfs::Array2D* Zr = Z->getChannelData();
+    pfs::Array2Df* Xr = X->getChannelData();
+    pfs::Array2Df* Yr = Y->getChannelData();
+    pfs::Array2Df* Zr = Z->getChannelData();
 
     pfs::transformColorSpace( pfs::CS_RGB, Xr, Yr, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
     float maxLum, avLum, minLum;
@@ -68,7 +86,7 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
     int w = Yr->getCols();
     int h = Yr->getRows();
 
-    pfs::Array2D L(w,h);
+    pfs::Array2Df L(w,h);
     tmo_ashikhmin02(Yr, &L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
 
     // TODO: this section can be rewritten using SSE Function
@@ -89,22 +107,5 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
     }
 
     pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, Yr, Zr);
-}
-
-void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum)
-{
-    avLum = 0.0f;
-    maxLum = 0.0f;
-    minLum = 0.0f;
-
-    int size = Y->getCols() * Y->getRows();
-
-    for ( int i=0 ; i<size; i++ )
-    {
-        avLum += log( (*Y)(i) + 1e-4 );
-        maxLum = ( (*Y)(i) > maxLum ) ? (*Y)(i) : maxLum ;
-        minLum = ( (*Y)(i) < minLum ) ? (*Y)(i) : minLum ;
-    }
-    avLum =exp( avLum/ size);
 }
 

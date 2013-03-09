@@ -109,7 +109,7 @@ inline float min( float a, float b )
 // Full Multigrid Algorithm for solving partial differential equations
 //////////////////////////////////////////////////////////////////////
 
-static void restrict( const pfs::Array2D *in, pfs::Array2D *out )
+static void restrict( const pfs::Array2Df *in, pfs::Array2Df *out )
 {
     const float inRows = in->getRows();
     const float inCols = in->getCols();
@@ -174,7 +174,7 @@ static void restrict( const pfs::Array2D *in, pfs::Array2D *out )
 // }
 
 
-static void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
+static void prolongate( const pfs::Array2Df *in, pfs::Array2Df *out )
 {
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
@@ -212,7 +212,7 @@ static void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
     } 
 }
 
-static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
+static void exact_sollution( pfs::Array2Df */*F*/, pfs::Array2Df *U )
 {
 //   DEBUG_STR << "exact sollution" << endl;
 
@@ -253,7 +253,7 @@ static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
 //static int rows, cols;
 
 // smooth u using f at level
-static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
+static void smooth( pfs::Array2Df *U, const pfs::Array2Df *F )
 {
 //   DEBUG_STR << "smooth" << endl;
   
@@ -302,7 +302,7 @@ static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
 //   }
 }
 
-static void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs::Array2D *F )
+static void calculate_defect( pfs::Array2Df *D, const pfs::Array2Df *U, const pfs::Array2Df *F )
 {
 //   DEBUG_STR << "calculate defect" << endl;
 
@@ -328,7 +328,7 @@ static void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs:
   
 }
 
-static void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
+static void add_correction( pfs::Array2Df *U, const pfs::Array2Df *C )
 {
 //   DEBUG_STR << "add_correction" << endl;
 
@@ -339,8 +339,7 @@ static void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
     (*U)(i) += (*C)(i);
 }
 
-
-void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, pfs::Progress &ph)
+void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
 {
   int xmax = F->getCols();
   int ymax = F->getRows();
@@ -361,16 +360,16 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, pfs::Progress &ph)
   }
 
   // given function f restricted on levels
-  pfs::Array2D** RHS = new pfs::Array2D*[levels+1];
+  pfs::Array2Df** RHS = new pfs::Array2Df*[levels+1];
 
   // approximate initial sollutions on levels
-  pfs::Array2D** IU = new pfs::Array2D*[levels+1];
+  pfs::Array2Df** IU = new pfs::Array2Df*[levels+1];
   // target functions in cycles (approximate sollution error (uh - ~uh) )
-  pfs::Array2D** VF = new pfs::Array2D*[levels+1];
+  pfs::Array2Df** VF = new pfs::Array2Df*[levels+1];
 
-  VF[0] = new pfs::Array2D(xmax,ymax);
+  VF[0] = new pfs::Array2Df(xmax,ymax);
   RHS[0] = F;
-  IU[0] = new pfs::Array2D(xmax,ymax);
+  IU[0] = new pfs::Array2Df(xmax,ymax);
   pfs::copy( U, IU[0] );
 
   int sx=xmax;
@@ -381,9 +380,9 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, pfs::Progress &ph)
     sx=sx/2+MODYF;
     sy=sy/2+MODYF;
     
-    RHS[k+1] = new pfs::Array2D(sx,sy);
-    IU[k+1] = new pfs::Array2D(sx,sy);
-    VF[k+1] = new pfs::Array2D(sx,sy);
+    RHS[k+1] = new pfs::Array2Df(sx,sy);
+    IU[k+1] = new pfs::Array2Df(sx,sy);
+    VF[k+1] = new pfs::Array2Df(sx,sy);
 
     // restrict from level k to level k+1 (coarser-grid)
     restrict( RHS[k], RHS[k+1] );
@@ -423,7 +422,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, pfs::Progress &ph)
 
         // 8. calculate defect at level
         //    d[k2] = Lh * ~u[k2] - f[k2]
-        pfs::Array2D* D = new pfs::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
+        pfs::Array2Df* D = new pfs::Array2Df(IU[k2]->getCols(), IU[k2]->getRows());
 	calculate_defect( D, IU[k2], VF[k2] );
 
         // 9. restrict deffect as target function for next coarser-grid
@@ -442,7 +441,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, pfs::Progress &ph)
       {
         // 12. interpolate correction from last coarser-grid to finer-grid
         //     iu[k2+1] -> cor
-        pfs::Array2D* C = new pfs::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
+        pfs::Array2Df* C = new pfs::Array2Df(IU[k2]->getCols(), IU[k2]->getRows());
 	prolongate( IU[k2+1], C );
 
         // 13. add interpolated correction to initial sollution at level k2

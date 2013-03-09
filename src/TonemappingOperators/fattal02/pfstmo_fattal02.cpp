@@ -93,8 +93,8 @@ void pfstmo_fattal02(pfs::Frame& frame,
   int w = frame.getWidth();
   int h = frame.getHeight();
   
-  pfs::Array2D Yr(w,h);
-  pfs::Array2D L(w,h);
+  pfs::Array2Df Yr(w,h);
+  pfs::Array2Df L(w,h);
 
   pfs::transformRGB2Y(R->getChannelData(), G->getChannelData(), B->getChannelData(),
                       &Yr);
@@ -107,9 +107,9 @@ void pfstmo_fattal02(pfs::Frame& frame,
 
   if ( !ph.canceled() )
   {
-      pfs::Array2D& arrayRed = *R->getChannelData();
-      pfs::Array2D& arrayGreen = *G->getChannelData();
-      pfs::Array2D& arrayBlue = *B->getChannelData();
+      pfs::Array2Df& arrayRed = *R->getChannelData();
+      pfs::Array2Df& arrayGreen = *G->getChannelData();
+      pfs::Array2Df& arrayBlue = *B->getChannelData();
 
       for (int i=0; i < w*h; i++)
       {
