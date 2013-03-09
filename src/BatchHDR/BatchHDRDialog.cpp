@@ -45,11 +45,11 @@ QDialog(p),
     m_Ui(new Ui::BatchHDRDialog),
     m_numProcessed(0),
     m_processed(0),
+    m_total(0),
     m_errors(false),
     m_loading_error(false),
     m_abort(false),
-    m_processing(false),
-    m_total(0)
+    m_processing(false)
 {
     m_Ui->setupUi(this);
 

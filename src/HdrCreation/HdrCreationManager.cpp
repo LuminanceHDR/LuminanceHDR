@@ -285,15 +285,15 @@ void blend(pfs::Array2D& R1, pfs::Array2D& G1, pfs::Array2D& B1,
 HdrCreationManager::HdrCreationManager(bool fromCommandLine) :
     inputType( UNKNOWN_INPUT_TYPE ),
     chosen_config( predef_confs[0] ),
-    ais( NULL ),
-    m_shift(0),
-    fromCommandLine( fromCommandLine ),
-    m_ais_crop_flag(false),
     m_loadingError(false),
+    m_runningThreads(0),
+    m_processedFiles(0),
+    ais( NULL ),
+    m_ais_crop_flag(false),
+    m_shift(0),
     m_mdrWidth(0),
     m_mdrHeight(0),
-    m_processedFiles(0),
-    m_runningThreads(0)
+    fromCommandLine( fromCommandLine )
     
 {}
 
