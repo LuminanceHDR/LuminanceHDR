@@ -120,7 +120,7 @@ void planarToInterleaved(const float *red, const float *green, const float *blue
     PixelShuffle rgbShuffle = getPixelShuffle(rgbOrder);
 
 #pragma omp parallel for
-    for (size_t idx = 0; idx < size; ++idx)
+    for (int idx = 0; idx < size; ++idx)
     {
         func.toUChar(red[idx], green[idx], blue[idx],
                      data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);

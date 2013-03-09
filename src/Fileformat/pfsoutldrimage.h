@@ -30,6 +30,7 @@
 #ifndef FROMLDRPFSTOQIMAGE
 #define FROMLDRPFSTOQIMAGE
 
+#include <stdint.h>
 #include <QImage>
 #include "Common/FloatRgbToQRgb.h"
 
