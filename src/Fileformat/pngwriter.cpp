@@ -123,7 +123,7 @@ public:
     virtual ~PngWriterImpl()
     {}
 
-    virtual bool open() = 0;
+    virtual bool open(size_t bufferSize) = 0;
     virtual void close() = 0;
 
     // get an handle to the underlying FILE*
@@ -155,7 +155,7 @@ public:
 
         qDebug() << "sRGB profile size: " << profile_size;
 
-        if ( !open() ) {
+        if ( !open(width*height*4 + (width*height*4)*0.1) ) {
             std::cerr << "Cannot open the output stream";
             return false;
         }
@@ -251,7 +251,7 @@ struct PngWriterImplFile : public PngWriterImpl
         , m_filename(filename)
     {}
 
-    bool open()
+    bool open(size_t /*bufferSize*/)
     {
         m_handle.reset( fopen(m_filename.c_str(), "wb") );
         if ( m_handle ) return true;
@@ -278,7 +278,7 @@ struct PngWriterImplMemory : public PngWriterImpl
         : PngWriterImpl()
     {}
 
-    bool open()
+    bool open(size_t bufferSize)
     {
 #ifdef USE_TEMPORARY_FILE
         if ( !m_temporaryFile.open() ) {
@@ -289,17 +289,16 @@ struct PngWriterImplMemory : public PngWriterImpl
         m_temporaryFile.close();
 
         m_handle.reset( fopen(temporaryFileName.constData(), "w+") );
-        if ( !m_handle ) return false;
-        return true;
 #else
-        m_temporaryBuffer.resize( width * height * 4 + (width * height * 4) * 0.1 );
+        m_temporaryBuffer.resize( bufferSize );
         // reset all element of the vector to zero!
-        std::fill(outbuf.begin(), outbuf.end(), 0);
+        std::fill(m_temporaryBuffer.begin(), m_temporaryBuffer.end(), 0);
 
         m_handle.reset( fmemopen(m_temporaryBuffer.data(),
                                  m_temporaryBuffer.size(), "w+") );
 #endif
-
+        if ( !m_handle ) return false;
+        return true;
     }
 
     void close()
@@ -318,7 +317,7 @@ struct PngWriterImplMemory : public PngWriterImpl
         int size = m_temporaryBuffer.size() - 1;
         for (; size > 0; --size)
         {
-            if ( outbuf[size] != 0 ) break;
+            if ( m_temporaryBuffer[size] != 0 ) break;
         }
         m_filesize = size;
 #endif

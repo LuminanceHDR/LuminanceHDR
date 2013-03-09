@@ -234,7 +234,7 @@ public:
     virtual ~JpegWriterImpl()
     {}
 
-    virtual bool open() = 0;
+    virtual bool open( size_t bufferSize ) = 0;
     virtual void close() = 0;
 
     // get an handle to the underlying FILE*
@@ -284,7 +284,7 @@ public:
         }
 
         // open output file!
-        if ( !open() ) {
+        if ( !open(cinfo.image_width*cinfo.image_height*cinfo.num_components) ) {
             std::cerr << "Cannot open the output stream";
             return false;
         }
@@ -355,7 +355,7 @@ struct JpegWriterImplMemory : public JpegWriterImpl
         : JpegWriterImpl()
     {}
 
-    bool open()
+    bool open(size_t bufferSize)
     {
 #ifdef USE_TEMPORARY_FILE
         if ( !m_temporaryFile.open() ) {
@@ -366,17 +366,16 @@ struct JpegWriterImplMemory : public JpegWriterImpl
         m_temporaryFile.close();
 
         m_handle.reset( fopen(temporaryFileName.constData(), "w+") );
-        if ( !m_handle ) return false;
-        return true;
 #else
-        m_temporaryBuffer.resize( cinfo.image_width * cinfo.image_height * cinfo.num_components );
+        m_temporaryBuffer.resize( bufferSize );
         // reset all element of the vector to zero!
-        std::fill(outbuf.begin(), outbuf.end(), 0);
+        std::fill(m_temporaryBuffer.begin(), m_temporaryBuffer.end(), 0);
 
         m_handle.reset( fmemopen(m_temporaryBuffer.data(),
                                  m_temporaryBuffer.size(), "w+") );
 #endif
-
+        if ( !m_handle ) return false;
+        return true;
     }
 
     void close()
@@ -395,7 +394,7 @@ struct JpegWriterImplMemory : public JpegWriterImpl
         int size = m_temporaryBuffer.size() - 1;
         for (; size > 0; --size)
         {
-            if ( outbuf[size] != 0 ) break;
+            if ( m_temporaryBuffer[size] != 0 ) break;
         }
         m_filesize = size;
 #endif
@@ -418,7 +417,7 @@ struct JpegWriterImplFile : public JpegWriterImpl
         , m_filename(filename)
     {}
 
-    virtual bool open()
+    virtual bool open(size_t /*bufferSize*/)
     {
         m_handle.reset( fopen(m_filename.c_str(), "wb") );
         if ( m_handle ) return true;

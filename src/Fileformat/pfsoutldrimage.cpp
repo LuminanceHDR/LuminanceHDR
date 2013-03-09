@@ -102,7 +102,7 @@ typedef map<RGBFormat, PixelShuffle> PixelShuffleFactory;
 
 PixelShuffle getPixelShuffle(RGBFormat order)
 {
-    static PixelShuffleFactory s_pixelShuffle =  map_list_of
+    static PixelShuffleFactory s_pixelShuffle = map_list_of
             (RGB_FORMAT, rgbToRgb)
             (BGR_FORMAT, rgbToBgr);
 
