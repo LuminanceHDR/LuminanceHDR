@@ -41,9 +41,8 @@
 
 #include "Common/FloatRgbToQRgb.h"
 
-// Forward declaration
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
 class GenericViewer;

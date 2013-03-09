@@ -1,10 +1,9 @@
-/**
- * @brief Writing QImage from PFS stream (which is a tonemapped LDR)
+/*
  *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006 Giuseppe Rota
- * Copyright (C) 2010, 2011 Davide Anastasia
+ * Copyright (C) 2010, 2011, 2012, 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,14 +20,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  New implementation:
- *  1) avoids the presence of a temporary buffer
- *  2) returns QImage* instead than a QImage
- *  3) has OpenMP (multi thread) capability)
- *
  */
+
+//! \brief Writing QImage from PFS stream (which is a tonemapped LDR)
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \ author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//!  New implementation:
+//!  1) avoids the presence of a temporary buffer
+//!  2) returns QImage* instead than a QImage
+//!  3) has OpenMP (multi thread) capability)
 
 #include <QImage>
 #include <QSysInfo>
@@ -36,9 +36,14 @@
 #include <assert.h>
 #include <stdexcept>
 
+#include <boost/assign/list_of.hpp>
+
 #include "pfsoutldrimage.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/utils/msec_timer.h"
+
+using namespace std;
+using namespace boost::assign;
 
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float min_luminance,
@@ -84,3 +89,43 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
 
     return temp_qimage;
 }
+
+typedef void (*PixelShuffle)(uint8_t& red, uint8_t& green, uint8_t& blue);
+
+void rgbToRgb(uint8_t& /*red*/, uint8_t& /*green*/, uint8_t& /*blue*/) {}
+void rgbToBgr(uint8_t& red, uint8_t& /*green*/, uint8_t& blue)
+{
+    std::swap(red, blue);
+}
+
+typedef map<RGBFormat, PixelShuffle> PixelShuffleFactory;
+
+PixelShuffle getPixelShuffle(RGBFormat order)
+{
+    static PixelShuffleFactory s_pixelShuffle =  map_list_of
+            (RGB_FORMAT, rgbToRgb)
+            (BGR_FORMAT, rgbToBgr);
+
+    PixelShuffleFactory::const_iterator it = s_pixelShuffle.find(order);
+    if ( it != s_pixelShuffle.end() ) {
+        return it->second;
+    }
+    return rgbToRgb;
+}
+
+void planarToInterleaved(const float *red, const float *green, const float *blue,
+                         uint8_t *data, RGBFormat rgbOrder,
+                         size_t size, const FloatRgbToQRgb &func)
+{
+    PixelShuffle rgbShuffle = getPixelShuffle(rgbOrder);
+
+#pragma omp parallel for
+    for (size_t idx = 0; idx < size; ++idx)
+    {
+        func.toUChar(red[idx], green[idx], blue[idx],
+                     data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);
+        rgbShuffle(data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);
+    }
+}
+
+

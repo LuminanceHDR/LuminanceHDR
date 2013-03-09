@@ -46,4 +46,15 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float max_luminance = 1.0f,
                            LumMappingMethod mapping_method = MAP_LINEAR);
 
+enum RGBFormat
+{
+    RGB_FORMAT = 1,
+    BGR_FORMAT = 2
+};
+
+void planarToInterleaved(const float* red, const float* green, const float* blue,
+                         uint8_t* data, RGBFormat dataOrder,
+                         size_t size,
+                         const FloatRgbToQRgb& func = FloatRgbToQRgb());
+
 #endif

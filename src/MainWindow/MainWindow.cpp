@@ -563,10 +563,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
             int quality = 100; // default value is 100%
             if ( format == "png" || format == "jpg" )
             {
-                // How costly is this function? I doesn't seem to be much
-                QImage image = l_v->getQImage();
-
-                ImageQualityDialog savedFileQuality(&image, format, this);
+                ImageQualityDialog savedFileQuality(l_v->getFrame(), format, this);
                 QString winTitle(QObject::tr("Save as..."));
                 winTitle += format.toUpper();
                 savedFileQuality.setWindowTitle( winTitle );

@@ -30,14 +30,15 @@
 #include "ImageQualityDialog.h"
 #include "ui_ImageQualityDialog.h"
 
-#include "Fileformat/jpegwriter.h"
-#include "Fileformat/pngwriter.h"
+#include <Fileformat/jpegwriter.h>
+#include <Fileformat/pngwriter.h>
 
 ImageQualityDialog::~ImageQualityDialog() {}
 
-ImageQualityDialog::ImageQualityDialog(const QImage *img, const QString& fmt, QWidget *parent)
+ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
+                                       const QString& fmt, QWidget *parent)
     : QDialog(parent)
-    , m_image(img)
+    , m_frame(frame)
     , m_format(fmt)
     , m_ui(new Ui::ImgQualityDialog)
 {
@@ -56,30 +57,32 @@ int ImageQualityDialog::getQuality(void)
 
 void ImageQualityDialog::on_getSizeButton_clicked()
 {
-    qDebug() << m_format;
+    pfs::Params params;
+    params.insert( pfs::Params::value_type("quality", (size_t)getQuality()) );
+
     setCursor(QCursor(Qt::WaitCursor));
-    int quality = getQuality();
     int size = 0;
     if (m_format.startsWith("jp"))
     {
-        JpegWriter writer(m_image, quality);
-        writer.writeQImageToJpeg();
+        JpegWriter writer;
+        writer.write(*m_frame, params);
         size = writer.getFileSize();
 	}
     else if (m_format.startsWith("png"))
     {
-        PngWriter writer(m_image, quality);
-        writer.writeQImageToPng();
+        PngWriter writer;
+        writer.write(*m_frame, params);
         size = writer.getFileSize();
 	}
-    else
-    {
-    	QByteArray ba;
-    	QBuffer buffer(&ba);
-	    buffer.open(QIODevice::WriteOnly);
-        m_image->save(&buffer, m_format.toLatin1().constData(), quality);
-		size = ba.size();
-	}
+    else { return; }
+//    else
+//    {
+//    	QByteArray ba;
+//    	QBuffer buffer(&ba);
+//	    buffer.open(QIODevice::WriteOnly);
+//        m_image->save(&buffer, m_format.toLatin1().constData(), quality);
+//		size = ba.size();
+//	}
 
     QLocale def;
     QString s = def.toString(size);

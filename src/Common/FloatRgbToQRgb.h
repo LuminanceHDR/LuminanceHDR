@@ -51,8 +51,7 @@ class FloatRgbToQRgb
 {
 public:
     // ctor
-    FloatRgbToQRgb(float min_value = 0.0f,
-                   float max_value = 1.0f,
+    FloatRgbToQRgb(float min_value = 0.0f, float max_value = 1.0f,
                    LumMappingMethod mapping_method = MAP_LINEAR);
 
     ~FloatRgbToQRgb();
@@ -66,10 +65,13 @@ public:
     //float getMaxLuminance() const;
     LumMappingMethod getMappingMethod() const;
 
-    void toQRgb(float r, float g, float b, QRgb& qrgb);
+    void toQRgb(float r, float g, float b, QRgb& qrgb) const;
 
     void toQUint16(float r, float g, float b,
-                   quint16& red, quint16& green, quint16& blue);
+                   quint16& red, quint16& green, quint16& blue) const;
+
+    void toUChar(float rI, float gI, float bI,
+                 uint8_t& rO, uint8_t& gO, uint8_t& bO) const;
 
 private:
     // private implementation, useful to get a more performant implementation

@@ -34,12 +34,12 @@
 #include <QScopedPointer>
 #include <stdexcept>
 
-
 #include "Core/IOWorker.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 #include "Fileformat/pfs_file_format.h"
+#include "Fileformat/jpegwriter.h"
 #include "Viewers/GenericViewer.h"
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
@@ -176,6 +176,12 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
+    pfs::Params writerParams;
+    writerParams.insert( pfs::Params::value_type("quality", (size_t)quality) );
+    writerParams.insert( pfs::Params::value_type("min_luminance", min_luminance) );
+    writerParams.insert( pfs::Params::value_type("max_luminance", max_luminance) );
+    writerParams.insert( pfs::Params::value_type("mapping_method", mapping_method) );
+
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
         // QScopedArrayPointer will call delete [] when this object goes out of scope
@@ -207,12 +213,8 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     }
     else if (qfi.suffix().toUpper().startsWith("JP"))
     {
-        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input,
-                                                        min_luminance,
-                                                        max_luminance,
-                                                        mapping_method));
-        JpegWriter writer(image.data(), filename, quality);
-		if (writer.writeQImageToJpeg()) 
+        JpegWriter writer(filename.toStdString());
+        if (writer.write(*ldr_input, writerParams))
 		{
 //			if (tmopts != NULL)
 //				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
@@ -227,12 +229,12 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
 	}
     else if (qfi.suffix().toUpper().startsWith("PNG"))
     {
-        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input,
-                                                        min_luminance,
-                                                        max_luminance,
-                                                        mapping_method));
-        PngWriter writer(image.data(), filename, quality);
-		if (writer.writeQImageToPng()) 
+//        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input,
+//                                                        min_luminance,
+//                                                        max_luminance,
+//                                                        mapping_method));
+        PngWriter writer(filename.toStdString());
+        if (writer.write(*ldr_input, writerParams))
 		{
 //			if (tmopts != NULL)
 //				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());

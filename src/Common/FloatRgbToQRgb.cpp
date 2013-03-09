@@ -26,8 +26,10 @@
 //! \since Luminance HDR 2.3.0-beta1
 
 #include "FloatRgbToQRgb.h"
+
 #include "arch/math.h"
 #include "Libpfs/vex/sse.h"
+
 #include <algorithm>
 
 // #undef LUMINANCE_USE_SSE
@@ -300,7 +302,7 @@ FloatRgbToQRgb::FloatRgbToQRgb(float min_value,
 FloatRgbToQRgb::~FloatRgbToQRgb()
 {}
 
-void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb)
+void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb) const
 {
 #ifdef LUMINANCE_USE_SSE
     if (isnan(r)) r = 0.0f;
@@ -325,8 +327,34 @@ void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb)
 #endif
 }
 
+void FloatRgbToQRgb::toUChar(float rI, float gI, float bI,
+                             uint8_t& rO, uint8_t& gO, uint8_t& bO) const
+{
+//#ifdef LUMINANCE_USE_SSE
+//    if (isnan(r)) r = 0.0f;
+//    if (isnan(g)) g = 0.0f;
+//    if (isnan(b)) b = 0.0f;
+
+//    v4sf rgb = (*m_Pimpl)(r,g,b);
+
+//    rgb = scaleAndRound(rgb, ZERO, TWOFIVEFIVE);
+
+//    const float* buf = reinterpret_cast<const float*>(&rgb);
+
+//    qrgb = qRgb( static_cast<int>(buf[0]),
+//                 static_cast<int>(buf[1]),
+//                 static_cast<int>(buf[2]) );
+//#else
+    RgbF3 rgb = (*m_Pimpl)(rI, gI, bI);
+
+    rO = scaleAndRound<uint8_t>(rgb.red, 0.f, 255.f);
+    gO = scaleAndRound<uint8_t>(rgb.green, 0.f, 255.f);
+    bO = scaleAndRound<uint8_t>(rgb.blue, 0.f, 255.f);
+// #endif
+}
+
 void FloatRgbToQRgb::toQUint16(float r, float g, float b,
-                               quint16& red, quint16& green, quint16& blue)
+                               quint16& red, quint16& green, quint16& blue) const
 {
 #ifdef LUMINANCE_USE_SSE
     if (isnan(r)) r = 0.0f;

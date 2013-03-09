@@ -1,12 +1,20 @@
 #include <QtGui/QApplication>
 
-#include "UI/ImageQualityDialog.h"
+#include <Libpfs/frame.h>
+#include <UI/ImageQualityDialog.h>
+
+using namespace pfs;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QImage image(100, 100, QImage::Format_RGB32);
+    pfs::Frame image(100, 100);
+
+    Channel* R;
+    Channel* G;
+    Channel* B;
+    image.createXYZChannels(R, G, B);
 
     ImageQualityDialog d(&image, "jpg");
     d.show();

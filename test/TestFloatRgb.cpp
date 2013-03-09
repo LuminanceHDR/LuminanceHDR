@@ -117,3 +117,63 @@ TEST(FloatRgbConverter, Qrgb_Test2)
     EXPECT_EQ(qGreen(rgb), 128);
     EXPECT_EQ(qBlue(rgb), 0);
 }
+
+TEST(FloatRgbConverter, Uint8_Test1)
+{
+    FloatRgbToQRgb d;
+
+    float inRed = 1.0f;
+    float inGreen = 0.0f;
+    float inBlue = 0.0f;
+
+    uint8_t outRed;
+    uint8_t outGreen;
+    uint8_t outBlue;
+
+    d.toUChar(inRed, inGreen, inBlue,
+                outRed, outGreen, outBlue);
+
+    EXPECT_EQ(static_cast<int>(outRed), 255);
+    EXPECT_EQ(static_cast<int>(outGreen), 0);
+    EXPECT_EQ(static_cast<int>(outBlue), 0);
+}
+
+TEST(FloatRgbConverter, Uint8_Test2)
+{
+    FloatRgbToQRgb d;
+
+    float inRed = 1.2f;
+    float inGreen = 0.0f;
+    float inBlue = 0.0f;
+
+    uint8_t outRed;
+    uint8_t outGreen;
+    uint8_t outBlue;
+
+    d.toUChar(inRed, inGreen, inBlue,
+                outRed, outGreen, outBlue);
+
+    EXPECT_EQ(static_cast<int>(outRed), 255);
+    EXPECT_EQ(static_cast<int>(outGreen), 0);
+    EXPECT_EQ(static_cast<int>(outBlue), 0);
+}
+
+TEST(FloatRgbConverter, Uint8_Test3)
+{
+    FloatRgbToQRgb d;
+
+    float inRed = 1.2f;
+    float inGreen = -0.0f;
+    float inBlue = 0.0f;
+
+    uint8_t outRed;
+    uint8_t outGreen;
+    uint8_t outBlue;
+
+    d.toUChar(inRed, inGreen, inBlue,
+                outRed, outGreen, outBlue);
+
+    EXPECT_EQ(static_cast<int>(outRed), 255);
+    EXPECT_EQ(static_cast<int>(outGreen), 0);
+    EXPECT_EQ(static_cast<int>(outBlue), 0);
+}
