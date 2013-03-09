@@ -38,7 +38,8 @@
 PngWriter::PngWriter(const QImage *out_qimage, QString filename, int quality) :
 	m_out_qimage(out_qimage),
 	m_fname(filename),
-	m_quality(quality)
+	m_quality(quality),
+	m_filesize(0)
 {}
 
 PngWriter::PngWriter(const QImage *out_qimage, int quality):

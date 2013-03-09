@@ -124,7 +124,8 @@ private:
 }
 
 PreviewPanel::PreviewPanel(QWidget *parent):
-    QWidget(parent)
+    QWidget(parent),
+    m_original_width_frame(0)
 {
     //! \note I need to register the new object to pass this class as parameter inside invokeMethod()
     //! see run() inside PreviewLabelUpdater
@@ -219,7 +220,7 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)
 {
     if ( frame == NULL ) return;
 
-    original_width_frame = frame->getWidth();
+    m_original_width_frame = frame->getWidth();
 
     int frame_width = frame->getWidth();
     int frame_height = frame->getHeight();
@@ -256,7 +257,7 @@ void PreviewPanel::tonemapPreview(TonemappingOptions* opts)
 #endif
 
     opts->xsize = LuminanceOptions().getPreviewWidth();
-    opts->origxsize = original_width_frame;
+    opts->origxsize = m_original_width_frame;
 
     emit startTonemapping(opts);
 }

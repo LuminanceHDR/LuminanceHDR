@@ -153,19 +153,19 @@ private:
 	QVector<QString>  filesToRemove;
     // set to true as soon as we find out that we cannot load a file or when we find out that a file has a different width/height than the other previously loaded ones.
     // This variable prevents "incoming" threads to do anything.
-	bool loadingError;
+	bool m_loadingError;
 
     // number of running threads at any given time
-	int runningThreads;
+	int m_runningThreads;
     // cumulative number of successfully loaded files
-	int processedFiles;
+	int m_processedFiles;
 
     LuminanceOptions m_luminance_options;
 
     // align_image_stack
 	QProcess *ais;
 
-    bool ais_crop_flag;
+    bool m_ais_crop_flag;
 
 	int m_shift;
 

@@ -887,16 +887,16 @@ void HdrWizard::on_pushButtonSaveSettings_clicked()
     QString response_filename;
     int weight = m_Ui->triGaussPlateauComboBox->currentIndex();
     int response;
-    if (m_Ui->predefRespCurveRadioButton->isChecked() && !m_Ui->loadRespCurveFromFileCheckbox->isChecked()) {
+    if (m_Ui->predefRespCurveRadioButton->isChecked()) {
         response = m_Ui->gammaLinLogComboBox->currentIndex();
-    }
-    else if (m_Ui->recoverRespCurveRadio->isChecked()) {
-        response = FROM_ROBERTSON;
     }
     else if (m_Ui->loadRespCurveFromFileCheckbox->isChecked()) {
         response = FROM_FILE;
         response_filename = m_Ui->RespCurveFileLoadedLineEdit->text();
     }
+    else
+        response = FROM_ROBERTSON;
+
     int model = m_Ui->modelComboBox->currentIndex();
 
     query.prepare("INSERT INTO parameters (weight, response, model, filename) "
