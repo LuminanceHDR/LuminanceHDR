@@ -177,10 +177,10 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
     pfs::Params writerParams;
-    writerParams.insert( pfs::Params::value_type("quality", (size_t)quality) );
-    writerParams.insert( pfs::Params::value_type("min_luminance", min_luminance) );
-    writerParams.insert( pfs::Params::value_type("max_luminance", max_luminance) );
-    writerParams.insert( pfs::Params::value_type("mapping_method", mapping_method) );
+    writerParams.insert( "quality", (size_t)quality );
+    writerParams.insert( "min_luminance", min_luminance );
+    writerParams.insert( "max_luminance", max_luminance );
+    writerParams.insert( "mapping_method", mapping_method );
 
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {

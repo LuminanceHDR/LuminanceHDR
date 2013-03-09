@@ -58,7 +58,7 @@ int ImageQualityDialog::getQuality(void)
 void ImageQualityDialog::on_getSizeButton_clicked()
 {
     pfs::Params params;
-    params.insert( pfs::Params::value_type("quality", (size_t)getQuality()) );
+    params.insert( "quality", (size_t)getQuality() );
 
     setCursor(QCursor(Qt::WaitCursor));
     int size = 0;

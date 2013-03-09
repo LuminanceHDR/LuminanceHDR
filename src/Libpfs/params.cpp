@@ -19,20 +19,41 @@
  * ----------------------------------------------------------------------
  */
 
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+#include "params.h"
 
-#ifndef LIBPFS_ARGS_H
-#define LIBPFS_ARGS_H
-
-#include <map>
+#include <cmath>
 #include <string>
-#include <boost/any.hpp>
+
+using namespace std;
 
 namespace pfs {
 
-typedef boost::any Param;
-typedef std::map< std::string, Param> Params;
-
+// Utility functions for case insensitive string compare
+static
+int charDiff(char c1, char c2)
+{
+    if ( tolower(c1) < tolower(c2) ) return -1;
+    if ( tolower(c1) == tolower(c2) ) return 0;
+    return 1;
 }
 
-#endif // LIBPFS_ARGS_H
+static
+int stringCompare(const string& str1, const string& str2)
+{
+    int diff = 0;
+    int size = std::min(str1.size(), str2.size());
+    for (size_t idx = 0; idx < size && diff == 0; ++idx)
+    {
+        diff += charDiff(str1[idx], str2[idx]);
+    }
+    if ( diff != 0 ) return diff;
+
+    if ( str2.length() == str1.length() ) return 0;
+    if ( str2.length() > str1.length() ) return 1;
+    return -1;
+}
+
+bool StringUnsensitiveComp::operator()(const std::string& str1, const std::string& str2) const {
+    return ( stringCompare(str1, str2) == -1 );
+}
+} // namespace pfs

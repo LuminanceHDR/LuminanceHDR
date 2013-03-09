@@ -31,7 +31,7 @@
 
 #include <string>
 #include <boost/scoped_ptr.hpp>
-#include <Libpfs/args.h>
+#include <Libpfs/params.h>
 
 namespace pfs {
 class Frame;
