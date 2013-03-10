@@ -68,29 +68,21 @@ struct PngWriterParams
         for ( Params::const_iterator it = params.begin(), itEnd = params.end();
               it != itEnd; ++it )
         {
-            try
-            {
-                if ( it->first == "quality" ) {
-                    quality_ = any_cast<size_t>(it->second);
-                    continue;
-                }
-                if ( it->first == "min_luminance" ) {
-                    minLuminance_ = any_cast<float>(it->second);
-                    continue;
-                }
-                if ( it->first == "max_luminance" ) {
-                    maxLuminance_ = any_cast<float>(it->second);
-                    continue;
-                }
-                if ( it->first == "mapping_method" ) {
-                    luminanceMapping_ = any_cast<LumMappingMethod>(it->second);
-                    continue;
-                }
+            if ( it->first == "quality" ) {
+                quality_ = it->second.as<size_t>(quality_);
+                continue;
             }
-            catch (const boost::bad_any_cast & ex)
-            {
-                cerr << "boost::bad_any_cast: " << it->first
-                     << " " << ex.what() << "\n";
+            if ( it->first == "min_luminance" ) {
+                minLuminance_ = it->second.as<float>(minLuminance_);
+                continue;
+            }
+            if ( it->first == "max_luminance" ) {
+                maxLuminance_ = it->second.as<float>(maxLuminance_);
+                continue;
+            }
+            if ( it->first == "mapping_method" ) {
+                luminanceMapping_ = it->second.as<LumMappingMethod>(luminanceMapping_);
+                continue;
             }
         }
     }

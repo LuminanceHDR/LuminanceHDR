@@ -32,12 +32,12 @@ TEST(FloatRgbConverter, Uint16_Test1)
     float inGreen = 0.0f;
     float inBlue = 0.0f;
 
-    quint16 outRed;
-    quint16 outGreen;
-    quint16 outBlue;
+    uint16_t outRed;
+    uint16_t outGreen;
+    uint16_t outBlue;
 
-    d.toQUint16(inRed, inGreen, inBlue,
-                outRed, outGreen, outBlue);
+    d.toUint16(inRed, inGreen, inBlue,
+               outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 65535);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -52,12 +52,12 @@ TEST(FloatRgbConverter, Uint16_Test2)
     float inGreen = 0.0f;
     float inBlue = 0.0f;
 
-    quint16 outRed;
-    quint16 outGreen;
-    quint16 outBlue;
+    uint16_t outRed;
+    uint16_t outGreen;
+    uint16_t outBlue;
 
-    d.toQUint16(inRed, inGreen, inBlue,
-                outRed, outGreen, outBlue);
+    d.toUint16(inRed, inGreen, inBlue,
+               outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 65535);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -72,12 +72,12 @@ TEST(FloatRgbConverter, Uint16_Test3)
     float inGreen = -0.0f;
     float inBlue = 0.0f;
 
-    quint16 outRed;
-    quint16 outGreen;
-    quint16 outBlue;
+    uint16_t outRed;
+    uint16_t outGreen;
+    uint16_t outBlue;
 
-    d.toQUint16(inRed, inGreen, inBlue,
-                outRed, outGreen, outBlue);
+    d.toUint16(inRed, inGreen, inBlue,
+               outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 65535);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -130,8 +130,8 @@ TEST(FloatRgbConverter, Uint8_Test1)
     uint8_t outGreen;
     uint8_t outBlue;
 
-    d.toUChar(inRed, inGreen, inBlue,
-                outRed, outGreen, outBlue);
+    d.toUint8(inRed, inGreen, inBlue,
+              outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 255);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -150,8 +150,8 @@ TEST(FloatRgbConverter, Uint8_Test2)
     uint8_t outGreen;
     uint8_t outBlue;
 
-    d.toUChar(inRed, inGreen, inBlue,
-                outRed, outGreen, outBlue);
+    d.toUint8(inRed, inGreen, inBlue,
+              outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 255);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -170,8 +170,8 @@ TEST(FloatRgbConverter, Uint8_Test3)
     uint8_t outGreen;
     uint8_t outBlue;
 
-    d.toUChar(inRed, inGreen, inBlue,
-                outRed, outGreen, outBlue);
+    d.toUint8(inRed, inGreen, inBlue,
+              outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 255);
     EXPECT_EQ(static_cast<int>(outGreen), 0);

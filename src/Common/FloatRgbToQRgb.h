@@ -68,11 +68,12 @@ public:
 
     void toQRgb(float r, float g, float b, QRgb& qrgb) const;
 
-    void toQUint16(float r, float g, float b,
-                   quint16& red, quint16& green, quint16& blue) const;
-
-    void toUChar(float rI, float gI, float bI,
+    void toUint8(float rI, float gI, float bI,
                  uint8_t& rO, uint8_t& gO, uint8_t& bO) const;
+    void toUint16(float r, float g, float b,
+                   quint16& red, quint16& green, quint16& blue) const;
+    void toFloat(float rI, float gI, float bI,
+                 float& rO, float& gO, float& bO) const;
 
 private:
     // private implementation, useful to get a more performant implementation

@@ -92,19 +92,25 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename)
     }
     else if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-        LuminanceOptions LuminanceOptions;
+        // DAVIDE_TIFF
+//        LuminanceOptions LuminanceOptions;
+        pfs::Params writerParams;
+//        writerParams.insert( pfs::Params::value_type("quality", (size_t)quality) );
+//        writerParams.insert( pfs::Params::value_type("min_luminance", min_luminance) );
+//        writerParams.insert( pfs::Params::value_type("max_luminance", max_luminance) );
+//        writerParams.insert( pfs::Params::value_type("mapping_method", mapping_method) );
 
-        TiffWriter tiffwriter(encodedName, hdr_frame);
-        connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
-        connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
-        if (LuminanceOptions.isSaveLogLuvTiff() )
-        {
-            tiffwriter.writeLogLuvTiff();
-        }
-        else
-        {
-            tiffwriter.writeFloatTiff();
-        }
+        // LogLuv is not implemented yet in the new TiffWriter...
+//        if ( LuminanceOptions.isSaveLogLuvTiff() ) {
+//            writerParams.insert( "tiff_mode", 3 );
+//        }
+//        else {
+            writerParams.insert( "tiff_mode", 2 );
+//        }
+
+        TiffWriter writer(encodedName);
+        writer.write(*hdr_frame, writerParams);
+
     }
     else if (qfi.suffix().toUpper() == "PFS")
     {
@@ -184,28 +190,15 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
 
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-        // QScopedArrayPointer will call delete [] when this object goes out of scope
-        QScopedArrayPointer<quint16> pixmap(
-                    fromLDRPFSto16bitsPixmap(ldr_input,
-                                             min_luminance,
-                                             max_luminance,
-                                             mapping_method)
-                    );
-        int width = ldr_input->getWidth();
-        int height = ldr_input->getHeight();
-        try
+        TiffWriter writer( encodedName.constData() );
+        if ( writer.write(*ldr_input, writerParams) )
         {
-            TiffWriter tiffwriter(encodedName, pixmap.data(), width, height);
-            connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
-            connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
-            tiffwriter.write16bitTiff();
-
 //            if (tmopts != NULL)
 //                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
 
             emit write_ldr_success(ldr_input, filename);
         }
-        catch (...)
+        else
         {
             status = false;
             emit write_ldr_failed();

@@ -64,8 +64,8 @@ quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,
 #pragma omp parallel for
     for (int idx = 0; idx < height*width; ++idx)
     {
-        converter.toQUint16(p_R[idx], p_G[idx], p_B[idx],
-                            temp_pixmap[3*idx], temp_pixmap[3*idx + 1], temp_pixmap[3*idx + 2]);
+        converter.toUint16(p_R[idx], p_G[idx], p_B[idx],
+                           temp_pixmap[3*idx], temp_pixmap[3*idx + 1], temp_pixmap[3*idx + 2]);
     }
 
 #ifdef TIMER_PROFILING

@@ -1,7 +1,6 @@
 #SET(FILES_UI )
 SET(FILES_H
 ${CMAKE_CURRENT_SOURCE_DIR}/tiffreader.h
-${CMAKE_CURRENT_SOURCE_DIR}/tiffwriter.h
 ${CMAKE_CURRENT_SOURCE_DIR}/jpegreader.h
 )
 

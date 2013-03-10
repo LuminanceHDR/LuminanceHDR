@@ -31,6 +31,7 @@
 #include "Libpfs/vex/sse.h"
 
 #include <algorithm>
+#include <cassert>
 
 // #undef LUMINANCE_USE_SSE
 
@@ -327,7 +328,7 @@ void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb) const
 #endif
 }
 
-void FloatRgbToQRgb::toUChar(float rI, float gI, float bI,
+void FloatRgbToQRgb::toUint8(float rI, float gI, float bI,
                              uint8_t& rO, uint8_t& gO, uint8_t& bO) const
 {
 //#ifdef LUMINANCE_USE_SSE
@@ -353,8 +354,41 @@ void FloatRgbToQRgb::toUChar(float rI, float gI, float bI,
 // #endif
 }
 
-void FloatRgbToQRgb::toQUint16(float r, float g, float b,
-                               quint16& red, quint16& green, quint16& blue) const
+void FloatRgbToQRgb::toFloat(float rI, float gI, float bI,
+                             float& rO, float& gO, float& bO) const
+{
+//#ifdef LUMINANCE_USE_SSE
+//    if (isnan(r)) r = 0.0f;
+//    if (isnan(g)) g = 0.0f;
+//    if (isnan(b)) b = 0.0f;
+
+//    v4sf rgb = (*m_Pimpl)(r,g,b);
+
+//    rgb = scaleAndRound(rgb, ZERO, TWOFIVEFIVE);
+
+//    const float* buf = reinterpret_cast<const float*>(&rgb);
+
+//    qrgb = qRgb( static_cast<int>(buf[0]),
+//                 static_cast<int>(buf[1]),
+//                 static_cast<int>(buf[2]) );
+//#else
+    RgbF3 rgb = (*m_Pimpl)(rI, gI, bI);
+
+    assert(rgb.red <= 1.0f);
+    assert(rgb.red >= 0.0f);
+    assert(rgb.green >= 0.0f);
+    assert(rgb.green >= 0.0f);
+    assert(rgb.blue >= 0.0f);
+    assert(rgb.blue >= 0.0f);
+
+    rO = rgb.red;
+    gO = rgb.green;
+    bO = rgb.blue;
+// #endif
+}
+
+void FloatRgbToQRgb::toUint16(float r, float g, float b,
+                              quint16& red, quint16& green, quint16& blue) const
 {
 #ifdef LUMINANCE_USE_SSE
     if (isnan(r)) r = 0.0f;

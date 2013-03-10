@@ -29,7 +29,7 @@
 //! \since 2.3.0-beta1
 
 #include "ResourceHandler.h"
-#include <QScopedPointer>
+
 #include <lcms2.h>
 #ifdef QT_DEBUG
 #include <QDebug>

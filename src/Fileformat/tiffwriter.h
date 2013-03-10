@@ -28,50 +28,25 @@
 #ifndef PFS_TIFFWRITER_H
 #define PFS_TIFFWRITER_H
 
-#include <QObject>
-#include <QImage>
-#include <tiffio.h>
+#include <string>
+#include <Libpfs/params.h>
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
 }
 
-class TiffWriter : public QObject
+//! \brief Writer class for TIFF files
+// tiff_mode: 0 = 8bit uint, 1 = 16bit uint, 2 = 32bit float, 3 = logluv
+class TiffWriter
 {
-    Q_OBJECT
-
 public:
-    TiffWriter( const char* filename, pfs::Frame *f );
-    TiffWriter( const char* filename, QImage *ldrimage );
-    TiffWriter( const char* filename, const quint16 *pixmap, int w, int h);
+    TiffWriter(const char* filename);
+    ~TiffWriter();
 
-    //! \brief write 8bit Tiff from QImage
-    int write8bitTiff();
-    //! \brief write 16bit Tiff from 16 bits pixmap
-    int write16bitTiff();
-    //! \brief write 32bit float Tiff from pfs::Frame
-    int writeFloatTiff();
-    //! \brief write LogLuv Tiff from pfs::Frame
-    int writeLogLuvTiff();
-    //! \brief write 16bit Tiff from pfs::Frame
-    int writePFSFrame16bitTiff();
-
-signals: //For ProgressDialog
-    void maximumValue(int);
-    void nextstep(int);
+    bool write(const pfs::Frame& frame, const pfs::Params& params);
 
 private:
-    void writeCommonHeader();
-
-    TIFF *tif;
-
-    QImage *ldrimage;
-    const quint16 *pixmap;
-    pfs::Frame* pfsFrame;
-
-    uint32 width;
-    uint32 height;
+    std::string m_filename;
 };
 
 #endif  // PFS_TIFFWRITER_H

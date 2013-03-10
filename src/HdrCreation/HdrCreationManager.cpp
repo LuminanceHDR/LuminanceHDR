@@ -952,8 +952,10 @@ void HdrCreationManager::saveLDRs(const QString& filename)
     for (int idx = 0; idx < origlistsize; idx++)
     {
         QString fname = filename + QString("_%1").arg(idx) + ".tiff";
-        TiffWriter writer(QFile::encodeName(fname).constData(), ldrImagesList[idx]);
-        writer.write8bitTiff();
+
+        // DAVIDE_TIFF
+//        TiffWriter writer(QFile::encodeName(fname).constData(), ldrImagesList[idx]);
+//        writer.write8bitTiff();
 
         QFileInfo qfi(filename);
         QString absoluteFileName = qfi.absoluteFilePath();
@@ -979,8 +981,9 @@ void HdrCreationManager::saveMDRs(const QString& filename)
         Xc->setChannelData(listmdrR[idx]);  
         Yc->setChannelData(listmdrG[idx]);  
         Zc->setChannelData(listmdrB[idx]);  
-        TiffWriter writer(QFile::encodeName(fname).constData(), frame);
-        writer.writePFSFrame16bitTiff();
+        // DAVIDE_TIFF
+//        TiffWriter writer(QFile::encodeName(fname).constData(), frame);
+//        writer.writePFSFrame16bitTiff();
 
         QFileInfo qfi(filename);
         QString absoluteFileName = qfi.absoluteFilePath();

@@ -36,7 +36,7 @@
 
 // forward declaration
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
 //! \brief Build from a pfs::Frame a QImage of the same size
@@ -55,6 +55,16 @@ enum RGBFormat
 
 void planarToInterleaved(const float* red, const float* green, const float* blue,
                          uint8_t* data, RGBFormat dataOrder,
+                         size_t size,
+                         const FloatRgbToQRgb& func = FloatRgbToQRgb());
+
+void planarToInterleaved(const float* red, const float* green, const float* blue,
+                         uint16_t* data, RGBFormat dataOrder,
+                         size_t size,
+                         const FloatRgbToQRgb& func = FloatRgbToQRgb());
+
+void planarToInterleaved(const float* red, const float* green, const float* blue,
+                         float* data, RGBFormat dataOrder,
                          size_t size,
                          const FloatRgbToQRgb& func = FloatRgbToQRgb());
 

@@ -90,42 +90,113 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     return temp_qimage;
 }
 
-typedef void (*PixelShuffle)(uint8_t& red, uint8_t& green, uint8_t& blue);
+// pixel shuffle operators
+template <typename Type>
+void rgbToRgb(Type& /*red*/, Type& /*green*/, Type& /*blue*/) {}
 
-void rgbToRgb(uint8_t& /*red*/, uint8_t& /*green*/, uint8_t& /*blue*/) {}
-void rgbToBgr(uint8_t& red, uint8_t& /*green*/, uint8_t& blue)
+template <typename Type>
+void rgbToBgr(Type& red, Type& /*green*/, Type& blue)
 {
     std::swap(red, blue);
 }
 
-typedef map<RGBFormat, PixelShuffle> PixelShuffleFactory;
 
-PixelShuffle getPixelShuffle(RGBFormat order)
+// uint8_t section
+typedef void (*PixelShuffleUint8)(uint8_t& red, uint8_t& green, uint8_t& blue);
+typedef map<RGBFormat, PixelShuffleUint8> PixelShuffleUint8Factory;
+
+void getPixelShuffle(RGBFormat order, PixelShuffleUint8& ptr)
 {
-    static PixelShuffleFactory s_pixelShuffle = map_list_of
-            (RGB_FORMAT, rgbToRgb)
-            (BGR_FORMAT, rgbToBgr);
+    static PixelShuffleUint8Factory s_pixelShuffle = map_list_of
+            (RGB_FORMAT, rgbToRgb<uint8_t>)
+            (BGR_FORMAT, rgbToBgr<uint8_t>);
 
-    PixelShuffleFactory::const_iterator it = s_pixelShuffle.find(order);
+    PixelShuffleUint8Factory::const_iterator it = s_pixelShuffle.find(order);
     if ( it != s_pixelShuffle.end() ) {
-        return it->second;
+        ptr = it->second;
     }
-    return rgbToRgb;
+    ptr = rgbToRgb<uint8_t>;
 }
 
 void planarToInterleaved(const float *red, const float *green, const float *blue,
                          uint8_t *data, RGBFormat rgbOrder,
                          size_t size, const FloatRgbToQRgb &func)
 {
-    PixelShuffle rgbShuffle = getPixelShuffle(rgbOrder);
+    PixelShuffleUint8 rgbShuffle = NULL;
+    getPixelShuffle(rgbOrder, rgbShuffle);
 
 #pragma omp parallel for
     for (int idx = 0; idx < size; ++idx)
     {
-        func.toUChar(red[idx], green[idx], blue[idx],
+        func.toUint8(red[idx], green[idx], blue[idx],
                      data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);
         rgbShuffle(data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);
     }
 }
 
+// uint16_t section
+typedef void (*PixelShuffleUint16)(uint16_t& red, uint16_t& green, uint16_t& blue);
+typedef map<RGBFormat, PixelShuffleUint16> PixelShuffleUint16Factory;
+
+void getPixelShuffle(RGBFormat order, PixelShuffleUint16& ptr)
+{
+    static PixelShuffleUint16Factory s_pixelShuffle = map_list_of
+            (RGB_FORMAT, rgbToRgb<uint16_t>)
+            (BGR_FORMAT, rgbToBgr<uint16_t>);
+
+    PixelShuffleUint16Factory::const_iterator it = s_pixelShuffle.find(order);
+    if ( it != s_pixelShuffle.end() ) {
+        ptr = it->second;
+    }
+    ptr = rgbToRgb<uint16_t>;
+}
+
+void planarToInterleaved(const float *red, const float *green, const float *blue,
+                         uint16_t *data, RGBFormat rgbOrder,
+                         size_t size, const FloatRgbToQRgb &func)
+{
+    PixelShuffleUint16 rgbShuffle = NULL;
+    getPixelShuffle(rgbOrder, rgbShuffle);
+
+#pragma omp parallel for
+    for (int idx = 0; idx < size; ++idx)
+    {
+        func.toUint16(red[idx], green[idx], blue[idx],
+                      data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);
+        rgbShuffle(data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);
+    }
+}
+
+// float section
+typedef void (*PixelShuffleFloat32)(float& red, float& green, float& blue);
+typedef map<RGBFormat, PixelShuffleFloat32> PixelShuffleFloat32Factory;
+
+void getPixelShuffle(RGBFormat order, PixelShuffleFloat32& ptr)
+{
+    static PixelShuffleFloat32Factory s_pixelShuffle = map_list_of
+            (RGB_FORMAT, rgbToRgb<float>)
+            (BGR_FORMAT, rgbToBgr<float>);
+
+    PixelShuffleFloat32Factory::const_iterator it = s_pixelShuffle.find(order);
+    if ( it != s_pixelShuffle.end() ) {
+        ptr = it->second;
+    }
+    ptr = rgbToRgb<float>;
+}
+
+void planarToInterleaved(const float *red, const float *green, const float *blue,
+                         float *data, RGBFormat rgbOrder,
+                         size_t size, const FloatRgbToQRgb &func)
+{
+    PixelShuffleFloat32 rgbShuffle = NULL;
+    getPixelShuffle(rgbOrder, rgbShuffle);
+
+#pragma omp parallel for
+    for (int idx = 0; idx < size; ++idx)
+    {
+        func.toFloat(red[idx], green[idx], blue[idx],
+                      data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);
+        rgbShuffle(data[idx*3], data[idx*3 + 1], data[idx*3 + 2]);
+    }
+}
 
