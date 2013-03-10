@@ -27,38 +27,17 @@
 
 #include "FloatRgbToQRgb.h"
 
-#include "arch/math.h"
-#include "Libpfs/vex/sse.h"
+// #include "arch/math.h"
+// #include "Libpfs/vex/sse.h"
 
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 
 // #undef LUMINANCE_USE_SSE
 
 namespace
 {
-#ifdef LUMINANCE_USE_SSE
-const v4sf GAMMA_1_4 = _mm_set1_ps(1.0f/1.4f);
-const v4sf GAMMA_1_8 = _mm_set1_ps(1.0f/1.8f);
-const v4sf GAMMA_2_2 = _mm_set1_ps(1.0f/2.2f);
-const v4sf GAMMA_2_6 = _mm_set1_ps(1.0f/2.6f);
-
-const v4sf ZERO = _mm_set1_ps(0.f);
-const v4sf ZERO_DOT_FIVE = _mm_set1_ps(0.5f);
-const v4sf TWOFIVEFIVE = _mm_set1_ps(255.f);
-const v4sf TWOPOWER16 = _mm_set1_ps(65535.f);
-
-inline
-v4sf scaleAndRound(v4sf value, v4sf MIN_, v4sf MAX_)
-{
-    value *= MAX_;
-    value = _mm_min_ps(value, MAX_);
-    value = _mm_max_ps(value, MIN_);
-    value += ZERO_DOT_FIVE;
-
-    return value;
-}
-#else
 template<class O_>
 inline
 O_ scaleAndRound(float value, float MIN_, float MAX_)
@@ -79,359 +58,38 @@ const float& clamp(const float& value, const float& min_, const float& max_)
 }
 
 // useful data structure to implement a triple of float as RGB pixel
-struct RgbF3
-{
-    RgbF3(float r, float g, float b)
-        : red(r)
-        , green(g)
-        , blue(b)
-    {}
 
-    float red;
-    float green;
-    float blue;
-};
 
 const float GAMMA_1_4 = 1.0f/1.4f;
 const float GAMMA_1_8 = 1.0f/1.8f;
 const float GAMMA_2_2 = 1.0f/2.2f;
 const float GAMMA_2_6 = 1.0f/2.6f;
-#endif
 }
 
-struct FloatRgbToQRgbImpl
-{
-    FloatRgbToQRgbImpl(float min_value, float max_value,
-                       LumMappingMethod mapping_method)
-#ifdef LUMINANCE_USE_SSE
-        : m_MinValue(_mm_set1_ps(min_value))
-        , m_MaxValue(_mm_set1_ps(max_value))
-        , m_Range(_mm_set1_ps(max_value - min_value))
-        , m_LogRange( _mm_set1_ps(log2f(max_value/min_value)) )
-#else
-        : m_MinValue(min_value)
-        , m_MaxValue(max_value)
-        , m_Range(max_value - min_value)
-        , m_LogRange( log2f(max_value/min_value) )
-#endif
+FloatRgbToQRgb::FloatRgbToQRgb(float minValue, float maxValue,
+                       LumMappingMethod mappingMethod)
+        : m_MinValue(minValue)
+        , m_MaxValue(maxValue)
+        , m_Range(maxValue - minValue)
+        , m_LogRange( log2f(maxValue/minValue) )
     {
-        setMappingMethod( mapping_method );
+        setMappingMethod( mappingMethod );
     }
-
-    ~FloatRgbToQRgbImpl()
-    {}
-
-    void setMinMax(float min, float max)
-    {
-#ifdef LUMINANCE_USE_SSE
-        m_MinValue      = _mm_set1_ps(min);
-        m_MaxValue      = _mm_set1_ps(max);
-        m_Range         = _mm_set1_ps(max - min);
-        m_LogRange      = _mm_set1_ps(log2f(max/min));
-#else
-        m_MinValue      = min;
-        m_MaxValue      = max;
-        m_Range         = max - min;
-        m_LogRange      = log2f(max/min);
-#endif
-    }
-
-    void setMappingMethod(LumMappingMethod method)
-    {
-        m_MappingMethod = method;
-
-        switch ( m_MappingMethod )
-        {
-        case MAP_LINEAR:
-            m_MappingFunc = &FloatRgbToQRgbImpl::mappingLinear;
-            break;
-        case MAP_GAMMA1_4:
-            m_MappingFunc = &FloatRgbToQRgbImpl::mappingGamma14;
-            break;
-        case MAP_GAMMA1_8:
-            m_MappingFunc = &FloatRgbToQRgbImpl::mappingGamma18;
-            break;
-        case MAP_GAMMA2_6:
-            m_MappingFunc = &FloatRgbToQRgbImpl::mappingGamma26;
-            break;
-        case MAP_LOGARITHMIC:
-            m_MappingFunc = &FloatRgbToQRgbImpl::mappingLog;
-            break;
-        default:
-        case MAP_GAMMA2_2:
-            m_MappingFunc = &FloatRgbToQRgbImpl::mappingGamma22;
-            break;
-        }
-    }
-
-    LumMappingMethod m_MappingMethod;
-
-#ifdef LUMINANCE_USE_SSE
-    inline
-    v4sf buildRgb(float r, float g, float b) {
-        return (_mm_set_ps(0, b, g, r) - m_MinValue)
-                / m_Range;
-    }
-
-    v4sf mappingLinear(float r, float g, float b) {
-        return buildRgb(r,g,b);
-    }
-
-    v4sf mappingGamma14(float r, float g, float b) {
-        return _mm_pow_ps(buildRgb(r,g,b), GAMMA_1_4);
-    }
-
-    v4sf mappingGamma18(float r, float g, float b) {
-        return _mm_pow_ps(buildRgb(r,g,b), GAMMA_1_8);
-    }
-
-    v4sf mappingGamma22(float r, float g, float b) {
-        return _mm_pow_ps(buildRgb(r,g,b), GAMMA_2_2);
-    }
-
-    v4sf mappingGamma26(float r, float g, float b) {
-        return _mm_pow_ps(buildRgb(r,g,b), GAMMA_2_6);
-    }
-
-    v4sf mappingLog(float r, float g, float b) {
-        return _mm_log2_ps(_mm_set_ps(0, b, g, r)/m_MinValue)
-                / m_LogRange;
-    }
-
-    inline
-    v4sf operator()(float r, float g, float b)
-    {
-        return (this->*m_MappingFunc)(r, g, b);
-    }
-
-    // pointer to function
-    typedef v4sf (FloatRgbToQRgbImpl::*MappingFunc)(float, float, float);
-
-    MappingFunc m_MappingFunc;
-
-    v4sf m_MinValue;
-    v4sf m_MaxValue;
-    v4sf m_Range;
-    v4sf m_LogRange;
-#else
-    // pointer to function
-    typedef RgbF3 (FloatRgbToQRgbImpl::*MappingFunc)(float, float, float);
-
-    inline
-    RgbF3 buildRgb(float r, float g, float b) {
-
-        return RgbF3(clamp((r - m_MinValue)/m_Range, 0.f, 1.f),
-                     clamp((g - m_MinValue)/m_Range, 0.f, 1.f),
-                     clamp((b - m_MinValue)/m_Range, 0.f, 1.f));
-    }
-
-    RgbF3 mappingLinear(float r, float g, float b)
-    {
-        return buildRgb(r,g,b);
-    }
-
-    RgbF3 mappingGamma14(float r, float g, float b)
-    {
-        RgbF3 pixel = buildRgb(r,g,b);
-
-        pixel.red = powf(pixel.red, GAMMA_1_4);
-        pixel.green = powf(pixel.green, GAMMA_1_4);
-        pixel.blue = powf(pixel.blue, GAMMA_1_4);
-
-        return pixel;
-    }
-
-    RgbF3 mappingGamma18(float r, float g, float b)
-    {
-        RgbF3 pixel = buildRgb(r,g,b);
-
-        pixel.red = powf(pixel.red, GAMMA_1_8);
-        pixel.green = powf(pixel.green, GAMMA_1_8);
-        pixel.blue = powf(pixel.blue, GAMMA_1_8);
-
-        return pixel;
-    }
-
-    RgbF3 mappingGamma22(float r, float g, float b)
-    {
-        RgbF3 pixel = buildRgb(r,g,b);
-
-        pixel.red = powf(pixel.red, GAMMA_2_2);
-        pixel.green = powf(pixel.green, GAMMA_2_2);
-        pixel.blue = powf(pixel.blue, GAMMA_2_2);
-
-        return pixel;
-    }
-
-    RgbF3 mappingGamma26(float r, float g, float b)
-    {
-        RgbF3 pixel = buildRgb(r,g,b);
-
-        // I have problems with Clang++ in using the powf function
-        pixel.red = powf(pixel.red, GAMMA_2_6);
-        pixel.green = powf(pixel.green, GAMMA_2_6);
-        pixel.blue = powf(pixel.blue, GAMMA_2_6);
-
-        return pixel;
-    }
-
-    RgbF3 mappingLog(float r, float g, float b)
-    {
-        return RgbF3(log2f(r/m_MinValue)/m_LogRange,
-                     log2f(g/m_MinValue)/m_LogRange,
-                     log2f(b/m_MinValue)/m_LogRange);
-    }
-
-    inline
-    RgbF3 operator()(float r, float g, float b)
-    {
-        return (this->*m_MappingFunc)(r, g, b);
-    }
-
-    MappingFunc m_MappingFunc;
-
-    float m_MinValue;
-    float m_MaxValue;
-    float m_Range;
-    float m_LogRange;
-#endif
-
-};
-
-FloatRgbToQRgb::FloatRgbToQRgb(float min_value,
-                               float max_value,
-                               LumMappingMethod mapping_method)
-    : m_Pimpl( new FloatRgbToQRgbImpl(min_value,
-                                      max_value,
-                                      mapping_method))
-{}
 
 FloatRgbToQRgb::~FloatRgbToQRgb()
 {}
 
-void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb) const
-{
-#ifdef LUMINANCE_USE_SSE
-    if (isnan(r)) r = 0.0f;
-    if (isnan(g)) g = 0.0f;
-    if (isnan(b)) b = 0.0f;
-
-    v4sf rgb = (*m_Pimpl)(r,g,b);
-
-    rgb = scaleAndRound(rgb, ZERO, TWOFIVEFIVE);
-
-    const float* buf = reinterpret_cast<const float*>(&rgb);
-
-    qrgb = qRgb( static_cast<int>(buf[0]),
-                 static_cast<int>(buf[1]),
-                 static_cast<int>(buf[2]) );
-#else
-    RgbF3 rgb = (*m_Pimpl)(r,g,b);
-
-    qrgb = qRgb( scaleAndRound<int>(rgb.red, 0.f, 255.f),
-                 scaleAndRound<int>(rgb.green, 0.f, 255.f),
-                 scaleAndRound<int>(rgb.blue, 0.f, 255.f) );
-#endif
-}
-
-void FloatRgbToQRgb::toUint8(float rI, float gI, float bI,
-                             uint8_t& rO, uint8_t& gO, uint8_t& bO) const
-{
-//#ifdef LUMINANCE_USE_SSE
-//    if (isnan(r)) r = 0.0f;
-//    if (isnan(g)) g = 0.0f;
-//    if (isnan(b)) b = 0.0f;
-
-//    v4sf rgb = (*m_Pimpl)(r,g,b);
-
-//    rgb = scaleAndRound(rgb, ZERO, TWOFIVEFIVE);
-
-//    const float* buf = reinterpret_cast<const float*>(&rgb);
-
-//    qrgb = qRgb( static_cast<int>(buf[0]),
-//                 static_cast<int>(buf[1]),
-//                 static_cast<int>(buf[2]) );
-//#else
-    RgbF3 rgb = (*m_Pimpl)(rI, gI, bI);
-
-    rO = scaleAndRound<uint8_t>(rgb.red, 0.f, 255.f);
-    gO = scaleAndRound<uint8_t>(rgb.green, 0.f, 255.f);
-    bO = scaleAndRound<uint8_t>(rgb.blue, 0.f, 255.f);
-// #endif
-}
-
-void FloatRgbToQRgb::toFloat(float rI, float gI, float bI,
-                             float& rO, float& gO, float& bO) const
-{
-//#ifdef LUMINANCE_USE_SSE
-//    if (isnan(r)) r = 0.0f;
-//    if (isnan(g)) g = 0.0f;
-//    if (isnan(b)) b = 0.0f;
-
-//    v4sf rgb = (*m_Pimpl)(r,g,b);
-
-//    rgb = scaleAndRound(rgb, ZERO, TWOFIVEFIVE);
-
-//    const float* buf = reinterpret_cast<const float*>(&rgb);
-
-//    qrgb = qRgb( static_cast<int>(buf[0]),
-//                 static_cast<int>(buf[1]),
-//                 static_cast<int>(buf[2]) );
-//#else
-    RgbF3 rgb = (*m_Pimpl)(rI, gI, bI);
-
-    assert(rgb.red <= 1.0f);
-    assert(rgb.red >= 0.0f);
-    assert(rgb.green >= 0.0f);
-    assert(rgb.green <= 1.0f);
-    assert(rgb.blue >= 0.0f);
-    assert(rgb.blue <= 1.0f);
-
-    rO = rgb.red;
-    gO = rgb.green;
-    bO = rgb.blue;
-// #endif
-}
-
-void FloatRgbToQRgb::toUint16(float r, float g, float b,
-                              quint16& red, quint16& green, quint16& blue) const
-{
-#ifdef LUMINANCE_USE_SSE
-    if (isnan(r)) r = 0.0f;
-    if (isnan(g)) g = 0.0f;
-    if (isnan(b)) b = 0.0f;
-
-    v4sf rgb = (*m_Pimpl)(r,g,b);
-
-    rgb = scaleAndRound(rgb, ZERO, TWOPOWER16);
-
-    const float* buf = reinterpret_cast<const float*>(&rgb);
-
-    red = static_cast<quint16>(buf[0]);
-    green = static_cast<quint16>(buf[1]);
-    blue = static_cast<quint16>(buf[2]);
-#else
-    RgbF3 rgb = (*m_Pimpl)(r,g,b);
-
-    red = scaleAndRound<quint16>(rgb.red, 0.f, 65535.f);
-    green = scaleAndRound<quint16>(rgb.green, 0.f, 65535.f);
-    blue = scaleAndRound<quint16>(rgb.blue, 0.f, 65535.f);
-#endif
-}
-
 void FloatRgbToQRgb::setMinMax(float min, float max)
 {
-    m_Pimpl->setMinMax(min, max);
-}
-
-void FloatRgbToQRgb::setMappingMethod(LumMappingMethod method)
-{
-    m_Pimpl->setMappingMethod( method );
+    m_MinValue      = min;
+    m_MaxValue      = max;
+    m_Range         = max - min;
+    m_LogRange      = log2f(max/min);
 }
 
 LumMappingMethod FloatRgbToQRgb::getMappingMethod() const
 {
-    return m_Pimpl->m_MappingMethod;
+    return m_MappingMethod;
 }
 
 //float FloatRgbToQRgb::getMinLuminance() const
@@ -443,3 +101,147 @@ LumMappingMethod FloatRgbToQRgb::getMappingMethod() const
 //{
 //    return m_Pimpl->m_MaxValue;
 //}
+
+void FloatRgbToQRgb::setMappingMethod(LumMappingMethod method)
+{
+    m_MappingMethod = method;
+
+    switch ( m_MappingMethod )
+    {
+    case MAP_LINEAR:
+        m_MappingFunc = &FloatRgbToQRgb::mappingLinear;
+        break;
+    case MAP_GAMMA1_4:
+        m_MappingFunc = &FloatRgbToQRgb::mappingGamma14;
+        break;
+    case MAP_GAMMA1_8:
+        m_MappingFunc = &FloatRgbToQRgb::mappingGamma18;
+        break;
+    case MAP_GAMMA2_6:
+        m_MappingFunc = &FloatRgbToQRgb::mappingGamma26;
+        break;
+    case MAP_LOGARITHMIC:
+        m_MappingFunc = &FloatRgbToQRgb::mappingLog;
+        break;
+    default:
+    case MAP_GAMMA2_2:
+        m_MappingFunc = &FloatRgbToQRgb::mappingGamma22;
+        break;
+    }
+}
+
+FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::buildRgb(float r, float g, float b) const
+{
+    return FloatRgbToQRgb::RgbF3(clamp((r - m_MinValue)/m_Range, 0.f, 1.f),
+                                 clamp((g - m_MinValue)/m_Range, 0.f, 1.f),
+                                 clamp((b - m_MinValue)/m_Range, 0.f, 1.f));
+}
+
+FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingLinear(float r, float g, float b) const
+{
+    return buildRgb(r,g,b);
+}
+
+FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma14(float r, float g, float b) const
+{
+    RgbF3 pixel = buildRgb(r,g,b);
+
+    pixel.red = powf(pixel.red, GAMMA_1_4);
+    pixel.green = powf(pixel.green, GAMMA_1_4);
+    pixel.blue = powf(pixel.blue, GAMMA_1_4);
+
+    return pixel;
+}
+
+FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma18(float r, float g, float b) const
+{
+    RgbF3 pixel = buildRgb(r,g,b);
+
+    pixel.red = powf(pixel.red, GAMMA_1_8);
+    pixel.green = powf(pixel.green, GAMMA_1_8);
+    pixel.blue = powf(pixel.blue, GAMMA_1_8);
+
+    return pixel;
+}
+
+FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma22(float r, float g, float b) const
+{
+    RgbF3 pixel = buildRgb(r,g,b);
+
+    pixel.red = powf(pixel.red, GAMMA_2_2);
+    pixel.green = powf(pixel.green, GAMMA_2_2);
+    pixel.blue = powf(pixel.blue, GAMMA_2_2);
+
+    return pixel;
+}
+
+FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma26(float r, float g, float b) const
+{
+    RgbF3 pixel = buildRgb(r,g,b);
+
+    // I have problems with Clang++ in using the powf function
+    pixel.red = powf(pixel.red, GAMMA_2_6);
+    pixel.green = powf(pixel.green, GAMMA_2_6);
+    pixel.blue = powf(pixel.blue, GAMMA_2_6);
+
+    return pixel;
+}
+
+FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingLog(float r, float g, float b) const
+{
+    return RgbF3(log2f(r/m_MinValue)/m_LogRange,
+                 log2f(g/m_MinValue)/m_LogRange,
+                 log2f(b/m_MinValue)/m_LogRange);
+}
+
+inline
+FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::get(float r, float g, float b) const
+{
+    return (this->*m_MappingFunc)(r, g, b);
+}
+
+void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb) const
+{
+    RgbF3 rgb = get(r,g,b);
+
+    qrgb = qRgb( scaleAndRound<int>(rgb.red, 0.f, 255.f),
+                 scaleAndRound<int>(rgb.green, 0.f, 255.f),
+                 scaleAndRound<int>(rgb.blue, 0.f, 255.f) );
+}
+
+void FloatRgbToQRgb::toUint8(float rI, float gI, float bI,
+                             uint8_t& rO, uint8_t& gO, uint8_t& bO) const
+{
+    RgbF3 rgb = get(rI, gI, bI);
+
+    rO = scaleAndRound<uint8_t>(rgb.red, 0.f, 255.f);
+    gO = scaleAndRound<uint8_t>(rgb.green, 0.f, 255.f);
+    bO = scaleAndRound<uint8_t>(rgb.blue, 0.f, 255.f);
+}
+
+void FloatRgbToQRgb::toFloat(float rI, float gI, float bI,
+                             float& rO, float& gO, float& bO) const
+{
+    RgbF3 rgb = get(rI, gI, bI);
+
+    assert(rgb.red <= 1.0f);
+    assert(rgb.red >= 0.0f);
+    assert(rgb.green >= 0.0f);
+    assert(rgb.green <= 1.0f);
+    assert(rgb.blue >= 0.0f);
+    assert(rgb.blue <= 1.0f);
+
+    rO = rgb.red;
+    gO = rgb.green;
+    bO = rgb.blue;
+}
+
+void FloatRgbToQRgb::toUint16(float r, float g, float b,
+                              quint16& red, quint16& green, quint16& blue) const
+{
+    RgbF3 rgb = get(r,g,b);
+
+    red = scaleAndRound<quint16>(rgb.red, 0.f, 65535.f);
+    green = scaleAndRound<quint16>(rgb.green, 0.f, 65535.f);
+    blue = scaleAndRound<quint16>(rgb.blue, 0.f, 65535.f);
+}

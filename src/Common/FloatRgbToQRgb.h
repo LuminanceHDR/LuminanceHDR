@@ -45,15 +45,12 @@ enum LumMappingMethod
     MAP_LOGARITHMIC = 5
 };
 
-//! \brief Private implementation for the class \c FloatRgbToQRgb
-struct FloatRgbToQRgbImpl;
-
 class FloatRgbToQRgb
 {
 public:
     // ctor
-    FloatRgbToQRgb(float min_value = 0.0f, float max_value = 1.0f,
-                   LumMappingMethod mapping_method = MAP_LINEAR);
+    FloatRgbToQRgb(float minValue = 0.0f, float maxValue = 1.0f,
+                   LumMappingMethod mappingMethod = MAP_LINEAR);
 
     ~FloatRgbToQRgb();
 
@@ -76,8 +73,37 @@ public:
                  float& rO, float& gO, float& bO) const;
 
 private:
-    // private implementation, useful to get a more performant implementation
-    QScopedPointer<FloatRgbToQRgbImpl> m_Pimpl;
+    struct RgbF3 {
+        RgbF3(float r, float g, float b)
+            : red(r) , green(g), blue(b)
+        {}
+
+        float red;
+        float green;
+        float blue;
+    };
+
+    // pointer to function
+    typedef RgbF3 (FloatRgbToQRgb::*MappingFunc)(float, float, float) const;
+
+    LumMappingMethod m_MappingMethod;
+    MappingFunc m_MappingFunc;
+
+    float m_MinValue;
+    float m_MaxValue;
+    float m_Range;
+    float m_LogRange;
+
+    RgbF3 get(float r, float g, float b) const;
+
+    // private stuff!
+    RgbF3 buildRgb(float r, float g, float b) const;
+    RgbF3 mappingLinear(float r, float g, float b) const;
+    RgbF3 mappingGamma14(float r, float g, float b) const;
+    RgbF3 mappingGamma18(float r, float g, float b) const;
+    RgbF3 mappingGamma22(float r, float g, float b) const;
+    RgbF3 mappingGamma26(float r, float g, float b) const;
+    RgbF3 mappingLog(float r, float g, float b) const;
 };
 
 #endif // PFSFRAME_TO_QIMAGE_MAPPING_H
