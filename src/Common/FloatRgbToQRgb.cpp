@@ -71,6 +71,13 @@ O_ scaleAndRound(float value, float MIN_, float MAX_)
     return static_cast<O_>(value);
 }
 
+const float& clamp(const float& value, const float& min_, const float& max_)
+{
+    if ( value > max_ ) return max_;
+    if ( value < min_ ) return min_;
+    return value;
+}
+
 // useful data structure to implement a triple of float as RGB pixel
 struct RgbF3
 {
@@ -94,9 +101,8 @@ const float GAMMA_2_6 = 1.0f/2.6f;
 
 struct FloatRgbToQRgbImpl
 {
-    FloatRgbToQRgbImpl(float min_value,
-                            float max_value,
-                            LumMappingMethod mapping_method)
+    FloatRgbToQRgbImpl(float min_value, float max_value,
+                       LumMappingMethod mapping_method)
 #ifdef LUMINANCE_USE_SSE
         : m_MinValue(_mm_set1_ps(min_value))
         , m_MaxValue(_mm_set1_ps(max_value))
@@ -214,9 +220,9 @@ struct FloatRgbToQRgbImpl
     inline
     RgbF3 buildRgb(float r, float g, float b) {
 
-        return RgbF3((r - m_MinValue)/m_Range,
-                     (g - m_MinValue)/m_Range,
-                     (b - m_MinValue)/m_Range);
+        return RgbF3(clamp((r - m_MinValue)/m_Range, 0.f, 1.f),
+                     clamp((g - m_MinValue)/m_Range, 0.f, 1.f),
+                     clamp((b - m_MinValue)/m_Range, 0.f, 1.f));
     }
 
     RgbF3 mappingLinear(float r, float g, float b)
@@ -377,9 +383,9 @@ void FloatRgbToQRgb::toFloat(float rI, float gI, float bI,
     assert(rgb.red <= 1.0f);
     assert(rgb.red >= 0.0f);
     assert(rgb.green >= 0.0f);
-    assert(rgb.green >= 0.0f);
+    assert(rgb.green <= 1.0f);
     assert(rgb.blue >= 0.0f);
-    assert(rgb.blue >= 0.0f);
+    assert(rgb.blue <= 1.0f);
 
     rO = rgb.red;
     gO = rgb.green;

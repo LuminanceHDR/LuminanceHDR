@@ -30,7 +30,7 @@
 #include <Common/FloatRgbToQRgb.h>
 
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
 quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,

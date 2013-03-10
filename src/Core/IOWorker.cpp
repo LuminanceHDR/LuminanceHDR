@@ -58,11 +58,19 @@ IOWorker::~IOWorker()
 #endif
 }
 
-bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer, const QString& filename)
+bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer,
+                               const QString& filename,
+                               const pfs::Params& params)
 {
+    pfs::Params params2( params );
+    params2.insert( "min_luminance", hdr_viewer->getMinLuminanceValue() );
+    params2.insert( "max_luminance", hdr_viewer->getMaxLuminanceValue() );
+    params2.insert( "mapping_method", hdr_viewer->getLuminanceMappingMethod() );
+
     pfs::Frame* hdr_frame = hdr_viewer->getFrame();
 
-    bool status = write_hdr_frame(hdr_frame, filename);
+    bool status = write_hdr_frame(hdr_frame, filename,
+                                  params2);
 
     if ( status )
     {
@@ -73,7 +81,8 @@ bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer, const QString& filenam
     return status;
 }
 
-bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename)
+bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
+                               const pfs::Params& params)
 {
     bool status = true;
     emit IO_init();
@@ -94,11 +103,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename)
     {
         // DAVIDE_TIFF
 //        LuminanceOptions LuminanceOptions;
-        pfs::Params writerParams;
-//        writerParams.insert( pfs::Params::value_type("quality", (size_t)quality) );
-//        writerParams.insert( pfs::Params::value_type("min_luminance", min_luminance) );
-//        writerParams.insert( pfs::Params::value_type("max_luminance", max_luminance) );
-//        writerParams.insert( pfs::Params::value_type("mapping_method", mapping_method) );
+        pfs::Params writerParams(params);
 
         // LogLuv is not implemented yet in the new TiffWriter...
 //        if ( LuminanceOptions.isSaveLogLuvTiff() ) {

@@ -39,6 +39,8 @@
 #include <QObject>
 #include <QString>
 
+#include <Libpfs/params.h>
+
 #include "Common/FloatRgbToQRgb.h"
 
 namespace pfs {
@@ -68,8 +70,10 @@ public:
 public Q_SLOTS:
     pfs::Frame* read_hdr_frame(const QString& filename);
 
-    bool write_hdr_frame(pfs::Frame *frame, const QString& filename);
-    bool write_hdr_frame(GenericViewer* frame, const QString& filename);
+    bool write_hdr_frame(pfs::Frame *frame, const QString& filename,
+                         const pfs::Params& params = pfs::Params());
+    bool write_hdr_frame(GenericViewer* frame, const QString& filename,
+                         const pfs::Params& params = pfs::Params());
 
     bool write_ldr_frame(pfs::Frame* frame,
                          const QString& filename, int quality,

@@ -71,9 +71,12 @@
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LuminanceRangeWidget.h"
 #include "Viewers/LdrViewer.h"
-#include "UI/ImageQualityDialog.h"
 
+#include "UI/ImageQualityDialog.h"
+#include "UI/TiffModeDialog.h"
 #include "UI/UMessageBox.h"
+#include "UI/GammaAndLevels.h"
+
 #include "PreviewPanel/PreviewPanel.h"
 #include "HelpBrowser/helpbrowser.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
@@ -85,7 +88,7 @@
 #include "Core/IOWorker.h"
 #include "Core/TMWorker.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
-#include "UI/GammaAndLevels.h"
+
 
 namespace
 {
@@ -94,10 +97,10 @@ QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget
     QString filetypes = QObject::tr("All LDR formats");
     filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
     filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
-    filetypes += "PNG (*.png *.PNG);;" ;
+    filetypes += "PNG (*.png *.PNG);;";
     filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
     filetypes += "BMP (*.bmp *.BMP);;";
-    filetypes += "16 bits TIFF (*.tif *.tiff *.TIF *.TIFF)";
+    filetypes += "TIFF (*.tif *.tiff *.TIF *.TIFF)";
 
     return QFileDialog::getSaveFileName(parent,
                                         QObject::tr("Save the LDR image as..."),
@@ -122,9 +125,7 @@ QString getHdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget
 
 void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
 {
-#ifdef QT_DEBUG
     assert( gv != NULL );
-#endif
 
     QRect cropRect = gv->getSelectionRect().normalized();
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
@@ -202,7 +203,7 @@ void MainWindow::init()
     num_ldr_generated = 0;
     curr_num_ldr_open = 0;
 
-    if ( sm_NumMainWindows == 1)
+    if ( sm_NumMainWindows == 1 )
     {
         // Register symbols on the first activation!
         qRegisterMetaType<QImage>("QImage");
@@ -482,9 +483,11 @@ void MainWindow::on_fileSaveAllAction_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
-    QString dir = QFileDialog::getExistingDirectory(this,
-                                                    tr("Save files in"),
-                                                    luminance_options->getDefaultPathLdrOut());
+    QString dir = QFileDialog::getExistingDirectory(
+                this,
+                tr("Save files in"),
+                luminance_options->getDefaultPathLdrOut()
+                );
 
     if (!dir.isEmpty())
     {
@@ -500,11 +503,15 @@ void MainWindow::on_fileSaveAllAction_triggered()
                 LdrViewer *l_v = dynamic_cast<LdrViewer*>(g_v);
 
                 QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
-                QString outfname = luminance_options->getDefaultPathLdrOut() + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
+                QString outfname = luminance_options->getDefaultPathLdrOut()
+                        + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
 
-                //emit save_ldr_frame(l_v, outfname, 100);
-                QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
-                                          Q_ARG(GenericViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, 100));
+                // emit save_ldr_frame(l_v, outfname, 100);
+                QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame",
+                                          Qt::QueuedConnection,
+                                          Q_ARG(GenericViewer*, l_v),
+                                          Q_ARG(QString, outfname),
+                                          Q_ARG(int, 100));
             }
         }
     }
@@ -528,7 +535,8 @@ void MainWindow::on_fileSaveAsAction_triggered()
             luminance_options->setDefaultPathHdrInOut( QFileInfo(fname).path() );
 
             //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
-            QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame", Qt::QueuedConnection,
+            QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame",
+                                      Qt::QueuedConnection,
                                       Q_ARG(GenericViewer*, dynamic_cast<HdrViewer*>(g_v)),
                                       Q_ARG(QString, fname));
         }
@@ -544,49 +552,55 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
-        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg", this);
+        QString outputFilename = getLdrFileNameFromSaveDialog(ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg", this);
 
-        if ( !outfname.isEmpty() )
+        if ( outputFilename.isEmpty() ) return;
+
+        QFileInfo qfi(outputFilename);
+        QString format = qfi.suffix();
+
+        luminance_options->setDefaultPathLdrOut( qfi.path() );
+
+        if ( format.isEmpty() )
         {
-            QFileInfo qfi(outfname);
-            QString format = qfi.suffix();
-
-            luminance_options->setDefaultPathLdrOut( qfi.path() );
-
-            if ( format.isEmpty() )
-            {
-                // default as JPG
-                format    =   "jpg";
-                outfname  +=  ".jpg";
-            }
-
-            int quality = 100; // default value is 100%
-            if ( format == "png" || format == "jpg" )
-            {
-                ImageQualityDialog savedFileQuality(l_v->getFrame(), format, this);
-                QString winTitle(QObject::tr("Save as..."));
-                winTitle += format.toUpper();
-                savedFileQuality.setWindowTitle( winTitle );
-                if ( savedFileQuality.exec() == QDialog::Rejected )
-                    return;
-                else
-                    quality = savedFileQuality.getQuality();
-            }
-
-            QString inputfname;
-            if (m_inputFilesName.isEmpty())
-                    inputfname = "";
-            else
-                    inputfname = m_inputFilesName.first();
-            // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
-            QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
-                                      Q_ARG(GenericViewer*, l_v),
-                                      Q_ARG(QString, outfname),
-                                      Q_ARG(int, quality),
-                                      Q_ARG(QString, inputfname),
-                                      Q_ARG(QVector<float>, m_inputExpoTimes),
-                                      Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
+            // default as JPG
+            format    =   "jpg";
+            outputFilename  +=  ".jpg";
         }
+
+        int quality = 100; // default value is 100%
+        if ( format == "png" || format == "jpg" )
+        {
+            ImageQualityDialog savedFileQuality(l_v->getFrame(), format, this);
+            QString winTitle(QObject::tr("Save as..."));
+            winTitle += format.toUpper();
+            savedFileQuality.setWindowTitle( winTitle );
+            if ( savedFileQuality.exec() == QDialog::Rejected ) return;
+
+            quality = savedFileQuality.getQuality();
+        }
+
+        if ( format == "tif" || format == "tiff" )
+        {
+            TiffModeDialog t;
+            if ( t.exec() == QDialog::Rejected ) return;
+
+            int tiffMode = t.getTiffWriterMode();
+            cout << "TIFF MODE: " << tiffMode << endl;
+        }
+
+        QString inputfname;
+        if ( ! m_inputFilesName.isEmpty() ) inputfname = m_inputFilesName.first();
+
+        // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
+        QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
+                                  Q_ARG(GenericViewer*, l_v),
+                                  Q_ARG(QString, outputFilename),
+                                  Q_ARG(int, quality),
+                                  Q_ARG(QString, inputfname),
+                                  Q_ARG(QVector<float>, m_inputExpoTimes),
+                                  Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
+
     }
 }
 
@@ -636,7 +650,8 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
 
         if ( outfname.isEmpty() ) return;
 
-        QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
+        QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame",
+                                  Qt::QueuedConnection,
                                   Q_ARG(GenericViewer*, g_v),
                                   Q_ARG(QString, outfname),
                                   Q_ARG(int, 100));
