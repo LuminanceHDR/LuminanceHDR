@@ -47,7 +47,7 @@
 #include <jpeglib.h>
 
 #include <Libpfs/frame.h>
-#include <Common/FloatRgbToQRgb.h>
+#include <Libpfs/utils/rgbremapper.h>
 #include <Common/ResourceHandlerCommon.h>
 #include <Common/ResourceHandlerLcms.h>
 #include <Fileformat/pfsoutldrimage.h>
@@ -192,7 +192,7 @@ struct JpegWriterParams
                 continue;
             }
             if ( it->first == "mapping_method" ) {
-                luminanceMapping_ = it->second.as<LumMappingMethod>(luminanceMapping_);
+                luminanceMapping_ = it->second.as<RGBMappingType>(luminanceMapping_);
                 continue;
             }
         }
@@ -201,7 +201,7 @@ struct JpegWriterParams
     size_t quality_;
     float minLuminance_;
     float maxLuminance_;
-    LumMappingMethod luminanceMapping_;
+    RGBMappingType luminanceMapping_;
 };
 
 ostream& operator<<(ostream& out, const JpegWriterParams& params)
@@ -301,6 +301,9 @@ public:
             std::vector<JSAMPLE> scanLineOut(cinfo.image_width * cinfo.num_components);
             JSAMPROW scanLineOutArray[1] = { scanLineOut.data() };
 
+            RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
+                                    params.luminanceMapping_);
+
             while ( cinfo.next_scanline < cinfo.image_height )
             {
                 // copy line from Frame into scanLineOut
@@ -309,10 +312,7 @@ public:
                                     blueData + cinfo.next_scanline*cinfo.image_width,
                                     scanLineOut.data(), RGB_FORMAT,
                                     cinfo.image_width,
-                                    FloatRgbToQRgb(params.minLuminance_,
-                                                   params.maxLuminance_,
-                                                   params.luminanceMapping_)
-                                    );
+                                    rgbRemapper);
 
                 jpeg_write_scanlines(&cinfo, scanLineOutArray, 1);
             }

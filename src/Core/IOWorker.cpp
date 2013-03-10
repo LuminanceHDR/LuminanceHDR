@@ -172,7 +172,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                TonemappingOptions* tmopts,
                                float min_luminance,
                                float max_luminance,
-                               LumMappingMethod mapping_method)
+                               RGBMappingType mapping_method)
 {
     bool status = true;
     emit IO_init();

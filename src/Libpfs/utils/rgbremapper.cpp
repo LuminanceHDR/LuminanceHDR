@@ -19,22 +19,17 @@
  * ----------------------------------------------------------------------
  */
 
-//! \file FloatRgbToQRgb.cpp
+//! \file RGBRemapper.cpp
 //! \brief This file creates common routines for mapping float RGB values into
 //! 8-bits or 16-bits integer RGB (QRgb or quint16)
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \since Luminance HDR 2.3.0-beta1
 
-#include "FloatRgbToQRgb.h"
-
-// #include "arch/math.h"
-// #include "Libpfs/vex/sse.h"
+#include <Libpfs/utils/rgbremapper.h>
 
 #include <algorithm>
 #include <cassert>
 #include <cmath>
-
-// #undef LUMINANCE_USE_SSE
 
 namespace
 {
@@ -66,83 +61,68 @@ const float GAMMA_2_2 = 1.0f/2.2f;
 const float GAMMA_2_6 = 1.0f/2.6f;
 }
 
-FloatRgbToQRgb::FloatRgbToQRgb(float minValue, float maxValue,
-                       LumMappingMethod mappingMethod)
+RGBRemapper::RGBRemapper(float minValue, float maxValue,
+                         RGBMappingType mappingMethod)
         : m_MinValue(minValue)
         , m_MaxValue(maxValue)
         , m_Range(maxValue - minValue)
-        , m_LogRange( log2f(maxValue/minValue) )
+        , m_LogRange(log2f(maxValue/minValue))
     {
         setMappingMethod( mappingMethod );
     }
 
-FloatRgbToQRgb::~FloatRgbToQRgb()
+RGBRemapper::~RGBRemapper()
 {}
 
-void FloatRgbToQRgb::setMinMax(float min, float max)
+void RGBRemapper::setMinMax(float minValue, float maxValue)
 {
-    m_MinValue      = min;
-    m_MaxValue      = max;
-    m_Range         = max - min;
-    m_LogRange      = log2f(max/min);
+    m_MinValue      = minValue;
+    m_MaxValue      = maxValue;
+    m_Range         = maxValue - minValue;
+    m_LogRange      = log2f(maxValue/minValue);
 }
 
-LumMappingMethod FloatRgbToQRgb::getMappingMethod() const
-{
-    return m_MappingMethod;
-}
-
-//float FloatRgbToQRgb::getMinLuminance() const
-//{
-//    return m_Pimpl->m_MinValue;
-//}
-
-//float FloatRgbToQRgb::getMaxLuminance() const
-//{
-//    return m_Pimpl->m_MaxValue;
-//}
-
-void FloatRgbToQRgb::setMappingMethod(LumMappingMethod method)
+void RGBRemapper::setMappingMethod(RGBMappingType method)
 {
     m_MappingMethod = method;
 
     switch ( m_MappingMethod )
     {
     case MAP_LINEAR:
-        m_MappingFunc = &FloatRgbToQRgb::mappingLinear;
+        m_MappingFunc = &RGBRemapper::mappingLinear;
         break;
     case MAP_GAMMA1_4:
-        m_MappingFunc = &FloatRgbToQRgb::mappingGamma14;
+        m_MappingFunc = &RGBRemapper::mappingGamma14;
         break;
     case MAP_GAMMA1_8:
-        m_MappingFunc = &FloatRgbToQRgb::mappingGamma18;
+        m_MappingFunc = &RGBRemapper::mappingGamma18;
         break;
     case MAP_GAMMA2_6:
-        m_MappingFunc = &FloatRgbToQRgb::mappingGamma26;
+        m_MappingFunc = &RGBRemapper::mappingGamma26;
         break;
     case MAP_LOGARITHMIC:
-        m_MappingFunc = &FloatRgbToQRgb::mappingLog;
+        m_MappingFunc = &RGBRemapper::mappingLog;
         break;
     default:
     case MAP_GAMMA2_2:
-        m_MappingFunc = &FloatRgbToQRgb::mappingGamma22;
+        m_MappingFunc = &RGBRemapper::mappingGamma22;
         break;
     }
 }
 
-FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::buildRgb(float r, float g, float b) const
+RGBRemapper::RgbF3 RGBRemapper::buildRgb(float r, float g, float b) const
 {
-    return FloatRgbToQRgb::RgbF3(clamp((r - m_MinValue)/m_Range, 0.f, 1.f),
-                                 clamp((g - m_MinValue)/m_Range, 0.f, 1.f),
-                                 clamp((b - m_MinValue)/m_Range, 0.f, 1.f));
+    return RGBRemapper::RgbF3( clamp((r - m_MinValue)/m_Range, 0.f, 1.f),
+                               clamp((g - m_MinValue)/m_Range, 0.f, 1.f),
+                               clamp((b - m_MinValue)/m_Range, 0.f, 1.f) );
 }
 
-FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingLinear(float r, float g, float b) const
+RGBRemapper::RgbF3 RGBRemapper::mappingLinear(float r, float g, float b) const
 {
     return buildRgb(r,g,b);
 }
 
-FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma14(float r, float g, float b) const
+RGBRemapper::RgbF3 RGBRemapper::mappingGamma14(float r, float g, float b) const
 {
     RgbF3 pixel = buildRgb(r,g,b);
 
@@ -153,7 +133,7 @@ FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma14(float r, float g, float b) 
     return pixel;
 }
 
-FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma18(float r, float g, float b) const
+RGBRemapper::RgbF3 RGBRemapper::mappingGamma18(float r, float g, float b) const
 {
     RgbF3 pixel = buildRgb(r,g,b);
 
@@ -164,7 +144,7 @@ FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma18(float r, float g, float b) 
     return pixel;
 }
 
-FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma22(float r, float g, float b) const
+RGBRemapper::RgbF3 RGBRemapper::mappingGamma22(float r, float g, float b) const
 {
     RgbF3 pixel = buildRgb(r,g,b);
 
@@ -175,7 +155,7 @@ FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma22(float r, float g, float b) 
     return pixel;
 }
 
-FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma26(float r, float g, float b) const
+RGBRemapper::RgbF3 RGBRemapper::mappingGamma26(float r, float g, float b) const
 {
     RgbF3 pixel = buildRgb(r,g,b);
 
@@ -187,7 +167,7 @@ FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingGamma26(float r, float g, float b) 
     return pixel;
 }
 
-FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingLog(float r, float g, float b) const
+RGBRemapper::RgbF3 RGBRemapper::mappingLog(float r, float g, float b) const
 {
     return RgbF3(log2f(r/m_MinValue)/m_LogRange,
                  log2f(g/m_MinValue)/m_LogRange,
@@ -195,12 +175,12 @@ FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::mappingLog(float r, float g, float b) cons
 }
 
 inline
-FloatRgbToQRgb::RgbF3 FloatRgbToQRgb::get(float r, float g, float b) const
+RGBRemapper::RgbF3 RGBRemapper::get(float r, float g, float b) const
 {
     return (this->*m_MappingFunc)(r, g, b);
 }
 
-void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb) const
+void RGBRemapper::toQRgb(float r, float g, float b, QRgb& qrgb) const
 {
     RgbF3 rgb = get(r,g,b);
 
@@ -209,7 +189,7 @@ void FloatRgbToQRgb::toQRgb(float r, float g, float b, QRgb& qrgb) const
                  scaleAndRound<int>(rgb.blue, 0.f, 255.f) );
 }
 
-void FloatRgbToQRgb::toUint8(float rI, float gI, float bI,
+void RGBRemapper::toUint8(float rI, float gI, float bI,
                              uint8_t& rO, uint8_t& gO, uint8_t& bO) const
 {
     RgbF3 rgb = get(rI, gI, bI);
@@ -219,7 +199,7 @@ void FloatRgbToQRgb::toUint8(float rI, float gI, float bI,
     bO = scaleAndRound<uint8_t>(rgb.blue, 0.f, 255.f);
 }
 
-void FloatRgbToQRgb::toFloat(float rI, float gI, float bI,
+void RGBRemapper::toFloat(float rI, float gI, float bI,
                              float& rO, float& gO, float& bO) const
 {
     RgbF3 rgb = get(rI, gI, bI);
@@ -236,7 +216,7 @@ void FloatRgbToQRgb::toFloat(float rI, float gI, float bI,
     bO = rgb.blue;
 }
 
-void FloatRgbToQRgb::toUint16(float r, float g, float b,
+void RGBRemapper::toUint16(float r, float g, float b,
                               quint16& red, quint16& green, quint16& blue) const
 {
     RgbF3 rgb = get(r,g,b);

@@ -39,8 +39,10 @@
 #include <boost/assign/list_of.hpp>
 
 #include "pfsoutldrimage.h"
-#include "Libpfs/frame.h"
-#include "Libpfs/utils/msec_timer.h"
+
+#include <Libpfs/frame.h>
+#include <Libpfs/utils/msec_timer.h>
+#include <Libpfs/utils/rgbremapper_fwd.h>
 
 using namespace std;
 using namespace boost::assign;
@@ -48,7 +50,7 @@ using namespace boost::assign;
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float min_luminance,
                            float max_luminance,
-                           LumMappingMethod mapping_method)
+                           RGBMappingType mapping_method)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
@@ -74,12 +76,12 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
 
     QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
 
-    FloatRgbToQRgb converter(min_luminance, max_luminance, mapping_method);
+    RGBRemapper rgbRemapper(min_luminance, max_luminance, mapping_method);
 
 #pragma omp parallel for shared(pixels)
     for (int idx = 0; idx < height*width; ++idx)
     {
-        converter.toQRgb(p_R[idx], p_G[idx], p_B[idx], pixels[idx]);
+        rgbRemapper.toQRgb(p_R[idx], p_G[idx], p_B[idx], pixels[idx]);
     }
 
 #ifdef TIMER_PROFILING
@@ -120,7 +122,7 @@ void getPixelShuffle(RGBFormat order, PixelShuffleUint8& ptr)
 
 void planarToInterleaved(const float *red, const float *green, const float *blue,
                          uint8_t *data, RGBFormat rgbOrder,
-                         size_t size, const FloatRgbToQRgb &func)
+                         size_t size, const RGBRemapper &func)
 {
     PixelShuffleUint8 rgbShuffle = NULL;
     getPixelShuffle(rgbOrder, rgbShuffle);
@@ -153,7 +155,7 @@ void getPixelShuffle(RGBFormat order, PixelShuffleUint16& ptr)
 
 void planarToInterleaved(const float *red, const float *green, const float *blue,
                          uint16_t *data, RGBFormat rgbOrder,
-                         size_t size, const FloatRgbToQRgb &func)
+                         size_t size, const RGBRemapper &func)
 {
     PixelShuffleUint16 rgbShuffle = NULL;
     getPixelShuffle(rgbOrder, rgbShuffle);
@@ -186,7 +188,7 @@ void getPixelShuffle(RGBFormat order, PixelShuffleFloat32& ptr)
 
 void planarToInterleaved(const float *red, const float *green, const float *blue,
                          float *data, RGBFormat rgbOrder,
-                         size_t size, const FloatRgbToQRgb &func)
+                         size_t size, const RGBRemapper &func)
 {
     PixelShuffleFloat32 rgbShuffle = NULL;
     getPixelShuffle(rgbOrder, rgbShuffle);

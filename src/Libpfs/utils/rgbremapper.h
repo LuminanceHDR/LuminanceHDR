@@ -19,49 +19,37 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef PFSFRAME_TO_QIMAGE_MAPPING_H
-#define PFSFRAME_TO_QIMAGE_MAPPING_H
+#ifndef PFS_RGBREMAPPER_H
+#define PFS_RGBREMAPPER_H
 
-//! \file FloatRgbToQRgb.h
-//! \brief This file creates common routines for mapping float RGB values into
-//! 255 levels QImage
+//! \file RGBRemapper.h
+//! \brief This file creates common routines for mapping RGB values into
+//! different
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \since Luminance HDR 2.3.0-beta1
 
 #include <stdint.h>
-#include <QtGlobal>
 #include <QRgb>
-#include <QScopedPointer>
 
-// Are you changing the order?
-// Feel free, but it's a fast track for troubles!
-enum LumMappingMethod
-{
-    MAP_LINEAR = 0,
-    MAP_GAMMA1_4 = 1,
-    MAP_GAMMA1_8 = 2,
-    MAP_GAMMA2_2 = 3,
-    MAP_GAMMA2_6 = 4,
-    MAP_LOGARITHMIC = 5
-};
+#include <Libpfs/utils/rgbremapper_fwd.h>
 
-class FloatRgbToQRgb
+class RGBRemapper
 {
 public:
     // ctor
-    FloatRgbToQRgb(float minValue = 0.0f, float maxValue = 1.0f,
-                   LumMappingMethod mappingMethod = MAP_LINEAR);
+    RGBRemapper(float minValue = 0.0f, float maxValue = 1.0f,
+                RGBMappingType mappingMethod = MAP_LINEAR);
 
-    ~FloatRgbToQRgb();
+    ~RGBRemapper();
 
     // non-const functions
     void setMinMax(float min, float max);
-    void setMappingMethod(LumMappingMethod method);
+    void setMappingMethod(RGBMappingType method);
 
     // const functions
     //float getMinLuminance() const;
     //float getMaxLuminance() const;
-    LumMappingMethod getMappingMethod() const;
+    RGBMappingType getMappingType() const { return m_MappingMethod; }
 
     void toQRgb(float r, float g, float b, QRgb& qrgb) const;
 
@@ -84,9 +72,9 @@ private:
     };
 
     // pointer to function
-    typedef RgbF3 (FloatRgbToQRgb::*MappingFunc)(float, float, float) const;
+    typedef RgbF3 (RGBRemapper::*MappingFunc)(float, float, float) const;
 
-    LumMappingMethod m_MappingMethod;
+    RGBMappingType m_MappingMethod;
     MappingFunc m_MappingFunc;
 
     float m_MinValue;
@@ -106,4 +94,4 @@ private:
     RgbF3 mappingLog(float r, float g, float b) const;
 };
 
-#endif // PFSFRAME_TO_QIMAGE_MAPPING_H
+#endif // PFS_RGBREMAPPER_H

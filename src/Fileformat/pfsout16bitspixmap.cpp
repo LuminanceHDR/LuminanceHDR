@@ -24,18 +24,21 @@
  *
  */
 
-#include <assert.h>
+#include "Fileformat/pfsout16bitspixmap.h"
+
+#include <cassert>
 #include <iostream>
+
 #include <QSharedPointer>
 
-#include "Libpfs/frame.h"
-#include "Fileformat/pfsout16bitspixmap.h"
-#include "Libpfs/utils/msec_timer.h"
+#include <Libpfs/frame.h>
+#include <Libpfs/utils/msec_timer.h>
+#include <Libpfs/utils/rgbremapper.h>
 
 quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,
                                   float min_luminance,
                                   float max_luminance,
-                                  LumMappingMethod mapping_method)
+                                  RGBMappingType mapping_method)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
@@ -59,12 +62,12 @@ quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,
     const float* p_G = Yc->getChannelData()->getRawData();
     const float* p_B = Zc->getChannelData()->getRawData();
 
-    FloatRgbToQRgb converter(min_luminance, max_luminance, mapping_method);
+    RGBRemapper rgbRemapper(min_luminance, max_luminance, mapping_method);
 	
 #pragma omp parallel for
     for (int idx = 0; idx < height*width; ++idx)
     {
-        converter.toUint16(p_R[idx], p_G[idx], p_B[idx],
+        rgbRemapper.toUint16(p_R[idx], p_G[idx], p_B[idx],
                            temp_pixmap[3*idx], temp_pixmap[3*idx + 1], temp_pixmap[3*idx + 2]);
     }
 

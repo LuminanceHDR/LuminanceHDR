@@ -73,7 +73,7 @@ public:
     //! \brief returns min value of the handled frame
     float getMinLuminanceValue();
 
-    LumMappingMethod getLuminanceMappingMethod();
+    RGBMappingType getLuminanceMappingMethod();
 
 public Q_SLOTS:
     void updateRangeWindow();
@@ -98,7 +98,7 @@ private:
     void initUi();
     void refreshPixmap();
 
-    LumMappingMethod m_mappingMethod;
+    RGBMappingType m_mappingMethod;
     float m_minValue;
     float m_maxValue;
 

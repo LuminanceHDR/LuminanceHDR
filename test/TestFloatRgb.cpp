@@ -22,11 +22,12 @@
 #include <gtest/gtest.h>
 #include <QRgb>
 #include <QDebug>
-#include "Common/FloatRgbToQRgb.h"
+
+#include <Libpfs/utils/rgbremapper.h>
 
 TEST(FloatRgbConverter, Uint16_Test1)
 {
-    FloatRgbToQRgb d;
+    RGBRemapper d;
 
     float inRed = 1.0f;
     float inGreen = 0.0f;
@@ -46,7 +47,7 @@ TEST(FloatRgbConverter, Uint16_Test1)
 
 TEST(FloatRgbConverter, Uint16_Test2)
 {
-    FloatRgbToQRgb d;
+    RGBRemapper d;
 
     float inRed = 1.2f;
     float inGreen = 0.0f;
@@ -66,7 +67,7 @@ TEST(FloatRgbConverter, Uint16_Test2)
 
 TEST(FloatRgbConverter, Uint16_Test3)
 {
-    FloatRgbToQRgb d;
+    RGBRemapper d;
 
     float inRed = 1.2f;
     float inGreen = -0.0f;
@@ -86,7 +87,7 @@ TEST(FloatRgbConverter, Uint16_Test3)
 
 TEST(FloatRgbConverter, Qrgb_Test1)
 {
-    FloatRgbToQRgb d;
+    RGBRemapper d;
 
     float inRed = 1.2f;
     float inGreen = -0.0f;
@@ -103,7 +104,7 @@ TEST(FloatRgbConverter, Qrgb_Test1)
 
 TEST(FloatRgbConverter, Qrgb_Test2)
 {
-    FloatRgbToQRgb d;
+    RGBRemapper d;
 
     float inRed = 1.2f;
     float inGreen = 0.5f;
@@ -120,7 +121,7 @@ TEST(FloatRgbConverter, Qrgb_Test2)
 
 TEST(FloatRgbConverter, Uint8_Test1)
 {
-    FloatRgbToQRgb d;
+    RGBRemapper d;
 
     float inRed = 1.0f;
     float inGreen = 0.0f;
@@ -140,7 +141,7 @@ TEST(FloatRgbConverter, Uint8_Test1)
 
 TEST(FloatRgbConverter, Uint8_Test2)
 {
-    FloatRgbToQRgb d;
+    RGBRemapper d;
 
     float inRed = 1.2f;
     float inGreen = 0.0f;
@@ -160,7 +161,7 @@ TEST(FloatRgbConverter, Uint8_Test2)
 
 TEST(FloatRgbConverter, Uint8_Test3)
 {
-    FloatRgbToQRgb d;
+    RGBRemapper d;
 
     float inRed = 1.2f;
     float inGreen = -0.0f;

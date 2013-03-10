@@ -32,7 +32,8 @@
 
 #include <stdint.h>
 #include <QImage>
-#include "Common/FloatRgbToQRgb.h"
+
+#include <Libpfs/utils/rgbremapper.h>
 
 // forward declaration
 namespace pfs {
@@ -45,7 +46,7 @@ class Frame;
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float min_luminance = 0.0f,
                            float max_luminance = 1.0f,
-                           LumMappingMethod mapping_method = MAP_LINEAR);
+                           RGBMappingType mapping_method = MAP_LINEAR);
 
 enum RGBFormat
 {
@@ -56,16 +57,16 @@ enum RGBFormat
 void planarToInterleaved(const float* red, const float* green, const float* blue,
                          uint8_t* data, RGBFormat dataOrder,
                          size_t size,
-                         const FloatRgbToQRgb& func = FloatRgbToQRgb());
+                         const RGBRemapper& func = RGBRemapper());
 
 void planarToInterleaved(const float* red, const float* green, const float* blue,
                          uint16_t* data, RGBFormat dataOrder,
                          size_t size,
-                         const FloatRgbToQRgb& func = FloatRgbToQRgb());
+                         const RGBRemapper& func = RGBRemapper());
 
 void planarToInterleaved(const float* red, const float* green, const float* blue,
                          float* data, RGBFormat dataOrder,
                          size_t size,
-                         const FloatRgbToQRgb& func = FloatRgbToQRgb());
+                         const RGBRemapper& func = RGBRemapper());
 
 #endif

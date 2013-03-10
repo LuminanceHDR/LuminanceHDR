@@ -45,7 +45,7 @@
 #include <png.h>
 
 #include <Libpfs/frame.h>
-#include <Common/FloatRgbToQRgb.h>
+#include <Libpfs/utils/rgbremapper.h>
 #include <Common/ResourceHandlerCommon.h>
 #include <Common/ResourceHandlerLcms.h>
 #include <Fileformat/pfsoutldrimage.h>
@@ -81,7 +81,7 @@ struct PngWriterParams
                 continue;
             }
             if ( it->first == "mapping_method" ) {
-                luminanceMapping_ = it->second.as<LumMappingMethod>(luminanceMapping_);
+                luminanceMapping_ = it->second.as<RGBMappingType>(luminanceMapping_);
                 continue;
             }
         }
@@ -90,7 +90,7 @@ struct PngWriterParams
     size_t quality_;
     float minLuminance_;
     float maxLuminance_;
-    LumMappingMethod luminanceMapping_;
+    RGBMappingType luminanceMapping_;
 };
 
 ostream& operator<<(ostream& out, const PngWriterParams& params)
@@ -207,18 +207,15 @@ public:
         const float* blueData = bChannel->getRawData();
 
         std::vector<png_byte> scanLineOut( width * 3 );
-
+        RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
+                                params.luminanceMapping_);
         for (png_uint_32 row = 0; row < height; ++row)
         {
             planarToInterleaved(redData + row*width,
                                 greenData + row*width,
                                 blueData + row*width,
                                 scanLineOut.data(), BGR_FORMAT,
-                                width,
-                                FloatRgbToQRgb(params.minLuminance_,
-                                               params.maxLuminance_,
-                                               params.luminanceMapping_)
-                                );
+                                width, rgbRemapper);
             png_write_row(png_ptr, scanLineOut.data());
         }
 

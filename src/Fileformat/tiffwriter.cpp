@@ -47,7 +47,7 @@
 #include <stdint.h>
 
 #include <Common/ResourceHandlerLcms.h>
-#include <Common/FloatRgbToQRgb.h>
+#include <Libpfs/utils/rgbremapper.h>
 #include <Fileformat/pfsoutldrimage.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/array2d.h>
@@ -84,7 +84,7 @@ struct TiffWriterParams
                 continue;
             }
             if ( it->first == "mapping_method" ) {
-                luminanceMapping_ = it->second.as<LumMappingMethod>(luminanceMapping_);
+                luminanceMapping_ = it->second.as<RGBMappingType>(luminanceMapping_);
                 continue;
             }
             if ( it->first == "tiff_mode" ) {
@@ -96,7 +96,7 @@ struct TiffWriterParams
     size_t quality_;
     float minLuminance_;
     float maxLuminance_;
-    LumMappingMethod luminanceMapping_;
+    RGBMappingType luminanceMapping_;
     int tiffWriterMode_;
 };
 
@@ -235,7 +235,7 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const float* blueData = bChannel->getRawData();
 
     std::vector<uint8_t> stripBuffer( stripSize );
-    FloatRgbToQRgb rgbConverter(params.minLuminance_, params.maxLuminance_,
+    RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
                                 params.luminanceMapping_);
     for (unsigned int s = 0; s < stripsNum; s++)
     {
@@ -243,7 +243,7 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                             greenData + s*width,
                             blueData + s*width,
                             stripBuffer.data(), RGB_FORMAT, width,
-                            rgbConverter);
+                            rgbRemapper);
 
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
@@ -288,7 +288,7 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const float* blueData = bChannel->getRawData();
 
     std::vector<uint16_t> stripBuffer( width*3 );
-    FloatRgbToQRgb rgbConverter(params.minLuminance_, params.maxLuminance_,
+    RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
                                 params.luminanceMapping_);
 
     for (unsigned int s = 0; s < stripsNum; s++)
@@ -297,7 +297,7 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                             greenData + s*width,
                             blueData + s*width,
                             stripBuffer.data(), RGB_FORMAT, width,
-                            rgbConverter);
+                            rgbRemapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
             qDebug ("error writing strip");
@@ -343,7 +343,7 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const float* blueData = bChannel->getRawData();
 
     std::vector<float> stripBuffer( width*3 );
-    FloatRgbToQRgb rgbConverter(params.minLuminance_,
+    RGBRemapper rgbRemapper(params.minLuminance_,
                                 params.maxLuminance_,
                                 params.luminanceMapping_); // maybe I have to force to be linear?!
     for (unsigned int s = 0; s < stripsNum; s++)
@@ -352,7 +352,7 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                             greenData + s*width,
                             blueData + s*width,
                             stripBuffer.data(), RGB_FORMAT, width,
-                            rgbConverter);
+                            rgbRemapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) == 0)
         {
             qDebug ("error writing strip");

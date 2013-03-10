@@ -1,8 +1,8 @@
 /*
  * This file is a part of Luminance HDR package.
- * ---------------------------------------------------------------------- 
- * Copyright (C) 2011 Franco Comida
- * 
+ * ----------------------------------------------------------------------
+ * Copyright (C) 2012 Davide Anastasia
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,26 +16,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- *
- *  Original Work
- * @author Franco Comida <fcomida@users.sourceforge.net>
- * 
+ * ----------------------------------------------------------------------
  */
 
-#ifndef FROMLDRPFSTO16BITSPIXMAP
-#define FROMLDRPFSTO16BITSPIXMAP
+//! \brief Forward declaration for RGBRemapper
 
-#include <QtGlobal>
-#include <Libpfs/utils/rgbremapper_fwd.h>
+#ifndef PFS_RGBREMAPPER_FWD_H
+#define PFS_RGBREMAPPER_FWD_H
 
-namespace pfs {
-class Frame;
-}
+enum RGBMappingType
+{
+    MAP_LINEAR      = 0,
+    MAP_GAMMA1_4    = 1,
+    MAP_GAMMA1_8    = 2,
+    MAP_GAMMA2_2    = 3,
+    MAP_GAMMA2_6    = 4,
+    MAP_LOGARITHMIC = 5
+};
 
-quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,
-                                  float min_luminance = 0.0f,
-                                  float max_luminance = 1.0f,
-                                  RGBMappingType mapping_method = MAP_LINEAR);
+class RGBRemapper;
 
-#endif
+#endif // PFS_RGBREMAPPER_FWD_H

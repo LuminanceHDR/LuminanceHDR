@@ -35,7 +35,7 @@
 #include "arch/math.h"
 
 #include "Common/global.h"
-#include "Common/FloatRgbToQRgb.h"
+
 
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Viewers/LuminanceRangeWidget.h"
@@ -46,6 +46,7 @@
 #include "Libpfs/domio.h"
 #include "Libpfs/vex/sse.h"
 #include "Libpfs/utils/msec_timer.h"
+#include "Libpfs/utils/rgbremapper.h"
 
 namespace // anonymous namespace
 {
@@ -77,7 +78,7 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns,
     m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
     m_lumRange->fitToDynamicRange();
 
-    m_mappingMethod = static_cast<LumMappingMethod>( m_mappingMethodCB->currentIndex() );
+    m_mappingMethod = static_cast<RGBMappingType>( m_mappingMethodCB->currentIndex() );
     m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
     m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
 
@@ -188,7 +189,7 @@ int HdrViewer::getLumMappingMethod()
 void HdrViewer::setLumMappingMethod( int method )
 {
     m_mappingMethodCB->setCurrentIndex( method );
-    m_mappingMethod = static_cast<LumMappingMethod>(method);
+    m_mappingMethod = static_cast<RGBMappingType>(method);
 
     refreshPixmap();
 }
@@ -227,7 +228,7 @@ float HdrViewer::getMinLuminanceValue()
     return m_minValue;
 }
 
-LumMappingMethod HdrViewer::getLuminanceMappingMethod()
+RGBMappingType HdrViewer::getLuminanceMappingMethod()
 {
     return m_mappingMethod;
 }
@@ -253,7 +254,7 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
     QImage return_qimage(in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);
     QRgb *pixels = reinterpret_cast<QRgb*>(return_qimage.bits());
 
-    FloatRgbToQRgb converter(m_minValue, m_maxValue, m_mappingMethod);
+    RGBRemapper rgbRemapper(m_minValue, m_maxValue, m_mappingMethod);
 
 #pragma omp parallel for
     for ( int index = 0; index < in_frame->getWidth()*in_frame->getHeight(); ++index )
@@ -268,7 +269,7 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
         }
         else
         {
-            converter.toQRgb(R[index], G[index], B[index], pixels[index]);
+            rgbRemapper.toQRgb(R[index], G[index], B[index], pixels[index]);
         }
     }
 
