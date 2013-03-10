@@ -108,7 +108,10 @@ void BatchTMJob::run()
             TMOptionsOperations operations(opts);
             QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
 
-            if ( io_worker.write_ldr_frame(temporary_frame.data(), output_file_name, opts->quality, "", QVector<float>(), opts) )
+            if ( io_worker.write_ldr_frame(temporary_frame.data(),
+                                           output_file_name, QString(),
+                                           QVector<float>(), opts,
+                                           pfs::Params().insert("quality", opts->quality)) )
             {
                 emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
             } else {

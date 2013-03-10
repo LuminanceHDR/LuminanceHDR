@@ -608,7 +608,11 @@ void  CommandLineInterfaceManager::startTonemap()
             inputfname = inputFiles.first();
 
         // Create an ad-hoc IOWorker to save the file
-        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename, quality, inputfname, hdrCreationManager->getExpotimes(), tmopts.data()) )
+        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename,
+                                        inputfname,
+                                        hdrCreationManager->getExpotimes(),
+                                        tmopts.data(),
+                                        pfs::Params().insert("quality", quality) ) )
         {
             // File save successful
             printIfVerbose( tr("Image %1 saved successfully").arg(saveLdrFilename) , verbose);

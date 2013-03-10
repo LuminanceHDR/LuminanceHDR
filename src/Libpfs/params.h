@@ -88,9 +88,12 @@ public:
     Params(const ParamsHolder& params)
         : holder_(params) {}
 
-    void insert(const std::string& key, const Param& value)
+    Params& insert(const std::string& key, const Param& value)
     {
-        holder_.insert( ParamsHolder::value_type(key, value) );
+        holder_[key] = value;
+
+        return *this;
+        // holder_.insert( ParamsHolder::value_type(key, value) );
     }
 
     operator const ParamsHolder& () {

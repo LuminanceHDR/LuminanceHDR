@@ -55,6 +55,7 @@
 #include "ui_MainWindow.h"
 
 #include "Libpfs/frame.h"
+#include "Libpfs/params.h"
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/rotate.h"
 #include "Libpfs/manip/gamma_levels.h"
@@ -214,6 +215,7 @@ void MainWindow::init()
         qRegisterMetaType<LdrViewer*>("LdrViewer*");
         qRegisterMetaType<GenericViewer*>("GenericViewer*");
         qRegisterMetaType<QVector<float> >("QVector<float>");
+        qRegisterMetaType<pfs::Params>("pfs::Params");
 
         QDir dir(QDir::homePath());
 
@@ -506,12 +508,13 @@ void MainWindow::on_fileSaveAllAction_triggered()
                 QString outfname = luminance_options->getDefaultPathLdrOut()
                         + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
 
-                // emit save_ldr_frame(l_v, outfname, 100);
-                QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame",
-                                          Qt::QueuedConnection,
+                QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                           Q_ARG(GenericViewer*, l_v),
                                           Q_ARG(QString, outfname),
-                                          Q_ARG(int, 100));
+                                          Q_ARG(QString, QString()),
+                                          Q_ARG(QVector<float>, QVector<float>()),
+                                          Q_ARG(TonemappingOptions*, NULL),
+                                          Q_ARG(pfs::Params, pfs::Params().insert("quality", 100)));
             }
         }
     }
@@ -568,38 +571,40 @@ void MainWindow::on_fileSaveAsAction_triggered()
             outputFilename  +=  ".jpg";
         }
 
-        int quality = 100; // default value is 100%
+        pfs::Params p;
         if ( format == "png" || format == "jpg" )
         {
             ImageQualityDialog savedFileQuality(l_v->getFrame(), format, this);
-            QString winTitle(QObject::tr("Save as..."));
-            winTitle += format.toUpper();
-            savedFileQuality.setWindowTitle( winTitle );
+            savedFileQuality.setWindowTitle( QObject::tr("Save as...") + format.toUpper() );
             if ( savedFileQuality.exec() == QDialog::Rejected ) return;
 
-            quality = savedFileQuality.getQuality();
+            p.insert("quality", (size_t)savedFileQuality.getQuality());
         }
 
         if ( format == "tif" || format == "tiff" )
         {
             TiffModeDialog t;
+            t.setWindowTitle("Save as ...TIFF");
             if ( t.exec() == QDialog::Rejected ) return;
 
+#ifndef NDEBUG
             int tiffMode = t.getTiffWriterMode();
             cout << "TIFF MODE: " << tiffMode << endl;
+#endif
+
+            p.insert("tiff_mode", t.getTiffWriterMode());
         }
 
         QString inputfname;
         if ( ! m_inputFilesName.isEmpty() ) inputfname = m_inputFilesName.first();
 
-        // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
         QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                   Q_ARG(GenericViewer*, l_v),
                                   Q_ARG(QString, outputFilename),
-                                  Q_ARG(int, quality),
                                   Q_ARG(QString, inputfname),
                                   Q_ARG(QVector<float>, m_inputExpoTimes),
-                                  Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
+                                  Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()),
+                                  Q_ARG(pfs::Params, p));
 
     }
 }
@@ -650,11 +655,13 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
 
         if ( outfname.isEmpty() ) return;
 
-        QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame",
-                                  Qt::QueuedConnection,
+        QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                   Q_ARG(GenericViewer*, g_v),
                                   Q_ARG(QString, outfname),
-                                  Q_ARG(int, 100));
+                                  Q_ARG(QString, QString()),
+                                  Q_ARG(QVector<float>, QVector<float>()),
+                                  Q_ARG(TonemappingOptions*, NULL),
+                                  Q_ARG(pfs::Params, pfs::Params().insert("quality", 100)) );
     }
     catch (...)
     {

@@ -101,17 +101,15 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
     }
     else if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-        // DAVIDE_TIFF
-//        LuminanceOptions LuminanceOptions;
+        LuminanceOptions LuminanceOptions;
         pfs::Params writerParams(params);
 
         // LogLuv is not implemented yet in the new TiffWriter...
-//        if ( LuminanceOptions.isSaveLogLuvTiff() ) {
-//            writerParams.insert( "tiff_mode", 3 );
-//        }
-//        else {
+        if ( LuminanceOptions.isSaveLogLuvTiff() ) {
+            writerParams.insert( "tiff_mode", 3 );
+        } else {
             writerParams.insert( "tiff_mode", 2 );
-//        }
+        }
 
         TiffWriter writer(encodedName);
         writer.write(*hdr_frame, writerParams);
@@ -136,43 +134,42 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
 }
 
 bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
-                               const QString& filename, int quality,
+                               const QString& filename, /*int quality,*/
                                const QString& inputFileName,
                                const QVector<float>& expoTimes,
-                               TonemappingOptions* tmopts)
+                               TonemappingOptions* tmopts,
+                               const pfs::Params& params)
 {
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
 
+    pfs::Params p2( params );
+    p2.insert( "min_luminance", ldr_viewer->getMinLuminanceValue() );
+    p2.insert( "max_luminance", ldr_viewer->getMaxLuminanceValue() );
+    p2.insert( "mapping_method", ldr_viewer->getLuminanceMappingMethod() );
+
     bool status = write_ldr_frame(ldr_frame,
-                                  filename, quality,
+                                  filename, /*quality,*/
                                   inputFileName,
                                   expoTimes,
-                                  tmopts,
-                                  ldr_viewer->getMinLuminanceValue(),
-                                  ldr_viewer->getMaxLuminanceValue(),
-                                  ldr_viewer->getLuminanceMappingMethod());
+                                  tmopts, p2);
 
-    if ( status )
-    {
-        if ( !ldr_viewer->isHDR() )
+    if ( status ) {
+        if ( !ldr_viewer->isHDR() ) {
             ldr_viewer->setFileName(filename);
+        }
 
         emit write_ldr_success(ldr_viewer, filename);
     }
-
     return status;
 }
 
 
 bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                const QString& filename,
-                               int quality,
                                const QString& inputFileName,
                                const QVector<float>& expoTimes,
                                TonemappingOptions* tmopts,
-                               float min_luminance,
-                               float max_luminance,
-                               RGBMappingType mapping_method)
+                               const pfs::Params& params)
 {
     bool status = true;
     emit IO_init();
@@ -187,19 +184,14 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-    pfs::Params writerParams;
-    writerParams.insert( "quality", (size_t)quality );
-    writerParams.insert( "min_luminance", min_luminance );
-    writerParams.insert( "max_luminance", max_luminance );
-    writerParams.insert( "mapping_method", mapping_method );
-
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
         TiffWriter writer( encodedName.constData() );
-        if ( writer.write(*ldr_input, writerParams) )
+        if ( writer.write(*ldr_input, params) )
         {
 //            if (tmopts != NULL)
-//                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+//                ExifOperations::writeExifData(encodedName.constData(),
+//                  operations->getExifComment().toStdString());
 
             emit write_ldr_success(ldr_input, filename);
         }
@@ -212,10 +204,11 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     else if (qfi.suffix().toUpper().startsWith("JP"))
     {
         JpegWriter writer(filename.toStdString());
-        if (writer.write(*ldr_input, writerParams))
+        if (writer.write(*ldr_input, params))
 		{
 //			if (tmopts != NULL)
-//				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+//				ExifOperations::writeExifData(encodedName.constData(),
+//                  operations->getExifComment().toStdString());
 
 			emit write_ldr_success(ldr_input, filename);
 		}
@@ -227,15 +220,12 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
 	}
     else if (qfi.suffix().toUpper().startsWith("PNG"))
     {
-//        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input,
-//                                                        min_luminance,
-//                                                        max_luminance,
-//                                                        mapping_method));
         PngWriter writer(filename.toStdString());
-        if (writer.write(*ldr_input, writerParams))
+        if (writer.write(*ldr_input, params))
 		{
 //			if (tmopts != NULL)
-//				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+//				ExifOperations::writeExifData(encodedName.constData(),
+//                  operations->getExifComment().toStdString());
 
 			emit write_ldr_success(ldr_input, filename);
 		}
@@ -248,11 +238,12 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     else
     {
         // QScopedPointer will call delete when this object goes out of scope
-        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
-        if ( image->save(filename, format.toLocal8Bit(), quality) )
+        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input, 0.f, 1.f));
+        if ( image->save(filename, format.toLocal8Bit(), -1) )
         {
 //            if (tmopts != NULL)
-//                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+//                ExifOperations::writeExifData(encodedName.constData(),
+//                  operations->getExifComment().toStdString());
 
             emit write_ldr_success(ldr_input, filename);
         }
@@ -304,7 +295,10 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
 
     pfs::Frame* hdrpfsframe = NULL;
     QStringList rawextensions;
-    rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF" << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF" << "X3F" << "RAW" << "SR2" << "3FR" << "RW2" << "MEF" << "MOS" << "ERF" << "NRW" << "SRW";
+    rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF"
+                  << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF"
+                  << "X3F" << "RAW" << "SR2" << "3FR" << "RW2" << "MEF"
+                  << "MOS" << "ERF" << "NRW" << "SRW";
 
     try
     {
