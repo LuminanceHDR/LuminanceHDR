@@ -32,7 +32,7 @@
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/colorspace.h"
+#include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/domio.h"
 #include "Libpfs/utils/msec_timer.h"
 

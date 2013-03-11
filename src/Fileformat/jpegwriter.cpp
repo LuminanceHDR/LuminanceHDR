@@ -47,7 +47,7 @@
 #include <jpeglib.h>
 
 #include <Libpfs/frame.h>
-#include <Libpfs/utils/rgbremapper.h>
+#include <Libpfs/colorspace/rgbremapper.h>
 #include <Common/ResourceHandlerCommon.h>
 #include <Common/ResourceHandlerLcms.h>
 #include <Fileformat/pfsoutldrimage.h>

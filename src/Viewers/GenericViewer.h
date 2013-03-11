@@ -32,7 +32,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
-#include <Libpfs/utils/rgbremapper_fwd.h>
+#include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 // Forward declaration
 namespace pfs {

@@ -25,7 +25,7 @@
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \since Luminance HDR 2.3.0-beta1
 
-#include <Libpfs/utils/rgbremapper.h>
+#include <Libpfs/colorspace/rgbremapper.h>
 
 #include <algorithm>
 #include <cassert>

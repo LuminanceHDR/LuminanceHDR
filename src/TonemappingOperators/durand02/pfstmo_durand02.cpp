@@ -35,7 +35,7 @@
 #include <sstream>
 #include <cmath>
 
-#include "Libpfs/colorspace.h"
+#include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/frame.h"
 #include "tmo_durand02.h"
 

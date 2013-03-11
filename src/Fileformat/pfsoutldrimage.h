@@ -33,7 +33,7 @@
 #include <stdint.h>
 #include <QImage>
 
-#include <Libpfs/utils/rgbremapper.h>
+#include <Libpfs/colorspace/rgbremapper.h>
 
 // forward declaration
 namespace pfs {

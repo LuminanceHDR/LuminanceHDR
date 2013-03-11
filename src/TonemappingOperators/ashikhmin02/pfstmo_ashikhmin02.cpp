@@ -36,7 +36,7 @@
 
 
 #include "Libpfs/frame.h"
-#include "Libpfs/colorspace.h"
+#include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/progress.h"
 
 #include "tmo_ashikhmin02.h"

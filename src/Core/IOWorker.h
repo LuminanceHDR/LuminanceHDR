@@ -40,7 +40,7 @@
 #include <QString>
 
 #include <Libpfs/params.h>
-#include <Libpfs/utils/rgbremapper_fwd.h>
+#include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 namespace pfs {
 class Frame;

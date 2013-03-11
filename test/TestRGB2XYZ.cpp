@@ -24,7 +24,7 @@
 #include <boost/assert.hpp>
 
 #include <Libpfs/array2d.h>
-#include <Libpfs/colorspace.h>
+#include <Libpfs/colorspace/colorspace.h>
 
 #include "PrintArray2D.h"
 

@@ -38,7 +38,7 @@
 #include <cmath>
 
 #include "Libpfs/frame.h"
-#include "Libpfs/colorspace.h"
+#include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/progress.h"
 
 void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadaptation, float lightadaptation, pfs::Progress &ph)

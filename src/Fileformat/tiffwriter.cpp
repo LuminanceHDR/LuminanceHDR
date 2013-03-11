@@ -47,7 +47,7 @@
 #include <stdint.h>
 
 #include <Common/ResourceHandlerLcms.h>
-#include <Libpfs/utils/rgbremapper.h>
+#include <Libpfs/colorspace/rgbremapper.h>
 #include <Fileformat/pfsoutldrimage.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/array2d.h>

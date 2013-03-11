@@ -33,7 +33,7 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
-#include <Libpfs/utils/rgbremapper.h>
+#include <Libpfs/colorspace/rgbremapper.h>
 
 quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,
                                   float min_luminance,

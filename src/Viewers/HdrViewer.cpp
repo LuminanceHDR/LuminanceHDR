@@ -46,7 +46,7 @@
 #include "Libpfs/domio.h"
 #include "Libpfs/vex/sse.h"
 #include "Libpfs/utils/msec_timer.h"
-#include "Libpfs/utils/rgbremapper.h"
+#include "Libpfs/colorspace/rgbremapper.h"
 
 namespace // anonymous namespace
 {

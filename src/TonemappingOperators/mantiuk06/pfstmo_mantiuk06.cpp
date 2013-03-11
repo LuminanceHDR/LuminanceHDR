@@ -45,7 +45,7 @@
 #include "Libpfs/pfs.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/colorspace.h"
+#include "Libpfs/colorspace/colorspace.h"
 
 
 //--- default tone mapping parameters;

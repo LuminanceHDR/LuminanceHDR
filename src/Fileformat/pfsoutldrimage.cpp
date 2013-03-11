@@ -42,7 +42,7 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
-#include <Libpfs/utils/rgbremapper_fwd.h>
+#include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 using namespace std;
 using namespace boost::assign;

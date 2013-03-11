@@ -38,7 +38,7 @@
 
 #include "Libpfs/progress.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/colorspace.h"
+#include "Libpfs/colorspace/colorspace.h"
 #include "display_adaptive_tmo.h"
 
 // TODO: remove this rubbish!
