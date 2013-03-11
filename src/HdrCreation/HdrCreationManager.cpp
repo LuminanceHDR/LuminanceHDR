@@ -37,6 +37,7 @@
 #include "Libpfs/domio.h"
 #include "Libpfs/manip/shift.h"
 #include "Libpfs/manip/cut.h"
+#include "Libpfs/manip/copy.h"
 
 #include "Libpfs/utils/msec_timer.h"
 
@@ -549,16 +550,16 @@ void HdrCreationManager::set_ais_crop_flag(bool flag)
 void HdrCreationManager::align_with_ais()
 {
     ais = new QProcess(this);
-    if (ais == NULL) //TODO: exit gracefully
-        exit(1);
-    if (!fromCommandLine)
+    if (ais == NULL) exit(1);       //TODO: exit gracefully
+    if (!fromCommandLine) {
         ais->setWorkingDirectory(m_luminance_options.getTempDir());
+    }
     QStringList env = QProcess::systemEnvironment();
-    #ifdef WIN32
+#ifdef WIN32
     QString separator(";");
-    #else
+#else
     QString separator(":");
-    #endif
+#endif
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
     ais->setEnvironment(env);
     connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
@@ -567,22 +568,25 @@ void HdrCreationManager::align_with_ais()
     connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
     
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
-    if (m_ais_crop_flag){
-        ais_parameters << "-C";
-    }
-    if (filesToRemove[0] == "") {
-        ais_parameters << fileList;
-    }
+
+    if (m_ais_crop_flag) { ais_parameters << "-C"; }
+    if (filesToRemove[0].isEmpty()) { ais_parameters << fileList; }
     else {
-        foreach(QString fname, filesToRemove) 
-            ais_parameters << fname;    
+        // foreach (QString fname, filesToRemove) {
+        // ...using iterators will remove a temporary copy instead than foreach
+        for ( QVector<QString>::const_iterator it = filesToRemove.begin(),
+              itEnd = filesToRemove.end(); it != itEnd; ++it)
+        {
+            ais_parameters << *it;
+        }
     }
     qDebug() << "ais_parameters " << ais_parameters;
-    #ifdef Q_WS_MAC
+#ifdef Q_WS_MAC
+    qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
     ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
-    #else
+#else
     ais->start("align_image_stack", ais_parameters );
-    #endif
+#endif
     qDebug() << "ais started";
 }
 
@@ -662,11 +666,10 @@ void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
 
 void HdrCreationManager::removeTempFiles()
 {
-    foreach (QString tempfname, filesToRemove)
-    {
-        qDebug() << "void HdrCreationManager::removeTempFiles(): " << qPrintable(tempfname);
-        if (!tempfname.isEmpty())
-        {
+    foreach (QString tempfname, filesToRemove) {
+        qDebug() << "void HdrCreationManager::removeTempFiles(): "
+                 << qPrintable(tempfname);
+        if (!tempfname.isEmpty()) {
             QFile::remove(tempfname);
         }
     }
@@ -812,14 +815,14 @@ void HdrCreationManager::applyShiftsToMdrImageStack(const QList<QPair<int,int> >
             continue;
         }
         pfs::Array2Df *shiftedR = shift(*listmdrR[i],
-                                       hvOffsets[i].first,
-                                       hvOffsets[i].second);
+                                        hvOffsets[i].first,
+                                        hvOffsets[i].second);
         pfs::Array2Df *shiftedG = shift(*listmdrG[i],
-                                       hvOffsets[i].first,
-                                       hvOffsets[i].second);
+                                        hvOffsets[i].first,
+                                        hvOffsets[i].second);
         pfs::Array2Df *shiftedB = shift(*listmdrB[i],
-                                       hvOffsets[i].first,
-                                       hvOffsets[i].second);
+                                        hvOffsets[i].first,
+                                        hvOffsets[i].second);
         delete listmdrR[i];
         delete listmdrG[i];
         delete listmdrB[i];
@@ -846,20 +849,53 @@ void HdrCreationManager::cropLDR(const QRect& ca)
 
 void HdrCreationManager::cropMDR(const QRect& ca)
 {
-    //crop all the images
+    int x_ul, y_ul, x_br, y_br;
+    ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+
+    int newWidth = x_br-x_ul;
+    int newHeight = y_br-y_ul;
+
+    /*
+    // crop all the images
     int origlistsize = listmdrR.size();
     pfs::Frame *frame;
     pfs::Channel *Xc, *Yc, *Zc;
     pfs::Frame *cropped_frame;
-    for (int idx = 0; idx < origlistsize; idx++)
+    */
+
+    // all R channels
+    for ( int idx = 0; idx < listmdrR.size(); ++idx )
     {
+        pfs::Array2Df tmp( newWidth, newHeight );
+        pfs::cut(listmdrR[idx], &tmp, x_ul, y_ul, x_br, y_br);
+        listmdrR[idx]->swap( tmp );
+    }
+
+    // all G channels
+    for ( int idx = 0; idx < listmdrG.size(); ++idx )
+    {
+        pfs::Array2Df tmp( newWidth, newHeight );
+        pfs::cut(listmdrG[idx], &tmp, x_ul, y_ul, x_br, y_br);
+        listmdrG[idx]->swap( tmp );
+    }
+
+    // all B channel
+    for ( int idx = 0; idx < listmdrB.size(); ++idx )
+    {
+        pfs::Array2Df tmp( newWidth, newHeight );
+        pfs::cut(listmdrB[idx], &tmp, x_ul, y_ul, x_br, y_br);
+        listmdrB[idx]->swap( tmp );
+    }
+
+    for (int idx = 0; idx < mdrImagesList.size(); idx++)
+    {
+        /*
         frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
         frame->createXYZChannels( Xc, Yc, Zc );
-        Xc->setChannelData(listmdrR[idx]);  
-        Yc->setChannelData(listmdrG[idx]);  
-        Zc->setChannelData(listmdrB[idx]);  
-        int x_ul, y_ul, x_br, y_br;
-        ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+        Xc->setChannelData(listmdrR[idx]);
+        Yc->setChannelData(listmdrG[idx]);
+        Zc->setChannelData(listmdrB[idx]);
+
         cropped_frame = pfs::cut(frame, x_ul, y_ul, x_br, y_br);
 
         pfs::DOMIO::freeFrame(frame);
@@ -869,18 +905,20 @@ void HdrCreationManager::cropMDR(const QRect& ca)
         listmdrR[idx] = R->getChannelData();
         listmdrG[idx] = G->getChannelData();
         listmdrB[idx] = B->getChannelData();
+        */
+
         QImage *newimage = new QImage(mdrImagesList.at(0)->copy(ca));
         if (newimage == NULL)
             exit(1); // TODO: exit gracefully
         mdrImagesList.append(newimage);
         mdrImagesToRemove.append(mdrImagesList.takeAt(0));
-        QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
+        QImage *img = new QImage(newWidth, newHeight, QImage::Format_ARGB32);
         img->fill(qRgba(0,0,0,0));
         antiGhostingMasksList.append(img);
         antiGhostingMasksList.takeAt(0);
     }
-    m_mdrWidth = cropped_frame->getWidth();
-    m_mdrHeight = cropped_frame->getHeight();
+    m_mdrWidth = newWidth;
+    m_mdrHeight = newHeight;
     cropAgMasks(ca);
 }
 
@@ -942,20 +980,60 @@ void HdrCreationManager::readData()
     emit aisDataReady(data);
 }
 
+namespace {
+
+inline float toFloat(int value) {
+    return (static_cast<float>(value)/255.f);
+}
+
+void interleavedToPlanar(const QImage* image,
+                         pfs::Array2Df* r, pfs::Array2Df* g, pfs::Array2Df* b)
+{
+    for (int row = 0; row < image->height(); ++row)
+    {
+        const QRgb* data = reinterpret_cast<const QRgb*>(image->scanLine(row));
+        pfs::Array2Df::iterator itRed = r->row_begin(row);
+        pfs::Array2Df::iterator itGreen = g->row_begin(row);
+        pfs::Array2Df::iterator itBlue = g->row_begin(row);
+
+        for ( int col = 0; col < image->width(); ++col )
+        {
+            *itRed++ = toFloat(qRed(*data));
+            *itGreen++ = toFloat(qGreen(*data));
+            *itBlue++ = toFloat(qBlue(*data));
+
+            ++data;
+        }
+    }
+}
+} // anonymous namespace
+
 void HdrCreationManager::saveLDRs(const QString& filename)
 {
 #ifdef QT_DEBUG
     qDebug() << "HdrCreationManager::saveLDRs";
 #endif
 
-    int origlistsize = ldrImagesList.size();
-    for (int idx = 0; idx < origlistsize; idx++)
+    for (int idx = 0, origlistsize = ldrImagesList.size(); idx < origlistsize;
+         ++idx)
     {
+        QImage* currentImage = ldrImagesList[idx];
+
         QString fname = filename + QString("_%1").arg(idx) + ".tiff";
 
+        pfs::Frame frame(currentImage->width(), currentImage->height());
+        pfs::Channel* R;
+        pfs::Channel* G;
+        pfs::Channel* B;
+        frame.createXYZChannels(R, G, B);
+        interleavedToPlanar(currentImage, R->getChannelData(), G->getChannelData(), B->getChannelData());
+
+        TiffWriter writer(QFile::encodeName(fname).constData());
+        writer.write( frame, pfs::Params("tiff_mode", 1) );
+
         // DAVIDE_TIFF
-//        TiffWriter writer(QFile::encodeName(fname).constData(), ldrImagesList[idx]);
-//        writer.write8bitTiff();
+        // TiffWriter writer(QFile::encodeName(fname).constData(), ldrImagesList[idx]);
+        // writer.write8bitTiff();
 
         QFileInfo qfi(filename);
         QString absoluteFileName = qfi.absoluteFilePath();
@@ -975,20 +1053,46 @@ void HdrCreationManager::saveMDRs(const QString& filename)
     for (int idx = 0; idx < origlistsize; idx++)
     {
         QString fname = filename + QString("_%1").arg(idx) + ".tiff";
-        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
-        pfs::Channel *Xc, *Yc, *Zc;
-        frame->createXYZChannels( Xc, Yc, Zc );
-        Xc->setChannelData(listmdrR[idx]);  
-        Yc->setChannelData(listmdrG[idx]);  
-        Zc->setChannelData(listmdrB[idx]);  
-        // DAVIDE_TIFF
-//        TiffWriter writer(QFile::encodeName(fname).constData(), frame);
+
+//        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
+//        pfs::Channel *Xc, *Yc, *Zc;
+//        frame->createXYZChannels( Xc, Yc, Zc );
+//        Xc->setChannelData(listmdrR[idx]);
+//        Yc->setChannelData(listmdrG[idx]);
+//        Zc->setChannelData(listmdrB[idx]);
+
+//        TiffWriter writer(, frame);
 //        writer.writePFSFrame16bitTiff();
+
+        pfs::Frame frame( m_mdrWidth, m_mdrHeight );
+        pfs::Channel* R;
+        pfs::Channel* G;
+        pfs::Channel* B;
+        frame.createXYZChannels(R, G, B);
+
+        pfs::copy(listmdrR[idx], R->getChannelData());
+        pfs::copy(listmdrG[idx], G->getChannelData());
+        pfs::copy(listmdrB[idx], B->getChannelData());
+
+        TiffWriter writer( QFile::encodeName(fname).constData() );
+        // tiff_mode = 2 (16 bit tiff)
+        // min_luminance = 0
+        // max_luminance = 2^16 - 1
+        // note: this is due to the fact the reader do read the native
+        // data into float, without doing any conversion into the [0, 1] range
+        // (definitely something to think about when we touch the readers)
+        writer.write(frame,
+                     pfs::Params("tiff_mode", 2)
+                        ("min_luminance", (float)0)
+                        ("max_luminance", (float)65535) );
 
         QFileInfo qfi(filename);
         QString absoluteFileName = qfi.absoluteFilePath();
-        QByteArray encodedName = QFile::encodeName(absoluteFileName + QString("_%1").arg(idx) + ".tiff");
-        ExifOperations::copyExifData(QFile::encodeName(fileList[idx]).constData(), encodedName.constData(), false);
+        QByteArray encodedName = QFile::encodeName(
+                    absoluteFileName + QString("_%1").arg(idx) + ".tiff");
+        ExifOperations::copyExifData(
+                    QFile::encodeName(fileList[idx]).constData(),
+                    encodedName.constData(), false);
     }
     emit imagesSaved();
 }
@@ -1015,9 +1119,7 @@ void HdrCreationManager::doAntiGhosting(int goodImageIndex)
         {
             if (idx != goodImageIndex)
             {
-                blend(*listmdrR[idx],
-                      *listmdrG[idx],
-                      *listmdrB[idx],
+                blend(*listmdrR[idx], *listmdrG[idx], *listmdrB[idx],
                       *listmdrR[goodImageIndex],
                       *listmdrG[goodImageIndex],
                       *listmdrB[goodImageIndex],

@@ -40,7 +40,7 @@ class Frame;
 class TiffWriter
 {
 public:
-    TiffWriter(const char* filename);
+    TiffWriter(const std::string& filename);
     ~TiffWriter();
 
     bool write(const pfs::Frame& frame, const pfs::Params& params);

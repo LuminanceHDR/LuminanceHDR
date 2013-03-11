@@ -612,7 +612,7 @@ void  CommandLineInterfaceManager::startTonemap()
                                         inputfname,
                                         hdrCreationManager->getExpotimes(),
                                         tmopts.data(),
-                                        pfs::Params().insert("quality", quality) ) )
+                                        pfs::Params("quality", (size_t)quality) ) )
         {
             // File save successful
             printIfVerbose( tr("Image %1 saved successfully").arg(saveLdrFilename) , verbose);

@@ -514,7 +514,7 @@ void MainWindow::on_fileSaveAllAction_triggered()
                                           Q_ARG(QString, QString()),
                                           Q_ARG(QVector<float>, QVector<float>()),
                                           Q_ARG(TonemappingOptions*, NULL),
-                                          Q_ARG(pfs::Params, pfs::Params().insert("quality", 100)));
+                                          Q_ARG(pfs::Params, pfs::Params("quality", 100u)));
             }
         }
     }
@@ -578,7 +578,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
             savedFileQuality.setWindowTitle( QObject::tr("Save as...") + format.toUpper() );
             if ( savedFileQuality.exec() == QDialog::Rejected ) return;
 
-            p.insert("quality", (size_t)savedFileQuality.getQuality());
+            p.set("quality", (size_t)savedFileQuality.getQuality());
         }
 
         if ( format == "tif" || format == "tiff" )
@@ -592,7 +592,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
             cout << "TIFF MODE: " << tiffMode << endl;
 #endif
 
-            p.insert("tiff_mode", t.getTiffWriterMode());
+            p.set("tiff_mode", t.getTiffWriterMode());
         }
 
         QString inputfname;
@@ -661,7 +661,7 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
                                   Q_ARG(QString, QString()),
                                   Q_ARG(QVector<float>, QVector<float>()),
                                   Q_ARG(TonemappingOptions*, NULL),
-                                  Q_ARG(pfs::Params, pfs::Params().insert("quality", 100)) );
+                                  Q_ARG(pfs::Params, pfs::Params("quality", 100u)) );
     }
     catch (...)
     {

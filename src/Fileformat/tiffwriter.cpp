@@ -531,7 +531,7 @@ private:
 //    return 0;
 //}
 
-TiffWriter::TiffWriter(const char *filename)
+TiffWriter::TiffWriter(const std::string& filename)
     : m_filename(filename)
 {}
 

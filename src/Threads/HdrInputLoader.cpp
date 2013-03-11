@@ -123,12 +123,12 @@ void HdrInputLoader::run() {
 			emit mdrReady(frame, image_idx, expotime, outfname);
 		}
 	}
-	catch(pfs::Exception e) {
+    catch(pfs::Exception& e) {
 		emit loadFailed(QString(tr("ERROR: %1")).arg(e.getMessage()),image_idx);
 		//QApplication::restoreOverrideCursor();
 		return;
 	}
-	catch (QString err) {
+    catch (QString& err) {
 		emit loadFailed((err + " : %1").arg(fname), image_idx);	
 		return;
 	}

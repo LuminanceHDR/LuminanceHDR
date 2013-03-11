@@ -25,6 +25,7 @@
 #ifndef LIBPFS_PARAMS_H
 #define LIBPFS_PARAMS_H
 
+#include <cassert>
 #include <map>
 #include <iostream>
 #include <string>
@@ -83,17 +84,27 @@ public:
     typedef ParamsHolder::iterator iterator;
     typedef ParamsHolder::const_iterator const_iterator;
 
+    //! \brief empty parameters holder ctor
     Params()
         : holder_() {}
+    //! \brief copy ctor
     Params(const ParamsHolder& params)
         : holder_(params) {}
+    //! \brief single key,value pair ctor
+    Params(const std::string& key, const Param& value)
+        : holder_()
+    { set(key, value); }
 
-    Params& insert(const std::string& key, const Param& value)
-    {
+    // pfs::Params()(key, value)(key, value)( ... )
+    // or
+    // pfs::Params(key, value)(key, value)( ... )
+    Params& operator()(const std::string& key, const Param& value) {
+        return set(key, value);
+    }
+
+    Params& set(const std::string& key, const Param& value) {
         holder_[key] = value;
-
         return *this;
-        // holder_.insert( ParamsHolder::value_type(key, value) );
     }
 
     operator const ParamsHolder& () {

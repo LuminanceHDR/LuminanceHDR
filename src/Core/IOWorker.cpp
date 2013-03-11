@@ -63,9 +63,9 @@ bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer,
                                const pfs::Params& params)
 {
     pfs::Params params2( params );
-    params2.insert( "min_luminance", hdr_viewer->getMinLuminanceValue() );
-    params2.insert( "max_luminance", hdr_viewer->getMaxLuminanceValue() );
-    params2.insert( "mapping_method", hdr_viewer->getLuminanceMappingMethod() );
+    params2.set( "min_luminance", hdr_viewer->getMinLuminanceValue() )
+            ( "max_luminance", hdr_viewer->getMaxLuminanceValue() )
+            ( "mapping_method", hdr_viewer->getLuminanceMappingMethod() );
 
     pfs::Frame* hdr_frame = hdr_viewer->getFrame();
 
@@ -106,14 +106,13 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
 
         // LogLuv is not implemented yet in the new TiffWriter...
         if ( LuminanceOptions.isSaveLogLuvTiff() ) {
-            writerParams.insert( "tiff_mode", 3 );
+            writerParams.set( "tiff_mode", 3 );
         } else {
-            writerParams.insert( "tiff_mode", 2 );
+            writerParams.set( "tiff_mode", 2 );
         }
 
-        TiffWriter writer(encodedName);
+        TiffWriter writer(encodedName.constData());
         writer.write(*hdr_frame, writerParams);
-
     }
     else if (qfi.suffix().toUpper() == "PFS")
     {
@@ -143,9 +142,9 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer,
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
 
     pfs::Params p2( params );
-    p2.insert( "min_luminance", ldr_viewer->getMinLuminanceValue() );
-    p2.insert( "max_luminance", ldr_viewer->getMaxLuminanceValue() );
-    p2.insert( "mapping_method", ldr_viewer->getLuminanceMappingMethod() );
+    p2.set( "min_luminance", ldr_viewer->getMinLuminanceValue() )
+            ( "max_luminance", ldr_viewer->getMaxLuminanceValue() )
+            ( "mapping_method", ldr_viewer->getLuminanceMappingMethod() );
 
     bool status = write_ldr_frame(ldr_frame,
                                   filename, /*quality,*/

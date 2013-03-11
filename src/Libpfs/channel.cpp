@@ -32,47 +32,29 @@ using namespace std;
 
 namespace pfs
 {
-Channel::Channel( size_t width, size_t height, const std::string& channel_name)
-    : channel_impl( new ChannelData( width, height ) )
-    , name( channel_name )
+Channel::Channel( size_t width, size_t height, const std::string& channelName)
+    : m_channelData( width, height )
+    , m_name( channelName )
+    , m_tags()
 {
     //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
 }
 
+//std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
 Channel::~Channel()
-{
-    //std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
-
-    delete channel_impl;
-}
-
-// Channel implementation
-TagContainer* Channel::getTags()
-{
-    return &tags;
-}
-
-const TagContainer* Channel::getTags() const
-{
-    return &tags;
-}
+{}
 
 void Channel::resize(int width, int height)
 {
-    channel_impl->resize(width, height);
+    m_channelData.resize(width, height);
 }
 
-const std::string& Channel::getName() const
-{
-    return name;
-}
-
-void Channel::setChannelData(ChannelData *array)
-{
-    if (channel_impl)
-        delete channel_impl;
-    channel_impl = array;
-}
+//void Channel::setChannelData(ChannelData *array)
+//{
+//    if (channel_impl)
+//        delete channel_impl;
+//    channel_impl = array;
+//}
 
 } // pfs
 

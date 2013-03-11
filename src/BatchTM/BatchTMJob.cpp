@@ -111,7 +111,7 @@ void BatchTMJob::run()
             if ( io_worker.write_ldr_frame(temporary_frame.data(),
                                            output_file_name, QString(),
                                            QVector<float>(), opts,
-                                           pfs::Params().insert("quality", opts->quality)) )
+                                           pfs::Params("quality", (size_t)opts->quality)) )
             {
                 emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
             } else {

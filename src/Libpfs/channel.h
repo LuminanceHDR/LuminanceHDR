@@ -30,9 +30,10 @@
 #include <string>
 #include <map>
 
-#include "pfs.h" // SelfPtr
-#include "array2d.h"
-#include "tag.h"
+#include <Libpfs/array2d.h>
+#include <Libpfs/tag.h>
+
+// #include "pfs.h" // SelfPtr
 
 namespace pfs
 {
@@ -44,7 +45,7 @@ class Channel
 public:
     typedef Array2D<float> ChannelData;
 
-    Channel(size_t width, size_t height, const std::string& channel_name);
+    Channel(size_t width, size_t height, const std::string& channelName);
 
     virtual ~Channel();
 
@@ -54,7 +55,6 @@ public:
     //!
     TagContainer *getTags();
     const TagContainer *getTags() const;
-
 
     //! \brief For performance reasons, the channels can be accessed as a
     //! table of float values. Data is given in row-major order, i.e.
@@ -81,51 +81,20 @@ public:
     //!
     const std::string& getName() const;
 
-    inline
-    ChannelData* getChannelData()
-    {
-        return channel_impl;
-    }
-    inline
-    const ChannelData* getChannelData() const
-    {
-        return channel_impl;
-    }
+    //! \brief return handler to the underlying data
+    inline ChannelData* getChannelData();
+    inline const ChannelData* getChannelData() const;
 
-    void setChannelData(ChannelData *);
+    //    void setChannelData(ChannelData *);
 
 private:
-    ChannelData* channel_impl;
-    std::string name;
-    TagContainer tags;
+    ChannelData     m_channelData;
+    std::string     m_name;
+    TagContainer    m_tags;
 };
-
-inline
-int Channel::getWidth() const
-{
-    return channel_impl->getCols();
-}
-
-inline
-int Channel::getHeight() const
-{
-    return channel_impl->getRows();
-}
-
-inline
-float* Channel::getRawData()
-{
-    return channel_impl->getRawData();
-}
-
-inline
-const float* Channel::getRawData() const
-{
-    return channel_impl->getRawData();
-}
 
 } // namespace pfs
 
-
+#include <Libpfs/channel.hxx>
 #endif // PFS_CHANNEL_H
 

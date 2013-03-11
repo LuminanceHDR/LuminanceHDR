@@ -109,9 +109,11 @@ public:
     void saveLDRs(const QString& filename);
     void saveMDRs(const QString& filename);
 	void doAntiGhosting(int);
+
 public slots:
 	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
 	void removeTempFiles();
+
 signals:
     void finishedLoadingInputFiles(const QStringList& filesLackingExif);
     void errorWhileLoading(const QString& message); //also for !valid size

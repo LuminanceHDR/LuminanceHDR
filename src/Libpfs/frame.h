@@ -48,15 +48,6 @@ typedef std::vector< Channel* > ChannelContainer;
 //! also contain additional information in tags (see getTags).
 class Frame
 {
-private:
-    int m_width;
-    int m_height;
-
-    TagContainer m_tags;
-    ChannelContainer m_channels;
-
-    ::pfs::exif::exif_data m_exifData;
-
 public:
     Frame(int width, int height);
     ~Frame();
@@ -141,15 +132,24 @@ public:
     const TagContainer& getTags() const;
 
     //! \brief exif data for the current \c Frame
-    const ::pfs::exif::exif_data& exif() const
-    {
-        return m_exifData;
-    }
+//    const ::pfs::exif::exif_data& exif() const
+//    {
+//        return m_exifData;
+//    }
 
-    ::pfs::exif::exif_data& exif()
-    {
-        return m_exifData;
-    }
+//    ::pfs::exif::exif_data& exif()
+//    {
+//        return m_exifData;
+//    }
+
+private:
+    int m_width;
+    int m_height;
+
+    TagContainer m_tags;
+    ChannelContainer m_channels;
+
+    // ::pfs::exif::exif_data m_exifData;
 };
 
 } // namespace pfs
