@@ -23,7 +23,7 @@
 #include <QRgb>
 #include <QDebug>
 
-#include <Libpfs/utils/rgbremapper.h>
+#include <Libpfs/colorspace/rgbremapper.h>
 
 TEST(FloatRgbConverter, Uint16_Test1)
 {
