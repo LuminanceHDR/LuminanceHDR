@@ -1,5 +1,5 @@
 /*
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2012 Davide Anastasia
  *
@@ -23,11 +23,9 @@
 #define RESOURCEHANDLER_H
 
 template<typename T>
-struct ResourceHandlerTraits
-{
-    static
-    void cleanup(T* p)
-    {
+struct ResourceHandlerTraits {
+    static inline
+    void cleanup(T* p) {
         delete p;
     }
 };
@@ -36,7 +34,7 @@ struct ResourceHandlerTraits
 //! however, it doesn't provide and operator*(), which allow to store
 //! a pointer to void
 template<typename T, typename Traits = ResourceHandlerTraits<T> >
-class ResourceHandler // : boost::noncopyable
+class ResourceHandler
 {
 public:
     ResourceHandler(T* p = 0):

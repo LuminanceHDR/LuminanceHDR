@@ -32,6 +32,7 @@
 #include <QRgb>
 
 #include <Libpfs/colorspace/rgbremapper_fwd.h>
+#include <Libpfs/colorspace/transform.h>
 
 class RGBRemapper
 {
@@ -60,6 +61,11 @@ public:
     void toFloat(float rI, float gI, float bI,
                  float& rO, float& gO, float& bO) const;
 
+    void operator()(float rI, float gI, float bI,
+                    float& rO, float& gO, float& bO) const
+    {
+        this->toFloat(rI, gI, bI, rO, gO, bO);
+    }
 private:
     struct RgbF3 {
         RgbF3(float r, float g, float b)

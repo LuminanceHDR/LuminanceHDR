@@ -1,7 +1,5 @@
-/**
- * @brief Tiff facilities
- *
- * This file is a part of LuminanceHDR package.
+/*
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2006 Giuseppe Rota
@@ -21,20 +19,21 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
- * slightly modified by Giuseppe Rota <grota@sourceforge.net> for Luminance HDR
- * added color management support by Franco Comida <fcomida@sourceforge.net>
  */
 
-#include "tiffwriter.h"
-#include <tiffio.h>
+//! \brief TIFF facilities
+//! \author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
+//! Original author for PFSTOOLS
+//! \author Giuseppe Rota <grota@sourceforge.net>
+//! slightly modified by for Luminance HDR
+//! \author Franco Comida <fcomida@sourceforge.net>
+//! added color management support by Franco Comida
+//! \author Davide Anastasia <davideanastasia@sourceforge.net>
+//! Complete rewrite/refactoring
 
-//#include <QObject>
-//#include <QSysInfo>
-//#include <QFileInfo>
-//#include <QFile>
-//#include <QDebug>
+#include "tiffwriter.h"
+#include <Fileformat/tiffcommon.h>
+#include <tiffio.h>
 
 #include <cmath>
 #include <iostream>
@@ -48,6 +47,7 @@
 
 #include <Common/ResourceHandlerLcms.h>
 #include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/colorspace/xyz.h>
 #include <Fileformat/pfsoutldrimage.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/array2d.h>
@@ -63,7 +63,7 @@ struct TiffWriterParams
         , minLuminance_(0.f)
         , maxLuminance_(1.f)
         , luminanceMapping_(MAP_LINEAR)
-        , tiffWriterMode_(2)        // 8bit uint
+        , tiffWriterMode_(0)        // 8bit uint by default
     {}
 
     void parse(const Params& params)
@@ -217,8 +217,7 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
-    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE,
-                  (uint16_t)8*(uint16_t)sizeof(uint8_t));
+    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(uint8_t));
     TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
 
     tsize_t stripSize = TIFFStripSize(tif);
@@ -270,8 +269,7 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
-    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE,
-                  (uint16_t)8*(uint16_t)sizeof(uint16_t));
+    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(uint16_t));
     TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
 
     tsize_t stripSize = TIFFStripSize(tif);
@@ -325,8 +323,7 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_IEEEFP);
-    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,
-                  (uint16_t)8*(uint16_t)sizeof(float));
+    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(float));
     TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
 
     tsize_t stripSize = TIFFStripSize(tif);
@@ -365,121 +362,132 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 }
 
 // write LogLUv Tiff from pfs::Frame
-// bool writeLogLuvTiff()
-// {
-//    if ( !pfsFrame )
-//    {
-//        std::runtime_error("TiffWriter: Invalid writeLogLuvTiff function, "\
-//                           "pfsFrame is not set correctly");
-//    }
+bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
+{
+#ifndef NDEBUG
+    cout << __func__ << endl;
+#endif
+    assert(tif != NULL);
 
-//    TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_SGILOG);
-//    TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_LOGLUV);
-//    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_IEEEFP);
-//    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE,
-//                  (uint16_t)8*(uint16_t)sizeof(float));
-//    TIFFSetField (tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
-//    TIFFSetField (tif, TIFFTAG_STONITS, 1.);	/* not known */
+    uint32_t width = frame.getWidth();
+    uint32_t height = frame.getHeight();
 
-//    pfs::Channel* Xc;
-//    pfs::Channel* Yc;
-//    pfs::Channel* Zc;
+    writeCommonHeader(tif, width, height);
 
-//    pfsFrame->getXYZChannels(Xc, Yc, Zc);
+    TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_SGILOG);
+    TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_LOGLUV);
+    TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_IEEEFP);
+    TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(float));
+    TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
+    TIFFSetField(tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
+    TIFFSetField(tif, TIFFTAG_STONITS, 1.);	/* not known */
 
-//    const float *X = Xc->getRawData();
-//    const float *Y = Yc->getRawData();
-//    const float *Z = Zc->getRawData();
+    tsize_t stripSize = TIFFStripSize(tif);
+    assert( sizeof(float)*width*3 == stripSize );
+    tstrip_t stripsNum = TIFFNumberOfStrips(tif);
 
-//    tsize_t strip_size = TIFFStripSize (tif);
-//    tstrip_t strips_num = TIFFNumberOfStrips (tif);
-//    float *strip_buf = (float *) _TIFFmalloc (strip_size);	// enough space for a strip
-//    if (!strip_buf)
-//    {
-//		TIFFClose(tif);
-//        throw std::runtime_error ("TIFF: error allocating buffer.");
-//    }
+    const Channel* rChannel;
+    const Channel* gChannel;
+    const Channel* bChannel;
+    frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-//    for (unsigned int s = 0; s < strips_num; s++)
-//    {
-//        for (unsigned int col = 0; col < width; col++)
-//        {
-//            strip_buf[3 * col + 0] = X[s * width + col];	//(*X)(col,s);
-//            strip_buf[3 * col + 1] = Y[s * width + col];	//(*Y)(col,s);
-//            strip_buf[3 * col + 2] = Z[s * width + col];	//(*Z)(col,s);
-//        }
-//        if (TIFFWriteEncodedStrip(tif, s, strip_buf, strip_size) == 0)
-//        {
-//            qDebug ("error writing strip");
-//			TIFFClose(tif);
-//            return -1;
-//        }
-//    }
-//    _TIFFfree (strip_buf);
-//	TIFFClose(tif);
+    const float* redData = rChannel->getRawData();
+    const float* greenData = gChannel->getRawData();
+    const float* blueData = bChannel->getRawData();
+
+    std::vector<float> stripBuffer( width*3 );
+    std::vector<float> xCh(width);
+    std::vector<float> yCh(width);
+    std::vector<float> zCh(width);
+
+    RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
+                            params.luminanceMapping_); // maybe I have to force to be linear?!
+    for (unsigned int s = 0; s < stripsNum; s++)
+    {
+        // remap to [0, 1]
+        colorspace::transform(redData + s*width, redData + s*(width + 1),
+                              greenData + s*width,
+                              blueData + s*width,
+                              xCh.begin(), yCh.begin(), zCh.begin(),
+                              rgbRemapper);
+        // transform colorspace to XYZ
+        colorspace::transform(xCh.begin(), xCh.end(), yCh.begin(), zCh.end(),
+                              xCh.begin(), yCh.begin(), zCh.end(),
+                              colorspace::ConvertRGB2XYZ());
+        // DAVIDE ... can we get rid of the RGBRemapper in this case?
+        planarToInterleaved(xCh.data(), yCh.data(), zCh.data(),
+                            stripBuffer.data(), RGB_FORMAT, width,
+                            RGBRemapper());
+        if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) == 0)
+        {
+            qDebug ("error writing strip");
+
+            return -1;
+        }
+    }
+
+    return true;
+}
 //
-//    return 0;
-// }
-
-namespace
-{
-// It can be done much better, but we can keep it for a bit :)
-struct ComputeMinMax
-{
-    ComputeMinMax()
-        : m_min( std::numeric_limits<float>::max() )
-        , m_max( -std::numeric_limits<float>::max() )
-    {}
-
-    void operator()(const float& value)
-    {
-        if ( value > m_max ) m_max = value;
-        else if ( value < m_min ) m_min = value;
-    }
-
-    inline
-    float min()
-    { return m_min; }
-
-    inline
-    float max()
-    { return m_max; }
-
-private:
-    float m_min;
-    float m_max;
-};
-
-struct Normalizer
-{
-    Normalizer(float min, float max)
-        : m_min(min + std::numeric_limits<float>::epsilon())
-        // , m_max(max)
-        , m_normalizer( max - m_min )
-    {}
-
-    float operator()(const float& value) const
-    {
-        return (value - m_min)/m_normalizer;
-    }
-private:
-    float m_min;
-    // float m_max;
-    float m_normalizer;
-};
-
+//namespace
+//{
+//// It can be done much better, but we can keep it for a bit :)
+//struct ComputeMinMax
+//{
+//    ComputeMinMax()
+//        : m_min( std::numeric_limits<float>::max() )
+//        , m_max( -std::numeric_limits<float>::max() )
+//    {}
+//
+//    void operator()(const float& value)
+//    {
+//        if ( value > m_max ) m_max = value;
+//        else if ( value < m_min ) m_min = value;
+//    }
+//
+//    inline
+//    float min()
+//    { return m_min; }
+//
+//    inline
+//    float max()
+//    { return m_max; }
+//
+//private:
+//    float m_min;
+//    float m_max;
+//};
+//
+//struct Normalizer
+//{
+//    Normalizer(float min, float max)
+//        : m_min(min + std::numeric_limits<float>::epsilon())
+//        // , m_max(max)
+//        , m_normalizer( max - m_min )
+//    {}
+//
+//    float operator()(const float& value) const
+//    {
+//        return (value - m_min)/m_normalizer;
+//    }
+//private:
+//    float m_min;
+//    // float m_max;
+//    float m_normalizer;
+//};
+//
 //    ComputeMinMax xMinMax = std::for_each(X, X + numPixels, ComputeMinMax());
 //    ComputeMinMax yMinMax = std::for_each(Y, Y + numPixels, ComputeMinMax());
 //    ComputeMinMax zMinMax = std::for_each(Z, Z + numPixels, ComputeMinMax());
-
+//
 //    Normalizer normalizer(std::min(xMinMax.min(),
 //                                   std::min(yMinMax.min(),
 //                                            zMinMax.min())),
 //                          std::max(xMinMax.max(),
 //                                   std::max(yMinMax.max(),
 //                                            zMinMax.max())));
-
-}
+//
+//}
 
 // double check this? (Sept 24, 2012)
 // bool writePFSFrame16bitTiff()
@@ -547,26 +555,25 @@ bool TiffWriter::write(const pfs::Frame& frame, const pfs::Params& params)
     cout << p << endl;
 #endif
 
-    // get handle to file ... better done with a smart pointer!
-    TIFF* tif = TIFFOpen (m_filename.c_str(), "w");
+    ScopedTiffFile tif( TIFFOpen (m_filename.c_str(), "w") );
 
     bool status = true;
     switch (p.tiffWriterMode_) {
     case 1:
-        status = writeUint16(tif, frame, p);
+        status = writeUint16(tif.data(), frame, p);
         break;
     case 2:
-        status = writeFloat32(tif, frame, p);
+        status = writeFloat32(tif.data(), frame, p);
         break;
     case 3:
-//        status = writeLogLuvTiff();
-//        break;
+        status = writeLogLuv(tif.data(), frame, p);
+        break;
     case 0:
     default:
-        status = writeUint8(tif, frame, p);
+        status = writeUint8(tif.data(), frame, p);
         break;
     }
-    TIFFClose(tif);
+
     assert( status == true );
     return status;
 }

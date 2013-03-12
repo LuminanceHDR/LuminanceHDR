@@ -1,7 +1,7 @@
 /*
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Davide Anastasia
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,27 +19,24 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef RESOURCEHANDLERCOMMON_H
-#define RESOURCEHANDLERCOMMON_H
+#ifndef TIFFCOMMON_H
+#define TIFFCOMMON_H
 
-//! \file ResourceHandlerCommon.h
-//! \brief This file contains simple resource handlers
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//! \date 2012 05 05
-//! \since 2.3.0-beta1
+#include <Common/ResourceHandler.h>
+#include <tiffio.h>
 
-#include <QScopedPointer>
-#include <stdio.h>
-
-struct ResourceHandlerTraitsStdIoFile
+struct CleanUpTiffFile
 {
     static inline
-    void cleanup(FILE* p) {
-        if ( p ) {
-            fclose(p);
+    void cleanup(TIFF* profile) {
+        if ( profile ) {
+#ifndef NDEBUG
+            std::cerr << "CleanUpTiffFile::cleanup()\n";
+#endif
+            TIFFClose(profile);
         }
     }
 };
-typedef QScopedPointer<FILE, ResourceHandlerTraitsStdIoFile> ResouceHandlerFile;
+typedef ResourceHandler<TIFF, CleanUpTiffFile> ScopedTiffFile;
 
-#endif
+#endif // TIFFCOMMON_H

@@ -11,6 +11,10 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.h
 ${CMAKE_CURRENT_SOURCE_DIR}/rgbeio.h
+${CMAKE_CURRENT_SOURCE_DIR}/tiffwriter.h
+${CMAKE_CURRENT_SOURCE_DIR}/tiffcommon.h
+${CMAKE_CURRENT_SOURCE_DIR}/jpegwriter.h
+${CMAKE_CURRENT_SOURCE_DIR}/pngwriter.h
 )
 
 SET(FILES_CPP

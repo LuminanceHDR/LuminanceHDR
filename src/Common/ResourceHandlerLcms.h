@@ -38,10 +38,8 @@
 struct CleanUpCmsProfile
 {
     static inline
-    void cleanup(cmsHPROFILE profile)
-    {
-        if ( profile )
-        {
+    void cleanup(cmsHPROFILE profile) {
+        if ( profile ) {
 #ifdef QT_DEBUG
             qDebug() << "CleanUpCmsProfile::cleanup()";
 #endif
@@ -55,10 +53,8 @@ typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
 struct CleanUpCmsTransform
 {
     static inline
-    void cleanup(cmsHTRANSFORM transform)
-    {
-        if ( transform )
-        {
+    void cleanup(cmsHTRANSFORM transform) {
+        if ( transform ) {
 #ifdef QT_DEBUG
             qDebug() << "CleanUpCmsTransform::cleanup()";
 #endif
@@ -67,6 +63,5 @@ struct CleanUpCmsTransform
     }
 };
 typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;
-//typedef QScopedPointer<char, CleanUpCmsTransform> ScopedCmsTransformV2;
 
 #endif
