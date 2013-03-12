@@ -32,8 +32,6 @@ namespace exif
 //! \class exif_data
 //! \brief Holds Exif Data
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//! \
-//!
 class exif_data
 {
 public:

@@ -27,6 +27,7 @@
 #ifndef HDRCREATIONMANAGER_H
 #define HDRCREATIONMANAGER_H
 
+#include <cstddef>
 #include <QProcess>
 #include <QPair>
 
@@ -180,7 +181,7 @@ private:
     void newResult(int index, float expotime, const QString&);
 
     bool ldrsHaveSameSize(int, int);
-    bool mdrsHaveSameSize(int, int);
+    bool mdrsHaveSameSize(size_t, size_t);
 
 private slots:
 	void ais_finished(int,QProcess::ExitStatus);

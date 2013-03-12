@@ -38,7 +38,7 @@ using namespace std;
 
 namespace pfs
 {    
-Frame::Frame( int width, int height )
+Frame::Frame(size_t width, size_t height )
     : m_width( width )
     , m_height( height )
 {}

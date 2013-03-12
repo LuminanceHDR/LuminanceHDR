@@ -41,10 +41,10 @@ static
 int stringCompare(const string& str1, const string& str2)
 {
     int diff = 0;
-    int size = std::min(str1.size(), str2.size());
+    size_t size = std::min(str1.size(), str2.size());
     for (size_t idx = 0; idx < size && diff == 0; ++idx)
     {
-        diff += charDiff(str1[idx], str2[idx]);
+        diff = charDiff(str1[idx], str2[idx]);
     }
     if ( diff != 0 ) return diff;
 

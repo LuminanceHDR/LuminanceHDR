@@ -35,10 +35,10 @@ namespace pfs
 
 template <typename Type>
 void cut(const Array2D<Type> *from, Array2D<Type> *to,
-         int x_ul, int y_ul, int x_br, int y_br)
+         size_t x_ul, size_t y_ul, size_t x_br, size_t y_br)
 {
-    assert( x_ul >= 0 );
-    assert( y_ul >= 0 );
+    assert( x_ul >= 0 );        // must be obvious...
+    assert( y_ul >= 0 );        // must be obvious...
     assert( x_br <= from->getCols() );
     assert( y_br <= from->getRows() );
     assert( to->getRows() <= from->getRows() );
@@ -51,8 +51,9 @@ void cut(const Array2D<Type> *from, Array2D<Type> *to,
 
     // update right border
     x_br = from->getCols() - x_br;
-#pragma omp parallel for
-    for (int r = 0; r < to->getRows(); r++)
+    int rEnd = (int)to->getRows();
+#pragma omp parallel for shared(rEnd)
+    for (int r = 0; r < rEnd; r++)
     {
         std::copy(from->row_begin(r + y_ul) + x_ul,
                   from->row_end(r + y_ul) - x_br,
@@ -60,6 +61,6 @@ void cut(const Array2D<Type> *from, Array2D<Type> *to,
     }
 }
 
-}
+}   // pfs
 
 #endif // PFS_CUT_HXX

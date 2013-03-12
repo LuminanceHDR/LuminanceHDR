@@ -31,7 +31,7 @@ TEST(TestPfsCut, NoCrop)
     // print(input);
     // print(output);
 
-    for (int idx = 0; idx < output.getRows()*output.getCols(); idx++)
+    for (size_t idx = 0, idxEnd = output.getRows()*output.getCols(); idx < idxEnd; ++idx)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -58,7 +58,7 @@ TEST(TestPfsCut, Crop_OneOne_ZeroZero)
     // print(input);
     // print(output);
 
-    for (int idx = 0; idx < output.getCols()*output.getRows(); idx++)
+    for (size_t idx = 0, idxEnd = output.getRows()*output.getCols(); idx < idxEnd; ++idx)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -84,7 +84,7 @@ TEST(TestPfsCut, Crop_OneOne_OneOne)
     // print(input);
     // print(output);
 
-    for (int idx = 0; idx < output.getCols()*output.getRows(); idx++)
+    for (size_t idx = 0, idxEnd = output.getRows()*output.getCols(); idx < idxEnd; ++idx)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -111,7 +111,8 @@ TEST(TestPfsCut, Crop_ZeroZero_OneOne)
     // print(input);
     // print(output);
 
-    for (int idx = 0; idx < output.getRows()*output.getCols(); idx++)
+    // for (int idx = 0; idx < output.getRows()*output.getCols(); idx++)
+    for (size_t idx = 0, idxEnd = output.getRows()*output.getCols(); idx < idxEnd; ++idx)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }
@@ -136,7 +137,8 @@ TEST(TestPfsCut, Crop_OneTwo_TwoOne)
     // print(input);
     // print(output);
 
-    for (int idx = 0; idx < output.getRows()*output.getCols(); idx++)
+    //for (int idx = 0; idx < output.getRows()*output.getCols(); idx++)
+    for (size_t idx = 0, idxEnd = output.getRows()*output.getCols(); idx < idxEnd; ++idx)
     {
         ASSERT_NEAR(ref[idx], outData[idx], 10e-5f);
     }

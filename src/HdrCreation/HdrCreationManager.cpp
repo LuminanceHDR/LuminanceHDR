@@ -513,7 +513,7 @@ bool HdrCreationManager::ldrsHaveSameSize(int currentWidth, int currentHeight)
     return true;
 }
 
-bool HdrCreationManager::mdrsHaveSameSize(int currentWidth, int currentHeight)
+bool HdrCreationManager::mdrsHaveSameSize(size_t currentWidth, size_t currentHeight)
 {
     for (unsigned int i = 0; i < listmdrR.size(); i++)
     {
@@ -864,7 +864,7 @@ void HdrCreationManager::cropMDR(const QRect& ca)
     */
 
     // all R channels
-    for ( int idx = 0; idx < listmdrR.size(); ++idx )
+    for ( size_t idx = 0; idx < listmdrR.size(); ++idx )
     {
         pfs::Array2Df tmp( newWidth, newHeight );
         pfs::cut(listmdrR[idx], &tmp, x_ul, y_ul, x_br, y_br);
@@ -872,7 +872,7 @@ void HdrCreationManager::cropMDR(const QRect& ca)
     }
 
     // all G channels
-    for ( int idx = 0; idx < listmdrG.size(); ++idx )
+    for ( size_t idx = 0; idx < listmdrG.size(); ++idx )
     {
         pfs::Array2Df tmp( newWidth, newHeight );
         pfs::cut(listmdrG[idx], &tmp, x_ul, y_ul, x_br, y_br);
@@ -880,14 +880,14 @@ void HdrCreationManager::cropMDR(const QRect& ca)
     }
 
     // all B channel
-    for ( int idx = 0; idx < listmdrB.size(); ++idx )
+    for ( size_t idx = 0; idx < listmdrB.size(); ++idx )
     {
         pfs::Array2Df tmp( newWidth, newHeight );
         pfs::cut(listmdrB[idx], &tmp, x_ul, y_ul, x_br, y_br);
         listmdrB[idx]->swap( tmp );
     }
 
-    for (int idx = 0; idx < mdrImagesList.size(); idx++)
+    for ( int idx = 0; idx < mdrImagesList.size(); ++idx )
     {
         /*
         frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );

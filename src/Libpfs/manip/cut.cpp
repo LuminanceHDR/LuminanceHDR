@@ -46,7 +46,7 @@ namespace pfs
 
 
 pfs::Frame *cut(const pfs::Frame *inFrame,
-                int x_ul, int y_ul, int x_br, int y_br)
+                size_t x_ul, size_t y_ul, size_t x_br, size_t y_br)
 {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;

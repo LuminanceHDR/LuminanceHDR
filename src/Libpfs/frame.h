@@ -49,19 +49,19 @@ typedef std::vector< Channel* > ChannelContainer;
 class Frame
 {
 public:
-    Frame(int width, int height);
+    Frame(size_t width, size_t height);
     ~Frame();
 
     //! \return width of the frame (in pixels).
     inline
-    int getWidth() const
+    size_t getWidth() const
     {
         return m_width;
     }
 
     //! \return height of the frame (in pixels).
     inline
-    int getHeight() const
+    size_t getHeight() const
     {
         return m_height;
     }
@@ -143,8 +143,8 @@ public:
 //    }
 
 private:
-    int m_width;
-    int m_height;
+    size_t m_width;
+    size_t m_height;
 
     TagContainer m_tags;
     ChannelContainer m_channels;
