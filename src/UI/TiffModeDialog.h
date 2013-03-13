@@ -12,13 +12,14 @@ class TiffModeDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit TiffModeDialog(QWidget *parent = 0);
+    explicit TiffModeDialog(bool hdrMode = false, QWidget *parent = 0);
     ~TiffModeDialog();
     
     int getTiffWriterMode();
 
 private:
-    Ui::TiffModeDialog *ui;
+    bool m_hdrMode;
+    Ui::TiffModeDialog *m_ui;
 };
 
 #endif // TIFFMODEDIALOG_H

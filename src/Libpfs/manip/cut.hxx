@@ -44,8 +44,8 @@ void cut(const Array2D<Type> *from, Array2D<Type> *to,
     assert( to->getRows() <= from->getRows() );
     assert( to->getRows() <= from->getRows() );
 
-    if ( x_ul < 0 ) x_ul = 0;
-    if ( y_ul < 0 ) y_ul = 0;
+    // if ( x_ul < 0 ) x_ul = 0;
+    // if ( y_ul < 0 ) y_ul = 0;
     if ( x_br > from->getCols() ) x_br = from->getCols();
     if ( y_br > from->getRows() ) y_br = from->getRows();
 

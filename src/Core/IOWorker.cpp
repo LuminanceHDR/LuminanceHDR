@@ -101,14 +101,15 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
     }
     else if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-        LuminanceOptions LuminanceOptions;
         pfs::Params writerParams(params);
-
-        // LogLuv is not implemented yet in the new TiffWriter...
-        if ( LuminanceOptions.isSaveLogLuvTiff() ) {
-            writerParams.set( "tiff_mode", 3 );
-        } else {
-            writerParams.set( "tiff_mode", 2 );
+        if ( !writerParams.count("tiff_mode") ) {
+            LuminanceOptions lumOpts;
+            // LogLuv is not implemented yet in the new TiffWriter...
+            if ( lumOpts.isSaveLogLuvTiff() ) {
+                writerParams.set( "tiff_mode", 3 );
+            } else {
+                writerParams.set( "tiff_mode", 2 );
+            }
         }
 
         TiffWriter writer(encodedName.constData());

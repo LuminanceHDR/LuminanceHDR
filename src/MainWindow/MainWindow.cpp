@@ -532,17 +532,35 @@ void MainWindow::on_fileSaveAsAction_triggered()
          */
         QString fname = getHdrFileNameFromSaveDialog(g_v->getFileName(), this);
 
-        if ( !fname.isEmpty() )
-        {
-            // Update working folder
-            luminance_options->setDefaultPathHdrInOut( QFileInfo(fname).path() );
+        if ( fname.isEmpty() ) return;
 
-            //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
-            QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame",
-                                      Qt::QueuedConnection,
-                                      Q_ARG(GenericViewer*, dynamic_cast<HdrViewer*>(g_v)),
-                                      Q_ARG(QString, fname));
+        QFileInfo qfi(fname);
+        QString format = qfi.suffix();
+
+        pfs::Params p;
+        if ( format == "tif" || format == "tiff" )
+        {
+            TiffModeDialog t(true);
+            t.setWindowTitle("Save as ...TIFF");
+            if ( t.exec() == QDialog::Rejected ) return;
+
+#ifndef NDEBUG
+            int tiffMode = t.getTiffWriterMode();
+            cout << "TIFF MODE: " << tiffMode << endl;
+#endif
+
+            p.set("tiff_mode", t.getTiffWriterMode());
         }
+
+        // Update working folder
+        luminance_options->setDefaultPathHdrInOut( QFileInfo(fname).path() );
+
+        //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
+        QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame",
+                                  Qt::QueuedConnection,
+                                  Q_ARG(GenericViewer*, dynamic_cast<HdrViewer*>(g_v)),
+                                  Q_ARG(QString, fname),
+                                  Q_ARG(pfs::Params, p));
     }
     else
     {
@@ -583,7 +601,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         if ( format == "tif" || format == "tiff" )
         {
-            TiffModeDialog t;
+            TiffModeDialog t(false);
             t.setWindowTitle("Save as ...TIFF");
             if ( t.exec() == QDialog::Rejected ) return;
 
@@ -1375,7 +1393,9 @@ bool MainWindow::maybeSave()
                     luminance_options->setDefaultPathHdrInOut(qfi.path());
 
                     // TODO : can I launch a signal and wait that it gets executed fully?
-                    return m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame), fname);
+                    return m_IOWorker->write_hdr_frame(
+                                dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame),
+                                fname);
                 }
                 else
                 {

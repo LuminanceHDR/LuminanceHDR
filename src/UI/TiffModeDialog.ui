@@ -15,23 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QComboBox" name="comboBox">
-     <item>
-      <property name="text">
-       <string>TIFF 8bit/channel</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>TIFF 16bit/channel</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>TIFF 32bit/channel (HDR)</string>
-      </property>
-     </item>
-    </widget>
+    <widget class="QComboBox" name="comboBox"/>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

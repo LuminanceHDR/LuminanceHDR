@@ -107,6 +107,10 @@ public:
         return *this;
     }
 
+    ParamsHolder::size_type count(const std::string& key) const {
+        return holder_.count(key);
+    }
+
     operator const ParamsHolder& () {
         return holder_;
     }

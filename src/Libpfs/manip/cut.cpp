@@ -54,8 +54,8 @@ pfs::Frame *cut(const pfs::Frame *inFrame,
 #endif
     
     // ----  Boundary Check!
-    if (x_ul < 0) x_ul = 0;
-    if (y_ul < 0) y_ul = 0;
+    // if (x_ul < 0) x_ul = 0;
+    // if (y_ul < 0) y_ul = 0;
     if (x_br > inFrame->getWidth()) x_br = inFrame->getWidth();
     if (y_br > inFrame->getHeight()) y_br = inFrame->getHeight();
     // ----- 
