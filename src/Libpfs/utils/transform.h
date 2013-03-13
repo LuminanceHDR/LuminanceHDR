@@ -26,7 +26,7 @@
 #define PFS_COLORSPACE_TRANSFORM_H
 
 namespace pfs {
-namespace colorspace {
+namespace utils {
 
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
@@ -39,8 +39,8 @@ template <typename InputIterator, typename OutputIterator,
 void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
                OutputIterator out1, ConversionOperator convOp);
 
-}   // colorspace
+}   // utils
 }   // pfs
 
-#include <Libpfs/colorspace/transform.hxx>
+#include <Libpfs/utils/transform.hxx>
 #endif //  PFS_COLORSPACE_TRANSFORM_H

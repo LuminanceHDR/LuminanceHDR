@@ -25,12 +25,12 @@
 #ifndef PFS_COLORSPACE_TRANSFORM_HXX
 #define PFS_COLORSPACE_TRANSFORM_HXX
 
-#include <Libpfs/colorspace/transform.h>
+#include <Libpfs/utils/transform.h>
 #include <iterator>
 #include <algorithm>
 
 namespace pfs {
-namespace colorspace {
+namespace utils {
 
 namespace detail {
 
@@ -123,7 +123,7 @@ void transform(InputIterator in1, InputIterator in1End, InputIterator in2, Input
                       typename std::iterator_traits<OutputIterator>::iterator_category());
 }
 
-}   // colorspace
+}   // utils
 }   // pfs
 
 #endif //  PFS_COLORSPACE_TRANSFORM_HXX

@@ -32,7 +32,7 @@
 #include <QRgb>
 
 #include <Libpfs/colorspace/rgbremapper_fwd.h>
-#include <Libpfs/colorspace/transform.h>
+#include <Libpfs/utils/transform.h>
 
 class RGBRemapper
 {

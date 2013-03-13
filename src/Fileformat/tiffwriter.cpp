@@ -405,15 +405,15 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     for (unsigned int s = 0; s < stripsNum; s++)
     {
         // remap to [0, 1]
-        colorspace::transform(redData + s*width, redData + s*(width + 1),
-                              greenData + s*width,
-                              blueData + s*width,
-                              xCh.begin(), yCh.begin(), zCh.begin(),
-                              rgbRemapper);
+        utils::transform(redData + s*width, redData + s*(width + 1),
+                         greenData + s*width,
+                         blueData + s*width,
+                         xCh.begin(), yCh.begin(), zCh.begin(),
+                         rgbRemapper);
         // transform colorspace to XYZ
-        colorspace::transform(xCh.begin(), xCh.end(), yCh.begin(), zCh.end(),
-                              xCh.begin(), yCh.begin(), zCh.end(),
-                              colorspace::ConvertRGB2XYZ());
+        utils::transform(xCh.begin(), xCh.end(), yCh.begin(), zCh.end(),
+                         xCh.begin(), yCh.begin(), zCh.end(),
+                         colorspace::ConvertRGB2XYZ());
         // DAVIDE ... can we get rid of the RGBRemapper in this case?
         planarToInterleaved(xCh.data(), yCh.data(), zCh.data(),
                             stripBuffer.data(), RGB_FORMAT, width,

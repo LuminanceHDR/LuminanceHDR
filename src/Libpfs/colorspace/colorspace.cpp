@@ -39,7 +39,7 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/utils/msec_timer.h"
 
-#include "Libpfs/colorspace/transform.h"
+#include "Libpfs/utils/transform.h"
 #include "Libpfs/colorspace/rgb.h"
 #include "Libpfs/colorspace/xyz.h"
 
@@ -61,9 +61,9 @@ void transformSRGB2XYZ(const Array2Df *inC1, const Array2Df *inC2, const Array2D
     f_timer.start();
 #endif
 
-    colorspace::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
-                          outC1->begin(), outC2->begin(), outC3->begin(),
-                          colorspace::ConvertSRGB2XYZ());
+    utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
+                     outC1->begin(), outC2->begin(), outC3->begin(),
+                     colorspace::ConvertSRGB2XYZ());
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
@@ -74,8 +74,8 @@ void transformSRGB2XYZ(const Array2Df *inC1, const Array2Df *inC2, const Array2D
 void transformSRGB2Y(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
                      Array2Df *outC1)
 {
-    colorspace::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
-                          outC1->begin(), colorspace::ConvertSRGB2Y());
+    utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
+                     outC1->begin(), colorspace::ConvertSRGB2Y());
 }
 
 //-----------------------------------------------------------
@@ -89,9 +89,9 @@ void transformRGB2XYZ(const Array2Df *inC1, const Array2Df *inC2, const Array2Df
     f_timer.start();
 #endif
 
-    colorspace::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
-                          outC1->begin(), outC2->begin(), outC3->begin(),
-                          colorspace::ConvertRGB2XYZ());
+    utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
+                     outC1->begin(), outC2->begin(), outC3->begin(),
+                     colorspace::ConvertRGB2XYZ());
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
@@ -102,8 +102,8 @@ void transformRGB2XYZ(const Array2Df *inC1, const Array2Df *inC2, const Array2Df
 void transformRGB2Y(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
                     Array2Df *outC1)
 {
-    colorspace::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
-                          outC1->begin(), colorspace::ConvertRGB2Y());
+    utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
+                     outC1->begin(), colorspace::ConvertRGB2Y());
 }
 
 void transformXYZ2SRGB(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
@@ -114,9 +114,9 @@ void transformXYZ2SRGB(const Array2Df *inC1, const Array2Df *inC2, const Array2D
     f_timer.start();
 #endif
 
-    colorspace::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
-                          outC1->begin(), outC2->begin(), outC3->begin(),
-                          colorspace::ConvertXYZ2SRGB());
+    utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
+                     outC1->begin(), outC2->begin(), outC3->begin(),
+                     colorspace::ConvertXYZ2SRGB());
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
@@ -132,9 +132,9 @@ void transformXYZ2RGB(const Array2Df *inC1, const Array2Df *inC2, const Array2Df
     f_timer.start();
 #endif
 
-    colorspace::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
-                          outC1->begin(), outC2->begin(), outC3->begin(),
-                          colorspace::ConvertXYZ2RGB());
+    utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
+                     outC1->begin(), outC2->begin(), outC3->begin(),
+                     colorspace::ConvertXYZ2RGB());
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
