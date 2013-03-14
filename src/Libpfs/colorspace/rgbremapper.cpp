@@ -113,9 +113,17 @@ void RGBRemapper::setMappingMethod(RGBMappingType method)
 
 RGBRemapper::RgbF3 RGBRemapper::buildRgb(float r, float g, float b) const
 {
+#ifndef NDEBUG
+    float rx = clamp((r - m_MinValue)/m_Range, 0.f, 1.f);
+    float gx = clamp((g - m_MinValue)/m_Range, 0.f, 1.f);
+    float bx = clamp((b - m_MinValue)/m_Range, 0.f, 1.f);
+
+    return RGBRemapper::RgbF3(rx, gx, bx);
+#else
     return RGBRemapper::RgbF3( clamp((r - m_MinValue)/m_Range, 0.f, 1.f),
                                clamp((g - m_MinValue)/m_Range, 0.f, 1.f),
                                clamp((b - m_MinValue)/m_Range, 0.f, 1.f) );
+#endif
 }
 
 RGBRemapper::RgbF3 RGBRemapper::mappingLinear(float r, float g, float b) const
@@ -201,7 +209,7 @@ void RGBRemapper::toUint8(float rI, float gI, float bI,
 }
 
 void RGBRemapper::toFloat(float rI, float gI, float bI,
-                             float& rO, float& gO, float& bO) const
+                          float& rO, float& gO, float& bO) const
 {
     RgbF3 rgb = get(rI, gI, bI);
 

@@ -26,10 +26,8 @@ TiffModeDialog::~TiffModeDialog()
 int TiffModeDialog::getTiffWriterMode()
 {
     if ( m_hdrMode ) {
-        if ( m_ui->comboBox->currentIndex() == 0 ) return 3;
-        if ( m_ui->comboBox->currentIndex() == 1 ) return 4;
+        return m_ui->comboBox->currentIndex() + 2;
     } else {
         return m_ui->comboBox->currentIndex();
     }
-    return 0;
 }

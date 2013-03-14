@@ -137,64 +137,6 @@ void writeSRGBProfile(TIFF* tif)
                  reinterpret_cast<void*>(embedBuffer.data()) );
 }
 
-//TiffWriter::TiffWriter(const char *filename, pfs::Frame* f):
-//    tif(TIFFOpen (filename, "w")),
-//    ldrimage(0),
-//    pixmap(0),
-//    pfsFrame(f),
-//    width(f->getWidth()),
-//    height(f->getHeight())
-//{
-//    if (!tif)
-//    {
-//        throw std::runtime_error ("TIFF: could not open file for writing.");
-//    }
-
-//    writeCommonHeader();
-
-//    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
-//}
-
-//TiffWriter::TiffWriter(const char *filename, const quint16 * pix, int w, int h):
-//    tif(TIFFOpen (filename, "w")),
-//    ldrimage(0),
-//    pixmap(pix),
-//    pfsFrame(0),
-//    width(w),
-//    height(h)
-//{
-//    if (!tif)
-//    {
-//        throw std::runtime_error ("TIFF: could not open file for writing.");
-//    }
-
-//    writeCommonHeader();
-
-//    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
-//}
-
-//TiffWriter::TiffWriter(const char *filename, QImage * f):
-//    tif(TIFFOpen (filename, "w")),
-//    ldrimage(f),
-//    pixmap(0),
-//    pfsFrame(0),
-//    width(f->width()),
-//    height(f->height())
-//{
-//    if (!tif)
-//    {
-//        throw std::runtime_error ("TIFF: could not open file for writing.");
-//    }
-
-//    writeCommonHeader();
-
-//    uint16 extras[1];
-//    extras[0] = EXTRASAMPLE_ASSOCALPHA;
-
-//    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)4);
-//    TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, (uint16_t)1, &extras);
-//}
-
 // Info: if you want to write the alpha channel, please use this!
 //    uint16 extras[1] = { EXTRASAMPLE_ASSOCALPHA };
 //    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)4);
@@ -236,7 +178,7 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     std::vector<uint8_t> stripBuffer( stripSize );
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
                                 params.luminanceMapping_);
-    for (unsigned int s = 0; s < stripsNum; s++)
+    for (tstrip_t s = 0; s < stripsNum; s++)
     {
         planarToInterleaved(redData + s*width,
                             greenData + s*width,
@@ -289,7 +231,7 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
                                 params.luminanceMapping_);
 
-    for (unsigned int s = 0; s < stripsNum; s++)
+    for (tstrip_t s = 0; s < stripsNum; s++)
     {
         planarToInterleaved(redData + s*width,
                             greenData + s*width,
@@ -340,10 +282,9 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const float* blueData = bChannel->getRawData();
 
     std::vector<float> stripBuffer( width*3 );
-    RGBRemapper rgbRemapper(params.minLuminance_,
-                                params.maxLuminance_,
-                                params.luminanceMapping_); // maybe I have to force to be linear?!
-    for (unsigned int s = 0; s < stripsNum; s++)
+    RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
+                            MAP_LINEAR); // maybe I have to force to be linear?!
+    for (tstrip_t s = 0; s < stripsNum; s++)
     {
         planarToInterleaved(redData + s*width,
                             greenData + s*width,
@@ -396,29 +337,35 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const float* blueData = bChannel->getRawData();
 
     std::vector<float> stripBuffer( width*3 );
+#ifndef NDEBUG
+    float* p = stripBuffer.data();
+#endif
     std::vector<float> xCh(width);
     std::vector<float> yCh(width);
     std::vector<float> zCh(width);
 
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
-                            params.luminanceMapping_); // maybe I have to force to be linear?!
-    for (unsigned int s = 0; s < stripsNum; s++)
+                            MAP_LINEAR); // maybe I have to force to be linear?!
+    for (tstrip_t s = 0; s < stripsNum; s++)
     {
         // remap to [0, 1]
-        utils::transform(redData + s*width, redData + s*(width + 1),
+        utils::transform(redData + s*width, redData + (s+1)*width,
                          greenData + s*width,
                          blueData + s*width,
                          xCh.begin(), yCh.begin(), zCh.begin(),
                          rgbRemapper);
         // transform colorspace to XYZ
-        utils::transform(xCh.begin(), xCh.end(), yCh.begin(), zCh.end(),
-                         xCh.begin(), yCh.begin(), zCh.end(),
+        utils::transform(xCh.begin(), xCh.end(), yCh.begin(), zCh.begin(),
+                         xCh.begin(), yCh.begin(), zCh.begin(),
                          colorspace::ConvertRGB2XYZ());
         // DAVIDE ... can we get rid of the RGBRemapper in this case?
         planarToInterleaved(xCh.data(), yCh.data(), zCh.data(),
                             stripBuffer.data(), RGB_FORMAT, width,
                             RGBRemapper());
-        if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) == 0)
+#ifndef NDEBUG
+        assert(p == stripBuffer.data());
+#endif
+        if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
             qDebug ("error writing strip");
 
@@ -428,116 +375,6 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 
     return true;
 }
-//
-//namespace
-//{
-//// It can be done much better, but we can keep it for a bit :)
-//struct ComputeMinMax
-//{
-//    ComputeMinMax()
-//        : m_min( std::numeric_limits<float>::max() )
-//        , m_max( -std::numeric_limits<float>::max() )
-//    {}
-//
-//    void operator()(const float& value)
-//    {
-//        if ( value > m_max ) m_max = value;
-//        else if ( value < m_min ) m_min = value;
-//    }
-//
-//    inline
-//    float min()
-//    { return m_min; }
-//
-//    inline
-//    float max()
-//    { return m_max; }
-//
-//private:
-//    float m_min;
-//    float m_max;
-//};
-//
-//struct Normalizer
-//{
-//    Normalizer(float min, float max)
-//        : m_min(min + std::numeric_limits<float>::epsilon())
-//        // , m_max(max)
-//        , m_normalizer( max - m_min )
-//    {}
-//
-//    float operator()(const float& value) const
-//    {
-//        return (value - m_min)/m_normalizer;
-//    }
-//private:
-//    float m_min;
-//    // float m_max;
-//    float m_normalizer;
-//};
-//
-//    ComputeMinMax xMinMax = std::for_each(X, X + numPixels, ComputeMinMax());
-//    ComputeMinMax yMinMax = std::for_each(Y, Y + numPixels, ComputeMinMax());
-//    ComputeMinMax zMinMax = std::for_each(Z, Z + numPixels, ComputeMinMax());
-//
-//    Normalizer normalizer(std::min(xMinMax.min(),
-//                                   std::min(yMinMax.min(),
-//                                            zMinMax.min())),
-//                          std::max(xMinMax.max(),
-//                                   std::max(yMinMax.max(),
-//                                            zMinMax.max())));
-//
-//}
-
-// double check this? (Sept 24, 2012)
-// bool writePFSFrame16bitTiff()
-// {
-//    assert (pfsFrame != 0);
-
-//    TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);	// TODO what about others?
-//    TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-//    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 16);
-
-//    pfs::Channel* Xc;
-//    pfs::Channel* Yc;
-//    pfs::Channel* Zc;
-
-//    pfsFrame->getXYZChannels(Xc, Yc, Zc);
-
-//    const float *X = Xc->getRawData();
-//    const float *Y = Yc->getRawData();
-//    const float *Z = Zc->getRawData();
-
-//    tsize_t strip_size = TIFFStripSize (tif);
-//    tstrip_t strips_num = TIFFNumberOfStrips (tif);
-//    quint16 *strip_buf = (quint16 *) _TIFFmalloc (strip_size);	// enough space for a strip (row)
-//    if (!strip_buf)
-//    {
-//		TIFFClose(tif);
-//        throw std::runtime_error ("TIFF: error allocating buffer.");
-//    }
-
-//    for (unsigned int s = 0; s < strips_num; s++)
-//    {
-//        for (unsigned int col = 0; col < width; col++)
-//        {
-//            strip_buf[3 * col + 0] = (qint16) X[s * width + col];	//(*X)(col,s);
-//            strip_buf[3 * col + 1] = (qint16) Y[s * width + col];	//(*Y)(col,s);
-//            strip_buf[3 * col + 2] = (qint16) Z[s * width + col];	//(*Z)(col,s);
-//        }
-//        if (TIFFWriteEncodedStrip(tif, s, strip_buf, strip_size) == 0)
-//        {
-//            qDebug ("error writing strip");
-//			TIFFClose(tif);
-
-//            return -1;
-//        }
-//    }
-//    _TIFFfree (strip_buf);
-//	TIFFClose(tif);
-
-//    return 0;
-//}
 
 TiffWriter::TiffWriter(const std::string& filename)
     : m_filename(filename)
