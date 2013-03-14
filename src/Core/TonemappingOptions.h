@@ -51,11 +51,9 @@ enum TMOperator
 
 class TonemappingOptions
 {
-private:
-
 public:
     int origxsize;          // this parameter should be coming from the UI
-	int xsize_percent;		// this parameter should be coming from the UI
+    int xsize_percent;		// this parameter should be coming from the UI
     int xsize;              // this parameter should be coming from the frame
     int quality;
     float pregamma;
@@ -127,8 +125,7 @@ public:
     int selection_y_bottom_right;
 
     // default constructor
-    inline TonemappingOptions()
-    {
+    TonemappingOptions() {
         setDefaultParameters();
     }
     void setDefaultTonemapParameters();

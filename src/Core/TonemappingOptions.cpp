@@ -101,6 +101,8 @@ void TonemappingOptions::setDefaultParameters()
 
     origxsize = INT_MAX;
     xsize = INT_MAX;
+    xsize_percent = 100;
+    quality = 100;
     pregamma = 1.0f;
     tonemapSelection = false;
     tmoperator = mantiuk06;

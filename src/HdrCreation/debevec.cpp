@@ -132,7 +132,7 @@ inline
 int debevecBuildPixel(float& outRed, float& outGreen, float& outBlue,
                       const float* arrayofexptime,
                       const float* Ir, const float* Ig, const float* Ib,
-                      const float* w, int maxM, int minM,
+                      const float* w, int minM, int maxM,
                       const VectorInt& inReds, const VectorInt& inGreens, const VectorInt& inBlues)
 {
     int N = inReds.size();
