@@ -48,6 +48,7 @@
 #include "Exif/ExifOperations.h"
 
 #include <Libpfs/io/pfswriter.h>
+#include <Libpfs/io/pfsreader.h>
 
 IOWorker::IOWorker(QObject* parent)
     : QObject(parent)
@@ -306,12 +307,10 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         }
         else if (extension=="PFS")
         {
-            //TODO : check this code and make it smoother
-            FILE *fd = fopen(encodedFileName, "rb");
-            if (!fd) throw;
-
-            hdrpfsframe = pfs::DOMIO::readFrame(fd);
-            fclose(fd);
+            hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
+            pfs::io::PFSReader reader(encodedFileName.constData());
+            reader.read( *hdrpfsframe, pfs::Params() );
+            reader.close();
         }
         else if (extension.startsWith("TIF"))
         {

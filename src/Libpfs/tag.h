@@ -143,6 +143,9 @@ public:
     //! </code>
     //!/
     TagIteratorPtr getIterator() const;
+
+    void swap(TagContainer& other)
+    { m_tags.swap( other.m_tags ); }
 };
 
 //! Copy all tags from both the frame and its channels to the

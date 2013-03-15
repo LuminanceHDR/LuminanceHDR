@@ -142,6 +142,8 @@ public:
 //        return m_exifData;
 //    }
 
+    void swap(Frame& other);
+
 private:
     size_t m_width;
     size_t m_height;

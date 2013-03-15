@@ -19,55 +19,41 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief Interface for the FrameReader base class
+//! \brief PFS file format reader (used for compatibility with PFSTOOLS)
+//! \note Most of the code of this class is derived from the code in PFSTOOLS
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#ifndef PFS_IO_FRAMEREADER_H
-#define PFS_IO_FRAMEREADER_H
+#ifndef PFS_IO_PFSREADER_H
+#define PFS_IO_PFSREADER_H
 
 #include <string>
 #include <Libpfs/params.h>
+#include <Libpfs/io/framereader.h>
+#include <Common/ResourceHandlerCommon.h>
 
 namespace pfs {
 class Frame;
 
 namespace io {
 
-class FrameReader
+class PFSReader : public FrameReader
 {
 public:
-    FrameReader(const std::string& filename);
+    PFSReader(const std::string& filename);
 
-    virtual ~FrameReader();
+    bool isOpen() const
+    { return m_file; }
 
-    const std::string& filename() const
-    { return m_filename; }
-
-    size_t width() const
-    { return m_width; }
-
-    size_t height() const
-    { return m_height; }
-
-    virtual void open() = 0;
-    virtual bool isOpen() const = 0;
-    virtual void close() = 0;
-    virtual void read(pfs::Frame& frame, const pfs::Params& params) = 0;
-
-protected:
-    void setWidth(size_t width)
-    { m_width = width; }
-
-    void setHeight(size_t height)
-    { m_height = height; }
+    void open();
+    void close();
+    void read(Frame &frame, const Params &);
 
 private:
-    std::string m_filename;
-    size_t m_width;
-    size_t m_height;
+    ResouceHandlerFile m_file;
+    size_t m_channelCount;
 };
 
-}
-}
+}   // io
+}   // pfs
 
-#endif // PFS_IO_FRAMEREADER_H
+#endif // PFS_IO_PFSREADER_H

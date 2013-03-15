@@ -51,19 +51,7 @@ namespace DOMIO
 /// @param height height of the frame to create
 /// @return Frame object that can be modified and written back to PFS
 /// stream using writeFrame method
-Frame *createFrame( int width, int height );
-
-/// @brief Read PFS frame from the input Stream. This method and
-/// createFrame are the only way to create Frame objects.
-///
-/// @note Frame object must be released with freeFrame methods
-/// as soon as it is no longer needed. Otherwise the
-/// application will run out of memory.
-///
-/// @param inputStream read frame from that stream
-/// @return Frame object that contains PFS frame read from
-/// the stream. NULL if there are no more frames.
-Frame *readFrame( FILE *inputStream );
+Frame *createFrame( size_t width, size_t height );
 
 /// @brief Deallocated memory allocated with createFrame or readFrame. Must
 /// be called as soon as frame is not needed. Pointer to a frame is

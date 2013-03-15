@@ -51,7 +51,8 @@ bool PFSWriter::write(const Frame &frame, const Params &/*params*/)
 
     const ChannelContainer& channels = frame.getChannels();
 
-    fprintf( outputStream.data(), "%d %d" PFSEOL, frame.getWidth(), frame.getHeight() );
+    fprintf( outputStream.data(), "%d %d" PFSEOL,
+             (int)frame.getWidth(), (int)frame.getHeight() );
     // fprintf( outputStream.data(), "%d" PFSEOL, frame.channel.size() );
     fprintf( outputStream.data(), "%zd" PFSEOL, channels.size() );
 
@@ -82,6 +83,7 @@ bool PFSWriter::write(const Frame &frame, const Params &/*params*/)
 #ifdef HAVE_SETMODE
     setmode( fileno( outputStream.data() ), old_mode );
 #endif
+    return true;
 }
 
 }   // io

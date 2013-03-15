@@ -219,6 +219,14 @@ const TagContainer& Frame::getTags() const
     return m_tags;
 }
 
+void Frame::swap(Frame& other)
+{
+    std::swap(m_width, other.m_width);
+    std::swap(m_height, other.m_height);
+    m_channels.swap( other.m_channels );
+    m_tags.swap( other.m_tags );
+}
+
 } // namespace pfs
 
 

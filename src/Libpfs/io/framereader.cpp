@@ -19,55 +19,19 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief Interface for the FrameReader base class
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-
-#ifndef PFS_IO_FRAMEREADER_H
-#define PFS_IO_FRAMEREADER_H
-
-#include <string>
-#include <Libpfs/params.h>
+#include <Libpfs/io/framereader.h>
 
 namespace pfs {
-class Frame;
-
 namespace io {
 
-class FrameReader
-{
-public:
-    FrameReader(const std::string& filename);
+FrameReader::FrameReader(const std::string& filename)
+    : m_filename(filename)
+    , m_width(0)
+    , m_height(0)
+{}
 
-    virtual ~FrameReader();
+FrameReader::~FrameReader()
+{}
 
-    const std::string& filename() const
-    { return m_filename; }
-
-    size_t width() const
-    { return m_width; }
-
-    size_t height() const
-    { return m_height; }
-
-    virtual void open() = 0;
-    virtual bool isOpen() const = 0;
-    virtual void close() = 0;
-    virtual void read(pfs::Frame& frame, const pfs::Params& params) = 0;
-
-protected:
-    void setWidth(size_t width)
-    { m_width = width; }
-
-    void setHeight(size_t height)
-    { m_height = height; }
-
-private:
-    std::string m_filename;
-    size_t m_width;
-    size_t m_height;
-};
-
-}
-}
-
-#endif // PFS_IO_FRAMEREADER_H
+}   // io
+}   // pfs
