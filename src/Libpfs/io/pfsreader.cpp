@@ -27,18 +27,18 @@ namespace io {
 
 static const char *PFSFILEID = "PFS1\x0a";
 
-PFSReader::PFSReader(const std::string& filename)
+PfsReader::PfsReader(const std::string& filename)
     : FrameReader(filename)
     , m_channelCount(0)
 {
-    PFSReader::open();
+    PfsReader::open();
 }
 
-void PFSReader::open()
+void PfsReader::open()
 {
     m_file.reset( fopen(filename().c_str(), "rb") );
     if ( !m_file ) {
-        throw std::runtime_error("Cannot open file!");
+        throw InvalidFile("Cannot open file!");
     }
 
 #ifdef HAVE_SETMODE
@@ -48,19 +48,17 @@ void PFSReader::open()
     char buf[5];
     size_t read = fread( buf, 1, 5, m_file.data() );
     if ( read == 0 ) {
-        // return NULL; // EOF
-        throw Exception("empty file!");
+        throw InvalidHeader("empty file!");
     }
-    if ( memcmp( buf, PFSFILEID, 5 ) )
-    {
-        throw Exception( "Incorrect PFS file header" );
+    if ( memcmp( buf, PFSFILEID, 5 ) ) {
+        throw InvalidHeader( "Incorrect PFS file header" );
     }
 
     int width, height;
     read = fscanf( m_file.data(), "%d %d" PFSEOL, &width, &height );
     if ( read != 2 || width <= 0 || width > MAX_RES || height <= 0 || height > MAX_RES )
     {
-        throw Exception( "Corrupted PFS file: missing or wrong 'width', 'height' tags" );
+        throw InvalidHeader( "Corrupted PFS file: missing or wrong 'width', 'height' tags" );
     }
     setWidth(width);
     setHeight(height);
@@ -69,12 +67,12 @@ void PFSReader::open()
     read = fscanf( m_file.data(), "%d" PFSEOL, &channelCount );
     if ( read != 1 || channelCount < 0 || channelCount > MAX_CHANNEL_COUNT )
     {
-        throw Exception( "Corrupted PFS file: missing or wrong 'channelCount' tag" );
+        throw InvalidHeader( "Corrupted PFS file: missing or wrong 'channelCount' tag" );
     }
     m_channelCount = channelCount;
 }
 
-void PFSReader::close()
+void PfsReader::close()
 {
     setWidth(0);
     setHeight(0);
@@ -82,28 +80,26 @@ void PFSReader::close()
     m_channelCount = 0;
 }
 
-void PFSReader::read(Frame &frame, const Params &/*params*/)
+void PfsReader::read(Frame &frame, const Params &/*params*/)
 {
     Frame tempFrame(width(), height());
 
     readTags( &tempFrame.getTags(), m_file.data() );
 
-    //Read channel IDs and tags
+    // read channel IDs and tags
     std::list<Channel*> orderedChannel;
     for ( int i = 0; i < m_channelCount; i++ )
     {
         char channelName[MAX_CHANNEL_NAME+1], *rs;
         rs = fgets( channelName, MAX_CHANNEL_NAME, m_file.data() );
-        if ( rs == NULL )
-        {
-            throw Exception( "Corrupted PFS file: missing channel name" );
+        if ( rs == NULL ) {
+            throw ReadException( "Corrupted PFS file: missing channel name" );
         }
 
         size_t len = strlen( channelName );
         // fprintf( stderr, "s = '%s' len = %d\n", channelName, len );
-        if ( len < 1 || channelName[len-1] != PFSEOLCH )
-        {
-            throw Exception( "Corrupted PFS file: bad channel name" );
+        if ( len < 1 || channelName[len-1] != PFSEOLCH ) {
+            throw ReadException( "Corrupted PFS file: bad channel name" );
         }
 
         channelName[len-1] = 0;
@@ -114,9 +110,8 @@ void PFSReader::read(Frame &frame, const Params &/*params*/)
 
     char buf[5];
     size_t read = fread( buf, 1, 4, m_file.data() );
-    if ( read == 0 || memcmp( buf, "ENDH", 4 ) )
-    {
-        throw Exception( "Corrupted PFS file: missing end of header (ENDH) token" );
+    if ( read == 0 || memcmp( buf, "ENDH", 4 ) ) {
+        throw ReadException( "Corrupted PFS file: missing end of header (ENDH) token" );
     }
 
     //Read channels
@@ -127,7 +122,7 @@ void PFSReader::read(Frame &frame, const Params &/*params*/)
         unsigned int size = tempFrame.getWidth()*tempFrame.getHeight();
         read = fread( ch->getRawData(), sizeof( float ), size, m_file.data() );
         if ( read != size ) {
-            throw Exception( "Corrupted PFS file: missing channel data" );
+            throw ReadException( "Corrupted PFS file: missing channel data" );
         }
     }
 #ifdef HAVE_SETMODE

@@ -119,7 +119,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
     }
     else if (qfi.suffix().toUpper() == "PFS")
     {
-        pfs::io::PFSWriter writer(encodedName.constData());
+        pfs::io::PfsWriter writer(encodedName.constData());
         status = writer.write(*hdr_frame, pfs::Params());
     }
     else
@@ -307,7 +307,7 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         else if (extension=="PFS")
         {
             hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
-            pfs::io::PFSReader reader(encodedFileName.constData());
+            pfs::io::PfsReader reader(encodedFileName.constData());
             reader.read( *hdrpfsframe, pfs::Params() );
             reader.close();
         }

@@ -33,11 +33,11 @@ namespace io {
 
 static const char *PFSFILEID = "PFS1\x0a";
 
-PFSWriter::PFSWriter(const std::string &filename)
+PfsWriter::PfsWriter(const std::string &filename)
     : m_filename(filename)
 {}
 
-bool PFSWriter::write(const Frame &frame, const Params &/*params*/)
+bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
 {
     ResouceHandlerFile outputStream(fopen(m_filename.c_str(), "w"));
 

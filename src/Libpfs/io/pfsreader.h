@@ -29,6 +29,7 @@
 #include <string>
 #include <Libpfs/params.h>
 #include <Libpfs/io/framereader.h>
+#include <Libpfs/io/ioexception.h>
 #include <Common/ResourceHandlerCommon.h>
 
 namespace pfs {
@@ -36,10 +37,10 @@ class Frame;
 
 namespace io {
 
-class PFSReader : public FrameReader
+class PfsReader : public FrameReader
 {
 public:
-    PFSReader(const std::string& filename);
+    PfsReader(const std::string& filename);
 
     bool isOpen() const
     { return m_file; }

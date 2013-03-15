@@ -19,33 +19,48 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief PFS file format writer (used for compatibility with PFSTOOLS)
-//! \note Most of the code of this class is derived from the code in PFSTOOLS
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+#ifndef PFS_IO_IOEXCEPTION_H
+#define PFS_IO_IOEXCEPTION_H
 
-#ifndef PFS_IO_PFSWRITER_H
-#define PFS_IO_PFSWRITER_H
-
-#include <string>
-#include <Libpfs/params.h>
-#include <Libpfs/io/ioexception.h>
+#include <Libpfs/exception.h>
 
 namespace pfs {
-class Frame;
-
 namespace io {
 
-class PfsWriter {
+class InvalidFile : public Exception
+{
 public:
-    PfsWriter(const std::string& filename);
-
-    bool write(const pfs::Frame& frame, const pfs::Params& params);
-
-private:
-    std::string m_filename;
+    InvalidFile(const std::string& message)
+        : Exception(message)
+    {}
 };
 
-} // io
-} // pfs
+class InvalidHeader : public Exception
+{
+public:
+    InvalidHeader(const std::string& message)
+        : Exception(message)
+    {}
+};
 
-#endif //  PFS_IO_PFSWRITER_H
+class ReadException : public Exception
+{
+public:
+    ReadException(const std::string& message)
+        : Exception(message)
+    {}
+};
+
+class WriteException : public Exception
+{
+public:
+    WriteException(const std::string& message)
+        : Exception(message)
+    {}
+};
+
+}
+}
+
+
+#endif // PFS_IO_IOEXCEPTION_H
