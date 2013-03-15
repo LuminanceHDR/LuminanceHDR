@@ -1,0 +1,88 @@
+/*
+ * This file is a part of Luminance HDR package.
+ * ----------------------------------------------------------------------
+ * Copyright (C) 2013 Davide Anastasia
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * ----------------------------------------------------------------------
+ */
+
+#include <cstdio>
+#include <cstdlib>
+
+#include <Libpfs/frame.h>
+#include <libpfs/tag.h>
+#include <Libpfs/io/pfswriter.h>
+#include <Libpfs/io/pfscommon.h>
+#include <Common/ResourceHandlerCommon.h>
+
+namespace pfs {
+namespace io {
+
+static const char *PFSFILEID = "PFS1\x0a";
+
+PFSWriter::PFSWriter(const std::string &filename)
+    : m_filename(filename)
+{}
+
+bool PFSWriter::write(const Frame &frame, const Params &/*params*/)
+{
+    ResouceHandlerFile outputStream(fopen(m_filename.c_str(), "w"));
+
+#ifdef HAVE_SETMODE
+    // Needed under MS windows (text translation IO for stdin/out)
+    int old_mode = setmode( fileno( outputStream.data() ), _O_BINARY );
+#endif
+
+    // Write header ID
+    fwrite( PFSFILEID, 1, 5, outputStream.data() );
+
+    const ChannelContainer& channels = frame.getChannels();
+
+    fprintf( outputStream.data(), "%d %d" PFSEOL, frame.getWidth(), frame.getHeight() );
+    // fprintf( outputStream.data(), "%d" PFSEOL, frame.channel.size() );
+    fprintf( outputStream.data(), "%zd" PFSEOL, channels.size() );
+
+    writeTags( &frame.getTags(), outputStream.data() );
+
+    //Write channel IDs and tags
+    for (ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end();
+         ++it)
+    {
+        fprintf( outputStream.data(), "%s" PFSEOL, (*it)->getName().c_str() );
+        writeTags( (*it)->getTags(), outputStream.data() );
+    }
+
+    fprintf( outputStream.data(), "ENDH");
+
+    //Write channels
+    for (ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end();
+         ++it)
+    {
+        int size = frame.getWidth()*frame.getHeight();
+        fwrite( (*it)->getRawData(), sizeof( float ), size, outputStream.data() );
+    }
+
+    // Very important for pfsoutavi !!!
+    fflush( outputStream.data() );
+#ifdef HAVE_SETMODE
+    setmode( fileno( outputStream.data() ), old_mode );
+#endif
+}
+
+}   // io
+}   // pfs

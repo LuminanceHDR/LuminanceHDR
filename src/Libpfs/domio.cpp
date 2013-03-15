@@ -133,53 +133,6 @@ Frame* createFrame( int width, int height )
     return frame;
 }
 
-
-void writeFrame(const Frame *src_frame, FILE *outputStream )
-{
-    assert( outputStream != NULL );
-    assert( src_frame != NULL );
-#ifdef HAVE_SETMODE
-    // Needed under MS windows (text translation IO for stdin/out)
-    int old_mode = setmode( fileno( outputStream ), _O_BINARY );
-#endif
-
-    fwrite( PFSFILEID, 1, 5, outputStream ); // Write header ID
-
-    const ChannelContainer& channels = src_frame->getChannels();
-
-    fprintf( outputStream, "%d %d" PFSEOL, src_frame->getWidth(), src_frame->getHeight() );
-    //fprintf( outputStream, "%d" PFSEOL, src_frame->channel.size() );
-    fprintf( outputStream, "%zd" PFSEOL, channels.size() );
-
-    writeTags( &src_frame->getTags(), outputStream );
-
-    //Write channel IDs and tags
-    for (ChannelContainer::const_iterator it = channels.begin();
-         it != channels.end();
-         ++it)
-    {
-        fprintf( outputStream, "%s" PFSEOL, (*it)->getName().c_str() );
-        writeTags( (*it)->getTags(), outputStream );
-    }
-
-    fprintf( outputStream, "ENDH");
-
-    //Write channels
-    for (ChannelContainer::const_iterator it = channels.begin();
-         it != channels.end();
-         ++it)
-    {
-        int size = src_frame->getWidth()*src_frame->getHeight();
-        fwrite( (*it)->getRawData(), sizeof( float ), size, outputStream );
-    }
-
-    //Very important for pfsoutavi !!!
-    fflush(outputStream);
-#ifdef HAVE_SETMODE
-    setmode( fileno( outputStream ), old_mode );
-#endif
-}
-
 void freeFrame( Frame *frame )
 {
     delete frame;

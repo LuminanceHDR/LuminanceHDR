@@ -47,8 +47,10 @@
 #include "Core/TonemappingOptions.h"
 #include "Exif/ExifOperations.h"
 
-IOWorker::IOWorker(QObject* parent):
-    QObject(parent)
+#include <Libpfs/io/pfswriter.h>
+
+IOWorker::IOWorker(QObject* parent)
+    : QObject(parent)
 {}
 
 IOWorker::~IOWorker()
@@ -113,23 +115,25 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
         }
 
         TiffWriter writer(encodedName.constData());
-        writer.write(*hdr_frame, writerParams);
+        status = writer.write(*hdr_frame, writerParams);
     }
     else if (qfi.suffix().toUpper() == "PFS")
     {
-        FILE *fd = fopen(encodedName, "w");
-        pfs::DOMIO::writeFrame(hdr_frame, fd);
-        fclose(fd);
+        pfs::io::PFSWriter writer(encodedName.constData());
+        status = writer.write(*hdr_frame, pfs::Params());
     }
     else
     {
         // Default as EXR
-        writeEXRfile(hdr_frame, QFile::encodeName(absoluteFileName + ".exr"));
+        writeEXRfile(hdr_frame, encodedName);
     }
-    emit write_hdr_success(hdr_frame, filename);
 
+    if ( status ) {
+        emit write_hdr_success(hdr_frame, filename);
+    } else {
+        emit write_hdr_failed();
+    }
     emit IO_finish();
-
     return status;
 }
 
@@ -171,108 +175,92 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                TonemappingOptions* tmopts,
                                const pfs::Params& params)
 {
+    /*
+     // in the future I would like it to be like this:
+
+     try {
+        FrameWriterPtr fr = FrameWriter::create( filename );
+
+        fr->write( frame, params);
+
+        // ...do some more stuff!
+
+        retur true;
+     } catch ( Exception& e) {
+
+        return false;
+     }
+
+     */
+
     bool status = true;
     emit IO_init();
 
     QScopedPointer<TMOptionsOperations> operations;
-
-    if (tmopts != NULL)
+    if (tmopts != NULL) {
         operations.reset(new TMOptionsOperations(tmopts));
+    }
     
     QFileInfo qfi(filename);
-    QString format = qfi.suffix();
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
         TiffWriter writer( encodedName.constData() );
-        if ( writer.write(*ldr_input, params) )
-        {
-//            if (tmopts != NULL)
-//                ExifOperations::writeExifData(encodedName.constData(),
-//                  operations->getExifComment().toStdString());
-
-            emit write_ldr_success(ldr_input, filename);
-        }
-        else
-        {
-            status = false;
-            emit write_ldr_failed();
-        }
+        status = writer.write(*ldr_input, params);
     }
     else if (qfi.suffix().toUpper().startsWith("JP"))
     {
-        JpegWriter writer(filename.toStdString());
-        if (writer.write(*ldr_input, params))
-		{
-//			if (tmopts != NULL)
-//				ExifOperations::writeExifData(encodedName.constData(),
-//                  operations->getExifComment().toStdString());
-
-			emit write_ldr_success(ldr_input, filename);
-		}
-		else
-		{
-            status = false;
-            emit write_ldr_failed();
-		}
+        JpegWriter writer( encodedName.constData() );
+        status = writer.write(*ldr_input, params);
 	}
     else if (qfi.suffix().toUpper().startsWith("PNG"))
     {
         PngWriter writer(filename.toStdString());
-        if (writer.write(*ldr_input, params))
-		{
-//			if (tmopts != NULL)
-//				ExifOperations::writeExifData(encodedName.constData(),
-//                  operations->getExifComment().toStdString());
-
-			emit write_ldr_success(ldr_input, filename);
-		}
-		else
-		{
-            status = false;
-            emit write_ldr_failed();
-		}
+        status = writer.write(*ldr_input, params);
 	}
     else
     {
+        QString format = qfi.suffix();
         // QScopedPointer will call delete when this object goes out of scope
         QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input, 0.f, 1.f));
-        if ( image->save(filename, format.toLocal8Bit(), -1) )
-        {
+        status = image->save(filename, format.toLocal8Bit(), -1);
+    }
+
+    if ( status )
+    {
 //            if (tmopts != NULL)
 //                ExifOperations::writeExifData(encodedName.constData(),
 //                  operations->getExifComment().toStdString());
 
-            emit write_ldr_success(ldr_input, filename);
-        }
-        else
+        // copy EXIF tags from the 1st bracketed image
+        if ( !inputFileName.isEmpty() )
         {
-            status = false;
-            emit write_ldr_failed();
-        }
-    }
-    // copy EXIF tags from the 1st bracketed image
-    if (inputFileName != "")
-    {
-        QFileInfo fileinfo(inputFileName);
-        QString absoluteInputFileName = fileinfo.absoluteFilePath();
-        QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
-        QString comment = operations->getExifComment();
-        comment += "\nBracketed images exposure times:\n\n";
-        foreach (float e, expoTimes) {
-            comment += QString("%1").arg(e) + "\n";
-        }
-        
-        ExifOperations::copyExifData(encodedInputFileName.constData(), 
-                                     encodedName.constData(), 
-                                     false, 
-                                     comment.toStdString(),
-                                     true, false);
-    }
-    emit IO_finish();
+            QFileInfo fileinfo(inputFileName);
+            QString absoluteInputFileName = fileinfo.absoluteFilePath();
+            QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
+            QString comment = operations->getExifComment();
+            comment += "\nBracketed images exposure times:\n\n";
+            foreach (float e, expoTimes) {
+                comment += QString("%1").arg(e) + "\n";
+            }
 
+            ExifOperations::copyExifData(encodedInputFileName.constData(),
+                                         encodedName.constData(),
+                                         false,
+                                         comment.toStdString(),
+                                         true, false);
+        }
+
+        emit write_ldr_success(ldr_input, filename);
+    }
+    else
+    {
+        emit write_ldr_failed();
+    }
+
+    emit IO_finish();
     return status;
 }
 
@@ -339,7 +327,7 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
 		try {
 			hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminanceOptions, false, progress_cb, this);
 		}
-		catch (QString err)
+        catch (QString& err)
 		{
             qDebug("TH: catched exception");
 			emit read_hdr_failed((err + " : %1").arg(filename));	

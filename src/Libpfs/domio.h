@@ -65,13 +65,6 @@ Frame *createFrame( int width, int height );
 /// the stream. NULL if there are no more frames.
 Frame *readFrame( FILE *inputStream );
 
-/// @brief Writes Frame object to outputStream in PFS format.
-///
-/// @param frame Frame object to be written. This object
-/// must be created with readFrame or createFrame method.
-/// @param outputStream write frame to that stream
-void writeFrame(const Frame *frame, FILE *outputStream );
-
 /// @brief Deallocated memory allocated with createFrame or readFrame. Must
 /// be called as soon as frame is not needed. Pointer to a frame is
 /// invalid after this method call.
