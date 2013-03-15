@@ -29,14 +29,12 @@
 
 #include <string>
 #include <map>
+#include <cstddef>
 
 #include <Libpfs/array2d.h>
 #include <Libpfs/tag.h>
 
-// #include "pfs.h" // SelfPtr
-
-namespace pfs
-{
+namespace pfs {
 
 //! \brief Channel interface represents a 2D rectangular array with
 //! associated tags.
@@ -68,14 +66,14 @@ public:
     //! \brief Gets width of the channel (in pixels).
     //! This is a synonym for Array2D::getCols().
     //!
-    int getWidth() const;
+    size_t getWidth() const;
 
     //! Gets height of the channel (in pixels).
     //! This is a synonym for Array2D::getRows().
     //!
-    int getHeight() const;
+    size_t getHeight() const;
 
-    void resize(int width, int height);
+    void resize(size_t width, size_t height);
 
     //! Gets name of the channel.
     //!

@@ -124,7 +124,7 @@ void HdrInputLoader::run() {
 		}
 	}
     catch(pfs::Exception& e) {
-		emit loadFailed(QString(tr("ERROR: %1")).arg(e.getMessage()),image_idx);
+        emit loadFailed(QString(tr("ERROR: %1")).arg(e.what()),image_idx);
 		//QApplication::restoreOverrideCursor();
 		return;
 	}

@@ -28,33 +28,21 @@
 
 #include <map>
 
-using namespace std;
+namespace pfs {
 
-namespace pfs
-{
 Channel::Channel( size_t width, size_t height, const std::string& channelName)
     : m_channelData( width, height )
     , m_name( channelName )
     , m_tags()
-{
-    //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
-}
+{}
 
-//std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
 Channel::~Channel()
 {}
 
-void Channel::resize(int width, int height)
+void Channel::resize(size_t width, size_t height)
 {
     m_channelData.resize(width, height);
 }
-
-//void Channel::setChannelData(ChannelData *array)
-//{
-//    if (channel_impl)
-//        delete channel_impl;
-//    channel_impl = array;
-//}
 
 } // pfs
 

@@ -41,6 +41,7 @@
 #define PFS_H
 
 #include <string.h>
+#include <Libpfs/exception.h>
 
 #define PFSEOL "\x0a"
 #define PFSEOLCH '\x0a'
@@ -208,38 +209,6 @@ namespace pfs
 
 //    };
 
-/**
- * General exception class used to throw exceptions from pfs library.
- */
-  class Exception
-    {
-      char msg[1024];
-    public:
-      /**
-       * Creates a new exception.
-       *
-       * @param message description of the cause for the
-       * exception. The copy of the message string is made, so it can
-       * be freed after creating Exception.
-       */
-      Exception( const char* const message )
-	{
-          strcpy( msg, message );
-	}
-			
-      ~Exception() {}
-
-      /**
-       * Returns the description of the problem.
-       *
-       * @return text description of the cause for the exception
-       */
-      const char* getMessage()
-        {
-          return msg;
-	}
-    };
-
 
 /**
  * Exception class used to throw exceptions from FileFileIterator class.
@@ -254,7 +223,5 @@ namespace pfs
 
 
 }
-
-
 
 #endif

@@ -97,7 +97,7 @@ void Array2D<Type>::swap(self& other)
 
 template <typename Type>
 inline
-Type& Array2D<Type>::operator()( size_t cols, size_t rows )
+Type& Array2D<Type>::operator()(size_t cols, size_t rows)
 {
 #ifndef NDEBUG
     return m_data.at( rows*m_cols + cols );

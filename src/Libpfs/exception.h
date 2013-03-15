@@ -1,7 +1,7 @@
 /*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) Davide Anastasia
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,43 +19,27 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief inline functions for pfs::Channel
+//! \brief Base class for C++ exceptions inside the library
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#ifndef PFS_CHANNEL_HXX
-#define PFS_CHANNEL_HXX
+#ifndef PFS_EXCEPTION_H
+#define PFS_EXCEPTION_H
 
-#include <Libpfs/channel.h>
+#include <stdexcept>
 
 namespace pfs {
 
-inline const std::string& Channel::getName() const
-{ return m_name; }
+/**
+ * General exception class used to throw exceptions from pfs library.
+ */
+class Exception : public std::runtime_error
+{
+public:
+    Exception( const std::string& message )
+        : std::runtime_error(message)
+    {}
+};
 
-inline size_t Channel::getWidth() const
-{ return m_channelData.getCols(); }
+}
 
-inline size_t Channel::getHeight() const
-{ return m_channelData.getRows(); }
-
-inline float* Channel::getRawData()
-{ return m_channelData.getRawData(); }
-
-inline const float* Channel::getRawData() const
-{ return m_channelData.getRawData(); }
-
-inline TagContainer* Channel::getTags()
-{ return &m_tags; }
-
-inline const TagContainer* Channel::getTags() const
-{ return &m_tags; }
-
-inline Channel::ChannelData* Channel::getChannelData()
-{ return &m_channelData; }
-
-inline const Channel::ChannelData* Channel::getChannelData() const
-{ return &m_channelData; }
-
-} // pfs
-
-#endif // PFS_CHANNEL_HXX
+#endif // PFS_EXCEPTION_H

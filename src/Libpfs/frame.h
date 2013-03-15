@@ -55,19 +55,15 @@ public:
     //! \return width of the frame (in pixels).
     inline
     size_t getWidth() const
-    {
-        return m_width;
-    }
+    { return m_width; }
 
     //! \return height of the frame (in pixels).
     inline
     size_t getHeight() const
-    {
-        return m_height;
-    }
+    { return m_height; }
 
     //! \brief Changes the size of the frame
-    void resize(int width, int height);
+    void resize(size_t width, size_t height);
 
     //! Gets color channels in XYZ color space. May return NULLs
     //! if such channels do not exist. Values assigned to

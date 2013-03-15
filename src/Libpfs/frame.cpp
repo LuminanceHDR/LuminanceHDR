@@ -65,7 +65,7 @@ Frame::~Frame()
 }
 
 //! \brief Changes the size of the frame
-void Frame::resize(int width, int height)
+void Frame::resize(size_t width, size_t height)
 {
     for_each(m_channels.begin(), m_channels.end(),
              boost::bind(&Channel::resize, _1, width, height));
