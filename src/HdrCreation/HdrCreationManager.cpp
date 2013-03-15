@@ -34,7 +34,6 @@
 #include <algorithm>
 #include <iostream>
 
-#include "Libpfs/domio.h"
 #include "Libpfs/manip/shift.h"
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/copy.h"

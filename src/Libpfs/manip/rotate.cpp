@@ -35,7 +35,6 @@
 #include "Libpfs/frame.h"
 
 #include "Libpfs/utils/msec_timer.h"
-#include "Libpfs/domio.h"
 
 namespace pfs
 {
@@ -49,7 +48,7 @@ pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
 
     int xSize = frame->getHeight();
     int ySize = frame->getWidth();
-    pfs::Frame *resizedFrame = pfs::DOMIO::createFrame( xSize, ySize );
+    pfs::Frame *resizedFrame = new pfs::Frame( xSize, ySize );
     
     const ChannelContainer& channels = frame->getChannels();
 

@@ -32,11 +32,14 @@
 #include <QSqlQueryModel>
 #include <QSqlError>
 
+#include <boost/scoped_ptr.hpp>
+
+#include <Libpfs/frame.h>
+
 #include "arch/math.h"
 #include "BatchHDR/BatchHDRDialog.h"
 #include "ui_BatchHDRDialog.h"
 #include "Libpfs/pfs.h"
-#include "Libpfs/domio.h"
 #include "Core/IOWorker.h"
 #include "OsIntegration/osintegration.h"
 
@@ -361,13 +364,13 @@ void BatchHDRDialog::create_hdr(int)
     else  {
         m_hdrCreationManager->chosen_config = m_customConfig[idx - 6];
     }
-    pfs::Frame* resultHDR = m_hdrCreationManager->createHdr(false, 1);
+
+    boost::scoped_ptr<pfs::Frame> resultHDR( m_hdrCreationManager->createHdr(false, 1) );
 
     int paddingLength = ceil(log10(m_total + 1.0f));
     QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
-    m_IO_Worker->write_hdr_frame(resultHDR, outName);
-    
-    pfs::DOMIO::freeFrame(resultHDR);
+    m_IO_Worker->write_hdr_frame(resultHDR.get(), outName);
+    resultHDR.reset();
     
     QStringList  fnames = m_hdrCreationManager->getFileList();
     int n = fnames.size();

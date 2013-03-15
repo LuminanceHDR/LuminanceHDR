@@ -25,7 +25,6 @@
 #include "copy.h"
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
 #include <algorithm>
 
@@ -42,7 +41,7 @@ pfs::Frame *copy(const pfs::Frame *inFrame)
     const int outWidth   = inFrame->getWidth();
     const int outHeight  = inFrame->getHeight();
 
-    pfs::Frame *outFrame = pfs::DOMIO::createFrame(outWidth, outHeight);
+    pfs::Frame *outFrame = new pfs::Frame(outWidth, outHeight);
 
     const ChannelContainer& channels = inFrame->getChannels();
 

@@ -28,7 +28,6 @@
 #include "PreviewPanel.h"
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/resize.h"
 

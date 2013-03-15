@@ -29,13 +29,12 @@
 
 #include "rgbeio.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
 pfs::Frame* readRGBEfile (const char * filename)
 {
     FILE *inputRGBEfile = fopen(filename,"rb");
 	RGBEReader reader( inputRGBEfile );
-    pfs::Frame *frame = pfs::DOMIO::createFrame( reader.getWidth(), reader.getHeight() );
+    pfs::Frame *frame = new pfs::Frame( reader.getWidth(), reader.getHeight() );
 	pfs::Channel  *X, *Y, *Z;
 	frame->createXYZChannels( X, Y, Z);
 	reader.readImage(X->getChannelData(), Y->getChannelData(), Z->getChannelData());

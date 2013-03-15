@@ -25,7 +25,6 @@
 #include "ui_ProjectionsDialog.h"
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 #include "Libpfs/manip/projection.h"
 
 ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
@@ -96,7 +95,7 @@ void ProjectionsDialog::okClicked()
 
     int xSize = original->getWidth();
     int ySize = static_cast<int>(xSize / transforminfo->dstProjection->getSizeRatio());
-    transformed = pfs::DOMIO::createFrame( xSize,ySize );
+    transformed = new pfs::Frame( xSize,ySize );
 
     const pfs::ChannelContainer& channels = original->getChannels();
 

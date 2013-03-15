@@ -31,7 +31,6 @@
 #include <QFile>
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 #include "Fileformat/pfsinraw.h"
 #include "Common/LuminanceOptions.h"
 
@@ -256,7 +255,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   int W = image->width;
   int H = image->height;
   
-  pfs::Frame *frame = pfs::DOMIO::createFrame( W, H );
+  pfs::Frame *frame = new pfs::Frame( W, H );
 
   if (frame == NULL)
   {

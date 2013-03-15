@@ -31,7 +31,6 @@
 #include <boost/bind.hpp>
 
 #include "frame.h"
-#include "domio.h"
 #include "channel.h"
 
 using namespace std;

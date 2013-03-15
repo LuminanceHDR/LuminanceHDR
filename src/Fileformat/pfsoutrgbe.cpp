@@ -28,7 +28,6 @@
 #include "rgbeio.h"
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
 void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename)
 {

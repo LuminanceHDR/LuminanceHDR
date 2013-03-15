@@ -39,7 +39,6 @@
 #include <ImfStandardAttributes.h>
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
 // TODO : leftover!
 #define PROG_NAME "pfsinexr"
@@ -80,7 +79,7 @@ pfs::Frame * readEXRfile( const char *filename )
       throw pfs::Exception( "No support for OpenEXR files DataWindow greater than DisplayWindow" );
   }
   
-  pfs::Frame *frame = pfs::DOMIO::createFrame( width, height );
+  pfs::Frame *frame = new pfs::Frame( width, height );
   
   const ChannelList &channels = file.header().channels();
   

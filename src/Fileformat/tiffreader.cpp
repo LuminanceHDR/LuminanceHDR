@@ -44,7 +44,6 @@
 #include "Common/ResourceHandlerLcms.h"
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
 #include "Common/LuminanceOptions.h"
 

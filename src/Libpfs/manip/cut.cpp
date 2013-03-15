@@ -36,8 +36,6 @@
 #include <algorithm>
 
 #include "Libpfs/utils/msec_timer.h"
-
-#include "Libpfs/domio.h"
 #include "Libpfs/frame.h"
 
 namespace pfs
@@ -60,7 +58,7 @@ pfs::Frame *cut(const pfs::Frame *inFrame,
     if (y_br > inFrame->getHeight()) y_br = inFrame->getHeight();
     // ----- 
     
-    pfs::Frame *outFrame = pfs::DOMIO::createFrame((x_br-x_ul), (y_br-y_ul));
+    pfs::Frame *outFrame = new pfs::Frame((x_br-x_ul), (y_br-y_ul));
     
     const ChannelContainer& channels = inFrame->getChannels();
     

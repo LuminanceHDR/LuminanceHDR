@@ -37,7 +37,6 @@
 #include "Core/IOWorker.h"
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 #include "Fileformat/pfs_file_format.h"
 #include "Fileformat/jpegwriter.h"
 #include "Viewers/GenericViewer.h"

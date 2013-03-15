@@ -28,7 +28,6 @@
 #include <QFile>
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
 #include "HdrCreation/createhdr.h"
 #include "HdrCreation/responses.h"
@@ -180,7 +179,7 @@ pfs::Frame* createHDR(const float* arrayofexptime,
         break;
     }
     // create channels for output
-    pfs::Frame *frameout = pfs::DOMIO::createFrame(width, height);
+    pfs::Frame *frameout = new pfs::Frame(width, height);
     pfs::Channel *Rj_, *Gj_, *Bj_;
     frameout->createXYZChannels( Rj_, Gj_, Bj_ );
 

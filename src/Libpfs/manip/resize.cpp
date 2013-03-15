@@ -36,7 +36,6 @@
 #include "Libpfs/utils/msec_timer.h"
 
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
 namespace pfs
 {
@@ -52,7 +51,7 @@ Frame* resize(Frame* frame, int xSize)
     int new_x = xSize;
     int new_y = (int)((float)frame->getHeight() * (float)xSize / (float)frame->getWidth());
 
-    pfs::Frame *resizedFrame = pfs::DOMIO::createFrame( new_x, new_y );
+    pfs::Frame *resizedFrame = new pfs::Frame( new_x, new_y );
 
     const ChannelContainer& channels = frame->getChannels();
     for ( ChannelContainer::const_iterator it = channels.begin();

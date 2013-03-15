@@ -27,7 +27,6 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/channel.h"
-#include "Libpfs/domio.h"
 #include "Libpfs/utils/msec_timer.h"
 
 namespace
