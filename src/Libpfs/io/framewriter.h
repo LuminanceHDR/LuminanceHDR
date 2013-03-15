@@ -19,30 +19,37 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief PFS file format writer (used for compatibility with PFSTOOLS)
-//! \note Most of the code of this class is derived from the code in PFSTOOLS
+//! \brief Interface for the FrameWriter base class
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#ifndef PFS_IO_PFSWRITER_H
-#define PFS_IO_PFSWRITER_H
+#ifndef PFS_IO_FRAMEWRITER_H
+#define PFS_IO_FRAMEWRITER_H
 
 #include <string>
 #include <Libpfs/params.h>
-#include <Libpfs/io/framewriter.h>
+#include <Libpfs/io/ioexception.h>
 
 namespace pfs {
 class Frame;
 
 namespace io {
 
-class PfsWriter : public FrameWriter {
+class FrameWriter
+{
 public:
-    PfsWriter(const std::string& filename);
+    FrameWriter(const std::string& filename);
+    virtual ~FrameWriter();
 
-    bool write(const pfs::Frame& frame, const pfs::Params& params);
+    virtual bool write(const pfs::Frame& frame, const pfs::Params& params) = 0;
+
+    const std::string& filename() const
+    { return m_filename; }
+
+private:
+    std::string m_filename;
 };
 
-} // io
-} // pfs
+}   // io
+}   // pfs
 
-#endif //  PFS_IO_PFSWRITER_H
+#endif // PFS_IO_FRAMEWRITER_H

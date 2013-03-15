@@ -34,12 +34,12 @@ namespace io {
 static const char *PFSFILEID = "PFS1\x0a";
 
 PfsWriter::PfsWriter(const std::string &filename)
-    : m_filename(filename)
+    : FrameWriter(filename)
 {}
 
 bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
 {
-    ResouceHandlerFile outputStream(fopen(m_filename.c_str(), "w"));
+    ResouceHandlerFile outputStream(fopen(filename().c_str(), "w"));
 
 #ifdef HAVE_SETMODE
     // Needed under MS windows (text translation IO for stdin/out)
