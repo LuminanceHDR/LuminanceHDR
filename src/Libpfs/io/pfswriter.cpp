@@ -26,7 +26,7 @@
 #include <libpfs/tag.h>
 #include <Libpfs/io/pfswriter.h>
 #include <Libpfs/io/pfscommon.h>
-#include <Common/ResourceHandlerCommon.h>
+#include <Libpfs/utils/resourcehandlerstdio.h>
 
 namespace pfs {
 namespace io {
@@ -39,7 +39,7 @@ PfsWriter::PfsWriter(const std::string &filename)
 
 bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
 {
-    ResouceHandlerFile outputStream(fopen(filename().c_str(), "w"));
+    utils::ScopedStdIoFile outputStream(fopen(filename().c_str(), "w"));
 
 #ifdef HAVE_SETMODE
     // Needed under MS windows (text translation IO for stdin/out)

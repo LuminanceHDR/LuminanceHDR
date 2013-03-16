@@ -22,8 +22,9 @@
 #ifndef TIFFCOMMON_H
 #define TIFFCOMMON_H
 
-#include <Common/ResourceHandler.h>
+#include <iostream>
 #include <tiffio.h>
+#include <Libpfs/utils/resourcehandler.h>
 
 struct CleanUpTiffFile
 {
@@ -31,12 +32,12 @@ struct CleanUpTiffFile
     void cleanup(TIFF* profile) {
         if ( profile ) {
 #ifndef NDEBUG
-            std::cerr << "CleanUpTiffFile::cleanup()\n";
+            std::clog << "CleanUpTiffFile::cleanup()\n";
 #endif
             TIFFClose(profile);
         }
     }
 };
-typedef ResourceHandler<TIFF, CleanUpTiffFile> ScopedTiffFile;
+typedef pfs::utils::ResourceHandler<TIFF, CleanUpTiffFile> ScopedTiffFile;
 
 #endif // TIFFCOMMON_H

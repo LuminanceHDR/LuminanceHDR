@@ -45,7 +45,7 @@
 #include <algorithm>
 #include <stdint.h>
 
-#include <Common/ResourceHandlerLcms.h>
+#include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/xyz.h>
 #include <Fileformat/pfsoutldrimage.h>
@@ -123,9 +123,9 @@ void writeCommonHeader(TIFF* tif, uint32_t width, uint32_t height)
 
 void writeSRGBProfile(TIFF* tif)
 {
-    ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
+    utils::ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
     cmsUInt32Number profileSize = 0;
-    cmsSaveProfileToMem (hsRGB.data(), NULL, &profileSize);	// get the size
+    cmsSaveProfileToMem(hsRGB.data(), NULL, &profileSize);	// get the size
 
     std::vector<char> embedBuffer(profileSize);
 

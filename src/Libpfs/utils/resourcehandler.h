@@ -22,6 +22,9 @@
 #ifndef RESOURCEHANDLER_H
 #define RESOURCEHANDLER_H
 
+namespace pfs {
+namespace utils {
+
 template<typename T>
 struct ResourceHandlerTraits {
     static inline
@@ -42,56 +45,52 @@ public:
     {}
 
     inline
-    void reset(T* p = 0)
-    {
+    void reset(T* p = 0) {
         if (p == p_) return;
-        if (p_ != 0)
-        {
+        if (p_ != 0) {
             Traits::cleanup(p_);
         }
         p_ = p;
     }
 
     inline
-    ~ResourceHandler()
-    {
+    ~ResourceHandler() {
         T *oldD = this->p_;
         Traits::cleanup(oldD);
         this->p_ = 0;
     }
 
-    inline
-    T* data()
-    {
-        return p_;
-    }
+    inline T* data()
+    { return p_; }
 
-    inline
-    T* take()
-    {
+    inline const T* data() const
+    { return p_; }
+
+    inline T* take() {
         T* old_p = p_;
         p_ = 0;
         return old_p;
     }
 
-    inline
-    operator bool()
-    {
-        return p_;
-    }
+    inline operator bool() const
+    { return p_; }
 
-    inline
-    bool operator!()
-    {
-        return !p_;
-    }
-
+    inline bool operator!() const
+    { return !p_; }
 
 private:
+#ifdef LHDR_CXX11_ENABLED
+    ResourceHandler(const ResourceHandler&) = delete;
+    ResourceHandler& operator=(const ResourceHandler&) = delete;
+#else
     ResourceHandler(const ResourceHandler&);
     ResourceHandler& operator=(const ResourceHandler&);
+#endif
 
     T* p_;
 };
+
+}   // utils
+}   // pfs
 
 #endif // RESOURCEHANDLER_H

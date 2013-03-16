@@ -30,7 +30,7 @@
 #include <Libpfs/params.h>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
-#include <Common/ResourceHandlerCommon.h>
+#include <Libpfs/utils/resourcehandlerstdio.h>
 
 namespace pfs {
 class Frame;
@@ -50,7 +50,7 @@ public:
     void read(Frame &frame, const Params &);
 
 private:
-    ResouceHandlerFile m_file;
+    utils::ScopedStdIoFile m_file;
     size_t m_channelCount;
 };
 

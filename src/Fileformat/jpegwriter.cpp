@@ -48,8 +48,9 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/rgbremapper.h>
-#include <Common/ResourceHandlerCommon.h>
-#include <Common/ResourceHandlerLcms.h>
+#include <Libpfs/utils/resourcehandlerstdio.h>
+#include <Libpfs/utils/resourcehandlerlcms.h>
+
 #include <Fileformat/pfsoutldrimage.h>
 
 #ifdef USE_TEMPORARY_FILE
@@ -238,7 +239,7 @@ public:
     bool write(const pfs::Frame &frame, const JpegWriterParams& params)
     {
         cmsUInt32Number cmsProfileSize = 0;
-        ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
+        utils::ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
 
         cmsSaveProfileToMem(hsRGB.data(), NULL, &cmsProfileSize);           // get the size
 
@@ -393,7 +394,7 @@ struct JpegWriterImplMemory : public JpegWriterImpl
     }
 
 private:
-    ResouceHandlerFile m_handle;
+    utils::ScopedStdIoFile m_handle;
 #ifdef USE_TEMPORARY_FILE
     QTemporaryFile m_temporaryFile;
 #else
@@ -426,7 +427,7 @@ struct JpegWriterImplFile : public JpegWriterImpl
     { m_filesize = 0; }
 
 private:
-    ResouceHandlerFile m_handle;
+    utils::ScopedStdIoFile m_handle;
     std::string m_filename;
 };
 

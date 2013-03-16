@@ -19,49 +19,35 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef RESOURCEHANDLERLCMS_H
-#define RESOURCEHANDLERLCMS_H
+#ifndef RESOURCEHANDLERSTDIO_H
+#define RESOURCEHANDLERSTDIO_H
 
-//! \file ResourceHandlerLcms.h
-//! \brief This file contains simple resource handlers for LCMS2 library
+//! \file resourcehandlerstdio.h
+//! \brief This file contains resource handlers for cstdio
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \date 2012 05 05
 //! \since 2.3.0-beta1
 
-#include "ResourceHandler.h"
+#include <Libpfs/utils/resourcehandler.h>
+#include <iostream>
+#include <cstdio>
 
-#include <lcms2.h>
-#ifdef QT_DEBUG
-#include <QDebug>
-#endif
+namespace pfs {
+namespace utils {
 
-struct CleanUpCmsProfile
+struct CleanUpStdIoFile
 {
     static inline
-    void cleanup(cmsHPROFILE profile) {
-        if ( profile ) {
-#ifdef QT_DEBUG
-            qDebug() << "CleanUpCmsProfile::cleanup()";
-#endif
-            cmsCloseProfile(profile);
+    void cleanup(FILE* p) {
+        if ( p ) {
+            fclose(p);
         }
     }
 };
-typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
-// typedef ResourceHandler<void, CleanUpCmsProfile> ScopedCmsProfile;
 
-struct CleanUpCmsTransform
-{
-    static inline
-    void cleanup(cmsHTRANSFORM transform) {
-        if ( transform ) {
-#ifdef QT_DEBUG
-            qDebug() << "CleanUpCmsTransform::cleanup()";
-#endif
-            cmsDeleteTransform(transform);
-        }
-    }
-};
-typedef ResourceHandler<void, CleanUpCmsTransform> ScopedCmsTransform;
+typedef ResourceHandler<FILE, CleanUpStdIoFile> ScopedStdIoFile;
 
-#endif
+}   // utils
+}   // pfs
+
+#endif // RESOURCEHANDLERSTDIO_H

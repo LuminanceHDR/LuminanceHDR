@@ -35,8 +35,11 @@
 #include "jpegreader.h"
 
 #include "Common/LuminanceOptions.h"
-#include "Common/ResourceHandlerCommon.h"
-#include "Common/ResourceHandlerLcms.h"
+
+#include <Libpfs/utils/resourcehandlerlcms.h>
+#include <Libpfs/utils/resourcehandlerstdio.h>
+
+using namespace pfs;
 
 namespace
 {
@@ -255,7 +258,7 @@ QImage* JpegReader::readJpegIntoQImage()
     QByteArray ba( QFile::encodeName(fname) );
 	qDebug() << "readJpegIntoQImage: filename: " << ba.data();
 
-    ResouceHandlerFile infile( fopen(ba.constData(), "rb") );
+    utils::ScopedStdIoFile infile( fopen(ba.constData(), "rb") );
     if (infile.data() == NULL)
     {
 		fprintf(stderr, "can't open %s\n", ba.data());
@@ -307,9 +310,9 @@ QImage* JpegReader::readJpegIntoQImage()
         throw;
 	}
 	
-    ScopedCmsProfile hsRGB;
-    ScopedCmsProfile hIn;
-    ScopedCmsTransform xform;
+    utils::ScopedCmsProfile hsRGB;
+    utils::ScopedCmsProfile hIn;
+    utils::ScopedCmsTransform xform;
 
     unsigned int cmsProfileLength;
     JOCTET * cmsProfileBuffer;

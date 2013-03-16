@@ -46,8 +46,8 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/rgbremapper.h>
-#include <Common/ResourceHandlerCommon.h>
-#include <Common/ResourceHandlerLcms.h>
+#include <Libpfs/utils/resourcehandlerlcms.h>
+#include <Libpfs/utils/resourcehandlerstdio.h>
 #include <Fileformat/pfsoutldrimage.h>
 
 using namespace std;
@@ -257,7 +257,7 @@ struct PngWriterImplFile : public PngWriterImpl
     { m_filesize = 0; }
 
 private:
-    ResouceHandlerFile m_handle;
+    utils::ScopedStdIoFile m_handle;
     std::string m_filename;
 };
 
@@ -313,7 +313,7 @@ struct PngWriterImplMemory : public PngWriterImpl
     }
 
 private:
-    ResouceHandlerFile m_handle;
+    utils::ScopedStdIoFile m_handle;
 #ifdef USE_TEMPORARY_FILE
     QTemporaryFile m_temporaryFile;
 #else

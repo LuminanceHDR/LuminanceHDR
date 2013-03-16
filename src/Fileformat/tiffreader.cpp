@@ -41,13 +41,15 @@
 #include <vector>
 #include <stdexcept>
 #include <cassert>
-#include "Common/ResourceHandlerLcms.h"
-
-#include "Libpfs/frame.h"
 
 #include "Common/LuminanceOptions.h"
 
+#include <Libpfs/frame.h>
 #include <Libpfs/colorspace/xyz.h>
+#include <Libpfs/utils/resourcehandlerlcms.h>
+
+using namespace pfs;
+using namespace pfs::utils;
 
 namespace
 {
