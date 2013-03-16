@@ -56,7 +56,6 @@ public:
 
     void toUint8(float rI, float gI, float bI,
                  uint8_t& rO, uint8_t& gO, uint8_t& bO) const;
-
     void operator()(float rI, float gI, float bI,
                     uint8_t& rO, uint8_t& gO, uint8_t& bO) const
     {
@@ -64,10 +63,15 @@ public:
     }
 
     void toUint16(float r, float g, float b,
-                   quint16& red, quint16& green, quint16& blue) const;
+                  uint16_t& red, uint16_t& green, uint16_t& blue) const;
+    void operator()(float rI, float gI, float bI,
+                    uint16_t& rO, uint16_t& gO, uint16_t& bO) const
+    {
+        this->toUint16(rI, gI, bI, rO, gO, bO);
+    }
+
     void toFloat(float rI, float gI, float bI,
                  float& rO, float& gO, float& bO) const;
-
     void operator()(float rI, float gI, float bI,
                     float& rO, float& gO, float& bO) const
     {

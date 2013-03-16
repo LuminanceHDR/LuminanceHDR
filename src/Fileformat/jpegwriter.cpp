@@ -34,7 +34,6 @@
 
 #include <QDebug>
 #include <QFile>
-#include <QSharedPointer>
 
 #include <stdexcept>
 #include <vector>
@@ -50,8 +49,7 @@
 #include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
-
-#include <Fileformat/pfsoutldrimage.h>
+#include <Libpfs/utils/transform.h>
 
 #ifdef USE_TEMPORARY_FILE
 #include <QTemporaryFile>
@@ -246,9 +244,9 @@ public:
         std::vector<JOCTET> cmsOutputProfile(cmsProfileSize);
 
         cmsSaveProfileToMem(hsRGB.data(), cmsOutputProfile.data(), &cmsProfileSize);    //
-
-        qDebug() << "sRGB profile size: " << cmsProfileSize;
-
+#ifndef NDEBUG
+        std::clog << "sRGB profile size: " << cmsProfileSize;
+#endif
         struct jpeg_compress_struct cinfo;
         cinfo.err                        = jpeg_std_error(&ErrorHandler.pub);
         ErrorHandler.pub.error_exit      = my_writer_error_handler;
@@ -289,10 +287,6 @@ public:
             const Channel* bChannel;
             frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-            const float* redData = rChannel->data();
-            const float* greenData = gChannel->data();
-            const float* blueData = bChannel->data();
-
             jpeg_stdio_dest(&cinfo, handle());
             jpeg_start_compress(&cinfo, true);
 
@@ -308,13 +302,14 @@ public:
             while ( cinfo.next_scanline < cinfo.image_height )
             {
                 // copy line from Frame into scanLineOut
-                planarToInterleaved(redData + cinfo.next_scanline*cinfo.image_width,
-                                    greenData + cinfo.next_scanline*cinfo.image_width,
-                                    blueData + cinfo.next_scanline*cinfo.image_width,
-                                    scanLineOut.data(), RGB_FORMAT,
-                                    cinfo.image_width,
-                                    rgbRemapper);
-
+                utils::transform(rChannel->row_begin(cinfo.next_scanline),
+                                 rChannel->row_end(cinfo.next_scanline),
+                                 gChannel->row_begin(cinfo.next_scanline),
+                                 bChannel->row_begin(cinfo.next_scanline),
+                                 scanLineOut.data(),
+                                 scanLineOut.data() + 1,
+                                 scanLineOut.data() + 2,
+                                 rgbRemapper, 3);
                 jpeg_write_scanlines(&cinfo, scanLineOutArray, 1);
             }
         }
@@ -348,7 +343,7 @@ struct JpegWriterImplMemory : public JpegWriterImpl
         : JpegWriterImpl()
     {}
 
-    bool open(size_t bufferSize)
+    bool open(size_t /*bufferSize*/)
     {
 #ifdef USE_TEMPORARY_FILE
         if ( !m_temporaryFile.open() ) {

@@ -226,7 +226,7 @@ void RGBRemapper::toFloat(float rI, float gI, float bI,
 }
 
 void RGBRemapper::toUint16(float r, float g, float b,
-                              quint16& red, quint16& green, quint16& blue) const
+                           uint16_t& red, uint16_t& green, uint16_t& blue) const
 {
     RgbF3 rgb = get(r,g,b);
 

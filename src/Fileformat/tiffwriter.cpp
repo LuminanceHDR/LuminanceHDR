@@ -45,10 +45,11 @@
 #include <algorithm>
 #include <stdint.h>
 
+#include <Libpfs/io/ioexception.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/xyz.h>
-#include <Fileformat/pfsoutldrimage.h>
+#include <Libpfs/utils/chain.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/array2d.h>
 
@@ -171,24 +172,22 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    const float* redData = rChannel->data();
-    const float* greenData = gChannel->data();
-    const float* blueData = bChannel->data();
-
     std::vector<uint8_t> stripBuffer( stripSize );
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
                                 params.luminanceMapping_);
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
-        planarToInterleaved(redData + s*width,
-                            greenData + s*width,
-                            blueData + s*width,
-                            stripBuffer.data(), RGB_FORMAT, width,
-                            rgbRemapper);
+        utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
+                         gChannel->row_begin(s),
+                         bChannel->row_begin(s),
+                         stripBuffer.data(),
+                         stripBuffer.data() + 1,
+                         stripBuffer.data() + 2,
+                         rgbRemapper, 3);
 
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
-            qDebug ("error writing strip");
+            throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
             return false;
         }
     }
@@ -223,24 +222,22 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    const float* redData = rChannel->data();
-    const float* greenData = gChannel->data();
-    const float* blueData = bChannel->data();
-
     std::vector<uint16_t> stripBuffer( width*3 );
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
-                                params.luminanceMapping_);
+                            params.luminanceMapping_);
 
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
-        planarToInterleaved(redData + s*width,
-                            greenData + s*width,
-                            blueData + s*width,
-                            stripBuffer.data(), RGB_FORMAT, width,
-                            rgbRemapper);
+        utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
+                         gChannel->row_begin(s),
+                         bChannel->row_begin(s),
+                         stripBuffer.data(),
+                         stripBuffer.data() + 1,
+                         stripBuffer.data() + 2,
+                         rgbRemapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
-            qDebug ("error writing strip");
+            throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
             return false;
         }
     }
@@ -277,23 +274,21 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    const float* redData = rChannel->data();
-    const float* greenData = gChannel->data();
-    const float* blueData = bChannel->data();
-
     std::vector<float> stripBuffer( width*3 );
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
                             MAP_LINEAR); // maybe I have to force to be linear?!
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
-        planarToInterleaved(redData + s*width,
-                            greenData + s*width,
-                            blueData + s*width,
-                            stripBuffer.data(), RGB_FORMAT, width,
-                            rgbRemapper);
+        utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
+                         gChannel->row_begin(s),
+                         bChannel->row_begin(s),
+                         stripBuffer.data(),
+                         stripBuffer.data() + 1,
+                         stripBuffer.data() + 2,
+                         rgbRemapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) == 0)
         {
-            qDebug ("error writing strip");
+            throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
 
             return -1;
         }
@@ -301,8 +296,6 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 
     return true;
 }
-
-#include <Libpfs/utils/chain.h>
 
 // write LogLUv Tiff from pfs::Frame
 bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
@@ -334,36 +327,25 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    const float* redData = rChannel->data();
-    const float* greenData = gChannel->data();
-    const float* blueData = bChannel->data();
-
     std::vector<float> stripBuffer( width*3 );
-#ifndef NDEBUG
-    float* p = stripBuffer.data();
-#endif
-
+    // remap to [0, 1] + transform to colorspace XYZ
     utils::Chain<RGBRemapper, colorspace::ConvertRGB2XYZ>
-            // remap to [0, 1] + transform to colorspace XYZ
             func(RGBRemapper(params.minLuminance_, params.maxLuminance_, MAP_LINEAR),
                  colorspace::ConvertRGB2XYZ());
 
      // maybe I have to force to be linear?!
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
-        utils::transform(redData + s*width, redData + (s+1)*width,
-                         greenData + s*width,
-                         blueData + s*width,
+        utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
+                         gChannel->row_begin(s),
+                         bChannel->row_begin(s),
                          stripBuffer.data(),
                          stripBuffer.data() + 1,
                          stripBuffer.data() + 2,
                          func, 3);
-#ifndef NDEBUG
-        assert(p == stripBuffer.data());
-#endif
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
-            qDebug ("error writing strip");
+            throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
 
             return -1;
         }
@@ -389,6 +371,9 @@ bool TiffWriter::write(const pfs::Frame& frame, const pfs::Params& params)
 #endif
 
     ScopedTiffFile tif( TIFFOpen (m_filename.c_str(), "w") );
+    if ( !tif ) {
+        throw pfs::io::InvalidFile("TiffWriter: cannot open " + m_filename);
+    }
 
     bool status = true;
     switch (p.tiffWriterMode_) {
@@ -407,6 +392,5 @@ bool TiffWriter::write(const pfs::Frame& frame, const pfs::Params& params)
         break;
     }
 
-    assert( status == true );
     return status;
 }
