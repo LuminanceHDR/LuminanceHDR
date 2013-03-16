@@ -32,7 +32,7 @@ template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
 void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
                OutputIterator out1, OutputIterator out2, OutputIterator out3,
-               ConversionOperator convOp);
+               ConversionOperator convOp, size_t outputStepSize = 1);
 
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
