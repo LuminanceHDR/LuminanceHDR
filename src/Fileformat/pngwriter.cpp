@@ -48,7 +48,7 @@
 #include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
-#include <Fileformat/pfsoutldrimage.h>
+#include <Libpfs/utils/transform.h>
 
 using namespace std;
 using namespace boost;
@@ -202,20 +202,17 @@ public:
         const Channel* bChannel;
         frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-        const float* redData = rChannel->data();
-        const float* greenData = gChannel->data();
-        const float* blueData = bChannel->data();
-
         std::vector<png_byte> scanLineOut( width * 3 );
         RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
                                 params.luminanceMapping_);
         for (png_uint_32 row = 0; row < height; ++row)
         {
-            planarToInterleaved(redData + row*width,
-                                greenData + row*width,
-                                blueData + row*width,
-                                scanLineOut.data(), BGR_FORMAT,
-                                width, rgbRemapper);
+            utils::transform(rChannel->row_begin(row), rChannel->row_end(row),
+                             gChannel->row_begin(row), bChannel->row_begin(row),
+                             scanLineOut.data()+2,
+                             scanLineOut.data()+1,
+                             scanLineOut.data(),
+                             rgbRemapper, 3);
             png_write_row(png_ptr, scanLineOut.data());
         }
 

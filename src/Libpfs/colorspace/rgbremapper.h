@@ -56,6 +56,13 @@ public:
 
     void toUint8(float rI, float gI, float bI,
                  uint8_t& rO, uint8_t& gO, uint8_t& bO) const;
+
+    void operator()(float rI, float gI, float bI,
+                    uint8_t& rO, uint8_t& gO, uint8_t& bO) const
+    {
+        this->toUint8(rI, gI, bI, rO, gO, bO);
+    }
+
     void toUint16(float r, float g, float b,
                    quint16& red, quint16& green, quint16& blue) const;
     void toFloat(float rI, float gI, float bI,
