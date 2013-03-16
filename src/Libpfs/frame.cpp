@@ -67,7 +67,7 @@ Frame::~Frame()
 void Frame::resize(size_t width, size_t height)
 {
     for_each(m_channels.begin(), m_channels.end(),
-             boost::bind(&Channel::resize, _1, width, height));
+             boost::bind(&Channel::ChannelData::resize, _1, width, height));
 
     m_width = width;
     m_height = height;
