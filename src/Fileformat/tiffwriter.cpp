@@ -302,6 +302,8 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     return true;
 }
 
+#include <Libpfs/utils/chain.h>
+
 // write LogLUv Tiff from pfs::Frame
 bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 {
@@ -340,28 +342,22 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 #ifndef NDEBUG
     float* p = stripBuffer.data();
 #endif
-    std::vector<float> xCh(width);
-    std::vector<float> yCh(width);
-    std::vector<float> zCh(width);
 
-    RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
-                            MAP_LINEAR); // maybe I have to force to be linear?!
+    utils::Chain<RGBRemapper, colorspace::ConvertRGB2XYZ>
+            // remap to [0, 1] + transform to colorspace XYZ
+            func(RGBRemapper(params.minLuminance_, params.maxLuminance_, MAP_LINEAR),
+                 colorspace::ConvertRGB2XYZ());
+
+     // maybe I have to force to be linear?!
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
-        // remap to [0, 1]
         utils::transform(redData + s*width, redData + (s+1)*width,
                          greenData + s*width,
                          blueData + s*width,
-                         xCh.begin(), yCh.begin(), zCh.begin(),
-                         rgbRemapper);
-        // transform colorspace to XYZ
-        utils::transform(xCh.begin(), xCh.end(), yCh.begin(), zCh.begin(),
-                         xCh.begin(), yCh.begin(), zCh.begin(),
-                         colorspace::ConvertRGB2XYZ());
-        // DAVIDE ... can we get rid of the RGBRemapper in this case?
-        planarToInterleaved(xCh.data(), yCh.data(), zCh.data(),
-                            stripBuffer.data(), RGB_FORMAT, width,
-                            RGBRemapper());
+                         stripBuffer.data(),
+                         stripBuffer.data()+1,
+                         stripBuffer.data()+2,
+                         func, 3);
 #ifndef NDEBUG
         assert(p == stripBuffer.data());
 #endif
