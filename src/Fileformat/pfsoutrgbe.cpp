@@ -37,6 +37,6 @@ void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename)
 	// X Y Z Channels contain R G B data
 	inputpfshdr->getXYZChannels(X, Y, Z);
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
-	writer.writeImage(X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+    writer.writeImage(X, Y, Z);
 	fclose(outfp);
 }

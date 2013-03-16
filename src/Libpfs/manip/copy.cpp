@@ -53,10 +53,7 @@ pfs::Frame *copy(const pfs::Frame *inFrame)
 
         pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
 
-        const pfs::Array2Df* inArray2D   = inCh->getChannelData();
-        pfs::Array2Df* outArray2D  = outCh->getChannelData();
-
-        copy(inArray2D, outArray2D);
+        copy(inCh, outCh);
     }
 
     pfs::copyTags(inFrame, outFrame);

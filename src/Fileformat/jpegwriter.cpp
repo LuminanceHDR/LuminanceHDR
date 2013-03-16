@@ -289,9 +289,9 @@ public:
             const Channel* bChannel;
             frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-            const float* redData = rChannel->getRawData();
-            const float* greenData = gChannel->getRawData();
-            const float* blueData = bChannel->getRawData();
+            const float* redData = rChannel->data();
+            const float* greenData = gChannel->data();
+            const float* blueData = bChannel->data();
 
             jpeg_stdio_dest(&cinfo, handle());
             jpeg_start_compress(&cinfo, true);

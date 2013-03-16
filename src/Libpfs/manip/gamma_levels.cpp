@@ -111,13 +111,13 @@ void gammaAndLevels(pfs::Frame* inFrame,
     inFrame->getXYZChannels( Xc, Yc, Zc );
     assert( Xc != NULL && Yc != NULL && Zc != NULL );
 
-    const float* R_i = Xc->getRawData();
-    const float* G_i = Yc->getRawData();
-    const float* B_i = Zc->getRawData();
+    const float* R_i = Xc->data();
+    const float* G_i = Yc->data();
+    const float* B_i = Zc->data();
 
-    float* R_o = Xc->getRawData();
-    float* G_o = Yc->getRawData();
-    float* B_o = Zc->getRawData();
+    float* R_o = Xc->data();
+    float* G_o = Yc->data();
+    float* B_o = Zc->data();
 
     // float exp_gamma = 1.f/gamma;
 #pragma omp parallel for

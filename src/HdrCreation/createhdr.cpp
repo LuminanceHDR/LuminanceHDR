@@ -180,12 +180,8 @@ pfs::Frame* createHDR(const float* arrayofexptime,
     }
     // create channels for output
     pfs::Frame *frameout = new pfs::Frame(width, height);
-    pfs::Channel *Rj_, *Gj_, *Bj_;
-    frameout->createXYZChannels( Rj_, Gj_, Bj_ );
-
-    pfs::Array2Df *Rj = Rj_->getChannelData();
-    pfs::Array2Df *Gj = Gj_->getChannelData();
-    pfs::Array2Df *Bj = Bj_->getChannelData();
+    pfs::Channel *Rj, *Gj, *Bj;
+    frameout->createXYZChannels( Rj, Gj, Bj );
 
     // camera response functions for each channel
     std::vector<float> Ir(M);

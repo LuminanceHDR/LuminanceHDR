@@ -265,7 +265,7 @@ static void smooth( pfs::Array2Df *U, const pfs::Array2Df *F )
   int iter;
   float err;
         
-  linbcg( n, F->getRawData(), U->getRawData(), BCG_TOL, BCG_STEPS, &iter, &err, rows, cols);
+  linbcg( n, F->data(), U->data(), BCG_TOL, BCG_STEPS, &iter, &err, rows, cols);
 
 //   fprintf( stderr, "." );
 
@@ -480,7 +480,7 @@ void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
     float err;
     //DEBUG_STR << "FMG: cg post improving ..., maxiter=" << BCG_POST_STEPS;
     //DEBUG_STR << ", tol=" << BCG_POST_TOL << std::endl;
-    linbcg( xmax*ymax, F->getRawData(), U->getRawData(),
+    linbcg( xmax*ymax, F->data(), U->data(),
                BCG_POST_TOL, BCG_POST_STEPS, &iter, &err,ymax,xmax);
     //DEBUG_STR << "FMG: cg post improvement: iter=" << iter << ", err=" << err;
     //DEBUG_STR << std::endl;

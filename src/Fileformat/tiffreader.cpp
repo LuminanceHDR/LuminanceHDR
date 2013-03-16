@@ -412,9 +412,9 @@ TiffReader::readIntoPfsFrame()
     pfs::Channel* Zc;
     frame->createXYZChannels (Xc, Yc, Zc);
 
-    float* X = Xc->getRawData();
-    float* Y = Yc->getRawData();
-    float* Z = Zc->getRawData();
+    float* X = Xc->data();
+    float* Y = Yc->data();
+    float* Z = Zc->data();
 
     //--- image length
     uint32 imagelength;
@@ -538,9 +538,9 @@ TiffReader::readIntoPfsFrame()
         pfs::Channel *Xc, *Yc, *Zc;
         frame->createXYZChannels (Xc, Yc, Zc);
 
-        float* X = Xc->getRawData();
-        float* Y = Yc->getRawData();
-        float* Z = Zc->getRawData();
+        float* X = Xc->data();
+        float* Y = Yc->data();
+        float* Z = Zc->data();
 
         QImage remapped( image_width, imagelength, QImage::Format_RGB32);
 

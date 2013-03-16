@@ -89,13 +89,10 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
         throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
     }
 
-    pfs::Array2Df& Xr = *X->getChannelData();
-    pfs::Array2Df& Yr = *Y->getChannelData();
-    pfs::Array2Df& Zr = *Z->getChannelData();
-
     // adaptation model
-    if ( multiplier != 1.0f )
-        multiplyChannels(Xr, Yr, Zr, multiplier );
+    if ( multiplier != 1.0f ) {
+        multiplyChannels(*X, *Y, *Z, multiplier );
+    }
 
     if( !local )
     {
@@ -104,10 +101,10 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
             if( !autolum )
                 am->setAdaptation(Acone, Arod);
             else
-                am->setAdaptation(Yr);
+                am->setAdaptation(*Y);
         }
         else
-            am->calculateAdaptation(Yr, 1.0f/fps);
+            am->calculateAdaptation(*Y, 1.0f/fps);
     }
     // tone mapping
     int w = Y->getWidth();
@@ -117,9 +114,9 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
     pfs::Array2Df G(w,h);
     pfs::Array2Df B(w,h);
 
-    pfs::transformColorSpace( pfs::CS_XYZ, &Xr, &Yr, &Zr, pfs::CS_RGB, &R, &G, &B );
-    tmo_pattanaik00( R, G, B, Yr, am.get(), local, ph );
-    pfs::transformColorSpace( pfs::CS_RGB, &R, &G, &B, pfs::CS_XYZ, &Xr, &Yr, &Zr );
+    pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, &R, &G, &B );
+    tmo_pattanaik00( R, G, B, *Y, am.get(), local, ph );
+    pfs::transformColorSpace( pfs::CS_RGB, &R, &G, &B, pfs::CS_XYZ, X, Y, Z );
 
     if (!ph.canceled())
     {

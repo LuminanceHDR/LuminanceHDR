@@ -96,9 +96,7 @@ void pfstmo_fattal02(pfs::Frame& frame,
   pfs::Array2Df Yr(w,h);
   pfs::Array2Df L(w,h);
 
-  pfs::transformRGB2Y(R->getChannelData(), G->getChannelData(), B->getChannelData(),
-                      &Yr);
-
+  pfs::transformRGB2Y(R, G, B, &Yr);
 
   tmo_fattal02(w, h, Yr, L,
                opt_alpha, opt_beta, opt_noise, newfattal,
@@ -107,9 +105,9 @@ void pfstmo_fattal02(pfs::Frame& frame,
 
   if ( !ph.canceled() )
   {
-      pfs::Array2Df& arrayRed = *R->getChannelData();
-      pfs::Array2Df& arrayGreen = *G->getChannelData();
-      pfs::Array2Df& arrayBlue = *B->getChannelData();
+      pfs::Array2Df& arrayRed = *R;
+      pfs::Array2Df& arrayGreen = *G;
+      pfs::Array2Df& arrayBlue = *B;
 
       for (int i=0; i < w*h; i++)
       {

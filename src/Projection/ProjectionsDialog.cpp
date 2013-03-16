@@ -100,15 +100,11 @@ void ProjectionsDialog::okClicked()
     const pfs::ChannelContainer& channels = original->getChannels();
 
     for (pfs::ChannelContainer::const_iterator it = channels.begin();
-         it != channels.end();
-         ++it)
+         it != channels.end(); ++it)
     {
-        const pfs::Channel *originalCh = *it;
-        pfs::Channel *newCh = transformed->createChannel( originalCh->getName() );
+        pfs::Channel *newCh = transformed->createChannel( (*it)->getName() );
 
-        transformArray(originalCh->getChannelData(),
-                       newCh->getChannelData(),
-                       transforminfo);
+        transformArray(*it, newCh, transforminfo);
     }
 
 	pfs::copyTags( original, transformed );

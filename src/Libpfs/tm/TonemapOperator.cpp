@@ -103,8 +103,8 @@ struct TonemapOperatorMantiuk08
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
         workingframe.getXYZChannels( X, Y, Z );
-        pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                 pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
+                                 pfs::CS_XYZ, X, Y, Z);
 
         pfstmo_mantiuk08(workingframe,
                          opts->operator_options.mantiuk08options.colorsaturation,
@@ -113,8 +113,8 @@ struct TonemapOperatorMantiuk08
                          opts->operator_options.mantiuk08options.setluminance,
                          ph);
 
-        pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                 pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
+                                 pfs::CS_RGB, X, Y, Z);
     }
 };
 
@@ -206,8 +206,8 @@ struct TonemapOperatorReinhard02
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
         workingframe.getXYZChannels( X, Y, Z );
-        pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                 pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
+                                 pfs::CS_XYZ, X, Y, Z);
 
         m_mutex.lock();
         try {
@@ -226,8 +226,8 @@ struct TonemapOperatorReinhard02
         }
         m_mutex.unlock();
 
-        pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                 pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
+                                 pfs::CS_SRGB, X, Y, Z);
     }
 
 private:
@@ -276,8 +276,8 @@ struct TonemapOperatorPattanaik00
         // Convert to CS_XYZ: tm operator now use this colorspace
         pfs::Channel *X, *Y, *Z;
         workingframe.getXYZChannels( X, Y, Z );
-        pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                 pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+        pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
+                                 pfs::CS_XYZ, X, Y, Z);
 
         pfstmo_pattanaik00(workingframe,
                            opts->operator_options.pattanaikoptions.local,
@@ -288,8 +288,8 @@ struct TonemapOperatorPattanaik00
                            ph);
 
 
-        pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                 pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+        pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
+                                 pfs::CS_SRGB, X, Y, Z);
     }
 };
 

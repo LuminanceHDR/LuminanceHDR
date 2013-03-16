@@ -58,9 +58,10 @@ quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,
 
     quint16* temp_pixmap = new quint16[3*width*height];
 
-    const float* p_R = Xc->getChannelData()->getRawData();
-    const float* p_G = Yc->getChannelData()->getRawData();
-    const float* p_B = Zc->getChannelData()->getRawData();
+    // DAVIDE -> FIX THIS FUNCTION!
+    const float* p_R = Xc->data();
+    const float* p_G = Yc->data();
+    const float* p_B = Zc->data();
 
     RGBRemapper rgbRemapper(min_luminance, max_luminance, mapping_method);
 	

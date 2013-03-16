@@ -49,7 +49,7 @@ TEST(TestPfsShift, MinusMinus)
 
     boost::scoped_ptr<Array2Df> output( shift(input, -2, -1) );
 
-    const float* outData = output->getRawData();
+    const float* outData = output->data();
 
     // print(input);
     // print(*output);
@@ -76,7 +76,7 @@ TEST(TestPfsShift, PlusMinus)
 
     boost::scoped_ptr<Array2Df> output( shift(input, 2, -1) );
 
-    const float* outData = output->getRawData();
+    const float* outData = output->data();
 
     // print(input);
     // print(*output);
@@ -103,7 +103,7 @@ TEST(TestPfsShift, StillMinus)
 
     boost::scoped_ptr<Array2Df> output( shift(input, 0, -1) );
 
-    const float* outData = output->getRawData();
+    const float* outData = output->data();
 
     // print(input);
     // print(*output);
@@ -129,7 +129,7 @@ TEST(TestPfsShift, MinusPlus)
 
     boost::scoped_ptr<Array2Df> output( shift(input, -2, 1) );
 
-    const float* outData = output->getRawData();
+    const float* outData = output->data();
 
     // print(input);
     // print(*output);
@@ -156,7 +156,7 @@ TEST(TestPfsShift, PlusPlus)
 
     boost::scoped_ptr<Array2Df> output( shift(input, 2, 1) );
 
-    const float* outData = output->getRawData();
+    const float* outData = output->data();
 
     // print(input);
     // print(*output);
@@ -183,7 +183,7 @@ TEST(TestPfsShift, StillStill)
 
     boost::scoped_ptr<Array2Df> output( shift(input, 0, 0) );
 
-    const float* outData = output->getRawData();
+    const float* outData = output->data();
 
     // print(input);
     // print(*output);

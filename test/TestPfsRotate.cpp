@@ -88,9 +88,7 @@ public:
         , referenceOutput(m_rows, m_cols)
         , computedOutput(m_rows, m_cols)
     {
-        std::generate(inputVector.getRawData(),
-                      inputVector.getRawData() + m_cols*m_rows,
-                      SeqInt());
+        std::generate(inputVector.begin(), inputVector.end(), SeqInt());
     }
 
     size_t cols() const { return m_cols; }
@@ -99,29 +97,29 @@ public:
 
 TEST_P(TestPfsRotate, ClockWise)
 {
-    rotate_cw(inputVector.getRawData(),
-              referenceOutput.getRawData(),
+    rotate_cw(inputVector.data(),
+              referenceOutput.data(),
               cols(), rows());
     pfs::rotate(&inputVector,
                      &computedOutput,
                      true);
     
-    compareVectors(referenceOutput.getRawData(),
-                   computedOutput.getRawData(),
+    compareVectors(referenceOutput.data(),
+                   computedOutput.data(),
                    cols()*rows());
 }
 
 TEST_P(TestPfsRotate, CClockWise)
 {
-    rotate_ccw(inputVector.getRawData(),
-               referenceOutput.getRawData(),
+    rotate_ccw(inputVector.data(),
+               referenceOutput.data(),
                cols(), rows());
     pfs::rotate(&inputVector,
                 &computedOutput,
                 false);
     
-    compareVectors(referenceOutput.getRawData(),
-                   computedOutput.getRawData(),
+    compareVectors(referenceOutput.data(),
+                   computedOutput.data(),
                    cols()*rows());
 }
 

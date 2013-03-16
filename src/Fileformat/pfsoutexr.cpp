@@ -137,18 +137,13 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
     
     int pixelCount = frame->getHeight()*frame->getWidth();
     
-    // Get Array2D from Channel
-    pfs::Array2Df* Rr = R->getChannelData();
-    pfs::Array2Df* Gr = G->getChannelData();
-    pfs::Array2Df* Br = B->getChannelData();
-    
     // Check if pixel values do not exceed maximum HALF value
     float maxValue = -1;
     for( int i = 0; i < pixelCount; i++ )
     {
-      if( (*Rr)(i) > maxValue ) maxValue = (*Rr)(i);
-      if( (*Gr)(i) > maxValue ) maxValue = (*Gr)(i);
-      if( (*Br)(i) > maxValue ) maxValue = (*Br)(i);
+      if( (*R)(i) > maxValue ) maxValue = (*R)(i);
+      if( (*G)(i) > maxValue ) maxValue = (*G)(i);
+      if( (*B)(i) > maxValue ) maxValue = (*B)(i);
       // if( (*X)(i) > maxValue ) maxValue = (*X)(i);
       // if( (*Y)(i) > maxValue ) maxValue = (*Y)(i);
       // if( (*Z)(i) > maxValue ) maxValue = (*Z)(i);
@@ -162,9 +157,9 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
       float scaleFactor = HALF_MAX/maxValue;
       for( int i = 0; i < pixelCount; i++ )
       {
-        halfR[i] = (half)((*Rr)(i)*scaleFactor);
-        halfG[i] = (half)((*Gr)(i)*scaleFactor);
-        halfB[i] = (half)((*Br)(i)*scaleFactor);
+        halfR[i] = (half)((*R)(i)*scaleFactor);
+        halfG[i] = (half)((*G)(i)*scaleFactor);
+        halfB[i] = (half)((*B)(i)*scaleFactor);
         // halfR[i] = (half)((*X)(i)*scaleFactor);
         // halfG[i] = (half)((*Y)(i)*scaleFactor);
         // halfB[i] = (half)((*Z)(i)*scaleFactor);
@@ -178,9 +173,9 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
       // Copy pixels to half-type buffers
       for( int i = 0; i < pixelCount; i++ )
       {
-        halfR[i] = min( (*Rr)(i), HALF_MAX );
-        halfG[i] = min( (*Gr)(i), HALF_MAX );
-        halfB[i] = min( (*Br)(i), HALF_MAX );
+        halfR[i] = min( (*R)(i), HALF_MAX );
+        halfG[i] = min( (*G)(i), HALF_MAX );
+        halfB[i] = min( (*B)(i), HALF_MAX );
         // halfR[i] = min( (*X)(i), HALF_MAX );
         // halfG[i] = min( (*Y)(i), HALF_MAX );
         // halfB[i] = min( (*Z)(i), HALF_MAX );

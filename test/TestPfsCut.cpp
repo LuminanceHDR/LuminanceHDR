@@ -26,7 +26,7 @@ TEST(TestPfsCut, NoCrop)
     Array2Df output(cols, rows);
     cut(&input, &output, 0, 0, input.getCols(), input.getRows());
 
-    const float* outData = output.getRawData();
+    const float* outData = output.data();
 
     // print(input);
     // print(output);
@@ -53,7 +53,7 @@ TEST(TestPfsCut, Crop_OneOne_ZeroZero)
     Array2Df output(cols-1, rows-1);
     cut(&input, &output, 1, 1, input.getCols(), input.getRows());
 
-    const float* outData = output.getRawData();
+    const float* outData = output.data();
 
     // print(input);
     // print(output);
@@ -79,7 +79,7 @@ TEST(TestPfsCut, Crop_OneOne_OneOne)
     Array2Df output(cols-2, rows-2);
     cut(&input, &output, 1, 1, input.getCols()-1, input.getRows()-1);
 
-    const float* outData = output.getRawData();
+    const float* outData = output.data();
 
     // print(input);
     // print(output);
@@ -106,7 +106,7 @@ TEST(TestPfsCut, Crop_ZeroZero_OneOne)
     Array2Df output(cols-1, rows-1);
     cut(&input, &output, 0, 0, input.getCols()-1, input.getRows()-1);
 
-    const float* outData = output.getRawData();
+    const float* outData = output.data();
 
     // print(input);
     // print(output);
@@ -132,7 +132,7 @@ TEST(TestPfsCut, Crop_OneTwo_TwoOne)
     Array2Df output(cols-3, rows-3);
     cut(&input, &output, 1, 2, input.getCols()-2, input.getRows()-1);
 
-    const float* outData = output.getRawData();
+    const float* outData = output.data();
 
     // print(input);
     // print(output);

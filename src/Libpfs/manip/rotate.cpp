@@ -56,11 +56,9 @@ pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
           it != channels.end();
           ++it)
     {
-        const pfs::Channel *originalCh = *it;
-        pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
+        pfs::Channel *newCh = resizedFrame->createChannel((*it)->getName());
 
-        rotate(originalCh->getChannelData(), newCh->getChannelData(),
-                    clock_wise);
+        rotate(*it, newCh, clock_wise);
     }
     
     pfs::copyTags( frame, resizedFrame );

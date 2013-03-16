@@ -30,8 +30,8 @@ namespace pfs
 template <typename Type>
 void rotate(const pfs::Array2D<Type> *in, pfs::Array2D<Type> *out, bool clockwise)
 {
-    const Type* Vin  = in->getRawData();
-    Type* Vout       = out->getRawData();
+    const Type* Vin  = in->data();
+    Type* Vout       = out->data();
 
     const int I_ROWS  = in->getRows();
     const int I_COLS  = in->getCols();

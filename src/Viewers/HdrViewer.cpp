@@ -55,7 +55,7 @@ namespace // anonymous namespace
 
 const pfs::Array2Df* getPrimaryChannel(const pfs::Frame& frame)
 {
-    return frame.getChannel("Y")->getChannelData();
+    return frame.getChannel("Y");
 }
 
 } // end anonymous namespace
@@ -244,9 +244,9 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
     in_frame->getXYZChannels( ChR, ChG, ChB );
     assert( ChR != NULL && ChG != NULL && ChB != NULL);
 
-    const float* R = ChR->getChannelData()->getRawData();
-    const float* G = ChG->getChannelData()->getRawData();
-    const float* B = ChB->getChannelData()->getRawData();
+    const float* R = ChR->data();
+    const float* G = ChG->data();
+    const float* B = ChB->data();
 
     assert( R != NULL && G != NULL && B != NULL );
 

@@ -75,7 +75,7 @@ bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
          ++it)
     {
         int size = frame.getWidth()*frame.getHeight();
-        fwrite( (*it)->getRawData(), sizeof( float ), size, outputStream.data() );
+        fwrite( (*it)->data(), sizeof( float ), size, outputStream.data() );
     }
 
     // Very important for pfsoutavi !!!

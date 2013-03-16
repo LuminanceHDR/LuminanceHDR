@@ -171,9 +171,9 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    const float* redData = rChannel->getRawData();
-    const float* greenData = gChannel->getRawData();
-    const float* blueData = bChannel->getRawData();
+    const float* redData = rChannel->data();
+    const float* greenData = gChannel->data();
+    const float* blueData = bChannel->data();
 
     std::vector<uint8_t> stripBuffer( stripSize );
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
@@ -223,9 +223,9 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    const float* redData = rChannel->getRawData();
-    const float* greenData = gChannel->getRawData();
-    const float* blueData = bChannel->getRawData();
+    const float* redData = rChannel->data();
+    const float* greenData = gChannel->data();
+    const float* blueData = bChannel->data();
 
     std::vector<uint16_t> stripBuffer( width*3 );
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
@@ -277,9 +277,9 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    const float* redData = rChannel->getRawData();
-    const float* greenData = gChannel->getRawData();
-    const float* blueData = bChannel->getRawData();
+    const float* redData = rChannel->data();
+    const float* greenData = gChannel->data();
+    const float* blueData = bChannel->data();
 
     std::vector<float> stripBuffer( width*3 );
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
@@ -334,9 +334,9 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    const float* redData = rChannel->getRawData();
-    const float* greenData = gChannel->getRawData();
-    const float* blueData = bChannel->getRawData();
+    const float* redData = rChannel->data();
+    const float* greenData = gChannel->data();
+    const float* blueData = bChannel->data();
 
     std::vector<float> stripBuffer( width*3 );
 #ifndef NDEBUG
@@ -355,8 +355,8 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          greenData + s*width,
                          blueData + s*width,
                          stripBuffer.data(),
-                         stripBuffer.data()+1,
-                         stripBuffer.data()+2,
+                         stripBuffer.data() + 1,
+                         stripBuffer.data() + 2,
                          func, 3);
 #ifndef NDEBUG
         assert(p == stripBuffer.data());

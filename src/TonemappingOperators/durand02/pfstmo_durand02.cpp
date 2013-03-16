@@ -84,17 +84,13 @@ void pfstmo_durand02(pfs::Frame& frame,
   frame.getXYZChannels( X, Y, Z );
   frame.getTags().setString("LUMINANCE", "RELATIVE");
   //---
-  
-  if ( Y==NULL || X==NULL || Z==NULL)
+
+  if ( Y == NULL || X == NULL || Z == NULL )
   {
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
   
-  pfs::Array2Df& R = *X->getChannelData();
-  pfs::Array2Df& G = *Y->getChannelData();
-  pfs::Array2Df& B = *Z->getChannelData();
-  
-  tmo_durand02(R, G, B,
+  tmo_durand02(*X, *Y, *Z,
                sigma_s, sigma_r, baseContrast, downsample, !original_algorithm,
                ph);
 }

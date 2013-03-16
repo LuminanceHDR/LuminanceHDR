@@ -71,13 +71,11 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
     std::cout << ", eq: " << eq << ")" << std::endl;
 #endif
 
-    pfs::Channel *X, *Y, *Z;
-    frame.getXYZChannels(X,Y,Z);
-    assert( X!=NULL && Y!=NULL && Z!=NULL );
-
-    pfs::Array2Df* Xr = X->getChannelData();
-    pfs::Array2Df* Yr = Y->getChannelData();
-    pfs::Array2Df* Zr = Z->getChannelData();
+    pfs::Channel *Xr, *Yr, *Zr;
+    frame.getXYZChannels(Xr, Yr, Zr);
+    assert( Xr != NULL );
+    assert( Yr != NULL );
+    assert( Zr != NULL );
 
     pfs::transformColorSpace( pfs::CS_RGB, Xr, Yr, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
     float maxLum, avLum, minLum;

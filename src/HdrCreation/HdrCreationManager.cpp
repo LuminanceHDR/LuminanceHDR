@@ -237,12 +237,12 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
     float r1, g1, b1;
     float r2, g2, b2;
     
-    const float *maxR1 = std::max_element(R1.getRawData(), R1.getRawData() + width*height);
-    const float *maxG1 = std::max_element(G1.getRawData(), G1.getRawData() + width*height);
-    const float *maxB1 = std::max_element(B1.getRawData(), B1.getRawData() + width*height);
-    const float *maxR2 = std::max_element(R2.getRawData(), R2.getRawData() + width*height);
-    const float *maxG2 = std::max_element(G2.getRawData(), G2.getRawData() + width*height);
-    const float *maxB2 = std::max_element(B2.getRawData(), B2.getRawData() + width*height);
+    const float *maxR1 = std::max_element(R1.data(), R1.data() + width*height);
+    const float *maxG1 = std::max_element(G1.data(), G1.data() + width*height);
+    const float *maxB1 = std::max_element(B1.data(), B1.data() + width*height);
+    const float *maxR2 = std::max_element(R2.data(), R2.data() + width*height);
+    const float *maxG2 = std::max_element(G2.data(), G2.data() + width*height);
+    const float *maxB2 = std::max_element(B2.data(), B2.data() + width*height);
 
     float m1[] = {*maxR1, *maxG1, *maxB1};
     float m2[] = {*maxR2, *maxG2, *maxB2};
@@ -424,9 +424,9 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
     m_mdrWidth = R->getWidth();
     m_mdrHeight = R->getHeight();
     // fill with image data
-    listmdrR[index] = R->getChannelData();
-    listmdrG[index] = G->getChannelData();
-    listmdrB[index] = B->getChannelData();
+    listmdrR[index] = R;
+    listmdrG[index] = G;
+    listmdrB[index] = B;
     //perform some housekeeping
     newResult(index,expotime,newfname);
     //continue with the loading process
@@ -635,9 +635,9 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
                 R = newFrame->getChannel("X");
                 G = newFrame->getChannel("Y");
                 B = newFrame->getChannel("Z");
-                listmdrR.push_back(R->getChannelData());
-                listmdrG.push_back(G->getChannelData());
-                listmdrB.push_back(B->getChannelData());
+                listmdrR.push_back(R);
+                listmdrG.push_back(G);
+                listmdrB.push_back(B);
                 if (!fromCommandLine) {
                     mdrImagesList.append(fromHDRPFStoQImage(newFrame));
                     QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
@@ -1025,7 +1025,7 @@ void HdrCreationManager::saveLDRs(const QString& filename)
         pfs::Channel* G;
         pfs::Channel* B;
         frame.createXYZChannels(R, G, B);
-        interleavedToPlanar(currentImage, R->getChannelData(), G->getChannelData(), B->getChannelData());
+        interleavedToPlanar(currentImage, R, G, B);
 
         TiffWriter writer(QFile::encodeName(fname).constData());
         writer.write( frame, pfs::Params("tiff_mode", 1) );
@@ -1069,9 +1069,9 @@ void HdrCreationManager::saveMDRs(const QString& filename)
         pfs::Channel* B;
         frame.createXYZChannels(R, G, B);
 
-        pfs::copy(listmdrR[idx], R->getChannelData());
-        pfs::copy(listmdrG[idx], G->getChannelData());
-        pfs::copy(listmdrB[idx], B->getChannelData());
+        pfs::copy(listmdrR[idx], R);
+        pfs::copy(listmdrG[idx], G);
+        pfs::copy(listmdrB[idx], B);
 
         TiffWriter writer( QFile::encodeName(fname).constData() );
         // tiff_mode = 2 (16 bit tiff)

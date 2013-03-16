@@ -37,7 +37,7 @@ pfs::Frame* readRGBEfile (const char * filename)
     pfs::Frame *frame = new pfs::Frame( reader.getWidth(), reader.getHeight() );
 	pfs::Channel  *X, *Y, *Z;
 	frame->createXYZChannels( X, Y, Z);
-	reader.readImage(X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+    reader.readImage(X, Y, Z);
 
     frame->getTags().setString("LUMINANCE", "RELATIVE");
     frame->getTags().setString("FILE_NAME", filename);

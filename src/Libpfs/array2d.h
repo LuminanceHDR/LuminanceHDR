@@ -105,14 +105,6 @@ public:
     void resize(size_t width, size_t height);
 
     //! \brief Direct access to the raw data
-    Type*       getRawData()
-    { return m_data.data(); }
-
-    //! \brief Direct access to the raw data
-    const Type* getRawData() const
-    { return m_data.data(); }
-
-    //! \brief Direct access to the raw data
     Type*       data()
     { return m_data.data(); }
 

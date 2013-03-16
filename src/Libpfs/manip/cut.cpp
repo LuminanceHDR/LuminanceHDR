@@ -70,7 +70,7 @@ pfs::Frame *cut(const pfs::Frame *inFrame,
 
         pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
 
-        cut(inCh->getChannelData(), outCh->getChannelData(),
+        cut(inCh, outCh,
             x_ul, y_ul, x_br, y_br);
     }
     

@@ -31,18 +31,13 @@
 namespace pfs {
 
 Channel::Channel( size_t width, size_t height, const std::string& channelName)
-    : m_channelData( width, height )
+    : ChannelData( width, height )
     , m_name( channelName )
     , m_tags()
 {}
 
 Channel::~Channel()
 {}
-
-void Channel::resize(size_t width, size_t height)
-{
-    m_channelData.resize(width, height);
-}
 
 } // pfs
 

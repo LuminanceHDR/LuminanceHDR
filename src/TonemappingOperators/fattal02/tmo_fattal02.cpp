@@ -318,7 +318,7 @@ void findMaxMinPercentile(const pfs::Array2Df& I,
     using namespace std;
 
     const int size = I.getRows() * I.getCols();
-    const float* data = I.getRawData();
+    const float* data = I.data();
     std::vector<float> vI;
 
     copy(data, data + size, back_inserter(vI));

@@ -87,11 +87,7 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   int rows = frame.getHeight();
   
   pfs::Array2Df R( cols, rows );
-  pfs::Array2Df* Xr = inX->getChannelData();
-  pfs::Array2Df* Yr = inY->getChannelData();
-  pfs::Array2Df* Zr = inZ->getChannelData();
-  
-  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, &R, Zr);
+  pfs::transformColorSpace(pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ);
   
   if( white_y == -2.f )
   {      
@@ -120,7 +116,7 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   
   datmoToneCurve tc;
   
-  std::auto_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->getRawData(), ph);
+  std::auto_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->data(), ph);
   if( C.get() == NULL )
     throw pfs::Exception("failed to analyse the image");
   
@@ -129,13 +125,13 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   if( res != PFSTMO_OK )
     throw pfs::Exception( "failed to compute the tone-curve" );    
   
-  res = datmo_apply_tone_curve_cc( inX->getRawData(), R.getRawData(), inZ->getRawData(), cols, rows, inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(), &tc, df, saturation_factor );
+  res = datmo_apply_tone_curve_cc( inX->data(), R.data(), inZ->data(), cols, rows, inX->data(), R.data(), inZ->data(), inY->data(), &tc, df, saturation_factor );
   if( res != PFSTMO_OK )
     throw pfs::Exception( "failed to tone-map the image" );
   
   ph.setValue( 100 );
   
-  pfs::transformColorSpace( pfs::CS_RGB, Xr, &R, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
+  pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
   frame.getTags().setString("LUMINANCE", "DISPLAY");
   
   delete df;

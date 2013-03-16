@@ -81,7 +81,7 @@ bool ImageInspector::inspect(const QString &filename, std::ostream &out)
          it != itEnd;
          ++it)
     {
-        const float* dataStart = (*it)->getRawData();
+        const float* dataStart = (*it)->data();
         const float* dataEnd = dataStart + ((*it)->getWidth()*(*it)->getHeight());
 
         ImageInspectorStats t = std::for_each(dataStart, dataEnd, ImageInspectorStats());

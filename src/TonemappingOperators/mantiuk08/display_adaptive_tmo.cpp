@@ -302,9 +302,9 @@ static void compute_gaussian_level( const int width, const int height,
   // be made to optimize this better.  If this can't be made faster
   // with using the overloaded operator then this optimization should
   // be applied to the other TMOs as well.
-  const float* in_raw = in.getRawData();
-  float* temp_raw = temp.getRawData();
-  float* out_raw = out.getRawData();
+  const float* in_raw = in.data();
+  float* temp_raw = temp.data();
+  float* out_raw = out.data();
 
   // Filter rows
 #pragma omp parallel for default(none) shared(in_raw, temp_raw, kernel)
@@ -443,7 +443,7 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
     
   pfs::Array2Df* LP_low = &buf_1;
   pfs::Array2Df* LP_high = &buf_2;
-  float* LP_high_raw = LP_high->getRawData();
+  float* LP_high_raw = LP_high->data();
   
   const float min_val = std::max( min_positive( L, pix_count ), MIN_PHVAL );
   

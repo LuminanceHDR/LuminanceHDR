@@ -38,7 +38,7 @@ namespace pfs {
 
 //! \brief Channel interface represents a 2D rectangular array with
 //! associated tags.
-class Channel
+class Channel : public Array2D<float>
 {
 public:
     typedef Array2D<float> ChannelData;
@@ -47,21 +47,15 @@ public:
 
     virtual ~Channel();
 
+    using ChannelData::data;
+    using ChannelData::resize;
+
     //!
     //! \brief Returns TagContainer that can be used to access or modify
     //! tags associated with this Channel object.
     //!
     TagContainer *getTags();
     const TagContainer *getTags() const;
-
-    //! \brief For performance reasons, the channels can be accessed as a
-    //! table of float values. Data is given in row-major order, i.e.
-    //! it is indexed data[x+y*width]. If performance is not crucial,
-    //! use Array2D interface instead.
-    //!
-    //! \return a table of floats of the size width*height
-    float *getRawData();
-    const float* getRawData() const;
 
     //! \brief Gets width of the channel (in pixels).
     //! This is a synonym for Array2D::getCols().
@@ -73,20 +67,15 @@ public:
     //!
     size_t getHeight() const;
 
-    void resize(size_t width, size_t height);
-
     //! Gets name of the channel.
     //!
     const std::string& getName() const;
 
-    //! \brief return handler to the underlying data
-    inline ChannelData* getChannelData();
-    inline const ChannelData* getChannelData() const;
-
-    //    void setChannelData(ChannelData *);
+//    //! \brief return handler to the underlying data
+//    inline ChannelData* getChannelData();
+//    inline const ChannelData* getChannelData() const;
 
 private:
-    ChannelData     m_channelData;
     std::string     m_name;
     TagContainer    m_tags;
 };

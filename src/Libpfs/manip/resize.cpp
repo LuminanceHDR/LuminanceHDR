@@ -58,10 +58,9 @@ Frame* resize(Frame* frame, int xSize)
           it != channels.end();
           ++it)
     {
-        const pfs::Channel* originalCh = *it;
-        pfs::Channel* newCh = resizedFrame->createChannel( originalCh->getName() );
+        pfs::Channel* newCh = resizedFrame->createChannel( (*it)->getName() );
 
-        resize( originalCh->getChannelData(), newCh->getChannelData() );
+        resize(*it, newCh);
     }
     pfs::copyTags( frame, resizedFrame );
 

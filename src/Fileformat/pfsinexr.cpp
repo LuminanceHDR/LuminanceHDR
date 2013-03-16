@@ -97,7 +97,7 @@ pfs::Frame * readEXRfile( const char *filename )
       
       frameBuffer.insert( "R",                                // name
                           Slice( FLOAT,                        // type
-                                 (char*)(X->getRawData() - dtw.min.x - dtw.min.y * width),
+                                 (char*)(X->data() - dtw.min.x - dtw.min.y * width),
                                  sizeof(float),                 // xStride
                                  sizeof(float) * width,         // yStride
                                  1, 1,                          // x/y sampling
@@ -105,7 +105,7 @@ pfs::Frame * readEXRfile( const char *filename )
       
       frameBuffer.insert( "G",                                // name
                           Slice( FLOAT,                        // type
-                                 (char*)(Y->getRawData() - dtw.min.x - dtw.min.y * width),
+                                 (char*)(Y->data() - dtw.min.x - dtw.min.y * width),
                                  sizeof(float),                 // xStride
                                  sizeof(float) * width,         // yStride
                                  1, 1,                          // x/y sampling
@@ -113,7 +113,7 @@ pfs::Frame * readEXRfile( const char *filename )
       
       frameBuffer.insert( "B",                                // name
                           Slice( FLOAT,                        // type
-                                 (char*)(Z->getRawData() - dtw.min.x - dtw.min.y * width),
+                                 (char*)(Z->data() - dtw.min.x - dtw.min.y * width),
                                  sizeof(float),                 // xStride
                                  sizeof(float) * width,         // yStride
                                  1, 1,                          // x/y sampling
@@ -141,7 +141,7 @@ pfs::Frame * readEXRfile( const char *filename )
       pfs::Channel *pfsCh = frame->createChannel( channelName );
       frameBuffer.insert( i.name(),                             // name
                           Slice( FLOAT,                          // type
-                                 (char *)(pfsCh->getRawData() - dtw.min.x - dtw.min.y * width),
+                                 (char *)(pfsCh->data() - dtw.min.x - dtw.min.y * width),
                                  sizeof(float),                   // xStride
                                  sizeof(float) * width,           // yStride
                                  1, 1,                            // x/y sampling
@@ -192,16 +192,12 @@ pfs::Frame * readEXRfile( const char *filename )
       float scaleFactor = whiteLuminance( file.header() );
       int pixelCount = frame->getHeight()*frame->getWidth();
       
-      pfs::Array2Df* Xr = X->getChannelData();
-      pfs::Array2Df* Yr = Y->getChannelData();
-      pfs::Array2Df* Zr = Z->getChannelData();
-      
       // TODO: convert in SSE
       for( int i = 0; i < pixelCount; i++ )
       {
-        (*Xr)(i) *= scaleFactor;
-        (*Yr)(i) *= scaleFactor;
-        (*Zr)(i) *= scaleFactor;
+        (*X)(i) *= scaleFactor;
+        (*Y)(i) *= scaleFactor;
+        (*Z)(i) *= scaleFactor;
       }
 /*      const StringAttribute *relativeLum = file.header().findTypedAttribute<StringAttribute>("RELATIVE_LUMINANCE");
  */

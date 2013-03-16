@@ -36,14 +36,14 @@ TEST(TestArray2D, Resize1)
     EXPECT_EQ(array.getCols(), 100);
     EXPECT_EQ(array.getRows(), 200);
 
-    float* d1 = array.getRawData();
+    float* d1 = array.data();
 
     array.resize(150, 220);
 
     EXPECT_EQ(array.getCols(), 150);
     EXPECT_EQ(array.getRows(), 220);
 
-    float* d2 = array.getRawData();
+    float* d2 = array.data();
 
     EXPECT_NE(d1, d2);
 }
@@ -55,14 +55,14 @@ TEST(TestArray2D, Resize2)
     EXPECT_EQ(array.getCols(), 100);
     EXPECT_EQ(array.getRows(), 200);
 
-    float* d1 = array.getRawData();
+    float* d1 = array.data();
 
     array.resize(90, 180);
 
     EXPECT_EQ(array.getCols(), 90);
     EXPECT_EQ(array.getRows(), 180);
 
-    float* d2 = array.getRawData();
+    float* d2 = array.data();
 
     EXPECT_EQ(d1, d2);
 }

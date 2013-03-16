@@ -33,16 +33,16 @@ inline const std::string& Channel::getName() const
 { return m_name; }
 
 inline size_t Channel::getWidth() const
-{ return m_channelData.getCols(); }
+{ return getCols(); }
 
 inline size_t Channel::getHeight() const
-{ return m_channelData.getRows(); }
+{ return getRows(); }
 
-inline float* Channel::getRawData()
-{ return m_channelData.getRawData(); }
+//inline float* Channel::getRawData()
+//{ return m_channelData.getRawData(); }
 
-inline const float* Channel::getRawData() const
-{ return m_channelData.getRawData(); }
+//inline const float* Channel::getRawData() const
+//{ return m_channelData.getRawData(); }
 
 inline TagContainer* Channel::getTags()
 { return &m_tags; }
@@ -50,11 +50,11 @@ inline TagContainer* Channel::getTags()
 inline const TagContainer* Channel::getTags() const
 { return &m_tags; }
 
-inline Channel::ChannelData* Channel::getChannelData()
-{ return &m_channelData; }
+//inline Channel::ChannelData* Channel::getChannelData()
+//{ return this; }
 
-inline const Channel::ChannelData* Channel::getChannelData() const
-{ return &m_channelData; }
+//inline const Channel::ChannelData* Channel::getChannelData() const
+//{ return this; }
 
 } // pfs
 

@@ -120,7 +120,7 @@ void PfsReader::read(Frame &frame, const Params &/*params*/)
     {
         Channel *ch = *it;
         unsigned int size = tempFrame.getWidth()*tempFrame.getHeight();
-        read = fread( ch->getRawData(), sizeof( float ), size, m_file.data() );
+        read = fread( ch->data(), sizeof( float ), size, m_file.data() );
         if ( read != size ) {
             throw ReadException( "Corrupted PFS file: missing channel data" );
         }

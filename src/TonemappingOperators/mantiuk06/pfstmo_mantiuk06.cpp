@@ -92,16 +92,13 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
     int rows = frame.getHeight();
     
     pfs::Array2Df inY( cols, rows );
-    pfs::transformRGB2Y(inRed->getChannelData(),
-                        inGreen->getChannelData(),
-                        inBlue->getChannelData(),
-                        &inY);
+    pfs::transformRGB2Y(inRed, inGreen, inBlue, &inY);
 
     tmo_mantiuk06_contmap(cols, rows,
-                          inRed->getRawData(),
-                          inGreen->getRawData(),
-                          inBlue->getRawData(),
-                          inY.getRawData(),
+                          inRed->data(),
+                          inGreen->data(),
+                          inBlue->data(),
+                          inY.data(),
                           scaleFactor, saturationFactor, detailFactor, itmax, tol,
                           ph);
 

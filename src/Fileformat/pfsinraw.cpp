@@ -266,9 +266,9 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   pfs::Channel *Xc, *Yc, *Zc;
   frame->createXYZChannels( Xc, Yc, Zc );
 
-  float* r =  Xc->getChannelData()->getRawData();
-  float* g =  Yc->getChannelData()->getRawData();
-  float* b =  Zc->getChannelData()->getRawData();
+  float* r =  Xc->data();
+  float* g =  Yc->data();
+  float* b =  Zc->data();
 
   const unsigned char* raw_data = image->data;
   for (int idx = 0; idx < H*W; ++idx)

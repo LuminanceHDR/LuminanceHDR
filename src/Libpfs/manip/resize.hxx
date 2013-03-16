@@ -100,7 +100,7 @@ void resizeBilinearGray(const Type* pixels, Type* output,
 template <typename Type>
 void resample(const ::pfs::Array2D<Type> *in, ::pfs::Array2D<Type> *out)
 {
-    resizeBilinearGray(in->getRawData(), out->getRawData(),
+    resizeBilinearGray(in->data(), out->data(),
                        in->getCols(), in->getRows(),
                        out->getCols(), out->getRows());
 }

@@ -33,6 +33,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <cstddef>
 
 #include "Libpfs/frame.h"
 #include "tmo_reinhard02.h"
@@ -66,19 +67,16 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
   frame.getTags().setString("LUMINANCE", "RELATIVE");
   //---
   
-  if ( Y==NULL || X==NULL || Z==NULL)
+  if ( Y==NULL || X==NULL || Z==NULL ) {
      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-  
-  pfs::Array2Df* Xr = X->getChannelData();
-  pfs::Array2Df* Yr = Y->getChannelData();
-  pfs::Array2Df* Zr = Z->getChannelData();
+  }
   
   // tone mapping
-  int w = Y->getWidth();
-  int h = Y->getHeight();
-  pfs::Array2Df* L = new pfs::Array2Df(w,h);
+  size_t w = Y->getWidth();
+  size_t h = Y->getHeight();
+  pfs::Array2Df L(w, h);
 
-  Reinhard02 tmoperator( Y->getChannelData(), L, use_scales, key, phi, num, low, high, temporal_coherent, ph );
+  Reinhard02 tmoperator( Y, &L, use_scales, key, phi, num, low, high, temporal_coherent, ph );
   
   tmoperator.tmo_reinhard02();
   
@@ -87,12 +85,10 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
   {
     for( int y=0 ; y<h ; y++ )
     {
-      float scale = (*L)(x,y) / (*Yr)(x,y);
-      (*Yr)(x,y) *= scale;
-      (*Xr)(x,y) *= scale;
-      (*Zr)(x,y) *= scale;
+      float scale = L(x,y) / (*Y)(x,y);
+      (*Y)(x,y) *= scale;
+      (*X)(x,y) *= scale;
+      (*Z)(x,y) *= scale;
     }
   }
-  
-  delete L;
 }

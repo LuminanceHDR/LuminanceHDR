@@ -74,15 +74,8 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadapt
     // is there a way to remove this copy as well?
     // I am pretty sure there is!
     pfs::Array2Df Y(width,height);
-
-    pfs::transformRGB2Y(R->getChannelData(),
-                        G->getChannelData(),
-                        B->getChannelData(),
-                        &Y);
-
-    tmo_reinhard05(width, height,
-                   R->getRawData(), G->getRawData(), B->getRawData(),
-                   Y.getRawData(),
+    pfs::transformRGB2Y(R, G, B, &Y);
+    tmo_reinhard05(width, height, R->data(), G->data(), B->data(), Y.data(),
                    Reinhard05Params(brightness, chromaticadaptation, lightadaptation), ph);
 
     if (!ph.canceled())
