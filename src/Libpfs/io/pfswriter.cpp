@@ -23,7 +23,7 @@
 #include <cstdlib>
 
 #include <Libpfs/frame.h>
-#include <libpfs/tag.h>
+#include <Libpfs/tag.h>
 #include <Libpfs/io/pfswriter.h>
 #include <Libpfs/io/pfscommon.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>

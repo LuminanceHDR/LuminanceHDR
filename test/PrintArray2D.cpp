@@ -26,7 +26,7 @@ void print(const pfs::Array2Df& a2d)
 {
     using namespace pfs;
 
-    for (int r = 0; r < a2d.getRows(); r++)
+    for (size_t r = 0; r < a2d.getRows(); r++)
     {
         Array2Df::const_iterator currSample = a2d.row_begin(r);
         Array2Df::const_iterator endSample = a2d.row_end(r);

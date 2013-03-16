@@ -255,8 +255,9 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
 
     RGBRemapper rgbRemapper(m_minValue, m_maxValue, m_mappingMethod);
 
+    int indexEnd = in_frame->getWidth()*in_frame->getHeight();
 #pragma omp parallel for
-    for ( int index = 0; index < in_frame->getWidth()*in_frame->getHeight(); ++index )
+    for ( int index = 0; index < indexEnd; ++index )
     {
         if ( !finite( R[index] ) || !finite( G[index] ) || !finite( B[index] ) )   // x is NaN or Inf
         {

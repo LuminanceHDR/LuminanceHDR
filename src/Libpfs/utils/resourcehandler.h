@@ -79,13 +79,8 @@ public:
     { return !p_; }
 
 private:
-#ifdef LHDR_CXX11_ENABLED
-    ResourceHandler(const ResourceHandler&) = delete;
-    ResourceHandler& operator=(const ResourceHandler&) = delete;
-#else
     ResourceHandler(const ResourceHandler&);
     ResourceHandler& operator=(const ResourceHandler&);
-#endif
 
     T* p_;
 };
