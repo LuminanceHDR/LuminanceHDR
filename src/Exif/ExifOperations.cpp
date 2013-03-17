@@ -49,16 +49,17 @@ namespace ExifOperations
 typedef std::set<std::string> KeysDictionary;
 
 struct ValidExifDictionary {
+    // Note: don't use tagLabel, as it might contain white spaces
     bool operator()(const std::string& groupName, const std::string& tagName,
-                    const std::string& tagLabel) const
+                    const std::string& key) const
     {
         // support for GPSInfo
-        if ( groupName == "Exif" && tagName == "GPSInfo" ) return true;
+        if ( groupName == "GPSInfo" ) return true;
         // remove info about thumbnail
-        if ( groupName == "Exif" && tagName == "Thumbnail" ) return false;
+        if ( groupName == "Thumbnail" ) return false;
 
         // search into the map if I don't find any better match
-        return sm_validExifTags.count(groupName+"."+tagName+"."+tagLabel);
+        return sm_validExifTags.count(key);
     }
 private:
     static KeysDictionary sm_validExifTags;
@@ -96,7 +97,10 @@ KeysDictionary ValidExifDictionary::sm_validExifTags = list_of
         ("Exif.Photo.ISOSpeedLatitudeyyy")
         ("Exif.Photo.ISOSpeedLatitudezzz")
         ("Exif.Photo.FileSource")
+        ("Exif.Photo.SceneType")
+        ("Exif.Photo.SceneCaptureType")
         ("Exif.Photo.UserComment")
+        ("Exif.Image.SensingMethod")
         ("Exif.Photo.ShutterSpeedValue")
         ("Exif.Photo.ApertureValue")
         ("Exif.Photo.BrightnessValue")
@@ -161,7 +165,7 @@ void copyExifData(const std::string& from, const std::string& to,
             for (Exiv2::ExifData::const_iterator it = srcExifData.begin(), itEnd = srcExifData.end();
                  it != itEnd; ++it)
             {
-                if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->tagLabel()) ) {
+                if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->key()) ) {
                     Exiv2::ExifData::iterator outIt = destExifData.findKey( Exiv2::ExifKey(it->key()) );
                     if ( outIt == destExifData.end() ) {
                         // we create a new tag in the destination file, the tag has the key of the source
@@ -190,7 +194,7 @@ void copyExifData(const std::string& from, const std::string& to,
                  it != itEnd; ++it)
             {
                 // Note: the algorithm is similar to the C++11 std::copy_if( )
-                if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->tagLabel()) ) {
+                if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->key()) ) {
                     // overwrite tag if found!
                     destExifData[it->key()] = it->value();
                 }
