@@ -1,9 +1,9 @@
 /*
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
  * Copyright (C) 2012 Franco Comida
- * Copyright (c) 2013 Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,18 +19,20 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
  */
 
-//! @author Giuseppe Rota <grota@users.sourceforge.net>
-//! @author Franco Comida
-//! @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \author Franco Comida
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 #include <QDebug>
-#include <QString>
 
 #include <cmath>
 #include <iostream>
+#include <set>
+#include <string>
+
+#include <boost/assign/list_of.hpp>
 
 #include <exif.hpp>
 #include <image.hpp>
@@ -39,157 +41,149 @@
 #include "arch/math.h"
 #include "Common/config.h"
 
+using namespace boost;
+using namespace boost::assign;
+
 namespace ExifOperations
 {
-/* 
-    void writeExifData(const std::string& filename, const std::string& comment, float expotime)
-    {
-        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
-        image->readMetadata();
-        Exiv2::ExifData &exifData = image->exifData();
-        exifData["Exif.Image.Software"]="Created with opensource tool Luminance HDR, http://qtpfsgui.sourceforge.net";
-        exifData["Exif.Image.ImageDescription"]=comment;
-        exifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
-        if (expotime != 100.0f) {
-            const Exiv2::ValueType<float> v(expotime*12.07488f/100);
-            const Exiv2::ValueType<Exiv2::Rational> r(v.toRational());
-            exifData["Exif.Photo.ExposureTime"] = r;
-            const Exiv2::ValueType<float> f(1.0);
-            const Exiv2::ValueType<Exiv2::Rational> fr(f.toRational());
-            exifData["Exif.Photo.FNumber"] = fr;
-        }
-        image->setExifData(exifData);
-        image->writeMetadata();
+typedef std::set<std::string> KeysDictionary;
+
+struct ValidExifDictionary {
+    bool operator()(const std::string& key) {
+        return sm_validExifTags.count(key);
     }
-*/
+private:
+    static KeysDictionary sm_validExifTags;
+};
+
+KeysDictionary ValidExifDictionary::sm_validExifTags = list_of
+        ("Exif.Image.Software")
+        ("Exif.Image.ImageDescription")
+        ("Exif.Image.Orientation")
+        ("Exif.Image.Make")
+        ("Exif.Image.Model")
+        ("Exif.Image.DateTime")
+        ("Exif.Photo.UserComment")
+        ("Exif.Photo.ExposureTime")
+        ("Exif.Photo.FNumber")
+        ("Exif.Photo.ExposureProgram")
+        ("Exif.Photo.ISOSpeedRatings")
+        ("Exif.Photo.DateTimeOriginal")
+        ("Exif.Photo.DateTimeDigitized")
+        ("Exif.Photo.ExposureBiasValue")
+        ("Exif.Photo.MeteringMode")
+        ("Exif.Photo.LightSource")
+        ("Exif.Photo.Flash")
+        ("Exif.Photo.FocalLength")
+        ("Exif.Photo.ExposureMode")
+        ("Exif.Photo.FocalLengthIn35mmFilm")
+        ("Exif.Photo.DigitalZoomRatio")
+        ;
 
 void copyExifData(const std::string& from, const std::string& to,
                   bool dontOverwrite,
-                  const std::string& comment, bool destIsLDR,
-                  bool keepRotation)
+                  const std::string& comment,
+                  bool destIsLDR, bool keepRotation)
 {
-    // std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
-    // get source and destination exif data
-    // THROWS, if opening the file fails or it contains data of an unknown image type.
-    Exiv2::Image::AutoPtr sourceImage;
-    Exiv2::Image::AutoPtr destinationImage;
+#ifndef NDEBUG
+    std::clog << "Processing EXIF from " << from << " to " << to << std::endl;
+#endif
+
     try
     {
-        sourceImage = Exiv2::ImageFactory::open(from);
-        destinationImage = Exiv2::ImageFactory::open(to);
-    }
-    catch (Exiv2::AnyError& e)
-    {
-        qDebug() << e.what();
-        return;
-    }
-    //Callers must check the size of individual metadata types before accessing the data.
-    //readMetadata THROWS an exception if opening or reading of the file fails or the image data is not valid (does not look like data of the specific image type).
-    sourceImage->readMetadata();
-    Exiv2::ExifData &srcExifData = sourceImage->exifData();
-    if ( srcExifData.empty() )
-    {
-        throw Exiv2::Error(1, "No exif data found in the image");
-    }
+        // get source and destination exif data
+        Exiv2::Image::AutoPtr sourceImage = Exiv2::ImageFactory::open(from);
+        Exiv2::Image::AutoPtr destinationImage = Exiv2::ImageFactory::open(to);
 
-    if (dontOverwrite)
-    {
-        //doesn't throw anything if it is empty
-        destinationImage->readMetadata();
-        //doesn't throw anything if it is empty
-        Exiv2::ExifData &dest_exifData = destinationImage->exifData();
-        //end delimiter for this source image data
-        Exiv2::ExifData::const_iterator end_src = srcExifData.end();
-        //for all the tags in the source exif data
-        for (Exiv2::ExifData::const_iterator i = srcExifData.begin(); i != end_src; ++i)
-        {
-            // check if current source key exists in destination file
-            Exiv2::ExifData::iterator maybe_exists = dest_exifData.findKey( Exiv2::ExifKey(i->key()) );
-            // if exists AND we are told not to overwrite
-            if (maybe_exists != dest_exifData.end())
-                continue;
-            else
-            {
-                //here we copy the value
-                //we create a new tag in the destination file, the tag has the key of the source
-                Exiv2::Exifdatum& dest_tag = dest_exifData[i->key()];
-                //now the tag has also the value of the source
-                dest_tag.setValue(&(i->value()));
-            }
+        sourceImage->readMetadata();
+        Exiv2::ExifData &srcExifData = sourceImage->exifData();
+
+        if ( srcExifData.empty() ) {
+#ifndef NDEBUG
+            std::clog << "No exif data found in the image: " << from << "\n";
+#endif
+            return;
         }
 
-        // rotation support
-        if (!keepRotation)
+        if (dontOverwrite)
         {
-            dest_exifData["Exif.Image.Orientation"] = 0;
-        }
-    }
-    else
-    {
-        if (destIsLDR)
-        {
-            // copy all tags from source except exposure time and aperture
-            Exiv2::ExifData destExifData;
-            if (comment != "")
-            {
-                destExifData["Exif.Image.Software"]=(QString("Luminance HDR ") + LUMINANCEVERSION).toStdString();
-                destExifData["Exif.Image.ImageDescription"]=comment;
-                destExifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
-            }
-            Exiv2::ExifData::const_iterator end_src = srcExifData.end();
+            // doesn't throw anything if it is empty
+            destinationImage->readMetadata();
+            // doesn't throw anything if it is empty
+            Exiv2::ExifData &destExifData = destinationImage->exifData();
 
-            // for all the tags in the source exif data
-            for (Exiv2::ExifData::const_iterator i = srcExifData.begin(); i != end_src; ++i)
+            //for all the tags in the source exif data
+            for (Exiv2::ExifData::const_iterator it = srcExifData.begin(), itEnd = srcExifData.end();
+                 it != itEnd; ++it)
             {
-                Exiv2::Exifdatum& sourceDatum = srcExifData[i->key()];
-
-                if (comment != "" && sourceDatum.key() == "Exif.Image.Software") continue;
-                if (comment != "" && sourceDatum.key() == "Exif.Image.ImageDescription") continue;
-                if (comment != "" && sourceDatum.key() == "Exif.Photo.UserComment") continue;
-                if (comment != "" && sourceDatum.key() == "Exif.Photo.ExposureTime") continue;
-                const Exiv2::ExifKey destKey(i->key());
-                destExifData.add(destKey, &(i->value()));
+                if ( ValidExifDictionary()(it->key()) ) {
+                    Exiv2::ExifData::iterator outIt = destExifData.findKey( Exiv2::ExifKey(it->key()) );
+                    if ( outIt == destExifData.end() ) {
+                        // we create a new tag in the destination file, the tag has the key of the source
+                        Exiv2::Exifdatum& destTag = destExifData[it->key()];
+                        // now the tag has also the value of the source
+                        destTag.setValue(&(it->value()));
+                    }
+                }
+#ifndef NDEBUG
+                else {
+                    std::clog << "Found invalid key: " << it->key() << "\n";
+                }
+#endif
             }
 
             // rotation support
-            if (!keepRotation)
+            if (!keepRotation) {
+                destExifData["Exif.Image.Orientation"] = 0;
+            }
+        }
+        else if (destIsLDR)
+        {
+            // copy all valid tag
+            Exiv2::ExifData destExifData;
+            for (Exiv2::ExifData::const_iterator it = srcExifData.begin(), itEnd = srcExifData.end();
+                 it != itEnd; ++it)
             {
+                // Note: the algorithm is similar to the C++11 std::copy_if( )
+                if ( ValidExifDictionary()(it->key()) ) {
+                    // overwrite tag if found!
+                    destExifData[it->key()] = it->value();
+                }
+#ifndef NDEBUG
+                else {
+                    std::clog << "Found invalid key: " << it->key() << "\n";
+                }
+#endif
+            }
+
+            // if comment is not empty, overwrite/set comment values
+            if ( !comment.empty() ) {
+#ifndef NDEBUG
+                std::clog << "EXIF comments: " << comment << "\n";
+#endif
+                destExifData["Exif.Image.Software"] = "Luminance HDR " + std::string(LUMINANCEVERSION);
+                destExifData["Exif.Image.ImageDescription"] = comment;
+                destExifData["Exif.Photo.UserComment"] = "charset=\"Ascii\" " + comment;
+            }
+
+            // rotation support
+            if (!keepRotation) {
                 destExifData["Exif.Image.Orientation"] = 0;
             }
 
-
-            try
-            {
-                destinationImage->setExifData(destExifData);
-            }
-            catch (Exiv2::AnyError& e)
-            {
-                qDebug() << e.what();
-                return;
-            }
+            destinationImage->setExifData(destExifData);
         }
         else
         {
-            try
-            {
-                destinationImage->setExifData(srcExifData);
-            }
-            catch (Exiv2::AnyError& e)
-            {
-                qDebug() << e.what();
-                return;
-            }
+            destinationImage->setExifData(srcExifData);
         }
-    }
-    //THROWS Exiv2::Error if the operation fails
-    try
-    {
         destinationImage->writeMetadata();
     }
     catch (Exiv2::AnyError& e)
     {
+#ifndef NDEBUG
         qDebug() << e.what();
-        return;
+#endif
     }
 }
 

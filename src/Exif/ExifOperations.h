@@ -29,12 +29,6 @@ namespace ExifOperations
 {
 //!
 //!
-//!
-//void writeExifData(const std::string& filename, const std::string& comment,
-//                   float expotime = 100.0f);
-//!
-//!
-//!
 void copyExifData(const std::string& from, const std::string& to,
                   bool dont_overwrite,
                   const std::string& comment = std::string(),
@@ -42,9 +36,7 @@ void copyExifData(const std::string& from, const std::string& to,
                   bool keepRotation = true);
 //!
 //!
-//!
 float obtain_avg_lum(const std::string& filename);
-//!
 //!
 //!
 int obtain_rotation(const std::string& filename);

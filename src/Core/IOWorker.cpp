@@ -230,10 +230,6 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
 
     if ( status )
     {
-//            if (tmopts != NULL)
-//                ExifOperations::writeExifData(encodedName.constData(),
-//                  operations->getExifComment().toStdString());
-
         // copy EXIF tags from the 1st bracketed image
         if ( !inputFileName.isEmpty() )
         {
@@ -241,9 +237,11 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
             QString absoluteInputFileName = fileinfo.absoluteFilePath();
             QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
             QString comment = operations->getExifComment();
-            comment += "\nBracketed images exposure times:\n\n";
-            foreach (float e, expoTimes) {
-                comment += QString("%1").arg(e) + "\n";
+            if ( !expoTimes.empty() ) {
+                comment += "\nBracketed images exposure times:\n";
+                foreach (float e, expoTimes) {
+                    comment += QString("%1").arg(e) + "\n";
+                }
             }
 
             ExifOperations::copyExifData(encodedInputFileName.constData(),
