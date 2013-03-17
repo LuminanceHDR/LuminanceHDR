@@ -49,35 +49,80 @@ namespace ExifOperations
 typedef std::set<std::string> KeysDictionary;
 
 struct ValidExifDictionary {
-    bool operator()(const std::string& key) {
-        return sm_validExifTags.count(key);
+    bool operator()(const std::string& groupName, const std::string& tagName,
+                    const std::string& tagLabel) const
+    {
+        // support for GPSInfo
+        if ( groupName == "Exif" && tagName == "GPSInfo" ) return true;
+        // remove info about thumbnail
+        if ( groupName == "Exif" && tagName == "Thumbnail" ) return false;
+
+        // search into the map if I don't find any better match
+        return sm_validExifTags.count(groupName+"."+tagName+"."+tagLabel);
     }
 private:
     static KeysDictionary sm_validExifTags;
 };
 
 KeysDictionary ValidExifDictionary::sm_validExifTags = list_of
+        // should I keep this? Isn't the version written by Exiv2?
+        //        ("Exif.Photo.ExifVersion")
+        // Exif.Image
         ("Exif.Image.Software")
         ("Exif.Image.ImageDescription")
         ("Exif.Image.Orientation")
         ("Exif.Image.Make")
         ("Exif.Image.Model")
         ("Exif.Image.DateTime")
-        ("Exif.Photo.UserComment")
-        ("Exif.Photo.ExposureTime")
-        ("Exif.Photo.FNumber")
-        ("Exif.Photo.ExposureProgram")
+        ("Exif.Image.ProcessingSoftware")
+        ("Exif.Image.GPSTag")
+        ("Exif.Image.SensingMethod")
+        ("Exif.Image.MaxApertureValue")
+        ("Exif.Image.SelfTimerMode")
+        ("Exif.Image.ShutterSpeedValue")
+        ("Exif.Image.ApertureValue")
+        ("Exif.Image.ExposureBiasValue")
+        ("Exif.Image.SubjectDistance")
+        ("Exif.Image.MeteringMode")
+        ("Exif.Image.CameraSerialNumber")
+        ("Exif.Image.LensInfo")
+        ("Exif.Image.ExposureTime")
+        ("Exif.Image.FNumber")
+        ("Exif.Image.ExposureProgram")
+        // Exif.Photo
+        ("Exif.Photo.SensitivityType")
+        ("Exif.Photo.ISOSpeed")
         ("Exif.Photo.ISOSpeedRatings")
-        ("Exif.Photo.DateTimeOriginal")
-        ("Exif.Photo.DateTimeDigitized")
+        ("Exif.Photo.ISOSpeedLatitudeyyy")
+        ("Exif.Photo.ISOSpeedLatitudezzz")
+        ("Exif.Photo.FileSource")
+        ("Exif.Photo.UserComment")
+        ("Exif.Photo.ShutterSpeedValue")
+        ("Exif.Photo.ApertureValue")
+        ("Exif.Photo.BrightnessValue")
         ("Exif.Photo.ExposureBiasValue")
+        ("Exif.Photo.MaxApertureValue")
+        ("Exif.Photo.SubjectDistance")
         ("Exif.Photo.MeteringMode")
         ("Exif.Photo.LightSource")
         ("Exif.Photo.Flash")
         ("Exif.Photo.FocalLength")
+        ("Exif.Photo.SubjectArea")
+        ("Exif.Photo.UserComment")
         ("Exif.Photo.ExposureMode")
-        ("Exif.Photo.FocalLengthIn35mmFilm")
         ("Exif.Photo.DigitalZoomRatio")
+        ("Exif.Photo.FocalLengthIn35mmFilm")
+        ("Exif.Photo.BodySerialNumber")
+        ("Exif.Photo.LensSpecification")
+        ("Exif.Photo.LensMake")
+        ("Exif.Photo.LensModel")
+        ("Exif.Photo.LensSerialNumber")
+        ("Exif.Photo.DateTimeOriginal")
+        ("Exif.Photo.DateTimeDigitized")
+        // Same tags as Exif.Image
+        ("Exif.Photo.ExposureTime")
+        ("Exif.Photo.FNumber")
+        ("Exif.Photo.ExposureProgram")
         ;
 
 void copyExifData(const std::string& from, const std::string& to,
@@ -116,7 +161,7 @@ void copyExifData(const std::string& from, const std::string& to,
             for (Exiv2::ExifData::const_iterator it = srcExifData.begin(), itEnd = srcExifData.end();
                  it != itEnd; ++it)
             {
-                if ( ValidExifDictionary()(it->key()) ) {
+                if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->tagLabel()) ) {
                     Exiv2::ExifData::iterator outIt = destExifData.findKey( Exiv2::ExifKey(it->key()) );
                     if ( outIt == destExifData.end() ) {
                         // we create a new tag in the destination file, the tag has the key of the source
@@ -145,7 +190,7 @@ void copyExifData(const std::string& from, const std::string& to,
                  it != itEnd; ++it)
             {
                 // Note: the algorithm is similar to the C++11 std::copy_if( )
-                if ( ValidExifDictionary()(it->key()) ) {
+                if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->tagLabel()) ) {
                     // overwrite tag if found!
                     destExifData[it->key()] = it->value();
                 }
@@ -161,6 +206,7 @@ void copyExifData(const std::string& from, const std::string& to,
 #ifndef NDEBUG
                 std::clog << "EXIF comments: " << comment << "\n";
 #endif
+                destExifData["Exif.Image.ProcessingSoftware"] = "Luminance HDR " + std::string(LUMINANCEVERSION);
                 destExifData["Exif.Image.Software"] = "Luminance HDR " + std::string(LUMINANCEVERSION);
                 destExifData["Exif.Image.ImageDescription"] = comment;
                 destExifData["Exif.Photo.UserComment"] = "charset=\"Ascii\" " + comment;
