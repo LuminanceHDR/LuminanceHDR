@@ -39,6 +39,7 @@
 #include <ImfStandardAttributes.h>
 
 #include "Libpfs/frame.h"
+#include "Libpfs/exception.h"
 
 // TODO : leftover!
 #define PROG_NAME "pfsinexr"
@@ -164,7 +165,7 @@ pfs::Frame * readEXRfile( const char *filename )
       
       if( colon == NULL )    // frame tag
       {
-        frame->getTags().setString( attribName, escapeString(attrib->value()).c_str() );
+        frame->getTags().setTag( attribName, escapeString(attrib->value()) );
       }
       else                // channel tag
       {
@@ -175,7 +176,7 @@ pfs::Frame * readEXRfile( const char *filename )
           fprintf( stderr, PROG_NAME ": Warning! Can not set tag for '%s' channel because it does not exist\n", channelName.c_str() );
           continue;
         }
-        ch->getTags()->setString(  colon+1, escapeString( attrib->value() ).c_str() );
+        ch->getTags().setTag(colon+1, escapeString( attrib->value() ));
       }
       
     }
@@ -201,14 +202,14 @@ pfs::Frame * readEXRfile( const char *filename )
       }
 /*      const StringAttribute *relativeLum = file.header().findTypedAttribute<StringAttribute>("RELATIVE_LUMINANCE");
  */
-      const char *luminanceTag = frame->getTags().getString("LUMINANCE");
-      if( luminanceTag == NULL )
+      std::string luminanceTag = frame->getTags().getTag("LUMINANCE");
+      if( luminanceTag.empty() )
       {
-        frame->getTags().setString("LUMINANCE", "ABSOLUTE");
+        frame->getTags().setTag("LUMINANCE", "ABSOLUTE");
       }
     }
   }
-  frame->getTags().setString( "FILE_NAME", filename );
+  frame->getTags().setTag( "FILE_NAME", filename );
   
   return frame;
 }

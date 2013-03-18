@@ -44,7 +44,7 @@ class HdrInputLoader : public QThread {
     Q_OBJECT
 
 public:
-    HdrInputLoader(QString filename, int image_idx);
+    HdrInputLoader(const QString &filename, int image_idx);
     ~HdrInputLoader();
 	static void conditionallyRotateImage(QFileInfo qfi, QImage** oldImage); 
 

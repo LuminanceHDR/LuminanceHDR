@@ -54,8 +54,8 @@ public:
     //! \brief Returns TagContainer that can be used to access or modify
     //! tags associated with this Channel object.
     //!
-    TagContainer *getTags();
-    const TagContainer *getTags() const;
+    TagContainer &getTags();
+    const TagContainer &getTags() const;
 
     //! \brief Gets width of the channel (in pixels).
     //! This is a synonym for Array2D::getCols().

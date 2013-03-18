@@ -39,6 +39,7 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/exception.h"
 #include "Libpfs/progress.h"
 
 void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadaptation, float lightadaptation, pfs::Progress &ph)
@@ -59,7 +60,7 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadapt
 
     pfs::Channel *R, *G, *B;
     frame.getXYZChannels( R, G, B );
-    frame.getTags().setString("LUMINANCE", "RELATIVE");
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
     //---
 
     if ( !R || !G || !B )

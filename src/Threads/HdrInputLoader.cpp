@@ -32,13 +32,14 @@
 #include "Exif/ExifOperations.h"
 #include "Fileformat/pfs_file_format.h"
 #include "Threads/HdrInputLoader.h"
+#include "Libpfs/exception.h"
 
+HdrInputLoader::HdrInputLoader(const QString& filename, int image_idx)
+    : QThread(0), image_idx(image_idx), fname(filename)
+{}
 
-
-HdrInputLoader::HdrInputLoader(QString filename, int image_idx) : QThread(0), image_idx(image_idx), fname(filename) {
-}
-
-HdrInputLoader::~HdrInputLoader() {
+HdrInputLoader::~HdrInputLoader()
+{
 	wait();
 }
 
@@ -123,7 +124,7 @@ void HdrInputLoader::run() {
 			emit mdrReady(frame, image_idx, expotime, outfname);
 		}
 	}
-    catch(pfs::Exception& e) {
+    catch (pfs::Exception& e) {
         emit loadFailed(QString(tr("ERROR: %1")).arg(e.what()),image_idx);
 		//QApplication::restoreOverrideCursor();
 		return;

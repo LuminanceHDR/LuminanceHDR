@@ -90,11 +90,11 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   pfs::transformColorSpace(pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ);
   
   if( white_y == -2.f )
-  {      
-    const char *white_y_str = frame.getTags().getString( "WHITE_Y" );
-    if( white_y_str != NULL )
+  {
+    std::string white_y_str = frame.getTags().getTag( "WHITE_Y" );
+    if( white_y_str.empty() )
     {
-      white_y = strtod( white_y_str, NULL );
+      white_y = strtod( white_y_str.c_str(), NULL );
       if( white_y == 0 )
       {
         white_y = -1;
@@ -109,8 +109,8 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   else
     fprintf( stderr, "%g\n", white_y );
   
-  const char *lum_data = frame.getTags().getString("LUMINANCE");
-  if( lum_data != NULL && !strcmp( lum_data, "DISPLAY" )) {
+  std::string lum_data = frame.getTags().getTag("LUMINANCE");
+  if( !lum_data.empty() && lum_data != "DISPLAY" ) {
     fprintf( stderr, PROG_NAME " warning: input image should be in linear (not gamma corrected) luminance factor units. Use '--linear' option with pfsin* commands.\n" );
   }
   
@@ -132,7 +132,7 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   ph.setValue( 100 );
   
   pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
-  frame.getTags().setString("LUMINANCE", "DISPLAY");
+  frame.getTags().setTag("LUMINANCE", "DISPLAY");
   
   delete df;
   delete ds;

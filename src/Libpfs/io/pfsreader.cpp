@@ -20,12 +20,46 @@
  */
 
 #include <Libpfs/io/pfsreader.h>
+#include <Libpfs/io/pfscommon.h>
 #include <Libpfs/frame.h>
+
+#include <list>
 
 namespace pfs {
 namespace io {
 
 static const char *PFSFILEID = "PFS1\x0a";
+
+void readTags(TagContainer& tags, FILE *in)
+{
+    int tagCount = -1;
+    int readItems = fscanf( in, "%d" PFSEOL, &tagCount );
+    if ( readItems != 1 || tagCount < 0 || tagCount > 1024 ) {
+        throw Exception( "Corrupted PFS tag section: missing or wrong number of tags" );
+    }
+
+    char buf[MAX_TAG_STRING+1];
+    for ( int i = 0; i < tagCount; i++ )
+    {
+        if ( !fgets( buf, MAX_TAG_STRING, in ) ) {
+            throw Exception( "Corrupted PFS tag section: missing tag" );
+        }
+        std::string data(buf);
+        size_t found = data.find_first_of("=");
+        if (found != std::string::npos) {
+#ifndef NDEBUG
+            std::clog << "found tag: " << data.substr(0, found) << "="
+                      << data.substr(found + 1, data.size()) << std::endl;
+#endif
+
+            tags.setTag( data.substr(0, found),
+                         data.substr(found + 1, data.size()) );
+
+        } else {
+            throw Exception( "Corrupted PFS tag section ('=' sign missing)" );
+        }
+    }
+}
 
 PfsReader::PfsReader(const std::string& filename)
     : FrameReader(filename)
@@ -84,7 +118,7 @@ void PfsReader::read(Frame &frame, const Params &/*params*/)
 {
     Frame tempFrame(width(), height());
 
-    readTags( &tempFrame.getTags(), m_file.data() );
+    readTags(tempFrame.getTags(), m_file.data());
 
     // read channel IDs and tags
     std::list<Channel*> orderedChannel;
@@ -104,7 +138,7 @@ void PfsReader::read(Frame &frame, const Params &/*params*/)
 
         channelName[len-1] = 0;
         Channel *ch = tempFrame.createChannel( channelName );
-        readTags( ch->getTags(), m_file.data() );
+        readTags(ch->getTags(), m_file.data());
         orderedChannel.push_back( ch );
     }
 

@@ -38,23 +38,11 @@ inline size_t Channel::getWidth() const
 inline size_t Channel::getHeight() const
 { return getRows(); }
 
-//inline float* Channel::getRawData()
-//{ return m_channelData.getRawData(); }
+inline TagContainer& Channel::getTags()
+{ return m_tags; }
 
-//inline const float* Channel::getRawData() const
-//{ return m_channelData.getRawData(); }
-
-inline TagContainer* Channel::getTags()
-{ return &m_tags; }
-
-inline const TagContainer* Channel::getTags() const
-{ return &m_tags; }
-
-//inline Channel::ChannelData* Channel::getChannelData()
-//{ return this; }
-
-//inline const Channel::ChannelData* Channel::getChannelData() const
-//{ return this; }
+inline const TagContainer& Channel::getTags() const
+{ return m_tags; }
 
 } // pfs
 

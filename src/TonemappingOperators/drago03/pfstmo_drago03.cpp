@@ -35,6 +35,7 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
+#include "Libpfs/exception.h"
 #include "tmo_drago03.h"
 
 namespace
@@ -59,7 +60,7 @@ void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress &ph)
     pfs::Channel *X, *Y, *Z;
     frame.getXYZChannels( X, Y, Z );
 
-    frame.getTags().setString("LUMINANCE", "RELATIVE");
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
     //---
 
     if ( Y == NULL )

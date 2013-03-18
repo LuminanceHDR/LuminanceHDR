@@ -40,6 +40,7 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/exception.h"
 #include "Libpfs/progress.h"
 
 namespace
@@ -81,7 +82,7 @@ void pfstmo_fattal02(pfs::Frame& frame,
   //Store RGB data temporarily in XYZ channels
   pfs::Channel *R, *G, *B;
   frame.getXYZChannels( R, G, B );
-  frame.getTags().setString("LUMINANCE", "RELATIVE");
+  frame.getTags().setTag("LUMINANCE", "RELATIVE");
   //---
   
   if ( !R || !G || !B )

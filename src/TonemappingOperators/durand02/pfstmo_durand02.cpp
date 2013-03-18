@@ -36,6 +36,7 @@
 #include <cmath>
 
 #include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/exception.h"
 #include "Libpfs/frame.h"
 #include "tmo_durand02.h"
 
@@ -82,7 +83,7 @@ void pfstmo_durand02(pfs::Frame& frame,
   pfs::Channel *X, *Y, *Z;
   
   frame.getXYZChannels( X, Y, Z );
-  frame.getTags().setString("LUMINANCE", "RELATIVE");
+  frame.getTags().setTag("LUMINANCE", "RELATIVE");
   //---
 
   if ( Y == NULL || X == NULL || Z == NULL )

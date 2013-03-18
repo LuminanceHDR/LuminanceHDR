@@ -102,5 +102,5 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
                           scaleFactor, saturationFactor, detailFactor, itmax, tol,
                           ph);
 
-    frame.getTags().setString("LUMINANCE", "RELATIVE");
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
 }

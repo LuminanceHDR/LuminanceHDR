@@ -32,7 +32,8 @@
 #ifndef COLORSPACE_H
 #define COLORSPACE_H
 
-#include "Libpfs/array2d_fwd.h"
+#include <Libpfs/array2d_fwd.h>
+#include <Libpfs/exception.h>
 
 namespace pfs
 {

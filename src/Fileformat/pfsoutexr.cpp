@@ -44,7 +44,7 @@ using std::string;
 void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
 {  
   Compression exrCompression = PIZ_COMPRESSION;
-  bool firstFrame = true;
+  // bool firstFrame = true;
   half *halfR = NULL;
   half *halfG = NULL;
   half *halfB = NULL;
@@ -57,7 +57,7 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
   R = frame->getChannel( "X" );
   G = frame->getChannel( "Y" );
   B = frame->getChannel( "Z" );
-  const char* luminanceTag = frame->getTags().getString("LUMINANCE");
+  std::string luminanceTag = frame->getTags().getTag("LUMINANCE");
   
   Header header(frame->getWidth(),
                 frame->getHeight(),
@@ -66,57 +66,45 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
                 1,                      // screenWindowWidth
                 INCREASING_Y,           // lineOrder
                 exrCompression );
+
   // Define channels in Header
-  {
-    // 	pfs::ChannelIteratorPtr cit( frame->getChannelIterator() );
-    header.channels().insert( "R", Channel(HALF) );
-    header.channels().insert( "G", Channel(HALF) );
-    header.channels().insert( "B", Channel(HALF) );
-  }
+  header.channels().insert( "R", Channel(HALF) );
+  header.channels().insert( "G", Channel(HALF) );
+  header.channels().insert( "B", Channel(HALF) );
   
   // Copy tags to attributes
   {
-    pfs::TagIteratorPtr it( frame->getTags().getIterator() );
-    
-    while( it->hasNext() )
-    {
-      const char *tagName = it->getNext();
-      header.insert( tagName, StringAttribute(frame->getTags().getString( tagName )) );
-    }
-    
-    //Copy all channel tags
-    //pfs::ChannelIteratorPtr cit( frame->getChannelIterator() );
+      pfs::TagContainer::const_iterator it = frame->getTags().begin();
+      pfs::TagContainer::const_iterator itEnd = frame->getTags().end();
 
+      for ( ; it != itEnd; ++it)
+      {
+          header.insert( it->first, StringAttribute(it->second) );
+      }
 
-    const pfs::ChannelContainer& channels = frame->getChannels();
+      // Copy all channel tags
+      const pfs::ChannelContainer& channels = frame->getChannels();
 
-    for (pfs::ChannelContainer::const_iterator ch = channels.begin();
-         ch != channels.end();
-         ++ch)
-    {
-        pfs::TagIteratorPtr tit( (*ch)->getTags()->getIterator() );
-        while ( tit->hasNext() )
-        {
-            const char *tagName = tit->getNext();
-            std::string channelTagName = (*ch)->getName();
-            channelTagName += ":";
-            channelTagName += tagName;
-            header.insert( channelTagName.c_str(), StringAttribute((*ch)->getTags()->getString( tagName )) );
-        }
-    }
+      for (pfs::ChannelContainer::const_iterator ch = channels.begin();
+           ch != channels.end();
+           ++ch)
+      {
+          pfs::TagContainer::const_iterator it = (*ch)->getTags().begin();
+          pfs::TagContainer::const_iterator itEnd = (*ch)->getTags().end();
+
+          for ( ; it != itEnd; ++it ){
+              header.insert( (*ch)->getName() + ":" + it->first,
+                             StringAttribute(it->second) );
+          }
+      }
   }
   FrameBuffer frameBuffer;
   // Create channels in FrameBuffer
   {
-    // pfs::ChannelIterator *it = frame->getChannels();
-    
-    if ( firstFrame )
-    {
-      halfR = new half[frame->getWidth()*frame->getHeight()];
-      halfG = new half[frame->getWidth()*frame->getHeight()];
-      halfB = new half[frame->getWidth()*frame->getHeight()];
-      firstFrame = false;
-    }
+    halfR = new half[frame->getWidth()*frame->getHeight()];
+    halfG = new half[frame->getWidth()*frame->getHeight()];
+    halfB = new half[frame->getWidth()*frame->getHeight()];
+
     frameBuffer.insert( "R",                                      // name
                        Slice( HALF,                               // type
                              (char*)halfR,                        // base
@@ -180,7 +168,7 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
         // halfG[i] = min( (*Y)(i), HALF_MAX );
         // halfB[i] = min( (*Z)(i), HALF_MAX );
       }
-      if( luminanceTag != NULL && !strcmp( luminanceTag, "ABSOLUTE" ) )
+      if ( !luminanceTag.empty() && luminanceTag != "ABSOLUTE" )
       {
         addWhiteLuminance( header, 1 );
       }

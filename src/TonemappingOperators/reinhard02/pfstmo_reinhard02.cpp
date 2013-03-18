@@ -36,6 +36,7 @@
 #include <cstddef>
 
 #include "Libpfs/frame.h"
+#include "Libpfs/exception.h"
 #include "tmo_reinhard02.h"
 
 namespace pfs
@@ -64,7 +65,7 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
 #endif
   pfs::Channel *X, *Y, *Z;
   frame.getXYZChannels( X, Y, Z );
-  frame.getTags().setString("LUMINANCE", "RELATIVE");
+  frame.getTags().setTag("LUMINANCE", "RELATIVE");
   //---
   
   if ( Y==NULL || X==NULL || Z==NULL ) {

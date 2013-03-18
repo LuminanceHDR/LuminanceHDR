@@ -33,6 +33,16 @@ namespace io {
 
 static const char *PFSFILEID = "PFS1\x0a";
 
+void writeTags(const TagContainer& tags, FILE *out)
+{
+    fprintf( out, "%d" PFSEOL, (int)tags.size());
+    for (TagContainer::const_iterator it = tags.begin(); it != tags.end(); ++it)
+    {
+        fprintf( out, "%s", std::string(it->first + "=" + it->second).c_str() );
+        fprintf( out, PFSEOL );
+    }
+}
+
 PfsWriter::PfsWriter(const std::string &filename)
     : FrameWriter(filename)
 {}
@@ -51,20 +61,20 @@ bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
 
     const ChannelContainer& channels = frame.getChannels();
 
-    fprintf( outputStream.data(), "%d %d" PFSEOL,
-             (int)frame.getWidth(), (int)frame.getHeight() );
+    fprintf(outputStream.data(), "%d %d" PFSEOL,
+            (int)frame.getWidth(), (int)frame.getHeight());
     // fprintf( outputStream.data(), "%d" PFSEOL, frame.channel.size() );
-    fprintf( outputStream.data(), "%zd" PFSEOL, channels.size() );
+    fprintf(outputStream.data(), "%zd" PFSEOL, channels.size());
 
-    writeTags( &frame.getTags(), outputStream.data() );
+    writeTags(frame.getTags(), outputStream.data());
 
     //Write channel IDs and tags
     for (ChannelContainer::const_iterator it = channels.begin();
          it != channels.end();
          ++it)
     {
-        fprintf( outputStream.data(), "%s" PFSEOL, (*it)->getName().c_str() );
-        writeTags( (*it)->getTags(), outputStream.data() );
+        fprintf(outputStream.data(), "%s" PFSEOL, (*it)->getName().c_str());
+        writeTags((*it)->getTags(), outputStream.data());
     }
 
     fprintf( outputStream.data(), "ENDH");
