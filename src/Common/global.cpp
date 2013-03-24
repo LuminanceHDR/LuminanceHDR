@@ -31,10 +31,10 @@
 #include <iostream>
 
 #include "Common/config.h"
-
-#include "Common/LuminanceOptions.h"
+#include "Common/global.hxx"
 #include "Common/global.h"
-#include "global.hxx"
+#include "Common/LuminanceOptions.h"
+
 
 bool matchesLdrFilename(const QString& file)
 {

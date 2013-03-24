@@ -1,13 +1,13 @@
-PROJECT(luminance-hdr)
+PROJECT("Luminance HDR") # luminance-hdr)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 
 # set include path for FindXXX.cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # Global variables for CMake
+include(cmake/Version.cmake)
 include(cmake/GlobalSettings.cmake)
 include(cmake/CompilerSettings.cmake)
-
 
 # find and setup Qt4 for this project
 FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit QtSql REQUIRED)
@@ -124,6 +124,7 @@ SET(LIBS ${LIBS} ${LCMS2_LIBRARIES})
 SET(LIBS ${LIBS} ${PNG_LIBRARIES})
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/")
+INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/src/")
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(LUMINANCE_HDR_H )
@@ -150,7 +151,6 @@ ENABLE_TESTING()
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(test)
 ADD_SUBDIRECTORY(tools)
-ADD_SUBDIRECTORY(package)
 
 # translations
 FILE(GLOB LUMINANCE_TS i18n/*.ts)
@@ -175,44 +175,54 @@ SET(LUMINANCE_FILES
 
 # Apple Mac OS X
 IF(APPLE)
-    # TODO
-    # 1. copy help under Resources/help
-    # 2. copy html under Resources/html
-    # 3. deployment align_image_stack
+    SET(CMAKE_INSTALL_PREFIX "/Applications")
 
-    CONFIGURE_FILE(
-    ${CMAKE_SOURCE_DIR}/build/macosx/create-dmg.sh
-    ${CMAKE_BINARY_DIR}/create-dmg.sh)
+    # Set Bundle settings
+    set(MACOSX_BUNDLE_INFO_STRING "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_BUNDLE_VERSION "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_LONG_VERSION_STRING "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_VERSION "${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    set(MACOSX_BUNDLE_ICON "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    set(MACOSX_BUNDLE_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources")
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER "${LHDR_DOMAIN_SECOND}.${LHDR_DOMAIN_FIRST}")
+    set(MACOSX_BUNDLE_BUNDLE_NAME "${LHDR_NAME}")
 
-    CONFIGURE_FILE(
-    ${CMAKE_SOURCE_DIR}/build/macosx/deploy-cli.sh
-    ${CMAKE_BINARY_DIR}/deploy-cli.sh)
+    configure_file( ${CMAKE_SOURCE_DIR}/build/macosx/Info.plist.in
+                    ${CMAKE_BINARY_DIR}/Info.plist )
+    configure_file( ${CMAKE_SOURCE_DIR}/build/macosx/create-dmg.sh.in
+                    ${CMAKE_BINARY_DIR}/create-dmg.sh )
 
     FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) # ${QT_TRANSLATIONS_DIR}/qt_*.qm)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
 
     # icon files to copy in the bundle
-    SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    SET(OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    # include the icns files in the target
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
+
+    # Build project
+    # SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
+    ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_NAME} MACOSX_BUNDLE ${LUMINANCE_FILES}) # luminance-hdr
+    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
+  
+    SET_TARGET_PROPERTIES( ${LHDR_OSX_EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST
+                           "${CMAKE_BINARY_DIR}/Info.plist" )
+
     # set where in the bundle to put the icns files
     SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     # set where in the bundle to put the translation files
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QT_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
 
-    # include the icns files in the target
-    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
+    INSTALL(TARGETS ${LHDR_OSX_EXECUTABLE_NAME} luminance-hdr-cli
+            BUNDLE DESTINATION . COMPONENT Runtime
+            RUNTIME DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS COMPONENT Runtime)
 
-    SET( PROGNAME luminance-hdr )
-    SET( MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns" )
-    SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 2.3.0 )
-    SET( MACOSX_BUNDLE_VERSION 2.3.0 )
-    SET( MACOSX_BUNDLE_LONG_VERSION_STRING Luminance HDR 2.3.0 )
-    #SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
-
-    ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})
-    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
-  
-    SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
+    # Link libraries
+    TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_NAME} ${LUMINANCE_MODULES_GUI} ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
 # Unix
 ELSEIF(UNIX)
     FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm)
@@ -220,6 +230,12 @@ ELSEIF(UNIX)
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
+
+    # link libraries
+    TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
+    TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})
 
     # make install directivies
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
@@ -245,6 +261,10 @@ ELSEIF(WIN32)
     ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
   
+    # Link libraries
+    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
+
     # copies all necessary Qt dlls from the Qt binary dir to the output folder
     SET(QT_RELEASE_DLLS
         phonon4.dll
@@ -278,14 +298,5 @@ ELSEIF(WIN32)
     FILE(COPY ${QtI18nAll} DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/i18n/")
 ENDIF()
 
-# Link sub modules
-IF(MSVC OR APPLE)
-    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI})
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI})
-ELSE()
-    TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
-ENDIF()
-# Link shared library
-TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
-TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})
+# Packaging must go at the bottom
+include(${CMAKE_SOURCE_DIR}/build/Packaging.cmake)

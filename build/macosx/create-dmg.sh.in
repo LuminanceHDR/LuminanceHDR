@@ -1,0 +1,3 @@
+#!/bin/bash
+#
+hdiutil create -format UDBZ -quiet -srcfolder @CMAKE_INSTALL_PREFIX@/@LHDR_OSX_EXECUTABLE_NAME@.app @LHDR_OSX_EXECUTABLE_NAME@.dmg

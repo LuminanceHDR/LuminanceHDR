@@ -14,4 +14,7 @@ ENDIF()
 OPTION(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files (WARNING: make clean will delete the source .ts files! Danger!)")
 OPTION(LUPDATE_NOOBSOLETE "While doing an lupdate, remove obsolete entries.")
 
+# Holds al the file that will be translated
+SET(FILES_TO_TRANSLATE )
+
 # add a function here that creates the translation when necessary
