@@ -79,7 +79,7 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
 
       for ( ; it != itEnd; ++it)
       {
-          header.insert( it->first, StringAttribute(it->second) );
+          header.insert( it->first.c_str(), StringAttribute(it->second) );
       }
 
       // Copy all channel tags
@@ -93,7 +93,7 @@ void writeEXRfile (pfs::Frame* inpfsframe, const char* outfilename)
           pfs::TagContainer::const_iterator itEnd = (*ch)->getTags().end();
 
           for ( ; it != itEnd; ++it ){
-              header.insert( (*ch)->getName() + ":" + it->first,
+              header.insert( string((*ch)->getName() + ":" + it->first).c_str(),
                              StringAttribute(it->second) );
           }
       }
