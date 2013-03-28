@@ -343,7 +343,7 @@ struct JpegWriterImplMemory : public JpegWriterImpl
         : JpegWriterImpl()
     {}
 
-    bool open(size_t /*bufferSize*/)
+    bool open(size_t bufferSize)
     {
 #ifdef USE_TEMPORARY_FILE
         if ( !m_temporaryFile.open() ) {
@@ -405,7 +405,7 @@ struct JpegWriterImplFile : public JpegWriterImpl
         , m_filename(filename)
     {}
 
-    virtual bool open(size_t /*bufferSize*/)
+    virtual bool open(size_t bufferSize)
     {
         m_handle.reset( fopen(m_filename.c_str(), "wb") );
         if ( m_handle ) return true;

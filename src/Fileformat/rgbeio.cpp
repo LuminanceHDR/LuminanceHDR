@@ -30,6 +30,7 @@
 #include <iostream>
 #include <math.h>
 #include <assert.h>
+#include <string.h>
 
 #include "Libpfs/pfs.h"
 #include "Libpfs/array2d.h"
