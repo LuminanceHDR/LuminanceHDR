@@ -8,6 +8,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 include(cmake/Version.cmake)
 include(cmake/GlobalSettings.cmake)
 include(cmake/CompilerSettings.cmake)
+include(cmake/Internationalization.cmake)
 
 # find and setup Qt4 for this project
 FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit QtSql REQUIRED)
@@ -26,9 +27,9 @@ ENDIF(WIN32)
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
-set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
-
-include(cmake/Internationalization.cmake)
+set(LIBS ${LIBS}
+    ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES}
+    ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
 
 FIND_PACKAGE(Git)
 IF(GIT_FOUND)
