@@ -24,7 +24,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsinraw.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsinexr.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pfsoutexr.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/jpegreader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/jpegwriter.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pngwriter.cpp

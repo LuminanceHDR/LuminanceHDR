@@ -41,8 +41,6 @@
 #include "Fileformat/jpegwriter.h"
 #include "Viewers/GenericViewer.h"
 #include "Common/LuminanceOptions.h"
-#include "Fileformat/pfsout16bitspixmap.h"
-#include "Fileformat/pfsoutldrimage.h"
 #include "Core/TonemappingOptions.h"
 #include "Exif/ExifOperations.h"
 
@@ -50,6 +48,7 @@
 #include <Libpfs/io/pfsreader.h>
 #include <Libpfs/io/rgbewriter.h>
 #include <Libpfs/io/rgbereader.h>
+#include <Libpfs/io/exrwriter.h>
 
 using namespace pfs::io;
 
@@ -99,12 +98,13 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
 
     if (qfi.suffix().toUpper() == "EXR")
     {
-        writeEXRfile(hdr_frame, encodedName);
+        EXRWriter writer(encodedName.constData());
+        writer.write(*hdr_frame, params);
     }
     else if (qfi.suffix().toUpper() == "HDR")
     {
         RGBEWriter writer(encodedName.constData());
-        writer.write(*hdr_frame, pfs::Params());
+        writer.write(*hdr_frame, params);
     }
     else if (qfi.suffix().toUpper().startsWith("TIF"))
     {
@@ -129,8 +129,8 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
     }
     else
     {
-        // Default as EXR
-        writeEXRfile(hdr_frame, encodedName);
+        EXRWriter writer(encodedName.constData());
+        writer.write(*hdr_frame, params);
     }
 
     if ( status ) {
