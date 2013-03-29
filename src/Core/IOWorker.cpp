@@ -49,6 +49,7 @@
 #include <Libpfs/io/rgbewriter.h>
 #include <Libpfs/io/rgbereader.h>
 #include <Libpfs/io/exrwriter.h>
+#include <Libpfs/io/exrreader.h>
 
 using namespace pfs::io;
 
@@ -299,11 +300,14 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         QByteArray TempPath = QFile::encodeName(luminanceOptions.getTempDir());
         QByteArray encodedFileName = QFile::encodeName(qfi.absoluteFilePath());
 
-        if (extension=="EXR")
+        if ( extension=="EXR" )
         {
-            hdrpfsframe = readEXRfile(encodedFileName);
+            hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
+            pfs::io::EXRReader reader(encodedFileName.constData());
+            reader.read( *hdrpfsframe, pfs::Params() );
+            reader.close();
         }
-        else if (extension=="HDR")
+        else if ( extension=="HDR" )
         {
             hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
             pfs::io::RGBEReader reader(encodedFileName.constData());
@@ -328,15 +332,15 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         else if ( rawextensions.indexOf(extension) != -1 )
         {
             // raw file detected
-		try {
-			hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminanceOptions, false, progress_cb, this);
-		}
-        catch (QString& err)
-		{
-            qDebug("TH: catched exception");
-			emit read_hdr_failed((err + " : %1").arg(filename));	
-			return NULL;
-		}
+            try {
+                hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminanceOptions, false, progress_cb, this);
+            }
+            catch (QString& err)
+            {
+                qDebug("TH: catched exception");
+                emit read_hdr_failed((err + " : %1").arg(filename));
+                return NULL;
+            }
         }
         else
         {

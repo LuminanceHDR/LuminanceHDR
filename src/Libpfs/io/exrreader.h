@@ -1,9 +1,7 @@
-/**
- * @brief Header file for pfs file format IO
- *
- * This file is a part of LuminanceHDR package.
+/*
+ * This file is a part of Luminance HDR package
  * ----------------------------------------------------------------------
- * Copyright (C) 2006 Davide Anastasia
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,20 +17,37 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *
  */
 
-#ifndef PFS_FILE_FORMAT_H
-#define PFS_FILE_FORMAT_H
+#ifndef PFS_IO_EXRREADER_H
+#define PFS_IO_EXRREADER_H
 
-#include "Fileformat/tiffreader.h"
-#include "Fileformat/tiffwriter.h"
-#include "Fileformat/pfsoutldrimage.h"
-#include "Fileformat/pfsinraw.h"
-#include "Fileformat/jpegwriter.h"
-#include "Fileformat/jpegreader.h"
-#include "Fileformat/pngwriter.h"
+#include <Libpfs/io/framereader.h>
+#include <boost/scoped_ptr.hpp>
 
-#endif // PFS_FILE_FORMAT_H
+namespace pfs {
+namespace io {
+
+class EXRReader : public FrameReader {
+public:
+    EXRReader(const std::string& filename);
+    ~EXRReader();
+
+    bool isOpen() const
+    { return (m_data.get() != NULL); }
+
+    void close();
+    void open();
+    void read(Frame &frame, const Params &params);
+
+protected:
+    class EXRReaderData;
+
+    boost::scoped_ptr<EXRReaderData> m_data;
+};
+
+}   // io
+}   // pfs
+
+
+#endif // #ifndef PFS_IO_EXRREADER_H
