@@ -1,6 +1,8 @@
 /*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
+ * Copyright (C) 2003-2007 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2006-2007 Giuseppe Rota
  * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,12 +21,15 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief PFS file format writer (used for compatibility with PFSTOOLS)
-//! \note Most of the code of this class is derived from the code in PFSTOOLS
+//! \brief IO operations on Radiance's RGBE file format
+//! \author Grzegorz Krawczyk <krawczyk@mpi-sb.mpg.de>
+//! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
+//! \author Giuseppe Rota  <grota@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! Code adaptation for Luminance HDR and LibHDR
 
-#ifndef PFS_IO_PFSWRITER_H
-#define PFS_IO_PFSWRITER_H
+#ifndef PFS_IO_RGBEWRITER_H
+#define PFS_IO_RGBEWRITER_H
 
 #include <string>
 #include <Libpfs/params.h>
@@ -36,14 +41,15 @@ class Frame;
 
 namespace io {
 
-class PfsWriter : public FrameWriter {
+class RGBEWriter : public FrameWriter
+{
 public:
-    PfsWriter(const std::string& filename);
+    RGBEWriter(const std::string& filename);
 
-    bool write(const pfs::Frame& frame, const pfs::Params& params);
+    bool write(const Frame &frame, const Params &params);
 };
 
-} // io
-} // pfs
+}
+}
 
-#endif //  PFS_IO_PFSWRITER_H
+#endif // PFS_IO_RGBEWRITER_H

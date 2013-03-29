@@ -72,7 +72,7 @@ void PfsReader::open()
 {
     m_file.reset( fopen(filename().c_str(), "rb") );
     if ( !m_file ) {
-        throw InvalidFile("Cannot open file!");
+        throw InvalidFile("Cannot open file " + filename());
     }
 
 #ifdef HAVE_SETMODE
@@ -116,6 +116,8 @@ void PfsReader::close()
 
 void PfsReader::read(Frame &frame, const Params &/*params*/)
 {
+    if ( !isOpen() ) open();
+
     Frame tempFrame(width(), height());
 
     readTags(tempFrame.getTags(), m_file.data());

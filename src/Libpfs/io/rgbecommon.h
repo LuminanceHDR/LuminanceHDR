@@ -1,9 +1,9 @@
-/**
- * @brief Header file for pfs file format IO
- *
- * This file is a part of LuminanceHDR package.
+/*
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006 Davide Anastasia
+ * Copyright (C) 2003-2007 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2006-2007 Giuseppe Rota
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,28 +19,30 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *
  */
 
-#ifndef PFS_FILE_FORMAT_H
-#define PFS_FILE_FORMAT_H
+//! \brief Radiance RGBE file format reader common code
+//! \author Grzegorz Krawczyk <krawczyk@mpi-sb.mpg.de>
+//! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
+//! \author Giuseppe Rota  <grota@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! Code adaptation for Luminance HDR and LibHDR
 
-#include "Fileformat/tiffreader.h"
-#include "Fileformat/tiffwriter.h"
-#include "Fileformat/pfsoutldrimage.h"
-#include "Fileformat/pfsinraw.h"
-#include "Fileformat/jpegwriter.h"
-#include "Fileformat/jpegreader.h"
-#include "Fileformat/pngwriter.h"
+#ifndef PFS_IO_RGBECOMMON_H
+#define PFS_IO_RGBECOMMON_H
 
-// Forward declaration
-namespace pfs {
-class Frame;
-}
+//! \brief constant to change between radiance and luminance
+#define WHITE_EFFICACY 179.0f
 
-pfs::Frame* readEXRfile(const char * filename);
-void writeEXRfile(pfs::Frame* inpfsframe, const char* outfilename);
+typedef unsigned char Trgbe;
 
-#endif // PFS_FILE_FORMAT_H
+//! \name RGB values and their exponent
+struct Trgbe_pixel
+{
+    Trgbe r;
+    Trgbe g;
+    Trgbe b;
+    Trgbe e;
+};
+
+#endif // PFS_IO_RGBECOMMON_H

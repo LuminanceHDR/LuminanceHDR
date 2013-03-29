@@ -48,6 +48,10 @@
 
 #include <Libpfs/io/pfswriter.h>
 #include <Libpfs/io/pfsreader.h>
+#include <Libpfs/io/rgbewriter.h>
+#include <Libpfs/io/rgbereader.h>
+
+using namespace pfs::io;
 
 IOWorker::IOWorker(QObject* parent)
     : QObject(parent)
@@ -99,7 +103,8 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
     }
     else if (qfi.suffix().toUpper() == "HDR")
     {
-        writeRGBEfile(hdr_frame, encodedName);
+        RGBEWriter writer(encodedName.constData());
+        writer.write(*hdr_frame, pfs::Params());
     }
     else if (qfi.suffix().toUpper().startsWith("TIF"))
     {
@@ -300,7 +305,10 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         }
         else if (extension=="HDR")
         {
-            hdrpfsframe = readRGBEfile(encodedFileName);
+            hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
+            pfs::io::RGBEReader reader(encodedFileName.constData());
+            reader.read( *hdrpfsframe, pfs::Params() );
+            reader.close();
         }
         else if (extension=="PFS")
         {
