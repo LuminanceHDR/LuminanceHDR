@@ -46,13 +46,11 @@ EXRWriter::EXRWriter(const string &filename)
     : FrameWriter(filename)
 {}
 
-bool EXRWriter::write(const Frame &frame, const Params &params)
+bool EXRWriter::write(const Frame &frame, const Params &/*params*/)
 {
+    // Channels are named (X Y Z) but contain (R G B) data
     const pfs::Channel *R, *G, *B;
-    // Channels are named X Y Z but contain R G B data
     frame.getXYZChannels(R, G, B);
-
-    string luminanceTag = frame.getTags().getTag("LUMINANCE");
 
     Header header(frame.getWidth(),
                   frame.getHeight(),
@@ -60,117 +58,61 @@ bool EXRWriter::write(const Frame &frame, const Params &params)
                   Imath::V2f (0, 0),      // screenWindowCenter
                   1,                      // screenWindowWidth
                   INCREASING_Y,           // lineOrder
-                  PIZ_COMPRESSION );
-
-    // Define channels in Header
-    header.channels().insert( "R", Imf::Channel(HALF) );
-    header.channels().insert( "G", Imf::Channel(HALF) );
-    header.channels().insert( "B", Imf::Channel(HALF) );
+                  PIZ_COMPRESSION);
 
     // Copy tags to attributes
     pfs::TagContainer::const_iterator it = frame.getTags().begin();
     pfs::TagContainer::const_iterator itEnd = frame.getTags().end();
 
-    for ( ; it != itEnd; ++it)
-    {
-        header.insert( it->first.c_str(), StringAttribute(it->second) );
+    for ( ; it != itEnd; ++it ) {
+        header.insert(it->first, StringAttribute(it->second));
     }
 
     // Copy all channel tags
     const pfs::ChannelContainer& channels = frame.getChannels();
 
     for (pfs::ChannelContainer::const_iterator ch = channels.begin();
-         ch != channels.end();
-         ++ch)
+         ch != channels.end(); ++ch)
     {
-        pfs::TagContainer::const_iterator it = (*ch)->getTags().begin();
+        std::string channelName                 = (*ch)->getName();
+        pfs::TagContainer::const_iterator it    = (*ch)->getTags().begin();
         pfs::TagContainer::const_iterator itEnd = (*ch)->getTags().end();
 
         for ( ; it != itEnd; ++it ) {
-            header.insert( string((*ch)->getName() + ":" + it->first).c_str(),
-                           StringAttribute(it->second) );
+            header.insert(string(channelName + ":" + it->first),
+                          StringAttribute(it->second));
         }
     }
 
     FrameBuffer frameBuffer;
 
+    // Define channels in Header
+    // and
     // Create channels in FrameBuffer
-    std::vector<half> halfR( frame.getWidth()*frame.getHeight() );
-    std::vector<half> halfG( frame.getWidth()*frame.getHeight() );
-    std::vector<half> halfB( frame.getWidth()*frame.getHeight() );
+    header.channels().insert("R", Imf::Channel(FLOAT));
+    frameBuffer.insert("R",                                         // name
+                       Slice( FLOAT,                                // type
+                              (char*)R->data(),                     // base
+                              sizeof(float) * 1,                    // xStride
+                              sizeof(float) * frame.getWidth()) );	// yStride
 
-    frameBuffer.insert( "R",                                      // name
-                        Slice( HALF,                               // type
-                               (char*)halfR.data(),                        // base
-                               sizeof(half) * 1,                    // xStride
-                               sizeof(half) * frame.getWidth()) );	// yStride
+    header.channels().insert("G", Imf::Channel(FLOAT));
+    frameBuffer.insert("G",                                         // name
+                       Slice( FLOAT,                                // type
+                              (char*)G->data(),                     // base
+                              sizeof(float) * 1,                    // xStride
+                              sizeof(float) * frame.getWidth()) );	// yStride
 
-    frameBuffer.insert( "G",                                      // name
-                        Slice( HALF,                               // type
-                               (char*)halfG.data(),                        // base
-                               sizeof(half) * 1,                    // xStride
-                               sizeof(half) * frame.getWidth()) );	// yStride
-
-    frameBuffer.insert( "B",                                      // name
-                        Slice( HALF,                               // type
-                               (char*)halfB.data(),                        // base
-                               sizeof(half) * 1,                    // xStride
-                               sizeof(half) * frame.getWidth()) );	// yStride
-
-    int pixelCount = frame.getHeight()*frame.getWidth();
-
-    // Check if pixel values do not exceed maximum HALF value
-    float maxValue = -1;
-    for( int i = 0; i < pixelCount; i++ )
-    {
-        if( (*R)(i) > maxValue ) maxValue = (*R)(i);
-        if( (*G)(i) > maxValue ) maxValue = (*G)(i);
-        if( (*B)(i) > maxValue ) maxValue = (*B)(i);
-        // if( (*X)(i) > maxValue ) maxValue = (*X)(i);
-        // if( (*Y)(i) > maxValue ) maxValue = (*Y)(i);
-        // if( (*Z)(i) > maxValue ) maxValue = (*Z)(i);
-    }
-
-    bool maxHalfExceeded = maxValue > HALF_MAX;
-
-    if ( maxHalfExceeded )
-    {
-        // Rescale and copy pixels to half-type buffers
-        float scaleFactor = HALF_MAX/maxValue;
-        for( int i = 0; i < pixelCount; i++ )
-        {
-            halfR[i] = (half)((*R)(i)*scaleFactor);
-            halfG[i] = (half)((*G)(i)*scaleFactor);
-            halfB[i] = (half)((*B)(i)*scaleFactor);
-            // halfR[i] = (half)((*X)(i)*scaleFactor);
-            // halfG[i] = (half)((*Y)(i)*scaleFactor);
-            // halfB[i] = (half)((*Z)(i)*scaleFactor);
-        }
-        // Store scale factor as WhileLuminance standard sttribute
-        // in order to restore absolute values later
-        addWhiteLuminance( header, 1/scaleFactor );
-    }
-    else
-    {
-        // Copy pixels to half-type buffers
-        for( int i = 0; i < pixelCount; i++ )
-        {
-            halfR[i] = std::min( (half)(*R)(i), (half)HALF_MAX );
-            halfG[i] = std::min( (half)(*G)(i), (half)HALF_MAX );
-            halfB[i] = std::min( (half)(*B)(i), (half)HALF_MAX );
-            // halfR[i] = min( (*X)(i), HALF_MAX );
-            // halfG[i] = min( (*Y)(i), HALF_MAX );
-            // halfB[i] = min( (*Z)(i), HALF_MAX );
-        }
-        if ( !luminanceTag.empty() && luminanceTag != "ABSOLUTE" )
-        {
-            addWhiteLuminance( header, 1 );
-        }
-    }
+    header.channels().insert("B", Imf::Channel(FLOAT));
+    frameBuffer.insert("B",                                         // name
+                       Slice( FLOAT,                                // type
+                              (char*)B->data(),                     // base
+                              sizeof(float) * 1,                    // xStride
+                              sizeof(float) * frame.getWidth()) );	// yStride
 
     OutputFile file(filename().c_str(), header);
-    file.setFrameBuffer( frameBuffer );
-    file.writePixels( frame.getHeight() );
+    file.setFrameBuffer(frameBuffer);
+    file.writePixels(frame.getHeight());
 
     return true;
 }
