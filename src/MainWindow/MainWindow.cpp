@@ -72,7 +72,6 @@
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LuminanceRangeWidget.h"
 #include "Viewers/LdrViewer.h"
-
 #include "UI/ImageQualityDialog.h"
 #include "UI/TiffModeDialog.h"
 #include "UI/UMessageBox.h"
@@ -194,8 +193,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
-    OsIntegration::getInstance().init(this);
-
     luminance_options = new LuminanceOptions();
 
     sm_NumMainWindows++;
@@ -248,6 +245,8 @@ void MainWindow::init()
         }
         // END SPLASH SCREEN    ------------------------------------------------------------------
     }
+
+    OsIntegration::getInstance().init(this);
 }
 
 void MainWindow::createUI()
@@ -1787,6 +1786,9 @@ void MainWindow::setCurrentFile(const QString &fileName)
         if (mainWin)
             mainWin->updateRecentFileActions();
     }
+    
+    OsIntegration::getInstance().addRecentFile(fileName);
+    
 }
 
 void MainWindow::updateRecentFileActions()
