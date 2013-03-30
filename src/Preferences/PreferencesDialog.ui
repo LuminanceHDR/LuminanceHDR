@@ -283,7 +283,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/CZEC0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/CZEC0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -293,7 +293,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/CHIN0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/CHIN0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -303,7 +303,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/UNKG0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/UNKG0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -313,7 +313,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/FINL0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/FINL0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -323,7 +323,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/FRAN0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/FRAN0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -333,7 +333,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/GERM0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/GERM0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -343,7 +343,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/HUNG0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/HUNG0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -353,7 +353,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/INDN0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/INDN0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -363,7 +363,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/ITAL0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/ITAL0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -373,7 +373,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/POLA0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/POLA0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -383,7 +383,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/RMNA0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/RMNA0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -393,7 +393,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/RUSS0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/RUSS0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -403,7 +403,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/SPAN0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/SPAN0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -413,7 +413,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/flags/images/TURK0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/TURK0001.PNG</normalon>
                </iconset>
               </property>
              </item>
