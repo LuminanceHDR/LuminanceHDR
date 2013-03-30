@@ -65,7 +65,7 @@ bool EXRWriter::write(const Frame &frame, const Params &/*params*/)
     pfs::TagContainer::const_iterator itEnd = frame.getTags().end();
 
     for ( ; it != itEnd; ++it ) {
-        header.insert(it->first, StringAttribute(it->second));
+        header.insert(it->first.c_str(), StringAttribute(it->second));
     }
 
     // Copy all channel tags
@@ -79,7 +79,7 @@ bool EXRWriter::write(const Frame &frame, const Params &/*params*/)
         pfs::TagContainer::const_iterator itEnd = (*ch)->getTags().end();
 
         for ( ; it != itEnd; ++it ) {
-            header.insert(string(channelName + ":" + it->first),
+            header.insert(string(channelName + ":" + it->first).c_str(),
                           StringAttribute(it->second));
         }
     }
