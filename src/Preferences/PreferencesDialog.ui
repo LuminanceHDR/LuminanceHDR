@@ -289,11 +289,20 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">中文</string>
+               <string notr="true">Dansk</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../icons.qrc">
+                <normaloff>:/new/prefix1/images/flags/DK.PNG</normaloff>:/new/prefix1/images/flags/DK.PNG</iconset>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">Deutsch</string>
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/new/prefix1/images/flags/CHIN0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/GERM0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -309,11 +318,11 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">Suomi</string>
+               <string notr="true">Español</string>
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/new/prefix1/images/flags/FINL0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/SPAN0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -324,26 +333,6 @@
               <property name="icon">
                <iconset>
                 <normalon>:/new/prefix1/images/flags/FRAN0001.PNG</normalon>
-               </iconset>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">Deutsch</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/new/prefix1/images/flags/GERM0001.PNG</normalon>
-               </iconset>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">Magyar</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normalon>:/new/prefix1/images/flags/HUNG0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -369,21 +358,21 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">Polski</string>
+               <string notr="true">Magyar</string>
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/new/prefix1/images/flags/POLA0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/HUNG0001.PNG</normalon>
                </iconset>
               </property>
              </item>
              <item>
               <property name="text">
-               <string notr="true">Română</string>
+               <string notr="true">Polski</string>
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/new/prefix1/images/flags/RMNA0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/POLA0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -399,11 +388,21 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">Español</string>
+               <string notr="true">Română</string>
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/new/prefix1/images/flags/SPAN0001.PNG</normalon>
+                <normalon>:/new/prefix1/images/flags/RMNA0001.PNG</normalon>
+               </iconset>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">Suomi</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/new/prefix1/images/flags/FINL0001.PNG</normalon>
                </iconset>
               </property>
              </item>
@@ -414,6 +413,16 @@
               <property name="icon">
                <iconset>
                 <normalon>:/new/prefix1/images/flags/TURK0001.PNG</normalon>
+               </iconset>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">中文</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/new/prefix1/images/flags/CHIN0001.PNG</normalon>
                </iconset>
               </property>
              </item>

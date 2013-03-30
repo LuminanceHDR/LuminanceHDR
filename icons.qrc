@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/new/prefix1">
+    <file>images/flags/DK.PNG</file>
     <file>images/button_add.png</file>
     <file>images/button_del.png</file>
     <file>images/raw.png</file>
@@ -69,7 +70,6 @@
     <file>images/vcs_update.png</file>
     <file>images/gimp-lasso.png</file>
     <file>images/brush_icon.png</file>
-
     <file>images/flags/CHIN0001.PNG</file>
     <file>images/flags/CZEC0001.PNG</file>
     <file>images/flags/FINL0001.PNG</file>
