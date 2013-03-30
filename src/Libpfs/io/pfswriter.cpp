@@ -49,7 +49,7 @@ PfsWriter::PfsWriter(const std::string &filename)
 
 bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
 {
-    utils::ScopedStdIoFile outputStream(fopen(filename().c_str(), "w"));
+    utils::ScopedStdIoFile outputStream(fopen(filename().c_str(), "wb"));
 
 #ifdef HAVE_SETMODE
     // Needed under MS windows (text translation IO for stdin/out)

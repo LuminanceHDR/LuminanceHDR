@@ -193,7 +193,7 @@ RGBEWriter::RGBEWriter(const std::string &filename)
 
 bool RGBEWriter::write(const Frame &frame, const Params &/*params*/)
 {
-    utils::ScopedStdIoFile outputStream(fopen(filename().c_str(), "w"));
+    utils::ScopedStdIoFile outputStream(fopen(filename().c_str(), "wb"));
 
     const pfs::Channel *X, *Y, *Z;        // X Y Z Channels contain R G B data
     frame.getXYZChannels(X, Y, Z);
