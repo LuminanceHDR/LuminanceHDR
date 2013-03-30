@@ -1,3 +1,5 @@
+ADD_SUBDIRECTORY(ImageInspector)
+
 # workaround for http://code.google.com/p/googletest/issues/detail?id=408
 IF(MSVC_VERSION EQUAL 1700)
     ADD_DEFINITIONS(-D_VARIADIC_MAX=10)
