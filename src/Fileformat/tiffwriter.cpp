@@ -234,7 +234,7 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          stripBuffer.data(),
                          stripBuffer.data() + 1,
                          stripBuffer.data() + 2,
-                         rgbRemapper);
+                         rgbRemapper, 3);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
             throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
@@ -285,7 +285,7 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          stripBuffer.data(),
                          stripBuffer.data() + 1,
                          stripBuffer.data() + 2,
-                         rgbRemapper);
+                         rgbRemapper, 3);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) == 0)
         {
             throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
