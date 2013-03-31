@@ -154,45 +154,43 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	m_Ui->user_qual_comboBox->addItem("AMaZE");
 #endif
 
-	fromIso639ToGuiIndex["cs"]=0;
-	fromIso639ToGuiIndex["zh"]=1;
-	fromIso639ToGuiIndex["en"]=2;
-	fromIso639ToGuiIndex["fi"]=3;
-	fromIso639ToGuiIndex["fr"]=4;
-	fromIso639ToGuiIndex["de"]=5;
-	fromIso639ToGuiIndex["hu"]=6;
-	fromIso639ToGuiIndex["id"]=7;
-	fromIso639ToGuiIndex["it"]=8;
-	fromIso639ToGuiIndex["pl"]=9;
-	fromIso639ToGuiIndex["ro"]=10;
-	fromIso639ToGuiIndex["ru"]=11;
-	fromIso639ToGuiIndex["es"]=12;
+	fromIso639ToGuiIndex["cs"]= 0;
+    fromIso639ToGuiIndex["dk"]= 1;
+	fromIso639ToGuiIndex["de"]= 2;
+	fromIso639ToGuiIndex["en"]= 3;
+	fromIso639ToGuiIndex["es"]= 4;
+	fromIso639ToGuiIndex["fr"]= 5;
+	fromIso639ToGuiIndex["id"]= 6;
+	fromIso639ToGuiIndex["it"]= 7;
+	fromIso639ToGuiIndex["hu"]= 8;
+	fromIso639ToGuiIndex["pl"]= 9;
+	fromIso639ToGuiIndex["ru"]=10;
+	fromIso639ToGuiIndex["ro"]=11;
+	fromIso639ToGuiIndex["fi"]=12;
 	fromIso639ToGuiIndex["tr"]=13;
-	//fromIso639ToGuiIndex["hi"]=14;
-	//fromIso639ToGuiIndex["sk"]=15;
+	fromIso639ToGuiIndex["zh"]=14;
 
-	fromGuiIndexToIso639[0]="cs";
-	fromGuiIndexToIso639[1]="zh";
-	fromGuiIndexToIso639[2]="en";
-	fromGuiIndexToIso639[3]="fi";
-	fromGuiIndexToIso639[4]="fr";
-	fromGuiIndexToIso639[5]="de";
-	fromGuiIndexToIso639[6]="hu";
-	fromGuiIndexToIso639[7]="id";
-	fromGuiIndexToIso639[8]="it";
-	fromGuiIndexToIso639[9]="pl";
-	fromGuiIndexToIso639[10]="ro";
-	fromGuiIndexToIso639[11]="ru";
-	fromGuiIndexToIso639[12]="es";
+	fromGuiIndexToIso639[ 0]="cs";
+	fromGuiIndexToIso639[ 1]="dk";
+	fromGuiIndexToIso639[ 2]="de";
+	fromGuiIndexToIso639[ 3]="en";
+	fromGuiIndexToIso639[ 4]="es";
+	fromGuiIndexToIso639[ 5]="fr";
+	fromGuiIndexToIso639[ 6]="id";
+	fromGuiIndexToIso639[ 7]="it";
+	fromGuiIndexToIso639[ 8]="hu";
+	fromGuiIndexToIso639[ 9]="pl";
+	fromGuiIndexToIso639[10]="ru";
+	fromGuiIndexToIso639[11]="ro";
+	fromGuiIndexToIso639[12]="fi";
 	fromGuiIndexToIso639[13]="tr";
-	//fromGuiIndexToIso639[14]="hi";
-	//fromGuiIndexToIso639[15]="sk";
+    fromGuiIndexToIso639[14]="zh";
 
     negcolor = LuminanceOptions().getViewerNegColor();
     infnancolor = LuminanceOptions().getViewerNanInfColor();
 
     from_options_to_gui(); //update the gui in order to show the options
-
+    
     toolButtonMapper = new QSignalMapper(this);
     connect(toolButtonMapper, SIGNAL(mapped(int)), this, SLOT(toolButton_clicked(int)));
 

@@ -54,6 +54,13 @@ void OsIntegration::setProgress(int value, int max) {
 	#endif
 }
 
+void OsIntegration::addRecentFile(const QString& filename)
+	{
+#ifdef Q_OS_WIN
+	winProgressbar->addRecentFile(filename);
+#endif
+	}
+
 #ifdef Q_WS_WIN
 	bool OsIntegration::winEvent(MSG * message, long * result)
 	{
