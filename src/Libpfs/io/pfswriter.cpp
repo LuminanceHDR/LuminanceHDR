@@ -63,12 +63,11 @@ bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
 
     fprintf(outputStream.data(), "%d %d" PFSEOL,
             (int)frame.getWidth(), (int)frame.getHeight());
-    // fprintf( outputStream.data(), "%d" PFSEOL, frame.channel.size() );
-    fprintf(outputStream.data(), "%zd" PFSEOL, channels.size());
+    fprintf(outputStream.data(), "%d" PFSEOL, (int)channels.size());
 
     writeTags(frame.getTags(), outputStream.data());
 
-    //Write channel IDs and tags
+    // Write channel IDs and tags
     for (ChannelContainer::const_iterator it = channels.begin();
          it != channels.end();
          ++it)
@@ -79,7 +78,7 @@ bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
 
     fprintf( outputStream.data(), "ENDH");
 
-    //Write channels
+    // Write channels
     for (ChannelContainer::const_iterator it = channels.begin();
          it != channels.end();
          ++it)
