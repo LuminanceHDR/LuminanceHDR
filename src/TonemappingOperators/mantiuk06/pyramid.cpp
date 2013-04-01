@@ -463,7 +463,7 @@ void calculateGradients(const float* inputData, PyramidS& gradient)
     const int COLS = gradient.getCols();
     const int ROWS = gradient.getRows();
 
-#pragma omp parallel shared(COLS, ROWS)
+#pragma omp parallel // shared(COLS, ROWS)
     {
 #pragma omp for nowait
         for (int ky = 0; ky < (ROWS-1); ++ky)

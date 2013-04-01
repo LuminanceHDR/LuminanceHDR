@@ -114,58 +114,84 @@ public:
 
     // friend operators
     template <typename Type>
-    friend bool operator==(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
-        assert(x.m_step == y.m_step);
-        return (x.m_data == y.m_data);
-    }
+    friend bool operator==(const StrideIterator<Type>& x, const StrideIterator<Type>& y);
 
     template <typename Type>
-    friend bool operator!=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
-        assert(x.m_step == y.m_step);
-        return (x.m_data != y.m_data);
-    }
+    friend bool operator!=(const StrideIterator<Type>& x, const StrideIterator<Type>& y);
 
     template <typename Type>
-    friend bool operator<(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
-        assert(x.m_step == y.m_step);
-        return (x.m_data < y.m_data);
-    }
+    friend bool operator<(const StrideIterator<Type>& x, const StrideIterator<Type>& y);
 
     template <typename Type>
-    friend bool operator<=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
-        assert(x.m_step == y.m_step);
-        return (x.m_data <= y.m_data);
-    }
+    friend bool operator<=(const StrideIterator<Type>& x, const StrideIterator<Type>& y);
 
     template <typename Type>
-    friend bool operator>(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
-        assert(x.m_step == y.m_step);
-        return (x.m_data > y.m_data);
-    }
+    friend bool operator>(const StrideIterator<Type>& x, const StrideIterator<Type>& y);
+
     template <typename Type>
-    friend bool operator>=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
-        assert(x.m_step == y.m_step);
-        return (x.m_data >= y.m_data);
-    }
+    friend bool operator>=(const StrideIterator<Type>& x, const StrideIterator<Type>& y);
 
     template <typename Type>
     friend typename StrideIterator<Type>::difference_type operator+(
-            const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
-        assert(x.m_step == y.m_step);
-        return (x.m_data + y.m_data) / x.m_step;
-    }
+            const StrideIterator<Type>& x, const StrideIterator<Type>& y);
 
     template <typename Type>
     friend typename StrideIterator<Type>::difference_type operator-(
-            const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
-        assert(x.m_step == y.m_step);
-        return (x.m_data - y.m_data) / x.m_step;
-    }
+            const StrideIterator<Type>& x, const StrideIterator<Type>& y);
 
 private:
     IterType m_data;
     difference_type m_step;
 };
+
+template <typename Type>
+inline bool operator==(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+    assert(x.m_step == y.m_step);
+    return (x.m_data == y.m_data);
+}
+
+template <typename Type>
+inline bool operator!=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+    assert(x.m_step == y.m_step);
+    return (x.m_data != y.m_data);
+}
+
+template <typename Type>
+inline bool operator<(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+    assert(x.m_step == y.m_step);
+    return (x.m_data < y.m_data);
+}
+
+template <typename Type>
+inline bool operator<=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+    assert(x.m_step == y.m_step);
+    return (x.m_data <= y.m_data);
+}
+
+template <typename Type>
+inline bool operator>(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+    assert(x.m_step == y.m_step);
+    return (x.m_data > y.m_data);
+}
+template <typename Type>
+inline bool operator>=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+    assert(x.m_step == y.m_step);
+    return (x.m_data >= y.m_data);
+}
+
+template <typename Type>
+inline typename StrideIterator<Type>::difference_type operator+(
+        const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+    assert(x.m_step == y.m_step);
+    return (x.m_data + y.m_data) / x.m_step;
+}
+
+template <typename Type>
+inline typename StrideIterator<Type>::difference_type operator-(
+        const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+    assert(x.m_step == y.m_step);
+    return (x.m_data - y.m_data) / x.m_step;
+}
 
 }   // pfs
 

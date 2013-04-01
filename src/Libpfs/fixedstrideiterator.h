@@ -114,42 +114,76 @@ public:
 
     // friend operators
     template <typename IType, size_t SSize>
-    friend bool operator==(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
-    { return (x.m_data == y.m_data); }
+    friend bool operator==(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y);
 
     template <typename IType, size_t SSize>
-    friend bool operator!=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
-    { return (x.m_data != y.m_data); }
+    friend bool operator!=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y);
 
     template <typename IType, size_t SSize>
-    friend bool operator<(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
-    { return (x.m_data < y.m_data); }
+    friend bool operator<(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y);
 
     template <typename IType, size_t SSize>
-    friend bool operator<=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
-    { return (x.m_data <= y.m_data); }
+    friend bool operator<=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y);
 
     template <typename IType, size_t SSize>
-    friend bool operator>(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
-    { return (x.m_data > y.m_data); }
+    friend bool operator>(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y);
 
     template <typename IType, size_t SSize>
-    friend bool operator>=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
-    { return (x.m_data >= y.m_data); }
+    friend bool operator>=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y);
 
     template <typename IType, size_t SSize>
     friend typename FixedStrideIterator<IType, SSize>::difference_type operator+(
-            const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
-    { return (x.m_data + y.m_data) / StepSize; }
+            const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y);
 
     template <typename IType, size_t SSize>
     friend typename FixedStrideIterator<IType, SSize>::difference_type operator-(
-            const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
-    { return (x.m_data - y.m_data) / StepSize; }
+            const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y);
 
 private:
     IterType m_data;
 };
+
+template <typename IType, size_t SSize>
+inline
+bool operator==(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
+{ return (x.m_data == y.m_data); }
+
+template <typename IType, size_t SSize>
+inline
+bool operator!=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
+{ return (x.m_data != y.m_data); }
+
+template <typename IType, size_t SSize>
+inline
+bool operator<(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
+{ return (x.m_data < y.m_data); }
+
+template <typename IType, size_t SSize>
+inline
+bool operator<=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
+{ return (x.m_data <= y.m_data); }
+
+template <typename IType, size_t SSize>
+inline
+bool operator>(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
+{ return (x.m_data > y.m_data); }
+
+template <typename IType, size_t SSize>
+inline
+bool operator>=(const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
+{ return (x.m_data >= y.m_data); }
+
+template <typename IType, size_t SSize>
+inline
+typename FixedStrideIterator<IType, SSize>::difference_type operator+(
+        const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
+{ return (x.m_data + y.m_data) / SSize; }
+
+template <typename IType, size_t SSize>
+inline
+typename FixedStrideIterator<IType, SSize>::difference_type operator-(
+        const FixedStrideIterator<IType, SSize>& x, const FixedStrideIterator<IType, SSize>& y)
+{ return (x.m_data - y.m_data) / SSize; }
 
 }   // pfs
 
