@@ -21,9 +21,18 @@
 
 #include <gtest/gtest.h>
 #include <algorithm>
+#ifdef __clang__
+#include <tr1/tuple>
+#else
+#include <tuple>
+#endif
 
 #include "TonemappingOperators/mantiuk06/pyramid.h"
 #include "mantiuk06/contrast_domain.h"
+
+using ::testing::TestWithParam;
+using ::testing::Values;
+using ::testing::Combine;
 
 struct RandZeroOne
 {
@@ -35,15 +44,11 @@ struct RandZeroOne
 
 TEST(TestPyramidS, Ctor)
 {
-    PyramidS t(100, 50);
+    PyramidS t(50, 100);
 
     EXPECT_EQ(t.getCols(), 50u);
     EXPECT_EQ(t.getRows(), 100u);
 }
-
-static const size_t ROWS = 1533;
-static const size_t COLS = 2131;
-static const size_t SIZE = ROWS*COLS;
 
 void compareVectors(const float* a, const float* b, size_t size)
 {
@@ -53,18 +58,37 @@ void compareVectors(const float* a, const float* b, size_t size)
     }
 }
 
-class TestPyramidT : public testing::Test
+void compareVectors(const XYGradient* inXYGradient,
+                    const float* inGx, const float* inGy, size_t size)
+{
+    for (size_t idx = 0; idx < size; idx++)
+    {
+        ASSERT_NEAR(inXYGradient[idx].gX(), inGx[idx], 10e-2f);
+        ASSERT_NEAR(inXYGradient[idx].gY(), inGy[idx], 10e-2f);
+    }
+}
+
+class TestPyramidT : public TestWithParam< ::std::tr1::tuple<int, int> >
 {
 protected:
-    std::vector<float> samples_;
+    size_t m_rows;
+    size_t m_cols;
+
+    pfs::Array2Df samples_;
     PyramidT newPyramid_;
     test_mantiuk06::pyramid_t* oldPyramid_;
 
+
+public:
     TestPyramidT()
-        : samples_(ROWS*COLS)
-        , newPyramid_(ROWS, COLS)
-        , oldPyramid_( test_mantiuk06::pyramid_allocate(COLS, ROWS) )
+        : m_rows( ::std::tr1::get<1>( GetParam() ))
+        , m_cols( ::std::tr1::get<0>( GetParam() ))
+        , samples_(m_cols, m_rows)
+        , newPyramid_(m_rows, m_cols)
+        , oldPyramid_( test_mantiuk06::pyramid_allocate(m_cols, m_rows) )
     {
+        std::cout << "(rows: " << m_rows << ", cols: " << m_cols << ")" << std::endl;
+
         std::generate(samples_.begin(), samples_.end(), RandZeroOne());
     }
 
@@ -72,6 +96,10 @@ protected:
     {
         test_mantiuk06::pyramid_free(oldPyramid_);
     }
+
+    size_t cols() const { return m_cols; }
+    size_t rows() const { return m_rows; }
+    size_t size() const { return m_rows*m_cols; }
 
     size_t computeLevels(const test_mantiuk06::pyramid_t* t)
     {
@@ -91,8 +119,7 @@ protected:
             EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
             EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
 
-            compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
-            compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
+            compareVectors(it->data(), cursor->Gx, cursor->Gy, cursor->cols*cursor->rows);
 
             cursor = cursor->next;
             ++it;
@@ -101,12 +128,12 @@ protected:
 
     void populatePyramids()
     {
-        newPyramid_.computeGradients(samples_.data());
+        newPyramid_.computeGradients(samples_);
         test_mantiuk06::pyramid_calculate_gradient(oldPyramid_, samples_.data());
     }
 };
 
-TEST_F(TestPyramidT, CopyCtor)
+TEST(TestPyramidTBasic, CopyCtor)
 {
     PyramidT pyramid(2000, 1500);
 
@@ -117,9 +144,9 @@ TEST_F(TestPyramidT, CopyCtor)
     EXPECT_EQ(copyPyramid.numLevels(), 9u);
 }
 
-TEST_F(TestPyramidT, Ctor)
+TEST_P(TestPyramidT, Ctor)
 {
-    EXPECT_EQ(newPyramid_.numLevels(), 9u);
+    // EXPECT_EQ(newPyramid_.numLevels(), 9u);
     EXPECT_EQ(newPyramid_.numLevels(), computeLevels(oldPyramid_));
 
     PyramidT::iterator it = newPyramid_.begin();
@@ -134,30 +161,30 @@ TEST_F(TestPyramidT, Ctor)
     }
 }
 
-TEST_F(TestPyramidT, FillGradient)
+TEST_P(TestPyramidT, FillGradient)
 {
     populatePyramids();
 
     comparePyramids();
 }
 
-TEST_F(TestPyramidT, SumOfDivergence)
+TEST_P(TestPyramidT, SumOfDivergence)
 {
     // ...and fill gradient!
     populatePyramids();
 
     // reference
-    std::vector<float> samplesRef( SIZE );
+    std::vector<float> samplesRef( size() );
     test_mantiuk06::pyramid_calculate_divergence_sum(oldPyramid_, samplesRef.data());
 
     // under test!
-    std::vector<float> samplesTest( SIZE );
-    newPyramid_.computeSumOfDivergence( samplesTest.data() );
+    pfs::Array2Df samplesTest( cols(), rows() );
+    newPyramid_.computeSumOfDivergence( samplesTest );
 
-    compareVectors(samplesRef.data(), samplesTest.data(), SIZE);
+    compareVectors(samplesRef.data(), samplesTest.data(), size());
 }
 
-TEST_F(TestPyramidT, TranformToR)
+TEST_P(TestPyramidT, TranformToR)
 {
     populatePyramids();
 
@@ -167,7 +194,7 @@ TEST_F(TestPyramidT, TranformToR)
     comparePyramids();
 }
 
-TEST_F(TestPyramidT, TranformToG)
+TEST_P(TestPyramidT, TranformToG)
 {
     populatePyramids();
 
@@ -177,7 +204,7 @@ TEST_F(TestPyramidT, TranformToG)
     comparePyramids();
 }
 
-TEST_F(TestPyramidT, Scale)
+TEST_P(TestPyramidT, Scale)
 {
     populatePyramids();
 
@@ -193,7 +220,7 @@ TEST_F(TestPyramidT, Scale)
 #if 0
 void contrastEqualization(PyramidT& pp, const float contrastFactor);
 
-TEST_F(TestPyramidT, ContrastEqualization)
+TEST_P(TestPyramidT, ContrastEqualization)
 {
     populatePyramids();
 
@@ -205,27 +232,39 @@ TEST_F(TestPyramidT, ContrastEqualization)
 #endif
 
 
-class TestDualPyramidT : public testing::Test
+INSTANTIATE_TEST_CASE_P(Mantiuk06,
+                        TestPyramidT,
+                        Combine(Values(765, 320, 96),
+                                Values(521, 123))
+                        );
+
+class TestDualPyramidT : public TestWithParam< ::std::tr1::tuple<int, int> >
 {
 protected:
-    std::vector<float> samples_;
+    size_t m_rows;
+    size_t m_cols;
+
+    pfs::Array2Df samples_;
     PyramidT newPyramid1_;
     PyramidT newPyramid2_;
     test_mantiuk06::pyramid_t* oldPyramid1_;
     test_mantiuk06::pyramid_t* oldPyramid2_;
 
+public:
     TestDualPyramidT()
-        : samples_(ROWS*COLS)
-        , newPyramid1_(ROWS, COLS)
-        , newPyramid2_(ROWS, COLS)
-        , oldPyramid1_( test_mantiuk06::pyramid_allocate(COLS, ROWS) )
-        , oldPyramid2_( test_mantiuk06::pyramid_allocate(COLS, ROWS) )
+        : m_rows( ::std::tr1::get<1>( GetParam() ))
+        , m_cols( ::std::tr1::get<0>( GetParam() ))
+        , samples_(m_cols, m_rows)
+        , newPyramid1_(m_rows, m_cols)
+        , newPyramid2_(m_rows, m_cols)
+        , oldPyramid1_( test_mantiuk06::pyramid_allocate(m_cols, m_rows) )
+        , oldPyramid2_( test_mantiuk06::pyramid_allocate(m_cols, m_rows) )
     {
         std::generate(samples_.begin(), samples_.end(), RandZeroOne());
 
         // fill gradients
-        newPyramid1_.computeGradients( samples_.data() );
-        newPyramid2_.computeGradients( samples_.data() );
+        newPyramid1_.computeGradients( samples_ );
+        newPyramid2_.computeGradients( samples_ );
 
         test_mantiuk06::pyramid_calculate_gradient(oldPyramid1_, samples_.data());
         test_mantiuk06::pyramid_calculate_gradient(oldPyramid2_, samples_.data());
@@ -236,6 +275,10 @@ protected:
         test_mantiuk06::pyramid_free(oldPyramid1_);
         test_mantiuk06::pyramid_free(oldPyramid2_);
     }
+
+    size_t cols() const { return m_cols; }
+    size_t rows() const { return m_rows; }
+    size_t size() const { return m_rows*m_cols; }
 
     size_t computeLevels(const test_mantiuk06::pyramid_t* t)
     {
@@ -256,8 +299,7 @@ protected:
             EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
             EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
 
-            compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
-            compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
+            compareVectors(it->data(), cursor->Gx, cursor->Gy, cursor->cols*cursor->rows);
 
             cursor = cursor->next;
             ++it;
@@ -271,8 +313,7 @@ protected:
             EXPECT_EQ(static_cast<size_t>(cursor->cols), it->getCols());
             EXPECT_EQ(static_cast<size_t>(cursor->rows), it->getRows());
 
-            compareVectors(it->gX(), cursor->Gx, cursor->cols*cursor->rows);
-            compareVectors(it->gY(), cursor->Gy, cursor->cols*cursor->rows);
+            compareVectors(it->data(), cursor->Gx, cursor->Gy, cursor->cols*cursor->rows);
 
             cursor = cursor->next;
             ++it;
@@ -282,7 +323,7 @@ protected:
 };
 
 
-TEST_F(TestDualPyramidT, ComputeScaleFactors)
+TEST_P(TestDualPyramidT, ComputeScaleFactors)
 {
     // compute scalingFactors!
     newPyramid1_.computeScaleFactors( newPyramid2_ );
@@ -291,7 +332,7 @@ TEST_F(TestDualPyramidT, ComputeScaleFactors)
     comparePyramids();
 }
 
-TEST_F(TestDualPyramidT, ScaleByGradient)
+TEST_P(TestDualPyramidT, ScaleByGradient)
 {
     // compute scalingFactors!
     newPyramid1_.multiply( newPyramid2_ );
@@ -302,31 +343,39 @@ TEST_F(TestDualPyramidT, ScaleByGradient)
 
 //// divG_sum = A * x = sum(divG(x))
 void multiplyA(PyramidT& px, const PyramidT& pC,
-               const float* x, float* divG_sum);
+               const pfs::Array2Df& x, pfs::Array2Df& sumOfDivG);
 
-TEST_F(TestDualPyramidT, multiplyA)
+TEST_P(TestDualPyramidT, multiplyA)
 {
     // generate fake image...
-    std::vector<float> frame1(SIZE);
-    std::vector<float> frame2(SIZE);
-    std::vector<float> frame3(SIZE);
-    std::vector<float> frame4(SIZE);
+    pfs::Array2Df frame1(cols(), rows());
+    pfs::Array2Df frame2(cols(), rows());
+    pfs::Array2Df frame3(cols(), rows());
+    pfs::Array2Df frame4(cols(), rows());
 
     std::generate(frame1.begin(), frame1.end(), RandZeroOne());
     std::generate(frame2.begin(), frame2.end(), RandZeroOne());
     std::copy(frame1.begin(), frame1.end(), frame3.begin());
     std::copy(frame2.begin(), frame2.end(), frame4.begin());
 
-    compareVectors(frame1.data(), frame3.data(), SIZE);
-    compareVectors(frame2.data(), frame4.data(), SIZE);
+    compareVectors(frame1.data(), frame3.data(), size());
+    compareVectors(frame2.data(), frame4.data(), size());
 
-    multiplyA(newPyramid1_, newPyramid2_, frame1.data(), frame2.data());
+    multiplyA(newPyramid1_, newPyramid2_, frame1, frame2);
     // old API
-    test_mantiuk06::multiplyA(oldPyramid1_, oldPyramid2_, frame3.data(), frame4.data());
+    test_mantiuk06::multiplyA(oldPyramid1_, oldPyramid2_,
+                              frame3.data(), frame4.data());
 
+    // invariant!
     comparePyramids();
+    compareVectors(frame1.data(), frame3.data(), size());
 
-    compareVectors(frame1.data(), frame3.data(), SIZE);
-    compareVectors(frame2.data(), frame4.data(), SIZE);
+    // actual result!
+    compareVectors(frame2.data(), frame4.data(), size());
 }
 
+INSTANTIATE_TEST_CASE_P(Mantiuk06,
+                        TestDualPyramidT,
+                        Combine(Values(765, 320, 96),
+                                Values(521, 123))
+                        );
