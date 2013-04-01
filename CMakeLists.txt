@@ -11,12 +11,13 @@ include(cmake/CompilerSettings.cmake)
 include(cmake/Internationalization.cmake)
 
 # find and setup Qt4 for this project
-FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit QtSql REQUIRED)
+FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit QtSql QtNetwork REQUIRED)
 
 # add Qt modules here, the include will setup QT_LIBRARIES
 SET(QT_USE_QTXML TRUE)
 SET(QT_USE_QTWEBKIT TRUE)
 SET(QT_USE_QTSQL TRUE)
+SET(QT_USE_QTNETWORK TRUE)
 
 # Include the qtmain lib if we are on the windows platform
 IF(WIN32)
@@ -28,7 +29,7 @@ INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 set(LIBS ${LIBS}
-    ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES}
+    ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTNETWORK_LIBRARIES}
     ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
 
 FIND_PACKAGE(Git)

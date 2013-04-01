@@ -14,7 +14,7 @@
    <string>Luminance HDR</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
   <property name="toolButtonStyle">
@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>24</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -52,6 +52,7 @@
     <addaction name="documentationAction"/>
     <addaction name="actionWhat_s_This"/>
     <addaction name="separator"/>
+    <addaction name="actionUpdateAvailable"/>
     <addaction name="actionDonate"/>
     <addaction name="actionAbout_Luminance"/>
     <addaction name="actionAbout_Qt"/>
@@ -177,6 +178,7 @@
    <addaction name="separator"/>
    <addaction name="actionSoft_Proofing"/>
    <addaction name="actionGamut_Check"/>
+   <addaction name="actionUpdateAvailable"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
@@ -1023,6 +1025,18 @@
    </property>
    <property name="text">
     <string>Realtime Previews</string>
+   </property>
+  </action>
+  <action name="actionUpdateAvailable">
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/vcs-update-required.png</normaloff>:/new/prefix1/images/vcs-update-required.png</iconset>
+   </property>
+   <property name="text">
+    <string>Update</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>

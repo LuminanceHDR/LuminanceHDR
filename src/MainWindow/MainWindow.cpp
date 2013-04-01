@@ -50,6 +50,7 @@
 
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DnDOption.h"
+#include "MainWindow/UpdateChecker.h"
 
 #include "ui_Splash.h"
 #include "ui_MainWindow.h"
@@ -88,7 +89,6 @@
 #include "Core/IOWorker.h"
 #include "Core/TMWorker.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
-
 
 namespace
 {
@@ -200,6 +200,8 @@ void MainWindow::init()
     helpBrowser = NULL;
     num_ldr_generated = 0;
     curr_num_ldr_open = 0;
+    splash = 0;
+    m_UpdateInfo = 0;
 
     if ( sm_NumMainWindows == 1 )
     {
@@ -244,6 +246,8 @@ void MainWindow::init()
             //UMessageBox::donationSplashMB();
         }
         // END SPLASH SCREEN    ------------------------------------------------------------------
+        
+        UpdateChecker::conditionallyShowUpdateChecker(this);
     }
 
     OsIntegration::getInstance().init(this);
@@ -1230,6 +1234,20 @@ void MainWindow::splashClose()
     splash->close();
 }
 
+void MainWindow::on_updateAvailable(UpdateAvailableInfo* info)
+{
+    m_UpdateInfo = info;
+    m_Ui->actionUpdateAvailable->setVisible(true);
+}
+
+void MainWindow::on_actionUpdateAvailable_triggered()
+{
+    if (m_UpdateInfo)
+    {
+        QDesktopServices::openUrl(QUrl(m_UpdateInfo->url));
+    }
+}
+
 void MainWindow::on_actionAbout_Luminance_triggered()
 {
 	UMessageBox::about();
@@ -1364,6 +1382,8 @@ void MainWindow::closeEvent( QCloseEvent *event )
         event->ignore();
     }
 }
+
+
 
 bool MainWindow::maybeSave()
 {
