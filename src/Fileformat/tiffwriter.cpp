@@ -52,6 +52,7 @@
 #include <Libpfs/utils/chain.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/array2d.h>
+#include <Libpfs/fixedstrideiterator.h>
 
 using namespace std;
 using namespace boost;
@@ -180,10 +181,10 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
         utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
                          gChannel->row_begin(s),
                          bChannel->row_begin(s),
-                         stripBuffer.data(),
-                         stripBuffer.data() + 1,
-                         stripBuffer.data() + 2,
-                         rgbRemapper, 3);
+                         FixedStrideIterator<uint8_t*, 3>(stripBuffer.data()),
+                         FixedStrideIterator<uint8_t*, 3>(stripBuffer.data() + 1),
+                         FixedStrideIterator<uint8_t*, 3>(stripBuffer.data() + 2),
+                         rgbRemapper);
 
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
@@ -231,10 +232,10 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
         utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
                          gChannel->row_begin(s),
                          bChannel->row_begin(s),
-                         stripBuffer.data(),
-                         stripBuffer.data() + 1,
-                         stripBuffer.data() + 2,
-                         rgbRemapper, 3);
+                         FixedStrideIterator<uint16_t*, 3>(stripBuffer.data()),
+                         FixedStrideIterator<uint16_t*, 3>(stripBuffer.data() + 1),
+                         FixedStrideIterator<uint16_t*, 3>(stripBuffer.data() + 2),
+                         rgbRemapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
             throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
@@ -282,10 +283,10 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
         utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
                          gChannel->row_begin(s),
                          bChannel->row_begin(s),
-                         stripBuffer.data(),
-                         stripBuffer.data() + 1,
-                         stripBuffer.data() + 2,
-                         rgbRemapper, 3);
+                         FixedStrideIterator<float*, 3>(stripBuffer.data()),
+                         FixedStrideIterator<float*, 3>(stripBuffer.data() + 1),
+                         FixedStrideIterator<float*, 3>(stripBuffer.data() + 2),
+                         rgbRemapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) == 0)
         {
             throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
@@ -339,10 +340,10 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
         utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
                          gChannel->row_begin(s),
                          bChannel->row_begin(s),
-                         stripBuffer.data(),
-                         stripBuffer.data() + 1,
-                         stripBuffer.data() + 2,
-                         func, 3);
+                         FixedStrideIterator<float*, 3>(stripBuffer.data()),
+                         FixedStrideIterator<float*, 3>(stripBuffer.data() + 1),
+                         FixedStrideIterator<float*, 3>(stripBuffer.data() + 2),
+                         func);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
             throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);

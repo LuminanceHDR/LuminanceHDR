@@ -49,6 +49,7 @@
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
 #include <Libpfs/utils/transform.h>
+#include <Libpfs/fixedstrideiterator.h>
 
 using namespace std;
 using namespace boost;
@@ -209,10 +210,10 @@ public:
         {
             utils::transform(rChannel->row_begin(row), rChannel->row_end(row),
                              gChannel->row_begin(row), bChannel->row_begin(row),
-                             scanLineOut.data()+2,
-                             scanLineOut.data()+1,
-                             scanLineOut.data(),
-                             rgbRemapper, 3);
+                             FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 2),
+                             FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 1),
+                             FixedStrideIterator<png_byte*, 3>(scanLineOut.data()),
+                             rgbRemapper);
             png_write_row(png_ptr, scanLineOut.data());
         }
 

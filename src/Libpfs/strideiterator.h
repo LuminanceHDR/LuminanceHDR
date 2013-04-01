@@ -19,25 +19,25 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef STRIDE_ITERATOR_H
-#define STRIDE_ITERATOR_H
+#ifndef PFS_STRIDE_ITERATOR_H
+#define PFS_STRIDE_ITERATOR_H
 
 #include <iterator>
 #include <cassert>
 
-namespace pfs
-{
+namespace pfs {
 
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \brief stride iterator
 //! \ref C++ Cookbook
 //! \ref http://zotu.blogspot.co.uk/2010/01/creating-random-access-iterator.html
 template <typename IterType>
-class stride_iterator
+class StrideIterator
         : public std::iterator< std::random_access_iterator_tag, IterType>
 {
 public:
     // public typedefs
-    typedef stride_iterator<IterType> self;
+    typedef StrideIterator<IterType> self;
     typedef typename std::iterator< std::random_access_iterator_tag, IterType> iterator_base;
     typedef typename std::random_access_iterator_tag iterator_category;
 
@@ -47,36 +47,34 @@ public:
     typedef typename std::iterator_traits<IterType>::pointer pointer;
 
     // ctors
-    stride_iterator()
-        : m_data()
-        , m_step()
+    StrideIterator()
+        : m_data(), m_step()
     {}
-    stride_iterator(const self& rhs)
-        : m_data(rhs.m_data)
-        , m_step(rhs.m_step)
+    StrideIterator(const self& rhs)
+        : m_data(rhs.m_data), m_step(rhs.m_step)
     {}
-    stride_iterator(IterType x, difference_type step)
-        : m_data(x)
-        , m_step(step)
+    StrideIterator(IterType x, difference_type step)
+        : m_data(x), m_step(step)
     {}
 
     // operators
     //! \brief Prefix increment
     self& operator++()
     { m_data += m_step; return *this; }
+
     //! \brief Postfix increment
-    self operator++(int)
-    {
+    self operator++(int) {
         self tmp(*this);
         m_data += m_step;
         return tmp;
     }
+
     //! \brief Increment
-    self& operator+=(const difference_type& n)
-    {
+    self& operator+=(const difference_type& n) {
         m_data += (n * m_step);
         return *this;
     }
+
     //! \brief Sum
     self operator+(const difference_type& n) const
     { return self(m_data + n*m_step, m_step); }
@@ -84,19 +82,20 @@ public:
     //! \brief Prefix decrement
     self& operator--()
     { m_data -= m_step; return *this; }
+
     //! \brief Postfix decrement
-    self operator--(int)
-    {
+    self operator--(int) {
         self tmp(*this);
         m_data -= m_step;
         return tmp;
     }
+
     //! \brief Decrement
-    self& operator-=(const difference_type& n)
-    {
+    self& operator-=(const difference_type& n) {
         m_data -= (n * m_step);
         return *this;
     }
+
     //! \brief Difference
     self operator-(const difference_type& n) const
     { return self(m_data - n*m_step, m_step); }
@@ -104,109 +103,70 @@ public:
     //! \brief dereferencing
     reference operator*() const
     { return *m_data; }
+
     //! \brief pointer
     pointer operator->() const
     { return m_data; }
+
     //! \brief subscription
     reference operator[](const difference_type& n)
     { return m_data[n * m_step]; }
 
     // friend operators
     template <typename Type>
-    friend bool operator==(const stride_iterator<Type>& x, const stride_iterator<Type>& y);
-    template <typename Type>
-    friend bool operator!=(const stride_iterator<Type>& x, const stride_iterator<Type>& y);
+    friend bool operator==(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+        assert(x.m_step == y.m_step);
+        return (x.m_data == y.m_data);
+    }
 
     template <typename Type>
-    friend bool operator<(const stride_iterator<Type>& x, const stride_iterator<Type>& y);
+    friend bool operator!=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+        assert(x.m_step == y.m_step);
+        return (x.m_data != y.m_data);
+    }
 
     template <typename Type>
-    friend bool operator<=(const stride_iterator<Type>& x, const stride_iterator<Type>& y);
+    friend bool operator<(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+        assert(x.m_step == y.m_step);
+        return (x.m_data < y.m_data);
+    }
 
     template <typename Type>
-    friend bool operator>(const stride_iterator<Type>& x, const stride_iterator<Type>& y);
-    template <typename Type>
-    friend bool operator>=(const stride_iterator<Type>& x, const stride_iterator<Type>& y);
+    friend bool operator<=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+        assert(x.m_step == y.m_step);
+        return (x.m_data <= y.m_data);
+    }
 
     template <typename Type>
-    friend typename stride_iterator<Type>::difference_type operator+(
-            const stride_iterator<Type>& x, const stride_iterator<Type>& y);
+    friend bool operator>(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+        assert(x.m_step == y.m_step);
+        return (x.m_data > y.m_data);
+    }
     template <typename Type>
-    friend typename stride_iterator<Type>::difference_type operator-(
-            const stride_iterator<Type>& x, const stride_iterator<Type>& y);
+    friend bool operator>=(const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+        assert(x.m_step == y.m_step);
+        return (x.m_data >= y.m_data);
+    }
+
+    template <typename Type>
+    friend typename StrideIterator<Type>::difference_type operator+(
+            const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+        assert(x.m_step == y.m_step);
+        return (x.m_data + y.m_data) / x.m_step;
+    }
+
+    template <typename Type>
+    friend typename StrideIterator<Type>::difference_type operator-(
+            const StrideIterator<Type>& x, const StrideIterator<Type>& y) {
+        assert(x.m_step == y.m_step);
+        return (x.m_data - y.m_data) / x.m_step;
+    }
 
 private:
     IterType m_data;
     difference_type m_step;
 };
 
-// friend operators
-template <typename IterType>
-bool operator==(const stride_iterator<IterType>& x,
-                const stride_iterator<IterType>& y)
-{
-    assert(x.m_step == y.m_step);
-    return (x.m_data == y.m_data);
-}
+}   // pfs
 
-template <typename IterType>
-bool operator!=(const stride_iterator<IterType>& x,
-                const stride_iterator<IterType>& y)
-{
-    assert(x.m_step == y.m_step);
-    return (x.m_data != y.m_data);
-}
-
-template <typename IterType>
-bool operator<(const stride_iterator<IterType>& x,
-               const stride_iterator<IterType>& y)
-{
-    assert(x.m_step == y.m_step);
-    return (x.m_data < y.m_data);
-}
-
-template <typename IterType>
-bool operator<=(const stride_iterator<IterType>& x,
-                const stride_iterator<IterType>& y)
-{
-    assert(x.m_step == y.m_step);
-    return (x.m_data <= y.m_data);
-}
-
-template <typename IterType>
-bool operator>(const stride_iterator<IterType>& x,
-               const stride_iterator<IterType>& y)
-{
-    assert(x.m_step == y.m_step);
-    return (x.m_data > y.m_data);
-}
-
-template <typename IterType>
-bool operator>=(const stride_iterator<IterType>& x,
-                const stride_iterator<IterType>& y)
-{
-    assert(x.m_step == y.m_step);
-    return (x.m_data >= y.m_data);
-}
-
-template <typename IterType>
-typename stride_iterator<IterType>::difference_type operator+(
-        const stride_iterator<IterType>& x,
-        const stride_iterator<IterType>& y)
-{
-    assert(x.m_step == y.m_step);
-    return (x.m_data + y.m_data) / x.m_step;
-}
-
-template <typename IterType>
-typename stride_iterator<IterType>::difference_type operator-(
-        const stride_iterator<IterType>& x,
-        const stride_iterator<IterType>& y)
-{
-    assert(x.m_step == y.m_step);
-    return (x.m_data - y.m_data) / x.m_step;
-}
-
-} // namespace pfs
-
-#endif // STRIDE_ITERATOR_H
+#endif // PFS_STRIDE_ITERATOR_H

@@ -1,8 +1,7 @@
 /*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
- * Copyright (C) 2010-2012 Davide Anastasia (Luminance HDR)
+ * Copyright (C) 2010-2012 Davide Anastasia
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -23,24 +22,21 @@
 #ifndef PFS_ARRAY2D_HXX
 #define PFS_ARRAY2D_HXX
 
-//! \file array2d.cpp
-//! \brief PFS library - general 2d array interface
-//! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
-//!
+//! \file array2d.hxx
+//! \brief General 2d Array interface
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//! \note This version is different then the one in the PFSTOOLS
+//! \note This class is different then the one in the PFSTOOLS
 
 #include <iostream>
 #include <cassert>
 
-#include "array2d.h"
-
-#include "Libpfs/vex/vex.h"
+#include <Libpfs/array2d.h>
+#include <Libpfs/vex/vex.h>
 
 using namespace std;
 
-namespace pfs
-{
+namespace pfs {
+
 template <typename Type>
 Array2D<Type>::Array2D()
     : m_data()
