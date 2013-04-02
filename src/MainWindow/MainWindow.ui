@@ -14,7 +14,7 @@
    <string>Luminance HDR</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
   <property name="toolButtonStyle">
@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>24</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -607,23 +607,6 @@
     <string>Ctrl+E</string>
    </property>
   </action>
-  <action name="actionAlign_Images">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Align Images...</string>
-   </property>
-   <property name="toolTip">
-    <string>WORK IN PROGRESS</string>
-   </property>
-   <property name="statusTip">
-    <string>WORK IN PROGRESS</string>
-   </property>
-   <property name="whatsThis">
-    <string>WORK IN PROGRESS</string>
-   </property>
-  </action>
   <action name="actionAbout_Qt">
    <property name="text">
     <string>&amp;About Qt</string>
@@ -636,27 +619,6 @@
    </property>
    <property name="whatsThis">
     <string>Show information about Qt library that is used by Luminance</string>
-   </property>
-  </action>
-  <action name="actionTile">
-   <property name="text">
-    <string>&amp;Tile</string>
-   </property>
-  </action>
-  <action name="actionCascade">
-   <property name="text">
-    <string>&amp;Cascade</string>
-   </property>
-   <property name="iconText">
-    <string>Cascade</string>
-   </property>
-   <property name="toolTip">
-    <string>Cascade</string>
-   </property>
-  </action>
-  <action name="actionToolbars">
-   <property name="text">
-    <string>Toolbars</string>
    </property>
   </action>
   <action name="actionText_Under_Icons">

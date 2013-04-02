@@ -1871,17 +1871,6 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
     }
 }
 
-//void MainWindow::setInputFiles(const QStringList& files)
-//{
-//    inputFiles = files;
-//    QTimer::singleShot(0, this, SLOT(openInputFiles()));
-//}
-
-//void MainWindow::openInputFiles()
-//{
-//    openFiles(inputFiles);
-//}
-
 void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 {
 	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
