@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <algorithm>
+#include <boost/bind.hpp>
 #ifdef __clang__
 #include <tr1/tuple>
 #else
@@ -79,19 +80,28 @@ public:
         return m_rows;
     }
 
-    static void compareVectors(const float* in1, const float* in2, size_t size)
-    {
-        for (size_t idx = 0; idx < size; idx++)
-        {
-            ASSERT_NEAR(in1[idx], in2[idx], 10e-2f);
-        }
-    }
-
 protected:
     size_t m_rows;
     size_t m_cols;
 };
 
+void compareVectors(const float* in1, const float* in2, size_t size)
+{
+    for (size_t idx = 0; idx < size; idx++)
+    {
+        ASSERT_NEAR(in1[idx], in2[idx], 10e-2f);
+    }
+}
+
+void compareVectors(const XYGradient* inXYGradient,
+                    const float* inGx, const float* inGy, size_t size)
+{
+    for (size_t idx = 0; idx < size; idx++)
+    {
+        ASSERT_NEAR(inXYGradient[idx].gX(), inGx[idx], 10e-2f);
+        ASSERT_NEAR(inXYGradient[idx].gY(), inGy[idx], 10e-2f);
+    }
+}
 
 TEST_P(TestMantiuk06, Upsample)
 {
@@ -163,9 +173,10 @@ TEST_P(TestMantiuk06, TransformToR)
     test_mantiuk06::transform_to_R(inputCols*inputRows,
                                    referenceOutput.data(),
                                    M_PI);
-    transformToR(testOutput.data(),
-                 M_PI,
-                 inputCols*inputRows);
+
+    std::transform(testOutput.begin(), testOutput.end(),
+                   testOutput.begin(),
+                   TransformToR(M_PI));
 
     compareVectors(referenceOutput.data(), testOutput.data(),
                    testOutput.size());
@@ -179,6 +190,7 @@ TEST_P(TestMantiuk06, TransformToG)
     DataBuffer referenceOutput(inputCols*inputRows);
     generate(referenceOutput.begin(), referenceOutput.end(),
              RandZeroOne());
+
     DataBuffer testOutput(inputCols*inputRows);
     copy(referenceOutput.begin(), referenceOutput.end(),
          testOutput.begin());
@@ -189,12 +201,22 @@ TEST_P(TestMantiuk06, TransformToG)
     test_mantiuk06::transform_to_G(inputCols*inputRows,
                                    referenceOutput.data(),
                                    M_PI);
-    transformToG(testOutput.data(),
-                 M_PI,
-                 inputCols*inputRows);
+
+    std::transform(testOutput.begin(), testOutput.end(),
+                   testOutput.begin(),
+                   TransformToG(M_PI));
 
     compareVectors(referenceOutput.data(), testOutput.data(),
                    testOutput.size());
+}
+
+void copyData(PyramidS& out, const DataBuffer& gx, const DataBuffer& gy)
+{
+    for ( size_t idx = 0; idx < out.size(); idx++ )
+    {
+        out(idx).gX() = gx[idx];
+        out(idx).gY() = gy[idx];
+    }
 }
 
 TEST_P(TestMantiuk06, TestMantiuk06AddDivergence)
@@ -209,9 +231,14 @@ TEST_P(TestMantiuk06, TestMantiuk06AddDivergence)
     generate(Gx.begin(), Gx.end(), RandZeroOne());
     generate(Gy.begin(), Gy.end(), RandZeroOne());
 
+    PyramidS inputGxGy(inputCols, inputRows);
+
+    copyData(inputGxGy, Gx, Gy);
+
     // data buffer
     DataBuffer referenceOutput(inputCols*inputRows);
-    DataBuffer testOutput(inputCols*inputRows);
+    pfs::Array2Df testOutput(inputCols + 10,
+                             inputRows + 10);
     // set initial value
     std::fill(testOutput.begin(), testOutput.end(), 1.f);
     std::fill(referenceOutput.begin(), referenceOutput.end(), 1.f);
@@ -219,12 +246,11 @@ TEST_P(TestMantiuk06, TestMantiuk06AddDivergence)
     test_mantiuk06::calculate_and_add_divergence(inputCols, inputRows,
                                                  Gx.data(), Gy.data(),
                                                  referenceOutput.data());
-    calculateAndAddDivergence(inputCols, inputRows,
-                              Gx.data(), Gy.data(),
-                              testOutput.data());
+
+    calculateAndAddDivergence(inputGxGy, testOutput.data());
 
     compareVectors(referenceOutput.data(), testOutput.data(),
-                   testOutput.size());
+                   referenceOutput.size());
 }
 
 TEST_P(TestMantiuk06, TestMantiuk06CalculateGradient)
@@ -232,7 +258,8 @@ TEST_P(TestMantiuk06, TestMantiuk06CalculateGradient)
     const size_t inputCols = cols();
     const size_t inputRows = rows();
 
-    std::vector<float> input(inputCols*inputRows);
+    pfs::Array2Df input(inputCols, inputRows);
+    
     // fill data with samples between zero and one!
     generate(input.begin(), input.end(), RandZeroOne());
 
@@ -244,23 +271,22 @@ TEST_P(TestMantiuk06, TestMantiuk06CalculateGradient)
                                   referenceGx.data(), referenceGy.data());
 
     // COMPUTED
-    DataBuffer computedGx(inputCols*inputRows);
-    DataBuffer computedGy(inputCols*inputRows);
+    PyramidS computedGradient(inputCols, inputRows);
 
-    calculateGradients(inputCols, inputRows, input.data(),
-                       computedGx.data(), computedGy.data());
+    calculateGradients(input.data(), computedGradient);
 
     // CHECK
-    compareVectors(referenceGx.data(), computedGx.data(),
-                   computedGx.size());
-    compareVectors(referenceGy.data(), computedGy.data(),
-                   computedGy.size());
+    compareVectors(computedGradient.data(),
+                   referenceGx.data(), referenceGy.data(),
+                   computedGradient.size());
 }
 
 INSTANTIATE_TEST_CASE_P(Mantiuk06,
                         TestMantiuk06,
-                        Combine(Values(91, 352, 403, 1024),
-                                Values(27, 256, 511, 1334))
+//                        Combine(Values(91, 352, 403, 1024),
+//                                Values(27, 256, 511, 1334))
+                        Combine(Values(765, 320, 96),
+                                Values(521, 123))
                         );
 #else
 

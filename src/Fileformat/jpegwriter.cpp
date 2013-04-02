@@ -50,6 +50,7 @@
 #include <Libpfs/utils/resourcehandlerstdio.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/utils/transform.h>
+#include <Libpfs/fixedstrideiterator.h>
 
 #ifdef USE_TEMPORARY_FILE
 #include <QTemporaryFile>
@@ -306,10 +307,10 @@ public:
                                  rChannel->row_end(cinfo.next_scanline),
                                  gChannel->row_begin(cinfo.next_scanline),
                                  bChannel->row_begin(cinfo.next_scanline),
-                                 scanLineOut.data(),
-                                 scanLineOut.data() + 1,
-                                 scanLineOut.data() + 2,
-                                 rgbRemapper, 3);
+                                 FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data()),
+                                 FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data() + 1),
+                                 FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data() + 2),
+                                 rgbRemapper);
                 jpeg_write_scanlines(&cinfo, scanLineOutArray, 1);
             }
         }

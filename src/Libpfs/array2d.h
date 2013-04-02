@@ -27,8 +27,7 @@
 #include <vector>
 #include <algorithm>
 
-#include <Libpfs/stride_iterator.h>
-#include <Libpfs/vex/vex.h>
+#include <Libpfs/strideiterator.h>
 
 //! \file array2d.h
 //! \brief general 2d array interface
@@ -150,8 +149,8 @@ public:
     { return row_begin(n); }
 
     // column iterator
-    typedef stride_iterator<typename DataBuffer::iterator> col_iterator;
-    typedef stride_iterator<typename DataBuffer::iterator> const_col_iterator;
+    typedef StrideIterator<typename DataBuffer::iterator> col_iterator;
+    typedef StrideIterator<typename DataBuffer::iterator> const_col_iterator;
 
     col_iterator col_begin(size_t n)
     { return col_iterator(begin() + n, getCols()); }

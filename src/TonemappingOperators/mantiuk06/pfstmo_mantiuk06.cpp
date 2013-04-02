@@ -43,7 +43,6 @@
 #include "contrast_domain.h"
 
 #include "Libpfs/pfs.h"
-#include "Libpfs/channel.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
 
@@ -57,7 +56,7 @@
 namespace
 {
 const int itmax = 200;
-const float tol = 1e-3f;
+const float tol = 5e-3f;
 }
 
 void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
@@ -94,11 +93,7 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
     pfs::Array2Df inY( cols, rows );
     pfs::transformRGB2Y(inRed, inGreen, inBlue, &inY);
 
-    tmo_mantiuk06_contmap(cols, rows,
-                          inRed->data(),
-                          inGreen->data(),
-                          inBlue->data(),
-                          inY.data(),
+    tmo_mantiuk06_contmap(*inRed, *inGreen, *inBlue, inY,
                           scaleFactor, saturationFactor, detailFactor, itmax, tol,
                           ph);
 
