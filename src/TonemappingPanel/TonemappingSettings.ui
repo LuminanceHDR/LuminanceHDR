@@ -157,9 +157,16 @@
          </spacer>
         </item>
         <item>
+         <widget class="QPushButton" name="btnTonemap">
+          <property name="text">
+           <string>Tonemap</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="applyButton">
           <property name="text">
-           <string>Apply</string>
+           <string>Load</string>
           </property>
          </widget>
         </item>

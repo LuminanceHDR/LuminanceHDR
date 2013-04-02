@@ -70,7 +70,7 @@ TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
     m_Ui->setupUi(this);
     
     m_Ui->splitter->setStretchFactor(0,1);
-    m_Ui->splitter->setStretchFactor(1,5);
+    m_Ui->splitter->setStretchFactor(1,10);
 
     m_previewSettings = new PreviewSettings(m_Ui->scrollArea);
 
@@ -473,6 +473,12 @@ void TonemappingSettings::sortPreviews(int index) {
 }
 
 void TonemappingSettings::tonemapPreview(TonemappingOptions* opt)
+{
+    m_wantsTonemap =  true;
+    accept();
+}
+
+void TonemappingSettings::on_btnTonemap_clicked()
 {
     m_wantsTonemap =  true;
     accept();

@@ -56,11 +56,12 @@ protected:
     bool m_wantsTonemap;
     QScopedPointer<Ui::TonemappingSettings> m_Ui;
 
-protected slots:
+protected Q_SLOTS:
     void listWidgetChanged(int row);
     void updateListView(int);
     void sortPreviews(int);
     void tonemapPreview(TonemappingOptions *);
+    void on_btnTonemap_clicked();
 };
 
 #endif
