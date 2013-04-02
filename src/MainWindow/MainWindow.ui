@@ -178,7 +178,6 @@
    <addaction name="separator"/>
    <addaction name="actionSoft_Proofing"/>
    <addaction name="actionGamut_Check"/>
-   <addaction name="actionUpdateAvailable"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
