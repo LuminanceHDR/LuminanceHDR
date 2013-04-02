@@ -155,7 +155,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 #endif
 
 	fromIso639ToGuiIndex["cs"]= 0;
-    fromIso639ToGuiIndex["dk"]= 1;
+    fromIso639ToGuiIndex["da"]= 1;
 	fromIso639ToGuiIndex["de"]= 2;
 	fromIso639ToGuiIndex["en"]= 3;
 	fromIso639ToGuiIndex["es"]= 4;
@@ -171,7 +171,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromIso639ToGuiIndex["zh"]=14;
 
 	fromGuiIndexToIso639[ 0]="cs";
-	fromGuiIndexToIso639[ 1]="dk";
+	fromGuiIndexToIso639[ 1]="da";
 	fromGuiIndexToIso639[ 2]="de";
 	fromGuiIndexToIso639[ 3]="en";
 	fromGuiIndexToIso639[ 4]="es";
