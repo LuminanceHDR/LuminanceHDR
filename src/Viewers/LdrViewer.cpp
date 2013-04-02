@@ -45,7 +45,7 @@ using namespace pfs;
 
 namespace
 {
-void parseOptions(const TonemappingOptions *opts, QString& caption)
+void parseOptions(TonemappingOptions *opts, QString& caption)
 {
     if (opts == NULL)
     {
@@ -54,8 +54,8 @@ void parseOptions(const TonemappingOptions *opts, QString& caption)
     else
     {
         TMOptionsOperations tmopts(opts);
-        //postfix = tmopts.getPostfix();
-        caption = tmopts.getCaption();
+        //postfix = opts->getPostfix();
+        caption = opts->getCaption();
         //exif_comment = tmopts.getExifComment();
     }
 }
@@ -192,12 +192,7 @@ void LdrViewer::retranslateUi()
 
 QString LdrViewer::getFileNamePostFix()
 {
-    if ( mTonemappingOptions )
-    {
-        TMOptionsOperations tm_ops(mTonemappingOptions);
-        return tm_ops.getPostfix();
-    } else
-        return QString();
+    return mTonemappingOptions ? mTonemappingOptions->getPostfix() : QString();
 }
 
 QString LdrViewer::getExifComment()

@@ -128,8 +128,12 @@ public:
     TonemappingOptions() {
         setDefaultParameters();
     }
+    const QString getPostfix();
+    const QString getCaption();
     void setDefaultTonemapParameters();
     void setDefaultParameters();
+    
+    char getRatingForOperator();
 };
 
 /*
@@ -145,11 +149,11 @@ public:
         TMOptionsOperations(const TonemappingOptions* opts);
         static TonemappingOptions* parseFile(const QString& file);
         static TonemappingOptions* getDefaultTMOptions();
-        QString getPostfix();
-        QString getCaption();
         QString getExifComment();
 private:
         const TonemappingOptions* opts;
+
+
 };
 
 #endif // TONEMAPPINGOPTIONS_H

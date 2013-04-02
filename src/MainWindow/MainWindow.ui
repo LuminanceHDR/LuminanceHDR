@@ -136,6 +136,8 @@
     <addaction name="separator"/>
     <addaction name="actionResizeHDR"/>
     <addaction name="action_Projective_Transformation"/>
+    <addaction name="separator"/>
+    <addaction name="actionFix_Histogram"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>

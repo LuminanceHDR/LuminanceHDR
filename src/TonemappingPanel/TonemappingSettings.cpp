@@ -42,141 +42,21 @@ const int PREVIEW_HEIGHT = 100;
 bool compareByComment(PreviewLabel *l1, PreviewLabel *l2)
 {
     QString s1 = l1->getComment(), s2 = l2->getComment();
-
     return s1 < s2;
 }
 
 bool compareByOperator(PreviewLabel *l1, PreviewLabel *l2)
 {
     TonemappingOptions *opts1 = l1->getTonemappingOptions(), *opts2 = l2->getTonemappingOptions();
-    TMOperator op1 = opts1->tmoperator, op2 = opts2->tmoperator;
-    QString s1, s2;
-    switch (op1) {
-        case ashikhmin:
-            s1 = "ashikmin";
-        break;
-        case drago:
-            s1 = "drago";
-        break;
-        case durand:
-            s1 = "durand";
-        break;
-        case fattal:
-            s1 = "fattal";
-        break;
-        case mantiuk06:
-            s1 = "mantiuk06";
-        break;
-        case mantiuk08:
-            s1 = "mantiuk08";
-        break;
-        case pattanaik:
-            s1 = "pattanaik";
-        break;
-        case reinhard02:
-            s1 = "reinhard02";
-        break;
-        case reinhard05:
-            s1 = "reinhard05";
-        break;
-    }
-    switch (op2) {
-        case ashikhmin:
-            s2 = "ashikmin";
-        break;
-        case drago:
-            s2 = "drago";
-        break;
-        case durand:
-            s2 = "durand";
-        break;
-        case fattal:
-            s2 = "fattal";
-        break;
-        case mantiuk06:
-            s2 = "mantiuk06";
-        break;
-        case mantiuk08:
-            s2 = "mantiuk08";
-        break;
-        case pattanaik:
-            s2 = "pattanaik";
-        break;
-        case reinhard02:
-            s2 = "reinhard02";
-        break;
-        case reinhard05:
-            s2 = "reinhard05";
-        break;
-    }
-    return s1 < s2;
+    return opts1->getPostfix() < opts2->getPostfix();
 }
 
 bool compareByMostUsefulOperators(PreviewLabel *l1, PreviewLabel *l2)
 {
     TonemappingOptions *opts1 = l1->getTonemappingOptions(), *opts2 = l2->getTonemappingOptions();
-    TMOperator op1 = opts1->tmoperator, op2 = opts2->tmoperator;
-    QString s1, s2;
-    switch (op1) {
-        case ashikhmin:
-            s1 = "H";
-        break;
-        case drago:
-            s1 = "G";
-        break;
-        case durand:
-            s1 = "F";
-        break;
-        case fattal:
-            s1 = "B";
-        break;
-        case mantiuk06:
-            s1 = "A";
-        break;
-        case mantiuk08:
-            s1 = "C";
-        break;
-        case pattanaik:
-            s1 = "I";
-        break;
-        case reinhard02:
-            s1 = "E";
-        break;
-        case reinhard05:
-            s1 = "D";
-        break;
-    }
-    switch (op2) {
-        case ashikhmin:
-            s2 = "H";
-        break;
-        case drago:
-            s2 = "G";
-        break;
-        case durand:
-            s2 = "F";
-        break;
-        case fattal:
-            s2 = "B";
-        break;
-        case mantiuk06:
-            s2 = "A";
-        break;
-        case mantiuk08:
-            s2 = "C";
-        break;
-        case pattanaik:
-            s2 = "I";
-        break;
-        case reinhard02:
-            s2 = "E";
-        break;
-        case reinhard05:
-            s2 = "D";
-        break;
-    }
-    return s1 < s2;
+    return opts1->getRatingForOperator() < opts2->getRatingForOperator();
 }
+
 
 }
 

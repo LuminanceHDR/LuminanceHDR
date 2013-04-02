@@ -105,8 +105,7 @@ void BatchTMJob::run()
 
             tm_operator->tonemapFrame(*temporary_frame, opts, prog_helper);
 
-            TMOptionsOperations operations(opts);
-            QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
+            QString output_file_name = m_output_file_name_base+"_"+opts->getPostfix()+"."+m_ldr_output_format;
 
             if ( io_worker.write_ldr_frame(temporary_frame.data(),
                                            output_file_name, QString(),
