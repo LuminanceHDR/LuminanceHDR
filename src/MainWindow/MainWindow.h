@@ -67,6 +67,8 @@ class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
 class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
 class TMWorker;
 
+class UpdateAvailableInfo; // #include "MainWindow/UpdateChecker.h"
+
 class MainWindow: public QMainWindow
 {
     Q_OBJECT
@@ -171,6 +173,9 @@ protected Q_SLOTS:
     void splashShowDonationsPage();
     void splashClose();
 
+    void on_updateAvailable(UpdateAvailableInfo* info);
+    void on_actionUpdateAvailable_triggered();
+
     // TM
     void tonemapBegin();
     void tonemapEnd();
@@ -230,6 +235,8 @@ protected:
     void closeEvent(QCloseEvent *);
     //!
 
+
+
     void dispatchrotate(bool clockwise);
 
     void updateRecentFileActions();
@@ -286,6 +293,8 @@ private:
     TMOProgressIndicator* m_TMProgressBar;
     // Tone Mapping Panel
     TonemappingPanel *tmPanel;
+    
+    UpdateAvailableInfo* m_UpdateInfo;
 };
 
 #endif // MAINWINDOW_H

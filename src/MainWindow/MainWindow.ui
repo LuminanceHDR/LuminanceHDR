@@ -52,6 +52,7 @@
     <addaction name="documentationAction"/>
     <addaction name="actionWhat_s_This"/>
     <addaction name="separator"/>
+    <addaction name="actionUpdateAvailable"/>
     <addaction name="actionDonate"/>
     <addaction name="actionAbout_Luminance"/>
     <addaction name="actionAbout_Qt"/>
@@ -987,6 +988,18 @@
    </property>
    <property name="text">
     <string>Realtime Previews</string>
+   </property>
+  </action>
+  <action name="actionUpdateAvailable">
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/vcs-update-required.png</normaloff>:/new/prefix1/images/vcs-update-required.png</iconset>
+   </property>
+   <property name="text">
+    <string>Update</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>
