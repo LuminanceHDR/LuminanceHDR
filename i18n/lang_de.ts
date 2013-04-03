@@ -1171,10 +1171,6 @@ p, li { white-space: pre-wrap; }
         <translation>E&amp;ntfernen</translation>
     </message>
     <message>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
         <source>Lasso - Draw a free hand selection area</source>
         <translation>Lasso - Einen Bereich freihändig auswählen</translation>
     </message>
@@ -1932,14 +1928,6 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
         <translation>Qualität der zu speichernden Datei</translation>
     </message>
     <message>
-        <source>Quality:</source>
-        <translation>Qualität:</translation>
-    </message>
-    <message>
-        <source>File size:</source>
-        <translation>Dateigröße:</translation>
-    </message>
-    <message>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -1954,6 +1942,14 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     <message>
         <source>&amp;Cancel</source>
         <translation>Abbre&amp;chen</translation>
+    </message>
+    <message>
+        <source>File size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2195,28 +2191,8 @@ p, li { white-space: pre-wrap; }
         <translation>Strg+E</translation>
     </message>
     <message>
-        <source>&amp;Align Images...</source>
-        <translation>Bilder a&amp;usrichten ...</translation>
-    </message>
-    <message>
-        <source>WORK IN PROGRESS</source>
-        <translation>WIRD VERARBEITET</translation>
-    </message>
-    <message>
         <source>&amp;About Qt</source>
         <translation>Über &amp;Qt</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation>&amp;Nebeneinander</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation>&amp;Gestapelt</translation>
-    </message>
-    <message>
-        <source>Cascade</source>
-        <translation>Gestapelt</translation>
     </message>
     <message>
         <source>Convert multiple HDR images to LDR</source>
@@ -2393,10 +2369,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Error: %1</source>
         <translation>Fehler: %1</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation>Symbolleisten</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
@@ -2653,6 +2625,10 @@ Do you want to continue?</source>
         <translation>Dieser Dynamikkompressionsoperator hängt von der Größe des Quellbildes ab. Diesen Operator auf ein Bild in Originalgröße anzuwenden, wird höchstwahrscheinlich ein anderes Ergebnis zur Folge haben.
 
 Willst du ihn dennoch anwenden?</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3253,6 +3229,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>PreviewSettings</name>
+    <message>
+        <source>Load settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProjectionsDialog</name>
     <message>
         <source>Projective Transformation</source>
@@ -3344,14 +3327,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Aborting...</source>
-        <translation>Abbrechen ...</translation>
-    </message>
-    <message>
-        <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
-        <translation>Kann das Qt-JPEG-Plug-in nicht finden ...&lt;br&gt;Das DLL-Paket sollte mit der Option &quot;Pfadangaben verwenden&quot; entpackt werden.</translation>
-    </message>
     <message>
         <source>All LDR formats</source>
         <translation>Alle LDR-Formate</translation>
@@ -3455,6 +3430,138 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>I cannot perform the color transform. Please select a different monitor profile.</source>
         <translation>Farbraumkonvertierung konnte nicht durchgeführt werden. Bitte anderes Bildschirmprofil wählen.</translation>
+    </message>
+    <message>
+        <source>PreGamma=%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="unfinished">Kontrastausgleich</translation>
+    </message>
+    <message>
+        <source>Contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation</source>
+        <translation type="unfinished">Sättigung</translation>
+    </message>
+    <message>
+        <source>Detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="unfinished">Helligkeit</translation>
+    </message>
+    <message>
+        <source>Luminance Level=Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="unfinished">Farbsättigung</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="unfinished">Kontrasterhöhung</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NoiseRedux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FFTSolver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spatial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="unfinished">Bereich</translation>
+    </message>
+    <message>
+        <source>Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="unfinished">Multiplikator</translation>
+    </message>
+    <message>
+        <source>AutoLuminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rod</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scales:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="unfinished">Helligkeit</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="unfinished">Chromatische Anpassung</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="unfinished">Lichtanpassung</translation>
     </message>
 </context>
 <context>
@@ -3709,6 +3816,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>TiffModeDialog</name>
+    <message>
+        <source>Save as ...TIFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TonemappingPanel</name>
     <message>
         <source>TM Database Problem</source>
@@ -3862,10 +3976,6 @@ Error: %1</source>
     <message>
         <source>&amp;Load from File</source>
         <translation>Aus Datei &amp;laden</translation>
-    </message>
-    <message>
-        <source>Load parameters by comment</source>
-        <translation>Parameter per Kommentar laden</translation>
     </message>
     <message>
         <source>Load saved parameters</source>
@@ -4124,12 +4234,20 @@ Luminace Level</source>
         <translation>Gebräuchlichste Operatoren</translation>
     </message>
     <message>
-        <source>Apply</source>
-        <translation>Anwenden</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Comments:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemap</source>
+        <translation type="unfinished">Dynamikkompression</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4245,6 +4363,21 @@ Luminace Level</source>
     <message>
         <source>Remind me later</source>
         <translation>Später erinnern</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateChecker</name>
+    <message>
+        <source>A new release is ready for download!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to download, or select Help-&gt;Update!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the webpage for download now?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

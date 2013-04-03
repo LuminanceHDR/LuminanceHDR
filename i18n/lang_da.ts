@@ -2386,14 +2386,6 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <source>&amp;Align Images...</source>
-        <translation>&amp;Positionér billeder...</translation>
-    </message>
-    <message>
-        <source>WORK IN PROGRESS</source>
-        <translation>UNDER UDARBEJDNING</translation>
-    </message>
-    <message>
         <source>&amp;About Qt</source>
         <translation>&amp;Om Qt</translation>
     </message>
@@ -2404,22 +2396,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Show information about Qt library that is used by Luminance</source>
         <translation>Vis information om Qt-biblioteket, som bruges af Luminance</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation>&amp;Fliselagt</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation>&amp;Overlappende</translation>
-    </message>
-    <message>
-        <source>Cascade</source>
-        <translation>Overlappende</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation>Værktøjslinier</translation>
     </message>
     <message>
         <source>Text &amp;under Icons</source>
@@ -2696,6 +2672,10 @@ Do you want to continue?</source>
         <translation>Denne tone mapping operator afhænger af inputbilledets størrelse. Anvendelse af operatoren på billedet i fuld størrelse vil sansynligvis resultere i et anderledes billede.
 
 Vil du fortsætte?</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3297,6 +3277,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>PreviewSettings</name>
+    <message>
+        <source>Load settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProjectionsDialog</name>
     <message>
         <source>Projective Transformation</source>
@@ -3491,6 +3478,138 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Save as...</source>
         <translation>Gem som...</translation>
+    </message>
+    <message>
+        <source>PreGamma=%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="unfinished">Kontrast-equalisering</translation>
+    </message>
+    <message>
+        <source>Contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation</source>
+        <translation type="unfinished">Farvemætning</translation>
+    </message>
+    <message>
+        <source>Detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance Level=Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="unfinished">Farvemætning</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="unfinished">Kontrastforbedring</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation type="unfinished">Alfa</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="unfinished">Beta</translation>
+    </message>
+    <message>
+        <source>NoiseRedux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FFTSolver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished">Ligning 2</translation>
+    </message>
+    <message>
+        <source>Equation 4</source>
+        <translation type="unfinished">Ligning 4</translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="unfinished">Bias</translation>
+    </message>
+    <message>
+        <source>Spatial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="unfinished">Interval</translation>
+    </message>
+    <message>
+        <source>Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="unfinished">Multiplikator</translation>
+    </message>
+    <message>
+        <source>AutoLuminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rod</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phi</source>
+        <translation type="unfinished">Phi</translation>
+    </message>
+    <message>
+        <source>Scales:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="unfinished">Lysstyrke</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="unfinished">Kromatisk adaptering</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="unfinished">Lysadaptering</translation>
     </message>
 </context>
 <context>
@@ -3747,8 +3866,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TiffModeDialog</name>
     <message>
-        <source>Dialog</source>
-        <translation>Dialog</translation>
+        <source>Save as ...TIFF</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4051,10 +4170,6 @@ Luminace Level</source>
         <translation>Indlæs gemte parametre</translation>
     </message>
     <message>
-        <source>Load parameters by comment</source>
-        <translation>Indlæs parametre efter kommentar</translation>
-    </message>
-    <message>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation>Her kan du anvende gamma-rettelse på HDR&apos;et.&lt;br&gt;Gamma-rettelse vil anvendes før tone mapping.</translation>
     </message>
@@ -4168,12 +4283,20 @@ Fejl: %1</translation>
         <translation>Mest brugbare operators</translation>
     </message>
     <message>
-        <source>Apply</source>
-        <translation>Anvend</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Annuller</translation>
+    </message>
+    <message>
+        <source>Comments:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemap</source>
+        <translation type="unfinished">Tone map</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4289,6 +4412,21 @@ Fejl: %1</translation>
     <message>
         <source>Remind me later</source>
         <translation>Påmind mig senere</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateChecker</name>
+    <message>
+        <source>A new release is ready for download!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to download, or select Help-&gt;Update!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the webpage for download now?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
