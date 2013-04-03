@@ -290,21 +290,15 @@ struct HistData
     size_t index;
 };
 
-struct HistDataCompareData
-{
-    bool operator()(const HistData& v1, const HistData& v2) const
-    {
-        if (v1.data >= v2.data) return false;
-        else return true;
+struct HistDataCompareData {
+    bool operator()(const HistData& v1, const HistData& v2) const {
+        return (v1.data < v2.data);
     }
 };
 
-struct HistDataCompareIndex
-{
-    bool operator()(const HistData& v1, const HistData& v2) const
-    {
-        if (v1.index >= v2.index) return false;
-        else return true;
+struct HistDataCompareIndex {
+    bool operator()(const HistData& v1, const HistData& v2) const {
+        return (v1.index < v2.index);
     }
 };
 
@@ -350,7 +344,7 @@ void contrastEqualization(PyramidT& pp, const float contrastFactor)
     const float normalizationFactor = 1.0f/totalPixels;
     for (size_t idx = 0; idx < totalPixels; ++idx)
     {
-        hist[idx].cdf = static_cast<float>(idx)*normalizationFactor;
+        hist[idx].cdf = idx*normalizationFactor;
     }
 
     // Recalculate in terms of indexes
@@ -369,11 +363,10 @@ void contrastEqualization(PyramidT& pp, const float contrastFactor)
 
         for (; xyGradIter != xyGradEnd; ++xyGradIter)
         {
-            float scaleFactor = contrastFactor +
-                    hist[offset].cdf / hist[offset].data;
+            float scaleFactor =
+                    contrastFactor * hist[offset].cdf / hist[offset].data;
 
-            xyGradIter->gX() *= scaleFactor;
-            xyGradIter->gY() *= scaleFactor;
+            *xyGradIter *= scaleFactor;
 
             offset++;
         }
