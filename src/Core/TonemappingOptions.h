@@ -33,6 +33,7 @@
 #define TONEMAPPINGOPTIONS_H
 
 #include <QString>
+#include <QObject>
 
 //----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
 // all is used by SavedParametersDialog to select comments from all operators
@@ -51,6 +52,7 @@ enum TMOperator
 
 class TonemappingOptions
 {
+
 public:
     int origxsize;          // this parameter should be coming from the UI
     int xsize_percent;		// this parameter should be coming from the UI
@@ -129,7 +131,9 @@ public:
         setDefaultParameters();
     }
     const QString getPostfix();
-    const QString getCaption();
+
+    /** returns the translated description of the TMO operator**/
+    const QString getCaption(bool pregamma = true, QString separator = QString(" ~ "));
     void setDefaultTonemapParameters();
     void setDefaultParameters();
     

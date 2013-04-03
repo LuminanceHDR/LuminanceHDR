@@ -139,253 +139,276 @@ char TonemappingOptions::getRatingForOperator()
 }
 
 const QString TonemappingOptions::getPostfix() {
-        QString postfix=QString("pregamma_%1_").arg(pregamma);
-        switch (tmoperator) {
-        case mantiuk06: {
-                postfix+="mantiuk06_";
-                float contrastfactor=operator_options.mantiuk06options.contrastfactor;
-                float saturationfactor=operator_options.mantiuk06options.saturationfactor;
-                float detailfactor=operator_options.mantiuk06options.detailfactor;
-                bool contrast_eq=operator_options.mantiuk06options.contrastequalization;
-                if (contrast_eq) {
-                        postfix+=QString("contrast_equalization_%1_").arg(contrastfactor);
-                } else {
-                        postfix+=QString("contrast_mapping_%1_").arg(contrastfactor);
-                }
-                postfix+=QString("saturation_factor_%1_").arg(saturationfactor);
-                postfix+=QString("detail_factor_%1").arg(detailfactor);
-                }
-                break;
-        case mantiuk08: {
-                postfix+="mantiuk08_";
-                float colorsaturation=operator_options.mantiuk08options.colorsaturation;
-                float contrastenhancement=operator_options.mantiuk08options.contrastenhancement;
-                float luminancelevel=operator_options.mantiuk08options.luminancelevel;
-                bool setluminance=operator_options.mantiuk08options.setluminance;
-                if (setluminance) {
-                        postfix+=QString("luminancelevel_%1_").arg(luminancelevel);
-                } else {
-                        postfix+=QString("auto_luminance");
-                }
-                postfix+=QString("colorsaturation_%1_").arg(colorsaturation);
-                postfix+=QString("contrastenhancement_%1").arg(contrastenhancement);
-                }
-                break;
-        case fattal: {
-                if (!operator_options.fattaloptions.newfattal)
-                        postfix+="v1_";
-                postfix+="fattal_";
-                float alpha=operator_options.fattaloptions.alpha;
-                float beta=operator_options.fattaloptions.beta;
-                float saturation2=operator_options.fattaloptions.color;
-                float noiseredux=operator_options.fattaloptions.noiseredux;
-				bool  fftsolver=operator_options.fattaloptions.fftsolver;
-                postfix+=QString("alpha_%1_").arg(alpha);
-                postfix+=QString("beta_%1_").arg(beta);
-                postfix+=QString("saturation_%1_").arg(saturation2);
-                postfix+=QString("noiseredux_%1_").arg(noiseredux);
-                postfix+=QString("fftsolver_%1").arg(fftsolver);
-                }
-                break;
-        case ashikhmin: {
-                postfix+="ashikhmin_";
-                if (operator_options.ashikhminoptions.simple) {
-                        postfix+="-simple";
-                } else {
-                        if (operator_options.ashikhminoptions.eq2) {
-                                postfix+="-eq2_";
-                        } else {
-                                postfix+="-eq4_";
-                        }
-                        postfix+=QString("local_%1").arg(operator_options.ashikhminoptions.lct);
-                }
-                }
-                break;
-        case drago: {
-                postfix+="drago_";
-                postfix+=QString("bias_%1").arg(operator_options.dragooptions.bias);
-                }
-                break;
-        case durand: {
-                float spatial=operator_options.durandoptions.spatial;
-                float range=operator_options.durandoptions.range;
-                float base=operator_options.durandoptions.base;
-                postfix+="durand_";
-                postfix+=QString("spatial_%1_").arg(spatial);
-                postfix+=QString("range_%1_").arg(range);
-                postfix+=QString("base_%1").arg(base);
-                }
-                break;
-        case pattanaik: {
-                float multiplier=operator_options.pattanaikoptions.multiplier;
-                float cone=operator_options.pattanaikoptions.cone;
-                float rod=operator_options.pattanaikoptions.rod;
-                postfix+="pattanaik00_";
-                postfix+=QString("mul_%1_").arg(multiplier);
-                if (operator_options.pattanaikoptions.local) {
-                        postfix+="local";
-                } else if (operator_options.pattanaikoptions.autolum) {
-                        postfix+="autolum";
-                } else {
-                        postfix+=QString("cone_%1_").arg(cone);
-                        postfix+=QString("rod_%1_").arg(rod);
-                }
-                }
-                break;
-        case reinhard02: {
-                float key=operator_options.reinhard02options.key;
-                float phi=operator_options.reinhard02options.phi;
-                int range=operator_options.reinhard02options.range;
-                int lower=operator_options.reinhard02options.lower;
-                int upper=operator_options.reinhard02options.upper;
-                postfix+="reinhard02_";
-                postfix+=QString("key_%1_").arg(key);
-                postfix+=QString("phi_%1").arg(phi);
-                if (operator_options.reinhard02options.scales) {
-                        postfix+=QString("_scales_");
-                        postfix+=QString("range_%1_").arg(range);
-                        postfix+=QString("lower%1_").arg(lower);
-                        postfix+=QString("upper%1").arg(upper);
-                }
-                }
-                break;
-        case reinhard05: {
-                float brightness=operator_options.reinhard05options.brightness;
-                float chromaticAdaptation= operator_options.reinhard05options.chromaticAdaptation;
-                float lightAdaptation=operator_options.reinhard05options.lightAdaptation;
-                postfix+="reinhard05_";
-                postfix+=QString("brightness_%1_").arg(brightness);
-                postfix+=QString("chromatic_adaptation_%1_").arg(chromaticAdaptation);
-                postfix+=QString("light_adaptation_%1").arg(lightAdaptation);
-                }
-                break;
+    QString postfix=QString("pregamma_%1_").arg(pregamma);
+    switch (tmoperator) {
+    case mantiuk06: 
+        {
+            postfix+="mantiuk06_";
+            float contrastfactor=operator_options.mantiuk06options.contrastfactor;
+            float saturationfactor=operator_options.mantiuk06options.saturationfactor;
+            float detailfactor=operator_options.mantiuk06options.detailfactor;
+            bool contrast_eq=operator_options.mantiuk06options.contrastequalization;
+            if (contrast_eq) {
+                    postfix+=QString("contrast_equalization_%1_").arg(contrastfactor);
+            } else {
+                    postfix+=QString("contrast_mapping_%1_").arg(contrastfactor);
+            }
+            postfix+=QString("saturation_factor_%1_").arg(saturationfactor);
+            postfix+=QString("detail_factor_%1").arg(detailfactor);
         }
-        return postfix;
+        break;
+    case mantiuk08:
+        {
+            postfix+="mantiuk08_";
+            float colorsaturation=operator_options.mantiuk08options.colorsaturation;
+            float contrastenhancement=operator_options.mantiuk08options.contrastenhancement;
+            float luminancelevel=operator_options.mantiuk08options.luminancelevel;
+            bool setluminance=operator_options.mantiuk08options.setluminance;
+            if (setluminance) {
+                    postfix+=QString("luminancelevel_%1_").arg(luminancelevel);
+            } else {
+                    postfix+=QString("auto_luminance");
+            }
+            postfix+=QString("colorsaturation_%1_").arg(colorsaturation);
+            postfix+=QString("contrastenhancement_%1").arg(contrastenhancement);
+        }
+        break;
+    case fattal:
+        {
+            if (!operator_options.fattaloptions.newfattal)
+                    postfix+="v1_";
+            postfix+="fattal_";
+            float alpha=operator_options.fattaloptions.alpha;
+            float beta=operator_options.fattaloptions.beta;
+            float saturation2=operator_options.fattaloptions.color;
+            float noiseredux=operator_options.fattaloptions.noiseredux;
+		    bool  fftsolver=operator_options.fattaloptions.fftsolver;
+            postfix+=QString("alpha_%1_").arg(alpha);
+            postfix+=QString("beta_%1_").arg(beta);
+            postfix+=QString("saturation_%1_").arg(saturation2);
+            postfix+=QString("noiseredux_%1_").arg(noiseredux);
+            postfix+=QString("fftsolver_%1").arg(fftsolver);
+        }
+        break;
+    case ashikhmin: 
+        {
+            postfix+="ashikhmin_";
+            if (operator_options.ashikhminoptions.simple) {
+                    postfix+="-simple";
+            } else {
+                    if (operator_options.ashikhminoptions.eq2) {
+                            postfix+="-eq2_";
+                    } else {
+                            postfix+="-eq4_";
+                    }
+                    postfix+=QString("local_%1").arg(operator_options.ashikhminoptions.lct);
+            }
+        }
+        break;
+    case drago:
+        {
+            postfix+="drago_";
+            postfix+=QString("bias_%1").arg(operator_options.dragooptions.bias);
+        }
+        break;
+    case durand:
+        {
+            float spatial=operator_options.durandoptions.spatial;
+            float range=operator_options.durandoptions.range;
+            float base=operator_options.durandoptions.base;
+            postfix+="durand_";
+            postfix+=QString("spatial_%1_").arg(spatial);
+            postfix+=QString("range_%1_").arg(range);
+            postfix+=QString("base_%1").arg(base);
+        }
+        break;
+    case pattanaik:
+        {
+            float multiplier=operator_options.pattanaikoptions.multiplier;
+            float cone=operator_options.pattanaikoptions.cone;
+            float rod=operator_options.pattanaikoptions.rod;
+            postfix+="pattanaik00_";
+            postfix+=QString("mul_%1_").arg(multiplier);
+            if (operator_options.pattanaikoptions.local) {
+                    postfix+="local";
+            } else if (operator_options.pattanaikoptions.autolum) {
+                    postfix+="autolum";
+            } else {
+                    postfix+=QString("cone_%1_").arg(cone);
+                    postfix+=QString("rod_%1_").arg(rod);
+            }
+        }
+        break;
+    case reinhard02:
+        {
+            float key=operator_options.reinhard02options.key;
+            float phi=operator_options.reinhard02options.phi;
+            int range=operator_options.reinhard02options.range;
+            int lower=operator_options.reinhard02options.lower;
+            int upper=operator_options.reinhard02options.upper;
+            postfix+="reinhard02_";
+            postfix+=QString("key_%1_").arg(key);
+            postfix+=QString("phi_%1").arg(phi);
+            if (operator_options.reinhard02options.scales) {
+                postfix+=QString("_scales_");
+                postfix+=QString("range_%1_").arg(range);
+                postfix+=QString("lower%1_").arg(lower);
+                postfix+=QString("upper%1").arg(upper);
+            }
+        }
+        break;
+    case reinhard05: 
+        {
+            float brightness=operator_options.reinhard05options.brightness;
+            float chromaticAdaptation= operator_options.reinhard05options.chromaticAdaptation;
+            float lightAdaptation=operator_options.reinhard05options.lightAdaptation;
+            postfix+="reinhard05_";
+            postfix+=QString("brightness_%1_").arg(brightness);
+            postfix+=QString("chromatic_adaptation_%1_").arg(chromaticAdaptation);
+            postfix+=QString("light_adaptation_%1").arg(lightAdaptation);
+        }
+        break;
+    }
+    return postfix;
 }
 
-const QString TonemappingOptions::getCaption() {
-        QString caption=QString("PreGamma=%1 ~ ").arg(pregamma);
-        switch (tmoperator) {
-        case mantiuk06: {
-                caption+="Mantiuk06: ~ ";
-                float contrastfactor=operator_options.mantiuk06options.contrastfactor;
-                float saturationfactor=operator_options.mantiuk06options.saturationfactor;
-                float detailfactor=operator_options.mantiuk06options.detailfactor;
-                bool contrast_eq=operator_options.mantiuk06options.contrastequalization;
-                if (contrast_eq) {
-                        caption+=QString("Contrast Equalization=%1 ~ ").arg(contrastfactor);
-                } else {
-                        caption+=QString("Contrast=%1 ~ ").arg(contrastfactor);
-                }
-                caption+=QString("Saturation=%1 ~ ").arg(saturationfactor);
-                caption+=QString("Detail=%1").arg(detailfactor);
-                }
-                break;
-        case mantiuk08: {
-                caption+="Mantiuk08: ~ ";
-                float colorsaturation=operator_options.mantiuk08options.colorsaturation;
-                float contrastenhancement=operator_options.mantiuk08options.contrastenhancement;
-                float luminancelevel=operator_options.mantiuk08options.luminancelevel;
-                bool setluminance=operator_options.mantiuk08options.setluminance;
-                if (setluminance) {
-                        caption+=QString("Luminance Level=%1 ~ ").arg(luminancelevel);
-                } else {
-                        caption+=QString("Luminance Level=Auto ~ ");
-                }
-                caption+=QString("Color Saturation=%1 ~ ").arg(colorsaturation);
-                caption+=QString("Contrast Enhancement=%1").arg(contrastenhancement);
-                }
-                break;
-        case fattal: {
-                if (!operator_options.fattaloptions.newfattal)
-                        caption+="V1_";
-                float alpha=operator_options.fattaloptions.alpha;
-                float beta=operator_options.fattaloptions.beta;
-                float saturation2=operator_options.fattaloptions.color;
-                float noiseredux=operator_options.fattaloptions.noiseredux;
-                bool  fftsolver=operator_options.fattaloptions.fftsolver;
-                caption+="Fattal: ~ ";
-                caption+=QString("Alpha=%1 ~ ").arg(alpha);
-                caption+=QString("Beta=%1 ~ ").arg(beta);
-                caption+=QString("Saturation=%1 ~ ").arg(saturation2);
-                caption+=QString("NoiseRedux=%1 ~ ").arg(noiseredux);
-                caption+=QString("FFTSolver=%1").arg(fftsolver);
-                }
-                break;
-        case ashikhmin: {
-                caption+="Ashikhmin: ~ ";
-                if (operator_options.ashikhminoptions.simple) {
-                        caption+="simple";
-                } else {
-                        if (operator_options.ashikhminoptions.eq2) {
-                                caption+="Equation 2 ~ ";
-                        } else {
-                                caption+="Equation 4 ~ ";
-                        }
-                        caption+=QString("Local=%1").arg(operator_options.ashikhminoptions.lct);
-                }
-                }
-                break;
-        case drago: {
-                caption+="Drago: ~ ";
-                caption+=QString("Bias=%1").arg(operator_options.dragooptions.bias);
-                }
-                break;
-        case durand: {
-                float spatial=operator_options.durandoptions.spatial;
-                float range=operator_options.durandoptions.range;
-                float base=operator_options.durandoptions.base;
-                caption+="Durand: ~ ";
-                caption+=QString("Spatial=%1 ~ ").arg(spatial);
-                caption+=QString("Range=%1 ~ ").arg(range);
-                caption+=QString("Base=%1").arg(base);
-                }
-                break;
-        case pattanaik: {
-                float multiplier=operator_options.pattanaikoptions.multiplier;
-                float cone=operator_options.pattanaikoptions.cone;
-                float rod=operator_options.pattanaikoptions.rod;
-                caption+="Pattanaik00: ~ ";
-                caption+=QString("Multiplier=%1 ~ ").arg(multiplier);
-                if (operator_options.pattanaikoptions.local) {
-                        caption+="Local";
-                } else if (operator_options.pattanaikoptions.autolum) {
-                        caption+="AutoLuminance";
-                } else {
-                        caption+=QString("Cone=%1 ~ ").arg(cone);
-                        caption+=QString("Rod=%1 ~ ").arg(rod);
-                }
-                }
-                break;
-        case reinhard02: {
-                float key=operator_options.reinhard02options.key;
-                float phi=operator_options.reinhard02options.phi;
-                int range=operator_options.reinhard02options.range;
-                int lower=operator_options.reinhard02options.lower;
-                int upper=operator_options.reinhard02options.upper;
-                caption+="Reinhard02: ~ ";
-                caption+=QString("Key=%1 ~ ").arg(key);
-                caption+=QString("Phi=%1").arg(phi);
-                if (operator_options.reinhard02options.scales) {
-                        caption+=QString(" ~ Scales: ~ ");
-                        caption+=QString("Range=%1 ~ ").arg(range);
-                        caption+=QString("Lower=%1 ~ ").arg(lower);
-                        caption+=QString("Upper=%1").arg(upper);
-                }
-                }
-                break;
-        case reinhard05: {
-                float brightness=operator_options.reinhard05options.brightness;
-                float chromaticAdaptation= operator_options.reinhard05options.chromaticAdaptation;
-                float lightAdaptation=operator_options.reinhard05options.lightAdaptation;
-                caption+="Reinhard05: ~ ";
-                caption+=QString("Brightness=%1 ~ ").arg(brightness);
-                caption+=QString("Chromatic Adaptation=%1 ~ ").arg(chromaticAdaptation);
-                caption+=QString("Light Adaptation=%1").arg(lightAdaptation);
-                }
-                break;
-        }
-        return caption;
+const QString TonemappingOptions::getCaption(bool pregamma, QString separator) {
+    QString caption=pregamma ? QString(QObject::tr("PreGamma=%1")).arg(pregamma) + separator : QString();
+    switch (tmoperator) {
+    case mantiuk06: 
+        {
+            caption+="Mantiuk06:";
+            caption += separator;
+            float contrastfactor=operator_options.mantiuk06options.contrastfactor;
+            float saturationfactor=operator_options.mantiuk06options.saturationfactor;
+            float detailfactor=operator_options.mantiuk06options.detailfactor;
+            bool contrast_eq=operator_options.mantiuk06options.contrastequalization;
+            if (contrast_eq) {
+                    caption+=QString(QObject::tr("Contrast Equalization") + "=%1").arg(contrastfactor);
+            } else {
+                    caption+=QString(QObject::tr("Contrast") + "=%1").arg(contrastfactor);
+            }
+            caption += separator;
+            caption+=QString(QObject::tr("Saturation") + "=%1").arg(saturationfactor);
+            caption += separator;
+            caption+=QString(QObject::tr("Detail") + "=%1").arg(detailfactor);
+            }
+            break;
+    case mantiuk08: 
+        {
+            caption+="Mantiuk08:" + separator;
+            float colorsaturation=operator_options.mantiuk08options.colorsaturation;
+            float contrastenhancement=operator_options.mantiuk08options.contrastenhancement;
+            float luminancelevel=operator_options.mantiuk08options.luminancelevel;
+            bool setluminance=operator_options.mantiuk08options.setluminance;
+            if (setluminance) {
+                    caption+=QString(QObject::tr("Luminance Level") + "=%1").arg(luminancelevel);
+            } else {
+                    caption+=QString(QObject::tr("Luminance Level=Auto"));
+            }
+            caption += separator;
+            caption+=QString(QObject::tr("Color Saturation") + "=%1").arg(colorsaturation) + separator;
+            caption+=QString(QObject::tr("Contrast Enhancement") + "=%1").arg(contrastenhancement);
+            }
+            break;
+    case fattal:
+        {
+            if (!operator_options.fattaloptions.newfattal)
+                    caption+="V1_";
+            float alpha=operator_options.fattaloptions.alpha;
+            float beta=operator_options.fattaloptions.beta;
+            float saturation2=operator_options.fattaloptions.color;
+            float noiseredux=operator_options.fattaloptions.noiseredux;
+            bool  fftsolver=operator_options.fattaloptions.fftsolver;
+            caption+="Fattal:" + separator;
+            caption+=QString(QObject::tr("Alpha") + "=%1").arg(alpha) + separator;
+            caption+=QString(QObject::tr("Beta") + "=%1").arg(beta) + separator;
+            caption+=QString(QObject::tr("Saturation") + "=%1").arg(saturation2) + separator;
+            caption+=QString(QObject::tr("NoiseRedux") + "=%1").arg(noiseredux) + separator;
+            caption+=QString(QObject::tr("FFTSolver") + "=%1").arg(fftsolver);
+            }
+            break;
+    case ashikhmin:
+        {
+            caption+="Ashikhmin:" + separator;
+            if (operator_options.ashikhminoptions.simple) {
+                    caption+=QObject::tr("simple");
+            } else {
+                    if (operator_options.ashikhminoptions.eq2) {
+                            caption+=QObject::tr("Equation 2");
+                    } else {
+                            caption+=QObject::tr("Equation 4");
+                    }
+                    caption += separator;
+                    caption+=QString(QObject::tr("Local") + "=%1").arg(operator_options.ashikhminoptions.lct);
+            }
+            }
+            break;
+    case drago:
+        {
+            caption+="Drago:" + separator;
+            caption+=QString(QObject::tr("Bias") + "=%1").arg(operator_options.dragooptions.bias);
+            }
+            break;
+    case durand:
+        {
+            float spatial=operator_options.durandoptions.spatial;
+            float range=operator_options.durandoptions.range;
+            float base=operator_options.durandoptions.base;
+            caption+="Durand:" + separator;
+            caption+=QString(QObject::tr("Spatial") + "=%1").arg(spatial) + separator;
+            caption+=QString(QObject::tr("Range") + "=%1").arg(range) + separator;
+            caption+=QString(QObject::tr("Base") + "=%1").arg(base);
+            }
+            break;
+    case pattanaik:
+        {
+            float multiplier=operator_options.pattanaikoptions.multiplier;
+            float cone=operator_options.pattanaikoptions.cone;
+            float rod=operator_options.pattanaikoptions.rod;
+            caption+="Pattanaik00:" + separator;
+            caption+=QString(QObject::tr("Multiplier") + "=%1").arg(multiplier) + separator;
+            if (operator_options.pattanaikoptions.local) {
+                    caption+=QObject::tr("Local");
+            } else if (operator_options.pattanaikoptions.autolum) {
+                    caption+=QObject::tr("AutoLuminance");
+            } else {
+                    caption+=QString(QObject::tr("Cone") + "=%1").arg(cone) + separator;
+                    caption+=QString(QObject::tr("Rod") + "=%1").arg(rod);
+            }
+            }
+            break;
+    case reinhard02:
+        {
+            float key=operator_options.reinhard02options.key;
+            float phi=operator_options.reinhard02options.phi;
+            int range=operator_options.reinhard02options.range;
+            int lower=operator_options.reinhard02options.lower;
+            int upper=operator_options.reinhard02options.upper;
+            caption+="Reinhard02:" + separator;
+            caption+=QString(QObject::tr("Key") + "=%1").arg(key) + separator;
+            caption+=QString(QObject::tr("Phi") + "=%1").arg(phi);
+            if (operator_options.reinhard02options.scales) {
+                    caption+= separator + QString(QObject::tr("Scales:")) + separator;
+                    caption+=QString(QObject::tr("Range") + "=%1").arg(range) + separator;
+                    caption+=QString(QObject::tr("Lower") + "=%1").arg(lower) + separator;
+                    caption+=QString(QObject::tr("Upper") + "=%1").arg(upper);
+            }
+            }
+            break;
+    case reinhard05:
+        {
+            float brightness=operator_options.reinhard05options.brightness;
+            float chromaticAdaptation= operator_options.reinhard05options.chromaticAdaptation;
+            float lightAdaptation=operator_options.reinhard05options.lightAdaptation;
+            caption+="Reinhard05:" + separator;
+            caption+=QString(QObject::tr("Brightness") + "=%1").arg(brightness) + separator;
+            caption+=QString(QObject::tr("Chromatic Adaptation") + "=%1").arg(chromaticAdaptation) + separator;
+            caption+=QString(QObject::tr("Light Adaptation") + "=%1").arg(lightAdaptation);
+            }
+            break;
+    }
+    return caption;
 }
 
 TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)

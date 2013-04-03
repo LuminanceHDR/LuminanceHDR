@@ -544,7 +544,6 @@ void MainWindow::on_fileSaveAsAction_triggered()
         if ( format == "tif" || format == "tiff" )
         {
             TiffModeDialog t(true);
-            t.setWindowTitle("Save as ...TIFF");
             if ( t.exec() == QDialog::Rejected ) return;
 
 #ifndef NDEBUG
@@ -605,7 +604,6 @@ void MainWindow::on_fileSaveAsAction_triggered()
         if ( format == "tif" || format == "tiff" )
         {
             TiffModeDialog t(false);
-            t.setWindowTitle("Save as ...TIFF");
             if ( t.exec() == QDialog::Rejected ) return;
 
 #ifndef NDEBUG
