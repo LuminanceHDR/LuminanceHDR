@@ -50,7 +50,7 @@ public:
 
     static bool isCurrentPortableMode;
     QString getDatabaseFileName();
-    void setPortableMode(bool isPortable);
+    void    setPortableMode(bool isPortable);
 
 public Q_SLOTS:
     // RAW settings
@@ -158,14 +158,16 @@ public Q_SLOTS:
     // Default Paths
     // Path to save temporary cached files
     QString getTempDir();
-    QString getDefaultPathHdrInOut();
-    QString getDefaultPathLdrIn(); // HdrWizard
-    QString getDefaultPathLdrOut();
+    QString getDefaultPathHdrIn();      // MainWindow
+    QString getDefaultPathHdrOut();     // MainWindow
+    QString getDefaultPathLdrIn();      // HdrWizard
+    QString getDefaultPathLdrOut();     // MainWindow
     QString getDefaultPathTmoSettings();
 
     void    setTempDir(const QString&);
-    void    setDefaultPathHdrInOut(const QString&);
-    void    setDefaultPathLdrIn(const QString&); // HdrWizard
+    void    setDefaultPathHdrIn(const QString&);
+    void    setDefaultPathHdrOut(const QString&);
+    void    setDefaultPathLdrIn(const QString&);    // HdrWizard
     void    setDefaultPathLdrOut(const QString&);
     void    setDefaultPathTmoSettings(const QString&);
 
@@ -187,8 +189,8 @@ public Q_SLOTS:
     // Viewer
     unsigned int getViewerNanInfColor();
     unsigned int getViewerNegColor();
-    void setViewerNanInfColor(unsigned int);
-    void setViewerNegColor(unsigned int);
+    void    setViewerNanInfColor(unsigned int);
+    void    setViewerNegColor(unsigned int);
 
     // Preview Panel
     bool    isPreviewPanelActive();
@@ -211,8 +213,8 @@ public Q_SLOTS:
 	QString getPrinterProfileFileName();
     void	setPrinterProfileFileName(const QString&);
 
-    int  getPreviewPanelMode();
-    void setPreviewPanelMode(int);
+    int     getPreviewPanelMode();
+    void    setPreviewPanelMode(int);
 
 private:
     void initSettings();

@@ -16,6 +16,10 @@ TiffModeDialog::TiffModeDialog(bool hdrMode, QWidget *parent)
         m_ui->comboBox->insertItem(1, "TIFF 16 bit/channel");
         m_ui->comboBox->insertItem(2, "TIFF 32 bit/channel floating point");
     }
+
+#ifdef Q_WS_MAC
+    this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
+#endif
 }
 
 TiffModeDialog::~TiffModeDialog()

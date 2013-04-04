@@ -50,8 +50,6 @@
 #define KEY_NANINFCOLOR "HDR_visualization/nan_inf_color"
 #define KEY_NEGCOLOR "HDR_visualization/neg_color"
 
-#define KEY_TEMP_RESULT_PATH "Tonemapping_Options/TemporaryFilesPath"
-
 #define KEY_SAVE_LOGLUV "TIFF_Options/TiffSaveLogLuv"
 
 #define KEY_TMOWINDOW_PREVIEWS_WIDTH "TMOWindow_Options/TMOWindow_PreviewsWidth"
@@ -106,11 +104,8 @@
 #define KEY_COLOR_PRINTER_PROFILE_FILENAME "Color_Management_Options/printer_profile_filename"
 
 //--------------------PATHS & co. ----------------
-#define KEY_RECENT_PATH_LOAD_SAVE_HDR "Recent_path_loadsave_hdr"
 #define KEY_RECENT_FILES "Recent_files_list"
-#define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "Recent_path_TMO_settings"
-#define KEY_RECENT_PATH_SAVE_LDR "Recent_path_save_ldr"
-#define KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR "Recent_path_input_for_hdr"
+
 // Exif
 #define KEY_RECENT_PATH_EXIF_FROM "Exif/Recent_path_exif_from"
 #define KEY_RECENT_PATH_EXIF_TO "Exif/Recent_path_exif_to"

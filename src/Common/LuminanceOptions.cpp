@@ -597,6 +597,7 @@ private:
 #endif // QT_DEBUG
 }
 
+#define KEY_TEMP_RESULT_PATH "Tonemapping_Options/TemporaryFilesPath"
 
 QString LuminanceOptions::getTempDir()
 {
@@ -639,31 +640,47 @@ QString LuminanceOptions::getTempDir()
     return temp_dir_name;
 }
 
-void LuminanceOptions::setTempDir(const QString& path)
-{
+void LuminanceOptions::setTempDir(const QString& path) {
     m_settingHolder->setValue(KEY_TEMP_RESULT_PATH, path);
 }
 
-QString LuminanceOptions::getDefaultPathHdrInOut()
+//--------------------PATHS & co. ----------------
+#define KEY_RECENT_PATH_SAVE_LDR "recent_path_save_ldr"
+#define KEY_RECENT_PATH_LOAD_LDR "recent_path_load_ldr"
+#define KEY_RECENT_PATH_SAVE_HDR "recent_path_save_hdr"
+#define KEY_RECENT_PATH_LOAD_HDR "recent_path_load_hdr"
+
+QString LuminanceOptions::getDefaultPathHdrIn()
 {
-    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_SAVE_HDR,
+    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_HDR,
                                   QDir::currentPath()).toString();
 }
 
-void LuminanceOptions::setDefaultPathHdrInOut(const QString& path)
+void LuminanceOptions::setDefaultPathHdrIn(const QString& path)
 {
-    m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, path);
+    m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_HDR, path);
+}
+
+QString LuminanceOptions::getDefaultPathHdrOut()
+{
+    return m_settingHolder->value(KEY_RECENT_PATH_SAVE_HDR,
+                                  QDir::currentPath()).toString();
+}
+
+void LuminanceOptions::setDefaultPathHdrOut(const QString& path)
+{
+    m_settingHolder->setValue(KEY_RECENT_PATH_SAVE_HDR, path);
 }
 
 QString LuminanceOptions::getDefaultPathLdrIn()
 {
-    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,
+    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_LDR,
                                   QDir::currentPath()).toString();
 }
 
 void LuminanceOptions::setDefaultPathLdrIn(const QString& path)
 {
-    m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, path);
+    m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_LDR, path);
 }
 
 QString LuminanceOptions::getDefaultPathLdrOut()
@@ -676,6 +693,8 @@ void LuminanceOptions::setDefaultPathLdrOut(const QString& path)
 {
     m_settingHolder->setValue(KEY_RECENT_PATH_SAVE_LDR, path);
 }
+
+#define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "Recent_path_TMO_settings"
 
 QString LuminanceOptions::getDefaultPathTmoSettings()
 {

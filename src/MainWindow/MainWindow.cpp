@@ -1,8 +1,8 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006,2007 Giuseppe Rota
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2006-2007 Giuseppe Rota
+ * Copyright (C) 2011-2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ QString getHdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget
 
     return QFileDialog::getSaveFileName(parent,
                                         QObject::tr("Save the HDR image as..."),
-                                        LuminanceOptions().getDefaultPathHdrInOut() + "/" + suggested_file_name,
+                                        LuminanceOptions().getDefaultPathHdrOut() + "/" + suggested_file_name,
                                         filetypes);
 }
 
@@ -154,7 +154,8 @@ MainWindow::MainWindow(QWidget *parent):
     init();
 }
 
-MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file, const QStringList& inputFileNames,
+MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
+                       const QStringList& inputFileNames,
                        bool needSaving, QWidget *parent):
     QMainWindow(parent),
     m_Ui(new Ui::MainWindow)
@@ -237,16 +238,11 @@ void MainWindow::init()
     setupTM();
     createConnections();
 
-    if ( sm_NumMainWindows == 1 )
-    {
-        // SPLASH SCREEN    ----------------------------------------------------------------------
-        if (luminance_options->value("ShowSplashScreen", true).toBool())
-        {
-            showSplash();
-            //UMessageBox::donationSplashMB();
-        }
-        // END SPLASH SCREEN    ------------------------------------------------------------------
-        
+    if ( sm_NumMainWindows == 1 ) {
+        // SPLASH SCREEN    ---------------------------------------------------
+        showSplash();
+        // UMessageBox::donationSplashMB();
+        // END SPLASH SCREEN    -----------------------------------------------
         UpdateChecker::conditionallyShowUpdateChecker(this);
     }
 
@@ -342,7 +338,7 @@ void MainWindow::createCentralWidget()
 
 void MainWindow::createToolBar()
 {
-    //main toolbars setup
+    // main toolbars setup
     QActionGroup *toolBarOptsGroup = new QActionGroup(this);
     toolBarOptsGroup->addAction(m_Ui->actionText_Under_Icons);
     toolBarOptsGroup->addAction(m_Ui->actionIcons_Only);
@@ -367,7 +363,6 @@ void MainWindow::createMenus()
 {
     // About(s)
     connect(m_Ui->actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
-
     connect(m_Ui->actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 
     // I/O
@@ -465,7 +460,7 @@ void MainWindow::on_fileOpenAction_triggered()
 
     QStringList files = QFileDialog::getOpenFileNames(this,
                                                       tr("Load one or more HDR images..."),
-                                                      luminance_options->getDefaultPathHdrInOut(),
+                                                      luminance_options->getDefaultPathHdrIn(),
                                                       filetypes );
 
     if ( files.isEmpty() ) return;
@@ -474,11 +469,11 @@ void MainWindow::on_fileOpenAction_triggered()
     // All the files are in the same folder, so I pick the first as reference to update the settings
     QFileInfo qfi(files.first());
 
-    luminance_options->setDefaultPathHdrInOut( qfi.path() );
+    luminance_options->setDefaultPathHdrIn( qfi.path() );
 
     foreach (const QString& filename, files)
     {
-        //emit open_hdr_frame(filename);
+        // emit open_hdr_frame(filename);
         QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
                                   Q_ARG(QString, filename));
     }
@@ -528,11 +523,8 @@ void MainWindow::on_fileSaveAsAction_triggered()
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-    if ( g_v->isHDR() )
-    {
-        /*
-         * In this case I'm saving an HDR
-         */
+    if ( g_v->isHDR() ) {
+        // In this case I'm saving an HDR
         QString fname = getHdrFileNameFromSaveDialog(g_v->getFileName(), this);
 
         if ( fname.isEmpty() ) return;
@@ -540,35 +532,28 @@ void MainWindow::on_fileSaveAsAction_triggered()
         QFileInfo qfi(fname);
         QString format = qfi.suffix();
 
+        // Update working folder
+        luminance_options->setDefaultPathHdrOut( qfi.path() );
+
         pfs::Params p;
         if ( format == "tif" || format == "tiff" )
         {
-            TiffModeDialog t(true);
+            TiffModeDialog t(true, this);
             if ( t.exec() == QDialog::Rejected ) return;
-
-#ifndef NDEBUG
-            int tiffMode = t.getTiffWriterMode();
-            cout << "TIFF MODE: " << tiffMode << endl;
-#endif
 
             p.set("tiff_mode", t.getTiffWriterMode());
         }
 
-        // Update working folder
-        luminance_options->setDefaultPathHdrInOut( QFileInfo(fname).path() );
-
-        //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
+        // CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
         QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame",
                                   Qt::QueuedConnection,
                                   Q_ARG(GenericViewer*, dynamic_cast<HdrViewer*>(g_v)),
                                   Q_ARG(QString, fname),
                                   Q_ARG(pfs::Params, p));
     }
-    else
-    {
-        /*
-         * In this case I'm saving an LDR
-         */
+    else {
+        // In this case I'm saving an LDR
+
         LdrViewer* l_v = dynamic_cast<LdrViewer*>(g_v);
 
         if ( l_v == NULL ) return;
@@ -584,10 +569,8 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         luminance_options->setDefaultPathLdrOut( qfi.path() );
 
-        if ( format.isEmpty() )
-        {
-            // default as JPG
-            format    =   "jpg";
+        if ( format.isEmpty() ) {   // default as JPG
+            format          =   "jpg";
             outputFilename  +=  ".jpg";
         }
 
@@ -603,13 +586,8 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         if ( format == "tif" || format == "tiff" )
         {
-            TiffModeDialog t(false);
+            TiffModeDialog t(false, this);
             if ( t.exec() == QDialog::Rejected ) return;
-
-#ifndef NDEBUG
-            int tiffMode = t.getTiffWriterMode();
-            cout << "TIFF MODE: " << tiffMode << endl;
-#endif
 
             p.set("tiff_mode", t.getTiffWriterMode());
         }
@@ -1208,16 +1186,19 @@ void MainWindow::Text_Only()
 
 void MainWindow::showSplash()
 {
-    // TODO: change implementation with a static member of UMessageBox
-    splash = new QDialog(this);
-    splash->setAttribute(Qt::WA_DeleteOnClose);
-    Ui::SplashLuminance ui;
-    ui.setupUi(splash);
-    connect(ui.yesButton, SIGNAL(clicked()), this, SLOT(splashShowDonationsPage()));
-    connect(ui.noButton, SIGNAL(clicked()), this, SLOT(splashClose()));
-    connect(ui.askMeLaterButton, SIGNAL(clicked()), splash, SLOT(close()));
+    if (luminance_options->value("ShowSplashScreen", true).toBool())
+    {
+        // TODO: change implementation with a static member of UMessageBox
+        splash = new QDialog(this);
+        splash->setAttribute(Qt::WA_DeleteOnClose);
+        Ui::SplashLuminance ui;
+        ui.setupUi(splash);
+        connect(ui.yesButton, SIGNAL(clicked()), this, SLOT(splashShowDonationsPage()));
+        connect(ui.noButton, SIGNAL(clicked()), this, SLOT(splashClose()));
+        connect(ui.askMeLaterButton, SIGNAL(clicked()), splash, SLOT(close()));
 
-    splash->show();
+        splash->show();
+    }
 }
 
 void MainWindow::splashShowDonationsPage()
@@ -1391,46 +1372,39 @@ bool MainWindow::maybeSave()
     if ( tm_status.curr_tm_frame->needsSaving() )
     {
         int ret = UMessageBox::saveDialog(
-                tr("Unsaved changes..."),
-                tr("This HDR image has unsaved changes.<br>Do you want to save it?"),
-                this);
+                    tr("Unsaved changes..."),
+                    tr("This HDR image has unsaved changes.<br>Do you want to save it?"),
+                    this);
         switch(ret)
         {
-        case QMessageBox::Save:
-            {
-                  /* if save == success return true;
-                   * else return false;
-                   */
-                QString fname = getHdrFileNameFromSaveDialog(QString(), this);
+        case QMessageBox::Save: {
+            // if save == success return true;
+            // else return false;
+            QString fname = getHdrFileNameFromSaveDialog(QString("Untitled"), this);
 
-                if ( !fname.isEmpty() )
-                {
-                    // Update working folder
-                    QFileInfo qfi(fname);
-                    luminance_options->setDefaultPathHdrInOut(qfi.path());
-
-                    // TODO : can I launch a signal and wait that it gets executed fully?
-                    return m_IOWorker->write_hdr_frame(
-                                dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame),
-                                fname);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            break;
-        case QMessageBox::Discard:
+            if ( !fname.isEmpty() )
             {
-                return true;
+                // Update working folder
+                QFileInfo qfi(fname);
+                luminance_options->setDefaultPathHdrOut(qfi.path());
+
+                // TODO : can I launch a signal and wait that it gets executed fully?
+                return m_IOWorker->write_hdr_frame(
+                            dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame),
+                            fname);
             }
-            break;
-        case QMessageBox::Cancel:
-        default:
+            else
             {
                 return false;
             }
-            break;
+        } break;
+        case QMessageBox::Discard: {
+            return true;
+        } break;
+        case QMessageBox::Cancel:
+        default: {
+            return false;
+        } break;
         }
     }
     else return true;

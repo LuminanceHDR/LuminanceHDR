@@ -31,12 +31,11 @@
 #include "Common/config.h"
 #include "UpdateChecker.h"
 
-UpdateChecker::UpdateChecker(QWidget *parent, QNetworkAccessManager* networkManager):
-    QObject(parent),
-    m_networkManager(networkManager),
-    m_tray(NULL)
-{
-}
+UpdateChecker::UpdateChecker(QWidget *parent, QNetworkAccessManager* networkManager)
+    : QObject(parent)
+    , m_tray(NULL)
+    , m_networkManager(networkManager)
+{}
 
 UpdateChecker::~UpdateChecker() {
     if (m_tray)

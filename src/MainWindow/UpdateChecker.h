@@ -40,14 +40,11 @@ public:
 
 class UpdateChecker : public QObject
 {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-
 	static void conditionallyShowUpdateChecker(MainWindow* parent);
 
     virtual ~UpdateChecker();
-
 signals: 
     void updateAvailable(UpdateAvailableInfo* info);
 
