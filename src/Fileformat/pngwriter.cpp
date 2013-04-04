@@ -20,20 +20,7 @@
  * ----------------------------------------------------------------------
  */
 
-//! \author Franco Comida <fcomida@users.sourceforge.net>
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-
-#if defined(WIN32) || defined(__APPLE__) || defined(__FreeBSD__)
-#define USE_TEMPORARY_FILE
-#endif
-
 #include "pngwriter.h"
-
-#include <QDebug>
-#include <QFile>
-#ifdef USE_TEMPORARY_FILE
-#include <QTemporaryFile>
-#endif
 
 #include <vector>
 #include <iostream>
@@ -88,6 +75,15 @@ struct PngWriterParams
         }
     }
 
+    int compressionLevel() const {
+        int compLevel = (9 - (int)((float)quality_/11.11111f + 0.5f));
+
+        assert(compLevel >= 0);
+        assert(compLevel <= 9);
+
+        return compLevel;
+    }
+
     size_t quality_;
     float minLuminance_;
     float maxLuminance_;
@@ -98,7 +94,7 @@ ostream& operator<<(ostream& out, const PngWriterParams& params)
 {
     stringstream ss;
     ss << "PngWriterParams: [";
-    ss << "quality: " << params.quality_ << ", ";
+    ss << "compression_level: " << params.compressionLevel() << ", ";
     ss << "min_luminance: " << params.minLuminance_ << ", ";
     ss << "max_luminance: " << params.maxLuminance_ << ", ";
     ss << "mapping_method: " << params.luminanceMapping_ << "]";
@@ -106,96 +102,87 @@ ostream& operator<<(ostream& out, const PngWriterParams& params)
     return (out << ss.str());
 }
 
+static
+void png_write_icc_profile(png_structp png_ptr, png_infop info_ptr)
+{
+    cmsUInt32Number profileSize = 0;
+    cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
+    cmsSaveProfileToMem(hsRGB, NULL, &profileSize);        // get the size
+
+#if PNG_LIBPNG_VER_MINOR < 5
+    std::vector<char> profileBuffer(profileSize);
+#else
+    std::vector<unsigned char> profileBuffer(profileSize);
+#endif
+
+    cmsSaveProfileToMem(hsRGB, profileBuffer.data(), &profileSize);
+#ifndef NDEBUG
+    std::clog << "sRGB profile size: " << profileSize << "\n";
+#endif
+
+    // char profileName[5] = "sRGB";
+    png_set_iCCP(png_ptr, info_ptr, "sRGB" /*profileName*/, 0,
+                 profileBuffer.data(), (png_uint_32)profileSize);
+}
+
 class PngWriterImpl
 {
 public:
-    PngWriterImpl()
-        : m_filesize(0)
-    {}
+    PngWriterImpl() : m_filesize(0) {}
+    virtual ~PngWriterImpl()        {}
 
-    virtual ~PngWriterImpl()
-    {}
+    virtual void setupPngDest(png_structp png_ptr) = 0;
 
-    virtual bool open(size_t bufferSize) = 0;
     virtual void close() = 0;
-
-    // get an handle to the underlying FILE*
-    virtual FILE* handle() = 0;
-
-    // compute size (if functionality available)
     virtual void computeSize() = 0;
 
-    size_t getFileSize()
-    { return m_filesize; }
+    size_t getFileSize()            { return m_filesize; }
+    void setFileSize(size_t size)   { m_filesize = size; }
 
     bool write(const pfs::Frame &frame, const PngWriterParams& params)
     {
         png_uint_32 width = frame.getWidth();
         png_uint_32 height = frame.getHeight();
 
-        cmsUInt32Number profile_size = 0;
-
-        cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
-        cmsSaveProfileToMem(hsRGB, NULL, &profile_size);        // get the size
-
-#if PNG_LIBPNG_VER_MINOR < 5
-        std::vector<char> profile_buffer(profile_size);
-#else
-        std::vector<unsigned char> profile_buffer(profile_size);
-#endif
-
-        cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);
-
-        qDebug() << "sRGB profile size: " << profile_size;
-
-        if ( !open(width*height*4 + (width*height*4)*0.1) ) {
-            std::cerr << "Cannot open the output stream";
-            return false;
-        }
-
-        png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
-                                                      NULL, NULL, NULL);
+        png_structp png_ptr =
+                png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
         if (!png_ptr)
         {
-            qDebug() << "PNG: Failed to create write struct";
             close();
+
+            throw io::WriteException("PNG: Failed to create write struct");
             return false;
         }
 
         png_infop info_ptr = png_create_info_struct(png_ptr);
         if (!info_ptr)
         {
-            qDebug() << "PNG: Failed to create info struct";
             png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
             close();
+
+            throw io::WriteException("PNG: Failed to create info struct");
             return false;
         }
 
         if (setjmp(png_jmpbuf(png_ptr)))
         {
-            qDebug() << "PNG: Error writing file";
             png_destroy_write_struct(&png_ptr, &info_ptr);
             close();
+
+            throw io::WriteException("PNG: Error writing file");
             return false;
         }
 
-        png_init_io(png_ptr, handle());
+        setupPngDest(png_ptr);
 
         png_set_IHDR(png_ptr, info_ptr, width, height,
                      8, /*PNG_COLOR_TYPE_RGB_ALPHA*/ PNG_COLOR_TYPE_RGB,
                      PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
                      PNG_FILTER_TYPE_DEFAULT);
 
-        int compression_level = 9 - params.quality_/11.11111;
-
-        png_set_compression_level(png_ptr, compression_level);
-
+        png_set_compression_level(png_ptr, params.compressionLevel());
         png_set_bgr(png_ptr);
-
-        char profileName[5] = "sRGB";
-        png_set_iCCP(png_ptr, info_ptr, profileName, 0,
-                     profile_buffer.data(), (png_uint_32)profile_size);
-
+        png_write_icc_profile(png_ptr, info_ptr);   // user defined function, see above
         png_write_info(png_ptr, info_ptr);
 
         const Channel* rChannel;
@@ -238,85 +225,58 @@ struct PngWriterImplFile : public PngWriterImpl
         , m_filename(filename)
     {}
 
-    bool open(size_t /*bufferSize*/)
-    {
-        m_handle.reset( fopen(m_filename.c_str(), "wb") );
-        if ( m_handle ) return true;
-        return false;
+    void setupPngDest(png_structp png_ptr) {
+        open();
+        png_init_io(png_ptr, handle());
     }
 
-    void close()
-    { m_handle.reset(); }
-
-    FILE* handle()
-    { return m_handle.data(); }
-
-    void computeSize()
-    { m_filesize = 0; }
+    void close()                    { m_handle.reset(); }
+    void computeSize()              { m_filesize = 0; }
 
 private:
+    FILE* handle()                  { return m_handle.data(); }
+
+    void open() {
+        m_handle.reset( fopen(m_filename.c_str(), "wb") );
+        if ( !m_handle ) {
+            throw io::WriteException("Cannot open file " + m_filename);
+        }
+    }
+
     utils::ScopedStdIoFile m_handle;
     std::string m_filename;
 };
+
+typedef std::vector<char> PngBuffer;
+
+static
+void my_png_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
+{
+    PngBuffer* buffer = (PngBuffer*)png_get_io_ptr(png_ptr);
+    size_t newSize = buffer->size() + length;
+
+    buffer->resize(newSize);
+    // copy the data ... it's not really necessary, as I need only the size!
+    std::copy(data, data + length, buffer->end() - length);
+}
 
 struct PngWriterImplMemory : public PngWriterImpl
 {
     PngWriterImplMemory()
         : PngWriterImpl()
+        , m_buffer()
     {}
 
-    bool open(size_t bufferSize)
+    void setupPngDest(png_structp png_ptr)
     {
-#ifdef USE_TEMPORARY_FILE
-        if ( !m_temporaryFile.open() ) {
-            // could not open the temporary file!
-            return false;
-        }
-        QByteArray temporaryFileName = QFile::encodeName( m_temporaryFile.fileName() );
-        m_temporaryFile.close();
-
-        m_handle.reset( fopen(temporaryFileName.constData(), "w+") );
-#else
-        m_temporaryBuffer.resize( bufferSize );
-        // reset all element of the vector to zero!
-        std::fill(m_temporaryBuffer.begin(), m_temporaryBuffer.end(), 0);
-
-        m_handle.reset( fmemopen(m_temporaryBuffer.data(),
-                                 m_temporaryBuffer.size(), "w+") );
-#endif
-        if ( !m_handle ) return false;
-        return true;
+        png_set_write_fn(png_ptr, &m_buffer, my_png_write_data, NULL);
     }
 
-    void close()
-    {  m_handle.reset(); }
-
-    FILE* handle()
-    { return m_handle.data(); }
-
-    void computeSize()
-    {
-#ifdef USE_TEMPORARY_FILE
-        fflush(handle());
-        fseek(handle(), 0, SEEK_END);
-        m_filesize = ftell(handle());
-#else
-        int size = m_temporaryBuffer.size() - 1;
-        for (; size > 0; --size)
-        {
-            if ( m_temporaryBuffer[size] != 0 ) break;
-        }
-        m_filesize = size;
-#endif
-    }
+    void close()            { }
+    void computeSize()      { setFileSize(m_buffer.size()); }
 
 private:
-    utils::ScopedStdIoFile m_handle;
-#ifdef USE_TEMPORARY_FILE
-    QTemporaryFile m_temporaryFile;
-#else
-    std::vector<char> m_temporaryBuffer;
-#endif
+    PngBuffer m_buffer;
 };
 
 PngWriter::PngWriter()

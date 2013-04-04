@@ -18,20 +18,23 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
  */
 
 //! \author Franco Comida <fcomida@users.sourceforge.net>
 //! Initial implementation
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//! Remove dependencies from Qt
+//! - Remove dependencies from Qt
+//! - Adaptation for Luminane HDR and LibHDR
+//! - in-memory writer without any temporary file
 
 #ifndef PNGWRITER_H
 #define PNGWRITER_H
 
 #include <string>
 #include <boost/scoped_ptr.hpp>
+
 #include <Libpfs/params.h>
+#include <Libpfs/io/ioexception.h>
 
 namespace pfs {
 class Frame;
