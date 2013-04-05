@@ -33,7 +33,8 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translatorcomment>Why is HTML code under translation?</translatorcomment>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -63,7 +64,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -72,7 +73,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2012, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -99,15 +100,15 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista dei cambiamenti</translation>
     </message>
     <message>
         <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -288,11 +289,11 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Input folder:</source>
-        <translation>Cartella di input</translation>
+        <translation>Cartella di input:</translation>
     </message>
     <message>
         <source>Output folder:</source>
-        <translation>Cartella di output</translation>
+        <translation>Cartella di output:</translation>
     </message>
     <message>
         <source>Choose a source directory</source>
@@ -312,11 +313,11 @@ Continuare?</translation>
     </message>
     <message>
         <source>Auto-crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-ritaglio</translation>
     </message>
     <message>
         <source>Custom config %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurazione personalizzata %1</translation>
     </message>
 </context>
 <context>
@@ -527,35 +528,35 @@ Continuare?</translation>
     </message>
     <message>
         <source>Output Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato di uscita:</translation>
     </message>
     <message>
         <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <source>TIFF (16 bits)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIFF (16 bits)</translation>
     </message>
     <message>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
+        <translation>PPM</translation>
     </message>
     <message>
         <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
+        <translation>PBM</translation>
     </message>
     <message>
         <source>Luminance HDR tone mapping settings text file (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>File configurazione tone mapping di Luminance HDR (*.txt)</translation>
     </message>
 </context>
 <context>
@@ -759,63 +760,63 @@ Continuare?</translation>
     </message>
     <message>
         <source>-h --help               Display this help.</source>
-        <translation type="unfinished"></translation>
+        <translation>-h --help               Mostra help.</translation>
     </message>
     <message>
         <source>-v --verbose            Print more messages during execution.</source>
-        <translation type="unfinished"></translation>
+        <translation>-v --verbose            Mostra messaggi durante l&apos;esecuzione.</translation>
     </message>
     <message>
         <source>-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation type="unfinished"></translation>
+        <translation>-a --align AIS|MTB      Metodo di allineamento da usare durante la creazione dell&apos;HDR (default: nessun allineamento).</translation>
     </message>
     <message>
         <source>-d --savealigned prefix Save aligned images to files which names start with prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>-d --savealigned prefix Salva le immagini allineate in file che iniziano con prefix</translation>
     </message>
     <message>
         <source>-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).</source>
-        <translation type="unfinished"></translation>
+        <translation>-e --ev EV1,EV2,...     Specifica il valore numerico per  EV (tanti quanti INPUTFILES).</translation>
     </message>
     <message>
         <source>-c --config             HDR creation config. Possible values: </source>
-        <translation type="unfinished"></translation>
+        <translation>-c --config             Processo creazione HDR. Valori possibili:</translation>
     </message>
     <message>
         <source>-l --load HDR_FILE      Load an HDR instead of creating a new one. </source>
-        <translation type="unfinished"></translation>
+        <translation>-l --load HDR_FILE      Carica un HDR invece di crearne uno nuovo.</translation>
     </message>
     <message>
         <source>-s --save HDR_FILE      Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation type="unfinished"></translation>
+        <translation>-s --save HDR_FILE      Salva in un formato HDR. (default: nessun salvataggio) </translation>
     </message>
     <message>
         <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
-        <translation type="unfinished"></translation>
+        <translation>-g --gamma VALUE        Gamma da utilizzare durante il tone mapping. (default: 1) </translation>
     </message>
     <message>
         <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation type="unfinished"></translation>
+        <translation>-r --resize VALUE       Larghezza alla quale vuole ridimensione l&apos;HDR (ridimensionamento applicato prima del gamma e del tone mapping)</translation>
     </message>
     <message>
         <source>-t --tmo                Tone mapping operator. Legal values are: </source>
-        <translation type="unfinished"></translation>
+        <translation>-t --tmo                Operatore Tone mapping. Valori possibili sono: </translation>
     </message>
     <message>
         <source>-p --tmoptions          Tone mapping operator options. Legal values are: </source>
-        <translation type="unfinished"></translation>
+        <translation>-p --tmoptions          Opzioni operatori Tone mapping. Valori possibili sono: </translation>
     </message>
     <message>
         <source>-o --output LDR_FILE    File name you want to save your tone mapped LDR to.</source>
-        <translation type="unfinished"></translation>
+        <translation>-o --output LDR_FILE    Name del file in cui salvare l&apos;immagine dopo il tone mapping.</translation>
     </message>
     <message>
         <source>-q --quality VALUE      Quality of the saved tone mapped file (0-100).</source>
-        <translation type="unfinished"></translation>
+        <translation>-q --quality VALUE      Qualità dell&apos;immagine che contiene il tone mapping (0-100).</translation>
     </message>
     <message>
         <source>                        (No tonemapping is performed unless -o is specified).</source>
-        <translation type="unfinished"></translation>
+        <translation>                        (Nessun tonemapping verrà effettuato senza specificare -o).</translation>
     </message>
 </context>
 <context>
@@ -865,19 +866,20 @@ Continuare?</translation>
     </message>
     <message>
         <source>Maskable</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>:S</translatorcomment>
+        <translation>Mascherabile</translation>
     </message>
     <message>
         <source>Good image</source>
-        <translation type="unfinished"></translation>
+        <translation>Immagine di riferimento</translation>
     </message>
     <message>
         <source>Ed&amp;itable</source>
-        <translation type="unfinished">Ed&amp;itabile</translation>
+        <translation>Mod&amp;ificabile</translation>
     </message>
     <message>
         <source>R&amp;eference</source>
-        <translation type="unfinished">&amp;Riferimento</translation>
+        <translation>&amp;Riferimento</translation>
     </message>
 </context>
 <context>
@@ -1100,7 +1102,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;L&apos;immagine correntemente selezionata e&apos; quella che puoi traslare e&apos; che e&apos; possibile marcare con una maschera anti-ghosting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;L&apos;immagine correntemente selezionata è quella che puoi traslare e su cui puoi disegnare una maschera anti-ghosting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -1110,7 +1112,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;L&apos;immagine correntemente selezionata in questa lista funge da posizione di riferimento per l&apos;immagine editabile&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;L&apos;immagine correntemente selezionata in questa lista è la posizione di riferimento per l&apos;immagine editabile&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -1130,7 +1132,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qui e&apos; possibilie visualizzare e settare i valori di shift per l&apos;immagine editabile correntemente selezionata&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qui è possibilie visualizzare e settare i valori di traslazione per l&apos;immagine editabile correntemente selezionata&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Shift values for editable image</source>
@@ -1156,47 +1158,47 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Modalità:</translation>
     </message>
     <message>
         <source>Brush</source>
-        <translation type="unfinished"></translation>
+        <translation>Pennello</translation>
     </message>
     <message>
         <source>Lasso</source>
-        <translation type="unfinished"></translation>
+        <translation>Lazo</translation>
     </message>
     <message>
         <source>Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Maschera</translation>
     </message>
     <message>
         <source>A&amp;dd</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;ggiungi</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation type="unfinished">&amp;Rimuovi</translation>
+        <translation>&amp;Rimuovi</translation>
     </message>
     <message>
         <source>Lasso - Draw a free hand selection area</source>
-        <translation type="unfinished"></translation>
+        <translation>Lazo - Disegna una selezione a mano libera</translation>
     </message>
     <message>
         <source>Brush - Paint the mask using the brush</source>
-        <translation type="unfinished"></translation>
+        <translation>Pennello - Disegna una maschera usando il pennello</translation>
     </message>
     <message>
         <source>Save mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva maschera</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Apply saved mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Applica la maschera salvata</translation>
     </message>
 </context>
 <context>
@@ -1675,7 +1677,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Auto-crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-ritaglio</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1696,26 +1698,27 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Save Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva parametri</translation>
     </message>
     <message>
         <source>Custom config %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurazione personalizzata %1</translation>
     </message>
     <message>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
 the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ATTENZIONE:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR non è stato capace di trovare i dati &lt;i&gt;EXIF&lt;/i&gt; per le seguenti immagini:
+ &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;Puoi ancora procedere alla creazione di un HDR, definendo &lt;b&gt;manualmente &lt;/b&gt; il valore EV (exposure values) o la differenza in F/Stops.        &lt;hr&gt;Se vuoi che Luminance HDR faccia questo &lt;b&gt;automaticamente&lt;/b&gt;, devi caricare immagini che abbiano almeno i seguenti dati EXIF::         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;NOTA:&lt;/b&gt; Generalmente i dati EXIF vengono persi durante la postproduzione delle immagini.&lt;br&gt;        Puoi effettuare una copia &lt;b&gt;uno-a-uno dei dati exif&lt;/b&gt; tra due set di immagini utilizzando l&apos;opzione:&lt;i&gt;&lt;b&gt;&quot;Strumenti-&gt;Copia Dati Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
         <source>From File: </source>
-        <translation type="unfinished"></translation>
+        <translation>Da file: </translation>
     </message>
 </context>
 <context>
@@ -1934,11 +1937,11 @@ Vuoi aprire il link con l&apos; applicazione predefinita associata con il protoc
     </message>
     <message>
         <source>File size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione file</translation>
     </message>
     <message>
         <source>Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualità</translation>
     </message>
 </context>
 <context>
@@ -2582,41 +2585,42 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Soft Proofing</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Gamut Check</source>
-        <translation type="unfinished"></translation>
+        <translation>Controllo Gamut</translation>
     </message>
     <message>
         <source>Preview Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Panello Anteprima</translation>
     </message>
     <message>
         <source>Show on the right</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra alla destra</translation>
     </message>
     <message>
         <source>Show on the bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra in basso</translation>
     </message>
     <message>
         <source>Realtime Previews</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna</translation>
     </message>
     <message>
         <source>Fattal Warning</source>
-        <translation type="unfinished">Avvertimento per Fattal</translation>
+        <translation>Avvertimento per Fattal</translation>
     </message>
     <message>
         <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
 
 Do you want to continue?</source>
-        <translation type="unfinished">Questo operatore di tomemapping dipende dalle dimensioni delle immagini in input. Applicando l&apos;operatore all&apos;immagine intera produrrà probabilmente un risultato differente.
+        <translation>Questo operatore di tomemapping dipende dalle dimensioni delle immagini in input. Applicando l&apos;operatore all&apos;immagine intera produrrà probabilmente un risultato differente.
+
 Vuoi continuare?</translation>
     </message>
 </context>
@@ -3202,26 +3206,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Saves the settings along the program files, to be portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva i parametri insieme ai file del programma, in modo da essere portable</translation>
     </message>
     <message>
         <source>Portable mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modalità portable</translation>
     </message>
     <message>
         <source>Restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Riavvia</translation>
     </message>
     <message>
         <source>For the settings to take effect, please restart the application!</source>
-        <translation type="unfinished"></translation>
+        <translation>Affinchè i nuovi settaggi abbiano effetto, per favore riavvia l&apos;applicazione!</translation>
     </message>
 </context>
 <context>
     <name>PreviewSettings</name>
     <message>
         <source>Load settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica parametri</translation>
     </message>
 </context>
 <context>
@@ -3422,47 +3426,47 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>PreGamma=%1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished"></translation>
+        <translation>Equalizza contrasto</translation>
     </message>
     <message>
         <source>Contrast</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrasto</translation>
     </message>
     <message>
         <source>Saturation</source>
-        <translation type="unfinished">Saturazione</translation>
+        <translation>Saturazione</translation>
     </message>
     <message>
         <source>Detail</source>
-        <translation type="unfinished"></translation>
+        <translation>Dettaglio</translation>
     </message>
     <message>
         <source>Luminance Level</source>
-        <translation type="unfinished">Livello luminanza</translation>
+        <translation>Livello Luminanza</translation>
     </message>
     <message>
         <source>Luminance Level=Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Livello Luminanza=Auto</translation>
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Saturazione colore</translation>
+        <translation>Saturazione colore</translation>
     </message>
     <message>
         <source>Contrast Enhancement</source>
-        <translation type="unfinished">Miglioramento contrasto</translation>
+        <translation>Miglioramento contrasto</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation type="unfinished">Alpha</translation>
+        <translation>Alpha</translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
+        <translation>Beta</translation>
     </message>
     <message>
         <source>NoiseRedux</source>
@@ -3478,51 +3482,51 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Equation 2</source>
-        <translation type="unfinished">Equazione 2</translation>
+        <translation>Equazione 2</translation>
     </message>
     <message>
         <source>Equation 4</source>
-        <translation type="unfinished">Equazione 4</translation>
+        <translation>Equazione 4</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Locale</translation>
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
+        <translation>Bias</translation>
     </message>
     <message>
         <source>Spatial</source>
-        <translation type="unfinished"></translation>
+        <translation>Spaziale</translation>
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Intervallo</translation>
+        <translation>Intervallo</translation>
     </message>
     <message>
         <source>Base</source>
-        <translation type="unfinished"></translation>
+        <translation>Base</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Moltiplicatore</translation>
+        <translation>Moltiplicatore</translation>
     </message>
     <message>
         <source>AutoLuminance</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoLuminance</translation>
     </message>
     <message>
         <source>Cone</source>
-        <translation type="unfinished"></translation>
+        <translation>Coni</translation>
     </message>
     <message>
         <source>Rod</source>
-        <translation type="unfinished"></translation>
+        <translation>Bastoncelli</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Key</translation>
     </message>
     <message>
         <source>Phi</source>
@@ -3542,15 +3546,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Luminosità</translation>
+        <translation>Luminosità</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Adattamento cromatico</translation>
+        <translation>Adattamento cromatico</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Adattamento luce</translation>
+        <translation>Adattamento luce</translation>
     </message>
 </context>
 <context>
@@ -3636,15 +3640,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
+        <translation>Bias</translation>
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation type="unfinished">Spatial kernel sigma</translation>
+        <translation>Spatial Kernel Sigma</translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation type="unfinished">Range kernel sigma</translation>
+        <translation>Range Kernel Sigma</translation>
     </message>
     <message>
         <source>Base Contrast</source>
@@ -3808,7 +3812,7 @@ p, li { white-space: pre-wrap; }
     <name>TiffModeDialog</name>
     <message>
         <source>Save as ...TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva come ...TIFF</translation>
     </message>
 </context>
 <context>
@@ -4200,46 +4204,46 @@ automatici</translation>
     </message>
     <message>
         <source>Version 2.3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>Versione 2.3.0</translation>
     </message>
 </context>
 <context>
     <name>TonemappingSettings</name>
     <message>
         <source>Load Custom Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica Parametri Personalizzati</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordina per</translation>
     </message>
     <message>
         <source>Comments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Commenti:</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished">Commento</translation>
+        <translation>Commento</translation>
     </message>
     <message>
         <source>Operator</source>
-        <translation type="unfinished">Operatore</translation>
+        <translation>Operatore</translation>
     </message>
     <message>
         <source>Most Useful Operators</source>
-        <translation type="unfinished"></translation>
+        <translation>Operatori più utilizzati</translation>
     </message>
     <message>
         <source>Tonemap</source>
-        <translation type="unfinished">Tonemap</translation>
+        <translation>Tonemap</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancella</translation>
     </message>
 </context>
 <context>
@@ -4361,15 +4365,15 @@ automatici</translation>
     <name>UpdateChecker</name>
     <message>
         <source>A new release is ready for download!</source>
-        <translation type="unfinished"></translation>
+        <translation>Una nuova versione è pronta per il download!</translation>
     </message>
     <message>
         <source>Click to download, or select Help-&gt;Update!</source>
-        <translation type="unfinished"></translation>
+        <translation>Clicca per scaricare, o seleziona Aiuto-&gt;Aggiorna!</translation>
     </message>
     <message>
         <source>Do you want to open the webpage for download now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi aprire una pagina web per il download adesso?</translation>
     </message>
 </context>
 </TS>
