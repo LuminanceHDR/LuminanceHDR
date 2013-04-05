@@ -2675,7 +2675,7 @@ Vil du fortsætte?</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdatér</translation>
     </message>
 </context>
 <context>
@@ -3280,7 +3280,7 @@ p, li { white-space: pre-wrap; }
     <name>PreviewSettings</name>
     <message>
         <source>Load settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Indlæs indstillinger</translation>
     </message>
 </context>
 <context>
@@ -3481,135 +3481,135 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>PreGamma=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>PræGamma=%1</translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Kontrast-equalisering</translation>
+        <translation>Kontrast-equalisering</translation>
     </message>
     <message>
         <source>Contrast</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrast</translation>
     </message>
     <message>
         <source>Saturation</source>
-        <translation type="unfinished">Farvemætning</translation>
+        <translation>Farvemætning</translation>
     </message>
     <message>
         <source>Detail</source>
-        <translation type="unfinished"></translation>
+        <translation>Detaljer</translation>
     </message>
     <message>
         <source>Luminance Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminansniveau</translation>
     </message>
     <message>
         <source>Luminance Level=Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminansniveau=Auto</translation>
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Farvemætning</translation>
+        <translation>Farvemætning</translation>
     </message>
     <message>
         <source>Contrast Enhancement</source>
-        <translation type="unfinished">Kontrastforbedring</translation>
+        <translation>Kontrastforbedring</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation type="unfinished">Alfa</translation>
+        <translation>Alfa</translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
+        <translation>Beta</translation>
     </message>
     <message>
         <source>NoiseRedux</source>
-        <translation type="unfinished"></translation>
+        <translation>StøjRedux</translation>
     </message>
     <message>
         <source>FFTSolver</source>
-        <translation type="unfinished"></translation>
+        <translation>FFTSolver</translation>
     </message>
     <message>
         <source>simple</source>
-        <translation type="unfinished"></translation>
+        <translation>simpel</translation>
     </message>
     <message>
         <source>Equation 2</source>
-        <translation type="unfinished">Ligning 2</translation>
+        <translation>Ligning 2</translation>
     </message>
     <message>
         <source>Equation 4</source>
-        <translation type="unfinished">Ligning 4</translation>
+        <translation>Ligning 4</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokal</translation>
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
+        <translation>Bias</translation>
     </message>
     <message>
         <source>Spatial</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumlig</translation>
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Interval</translation>
+        <translation>Interval</translation>
     </message>
     <message>
         <source>Base</source>
-        <translation type="unfinished"></translation>
+        <translation>Base</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Multiplikator</translation>
+        <translation>Multiplikator</translation>
     </message>
     <message>
         <source>AutoLuminance</source>
-        <translation type="unfinished"></translation>
+        <translation>AutoLuminans</translation>
     </message>
     <message>
         <source>Cone</source>
-        <translation type="unfinished"></translation>
+        <translation>Kegle</translation>
     </message>
     <message>
         <source>Rod</source>
-        <translation type="unfinished"></translation>
+        <translation>Rod</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Nøgle</translation>
     </message>
     <message>
         <source>Phi</source>
-        <translation type="unfinished">Phi</translation>
+        <translation>Phi</translation>
     </message>
     <message>
         <source>Scales:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalaer:</translation>
     </message>
     <message>
         <source>Lower</source>
-        <translation type="unfinished"></translation>
+        <translation>Lav</translation>
     </message>
     <message>
         <source>Upper</source>
-        <translation type="unfinished"></translation>
+        <translation>Høj</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Lysstyrke</translation>
+        <translation>Lysstyrke</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Kromatisk adaptering</translation>
+        <translation>Kromatisk adaptering</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Lysadaptering</translation>
+        <translation>Lysadaptering</translation>
     </message>
 </context>
 <context>
@@ -3867,7 +3867,7 @@ p, li { white-space: pre-wrap; }
     <name>TiffModeDialog</name>
     <message>
         <source>Save as ...TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem som ...TIFF</translation>
     </message>
 </context>
 <context>
@@ -4288,15 +4288,15 @@ Fejl: %1</translation>
     </message>
     <message>
         <source>Comments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommentarer:</translation>
     </message>
     <message>
         <source>Tonemap</source>
-        <translation type="unfinished">Tone map</translation>
+        <translation>Tone map</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Indlæs</translation>
     </message>
 </context>
 <context>
@@ -4418,15 +4418,15 @@ Fejl: %1</translation>
     <name>UpdateChecker</name>
     <message>
         <source>A new release is ready for download!</source>
-        <translation type="unfinished"></translation>
+        <translation>En ny udgivelse er klar til download!</translation>
     </message>
     <message>
         <source>Click to download, or select Help-&gt;Update!</source>
-        <translation type="unfinished"></translation>
+        <translation>Klik for at downloade, eller vælg Hjælp-&gt;Opdatér!</translation>
     </message>
     <message>
         <source>Do you want to open the webpage for download now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vil du åbne websiden for download nu?</translation>
     </message>
 </context>
 </TS>
