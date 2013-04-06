@@ -54,9 +54,10 @@ public:
 
     static void about(QWidget* parent = 0);
 
-    static int warning(QString title, QString description, QWidget* parent = 0);
+    static int warning(const QString& title, const QString& description, QWidget* parent = 0);
+    static int question(const QString& title, const QString& description, QWidget* parent = 0);
 
-    static int saveDialog(QString title, QString description, QWidget* parent = 0);
+    static int saveDialog(const QString& title, const QString& description, QWidget* parent = 0);
 
     /*
    * Function not yet used, it will... :)

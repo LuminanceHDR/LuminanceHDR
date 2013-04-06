@@ -44,6 +44,7 @@
 #include <QThread>
 #include <QProgressBar>
 #include <QScrollArea>
+#include <QScopedPointer>
 
 #include "Common/LuminanceOptions.h"
 
@@ -67,7 +68,8 @@ class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
 class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
 class TMWorker;
 
-class UpdateAvailableInfo; // #include "MainWindow/UpdateChecker.h"
+
+class UpdateChecker;        // #include "MainWindow/UpdateChecker.h"
 
 class MainWindow: public QMainWindow
 {
@@ -173,7 +175,7 @@ protected Q_SLOTS:
     void splashShowDonationsPage();
     void splashClose();
 
-    void on_updateAvailable(UpdateAvailableInfo* info);
+    void on_updateAvailable();
     void on_actionUpdateAvailable_triggered();
 
     // TM
@@ -294,7 +296,7 @@ private:
     // Tone Mapping Panel
     TonemappingPanel *tmPanel;
     
-    UpdateAvailableInfo* m_UpdateInfo;
+    static QScopedPointer<UpdateChecker> sm_updateChecker;
 };
 
 #endif // MAINWINDOW_H

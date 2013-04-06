@@ -29,35 +29,28 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-#include "MainWindow.h"
-
-class UpdateAvailableInfo
-{
-public:
-    QString version;
-    QString url;
-};
-
 class UpdateChecker : public QObject
 {
     Q_OBJECT
 public:
-	static void conditionallyShowUpdateChecker(MainWindow* parent);
-
+    UpdateChecker(QWidget *parent);
     virtual ~UpdateChecker();
-signals: 
-    void updateAvailable(UpdateAvailableInfo* info);
 
-protected: 
-    UpdateChecker(QWidget *parent, QNetworkAccessManager* networkManager);
+public slots:
+    void trayMessageClicked() const;
 
 protected slots:
-    void trayMessageClicked();
     void requestFinished(QNetworkReply*);
+
+signals:
+    void updateAvailable();
 
 private:
     QSystemTrayIcon* m_tray;
-    QString latestUrl;
     QNetworkAccessManager* m_networkManager;
+
+    QString m_latestUrl;
+    QString m_version;
 };
+
 #endif

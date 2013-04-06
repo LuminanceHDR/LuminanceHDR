@@ -26,33 +26,34 @@
 #include <QMessageBox>
 #include <QNetworkRequest>
 
-
 #include "Common/global.h"
 #include "Common/config.h"
+#include "UI/UMessageBox.h"
 #include "UpdateChecker.h"
 
-UpdateChecker::UpdateChecker(QWidget *parent, QNetworkAccessManager* networkManager)
+UpdateChecker::UpdateChecker(QWidget *parent) //, QNetworkAccessManager* networkManager)
     : QObject(parent)
-    , m_tray(NULL)
-    , m_networkManager(networkManager)
-{}
+    , m_tray(new QSystemTrayIcon(parent->windowIcon()))
+    , m_networkManager(new QNetworkAccessManager())
+{
+    connect(this, SIGNAL(updateAvailable()), parent, SLOT(on_updateAvailable()));
+    connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
+    connect(m_tray, SIGNAL(messageClicked()), this, SLOT(trayMessageClicked()));
+    connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayMessageClicked()));
 
-UpdateChecker::~UpdateChecker() {
-    if (m_tray)
-    {
-        m_tray->hide();
-        m_tray->deleteLater();
-        m_networkManager->deleteLater();
-    }
+    m_networkManager->get(QNetworkRequest(QUrl(QString("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM))));
 }
 
-void UpdateChecker::trayMessageClicked()
-{
-    QDesktopServices::openUrl(QUrl(latestUrl));
+UpdateChecker::~UpdateChecker() {
     m_tray->hide();
     m_tray->deleteLater();
-    m_tray = NULL;
-    this->deleteLater();
+    m_networkManager->deleteLater();
+}
+
+void UpdateChecker::trayMessageClicked() const
+{
+    QDesktopServices::openUrl(QUrl(m_latestUrl));
+    m_tray->hide();
 }
 
 void UpdateChecker::requestFinished(QNetworkReply* reply)
@@ -75,42 +76,43 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
             QDomNode nodeUrl = nodeRoot.firstChildElement("url");
             if (!nodeVersion.isNull() && !nodeUrl.isNull())
             {
-                QString version = nodeVersion.toElement().text();
-                latestUrl = nodeUrl.toElement().text();
+                m_version = nodeVersion.toElement().text();
+                m_latestUrl = nodeUrl.toElement().text();
                 
-                QString msgTitle = QString("Luminance HDR %1").arg(version);
+                if (m_version == LUMINANCEVERSION) return;
+
+                qDebug() << m_version;
+
+                QString msgTitle = QString("Luminance HDR %1").arg(m_version);
                 QString msgContent = tr("A new release is ready for download!");
                 QWidget* widgetP = (QWidget*)parent();
 
-                UpdateAvailableInfo* info = new UpdateAvailableInfo();
-                info->version = version;
-                info->url = latestUrl;
-                emit updateAvailable(info);
+                emit updateAvailable();
 
+#ifdef Q_WS_MAC
+                if ( UMessageBox::question(msgTitle, msgContent + "\n\n" +
+                                      tr("Do you want to open the webpage for download now?"),
+                                           widgetP)
+                     == QMessageBox::Yes )
+                {
+                    trayMessageClicked();
+                }
+#else
                 if (QSystemTrayIcon::supportsMessages())
                 {
-                    m_tray = new QSystemTrayIcon(widgetP->windowIcon(), this);
                     m_tray->setToolTip(widgetP->windowTitle());
                     m_tray->show();
-                    connect(m_tray, SIGNAL(messageClicked()), this, SLOT(trayMessageClicked()));
-                    connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayMessageClicked()));
-
-                    m_tray->showMessage(msgTitle, msgContent + "\n" + tr("Click to download, or select Help->Update!"));
+                    m_tray->showMessage(msgTitle, msgContent + "\n" +
+                                        tr("Click to download, or select Help->Update!"));
                 }
                 else
                 {
-                    QMessageBox::question(widgetP, msgTitle, msgContent + "\n\n" + tr("Do you want to open the webpage for download now?"),
-                        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                    QMessageBox::question(widgetP, msgTitle, msgContent + "\n\n" +
+                                          tr("Do you want to open the webpage for download now?"),
+                                          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
                 }
+#endif
             }        
         }
     }
-}
-
-void UpdateChecker::conditionallyShowUpdateChecker(MainWindow* parent) {
-    QNetworkAccessManager* manager = new QNetworkAccessManager();
-    UpdateChecker* dl = new UpdateChecker(parent, manager);
-    connect(dl, SIGNAL(updateAvailable(UpdateAvailableInfo*)), parent, SLOT(on_updateAvailable(UpdateAvailableInfo*)));
-    connect(manager, SIGNAL(finished(QNetworkReply*)), dl, SLOT(requestFinished(QNetworkReply*)));
-    manager->get(QNetworkRequest(QUrl(QString("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM))));
 }

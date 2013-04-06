@@ -126,7 +126,7 @@ void UMessageBox::about(QWidget* parent)
     about->show();
 }
 
-int UMessageBox::warning(QString title, QString description, QWidget* parent)
+int UMessageBox::warning(const QString &title, const QString &description, QWidget* parent)
 {
     UMessageBox WarningMsgBox(parent);
     WarningMsgBox.setText(title);
@@ -138,7 +138,19 @@ int UMessageBox::warning(QString title, QString description, QWidget* parent)
     return WarningMsgBox.exec();
 }
 
-int UMessageBox::saveDialog(QString title, QString description, QWidget* parent)
+int UMessageBox::question(const QString &title, const QString &description, QWidget* parent)
+{
+    UMessageBox questionMsgBox(parent);
+    questionMsgBox.setText(title);
+    questionMsgBox.setInformativeText(description);
+    questionMsgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    questionMsgBox.setDefaultButton(QMessageBox::No);
+    questionMsgBox.setIcon(QMessageBox::Question);
+
+    return questionMsgBox.exec();
+}
+
+int UMessageBox::saveDialog(const QString &title, const QString &description, QWidget* parent)
 {
     UMessageBox WarningMsgBox(parent);
     WarningMsgBox.setText(title);

@@ -145,7 +145,10 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
 }
 }
 
+// static members!
 int MainWindow::sm_NumMainWindows = 0;
+QScopedPointer<UpdateChecker> MainWindow::sm_updateChecker;
+
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
@@ -183,9 +186,11 @@ MainWindow::~MainWindow()
         luminance_options->setValue("MainWindowBottomSplitterState", m_bottom_splitter->saveState());
         luminance_options->setValue("MainWindowBottomSplitterGeometry", m_bottom_splitter->saveGeometry());
 
-        //wait for the working thread to finish
+        // wait for the working thread to finish
         m_IOThread->wait(500);
         m_TMThread->wait(500);
+
+        sm_updateChecker.reset();
     }
 
     clearRecentFileActions();
@@ -202,7 +207,6 @@ void MainWindow::init()
     num_ldr_generated = 0;
     curr_num_ldr_open = 0;
     splash = 0;
-    m_UpdateInfo = 0;
 
     if ( sm_NumMainWindows == 1 )
     {
@@ -243,7 +247,7 @@ void MainWindow::init()
         showSplash();
         // UMessageBox::donationSplashMB();
         // END SPLASH SCREEN    -----------------------------------------------
-        UpdateChecker::conditionallyShowUpdateChecker(this);
+        sm_updateChecker.reset(new UpdateChecker(this));
     }
 
     OsIntegration::getInstance().init(this);
@@ -1213,17 +1217,16 @@ void MainWindow::splashClose()
     splash->close();
 }
 
-void MainWindow::on_updateAvailable(UpdateAvailableInfo* info)
+void MainWindow::on_updateAvailable()
 {
-    m_UpdateInfo = info;
     m_Ui->actionUpdateAvailable->setVisible(true);
 }
 
 void MainWindow::on_actionUpdateAvailable_triggered()
 {
-    if (m_UpdateInfo)
+    if (sm_updateChecker)
     {
-        QDesktopServices::openUrl(QUrl(m_UpdateInfo->url));
+        sm_updateChecker->trayMessageClicked();
     }
 }
 
