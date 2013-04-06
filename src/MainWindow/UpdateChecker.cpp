@@ -23,7 +23,6 @@
 #include <QDebug>
 #include <QDomDocument>
 #include <QDesktopServices>
-#include <QMessageBox>
 #include <QNetworkRequest>
 
 #include "Common/global.h"
@@ -89,7 +88,7 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
 
                 emit updateAvailable();
 
-#ifdef Q_WS_MAC
+#if defined(Q_WS_MAC) || defined(Q_WS_X11)
                 if ( UMessageBox::question(msgTitle, msgContent + "\n\n" +
                                       tr("Do you want to open the webpage for download now?"),
                                            widgetP)
@@ -107,9 +106,13 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
                 }
                 else
                 {
-                    QMessageBox::question(widgetP, msgTitle, msgContent + "\n\n" +
+                    if ( UMessageBox::question(msgTitle, msgContent + "\n\n" +
                                           tr("Do you want to open the webpage for download now?"),
-                                          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                                               widgetP)
+                         == QMessageBox::Yes )
+                    {
+                        trayMessageClicked();
+                    }
                 }
 #endif
             }        
