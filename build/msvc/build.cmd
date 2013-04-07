@@ -1,10 +1,24 @@
 @echo off
 SETLOCAL
 
-SET EXIV2_COMMIT=2984
-SET LIBJPEG_COMMIT=921
-SET LIBRAW_COMMIT=968c975
-SET LIBRAW_COMMIT_LONG=968c975e21870df390bca95f801ffef6b477e3ba
+REM http://dev.exiv2.org/projects/exiv2/repository/
+SET EXIV2_COMMIT=3015
+REM sourceforge.net/p/libjpeg-turbo/code/
+SET LIBJPEG_COMMIT=942
+
+
+rem https://github.com/madler/zlib/commits
+rem SET ZLIB_COMMIT=0b16609
+rem SET ZLIB_COMMIT_LONG=0b166094092efa2b92200cbb67f390e86c181ab4
+SET ZLIB_COMMIT=b06dee4
+SET ZLIB_COMMIT_LONG=b06dee43696b5057ee8e1b9700655ad9e7d89669
+
+
+SET LCMS_COMMIT=cde00fd
+SET LCMS_COMMIT_LONG=cde00fd7dbe74e275aceb4a9055bbb1ae6bf93b2
+
+SET LIBRAW_COMMIT=869ed7e
+SET LIBRAW_COMMIT_LONG=869ed7e2ebca24c654401008903f188ac3e0d287
 SET LIBRAW_DEMOS2_COMMIT=028c410
 SET LIBRAW_DEMOS2_COMMIT_LONG=028c41031044c8f2bece04c3fb68d2d01368b7ae
 SET LIBRAW_DEMOS3_COMMIT=f089589
@@ -107,11 +121,15 @@ GOTO error_end
 IF NOT DEFINED Configuration (
 	set Configuration=Release
 )
+IF NOT DEFINED ConfigurationLuminance (
+	set ConfigurationLuminance=RelWithDebInfo
+)
 
 cls
 echo.
 echo.--- %VS_CMAKE% ---
 echo.Configuration = %Configuration%
+echo.ConfigurationLuminance = %ConfigurationLuminance%
 echo.Platform = %Platform% (%RawPlatform%)
 echo.
 
@@ -136,17 +154,17 @@ IF NOT EXIST %TEMP_DIR%\align_image_stack_%RawPlatform%.exe (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/align_image_stack_%RawPlatform%.exe qtpfsgui.sourceforge.net/win/align_image_stack_%RawPlatform%.exe
 )
 
-IF NOT EXIST %TEMP_DIR%\zlib-aa566e.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib-aa566e.zip --no-check-certificate http://github.com/madler/zlib/zipball/aa566e86c46d2264bf623e51f5840bde642548ad
+IF NOT EXIST %TEMP_DIR%\zlib-%ZLIB_COMMIT%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip --no-check-certificate http://github.com/madler/zlib/zipball/%ZLIB_COMMIT_LONG%
 )
 
-IF NOT EXIST zlib-aa566e (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib-aa566e.zip
-	%CYGWIN_DIR%\bin\mv.exe madler-zlib-* zlib-aa566e
+IF NOT EXIST zlib-%ZLIB_COMMIT% (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip
+	%CYGWIN_DIR%\bin\mv.exe madler-zlib-* zlib-%ZLIB_COMMIT%
 	
 	REM zlib must be compiled in the source folder, else exiv2 compilation
 	REM fails due to zconf.h rename/compile problems, due to cmake
-	pushd zlib-aa566e
+	pushd zlib-%ZLIB_COMMIT%
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"
 	IF errorlevel 1 goto error_end
 	devenv zlib.sln /build "%Configuration%|%Platform%" /Project zlib
@@ -154,15 +172,15 @@ IF NOT EXIST zlib-aa566e (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\lpng1513.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng1513.zip http://sourceforge.net/projects/libpng/files/libpng15/1.5.13/lpng1513.zip/download
+IF NOT EXIST %TEMP_DIR%\lpng161.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng161.zip http://sourceforge.net/projects/libpng/files/libpng16/1.6.1/lpng161.zip/download
 )
-IF NOT EXIST lpng1513 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng1513.zip
-	pushd lpng1513
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DZLIB_ROOT=..\zlib-aa566e;..\zlib-aa566e\%Configuration%
+IF NOT EXIST lpng161 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng161.zip
+	pushd lpng161
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DZLIB_ROOT=..\zlib-%ZLIB_COMMIT%;..\zlib-%ZLIB_COMMIT%\%Configuration%
 	IF errorlevel 1	goto error_end
-	devenv libpng.sln /build "%Configuration%|%Platform%" /Project png15
+	devenv libpng.sln /build "%Configuration%|%Platform%" /Project png16
 	IF errorlevel 1	goto error_end
 	popd
 )
@@ -186,7 +204,7 @@ IF NOT EXIST exiv2-%EXIV2_COMMIT% (
 	%CYGWIN_DIR%\bin\svn.exe co -r %EXIV2_COMMIT% svn://dev.exiv2.org/svn/trunk exiv2-%EXIV2_COMMIT%
     
     pushd exiv2-%EXIV2_COMMIT%
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"  -DZLIB_ROOT=..\zlib-aa566e;..\zlib-aa566e\Release
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"  -DZLIB_ROOT=..\zlib-%ZLIB_COMMIT%;..\zlib-%ZLIB_COMMIT%\Release
 	IF errorlevel 1 goto error_end
 	devenv exiv2.sln /build "%Configuration%|%Platform%" /Project exiv2
 	IF errorlevel 1 goto error_end
@@ -200,7 +218,7 @@ IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
         mkdir libjpeg-turbo-%LIBJPEG_COMMIT%.build
     )
 	pushd libjpeg-turbo-%LIBJPEG_COMMIT%.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" -DWITH_JPEG8=TRUE -DWITH_MEM_SRCDST=FALSE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" -DWITH_JPEG8=TRUE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	IF errorlevel 1 goto error_end
 	devenv libjpeg-turbo.sln /build "%Configuration%|%Platform%"
 	IF errorlevel 1 goto error_end
@@ -208,16 +226,16 @@ IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\lcms2-493aac.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-493aac.zip --no-check-certificate https://github.com/mm2/Little-CMS/zipball/493aac084b7df46e24ec86ffb6395e5d11cddfba
+IF NOT EXIST %TEMP_DIR%\lcms2-%LCMS_COMMIT%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip --no-check-certificate https://github.com/mm2/Little-CMS/zipball/%LCMS_COMMIT_LONG%
 )
 
 
-IF NOT EXIST lcms2-493aac (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-493aac.zip
-	%CYGWIN_DIR%\bin\mv.exe mm2-Little-CMS-* lcms2-493aac
+IF NOT EXIST lcms2-%LCMS_COMMIT% (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip
+	%CYGWIN_DIR%\bin\mv.exe mm2-Little-CMS-* lcms2-%LCMS_COMMIT%
 	
-	pushd lcms2-493aac
+	pushd lcms2-%LCMS_COMMIT%
 	devenv Projects\VC2010\lcms2.sln /Upgrade
 	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
 	IF errorlevel 1	goto error_end
@@ -236,8 +254,8 @@ IF NOT EXIST tiff-4.0.3 (
 	echo.JPEG_INCLUDE=-I%CD%\libjpeg-turbo-%LIBJPEG_COMMIT%>> tiff-4.0.3\qtpfsgui_commands.in
 	echo.JPEG_LIB=%CD%\libjpeg-turbo-%LIBJPEG_COMMIT%.build\sharedlib\%Configuration%\jpeg.lib>> tiff-4.0.3\qtpfsgui_commands.in
 	echo.ZIP_SUPPORT=^1>> tiff-4.0.3\qtpfsgui_commands.in
-	echo.ZLIBDIR=..\..\zlib-aa566e\%Configuration%>> tiff-4.0.3\qtpfsgui_commands.in
-	echo.ZLIB_INCLUDE=-I..\..\zlib-aa566e>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.ZLIBDIR=..\..\zlib-%ZLIB_COMMIT%\%Configuration%>> tiff-4.0.3\qtpfsgui_commands.in
+	echo.ZLIB_INCLUDE=-I..\..\zlib-%ZLIB_COMMIT%>> tiff-4.0.3\qtpfsgui_commands.in
 	echo.ZLIB_LIB=$^(ZLIBDIR^)\zlib.lib>> tiff-4.0.3\qtpfsgui_commands.in
 
 	pushd tiff-4.0.3
@@ -280,8 +298,8 @@ IF NOT EXIST LibRaw-%LIBRAW_COMMIT% (
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
 	echo.CFLAGS_DP3=/I..\LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%>> qtpfsgui_commands.in
 	echo.CFLAGSG3=/DLIBRAW_DEMOSAIC_PACK_GPL3>> qtpfsgui_commands.in
-	echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-493aac\include">> qtpfsgui_commands.in
-	echo.LCMS_LIB="..\lcms2-493aac\bin\lcms2_dll.lib">> qtpfsgui_commands.in
+	echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-%LCMS_COMMIT%\include">> qtpfsgui_commands.in
+	echo.LCMS_LIB="..\lcms2-%LCMS_COMMIT%\bin\lcms2_dll.lib">> qtpfsgui_commands.in
     echo.JPEG_DEF="/DUSE_JPEG8 /DUSE_JPEG /I..\libjpeg-turbo-%LIBJPEG_COMMIT%">> qtpfsgui_commands.in
     echo.JPEG_LIB="..\libjpeg-turbo-%LIBJPEG_COMMIT%.build\sharedlib\%Configuration%\jpeg.lib">> qtpfsgui_commands.in
 	
@@ -321,9 +339,9 @@ IF NOT EXIST OpenExrStuff (
 	)
 	popd
 	
-	copy zlib-aa566e\*.h OpenExrStuff\Deploy\include
-	copy zlib-aa566e\%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
-	copy zlib-aa566e\%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
+	copy zlib-%ZLIB_COMMIT%\*.h OpenExrStuff\Deploy\include
+	copy zlib-%ZLIB_COMMIT%\%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
+	copy zlib-%ZLIB_COMMIT%\%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
 )
 	
 pushd OpenExrStuff\openexr-cvs
@@ -412,26 +430,26 @@ IF NOT DEFINED L_BOOST_DIR (
 	set L_BOOST_DIR=.
 )
 
-IF NOT EXIST %TEMP_DIR%\boost_1_50_0.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/boost_1_50_0.zip http://sourceforge.net/projects/boost/files/boost/1.50.0/boost_1_50_0.zip/download
+IF NOT EXIST %TEMP_DIR%\boost_1_53_0.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/boost_1_53_0.zip http://sourceforge.net/projects/boost/files/boost/1.53.0/boost_1_53_0.zip/download
 )
 
-IF NOT EXIST %L_BOOST_DIR%\boost_1_50_0 (
+IF NOT EXIST %L_BOOST_DIR%\boost_1_53_0 (
 	echo.Extracting boost. Be patient!
 
 	pushd %L_BOOST_DIR%
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/boost_1_50_0.zip
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/boost_1_53_0.zip
 	popd
 
 	REM Currently only the header files are required of boost.
 	REM Therefore the following code block is commented out.
 
 REM 
-REM 	pushd %L_BOOST_DIR%\boost_1_50_0
+REM 	pushd %L_BOOST_DIR%\boost_1_53_0
 REM 	bootstrap.bat
 REM 	popd
 REM 	
-REM 	pushd %L_BOOST_DIR%\boost_1_50_0
+REM 	pushd %L_BOOST_DIR%\boost_1_53_0
 REM 	IF %Platform% EQU Win32 (
 REM 		IF %Configuration% EQU Release (
 REM 			b2.exe toolset=msvc variant=release
@@ -449,7 +467,7 @@ REM 	)
 )
 
 REM Set Boost-directory as ENV variable (needed for CMake)
-pushd %L_BOOST_DIR%\boost_1_50_0
+pushd %L_BOOST_DIR%\boost_1_53_0
 SET BOOST_ROOT=%CD%
 popd
 
@@ -511,18 +529,18 @@ robocopy exiv2-%EXIV2_COMMIT%\include LuminanceHdrStuff\DEPs\include\exiv2 *.h *
 robocopy exiv2-%EXIV2_COMMIT%\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\lib\exiv2 *.lib /MIR >nul
 robocopy exiv2-%EXIV2_COMMIT%\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\bin\exiv2 *.dll /MIR >nul
 
-robocopy lpng1513 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
-robocopy lpng1513\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
-robocopy lpng1513\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
+robocopy lpng161 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
+robocopy lpng161\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
+robocopy lpng161\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
 	
 
 robocopy LibRaw-%LIBRAW_COMMIT%\libraw LuminanceHdrStuff\DEPs\include\libraw\libraw /MIR >nul
 robocopy LibRaw-%LIBRAW_COMMIT%\lib LuminanceHdrStuff\DEPs\lib\libraw *.lib /MIR >nul
 robocopy LibRaw-%LIBRAW_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR >nul
 	
-robocopy lcms2-493aac\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
-robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
-robocopy lcms2-493aac\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
+robocopy lcms2-%LCMS_COMMIT%\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
+robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
+robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
 
 robocopy libjpeg-turbo-%LIBJPEG_COMMIT% LuminanceHdrStuff\DEPs\include\libjpeg *.h /MIR >nul
 robocopy libjpeg-turbo-%LIBJPEG_COMMIT%.build\sharedlib\%Configuration% LuminanceHdrStuff\DEPs\lib\libjpeg *.lib /MIR /NJS >nul
@@ -551,10 +569,11 @@ IF %OPTION_LUPDATE_NOOBSOLETE% EQU 1 (
 )
 
 
-set L_CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-aa566e
-set L_CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-aa566e\%Configuration%
+set L_CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-%ZLIB_COMMIT%
+set L_CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-%ZLIB_COMMIT%\%Configuration%
 set L_CMAKE_PROGRAM_PATH=%CYGWIN_DIR%\bin
-set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include\exiv2 -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH%
+set L_CMAKE_PREFIX_PATH=%QTDIR%
+set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include\exiv2 -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH% -DCMAKE_PREFIX_PATH=%L_CMAKE_PREFIX_PATH% -DPNG_NAMES=libpng16
 
 IF EXIST ..\..\gtest-1.6.0 (
 	SET GTEST_ROOT=%CD%\..\..\gtest-1.6.0
@@ -563,56 +582,73 @@ IF EXIST ..\..\gtest-1.6.0 (
 %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
 popd
 
-IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
+IF EXIST LuminanceHdrStuff\qtpfsgui.build\Luminance HDR.sln (
 	pushd LuminanceHdrStuff\qtpfsgui.build	
 	rem devenv luminance-hdr.sln /Upgrade
-	devenv luminance-hdr.sln /build "%Configuration%|%Platform%"
+	devenv "Luminance HDR.sln" /build "%ConfigurationLuminance%|%Platform%"
 	IF errorlevel 1	goto error_end
 	popd
 )
 
-IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
-	IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration% (
+IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr.exe (
+	IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% (
 		
-		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt (
-			copy LuminanceHdrStuff\qtpfsgui\LICENSE LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt
-		)
-		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe (
-			copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe
-			copy vcDlls\selected\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\
-		)
-		
-		IF EXIST LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\ (
-			IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
-				mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\imageformats\
-				mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\sqldrivers\
-				copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\
-				copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\imageformats\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\imageformats\
-				copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\sqldrivers\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\sqldrivers\
-			)
-		)
+        robocopy LuminanceHdrStuff\qtpfsgui LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% LICENSE.txt >nul
 
-		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
-			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("libjpeg\jpeg8.dll", "lcms2\lcms2_DLL.dll", "exiv2\exiv2.dll", "exiv2\expat.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlib.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll", "libpng\libpng15.dll") do (
-				copy %%v ..\..\qtpfsgui.build\%Configuration%
-			)
-			popd
-			ren LuminanceHdrStuff\qtpfsgui.build\%Configuration%\lcms2_DLL.dll lcms2.dll
-		)
-		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n\ (
-			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
-		)
-		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help\ (
-			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\align_image_stack.exe (
+			copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\align_image_stack.exe
+			copy vcDlls\selected\* LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\
 		)
 		
+        pushd LuminanceHdrStuff\DEPs\bin
+        robocopy libjpeg ..\..\qtpfsgui.build\%ConfigurationLuminance% jpeg8.dll >nul
+        robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% exiv2.dll >nul
+        robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% expat.dll >nul
+        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% Half.dll >nul
+        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% Iex.dll >nul
+        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% IlmImf.dll >nul
+        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% IlmThread.dll >nul
+        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% zlib.dll >nul
+        robocopy libraw ..\..\qtpfsgui.build\%ConfigurationLuminance% libraw.dll >nul
+        robocopy fftw3 ..\..\qtpfsgui.build\%ConfigurationLuminance% libfftw3f-3.dll >nul
+        robocopy libpng ..\..\qtpfsgui.build\%ConfigurationLuminance% libpng16.dll >nul
+        popd
+        
+        IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\lcms2.dll (
+            pushd LuminanceHdrStuff\DEPs\bin
+            for %%v in ("lcms2\lcms2_DLL.dll", ) do (
+                copy %%v ..\..\qtpfsgui.build\%ConfigurationLuminance%
+            )
+            popd
+            ren LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\lcms2_DLL.dll lcms2.dll
+        )
+
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\i18n\ (
+			mkdir LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\i18n
+		)
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\help\ (
+			mkdir LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\help
+		)
 		
-		
-		robocopy LuminanceHdrStuff\qtpfsgui.build\QtDlls\i18n LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n *.qm >nul
-		robocopy LuminanceHdrStuff\qtpfsgui.build LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n *.qm >nul
-		
-		robocopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help /MIR >nul
+		robocopy LuminanceHdrStuff\qtpfsgui.build LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\i18n lang_*.qm >nul
+		robocopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\help /MIR >nul
+
+
+        REM ----- QT Stuff (Dlls, translations) --------------------------------------------
+        pushd LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%
+        for %%v in ( "QtCore4.dll", "QtGui4.dll", "QtMultimedia4.dll", "QtNetwork4.dll", "QtSql4.dll", "QtWebkit4.dll", "QtXml4.dll", "QtXmlPatterns4.dll") do (
+            robocopy %QTDIR%\bin . %%v >nul
+        )
+        for %%v in ("imageformats", "sqldrivers") do (
+            IF NOT EXIST %%v (
+                mkdir %%v
+            )        
+        )
+        robocopy %QTDIR%\plugins\imageformats imageformats qjpeg4.dll >nul
+        robocopy %QTDIR%\plugins\sqldrivers sqldrivers qsqlite4.dll >nul
+		robocopy %QTDIR%\translations i18n qt_??.qm >nul
+		robocopy %QTDIR%\translations i18n qt_??_*.qm >nul
+        popd
 	)
 )
 
