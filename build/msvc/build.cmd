@@ -13,6 +13,9 @@ rem SET ZLIB_COMMIT_LONG=0b166094092efa2b92200cbb67f390e86c181ab4
 SET ZLIB_COMMIT=b06dee4
 SET ZLIB_COMMIT_LONG=b06dee43696b5057ee8e1b9700655ad9e7d89669
 
+SET OPENEXR_COMMIT=3c2f7b9
+SET OPENEXR_COMMIT_LONG=3c2f7b956e57d8569f53823b4889921716276474
+
 
 SET LCMS_COMMIT=cde00fd
 SET LCMS_COMMIT_LONG=cde00fd7dbe74e275aceb4a9055bbb1ae6bf93b2
@@ -150,8 +153,18 @@ IF NOT EXIST vcDlls\selected (
 	%CYGWIN_DIR%\bin\cp.exe vcDlls/**/msv* vcDlls/selected
 )
 
-IF NOT EXIST %TEMP_DIR%\align_image_stack_%RawPlatform%.exe (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/align_image_stack_%RawPlatform%.exe qtpfsgui.sourceforge.net/win/align_image_stack_%RawPlatform%.exe
+IF NOT EXIST %TEMP_DIR%\%RawPlatform% (
+    mkdir %TEMP_DIR%\%RawPlatform%
+)
+
+IF NOT EXIST %TEMP_DIR%\%RawPlatform%\align_image_stack.exe (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/align_image_stack.exe qtpfsgui.sourceforge.net/win/%RawPlatform%/align_image_stack.exe
+  	IF %Platform% EQU Win32 (
+        %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/huginbase.dll qtpfsgui.sourceforge.net/win/%RawPlatform%/huginbase.dll
+        %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/huginvigraimpex.dll qtpfsgui.sourceforge.net/win/%RawPlatform%/huginvigraimpex.dll
+        %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/msvcp100.dll qtpfsgui.sourceforge.net/win/%RawPlatform%/msvcp100.dll
+        %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/msvcr100.dll qtpfsgui.sourceforge.net/win/%RawPlatform%/msvcr100.dll
+	)
 )
 
 IF NOT EXIST %TEMP_DIR%\zlib-%ZLIB_COMMIT%.zip (
@@ -343,34 +356,60 @@ IF NOT EXIST OpenExrStuff (
 	copy zlib-%ZLIB_COMMIT%\%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
 	copy zlib-%ZLIB_COMMIT%\%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
 )
+
+IF NOT EXIST %TEMP_DIR%\OpenEXR-%OPENEXR_COMMIT%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/OpenEXR-%OPENEXR_COMMIT%.zip --no-check-certificate https://github.com/openexr/openexr/zipball/%OPENEXR_COMMIT_LONG%
+)
+
+IF NOT EXIST OpenEXR-%OPENEXR_COMMIT% (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/OpenEXR-%OPENEXR_COMMIT%.zip
+	%CYGWIN_DIR%\bin\mv.exe openexr-openexr-* OpenEXR-%OPENEXR_COMMIT%
+
+	pushd OpenEXR-%OPENEXR_COMMIT%
+
+    IF NOT EXIST zlib (
+        mkdir zlib
+        mkdir zlib\include
+        mkdir zlib\lib
+        robocopy ..\zlib-%ZLIB_COMMIT%\ zlib\include *.h  >nul
+        robocopy ..\zlib-%ZLIB_COMMIT%\%Configuration%\ zlib\lib *.dll *.exp *.lib  >nul
+    )
 	
-pushd OpenExrStuff\openexr-cvs
-IF NOT EXIST IlmBase (
-	%CYGWIN_DIR%\bin\cvs.exe -d :pserver:anonymous:anonymous@cvs.savannah.nongnu.org:/sources/openexr co IlmBase
-	set openexr-compile=true
-) ELSE (
-	rem %CYGWIN_DIR%\bin\cvs.exe -d :pserver:anonymous:anonymous@cvs.savannah.nongnu.org:/sources/openexr update IlmBase
-)
-IF NOT EXIST OpenEXR (
-	%CYGWIN_DIR%\bin\cvs.exe -d :pserver:anonymous:anonymous@cvs.savannah.nongnu.org:/sources/openexr co OpenEXR
-	set openexr-compile=true
-) ELSE (
-	rem %CYGWIN_DIR%\bin\cvs.exe -d :pserver:anonymous:anonymous@cvs.savannah.nongnu.org:/sources/openexr update OpenEXR
-)
-popd
-
-IF DEFINED openexr-compile (
-	pushd OpenExrStuff\openexr-cvs\IlmBase\vc\vc9\IlmBase
-	devenv IlmBase.sln /Upgrade
+    IF NOT EXIST IlmBase.build (
+        mkdir IlmBase.build
+    )
+	pushd IlmBase.build
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ../IlmBase -DCMAKE_INSTALL_PREFIX=output
+	IF errorlevel 1 goto error_end
 	devenv IlmBase.sln /build "%Configuration%|%Platform%"
+	IF errorlevel 1 goto error_end
+	devenv IlmBase.sln /build "%Configuration%|%Platform%" /Project INSTALL
+	IF errorlevel 1 goto error_end
 	popd
-
-	pushd OpenExrStuff\openexr-cvs\OpenEXR\vc\vc8\OpenEXR
-	devenv OpenEXR.sln /Upgrade
+	
+    copy IlmBase\Half\halfExport.h IlmBase.build\output\include\OpenEXR
+    
+    IF NOT EXIST OpenEXR.build (
+        mkdir OpenEXR.build
+    )
+      
+	pushd OpenEXR.build
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ^
+        -DZLIB_ROOT=..\zlib ^
+        -DILMBASE_PACKAGE_PREFIX=%CD%\OpenEXR-%OPENEXR_COMMIT%\IlmBase.build\output ^
+        -DCMAKE_INSTALL_PREFIX=output ^
+        ../OpenEXR
+	IF errorlevel 1 goto error_end
 	devenv OpenEXR.sln /build "%Configuration%|%Platform%" /Project IlmImf
+	rem IF errorlevel 1 goto error_end
+	popd
+    copy OpenEXR\IlmImf\*.h IlmBase.build\output\include\OpenEXR
+    copy OpenEXR.build\IlmImf\%Configuration%\*.lib IlmBase.build\output\lib
+    copy OpenEXR\config\*.h IlmBase.build\output\include\OpenEXR 
+    
 	popd
 )
-
+    
 IF %Platform% EQU Win32 (
 	IF NOT EXIST %TEMP_DIR%\fftw-3.3.3-dll32.zip (
 		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.3-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.3-dll32.zip
@@ -476,7 +515,7 @@ IF NOT EXIST LuminanceHdrStuff (
 )
 IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 	pushd LuminanceHdrStuff
-	%CYGWIN_DIR%\bin\git.exe clone git://git.code.sf.net/p/qtpfsgui/code qtpfsgui-code
+	%CYGWIN_DIR%\bin\git.exe clone git://git.code.sf.net/p/qtpfsgui/code qtpfsgui
 	popd
 ) ELSE (
 	pushd LuminanceHdrStuff\qtpfsgui
@@ -504,9 +543,11 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
 
-	copy OpenExrStuff\Deploy\include\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
-	copy OpenExrStuff\Deploy\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
-	copy OpenExrStuff\Deploy\bin\%Platform%\%Configuration%\*.dll LuminanceHdrStuff\DEPs\bin\OpenEXR
+    
+    
+	copy OpenEXR-%OPENEXR_COMMIT%\IlmBase.build\output\include\OpenEXR\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
+	copy OpenEXR-%OPENEXR_COMMIT%\IlmBase.build\output\lib\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
+	rem copy OpenExrStuff\Deploy\bin\%Platform%\%Configuration%\*.dll LuminanceHdrStuff\DEPs\bin\OpenEXR
 
 	mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
 	copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
@@ -593,22 +634,26 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\Luminance HDR.sln (
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr.exe (
 	IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% (
 		
-        robocopy LuminanceHdrStuff\qtpfsgui LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% LICENSE.txt >nul
+        robocopy LuminanceHdrStuff\qtpfsgui LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% LICENSE >nul
 
-		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\align_image_stack.exe (
-			copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\align_image_stack.exe
-			copy vcDlls\selected\* LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\
-		)
+        IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\align_image_stack.exe (
+            copy vcDlls\selected\* LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\
+        )
+        
+        robocopy %TEMP_DIR%\%RawPlatform% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% align_image_stack.exe >nul
+        IF %Platform% EQU Win32 (
+            rem robocopy %TEMP_DIR%\%RawPlatform% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% huginbase.dll huginvigraimpex.dll msvcp100.dll msvcr100.dll >nul
+        )
 		
         pushd LuminanceHdrStuff\DEPs\bin
         robocopy libjpeg ..\..\qtpfsgui.build\%ConfigurationLuminance% jpeg8.dll >nul
         robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% exiv2.dll >nul
         robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% expat.dll >nul
+        robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% zlib.dll >nul
         robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% Half.dll >nul
         robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% Iex.dll >nul
         robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% IlmImf.dll >nul
         robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% IlmThread.dll >nul
-        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% zlib.dll >nul
         robocopy libraw ..\..\qtpfsgui.build\%ConfigurationLuminance% libraw.dll >nul
         robocopy fftw3 ..\..\qtpfsgui.build\%ConfigurationLuminance% libfftw3f-3.dll >nul
         robocopy libpng ..\..\qtpfsgui.build\%ConfigurationLuminance% libpng16.dll >nul
