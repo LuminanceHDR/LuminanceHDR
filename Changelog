@@ -1,12 +1,19 @@
-Changes Luminance.next
+Changes 2.3.1
+* Automatically Update Checker
+* Update libraries (in particular, LibRAW)
+* Support for TIFF 32 bit floating point (compatible with Adobe Lightroom 4)
+* Improved EXR, TIFF, JPEG and PNG I/O
+* Improved color conversion routines 
 * NEW: Hugin's alignment: Autocrop feature (thanks to David Polák)
 * NEW: Support additional demosaicing algorithms, AMaZE as default
 * NEW: Save HDR creation profiles
-* NEW: Copy EXIF tags to tonemapped images
+* NEW: Copy EXIF tags to tonemapped images automatically
 * NEW: Portable mode
-* NEW: Testing realtime previews ????
+* NEW: Testing realtime previews (beta functionality)
 * Anti-ghosting working again
 * Speed improvements to various TMO algorithms
+* Speed improvements to merge algorithms
+* New Danish translation
 
 Changes 2.3.0
 * New Fattal02 solver based on FFT (thanks to Tino Kluge)
