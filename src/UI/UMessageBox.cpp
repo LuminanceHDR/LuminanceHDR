@@ -101,9 +101,6 @@ void UMessageBox::about(QWidget* parent)
     foreach (QString path,paths)
     {
         QString fname(path+QString("/LICENSE"));
-#ifdef WIN32
-        fname+=".txt";
-#endif
         if (QFile::exists(fname))
         {
             QFile file(fname);
