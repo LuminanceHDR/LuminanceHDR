@@ -256,7 +256,7 @@ p, li { white-space: pre-wrap; }
           <widget class="QWebView" name="webView">
            <property name="url">
             <url>
-             <string>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</string>
+             <string>http://qtpfsgui.sourceforge.net/updater/Changelog</string>
             </url>
            </property>
           </widget>

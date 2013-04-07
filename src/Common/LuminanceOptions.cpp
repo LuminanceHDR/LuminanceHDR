@@ -31,6 +31,7 @@
 #include <QApplication>
 #include <QString>
 #include <QLocale>
+#include <QDate>
 #include <QFile>
 #include <QDebug>
 
@@ -95,6 +96,18 @@ void LuminanceOptions::setPortableMode(bool isPortable)
             file.remove();
         }
     }
+}
+
+bool LuminanceOptions::checkForUpdate()
+{
+    QDate date = value("UpdateChecked", QDate(0, 1, 1)).toDate();
+    int diff = date.daysTo(QDate::currentDate());
+    return diff > 0;
+}
+
+void LuminanceOptions::setUpdateChecked()
+{
+    setValue("UpdateChecked", QDate::currentDate());
 }
 
 void LuminanceOptions::initSettings()

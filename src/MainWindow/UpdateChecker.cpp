@@ -27,6 +27,7 @@
 
 #include "Common/global.h"
 #include "Common/config.h"
+#include "Common/LuminanceOptions.h"
 #include "UI/UMessageBox.h"
 #include "UpdateChecker.h"
 
@@ -35,12 +36,16 @@ UpdateChecker::UpdateChecker(QWidget *parent) //, QNetworkAccessManager* network
     , m_tray(new QSystemTrayIcon(parent->windowIcon()))
     , m_networkManager(new QNetworkAccessManager())
 {
-    connect(this, SIGNAL(updateAvailable()), parent, SLOT(on_updateAvailable()));
-    connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
-    connect(m_tray, SIGNAL(messageClicked()), this, SLOT(trayMessageClicked()));
-    connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayMessageClicked()));
-
-    m_networkManager->get(QNetworkRequest(QUrl(QString("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM))));
+    LuminanceOptions options;
+    if (options.checkForUpdate())
+    {
+        connect(this, SIGNAL(updateAvailable()), parent, SLOT(on_updateAvailable()));
+        connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
+        connect(m_tray, SIGNAL(messageClicked()), this, SLOT(trayMessageClicked()));
+        connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayMessageClicked()));
+    
+        m_networkManager->get(QNetworkRequest(QUrl(QString("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM))));
+    }
 }
 
 UpdateChecker::~UpdateChecker() {
@@ -59,6 +64,9 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
 {
     if (reply->error() == QNetworkReply::NoError)
     {
+        LuminanceOptions options;
+        options.setUpdateChecked();
+        
         QDomDocument document;
         document.setContent(reply);
 

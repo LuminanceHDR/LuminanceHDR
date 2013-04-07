@@ -51,6 +51,9 @@ public:
     static bool isCurrentPortableMode;
     QString getDatabaseFileName();
     void    setPortableMode(bool isPortable);
+    
+    bool checkForUpdate();
+    void setUpdateChecked();
 
 public Q_SLOTS:
     // RAW settings
