@@ -1945,11 +1945,11 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     </message>
     <message>
         <source>File size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateigröße</translation>
     </message>
     <message>
         <source>Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualität</translation>
     </message>
 </context>
 <context>
@@ -2628,7 +2628,7 @@ Willst du ihn dennoch anwenden?</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisierung</translation>
     </message>
 </context>
 <context>
@@ -3232,7 +3232,7 @@ p, li { white-space: pre-wrap; }
     <name>PreviewSettings</name>
     <message>
         <source>Load settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen laden</translation>
     </message>
 </context>
 <context>
@@ -3433,135 +3433,135 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>PreGamma=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pre-Gamma=%1</translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Kontrastausgleich</translation>
+        <translation>Kontrastausgleich</translation>
     </message>
     <message>
         <source>Contrast</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrast</translation>
     </message>
     <message>
         <source>Saturation</source>
-        <translation type="unfinished">Sättigung</translation>
+        <translation>Sättigung</translation>
     </message>
     <message>
         <source>Detail</source>
-        <translation type="unfinished"></translation>
+        <translation>Detail</translation>
     </message>
     <message>
         <source>Luminance Level</source>
-        <translation type="unfinished">Helligkeit</translation>
+        <translation>Helligkeit</translation>
     </message>
     <message>
         <source>Luminance Level=Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Helligkeit=Auto</translation>
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Farbsättigung</translation>
+        <translation>Farbsättigung</translation>
     </message>
     <message>
         <source>Contrast Enhancement</source>
-        <translation type="unfinished">Kontrasterhöhung</translation>
+        <translation>Kontrasterhöhung</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NoiseRedux</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschunterdrückung</translation>
     </message>
     <message>
         <source>FFTSolver</source>
-        <translation type="unfinished"></translation>
+        <translation>FFT-Funktion</translation>
     </message>
     <message>
         <source>simple</source>
-        <translation type="unfinished"></translation>
+        <translation>einfach</translation>
     </message>
     <message>
         <source>Equation 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Eqn 2</translation>
     </message>
     <message>
         <source>Equation 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Eqn 4</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwellenwert</translation>
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Spatial</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Bereich</translation>
+        <translation>Bereich</translation>
     </message>
     <message>
         <source>Base</source>
-        <translation type="unfinished"></translation>
+        <translation>Basis</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Multiplikator</translation>
+        <translation>Multiplikator</translation>
     </message>
     <message>
         <source>AutoLuminance</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-Helligkeit</translation>
     </message>
     <message>
         <source>Cone</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapfen</translation>
     </message>
     <message>
         <source>Rod</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäbchen</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauptwert</translation>
     </message>
     <message>
         <source>Phi</source>
-        <translation type="unfinished"></translation>
+        <translation>Phi</translation>
     </message>
     <message>
         <source>Scales:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalen:</translation>
     </message>
     <message>
         <source>Lower</source>
-        <translation type="unfinished"></translation>
+        <translation>Untere</translation>
     </message>
     <message>
         <source>Upper</source>
-        <translation type="unfinished"></translation>
+        <translation>Obere</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Helligkeit</translation>
+        <translation>Helligkeit</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Chromatische Anpassung</translation>
+        <translation>Chromatische Anpassung</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Lichtanpassung</translation>
+        <translation>Lichtanpassung</translation>
     </message>
 </context>
 <context>
@@ -3819,7 +3819,7 @@ p, li { white-space: pre-wrap; }
     <name>TiffModeDialog</name>
     <message>
         <source>Save as ...TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern als TIFF ...</translation>
     </message>
 </context>
 <context>
@@ -4239,15 +4239,15 @@ Luminace Level</source>
     </message>
     <message>
         <source>Comments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommentare:</translation>
     </message>
     <message>
         <source>Tonemap</source>
-        <translation type="unfinished">Dynamikkompression</translation>
+        <translation>Anwenden</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden</translation>
     </message>
 </context>
 <context>
@@ -4369,15 +4369,15 @@ Luminace Level</source>
     <name>UpdateChecker</name>
     <message>
         <source>A new release is ready for download!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine neue Version kann heruntergeladen werden!</translation>
     </message>
     <message>
         <source>Click to download, or select Help-&gt;Update!</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicken zum Herunterladen oder Hilfe -&gt; Aktualisierung wählen!</translation>
     </message>
     <message>
         <source>Do you want to open the webpage for download now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest du jetzt die Webseite für den Download öffnen?</translation>
     </message>
 </context>
 </TS>
