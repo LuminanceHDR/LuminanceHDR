@@ -50,6 +50,7 @@
 #include <Libpfs/io/rgbereader.h>
 #include <Libpfs/io/exrwriter.h>
 #include <Libpfs/io/exrreader.h>
+#include <Libpfs/io/tiffwriter.h>
 
 using namespace pfs::io;
 

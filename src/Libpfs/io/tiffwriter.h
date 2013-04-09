@@ -36,14 +36,13 @@
 
 #include <string>
 #include <Libpfs/params.h>
+#include <Libpfs/io/framewriter.h>
 
 namespace pfs {
-class Frame;
-}
+namespace io {
 
 //! \brief Writer class for TIFF files
-
-class TiffWriter
+class TiffWriter : public FrameWriter
 {
 public:
     TiffWriter(const std::string& filename);
@@ -57,9 +56,9 @@ public:
     //!   mapping_method (int): RGB mapping methodo choosen between
     //!   RGBMappingType in rgbremapper.h
     bool write(const pfs::Frame& frame, const pfs::Params& params);
-
-private:
-    std::string m_filename;
 };
+
+}   // io
+}   // pfs
 
 #endif  // PFS_TIFFWRITER_H

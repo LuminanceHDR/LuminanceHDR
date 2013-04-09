@@ -36,14 +36,13 @@
 #include <cmath>
 #include <iostream>
 
-#include "Libpfs/manip/shift.h"
-#include "Libpfs/manip/cut.h"
-#include "Libpfs/manip/copy.h"
-
-#include "Libpfs/utils/msec_timer.h"
+#include <Libpfs/utils/msec_timer.h>
+#include <Libpfs/manip/shift.h>
+#include <Libpfs/manip/cut.h>
+#include <Libpfs/manip/copy.h>
+#include <Libpfs/io/tiffwriter.h>
 
 #include "Fileformat/tiffreader.h"
-#include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsouthdrimage.h"
 
 #include "Exif/ExifOperations.h"
@@ -1358,7 +1357,7 @@ void HdrCreationManager::saveLDRs(const QString& filename)
         frame.createXYZChannels(R, G, B);
         interleavedToPlanar(currentImage, R, G, B);
 
-        TiffWriter writer(QFile::encodeName(fname).constData());
+        pfs::io::TiffWriter writer(QFile::encodeName(fname).constData());
         writer.write( frame, pfs::Params("tiff_mode", 1) );
 
         // DAVIDE_TIFF
@@ -1404,7 +1403,7 @@ void HdrCreationManager::saveMDRs(const QString& filename)
         pfs::copy(listmdrG[idx], G);
         pfs::copy(listmdrB[idx], B);
 
-        TiffWriter writer( QFile::encodeName(fname).constData() );
+        pfs::io::TiffWriter writer( QFile::encodeName(fname).constData() );
         // tiff_mode = 2 (16 bit tiff)
         // min_luminance = 0
         // max_luminance = 2^16 - 1

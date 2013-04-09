@@ -28,7 +28,6 @@
 #define PFS_FILE_FORMAT_H
 
 #include "Fileformat/tiffreader.h"
-#include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "Fileformat/pfsinraw.h"
 #include "Fileformat/jpegreader.h"

@@ -10,14 +10,12 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsinraw.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.h
-${CMAKE_CURRENT_SOURCE_DIR}/tiffwriter.h
 ${CMAKE_CURRENT_SOURCE_DIR}/tiffcommon.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pngwriter.h
 )
 
 SET(FILES_CPP
 ${CMAKE_CURRENT_SOURCE_DIR}/tiffreader.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/tiffwriter.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.cpp

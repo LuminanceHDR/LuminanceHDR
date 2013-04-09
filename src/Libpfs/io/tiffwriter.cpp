@@ -58,6 +58,9 @@ using namespace std;
 using namespace boost;
 using namespace pfs;
 
+namespace pfs {
+namespace io {
+
 struct TiffWriterParams
 {
     TiffWriterParams()
@@ -356,7 +359,7 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 }
 
 TiffWriter::TiffWriter(const std::string& filename)
-    : m_filename(filename)
+    : FrameWriter(filename)
 {}
 
 TiffWriter::~TiffWriter()
@@ -371,9 +374,9 @@ bool TiffWriter::write(const pfs::Frame& frame, const pfs::Params& params)
     cout << p << endl;
 #endif
 
-    ScopedTiffFile tif( TIFFOpen (m_filename.c_str(), "w") );
+    ScopedTiffFile tif( TIFFOpen (filename().c_str(), "w") );
     if ( !tif ) {
-        throw pfs::io::InvalidFile("TiffWriter: cannot open " + m_filename);
+        throw pfs::io::InvalidFile("TiffWriter: cannot open " + filename());
     }
 
     bool status = true;
@@ -395,3 +398,6 @@ bool TiffWriter::write(const pfs::Frame& frame, const pfs::Params& params)
 
     return status;
 }
+
+}   // io
+}   // pfs
