@@ -316,16 +316,15 @@ struct JpegWriterImplMemory : public JpegWriterImpl
         , m_buffer(0)
     {}
 
-    ~JpegWriterImplMemory()
-    {
-        sm_registry.erase(m_cinfo);
-        m_cinfo->dest = NULL;
-    }
+    ~JpegWriterImplMemory() { close(); }
 
     // implementation below!
     void setupJpegDest(j_compress_ptr cinfo, const std::string& filename);
 
-    void close() {}
+    void close() {
+        sm_registry.erase(m_cinfo);
+        m_cinfo->dest = NULL;
+    }
     size_t getFileSize() const  { return (m_buffer.size()*sizeof(JOCTET)); }
 
     static
@@ -404,9 +403,7 @@ struct JpegWriterImplFile : public JpegWriterImpl
     {}
 
     void setupJpegDest(j_compress_ptr cinfo, const std::string& filename) {
-        if ( !open(filename) ) {  // open output file!
-            throw pfs::io::InvalidFile( "Cannot open the output file " + filename );
-        }
+        open(filename);
         jpeg_stdio_dest(cinfo, handle());
     }
 
@@ -414,10 +411,11 @@ struct JpegWriterImplFile : public JpegWriterImpl
     size_t getFileSize() const  { return 0; }
 
 private:
-    bool open(const std::string& filename) {
+    void open(const std::string& filename) {
         m_handle.reset( fopen(filename.c_str(), "wb") );
-        if ( m_handle ) return true;
-        return false;
+        if ( !m_handle ) {
+            throw pfs::io::InvalidFile( "Cannot open the output file " + filename );
+        }
     }
 
     FILE* handle()              { return m_handle.data(); }

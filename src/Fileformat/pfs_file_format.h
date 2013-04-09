@@ -31,6 +31,5 @@
 #include "Fileformat/pfsoutldrimage.h"
 #include "Fileformat/pfsinraw.h"
 #include "Fileformat/jpegreader.h"
-#include "Fileformat/pngwriter.h"
 
 #endif // PFS_FILE_FORMAT_H

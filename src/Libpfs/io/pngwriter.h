@@ -35,14 +35,14 @@
 
 #include <Libpfs/params.h>
 #include <Libpfs/io/ioexception.h>
+#include <Libpfs/io/framewriter.h>
 
 namespace pfs {
-class Frame;
-}
+namespace io {
 
 class PngWriterImpl;
 
-class PngWriter
+class PngWriter : public FrameWriter
 {
 public:
     PngWriter(const std::string& filename);
@@ -56,5 +56,8 @@ public:
 private:
     boost::scoped_ptr<PngWriterImpl> m_impl;
 };
+
+}   // io
+}   // pfs
 
 #endif

@@ -11,7 +11,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.h
 ${CMAKE_CURRENT_SOURCE_DIR}/tiffcommon.h
-${CMAKE_CURRENT_SOURCE_DIR}/pngwriter.h
 )
 
 SET(FILES_CPP
@@ -21,7 +20,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsinraw.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/jpegreader.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pngwriter.cpp
 )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})

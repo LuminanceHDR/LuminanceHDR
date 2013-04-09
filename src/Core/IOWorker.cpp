@@ -51,6 +51,7 @@
 #include <Libpfs/io/exrwriter.h>
 #include <Libpfs/io/exrreader.h>
 #include <Libpfs/io/tiffwriter.h>
+#include <Libpfs/io/pngwriter.h>
 
 using namespace pfs::io;
 

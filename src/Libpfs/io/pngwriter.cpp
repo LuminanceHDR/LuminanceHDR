@@ -42,6 +42,9 @@ using namespace std;
 using namespace boost;
 using namespace pfs;
 
+namespace pfs {
+namespace io {
+
 struct PngWriterParams
 {
     PngWriterParams()
@@ -131,7 +134,7 @@ public:
     PngWriterImpl() : m_filesize(0) {}
     virtual ~PngWriterImpl()        {}
 
-    virtual void setupPngDest(png_structp png_ptr) = 0;
+    virtual void setupPngDest(png_structp png_ptr, const std::string& filename) = 0;
 
     virtual void close() = 0;
     virtual void computeSize() = 0;
@@ -139,7 +142,8 @@ public:
     size_t getFileSize()            { return m_filesize; }
     void setFileSize(size_t size)   { m_filesize = size; }
 
-    bool write(const pfs::Frame &frame, const PngWriterParams& params)
+    bool write(const pfs::Frame &frame, const PngWriterParams& params,
+               const std::string& filename)
     {
         png_uint_32 width = frame.getWidth();
         png_uint_32 height = frame.getHeight();
@@ -173,7 +177,7 @@ public:
             return false;
         }
 
-        setupPngDest(png_ptr);
+        setupPngDest(png_ptr, filename);
 
         png_set_IHDR(png_ptr, info_ptr, width, height,
                      8, /*PNG_COLOR_TYPE_RGB_ALPHA*/ PNG_COLOR_TYPE_RGB,
@@ -219,14 +223,13 @@ protected:
 
 struct PngWriterImplFile : public PngWriterImpl
 {
-    PngWriterImplFile(const std::string& filename)
+    PngWriterImplFile()
         : PngWriterImpl()
         , m_handle()
-        , m_filename(filename)
     {}
 
-    void setupPngDest(png_structp png_ptr) {
-        open();
+    void setupPngDest(png_structp png_ptr, const std::string& filename) {
+        open(filename);
         png_init_io(png_ptr, handle());
     }
 
@@ -236,15 +239,14 @@ struct PngWriterImplFile : public PngWriterImpl
 private:
     FILE* handle()                  { return m_handle.data(); }
 
-    void open() {
-        m_handle.reset( fopen(m_filename.c_str(), "wb") );
+    void open(const std::string& filename) {
+        m_handle.reset( fopen(filename.c_str(), "wb") );
         if ( !m_handle ) {
-            throw io::WriteException("Cannot open file " + m_filename);
+            throw io::WriteException("Cannot open file " + filename);
         }
     }
 
     utils::ScopedStdIoFile m_handle;
-    std::string m_filename;
 };
 
 typedef std::vector<char> PngBuffer;
@@ -267,12 +269,12 @@ struct PngWriterImplMemory : public PngWriterImpl
         , m_buffer()
     {}
 
-    void setupPngDest(png_structp png_ptr)
+    void setupPngDest(png_structp png_ptr, const std::string&)
     {
         png_set_write_fn(png_ptr, &m_buffer, my_png_write_data, NULL);
     }
 
-    void close()            { }
+    void close()            { m_buffer.clear(); }
     void computeSize()      { setFileSize(m_buffer.size()); }
 
 private:
@@ -280,15 +282,20 @@ private:
 };
 
 PngWriter::PngWriter()
-    : m_impl(new PngWriterImplMemory)
+    : FrameWriter()
+    , m_impl(new PngWriterImplMemory)
 {}
 
 PngWriter::PngWriter(const string &filename)
-    : m_impl(new PngWriterImplFile(filename))
+    : FrameWriter(filename)
+    , m_impl(new PngWriterImplFile())
 {}
 
+
 PngWriter::~PngWriter()
-{}
+{
+    m_impl->close();
+}
 
 bool PngWriter::write(const pfs::Frame& frame, const Params& params)
 {
@@ -299,10 +306,13 @@ bool PngWriter::write(const pfs::Frame& frame, const Params& params)
     cout << p << endl << flush;
 #endif
 
-    return m_impl->write(frame, p);
+    return m_impl->write(frame, p, filename());
 }
 
 size_t PngWriter::getFileSize() const
 {
     return m_impl->getFileSize();
 }
+
+}   // io
+}   // pfs
