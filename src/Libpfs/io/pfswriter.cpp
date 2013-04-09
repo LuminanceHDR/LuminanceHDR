@@ -50,6 +50,9 @@ PfsWriter::PfsWriter(const std::string &filename)
 bool PfsWriter::write(const Frame &frame, const Params &/*params*/)
 {
     utils::ScopedStdIoFile outputStream(fopen(filename().c_str(), "wb"));
+    if (!outputStream) {
+        throw pfs::io::InvalidFile("PfsWriter: cannot open " + filename());
+    }
 
 #ifdef HAVE_SETMODE
     // Needed under MS windows (text translation IO for stdin/out)

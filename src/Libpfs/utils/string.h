@@ -19,41 +19,22 @@
  * ----------------------------------------------------------------------
  */
 
-#include "params.h"
+#ifndef PFS_UTILS_STRING_H
+#define PFS_UTILS_STRING_H
 
-#include <cmath>
 #include <string>
 
-using namespace std;
-
 namespace pfs {
+namespace utils {
 
-// Utility functions for case insensitive string compare
-static
-int charDiff(char c1, char c2)
-{
-    if ( tolower(c1) < tolower(c2) ) return -1;
-    if ( tolower(c1) == tolower(c2) ) return 0;
-    return 1;
-}
+struct StringUnsensitiveComp {
+    bool operator()(const std::string& str1, const std::string& str2) const;
+};
 
-static
-int stringCompare(const string& str1, const string& str2)
-{
-    int diff = 0;
-    size_t size = std::min(str1.size(), str2.size());
-    for (size_t idx = 0; idx < size && diff == 0; ++idx)
-    {
-        diff = charDiff(str1[idx], str2[idx]);
-    }
-    if ( diff != 0 ) return diff;
+//! \brief return extension from filename
+std::string getFormat(const std::string& filename);
 
-    if ( str2.length() == str1.length() ) return 0;
-    if ( str2.length() > str1.length() ) return 1;
-    return -1;
-}
+}   // utils
+}   // pfs
 
-bool StringUnsensitiveComp::operator()(const std::string& str1, const std::string& str2) const {
-    return ( stringCompare(str1, str2) == -1 );
-}
-} // namespace pfs
+#endif // PFS_UTILS_STRING_H

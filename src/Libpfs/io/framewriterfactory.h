@@ -19,55 +19,36 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef PFS_IO_IOEXCEPTION_H
-#define PFS_IO_IOEXCEPTION_H
+//! \brief FrameWriterFactory, creation of FrameWriter based on the input filename
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <Libpfs/exception.h>
+#ifndef PFS_IO_FRAMEWRITERFACTORY_H
+#define PFS_IO_FRAMEWRITERFACTORY_H
+
+#include <string>
+#include <map>
+#include <Libpfs/io/framewriter.h>
+#include <Libpfs/io/ioexception.h>
+#include <Libpfs/utils/string.h>
 
 namespace pfs {
 namespace io {
 
-class InvalidFile : public Exception
-{
+class FrameWriterFactory {
 public:
-    InvalidFile(const std::string& message)
-        : Exception(message)
-    {}
+    typedef FrameWriterPtr (*FrameWriterCreator)(const std::string& filename);
+    typedef std::map<std::string, FrameWriterCreator, utils::StringUnsensitiveComp> FrameWriterCreatorMap;
+
+    static FrameWriterPtr open(const std::string& filename);
+
+    static void registerFormat(const std::string& format, FrameWriterCreator creator);
+    static size_t numRegisteredFormats();
+    static bool isSupported(const std::string& format);
+private:
+    static FrameWriterCreatorMap sm_registry;
 };
 
-class InvalidHeader : public Exception
-{
-public:
-    InvalidHeader(const std::string& message)
-        : Exception(message)
-    {}
-};
+}   // io
+}   // pfs
 
-class ReadException : public Exception
-{
-public:
-    ReadException(const std::string& message)
-        : Exception(message)
-    {}
-};
-
-class WriteException : public Exception
-{
-public:
-    WriteException(const std::string& message)
-        : Exception(message)
-    {}
-};
-
-class UnsupportedFormat : public Exception
-{
-public:
-    UnsupportedFormat(const std::string& message)
-        : Exception(message)
-    {}
-};
-
-}
-}
-
-#endif // PFS_IO_IOEXCEPTION_H
+#endif // PFS_IO_FRAMEWRITERFACTORY_H

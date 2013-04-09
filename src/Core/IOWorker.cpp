@@ -43,17 +43,15 @@
 #include "Core/TonemappingOptions.h"
 #include "Exif/ExifOperations.h"
 
-#include <Libpfs/io/jpegwriter.h>
-#include <Libpfs/io/pfswriter.h>
 #include <Libpfs/io/pfsreader.h>
-#include <Libpfs/io/rgbewriter.h>
 #include <Libpfs/io/rgbereader.h>
-#include <Libpfs/io/exrwriter.h>
 #include <Libpfs/io/exrreader.h>
-#include <Libpfs/io/tiffwriter.h>
-#include <Libpfs/io/pngwriter.h>
+
+#include <Libpfs/io/exrwriter.h>            // default for HDR saving
+#include <Libpfs/io/framewriterfactory.h>
 
 using namespace pfs::io;
+using namespace std;
 
 IOWorker::IOWorker(QObject* parent)
     : QObject(parent)
@@ -99,41 +97,31 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-    if (qfi.suffix().toUpper() == "EXR")
-    {
-        EXRWriter writer(encodedName.constData());
-        writer.write(*hdr_frame, params);
-    }
-    else if (qfi.suffix().toUpper() == "HDR")
-    {
-        RGBEWriter writer(encodedName.constData());
-        writer.write(*hdr_frame, params);
-    }
-    else if (qfi.suffix().toUpper().startsWith("TIF"))
-    {
-        pfs::Params writerParams(params);
-        if ( !writerParams.count("tiff_mode") ) {
-            LuminanceOptions lumOpts;
-            // LogLuv is not implemented yet in the new TiffWriter...
-            if ( lumOpts.isSaveLogLuvTiff() ) {
-                writerParams.set( "tiff_mode", 3 );
-            } else {
-                writerParams.set( "tiff_mode", 2 );
-            }
+    // add parameters for TiffWriter HDR
+    pfs::Params writerParams(params);
+    if ( !writerParams.count("tiff_mode") ) {
+        LuminanceOptions lumOpts;
+        if ( lumOpts.isSaveLogLuvTiff() ) {
+            writerParams.set( "tiff_mode", 3 );
+        } else {
+            writerParams.set( "tiff_mode", 2 );
         }
+    }
 
-        TiffWriter writer(encodedName.constData());
-        status = writer.write(*hdr_frame, writerParams);
-    }
-    else if (qfi.suffix().toUpper() == "PFS")
+    try
     {
-        pfs::io::PfsWriter writer(encodedName.constData());
-        status = writer.write(*hdr_frame, pfs::Params());
+        FrameWriterPtr writer = FrameWriterFactory::open(encodedName.constData());
+        writer->write(*hdr_frame, writerParams);
     }
-    else
-    {
+    catch (pfs::io::InvalidFile& exInvalid) {
+        qDebug() << "Unsupported format for " << exInvalid.what();
+
         EXRWriter writer(encodedName.constData());
-        writer.write(*hdr_frame, params);
+        writer.write(*hdr_frame, writerParams);
+    }
+    catch (std::runtime_error& ex) {
+        qDebug() << ex.what();
+        status = false;
     }
 
     if ( status ) {
@@ -183,24 +171,6 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                TonemappingOptions* tmopts,
                                const pfs::Params& params)
 {
-    /*
-     // in the future I would like it to be like this:
-
-     try {
-        FrameWriterPtr fr = FrameWriter::create( filename );
-
-        fr->write( frame, params);
-
-        // ...do some more stuff!
-
-        retur true;
-     } catch ( Exception& e) {
-
-        return false;
-     }
-
-     */
-
     bool status = true;
     emit IO_init();
 
@@ -213,27 +183,24 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-    if (qfi.suffix().toUpper().startsWith("TIF"))
+    try
     {
-        TiffWriter writer( encodedName.constData() );
-        status = writer.write(*ldr_input, params);
+        FrameWriterPtr writer = FrameWriterFactory::open(encodedName.constData());
+        writer->write(*ldr_input, params);
     }
-    else if (qfi.suffix().toUpper().startsWith("JP"))
-    {
-        JpegWriter writer( encodedName.constData() );
-        status = writer.write(*ldr_input, params);
-	}
-    else if (qfi.suffix().toUpper().startsWith("PNG"))
-    {
-        PngWriter writer(filename.toStdString());
-        status = writer.write(*ldr_input, params);
-	}
-    else
-    {
+    catch (pfs::io::UnsupportedFormat& exUnsupported) {
+        qDebug() << "Exception: " << exUnsupported.what();
+
         QString format = qfi.suffix();
         // QScopedPointer will call delete when this object goes out of scope
         QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input, 0.f, 1.f));
         status = image->save(filename, format.toLocal8Bit(), -1);
+    }
+    catch (pfs::io::InvalidFile& /*exInvalid*/) {
+        status = false;
+    }
+    catch (pfs::io::WriteException& /*exWrite*/) {
+        status = false;
     }
 
     if ( status )

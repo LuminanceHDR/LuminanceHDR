@@ -242,7 +242,7 @@ private:
     void open(const std::string& filename) {
         m_handle.reset( fopen(filename.c_str(), "wb") );
         if ( !m_handle ) {
-            throw io::WriteException("Cannot open file " + filename);
+            throw io::InvalidFile("Cannot open file " + filename);
         }
     }
 

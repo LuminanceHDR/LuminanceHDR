@@ -26,6 +26,8 @@
 #define PFS_IO_FRAMEWRITER_H
 
 #include <string>
+#include <boost/shared_ptr.hpp>
+
 #include <Libpfs/params.h>
 #include <Libpfs/io/ioexception.h>
 
@@ -49,6 +51,10 @@ public:
 private:
     std::string m_filename;
 };
+
+
+
+typedef ::boost::shared_ptr<FrameWriter> FrameWriterPtr;
 
 }   // io
 }   // pfs
