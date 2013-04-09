@@ -28,6 +28,10 @@ FrameWriter::FrameWriter(const std::string& filename)
     : m_filename(filename)
 {}
 
+FrameWriter::FrameWriter()
+    : m_filename()
+{}
+
 FrameWriter::~FrameWriter()
 {}
 

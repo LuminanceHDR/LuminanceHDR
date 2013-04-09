@@ -21,7 +21,7 @@
  *
  */
 
-#include "jpegwriter.h"
+#include <Libpfs/io/jpegwriter.h>
 
 #include <stdexcept>
 #include <vector>
@@ -43,6 +43,9 @@
 using namespace std;
 using namespace pfs;
 using namespace boost;
+
+namespace pfs {
+namespace io {
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -72,6 +75,7 @@ using namespace boost;
 // (This ordering ensures that the APP2 marker(s) will appear after the
 // SOI and JFIF or Adobe markers, but before all else.)
 
+static
 void write_icc_profile (j_compress_ptr cinfo, const JOCTET *icc_data_ptr,
                         unsigned int icc_data_len)
 {
@@ -199,20 +203,15 @@ ostream& operator<<(ostream& out, const JpegWriterParams& params)
 class JpegWriterImpl
 {
 public:
-    JpegWriterImpl()
-        : m_filesize(0)
-    {}
+    JpegWriterImpl() {}
+    virtual ~JpegWriterImpl() {}
 
-    virtual ~JpegWriterImpl()
-    {}
-
-    virtual void setupJpegDest(j_compress_ptr cinfo) = 0;
+    virtual void setupJpegDest(j_compress_ptr cinfo, const std::string& filename) = 0;
     virtual void close() = 0;
+    virtual size_t getFileSize() const = 0;
 
-    // compute size (if functionality available)
-    virtual void computeSize() = 0;
-
-    bool write(const pfs::Frame &frame, const JpegWriterParams& params)
+    bool write(const pfs::Frame &frame, const JpegWriterParams& params,
+               const std::string& filename)
     {
         cmsUInt32Number cmsProfileSize = 0;
         utils::ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
@@ -224,9 +223,9 @@ public:
         cmsSaveProfileToMem(hsRGB.data(), cmsOutputProfile.data(), &cmsProfileSize);
 
         struct jpeg_compress_struct cinfo;
-        jpeg_create_compress(&cinfo);
+        struct jpeg_error_mgr errorHandler;
 
-        struct  jpeg_error_mgr errorHandler;
+        jpeg_create_compress(&cinfo);
 
         cinfo.err                        = jpeg_std_error(&errorHandler);
         errorHandler.error_exit          = my_writer_error_handler;
@@ -254,7 +253,7 @@ public:
 
         try
         {
-            setupJpegDest(&cinfo);
+            setupJpegDest(&cinfo, filename);
 
             jpeg_start_compress(&cinfo, true);
 
@@ -298,21 +297,10 @@ public:
         jpeg_finish_compress(&cinfo);
         jpeg_destroy_compress(&cinfo);
 
-        computeSize();
         close();
 
         return true;
     }
-
-    size_t getFileSize()
-    { return m_filesize; }
-
-protected:
-    void setFileSize(size_t filesize)
-    { m_filesize = filesize; }
-
-private:
-    size_t m_filesize;
 };
 
 //! \ref http://www.andrewewhite.net/wordpress/2010/04/07/simple-cc-jpeg-writer-part-2-write-to-buffer-in-memory/
@@ -335,12 +323,10 @@ struct JpegWriterImplMemory : public JpegWriterImpl
     }
 
     // implementation below!
-    void setupJpegDest(j_compress_ptr cinfo);
+    void setupJpegDest(j_compress_ptr cinfo, const std::string& filename);
 
     void close() {}
-
-    void computeSize()
-    { setFileSize(m_buffer.size()*sizeof(JOCTET)); }
+    size_t getFileSize() const  { return (m_buffer.size()*sizeof(JOCTET)); }
 
     static
     JpegBuffer& getBuffer(j_compress_ptr cinfo) {
@@ -394,7 +380,7 @@ void my_term_destination(j_compress_ptr cinfo)
 }
 #undef BLOCK_SIZE
 
-void JpegWriterImplMemory::setupJpegDest(j_compress_ptr cinfo)
+void JpegWriterImplMemory::setupJpegDest(j_compress_ptr cinfo, const string &/*filename*/)
 {
     // remember the j_compress_struct ... it will be necessary in the dtor!
     m_cinfo = cinfo;
@@ -412,42 +398,41 @@ void JpegWriterImplMemory::setupJpegDest(j_compress_ptr cinfo)
 //! \brief Writer to file basic implementation
 struct JpegWriterImplFile : public JpegWriterImpl
 {
-    JpegWriterImplFile(const string& filename)
+    JpegWriterImplFile()
         : JpegWriterImpl()
         , m_handle()
-        , m_filename(filename)
     {}
 
-    void setupJpegDest(j_compress_ptr cinfo) {
-        if ( !open() ) {  // open output file!
-            throw pfs::io::InvalidFile( "Cannot open the output file " + m_filename );
+    void setupJpegDest(j_compress_ptr cinfo, const std::string& filename) {
+        if ( !open(filename) ) {  // open output file!
+            throw pfs::io::InvalidFile( "Cannot open the output file " + filename );
         }
         jpeg_stdio_dest(cinfo, handle());
     }
 
-    void close()        { m_handle.reset(); }
-    void computeSize()  { setFileSize(0); }
+    void close()                { m_handle.reset(); }
+    size_t getFileSize() const  { return 0; }
 
 private:
-    bool open() {
-        m_handle.reset( fopen(m_filename.c_str(), "wb") );
+    bool open(const std::string& filename) {
+        m_handle.reset( fopen(filename.c_str(), "wb") );
         if ( m_handle ) return true;
         return false;
     }
 
-    FILE* handle()      { return m_handle.data(); }
+    FILE* handle()              { return m_handle.data(); }
 
     utils::ScopedStdIoFile m_handle;
-    std::string m_filename;
 };
 
 
 JpegWriter::JpegWriter()
-    : m_impl(new JpegWriterImplMemory)
+    : m_impl(new JpegWriterImplMemory())
 {}
 
 JpegWriter::JpegWriter(const std::string &filename)
-    : m_impl(new JpegWriterImplFile(filename))
+    : FrameWriter(filename)
+    , m_impl(new JpegWriterImplFile())
 {}
 
 JpegWriter::~JpegWriter()
@@ -462,10 +447,13 @@ bool JpegWriter::write(const pfs::Frame& frame, const Params& params)
     cout << p << endl << flush;
 #endif
 
-    return m_impl->write(frame, p);
+    return m_impl->write(frame, p, filename());
 }
 
-size_t JpegWriter::getFileSize()
+size_t JpegWriter::getFileSize() const
 {
     return m_impl->getFileSize();
 }
+
+}   // io
+}   // pfs

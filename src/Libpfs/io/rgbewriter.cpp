@@ -171,7 +171,7 @@ void writeRadiance(FILE *file,
         fwrite(header, sizeof(header), 1, file);
 
         // each channel is encoded separately
-        for ( int x=0 ; x < width ; x++ )
+        for ( size_t x=0 ; x < width ; x++ )
         {
             Trgbe_pixel p;
             rgb2rgbe( X(x,y), Y(x,y), Z(x,y), p );

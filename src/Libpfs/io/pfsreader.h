@@ -47,7 +47,7 @@ public:
 
     void open();
     void close();
-    void read(Frame &frame, const Params &);
+    void read(pfs::Frame &frame, const pfs::Params &);
 
 private:
     utils::ScopedStdIoFile m_file;

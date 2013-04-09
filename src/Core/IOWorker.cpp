@@ -35,15 +35,15 @@
 #include <stdexcept>
 
 #include "Core/IOWorker.h"
-
 #include "Libpfs/frame.h"
 #include "Fileformat/pfs_file_format.h"
-#include "Fileformat/jpegwriter.h"
+
 #include "Viewers/GenericViewer.h"
 #include "Common/LuminanceOptions.h"
 #include "Core/TonemappingOptions.h"
 #include "Exif/ExifOperations.h"
 
+#include <Libpfs/io/jpegwriter.h>
 #include <Libpfs/io/pfswriter.h>
 #include <Libpfs/io/pfsreader.h>
 #include <Libpfs/io/rgbewriter.h>

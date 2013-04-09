@@ -37,7 +37,8 @@ namespace io {
 class FrameWriter
 {
 public:
-    FrameWriter(const std::string& filename);
+    explicit FrameWriter(const std::string& filename);
+    explicit FrameWriter();
     virtual ~FrameWriter();
 
     virtual bool write(const pfs::Frame& frame, const pfs::Params& params) = 0;

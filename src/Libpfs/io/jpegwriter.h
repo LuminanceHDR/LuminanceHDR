@@ -27,21 +27,23 @@
 //! - rewrite for LibHDR
 //! - implementation in-memory writer (to retrieve size)
 
-#ifndef JPEGWRITER_H
-#define JPEGWRITER_H
+#ifndef PFS_IO_JPEGWRITER_H
+#define PFS_IO_JPEGWRITER_H
 
 #include <string>
 #include <boost/scoped_ptr.hpp>
 #include <Libpfs/params.h>
 #include <Libpfs/io/ioexception.h>
+#include <Libpfs/io/framewriter.h>
 
 namespace pfs {
 class Frame;
-}
+
+namespace io {
 
 class JpegWriterImpl;
 
-class JpegWriter
+class JpegWriter : public FrameWriter
 {
 public:
     JpegWriter(const std::string& filename);
@@ -52,10 +54,13 @@ public:
     bool write(const pfs::Frame& frame, const pfs::Params& params);
 
     //! \brief return size in bytes of the file written
-    size_t getFileSize();
+    size_t getFileSize() const;
 
 private:
     boost::scoped_ptr<JpegWriterImpl> m_impl;
 };
 
-#endif
+}   // io
+}   // pfs
+
+#endif  // PFS_IO_JPEGWRITER_H

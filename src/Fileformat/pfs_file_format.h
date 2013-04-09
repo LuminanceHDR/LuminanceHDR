@@ -31,7 +31,6 @@
 #include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "Fileformat/pfsinraw.h"
-#include "Fileformat/jpegwriter.h"
 #include "Fileformat/jpegreader.h"
 #include "Fileformat/pngwriter.h"
 

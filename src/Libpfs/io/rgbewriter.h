@@ -37,8 +37,6 @@
 #include <Libpfs/io/framewriter.h>
 
 namespace pfs {
-class Frame;
-
 namespace io {
 
 class RGBEWriter : public FrameWriter
@@ -46,7 +44,7 @@ class RGBEWriter : public FrameWriter
 public:
     RGBEWriter(const std::string& filename);
 
-    bool write(const Frame &frame, const Params &params);
+    bool write(const pfs::Frame &frame, const pfs::Params &params);
 };
 
 }
