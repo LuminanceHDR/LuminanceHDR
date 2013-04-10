@@ -1,9 +1,7 @@
-/**
- * @brief Header file for pfs file format IO
- *
- * This file is a part of LuminanceHDR package.
+/*
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006 Davide Anastasia
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,16 +17,27 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *
  */
 
-#ifndef PFS_FILE_FORMAT_H
-#define PFS_FILE_FORMAT_H
+#ifndef PFS_COLORSPACE_COPY_H
+#define PFS_COLORSPACE_COPY_H
 
-#include "Fileformat/tiffreader.h"
-#include "Fileformat/pfsoutldrimage.h"
-#include "Fileformat/pfsinraw.h"
+namespace pfs {
+namespace colorspace {
 
-#endif // PFS_FILE_FORMAT_H
+struct Copy {
+    template <typename TypeIn, typename TypeOut>
+    void operator()(TypeIn v1, TypeIn v2, TypeIn v3,
+                    TypeOut& o1, TypeOut& o2, TypeOut& o3)
+    {
+        o1 = static_cast<TypeOut>(v1);
+        o2 = static_cast<TypeOut>(v2);
+        o3 = static_cast<TypeOut>(v3);
+    }
+};
+
+}   // utils
+}   // pfs
+
+
+#endif // PFS_UTILS_CHAIN_H

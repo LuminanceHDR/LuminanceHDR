@@ -28,12 +28,23 @@
 namespace pfs {
 namespace utils {
 
+//! \brief 3 components to 3 components transform function
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
 void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,
                OutputIterator out1, OutputIterator out2, OutputIterator out3,
                ConversionOperator convOp);
 
+//! \brief 4 components to 3 components transform function
+//! useful for CMYK to RGB conversion (or RGBA to RGB)
+template <typename InputIterator, typename OutputIterator,
+          typename ConversionOperator>
+void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3, InputIterator in4,
+               OutputIterator out1, OutputIterator out2, OutputIterator out3,
+               ConversionOperator convOp);
+
+//! \brief 3 components to 1 component transform function
+//! useful for channel stripping or RGB to Y conversion
 template <typename InputIterator, typename OutputIterator,
           typename ConversionOperator>
 void transform(InputIterator in1, InputIterator in1End, InputIterator in2, InputIterator in3,

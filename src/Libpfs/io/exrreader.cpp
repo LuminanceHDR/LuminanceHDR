@@ -83,7 +83,10 @@ EXRReader::EXRReader(const string &filename)
     EXRReader::open();
 }
 
-EXRReader::~EXRReader() {}
+EXRReader::~EXRReader()
+{
+    close();
+}
 
 void EXRReader::open()
 {

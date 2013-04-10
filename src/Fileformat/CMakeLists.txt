@@ -1,7 +1,6 @@
 #SET(FILES_UI )
 SET(FILES_H
 ${CMAKE_CURRENT_SOURCE_DIR}/tiffreader.h
-${CMAKE_CURRENT_SOURCE_DIR}/jpegreader.h
 )
 
 SET(FILES_HXX
@@ -19,7 +18,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsinraw.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/jpegreader.cpp
 )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})

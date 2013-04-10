@@ -468,8 +468,12 @@ TiffReader::readIntoPfsFrame()
 
             TIFFReadScanline (tif, buf_fp, row);
             for (int i = 0; i < image_width; i++) {
-                xyz2rgb(buf_fp[i * nSamples], buf_fp[i * nSamples + 1], buf_fp[i * nSamples + 2],
-                        X[row * image_width + i], Y[row * image_width + i], Z[row * image_width + i]);
+                xyz2rgb(buf_fp[i * nSamples],
+                        buf_fp[i * nSamples + 1],
+                        buf_fp[i * nSamples + 2],
+                        X[row * image_width + i],
+                        Y[row * image_width + i],
+                        Z[row * image_width + i]);
             }
         }
             break;

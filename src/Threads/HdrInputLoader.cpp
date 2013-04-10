@@ -35,7 +35,9 @@
 #include "Libpfs/exception.h"
 
 HdrInputLoader::HdrInputLoader(const QString& filename, int image_idx)
-    : QThread(0), image_idx(image_idx), fname(filename)
+    : QThread(0)
+    , image_idx(image_idx)
+    , fname(filename)
 {}
 
 HdrInputLoader::~HdrInputLoader()
@@ -71,16 +73,17 @@ void HdrInputLoader::run() {
 		//now go and fill the list of image data (real payload)
 		// check for extension: if JPEG:
 		if (extension.startsWith("JP")) {
-			JpegReader reader(qfi.filePath());
-			QImage *newimage = reader.readJpegIntoQImage();
-			if (newimage == NULL)
-				emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
-
-			conditionallyRotateImage(qfi, &newimage);
-
-			emit ldrReady(newimage, image_idx, expotime, fname, false);
-			//QApplication::restoreOverrideCursor();
-			return;
+            // DAVIDE _ JPEG!
+//			JpegReader reader(qfi.filePath());
+//			QImage *newimage = reader.readJpegIntoQImage();
+//			if (newimage == NULL)
+//				emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
+//
+//			conditionallyRotateImage(qfi, &newimage);
+//
+//			emit ldrReady(newimage, image_idx, expotime, fname, false);
+//			//QApplication::restoreOverrideCursor();
+//			return;
 		}
 		//if tiff
 		else if(extension.startsWith("TIF")) {

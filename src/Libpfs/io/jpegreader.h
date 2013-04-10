@@ -1,7 +1,8 @@
 /*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2013 Davide Anastasia
+ * Copyright (C) 2012 Franco Comida
+ * Copyright (C) 2012-2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,50 +20,40 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief Interface for the FrameReader base class
+//! \author Franco Comida <fcomida@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! - Refactoring
+//! - Adaptation for new Luminance HDR engine (LibHDR) - 2013.04.10
 
-#ifndef PFS_IO_FRAMEREADER_H
-#define PFS_IO_FRAMEREADER_H
+#ifndef PFS_IO_JPEGREADER_H
+#define PFS_IO_JPEGREADER_H
 
 #include <string>
-#include <Libpfs/params.h>
+#include <boost/scoped_ptr.hpp>
+#include <Libpfs/io/framereader.h>
+#include <Libpfs/io/ioexception.h>
 
 namespace pfs {
-class Frame;
-
 namespace io {
 
-class FrameReader
+class JpegReader : public FrameReader
 {
 public:
-    FrameReader(const std::string& filename);
+    JpegReader(const std::string& filename);
+    ~JpegReader();
 
-    virtual ~FrameReader();
-
-    //! \brief filename of the file being read
-    const std::string& filename() const     { return m_filename; }
-    //! \brief return the width of the file being read
-    size_t width() const                    { return m_width; }
-    //! \brief return the height of the file being read
-    size_t height() const                   { return m_height; }
-
-    virtual void open() = 0;
-    virtual bool isOpen() const = 0;
-    virtual void close() = 0;
-    virtual void read(pfs::Frame& frame, const pfs::Params& params) = 0;
-
-protected:
-    void setWidth(size_t width)     { m_width = width; }
-    void setHeight(size_t height)   { m_height = height; }
+    void open();
+    bool isOpen() const;
+    void close();
+    void read(Frame &frame, const Params &params);
 
 private:
-    std::string m_filename;
-    size_t m_width;
-    size_t m_height;
+    struct JpegReaderData;
+
+    boost::scoped_ptr<JpegReaderData> m_data;
 };
 
 }   // io
 }   // pfs
 
-#endif // PFS_IO_FRAMEREADER_H
+#endif  // PFS_IO_JPEGREADER_H

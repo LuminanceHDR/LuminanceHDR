@@ -1,4 +1,5 @@
 ADD_SUBDIRECTORY(ImageInspector)
+ADD_SUBDIRECTORY(JpegTest)
 
 # workaround for http://code.google.com/p/googletest/issues/detail?id=408
 IF(MSVC_VERSION EQUAL 1700)
