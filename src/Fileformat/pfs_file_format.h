@@ -29,6 +29,5 @@
 
 #include "Fileformat/tiffreader.h"
 #include "Fileformat/pfsoutldrimage.h"
-#include "Fileformat/pfsinraw.h"
 
 #endif // PFS_FILE_FORMAT_H

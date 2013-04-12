@@ -27,12 +27,14 @@
  *
  */
 
+#include <stdexcept>
+#include <sstream>
+
 #include <QFileInfo>
 #include <QString>
 #include <QByteArray>
 #include <QDebug>
 #include <QScopedPointer>
-#include <stdexcept>
 
 #include "Core/IOWorker.h"
 #include "Libpfs/frame.h"
@@ -46,6 +48,7 @@
 #include <Libpfs/io/pfsreader.h>
 #include <Libpfs/io/rgbereader.h>
 #include <Libpfs/io/exrreader.h>
+#include <Libpfs/io/rawreader.h>
 
 #include <Libpfs/io/exrwriter.h>            // default for HDR saving
 #include <Libpfs/io/framewriterfactory.h>
@@ -301,34 +304,28 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         else if ( rawextensions.indexOf(extension) != -1 )
         {
             // raw file detected
-            try {
-                hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminanceOptions, false, progress_cb, this);
-            }
-            catch (QString& err)
-            {
-                qDebug("TH: catched exception");
-                emit read_hdr_failed((err + " : %1").arg(filename));
-                return NULL;
-            }
+            hdrpfsframe = new pfs::Frame(0,0);
+
+            pfs::io::RAWReader reader(encodedFileName.constData());
+            reader.read( *hdrpfsframe, getRawSettings(luminanceOptions) );
+            reader.close();
         }
         else
         {
-#ifdef QT_DEBUG
             qDebug("TH: File %s has unsupported extension.", qPrintable(filename));
-#endif
+
             emit read_hdr_failed(tr("ERROR: File %1 has unsupported extension.").arg(filename));
             return NULL;
         }
-
-        if (hdrpfsframe == NULL)
-        {
-            return NULL;
-        }
     }
-	catch (const std::runtime_error& err)
+    catch (std::runtime_error& err)
 	{
-		qDebug() << err.what();
-		emit read_hdr_failed(err.what()); 
+        qDebug("TH: catched exception");
+        std::stringstream ss;
+        ss << err.what();
+        ss << " : %1";
+
+        emit read_hdr_failed(QString::fromStdString(ss.str()).arg(filename));
 		return NULL;
 	}
     catch (...)
@@ -337,11 +334,16 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         emit read_hdr_failed(tr("ERROR: Failed loading file: %1").arg(filename));
         return NULL;
     }
-    emit read_hdr_success(hdrpfsframe, filename);
 
     emit IO_finish();
 
-    return hdrpfsframe;
+    if (hdrpfsframe != NULL)
+    {
+        emit read_hdr_success(hdrpfsframe, filename);
+        return hdrpfsframe;
+    } else {
+        return NULL;
+    }
 }
 
 void IOWorker::emitNextStep(int iteration)
@@ -362,3 +364,57 @@ int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected)
     return 0;
 }
 
+// moves settings from LuminanceOptions into Params, for the underlying
+// processing engine
+pfs::Params getRawSettings(const LuminanceOptions& opts)
+{
+    pfs::Params p;
+    // general parameters
+    if ( opts.isRawFourColorRGB() )
+    { p.set("raw.four_color", 1); }
+    if ( opts.isRawDoNotUseFujiRotate() )
+    { p.set("raw.fuji_rotate", 0); }
+
+    p.set("raw.user_quality", opts.getRawUserQuality());
+    p.set("raw.med_passes", opts.getRawMedPasses());
+
+    // white balance
+    p.set("raw.wb_method", opts.getRawWhiteBalanceMethod());
+    p.set("raw.wb_temperature", opts.getRawTemperatureKelvin());
+    p.set("raw.wb_green", opts.getRawGreen());
+
+    // highlights
+    p.set("raw.highlights", opts.getRawHighlightsMode());
+    p.set("raw.highlights_rebuild", opts.getRawLevel());
+
+    // colors
+    if ( opts.isRawUseBlack() )
+    { p.set("raw.black_level", opts.getRawUserBlack()); }
+    if ( opts.isRawUseSaturation() )
+    { p.set("raw.saturation", opts.getRawUserSaturation()); }
+    // brightness
+    if ( opts.isRawAutoBrightness() )
+    { p.set("raw.auto_brightness", true); }
+    p.set("raw.brightness", opts.getRawBrightness());
+    p.set("raw.auto_brightness_threshold", opts.getRawAutoBrightnessThreshold());
+    // noise reduction
+    if ( opts.isRawUseNoiseReduction() )
+    { p.set("raw.noise_reduction_threshold", opts.getRawNoiseReductionThreshold()); }
+
+    if ( opts.isRawUseChromaAber() ) {
+        p.set("raw.chroma_aber", true);
+        p.set("raw.chroma_aber_0", opts.getRawAber0());
+        p.set("raw.chroma_aber_1", opts.getRawAber1());
+        p.set("raw.chroma_aber_2", opts.getRawAber2());
+        p.set("raw.chroma_aber_3", opts.getRawAber3());
+    }
+
+    if ( !opts.getRawCameraProfile().isEmpty() ) {
+        p.set("raw.camera_profile",
+              std::string(
+                  QFile::encodeName( opts.getRawCameraProfile() ).constData()
+                  ));
+    }
+
+    return p;
+}

@@ -164,7 +164,7 @@ void LuminanceOptions::setGuiLang(const QString& s)
     m_settingHolder->setValue(KEY_GUI_LANG, s);
 }
 
-bool LuminanceOptions::isRawFourColorRGB()
+bool LuminanceOptions::isRawFourColorRGB() const
 {
     return m_settingHolder->value(KEY_FOUR_COLOR_RGB, false).toBool();
 }
@@ -174,7 +174,7 @@ void LuminanceOptions::setRawFourColorRGB(bool b)
     m_settingHolder->setValue(KEY_FOUR_COLOR_RGB, b);
 }
 
-bool LuminanceOptions::isRawDoNotUseFujiRotate()
+bool LuminanceOptions::isRawDoNotUseFujiRotate() const
 {
     return m_settingHolder->value(KEY_DO_NOT_USE_FUJI_ROTATE, false).toBool();
 }
@@ -184,7 +184,7 @@ void LuminanceOptions::setRawDoNotUseFujiRotate(bool b)
     m_settingHolder->setValue(KEY_DO_NOT_USE_FUJI_ROTATE, b);
 }
 
-double LuminanceOptions::getRawAber0()
+double LuminanceOptions::getRawAber0() const
 {
     return m_settingHolder->value(KEY_ABER_0, 1.0).toDouble();
 }
@@ -194,7 +194,7 @@ void LuminanceOptions::setRawAber0(double v)
     m_settingHolder->setValue(KEY_ABER_0, v);
 }
 
-double LuminanceOptions::getRawAber1()
+double LuminanceOptions::getRawAber1() const
 {
     return m_settingHolder->value(KEY_ABER_1, 1.0).toDouble();
 }
@@ -204,9 +204,9 @@ void LuminanceOptions::setRawAber1(double v)
     m_settingHolder->setValue(KEY_ABER_1, v);
 }
 
-double LuminanceOptions::getRawAber2()
+double LuminanceOptions::getRawAber2() const
 {
-    return m_settingHolder->value(KEY_ABER_2).toDouble();
+    return m_settingHolder->value(KEY_ABER_2, 1.0).toDouble();
 }
 
 void LuminanceOptions::setRawAber2(double v)
@@ -214,9 +214,9 @@ void LuminanceOptions::setRawAber2(double v)
     m_settingHolder->setValue(KEY_ABER_2, v);
 }
 
-double LuminanceOptions::getRawAber3()
+double LuminanceOptions::getRawAber3() const
 {
-    return m_settingHolder->value(KEY_ABER_3).toDouble();
+    return m_settingHolder->value(KEY_ABER_3, 1.0).toDouble();
 }
 
 void LuminanceOptions::setRawAber3(double v)
@@ -224,7 +224,7 @@ void LuminanceOptions::setRawAber3(double v)
     m_settingHolder->setValue(KEY_ABER_3, v);
 }
 
-double LuminanceOptions::getRawGamm0()
+double LuminanceOptions::getRawGamm0() const
 {
     return m_settingHolder->value(KEY_GAMM_0, 1.0/2.4).toDouble();
 }
@@ -234,7 +234,7 @@ void LuminanceOptions::setRawGamm0(double v)
     m_settingHolder->setValue(KEY_GAMM_0, v);
 }
 
-double LuminanceOptions::getRawGamm1()
+double LuminanceOptions::getRawGamm1() const
 {
     return m_settingHolder->value(KEY_GAMM_1, 12.92).toDouble();
 }
@@ -244,7 +244,7 @@ void LuminanceOptions::setRawGamm1(double v)
     m_settingHolder->setValue(KEY_GAMM_1, v);
 }
 
-int LuminanceOptions::getRawTemperatureKelvin()
+int LuminanceOptions::getRawTemperatureKelvin() const
 {
     return m_settingHolder->value(KEY_TK, 6500).toInt();
 }
@@ -254,7 +254,7 @@ void LuminanceOptions::setRawTemperatureKelvin(int v)
     m_settingHolder->setValue(KEY_TK, v);
 }
 
-float LuminanceOptions::getRawGreen()
+float LuminanceOptions::getRawGreen() const
 {
     return m_settingHolder->value(KEY_GREEN, 1.0f).toFloat();
 }
@@ -264,7 +264,7 @@ void LuminanceOptions::setRawGreen(float v)
     m_settingHolder->setValue(KEY_GREEN, v);
 }
 
-float LuminanceOptions::getRawUserMul0()
+float LuminanceOptions::getRawUserMul0() const
 {
     return m_settingHolder->value(KEY_USER_MUL_0, 1.0f).toFloat();
 }
@@ -274,7 +274,7 @@ void LuminanceOptions::setRawUserMul0(float v)
     m_settingHolder->setValue(KEY_USER_MUL_0, v);
 }
 
-float LuminanceOptions::getRawUserMul1()
+float LuminanceOptions::getRawUserMul1() const
 {
     return m_settingHolder->value(KEY_USER_MUL_1, 1.0f).toFloat();
 }
@@ -284,7 +284,7 @@ void LuminanceOptions::setRawUserMul1(float v)
     m_settingHolder->setValue(KEY_USER_MUL_1, v);
 }
 
-float LuminanceOptions::getRawUserMul2()
+float LuminanceOptions::getRawUserMul2() const
 {
     return m_settingHolder->value(KEY_USER_MUL_2, 1.0f).toFloat();
 }
@@ -294,7 +294,7 @@ void LuminanceOptions::setRawUserMul2(float v)
     m_settingHolder->setValue(KEY_USER_MUL_2, v);
 }
 
-float LuminanceOptions::getRawUserMul3()
+float LuminanceOptions::getRawUserMul3() const
 {
     return m_settingHolder->value(KEY_USER_MUL_3, 1.0f).toFloat();
 }
@@ -304,7 +304,7 @@ void LuminanceOptions::setRawUserMul3(float v)
     m_settingHolder->setValue(KEY_USER_MUL_3, v);
 }
 
-bool LuminanceOptions::isRawAutoBrightness()
+bool LuminanceOptions::isRawAutoBrightness() const
 {
     return m_settingHolder->value(KEY_AUTO_BRIGHT, false).toBool();
 }
@@ -314,7 +314,7 @@ void LuminanceOptions::setRawAutoBrightness(bool b)
     m_settingHolder->setValue(KEY_AUTO_BRIGHT, b);
 }
 
-float LuminanceOptions::getRawBrightness()
+float LuminanceOptions::getRawBrightness() const
 {
     return m_settingHolder->value(KEY_BRIGHTNESS, 1.0f).toFloat();
 }
@@ -324,7 +324,7 @@ void LuminanceOptions::setRawBrightness(float f)
     m_settingHolder->setValue(KEY_BRIGHTNESS, f);
 }
 
-float LuminanceOptions::getRawNoiseReductionThreshold()
+float LuminanceOptions::getRawNoiseReductionThreshold() const
 {
     return m_settingHolder->value(KEY_THRESHOLD, 100.0f).toFloat();
 }
@@ -334,7 +334,7 @@ void LuminanceOptions::setRawNoiseReductionThreshold(float v)
     m_settingHolder->setValue(KEY_THRESHOLD, v);
 }
 
-int LuminanceOptions::getRawHalfSize()
+int LuminanceOptions::getRawHalfSize() const
 {
     return m_settingHolder->value(KEY_HALF_SIZE, 0).toInt();
 }
@@ -344,7 +344,7 @@ void LuminanceOptions::setRawHalfSize(int v)
     m_settingHolder->setValue(KEY_HALF_SIZE, v);
 }
 
-int LuminanceOptions::getRawWhiteBalanceMethod()
+int LuminanceOptions::getRawWhiteBalanceMethod() const
 {
     return m_settingHolder->value(KEY_WB_METHOD, 1).toInt();
 }
@@ -354,13 +354,13 @@ void LuminanceOptions::setRawWhiteBalanceMethod(int v)
     m_settingHolder->setValue(KEY_WB_METHOD, v);
 }
 
-int LuminanceOptions::getRawOutputColor()
+int LuminanceOptions::getRawOutputColor() const
 {
     return m_settingHolder->value(KEY_OUTPUT_COLOR, 1).toInt();
 }
 
 // double check those!
-QString LuminanceOptions::getRawOutputProfile()
+QString LuminanceOptions::getRawOutputProfile() const
 {
     //QFile::encodeName(this->value(KEY_OUTPUT_PROFILE).toString()).constData();
     return QFile::encodeName(m_settingHolder->value(KEY_OUTPUT_PROFILE).toString());
@@ -371,7 +371,7 @@ void LuminanceOptions::setRawOutputProfile(const QString& v)
     m_settingHolder->setValue(KEY_OUTPUT_PROFILE, v);
 }
 
-QString LuminanceOptions::getRawCameraProfile()
+QString LuminanceOptions::getRawCameraProfile() const
 {
     // QFile::encodeName(this->value(KEY_CAMERA_PROFILE).toString()).constData();
     return QFile::encodeName(m_settingHolder->value(KEY_CAMERA_PROFILE).toString());
@@ -382,22 +382,22 @@ void LuminanceOptions::setRawCameraProfile(const QString& v)
     m_settingHolder->setValue(KEY_CAMERA_PROFILE, v);
 }
 
-int LuminanceOptions::getRawUserFlip()
+int LuminanceOptions::getRawUserFlip() const
 {
     return m_settingHolder->value(KEY_USER_FLIP, 0).toInt();
 }
 
-int LuminanceOptions::getRawUserQuality()
-{
-#ifdef DEMOSAICING_GPL2
-    int defaultUserQuality = 5; // using AHDv2
-#else
-    int defaultUserQuality = 3; // using AHD
-#endif
 #ifdef DEMOSAICING_GPL3
-    defaultUserQuality = 10; // using  AMaZE interpolation
+#define USER_QUALITY 10         // using  AMaZE interpolation
+#elif DEMOSAICING_GPL2
+#define USER_QUALITY 5          // using AHDv2
+#else
+#define USER_QUALITY 3;         // using AHD
 #endif
-    return m_settingHolder->value(KEY_USER_QUAL, defaultUserQuality).toInt();
+
+int LuminanceOptions::getRawUserQuality() const
+{
+    return m_settingHolder->value(KEY_USER_QUAL, USER_QUALITY).toInt();
 }
 
 void LuminanceOptions::setRawUserQuality(int v)
@@ -405,7 +405,7 @@ void LuminanceOptions::setRawUserQuality(int v)
     m_settingHolder->setValue(KEY_USER_QUAL, v);
 }
 
-int LuminanceOptions::getRawUserSaturation()
+int LuminanceOptions::getRawUserSaturation() const
 {
     return m_settingHolder->value(KEY_USER_SAT, 20000).toInt();
 }
@@ -415,7 +415,7 @@ void LuminanceOptions::setRawUserSaturation(int v)
     m_settingHolder->setValue(KEY_USER_SAT, v);
 }
 
-int LuminanceOptions::getRawMedPasses()
+int LuminanceOptions::getRawMedPasses() const
 {
     return m_settingHolder->value(KEY_MED_PASSES, 0).toInt();
 }
@@ -425,7 +425,7 @@ void LuminanceOptions::setRawMedPasses(int v)
     m_settingHolder->setValue(KEY_MED_PASSES, v);
 }
 
-int LuminanceOptions::getRawHighlightsMode()
+int LuminanceOptions::getRawHighlightsMode() const
 {
     return m_settingHolder->value(KEY_HIGHLIGHTS, 0).toInt();
 }
@@ -435,7 +435,7 @@ void LuminanceOptions::setRawHighlightsMode(int v)
     m_settingHolder->setValue(KEY_HIGHLIGHTS, v);
 }
 
-int LuminanceOptions::getRawLevel()
+int LuminanceOptions::getRawLevel() const
 {
     return m_settingHolder->value(KEY_LEVEL, 0).toInt();
 }
@@ -445,17 +445,17 @@ void LuminanceOptions::setRawLevel(int v)
     m_settingHolder->setValue(KEY_LEVEL, v);
 }
 
-float LuminanceOptions::getRawBrightnessThreshold()
+float LuminanceOptions::getRawAutoBrightnessThreshold() const
 {
-    return m_settingHolder->value(KEY_AUTO_BRIGHT_THR, 0.0f).toFloat();
+    return m_settingHolder->value(KEY_AUTO_BRIGHT_THR, 0.001f).toFloat();
 }
 
-void LuminanceOptions::setRawBrightnessThreshold(float v)
+void LuminanceOptions::setRawAutoBrightnessThreshold(float v)
 {
     m_settingHolder->setValue(KEY_AUTO_BRIGHT_THR, v);
 }
 
-float LuminanceOptions::getRawMaximumThreshold()
+float LuminanceOptions::getRawMaximumThreshold() const
 {
     return m_settingHolder->value(KEY_ADJUST_MAXIMUM_THR, 0.0f).toFloat();
 }
@@ -465,7 +465,7 @@ void LuminanceOptions::setRawMaximumThreshold(float v)
     m_settingHolder->setValue(KEY_ADJUST_MAXIMUM_THR, v);
 }
 
-bool LuminanceOptions::isRawUseBlack()
+bool LuminanceOptions::isRawUseBlack() const
 {
     return m_settingHolder->value(KEY_USE_BLACK, false).toBool();
 }
@@ -475,7 +475,7 @@ void LuminanceOptions::setRawUseBlack(bool b)
     m_settingHolder->setValue(KEY_USE_BLACK, b);
 }
 
-int LuminanceOptions::getRawUserBlack()
+int LuminanceOptions::getRawUserBlack() const
 {
     return m_settingHolder->value(KEY_USER_BLACK, 0).toInt();
 }
@@ -485,7 +485,7 @@ void LuminanceOptions::setRawUserBlack(int v)
     m_settingHolder->setValue(KEY_USER_BLACK, v);
 }
 
-bool LuminanceOptions::isRawUseSaturation()
+bool LuminanceOptions::isRawUseSaturation() const
 {
     return m_settingHolder->value(KEY_USE_SAT, false).toBool();
 }
@@ -495,7 +495,7 @@ void LuminanceOptions::setRawUseSaturation(bool b)
     m_settingHolder->setValue(KEY_USE_SAT, b);
 }
 
-bool LuminanceOptions::isRawUseNoiseReduction()
+bool LuminanceOptions::isRawUseNoiseReduction() const
 {
     return m_settingHolder->value(KEY_USE_NOISE, true).toBool();
 }
@@ -505,12 +505,12 @@ void LuminanceOptions::setRawUseNoiseReduction(bool b)
     m_settingHolder->setValue(KEY_USE_NOISE, b);
 }
 
-bool LuminanceOptions::isRawUseChroma()
+bool LuminanceOptions::isRawUseChromaAber() const
 {
     return m_settingHolder->value(KEY_USE_CHROMA, false).toBool();
 }
 
-void LuminanceOptions::setRawUseChroma(bool b)
+void LuminanceOptions::setRawUseChromaAber(bool b)
 {
     m_settingHolder->setValue(KEY_USE_CHROMA, b);
 }

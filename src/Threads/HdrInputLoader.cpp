@@ -29,6 +29,8 @@
 #include <QApplication>
 #include <QCoreApplication>
 
+#include <Libpfs/io/rawreader.h>
+
 #include "Exif/ExifOperations.h"
 #include "Fileformat/pfs_file_format.h"
 #include "Threads/HdrInputLoader.h"
@@ -119,12 +121,13 @@ void HdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-			pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options.getTempDir()), &luminance_options, true, prog_callback, this);
-			if (frame == NULL)
-				emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
-
-			QString outfname = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".tiff");
-			emit mdrReady(frame, image_idx, expotime, outfname);
+            // DAVIDE _ RAW!!!
+//			pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options.getTempDir()), &luminance_options, true, prog_callback, this);
+//			if (frame == NULL)
+//				emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
+//
+//			QString outfname = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".tiff");
+//			emit mdrReady(frame, image_idx, expotime, outfname);
 		}
 	}
     catch (pfs::Exception& e) {

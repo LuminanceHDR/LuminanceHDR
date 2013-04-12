@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef READRAWINTOPFSFRAME
-#define READRAWINTOPFSFRAME
+#ifndef PFS_IO_RAWREADER_H
+#define PFS_IO_RAWREADER_H
 
 #ifdef __APPLE__
 #include <libraw.h>
@@ -31,15 +31,36 @@
 #include <libraw/libraw.h>
 #endif
 
-// Forward declaration
+#include <Libpfs/io/framereader.h>
+#include <Libpfs/io/ioexception.h>
+
+//
+// typedef int (*progress_callback)(void *callback_data,
+//                enum LibRaw_progress stage, int iteration, int expected);
+//
+// pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir,
+//                                  LuminanceOptions *options, bool writeOnDisk,
+//                                  progress_callback cb, void *);
+
 namespace pfs {
-    class Frame;
-}
+namespace io {
 
-class LuminanceOptions;
+class RAWReader : public FrameReader {
+public:
+    RAWReader(const std::string& filename);
+    ~RAWReader();
 
-typedef int (*progress_callback)(void *callback_data, enum LibRaw_progress stage, int iteration, int expected);
+    void open();
+    bool isOpen() const;
+    void close();
 
-pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, LuminanceOptions *options, bool writeOnDisk, progress_callback cb, void *);
+    void read(Frame &frame, const Params &params);
+
+private:
+    LibRaw m_processor;
+};
+
+}   // io
+}   // pfs
 
 #endif

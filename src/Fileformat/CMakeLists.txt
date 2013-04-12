@@ -5,7 +5,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/tiffreader.h
 
 SET(FILES_HXX
 ${CMAKE_CURRENT_SOURCE_DIR}/pfs_file_format.h
-${CMAKE_CURRENT_SOURCE_DIR}/pfsinraw.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.h
@@ -17,7 +16,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/tiffreader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsouthdrimage.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/pfsinraw.cpp
 )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})

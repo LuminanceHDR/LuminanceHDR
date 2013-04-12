@@ -115,6 +115,7 @@ GetTIFFProfile(TIFF* in)
 
             return hProfile;
         }
+        // <-- returno 0?
     }
 
     return 0;

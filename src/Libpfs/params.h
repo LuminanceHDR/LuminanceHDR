@@ -109,6 +109,21 @@ public:
         return holder_.count(key);
     }
 
+    template <typename Type>
+    bool get(const std::string& key, Type& value) const {
+        ParamsHolder::const_iterator it = holder_.find(key);
+        if ( it == holder_.end() ) {
+            return false;
+        }
+
+        try {
+            value = it->second.as<Type>();
+            return true;
+        } catch ( boost::bad_any_cast& ex ) {
+            return false;
+        }
+    }
+
     operator const ParamsHolder& () {
         return holder_;
     }
