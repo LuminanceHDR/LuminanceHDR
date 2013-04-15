@@ -26,6 +26,7 @@
 #define PFS_IO_FRAMEREADER_H
 
 #include <string>
+#include <boost/shared_ptr.hpp>
 #include <Libpfs/params.h>
 
 namespace pfs {
@@ -61,6 +62,8 @@ private:
     size_t m_width;
     size_t m_height;
 };
+
+typedef ::boost::shared_ptr<FrameReader> FrameReaderPtr;
 
 }   // io
 }   // pfs

@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include <Libpfs/frame.h>
-#include <Libpfs/io/jpegwriter.h>
-#include <Libpfs/io/jpegreader.h>
+#include <Libpfs/io/framewriterfactory.h>
+#include <Libpfs/io/framereaderfactory.h>
 
 using namespace std;
 using namespace pfs;
@@ -19,12 +19,13 @@ int main(int argc, char** argv)
     {
         Frame myFrame(0,0);
 
-        JpegReader reader(argv[1]);
-        reader.read(myFrame, pfs::Params());
+        FrameReaderPtr reader = FrameReaderFactory::open(argv[1]);
+        reader->read(myFrame, pfs::Params());
+        reader->close();
 
-        JpegWriter writer(argv[2]);
-        writer.write(myFrame,
-                     pfs::Params( "min_luminance", 0.f )( "max_luminance", 255.f ));
+        FrameWriterPtr writer = FrameWriterFactory::open(argv[2]);
+        writer->write(myFrame,
+                      pfs::Params( "min_luminance", 0.f )( "max_luminance", 65535.f ));
 
         return 0;
     }

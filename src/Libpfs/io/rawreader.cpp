@@ -117,7 +117,8 @@ void temperatureToRGB(double T, double RGB[3])
 
 struct RAWReaderParams {
     RAWReaderParams()
-        : gamma0_(1.0), gamma1_(1.0)
+        // : gamma0_(1.0), gamma1_(1.0)
+        : gamma0_(1/2.4), gamma1_(12.92)
         , fourColorRGB_(0)
         , useFujiRotate_(-1)
         , userQuality_(USER_QUALITY), medPasses_(0)
@@ -276,15 +277,31 @@ ostream& operator<<(ostream& out, const RAWReaderParams& p)
     ss << ", WB Green: " << p.wbGreen_;
     ss << ", Highlight Method: " << p.highlightsMethod_;
     ss << ", Highlight Rebuild: " << p.highlightsRebuildMethod_;
-    ss << ", Black Level: " << p.blackLevel_;
-    ss << ", Saturation: " << p.saturation_;
+    if (p.isBlackLevel() ) {
+        ss << ", Black Level: " << p.blackLevel_;
+    } else {
+        ss << ", Black Level: N/A";
+    }
+    if ( p.isSaturation() ) {
+        ss << ", Saturation: " << p.saturation_;
+    } else {
+        ss << ", Saturation: N/A";
+    }
     ss << ", Auto Brightness: " << p.autoBrightness_;
     ss << ", Auto Brightness Threshold: " << p.autoBrightnessThreshold_;
     ss << ", Brightness: " << p.brightness_;
-    ss << ", Noise Reduction: " << p.noiseReductionThreshold_;
+    if ( p.isNoiseReduction() ) {
+        ss << ", Noise Reduction: ON";
+        ss << ", Noise Reduction Threshold: " << p.noiseReductionThreshold_;
+    } else {
+        ss << ", Noise Reduction: OFF";
+    }
+
     ss << ", Chromatic Aberation: " << p.chromaAberation_;
-    ss << ", Chroma {" << p.chroma0_ << ", " << p.chroma1_
-       << ", " << p.chroma2_ << ", " << p.chroma3_;
+    if ( p.chromaAberation_ ) {
+        ss << ", Chroma {" << p.chroma0_ << ", " << p.chroma1_;
+        ss << ", " << p.chroma2_ << ", " << p.chroma3_ << "}";
+    }
     ss << "]";
 
     return (out << ss.str());

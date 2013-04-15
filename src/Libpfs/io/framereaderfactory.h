@@ -19,42 +19,36 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief Interface for the FrameWriter base class
+//! \brief FrameReaderFactory, creation of FrameReader based on the input filename
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#ifndef PFS_IO_FRAMEWRITER_H
-#define PFS_IO_FRAMEWRITER_H
+#ifndef PFS_IO_FRAMEREADERFACTORY_H
+#define PFS_IO_FRAMEREADERFACTORY_H
 
 #include <string>
-#include <boost/shared_ptr.hpp>
-
-#include <Libpfs/params.h>
+#include <map>
+#include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
+#include <Libpfs/utils/string.h>
 
 namespace pfs {
-class Frame;
-
 namespace io {
 
-class FrameWriter
-{
+class FrameReaderFactory {
 public:
-    explicit FrameWriter(const std::string& filename);
-    explicit FrameWriter();
-    virtual ~FrameWriter();
+    typedef FrameReaderPtr (*FrameReaderCreator)(const std::string& filename);
+    typedef std::map<std::string, FrameReaderCreator, utils::StringUnsensitiveComp> FrameReaderCreatorMap;
 
-    virtual bool write(const pfs::Frame& frame, const pfs::Params& params) = 0;
+    static FrameReaderPtr open(const std::string& filename);
 
-    const std::string& filename() const
-    { return m_filename; }
-
+    static void registerFormat(const std::string& format, FrameReaderCreator creator);
+    static size_t numRegisteredFormats();
+    static bool isSupported(const std::string& format);
 private:
-    std::string m_filename;
+    static FrameReaderCreatorMap sm_registry;
 };
-
-typedef ::boost::shared_ptr<FrameWriter> FrameWriterPtr;
 
 }   // io
 }   // pfs
 
-#endif // PFS_IO_FRAMEWRITER_H
+#endif // PFS_IO_FRAMEREADERFACTORY_H
