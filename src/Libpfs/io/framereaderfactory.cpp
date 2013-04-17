@@ -72,6 +72,7 @@ bool FrameReaderFactory::isSupported(const std::string& format)
 #include <Libpfs/io/exrreader.h>
 #include <Libpfs/io/rgbereader.h>
 #include <Libpfs/io/rawreader.h>
+#include <Libpfs/io/tiffreader.h>
 
 namespace pfs {
 namespace io {
@@ -113,6 +114,9 @@ FrameReaderFactory::FrameReaderCreatorMap FrameReaderFactory::sm_registry =
         ("erf", creator<RAWReader>)
         ("nrw", creator<RAWReader>)
         ("srw", creator<RAWReader>)
+        // tiff
+        ("tif", creator<TiffReader>)
+        ("tiff", creator<TiffReader>)
         ;
 
 }   // io

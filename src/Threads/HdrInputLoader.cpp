@@ -89,37 +89,41 @@ void HdrInputLoader::run() {
 		}
 		//if tiff
 		else if(extension.startsWith("TIF")) {
-			TiffReader reader(QFile::encodeName(qfi.filePath()), QFile::encodeName(luminance_options.getTempDir()), true);
-            connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
-            connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
-			//if 8bit ldr tiff
-			if (reader.is8bitTiff()) {
-				QImage *newimage = reader.readIntoQImage();
-				if (newimage->isNull())
-					emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
-				
-				conditionallyRotateImage(qfi, &newimage);
 
-				emit ldrReady(newimage, image_idx, expotime, fname, true);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-			//if 16bit (tiff) treat as hdr
-			else if (reader.is16bitTiff()) {
-				pfs::Frame *frame = reader.readIntoPfsFrame();
-				if (frame == NULL)
-					emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
-				emit mdrReady(frame, image_idx, expotime, fname);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-			//error if other tiff type
-			else {
-				emit loadFailed(tr("ERROR: The file<br>%1<br> is not a 8 bit or 16 bit tiff.").arg(qfi.fileName()),image_idx);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-		//not a jpeg of tiff file, so it's raw input (hdr)
+            // DAVIDE _ TIFFREADER
+//			TiffReader reader(QFile::encodeName(qfi.filePath()), QFile::encodeName(luminance_options.getTempDir()), true);
+//            connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
+//            connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
+//			//if 8bit ldr tiff
+//			if (reader.is8bitTiff()) {
+//				QImage *newimage = reader.readIntoQImage();
+//				if (newimage->isNull())
+//					emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
+				
+//				conditionallyRotateImage(qfi, &newimage);
+
+//				emit ldrReady(newimage, image_idx, expotime, fname, true);
+//				//QApplication::restoreOverrideCursor();
+//				return;
+//			}
+//			//if 16bit (tiff) treat as hdr
+//			else if (reader.is16bitTiff()) {
+//				pfs::Frame *frame = reader.readIntoPfsFrame();
+//				if (frame == NULL)
+//					emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
+//				emit mdrReady(frame, image_idx, expotime, fname);
+//				//QApplication::restoreOverrideCursor();
+//				return;
+//			}
+//			//error if other tiff type
+//			else {
+//				emit loadFailed(tr("ERROR: The file<br>%1<br> is not a 8 bit or 16 bit tiff.").arg(qfi.fileName()),image_idx);
+//				//QApplication::restoreOverrideCursor();
+//				return;
+//			}
+
+
+        //not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
             // DAVIDE _ RAW!!!
 //			pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options.getTempDir()), &luminance_options, true, prog_callback, this);

@@ -35,7 +35,6 @@
 #include "Common/config.h"
 #include "UI/GammaAndLevels.h"
 #include "Viewers/PanIconWidget.h"
-#include "Fileformat/tiffreader.h"
 #include "HdrWizard/EditingTools.h"
 #include "Exif/ExifOperations.h"
 #include "HdrCreation/mtb_alignment.h"

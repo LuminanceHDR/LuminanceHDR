@@ -40,8 +40,8 @@ struct Convert4LCMS3 {
     void operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeIn i4,
                     TypeOut& o1, TypeOut& o2, TypeOut& o3) const
     {
-        unsigned char inBuffer[4] = { i1, i2, i3, i4 };
-        unsigned char outBuffer[3];
+        TypeIn inBuffer[4] = { i1, i2, i3, i4 };
+        TypeOut outBuffer[3];
 
         cmsDoTransform(transform_, &inBuffer[0],
                 &outBuffer[0], 1);
@@ -64,8 +64,8 @@ struct Convert3LCMS3 {
     void operator()(TypeIn i1, TypeIn i2, TypeIn i3,
                     TypeOut& o1, TypeOut& o2, TypeOut& o3) const
     {
-        unsigned char inBuffer[3] = { i1, i2, i3 };
-        unsigned char outBuffer[3];
+        TypeIn inBuffer[3] = { i1, i2, i3 };
+        TypeOut outBuffer[3];
 
         cmsDoTransform(transform_, &inBuffer[0],
                 &outBuffer[0], 1);

@@ -296,10 +296,12 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         else if (extension.startsWith("TIF"))
         {
             // from 8,16,32,logluv to pfs::Frame
-            TiffReader reader(encodedFileName, TempPath, false );
-            connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
-            connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
-            hdrpfsframe = reader.readIntoPfsFrame();
+
+            // DAVIDE _ TIFFREADER
+//            TiffReader reader(encodedFileName, TempPath, false );
+//            connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
+//            connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
+//            hdrpfsframe = reader.readIntoPfsFrame();
         }
         else if ( rawextensions.indexOf(extension) != -1 )
         {

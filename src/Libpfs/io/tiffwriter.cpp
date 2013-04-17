@@ -31,8 +31,9 @@
 //! \author Davide Anastasia <davideanastasia@sourceforge.net>
 //! Complete rewrite/refactoring
 
-#include "tiffwriter.h"
-#include <Fileformat/tiffcommon.h>
+#include <Libpfs/io/tiffwriter.h>
+#include <Libpfs/io/tiffcommon.h>
+
 #include <tiffio.h>
 
 #include <cmath>

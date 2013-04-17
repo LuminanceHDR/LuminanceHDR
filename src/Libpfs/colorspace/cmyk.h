@@ -29,7 +29,7 @@ namespace pfs {
 namespace colorspace {
 
 //! \brief Functor CMYK -> RGB conversion
-struct ConvertCMYK2RGB {
+struct ConvertInvertedCMYK2RGB {
     //! \brief
     template <typename TypeIn, typename TypeOut>
     void operator()(TypeIn c, TypeIn m, TypeIn y, TypeIn k,
@@ -41,14 +41,20 @@ struct ConvertCMYK2RGB {
     }
 };
 
-/*
-//! \brief Functor RGB -> CMYK conversion
-struct ConvertRGB2CMYK {
-    //! \brief RGB triplet companding SRGB -> RGB
-    void operator()(float i1, float i2, float i3,
-                    float& o1, float& o2, float& o3) const;
+struct ConvertCMYK2RGB {
+    //! \brief
+    template <typename TypeIn, typename TypeOut>
+    void operator()(TypeIn c, TypeIn m, TypeIn y, TypeIn k,
+                    TypeOut& r, TypeOut& g, TypeOut& b) const
+    {
+        TypeIn K = (255 - k);
+
+        r = (255 - c)*K/255;
+        g = (255 - m)*K/255;
+        b = (255 - y)*K/255;
+    }
 };
-*/
+
 
 }   // colorspace
 }   // pfs

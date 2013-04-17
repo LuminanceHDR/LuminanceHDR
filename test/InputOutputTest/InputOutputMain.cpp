@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 
         FrameWriterPtr writer = FrameWriterFactory::open(argv[2]);
         writer->write(myFrame,
-                      pfs::Params( "min_luminance", 0.f )( "max_luminance", 65535.f ));
+                      pfs::Params( "min_luminance", 0.f )( "max_luminance", 1.f ));
 
         return 0;
     }

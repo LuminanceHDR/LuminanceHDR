@@ -41,8 +41,8 @@
 #include <Libpfs/manip/cut.h>
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/io/tiffwriter.h>
+#include <Libpfs/io/tiffreader.h>
 
-#include "Fileformat/tiffreader.h"
 #include "Fileformat/pfsouthdrimage.h"
 
 #include "Exif/ExifOperations.h"
@@ -934,49 +934,50 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
         for (int i = 0; i < fileList.size(); i++)
         {
             //align_image_stack can only output tiff files
-            QString filename;
-            if (!fromCommandLine)
-                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-            else
-                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-            QByteArray fname = QFile::encodeName(filename);
-            TiffReader reader(fname, "", false);
-            //if 8bit ldr tiff
-            if (reader.is8bitTiff())
-            {
-                QImage* resultImage = reader.readIntoQImage();
-                HdrInputLoader::conditionallyRotateImage(QFileInfo(fileList[0]), &resultImage);
+            // DAVIDE
+//            QString filename;
+//            if (!fromCommandLine)
+//                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+//            else
+//                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+//            QByteArray fname = QFile::encodeName(filename);
+//            TiffReader reader(fname, "", false);
+//            //if 8bit ldr tiff
+//            if (reader.is8bitTiff())
+//            {
+//                QImage* resultImage = reader.readIntoQImage();
+//                HdrInputLoader::conditionallyRotateImage(QFileInfo(fileList[0]), &resultImage);
 
-                ldrImagesList.append( resultImage );
-                if (!fromCommandLine) {
-                    QImage *img = new QImage(resultImage->width(),resultImage->height(), QImage::Format_ARGB32);
-                    img->fill(qRgba(0,0,0,0));
-                    antiGhostingMasksList.append(img);
-                }
-            }
-            //if 16bit (tiff) treat as hdr
-            else if (reader.is16bitTiff())
-            {
-                //TODO: get a 16bit TIFF image and test it
-                pfs::Frame *newFrame = reader.readIntoPfsFrame();
-                m_mdrWidth = newFrame->getWidth();
-                m_mdrHeight = newFrame->getHeight();
-                pfs::Channel *R, *G, *B;
-                R = newFrame->getChannel("X");
-                G = newFrame->getChannel("Y");
-                B = newFrame->getChannel("Z");
-                listmdrR.push_back(R);
-                listmdrG.push_back(G);
-                listmdrB.push_back(B);
-                if (!fromCommandLine) {
-                    mdrImagesList.append(fromHDRPFStoQImage(newFrame));
-                    QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
-                    img->fill(qRgba(0,0,0,0));
-                    antiGhostingMasksList.append(img);
-                }
-            }
-            qDebug() << "void HdrCreationManager::ais_finished: remove " << fname;
-            QFile::remove(fname);
+//                ldrImagesList.append( resultImage );
+//                if (!fromCommandLine) {
+//                    QImage *img = new QImage(resultImage->width(),resultImage->height(), QImage::Format_ARGB32);
+//                    img->fill(qRgba(0,0,0,0));
+//                    antiGhostingMasksList.append(img);
+//                }
+//            }
+//            //if 16bit (tiff) treat as hdr
+//            else if (reader.is16bitTiff())
+//            {
+//                //TODO: get a 16bit TIFF image and test it
+//                pfs::Frame *newFrame = reader.readIntoPfsFrame();
+//                m_mdrWidth = newFrame->getWidth();
+//                m_mdrHeight = newFrame->getHeight();
+//                pfs::Channel *R, *G, *B;
+//                R = newFrame->getChannel("X");
+//                G = newFrame->getChannel("Y");
+//                B = newFrame->getChannel("Z");
+//                listmdrR.push_back(R);
+//                listmdrG.push_back(G);
+//                listmdrB.push_back(B);
+//                if (!fromCommandLine) {
+//                    mdrImagesList.append(fromHDRPFStoQImage(newFrame));
+//                    QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
+//                    img->fill(qRgba(0,0,0,0));
+//                    antiGhostingMasksList.append(img);
+//                }
+//            }
+//            qDebug() << "void HdrCreationManager::ais_finished: remove " << fname;
+//            QFile::remove(fname);
         }
         QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
         emit finishedAligning(exitcode);
