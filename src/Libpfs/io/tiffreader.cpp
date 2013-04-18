@@ -29,6 +29,7 @@
 #include <Libpfs/colorspace/xyz.h>
 #include <Libpfs/colorspace/cmyk.h>
 #include <Libpfs/colorspace/lcms.h>
+#include <Libpfs/colorspace/copy.h>
 
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/utils/transform.h>
@@ -122,17 +123,6 @@ cmsHPROFILE GetTIFFProfile(TIFF* in)
     return hProfile;
 }
 // End of code form tifficc.c
-
-struct FlatCopy {
-    template <typename TypeIn, typename TypeOut>
-    inline
-    void operator()(const TypeIn& i1, const TypeIn& i2, const TypeIn& i3,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3) const {
-        o1 = static_cast<TypeOut>(i1);
-        o2 = static_cast<TypeOut>(i2);
-        o3 = static_cast<TypeOut>(i3);
-    }
-};
 
 namespace pfs {
 namespace io {
@@ -350,7 +340,7 @@ private:
                                 colorspace::Convert3LCMS3(xform.data()));
             }
         } else {
-            read3Components<InputDataType>(frame, params, FlatCopy());
+            read3Components<InputDataType>(frame, params, colorspace::Copy());
         }
     }
 

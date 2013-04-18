@@ -38,22 +38,12 @@
 #include <Libpfs/io/rawreader.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/fixedstrideiterator.h>
+#include <Libpfs/colorspace/copy.h>
 
 using namespace pfs;
 
 namespace pfs {
 namespace io {
-
-struct FlatCopy {
-    template <typename TypeIn, typename TypeOut>
-    inline
-    void operator()(const TypeIn& i1, const TypeIn& i2, const TypeIn& i3,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3) const {
-        o1 = static_cast<TypeOut>(i1);
-        o2 = static_cast<TypeOut>(i2);
-        o3 = static_cast<TypeOut>(i3);
-    }
-};
 
 /**************************** From UFRAW sourcecode ********************************
  *
@@ -496,7 +486,7 @@ void RAWReader::read(Frame &frame, const Params &params)
                      FixedStrideIterator<const uint16_t*, 3>(raw_data + 1),
                      FixedStrideIterator<const uint16_t*, 3>(raw_data + 2),
                      Xc->begin(), Yc->begin(), Zc->begin(),
-                     FlatCopy());
+                     colorspace::Copy());
 
     qDebug() << "Data size: " << image->data_size << " " << W*H*3*sizeof(uint16_t);
     qDebug() << "W: " << W << " H: " << H;

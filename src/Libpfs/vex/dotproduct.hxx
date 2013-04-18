@@ -36,7 +36,7 @@ _Type dotProduct(const _Type* v1, const _Type* v2, size_t N)
 #pragma omp parallel for reduction(+:dotProd)
     for (int idx = 0; idx < static_cast<int>(N); idx++)
     {
-        dotProd += (v1[idx] * v2[idx]);
+        dotProd = dotProd + (v1[idx] * v2[idx]);
     }
     return static_cast<_Type>(dotProd);
 }
@@ -48,7 +48,7 @@ _Type dotProduct(const _Type* v1, size_t N)
 #pragma omp parallel for reduction(+:dotProd)
     for (int idx = 0; idx < static_cast<int>(N); idx++)
     {
-        dotProd += (v1[idx] * v1[idx]);
+        dotProd = dotProd + (v1[idx] * v1[idx]);
     }
     return static_cast<_Type>(dotProd);
 }

@@ -26,6 +26,7 @@
 #define PFS_COLORSPACE_LCMS_H
 
 #include <lcms2.h>
+#include <Libpfs/colorspace/convert.h>
 
 namespace pfs {
 namespace colorspace {

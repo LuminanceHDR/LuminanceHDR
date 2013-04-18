@@ -327,7 +327,7 @@ cmsHTRANSFORM getColorSpaceTransform(j_decompress_ptr cinfo)
     {
         PRINT_DEBUG("Transform colorspace = sRGB");
         return cmsCreateTransform(hIn.data(), TYPE_RGB_8,
-                                  hsRGB.data(), TYPE_RGB_8, /*TYPE_BGRA_8,*/
+                                  hsRGB.data(), TYPE_RGB_FLT, /*TYPE_BGRA_8,*/
                                   INTENT_PERCEPTUAL, 0);
 
     } break;
@@ -336,7 +336,7 @@ cmsHTRANSFORM getColorSpaceTransform(j_decompress_ptr cinfo)
     {
         PRINT_DEBUG("Transform colorspace = CMYK");
         return cmsCreateTransform(hIn.data(), TYPE_YUVK_8,
-                                  hsRGB.data(), TYPE_RGB_8, /*TYPE_BGRA_8,*/
+                                  hsRGB.data(), TYPE_RGB_FLT, /*TYPE_BGRA_8,*/
                                   INTENT_PERCEPTUAL, 0);
     } break;
     default:
@@ -427,6 +427,7 @@ void JpegReader::read(Frame &frame, const Params &/*params*/)
         case JCS_YCbCr:
         {
             if ( xform ) {
+                PRINT_DEBUG("Use LCMS RGB");
                 read3Components(m_data->cinfo(), tempFrame,
                                 colorspace::Convert3LCMS3(xform.data()));
             } else {
@@ -438,6 +439,7 @@ void JpegReader::read(Frame &frame, const Params &/*params*/)
         case JCS_YCCK:
         {
             if ( xform ) {
+                PRINT_DEBUG("Use LCMS CMYK");
                 read4Components(m_data->cinfo(), tempFrame,
                                 colorspace::Convert4LCMS3(xform.data()));
             } else {

@@ -29,7 +29,7 @@
 
 float myRand()
 {
-    return ( static_cast<float>(rand())/(RAND_MAX) )*2000;
+    return ( static_cast<float>(rand())/(RAND_MAX) );
 }
 
 TEST(TestVexDotProduct, SmallSize)

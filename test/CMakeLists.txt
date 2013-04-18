@@ -37,6 +37,12 @@ TARGET_LINK_LIBRARIES(TestXYZ2RGB pfs PrintArray2D
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestXYZ2RGB TestXYZ2RGB)
 
+ADD_EXECUTABLE(TestCMYK2RGB TestCMYK2RGB.cpp)
+TARGET_LINK_LIBRARIES(TestCMYK2RGB PrintArray2D
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT})
+ADD_TEST(TestCMYK2RGB TestCMYK2RGB)
+
 ADD_LIBRARY(ContrastDomain STATIC
     mantiuk06/contrast_domain.cpp
     mantiuk06/contrast_domain.h)
@@ -103,6 +109,12 @@ TARGET_LINK_LIBRARIES(TestPfsShift pfs
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsShift TestPfsShift)
+
+ADD_EXECUTABLE(TestConvertSample TestConvertSample.cpp)
+TARGET_LINK_LIBRARIES(TestConvertSample PrintArray2D
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT})
+ADD_TEST(TestConvertSample TestConvertSample)
 
 ADD_EXECUTABLE(TestPfsCut TestPfsCut.cpp SeqInt.h)
 TARGET_LINK_LIBRARIES(TestPfsCut pfs PrintArray2D

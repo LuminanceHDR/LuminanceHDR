@@ -19,27 +19,55 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef PFS_COLORSPACE_COPY_H
-#define PFS_COLORSPACE_COPY_H
+//! \brief Sample convert functions
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <Libpfs/colorspace/convert.h>
+#ifndef PFS_COLORSPACE_CONVERT_H
+#define PFS_COLORSPACE_CONVERT_H
+
+#include <stdint.h>
+#include <iostream>
+#include <cmath>
 
 namespace pfs {
 namespace colorspace {
 
-struct Copy {
-    template <typename TypeIn, typename TypeOut>
-    void operator()(TypeIn v1, TypeIn v2, TypeIn v3,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3)
-    {
-        o1 = ConvertSample<TypeOut, TypeIn>()(v1);
-        o2 = ConvertSample<TypeOut, TypeIn>()(v2);
-        o3 = ConvertSample<TypeOut, TypeIn>()(v3);
-    }
+template <typename TypeOut, typename TypeIn> struct ConvertSample;
+
+template <typename Type>
+struct ConvertSample<Type, Type> {
+    Type operator()(Type vIn) { return vIn; }
 };
 
-}   // utils
+/*
+template <>
+struct ConvertSample<float, float> {
+    float operator()(float vIn)
+    { return vIn; }
+};
+*/
+
+template <>
+struct ConvertSample<float, uint16_t> {
+    float operator()(uint16_t vIn)
+    { return ((float)vIn)/65535.f; }
+};
+
+template <>
+struct ConvertSample<float, uint8_t> {
+    float operator()(uint8_t vIn)
+    { return ((float)vIn)/255.f; }
+};
+
+template <>
+struct ConvertSample<uint8_t, float> {
+    uint8_t operator()(float vIn)
+    { return static_cast<uint8_t>(std::floor(vIn*255.f + 0.5f)); }
+};
+
+
+
+}   // colorspace
 }   // pfs
 
-
-#endif // PFS_UTILS_CHAIN_H
+#endif // PFS_COLORSPACE_CONVERT_H

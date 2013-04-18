@@ -25,6 +25,8 @@
 #ifndef PFS_COLORSPACE_CMYK_H
 #define PFS_COLORSPACE_CMYK_H
 
+#include <Libpfs/colorspace/convert.h>
+
 namespace pfs {
 namespace colorspace {
 
@@ -35,9 +37,14 @@ struct ConvertInvertedCMYK2RGB {
     void operator()(TypeIn c, TypeIn m, TypeIn y, TypeIn k,
                     TypeOut& r, TypeOut& g, TypeOut& b) const
     {
-        r = c*k/255;
-        g = m*k/255;
-        b = y*k/255;
+        float c_ = ConvertSample<float, TypeIn>()(c);
+        float m_ = ConvertSample<float, TypeIn>()(m);
+        float y_ = ConvertSample<float, TypeIn>()(y);
+        float k_ = ConvertSample<float, TypeIn>()(k);
+
+        r = ConvertSample<TypeOut, float>()(c_*k_);
+        g = ConvertSample<TypeOut, float>()(m_*k_);
+        b = ConvertSample<TypeOut, float>()(y_*k_);
     }
 };
 
@@ -47,14 +54,13 @@ struct ConvertCMYK2RGB {
     void operator()(TypeIn c, TypeIn m, TypeIn y, TypeIn k,
                     TypeOut& r, TypeOut& g, TypeOut& b) const
     {
-        TypeIn K = (255 - k);
+        float K = (1.f - ConvertSample<float, TypeIn>()(k));
 
-        r = (255 - c)*K/255;
-        g = (255 - m)*K/255;
-        b = (255 - y)*K/255;
+        r = ConvertSample<TypeOut, float>()((1.f - ConvertSample<float, TypeIn>()(c))*K);
+        g = ConvertSample<TypeOut, float>()((1.f - ConvertSample<float, TypeIn>()(m))*K);
+        b = ConvertSample<TypeOut, float>()((1.f - ConvertSample<float, TypeIn>()(y))*K);
     }
 };
-
 
 }   // colorspace
 }   // pfs
