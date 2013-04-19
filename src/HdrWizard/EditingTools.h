@@ -34,7 +34,7 @@
 #include "PreviewWidget.h"
 #include "Common/global.h"
 #include "Viewers/SelectionTool.h"
-#include "HdrCreation/HdrCreationManager.h"
+#include "HdrWizard/HdrCreationManager.h"
 #include "PreviewWidget.h"
 #include "AntiGhostingWidget.h"
 #include "Common/LuminanceOptions.h"

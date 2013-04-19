@@ -34,7 +34,7 @@
 #include <QScopedPointer>
 
 #include "Core/TonemappingOptions.h"
-#include "HdrCreation/HdrCreationManager.h"
+#include "HdrWizard/HdrCreationManager.h"
 #include "Libpfs/frame.h"
 #include "ezETAProgressBar.hpp"
 

@@ -46,8 +46,8 @@
 #include "Fileformat/pfsouthdrimage.h"
 
 #include "Exif/ExifOperations.h"
-#include "Threads/HdrInputLoader.h"
-#include "mtb_alignment.h"
+#include "HdrWizard/HdrInputLoader.h"
+#include "HdrCreation/mtb_alignment.h"
 #include "HdrCreationManager.h"
 #include "arch/math.h"
 

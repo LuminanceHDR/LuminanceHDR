@@ -35,7 +35,7 @@
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 #include "Libpfs/pfs.h"
-#include "HdrCreation/HdrCreationManager.h"
+#include "HdrWizard/HdrCreationManager.h"
 
 class Gang;
 

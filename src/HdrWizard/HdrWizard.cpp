@@ -48,7 +48,7 @@
 #include "Common/config.h"
 #include "HdrWizard/EditingTools.h"
 #include "UI/Gang.h"
-#include "HdrCreation/HdrCreationManager.h"
+#include "HdrWizard/HdrCreationManager.h"
 
 HdrWizard::HdrWizard(QWidget *p,
                      const QStringList &files,

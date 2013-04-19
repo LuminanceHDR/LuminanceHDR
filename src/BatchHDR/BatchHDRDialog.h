@@ -29,7 +29,7 @@
 #include <QDialog>
 
 #include "Common/LuminanceOptions.h"
-#include "HdrCreation/HdrCreationManager.h"
+#include "HdrWizard/HdrCreationManager.h"
 
 // Forward declaration
 class IOWorker;

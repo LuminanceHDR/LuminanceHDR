@@ -33,7 +33,7 @@
 
 #include "Exif/ExifOperations.h"
 #include "Fileformat/pfs_file_format.h"
-#include "Threads/HdrInputLoader.h"
+#include "HdrWizard/HdrInputLoader.h"
 #include "Libpfs/exception.h"
 
 HdrInputLoader::HdrInputLoader(const QString& filename, int image_idx)
