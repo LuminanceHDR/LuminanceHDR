@@ -295,8 +295,9 @@ void BatchHDRDialog::batch_hdr()
             toProcess << m_bracketed.takeFirst();
         }
         qDebug() << "BatchHDRDialog::batch_hdr() Files to process: " << toProcess;
-        m_hdrCreationManager->setFileList(toProcess);
-        m_hdrCreationManager->loadInputFiles();
+        // DAVIDE _ HDR CREATION
+        // m_hdrCreationManager->setFileList(toProcess);
+        // m_hdrCreationManager->loadInputFiles();
     }   
     else
     {

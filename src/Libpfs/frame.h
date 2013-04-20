@@ -32,6 +32,7 @@
 
 #include <string>
 #include <vector>
+#include <boost/shared_ptr.hpp>
 
 #include <Libpfs/channel.h>
 #include <Libpfs/tag.h>
@@ -49,8 +50,12 @@ typedef std::vector< Channel* > ChannelContainer;
 class Frame
 {
 public:
-    Frame(size_t width, size_t height);
+    Frame(size_t width = 0, size_t height = 0);
     ~Frame();
+
+    bool isValid() const {
+        return (getWidth() > 0 && getHeight() > 0);
+    }
 
     //! \return width of the frame (in pixels).
     inline
@@ -151,5 +156,7 @@ private:
 };
 
 } // namespace pfs
+
+typedef boost::shared_ptr< pfs::Frame > FramePtr;
 
 #endif // PFS_FRAME_H

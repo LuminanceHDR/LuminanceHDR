@@ -480,8 +480,9 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
 		connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
 			
         hdrCreationManager->setConfig(hdrcreationconfig);
-        hdrCreationManager->setFileList(inputFiles);
-        hdrCreationManager->loadInputFiles();
+        // DAVIDE _ HDR CREATION
+        // hdrCreationManager->setFileList(inputFiles);
+        // hdrCreationManager->loadInputFiles();
     }
     else
     {

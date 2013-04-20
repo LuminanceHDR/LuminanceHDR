@@ -1,7 +1,9 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyrighr (C) 2010,2011,2012 Franco Comida
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,12 +19,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * Original Work
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing
- * @author Franco Comida <fcomida@users.sourceforge.net>
- *
  */
 
 #ifndef HDRWIZARD_IMPL_H
@@ -37,15 +33,34 @@
 #include "Libpfs/pfs.h"
 #include "HdrWizard/HdrCreationManager.h"
 
-class Gang;
-
 namespace Ui {
-    class HdrWizard;
+class HdrWizard;
 }
 
 class HdrWizard : public QDialog
 {
     Q_OBJECT
+private:
+    // members ... private functions are below
+    QScopedPointer<Ui::HdrWizard> m_ui;
+    QScopedPointer<HdrCreationManager> m_hdrCreationManager;
+
+    QString loadcurvefilename;
+    QString savecurvefilename;
+
+    //    QStringList m_inputFilesName;
+    //    QVector<float> m_inputExpoTimes;
+
+    LuminanceOptions luminance_options;
+
+    // the new hdr, returned by the HdrCreationManager class
+    pfs::Frame* m_pfsFrameHDR;
+
+    // hdr creation parameters
+    TResponse responses_in_gui[4];
+    TModel models_in_gui[2];
+    TWeight weights_in_gui[3];
+    QVector<config_triple> m_customConfig;
 
 public:
     HdrWizard(QWidget *parent,
@@ -55,8 +70,7 @@ public:
     ~HdrWizard();
 
     //! \brief get the current PFS Frame
-    pfs::Frame* getPfsFrameHDR()
-    { return PfsFrameHDR; }
+    pfs::Frame* getPfsFrameHDR() { return m_pfsFrameHDR; }
 
     //! \brief return the caption text
     QString getCaptionTEXT();
@@ -65,38 +79,19 @@ public:
 protected:
 	void resizeEvent(QResizeEvent *);
 	void keyPressEvent(QKeyEvent *);
-	virtual void dragEnterEvent(QDragEnterEvent *);
-	virtual void dropEvent(QDropEvent *);
+    void dragEnterEvent(QDragEnterEvent *);
+    void dropEvent(QDropEvent *);
 
 private:
 	QString getQStringFromConfig( int type );
 
-    LuminanceOptions luminance_options;
-
-    Gang* EVgang;
-
-	HdrCreationManager *hdrCreationManager;
-
-	//the new hdr, returned by the HdrCreationManager class
-	pfs::Frame* PfsFrameHDR;
-	QString loadcurvefilename,savecurvefilename;
-    QStringList m_inputFilesName;
-    QVector<float> m_inputExpoTimes;
-
-	//hdr creation parameters
-	TResponse responses_in_gui[4];
-	TModel models_in_gui[2];
-	TWeight weights_in_gui[3];
-	QVector<config_triple> m_customConfig;
-
-    QScopedPointer<Ui::HdrWizard> m_Ui;
+    void updateTableGrid();
 
 signals:
     void setValue(int value);
 
 private slots:
-
-    void loadInputFiles(const QStringList& files, int count);
+    void loadInputFiles(const QStringList& files);
 
     void fileLoaded(int index, const QString& fname, float expotime);
     void finishedLoadingInputFiles(const QStringList& NoExifFiles);
@@ -108,6 +103,9 @@ private slots:
 	void loadImagesButtonClicked();
 	void removeImageButtonClicked();
 	void clearListButtonClicked();
+
+
+
     void alignSelectionClicked();
 	void inputHdrFileSelected(int);
 	void predefConfigsComboBoxActivated(int);

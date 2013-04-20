@@ -31,17 +31,26 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QColor>
+#include <QtConcurrentMap>
+#include <QtConcurrentFilter>
 
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <boost/make_shared.hpp>
+#include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 
+#include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/manip/shift.h>
 #include <Libpfs/manip/cut.h>
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/io/tiffwriter.h>
 #include <Libpfs/io/tiffreader.h>
+
+#include <Libpfs/io/framereader.h>
+#include <Libpfs/io/framereaderfactory.h>
 
 #include "Fileformat/pfsouthdrimage.h"
 
@@ -55,6 +64,76 @@ static const float max_rgb = 65535.0f;
 static const float max_lightness = 65535.0f;
 static const int gridSize = 40;
 
+using namespace pfs;
+using namespace pfs::io;
+
+
+// --- NEW CODE ---
+HdrCreationItem::HdrCreationItem(const QString &filename)
+    : m_filename(filename)
+    , m_ev(-std::numeric_limits<float>::max())
+    , m_frame(boost::make_shared<pfs::Frame>())
+{
+     qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
+}
+
+HdrCreationItem::~HdrCreationItem() {
+    qDebug() << QString("Destroying HdrCreationItem for %1").arg(m_filename);
+}
+
+struct LoadFile {
+    void operator()(HdrCreationItem& currentItem)
+    {
+        qDebug() << QString("Loading data for %1").arg(currentItem.filename());
+
+        try {
+            FrameReaderPtr reader = FrameReaderFactory::open( currentItem.filename().toStdString() );
+            reader->read( *currentItem.frame(), Params() );
+        } catch (std::runtime_error& err) {
+            qDebug() << QString("Cannot load %1: %2")
+                        .arg(currentItem.filename())
+                        .arg(QString::fromStdString(err.what()));
+        }
+
+
+    }
+};
+
+bool checkFileName(const HdrCreationItem& item, const QString& str) {
+    return (item.filename().compare(str) == 0);
+}
+
+void HdrCreationManager::loadFiles(const QStringList &filenames)
+{
+    std::vector<HdrCreationItem> tempItems;
+    BOOST_FOREACH(const QString& i, filenames) {
+        qDebug() << QString("Checking %1").arg(i);
+        HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
+                                                        boost::bind(&checkFileName, _1, i));
+        // has the file been inserted already?
+        if ( it == m_data.end() ) {
+            qDebug() << QString("Schedule loading for %1").arg(i);
+            tempItems.push_back( HdrCreationItem(i) );
+        }
+    }
+
+    // parallel load of the data...
+    QFuture<void> r = QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile());
+    r.waitForFinished();
+
+    qDebug() << "Data loaded ... move to internal structure!";
+
+    BOOST_FOREACH(const HdrCreationItem& i, tempItems) {
+        if ( i.isValid() ) {
+            qDebug() << QString("Insert data for %1").arg(i.filename());
+            m_data.push_back(i);
+        }
+    }
+
+    qDebug() << QString("Read %1 out of %2").arg(tempItems.size()).arg(filenames.size());
+}
+
+// --- LEGACY CODE ---
 namespace
 {
 inline
@@ -632,6 +711,7 @@ void HdrCreationManager::setConfig(const config_triple &c)
     chosen_config = c;
 }
 
+/*
 void HdrCreationManager::setFileList(const QStringList& l)
 {
     m_processedFiles = m_shift;
@@ -661,7 +741,9 @@ void HdrCreationManager::setFileList(const QStringList& l)
         listmdrB.push_back(NULL);
     }
 }
+*/
 
+/*
 void HdrCreationManager::loadInputFiles()
 {
     //find first not started processing.
@@ -714,6 +796,7 @@ void HdrCreationManager::loadInputFiles()
         }
     }
 }
+*/
 
 void HdrCreationManager::loadFailed(const QString& message, int /*index*/)
 {
@@ -759,8 +842,9 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
     listmdrB[index] = B;
     //perform some housekeeping
     newResult(index,expotime,newfname);
-    //continue with the loading process
-    loadInputFiles();
+    // continue with the loading process
+    // DAVIDE _ HDR CREATION
+    // loadInputFiles();
 }
 
 void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, const QString& newfname, bool /*ldrtiff*/)
@@ -795,8 +879,9 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
 
     //perform some housekeeping
     newResult(index,expotime,newfname);
-    //continue with the loading process
-    loadInputFiles();
+    // continue with the loading process
+    // DAVIDE _ HDR CREATION
+    // loadInputFiles();
 }
 
 void HdrCreationManager::newResult(int index, float expotime, const QString& newfname)
@@ -929,8 +1014,9 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
     }
     if (exitcode == 0)
     {
-        //TODO: try-catch 
-        clearlists(false);
+        // TODO: try-catch
+        // DAVIDE _ HDR CREATION
+        // clearlists(false);
         for (int i = 0; i < fileList.size(); i++)
         {
             //align_image_stack can only output tiff files
@@ -1058,10 +1144,12 @@ HdrCreationManager::~HdrCreationManager()
     if (ais != NULL && ais->state() != QProcess::NotRunning) {
         ais->kill();
     }
-    clearlists(true);
+    // DAVIDE _ HDR CREATION
+    // clearlists(true);
     qDeleteAll(antiGhostingMasksList);
 }
 
+/*
 void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
 {
     startedProcessing.clear();
@@ -1099,6 +1187,7 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
         antiGhostingMasksList.clear();
     }
 }
+*/
 
 void HdrCreationManager::makeSureLDRsHaveAlpha()
 {
@@ -1259,7 +1348,8 @@ void HdrCreationManager::reset()
     chosen_config = predef_confs[0];
     inputType = UNKNOWN_INPUT_TYPE;
     fileList.clear();
-    clearlists(true);
+    // DAVIDE _ HDR CREATION
+    // clearlists(true);
     removeTempFiles();
 }
 

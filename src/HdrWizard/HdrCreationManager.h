@@ -28,8 +28,12 @@
 #define HDRCREATIONMANAGER_H
 
 #include <cstddef>
+#include <vector>
+
 #include <QProcess>
 #include <QPair>
+
+#include <Libpfs/frame.h>
 
 #include "Common/LuminanceOptions.h"
 #include "arch/math.h"
@@ -46,11 +50,55 @@ const config_triple predef_confs[6]= {
 {GAUSSIAN, GAMMA,DEBEVEC,"",""},
 };
 
-class HdrCreationManager : public QObject {
-Q_OBJECT
+// defines an element that contains all the informations for this particular
+// image to be used inside the HdrWizard
+class HdrCreationItem {
+public:
+    HdrCreationItem(const QString& filename);
+    ~HdrCreationItem();
+
+    const QString& filename() const     { return m_filename; }
+    FramePtr frame()                    { return m_frame; }
+    bool isValid() const                { return m_frame->isValid(); }
+
+    bool hasEV() const                  { return (m_ev != -std::numeric_limits<float>::max()); }
+private:
+    QString     m_filename;
+    float       m_ev;
+    FramePtr    m_frame;
+    QImage      m_thumbnail;
+
+};
+
+class HdrCreationManager : public QObject
+{
+    Q_OBJECT
+private:
+    typedef std::vector< HdrCreationItem > HdrCreationItemContainer;
+
+    HdrCreationItemContainer m_data;
+
 public:
 	HdrCreationManager(bool = false);
 	~HdrCreationManager();
+
+
+    // ----- NEW FUNCTIONS ------
+    void loadFiles(const QStringList& filenames);
+    void removeFile(int idx);
+    void clearFiles();
+    size_t availableInputFiles() const { return m_data.size(); }
+
+    // iterators
+    typedef HdrCreationItemContainer::iterator  iterator;
+    typedef HdrCreationItemContainer::const_iterator const_iterator;
+
+    iterator begin() { return m_data.begin(); }
+    iterator end() { return m_data.end(); }
+    const_iterator begin() const { return m_data.begin(); }
+    const_iterator end() const { return m_data.end(); }
+
+   // ----- LEGACY FUNCTIONS ----
 
     void setConfig(const config_triple& cfg);
 
@@ -61,12 +109,13 @@ public:
         MDR_INPUT_TYPE = 1,
         UNKNOWN_INPUT_TYPE = 2
     } inputType;
-	//initialize internal structures before actually loading the files
-    void setFileList(const QStringList&);
-	//load files listed in fileList in a threaded way
-	void loadInputFiles();
-	//clear lists used internally
-	void clearlists(bool deleteExpotimeAsWell);
+
+    // initialize internal structures before actually loading the files
+    // void setFileList(const QStringList&);
+    // load files listed in fileList in a threaded way
+    // void loadInputFiles();
+    // clear lists used internally
+    // void clearlists(bool deleteExpotimeAsWell);
 
 	pfs::Frame* createHdr(bool ag, int iterations);
 
@@ -74,27 +123,27 @@ public:
 	void align_with_ais();
 	void align_with_mtb();
 
-	QList<QImage*> getLDRList() const {return ldrImagesList;}
-	QList<QImage*> getMDRList() const {return mdrImagesList;}
-	QList<QImage*> getAntiGhostingMasksList() const {return antiGhostingMasksList;}
-	QVector<float> getExpotimes() const {return expotimes;}
-	QStringList getFileList() const {return fileList;}
-	bool inputImageType() const {return inputType;}
-	const QStringList getFilesLackingExif() const {return filesLackingExif;}
-	bool  isValidEV(int i) const {return expotimes[i]!=-1;}
-	float getEV(int i) const {return log2f(expotimes[i]);}
+    const QList<QImage*>& getLDRList() const                { return ldrImagesList; }
+    const QList<QImage*>& getMDRList() const                { return mdrImagesList; }
+    const QList<QImage*>& getAntiGhostingMasksList() const  { return antiGhostingMasksList; }
+    const QVector<float>& getExpotimes() const              { return expotimes; }
+    const QStringList& getFileList() const                  { return fileList; }
+    bool  inputImageType() const                            { return inputType; }
+    const QStringList& getFilesLackingExif() const          { return filesLackingExif; }
+    bool  isValidEV(int i) const                            { return expotimes[i]!=-1; }
+    float getEV(int i) const                                { return log2f(expotimes[i]); }
 
-	//updates EV value in expotimes array and emits signal
+    // updates EV value in expotimes array and emits signal
 	void setEV(float newev, int image_idx);
 
-	//the configuration used to create the hdr
-	//this is public so that the wizard (or the cli?) can modify it directly.
+    // the configuration used to create the hdr
+    // this is public so that the wizard (or the cli?) can modify it directly.
 	config_triple chosen_config;
 
-	//operates on expotimes array:
-	//if the correspondent EV value span is >10EV or <-10EV,
-	//add an offset to the expotimes array to make it stay inside boundaries (-10..+10).
-	//the EV values cannot cover more than 20EV values
+    // operates on expotimes array:
+    // if the correspondent EV value span is >10EV or <-10EV,
+    // add an offset to the expotimes array to make it stay inside boundaries (-10..+10).
+    // the EV values cannot cover more than 20EV values
 	void checkEVvalues();
 	void makeSureLDRsHaveAlpha();
     void applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets);
@@ -113,7 +162,7 @@ public:
 	void doAutoAntiGhosting(float);
 
 public slots:
-	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
+    // remove temp 8or16 bit tiff files created by libRaw upon raw input.
 	void removeTempFiles();
 
 signals:
