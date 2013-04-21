@@ -65,6 +65,10 @@ struct ConvertSample<uint8_t, float> {
     { return static_cast<uint8_t>(std::floor(vIn*255.f + 0.5f)); }
 };
 
+template <typename TypeOut, typename TypeIn>
+TypeOut convertSample(TypeIn vIn) {
+    return ConvertSample<TypeOut, TypeIn>()(vIn);
+}
 
 
 }   // colorspace

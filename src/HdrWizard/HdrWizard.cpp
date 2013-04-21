@@ -21,6 +21,7 @@
  * ----------------------------------------------------------------------
  */
 
+#include <cmath>
 #include <boost/foreach.hpp>
 
 #include <QDebug>
@@ -35,6 +36,7 @@
 #include <QProcess>
 #include <QTextStream>
 #include <QProgressDialog>
+#include <QThread>
 
 // --- SQL handling
 #include <QSqlRecord>
@@ -49,6 +51,7 @@
 #include "arch/math.h"
 #include "arch/freebsd/math.h"
 #include "Common/config.h"
+#include "Common/global.h"
 #include "HdrWizard/EditingTools.h"
 #include "HdrWizard/HdrCreationManager.h"
 
@@ -66,6 +69,7 @@ HdrWizard::HdrWizard(QWidget *p,
 {
     m_ui->setupUi(this);
     setAcceptDrops(true);
+    setupConnections();
 
     weights_in_gui[0] = TRIANGULAR;
     weights_in_gui[1] = GAUSSIAN;
@@ -78,7 +82,10 @@ HdrWizard::HdrWizard(QWidget *p,
     models_in_gui[1] = ROBERTSON;
 
     m_ui->tableWidget->setHorizontalHeaderLabels(
-                QStringList() << tr("Image Filename") << tr("Exposure"));
+                QStringList() << tr("Image Filename") << tr("Exposure")
+                );
+    m_ui->tableWidget->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
+    m_ui->tableWidget->verticalHeader()->hide();
     // m_ui->tableWidget->resizeColumnsToContents();
     
     if ( !luminance_options.isShowFirstPageWizard() )
@@ -89,8 +96,6 @@ HdrWizard::HdrWizard(QWidget *p,
 
     m_ui->progressBar->hide();
     m_ui->textEdit->hide();
-
-    setupConnections();
 
     if (files.size())
     {
@@ -159,50 +164,54 @@ HdrWizard::~HdrWizard()
     qDebug() << "HdrWizard::~HdrWizard()";
 #endif
     
-    QStringList  fnames = m_hdrCreationManager->getFileList();
-    int n = fnames.size();
+//    QStringList  fnames = m_hdrCreationManager->getFileList();
+//    int n = fnames.size();
 
-    for (int i = 0; i < n; i++)
-    {
-        QString fname = m_hdrCreationManager->getFileList().at(i);
-        QFileInfo qfi(fname);
-        QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
-        QFile::remove(thumb_name);
-        thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
-        QFile::remove(thumb_name);
-    }
+//    for (int i = 0; i < n; i++)
+//    {
+//        QString fname = m_hdrCreationManager->getFileList().at(i);
+//        QFileInfo qfi(fname);
+//        QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+//        QFile::remove(thumb_name);
+//        thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
+//        QFile::remove(thumb_name);
+//    }
 }
 
 void HdrWizard::setupConnections()
 {
-//    connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    connect(m_ui->NextFinishButton, SIGNAL(clicked()), this, SLOT(NextFinishButtonClicked()));
+    connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(m_ui->pagestack, SIGNAL(currentChanged(int)), this, SLOT(currentPageChangedInto(int)));
 
-    connect(m_ui->NextFinishButton,SIGNAL(clicked()),this,SLOT(NextFinishButtonClicked()));
-    connect(m_ui->cancelButton,SIGNAL(clicked()),this,SLOT(reject()));
-    connect(m_ui->pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
+    connect(m_ui->loadImagesButton, SIGNAL(clicked()), this, SLOT(loadImagesButtonClicked()));
+    connect(m_ui->removeImageButton, SIGNAL(clicked()), this, SLOT(removeImageButtonClicked()));
+    connect(m_ui->clearListButton, SIGNAL(clicked()), this, SLOT(clearListButtonClicked()));
+
+    connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    connect(m_ui->EVSlider, SIGNAL(valueChanged(int)), this, SLOT(updateEVSlider(int)));
+    connect(m_ui->ImageEVdsb, SIGNAL(valueChanged(double)), this, SLOT(updateEVSpinBox(double)));
 
 //    connect(m_ui->ais_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
 //    connect(m_ui->mtb_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
 
-//    connect(m_ui->predefConfigsComboBox,SIGNAL(activated(int)),this, SLOT(predefConfigsComboBoxActivated(int)));
-//    connect(m_ui->antighostRespCurveCombobox,SIGNAL(activated(int)),this, SLOT(antighostRespCurveComboboxActivated(int)));
-//    connect(m_ui->customConfigCheckBox,SIGNAL(toggled(bool)),this, SLOT(customConfigCheckBoxToggled(bool)));
-//    connect(m_ui->triGaussPlateauComboBox,SIGNAL(activated(int)),this, SLOT(triGaussPlateauComboBoxActivated(int)));
-//    connect(m_ui->predefRespCurveRadioButton,SIGNAL(toggled(bool)),this, SLOT(predefRespCurveRadioButtonToggled(bool)));
-//    connect(m_ui->gammaLinLogComboBox,SIGNAL(activated(int)),this, SLOT(gammaLinLogComboBoxActivated(int)));
-//    connect(m_ui->loadRespCurveFromFileCheckbox,SIGNAL(toggled(bool)),this, SLOT(loadRespCurveFromFileCheckboxToggled(bool)));
-//    connect(m_ui->loadRespCurveFileButton,SIGNAL(clicked()),this, SLOT(loadRespCurveFileButtonClicked()));
-//    connect(m_ui->saveRespCurveToFileCheckbox,SIGNAL(toggled(bool)),this, SLOT(saveRespCurveToFileCheckboxToggled(bool)));
-//    connect(m_ui->saveRespCurveFileButton,SIGNAL(clicked()),this, SLOT(saveRespCurveFileButtonClicked()));
-//    connect(m_ui->modelComboBox,SIGNAL(activated(int)),this, SLOT(modelComboBoxActivated(int)));
-//    connect(m_ui->RespCurveFileLoadedLineEdit,SIGNAL(textChanged(const QString&)),this, SLOT(loadRespCurveFilename(const QString&)));
-    connect(m_ui->loadImagesButton,SIGNAL(clicked()),this,SLOT(loadImagesButtonClicked()));
-    connect(m_ui->removeImageButton,SIGNAL(clicked()),this,SLOT(removeImageButtonClicked()));
-    connect(m_ui->clearListButton,SIGNAL(clicked()),this,SLOT(clearListButtonClicked()));
+//    connect(m_ui->predefConfigsComboBox, SIGNAL(activated(int)), this, SLOT(predefConfigsComboBoxActivated(int)));
+//    connect(m_ui->antighostRespCurveCombobox, SIGNAL(activated(int)), this, SLOT(antighostRespCurveComboboxActivated(int)));
+//    connect(m_ui->customConfigCheckBox, SIGNAL(toggled(bool)), this, SLOT(customConfigCheckBoxToggled(bool)));
+//    connect(m_ui->triGaussPlateauComboBox, SIGNAL(activated(int)), this, SLOT(triGaussPlateauComboBoxActivated(int)));
+//    connect(m_ui->predefRespCurveRadioButton, SIGNAL(toggled(bool)), this, SLOT(predefRespCurveRadioButtonToggled(bool)));
+//    connect(m_ui->gammaLinLogComboBox, SIGNAL(activated(int)), this, SLOT(gammaLinLogComboBoxActivated(int)));
+//    connect(m_ui->loadRespCurveFromFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(loadRespCurveFromFileCheckboxToggled(bool)));
+//    connect(m_ui->loadRespCurveFileButton, SIGNAL(clicked()), this, SLOT(loadRespCurveFileButtonClicked()));
+//    connect(m_ui->saveRespCurveToFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(saveRespCurveToFileCheckboxToggled(bool)));
+//    connect(m_ui->saveRespCurveFileButton, SIGNAL(clicked()), this, SLOT(saveRespCurveFileButtonClicked()));
+//    connect(m_ui->modelComboBox, SIGNAL(activated(int)), this, SLOT(modelComboBoxActivated(int)));
+//    connect(m_ui->RespCurveFileLoadedLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(loadRespCurveFilename(const QString&)));
+
 //    connect(m_hdrCreationManager.data(), SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
-//    connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
-//    connect(m_hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
-//    connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)),this, SLOT(updateGraphicalEVvalue(float,int)));
+//    connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
+//    connect(m_hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)), this, SLOT(errorWhileLoading(QString)));
+//    connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)), this, SLOT(updateGraphicalEVvalue(float,int)));
 //    connect(m_hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(finishedAligning(int)));
 //    connect(m_hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 //    connect(m_hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
@@ -226,62 +235,218 @@ void HdrWizard::loadImagesButtonClicked()
     loadInputFiles(files);
 }
 
+void HdrWizard::updateTableGrid()
+{
+    qDebug() << "Fill grid with values in the m_data structure";
+
+    int currentRow = m_ui->tableWidget->currentRow();
+
+    // empty grid...
+    m_ui->tableWidget->clear();
+    m_ui->tableWidget->setRowCount(0);
+
+    // insert the row at the bottom of the table widget
+    int counter =  0;
+    BOOST_FOREACH(const HdrCreationItem& item, *m_hdrCreationManager)
+    {
+        qDebug() << QString("Fill row %1: %2 %3EV")
+                    .arg(counter)
+                    .arg(item.filename())
+                    .arg(item.getEV());
+
+        // fill graphical list
+        m_ui->tableWidget->insertRow(counter);
+        m_ui->tableWidget->setItem(counter, 0, new QTableWidgetItem(QFileInfo(item.filename()).fileName()));
+        if (item.hasEV())
+        {
+            QString EVdisplay;
+            QTextStream ts(&EVdisplay);
+            ts.setRealNumberPrecision(2);
+            ts << right << forcesign << fixed << item.getEV() << " EV";
+            QTableWidgetItem *tableitem = new QTableWidgetItem(EVdisplay);
+            tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            m_ui->tableWidget->setItem(counter, 1, tableitem);
+        }
+        else
+        {
+            //if image doesn't contain (the required) exif tags
+            QTableWidgetItem *tableitem = new QTableWidgetItem(QString(tr("Unknown")));
+            tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            tableitem->setBackground(QBrush(Qt::yellow));
+            tableitem->setForeground(QBrush(Qt::red));
+            m_ui->tableWidget->setItem(counter, 1, tableitem);
+        }
+
+        ++counter;
+    }
+
+    if ( currentRow >= 0 && currentRow < m_hdrCreationManager->availableInputFiles()) {
+        m_ui->tableWidget->selectRow(currentRow);
+    } else if (currentRow >= 0) {
+        m_ui->tableWidget->selectRow(0);
+    } else {
+        m_ui->tableWidget->selectRow(-1);
+    }
+
+    if ( counter ) {
+        m_ui->clearListButton->setEnabled(true);
+    } else {
+        m_ui->clearListButton->setEnabled(false);
+        m_ui->removeImageButton->setEnabled(false);
+    }
+}
+
 void HdrWizard::removeImageButtonClicked()
 {
-    // disconnect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    qDebug() << "HdrWizard::removeImageButtonClicked()";
+
     int index = m_ui->tableWidget->currentRow();
 
-    if (m_ui->tableWidget->rowCount() == 1)
-    {
-        clearListButtonClicked();
-    }
-    else 
-    {
-        QString fname = m_hdrCreationManager->getFileList().at(index);
-        QFileInfo qfi(fname);
-        QFile::remove( QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg") );
-        QFile::remove( QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm") );
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < m_hdrCreationManager->availableInputFiles());
 
-        m_hdrCreationManager->remove(index);
-        m_ui->tableWidget->removeRow(index);
-        inputHdrFileSelected(m_ui->tableWidget->currentRow());
-    }
-    // connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    m_hdrCreationManager->removeFile(index);
+
+    updateTableGrid();
 }
 
 void HdrWizard::clearListButtonClicked()
 {
-    // disconnect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
-    m_ui->previewLabel->clear();
-    for (int i = m_ui->tableWidget->rowCount()-1; i >= 0; --i)
-        m_ui->tableWidget->removeRow(i);
+    qDebug() << "HdrWizard::clearListButtonClicked()";
 
-    QStringList  fnames = m_hdrCreationManager->getFileList();
-    int n = fnames.size();
-    
-    for (int i = 0; i < n; i++) {
-        QString fname = m_hdrCreationManager->getFileList().at(i);
-        QFileInfo qfi(fname);
-        QFile::remove( QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg") );
-        QFile::remove( QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm") );
-    }
+    m_hdrCreationManager->clearFiles();
 
-    m_hdrCreationManager->reset();
-    m_ui->removeImageButton->setEnabled(false);
-    m_ui->clearListButton->setEnabled(false);
-    m_ui->EVgroupBox->setEnabled(false);
-    m_ui->alignGroupBox->setEnabled(false);
-    //EVSlider->setValue(0);
-    m_ui->NextFinishButton->setEnabled(false);
-    m_ui->progressBar->setValue(0);
-    m_ui->progressBar->hide();
-    m_ui->confirmloadlabel->setText("<center><h3><b>"+tr("Start loading a set of images with different exposure")+"</b></h3></center>");
-    // connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    updateTableGrid();
 }
 
-void HdrWizard::dragEnterEvent(QDragEnterEvent *event) {
-    if (m_ui->loadImagesButton->isEnabled())
+void HdrWizard::updateEVSlider(int newValue)
+{
+    int currentRow = m_ui->tableWidget->currentRow();
+    float newEV = ((float)newValue)/100.f;
+    bool oldState = m_ui->ImageEVdsb->blockSignals(true);
+    m_ui->ImageEVdsb->setValue( newEV );
+    m_ui->ImageEVdsb->blockSignals(oldState);
+
+    qDebug() << QString("HdrWizard::updateEVSlider(%1) for %2")
+                .arg(newEV).arg(currentRow);
+
+    QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
+    if ( tableitem )
+    {
+        QString EVdisplay;
+        QTextStream ts(&EVdisplay);
+        ts.setRealNumberPrecision(2);
+        ts << right << forcesign << fixed << newEV << " EV";
+        tableitem->setText(EVdisplay);
+    }
+
+    m_hdrCreationManager->getFile(currentRow).setEV(newEV);
+}
+
+void HdrWizard::updateEVSpinBox(double newEV)
+{
+    int currentRow = m_ui->tableWidget->currentRow();
+
+    bool oldState = m_ui->EVSlider->blockSignals(true);
+    m_ui->EVSlider->setValue( (int)(newEV*100) );
+    m_ui->EVSlider->blockSignals(oldState);
+
+    qDebug() << QString("HdrWizard::updateEVSpinBox(%1) for %2")
+                .arg(newEV).arg(currentRow);
+
+    QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
+    if ( tableitem )
+    {
+        QString EVdisplay;
+        QTextStream ts(&EVdisplay);
+        ts.setRealNumberPrecision(2);
+        ts << right << forcesign << fixed << newEV << " EV";
+        tableitem->setText(EVdisplay);
+    }
+
+    m_hdrCreationManager->getFile(currentRow).setEV(newEV);
+}
+
+void HdrWizard::inputHdrFileSelected(int currentRow)
+{
+    qDebug() << QString("HdrWizard::inputHdrFileSelected(%1)").arg(currentRow);
+
+    if ( currentRow < 0 || m_ui->tableWidget->rowCount() < 0 ) {
+        // no selection...
+        m_ui->EVgroupBox->setEnabled(false);
+        m_ui->removeImageButton->setEnabled(false);
+        m_ui->clearListButton->setEnabled(false);
+        m_ui->NextFinishButton->setEnabled(false);
+        m_ui->previewLabel->clear();
+    }
+    else // if ( m_ui->tableWidget->rowCount() > 0 )
+    {
+        // enable remove button
+        m_ui->removeImageButton->setEnabled(true);
+        m_ui->clearListButton->setEnabled(true);
+
+        // update ev slider and spinbox
+        m_ui->ImageEVdsb->blockSignals(true);
+        m_ui->EVSlider->blockSignals(true);
+
+        m_ui->EVgroupBox->setEnabled(true);
+        if ( m_hdrCreationManager->getFile(currentRow).hasEV() )
+        {
+            m_ui->ImageEVdsb->setValue( m_hdrCreationManager->getFile(currentRow).getEV() );
+            m_ui->EVSlider->setValue( (int)(m_hdrCreationManager->getFile(currentRow).getEV()*100.f + 0.5f) );
+        }
+        else
+        {
+            m_ui->ImageEVdsb->setValue( 0.0 );
+            m_ui->EVSlider->setValue( 0 );
+        }
+        m_ui->ImageEVdsb->blockSignals(false);
+        m_ui->EVSlider->blockSignals(false);
+
+        // load QImage...
+        m_ui->previewLabel->setPixmap(
+                    QPixmap::fromImage(
+                        m_hdrCreationManager->getFile(currentRow).qimage().scaled(
+                            m_ui->previewLabel->size(), Qt::KeepAspectRatio)
+                        ));
+
+        m_ui->ImageEVdsb->setFocus();
+    }
+
+//    if (m_hdrCreationManager->isValidEV(i))
+//        m_ui->ImageEVdsb->setValue(m_hdrCreationManager->getEV(i));
+//    if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
+//        QImage *image = m_hdrCreationManager->getLDRList().at(i);
+//        m_ui->previewLabel->setPixmap(QPixmap::fromImage(image->scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
+//    }
+//    else { // load preview from thumbnail previously created on disk
+//        QString fname = m_hdrCreationManager->getFileList().at(i);
+//        QFileInfo qfi(fname);
+//        QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
+
+//        if (QFile::exists(thumb_name))
+//        {
+//            QImage thumb_image(thumb_name);
+//            m_ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
+//        }
+//        else
+//        {
+//            QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
+//            if ( QFile::exists(thumb_name))  {
+//                QImage thumb_image(thumb_name);
+//                m_ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
+//            }
+//        }
+//    }
+//    m_ui->ImageEVdsb->setFocus();
+}
+
+
+void HdrWizard::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (m_ui->loadImagesButton->isEnabled()) {
         event->acceptProposedAction();
+    }
 }
 
 void HdrWizard::dropEvent(QDropEvent *event)
@@ -305,14 +470,29 @@ void HdrWizard::loadInputFiles(const QStringList& files)
         // m_ui->confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
 
         QProgressDialog progressDialog(this);
-        progressDialog.show();
+        progressDialog.setWindowModality(Qt::WindowModal);
+        progressDialog.setLabelText(QString("Loading %1 file(s) using %2 thread(s)...")
+                                    .arg(files.size())
+                                    .arg(QThread::idealThreadCount())
+                                    );
+
+        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(exec()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(show()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(reset()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(hide()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), &progressDialog, SLOT(setRange(int,int)));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), &progressDialog, SLOT(setValue(int)));
+        connect(&progressDialog, SIGNAL(canceled()), m_hdrCreationManager.data(), SIGNAL(progressCancel()));
 
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+
         m_hdrCreationManager->loadFiles(files);
 
         updateTableGrid();
 
-        progressDialog.hide();
+        // Query the progress dialog to check if was canceled.
+        // qDebug() << "Canceled?" << progressDialog.wasCanceled();
+
         QApplication::restoreOverrideCursor();
     }
 
@@ -334,6 +514,7 @@ void HdrWizard::loadInputFiles(const QStringList& files)
     */
 }
 
+/*
 void HdrWizard::fileLoaded(int index, const QString& fname, float expotime)
 {
     qDebug("WIZ: fileLoaded, expotimes[%d]=%f --- EV=%f",
@@ -348,7 +529,9 @@ void HdrWizard::fileLoaded(int index, const QString& fname, float expotime)
     // increment progressbar
     m_ui->progressBar->setValue(m_ui->progressBar->value()+1);
 }
+*/
 
+/*
 void HdrWizard::finishedLoadingInputFiles(const QStringList& filesLackingExif)
 {
     if (filesLackingExif.size() == 0)
@@ -394,7 +577,9 @@ void HdrWizard::finishedLoadingInputFiles(const QStringList& filesLackingExif)
     m_ui->progressBar->hide();
     QApplication::restoreOverrideCursor();
 }
+*/
 
+/*
 void HdrWizard::errorWhileLoading(const QString& error)
 {
     // disconnect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
@@ -420,32 +605,35 @@ void HdrWizard::errorWhileLoading(const QString& error)
 
     // connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 }
+*/
 
+/*
 void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table)
 {
-    qDebug("WIZ: updateGraphicalEVvalue EV[%d]=%f",
-           index_in_table, log2f(expotime));
+//    qDebug("WIZ: updateGraphicalEVvalue EV[%d]=%f",
+//           index_in_table, log2f(expotime));
 
-    if (expotime != -1)
-    {
-        QString EVdisplay;
-        QTextStream ts(&EVdisplay);
-        ts.setRealNumberPrecision(2);
-        ts << right << forcesign << fixed << log2f(expotime) << " EV";
-        QTableWidgetItem *tableitem = new QTableWidgetItem(EVdisplay);
-        tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        m_ui->tableWidget->setItem(index_in_table,1,tableitem);
-    }
-    else
-    {
-        //if image doesn't contain (the required) exif tags
-        QTableWidgetItem *tableitem = new QTableWidgetItem(QString(tr("Unknown")));
-        tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        tableitem->setBackground(QBrush(Qt::yellow));
-        tableitem->setForeground(QBrush(Qt::red));
-        m_ui->tableWidget->setItem(index_in_table,1,tableitem);
-    }
+//    if (expotime != -1)
+//    {
+//        QString EVdisplay;
+//        QTextStream ts(&EVdisplay);
+//        ts.setRealNumberPrecision(2);
+//        ts << right << forcesign << fixed << log2f(expotime) << " EV";
+//        QTableWidgetItem *tableitem = new QTableWidgetItem(EVdisplay);
+//        tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+//        m_ui->tableWidget->setItem(index_in_table,1,tableitem);
+//    }
+//    else
+//    {
+//        //if image doesn't contain (the required) exif tags
+//        QTableWidgetItem *tableitem = new QTableWidgetItem(QString(tr("Unknown")));
+//        tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+//        tableitem->setBackground(QBrush(Qt::yellow));
+//        tableitem->setForeground(QBrush(Qt::red));
+//        m_ui->tableWidget->setItem(index_in_table,1,tableitem);
+//    }
 }
+*/
 
 void HdrWizard::finishedAligning(int exitcode)
 {
@@ -817,38 +1005,6 @@ void HdrWizard::editingEVfinished() {
     }
 }
 
-void HdrWizard::inputHdrFileSelected(int i)
-{
-    qDebug() << QString("HdrWizard::inputHdrFileSelected(%1)").arg(i);
-
-//    if (m_hdrCreationManager->isValidEV(i))
-//        m_ui->ImageEVdsb->setValue(m_hdrCreationManager->getEV(i));
-//    if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
-//        QImage *image = m_hdrCreationManager->getLDRList().at(i);
-//        m_ui->previewLabel->setPixmap(QPixmap::fromImage(image->scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
-//    }
-//    else { // load preview from thumbnail previously created on disk
-//        QString fname = m_hdrCreationManager->getFileList().at(i);
-//        QFileInfo qfi(fname);
-//        QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
-
-//        if (QFile::exists(thumb_name))
-//        {
-//            QImage thumb_image(thumb_name);
-//            m_ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
-//        }
-//        else
-//        {
-//            QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
-//            if ( QFile::exists(thumb_name))  {
-//                QImage thumb_image(thumb_name);
-//                m_ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
-//            }
-//        }
-//    }
-//    m_ui->ImageEVdsb->setFocus();
-}
-
 void HdrWizard::resizeEvent( QResizeEvent * )
 {
     // qDebug() << "void HdrWizard::resizeEvent ( QResizeEvent * )";
@@ -943,8 +1099,6 @@ void HdrWizard::on_pushButtonSaveSettings_clicked()
         qDebug() << "Insert: " << query.lastError();
     m_ui->pushButtonSaveSettings->setEnabled(false);
 }
-
-
 
 // new code
 void HdrWizard::updateTableGrid()

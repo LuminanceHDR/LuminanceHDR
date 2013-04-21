@@ -27,10 +27,9 @@
 #include <QDialog>
 #include <QString>
 #include <QVector>
+#include <QDebug>
 
 #include "Common/LuminanceOptions.h"
-#include "Common/global.h"
-#include "Libpfs/pfs.h"
 #include "HdrWizard/HdrCreationManager.h"
 
 namespace Ui {
@@ -93,21 +92,24 @@ signals:
 private slots:
     void loadInputFiles(const QStringList& files);
 
-    void fileLoaded(int index, const QString& fname, float expotime);
-    void finishedLoadingInputFiles(const QStringList& NoExifFiles);
-    void errorWhileLoading(const QString& errormessage);
+    void loadImagesButtonClicked();
+    void removeImageButtonClicked();
+    void clearListButtonClicked();
 
-	void updateGraphicalEVvalue(float expotime, int index_in_table);
-	void finishedAligning(int);
+    void inputHdrFileSelected(int currentRow);
 
-	void loadImagesButtonClicked();
-	void removeImageButtonClicked();
-	void clearListButtonClicked();
+    void updateEVSlider(int newValue);
+    void updateEVSpinBox(double newValue);
 
+    // void fileLoaded(int index, const QString& fname, float expotime);
+    // void finishedLoadingInputFiles(const QStringList& NoExifFiles);
+    // void errorWhileLoading(const QString& errormessage);
 
+    // void updateGraphicalEVvalue(float expotime, int index_in_table);
 
+    void finishedAligning(int);
     void alignSelectionClicked();
-	void inputHdrFileSelected(int);
+
 	void predefConfigsComboBoxActivated(int);
 	void antighostRespCurveComboboxActivated(int);
 	void customConfigCheckBoxToggled(bool);

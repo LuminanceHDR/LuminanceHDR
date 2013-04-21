@@ -33,6 +33,7 @@
 #include <QColor>
 #include <QtConcurrentMap>
 #include <QtConcurrentFilter>
+#include <QFutureWatcher>
 
 #include <algorithm>
 #include <cmath>
@@ -51,6 +52,8 @@
 
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/framereaderfactory.h>
+#include <Libpfs/utils/transform.h>
+#include <Libpfs/colorspace/convert.h>
 
 #include "Fileformat/pfsouthdrimage.h"
 
@@ -71,34 +74,73 @@ using namespace pfs::io;
 // --- NEW CODE ---
 HdrCreationItem::HdrCreationItem(const QString &filename)
     : m_filename(filename)
-    , m_ev(-std::numeric_limits<float>::max())
+    , m_averageLuminance(-1.f)
     , m_frame(boost::make_shared<pfs::Frame>())
 {
-     qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
+     // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
 }
 
-HdrCreationItem::~HdrCreationItem() {
-    qDebug() << QString("Destroying HdrCreationItem for %1").arg(m_filename);
+HdrCreationItem::~HdrCreationItem()
+{
+    // qDebug() << QString("Destroying HdrCreationItem for %1").arg(m_filename);
 }
+
+struct ConvertToQRgb {
+    void operator()(float r, float g, float b, QRgb& rgb) const {
+        uint8_t r8u = colorspace::convertSample<uint8_t>(r);
+        uint8_t g8u = colorspace::convertSample<uint8_t>(g);
+        uint8_t b8u = colorspace::convertSample<uint8_t>(b);
+
+        rgb = qRgb(r8u, g8u, b8u);
+    }
+};
 
 struct LoadFile {
     void operator()(HdrCreationItem& currentItem)
     {
+        QFileInfo qfi(currentItem.filename());
         qDebug() << QString("Loading data for %1").arg(currentItem.filename());
 
-        try {
-            FrameReaderPtr reader = FrameReaderFactory::open( currentItem.filename().toStdString() );
+        // read pfs::Frame
+        try
+        {
+            FrameReaderPtr reader = FrameReaderFactory::open(
+                        QFile::encodeName(qfi.filePath()).constData() );
             reader->read( *currentItem.frame(), Params() );
-        } catch (std::runtime_error& err) {
+
+            // read Average Luminance
+            currentItem.setAverageLuminance(
+                        ExifOperations::obtain_avg_lum(
+                            QFile::encodeName(qfi.filePath()).constData() )
+                        );
+
+            // build QImage
+            QImage tempImage(currentItem.frame()->getWidth(),
+                             currentItem.frame()->getHeight(),
+                             QImage::Format_ARGB32_Premultiplied);
+
+            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
+
+            Channel* red;
+            Channel* green;
+            Channel* blue;
+            currentItem.frame()->getXYZChannels(red, green, blue);
+
+            utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
+                             qimageData, ConvertToQRgb());
+
+            currentItem.qimage().swap( tempImage );
+        }
+        catch (std::runtime_error& err)
+        {
             qDebug() << QString("Cannot load %1: %2")
                         .arg(currentItem.filename())
                         .arg(QString::fromStdString(err.what()));
         }
-
-
     }
 };
 
+static
 bool checkFileName(const HdrCreationItem& item, const QString& str) {
     return (item.filename().compare(str) == 0);
 }
@@ -118,8 +160,19 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
     }
 
     // parallel load of the data...
-    QFuture<void> r = QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile());
-    r.waitForFinished();
+    // Create a QFutureWatcher and connect signals and slots.
+    QFutureWatcher<void> futureWatcher;
+    connect(&futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()));
+    connect(&futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()));
+    connect(this, SIGNAL(progressCancel()), &futureWatcher, SLOT(cancel()));
+    connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)));
+    connect(&futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)));
+
+    // Start the computation.
+    futureWatcher.setFuture( QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile()) );
+    futureWatcher.waitForFinished();
+
+    if (futureWatcher.isCanceled()) return;
 
     qDebug() << "Data loaded ... move to internal structure!";
 
@@ -131,6 +184,14 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
     }
 
     qDebug() << QString("Read %1 out of %2").arg(tempItems.size()).arg(filenames.size());
+}
+
+void HdrCreationManager::removeFile(int idx)
+{
+    Q_ASSERT(idx >= 0);
+    Q_ASSERT(idx < m_data.size());
+
+    m_data.erase(m_data.begin() + idx);
 }
 
 // --- LEGACY CODE ---
@@ -1341,6 +1402,7 @@ void HdrCreationManager::cropMDR(const QRect& ca)
     cropAgMasks(ca);
 }
 
+/*
 void HdrCreationManager::reset()
 {
     ais = NULL;
@@ -1352,7 +1414,9 @@ void HdrCreationManager::reset()
     // clearlists(true);
     removeTempFiles();
 }
+*/
 
+/*
 void HdrCreationManager::remove(int index)
 {
     switch (inputType) {
@@ -1393,6 +1457,7 @@ void HdrCreationManager::remove(int index)
     expotimes.remove(index);
     startedProcessing.removeAt(index);
 }
+*/
 
 void HdrCreationManager::readData()
 {

@@ -29,6 +29,7 @@
 
 #include <cstddef>
 #include <vector>
+#include <cmath>
 
 #include <QProcess>
 #include <QPair>
@@ -52,7 +53,8 @@ const config_triple predef_confs[6]= {
 
 // defines an element that contains all the informations for this particular
 // image to be used inside the HdrWizard
-class HdrCreationItem {
+class HdrCreationItem
+{
 public:
     HdrCreationItem(const QString& filename);
     ~HdrCreationItem();
@@ -61,13 +63,22 @@ public:
     FramePtr frame()                    { return m_frame; }
     bool isValid() const                { return m_frame->isValid(); }
 
-    bool hasEV() const                  { return (m_ev != -std::numeric_limits<float>::max()); }
+    bool hasAverageLuminance() const    { return (m_averageLuminance != -1.f); }
+    void setAverageLuminance(float avl) { m_averageLuminance = avl; }
+    float getAverageLuminance() const   { return m_averageLuminance; }
+
+    bool hasEV() const                  { return hasAverageLuminance(); }
+    void setEV(float ev)                { m_averageLuminance = std::pow(2.f, ev); }
+    float getEV() const                 { return log2(m_averageLuminance); }
+
+    QImage& qimage()                    { return m_thumbnail; }
+    const QImage& qimage() const        { return m_thumbnail; }
+
 private:
     QString     m_filename;
-    float       m_ev;
+    float       m_averageLuminance;
     FramePtr    m_frame;
     QImage      m_thumbnail;
-
 };
 
 class HdrCreationManager : public QObject
@@ -84,10 +95,13 @@ public:
 
 
     // ----- NEW FUNCTIONS ------
+    HdrCreationItem& getFile(size_t idx)                { return m_data[idx]; }
+    const HdrCreationItem& getFile(size_t idx) const    { return m_data[idx]; }
+
     void loadFiles(const QStringList& filenames);
     void removeFile(int idx);
-    void clearFiles();
-    size_t availableInputFiles() const { return m_data.size(); }
+    void clearFiles()                   { m_data.clear(); }
+    size_t availableInputFiles() const  { return m_data.size(); }
 
     // iterators
     typedef HdrCreationItemContainer::iterator  iterator;
@@ -153,8 +167,8 @@ public:
     void cropMDR(const QRect& ca);
     void cropAgMasks(const QRect& ca);
 
-    void reset();
-	void remove(int index);
+    // void reset();
+    // void remove(int index);
 	void setShift(int shift) { m_shift = shift; }
     void saveLDRs(const QString& filename);
     void saveMDRs(const QString& filename);
@@ -166,6 +180,14 @@ public slots:
 	void removeTempFiles();
 
 signals:
+    // computation progress
+    void progressStarted();
+    void progressFinished();
+    void progressCancel();
+    void progressRangeChanged(int,int);
+    void progressValueChanged(int);
+
+    // legacy code
     void finishedLoadingInputFiles(const QStringList& filesLackingExif);
     void errorWhileLoading(const QString& message); //also for !valid size
 
@@ -176,8 +198,8 @@ signals:
 	void ais_failed(QProcess::ProcessError);
     void aisDataReady(const QByteArray& data);
 
-	void maximumValue(int);
-	void nextstep(int);
+    // void maximumValue(int);
+    // void nextstep(int);
 
 	void processed();
 	void imagesSaved();

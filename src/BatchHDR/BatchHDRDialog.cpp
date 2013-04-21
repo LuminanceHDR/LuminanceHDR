@@ -148,7 +148,8 @@ BatchHDRDialog::~BatchHDRDialog()
         thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
         QFile::remove(thumb_name);
     }
-    m_hdrCreationManager->reset();
+    // DAVIDE _ HDR WIZARD
+    // m_hdrCreationManager->reset();
     delete m_hdrCreationManager;
     delete m_IO_Worker;
 }
@@ -282,7 +283,8 @@ void BatchHDRDialog::batch_hdr()
     if (m_abort) {
         qDebug() << "Aborted";
         QApplication::restoreOverrideCursor();
-        m_hdrCreationManager->reset();
+        // DAVIDE _ HDR WIZARD
+        // m_hdrCreationManager->reset();
         this->reject();
     }
     if (!m_bracketed.isEmpty())
@@ -334,7 +336,8 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
             thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
             QFile::remove(thumb_name);
         }
-        m_hdrCreationManager->reset();
+        // DAVIDE _ HDR WIZARD
+        // m_hdrCreationManager->reset();
         batch_hdr();
         return;
     }
@@ -384,7 +387,8 @@ void BatchHDRDialog::create_hdr(int)
         thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
         QFile::remove(thumb_name);
     }
-    m_hdrCreationManager->reset();
+    // DAVIDE _ HDR WIZARD
+    // m_hdrCreationManager->reset();
     int progressValue = m_Ui->progressBar->value() + 1;
     m_Ui->progressBar->setValue(progressValue);
     OsIntegration::getInstance().setProgress(progressValue, m_Ui->progressBar->maximum() - m_Ui->progressBar->minimum());
@@ -454,7 +458,8 @@ void BatchHDRDialog::try_to_continue()
         m_processed = 0;
         if (m_loading_error) {
             m_loading_error = false;
-            m_hdrCreationManager->reset();
+            // DAVIDE _ HDR WIZARD
+            // m_hdrCreationManager->reset();
             batch_hdr(); // try to continue
         }
     }

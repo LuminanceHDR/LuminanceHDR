@@ -55,8 +55,10 @@ signals:
     void loadFailed(QString errormessage, int index);
 	void maximumValue(int);
 	void nextstep(int);
+
 protected:
     void run();
+
 private:
 	friend int prog_callback(void *data,enum LibRaw_progress p,int iteration, int expected);
 	void emitNextStep(int iteration);

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>736</width>
-    <height>633</height>
+    <width>781</width>
+    <height>684</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -257,6 +257,9 @@ p, li { white-space: pre-wrap; }
                   <property name="columnCount">
                    <number>2</number>
                   </property>
+                  <attribute name="horizontalHeaderStretchLastSection">
+                   <bool>true</bool>
+                  </attribute>
                   <column/>
                   <column/>
                  </widget>
@@ -461,17 +464,20 @@ p, li { white-space: pre-wrap; }
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
+                       <property name="minimum">
+                        <number>-1000</number>
+                       </property>
                        <property name="maximum">
-                        <number>2000</number>
+                        <number>1000</number>
                        </property>
                        <property name="pageStep">
                         <number>100</number>
                        </property>
                        <property name="value">
-                        <number>1000</number>
+                        <number>0</number>
                        </property>
                        <property name="sliderPosition">
-                        <number>1000</number>
+                        <number>0</number>
                        </property>
                        <property name="orientation">
                         <enum>Qt::Horizontal</enum>
