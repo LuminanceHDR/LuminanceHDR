@@ -31,26 +31,7 @@
 #ifndef RESPONSES_H
 #define RESPONSES_H
 
-#include <stdio.h>
-
-#include <vector>
-#include "Libpfs/array2d.h"
-
-/**
- * @brief Container for images taken with different exposures
- */
-struct Exposure
-{
-  float ti;			// exposure value (eg time)
-  pfs::Array2D* yi;		// exposed pixel value (camera output)
-};
-
-
-/**
- * @brief Container for a list of exposures
- */
-typedef std::vector<Exposure> ExposureList;
-typedef std::vector<pfs::Array2D*> Array2DList;
+#include <cstdio>
 
 /**
  * @brief Weighting function with "flat" distribution (as in icip06)

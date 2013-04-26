@@ -38,7 +38,7 @@ inline
 void op(const _Type* A, const _Type* B, _Type* C, size_t size, const _Op& currOp)
 {
 #pragma omp parallel for
-    for (int idx = 0; idx < size; idx++)
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
     {
         C[idx] = currOp(A[idx], B[idx]);
     }
@@ -80,6 +80,17 @@ template <typename _Type>
 void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size)
 {
     detail::op(A, B, C, size, numeric::vsubs<_Type>(s));
+}
+
+
+template <typename _Type>
+void vsmul(const _Type* I, float c, _Type* O, size_t size)
+{
+#pragma omp parallel for
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
+    {
+        O[idx] = c*I[idx];
+    }
 }
 
 } // vex

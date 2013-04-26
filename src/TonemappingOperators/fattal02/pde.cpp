@@ -35,15 +35,18 @@
 #include "pde.h"
 
 #include <iostream>
+#include <cassert>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-#include "Libpfs/vex.h"
+#include "Libpfs/progress.h"
 #include "Libpfs/vex/vex.h"
+#include "Libpfs/vex/sse.h"
 #include "Libpfs/array2d.h"
+#include "Libpfs/manip/copy.h"
+
 #include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
 
 using namespace std;
 
@@ -106,7 +109,7 @@ inline float min( float a, float b )
 // Full Multigrid Algorithm for solving partial differential equations
 //////////////////////////////////////////////////////////////////////
 
-static void restrict( const pfs::Array2D *in, pfs::Array2D *out )
+static void restrict( const pfs::Array2Df *in, pfs::Array2Df *out )
 {
     const float inRows = in->getRows();
     const float inCols = in->getCols();
@@ -171,7 +174,7 @@ static void restrict( const pfs::Array2D *in, pfs::Array2D *out )
 // }
 
 
-static void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
+static void prolongate( const pfs::Array2Df *in, pfs::Array2Df *out )
 {
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
@@ -209,7 +212,7 @@ static void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
     } 
 }
 
-static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
+static void exact_sollution( pfs::Array2Df */*F*/, pfs::Array2Df *U )
 {
 //   DEBUG_STR << "exact sollution" << endl;
 
@@ -220,8 +223,10 @@ static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
   float h = 1.0/sqrt(sx*sy*1.0f);
   float h2 = h*h;
 */
+    U->reset();
 
-    setArray( U, 0.0f); return;   /* also works well?? */
+    /* also works well?? */
+    return;
   
 //   if( sx==3 && sy==3 )
 //   {
@@ -248,7 +253,7 @@ static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
 //static int rows, cols;
 
 // smooth u using f at level
-static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
+static void smooth( pfs::Array2Df *U, const pfs::Array2Df *F )
 {
 //   DEBUG_STR << "smooth" << endl;
   
@@ -260,7 +265,7 @@ static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
   int iter;
   float err;
         
-  linbcg( n, F->getRawData(), U->getRawData(), BCG_TOL, BCG_STEPS, &iter, &err, rows, cols);
+  linbcg( n, F->data(), U->data(), BCG_TOL, BCG_STEPS, &iter, &err, rows, cols);
 
 //   fprintf( stderr, "." );
 
@@ -297,17 +302,17 @@ static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
 //   }
 }
 
-static void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs::Array2D *F )
+static void calculate_defect( pfs::Array2Df *D, const pfs::Array2Df *U, const pfs::Array2Df *F )
 {
 //   DEBUG_STR << "calculate defect" << endl;
 
   int sx = F->getCols();
   int sy = F->getRows();
 
-  float h = 1.0f/sqrt(sx*sy*1.0f);
-  float h2i = 1.0/(h*h);
+  // float h = 1.0f/sqrt(sx*sy*1.0f);
+  // float h2i = 1.0/(h*h);
 
-  h2i = 1;
+  // h2i = 1;
 
   for( int y=0 ; y<sy ; y++ )
     for( int x=0 ; x<sx ; x++ ) {
@@ -323,7 +328,7 @@ static void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs:
   
 }
 
-static void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
+static void add_correction( pfs::Array2Df *U, const pfs::Array2Df *C )
 {
 //   DEBUG_STR << "add_correction" << endl;
 
@@ -334,8 +339,7 @@ static void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
     (*U)(i) += (*C)(i);
 }
 
-
-void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
+void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
 {
   int xmax = F->getCols();
   int ymax = F->getRows();
@@ -356,17 +360,17 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
   }
 
   // given function f restricted on levels
-  pfs::Array2D** RHS = new pfs::Array2D*[levels+1];
+  pfs::Array2Df** RHS = new pfs::Array2Df*[levels+1];
 
   // approximate initial sollutions on levels
-  pfs::Array2D** IU = new pfs::Array2D*[levels+1];
+  pfs::Array2Df** IU = new pfs::Array2Df*[levels+1];
   // target functions in cycles (approximate sollution error (uh - ~uh) )
-  pfs::Array2D** VF = new pfs::Array2D*[levels+1];
+  pfs::Array2Df** VF = new pfs::Array2Df*[levels+1];
 
-  VF[0] = new pfs::Array2D(xmax,ymax);
+  VF[0] = new pfs::Array2Df(xmax,ymax);
   RHS[0] = F;
-  IU[0] = new pfs::Array2D(xmax,ymax);
-  pfs::copyArray( U, IU[0] );
+  IU[0] = new pfs::Array2Df(xmax,ymax);
+  pfs::copy( U, IU[0] );
 
   int sx=xmax;
   int sy=ymax;
@@ -376,9 +380,9 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
     sx=sx/2+MODYF;
     sy=sy/2+MODYF;
     
-    RHS[k+1] = new pfs::Array2D(sx,sy);
-    IU[k+1] = new pfs::Array2D(sx,sy);
-    VF[k+1] = new pfs::Array2D(sx,sy);
+    RHS[k+1] = new pfs::Array2Df(sx,sy);
+    IU[k+1] = new pfs::Array2Df(sx,sy);
+    VF[k+1] = new pfs::Array2Df(sx,sy);
 
     // restrict from level k to level k+1 (coarser-grid)
     restrict( RHS[k], RHS[k+1] );
@@ -390,14 +394,14 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
   // 3. nested iterations
   for( k=levels-1; k>=0 ; k-- )
   {
-    ph->newValue(20+70*(levels - k)/(levels+1));
+    ph.setValue(20+70*(levels - k)/(levels+1));
     // 4. interpolate sollution from last coarse-grid to finer-grid
     // interpolate from level k+1 to level k (finer-grid)
     prolongate( IU[k+1], IU[k] );
 
     // 4.1. first target function is the equation target function
     //      (following target functions are the defect)
-    copyArray( RHS[k], VF[k] );
+    pfs::copy( RHS[k], VF[k] );
 
     // 5. V-cycle (twice repeated)
     for( int cycle=0 ; cycle<V_CYCLE ; cycle++ )
@@ -409,7 +413,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
         //    zero for initial guess at smoothing
         //    (except for level k when iu contains prolongated result)
 	if( k2!=k )
-          setArray( IU[k2], 0.0f );
+        IU[k2]->reset();
 
 //        fprintf( stderr, "Level: %d --------\n", k2 );
         
@@ -418,7 +422,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
 
         // 8. calculate defect at level
         //    d[k2] = Lh * ~u[k2] - f[k2]
-        pfs::Array2D* D = new pfs::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
+        pfs::Array2Df* D = new pfs::Array2Df(IU[k2]->getCols(), IU[k2]->getRows());
 	calculate_defect( D, IU[k2], VF[k2] );
 
         // 9. restrict deffect as target function for next coarser-grid
@@ -437,7 +441,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
       {
         // 12. interpolate correction from last coarser-grid to finer-grid
         //     iu[k2+1] -> cor
-        pfs::Array2D* C = new pfs::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
+        pfs::Array2Df* C = new pfs::Array2Df(IU[k2]->getCols(), IU[k2]->getRows());
 	prolongate( IU[k2+1], C );
 
         // 13. add interpolated correction to initial sollution at level k2
@@ -468,7 +472,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
 //     dumpPFS( name, VF[k], "Y" );
 //   }  
 
-  pfs::copyArray( IU[0], U );
+  pfs::copy( IU[0], U );
 
   // further improvement of the solution
   if(BCG_POST_IMPROVE) {
@@ -476,14 +480,14 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph)
     float err;
     //DEBUG_STR << "FMG: cg post improving ..., maxiter=" << BCG_POST_STEPS;
     //DEBUG_STR << ", tol=" << BCG_POST_TOL << std::endl;
-    linbcg( xmax*ymax, F->getRawData(), U->getRawData(),
+    linbcg( xmax*ymax, F->data(), U->data(),
                BCG_POST_TOL, BCG_POST_STEPS, &iter, &err,ymax,xmax);
     //DEBUG_STR << "FMG: cg post improvement: iter=" << iter << ", err=" << err;
     //DEBUG_STR << std::endl;
   }
 
   
-  ph->newValue(90);
+  ph.setValue(90);
 
   delete VF[0];
   delete IU[0];
@@ -560,7 +564,7 @@ static float snrm(unsigned long n, const float sx[])
  */
 static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err, int rows, int cols)
 {	
-	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
+    float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
 	p=new float[n+1];
@@ -591,16 +595,16 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		asolve(rr,zz, rows, cols);
 		bknum=0.0;
 #pragma omp parallel for shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
-        for (long j=0;j<n;j++)
+        for (long j=0;j<static_cast<long>(n);j++)
         {
             bknum += z[j]*rr[j];
         }
 		if (*iter == 1) {
-            for (long j=0;j<n;j++)
+            for (long j=0;j<static_cast<long>(n);j++)
             {
 				p[j]=z[j];
             }
-            for (long j=0;j<n;j++)
+            for (long j=0;j<static_cast<long>(n);j++)
             {
 				pp[j]=zz[j];
             }
@@ -614,7 +618,7 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		atimes(p,z,rows,cols);
 		akden=0.0;
 #pragma omp parallel for shared(z, pp) reduction(+:akden) if (n>OMP_THRESHOLD) schedule(static)
-        for (long j=0;j<n;j++)
+        for (long j=0;j<static_cast<long>(n);j++)
         {
             akden += z[j]*pp[j];
         }

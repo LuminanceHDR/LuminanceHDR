@@ -38,7 +38,7 @@
 #include <math.h>
 
 #include "Libpfs/frame.h"
-#include "Common/msec_timer.h"
+#include "Libpfs/utils/msec_timer.h"
 
 namespace
 {
@@ -79,9 +79,10 @@ QImage* fromHDRPFStoQImage(pfs::Frame* in_frame)
 
     QImage* temp_qimage = new QImage(width, height, QImage::Format_ARGB32);
 
-    const float* p_R = Xc->getChannelData()->getRawData();
-    const float* p_G = Yc->getChannelData()->getRawData();
-    const float* p_B = Zc->getChannelData()->getRawData();
+    // DAVIDE - FIX THIS FUNCTION PLEASE!
+    const float* p_R = Xc->data();
+    const float* p_G = Yc->data();
+    const float* p_B = Zc->data();
 
     QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
 

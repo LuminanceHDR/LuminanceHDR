@@ -58,7 +58,7 @@ Q_SIGNALS:
     void startTonemapping(TonemappingOptions*);
 
 private:
-    int original_width_frame;
+    int m_original_width_frame;
     QList<PreviewLabel*> m_ListPreviewLabel;
 };
 #endif

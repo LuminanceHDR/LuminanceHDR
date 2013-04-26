@@ -28,6 +28,9 @@ namespace vex
 template <typename _Type>
 _Type minElement(const _Type* data, size_t size);
 
+template <typename _Type>
+_Type maxElement(const _Type* data, size_t size);
+
 }
 
 #include "minmax.hxx"

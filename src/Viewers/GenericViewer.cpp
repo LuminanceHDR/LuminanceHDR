@@ -29,6 +29,8 @@
 
 #include <QScrollBar>
 #include <QDebug>
+#include <QDrag>
+#include <QMimeData>
 //#include <QtOpenGL/QGLWidget>
 
 #include "Viewers/GenericViewer.h"
@@ -435,5 +437,5 @@ void GenericViewer::startDragging()
 	drag->setMimeData(mimeData);
 	drag->setPixmap(mPixmap->pixmap().scaledToHeight(mPixmap->pixmap().height()/10));
 
-	Qt::DropAction dropAction = drag->exec();
+    /*Qt::DropAction dropAction =*/ drag->exec();
 }

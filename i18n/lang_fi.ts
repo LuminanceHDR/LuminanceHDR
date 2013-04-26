@@ -93,6 +93,14 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BatchHDRDialog</name>
@@ -184,10 +192,6 @@ See documentation for more information.</source>
     <message>
         <source>Folder where created HDRs are saved</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="obsolete">Valitse hakemisto</translation>
     </message>
     <message>
         <source>Started processing...</source>
@@ -299,6 +303,10 @@ Continue?</source>
         <source>Auto-crop</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Custom config %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -312,60 +320,8 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">Muunnettavat HDR-kuvat</translation>
     </message>
     <message>
-        <source>Add all the HDRs in a directory to the list</source>
-        <translation type="obsolete">Lisää kaikki hakemiston HDR-kuvat listaan</translation>
-    </message>
-    <message>
-        <source>Add &amp;Directory</source>
-        <translation type="obsolete">Lisää &amp;Hakemisto</translation>
-    </message>
-    <message>
-        <source>Add single HDR files to the list</source>
-        <translation type="obsolete">Lisää HDR-kuva listalle</translation>
-    </message>
-    <message>
-        <source>&amp;Add Files</source>
-        <translation type="obsolete">&amp;Lisää tiedostot</translation>
-    </message>
-    <message>
-        <source>Remove single HDR files to the list</source>
-        <translation type="obsolete">Poista yksittäisiä HDR-kuvia listalta</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Files</source>
-        <translation type="obsolete">&amp;Poista Tiedostot</translation>
-    </message>
-    <message>
         <source>List of HDRs that will be tone mapped</source>
         <translation type="unfinished">Lista tonemapattavista HDR-kuvista</translation>
-    </message>
-    <message>
-        <source>Tone Mapping Settings Files</source>
-        <translation type="obsolete">Tonemappauksen asetustiedostot</translation>
-    </message>
-    <message>
-        <source>Add all the Tone Mapping Setting files in a directory to the list</source>
-        <translation type="obsolete">Lisää kaikki tonemappauksen asetustiedostot hakemistosta listalle</translation>
-    </message>
-    <message>
-        <source>Add D&amp;irectory</source>
-        <translation type="obsolete">Lisää &amp;Hakemisto</translation>
-    </message>
-    <message>
-        <source>Add single Tone Mapping Setting files to the list</source>
-        <translation type="obsolete">Lisää yksittäinen tonemappauksen asetustiedosto listalle</translation>
-    </message>
-    <message>
-        <source>Add Fi&amp;les</source>
-        <translation type="obsolete">&amp;Lisää tiedostot</translation>
-    </message>
-    <message>
-        <source>Remove single Tone Mapping Setting files to the list</source>
-        <translation type="obsolete">Poista yksittäisiä tonemappauksen asetustiedostoja listalta</translation>
-    </message>
-    <message>
-        <source>R&amp;emove Files</source>
-        <translation type="obsolete">&amp;Poista Tiedostot</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
@@ -378,10 +334,6 @@ Kuvaerän tonemappaus</translation>
     <message>
         <source>Output</source>
         <translation type="unfinished">Lopputulos</translation>
-    </message>
-    <message>
-        <source>Select &amp;Output Folder...</source>
-        <translation type="obsolete">Valitse &amp;kohdekansio...</translation>
     </message>
     <message>
         <source>Conversion Log</source>
@@ -456,10 +408,6 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">Lataa tonemappauksen asetusten tekstitiedostot...</translation>
     </message>
     <message>
-        <source>LuminanceHDR tone mapping settings text file (*.txt)</source>
-        <translation type="unfinished">LuminanceHDR tonemappauksen asetusten tekstitiedosto(*.txt)</translation>
-    </message>
-    <message>
         <source>Processing...</source>
         <translation type="unfinished">Prosessoidaan...</translation>
     </message>
@@ -493,10 +441,6 @@ Kuvaerän tonemappaus</translation>
     </message>
     <message>
         <source>Output Image Quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving using file format: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -569,6 +513,38 @@ Kuvaerän tonemappaus</translation>
     </message>
     <message>
         <source>Alt+M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JPEG</source>
+        <translation type="unfinished">JPEG</translation>
+    </message>
+    <message>
+        <source>TIFF (16 bits)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG</source>
+        <translation type="unfinished">PNG</translation>
+    </message>
+    <message>
+        <source>BMP</source>
+        <translation type="unfinished">BMP</translation>
+    </message>
+    <message>
+        <source>PPM</source>
+        <translation type="unfinished">PPM</translation>
+    </message>
+    <message>
+        <source>PBM</source>
+        <translation type="unfinished">PBM</translation>
+    </message>
+    <message>
+        <source>Luminance HDR tone mapping settings text file (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -658,40 +634,12 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">VIRHE: Ei voida tallentaa tiedostoon: %1</translation>
     </message>
     <message>
-        <source>Cannot convert %1 to a float</source>
-        <translation type="obsolete">Ei voida muuntaa %1 liukuluvuksi</translation>
-    </message>
-    <message>
-        <source>Cannot convert %1 to an integer</source>
-        <translation type="obsolete">Ei voida muuntaa %1 kokonaisluvuksi</translation>
-    </message>
-    <message>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
         <translation type="unfinished">Käyttö: %1 [OPTIONS]... [INPUTFILES]...</translation>
     </message>
     <message>
         <source>Commandline interface to %1.</source>
         <translation type="unfinished">Komentorivirajapinta %1.</translation>
-    </message>
-    <message>
-        <source>-h --help              Display this help.</source>
-        <translation type="unfinished">-h --help              Näytä apua.</translation>
-    </message>
-    <message>
-        <source>-v --verbose           Print more messages during execution.</source>
-        <translation type="unfinished">-v --verbose           Näytä enemmän viestejä ajon aikana.</translation>
-    </message>
-    <message>
-        <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation type="unfinished">-a --align AIS|MTB     HDR-kuvan luomisessa käytettävä kohdistusmoottori (oletus: ei kohdistusta).</translation>
-    </message>
-    <message>
-        <source>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).</source>
-        <translation type="unfinished">-e --ev EV1,EV2,...    Määritä numeeriset EV-arvot (niin monta kuin TIEDOSTOJA).</translation>
-    </message>
-    <message>
-        <source>-c --config            HDR creation config. Possible values: </source>
-        <translation type="unfinished">-c --config            HDR:n luomisen määritys. Mahdollisest arvot: </translation>
     </message>
     <message>
         <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
@@ -702,32 +650,8 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">(Oletus on weight=triangular:response_curve=linear:model=debevec) </translation>
     </message>
     <message>
-        <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
-        <translation type="unfinished">-l --load HDR_FILE     Lataa HDR uuden luomisen sijasta. </translation>
-    </message>
-    <message>
-        <source>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation type="unfinished">-s --save HDR_FILE     Tallenna HDR tiedostoformaatissa. (oletus: älä tallenna) </translation>
-    </message>
-    <message>
-        <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
-        <translation type="unfinished">-g --gamma VALUE       Gamma-arvo, jota käytetään tonemappauksessa. (oletus: 1) </translation>
-    </message>
-    <message>
-        <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation type="unfinished">-r --resize VALUE      Leveys, johon HDR:n koko muutetaan (koko muutetaan ennen gammaa ja tonemappausta) </translation>
-    </message>
-    <message>
-        <source>-t --tmo               Tone mapping operator. Legal values are: </source>
-        <translation type="unfinished">-t --tmo               Tonemappausoperaattori. Sallitut arvot ovat: </translation>
-    </message>
-    <message>
         <source>(Default is mantiuk06)</source>
         <translation type="unfinished">(Oletus on mantiuk06)</translation>
-    </message>
-    <message>
-        <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
-        <translation type="unfinished">-p --tmoptions         Tonemappausoperaattorien asetukset. Sallitut arvot ovat: </translation>
     </message>
     <message>
         <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
@@ -764,14 +688,6 @@ Kuvaerän tonemappaus</translation>
     <message>
         <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
         <translation type="unfinished">(oletus on contrast=0.3:equalization=false:saturation=1.8, katso myös -o)</translation>
-    </message>
-    <message>
-        <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
-        <translation type="unfinished">-o --output LDR_FILE   Tiedostonimi tallennettavalle LDR:lle.</translation>
-    </message>
-    <message>
-        <source>                       (No tonemapping is performed unless -o is specified).</source>
-        <translation type="unfinished">                       (Tonemappausta ei tehdä mikäli -o ei ole määritetty).</translation>
     </message>
     <message>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
@@ -831,7 +747,63 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>-q --quality VALUE   Quality of the saved tone mapped file (0-100).</source>
+        <source>-h --help               Display this help.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-v --verbose            Print more messages during execution.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-d --savealigned prefix Save aligned images to files which names start with prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-c --config             HDR creation config. Possible values: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-l --load HDR_FILE      Load an HDR instead of creating a new one. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-s --save HDR_FILE      Save to a HDR file format. (default: don&apos;t save) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-t --tmo                Tone mapping operator. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-p --tmoptions          Tone mapping operator options. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-o --output LDR_FILE    File name you want to save your tone mapped LDR to.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-q --quality VALUE      Quality of the saved tone mapped file (0-100).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>                        (No tonemapping is performed unless -o is specified).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -880,6 +852,22 @@ Kuvaerän tonemappaus</translation>
         <source>Pan the image to a region</source>
         <translation type="unfinished">Panoroi kuva alueelle</translation>
     </message>
+    <message>
+        <source>Maskable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Good image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ed&amp;itable</source>
+        <translation type="unfinished">&amp;Muokattava</translation>
+    </message>
+    <message>
+        <source>R&amp;eference</source>
+        <translation type="unfinished">Ve&amp;rtaus</translation>
+    </message>
 </context>
 <context>
     <name>EditingToolsDialog</name>
@@ -924,10 +912,6 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">L&amp;oitonna</translation>
     </message>
     <message>
-        <source>Preview &amp;Mode:</source>
-        <translation type="unfinished">&amp;Esikatselutila:</translation>
-    </message>
-    <message>
         <source>Difference (E-P)</source>
         <translation type="unfinished">Ero (E-P)</translation>
     </message>
@@ -946,10 +930,6 @@ Kuvaerän tonemappaus</translation>
     <message>
         <source>Antighosting Mask</source>
         <translation type="unfinished">Haamukuvamaski</translation>
-    </message>
-    <message>
-        <source>Mask Color</source>
-        <translation type="unfinished">Maskin väri</translation>
     </message>
     <message>
         <source>Images List</source>
@@ -1042,20 +1022,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+S</translation>
     </message>
     <message>
-        <source>A&amp;dd Mask</source>
-        <translation type="unfinished">&amp;Lisää maski</translation>
-    </message>
-    <message>
-        <source>Remove Mas&amp;k</source>
-        <translation type="unfinished">&amp;Poista maski</translation>
-    </message>
-    <message>
         <source>Size:</source>
         <translation type="unfinished">Koko:</translation>
-    </message>
-    <message>
-        <source> pixels</source>
-        <translation type="unfinished">pikselit</translation>
     </message>
     <message>
         <source>&amp;Strength:</source>
@@ -1175,6 +1143,50 @@ p, li { white-space: pre-wrap; }
         <source>Histogram</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lasso</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A&amp;dd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove</source>
+        <translation type="unfinished">&amp;Poista</translation>
+    </message>
+    <message>
+        <source>Lasso - Draw a free hand selection area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brush - Paint the mask using the brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Apply saved mask</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1257,44 +1269,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>HDR Creation Wizard</source>
         <translation type="unfinished">HDR-luontivelho</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool help you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR-luontivelho&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tämä työkalu auttaa sinua yhdistämään eri valotuksilla haarukoidut kuvat luodaksesi &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR-kuvan&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Haarukoidut kuvat pitää ottaa samalla kameralla, samoissa olosuhteissa ja mahdollisesti kolmijalkaa käyttäen.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tämä avustaja auttaa sinut kaikkien tarvittavien vaiheiden läpi: kuvien tuominen, niiden kohdistaminen sekä profiilin valitseminen HDR-kuvan luomiseksi.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Rajoitukset:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kaikkien kuvien pitää olla saman kokoisia&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kaikissa kuvissa pitää olla sama värisyvyys&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>[1/2] Load Input Images</source>
@@ -1637,10 +1611,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Kalibroinnista</translation>
     </message>
     <message>
-        <source>From File</source>
-        <translation type="unfinished">Tiedostosta</translation>
-    </message>
-    <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Kaikki EV-arvot on asetettu.&lt;br&gt;Klikkaa seuraava-nappia.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -1677,13 +1647,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading Error: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1701,6 +1664,46 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Auto-crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool helps you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom config %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
+for the following images:
+ &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
+the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From File: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1904,14 +1907,6 @@ joka on liitetty protokollaan?</translation>
         <translation type="unfinished">Tallennetun tiedoston laatu</translation>
     </message>
     <message>
-        <source>Quality:</source>
-        <translation type="unfinished">Laatu:</translation>
-    </message>
-    <message>
-        <source>File size:</source>
-        <translation type="unfinished">Tiedoston koko:</translation>
-    </message>
-    <message>
         <source>Unknown</source>
         <translation type="unfinished">Tuntematon</translation>
     </message>
@@ -1926,6 +1921,14 @@ joka on liitetty protokollaan?</translation>
     <message>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;Peruuta</translation>
+    </message>
+    <message>
+        <source>File size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2295,14 +2298,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+E</translation>
     </message>
     <message>
-        <source>&amp;Align Images...</source>
-        <translation type="unfinished">&amp;Kohdista kuvat...</translation>
-    </message>
-    <message>
-        <source>WORK IN PROGRESS</source>
-        <translation type="unfinished">TYÖ KÄYNNISSÄ</translation>
-    </message>
-    <message>
         <source>&amp;About Qt</source>
         <translation type="unfinished">&amp;Tietoja Qt:sta</translation>
     </message>
@@ -2313,22 +2308,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Show information about Qt library that is used by Luminance</source>
         <translation type="unfinished">Näyttää tietoa Qt-kirjastosta jota Luminance käyttää</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="unfinished">&amp;Järjestä vierekkäin</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="unfinished">&amp;Limitä</translation>
-    </message>
-    <message>
-        <source>Cascade</source>
-        <translation type="unfinished">Limitä</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="unfinished">Työkaluvalikot</translation>
     </message>
     <message>
         <source>Text &amp;under Icons</source>
@@ -2475,14 +2454,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Tallenna nimellä...</translation>
     </message>
     <message>
-        <source>Next Image</source>
-        <translation type="obsolete">Seuraava kuva</translation>
-    </message>
-    <message>
-        <source>Previous Image</source>
-        <translation type="obsolete">Edellinen kuva</translation>
-    </message>
-    <message>
         <source>Adjust &amp;Levels</source>
         <translation type="unfinished">Säädä &amp;tasoja</translation>
     </message>
@@ -2606,6 +2577,36 @@ p, li { white-space: pre-wrap; }
         <source>Gamut Check</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show on the right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show on the bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realtime Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -2624,50 +2625,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>External Tools</source>
         <translation type="unfinished">Lisätyökalut</translation>
-    </message>
-    <message>
-        <source>Czech</source>
-        <translation type="obsolete">Tsekki</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="obsolete">Englanti</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation type="obsolete">Ranska</translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="obsolete">Saksa</translation>
-    </message>
-    <message>
-        <source>Indonesian</source>
-        <translation type="obsolete">Indonesia</translation>
-    </message>
-    <message>
-        <source>Italian</source>
-        <translation type="obsolete">Italia</translation>
-    </message>
-    <message>
-        <source>Polish</source>
-        <translation type="obsolete">Puola</translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="obsolete">Venäjä</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="obsolete">Espanja</translation>
-    </message>
-    <message>
-        <source>Turkish</source>
-        <translation type="obsolete">Turkki</translation>
-    </message>
-    <message>
-        <source>Hungarian</source>
-        <translation type="obsolete">Unkari</translation>
     </message>
     <message>
         <source>HDR Options</source>
@@ -2696,34 +2653,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Show nan and +/-Inf values as:</source>
         <translation type="unfinished"> Nan- ja +/-Inf-arvojen väri:</translation>
-    </message>
-    <message>
-        <source>C&amp;hoose</source>
-        <translation type="obsolete">&amp;Valitse</translation>
-    </message>
-    <message>
-        <source>Which LDR image format to save to</source>
-        <translation type="unfinished">Mihin LDR-formaattiin tallennetaan</translation>
-    </message>
-    <message>
-        <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
-    </message>
-    <message>
-        <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
-    </message>
-    <message>
-        <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
-    </message>
-    <message>
-        <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
-    </message>
-    <message>
-        <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
     </message>
     <message>
         <source>Amount of threads to use on multicore/SMP machines</source>
@@ -3111,84 +3040,6 @@ p, li { white-space: pre-wrap; }
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Camera Profile&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the input color space used to decode RAW data.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: no input color profile is used during RAW decoding.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Embedded&lt;/span&gt;: use embedded color profile from RAW file if exist.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom input color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Kameran profiili&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vailtse väriavaruus, jolla tulkitaan RAW-kuvaa.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ei mitän&lt;/span&gt;: ei käytetä väriprofiilia RAW-kuvan käännön aikana.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Sisäinen&lt;/span&gt;: käytä RAW-tiedoston sisäistä profiilia jos on olemassa.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Kustomoitu&lt;/span&gt;: käytä kustomoitua väriavaruusprofiilia.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Ei mitään</translation>
-    </message>
-    <message>
-        <source>Built in</source>
-        <translation type="obsolete">Sisäänrakennettu</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">Kustomoitu</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Workspace&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the output color space used to decode RAW data.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Raw (linear)&lt;/span&gt;: in this mode, no output color space is used during RAW decoding.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;sRGB&lt;/span&gt;: this is a RGB color space, created cooperatively by Hewlett-Packard and Microsoft. It is the best choice for images destined for the Web and portrait photography.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adobe RGB&lt;/span&gt;: this color space is an extended RGB color space, developed by Adobe. It is used for photography applications such as advertising and fine art.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wide Gamut&lt;/span&gt;: this color space is an expanded version of the Adobe RGB color space.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro-Photo&lt;/span&gt;: this color space is an RGB color space, developed by Kodak, that offers an especially large gamut designed for use with photographic outputs in mind.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom output color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Työtila&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Valitse tässä antoväriavaruus, jolla käännetään RAW-dataa.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Raw (lineaarinen)&lt;/span&gt;: tässä tilassa ei käytetä antoväriavaruutta RAW-kännön aikana.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;sRGB&lt;/span&gt;:  RGB-väriavaruus, luonut  Hewlett-Packard ja Microsoft. Paras valinta nettiin ja muotokuviin.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adobe RGB&lt;/span&gt;: laajennettu RGB-väriavaruus, kehittänyt Adobe. Käytetään esim. mainoksissa ja huipputaiteessa.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wide Gamut&lt;/span&gt;: .laajennettu versio Adobe RGB:stä.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro-Photo&lt;/span&gt;: RGB-väriavaruus, kehittänyt Kodak. Tarjoaa suuren gamutin, suunniteltu käytettäväksi erityisesti valokuvauksessa.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Kustomoitu&lt;/span&gt;: käytä kustomoitua väriavaruusprofiilia.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>RAW</source>
-        <translation type="obsolete">RAW</translation>
-    </message>
-    <message>
-        <source>sRGB</source>
-        <translation type="obsolete">sRGB</translation>
-    </message>
-    <message>
-        <source>Adobe RGB</source>
-        <translation type="obsolete">Adobe RGB</translation>
-    </message>
-    <message>
-        <source>Wide Gamut</source>
-        <translation type="obsolete">Wide Gamut</translation>
-    </message>
-    <message>
-        <source>Pro Photo</source>
-        <translation type="obsolete">Pro Photo</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3206,20 +3057,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;OK</translation>
     </message>
     <message>
-        <source>Please restart...</source>
-        <translation type="obsolete">Ole hyvä ja käynnistä uudelleen...</translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="obsolete">Ole hyvä ja käynnistä LuminanceHDR uudelleen jotta voit käyttää uutta kieltä (%1).</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Valitse hakemisto</translation>
-    </message>
-    <message>
-        <source>Finnish</source>
-        <translation type="obsolete">Suomi</translation>
     </message>
     <message>
         <source>RAW Conversion</source>
@@ -3231,10 +3070,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Always show Wizard first page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TIFF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3255,10 +3090,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Temporary Working Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Batch Tonemapping Default Output Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3357,48 +3188,28 @@ p, li { white-space: pre-wrap; }
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Saves the settings along the program files, to be portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portable mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For the settings to take effect, please restart the application!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>PreviewPanel</name>
+    <name>PreviewSettings</name>
     <message>
-        <source>Mantiuk &apos;06</source>
-        <translation type="unfinished">Mantiuk &apos;06</translation>
-    </message>
-    <message>
-        <source>Mantiuk &apos;08</source>
-        <translation type="unfinished">Mantiuk &apos;08</translation>
-    </message>
-    <message>
-        <source>Fattal</source>
-        <translation type="unfinished">Fattal</translation>
-    </message>
-    <message>
-        <source>Drago</source>
-        <translation type="unfinished">Drago</translation>
-    </message>
-    <message>
-        <source>Durand</source>
-        <translation type="unfinished">Durand</translation>
-    </message>
-    <message>
-        <source>Reinhard &apos;02</source>
-        <translation type="unfinished">Reinhard &apos;02</translation>
-    </message>
-    <message>
-        <source>Reinhard &apos;05</source>
-        <translation type="unfinished">Reinhard &apos;05</translation>
-    </message>
-    <message>
-        <source>Ashikhmin</source>
-        <translation type="unfinished">Ashikhmin</translation>
-    </message>
-    <message>
-        <source>Pattanaik</source>
-        <translation type="unfinished">Pattanaik</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished">Esikatselu</translation>
+        <source>Load settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3506,14 +3317,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Tallenna nimellä...</translation>
     </message>
     <message>
-        <source>Aborting...</source>
-        <translation type="unfinished">Keskeytetään...</translation>
-    </message>
-    <message>
-        <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
-        <translation type="unfinished">Qt:n JPEG-pluginia ei löydy...&lt;br&gt;Ole hyvä ja pura DLL-paketti asetus &quot;käytä kansioiden nimiä&quot; aktivoituna.</translation>
-    </message>
-    <message>
         <source>All HDR formats </source>
         <translation type="unfinished">Kaikki HDR-formaatit</translation>
     </message>
@@ -3605,6 +3408,138 @@ p, li { white-space: pre-wrap; }
         <source>I cannot perform the color transform. Please select a different monitor profile.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PreGamma=%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="unfinished">Kontrastin tasoitus</translation>
+    </message>
+    <message>
+        <source>Contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="unfinished">Luminanssin taso</translation>
+    </message>
+    <message>
+        <source>Luminance Level=Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="unfinished">Värin saturaatio</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="unfinished">Kontrastin parannus</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation type="unfinished">Alpha</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="unfinished">Beta</translation>
+    </message>
+    <message>
+        <source>NoiseRedux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FFTSolver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="unfinished">Bias</translation>
+    </message>
+    <message>
+        <source>Spatial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="unfinished">Range</translation>
+    </message>
+    <message>
+        <source>Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="unfinished">Kerroin</translation>
+    </message>
+    <message>
+        <source>AutoLuminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rod</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phi</source>
+        <translation type="unfinished">Phi</translation>
+    </message>
+    <message>
+        <source>Scales:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="unfinished">Kirkkaus</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="unfinished">Kromaattinen adaptaatio</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="unfinished">Valon adaptaatio</translation>
+    </message>
 </context>
 <context>
     <name>ResizeDialog</name>
@@ -3655,121 +3590,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Scale</source>
         <translation type="unfinished">&amp;Muuta kuvan kokoa</translation>
-    </message>
-</context>
-<context>
-    <name>SavedParameters</name>
-    <message>
-        <source>Simple</source>
-        <translation type="obsolete">Yksinkertainen</translation>
-    </message>
-    <message>
-        <source>Local Contrast Threshold</source>
-        <translation type="obsolete">Paikallisen kontrastin kynnysarvo</translation>
-    </message>
-    <message>
-        <source>Bias</source>
-        <translation type="obsolete">Bias</translation>
-    </message>
-    <message>
-        <source>Spatial Kernel Sigma</source>
-        <translation type="obsolete">Spatial Kernel Sigma</translation>
-    </message>
-    <message>
-        <source>Range Kernel Sigma</source>
-        <translation type="obsolete">Range Kernel Sigma</translation>
-    </message>
-    <message>
-        <source>Base Contrast</source>
-        <translation type="obsolete">Base Contrast</translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="obsolete">Alpha</translation>
-    </message>
-    <message>
-        <source>Beta</source>
-        <translation type="obsolete">Beta</translation>
-    </message>
-    <message>
-        <source>Color Saturation</source>
-        <translation type="obsolete">Värin saturaatio</translation>
-    </message>
-    <message>
-        <source>Noise Reduction</source>
-        <translation type="obsolete">Kohinanpoisto</translation>
-    </message>
-    <message>
-        <source>Contrast Equalization</source>
-        <translation type="obsolete">Kontrastin tasoitus</translation>
-    </message>
-    <message>
-        <source>Contrast Factor</source>
-        <translation type="obsolete">Kontrastin kerroin</translation>
-    </message>
-    <message>
-        <source>Saturation Factor</source>
-        <translation type="obsolete">Värikylläisyyden kerroin</translation>
-    </message>
-    <message>
-        <source>Detail Factor</source>
-        <translation type="obsolete">Yksityiskohtien kerroin</translation>
-    </message>
-    <message>
-        <source>Contrast Enhancement</source>
-        <translation type="obsolete">Kontrastin parannus</translation>
-    </message>
-    <message>
-        <source>Luminance Level</source>
-        <translation type="obsolete">Luminanssin taso</translation>
-    </message>
-    <message>
-        <source>Cone and Rod based on Luminance</source>
-        <translation type="obsolete">Cone and Rod based on Luminance</translation>
-    </message>
-    <message>
-        <source>Cone Level</source>
-        <translation type="obsolete">Cone Level</translation>
-    </message>
-    <message>
-        <source>Rod Level</source>
-        <translation type="obsolete">Rod Level</translation>
-    </message>
-    <message>
-        <source>Multiplier</source>
-        <translation type="obsolete">Kerroin</translation>
-    </message>
-    <message>
-        <source>Use Scales</source>
-        <translation type="obsolete">Use Sclaes</translation>
-    </message>
-    <message>
-        <source>Key Value</source>
-        <translation type="obsolete">Key Value</translation>
-    </message>
-    <message>
-        <source>Range</source>
-        <translation type="obsolete">Range</translation>
-    </message>
-    <message>
-        <source>Lower Scale</source>
-        <translation type="obsolete">Lower Scale</translation>
-    </message>
-    <message>
-        <source>Upper Scale</source>
-        <translation type="obsolete">Upper Scale</translation>
-    </message>
-    <message>
-        <source>Brightness</source>
-        <translation type="obsolete">Kirkkaus</translation>
-    </message>
-    <message>
-        <source>Chromatic Adaptation</source>
-        <translation type="obsolete">Kromaattinen adaptaatio</translation>
-    </message>
-    <message>
-        <source>Light Adaptation</source>
-        <translation type="obsolete">Valon adaptaatio</translation>
     </message>
 </context>
 <context>
@@ -3970,6 +3790,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Abort computation</source>
         <translation type="unfinished">Keskeytä laskenta</translation>
+    </message>
+</context>
+<context>
+    <name>TiffModeDialog</name>
+    <message>
+        <source>Save as ...TIFF</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4251,14 +4078,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Tonemappaa</translation>
     </message>
     <message>
-        <source>undo</source>
-        <translation type="obsolete">Kumoa</translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="obsolete">Tee uudelleen</translation>
-    </message>
-    <message>
         <source>Load a tonemapping settings text file...</source>
         <translation type="unfinished">Lataa tonemappauksen asetusten tekstitiedosto...</translation>
     </message>
@@ -4287,20 +4106,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Tiedostoa ei voida lukea (tarkista oikeudet, polku...)</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
-        <translation type="obsolete">Virhe, tonemappauksen asetustiedoston formaatti on muuttunut. Tätä (vanhaa) tiedostoa ei voida käyttää LuminanceHDR:n tämän version kanssa. Luo uusi.</translation>
-    </message>
-    <message>
         <source>Enter the width of the new size:</source>
         <translation type="unfinished">Sytö uuden koon leveys:</translation>
     </message>
     <message>
         <source>Ctrl+T</source>
         <translation type="unfinished">Ctrl+T</translation>
-    </message>
-    <message>
-        <source>Load parameters by comment</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Load saved parameters</source>
@@ -4378,31 +4189,41 @@ Luminace Level</source>
     </message>
 </context>
 <context>
-    <name>TonemappingWarningDialog</name>
+    <name>TonemappingSettings</name>
     <message>
-        <source>Attention!</source>
-        <translation type="obsolete">Huomio!</translation>
-    </message>
-    <message>
-        <source>Ask again</source>
-        <translation type="obsolete">Kysy uudelleen</translation>
-    </message>
-    <message>
-        <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
-
-Do you want to continue?</source>
-        <translation type="obsolete">Tämä tonemappausoperaattori on riipuvainen annetun kuvan koosta. Lopputulos on todennäköisesti erilainen, kun operaattoria käytetään täysikokoiseen kuvaan.
-
-Haluatko jatkaa?</translation>
-    </message>
-    <message>
-        <source>Fattal Warning</source>
+        <source>Load Custom Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
-
-Do you want to continue?</source>
+        <source>Sort by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comments:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Most Useful Operators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4427,34 +4248,6 @@ Do you want to continue?</source>
     <message>
         <source>Append files to the list</source>
         <translation type="unfinished">Lisää tiedostot listalle</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;From:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Mistä:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;To:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Mihin:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Log:</source>
-        <translation type="obsolete">Loki:</translation>
     </message>
     <message>
         <source>Exif operations report</source>
@@ -4546,6 +4339,21 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Remind me later</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UpdateChecker</name>
+    <message>
+        <source>A new release is ready for download!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to download, or select Help-&gt;Update!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the webpage for download now?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

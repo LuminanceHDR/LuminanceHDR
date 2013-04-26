@@ -31,14 +31,20 @@
  * $Id: pfstmo_reinhard02.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
+#include <iostream>
 #include <math.h>
+#include <cstddef>
 
 #include "Libpfs/frame.h"
+#include "Libpfs/exception.h"
 #include "tmo_reinhard02.h"
 
-#include <iostream>
+namespace pfs
+{
+class Progress;
+}
 
-void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
+void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low, int high, bool use_scales, pfs::Progress &ph )
 {
   //--- default tone mapping parameters;
   //float key = 0.18;
@@ -48,7 +54,7 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   //int high = 43;
   //bool use_scales = false;
   bool temporal_coherent = false;  
-  
+#ifndef NDEBUG
   std::cout << "pfstmo_reinhard02 (";
   std::cout << "key: " << key;
   std::cout << ", phi: " << phi;
@@ -56,25 +62,22 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   std::cout << ", lower scale: " << low;
   std::cout << ", upper scale: " << high;
   std::cout << ", use scales: " << use_scales << ")" << std::endl;
-  
+#endif
   pfs::Channel *X, *Y, *Z;
-  frame->getXYZChannels( X, Y, Z );
-  frame->getTags().setString("LUMINANCE", "RELATIVE");
+  frame.getXYZChannels( X, Y, Z );
+  frame.getTags().setTag("LUMINANCE", "RELATIVE");
   //---
   
-  if( Y==NULL || X==NULL || Z==NULL)
-    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-  
-  pfs::Array2D* Xr = X->getChannelData();
-  pfs::Array2D* Yr = Y->getChannelData();
-  pfs::Array2D* Zr = Z->getChannelData();
+  if ( Y==NULL || X==NULL || Z==NULL ) {
+     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+  }
   
   // tone mapping
-  int w = Y->getWidth();
-  int h = Y->getHeight();
-  pfs::Array2D* L = new pfs::Array2D(w,h);
+  size_t w = Y->getWidth();
+  size_t h = Y->getHeight();
+  pfs::Array2Df L(w, h);
 
-  Reinhard02 tmoperator( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent, ph );
+  Reinhard02 tmoperator( Y, &L, use_scales, key, phi, num, low, high, temporal_coherent, ph );
   
   tmoperator.tmo_reinhard02();
   
@@ -83,12 +86,10 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   {
     for( int y=0 ; y<h ; y++ )
     {
-      float scale = (*L)(x,y) / (*Yr)(x,y);
-      (*Yr)(x,y) *= scale;
-      (*Xr)(x,y) *= scale;
-      (*Zr)(x,y) *= scale;
+      float scale = L(x,y) / (*Y)(x,y);
+      (*Y)(x,y) *= scale;
+      (*X)(x,y) *= scale;
+      (*Z)(x,y) *= scale;
     }
   }
-  
-  delete L;
 }

@@ -20,9 +20,11 @@
 #include <stdio.h>
 #include "arch/math.h"
 
-#include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
 #include "tmo_reinhard02.h"
+
+#include "Libpfs/progress.h"
+#include "Libpfs/array2d.h"
+#include "TonemappingOperators/pfstmo.h"
 
 #define SIGMA_I(i)       (m_sigma_0 + ((double)i/(double)m_range)*(m_sigma_1 - m_sigma_0))
 #define S_I(i)           (exp (SIGMA_I(i)))
@@ -263,32 +265,32 @@ void Reinhard02::dynamic_range ()
  * @param low size in pixels of smallest scale (should be kept at 1)
  * @param high size in pixels of largest scale (default 1.6^8 = 43)
  */
-Reinhard02::Reinhard02(unsigned int width, unsigned int height,
-	const float *nY, float *nL,
-	bool use_scales, float key, float phi,
-	int num, int low, int high, bool temporal_coherent, ProgressHelper *ph ) :
-m_width(width),
-m_height(height),
-m_use_scales(use_scales),
-m_use_border(false),
-m_key(key),
-m_phi(phi),
-m_white(1e20),
-m_range(num),
-m_scale_low(low),
-m_scale_high(high),
-m_temporal_coherent(temporal_coherent),
-m_alpha(2.),
-m_threshold(0.05),
-m_ph(ph)
+Reinhard02::Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df* L,
+                       bool use_scales, float key, float phi,
+                       int num, int low, int high, bool temporal_coherent,
+                       pfs::Progress &ph)
+    : m_width(Y->getCols())
+    , m_height(Y->getRows())
+    , m_use_scales(use_scales)
+    , m_use_border(false)
+    , m_key(key)
+    , m_phi(phi)
+    , m_white(1e20)
+    , m_range(num)
+    , m_scale_low(low)
+    , m_scale_high(high)
+    , m_temporal_coherent(temporal_coherent)
+    , m_alpha(2.)
+    , m_threshold(0.05)
+    , m_ph(ph)
 {
-	m_Y = new pfs::Array2D(m_width, m_height, const_cast<float*>(nY));
-	m_L = new pfs::Array2D(m_width, m_height, nL);
+    m_Y = Y;
+    m_L = L;
 }
 
 void Reinhard02::tmo_reinhard02()
 {
-  m_ph->newValue( 0 );
+  m_ph.setValue( 0 );
 
   int x,y;
 
@@ -301,8 +303,8 @@ void Reinhard02::tmo_reinhard02()
   compute_bessel();
   allocate_memory ();
 
-  m_ph->newValue( 10 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 10 );
+  if (m_ph.canceled())
 	  goto end;
 
   // reading image
@@ -311,26 +313,26 @@ void Reinhard02::tmo_reinhard02()
       m_image[y][x][0] = (*m_Y)(x,y);
 
   copy_luminance();
-  m_ph->newValue( 20 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 20 );
+  if (m_ph.canceled())
 	  goto end;
   scale_to_midtone();
-  m_ph->newValue( 30 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 30 );
+  if (m_ph.canceled())
 	  goto end;
 
   if( m_use_scales )
   {
     build_pyramid(m_luminance, m_cvts.xmax, m_cvts.ymax);
   }
-  m_ph->newValue( 50 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 50 );
+  if (m_ph.canceled())
 	  goto end;
 
   tonemap_image();
 
-  m_ph->newValue( 85 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 85 );
+  if (m_ph.canceled())
 	  goto end;
   // saving image
   for( y=0 ; y<m_cvts.ymax ; y++ )
@@ -339,16 +341,16 @@ void Reinhard02::tmo_reinhard02()
 
 //  print_parameter_settings();
 
-  m_ph->newValue( 95 );
-  if (m_ph->isTerminationRequested())
+  m_ph.setValue( 95 );
+  if (m_ph.canceled())
 	  goto end;
   deallocate_memory();
   if( m_use_scales ) {
       clean_pyramid();
   }
 
-  if (!m_ph->isTerminationRequested())
-    m_ph->newValue( 100 );
+  if (!m_ph.canceled())
+    m_ph.setValue( 100 );
   
   end:
 	;
@@ -388,10 +390,10 @@ double Reinhard02::V1( int x, int y, int level )
           + (1-s)*t*Pyramid[level][y01][x0] + s*t*Pyramid[level][y01][x01]);
 }
 
+/* PRE:  */
 double Reinhard02::pyramid_lookup( int x, int y, int level )
-  /* PRE:  */
 {
-  int n, s;
+  // int n, s;
   
   /* Level 0 is a special case, the value is just the image */
   if (level == 0) {
@@ -403,8 +405,8 @@ double Reinhard02::pyramid_lookup( int x, int y, int level )
 
   /* Compute the size of the slice */
   level--;
-  n = 1 << level;
-  s = PyramidWidth0 >> level;
+  // n = 1 << level;
+  int s = PyramidWidth0 >> level;
   
   //x = x >> level;
   //y = y >> level;

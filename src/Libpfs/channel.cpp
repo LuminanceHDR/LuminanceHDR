@@ -28,76 +28,16 @@
 
 #include <map>
 
-using namespace std;
+namespace pfs {
 
-namespace pfs
-{
-Channel::Channel( int width, int height, const std::string& channel_name)
-    : channel_impl( new Array2D( width, height ) )
-    , name( channel_name )
-{
-    //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
-}
+Channel::Channel( size_t width, size_t height, const std::string& channelName)
+    : ChannelData( width, height )
+    , m_name( channelName )
+    , m_tags()
+{}
 
 Channel::~Channel()
-{
-    //std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
-
-    delete channel_impl;
-}
-
-// Channel implementation
-TagContainer* Channel::getTags()
-{
-    return &tags;
-}
-
-const TagContainer* Channel::getTags() const
-{
-    return &tags;
-}
-
-float* Channel::getRawData()
-{
-    return channel_impl->getRawData();
-}
-
-const float* Channel::getRawData() const
-{
-    return channel_impl->getRawData();
-}
-
-int Channel::getWidth() const
-{
-    return channel_impl->getCols();
-}
-
-int Channel::getHeight() const
-{
-    return channel_impl->getRows();
-}
-
-const std::string& Channel::getName() const
-{
-    return name;
-}
-
-Array2D* Channel::getChannelData()
-{
-    return channel_impl;
-}
-
-const Array2D* Channel::getChannelData() const
-{
-    return channel_impl;
-}
-
-void Channel::setChannelData(Array2D *array)
-{
-    if (channel_impl)
-        delete channel_impl;
-    channel_impl = array;
-}
+{}
 
 } // pfs
 

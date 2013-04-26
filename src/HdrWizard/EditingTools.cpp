@@ -557,14 +557,14 @@ void EditingTools::saveImagesButtonClicked() {
     QString fnameprefix=QFileDialog::getSaveFileName(
                 this,
                 tr("Choose a directory and a prefix"),
-                                m_luminanceOptions.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString());
+                m_luminanceOptions.getDefaultPathLdrIn());
     if (fnameprefix.isEmpty())
         return;
 
     QFileInfo qfi(fnameprefix);
     QFileInfo test(qfi.path());
 
-    m_luminanceOptions.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
+    m_luminanceOptions.setDefaultPathLdrIn(qfi.path());
 
     if (test.isWritable() && test.exists() && test.isDir()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );

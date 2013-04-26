@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="/new/prefix1">
+    <file>images/vcs-update-required.png</file>
+    <file>images/flags/DK.PNG</file>
     <file>images/button_add.png</file>
     <file>images/button_del.png</file>
     <file>images/raw.png</file>
@@ -69,6 +71,22 @@
     <file>images/vcs_update.png</file>
     <file>images/gimp-lasso.png</file>
     <file>images/brush_icon.png</file>
+    <file>images/flags/CHIN0001.PNG</file>
+    <file>images/flags/CZEC0001.PNG</file>
+    <file>images/flags/FINL0001.PNG</file>
+    <file>images/flags/FRAN0001.PNG</file>
+    <file>images/flags/GERM0001.PNG</file>
+    <file>images/flags/HUNG0001.PNG</file>
+    <file>images/flags/INDA0001.PNG</file>
+    <file>images/flags/INDN0001.PNG</file>
+    <file>images/flags/ITAL0001.PNG</file>
+    <file>images/flags/POLA0001.PNG</file>
+    <file>images/flags/RMNA0001.PNG</file>
+    <file>images/flags/RUSS0001.PNG</file>
+    <file>images/flags/SPAN0001.PNG</file>
+    <file>images/flags/TURK0001.PNG</file>
+    <file>images/flags/UNKG0001.PNG</file>
+    <file>images/flags/SVKA0001.PNG</file>
   </qresource>
   <qresource prefix="/help">
     <file alias="document-print.png">icons/help/document-print.png</file>
@@ -89,23 +107,5 @@
     <file>images/camera.png</file>
     <file>images/camera_on_tripod.png</file>
     <file>images/stack.png</file>
-  </qresource>
-  <qresource prefix="/flags">
-    <file>images/CHIN0001.PNG</file>
-    <file>images/CZEC0001.PNG</file>
-    <file>images/FINL0001.PNG</file>
-    <file>images/FRAN0001.PNG</file>
-    <file>images/GERM0001.PNG</file>
-    <file>images/HUNG0001.PNG</file>
-    <file>images/INDA0001.PNG</file>
-    <file>images/INDN0001.PNG</file>
-    <file>images/ITAL0001.PNG</file>
-    <file>images/POLA0001.PNG</file>
-    <file>images/RMNA0001.PNG</file>
-    <file>images/RUSS0001.PNG</file>
-    <file>images/SPAN0001.PNG</file>
-    <file>images/TURK0001.PNG</file>
-    <file>images/UNKG0001.PNG</file>
-    <file>images/SVKA0001.PNG</file>
   </qresource>
 </RCC>

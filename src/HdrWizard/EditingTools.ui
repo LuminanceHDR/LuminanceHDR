@@ -804,7 +804,7 @@ p, li { white-space: pre-wrap; }
                           <item row="0" column="2">
                            <widget class="QSpinBox" name="agBrushSizeQSpinbox">
                             <property name="suffix">
-                             <string> pix</string>
+                             <string> px</string>
                             </property>
                             <property name="minimum">
                              <number>1</number>

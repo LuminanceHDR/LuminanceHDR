@@ -40,10 +40,6 @@
 #define isnan(x) _isnan(x)
 #define isnanf(x) _isnanf(x)
 
-#define fmax std::max
-#define fmaxf std::max
-#define fmin std::min
-#define fminf std::min
 #pragma warning (disable:4996)
 
 #endif  // MSVC_MATH_H

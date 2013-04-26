@@ -157,7 +157,6 @@ TonemappingPanel::TonemappingPanel(PreviewPanel *panel, QWidget *parent):
 
     connect(m_Ui->loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
     connect(m_Ui->saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
-    connect(m_Ui->loadCommentsButton, SIGNAL(clicked()), this, SLOT(loadComments()));
 
     createDatabase();
 }
@@ -904,7 +903,7 @@ void TonemappingPanel::fromTxt2Gui()
 void TonemappingPanel::on_addCustomSizeButton_clicked()
 {
     bool ok;
-    int i = QInputDialog::getInteger(this,
+    int i = QInputDialog::getInt(this,
                                      tr("Custom LDR size"),
                                      tr("Enter the width of the new size:"), 0 , 0, 2147483647, 1, &ok);
     if (ok && i > 0)
@@ -956,7 +955,6 @@ void TonemappingPanel::setEnabled(bool b)
     m_Ui->applyButton->setEnabled(b);
 
 	// DB
-    m_Ui->loadCommentsButton->setEnabled(b);
     m_Ui->loadButton->setEnabled(b);
     m_Ui->saveButton->setEnabled(b);
 
@@ -1321,177 +1319,6 @@ void TonemappingPanel::loadParameters()
             t->xsize = sizes[0];
             emit startTonemapping(t);
         }
-	}
-}
-
-void TonemappingPanel::loadComments()
-{
-    SavedParametersDialog dialog(this);
-	if (dialog.exec())
-	{
-		QSqlQueryModel *model = dialog.getModel();
-		int selectedRow = dialog.getCurrentIndex().row();
-		QString comment = model->record(selectedRow).value("comment").toString();
-        QString tmOperator = model->record(selectedRow).value("operator").toString();
-
-		QSqlTableModel *temp_model = new QSqlTableModel;
-		temp_model->setTable(tmOperator);
-		temp_model->select();
-		QSqlQuery query("SELECT * from " + tmOperator + " WHERE comment = '" + comment + "'");
-		if (tmOperator == "ashikhmin")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(ashikhmin);
-			updateCurrentTmoOperator(ashikhmin);
-			while (query.next())
-			{
-                m_Ui->simpleCheckBox->setChecked(query.value(0).toBool());
-				if (query.value(1).toBool())
-                    m_Ui->eq2RadioButton->setChecked(true);
-				else
-                    m_Ui->eq4RadioButton->setChecked(true);
-                m_Ui->contrastSlider->setValue(query.value(2).toFloat());
-                m_Ui->contrastdsb->setValue(query.value(2).toFloat());
-                m_Ui->pregammaSlider->setValue(query.value(3).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(3).toFloat());
-			}
-		}
-		else if (tmOperator == "drago")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(drago);
-			updateCurrentTmoOperator(drago);
-			while (query.next())
-			{
-                m_Ui->biasSlider->setValue(query.value(0).toFloat());
-                m_Ui->biasdsb->setValue(query.value(0).toFloat());
-                m_Ui->pregammaSlider->setValue(query.value(1).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(1).toFloat());
-			}
-		}
-		else if (tmOperator == "durand")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(durand);
-			updateCurrentTmoOperator(durand);
-			while (query.next())
-			{
-                m_Ui->spatialSlider->setValue(query.value(0).toFloat());
-                m_Ui->spatialdsb->setValue(query.value(0).toFloat());
-                m_Ui->rangeSlider->setValue(query.value(1).toFloat());
-                m_Ui->rangedsb->setValue(query.value(1).toFloat());
-                m_Ui->baseSlider->setValue(query.value(2).toFloat());
-                m_Ui->basedsb->setValue(query.value(2).toFloat());
-                m_Ui->pregammaSlider->setValue(query.value(3).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(3).toFloat());
-			}
-		}
-		else if (tmOperator == "fattal")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(fattal);
-			updateCurrentTmoOperator(fattal);
-			while (query.next())
-			{
-                m_Ui->alphaSlider->setValue(query.value(0).toFloat());
-                m_Ui->alphadsb->setValue(query.value(0).toFloat());
-                m_Ui->betaSlider->setValue(query.value(1).toFloat());
-                m_Ui->betadsb->setValue(query.value(1).toFloat());
-                m_Ui->saturation2Slider->setValue(query.value(2).toFloat());
-                m_Ui->saturation2dsb->setValue(query.value(2).toFloat());
-                m_Ui->noiseSlider->setValue(query.value(3).toFloat());
-                m_Ui->noisedsb->setValue(query.value(3).toFloat());
-                m_Ui->fftVersionCheckBox->setChecked(!query.value(4).toBool());
-                m_Ui->pregammaSlider->setValue(query.value(5).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(5).toFloat());
-			}
-		}
-		else if (tmOperator == "mantiuk06")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk06);
-			updateCurrentTmoOperator(mantiuk06);
-			while (query.next())
-			{
-                m_Ui->contrastEqualizCheckBox->setChecked(query.value(0).toBool());
-                m_Ui->contrastFactorSlider->setValue(query.value(1).toFloat());
-                m_Ui->contrastFactordsb->setValue(query.value(1).toFloat());
-                m_Ui->saturationFactorSlider->setValue(query.value(2).toFloat());
-                m_Ui->saturationFactordsb->setValue(query.value(2).toFloat());
-                m_Ui->detailFactorSlider->setValue(query.value(3).toFloat());
-                m_Ui->detailFactordsb->setValue(query.value(3).toFloat());
-                m_Ui->pregammaSlider->setValue(query.value(4).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(4).toFloat());
-			}
-		}
-		else if (tmOperator == "mantiuk08")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk08);
-			updateCurrentTmoOperator(mantiuk08);
-			while (query.next())
-			{
-                m_Ui->colorSaturationSlider->setValue(query.value(0).toFloat());
-                m_Ui->colorSaturationDSB->setValue(query.value(0).toFloat());
-                m_Ui->contrastEnhancementSlider->setValue(query.value(1).toFloat());
-                m_Ui->contrastEnhancementDSB->setValue(query.value(1).toFloat());
-                m_Ui->luminanceLevelSlider->setValue(query.value(2).toFloat());
-                m_Ui->luminanceLevelDSB->setValue(query.value(2).toFloat());
-                m_Ui->luminanceLevelCheckBox->setChecked(query.value(3).toBool());
-                m_Ui->pregammaSlider->setValue(query.value(4).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(4).toFloat());
-			}
-		}
-		else if (tmOperator == "pattanaik")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(pattanaik);
-			updateCurrentTmoOperator(pattanaik);
-			while (query.next())
-			{
-                m_Ui->multiplierSlider->setValue(query.value(0).toFloat());
-                m_Ui->multiplierdsb->setValue(query.value(0).toFloat());
-                m_Ui->coneSlider->setValue(query.value(1).toFloat());
-                m_Ui->conedsb->setValue(query.value(1).toFloat());
-                m_Ui->rodSlider->setValue(query.value(2).toFloat());
-                m_Ui->roddsb->setValue(query.value(2).toFloat());
-                m_Ui->pattalocal->setChecked(query.value(3).toBool());
-                m_Ui->autoYcheckbox->setChecked(query.value(4).toBool());
-                m_Ui->pregammaSlider->setValue(query.value(5).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(5).toFloat());
-			}
-		}
-		else if (tmOperator == "reinhard02")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(reinhard02);
-			updateCurrentTmoOperator(reinhard02);
-			while (query.next())
-			{
-                m_Ui->usescalescheckbox->setChecked(query.value(0).toBool());
-                m_Ui->keySlider->setValue(query.value(1).toFloat());
-                m_Ui->keydsb->setValue(query.value(1).toFloat());
-                m_Ui->phiSlider->setValue(query.value(2).toFloat());
-                m_Ui->phidsb->setValue(query.value(2).toFloat());
-                m_Ui->range2Slider->setValue(query.value(3).toInt());
-                m_Ui->range2dsb->setValue(query.value(3).toInt());
-                m_Ui->lowerSlider->setValue(query.value(4).toInt());
-                m_Ui->lowerdsb->setValue(query.value(4).toInt());
-                m_Ui->upperSlider->setValue(query.value(5).toInt());
-                m_Ui->upperdsb->setValue(query.value(5).toInt());
-                m_Ui->pregammaSlider->setValue(query.value(6).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(6).toFloat());
-			}
-		}
-		else if (tmOperator == "reinhard05")
-		{
-            m_Ui->stackedWidget_operators->setCurrentIndex(reinhard05);
-			updateCurrentTmoOperator(reinhard05);
-			while (query.next())
-			{
-                m_Ui->brightnessSlider->setValue(query.value(0).toFloat());
-                m_Ui->brightnessdsb->setValue(query.value(0).toFloat());
-                m_Ui->chromaticAdaptSlider->setValue(query.value(1).toFloat());
-                m_Ui->chromaticAdaptdsb->setValue(query.value(1).toFloat());
-                m_Ui->lightAdaptSlider->setValue(query.value(2).toFloat());
-                m_Ui->lightAdaptdsb->setValue(query.value(2).toFloat());
-                m_Ui->pregammaSlider->setValue(query.value(3).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(3).toFloat());
-			}
-		}
-		delete temp_model;
 	}
 }
 

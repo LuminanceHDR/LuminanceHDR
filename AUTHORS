@@ -1,29 +1,28 @@
 If I forgot to add someone to this list please let me know.
 
-Main developer, improvements, bug fixing
-Davide Anastasia (Lead Project Mantainer & Mac OS X support) <davideanastasia@users.sourceforge.net>
-Franco Comida <fcomida@sourceforge.net>
-Daniel Kaneider (windows setup, head of i18n efforts)
+Main developer, improvements, bug fixing:
+Davide Anastasia			(Lead Project Mantainer & Mac OS X support)
+<davideanastasia@users.sourceforge.net>
+Daniel Kaneider 			(Windows Setup and Optimisation, Head of i18n Support)
+Franco Comida				(Maintainer Fedora Package)
+<fcomida@sourceforge.net>
 Bruce Guenter
 
 Contributors:
-Christian Raue (German Translator)
-
-Mandus (Norwegian translator)
-Nicholas Phillips (MTB alignment code)
-Mustafa GÜNAY (Turkish translator)
-Douglas E. Warner (fc6 packager and bug reports)
-Jan Gemela (Cezk translator)
-Peter Gaal (Hungarian translator)
-Ignacy Gawedzki (tiff ldr bugfixes and suggestion)
-Bertrand Petit (FreeBSD patch)
-Sloan Poe (found and fixed bug regarding legacy actions signal)
-Alexandre Prokoudine (gui improvements, desktop integration)
-Arne Hagenah (various suggestions)
-Frank Boehme (various suggestions)
+Nicholas Phillips 			(MTB alignment code)
+Douglas E. Warner 			(FC6 packager and bug reports)
+Ignacy Gawedzki 			(tiff ldr bugfixes and suggestion)
+Bertrand Petit 				(FreeBSD patch)
+Sloan Poe 					(found and fixed bug regarding legacy actions signal)
+Alexandre Prokoudine 		(gui improvements, desktop integration)
+Arne Hagenah 				(various suggestions)
+Frank Boehme 				(various suggestions)
 Erik Ouchterlony
 Antoine Latter
-Markus Schmaus (found and fixed bug in Debevec and Robertson02)
+Markus Schmaus 				(found and fixed bug in Debevec and Robertson02)
+
+Translators:
+http://qtpfsgui.sourceforge.net/?page_id=23
 
 Original author:
 Giuseppe Rota <grota@sourceforge.net>

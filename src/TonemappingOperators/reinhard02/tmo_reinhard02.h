@@ -11,7 +11,12 @@
 #ifndef TMO_REINHARD02_H
 #define TMO_REINHARD02_H
 
-class ProgressHelper;
+#include <Libpfs/array2d_fwd.h>
+
+namespace pfs
+{
+class Progress;
+}
 
 /**
  * Used to achieve temporal coherence
@@ -89,12 +94,15 @@ typedef double  COLOR[3];       /* red, green, blue (or X,Y,Z) */
 class Reinhard02
 {
 public:
-	Reinhard02(unsigned int width, unsigned int height,
-	const float *Y, float *L,
-	bool use_scales, float key, float phi,
-	int num, int low, int high, bool temporal_coherent, ProgressHelper *ph );
-	~Reinhard02() { delete m_Y; delete m_L; };
-	void tmo_reinhard02(); 
+    Reinhard02(const pfs::Array2Df *Y, pfs::Array2Df *L,
+               bool use_scales, float key, float phi,
+               int num, int low, int high, bool temporal_coherent,
+               pfs::Progress &ph);
+
+    ~Reinhard02()
+    {}
+
+    void tmo_reinhard02();
 
 private:
 	TemporalSmoothVariable<double> m_avg_luminance, m_max_luminance;
@@ -102,9 +110,9 @@ private:
 	COLOR   **m_image;
 	double m_sigma_0, m_sigma_1;
 	double **m_luminance;
-	unsigned int m_width, m_height;
-	const pfs::Array2D*  m_Y;
-	pfs::Array2D* m_L;
+    unsigned int m_width, m_height;
+    const pfs::Array2Df* m_Y;
+    pfs::Array2Df* m_L;
 	bool m_use_scales;
 	bool m_use_border;
 	double m_key, m_phi, m_white;
@@ -113,7 +121,7 @@ private:
 	const double m_alpha;	
 	double m_bbeta;
 	double m_threshold;
-	ProgressHelper *m_ph;
+    pfs::Progress &m_ph;
 
 	double ***Pyramid;
 	int       PyramidHeight;

@@ -41,12 +41,15 @@
 #include <vector>
 #include <stdexcept>
 #include <cassert>
-#include "Common/ResourceHandlerLcms.h"
-
-#include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
 #include "Common/LuminanceOptions.h"
+
+#include <Libpfs/frame.h>
+#include <Libpfs/colorspace/xyz.h>
+#include <Libpfs/utils/resourcehandlerlcms.h>
+
+using namespace pfs;
+using namespace pfs::utils;
 
 namespace
 {
@@ -332,23 +335,29 @@ TiffReader::readIntoPfsFrame()
         cmsUInt32Number cmsOutputFormat = TYPE_RGBA_8;
         cmsUInt32Number cmsIntent = INTENT_PERCEPTUAL;
 
-        if (ColorSpace == RGB && TypeOfData == WORD)
-        {
-            cmsInputFormat = TYPE_RGB_16;
-            cmsOutputFormat = TYPE_RGB_16;
+        if (ColorSpace == RGB && TypeOfData == WORD) {
+            if (has_alpha) {
+                cmsInputFormat = TYPE_RGBA_16;
+                cmsOutputFormat = TYPE_RGBA_16;
+            } else {
+                cmsInputFormat = TYPE_RGB_16;
+                cmsOutputFormat = TYPE_RGB_16;
+            }
         }
-        else if (ColorSpace == RGB && TypeOfData == BYTE)
-        {
-            cmsInputFormat = TYPE_RGB_8;
-            cmsOutputFormat = TYPE_RGB_8;
+        else if (ColorSpace == RGB && TypeOfData == BYTE) {
+            if (has_alpha) {
+                cmsInputFormat = TYPE_RGBA_8;
+                cmsOutputFormat = TYPE_RGBA_8;
+            } else {
+                cmsInputFormat = TYPE_RGB_8;
+                cmsOutputFormat = TYPE_RGB_8;
+            }
         }
-        else if (ColorSpace == CMYK && TypeOfData == WORD)
-        {
+        else if (ColorSpace == CMYK && TypeOfData == WORD) {
             cmsInputFormat = TYPE_CMYK_16;
             cmsOutputFormat = TYPE_RGBA_16;
         }
-        else
-        {
+        else {
             cmsInputFormat = TYPE_CMYK_8;
             cmsOutputFormat = TYPE_RGBA_8;
         }
@@ -403,9 +412,9 @@ TiffReader::readIntoPfsFrame()
     pfs::Channel* Zc;
     frame->createXYZChannels (Xc, Yc, Zc);
 
-    float* X = Xc->getRawData();
-    float* Y = Yc->getRawData();
-    float* Z = Zc->getRawData();
+    float* X = Xc->data();
+    float* Y = Yc->data();
+    float* Z = Zc->data();
 
     //--- image length
     uint32 imagelength;
@@ -430,9 +439,12 @@ TiffReader::readIntoPfsFrame()
     {
         switch (TypeOfData)
         {
+        // float 32bit/channel
         case FLOAT:
-        case FLOATLOGLUV:
         {
+#ifndef NDEBUG
+            std::clog << "TIFF float 32bit/channel Reader";
+#endif
             float* buf_fp = reinterpret_cast<float*>(buf.data());
 
             TIFFReadScanline (tif, buf_fp, row);
@@ -441,6 +453,23 @@ TiffReader::readIntoPfsFrame()
                 X[row * image_width + i] = buf_fp[i * nSamples];
                 Y[row * image_width + i] = buf_fp[i * nSamples + 1];
                 Z[row * image_width + i] = buf_fp[i * nSamples + 2];
+            }
+        }
+            break;
+        // float LogLuv
+        case FLOATLOGLUV:
+        {
+#ifndef NDEBUG
+            std::clog << "TIFF LogLuv Reader";
+#endif
+            pfs::colorspace::ConvertXYZ2RGB xyz2rgb;
+
+            float* buf_fp = reinterpret_cast<float*>(buf.data());
+
+            TIFFReadScanline (tif, buf_fp, row);
+            for (int i = 0; i < image_width; i++) {
+                xyz2rgb(buf_fp[i * nSamples], buf_fp[i * nSamples + 1], buf_fp[i * nSamples + 2],
+                        X[row * image_width + i], Y[row * image_width + i], Z[row * image_width + i]);
             }
         }
             break;
@@ -509,9 +538,9 @@ TiffReader::readIntoPfsFrame()
         pfs::Channel *Xc, *Yc, *Zc;
         frame->createXYZChannels (Xc, Yc, Zc);
 
-        float* X = Xc->getRawData();
-        float* Y = Yc->getRawData();
-        float* Z = Zc->getRawData();
+        float* X = Xc->data();
+        float* Y = Yc->data();
+        float* Z = Zc->data();
 
         QImage remapped( image_width, imagelength, QImage::Format_RGB32);
 

@@ -90,7 +90,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 
     m_thread_slot.release(m_max_num_threads);
     m_available_threads = new bool[m_max_num_threads];
-    for (int r = 0; r < m_max_num_threads; r++) m_available_threads[r] = TRUE;  // reset to true
+    for (int r = 0; r < m_max_num_threads; r++) m_available_threads[r] = true;  // reset to true
 
     m_next_hdr_file = 0;
     m_is_batch_running  = false;
@@ -457,9 +457,9 @@ int BatchTMDialog::get_available_thread_id()
         // look for the first available ID
         for (t_id = 0; t_id < m_max_num_threads; t_id++)
         {
-            if (m_available_threads[t_id] == TRUE)
+            if (m_available_threads[t_id] == true)
             {
-                m_available_threads[t_id] = FALSE;
+                m_available_threads[t_id] = false;
                 break;
             }
         }

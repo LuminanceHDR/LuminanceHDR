@@ -31,29 +31,29 @@
 #include <iostream>
 
 #include "Common/config.h"
-
-#include "Common/LuminanceOptions.h"
+#include "Common/global.hxx"
 #include "Common/global.h"
-#include "global.hxx"
+#include "Common/LuminanceOptions.h"
 
-bool matchesLdrFilename(QString file)
+
+bool matchesLdrFilename(const QString& file)
 {
 	QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 	return exp.exactMatch(file);
 }
 
-bool matchesHdrFilename(QString file)
+bool matchesHdrFilename(const QString& file)
 {
 	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 	return exp.exactMatch(file);
 }
 
-bool matchesValidHDRorLDRfilename(QString file)
+bool matchesValidHDRorLDRfilename(const QString& file)
 {
 	return matchesLdrFilename(file) || matchesHdrFilename(file);
 }
 
-QStringList convertUrlListToFilenameList(QList<QUrl> urls)
+QStringList convertUrlListToFilenameList(const QList<QUrl>& urls)
 {
     QStringList files;
     for (int i = 0; i < urls.size(); ++i)
@@ -65,56 +65,4 @@ QStringList convertUrlListToFilenameList(QList<QUrl> urls)
         }
     }
     return files;
-}
-
-namespace
-{
-typedef QScopedPointer<QTranslator> ScopedQTranslator;
-
-ScopedQTranslator lastGuiTranslator;
-ScopedQTranslator lastQtTranslator;
-}
-
-void installTranslators(const QString& lang, bool installQtTranslations)
-{
-    if (lastGuiTranslator)
-    {
-        QCoreApplication::removeTranslator(lastGuiTranslator.data());
-        lastGuiTranslator.reset();
-	}
-    if (installQtTranslations && lastQtTranslator)
-    {
-        QCoreApplication::removeTranslator(lastQtTranslator.data());
-        lastQtTranslator.reset();
-	}
-    if (lang != "en")
-    {
-        ScopedQTranslator guiTranslator( new QTranslator() );
-
-        // prefer translation files along the program binaries
-        if (!guiTranslator->load(QString("lang_") + lang, QString("i18n"))) 
-        {
-            guiTranslator->load(QString("lang_") + lang, I18NDIR);
-        }
-        QCoreApplication::installTranslator(guiTranslator.data());
-        lastGuiTranslator.swap( guiTranslator );
-
-        if (installQtTranslations)
-        {
-            ScopedQTranslator qtTranslator( new QTranslator() );
-
-            if (!qtTranslator->load(QString("qt_") + lang, QString("i18n")))
-            {
-    			qtTranslator->load(QString("qt_") + lang, I18NDIR);
-            }
-            QCoreApplication::installTranslator(qtTranslator.data());
-            lastQtTranslator.swap( qtTranslator );
-	    }
-	}
-}
-
-void installTranslators(bool installQtTranslations)
-{
-	LuminanceOptions luminance_options;
-	installTranslators(luminance_options.getGuiLang(), installQtTranslations);
 }

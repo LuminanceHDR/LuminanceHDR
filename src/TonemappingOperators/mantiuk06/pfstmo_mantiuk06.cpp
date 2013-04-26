@@ -43,7 +43,8 @@
 #include "contrast_domain.h"
 
 #include "Libpfs/pfs.h"
-#include "Libpfs/colorspace.h"
+#include "Libpfs/frame.h"
+#include "Libpfs/colorspace/colorspace.h"
 
 
 //--- default tone mapping parameters;
@@ -55,10 +56,12 @@
 namespace
 {
 const int itmax = 200;
-const float tol = 1e-3f;
+const float tol = 5e-3f;
 }
 
-void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, ProgressHelper *ph)
+void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
+                      float saturationFactor, float detailFactor,
+                      bool cont_eq, pfs::Progress &ph)
 {
 #ifndef NDEBUG
     std::stringstream ss;
@@ -82,24 +85,17 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
 #endif
 
     pfs::Channel *inRed, *inGreen, *inBlue;
-    frame->getXYZChannels(inRed, inGreen, inBlue);
+    frame.getXYZChannels(inRed, inGreen, inBlue);
 
-    int cols = frame->getWidth();
-    int rows = frame->getHeight();
+    int cols = frame.getWidth();
+    int rows = frame.getHeight();
     
-    pfs::Array2D inY( cols, rows );
-    pfs::transformRGB2Y(inRed->getChannelData(),
-                        inGreen->getChannelData(),
-                        inBlue->getChannelData(),
-                        &inY);
+    pfs::Array2Df inY( cols, rows );
+    pfs::transformRGB2Y(inRed, inGreen, inBlue, &inY);
 
-    tmo_mantiuk06_contmap(cols, rows,
-                          inRed->getRawData(),
-                          inGreen->getRawData(),
-                          inBlue->getRawData(),
-                          inY.getRawData(),
+    tmo_mantiuk06_contmap(*inRed, *inGreen, *inBlue, inY,
                           scaleFactor, saturationFactor, detailFactor, itmax, tol,
                           ph);
 
-    frame->getTags().setString("LUMINANCE", "RELATIVE");
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
 }

@@ -33,9 +33,12 @@
 #ifndef TMO_REINHARD05_H
 #define TMO_REINHARD05_H
 
-#include <cstring>
+#include <cstddef>
 
-class ProgressHelper;
+namespace pfs
+{
+class Progress;
+}
 
 struct Reinhard05Params
 {
@@ -55,23 +58,21 @@ struct Reinhard05Params
     float m_lightAdaptation;
 };
 
-/**
- * @brief: Tone mapping algorithm [Reinhard2005]
- *
- * @param width image width
- * @param height image height
- * @param R red channel
- * @param G green channel
- * @param B blue channel
- * @param Y luminance channel
- * @param br brightness level -8:8 (def 0)
- * @param ca amount of chromatic adaptation 0:1 (saturation, def 0)
- * @param la amount of light adaptation 0:1 (local/global, def 1)
- */
+//! \brief: Tone mapping algorithm [Reinhard2005]
+//!
+//! \param width image width
+//! \param height image height
+//! \param R red channel
+//! \param G green channel
+//! \param B blue channel
+//! \param Y luminance channel
+//! \param br brightness level -8:8 (def 0)
+//! \param ca amount of chromatic adaptation 0:1 (saturation, def 0)
+//! \param la amount of light adaptation 0:1 (local/global, def 1)
 void tmo_reinhard05(size_t width, size_t height,
                     float* R, float* G, float* B,
                     const float* Y,
                     const Reinhard05Params& params,
-                    ProgressHelper *ph );
+                    pfs::Progress &ph);
 
 #endif // TMO_REINHARD05_H

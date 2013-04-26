@@ -31,9 +31,13 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     QWidget(parent), 
     m_movableImage(m), 
     m_pivotImage(p), 
-    m_prevComputed() 
+    m_prevComputed(),
+    m_mx(0),
+    m_my(0),
+    m_px(0),
+    m_py(0),
+    m_scaleFactor(1) 
 {
-    m_mx = m_my = m_px = m_py = 0;
     setFocusPolicy(Qt::StrongFocus);
     m_previewImage = new QImage(m_movableImage->size(),QImage::Format_ARGB32);
     m_previewImage->fill(qRgba(255,0,0,255));

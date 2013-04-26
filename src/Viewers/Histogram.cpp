@@ -25,31 +25,32 @@
  * $Id: histogram.cpp,v 1.2 2005/09/02 13:10:35 rafm Exp $
  */
 
+#include "Histogram.h"
+
 #include <math.h>
 #include <assert.h>
 
-#include "Histogram.h"
+#include <Libpfs/array2d.h>
 
-Histogram::Histogram( int bins, int accuracy ):
-  bins( bins ), accuracy( accuracy )
-{
-  P = new float[bins];
-}
+Histogram::Histogram( int bins, int accuracy )
+    : bins( bins )
+    , accuracy( accuracy )
+    , P( new float[bins] )
+{}
 
 Histogram::~Histogram()
 {
-  delete[] P;
+    delete[] P;
 }
 
-
-void Histogram::computeLog( const pfs::Array2D *image )
+void Histogram::computeLog( const pfs::Array2Df *image )
 {
   const int size = image->getRows()*image->getCols();
 
   float max, min;               // Find min, max
   {
-    min = 999999999;
-    max = -999999999;
+    min = 999999999.0f;
+    max = -999999999.0f;
     
     for( int i = 0; i < size; i += accuracy ) {
       float v = (*image)(i);
@@ -61,7 +62,7 @@ void Histogram::computeLog( const pfs::Array2D *image )
 }
 
 
-void Histogram::computeLog( const pfs::Array2D *image, float min, float max )
+void Histogram::computeLog( const pfs::Array2Df *image, float min, float max )
 {
   const int size = image->getRows()*image->getCols();
   

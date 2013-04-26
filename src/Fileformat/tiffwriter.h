@@ -1,10 +1,9 @@
-/**
- * @brief Tiff facilities
- * 
- * This file is a part of LuminanceHDR package.
+/*
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2006 Giuseppe Rota
+ * Copyright (C) 2012-2013 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,59 +19,47 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- * 
- * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
- * slightly modified by Giuseppe Rota <grota@sourceforge.net> for luminance
  */
+
+//! \brief TIFF facilities
+//! \author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
+//! Original author for PFSTOOLS
+//! \author Giuseppe Rota <grota@sourceforge.net>
+//! slightly modified by for Luminance HDR
+//! \author Franco Comida <fcomida@sourceforge.net>
+//! added color management support by Franco Comida
+//! \author Davide Anastasia <davideanastasia@sourceforge.net>
+//! Complete rewrite/refactoring
 
 #ifndef PFS_TIFFWRITER_H
 #define PFS_TIFFWRITER_H
 
-#include <QObject>
-#include <QImage>
-#include <tiffio.h>
+#include <string>
+#include <Libpfs/params.h>
 
-namespace pfs
-{
+namespace pfs {
 class Frame;
-class Array2D;
 }
 
-class TiffWriter : public QObject
+//! \brief Writer class for TIFF files
+
+class TiffWriter
 {
-    Q_OBJECT
-
 public:
-    TiffWriter( const char* filename, pfs::Frame *f );
-    TiffWriter( const char* filename, QImage *ldrimage );
-    TiffWriter( const char* filename, const quint16 *pixmap, int w, int h);
+    TiffWriter(const std::string& filename);
+    ~TiffWriter();
 
-    //! \brief write 8bit Tiff from QImage
-    int write8bitTiff();
-    //! \brief write 16bit Tiff from 16 bits pixmap
-    int write16bitTiff();
-    //! \brief write 32bit float Tiff from pfs::Frame
-    int writeFloatTiff();
-    //! \brief write LogLuv Tiff from pfs::Frame
-    int writeLogLuvTiff();
-    //! \brief write 16bit Tiff from pfs::Frame
-    int writePFSFrame16bitTiff();
-
-signals: //For ProgressDialog
-    void maximumValue(int);
-    void nextstep(int);
+    //! \brief write a pfs::Frame into a properly formatted TIFF file
+    //!  \c params can take:
+    //!   tiff_mode (int): 0 = 8bit uint, 1 = 16bit uint, 2 = 32bit float, 3 = logluv
+    //!   min_luminance (float): minimum luminance to consider trusthworthy
+    //!   max_luminance (float): maximum luminance to consider trusthworthy
+    //!   mapping_method (int): RGB mapping methodo choosen between
+    //!   RGBMappingType in rgbremapper.h
+    bool write(const pfs::Frame& frame, const pfs::Params& params);
 
 private:
-    void writeCommonHeader();
-
-    TIFF *tif;
-
-    QImage *ldrimage;
-    const quint16 *pixmap;
-    pfs::Frame* pfsFrame;
-
-    uint32 width;
-    uint32 height;
+    std::string m_filename;
 };
 
 #endif  // PFS_TIFFWRITER_H

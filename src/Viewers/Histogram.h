@@ -28,20 +28,21 @@
  */
 
 #include <assert.h>
-#include "Libpfs/array2d.h"
+#include "Libpfs/array2d_fwd.h"
 
 class Histogram
 {
-  float *P;
   int bins;
   int accuracy;
   
+  float *P;
+
 public:
   Histogram( int bins, int accuracy = 1 );
   ~Histogram();
 
-  void computeLog( const pfs::Array2D *image );
-  void computeLog( const pfs::Array2D *image, float min, float max );
+  void computeLog( const pfs::Array2Df *image );
+  void computeLog( const pfs::Array2Df *image, float min, float max );
 
   int getBins() const 
     {

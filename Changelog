@@ -1,3 +1,20 @@
+Changes 2.3.1
+* Automatically Update Checker
+* Update libraries (in particular, LibRAW)
+* Support for TIFF 32 bit floating point (compatible with Adobe Lightroom 4)
+* Improved EXR, TIFF, JPEG and PNG I/O
+* Improved color conversion routines 
+* NEW: Hugin's alignment: Autocrop feature (thanks to David Polák)
+* NEW: Support additional demosaicing algorithms, AMaZE as default
+* NEW: Save HDR creation profiles
+* NEW: Copy EXIF tags to tonemapped images automatically
+* NEW: Portable mode
+* NEW: Testing realtime previews (beta functionality)
+* Anti-ghosting working again
+* Speed improvements to various TMO algorithms
+* Speed improvements to merge algorithms
+* New Danish translation
+
 Changes 2.3.0
 * New Fattal02 solver based on FFT (thanks to Tino Kluge)
 * Port of color management system to LCMS2
@@ -6,14 +23,12 @@ Changes 2.3.0
 * Update translations
 * Bug fixes
 
-
 Changes 2.3.0-beta1
 * NEW: colour management system
 The new colour management system allows to load colour profile for screen and printer so that users can double-check the final quality of their HDR images before being saved to JPEG or PNG.
 * Windows: new task bar progress report
 * Improved load/save of calculated profile for the merge operator
 * Improved JPG, PNG and TIFF reader and writer
-* 
 
 Changes 2.2.1
 * NEW: splitted executable luminance-hdr-cli for commandline mode

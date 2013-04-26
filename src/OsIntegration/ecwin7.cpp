@@ -32,6 +32,7 @@ EcWin7::EcWin7()
     mTaskbar = NULL;
     mOverlayIcon = NULL;
     mTaskbarMessageId = RegisterWindowMessage(L"TaskbarButtonCreated");
+    mWindowId = NULL;
 #endif
 }
 
@@ -60,6 +61,13 @@ bool EcWin7::winEvent(MSG * message, long * result)
     return false;
 }
 #endif
+
+void EcWin7::addRecentFile(const QString& filename)
+{
+#ifdef Q_OS_WIN
+    SHAddToRecentDocs(SHARD_PATHW, filename.toStdWString().c_str());
+#endif
+}
 
 // Set progress bar current value
 void EcWin7::setProgressValue(int value, int max)

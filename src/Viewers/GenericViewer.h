@@ -32,11 +32,11 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
-#include "Common/FloatRgbToQRgb.h"
+#include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 // Forward declaration
 namespace pfs {
-    class Frame;            // #include "Libpfs/frame.h"
+class Frame;                // #include "Libpfs/frame.h"
 }
 
 class PanIconWidget;        // #include "Common/PanIconWidget.h"
@@ -131,7 +131,7 @@ public Q_SLOTS:
     virtual float getMinLuminanceValue() = 0;
 
     //! \brief returns the mapping method
-    virtual LumMappingMethod getLuminanceMappingMethod()
+    virtual RGBMappingType getLuminanceMappingMethod()
     {
         return MAP_LINEAR;
     }

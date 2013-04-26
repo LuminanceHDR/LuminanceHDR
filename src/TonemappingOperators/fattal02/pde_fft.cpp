@@ -76,8 +76,8 @@
 #include <vector>
 #include <fftw3.h>
 
+#include "Libpfs/progress.h"
 #include "Libpfs/array2d.h"
-#include "Common/ProgressHelper.h"
 #include "pde.h"
 
 using namespace std;
@@ -90,7 +90,7 @@ using namespace std;
 
 // returns T = EVy A EVx^tr
 // note, modifies input data
-void transform_ev2normal(pfs::Array2D *A, pfs::Array2D *T)
+void transform_ev2normal(pfs::Array2Df *A, pfs::Array2Df *T)
 {
   int width = A->getCols();
   int height = A->getRows();
@@ -124,7 +124,7 @@ void transform_ev2normal(pfs::Array2D *A, pfs::Array2D *T)
 
   // executes 2d discrete cosine transform
   fftwf_plan p;
-  p=fftwf_plan_r2r_2d(height, width, A->getRawData(), T->getRawData(),
+  p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
   fftwf_execute(p); 
   fftwf_destroy_plan(p);
@@ -132,7 +132,7 @@ void transform_ev2normal(pfs::Array2D *A, pfs::Array2D *T)
 
 
 // returns T = EVy^-1 * A * (EVx^-1)^tr
-void transform_normal2ev(pfs::Array2D *A, pfs::Array2D *T)
+void transform_normal2ev(pfs::Array2Df *A, pfs::Array2Df *T)
 {
   int width = A->getCols();
   int height = A->getRows();
@@ -140,7 +140,7 @@ void transform_normal2ev(pfs::Array2D *A, pfs::Array2D *T)
 
   // executes 2d discrete cosine transform
   fftwf_plan p;
-  p=fftwf_plan_r2r_2d(height, width, A->getRawData(), T->getRawData(),
+  p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
   fftwf_execute(p); 
   fftwf_destroy_plan(p);
@@ -176,7 +176,7 @@ std::vector<double> get_lambda(int n)
 }
 
 // makes boundary conditions compatible so that a solution exists
-void make_compatible_boundary(pfs::Array2D *F)
+void make_compatible_boundary(pfs::Array2Df *F)
 {
   int width = F->getCols();
   int height = F->getRows();
@@ -219,10 +219,10 @@ void make_compatible_boundary(pfs::Array2D *F)
 // not modified and the equation might not have a solution but an
 // approximate solution with a minimum error is then calculated
 // double precision version
-void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
-                  bool adjust_bound)
+void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
+                   bool adjust_bound)
 {
-   ph->newValue(20); 
+   ph.setValue(20);
   //DEBUG_STR << "solve_pde_fft: solving Laplace U = F ..." << std::endl;
   int width = F->getCols();
   int height = F->getRows();
@@ -248,12 +248,13 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
 
   // transforms F into eigenvector space: Ftr = 
   //DEBUG_STR << "solve_pde_fft: transform F to ev space (fft)" << std::endl;
-  pfs::Array2D* F_tr = new pfs::Array2D(width,height);
+  pfs::Array2Df* F_tr = new pfs::Array2Df(width,height);
   transform_normal2ev(F, F_tr);
   // TODO: F no longer needed so could release memory, but as it is an
   // input parameter we won't do that
-  ph->newValue(50);
-  if (ph->isTerminationRequested()){
+  ph.setValue(50);
+  if (ph.canceled())
+  {
     delete F_tr;
     return;
   }
@@ -263,10 +264,11 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
 
   // in the eigenvector space the solution is very simple
   //DEBUG_STR << "solve_pde_fft: solve in eigenvector space" << std::endl;
-  pfs::Array2D* U_tr = new pfs::Array2D(width,height);
+  pfs::Array2Df* U_tr = new pfs::Array2Df(width,height);
   std::vector<double> l1=get_lambda(height);
   std::vector<double> l2=get_lambda(width);
   for(int y=0 ; y<height ; y++ )
+  {
     for(int x=0 ; x<width ; x++ )
     {
       if(x==0 && y==0)
@@ -274,15 +276,16 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
       else
         (*U_tr)(x,y)=(*F_tr)(x,y)/(l1[y]+l2[x]);
     }
+  }
   delete F_tr;    // no longer needed so release memory
-  ph->newValue(55); 
+  ph.setValue(55);
 
 
   // transforms U_tr back to the normal space
   //DEBUG_STR << "solve_pde_fft: transform U_tr to normal space (fft)" << std::endl;
   transform_ev2normal(U_tr, U);
   delete U_tr;    // no longer needed so release memory
-  ph->newValue(85); 
+  ph.setValue(85);
 
   // the solution U as calculated will satisfy something like int U = 0
   // since for any constant c, U-c is also a solution and we are mainly
@@ -302,7 +305,7 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
   // fft parallel threads cleanup, better handled outside this function?
   fftwf_cleanup_threads();
 
-  ph->newValue(90); 
+  ph.setValue(90);
   //DEBUG_STR << "solve_pde_fft: done" << std::endl;
 }
 
@@ -314,7 +317,7 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph,
 
 // returns the norm of (Laplace U - F) of all interior points
 // useful to compare solvers
-float residual_pde(pfs::Array2D* U, pfs::Array2D* F)
+float residual_pde(pfs::Array2Df* U, pfs::Array2Df* F)
 {
   int width = U->getCols();
   int height = U->getRows();

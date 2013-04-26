@@ -31,48 +31,60 @@
 #ifndef MANTIUK06_PYRAMID_H
 #define MANTIUK06_PYRAMID_H
 
+#include <cstddef>
 #include <vector>
-#include <list>
 
-//! \brief Pyramid item, containing its sizes and X and Y gradients
-class PyramidS
+#include "Libpfs/array2d.h"
+
+class XYGradient
 {
 public:
-    typedef std::vector<float> Vector;
+    XYGradient()
+        : m_Gx(), m_Gy() {}
 
-    //! \brief Allocate a properly sized Pyramid level
-    PyramidS(size_t rows, size_t cols);
-    //! \brief copy ctor that does NOT perform deep copy (it does allocate
-    //! all the dimensions properly, but it does not copy the data)
-    PyramidS(const PyramidS& lhs);
+    XYGradient(float gx, float gy)
+        : m_Gx(gx), m_Gy(gy) {}
 
-    size_t getRows() const { return m_rows; }
-    size_t getCols() const { return m_cols; }
-    size_t size() const { return m_rows*m_cols; }
+    XYGradient(float grad)
+        : m_Gx(grad), m_Gy(grad) {}
 
-    const float* gX() const { return m_Gx.data(); }
-    float* gX() { return m_Gx.data(); }
+    const float& gX() const     { return m_Gx; }
+    float& gX()                 { return m_Gx; }
 
-    const float* gY() const { return m_Gy.data(); }
-    float* gY() { return m_Gy.data(); }
+    const float& gY() const     { return m_Gy; }
+    float& gY()                 { return m_Gy; }
 
-    //! \brief transform both X and Y gradients in the R space
-    //! \note Please refer to the original paper for the meaning of R and G
-    void transformToR(float detailFactor);
+    inline
+    XYGradient& operator*=(float multiplier)
+    {
+        m_Gx *= multiplier;
+        m_Gy *= multiplier;
 
-    //! \brief transform both X and Y gradients in the G space
-    //! \note Please refer to the original paper for the meaning of R and G
-    void transformToG(float detailFactor);
-
-    void scale(float multiplier);
-    void multiply(const PyramidS& multiplier);
+        return *this;
+    }
+    
+    inline
+    XYGradient& operator*=(const XYGradient& multiplier)
+    {
+        m_Gx *= multiplier.m_Gx;
+        m_Gy *= multiplier.m_Gy;
+        
+        return *this;
+    }
 
 private:
-    size_t m_rows;
-    size_t m_cols;
-    Vector m_Gx;
-    Vector m_Gy;
+    float m_Gx;
+    float m_Gy;
 };
+
+inline
+XYGradient operator*(const XYGradient& x, const XYGradient& y)
+{
+    return XYGradient(x.gX() * y.gX(),
+                      x.gY() * y.gY());
+}
+
+typedef ::pfs::Array2D< XYGradient > PyramidS;
 
 class PyramidT
 {
@@ -81,36 +93,37 @@ public:
 
     // iterator
     typedef PyramidContainer::iterator iterator;
-
-    iterator begin() { return m_pyramid.begin(); }
-    iterator end() { return m_pyramid.end(); }
-
-    // const iterator
     typedef PyramidContainer::const_iterator const_iterator;
 
-    const_iterator begin() const { return m_pyramid.begin(); }
-    const_iterator end() const { return m_pyramid.end(); }
+    iterator begin()                { return m_pyramid.begin(); }
+    iterator end()                  { return m_pyramid.end(); }
 
-    // builds a
+    const_iterator begin() const    { return m_pyramid.begin(); }
+    const_iterator end() const      { return m_pyramid.end(); }
+
+    // builds a Pyramid
     PyramidT(size_t rows, size_t cols);
 
-    size_t getRows() const { return m_rows; }
-    size_t getCols() const { return m_cols; }
-    size_t getElems() const { return m_rows*m_cols; }
+    inline
+    size_t getRows() const      { return m_rows; }
+    inline
+    size_t getCols() const      { return m_cols; }
+    inline
+    size_t getElems() const     { return m_rows*m_cols; }
 
     inline
-    size_t numLevels() const { return m_pyramid.size(); }
+    size_t numLevels() const    { return m_pyramid.size(); }
 
     //! \brief fill all the levels of the pyramid based on the data inside
     //! the supplied vector (same size of the first level of the \c PyramidT)
     //! \param[in] data input vector of data
-    void computeGradients(const float* data);
+    void computeGradients(const pfs::Array2Df& inputData);
 
     //! \param[out] data input vector of data
-    void computeSumOfDivergence(float* data);
+    void computeSumOfDivergence(pfs::Array2Df& sumOfDivG);
 
     //! \param[out] result PyramidT structure that contains the scaling factors!
-    void computeScaleFactors( PyramidT& result ) const;
+    void computeScaleFactors(PyramidT& result) const;
 
     //! \brief transform every level of the Pyramid in the R space
     //! \note Please refer to the original paper for the meaning of R and G
@@ -133,31 +146,40 @@ private:
 };
 
 // free functions (mostly in the header file to improve testability)
-
-//! \brief downsample the frame contained in inputData and stores the result
-//! inside outputData
+//! \brief downsample the image contained in \a inputData and stores the result
+//! inside \a outputData
 void matrixDownsample(size_t inCols, size_t inRows,
-                      const float* inputData,
-                      float* outputData);
+                      const float* inputData, float* outputData);
 
+//! \brief upsample the image contained in \a inputData and stores the result
+//! inside \a outputData
 void matrixUpsample(size_t outCols, size_t outRows,
                     const float* inputData, float* outputData);
 
-//! \brief calculate X and Y gradients and stores inside the \c gxData and
-//! \c gyData
-void calculateGradients(size_t cols, size_t rows,
-                        const float* inputData,
-                        float* gxData, float* gyData);
+//! \brief compute X and Y gradients from \a inputData into \a gradient
+void calculateGradients(const float* inputData, PyramidS& gradient);
+//
+void calculateAndAddDivergence(const PyramidS& G, float* divG);
 
-void calculateAndAddDivergence(size_t cols, size_t rows,
-                               const float* Gx, const float* Gy, float* divG);
+//! \brief compute a scale factor based on the input \a g value
+float calculateScaleFactor(float g);
 
-void calculateScaleFactor(const float* G, float* C, size_t size);
+//! \brief transform gradient \a G to R
+struct TransformToR
+{
+    TransformToR(float detailFactor);
+    float operator()(float currG) const;
+private:
+    float m_detailFactor;
+};
 
-//! \brief transform gradient (Gx,Gy) to R
-void transformToR(float* G, float detailFactor, size_t size);
-
-//! \brief transform from R to G
-void transformToG(float* R, float detailFactor, size_t size);
+//! \brief transform from \a R to G
+struct TransformToG
+{
+    TransformToG(float detailFactor);
+    float operator()(float currR) const;
+private:
+    float m_detailFactor;
+};
 
 #endif // MANTIUK06_PYRAMID_H

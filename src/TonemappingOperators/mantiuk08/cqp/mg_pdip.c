@@ -115,7 +115,7 @@ static int
 mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y, gsl_vector *z,
 		double *gap, double *residuals_norm, double *data_norm, double *infeasibility, double *infeasibility_min)
 {
-	int status;
+    int status;
 	size_t i, j, debug=0;
 	
 	
@@ -506,7 +506,7 @@ compute_residuals(const gsl_cqp_data * cqp, const gsl_vector *x, const gsl_vecto
 									gsl_vector *r)
 {
 
-	int status;
+    int status;
 	gsl_vector_view r_block;
 	
 	/*gsl_cqp_geconstraints * constraints = (gsl_cqp_geconstraints *) cqp->constraints;*/
@@ -541,7 +541,7 @@ build_kkt_matrix(const gsl_cqp_data * cqp,  const gsl_vector *z, const gsl_vecto
 {
 	size_t i;
 	
-	int status;
+    int status;
 	
 	gsl_matrix_view kkt_block;
 	
@@ -615,10 +615,8 @@ step_length(const gsl_vector *s, const gsl_vector *z, const gsl_vector *delta_s,
 static double
 compute_gap_infeasible_points(const gsl_cqp_data *cqp, const gsl_vector *x, const gsl_vector *y, const gsl_vector *z)
 {
-	
-	
 	double g, tmp_d;
-	int status;
+    int status;
 	
 	gsl_vector * tmp_v = gsl_vector_alloc(cqp->q->size);
 	

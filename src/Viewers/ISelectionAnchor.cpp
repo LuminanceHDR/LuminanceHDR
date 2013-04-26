@@ -111,7 +111,7 @@ QRectF ISelectionAnchor::boundingRect() const
     return QRectF(-mSize/qreal(2.), -mSize/qreal(2.), mSize, mSize).normalized() ;
 }
 
-#include <QtCore/qmath.h>
+#include <qmath.h>
 
 void ISelectionAnchor::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {

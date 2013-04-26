@@ -30,12 +30,14 @@
 #endif
 
 #include "Libpfs/frame.h"
+#include "Libpfs/manip/copy.h"
+#include "Libpfs/manip/cut.h"
+#include "Libpfs/manip/resize.h"
+#include "Libpfs/manip/gamma.h"
+#include "Libpfs/tm/TonemapOperator.h"
+
 #include "Core/TonemappingOptions.h"
-#include "Filter/pfscut.h"
-#include "Filter/pfsgamma.h"
-#include "Filter/pfssize.h"
 #include "Common/ProgressHelper.h"
-#include "TonemappingEngine/TonemapOperator.h"
 
 TMWorker::TMWorker(QObject* parent):
     QObject(parent),
@@ -47,10 +49,10 @@ TMWorker::TMWorker(QObject* parent):
 
     connect(this, SIGNAL(destroyed()), m_Callback, SLOT(deleteLater()));
 
-    connect(this, SIGNAL(tonemapRequestTermination()), m_Callback, SLOT(terminate()), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(setValue(int)), this, SIGNAL(tonemapSetValue(int)), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(setMinimum(int)), this, SIGNAL(tonemapSetMinimum(int)), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(setMaximum(int)), this, SIGNAL(tonemapSetMaximum(int)), Qt::DirectConnection);
+    connect(this, SIGNAL(tonemapRequestTermination()), m_Callback, SLOT(qtCancel()), Qt::DirectConnection);
+    connect(m_Callback, SIGNAL(qtSetValue(int)), this, SIGNAL(tonemapSetValue(int)), Qt::DirectConnection);
+    connect(m_Callback, SIGNAL(qtSetMinimum(int)), this, SIGNAL(tonemapSetMinimum(int)), Qt::DirectConnection);
+    connect(m_Callback, SIGNAL(qtSetMaximum(int)), this, SIGNAL(tonemapSetMaximum(int)), Qt::DirectConnection);
 }
 
 TMWorker::~TMWorker()
@@ -77,9 +79,9 @@ pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, Tonemappi
         return NULL;
     }
 
-    if ( m_Callback->isTerminationRequested() )
+    if ( m_Callback->canceled() )
     {
-        m_Callback->terminate(false);
+        m_Callback->cancel(false);      // double check this
         delete working_frame;
         return NULL;
     }
@@ -92,14 +94,14 @@ pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, Tonemappi
 
 void TMWorker::tonemapFrame(pfs::Frame* working_frame, TonemappingOptions* tm_options)
 {
-    m_Callback->terminate(false);
+    m_Callback->cancel(false);
 
     emit tonemapBegin();
     // build tonemap object
     TonemapOperator* tmEngine = TonemapOperator::getTonemapOperator(tm_options->tmoperator);
 
     // build object, pass new frame to it and collect the result
-    tmEngine->tonemapFrame(working_frame, tm_options, *m_Callback);
+    tmEngine->tonemapFrame(*working_frame, tm_options, *m_Callback);
 
     emit tonemapEnd();
     delete tmEngine;
@@ -114,26 +116,26 @@ pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOption
         // workingframe = "crop"
         // std::cout << "crop:[" << opts.selection_x_up_left <<", " << opts.selection_y_up_left <<"],";
         // std::cout << "[" << opts.selection_x_bottom_right <<", " << opts.selection_y_bottom_right <<"]" << std::endl;
-        working_frame = pfs::pfscut(input_frame,
-                                   tm_options->selection_x_up_left,
-                                   tm_options->selection_y_up_left,
-                                   tm_options->selection_x_bottom_right,
-                                   tm_options->selection_y_bottom_right);
+        working_frame = pfs::cut(input_frame,
+                                 tm_options->selection_x_up_left,
+                                 tm_options->selection_y_up_left,
+                                 tm_options->selection_x_bottom_right,
+                                 tm_options->selection_y_bottom_right);
     }
     else if ( tm_options->xsize != tm_options->origxsize )
     {
         // workingframe = "resize"
-        working_frame = pfs::resizeFrame(input_frame, tm_options->xsize);
+        working_frame = pfs::resize(input_frame, tm_options->xsize);
     }
     else
     {
         // workingframe = "full res"
-        working_frame = pfs::pfscopy(input_frame);
+        working_frame = pfs::copy(input_frame);
     }
 
     if ( tm_options->pregamma != 1.0f )
     {
-        pfs::applyGammaOnFrame( working_frame, tm_options->pregamma );
+        pfs::applyGamma( working_frame, tm_options->pregamma );
     }
 
     return working_frame;

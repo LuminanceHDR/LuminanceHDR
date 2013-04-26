@@ -26,15 +26,17 @@
 #include "BatchTM/BatchTMJob.h"
 #include "Fileformat/tiffreader.h"
 #include "Exif/ExifOperations.h"
+#include "Libpfs/progress.h"
 #include "Libpfs/frame.h"
-#include "Filter/pfscut.h"
-#include "Filter/pfsgamma.h"
+#include "Libpfs/manip/copy.h"
+#include "Libpfs/manip/resize.h"
+#include "Libpfs/manip/gamma.h"
+#include "Libpfs/tm/TonemapOperator.h"
+
 #include "Core/IOWorker.h"
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Fileformat/pfsoutldrimage.h"
-#include "TonemappingEngine/TonemapOperator.h"
-#include "Filter/pfssize.h"
 
 #include <QFileInfo>
 #include <QByteArray>
@@ -59,7 +61,7 @@ BatchTMJob::~BatchTMJob()
 
 void BatchTMJob::run()
 {
-    ProgressHelper prog_helper;
+    pfs::Progress prog_helper;
     IOWorker io_worker;
 
     emit add_log_message(tr("[T%1] Start processing %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
@@ -86,23 +88,29 @@ void BatchTMJob::run()
 
             QScopedPointer<pfs::Frame> temporary_frame;
             if ( opts->origxsize == opts->xsize )
-                temporary_frame.reset( pfs::pfscopy(reference_frame.data()) );
+            {
+                temporary_frame.reset( pfs::copy(reference_frame.data()) );
+            }
             else
-                temporary_frame.reset( pfs::resizeFrame(reference_frame.data(), opts->xsize) );
+            {
+                temporary_frame.reset( pfs::resize(reference_frame.data(), opts->xsize) );
+            }
 
 			if ( opts->pregamma != 1.0f )
 			{
-				pfs::applyGammaOnFrame(temporary_frame.data(), opts->pregamma );
+                pfs::applyGamma(temporary_frame.data(), opts->pregamma );
 			}
 
             QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(opts->tmoperator) );
 
-            tm_operator->tonemapFrame(temporary_frame.data(), opts, prog_helper);
+            tm_operator->tonemapFrame(*temporary_frame, opts, prog_helper);
 
-            TMOptionsOperations operations(opts);
-            QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
+            QString output_file_name = m_output_file_name_base+"_"+opts->getPostfix()+"."+m_ldr_output_format;
 
-            if ( io_worker.write_ldr_frame(temporary_frame.data(), output_file_name, opts->quality, "", QVector<float>(), opts) )
+            if ( io_worker.write_ldr_frame(temporary_frame.data(),
+                                           output_file_name, QString(),
+                                           QVector<float>(), opts,
+                                           pfs::Params("quality", (size_t)opts->quality)) )
             {
                 emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
             } else {

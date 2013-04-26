@@ -114,7 +114,6 @@ private:
   
     // the model that holds the data
 	QStringListModel    * full_Log_Model;
-	TonemappingOptions  * opts;
   
     QMutex          m_add_log_message_mutex;
   

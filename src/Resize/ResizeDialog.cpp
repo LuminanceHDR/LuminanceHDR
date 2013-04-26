@@ -24,17 +24,18 @@
 #include "ResizeDialog.h"
 #include "ui_ResizeDialog.h"
 
-#include "Filter/pfssize.h"
 #include "Libpfs/frame.h"
+#include "Libpfs/manip/resize.h"
 
 ResizeDialog::ResizeDialog(QWidget *parent, pfs::Frame *orig):
     QDialog(parent),
-    original(orig),
+    m_original(orig),
+    m_resized(NULL),
     m_Ui(new Ui::ResizeDialog)
 {
     m_Ui->setupUi(this);
-    orig_width = original->getWidth();
-    orig_height = original->getHeight();
+    orig_width = m_original->getWidth();
+    orig_height = m_original->getHeight();
     resized_width = orig_width;
     resized_height = orig_height;
 
@@ -68,7 +69,7 @@ ResizeDialog::~ResizeDialog() {
 }
 
 pfs::Frame* ResizeDialog::getResizedFrame() {
-	return resized;
+	return m_resized;
 }
 
 void ResizeDialog::scaledPressed() {
@@ -76,7 +77,7 @@ void ResizeDialog::scaledPressed() {
 		emit reject();
 		return;
 	}
-	resized = pfs::resizeFrame(original,resized_width);
+    m_resized = pfs::resize(m_original, resized_width);
 	accept();
 }
 

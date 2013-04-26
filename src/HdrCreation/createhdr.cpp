@@ -27,10 +27,14 @@
 
 #include <QFile>
 
-#include "HdrCreation/createhdr.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
 
+#include "HdrCreation/createhdr.h"
+#include "HdrCreation/responses.h"
+#include "HdrCreation/robertson02.h"
+#include "HdrCreation/debevec.h"
+
+/*
 inline float max3( float a, float b, float c ) {
   float max = (a>b) ? a : b;
   return (c>max) ? c : max;
@@ -45,50 +49,54 @@ inline float min3( float a, float b, float c ) {
   float min = (a<b) ? a : b;
   return (c<min) ? c : min;
 }
+*/
 
-pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, const bool ldrinput, ...)
+const float opt_gauss = 8.0f;
+
+pfs::Frame* createHDR(const float* arrayofexptime,
+                      const config_triple* chosen_config,
+                      bool antighosting, int /*iterations*/,
+                      const bool ldrinput, ...)
 {
-    //only one of these two is used by casting extra parameters:
-    //listldr is used when input is a list of jpegs (and LDR tiffs).
-    //listhdr is used when input is a list of hdrs (raw image formats, or HDR tiffs).
-    QList<QImage*> *listldr=NULL;
-    Array2DList *listhdrR=NULL;
-    Array2DList *listhdrG=NULL;
-    Array2DList *listhdrB=NULL;
+    // only one of these two is used by casting extra parameters:
+    // listldr is used when input is a list of jpegs (and LDR tiffs).
+    // listhdr is used when input is a list of hdrs (raw image formats, or HDR tiffs).
+    QList<QImage*>* listldr = NULL;
+    Array2DfList* listhdrR   = NULL;
+    Array2DfList* listhdrG   = NULL;
+    Array2DfList* listhdrB   = NULL;
     va_list arg_pointer;
     va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
 
-    int opt_bpp;
-    float opt_gauss = 8.0f;
-    int width=-1;
-    int height=-1;
+    int opt_bpp = 8;
+    int width   = -1;
+    int height  = -1;
+    if (ldrinput)
+    {
+        listldr  = va_arg(arg_pointer, QList<QImage*>*);
+        width    = listldr->at(0)->width();
+        height   = listldr->at(0)->height();
+        opt_bpp  = 8;
+    }
+    else
+    {
+        listhdrR = va_arg(arg_pointer, Array2DfList*);
+        listhdrG = va_arg(arg_pointer, Array2DfList*);
+        listhdrB = va_arg(arg_pointer, Array2DfList*);
+        width    = listhdrR->at(0)->getCols();
+        height   = listhdrR->at(0)->getRows();
+        opt_bpp  = 16;
+    }
+    va_end(arg_pointer); /* Clean up. */
 
     TWeight opt_weight = chosen_config->weights;
     TResponse opt_response = chosen_config->response_curve;
     TModel opt_model = chosen_config->model;
 
-    if (ldrinput)
-    {
-        listldr=va_arg(arg_pointer,QList<QImage*>*);
-        width=(listldr->at(0))->width();
-        height=(listldr->at(0))->height();
-        opt_bpp=8;
-    }
-    else
-    {
-        listhdrR=va_arg(arg_pointer,Array2DList*);
-        listhdrG=va_arg(arg_pointer,Array2DList*);
-        listhdrB=va_arg(arg_pointer,Array2DList*);
-        width =((*listhdrR)[0])->getCols();
-        height=((*listhdrR)[0])->getRows();
-        opt_bpp=16;
-    }
-    va_end(arg_pointer); /* Clean up. */
-
-    //either 256(LDRs) or 65536(hdr RAW images).
-    const int M = (int) powf(2.0f, opt_bpp);
-    const int minResponse=0;
-    const int maxResponse=M;
+    // either 256(LDRs) or 65536(hdr RAW images).
+    const int M = static_cast<int>(1 << opt_bpp);
+    const int minResponse = 0;
+    const int maxResponse = M;
 
     // weighting function representing confidence in pixel values
     std::vector<float> w(M); // float* w = new float[M];
@@ -164,79 +172,83 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
         weights_triangle(w.data(), M/*, minResponse, maxResponse*/);
         break;
     case GAUSSIAN:
-        weightsGauss(w.data(), M, minResponse, maxResponse, opt_gauss );
+        weightsGauss(w.data(), M, minResponse, maxResponse, opt_gauss);
         break;
     case PLATEAU:
         exposure_weights_icip06(w.data(), M, minResponse, maxResponse);
         break;
     }
     // create channels for output
-    pfs::Frame *frameout = pfs::DOMIO::createFrame(width, height);
-    pfs::Channel *Rj_, *Gj_, *Bj_;
-    frameout->createXYZChannels( Rj_, Gj_, Bj_ );
-
-    pfs::Array2D *Rj = Rj_->getChannelData();
-    pfs::Array2D *Gj = Gj_->getChannelData();
-    pfs::Array2D *Bj = Bj_->getChannelData();
+    pfs::Frame *frameout = new pfs::Frame(width, height);
+    pfs::Channel *Rj, *Gj, *Bj;
+    frameout->createXYZChannels( Rj, Gj, Bj );
 
     // camera response functions for each channel
     std::vector<float> Ir(M);
     std::vector<float> Ig(M);
     std::vector<float> Ib(M);
 
-    //2) response curves, either predefined (log,gamma,lin,from_file) or calibration from the set of images.
+    // 2) response curves, either predefined (log, gamma, lin, from_file) or
+    // calibration from the set of images.
     switch( opt_response )
     {
     case FROM_FILE:
     {
-        FILE* respfile = fopen(QFile::encodeName(chosen_config->LoadCurveFromFilename).constData(),"r");
+        FILE* respfile = fopen(QFile::encodeName(chosen_config->LoadCurveFromFilename).constData(), "r");
         // read camera response from file
         bool load_ok = responseLoad(respfile, Ir.data(), Ig.data(), Ib.data(), M);
         fclose(respfile);
 
-        if ( !load_ok)
+        if ( !load_ok )
         {
             responseGamma(Ir.data(), M);
             responseGamma(Ig.data(), M);
             responseGamma(Ib.data(), M);
         }
-    }
-        break;
+    } break;
     case LINEAR:
+    {
         responseLinear(Ir.data(), M);
         responseLinear(Ig.data(), M);
         responseLinear(Ib.data(), M);
-        break;
+    } break;
     case GAMMA:
+    {
         responseGamma(Ir.data(), M);
         responseGamma(Ig.data(), M);
         responseGamma(Ib.data(), M);
-        break;
+    } break;
     case LOG10:
+    {
         responseLog10(Ir.data(), M);
         responseLog10(Ig.data(), M);
         responseLog10(Ib.data(), M);
-        break;
+    } break;
     case FROM_ROBERTSON:
+    {
         responseLinear(Ir.data(), M);
         responseLinear(Ig.data(), M);
         responseLinear(Ib.data(), M);
-        //call robertson02_getResponse method which computes both the Ir,Ig,Ib and the output HDR (i.e. its channels Rj,Gj,Bj).
+        // call robertson02_getResponse method which computes both the Ir,Ig,Ib
+        // and the output HDR (i.e. its channels Rj,Gj,Bj).
         if (ldrinput) {
-            robertson02_getResponse(Rj, arrayofexptime, Ir.data(), w.data(), M, 1, true, listldr);
-            robertson02_getResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, true, listldr);
-            robertson02_getResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, true, listldr);
+            robertson02_getResponse(*Rj, *Gj, *Bj,
+                                    arrayofexptime,
+                                    Ir.data(), Ig.data(), Ib.data(),
+                                    w.data(), M, *listldr);
         } else {
-            robertson02_getResponse(Rj, arrayofexptime, Ir.data(), w.data(), M, 1, false, listhdrR);
-            robertson02_getResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, false, listhdrG);
-            robertson02_getResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, false, listhdrB);
+            robertson02_getResponse(*Rj, *Gj, *Bj,
+                                    arrayofexptime,
+                                    Ir.data(), Ig.data(), Ib.data(),
+                                    w.data(), M,
+                                    *listhdrR, *listhdrG, *listhdrB);
         }
-        break;
+    } break;
     }
 
-	//save response curves if required (variable not empty)
-	if (chosen_config->SaveCurveToFilename != "") {
-		FILE * respfile=fopen(QFile::encodeName(chosen_config->SaveCurveToFilename).constData(), "w");
+    // save response curves if required (variable not empty)
+    if ( !chosen_config->SaveCurveToFilename.isEmpty() ) {
+        FILE* respfile = fopen(QFile::encodeName(chosen_config->SaveCurveToFilename).constData(), "w");
 		responseSave(respfile, Ir.data(), Ig.data(), Ib.data(), M);
 		fclose(respfile);
 	}
@@ -245,30 +257,43 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
     switch ( opt_model )
     {
     case ROBERTSON:
-        // If model is robertson and user preference was to compute response curve from image dataset using robertson algorithm
-        // i.e. to calibrate, we are done, the robertson02_getResponse function has already computed the HDR (i.e. its channels).
+    {
+        // If model is robertson and user preference was to compute response
+        // curve from image dataset using robertson algorithm
+        // i.e. to calibrate, we are done, the robertson02_getResponse function
+        // has already computed the HDR (i.e. its channels).
         if ( opt_response == FROM_ROBERTSON)
             break;
         else {
             //apply robertson model
             if (ldrinput) {
-                robertson02_applyResponse(Rj, arrayofexptime, Ir.data(), w.data(), M, 1, true, listldr);
-                robertson02_applyResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, true, listldr);
-                robertson02_applyResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, true, listldr);
+                robertson02_applyResponse(*Rj, *Gj, *Bj, arrayofexptime,
+                                          Ir.data(), Ig.data(), Ib.data(),
+                                          w.data(), M, *listldr);
             } else {
-                robertson02_applyResponse(Rj, arrayofexptime, Ir.data(), w.data(), M, 1, false, listhdrR);
-                robertson02_applyResponse(Gj, arrayofexptime, Ig.data(), w.data(), M, 2, false, listhdrG);
-                robertson02_applyResponse(Bj, arrayofexptime, Ib.data(), w.data(), M, 3, false, listhdrB);
+                robertson02_applyResponse(*Rj, *Gj, *Bj, arrayofexptime,
+                                          Ir.data(), Ig.data(), Ib.data(),
+                                          w.data(), M,
+                                          *listhdrR, *listhdrG, *listhdrB);
             }
         }
-        break;
+    } break;
     case DEBEVEC:
+    {
         //apply debevec model
-        if (ldrinput)
-            debevec_applyResponse(arrayofexptime, Rj, Gj, Bj, Ir.data(), Ig.data(), Ib.data(), w.data(), M, true, listldr);
-        else
-            debevec_applyResponse(arrayofexptime, Rj, Gj, Bj, Ir.data(), Ig.data(), Ib.data(), w.data(), M, false, listhdrR, listhdrG, listhdrB);
-        break;
+        if (ldrinput) {
+            debevec_applyResponse(*Rj, *Gj, *Bj,
+                                  arrayofexptime,
+                                  Ir.data(), Ig.data(), Ib.data(),
+                                  w.data(), M, *listldr);
+        } else {
+            debevec_applyResponse(*Rj, *Gj, *Bj,
+                                  arrayofexptime,
+                                  Ir.data(), Ig.data(), Ib.data(),
+                                  w.data(), M,
+                                  *listhdrR, *listhdrG, *listhdrB);
+        }
+    } break;
     } //end switch
 
 	return frameout;

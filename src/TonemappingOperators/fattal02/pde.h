@@ -32,10 +32,11 @@
 #ifndef FMG_PDE_H
 #define FMG_PDE_H
 
-class ProgressHelper;
+#include <Libpfs/array2d_fwd.h>
 
-namespace pfs {
-    class Array2D;
+namespace pfs
+{
+class Progress;
 }
 
 /**
@@ -44,7 +45,7 @@ namespace pfs {
  * @param F array with divergence
  * @param U [out] sollution
  */
-void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph);
+void solve_pde_multigrid(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph);
 
 /**
  * @brief solve poisson pde (Laplace U = F) using discrete cosine transform
@@ -53,7 +54,8 @@ void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph);
  * @param U [out] solution
  * @param adjust_bound, adjust boundary values of F to make pde solvable 
  */
-void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph, bool adjust_bound=false);
+void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U,
+                   pfs::Progress &ph, bool adjust_bound = false);
 
 /**
  * @brief returns the residual error of the solution U, ie norm(Laplace U - F) 
@@ -61,7 +63,7 @@ void solve_pde_fft(pfs::Array2D *F, pfs::Array2D *U, ProgressHelper *ph, bool ad
  * @param F [in] right hand side
  * @param U [in] solution
  */
-float residual_pde(pfs::Array2D *U, pfs::Array2D *F);
+float residual_pde(pfs::Array2Df *U, pfs::Array2Df *F);
 
 
 #endif
