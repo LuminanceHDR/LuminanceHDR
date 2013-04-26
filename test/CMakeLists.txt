@@ -139,4 +139,7 @@ ADD_TEST(TestFloatRgb TestFloatRgb)
 ADD_EXECUTABLE(TestImageQualityDialog TestImageQualityDialog.cpp)
 TARGET_LINK_LIBRARIES(TestImageQualityDialog ui fileformat pfs common ${LIBS})
 
+ADD_EXECUTABLE(TestHdrCreationWizard TestHdrCreationWizard.cpp)
+TARGET_LINK_LIBRARIES(TestHdrCreationWizard ${LUMINANCE_MODULES_GUI} ${LIBS})
+
 ENDIF(GTEST_FOUND)
