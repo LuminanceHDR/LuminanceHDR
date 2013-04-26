@@ -32,6 +32,7 @@
 #include <QColor>
 
 #include <algorithm>
+#include <cmath>
 
 #include "Libpfs/domio.h"
 #include "Fileformat/tiffreader.h"
@@ -132,6 +133,136 @@ void hsl2rgb(float h, float sl, float l, float *r, float *g, float *b)
     } 
 }
 
+int findIndex(float *data, int size)
+{
+    float max = *std::max_element(data, data + size);
+    int i;
+    for (i = 0; i < size; i++)
+        if (data[i] == max) 
+            return i;
+
+    return i;
+}
+
+void transformFromRgbToHsl(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
+{
+    int width = R->getCols();
+    int height = R->getRows();
+    float h, s, l;
+    
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            rgb2hsl((*R)(i, j), (*G)(i, j), (*B)(i, j), &h, &s, &l);
+            (*R)(i, j) = h;
+            (*G)(i, j) = s;
+            (*B)(i, j) = l;
+        }
+    } 
+}
+
+void transformFromHslToRgb(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
+{
+    int width = R->getCols();
+    int height = R->getRows();
+    float r, g, b;
+    
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            hsl2rgb((*R)(i, j), (*G)(i, j), (*B)(i, j), &r, &g, &b);
+            (*R)(i, j) = r;
+            (*G)(i, j) = g;
+            (*B)(i, j) = b;
+        }
+    } 
+}
+
+float *findMax(pfs::Array2D *R)
+{
+    int width = R->getCols();
+    int height = R->getRows();
+
+    return std::max_element(R->getRawData(), R->getRawData() + width*height);
+}
+
+float *findMax(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1)
+{
+    float *maxR1 = findMax(R1);
+    float *maxG1 = findMax(G1);
+    float *maxB1 = findMax(B1);
+
+    float m1[] = {*maxR1, *maxG1, *maxB1};
+
+    return std::max_element(m1, m1+3);
+}
+
+void normalize(pfs::Array2D *R)
+{
+    int width = R->getCols();
+    int height = R->getRows();
+
+    float max = *findMax(R);
+
+    std::transform(R->getRawData(), R->getRawData() + width*height, R->getRawData(), std::bind2nd(std::divides<float>(),max));
+}
+
+void normalize(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
+{
+    int width = R->getCols();
+    int height = R->getRows();
+
+    float max = *findMax(R, G, B);
+
+    std::transform(R->getRawData(), R->getRawData() + width*height, R->getRawData(), std::bind2nd(std::divides<float>(),max));
+    std::transform(G->getRawData(), G->getRawData() + width*height, G->getRawData(), std::bind2nd(std::divides<float>(),max));
+    std::transform(B->getRawData(), B->getRawData() + width*height, B->getRawData(), std::bind2nd(std::divides<float>(),max));
+}
+
+void rescale(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
+{
+    int width = R->getCols();
+    int height = R->getRows();
+
+    std::transform(R->getRawData(), R->getRawData() + width*height, R->getRawData(), std::bind2nd(std::multiplies<float>(),65535));
+    std::transform(G->getRawData(), G->getRawData() + width*height, G->getRawData(), std::bind2nd(std::multiplies<float>(),65535));
+    std::transform(B->getRawData(), B->getRawData() + width*height, B->getRawData(), std::bind2nd(std::multiplies<float>(),65535));
+}
+
+float hueMean(float *hues, int size)
+{
+    float H = 0.0f;
+    for (int k = 0; k < size; k++)
+        H += hues[k];
+
+    return H / size;
+}
+
+float hueSquaredMean(Array2DList &listH, int k)
+{
+    int width = listH.at(0)->getCols();
+    int height = listH.at(0)->getRows();
+    int size = listH.size();
+    float hues[size];
+    
+    float Fk, Fh;
+    float HS = 0.0f;
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int h = 0; h < size; h++) {
+                Fh = (*listH.at(h))(i, j);
+                if (std::isnan(Fh)) Fh = 0.0f;
+                hues[h] = Fh;
+            }
+            Fk = (*listH.at(k))(i, j);
+            if (std::isnan(Fk)) Fk = 0.0f;
+            float H = hueMean(hues, size) - Fk;
+            H = H*H;
+            HS += H;
+        }
+    }
+    
+    return HS / (width*height);
+}
+
 qreal averageLightness(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
 {
     int width = R->getCols();
@@ -166,6 +297,104 @@ qreal averageLightness(QImage *img)
         }
     }
     return avgLum / (w * h);
+}
+
+bool comparePatches(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1,
+                    pfs::Array2D *R2, pfs::Array2D *G2, pfs::Array2D *B2,
+                    int i, int j, int gridX, int gridY, float ghostingValue, float threshold, float deltaEV)
+{
+    float logRed[gridX*gridY];
+    float logGreen[gridX*gridY];
+    float logBlue[gridX*gridY];
+    
+    int count = 0;
+    for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            if (deltaEV < 0) {
+                if (i == 16 && j == 24) {
+                //if (i == 10 && j == 10) {
+                    //qDebug() << logf((*R1)(x, y)) << "\t" << logf((*R2)(x, y));
+                    //qDebug() << logf((*G1)(x, y)) << "\t" << logf((*G2)(x, y));
+                    qDebug() << logf((*B1)(x, y)) << "\t" << logf((*B2)(x, y));
+                }
+                logRed[count] = logf((*R1)(x, y)) - logf((*R2)(x, y)) - deltaEV;
+                logGreen[count] = logf((*G1)(x, y)) - logf((*G2)(x, y)) - deltaEV;
+                logBlue[count++] = logf((*B1)(x, y)) - logf((*B2)(x, y)) - deltaEV;
+            }
+            else {
+                if (i == 16 && j == 24) {
+                //if (i == 10 && j == 10) {
+                    //qDebug() << logf((*R1)(x, y)) << "\t" << logf((*R2)(x, y));
+                    //qDebug() << logf((*G1)(x, y)) << "\t" << logf((*G2)(x, y));
+                    qDebug() << logf((*B1)(x, y)) << "\t" << logf((*B2)(x, y));
+                }
+                logRed[count] = logf((*R2)(x, y)) - logf((*R1)(x, y)) + deltaEV;
+                logGreen[count] = logf((*G2)(x, y)) - logf((*G1)(x, y)) + deltaEV;
+                logBlue[count++] = logf((*B2)(x, y)) - logf((*B1)(x, y)) + deltaEV;
+            }
+        }
+    }
+  
+    if (i == 16 && j == 24) {
+    //if (i == 10 && j == 10) {
+        for (int h = 0; h < gridX*gridY; h++) 
+            qDebug() << h << "\t" << logBlue[h];
+    }
+
+    float maxR = *std::max_element(logRed, logRed + gridX*gridY);
+    float minR = *std::min_element(logRed, logRed + gridX*gridY);
+    float maxG = *std::max_element(logGreen, logGreen + gridX*gridY);
+    float minG = *std::min_element(logGreen, logGreen + gridX*gridY);
+    float maxB = *std::max_element(logBlue, logBlue + gridX*gridY);
+    float minB = *std::min_element(logBlue, logBlue + gridX*gridY);
+
+    maxR = std::max(maxR, std::abs(minR));
+    maxG = std::max(maxG, std::abs(minG));
+    maxB = std::max(maxB, std::abs(minB));
+
+    count = 0;
+    for (int h = 0; h < gridX*gridY; h++) {
+        //if (std::abs(logRed[h]) > ghostingValue*maxR || std::abs(logGreen[h]) > ghostingValue*maxG || std::abs(logBlue[h]) > ghostingValue*maxB)
+        if (std::abs(logRed[h]) > ghostingValue || std::abs(logGreen[h]) > ghostingValue || std::abs(logBlue[h]) > ghostingValue)
+            count++;
+    }
+
+    if (i == 10 && j == 10) 
+        qDebug() << "count = " << count;
+    if (i == 16 && j == 24) 
+        qDebug() << "count = " << count;
+
+    if ((float) count / (float) (gridX*gridY) > threshold)
+        return true;
+    else
+        return false;
+}
+
+void copyPatch(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1,
+               pfs::Array2D *R2, pfs::Array2D *G2, pfs::Array2D *B2,
+               int i, int j, int gridX, int gridY, float sf)
+{
+    if (sf > 1.0f)
+        sf = 1.0f / sf;
+
+    for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            float h1, s1, l1, h2, s2, l2, r1, g1, b1, r2, g2, b2;
+            rgb2hsl((*R1)(x, y), (*G1)(x, y), (*B1)(x, y), &h1, &s1, &l1);
+            rgb2hsl((*R2)(x, y), (*G2)(x, y), (*B2)(x, y), &h2, &s2, &l2);
+            (*R2)(x, y) = h1;
+            (*G2)(x, y) = s1;
+            (*B2)(x, y) = l1 * sf;
+            hsl2rgb(h1, s1, l1, &r1, &g1, &b1);
+            hsl2rgb((*R2)(x, y), (*G2)(x, y), (*B2)(x, y), &r2, &g2, &b2);
+            (*R1)(x, y) = r1;
+            (*G1)(x, y) = g1;
+            (*B1)(x, y) = b1;
+            (*R2)(x, y) = r2;
+            (*G2)(x, y) = g2;
+            (*B2)(x, y) = b2;
+        }
+    }
 }
 
 pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
@@ -283,6 +512,8 @@ void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R
     float alpha;
     qreal avgLight1 = averageLightness(R1, G1, B1);
     qreal avgLight2 = averageLightness(R2, G2, B2);
+    qDebug() << "avgLight1 = " << avgLight1;
+    qDebug() << "avgLight2 = " << avgLight2;
     qreal sf = avgLight1 / avgLight2;
     float h, s, l, r1, g1, b1, r2, g2, b2;
     
@@ -1047,3 +1278,76 @@ void HdrCreationManager::cropAgMasks(QRect ca) {
         delete antiGhostingMasksList.takeAt(0);
     }
 }
+
+void HdrCreationManager::doAutoAntiGhosting(float ghostingValue, float threshold)
+{
+    const int gridSize = 40;
+    int size = listmdrR.size(); 
+    float HE[size];
+    int width = listmdrR.at(0)->getCols();
+    int height = listmdrR.at(0)->getRows();
+    int gridX = width / gridSize;
+    int gridY = height / gridSize;
+
+//    for (int i = 0; i < size; i++) 
+//        normalize(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i));
+
+    float avgLightness[size];
+
+    for (int i = 0; i < size; i++) {
+        avgLightness[i] = averageLightness(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i)); 
+        qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
+    }
+
+    for (int i = 0; i < size; i++)
+        transformFromRgbToHsl(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i));
+
+    for (int i = 0; i < size; i++) { 
+        HE[i] = hueSquaredMean(listmdrR, i);
+        qDebug() << "HE[" << i << "]: " << HE[i];
+    }
+
+    int h0 = findIndex(HE, size);
+
+    float scaleFactor[size];
+
+    for (int i = 0; i < size; i++) {
+        scaleFactor[i] = avgLightness[h0] / avgLightness[i];        
+    }
+
+    qDebug() << "h0: " << h0;
+
+    for (int i = 0; i < size; i++) 
+        transformFromHslToRgb(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i));
+/*
+    for (int i = 0; i < width*height; i++) {
+        float deltaEV = logf(expotimes.at(2)) - logf(expotimes.at(1));
+        if (deltaEV < 0)
+            deltaEV *= -1.0f;
+        qDebug() << logf((*listmdrB.at(1))(i)) - logf((*listmdrB.at(2))(i)) + deltaEV;
+    }
+*/
+    int count = 0;
+    for (int h = 0; h < size; h++) {
+        if (h == h0) 
+            continue;
+        for (int j = 0; j < gridSize; j++) {
+            for (int i = 0; i < gridSize; i++) {
+                    float deltaEV = logf(expotimes.at(h0)) - logf(expotimes.at(h));
+                    if (comparePatches(listmdrR.at(h0), listmdrG.at(h0), listmdrB.at(h0),
+                                       listmdrR.at(h), listmdrG.at(h), listmdrB.at(h),
+                                       i, j, gridX, gridY, ghostingValue, threshold, deltaEV)) {
+                        copyPatch(listmdrR.at(h0), listmdrG.at(h0), listmdrB.at(h0),
+                                  listmdrR.at(h), listmdrG.at(h), listmdrB.at(h),
+                                  i, j, gridX, gridY, scaleFactor[h]);
+                        count++;
+                        qDebug() << "copyPatch (" << i << "," << j << ")";
+                    }
+            }                      
+        }
+    }
+    qDebug() << "Copied patches: " << count;
+//    for (int i = 0; i < size; i++) 
+//        rescale(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i));
+}
+

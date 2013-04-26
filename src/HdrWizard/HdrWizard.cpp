@@ -182,8 +182,6 @@ void HdrWizard::setupConnections()
 
     connect(m_Ui->predefConfigsComboBox,SIGNAL(activated(int)),this,
     SLOT(predefConfigsComboBoxActivated(int)));
-    connect(m_Ui->antighostRespCurveCombobox,SIGNAL(activated(int)),this,
-    SLOT(antighostRespCurveComboboxActivated(int)));
     connect(m_Ui->customConfigCheckBox,SIGNAL(toggled(bool)),this,
     SLOT(customConfigCheckBoxToggled(bool)));
     connect(m_Ui->triGaussPlateauComboBox,SIGNAL(activated(int)),this,
@@ -463,12 +461,8 @@ void HdrWizard::ais_failed(QProcess::ProcessError e) {
 void HdrWizard::customConfigCheckBoxToggled(bool want_custom) {
     if (!want_custom) {
         if (!m_Ui->antighostingCheckBox->isChecked()) {
-            m_Ui->label_RespCurve_Antighost->setDisabled(true);
-            m_Ui->antighostRespCurveCombobox->setDisabled(true);
             m_Ui->label_Iterations->setDisabled(true);
             m_Ui->spinBoxIterations->setDisabled(true);
-            //temporary disable anti-ghosting until it's fixed
-            m_Ui->antighostingCheckBox->setDisabled(true);
         }
         else {
             m_Ui->label_predef_configs->setDisabled(true);
@@ -595,7 +589,9 @@ void HdrWizard::NextFinishButtonClicked() {
         m_Ui->customize_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
         repaint();
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
-        PfsFrameHDR = hdrCreationManager->createHdr(m_Ui->antighostingCheckBox->isChecked(),m_Ui->spinBoxIterations->value());
+        if (m_Ui->antighostingCheckBox->isChecked())
+            hdrCreationManager->doAutoAntiGhosting(m_Ui->doubleSpinBoxGhostingValue->value(), m_Ui->doubleSpinBoxThreshold->value());
+        PfsFrameHDR = hdrCreationManager->createHdr(false, m_Ui->spinBoxIterations->value());
         QApplication::restoreOverrideCursor();
         accept();
         return;

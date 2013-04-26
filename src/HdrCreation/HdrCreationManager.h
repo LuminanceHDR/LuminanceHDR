@@ -106,6 +106,7 @@ public:
 	void saveLDRs(QString);
 	void saveMDRs(QString);
 	void doAntiGhosting(int);
+	void doAutoAntiGhosting(float, float);
 public slots:
 	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
 	void removeTempFiles();
