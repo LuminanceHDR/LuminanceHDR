@@ -30,6 +30,7 @@
 #include <Libpfs/array2d.h>
 #include <Libpfs/io/rgbereader.h>
 #include <Libpfs/io/rgbecommon.h>
+#include <Libpfs/colorspace/colorspace.h>
 
 using namespace std;
 
@@ -52,7 +53,7 @@ void rgbe2rgb(const Trgbe_pixel& rgbe, float exposure, float &r, float &g, float
 }
 
 // Reading RGBE files
-void readRadianceHeader(FILE *file, int &width, int &height, float &exposure)
+void readRadianceHeader(FILE *file, int &width, int &height, float &exposure, Colorspace &colorspace)
 {
     // DEBUG_STR << "RGBE: reading header..." << endl;
 
@@ -86,6 +87,12 @@ void readRadianceHeader(FILE *file, int &width, int &height, float &exposure)
         }
         if ( strcmp(head, "FORMAT=32-bit_rle_rgbe\n") == 0 ) {
             // header found
+            colorspace = RGB;
+            continue;
+        }
+        if ( strcmp(head, "FORMAT=32-bit_rle_xyze\n") == 0 ) {
+            // header found
+            colorspace = XYZ;
             continue;
         }
         if ( sscanf(head, "EXPOSURE=%f", &fval) == 1 )
@@ -254,9 +261,12 @@ void RGBEReader::open()
     int width = 0;
     int height = 0;
     float exposure = 0.f;
+    Colorspace colorspace;
 
-    readRadianceHeader(m_file.data(), width, height, exposure);
-
+    readRadianceHeader(m_file.data(), width, height, exposure, colorspace);
+    
+    m_colorspace = colorspace;
+    
     setWidth(width);
     setHeight(height);
     m_exposure = exposure;
@@ -282,6 +292,9 @@ void RGBEReader::read(Frame &frame, const Params &/*params*/)
 
     readRadiance(m_file.data(), width(), height(), m_exposure, *X, *Y, *Z);
 
+    if (m_colorspace == XYZ)
+        pfs::transformXYZ2RGB(X, Y, Z, X, Y, Z);
+    
     tempFrame.getTags().setTag("LUMINANCE", "RELATIVE");
     tempFrame.getTags().setTag("FILE_NAME", filename());
 

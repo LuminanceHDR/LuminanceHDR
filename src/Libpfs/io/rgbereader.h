@@ -39,6 +39,8 @@
 namespace pfs {
 namespace io {
 
+enum Colorspace {RGB, XYZ};
+
 class RGBEReader : public FrameReader
 {
 public:
@@ -54,6 +56,7 @@ public:
 private:
     utils::ScopedStdIoFile m_file;
     float m_exposure;
+    Colorspace m_colorspace;
 };
 
 }
