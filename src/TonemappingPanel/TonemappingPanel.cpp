@@ -1112,6 +1112,8 @@ void TonemappingPanel::loadParameters()
 
 	if (dialog.exec())
 	{
+        LuminanceOptions *luminance_options = new LuminanceOptions;
+        setRealtimePreviews(false);
         TonemappingOptions *tmopts = dialog.getTonemappingOptions();
 		// Ashikhmin
 		bool simple,
@@ -1319,6 +1321,8 @@ void TonemappingPanel::loadParameters()
             t->xsize = sizes[0];
             emit startTonemapping(t);
         }
+        setRealtimePreviews(luminance_options->isRealtimePreviewsActive());
+        delete luminance_options;
 	}
 }
 
