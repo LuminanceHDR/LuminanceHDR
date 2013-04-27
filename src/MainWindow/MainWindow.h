@@ -175,7 +175,7 @@ protected Q_SLOTS:
     void splashShowDonationsPage();
     void splashClose();
 
-    void on_updateAvailable();
+    void onUpdateAvailable();
     void on_actionUpdateAvailable_triggered();
 
     // TM

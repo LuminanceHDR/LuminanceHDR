@@ -248,6 +248,7 @@ void MainWindow::init()
         // UMessageBox::donationSplashMB();
         // END SPLASH SCREEN    -----------------------------------------------
         sm_updateChecker.reset(new UpdateChecker(this));
+        connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), this, SLOT(onUpdateAvailable()));
     }
 
     OsIntegration::getInstance().init(this);
@@ -1217,7 +1218,7 @@ void MainWindow::splashClose()
     splash->close();
 }
 
-void MainWindow::on_updateAvailable()
+void MainWindow::onUpdateAvailable()
 {
     m_Ui->actionUpdateAvailable->setVisible(true);
 }
