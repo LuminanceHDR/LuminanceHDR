@@ -259,6 +259,7 @@ void copyExifData(const std::string& from, const std::string& to,
  *
  * F-number and shutter speed are mandatory in exif data for EV calculation, iso is not.
  */
+/*
 float obtain_avg_lum(const std::string& filename)
 {
     try
@@ -337,6 +338,39 @@ float obtain_avg_lum(const std::string& filename)
     catch (Exiv2::AnyError& e)
     {
         return -1;
+    }
+}
+*/
+
+float getAverageLuminance(const std::string& filename)
+{
+    try
+    {
+        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        image->readMetadata();
+        Exiv2::ExifData &exifData = image->exifData();
+
+        // Exif.Image.ExposureBiasValue
+        Exiv2::ExifData::const_iterator itExpValue =
+                exifData.findKey(Exiv2::ExifKey("Exif.Image.ExposureBiasValue"));
+        if ( itExpValue != exifData.end() ) {
+            return pow(2.0f, itExpValue->toFloat());
+        }
+
+        // Exif.Photo.ExposureBiasValue
+        itExpValue =
+                exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureBiasValue"));
+        if ( itExpValue != exifData.end() ) {
+            return pow(2.0f, itExpValue->toFloat());
+        }
+
+        std::clog << "Cannot find ExposureBiasValue for " << filename << std::endl;
+
+        return -1.0;
+    }
+    catch (Exiv2::AnyError& e)
+    {
+        return -1.0;
     }
 }
 

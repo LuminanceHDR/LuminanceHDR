@@ -66,11 +66,10 @@ void HdrInputLoader::run() {
 	try {
 		//QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 		QFileInfo qfi(fname);
-/*
-		//get exposure time, -1 is error
-		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
-		float expotime = ExifOperations::obtain_avg_lum( QFile::encodeName(qfi.filePath()).constData() );
-*/
+
+        // get exposure time, -1 is error
+        // ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
+        // float expotime = ExifOperations::obtain_avg_lum( QFile::encodeName(qfi.filePath()).constData() );
 
 		QString extension=qfi.suffix().toUpper(); //get filename extension
 		//now go and fill the list of image data (real payload)

@@ -1100,30 +1100,6 @@ void HdrWizard::on_pushButtonSaveSettings_clicked()
     m_ui->pushButtonSaveSettings->setEnabled(false);
 }
 
-// new code
-void HdrWizard::updateTableGrid()
-{
-    qDebug() << "Fill grid with values in the m_data structure";
-
-    // empty grid...
-    m_ui->tableWidget->clear();
-    m_ui->tableWidget->setRowCount(0);
-
-    // insert the row at the bottom of the table widget
-    int counter =  0;
-    BOOST_FOREACH(const HdrCreationItem& item, *m_hdrCreationManager)
-    {
-        qDebug() << QString("Fill row %1: %2").arg(counter).arg(item.filename());
-
-        // fill graphical list
-        m_ui->tableWidget->insertRow(counter);
-        m_ui->tableWidget->setItem(counter, 0, new QTableWidgetItem(QFileInfo(item.filename()).fileName()));
-        m_ui->tableWidget->setItem(counter, 1, new QTableWidgetItem("unknown"));
-
-        ++counter;
-    }
-}
-
 void HdrWizard::updateProgressBar(int value)
 {
     if (value == 0) {

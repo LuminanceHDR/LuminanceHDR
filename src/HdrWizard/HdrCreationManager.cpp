@@ -110,7 +110,7 @@ struct LoadFile {
 
             // read Average Luminance
             currentItem.setAverageLuminance(
-                        ExifOperations::obtain_avg_lum(
+                        ExifOperations::getAverageLuminance(
                             QFile::encodeName(qfi.filePath()).constData() )
                         );
 
