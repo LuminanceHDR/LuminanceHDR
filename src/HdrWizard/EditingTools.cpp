@@ -608,12 +608,13 @@ void EditingTools::addGoodImage()
 {
     QString filename = movableListWidget->currentItem()->text();
     int idx = m_filesMap[filename];
-    int idxToRemove = movableListWidget->currentRow();
+    int idxGoodImage = movableListWidget->currentRow();
     referenceListWidget->addItem(QFileInfo(m_fileList[idx]).fileName());
     referenceListWidget->setCurrentRow(0);
     m_goodImageIndex = idx;
     m_antiGhostingMasksList[idx]->fill(qRgba(0,0,0,0));
-    movableListWidget->takeItem(idxToRemove);
+    movableListWidget->item(idxGoodImage)->setBackground(QColor(Qt::yellow));
+
     prevBothButton->setDisabled(true);
     nextBothButton->setDisabled(false);
     updatePivot(idx);
@@ -624,7 +625,7 @@ void EditingTools::removeGoodImage()
 {
     QString filename = referenceListWidget->currentItem()->text();
     int idx = m_filesMap[filename];
-    movableListWidget->addItem(QFileInfo(m_fileList[idx]).fileName());
+    movableListWidget->item(idx)->setBackground(QColor(Qt::white));
     referenceListWidget->takeItem(0);
     prevBothButton->setDisabled(false);
     nextBothButton->setDisabled(true);

@@ -142,6 +142,24 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
     }
 }
 
+qreal maxLightness(const pfs::Array2Df& R,
+                   const pfs::Array2Df& G,
+                   const pfs::Array2Df& B)
+{
+    int width = R.getCols();
+    int height = R.getRows();
+
+    qreal maxL = 0.0f;
+
+    float h, s, l;
+    for (int i = 0; i < height*width; i++)
+    {
+        rgb2hsl(R(i), G(i), B(i), h, s, l);
+        if (l > maxL) maxL = l;
+    }
+    return maxL;
+}
+
 qreal averageLightness(const pfs::Array2Df& R,
                        const pfs::Array2Df& G,
                        const pfs::Array2Df& B)
@@ -174,9 +192,7 @@ qreal averageLightness(const QImage& qImage)
     return avgLum / (w * h);
 }
 
-
-
-void blend(QImage& img1, const QImage& img2, const QImage& mask)
+void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& maskGoodImage)
 {
     qDebug() << "blend";
 #ifdef TIMER_PROFILING
@@ -194,17 +210,18 @@ void blend(QImage& img1, const QImage& img2, const QImage& mask)
     qreal sf = averageLightness(img1) / averageLightness(img2);
     int h, s, l;
     
-    if (sf > 1.0f) sf = 1.0f / sf; 
-
     for (int j = 0; j < height; j++)
     {
         for (int i = 0; i < width; i++)
         {
-            alpha = static_cast<float>(qAlpha(mask.pixel(i,j))) / 255;
+            if (qAlpha(mask.pixel(i,j)) == 0 && qAlpha(maskGoodImage.pixel(i,j)) == 0) continue;
+            alpha = (qAlpha(maskGoodImage.pixel(i,j)) == 0) ? static_cast<float>(qAlpha(mask.pixel(i,j))) / 255 : 
+                                                              static_cast<float>(qAlpha(maskGoodImage.pixel(i,j))) / 255;
             pixValue = img2.pixel(i, j);
             color = QColor::fromRgb(pixValue).toHsl();
             color.getHsl(&h, &s, &l);
             l *= sf;
+            if (l > 255) l = 255;
             color.setHsl(h, s, l);
             pixValue = color.rgb();     
             pixValue = (1.0f - alpha)*img1.pixel(i, j) + alpha*pixValue;
@@ -219,14 +236,14 @@ void blend(QImage& img1, const QImage& img2, const QImage& mask)
 
 void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
            const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
-           const QImage& mask)
+           const QImage& mask, const QImage& maskGoodImage)
 {
     qDebug() << "blend MDR";
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-
+    const float max_rgb = 65535.0f;
     int width = R1.getCols();
     int height = R1.getRows();
 
@@ -236,47 +253,45 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
     float h, s, l;
     float r1, g1, b1;
     float r2, g2, b2;
-    
-    const float *maxR1 = std::max_element(R1.data(), R1.data() + width*height);
-    const float *maxG1 = std::max_element(G1.data(), G1.data() + width*height);
-    const float *maxB1 = std::max_element(B1.data(), B1.data() + width*height);
-    const float *maxR2 = std::max_element(R2.data(), R2.data() + width*height);
-    const float *maxG2 = std::max_element(G2.data(), G2.data() + width*height);
-    const float *maxB2 = std::max_element(B2.data(), B2.data() + width*height);
+    float maxL1 = maxLightness(R1, G1, B1);
+    float maxL2 = maxLightness(R2, G2, B2);
+    float maxL = std::max(maxL1, maxL2);
 
-    float m1[] = {*maxR1, *maxG1, *maxB1};
-    float m2[] = {*maxR2, *maxG2, *maxB2};
-    
-    float inverseMax = 1.f / std::max(*std::max_element(m1, m1+3),
-                                      *std::max_element(m2, m2+3));
-
-    if (sf > 1.0f) sf = 1.0f / sf;
-    
     for (int j = 0; j < height; j++)
     {
         for (int i = 0; i < width; i++)
         {
-            alpha = static_cast<float>(qAlpha( mask.pixel(i,j) ))/255;
-            r1 = R1(i, j) * inverseMax;
-            g1 = G1(i, j) * inverseMax;
-            b1 = B1(i, j) * inverseMax;
+            if (qAlpha(mask.pixel(i,j)) == 0 && qAlpha(maskGoodImage.pixel(i,j)) == 0) continue;
+            alpha = (qAlpha(maskGoodImage.pixel(i,j)) == 0) ? static_cast<float>(qAlpha(mask.pixel(i,j))) / 255 : 
+                                                              static_cast<float>(qAlpha(maskGoodImage.pixel(i,j))) / 255;
 
-            r2 = R2(i, j) * inverseMax;
-            g2 = G2(i, j) * inverseMax;
-            b2 = B2(i, j) * inverseMax;
+            r1 = R1(i, j);
+            g1 = G1(i, j);
+            b1 = B1(i, j);
+
+            r2 = R2(i, j);
+            g2 = G2(i, j);
+            b2 = B2(i, j);
 
             rgb2hsl(r2, g2, b2, h, s, l);
             l *= sf;
+            if (l > maxL) l = maxL;
+
             hsl2rgb(h, s, l, r2, g2, b2);
 
-            R1(i, j) = (1.0f - alpha)*r1 +  alpha*r2;
-            G1(i, j) = (1.0f - alpha)*g1 +  alpha*g2;
-            B1(i, j) = (1.0f - alpha)*b1 +  alpha*b2;
+            if (r2 > max_rgb) r2 = max_rgb;
+            if (g2 > max_rgb) g2 = max_rgb;
+            if (b2 > max_rgb) b2 = max_rgb;
+
+            R1(i, j) = (1.0f - alpha)*r1 + alpha*r2;
+            G1(i, j) = (1.0f - alpha)*g1 + alpha*g2;
+            B1(i, j) = (1.0f - alpha)*b1 + alpha*b2;
         }
     }
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "blend MDR = " << stop_watch.get_time() << " msec" << std::endl;
+    qDebug() << "Max lightness: " << maxL;
 #endif
 }
 
@@ -1108,7 +1123,8 @@ void HdrCreationManager::doAntiGhosting(int goodImageIndex)
             {
                 blend(*ldrImagesList[idx],
                       *ldrImagesList[goodImageIndex],
-                      *antiGhostingMasksList[idx]);
+                      *antiGhostingMasksList[idx],
+                      *antiGhostingMasksList[goodImageIndex]);
             }
         }
     }
@@ -1122,7 +1138,8 @@ void HdrCreationManager::doAntiGhosting(int goodImageIndex)
                       *listmdrR[goodImageIndex],
                       *listmdrG[goodImageIndex],
                       *listmdrB[goodImageIndex],
-                      *antiGhostingMasksList[idx]);
+                      *antiGhostingMasksList[idx],
+                      *antiGhostingMasksList[goodImageIndex]);
             }
         }
     }
