@@ -283,6 +283,10 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
             if (g2 > max_rgb) g2 = max_rgb;
             if (b2 > max_rgb) b2 = max_rgb;
 
+            if (r2 < 0.0f) r2 = 0.0f;
+            if (g2 < 0.0f) g2 = 0.0f;
+            if (b2 < 0.0f) b2 = 0.0f;
+
             R1(i, j) = (1.0f - alpha)*r1 + alpha*r2;
             G1(i, j) = (1.0f - alpha)*g1 + alpha*g2;
             B1(i, j) = (1.0f - alpha)*b1 + alpha*b2;
