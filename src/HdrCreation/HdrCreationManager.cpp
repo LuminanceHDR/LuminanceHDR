@@ -192,6 +192,7 @@ qreal averageLightness(const QImage& qImage)
     return avgLum / (w * h);
 }
 
+/*
 void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& maskGoodImage)
 {
     qDebug() << "blend";
@@ -228,6 +229,51 @@ void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& m
             img1.setPixel(i, j, pixValue);
         }
     } 
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
+*/
+
+void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& maskGoodImage)
+{
+    qDebug() << "blend";
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+
+    const int width = img1.width();
+    const int height = img1.height();
+
+    QColor color;
+    QRgb pixValue;
+    qreal alpha;
+
+    qreal sf = averageLightness(img1) / averageLightness(img2);
+    int h, s, l;
+
+    QRgb *img1Ptr = reinterpret_cast<QRgb *>(img1.bits());  
+    const QRgb *img2Ptr = reinterpret_cast<const QRgb *>(img2.bits());  
+    const QRgb *maskPtr = reinterpret_cast<const QRgb *>(mask.bits());  
+    const QRgb *maskGoodImagePtr = reinterpret_cast<const QRgb *>(maskGoodImage.bits());  
+    
+    for (int i = 0; i < width*height; i++)
+    {
+        if (qAlpha(*(maskPtr + i)) == 0 && qAlpha(*(maskGoodImagePtr + i)) == 0) continue;
+        alpha = (qAlpha(*(maskGoodImagePtr + i)) == 0) ? static_cast<float>(qAlpha(*(maskPtr + i))) / 255 : 
+                                                          static_cast<float>(qAlpha(*(maskGoodImagePtr + i))) / 255;
+        pixValue = *(img2Ptr + i);
+        color = QColor::fromRgb(pixValue).toHsl();
+        color.getHsl(&h, &s, &l);
+        l *= sf;
+        if (l > 255) l = 255;
+        color.setHsl(h, s, l);
+        pixValue = color.rgb();     
+        pixValue = (1.0f - alpha)*(*(img1Ptr + i)) + alpha*pixValue;
+        *(img1Ptr + i) = pixValue;
+    }
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
