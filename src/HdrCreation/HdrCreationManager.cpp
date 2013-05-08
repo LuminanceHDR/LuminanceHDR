@@ -51,10 +51,6 @@
 #include "HdrCreationManager.h"
 #include "arch/math.h"
 
-#include <boost/math/special_functions/fpclassify.hpp>
-
-using namespace boost::math;
-
 static const float max_rgb = 65535.0f;
 static const float max_lightness = 65535.0f;
 static const int gridSize = 40;
@@ -162,48 +158,6 @@ int findIndex(float *data, int size)
     return i;
 }
 
-void transformFromRgbToHsl(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B)
-{
-    const int width = R.getCols();
-    const int height = R.getRows();
-    float h, s, l;
-    
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            rgb2hsl(R(i, j), G(i, j), B(i, j), h, s, l);
-
-            R(i, j) = h;
-            G(i, j) = s;
-            B(i, j) = l;
-        }
-    } 
-}
-
-void transformFromHslToRgb(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B)
-{
-    const int width = R.getCols();
-    const int height = R.getRows();
-    float r, g, b;
-    
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            hsl2rgb(R(i, j), G(i, j), B(i, j), r, g, b);
-
-            if (r > max_rgb) r = max_rgb;
-            if (g > max_rgb) g = max_rgb;
-            if (b > max_rgb) b = max_rgb;
-
-            if (r < 0.0f) r = 0.0f;
-            if (g < 0.0f) g = 0.0f;
-            if (b < 0.0f) b = 0.0f;
-            
-            R(i, j) = r;
-            G(i, j) = g;
-            B(i, j) = b;
-        }
-    } 
-}
-
 float hueMean(float *hues, int size)
 {
     float H = 0.0f;
@@ -213,11 +167,41 @@ float hueMean(float *hues, int size)
     return H / size;
 }
 
-float hueSquaredMean(Array2DfList &listH, int k)
+float hueSquaredMean(Array2DfList &listR, Array2DfList &listG, Array2DfList &listB, int k)
 {
-    int width = listH.at(0)->getCols();
-    int height = listH.at(0)->getRows();
-    int size = listH.size();
+    int width = listR.at(0)->getCols();
+    int height = listR.at(0)->getRows();
+    int size = listR.size();
+    float hues[size];
+    
+    float r, g, b, h, s, l;
+    float H, HS = 0.0f;
+
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int w = 0; w < size; w++) {
+                r = (*listR.at(w))(i, j);
+                g = (*listG.at(w))(i, j);
+                b = (*listB.at(w))(i, j);
+                rgb2hsl(r, g, b, h, s, l);
+                hues[w] = h;
+            }
+            r = (*listR.at(k))(i, j);
+            g = (*listG.at(k))(i, j);
+            b = (*listB.at(k))(i, j);
+            rgb2hsl(r, g, b, h, s, l);
+            H = hueMean(hues, size) - h;
+            HS += H*H;
+        }
+    }
+    return HS / (width*height);
+}
+
+float hueSquaredMean(QList<QImage*> list, int k)
+{
+    int width = list.at(0)->width();
+    int height = list.at(0)->height();
+    int size = list.size();
     float hues[size];
     
     float Fk, Fh, H;
@@ -225,10 +209,10 @@ float hueSquaredMean(Array2DfList &listH, int k)
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
             for (int h = 0; h < size; h++) {
-                Fh = (*listH.at(h))(i, j);
+                Fh = QColor::fromRgb(list.at(h)->pixel(i, j)).toHsl().lightnessF();
                 hues[h] = Fh;
             }
-            Fk = (*listH.at(k))(i, j);
+            Fk = QColor::fromRgb(list.at(k)->pixel(i, j)).toHsl().lightnessF();
             H = hueMean(hues, size) - Fk;
             HS += H*H;
         }
@@ -281,7 +265,7 @@ qreal averageLightness(const QImage& qImage)
     qreal avgLum = 0.0f;
     for (int i = 0; i < h*w; i++)
     {
-        avgLum += QColor::fromRgb( *qImagePtr++ ).toHsl().lightnessF();
+        avgLum += static_cast<float>(QColor::fromRgb( *qImagePtr++ ).toHsl().lightness());
     }
     return avgLum / (w * h);
 }
@@ -306,6 +290,46 @@ bool comparePatches(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs:
                 logRed[count] = logf(R2(x, y)) - logf(R1(x, y)) + deltaEV;
                 logGreen[count] = logf(G2(x, y)) - logf(G1(x, y)) + deltaEV;
                 logBlue[count++] = logf(B2(x, y)) - logf(B1(x, y)) + deltaEV;
+            }
+        }
+    }
+  
+    float threshold1 = 0.7f * std::abs(deltaEV);
+    count = 0;
+    for (int h = 0; h < gridX*gridY; h++) {
+        if (std::abs(logRed[h]) > threshold1 || std::abs(logGreen[h]) > threshold1 || std::abs(logBlue[h]) > threshold1)
+            count++;
+    }
+
+    if ((float) count / (float) (gridX*gridY) > threshold)
+        return true;
+    else
+        return false;
+}
+
+bool comparePatches(const QImage& image1,
+                    const QImage& image2,
+                    int i, int j, int gridX, int gridY, float threshold, float deltaEV)
+{
+    float logRed[gridX*gridY];
+    float logGreen[gridX*gridY];
+    float logBlue[gridX*gridY];
+   
+    qreal  r1, g1, b1, alpha1, r2, b2, g2, alpha2; 
+    int count = 0;
+    for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            QColor::fromRgb(image1.pixel(x, y)).getRgbF(&r1, &g1, &b1, &alpha1);
+            QColor::fromRgb(image2.pixel(x, y)).getRgbF(&r2, &g2, &b2, &alpha2);
+            if (deltaEV < 0) {
+                logRed[count] = logf(r1) - logf(r2) - deltaEV;
+                logGreen[count] = logf(g1) - logf(g2) - deltaEV;
+                logBlue[count++] = logf(b1) - logf(b2) - deltaEV;
+            }
+            else {
+                logRed[count] = logf(r2) - logf(r1) + deltaEV;
+                logGreen[count] = logf(g2) - logf(g1) + deltaEV;
+                logBlue[count++] = logf(b2) - logf(b1) + deltaEV;
             }
         }
     }
@@ -360,6 +384,36 @@ void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Arra
     }
 }
 
+void copyPatch(const QImage& image1,
+               QImage& image2,
+               int i, int j, int gridX, int gridY, float sf)
+{
+    QRgb pixValue;
+    QColor color;
+    int h, s, l;
+    float avgL = 0.0f;    
+    for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            avgL += static_cast<float>(QColor::fromRgb( image2.pixel(x, y) ).toHsl().lightness());
+        }
+    }
+    avgL /= (gridX*gridY);
+    if ( avgL >= 255.0f || avgL <= 0.0f ) return;
+
+    for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            pixValue = image1.pixel(x, y);
+            color = QColor::fromRgb(pixValue).toHsl();
+            color.getHsl(&h, &s, &l);
+            l *= sf;
+            if (l > 255) l = 255;
+            color.setHsl(h, s, l);
+            pixValue = color.rgb();     
+            image2.setPixel(x, y, pixValue);
+        }
+    }
+}
+
 void copyPatches(Array2DfList& listR, 
                  Array2DfList& listG,
                  Array2DfList& listB, 
@@ -374,6 +428,24 @@ void copyPatches(Array2DfList& listR,
                 if (patches[i][j])
                     copyPatch(*listR.at(h0), *listG.at(h0), *listB.at(h0),
                               *listR.at(h), *listG.at(h), *listB.at(h),
+                              i, j, gridX, gridY, scalefactor[h]);
+            }
+        }
+    }
+}
+
+void copyPatches(QList<QImage *> list, 
+                 bool patches[gridSize][gridSize],
+                 int h0, float* scalefactor, int gridX, int gridY)
+{
+    const int size = list.size(); 
+    for (int h = 0; h < size; h++) {
+        if (h == h0) continue;
+        for (int j = 0; j < gridSize; j++) {
+            for (int i = 0; i < gridSize; i++) {
+                if (patches[i][j])
+                    copyPatch(*list.at(h0),
+                              *list.at(h),
                               i, j, gridX, gridY, scalefactor[h]);
             }
         }
@@ -1393,7 +1465,7 @@ void HdrCreationManager::cropAgMasks(const QRect& ca) {
     }
 }
 
-void HdrCreationManager::doAutoAntiGhosting(float threshold)
+void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
 {
     const int size = listmdrR.size(); 
     float HE[size];
@@ -1414,26 +1486,19 @@ void HdrCreationManager::doAutoAntiGhosting(float threshold)
         qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
     }
 
-    for (int i = 0; i < size; i++)
-        transformFromRgbToHsl(*listmdrR.at(i), *listmdrG.at(i), *listmdrB.at(i));
-
     for (int i = 0; i < size; i++) { 
-        HE[i] = hueSquaredMean(listmdrR, i);
+        HE[i] = hueSquaredMean(listmdrR, listmdrG, listmdrB, i);
         qDebug() << "HE[" << i << "]: " << HE[i];
     }
 
     int h0 = findIndex(HE, size);
+    qDebug() << "h0: " << h0;
 
     float scaleFactor[size];
 
     for (int i = 0; i < size; i++) {
         scaleFactor[i] = avgLightness[i] / avgLightness[h0];        
     }
-
-    qDebug() << "h0: " << h0;
-
-    for (int i = 0; i < size; i++) 
-        transformFromHslToRgb(*listmdrR.at(i), *listmdrG.at(i), *listmdrB.at(i));
 
     for (int h = 0; h < size; h++) {
         if (h == h0) 
@@ -1459,3 +1524,77 @@ void HdrCreationManager::doAutoAntiGhosting(float threshold)
     copyPatches(listmdrR, listmdrG, listmdrB, patches, h0, scaleFactor, gridX, gridY);
 }
 
+void HdrCreationManager::doAutoAntiGhostingLDR(float threshold)
+{
+    const int size = ldrImagesList.size(); 
+    float HE[size];
+    const int width = ldrImagesList.at(0)->width();
+    const int height = ldrImagesList.at(0)->height();
+    const int gridX = width / gridSize;
+    const int gridY = height / gridSize;
+
+    float avgLightness[size];
+    bool patches[gridSize][gridSize];
+    
+    for (int i = 0; i < gridSize; i++)
+        for (int j = 0; j < gridSize; j++)
+            patches[i][j] = false;
+
+    for (int i = 0; i < size; i++) {
+        avgLightness[i] = averageLightness(*ldrImagesList.at(i)); 
+        qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
+    }
+
+    for (int i = 0; i < size; i++) { 
+        HE[i] = hueSquaredMean(ldrImagesList, i);
+        qDebug() << "HE[" << i << "]: " << HE[i];
+    }
+
+    int h0 = findIndex(HE, size);
+    qDebug() << "h0: " << h0;
+
+    float scaleFactor[size];
+
+    for (int i = 0; i < size; i++) {
+        scaleFactor[i] = avgLightness[i] / avgLightness[h0];        
+    }
+
+    for (int h = 0; h < size; h++) {
+        if (h == h0) 
+            continue;
+        for (int j = 0; j < gridSize; j++) {
+            for (int i = 0; i < gridSize; i++) {
+                    float deltaEV = logf(expotimes.at(h0)) - logf(expotimes.at(h));
+                    if (comparePatches(*ldrImagesList.at(h0),
+                                       *ldrImagesList.at(h),
+                                       i, j, gridX, gridY, threshold, deltaEV)) {
+                        patches[i][j] = true;
+                    }
+            }                      
+        }
+    }
+
+    int count = 0;
+    for (int i = 0; i < gridSize; i++)
+        for (int j = 0; j < gridSize; j++)
+            if (patches[i][j] == true)
+                count++;
+    qDebug() << "Copied patches: " << static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f << "%";
+    copyPatches(ldrImagesList, patches, h0, scaleFactor, gridX, gridY);
+}
+
+void HdrCreationManager::doAutoAntiGhosting(float threshold)
+{
+    qDebug() << "HdrCreationManager::doAutoAntiGhosting";
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+
+    (inputType == LDR_INPUT_TYPE) ? doAutoAntiGhostingLDR(threshold) : doAutoAntiGhostingMDR(threshold);
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "doAutoAntiGhosting = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}

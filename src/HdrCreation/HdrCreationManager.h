@@ -134,6 +134,8 @@ signals:
 	void imagesSaved();
 
 private:
+	void doAutoAntiGhostingMDR(float);
+	void doAutoAntiGhostingLDR(float);
     // List of input files (absolute pathnames)
 	QStringList fileList;
 	//data structures that hold the input images' payload
