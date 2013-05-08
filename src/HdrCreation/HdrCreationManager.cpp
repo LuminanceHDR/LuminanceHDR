@@ -2,6 +2,7 @@
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2010-2012 Franco Comida
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +26,6 @@
  */
 
 #include <QDebug>
-
 #include <QApplication>
 #include <QFileInfo>
 #include <QFile>
@@ -33,59 +33,76 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 
-#include "Libpfs/domio.h"
+#include "Libpfs/manip/shift.h"
+#include "Libpfs/manip/cut.h"
+#include "Libpfs/manip/copy.h"
+
+#include "Libpfs/utils/msec_timer.h"
+
 #include "Fileformat/tiffreader.h"
 #include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsouthdrimage.h"
-#include "Filter/pfscut.h"
+
 #include "Exif/ExifOperations.h"
 #include "Threads/HdrInputLoader.h"
 #include "mtb_alignment.h"
 #include "HdrCreationManager.h"
 #include "arch/math.h"
-#include "Common/msec_timer.h"
+
+#include <boost/math/special_functions/fpclassify.hpp>
+
+using namespace boost::math;
+
+static const float max_rgb = 65535.0f;
+static const float max_lightness = 65535.0f;
+static const int gridSize = 40;
 
 namespace
 {
-void rgb2hsl(float r, float g, float b, float *h, float *s, float *l)
+inline
+void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
 {
     float v, m, vm, r2, g2, b2;
-    *h = 0.0f;
-    *s = 0.0f;
-    *l = 0.0f;
+    h = 0.0f;
+    s = 0.0f;
+    l = 0.0f;
     v = std::max(r, g);
     v = std::max(v, b);
     m = std::min(r, g);
     m = std::min(m, b);
-    *l = (m + v) / 2.0f;
-    if (*l <= 0.0f)
+    l = (m + v) / 2.0f;
+    if (l <= 0.0f)
         return;
     vm = v - m;
-    *s = vm;
-    if (*s >= 0.0f)
-        *s /= (*l <= 0.5f) ? (v + m) : (2.0f - v - m);
+    s = vm;
+    //if (s >= 0.0f)
+    if (s > 0.0f)
+        s /= (l <= 0.5f) ? (v + m) : (2.0f - v - m);
     else return;
     r2 = (v - r) / vm;
     g2 = (v - g) / vm;
     b2 = (v - b) / vm;
     if (r == v)
-        *h = (g == m ? 5.0f + b2 : 1.0f - g2);
+        h = (g == m ? 5.0f + b2 : 1.0f - g2);
     else if (g == v)
-        *h = (b == m ? 1.0f + r2 : 3.0f - b2);
+        h = (b == m ? 1.0f + r2 : 3.0f - b2);
     else
-        *h = (r == m ? 3.0f + g2 : 5.0f - r2);
-    *h /= 6.0;
+        h = (r == m ? 3.0f + g2 : 5.0f - r2);
+    h /= 6.0f;
 }
 
-void hsl2rgb(float h, float sl, float l, float *r, float *g, float *b)
+inline
+void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
 {
     float v;
-    *r = l;
-    *g = l;
-    *b = l;
+    r = l;
+    g = l;
+    b = l;
     v = (l <= 0.5f) ? (l * (1.0f + sl)) : (l + sl - l * sl);
-    if (v > 0.0f) {
+    if (v > 0.0f)
+    {
         float m;
         float sv;
         int sextant;
@@ -98,39 +115,40 @@ void hsl2rgb(float h, float sl, float l, float *r, float *g, float *b)
         vsf = v * sv * fract;
         mid1 = m + vsf;
         mid2 = v - vsf;
-        switch (sextant) {
-            case 0:
-                *r = v;
-                *g = mid1;
-                *b = m;
-             break;
-             case 1:
-                 *r = mid2;
-                 *g = v;
-                 *b = m;
-             break;
-             case 2:
-                 *r = m;
-                 *g = v;
-                 *b = mid1;
-             break;
-             case 3:
-                 *r = m;
-                 *g = mid2;
-                 *b = v;
-             break;
-             case 4:
-                 *r = mid1;
-                 *g = m;
-                 *b = v;
-             break;
-             case 5:
-                 *r = v;
-                 *g = m;
-                 *b = mid2;
-             break;
-         }    
-    } 
+        switch (sextant)
+        {
+        case 0:
+            r = v;
+            g = mid1;
+            b = m;
+            break;
+        case 1:
+            r = mid2;
+            g = v;
+            b = m;
+            break;
+        case 2:
+            r = m;
+            g = v;
+            b = mid1;
+            break;
+        case 3:
+            r = m;
+            g = mid2;
+            b = v;
+            break;
+        case 4:
+            r = mid1;
+            g = m;
+            b = v;
+            break;
+        case 5:
+            r = v;
+            g = m;
+            b = mid2;
+            break;
+        }
+    }
 }
 
 int findIndex(float *data, int size)
@@ -144,87 +162,46 @@ int findIndex(float *data, int size)
     return i;
 }
 
-void transformFromRgbToHsl(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
+void transformFromRgbToHsl(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B)
 {
-    int width = R->getCols();
-    int height = R->getRows();
+    const int width = R.getCols();
+    const int height = R.getRows();
     float h, s, l;
     
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
-            rgb2hsl((*R)(i, j), (*G)(i, j), (*B)(i, j), &h, &s, &l);
-            (*R)(i, j) = h;
-            (*G)(i, j) = s;
-            (*B)(i, j) = l;
+            rgb2hsl(R(i, j), G(i, j), B(i, j), h, s, l);
+
+            R(i, j) = h;
+            G(i, j) = s;
+            B(i, j) = l;
         }
     } 
 }
 
-void transformFromHslToRgb(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
+void transformFromHslToRgb(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B)
 {
-    int width = R->getCols();
-    int height = R->getRows();
+    const int width = R.getCols();
+    const int height = R.getRows();
     float r, g, b;
     
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
-            hsl2rgb((*R)(i, j), (*G)(i, j), (*B)(i, j), &r, &g, &b);
-            (*R)(i, j) = r;
-            (*G)(i, j) = g;
-            (*B)(i, j) = b;
+            hsl2rgb(R(i, j), G(i, j), B(i, j), r, g, b);
+
+            if (r > max_rgb) r = max_rgb;
+            if (g > max_rgb) g = max_rgb;
+            if (b > max_rgb) b = max_rgb;
+
+            if (r < 0.0f) r = 0.0f;
+            if (g < 0.0f) g = 0.0f;
+            if (b < 0.0f) b = 0.0f;
+            
+            R(i, j) = r;
+            G(i, j) = g;
+            B(i, j) = b;
         }
     } 
-}
-
-float *findMax(pfs::Array2D *R)
-{
-    int width = R->getCols();
-    int height = R->getRows();
-
-    return std::max_element(R->getRawData(), R->getRawData() + width*height);
-}
-
-float *findMax(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1)
-{
-    float *maxR1 = findMax(R1);
-    float *maxG1 = findMax(G1);
-    float *maxB1 = findMax(B1);
-
-    float m1[] = {*maxR1, *maxG1, *maxB1};
-
-    return std::max_element(m1, m1+3);
-}
-
-void normalize(pfs::Array2D *R)
-{
-    int width = R->getCols();
-    int height = R->getRows();
-
-    float max = *findMax(R);
-
-    std::transform(R->getRawData(), R->getRawData() + width*height, R->getRawData(), std::bind2nd(std::divides<float>(),max));
-}
-
-void normalize(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
-{
-    int width = R->getCols();
-    int height = R->getRows();
-
-    float max = *findMax(R, G, B);
-
-    std::transform(R->getRawData(), R->getRawData() + width*height, R->getRawData(), std::bind2nd(std::divides<float>(),max));
-    std::transform(G->getRawData(), G->getRawData() + width*height, G->getRawData(), std::bind2nd(std::divides<float>(),max));
-    std::transform(B->getRawData(), B->getRawData() + width*height, B->getRawData(), std::bind2nd(std::divides<float>(),max));
-}
-
-void rescale(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
-{
-    int width = R->getCols();
-    int height = R->getRows();
-
-    std::transform(R->getRawData(), R->getRawData() + width*height, R->getRawData(), std::bind2nd(std::multiplies<float>(),65535));
-    std::transform(G->getRawData(), G->getRawData() + width*height, G->getRawData(), std::bind2nd(std::multiplies<float>(),65535));
-    std::transform(B->getRawData(), B->getRawData() + width*height, B->getRawData(), std::bind2nd(std::multiplies<float>(),65535));
 }
 
 float hueMean(float *hues, int size)
@@ -236,72 +213,82 @@ float hueMean(float *hues, int size)
     return H / size;
 }
 
-float hueSquaredMean(Array2DList &listH, int k)
+float hueSquaredMean(Array2DfList &listH, int k)
 {
     int width = listH.at(0)->getCols();
     int height = listH.at(0)->getRows();
     int size = listH.size();
     float hues[size];
     
-    float Fk, Fh;
+    float Fk, Fh, H;
     float HS = 0.0f;
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
             for (int h = 0; h < size; h++) {
                 Fh = (*listH.at(h))(i, j);
-                if (std::isnan(Fh)) Fh = 0.0f;
                 hues[h] = Fh;
             }
             Fk = (*listH.at(k))(i, j);
-            if (std::isnan(Fk)) Fk = 0.0f;
-            float H = hueMean(hues, size) - Fk;
-            H = H*H;
-            HS += H;
+            H = hueMean(hues, size) - Fk;
+            HS += H*H;
         }
     }
-    
     return HS / (width*height);
 }
 
-qreal averageLightness(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B)
+qreal maxLightness(const pfs::Array2Df& R,
+                   const pfs::Array2Df& G,
+                   const pfs::Array2Df& B)
 {
-    int width = R->getCols();
-    int height = R->getRows();
+    int width = R.getCols();
+    int height = R.getRows();
+
+    qreal maxL = 0.0f;
+
+    float h, s, l;
+    for (int i = 0; i < height*width; i++)
+    {
+        rgb2hsl(R(i), G(i), B(i), h, s, l);
+        if (l > maxL) maxL = l;
+    }
+    return maxL;
+}
+
+qreal averageLightness(const pfs::Array2Df& R,
+                       const pfs::Array2Df& G,
+                       const pfs::Array2Df& B)
+{
+    int width = R.getCols();
+    int height = R.getRows();
 
     qreal avgLum = 0.0f;
+
     float h, s, l;
-    
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            rgb2hsl((*R)(i, j), (*G)(i, j), (*B)(i, j), &h, &s, &l);
-            avgLum += l;
-        }
-    } 
+    for (int i = 0; i < height*width; i++)
+    {
+        rgb2hsl(R(i), G(i), B(i), h, s, l);
+        avgLum += l;
+    }
     return avgLum / (width * height);
 }
 
-qreal averageLightness(QImage *img)
+qreal averageLightness(const QImage& qImage)
 {
-    qreal avgLum = 0.0f;
-    int w = img->width(), h = img->height();
-    QColor color;
-    QRgb rgb;
-    qreal l;
+    const int w = qImage.width();
+    const int h = qImage.height();
+    const QRgb* qImagePtr = reinterpret_cast<const QRgb*>(qImage.bits());
 
-    for (int j = 0; j < h; j++) {
-        for (int i = 0; i < w; i++) {
-            rgb = img->pixel(i, j);
-            color = QColor::fromRgb(rgb);
-            l = color.toHsl().lightnessF();
-            avgLum += l;
-        }
+    qreal avgLum = 0.0f;
+    for (int i = 0; i < h*w; i++)
+    {
+        avgLum += QColor::fromRgb( *qImagePtr++ ).toHsl().lightnessF();
     }
     return avgLum / (w * h);
 }
 
-bool comparePatches(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1,
-                    pfs::Array2D *R2, pfs::Array2D *G2, pfs::Array2D *B2,
-                    int i, int j, int gridX, int gridY, float ghostingValue, float threshold, float deltaEV)
+bool comparePatches(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Array2Df& B1,
+                    const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
+                    int i, int j, int gridX, int gridY, float threshold, float deltaEV)
 {
     float logRed[gridX*gridY];
     float logGreen[gridX*gridY];
@@ -311,58 +298,24 @@ bool comparePatches(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1,
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
             if (deltaEV < 0) {
-                if (i == 16 && j == 24) {
-                //if (i == 10 && j == 10) {
-                    //qDebug() << logf((*R1)(x, y)) << "\t" << logf((*R2)(x, y));
-                    //qDebug() << logf((*G1)(x, y)) << "\t" << logf((*G2)(x, y));
-                    qDebug() << logf((*B1)(x, y)) << "\t" << logf((*B2)(x, y));
-                }
-                logRed[count] = logf((*R1)(x, y)) - logf((*R2)(x, y)) - deltaEV;
-                logGreen[count] = logf((*G1)(x, y)) - logf((*G2)(x, y)) - deltaEV;
-                logBlue[count++] = logf((*B1)(x, y)) - logf((*B2)(x, y)) - deltaEV;
+                logRed[count] = logf(R1(x, y)) - logf(R2(x, y)) - deltaEV;
+                logGreen[count] = logf(G1(x, y)) - logf(G2(x, y)) - deltaEV;
+                logBlue[count++] = logf(B1(x, y)) - logf(B2(x, y)) - deltaEV;
             }
             else {
-                if (i == 16 && j == 24) {
-                //if (i == 10 && j == 10) {
-                    //qDebug() << logf((*R1)(x, y)) << "\t" << logf((*R2)(x, y));
-                    //qDebug() << logf((*G1)(x, y)) << "\t" << logf((*G2)(x, y));
-                    qDebug() << logf((*B1)(x, y)) << "\t" << logf((*B2)(x, y));
-                }
-                logRed[count] = logf((*R2)(x, y)) - logf((*R1)(x, y)) + deltaEV;
-                logGreen[count] = logf((*G2)(x, y)) - logf((*G1)(x, y)) + deltaEV;
-                logBlue[count++] = logf((*B2)(x, y)) - logf((*B1)(x, y)) + deltaEV;
+                logRed[count] = logf(R2(x, y)) - logf(R1(x, y)) + deltaEV;
+                logGreen[count] = logf(G2(x, y)) - logf(G1(x, y)) + deltaEV;
+                logBlue[count++] = logf(B2(x, y)) - logf(B1(x, y)) + deltaEV;
             }
         }
     }
   
-    if (i == 16 && j == 24) {
-    //if (i == 10 && j == 10) {
-        for (int h = 0; h < gridX*gridY; h++) 
-            qDebug() << h << "\t" << logBlue[h];
-    }
-
-    float maxR = *std::max_element(logRed, logRed + gridX*gridY);
-    float minR = *std::min_element(logRed, logRed + gridX*gridY);
-    float maxG = *std::max_element(logGreen, logGreen + gridX*gridY);
-    float minG = *std::min_element(logGreen, logGreen + gridX*gridY);
-    float maxB = *std::max_element(logBlue, logBlue + gridX*gridY);
-    float minB = *std::min_element(logBlue, logBlue + gridX*gridY);
-
-    maxR = std::max(maxR, std::abs(minR));
-    maxG = std::max(maxG, std::abs(minG));
-    maxB = std::max(maxB, std::abs(minB));
-
+    float threshold1 = 0.7f * std::abs(deltaEV);
     count = 0;
     for (int h = 0; h < gridX*gridY; h++) {
-        //if (std::abs(logRed[h]) > ghostingValue*maxR || std::abs(logGreen[h]) > ghostingValue*maxG || std::abs(logBlue[h]) > ghostingValue*maxB)
-        if (std::abs(logRed[h]) > ghostingValue || std::abs(logGreen[h]) > ghostingValue || std::abs(logBlue[h]) > ghostingValue)
+        if (std::abs(logRed[h]) > threshold1 || std::abs(logGreen[h]) > threshold1 || std::abs(logBlue[h]) > threshold1)
             count++;
     }
-
-    if (i == 10 && j == 10) 
-        qDebug() << "count = " << count;
-    if (i == 16 && j == 24) 
-        qDebug() << "count = " << count;
 
     if ((float) count / (float) (gridX*gridY) > threshold)
         return true;
@@ -370,93 +323,65 @@ bool comparePatches(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1,
         return false;
 }
 
-void copyPatch(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1,
-               pfs::Array2D *R2, pfs::Array2D *G2, pfs::Array2D *B2,
+void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Array2Df& B1,
+               pfs::Array2Df& R2, pfs::Array2Df& G2, pfs::Array2Df& B2,
                int i, int j, int gridX, int gridY, float sf)
 {
-    if (sf > 1.0f)
-        sf = 1.0f / sf;
+    float h, s, l, r, g, b;
+    float avgL = 0.0f;    
+    for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            rgb2hsl(R2(x, y), G2(x, y), B2(x, y), h, s, l);
+            avgL += l;
+        }
+    }
+    avgL /= (gridX*gridY);
+    if ( avgL >= max_lightness || avgL <= 0.0f ) return;
 
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            float h1, s1, l1, h2, s2, l2, r1, g1, b1, r2, g2, b2;
-            rgb2hsl((*R1)(x, y), (*G1)(x, y), (*B1)(x, y), &h1, &s1, &l1);
-            rgb2hsl((*R2)(x, y), (*G2)(x, y), (*B2)(x, y), &h2, &s2, &l2);
-            (*R2)(x, y) = h1;
-            (*G2)(x, y) = s1;
-            (*B2)(x, y) = l1 * sf;
-            hsl2rgb(h1, s1, l1, &r1, &g1, &b1);
-            hsl2rgb((*R2)(x, y), (*G2)(x, y), (*B2)(x, y), &r2, &g2, &b2);
-            (*R1)(x, y) = r1;
-            (*G1)(x, y) = g1;
-            (*B1)(x, y) = b1;
-            (*R2)(x, y) = r2;
-            (*G2)(x, y) = g2;
-            (*B2)(x, y) = b2;
+            rgb2hsl(R1(x, y), G1(x, y), B1(x, y), h, s, l);
+            l *= sf;
+            if (l > max_lightness) l = max_lightness;
+            hsl2rgb(h, s, l, r, g, b);
+
+            if (r > max_rgb) r = max_rgb;
+            if (g > max_rgb) g = max_rgb;
+            if (b > max_rgb) b = max_rgb;
+
+            if (r < 0.0f) r = 0.0f;
+            if (g < 0.0f) g = 0.0f;
+            if (b < 0.0f) b = 0.0f;
+
+            R2(x, y) = r;
+            G2(x, y) = g;
+            B2(x, y) = b;
         }
     }
 }
 
-pfs::Array2D *shiftPfsArray2D(pfs::Array2D *in, int dx, int dy)
+void copyPatches(Array2DfList& listR, 
+                 Array2DfList& listG,
+                 Array2DfList& listB, 
+                 bool patches[gridSize][gridSize],
+                 int h0, float* scalefactor, int gridX, int gridY)
 {
-#ifdef TIMER_PROFILING
-    msec_timer stop_watch;
-    stop_watch.start();
-#endif
-
-    int width = in->getCols();
-    int height = in->getRows();
-
-    pfs::Array2D *temp = new pfs::Array2D(width, height);   
-    pfs::Array2D *out = new pfs::Array2D(width, height);    
-    
-#pragma omp parallel for shared(temp)
-    for (int j = 0; j < height; j++) 
-        for (int i = 0; i < width; i++) 
-            (*temp)(i, j) = 0;
-
-    // x-shift
-#pragma omp parallel for shared(in)
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            if ((i+dx) < 0)
-                continue;
-            if ((i+dx) >= width)
-                break;
-            if ((*in)(i+dx, j) > 65535)
-                (*temp)(i, j) = 65535;
-            else if ((*in)(i+dx, j) < 0)
-                (*temp)(i, j) = 0;
-            else
-                (*temp)(i, j) = (*in)(i+dx, j);
+    const int size = listR.size(); 
+    for (int h = 0; h < size; h++) {
+        if (h == h0) continue;
+        for (int j = 0; j < gridSize; j++) {
+            for (int i = 0; i < gridSize; i++) {
+                if (patches[i][j])
+                    copyPatch(*listR.at(h0), *listG.at(h0), *listB.at(h0),
+                              *listR.at(h), *listG.at(h), *listB.at(h),
+                              i, j, gridX, gridY, scalefactor[h]);
+            }
         }
     }
-    // y-shift
-#pragma omp parallel for shared(out)
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            if ((j+dy) < 0)
-                continue;
-            if ((j+dy) >= height)
-                break;
-            if ((*temp)(i, j+dy) > 65535)
-                (*out)(i, j) = 65535;
-            else if ((*temp)(i, j+dy) < 0)
-                (*out)(i, j) = 0;
-            else
-                (*out)(i, j) = (*temp)(i, j+dy);
-        }
-    }
-#ifdef TIMER_PROFILING
-    stop_watch.stop_and_update();
-    std::cout << "shiftPfsArray2D = " << stop_watch.get_time() << " msec" << std::endl;
-#endif
-
-    delete temp;
-    return out;
 }
 
-void blend(QImage *img1, QImage *img2, QImage *mask)
+/*
+void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& maskGoodImage)
 {
     qDebug() << "blend";
 #ifdef TIMER_PROFILING
@@ -464,31 +389,32 @@ void blend(QImage *img1, QImage *img2, QImage *mask)
     stop_watch.start();
 #endif
 
-    int width = img1->width();
-    int height = img1->height();
+    const int width = img1.width();
+    const int height = img1.height();
 
     QColor color;
-    QRgb maskValue, pixValue;
+    QRgb pixValue;
     qreal alpha;
-    qreal avgLight1 = averageLightness(img1);
-    qreal avgLight2 = averageLightness(img2);
-    qreal sf = avgLight1 / avgLight2;
+
+    qreal sf = averageLightness(img1) / averageLightness(img2);
     int h, s, l;
     
-    if (sf > 1.0f) sf = 1.0f / sf; 
-
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            maskValue = mask->pixel(i,j);
-            alpha = qAlpha(maskValue) / 255;
-            pixValue = img2->pixel(i, j);
+    for (int j = 0; j < height; j++)
+    {
+        for (int i = 0; i < width; i++)
+        {
+            if (qAlpha(mask.pixel(i,j)) == 0 && qAlpha(maskGoodImage.pixel(i,j)) == 0) continue;
+            alpha = (qAlpha(maskGoodImage.pixel(i,j)) == 0) ? static_cast<float>(qAlpha(mask.pixel(i,j))) / 255 : 
+                                                              static_cast<float>(qAlpha(maskGoodImage.pixel(i,j))) / 255;
+            pixValue = img2.pixel(i, j);
             color = QColor::fromRgb(pixValue).toHsl();
             color.getHsl(&h, &s, &l);
             l *= sf;
+            if (l > 255) l = 255;
             color.setHsl(h, s, l);
             pixValue = color.rgb();     
-            pixValue = (1.0f - alpha) * img1->pixel(i, j) +  alpha * pixValue;
-            img1->setPixel(i, j, pixValue);
+            pixValue = (1.0f - alpha)*img1.pixel(i, j) + alpha*pixValue;
+            img1.setPixel(i, j, pixValue);
         }
     } 
 #ifdef TIMER_PROFILING
@@ -496,78 +422,131 @@ void blend(QImage *img1, QImage *img2, QImage *mask)
     std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 }
+*/
 
-void blend(pfs::Array2D *R1, pfs::Array2D *G1, pfs::Array2D *B1, pfs::Array2D *R2, pfs::Array2D *G2, pfs::Array2D *B2, QImage *mask)
+void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& maskGoodImage)
+{
+    qDebug() << "blend";
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+
+    const int width = img1.width();
+    const int height = img1.height();
+
+    QColor color;
+    QRgb pixValue;
+    qreal alpha;
+
+    qreal sf = averageLightness(img1) / averageLightness(img2);
+    int h, s, l;
+
+    QRgb *img1Ptr = reinterpret_cast<QRgb *>(img1.bits());  
+    const QRgb *img2Ptr = reinterpret_cast<const QRgb *>(img2.bits());  
+    const QRgb *maskPtr = reinterpret_cast<const QRgb *>(mask.bits());  
+    const QRgb *maskGoodImagePtr = reinterpret_cast<const QRgb *>(maskGoodImage.bits());  
+    
+    for (int i = 0; i < width*height; i++)
+    {
+        if (qAlpha(*(maskPtr + i)) == 0 && qAlpha(*(maskGoodImagePtr + i)) == 0) continue;
+        alpha = (qAlpha(*(maskGoodImagePtr + i)) == 0) ? static_cast<float>(qAlpha(*(maskPtr + i))) / 255 : 
+                                                          static_cast<float>(qAlpha(*(maskGoodImagePtr + i))) / 255;
+        pixValue = *(img2Ptr + i);
+        color = QColor::fromRgb(pixValue).toHsl();
+        color.getHsl(&h, &s, &l);
+        l *= sf;
+        if (l > 255) l = 255;
+        color.setHsl(h, s, l);
+        pixValue = color.rgb();     
+        pixValue = (1.0f - alpha)*(*(img1Ptr + i)) + alpha*pixValue;
+        *(img1Ptr + i) = pixValue;
+    }
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
+
+void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
+           const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
+           const QImage& mask, const QImage& maskGoodImage)
 {
     qDebug() << "blend MDR";
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
+    int width = R1.getCols();
+    int height = R1.getRows();
 
-    int width = R1->getCols();
-    int height = R1->getRows();
+    float alpha = 0.0f;
+    qreal sf = averageLightness(R1, G1, B1) / averageLightness(R2, G2, B2);
 
-    QRgb maskValue;
-    float alpha;
-    qreal avgLight1 = averageLightness(R1, G1, B1);
-    qreal avgLight2 = averageLightness(R2, G2, B2);
-    qDebug() << "avgLight1 = " << avgLight1;
-    qDebug() << "avgLight2 = " << avgLight2;
-    qreal sf = avgLight1 / avgLight2;
-    float h, s, l, r1, g1, b1, r2, g2, b2;
-    
-    float *maxR1 = std::max_element(R1->getRawData(), R1->getRawData() + width*height);
-    float *maxG1 = std::max_element(G1->getRawData(), G1->getRawData() + width*height);
-    float *maxB1 = std::max_element(B1->getRawData(), B1->getRawData() + width*height);
-    float *maxR2 = std::max_element(R2->getRawData(), R2->getRawData() + width*height);
-    float *maxG2 = std::max_element(G2->getRawData(), G2->getRawData() + width*height);
-    float *maxB2 = std::max_element(B2->getRawData(), B2->getRawData() + width*height);
+    float h, s, l;
+    float r1, g1, b1;
+    float r2, g2, b2;
+    float maxL1 = maxLightness(R1, G1, B1);
+    float maxL2 = maxLightness(R2, G2, B2);
+    float maxL = std::max(maxL1, maxL2);
 
-    float m1[] = {*maxR1, *maxG1, *maxB1};
-    float m2[] = {*maxR2, *maxG2, *maxB2};
+    for (int j = 0; j < height; j++)
+    {
+        for (int i = 0; i < width; i++)
+        {
+            if (qAlpha(mask.pixel(i,j)) == 0 && qAlpha(maskGoodImage.pixel(i,j)) == 0) continue;
+            alpha = (qAlpha(maskGoodImage.pixel(i,j)) == 0) ? static_cast<float>(qAlpha(mask.pixel(i,j))) / 255 : 
+                                                              static_cast<float>(qAlpha(maskGoodImage.pixel(i,j))) / 255;
 
-    float *max1 = std::max_element(m1, m1+3);
-    float *max2 = std::max_element(m2, m2+3);
-    
-    float max = std::max(*max1, *max2);
+            r1 = R1(i, j);
+            g1 = G1(i, j);
+            b1 = B1(i, j);
 
-    if (sf > 1.0f) sf = 1.0f / sf; 
-    
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            maskValue = mask->pixel(i,j);
-            alpha = qAlpha(maskValue) / 255;
-            r1 = (*R1)(i, j) / max;
-            g1 = (*G1)(i, j) / max;
-            b1 = (*B1)(i, j) / max;
+            r2 = R2(i, j);
+            g2 = G2(i, j);
+            b2 = B2(i, j);
 
-            r2 = (*R2)(i, j) / max;
-            g2 = (*G2)(i, j) / max;
-            b2 = (*B2)(i, j) / max;
-
-            rgb2hsl(r2, g2, b2, &h, &s, &l);
+            rgb2hsl(r2, g2, b2, h, s, l);
             l *= sf;
-            hsl2rgb(h, s, l, &r2, &g2, &b2);
-            (*R1)(i, j) = (1.0f - alpha) * r1 +  alpha * r2;
-            (*G1)(i, j) = (1.0f - alpha) * g1 +  alpha * g2;
-            (*B1)(i, j) = (1.0f - alpha) * b1 +  alpha * b2;
+            if (l > maxL) l = maxL;
+
+            hsl2rgb(h, s, l, r2, g2, b2);
+
+            if (r2 > max_rgb) r2 = max_rgb;
+            if (g2 > max_rgb) g2 = max_rgb;
+            if (b2 > max_rgb) b2 = max_rgb;
+
+            if (r2 < 0.0f) r2 = 0.0f;
+            if (g2 < 0.0f) g2 = 0.0f;
+            if (b2 < 0.0f) b2 = 0.0f;
+
+            R1(i, j) = (1.0f - alpha)*r1 + alpha*r2;
+            G1(i, j) = (1.0f - alpha)*g1 + alpha*g2;
+            B1(i, j) = (1.0f - alpha)*b1 + alpha*b2;
         }
-    } 
+    }
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "blend MDR = " << stop_watch.get_time() << " msec" << std::endl;
+    qDebug() << "Max lightness: " << maxL;
 #endif
 }
 
-}
+} // anonymous namespace
 
 HdrCreationManager::HdrCreationManager(bool fromCommandLine) :
     inputType( UNKNOWN_INPUT_TYPE ),
     chosen_config( predef_confs[0] ),
+    m_loadingError(false),
+    m_runningThreads(0),
+    m_processedFiles(0),
     ais( NULL ),
+    m_ais_crop_flag(false),
     m_shift(0),
+    m_mdrWidth(0),
+    m_mdrHeight(0),
     fromCommandLine( fromCommandLine )
+    
 {}
 
 void HdrCreationManager::setConfig(const config_triple &c)
@@ -577,9 +556,9 @@ void HdrCreationManager::setConfig(const config_triple &c)
 
 void HdrCreationManager::setFileList(const QStringList& l)
 {
-    processedFiles = m_shift;
-    runningThreads = 0;
-    loadingError = false;
+    m_processedFiles = m_shift;
+    m_runningThreads = 0;
+    m_loadingError = false;
 
     fileList.append(l);
 
@@ -623,7 +602,7 @@ void HdrCreationManager::loadInputFiles()
     // called in a queued way by newResult(...).
     if (firstNotStarted == -1)
     {
-        if (processedFiles == fileList.size()) //then it's really over
+        if (m_processedFiles == fileList.size()) //then it's really over
         {
             if (filesLackingExif.size() == 0)
             {
@@ -638,7 +617,7 @@ void HdrCreationManager::loadInputFiles()
     } //if all files already started processing
     else
     { //if we still have to start processing some file
-        while ( runningThreads < m_luminance_options.getNumThreads() &&
+        while ( m_runningThreads < m_luminance_options.getNumThreads() &&
                 firstNotStarted < startedProcessing.size() )
         {
             startedProcessing[firstNotStarted] = true;
@@ -653,7 +632,7 @@ void HdrCreationManager::loadInputFiles()
             connect(thread, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
             thread->start();
             firstNotStarted++;
-            runningThreads++;
+            m_runningThreads++;
         }
     }
 }
@@ -661,13 +640,13 @@ void HdrCreationManager::loadInputFiles()
 void HdrCreationManager::loadFailed(const QString& message, int /*index*/)
 {
     //check for correct image size: update list that will be sent once all is over.
-    loadingError = true;
+    m_loadingError = true;
     emit errorWhileLoading(message);
 }
 
 void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotime, const QString& newfname)
 {
-    if (loadingError) {
+    if (m_loadingError) {
         emit processed();
         return;
     }
@@ -677,14 +656,14 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 
     if (inputType == LDR_INPUT_TYPE)
     {
-        loadingError = true;
+        m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 is an 8 bit format (LDR) while the previous ones are not.").arg(newfname));
         return;
     }
     inputType = MDR_INPUT_TYPE;
     if (!mdrsHaveSameSize(R->getWidth(),R->getHeight()))
     {
-        loadingError = true;
+        m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
         return;
     }
@@ -697,9 +676,9 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
     m_mdrWidth = R->getWidth();
     m_mdrHeight = R->getHeight();
     // fill with image data
-    listmdrR[index] = R->getChannelData();
-    listmdrG[index] = G->getChannelData();
-    listmdrB[index] = B->getChannelData();
+    listmdrR[index] = R;
+    listmdrG[index] = G;
+    listmdrB[index] = B;
     //perform some housekeeping
     newResult(index,expotime,newfname);
     //continue with the loading process
@@ -709,21 +688,21 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, const QString& newfname, bool /*ldrtiff*/)
 {
     //qDebug("HCM: ldrReady");
-    if (loadingError)
+    if (m_loadingError)
     {
         emit processed();
         return;
     }
     if (inputType==MDR_INPUT_TYPE)
     {
-        loadingError = true;
+        m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 is an 16 bit format while the previous ones are not.").arg(newfname));
         return;
     }
     inputType=LDR_INPUT_TYPE;
     if (!ldrsHaveSameSize(newImage->width(),newImage->height()))
     {
-        loadingError = true;
+        m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
         return;
     }
@@ -744,8 +723,8 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
 
 void HdrCreationManager::newResult(int index, float expotime, const QString& newfname)
 {
-    runningThreads--;
-    processedFiles++;
+    m_runningThreads--;
+    m_processedFiles++;
 
     //update filesToRemove
     if ( fileList.at(index) != newfname )
@@ -785,13 +764,13 @@ bool HdrCreationManager::ldrsHaveSameSize(int currentWidth, int currentHeight)
     return true;
 }
 
-bool HdrCreationManager::mdrsHaveSameSize(int currentWidth, int currentHeight)
+bool HdrCreationManager::mdrsHaveSameSize(size_t currentWidth, size_t currentHeight)
 {
     for (unsigned int i = 0; i < listmdrR.size(); i++)
     {
-        const pfs::Array2D* Rpointer = listmdrR.at(i);
-        const pfs::Array2D* Gpointer = listmdrG.at(i);
-        const pfs::Array2D* Bpointer = listmdrB.at(i);
+        const pfs::Array2Df* Rpointer = listmdrR.at(i);
+        const pfs::Array2Df* Gpointer = listmdrG.at(i);
+        const pfs::Array2Df* Bpointer = listmdrB.at(i);
         if (Rpointer != NULL && Gpointer != NULL && Bpointer != NULL)
         {
             if ( (Rpointer->getCols() != currentWidth) ||
@@ -816,22 +795,22 @@ void HdrCreationManager::align_with_mtb()
 
 void HdrCreationManager::set_ais_crop_flag(bool flag)
 {
-    ais_crop_flag = flag;
+    m_ais_crop_flag = flag;
 }
 
 void HdrCreationManager::align_with_ais()
 {
     ais = new QProcess(this);
-    if (ais == NULL) //TODO: exit gracefully
-        exit(1);
-    if (!fromCommandLine)
+    if (ais == NULL) exit(1);       //TODO: exit gracefully
+    if (!fromCommandLine) {
         ais->setWorkingDirectory(m_luminance_options.getTempDir());
+    }
     QStringList env = QProcess::systemEnvironment();
-    #ifdef WIN32
+#ifdef WIN32
     QString separator(";");
-    #else
+#else
     QString separator(":");
-    #endif
+#endif
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
     ais->setEnvironment(env);
     connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
@@ -840,22 +819,25 @@ void HdrCreationManager::align_with_ais()
     connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
     
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
-    if (ais_crop_flag){
-        ais_parameters << "-C";
-    }
-    if (filesToRemove[0] == "") {
-        ais_parameters << fileList;
-    }
+
+    if (m_ais_crop_flag) { ais_parameters << "-C"; }
+    if (filesToRemove[0].isEmpty()) { ais_parameters << fileList; }
     else {
-        foreach(QString fname, filesToRemove) 
-            ais_parameters << fname;    
+        // foreach (QString fname, filesToRemove) {
+        // ...using iterators will remove a temporary copy instead than foreach
+        for ( QVector<QString>::const_iterator it = filesToRemove.begin(),
+              itEnd = filesToRemove.end(); it != itEnd; ++it)
+        {
+            ais_parameters << *it;
+        }
     }
     qDebug() << "ais_parameters " << ais_parameters;
-    #ifdef Q_WS_MAC
+#ifdef Q_WS_MAC
+    qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
     ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
-    #else
+#else
     ais->start("align_image_stack", ais_parameters );
-    #endif
+#endif
     qDebug() << "ais started";
 }
 
@@ -905,9 +887,9 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
                 R = newFrame->getChannel("X");
                 G = newFrame->getChannel("Y");
                 B = newFrame->getChannel("Z");
-                listmdrR.push_back(R->getChannelData());
-                listmdrG.push_back(G->getChannelData());
-                listmdrB.push_back(B->getChannelData());
+                listmdrR.push_back(R);
+                listmdrG.push_back(G);
+                listmdrB.push_back(B);
                 if (!fromCommandLine) {
                     mdrImagesList.append(fromHDRPFStoQImage(newFrame));
                     QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
@@ -935,11 +917,10 @@ void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
 
 void HdrCreationManager::removeTempFiles()
 {
-    foreach (QString tempfname, filesToRemove)
-    {
-        qDebug() << "void HdrCreationManager::removeTempFiles(): " << qPrintable(tempfname);
-        if (!tempfname.isEmpty())
-        {
+    foreach (QString tempfname, filesToRemove) {
+        qDebug() << "void HdrCreationManager::removeTempFiles(): "
+                 << qPrintable(tempfname);
+        if (!tempfname.isEmpty()) {
             QFile::remove(tempfname);
         }
     }
@@ -1021,7 +1002,7 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
     }
     if (listmdrR.size()!=0 && listmdrG.size()!=0 && listmdrB.size()!=0)
     {
-        Array2DList::iterator itR=listmdrR.begin(), itG=listmdrG.begin(), itB=listmdrB.begin();
+        Array2DfList::iterator itR=listmdrR.begin(), itG=listmdrG.begin(), itB=listmdrB.begin();
         for (; itR!=listmdrR.end(); itR++,itG++,itB++ )
         {
             delete *itR;
@@ -1054,29 +1035,45 @@ void HdrCreationManager::makeSureLDRsHaveAlpha()
     }
 }
 
-void HdrCreationManager::applyShiftsToImageStack(const QList< QPair<int,int> > HV_offsets)
+void HdrCreationManager::applyShiftsToImageStack(const QList<QPair<int,int> >& hvOffsets)
 {
     int originalsize = ldrImagesList.count();
     //shift the images
-    for (int i = 0; i < originalsize; i++) {
-        if (HV_offsets[i].first == HV_offsets[i].second && HV_offsets[i].first == 0)
+    for (int i = 0; i < originalsize; i++)
+    {
+        if ( hvOffsets[i].first == hvOffsets[i].second &&
+             hvOffsets[i].first == 0 )
+        {
             continue;
-        QImage *shifted = shiftQImage(ldrImagesList[i], HV_offsets[i].first, HV_offsets[i].second);
+        }
+        QImage *shifted = shiftQImage(ldrImagesList[i],
+                                      hvOffsets[i].first,
+                                      hvOffsets[i].second);
         delete ldrImagesList.takeAt(i);
         ldrImagesList.insert(i, shifted);
     }
 }
 
-void HdrCreationManager::applyShiftsToMdrImageStack(const QList< QPair<int,int> > HV_offsets)
+void HdrCreationManager::applyShiftsToMdrImageStack(const QList<QPair<int,int> >& hvOffsets)
 {
     qDebug() << "HdrCreationManager::applyShiftsToMdrImageStack";
     int originalsize = mdrImagesList.count();
-    for (int i = 0; i < originalsize; i++) {
-        if (HV_offsets[i].first == HV_offsets[i].second && HV_offsets[i].first == 0)
+    for (int i = 0; i < originalsize; i++)
+    {
+        if ( hvOffsets[i].first == hvOffsets[i].second &&
+             hvOffsets[i].first == 0 )
+        {
             continue;
-        pfs::Array2D *shiftedR = shiftPfsArray2D(listmdrR[i], HV_offsets[i].first, HV_offsets[i].second);
-        pfs::Array2D *shiftedG = shiftPfsArray2D(listmdrG[i], HV_offsets[i].first, HV_offsets[i].second);
-        pfs::Array2D *shiftedB = shiftPfsArray2D(listmdrB[i], HV_offsets[i].first, HV_offsets[i].second);
+        }
+        pfs::Array2Df *shiftedR = shift(*listmdrR[i],
+                                        hvOffsets[i].first,
+                                        hvOffsets[i].second);
+        pfs::Array2Df *shiftedG = shift(*listmdrG[i],
+                                        hvOffsets[i].first,
+                                        hvOffsets[i].second);
+        pfs::Array2Df *shiftedB = shift(*listmdrB[i],
+                                        hvOffsets[i].first,
+                                        hvOffsets[i].second);
         delete listmdrR[i];
         delete listmdrG[i];
         delete listmdrB[i];
@@ -1087,7 +1084,7 @@ void HdrCreationManager::applyShiftsToMdrImageStack(const QList< QPair<int,int> 
 }
 
 
-void HdrCreationManager::cropLDR(const QRect ca)
+void HdrCreationManager::cropLDR(const QRect& ca)
 {
     //crop all the images
     int origlistsize = ldrImagesList.size();
@@ -1101,23 +1098,56 @@ void HdrCreationManager::cropLDR(const QRect ca)
     cropAgMasks(ca);
 }
 
-void HdrCreationManager::cropMDR(const QRect ca)
+void HdrCreationManager::cropMDR(const QRect& ca)
 {
-    //crop all the images
+    int x_ul, y_ul, x_br, y_br;
+    ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+
+    int newWidth = x_br-x_ul;
+    int newHeight = y_br-y_ul;
+
+    /*
+    // crop all the images
     int origlistsize = listmdrR.size();
     pfs::Frame *frame;
     pfs::Channel *Xc, *Yc, *Zc;
     pfs::Frame *cropped_frame;
-    for (int idx = 0; idx < origlistsize; idx++)
+    */
+
+    // all R channels
+    for ( size_t idx = 0; idx < listmdrR.size(); ++idx )
     {
+        pfs::Array2Df tmp( newWidth, newHeight );
+        pfs::cut(listmdrR[idx], &tmp, x_ul, y_ul, x_br, y_br);
+        listmdrR[idx]->swap( tmp );
+    }
+
+    // all G channels
+    for ( size_t idx = 0; idx < listmdrG.size(); ++idx )
+    {
+        pfs::Array2Df tmp( newWidth, newHeight );
+        pfs::cut(listmdrG[idx], &tmp, x_ul, y_ul, x_br, y_br);
+        listmdrG[idx]->swap( tmp );
+    }
+
+    // all B channel
+    for ( size_t idx = 0; idx < listmdrB.size(); ++idx )
+    {
+        pfs::Array2Df tmp( newWidth, newHeight );
+        pfs::cut(listmdrB[idx], &tmp, x_ul, y_ul, x_br, y_br);
+        listmdrB[idx]->swap( tmp );
+    }
+
+    for ( int idx = 0; idx < mdrImagesList.size(); ++idx )
+    {
+        /*
         frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
         frame->createXYZChannels( Xc, Yc, Zc );
-        Xc->setChannelData(listmdrR[idx]);  
-        Yc->setChannelData(listmdrG[idx]);  
-        Zc->setChannelData(listmdrB[idx]);  
-        int x_ul, y_ul, x_br, y_br;
-        ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
-        cropped_frame = pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
+        Xc->setChannelData(listmdrR[idx]);
+        Yc->setChannelData(listmdrG[idx]);
+        Zc->setChannelData(listmdrB[idx]);
+
+        cropped_frame = pfs::cut(frame, x_ul, y_ul, x_br, y_br);
 
         pfs::DOMIO::freeFrame(frame);
 
@@ -1126,18 +1156,20 @@ void HdrCreationManager::cropMDR(const QRect ca)
         listmdrR[idx] = R->getChannelData();
         listmdrG[idx] = G->getChannelData();
         listmdrB[idx] = B->getChannelData();
+        */
+
         QImage *newimage = new QImage(mdrImagesList.at(0)->copy(ca));
         if (newimage == NULL)
             exit(1); // TODO: exit gracefully
         mdrImagesList.append(newimage);
         mdrImagesToRemove.append(mdrImagesList.takeAt(0));
-        QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
+        QImage *img = new QImage(newWidth, newHeight, QImage::Format_ARGB32);
         img->fill(qRgba(0,0,0,0));
         antiGhostingMasksList.append(img);
         antiGhostingMasksList.takeAt(0);
     }
-    m_mdrWidth = cropped_frame->getWidth();
-    m_mdrHeight = cropped_frame->getHeight();
+    m_mdrWidth = newWidth;
+    m_mdrHeight = newHeight;
     cropAgMasks(ca);
 }
 
@@ -1162,15 +1194,15 @@ void HdrCreationManager::remove(int index)
         break;
     case MDR_INPUT_TYPE:
     {
-            Array2DList::iterator itR = listmdrR.begin() + index;
+            Array2DfList::iterator itR = listmdrR.begin() + index;
             delete *itR;
             listmdrR.erase(itR);
 
-            Array2DList::iterator itG = listmdrG.begin() + index;
+            Array2DfList::iterator itG = listmdrG.begin() + index;
             delete *itG;
             listmdrG.erase(itG);
 
-            Array2DList::iterator itB = listmdrB.begin() + index;
+            Array2DfList::iterator itB = listmdrB.begin() + index;
             delete *itB;
             listmdrB.erase(itB);
             
@@ -1199,18 +1231,60 @@ void HdrCreationManager::readData()
     emit aisDataReady(data);
 }
 
-void HdrCreationManager::saveLDRs(const QString filename)
+namespace {
+
+inline float toFloat(int value) {
+    return (static_cast<float>(value)/255.f);
+}
+
+void interleavedToPlanar(const QImage* image,
+                         pfs::Array2Df* r, pfs::Array2Df* g, pfs::Array2Df* b)
+{
+    for (int row = 0; row < image->height(); ++row)
+    {
+        const QRgb* data = reinterpret_cast<const QRgb*>(image->scanLine(row));
+        pfs::Array2Df::iterator itRed = r->row_begin(row);
+        pfs::Array2Df::iterator itGreen = g->row_begin(row);
+        pfs::Array2Df::iterator itBlue = g->row_begin(row);
+
+        for ( int col = 0; col < image->width(); ++col )
+        {
+            *itRed++ = toFloat(qRed(*data));
+            *itGreen++ = toFloat(qGreen(*data));
+            *itBlue++ = toFloat(qBlue(*data));
+
+            ++data;
+        }
+    }
+}
+} // anonymous namespace
+
+void HdrCreationManager::saveLDRs(const QString& filename)
 {
 #ifdef QT_DEBUG
     qDebug() << "HdrCreationManager::saveLDRs";
 #endif
 
-    int origlistsize = ldrImagesList.size();
-    for (int idx = 0; idx < origlistsize; idx++)
+    for (int idx = 0, origlistsize = ldrImagesList.size(); idx < origlistsize;
+         ++idx)
     {
+        QImage* currentImage = ldrImagesList[idx];
+
         QString fname = filename + QString("_%1").arg(idx) + ".tiff";
-        TiffWriter writer(QFile::encodeName(fname).constData(), ldrImagesList[idx]);
-        writer.write8bitTiff();
+
+        pfs::Frame frame(currentImage->width(), currentImage->height());
+        pfs::Channel* R;
+        pfs::Channel* G;
+        pfs::Channel* B;
+        frame.createXYZChannels(R, G, B);
+        interleavedToPlanar(currentImage, R, G, B);
+
+        TiffWriter writer(QFile::encodeName(fname).constData());
+        writer.write( frame, pfs::Params("tiff_mode", 1) );
+
+        // DAVIDE_TIFF
+        // TiffWriter writer(QFile::encodeName(fname).constData(), ldrImagesList[idx]);
+        // writer.write8bitTiff();
 
         QFileInfo qfi(filename);
         QString absoluteFileName = qfi.absoluteFilePath();
@@ -1220,7 +1294,7 @@ void HdrCreationManager::saveLDRs(const QString filename)
     emit imagesSaved();
 }
 
-void HdrCreationManager::saveMDRs(const QString filename)
+void HdrCreationManager::saveMDRs(const QString& filename)
 {
 #ifdef QT_DEBUG
     qDebug() << "HdrCreationManager::saveMDRs";
@@ -1230,19 +1304,46 @@ void HdrCreationManager::saveMDRs(const QString filename)
     for (int idx = 0; idx < origlistsize; idx++)
     {
         QString fname = filename + QString("_%1").arg(idx) + ".tiff";
-        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
-        pfs::Channel *Xc, *Yc, *Zc;
-        frame->createXYZChannels( Xc, Yc, Zc );
-        Xc->setChannelData(listmdrR[idx]);  
-        Yc->setChannelData(listmdrG[idx]);  
-        Zc->setChannelData(listmdrB[idx]);  
-        TiffWriter writer(QFile::encodeName(fname).constData(), frame);
-        writer.writePFSFrame16bitTiff();
+
+//        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
+//        pfs::Channel *Xc, *Yc, *Zc;
+//        frame->createXYZChannels( Xc, Yc, Zc );
+//        Xc->setChannelData(listmdrR[idx]);
+//        Yc->setChannelData(listmdrG[idx]);
+//        Zc->setChannelData(listmdrB[idx]);
+
+//        TiffWriter writer(, frame);
+//        writer.writePFSFrame16bitTiff();
+
+        pfs::Frame frame( m_mdrWidth, m_mdrHeight );
+        pfs::Channel* R;
+        pfs::Channel* G;
+        pfs::Channel* B;
+        frame.createXYZChannels(R, G, B);
+
+        pfs::copy(listmdrR[idx], R);
+        pfs::copy(listmdrG[idx], G);
+        pfs::copy(listmdrB[idx], B);
+
+        TiffWriter writer( QFile::encodeName(fname).constData() );
+        // tiff_mode = 2 (16 bit tiff)
+        // min_luminance = 0
+        // max_luminance = 2^16 - 1
+        // note: this is due to the fact the reader do read the native
+        // data into float, without doing any conversion into the [0, 1] range
+        // (definitely something to think about when we touch the readers)
+        writer.write(frame,
+                     pfs::Params("tiff_mode", 2)
+                        ("min_luminance", (float)0)
+                        ("max_luminance", (float)65535) );
 
         QFileInfo qfi(filename);
         QString absoluteFileName = qfi.absoluteFilePath();
-        QByteArray encodedName = QFile::encodeName(absoluteFileName + QString("_%1").arg(idx) + ".tiff");
-        ExifOperations::copyExifData(QFile::encodeName(fileList[idx]).constData(), encodedName.constData(), false);
+        QByteArray encodedName = QFile::encodeName(
+                    absoluteFileName + QString("_%1").arg(idx) + ".tiff");
+        ExifOperations::copyExifData(
+                    QFile::encodeName(fileList[idx]).constData(),
+                    encodedName.constData(), false);
     }
     emit imagesSaved();
 }
@@ -1250,25 +1351,38 @@ void HdrCreationManager::saveMDRs(const QString filename)
 void HdrCreationManager::doAntiGhosting(int goodImageIndex)
 {
     qDebug() << "HdrCreationManager::doAntiGhosting";
-    if (inputType == LDR_INPUT_TYPE) {
+    if (inputType == LDR_INPUT_TYPE)
+    {
         int origlistsize = ldrImagesList.size();
-        for (int idx = 0; idx < origlistsize; idx++) {
-            if (idx == goodImageIndex) continue;
-            blend(ldrImagesList[idx], ldrImagesList[goodImageIndex], antiGhostingMasksList[idx]);
+        for (int idx = 0; idx < origlistsize; idx++)
+        {
+            if (idx != goodImageIndex)
+            {
+                blend(*ldrImagesList[idx],
+                      *ldrImagesList[goodImageIndex],
+                      *antiGhostingMasksList[idx],
+                      *antiGhostingMasksList[goodImageIndex]);
+            }
         }
     }
     else {
         int origlistsize = listmdrR.size();
-        for (int idx = 0; idx < origlistsize; idx++) {
-            if (idx == goodImageIndex) continue;
-            blend(listmdrR[idx], listmdrG[idx], listmdrB[idx], 
-                listmdrR[goodImageIndex], listmdrG[goodImageIndex], listmdrB[goodImageIndex],
-                antiGhostingMasksList[idx]);
+        for (int idx = 0; idx < origlistsize; idx++)
+        {
+            if (idx != goodImageIndex)
+            {
+                blend(*listmdrR[idx], *listmdrG[idx], *listmdrB[idx],
+                      *listmdrR[goodImageIndex],
+                      *listmdrG[goodImageIndex],
+                      *listmdrB[goodImageIndex],
+                      *antiGhostingMasksList[idx],
+                      *antiGhostingMasksList[goodImageIndex]);
+            }
         }
-    }       
+    }
 }
 
-void HdrCreationManager::cropAgMasks(QRect ca) {
+void HdrCreationManager::cropAgMasks(const QRect& ca) {
     int origlistsize = antiGhostingMasksList.size();
     for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
         QImage *newimage = new QImage(antiGhostingMasksList.at(0)->copy(ca));
@@ -1279,28 +1393,29 @@ void HdrCreationManager::cropAgMasks(QRect ca) {
     }
 }
 
-void HdrCreationManager::doAutoAntiGhosting(float ghostingValue, float threshold)
+void HdrCreationManager::doAutoAntiGhosting(float threshold)
 {
-    const int gridSize = 40;
-    int size = listmdrR.size(); 
+    const int size = listmdrR.size(); 
     float HE[size];
-    int width = listmdrR.at(0)->getCols();
-    int height = listmdrR.at(0)->getRows();
-    int gridX = width / gridSize;
-    int gridY = height / gridSize;
-
-//    for (int i = 0; i < size; i++) 
-//        normalize(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i));
+    const int width = listmdrR.at(0)->getCols();
+    const int height = listmdrR.at(0)->getRows();
+    const int gridX = width / gridSize;
+    const int gridY = height / gridSize;
 
     float avgLightness[size];
+    bool patches[gridSize][gridSize];
+    
+    for (int i = 0; i < gridSize; i++)
+        for (int j = 0; j < gridSize; j++)
+            patches[i][j] = false;
 
     for (int i = 0; i < size; i++) {
-        avgLightness[i] = averageLightness(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i)); 
+        avgLightness[i] = averageLightness(*listmdrR.at(i), *listmdrG.at(i), *listmdrB.at(i)); 
         qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
     }
 
     for (int i = 0; i < size; i++)
-        transformFromRgbToHsl(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i));
+        transformFromRgbToHsl(*listmdrR.at(i), *listmdrG.at(i), *listmdrB.at(i));
 
     for (int i = 0; i < size; i++) { 
         HE[i] = hueSquaredMean(listmdrR, i);
@@ -1312,42 +1427,35 @@ void HdrCreationManager::doAutoAntiGhosting(float ghostingValue, float threshold
     float scaleFactor[size];
 
     for (int i = 0; i < size; i++) {
-        scaleFactor[i] = avgLightness[h0] / avgLightness[i];        
+        scaleFactor[i] = avgLightness[i] / avgLightness[h0];        
     }
 
     qDebug() << "h0: " << h0;
 
     for (int i = 0; i < size; i++) 
-        transformFromHslToRgb(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i));
-/*
-    for (int i = 0; i < width*height; i++) {
-        float deltaEV = logf(expotimes.at(2)) - logf(expotimes.at(1));
-        if (deltaEV < 0)
-            deltaEV *= -1.0f;
-        qDebug() << logf((*listmdrB.at(1))(i)) - logf((*listmdrB.at(2))(i)) + deltaEV;
-    }
-*/
-    int count = 0;
+        transformFromHslToRgb(*listmdrR.at(i), *listmdrG.at(i), *listmdrB.at(i));
+
     for (int h = 0; h < size; h++) {
         if (h == h0) 
             continue;
         for (int j = 0; j < gridSize; j++) {
             for (int i = 0; i < gridSize; i++) {
                     float deltaEV = logf(expotimes.at(h0)) - logf(expotimes.at(h));
-                    if (comparePatches(listmdrR.at(h0), listmdrG.at(h0), listmdrB.at(h0),
-                                       listmdrR.at(h), listmdrG.at(h), listmdrB.at(h),
-                                       i, j, gridX, gridY, ghostingValue, threshold, deltaEV)) {
-                        copyPatch(listmdrR.at(h0), listmdrG.at(h0), listmdrB.at(h0),
-                                  listmdrR.at(h), listmdrG.at(h), listmdrB.at(h),
-                                  i, j, gridX, gridY, scaleFactor[h]);
-                        count++;
-                        qDebug() << "copyPatch (" << i << "," << j << ")";
+                    if (comparePatches(*listmdrR.at(h0), *listmdrG.at(h0), *listmdrB.at(h0),
+                                       *listmdrR.at(h), *listmdrG.at(h), *listmdrB.at(h),
+                                       i, j, gridX, gridY, threshold, deltaEV)) {
+                        patches[i][j] = true;
                     }
             }                      
         }
     }
-    qDebug() << "Copied patches: " << count;
-//    for (int i = 0; i < size; i++) 
-//        rescale(listmdrR.at(i), listmdrG.at(i), listmdrB.at(i));
+
+    int count = 0;
+    for (int i = 0; i < gridSize; i++)
+        for (int j = 0; j < gridSize; j++)
+            if (patches[i][j] == true)
+                count++;
+    qDebug() << "Copied patches: " << static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f << "%";
+    copyPatches(listmdrR, listmdrG, listmdrB, patches, h0, scaleFactor, gridX, gridY);
 }
 

@@ -23,9 +23,9 @@
 
 #include "ProjectionsDialog.h"
 #include "ui_ProjectionsDialog.h"
-#include "Filter/pfspanoramic.h"
+
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
+#include "Libpfs/manip/projection.h"
 
 ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
     QDialog(parent),
@@ -93,28 +93,18 @@ void ProjectionsDialog::okClicked()
 {
 	qDebug("Projective Transformation from %s to %s", transforminfo->srcProjection->getName(), transforminfo->dstProjection->getName());
 
-    // TODO
-	pfs::Channel *R,*G,*B;
-	//original->getRGBChannels( R,G,B );
-	R = original->getChannel("R");
-	G = original->getChannel("G");
-	B = original->getChannel("B");
-	int xSize=original->getWidth();
-	int ySize=(int)(xSize / transforminfo->dstProjection->getSizeRatio());
-    transformed = pfs::DOMIO::createFrame( xSize,ySize );
+    int xSize = original->getWidth();
+    int ySize = static_cast<int>(xSize / transforminfo->dstProjection->getSizeRatio());
+    transformed = new pfs::Frame( xSize,ySize );
 
     const pfs::ChannelContainer& channels = original->getChannels();
 
     for (pfs::ChannelContainer::const_iterator it = channels.begin();
-         it != channels.end();
-         ++it)
+         it != channels.end(); ++it)
     {
-        const pfs::Channel *originalCh = *it;
-        pfs::Channel *newCh = transformed->createChannel( originalCh->getName() );
+        pfs::Channel *newCh = transformed->createChannel( (*it)->getName() );
 
-        transformArray(originalCh->getChannelData(),
-                       newCh->getChannelData(),
-                       transforminfo);
+        transformArray(*it, newCh, transforminfo);
     }
 
 	pfs::copyTags( original, transformed );

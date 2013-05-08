@@ -31,19 +31,21 @@
 #include <QDebug>
 
 #include <cmath>
-#include <assert.h>
+#include <cassert>
 #include "arch/math.h"
 
 #include "Common/global.h"
-#include "Common/msec_timer.h"
-#include "Common/FloatRgbToQRgb.h"
+
+
 #include "Viewers/IGraphicsPixmapItem.h"
+#include "Viewers/LuminanceRangeWidget.h"
+
 #include "Libpfs/array2d.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/domio.h"
-#include "Viewers/LuminanceRangeWidget.h"
-#include "Libpfs/vex.h"
+#include "Libpfs/vex/sse.h"
+#include "Libpfs/utils/msec_timer.h"
+#include "Libpfs/colorspace/rgbremapper.h"
 
 namespace // anonymous namespace
 {
@@ -51,9 +53,9 @@ namespace // anonymous namespace
 // In this way, we let know the compiler it can mess up as much as it wants with the code,
 // because it will only used inside this compilation unit
 
-const pfs::Array2D* getPrimaryChannel(const pfs::Frame& frame)
+const pfs::Array2Df* getPrimaryChannel(const pfs::Frame& frame)
 {
-    return frame.getChannel("Y")->getChannelData();
+    return frame.getChannel("Y");
 }
 
 } // end anonymous namespace
@@ -75,7 +77,7 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns,
     m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
     m_lumRange->fitToDynamicRange();
 
-    m_mappingMethod = static_cast<LumMappingMethod>( m_mappingMethodCB->currentIndex() );
+    m_mappingMethod = static_cast<RGBMappingType>( m_mappingMethodCB->currentIndex() );
     m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
     m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
 
@@ -186,7 +188,7 @@ int HdrViewer::getLumMappingMethod()
 void HdrViewer::setLumMappingMethod( int method )
 {
     m_mappingMethodCB->setCurrentIndex( method );
-    m_mappingMethod = static_cast<LumMappingMethod>(method);
+    m_mappingMethod = static_cast<RGBMappingType>(method);
 
     refreshPixmap();
 }
@@ -225,7 +227,7 @@ float HdrViewer::getMinLuminanceValue()
     return m_minValue;
 }
 
-LumMappingMethod HdrViewer::getLuminanceMappingMethod()
+RGBMappingType HdrViewer::getLuminanceMappingMethod()
 {
     return m_mappingMethod;
 }
@@ -242,19 +244,20 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
     in_frame->getXYZChannels( ChR, ChG, ChB );
     assert( ChR != NULL && ChG != NULL && ChB != NULL);
 
-    const float* R = ChR->getChannelData()->getRawData();
-    const float* G = ChG->getChannelData()->getRawData();
-    const float* B = ChB->getChannelData()->getRawData();
+    const float* R = ChR->data();
+    const float* G = ChG->data();
+    const float* B = ChB->data();
 
     assert( R != NULL && G != NULL && B != NULL );
 
     QImage return_qimage(in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);
     QRgb *pixels = reinterpret_cast<QRgb*>(return_qimage.bits());
 
-    FloatRgbToQRgb converter(m_minValue, m_maxValue, m_mappingMethod);
+    RGBRemapper rgbRemapper(m_minValue, m_maxValue, m_mappingMethod);
 
+    int indexEnd = in_frame->getWidth()*in_frame->getHeight();
 #pragma omp parallel for
-    for ( int index = 0; index < in_frame->getWidth()*in_frame->getHeight(); ++index )
+    for ( int index = 0; index < indexEnd; ++index )
     {
         if ( !finite( R[index] ) || !finite( G[index] ) || !finite( B[index] ) )   // x is NaN or Inf
         {
@@ -266,7 +269,7 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
         }
         else
         {
-            converter.toQRgb(R[index], G[index], B[index], pixels[index]);
+            rgbRemapper.toQRgb(R[index], G[index], B[index], pixels[index]);
         }
     }
 

@@ -48,8 +48,8 @@ public slots:
 	void update_widthSpinBox();
 	void defaultpressed();
 private:
-	pfs::Frame *original;
-	pfs::Frame *resized;
+	pfs::Frame* m_original;
+	pfs::Frame* m_resized;
 	int orig_width,orig_height;
 	int resized_width,resized_height;
 	void updatelabel();

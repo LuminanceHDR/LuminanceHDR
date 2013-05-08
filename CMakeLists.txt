@@ -1,29 +1,23 @@
-PROJECT(luminance-hdr)
+PROJECT("Luminance HDR") # luminance-hdr)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 
 # set include path for FindXXX.cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-# Global variable for CMake
-INCLUDE(CMakeGlobal.txt)
-
-IF(NOT CMAKE_BUILD_TYPE)
-    SET(CMAKE_BUILD_TYPE "RelWithDebInfo" )
-ENDIF()
-
-# MESSAGE(${CMAKE_BUILD_TYPE})
-
-IF(${CMAKE_BUILD_TYPE} STREQUAL "Release" OR ${CMAKE_BUILD_TYPE} STREQUAL "MinSizeRel")
-ADD_DEFINITIONS("-DQT_NO_DEBUG_OUTPUT")
-ENDIF()
+# Global variables for CMake
+include(cmake/Version.cmake)
+include(cmake/GlobalSettings.cmake)
+include(cmake/CompilerSettings.cmake)
+include(cmake/Internationalization.cmake)
 
 # find and setup Qt4 for this project
-FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit QtSql REQUIRED)
+FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit QtSql QtNetwork REQUIRED)
 
 # add Qt modules here, the include will setup QT_LIBRARIES
 SET(QT_USE_QTXML TRUE)
 SET(QT_USE_QTWEBKIT TRUE)
 SET(QT_USE_QTSQL TRUE)
+SET(QT_USE_QTNETWORK TRUE)
 
 # Include the qtmain lib if we are on the windows platform
 IF(WIN32)
@@ -34,26 +28,14 @@ ENDIF(WIN32)
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
-set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
+set(LIBS ${LIBS}
+    ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTNETWORK_LIBRARIES}
+    ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
 
 FIND_PACKAGE(Git)
-#FIND_PACKAGE(Git QUIET)
-IF(NOT GIT_FOUND)
-    FIND_FILE(GIT_EXECUTABLE git.exe 
-        $ENV{CYGWIN_DIR}\\bin
-        $ENV{CYGWIN_DIR}
-    )
-    IF (EXISTS ${GIT_EXECUTABLE})
-        SET(GIT_FOUND 1)
-    ENDIF()
-ENDIF()
-
 IF(GIT_FOUND)
     include(GetGitRevisionDescription)
     get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-    message(STATUS "Git found")
-ELSE()
-    message(STATUS "Git not found")
 ENDIF()
 
 IF(WIN32)
@@ -63,15 +45,12 @@ IF(WIN32)
     ADD_DEFINITIONS(-DNOMINMAX)
     
     SET(OPENEXR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/OpenEXR")
-    SET(TIFF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libtiff")
     SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
     SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
     SET(GSL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
     SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
-    SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
     SET(LCMS2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
     SET(JPEGLIB_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libjpeg")
-    SET(LIBPNG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libpng")
 
     # Enable multi processor compilation
     ADD_DEFINITIONS(/MP)
@@ -86,16 +65,16 @@ IF(WIN32)
     ADD_DEFINITIONS(/Zc:wchar_t-)
 	
     ADD_DEFINITIONS(-DUNICODE )
-    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
+    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_REENTRANT)
     SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
-    ADD_DEFINITIONS(-DHAVE_FFTW3F)
 	
-    SET(OPENEXR_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Half.lib")
+    SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Half.lib")
     SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Iex.lib")
     SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/IlmImf.lib")
-	
-    SET(TIFF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libtiff/libtiff.lib")
-	
+    SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/IlmThread.lib")
+    SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Imath.lib")
+    SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/IexMath.lib")
+    
     SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
     ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
     ADD_DEFINITIONS("-DDEMOSAICING_GPL3")
@@ -103,50 +82,40 @@ IF(WIN32)
     SET(GSL_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/gsl.lib")
     SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
 	
-    SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
-    #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
-    #SET(LCMS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms.lib")
     SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2_dll.lib")
-    #ADD_DEFINITIONS(-DLCMS_DLL)
     ADD_DEFINITIONS(-DCMS_DLL)
     ADD_DEFINITIONS(-DUSE_LCMS2)
-    
-    SET(LIBPNG_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libpng/libpng15.lib")
-    
 ELSE()
-    IF(APPLE)
-    # optimize for 64-bit core 2 architecture on apple
-    ADD_DEFINITIONS(-march=core2)
-    # ELSE()
-    # optimize for 64-bit prescott architecture on unix
-    # ADD_DEFINITIONS(-march=nocona)
-    ENDIF()
-
     # Unix & Apple part
     FIND_PACKAGE(OpenEXR REQUIRED)
-    FIND_PACKAGE(TIFF REQUIRED)
     FIND_PACKAGE(LibRAW REQUIRED)
     FIND_PACKAGE(fftwf REQUIRED)
     FIND_PACKAGE(GSL REQUIRED)
-    FIND_PACKAGE(exiv2 REQUIRED)
     FIND_PACKAGE(libjpeg REQUIRED)
     FIND_PACKAGE(lcms2 REQUIRED)
-    FIND_PACKAGE(libpng REQUIRED)
 
 ENDIF()
+
 
 FIND_PACKAGE(Boost REQUIRED)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
-INCLUDE_DIRECTORIES(${OPENEXR_INCLUDE_DIR} "${OPENEXR_INCLUDE_DIR}/OpenEXR")
+FIND_PACKAGE(exiv2 REQUIRED)
+INCLUDE_DIRECTORIES(${EXIV2_INCLUDE_DIR} "${EXIV2_INCLUDE_DIR}/exiv2")
+
+FIND_PACKAGE(TIFF REQUIRED)
 INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIR})
+
+FIND_PACKAGE(PNG REQUIRED)
+INCLUDE_DIRECTORIES(${PNG_INCLUDE_DIR})
+
+INCLUDE_DIRECTORIES(${OPENEXR_INCLUDE_DIR} "${OPENEXR_INCLUDE_DIR}/OpenEXR")
 INCLUDE_DIRECTORIES(${LIBRAW_INCLUDE_DIR} "${LIBRAW_INCLUDE_DIR}/libraw")
 INCLUDE_DIRECTORIES(${FFTWF_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${GSL_INCLUDE_DIR} ${GSLCBLAS_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(${EXIV2_INCLUDE_DIR} "${EXIV2_INCLUDE_DIR}/exiv2")
+
 INCLUDE_DIRECTORIES(${JPEGLIB_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${LCMS2_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(${LIBPNG_INCLUDE_DIR})
 
 SET(LIBS ${LIBS} ${OPENEXR_LIBRARIES})
 SET(LIBS ${LIBS} ${TIFF_LIBRARIES})
@@ -157,26 +126,10 @@ SET(LIBS ${LIBS} ${GSL_LIBRARIES} ${GSLCBLAS_LIBRARIES})
 SET(LIBS ${LIBS} ${EXIV2_LIBRARIES})
 SET(LIBS ${LIBS} ${JPEGLIB_LIBRARIES})
 SET(LIBS ${LIBS} ${LCMS2_LIBRARIES})
-SET(LIBS ${LIBS} ${LIBPNG_LIBRARIES})
-
-#OpenMP Support under Linux, Windows with MSVC & MacOS X with GCC >= 4.3
-IF(MSVC)
-    FIND_PACKAGE(OpenMP REQUIRED)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-ELSEIF(CMAKE_COMPILER_IS_GNUCC AND UNIX)
-    EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
-    #MESSAGE(STATUS ${GCC_VERSION})
-    IF(GCC_VERSION VERSION_GREATER 4.3 OR GCC_VERSION VERSION_EQUAL 4.3)
-        MESSAGE(STATUS "GCC >= 4.3")
-        FIND_PACKAGE(OpenMP REQUIRED)
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    ENDIF()
-ENDIF()
-# END OpenMP Support
+SET(LIBS ${LIBS} ${PNG_LIBRARIES})
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/")
+INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/src/")
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(LUMINANCE_HDR_H )
@@ -226,44 +179,55 @@ SET(LUMINANCE_FILES
 
 # Apple Mac OS X
 IF(APPLE)
-    # TODO
-    # 1. copy help under Resources/help
-    # 2. copy html under Resources/html
-    # 3. deployment align_image_stack
+    SET(CMAKE_INSTALL_PREFIX "/Applications")
 
-    CONFIGURE_FILE(
-    ${CMAKE_SOURCE_DIR}/build/macosx/create-dmg.sh
-    ${CMAKE_BINARY_DIR}/create-dmg.sh)
+    # Set Bundle settings
+    set(MACOSX_BUNDLE_INFO_STRING "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_BUNDLE_VERSION "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_LONG_VERSION_STRING "${LHDR_NAME} ${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_VERSION "${LHDR_VERSION}")
+    set(MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    set(MACOSX_BUNDLE_ICON "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    set(MACOSX_BUNDLE_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources")
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER "${LHDR_DOMAIN_SECOND}.${LHDR_DOMAIN_FIRST}")
+    set(MACOSX_BUNDLE_BUNDLE_NAME "${LHDR_NAME}")
 
-    CONFIGURE_FILE(
-    ${CMAKE_SOURCE_DIR}/build/macosx/deploy-cli.sh
-    ${CMAKE_BINARY_DIR}/deploy-cli.sh)
+    configure_file( ${CMAKE_SOURCE_DIR}/build/macosx/Info.plist.in
+                    ${CMAKE_BINARY_DIR}/Info.plist )
+    configure_file( ${CMAKE_SOURCE_DIR}/build/macosx/create-dmg.sh.in
+                    ${CMAKE_BINARY_DIR}/create-dmg.sh )
 
     FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) # ${QT_TRANSLATIONS_DIR}/qt_*.qm)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
 
     # icon files to copy in the bundle
-    SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    SET(OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    # include the icns files in the target
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
+
+    # Build project
+    # SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
+    ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES}) # luminance-hdr
+    set_property(TARGET ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTY OUTPUT_NAME ${LHDR_OSX_EXECUTABLE_NAME})
+    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
+  
+    SET_TARGET_PROPERTIES( ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTIES MACOSX_BUNDLE_INFO_PLIST
+                           "${CMAKE_BINARY_DIR}/Info.plist" )
+
     # set where in the bundle to put the icns files
     SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     # set where in the bundle to put the translation files
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
     SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QT_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
 
-    # include the icns files in the target
-    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
+    INSTALL(TARGETS ${LHDR_OSX_EXECUTABLE_TARGET} luminance-hdr-cli
+            BUNDLE DESTINATION . COMPONENT Runtime
+            RUNTIME DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS COMPONENT Runtime)
 
-    SET( PROGNAME luminance-hdr )
-    SET( MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns" )
-    SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 2.3.0 )
-    SET( MACOSX_BUNDLE_VERSION 2.3.0 )
-    SET( MACOSX_BUNDLE_LONG_VERSION_STRING Luminance HDR 2.3.0 )
-    #SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
-
-    ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})
-    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
-  
-    SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
+    # Link libraries
+    TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} ${LUMINANCE_MODULES_GUI} ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
 # Unix
 ELSEIF(UNIX)
     FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm)
@@ -271,6 +235,12 @@ ELSEIF(UNIX)
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
+
+    # link libraries
+    TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
+    TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})
 
     # make install directivies
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
@@ -296,6 +266,10 @@ ELSEIF(WIN32)
     ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
   
+    # Link libraries
+    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS})
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
+
     # copies all necessary Qt dlls from the Qt binary dir to the output folder
     SET(QT_RELEASE_DLLS
         phonon4.dll
@@ -329,14 +303,5 @@ ELSEIF(WIN32)
     FILE(COPY ${QtI18nAll} DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/i18n/")
 ENDIF()
 
-# Link sub modules
-IF(MSVC OR APPLE)
-    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI})
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI})
-ELSE()
-    TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
-    TARGET_LINK_LIBRARIES(luminance-hdr-cli -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
-ENDIF()
-# Link shared library
-TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
-TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})
+# Packaging must go at the bottom
+include(${CMAKE_SOURCE_DIR}/build/Packaging.cmake)

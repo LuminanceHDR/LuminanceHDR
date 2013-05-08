@@ -32,8 +32,12 @@
 #include <QImage>
 #include <tiffio.h>
 
-#include "Libpfs/array2d.h"
-#include "Libpfs/frame.h"
+#include "Libpfs/array2d_fwd.h"
+
+namespace pfs
+{
+class Frame;
+}
 
 class TiffReader : public QObject
 {

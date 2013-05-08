@@ -81,12 +81,8 @@ void transform_to_G(const int n, float* const R, float detail_factor);
 void pyramid_transform_to_G(pyramid_t* pyramid, float detail_factor);
 void pyramid_gradient_multiply(pyramid_t* pyramid, const float val);
 
-void matrix_upsample_full(const int outCols, const int outRows, const float* const in, float* const out);
-void matrix_upsample_simple(const int outCols, const int outRows, const float* const in, float* const out);
-
-void matrix_downsample_full(const int inCols, const int inRows, const float* const data, float* const res);
-void matrix_downsample_simple(const int inCols, const int inRows, const float* const data, float* const res);
-
+void matrix_upsample(const int outCols, const int outRows, const float* const in, float* const out);
+void matrix_downsample(const int inCols, const int inRows, const float* const data, float* const res);
 
 /**
  * @brief: Tone mapping algorithm [Mantiuk2006]

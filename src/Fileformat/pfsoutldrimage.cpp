@@ -1,10 +1,9 @@
-/**
- * @brief Writing QImage from PFS stream (which is a tonemapped LDR)
+/*
  *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006 Giuseppe Rota
- * Copyright (C) 2010, 2011 Davide Anastasia
+ * Copyright (C) 2010, 2011, 2012, 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,14 +20,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  New implementation:
- *  1) avoids the presence of a temporary buffer
- *  2) returns QImage* instead than a QImage
- *  3) has OpenMP (multi thread) capability)
- *
  */
+
+//! \brief Writing QImage from PFS stream (which is a tonemapped LDR)
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \ author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//!  New implementation:
+//!  1) avoids the presence of a temporary buffer
+//!  2) returns QImage* instead than a QImage
+//!  3) has OpenMP (multi thread) capability)
 
 #include <QImage>
 #include <QSysInfo>
@@ -36,14 +36,21 @@
 #include <assert.h>
 #include <stdexcept>
 
+#include <boost/assign/list_of.hpp>
+
 #include "pfsoutldrimage.h"
-#include "Libpfs/frame.h"
-#include "Common/msec_timer.h"
+
+#include <Libpfs/frame.h>
+#include <Libpfs/utils/msec_timer.h>
+#include <Libpfs/colorspace/rgbremapper_fwd.h>
+
+using namespace std;
+using namespace boost::assign;
 
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float min_luminance,
                            float max_luminance,
-                           LumMappingMethod mapping_method)
+                           RGBMappingType mapping_method)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
@@ -63,18 +70,19 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
 
     QImage* temp_qimage = new QImage(width, height, QImage::Format_RGB32);
 
-    const float* p_R = Xc->getChannelData()->getRawData();
-    const float* p_G = Yc->getChannelData()->getRawData();
-    const float* p_B = Zc->getChannelData()->getRawData();
+    // DAVIDE - FIX THIS FUNCTION
+    const float* p_R = Xc->data();
+    const float* p_G = Yc->data();
+    const float* p_B = Zc->data();
 
     QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
 
-    FloatRgbToQRgb converter(min_luminance, max_luminance, mapping_method);
+    RGBRemapper rgbRemapper(min_luminance, max_luminance, mapping_method);
 
 #pragma omp parallel for shared(pixels)
     for (int idx = 0; idx < height*width; ++idx)
     {
-        converter.toQRgb(p_R[idx], p_G[idx], p_B[idx], pixels[idx]);
+        rgbRemapper.toQRgb(p_R[idx], p_G[idx], p_B[idx], pixels[idx]);
     }
 
 #ifdef TIMER_PROFILING

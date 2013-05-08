@@ -46,15 +46,15 @@ public:
     ~TMWorker();
 
 public Q_SLOTS:
-    ///!
-    ///!  This function creates a copy of the input frame, tonemap the copy
-    ///!  and then returns it
-    ///!
+    //!
+    //!  This function creates a copy of the input frame, tonemap the copy
+    //!  and then returns it
+    //!
     pfs::Frame* computeTonemap(/* const */pfs::Frame*, TonemappingOptions*);
 
-    ///!
-    ///! This function tonemap the input frame
-    ///!
+    //!
+    //! This function tonemap the input frame
+    //!
     void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 
 private:

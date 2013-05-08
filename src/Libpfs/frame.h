@@ -33,8 +33,9 @@
 #include <string>
 #include <vector>
 
-#include "channel.h"
-#include "tag.h"
+#include <Libpfs/channel.h>
+#include <Libpfs/tag.h>
+#include <Libpfs/exif/exif_data.hpp>
 
 namespace pfs
 {
@@ -47,32 +48,22 @@ typedef std::vector< Channel* > ChannelContainer;
 //! also contain additional information in tags (see getTags).
 class Frame
 {
-private:
-    int m_width;
-    int m_height;
-
-    TagContainer m_tags;
-
-    ChannelContainer m_channels;
-
 public:
-
-    Frame(int width, int height);
+    Frame(size_t width, size_t height);
     ~Frame();
 
     //! \return width of the frame (in pixels).
     inline
-    int getWidth() const
-    {
-        return m_width;
-    }
+    size_t getWidth() const
+    { return m_width; }
 
     //! \return height of the frame (in pixels).
     inline
-    int getHeight() const
-    {
-        return m_height;
-    }
+    size_t getHeight() const
+    { return m_height; }
+
+    //! \brief Changes the size of the frame
+    void resize(size_t width, size_t height);
 
     //! Gets color channels in XYZ color space. May return NULLs
     //! if such channels do not exist. Values assigned to
@@ -135,6 +126,28 @@ public:
     //! Returns TagContainer that can be used to access or modify
     //! tags associated with this Frame object.
     const TagContainer& getTags() const;
+
+    //! \brief exif data for the current \c Frame
+//    const ::pfs::exif::exif_data& exif() const
+//    {
+//        return m_exifData;
+//    }
+
+//    ::pfs::exif::exif_data& exif()
+//    {
+//        return m_exifData;
+//    }
+
+    void swap(Frame& other);
+
+private:
+    size_t m_width;
+    size_t m_height;
+
+    TagContainer m_tags;
+    ChannelContainer m_channels;
+
+    // ::pfs::exif::exif_data m_exifData;
 };
 
 } // namespace pfs

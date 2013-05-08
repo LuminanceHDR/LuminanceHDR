@@ -93,6 +93,14 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BatchHDRDialog</name>
@@ -199,20 +207,8 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
         <translation type="unfinished">Fişierele unde pozele din paranteză sunt localizate (în ordine alfabetică)</translation>
     </message>
     <message>
-        <source>Select &amp;Input Folder</source>
-        <translation type="obsolete">Selectează &amp;Fişierul De Importat</translation>
-    </message>
-    <message>
         <source>Folder where created HDRs are saved</source>
         <translation type="unfinished">Fişierul unde HDR-urile create sunt salvate</translation>
-    </message>
-    <message>
-        <source>Select &amp;Output Folder</source>
-        <translation type="obsolete">Selectează &amp;Fişierul De Exportat</translation>
-    </message>
-    <message>
-        <source>Messages</source>
-        <translation type="obsolete">Mesaje</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -225,10 +221,6 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     <message>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="obsolete">Alege un dosar</translation>
     </message>
     <message>
         <source>Started processing...</source>
@@ -312,6 +304,10 @@ Continue?</source>
         <source>Auto-crop</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Custom config %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -324,60 +320,8 @@ Continue?</source>
         <translation type="unfinished">Imagini HDR de convertit</translation>
     </message>
     <message>
-        <source>Add all the HDRs in a directory to the list</source>
-        <translation type="obsolete">Adaugă toate HDR-urile dintr-un dosar la listă</translation>
-    </message>
-    <message>
-        <source>Add &amp;Directory</source>
-        <translation type="obsolete">Adaugă &amp;dosar</translation>
-    </message>
-    <message>
-        <source>Add single HDR files to the list</source>
-        <translation type="obsolete">Adaugă fișiere HDR la listă</translation>
-    </message>
-    <message>
-        <source>&amp;Add Files</source>
-        <translation type="obsolete">&amp;Adaugă fișiere</translation>
-    </message>
-    <message>
-        <source>Remove single HDR files to the list</source>
-        <translation type="obsolete">Șterge fișiere HDR din listă</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Files</source>
-        <translation type="obsolete">Ște&amp;rge fișiere</translation>
-    </message>
-    <message>
         <source>List of HDRs that will be tone mapped</source>
         <translation type="unfinished">Lista de HDR-uri care vor fi mapate</translation>
-    </message>
-    <message>
-        <source>Tone Mapping Settings Files</source>
-        <translation type="obsolete">Fișiere setări pentru maparea de tonuri</translation>
-    </message>
-    <message>
-        <source>Add all the Tone Mapping Setting files in a directory to the list</source>
-        <translation type="obsolete">Adaugă la listă toate fișierele de setări pentru maparea de tonuri dintr-un dosar</translation>
-    </message>
-    <message>
-        <source>Add D&amp;irectory</source>
-        <translation type="obsolete">Adaugă d&amp;osar</translation>
-    </message>
-    <message>
-        <source>Add single Tone Mapping Setting files to the list</source>
-        <translation type="obsolete">Adaugă la listă fișiere de setări mapare de tonuri</translation>
-    </message>
-    <message>
-        <source>Add Fi&amp;les</source>
-        <translation type="obsolete">Adaugă Fi&amp;șiere</translation>
-    </message>
-    <message>
-        <source>Remove single Tone Mapping Setting files to the list</source>
-        <translation type="obsolete">Șterge fișiere setări pentru maparea de tonuri</translation>
-    </message>
-    <message>
-        <source>R&amp;emove Files</source>
-        <translation type="obsolete">Șt&amp;erge fișiere</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
@@ -390,10 +334,6 @@ Continue?</source>
     <message>
         <source>Output</source>
         <translation type="unfinished">Destinație</translation>
-    </message>
-    <message>
-        <source>Select &amp;Output Folder...</source>
-        <translation type="obsolete">Selectează dosar &amp;destinație...</translation>
     </message>
     <message>
         <source>Conversion Log</source>
@@ -452,10 +392,6 @@ Continue?</source>
         <translation type="unfinished">Folosind %1 fire de execuție</translation>
     </message>
     <message>
-        <source>Saving using file format: %1, (quality - if applicable): %2</source>
-        <translation type="obsolete">Se salvează folosind formatul: %1, (calitate -dacă e aplicabil): %2</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Alege un dosar</translation>
     </message>
@@ -470,10 +406,6 @@ Continue?</source>
     <message>
         <source>Load tone mapping settings text files...</source>
         <translation type="unfinished">Încarcă fișierele text de setări pentru maparea de tonuri...</translation>
-    </message>
-    <message>
-        <source>LuminanceHDR tone mapping settings text file (*.txt)</source>
-        <translation type="unfinished">Fișier text de setări pentru mapare de tonuri LuminanceHDR (*.txt)</translation>
     </message>
     <message>
         <source>Processing...</source>
@@ -509,10 +441,6 @@ Continue?</source>
     </message>
     <message>
         <source>Output Image Quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving using file format: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -585,6 +513,38 @@ Continue?</source>
     </message>
     <message>
         <source>Alt+M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JPEG</source>
+        <translation type="unfinished">JPEG</translation>
+    </message>
+    <message>
+        <source>TIFF (16 bits)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG</source>
+        <translation type="unfinished">PNG</translation>
+    </message>
+    <message>
+        <source>BMP</source>
+        <translation type="unfinished">BMP</translation>
+    </message>
+    <message>
+        <source>PPM</source>
+        <translation type="unfinished">PPM</translation>
+    </message>
+    <message>
+        <source>PBM</source>
+        <translation type="unfinished">PBM</translation>
+    </message>
+    <message>
+        <source>Luminance HDR tone mapping settings text file (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -674,44 +634,12 @@ Continue?</source>
         <translation type="unfinished">EROARE: Nu pot salva în fișier: %1</translation>
     </message>
     <message>
-        <source>Cannot convert %1 to a float</source>
-        <translation type="obsolete">Nu pot coverti %1 la virgulă mobilă</translation>
-    </message>
-    <message>
-        <source>Cannot convert %1 to an integer</source>
-        <translation type="obsolete">Nu pot converti %1 la întreg</translation>
-    </message>
-    <message>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
         <translation type="unfinished">Utilizare: %1 [OPȚIUNI]...[FIȘIERESURSĂ]...</translation>
     </message>
     <message>
         <source>Commandline interface to %1.</source>
         <translation type="unfinished">Interfață linie de comandă către %1.</translation>
-    </message>
-    <message>
-        <source>-h --help              Display this help.</source>
-        <translation type="unfinished">-h --help             Arată acest ajutor.</translation>
-    </message>
-    <message>
-        <source>-v --verbose           Print more messages during execution.</source>
-        <translation type="unfinished">-v --verbose           Afișează mai multe mesaje în timpul execuției.</translation>
-    </message>
-    <message>
-        <source>-u --gui               Start in gui mode with input files.</source>
-        <translation type="obsolete">-u --gui              Începe în modul gui cu fişierele importate.</translation>
-    </message>
-    <message>
-        <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation type="unfinished">-a --align AIS|MTB     Motor de aliniere de folosit în timpul creării HDR (implicit: fără aliniere).</translation>
-    </message>
-    <message>
-        <source>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).</source>
-        <translation type="unfinished">-e --ev EV1,EV2,...    Specifică valorile EV (la fel de multe ca FIȘIERESURSĂ).</translation>
-    </message>
-    <message>
-        <source>-c --config            HDR creation config. Possible values: </source>
-        <translation type="unfinished">-c --config            Configurare creare HDR. Valori posibile: </translation>
     </message>
     <message>
         <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
@@ -722,36 +650,12 @@ Continue?</source>
         <translation type="unfinished">(Implicit este weight=triangular:response_curve=linear:model=debevec) </translation>
     </message>
     <message>
-        <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
-        <translation type="unfinished">-l --load FISIER_HDR     Încarcă un HDR în loc să creezi unul nou. </translation>
-    </message>
-    <message>
-        <source>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation type="unfinished">-s --save FIȘIER_HDR     Salvează într-un format de fișier HDR. (implicit: nu salva) </translation>
-    </message>
-    <message>
-        <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
-        <translation type="unfinished">-g --gamma VALOARE       Valoare gamma de folosit în timpul mapării de tonuri. (implicit: 1) </translation>
-    </message>
-    <message>
-        <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation type="unfinished">-r --resize VALOARE      Lățimea la care vrei să redimensionezi HDR-ul (redimensionat înainte de gamma și mapare de tonuri) </translation>
-    </message>
-    <message>
-        <source>-t --tmo               Tone mapping operator. Legal values are: </source>
-        <translation type="unfinished">-t --tmo               Operator mapare de tonuri. Valorile legale sunt: </translation>
-    </message>
-    <message>
         <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</source>
         <translation type="unfinished">ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</translation>
     </message>
     <message>
         <source>(Default is mantiuk06)</source>
         <translation type="unfinished">(Implicit este mantiuk06)</translation>
-    </message>
-    <message>
-        <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
-        <translation type="unfinished">-p --tmoptions         Opțiuni operator mapare de tonuri. Valorile legale sunt: </translation>
     </message>
     <message>
         <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
@@ -792,14 +696,6 @@ Continue?</source>
     <message>
         <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
         <translation type="unfinished">(implicit este contrast=0.3:equalization=false:saturation=1.8, vezi deasemenea -o)</translation>
-    </message>
-    <message>
-        <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
-        <translation type="unfinished">-o --output FIȘIER_LDR   Nume fișier în care vrei să salvezi maparea de tonuri LDR.</translation>
-    </message>
-    <message>
-        <source>                       (No tonemapping is performed unless -o is specified).</source>
-        <translation type="unfinished">                       (Nici o mapare de tonuti nu este realizată decât dacă -o este specificat).</translation>
     </message>
     <message>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
@@ -852,7 +748,63 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>-q --quality VALUE   Quality of the saved tone mapped file (0-100).</source>
+        <source>-h --help               Display this help.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-v --verbose            Print more messages during execution.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-d --savealigned prefix Save aligned images to files which names start with prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-c --config             HDR creation config. Possible values: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-l --load HDR_FILE      Load an HDR instead of creating a new one. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-s --save HDR_FILE      Save to a HDR file format. (default: don&apos;t save) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-t --tmo                Tone mapping operator. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-p --tmoptions          Tone mapping operator options. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-o --output LDR_FILE    File name you want to save your tone mapped LDR to.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-q --quality VALUE      Quality of the saved tone mapped file (0-100).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>                        (No tonemapping is performed unless -o is specified).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -901,6 +853,22 @@ Continue?</source>
         <source>Choose a directory and a prefix</source>
         <translation type="unfinished">Alege un dosar și un prefix</translation>
     </message>
+    <message>
+        <source>Maskable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Good image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ed&amp;itable</source>
+        <translation type="unfinished">Ed&amp;itabil</translation>
+    </message>
+    <message>
+        <source>R&amp;eference</source>
+        <translation type="unfinished">R&amp;eferință</translation>
+    </message>
 </context>
 <context>
     <name>EditingToolsDialog</name>
@@ -945,10 +913,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Preview &amp;Mode:</source>
-        <translation type="unfinished">&amp;Mod previzualizare:</translation>
-    </message>
-    <message>
         <source>Difference (E-P)</source>
         <translation type="unfinished">Diferență (E-P)</translation>
     </message>
@@ -967,10 +931,6 @@ Continue?</source>
     <message>
         <source>Antighosting Mask</source>
         <translation type="unfinished">Mască anti-reflexii</translation>
-    </message>
-    <message>
-        <source>Mask Color</source>
-        <translation type="unfinished">Culoare mască</translation>
     </message>
     <message>
         <source>Images List</source>
@@ -1063,20 +1023,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+S</translation>
     </message>
     <message>
-        <source>A&amp;dd Mask</source>
-        <translation type="unfinished">A&amp;daugă mască</translation>
-    </message>
-    <message>
-        <source>Remove Mas&amp;k</source>
-        <translation type="unfinished">Șterge ma&amp;scă</translation>
-    </message>
-    <message>
         <source>Size:</source>
         <translation type="unfinished">Dimensiune:</translation>
-    </message>
-    <message>
-        <source> pixels</source>
-        <translation type="unfinished">pixeli</translation>
     </message>
     <message>
         <source>&amp;Strength:</source>
@@ -1196,6 +1144,50 @@ p, li { white-space: pre-wrap; }
         <source>Histogram</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lasso</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A&amp;dd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove</source>
+        <translation type="unfinished">&amp;Șterge</translation>
+    </message>
+    <message>
+        <source>Lasso - Draw a free hand selection area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brush - Paint the mask using the brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Apply saved mask</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1278,27 +1270,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>HDR Creation Wizard</source>
         <translation type="unfinished">Asistent creare HDR</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool help you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[1/2] Load Input Images</source>
@@ -1597,13 +1568,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Imagini încărcate.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>EXIF data not found</source>
         <translation type="unfinished">Nu am găsit informațiile EXIF</translation>
     </message>
@@ -1684,10 +1648,6 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation type="unfinished">Din calibrare</translation>
     </message>
     <message>
-        <source>From File</source>
-        <translation type="unfinished">Din fișier</translation>
-    </message>
-    <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Toate valorile EV au fost setate.&lt;br&gt;Acum apasă butonul Înainte.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -1697,6 +1657,46 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Auto-crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool helps you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom config %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
+for the following images:
+ &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
+the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From File: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1900,14 +1900,6 @@ asociată cu protocolul?</translation>
         <translation type="unfinished">Calitate fișier salvat</translation>
     </message>
     <message>
-        <source>Quality:</source>
-        <translation type="unfinished">Calitate:</translation>
-    </message>
-    <message>
-        <source>File size:</source>
-        <translation type="unfinished">Dimensiune fișier:</translation>
-    </message>
-    <message>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1921,6 +1913,14 @@ asociată cu protocolul?</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2307,14 +2307,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+E</translation>
     </message>
     <message>
-        <source>&amp;Align Images...</source>
-        <translation type="unfinished">&amp;Aliniază imagini...</translation>
-    </message>
-    <message>
-        <source>WORK IN PROGRESS</source>
-        <translation type="unfinished">PROCESARE ÎN CURS</translation>
-    </message>
-    <message>
         <source>&amp;About Qt</source>
         <translation type="unfinished">&amp;Despre Qt</translation>
     </message>
@@ -2325,22 +2317,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Show information about Qt library that is used by Luminance</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="unfinished">&amp;Mozaic</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cascade</source>
-        <translation type="unfinished">Cascadă</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="unfinished">Bare de unelte</translation>
     </message>
     <message>
         <source>Text &amp;under Icons</source>
@@ -2449,30 +2425,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Ctrl+D</source>
         <translation type="unfinished">Ctrl+D</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translation type="obsolete">Următor</translation>
-    </message>
-    <message>
-        <source>Next Image</source>
-        <translation type="obsolete">Imaginea următoare</translation>
-    </message>
-    <message>
-        <source>Show Next Image</source>
-        <translation type="obsolete">Arată Imaginea Următoare</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="obsolete">Precedent</translation>
-    </message>
-    <message>
-        <source>Previous Image</source>
-        <translation type="obsolete">Imaginea precedentă</translation>
-    </message>
-    <message>
-        <source>Show Previous Image</source>
-        <translation type="obsolete">Arată Imaginea Precedentă</translation>
     </message>
     <message>
         <source>Lock Viewers</source>
@@ -2618,12 +2570,35 @@ p, li { white-space: pre-wrap; }
         <source>Gamut Check</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ParametersDialog</name>
     <message>
-        <source>Saved Parameters</source>
-        <translation type="obsolete">Parametrii Salvaţi</translation>
+        <source>Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show on the right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show on the bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realtime Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2655,58 +2630,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Language</source>
         <translation type="unfinished">Limba</translation>
-    </message>
-    <message>
-        <source>Czech</source>
-        <translation type="obsolete">Cehă</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="obsolete">Engleză</translation>
-    </message>
-    <message>
-        <source>Finnish</source>
-        <translation type="obsolete">Finlandeză</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation type="obsolete">Franceză</translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="obsolete">Germană</translation>
-    </message>
-    <message>
-        <source>Indonesian</source>
-        <translation type="obsolete">Indoneziană</translation>
-    </message>
-    <message>
-        <source>Italian</source>
-        <translation type="obsolete">Italiană</translation>
-    </message>
-    <message>
-        <source>Polish</source>
-        <translation type="obsolete">Poloneză</translation>
-    </message>
-    <message>
-        <source>Romanian</source>
-        <translation type="obsolete">Română</translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="obsolete">Rusă</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="obsolete">Spaniolă</translation>
-    </message>
-    <message>
-        <source>Turkish</source>
-        <translation type="obsolete">Turcă</translation>
-    </message>
-    <message>
-        <source>Hungarian</source>
-        <translation type="obsolete">Maghiară</translation>
     </message>
     <message>
         <source>Default Previews Width</source>
@@ -2757,52 +2680,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Fişier De Lucru Temporar</translation>
     </message>
     <message>
-        <source>C&amp;hoose</source>
-        <translation type="obsolete">A&amp;lege</translation>
-    </message>
-    <message>
-        <source>Which LDR image format to save to</source>
-        <translation type="unfinished">În ce format de imagine LDR să salvez</translation>
-    </message>
-    <message>
-        <source>Batch Tonemapping Default Output Format</source>
-        <translation type="unfinished">Serie De Mapare De Donuri Default Format Export</translation>
-    </message>
-    <message>
-        <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
-    </message>
-    <message>
-        <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
-    </message>
-    <message>
-        <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
-    </message>
-    <message>
-        <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
-    </message>
-    <message>
-        <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
-    </message>
-    <message>
-        <source>TIFF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Amount of threads to use on multicore/SMP machines</source>
         <translation type="unfinished">Număr de fire de execuție de folosit pe calculatoare multi-nucleu/SMP</translation>
     </message>
     <message>
         <source>Batch Tonemapping Number of Threads</source>
         <translation type="unfinished">Serie De Mapare De Tonuri Număr De Fire</translation>
-    </message>
-    <message>
-        <source>Batch Tonemapping Default Output Quality</source>
-        <translation type="obsolete">Serie De Mapare De Tonuri Default Calitate Export</translation>
     </message>
     <message>
         <source>General</source>
@@ -3124,36 +3007,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Componentă Albastră</translation>
     </message>
     <message>
-        <source>Camera Profile</source>
-        <translation type="obsolete">Profil Cameră</translation>
-    </message>
-    <message>
         <source>Camera profile</source>
         <translation type="unfinished">Profil Cameră</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Nimic</translation>
-    </message>
-    <message>
-        <source>Built in</source>
-        <translation type="obsolete">Construit în</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">Customizat</translation>
-    </message>
-    <message>
-        <source>RAW</source>
-        <translation type="obsolete">RAW</translation>
-    </message>
-    <message>
-        <source>sRGB</source>
-        <translation type="obsolete">sRGB</translation>
-    </message>
-    <message>
-        <source>Color Space</source>
-        <translation type="obsolete">Culoare Spaţiu</translation>
     </message>
     <message>
         <source>align_image_stack command line arguments</source>
@@ -3178,14 +3033,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Please restart...</source>
-        <translation type="obsolete">Restartează...</translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="obsolete">Restartează Luminance HDR pentru a folosi nouă limbă (%1).</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -3231,47 +3078,27 @@ p, li { white-space: pre-wrap; }
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Saves the settings along the program files, to be portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portable mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For the settings to take effect, please restart the application!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>PreviewPanel</name>
+    <name>PreviewSettings</name>
     <message>
-        <source>Mantiuk &apos;06</source>
-        <translation type="unfinished">Mantiuk &apos;06</translation>
-    </message>
-    <message>
-        <source>Mantiuk &apos;08</source>
-        <translation type="unfinished">Mantiuk &apos;08</translation>
-    </message>
-    <message>
-        <source>Fattal</source>
-        <translation type="unfinished">Fattal</translation>
-    </message>
-    <message>
-        <source>Drago</source>
-        <translation type="unfinished">Drago</translation>
-    </message>
-    <message>
-        <source>Durand</source>
-        <translation type="unfinished">Durand</translation>
-    </message>
-    <message>
-        <source>Reinhard &apos;02</source>
-        <translation type="unfinished">Reinhard &apos;02</translation>
-    </message>
-    <message>
-        <source>Reinhard &apos;05</source>
-        <translation type="unfinished">Reinhard &apos;05</translation>
-    </message>
-    <message>
-        <source>Ashikhmin</source>
-        <translation type="unfinished">Ashikhmin</translation>
-    </message>
-    <message>
-        <source>Pattanaik</source>
-        <translation type="unfinished">Pattanaik</translation>
-    </message>
-    <message>
-        <source>Preview</source>
+        <source>Load settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3396,14 +3223,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">LuminanceHDR necesită align_image_stack pentru a fi executat  cu opţiuneal &quot;v -a aligned_&quot;. Opţiunile au fost corectate.</translation>
     </message>
     <message>
-        <source>Aborting...</source>
-        <translation type="unfinished">Anulând...</translation>
-    </message>
-    <message>
-        <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
-        <translation type="unfinished">Nu pot găsi modulul JPEG al Qt...&lt;br&gt;Te rog dezarhivează pachetul DLL cu opțiunea &quot;folosește numele dosarelor&quot; activată.</translation>
-    </message>
-    <message>
         <source>Cannot convert %1 to a float</source>
         <translation type="unfinished">Nu pot coverti %1 la virgulă mobilă</translation>
     </message>
@@ -3479,6 +3298,138 @@ p, li { white-space: pre-wrap; }
         <source>I cannot perform the color transform. Please select a different monitor profile.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PreGamma=%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="unfinished">Egalizare contrast</translation>
+    </message>
+    <message>
+        <source>Contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation</source>
+        <translation type="unfinished">Saturaţie</translation>
+    </message>
+    <message>
+        <source>Detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="unfinished">Nive luminanță</translation>
+    </message>
+    <message>
+        <source>Luminance Level=Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="unfinished">Saturație culoare</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="unfinished">Îmbunătățire contrast</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation type="unfinished">Alfa</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="unfinished">Beta</translation>
+    </message>
+    <message>
+        <source>NoiseRedux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FFTSolver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished">Ecuaţie 2</translation>
+    </message>
+    <message>
+        <source>Equation 4</source>
+        <translation type="unfinished">Ecuaţie 4</translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="unfinished">Tendință</translation>
+    </message>
+    <message>
+        <source>Spatial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="unfinished">Interval</translation>
+    </message>
+    <message>
+        <source>Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="unfinished">Multiplicator</translation>
+    </message>
+    <message>
+        <source>AutoLuminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rod</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phi</source>
+        <translation type="unfinished">Phi</translation>
+    </message>
+    <message>
+        <source>Scales:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="unfinished">Strălucire</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="unfinished">Adaptare cromatică</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="unfinished">Adaptare lumină</translation>
+    </message>
 </context>
 <context>
     <name>ResizeDialog</name>
@@ -3529,153 +3480,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Scale</source>
         <translation type="unfinished">&amp;Scalează</translation>
-    </message>
-</context>
-<context>
-    <name>SavedParameters</name>
-    <message>
-        <source>Comment</source>
-        <translation type="obsolete">Comentariu</translation>
-    </message>
-    <message>
-        <source>TM Operator</source>
-        <translation type="obsolete">Operator TM</translation>
-    </message>
-    <message>
-        <source>Simple</source>
-        <translation type="obsolete">Simplu</translation>
-    </message>
-    <message>
-        <source>Equation 2</source>
-        <translation type="obsolete">Ecuaţie 2</translation>
-    </message>
-    <message>
-        <source>Local Contrast Threshold</source>
-        <translation type="obsolete">Prag contrast local</translation>
-    </message>
-    <message>
-        <source>Pre-gamma</source>
-        <translation type="obsolete">Pre-gamma</translation>
-    </message>
-    <message>
-        <source>Bias</source>
-        <translation type="obsolete">Tendință</translation>
-    </message>
-    <message>
-        <source>Spatial Kernel Sigma</source>
-        <translation type="obsolete">Sigma nucleu spațial</translation>
-    </message>
-    <message>
-        <source>Range Kernel Sigma</source>
-        <translation type="obsolete">Sigma nucleu interval</translation>
-    </message>
-    <message>
-        <source>Base Contrast</source>
-        <translation type="obsolete">Contrast bază</translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="obsolete">Alfa</translation>
-    </message>
-    <message>
-        <source>Beta</source>
-        <translation type="obsolete">Beta</translation>
-    </message>
-    <message>
-        <source>Color Saturation</source>
-        <translation type="obsolete">Saturație culoare</translation>
-    </message>
-    <message>
-        <source>Noise Reduction</source>
-        <translation type="obsolete">Reducere de zgomot</translation>
-    </message>
-    <message>
-        <source>Old Fattal</source>
-        <translation type="obsolete">Fattal Vechi</translation>
-    </message>
-    <message>
-        <source>Contrast Equalization</source>
-        <translation type="obsolete">Egalizare contrast</translation>
-    </message>
-    <message>
-        <source>Contrast Factor</source>
-        <translation type="obsolete">Factor contrast</translation>
-    </message>
-    <message>
-        <source>Saturation Factor</source>
-        <translation type="obsolete">Factor saturație</translation>
-    </message>
-    <message>
-        <source>Detail Factor</source>
-        <translation type="obsolete">Factor detalii</translation>
-    </message>
-    <message>
-        <source>Contrast Enhancement</source>
-        <translation type="obsolete">Îmbunătățire contrast</translation>
-    </message>
-    <message>
-        <source>Luminance Level</source>
-        <translation type="obsolete">Nive luminanță</translation>
-    </message>
-    <message>
-        <source>Manual Luminance Level</source>
-        <translation type="obsolete">Manual Luminance Nivel</translation>
-    </message>
-    <message>
-        <source>Cone and Rod based on Luminance</source>
-        <translation type="obsolete">Con și tijă bazate pe luminanță</translation>
-    </message>
-    <message>
-        <source>Local Tonemapping</source>
-        <translation type="obsolete">Mapare Locală De Tonuri</translation>
-    </message>
-    <message>
-        <source>Cone Level</source>
-        <translation type="obsolete">Nivel con</translation>
-    </message>
-    <message>
-        <source>Rod Level</source>
-        <translation type="obsolete">Nivel tijă</translation>
-    </message>
-    <message>
-        <source>Multiplier</source>
-        <translation type="obsolete">Multiplicator</translation>
-    </message>
-    <message>
-        <source>Use Scales</source>
-        <translation type="obsolete">Utilizează scale</translation>
-    </message>
-    <message>
-        <source>Key Value</source>
-        <translation type="obsolete">Valoare cheie</translation>
-    </message>
-    <message>
-        <source>Phi Value</source>
-        <translation type="obsolete">Valoarea Phi</translation>
-    </message>
-    <message>
-        <source>Range</source>
-        <translation type="obsolete">Interval</translation>
-    </message>
-    <message>
-        <source>Lower Scale</source>
-        <translation type="obsolete">Scală joasă</translation>
-    </message>
-    <message>
-        <source>Upper Scale</source>
-        <translation type="obsolete">Scală înaltă</translation>
-    </message>
-    <message>
-        <source>Brightness</source>
-        <translation type="obsolete">Strălucire</translation>
-    </message>
-    <message>
-        <source>Chromatic Adaptation</source>
-        <translation type="obsolete">Adaptare cromatică</translation>
-    </message>
-    <message>
-        <source>Light Adaptation</source>
-        <translation type="obsolete">Adaptare lumină</translation>
     </message>
 </context>
 <context>
@@ -3879,6 +3683,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>TiffModeDialog</name>
+    <message>
+        <source>Save as ...TIFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TonemappingPanel</name>
     <message>
         <source>Tone mapping operators and their options</source>
@@ -4013,10 +3824,6 @@ Nivelul Luminance</translation>
     <message>
         <source>Noise Reduction</source>
         <translation type="unfinished">Reducere de zgomot</translation>
-    </message>
-    <message>
-        <source>Version Pre 1.8.4</source>
-        <translation type="obsolete">Versiunea Pre 1.8.4</translation>
     </message>
     <message>
         <source>Bias</source>
@@ -4179,10 +3986,6 @@ Nivelul Luminance</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load parameters by comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation type="unfinished">Aici poți aplica corecția gamma la HDR.&lt;br&gt;Corecția gamma va fi aplicată înainte de maparea de tonuri.</translation>
     </message>
@@ -4223,14 +4026,6 @@ Nivelul Luminance</translation>
         <translation type="unfinished">Cu clic pe acest buton vei putea să inserezi o &lt;i&gt;lățime&lt;/i&gt; pentru imaginea LDR rezultată.&lt;br&gt;După apasarea Enter o valoare a înălțimii va fi calculată automat și noua dimensiune va fi adăugată la listă.</translation>
     </message>
     <message>
-        <source>undo</source>
-        <translation type="obsolete">anulează</translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="obsolete">refă</translation>
-    </message>
-    <message>
         <source>TM Database Problem</source>
         <translation type="unfinished">TM Probleme Cu Baza De Date</translation>
     </message>
@@ -4269,10 +4064,6 @@ Eroare: %1</translation>
         <translation type="unfinished">Fișierul nu poate fi citit (verifică drepturi, cale...)</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
-        <translation type="obsolete">Eroare, formatul fișierul de setări pentru mapare de tonuri s-a schimbat. Acest fișier (vechi) nu poate fi folosit cu această versiune de LuminanceHDR. Crează unul nou.</translation>
-    </message>
-    <message>
         <source>Custom LDR size</source>
         <translation type="unfinished">Dimensiune LDR customizată</translation>
     </message>
@@ -4290,31 +4081,41 @@ Eroare: %1</translation>
     </message>
 </context>
 <context>
-    <name>TonemappingWarningDialog</name>
+    <name>TonemappingSettings</name>
     <message>
-        <source>Attention!</source>
-        <translation type="obsolete">Atenţie!</translation>
-    </message>
-    <message>
-        <source>Ask again</source>
-        <translation type="obsolete">Întreabă din nou</translation>
-    </message>
-    <message>
-        <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
-
-Do you want to continue?</source>
-        <translation type="obsolete">Acest operator de mapare de tonuri depinde de dimensiunea imaginii sursă. Aplicarea acestui operator pe imaginea completă va rezulta cel mai probabil într-o imagine diferită.
-
-Vrei să continui?</translation>
-    </message>
-    <message>
-        <source>Fattal Warning</source>
+        <source>Load Custom Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
-
-Do you want to continue?</source>
+        <source>Sort by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comments:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished">Comentariu</translation>
+    </message>
+    <message>
+        <source>Operator</source>
+        <translation type="unfinished">Operator</translation>
+    </message>
+    <message>
+        <source>Most Useful Operators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemap</source>
+        <translation type="unfinished">Mapare De Tonuri</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4339,34 +4140,6 @@ Do you want to continue?</source>
     <message>
         <source>Append files to the list</source>
         <translation type="unfinished">Adaugă fișiere în listă</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;From:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;De la:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;To:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Către:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Log:</source>
-        <translation type="obsolete">Jurnal:</translation>
     </message>
     <message>
         <source>Exif operations report</source>
@@ -4459,6 +4232,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Remind me later</source>
         <translation type="unfinished">Aminteşte-mi mai târziu</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateChecker</name>
+    <message>
+        <source>A new release is ready for download!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to download, or select Help-&gt;Update!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the webpage for download now?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

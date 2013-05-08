@@ -21,13 +21,17 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
-#ifndef IMAGEQUALITYDIALOG_IMPL_H
-#define IMAGEQUALITYDIALOG_IMPL_H
+#ifndef IMAGEQUALITYDIALOG_H
+#define IMAGEQUALITYDIALOG_H
 
 #include <QDialog>
 
 namespace Ui {
-    class ImgQualityDialog;
+class ImgQualityDialog;
+}
+
+namespace pfs {
+class Frame;
 }
 
 class ImageQualityDialog : public QDialog //, private Ui::ImgQualityDialog
@@ -35,17 +39,20 @@ class ImageQualityDialog : public QDialog //, private Ui::ImgQualityDialog
     Q_OBJECT
 
 public:
-    ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent = 0);
+    ImageQualityDialog(const pfs::Frame* frame, const QString& fmt, QWidget *parent = 0);
     ~ImageQualityDialog();
+
     int getQuality(void);
+
 protected slots:
     void on_getSizeButton_clicked();
     void reset(int);
 
 protected:
-    const QImage *image;
-    QString format;
+    const pfs::Frame* m_frame;
+    QString m_format;
 
-    QScopedPointer<Ui::ImgQualityDialog> m_Ui;
+    QScopedPointer<Ui::ImgQualityDialog> m_ui;
 };
-#endif
+
+#endif // IMAGEQUALITYDIALOG_H

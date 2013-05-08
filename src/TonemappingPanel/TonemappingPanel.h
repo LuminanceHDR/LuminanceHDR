@@ -130,7 +130,6 @@ protected Q_SLOTS:
     void updateUndoState();
 	void loadParameters();
 	void saveParameters();
-	void loadComments();
 	void execMantiuk06Query(bool, float, float,	float, QString);
 	void execMantiuk08Query(float, float, float, bool, QString);
 	void execAshikhminQuery(bool, bool, float, QString);

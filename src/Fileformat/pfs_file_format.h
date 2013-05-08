@@ -27,7 +27,6 @@
 #ifndef PFS_FILE_FORMAT_H
 #define PFS_FILE_FORMAT_H
 
-#include "Fileformat/rgbeio.h"
 #include "Fileformat/tiffreader.h"
 #include "Fileformat/tiffwriter.h"
 #include "Fileformat/pfsoutldrimage.h"
@@ -35,16 +34,5 @@
 #include "Fileformat/jpegwriter.h"
 #include "Fileformat/jpegreader.h"
 #include "Fileformat/pngwriter.h"
-
-// Forward declaration
-namespace pfs {
-    class Frame;
-}
-
-pfs::Frame* readEXRfile(const char * filename);
-void writeEXRfile(pfs::Frame* inpfsframe, const char* outfilename);
-
-pfs::Frame* readRGBEfile(const char * filename);
-void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename);
 
 #endif // PFS_FILE_FORMAT_H

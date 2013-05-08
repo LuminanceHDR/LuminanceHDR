@@ -36,6 +36,7 @@
 #include <memory>
 #include <iostream>
 #include <assert.h>
+#include <string.h>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -48,7 +49,10 @@
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_interp.h>
 #include "cqp/gsl_cqp.h"
-#include "Libpfs/vex.h"
+
+#include "Libpfs/progress.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/vex/sse.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)
@@ -278,14 +282,19 @@ static void dumpPFS( const char *fileName, const int width, const int height, fl
 #endif
 
 
-static void compute_gaussian_level( const int width, const int height, const pfs::Array2D& in, pfs::Array2D& out, int level, pfs::Array2D& temp )
+static void compute_gaussian_level( const int width, const int height,
+                                    const pfs::Array2Df& in, pfs::Array2Df& out, int level, pfs::Array2Df& temp )
 {
 
   const float kernel_a = 0.4f;
 
   const int kernel_len = 5;
   const int kernel_len_2 = kernel_len/2;
-  const float kernel[kernel_len] = { 0.25 - kernel_a/2, 0.25 , kernel_a, 0.25, 0.25 - kernel_a/2 };
+  const float kernel[kernel_len] = { 0.25f - kernel_a/2.f,
+                                     0.25f,
+                                     kernel_a,
+                                     0.25f,
+                                     0.25f - kernel_a/2.f };
 
   const int step = 1<<level;
 
@@ -294,9 +303,9 @@ static void compute_gaussian_level( const int width, const int height, const pfs
   // be made to optimize this better.  If this can't be made faster
   // with using the overloaded operator then this optimization should
   // be applied to the other TMOs as well.
-  const float* in_raw = in.getRawData();
-  float* temp_raw = temp.getRawData();
-  float* out_raw = out.getRawData();
+  const float* in_raw = in.data();
+  float* temp_raw = temp.data();
+  float* out_raw = out.data();
 
   // Filter rows
 #pragma omp parallel for default(none) shared(in_raw, temp_raw, kernel)
@@ -419,13 +428,13 @@ const double conditional_density::l_min = -8.f, conditional_density::l_max = 8.f
 double conditional_density::x_scale[X_COUNT] = { 0 };    // input log luminance scale
 
 
-std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, ProgressHelper *ph)
+std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfs::Progress &ph)
 {
-  ph->newValue( 0 );
+  ph.setValue( 0 );
 
-  pfs::Array2D buf_1(width, height);
-  pfs::Array2D buf_2(width, height);
-  pfs::Array2D temp(width, height);
+  pfs::Array2Df buf_1(width, height);
+  pfs::Array2Df buf_2(width, height);
+  pfs::Array2Df temp(width, height);
   
   std::auto_ptr<conditional_density> C(new conditional_density());
 
@@ -433,9 +442,9 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
   const int pix_count = width*height;
 
     
-  pfs::Array2D* LP_low = &buf_1;
-  pfs::Array2D* LP_high = &buf_2;
-  float* LP_high_raw = LP_high->getRawData();
+  pfs::Array2Df* LP_low = &buf_1;
+  pfs::Array2Df* LP_high = &buf_2;
+  float* LP_high_raw = LP_high->data();
   
   const float min_val = std::max( min_positive( L, pix_count ), MIN_PHVAL );
   
@@ -515,8 +524,8 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
     }
     std::swap( LP_low, LP_high );
 
-    ph->newValue( (f+1)*PROGRESS_CDF/C->f_count );  
-	if (ph->isTerminationRequested())
+    ph.setValue( (f+1)*PROGRESS_CDF/C->f_count );
+    if (ph.canceled())
 		break;
   }
 
@@ -742,7 +751,7 @@ static void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_coun
  * a pre-allocated array and has the same size as C->x_scale.
  */
 static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, DisplaySize */*ds*/,
-  float enh_factor, double *y, const float white_y, ProgressHelper *ph = NULL ) {
+  float enh_factor, double *y, const float white_y, pfs::Progress &ph ) {
   
   conditional_density *C = (conditional_density*)C_pub;
   
@@ -969,8 +978,8 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
     if( converged )
       break;    
   }
-  ph->newValue( 95 );    
-  if (ph->isTerminationRequested())
+  ph.setValue( 95 );
+  if (ph.canceled())
 	return PFSTMO_ABORTED; // PFSTMO_OK is right 
   
 //   for( int i=0; i < L; i++ )
@@ -984,7 +993,7 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 
 int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_dens,
   DisplayFunction *df, DisplaySize *ds, const float enh_factor, 
-  const float white_y, ProgressHelper *ph )
+  const float white_y, pfs::Progress &ph )
 {
   conditional_density *C = (conditional_density*)cond_dens;
   tc->init( C->x_count, C->x_scale );

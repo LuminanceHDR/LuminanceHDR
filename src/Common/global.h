@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2010-2012 Davide Anastasia, Franco Comida, Daniel Kaneider
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,9 +18,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
+
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \author Daniel Kaneider
+//! \author Franco Comida
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
 
 #ifndef GLOBAL_H
 #define GLOBAL_H
@@ -30,12 +34,9 @@
 #include <QStringList>
 #include <QUrl>
 
-bool matchesLdrFilename(QString file);
-bool matchesHdrFilename(QString file);
-bool matchesValidHDRorLDRfilename(QString file);
-QStringList convertUrlListToFilenameList(QList<QUrl> urls);
-
-void installTranslators(bool installQtTranslations);
-void installTranslators(const QString& lang, bool installQtTranslations);
+bool matchesLdrFilename(const QString& file);
+bool matchesHdrFilename(const QString& file);
+bool matchesValidHDRorLDRfilename(const QString& file);
+QStringList convertUrlListToFilenameList(const QList<QUrl>& urls);
 
 #endif

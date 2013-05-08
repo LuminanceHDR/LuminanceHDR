@@ -27,12 +27,14 @@
 #ifndef HDRCREATIONMANAGER_H
 #define HDRCREATIONMANAGER_H
 
+#include <cstddef>
 #include <QProcess>
 #include <QPair>
 
 #include "Common/LuminanceOptions.h"
 #include "arch/math.h"
 #include "HdrCreation/createhdr.h"
+#include "HdrCreation/createhdr_common.h"
 
 // Some other file expect this to be available
 const config_triple predef_confs[6]= {
@@ -95,21 +97,25 @@ public:
 	//the EV values cannot cover more than 20EV values
 	void checkEVvalues();
 	void makeSureLDRsHaveAlpha();
-	void applyShiftsToImageStack(QList< QPair<int,int> > HV_offsets);
-	void applyShiftsToMdrImageStack(QList< QPair<int,int> > HV_offsets);
-	void cropLDR (QRect ca);
-	void cropMDR (QRect ca);
-	void cropAgMasks (QRect ca);
-	void reset();
+    void applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets);
+    void applyShiftsToMdrImageStack(const QList< QPair<int,int> >& HV_offsets);
+
+    void cropLDR(const QRect& ca);
+    void cropMDR(const QRect& ca);
+    void cropAgMasks(const QRect& ca);
+
+    void reset();
 	void remove(int index);
 	void setShift(int shift) { m_shift = shift; }
-	void saveLDRs(QString);
-	void saveMDRs(QString);
+    void saveLDRs(const QString& filename);
+    void saveMDRs(const QString& filename);
 	void doAntiGhosting(int);
-	void doAutoAntiGhosting(float, float);
+	void doAutoAntiGhosting(float);
+
 public slots:
 	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
 	void removeTempFiles();
+
 signals:
     void finishedLoadingInputFiles(const QStringList& filesLackingExif);
     void errorWhileLoading(const QString& message); //also for !valid size
@@ -136,7 +142,7 @@ private:
 	QList<QImage*> mdrImagesToRemove;  //QImages need to be deleted
 	QList<QImage*> antiGhostingMasksList;  //QImages used for manual anti ghosting
 	QList<bool> tiffLdrList;  //tiff ldr input
-	Array2DList listmdrR,listmdrG,listmdrB; //mdr input
+    Array2DfList listmdrR,listmdrG,listmdrB; //mdr input
 	//if startedProcessing[i]==true, we started a thread for the i-th file
 	QList<bool> startedProcessing;
     // time equivalent array (from exif data)
@@ -151,19 +157,19 @@ private:
 	QVector<QString>  filesToRemove;
     // set to true as soon as we find out that we cannot load a file or when we find out that a file has a different width/height than the other previously loaded ones.
     // This variable prevents "incoming" threads to do anything.
-	bool loadingError;
+	bool m_loadingError;
 
     // number of running threads at any given time
-	int runningThreads;
+	int m_runningThreads;
     // cumulative number of successfully loaded files
-	int processedFiles;
+	int m_processedFiles;
 
     LuminanceOptions m_luminance_options;
 
     // align_image_stack
 	QProcess *ais;
 
-    bool ais_crop_flag;
+    bool m_ais_crop_flag;
 
 	int m_shift;
 
@@ -176,7 +182,7 @@ private:
     void newResult(int index, float expotime, const QString&);
 
     bool ldrsHaveSameSize(int, int);
-    bool mdrsHaveSameSize(int, int);
+    bool mdrsHaveSameSize(size_t, size_t);
 
 private slots:
 	void ais_finished(int,QProcess::ExitStatus);

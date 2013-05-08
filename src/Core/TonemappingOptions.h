@@ -33,18 +33,29 @@
 #define TONEMAPPINGOPTIONS_H
 
 #include <QString>
+#include <QObject>
 
 //----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
 // all is used by SavedParametersDialog to select comments from all operators
-enum TMOperator {mantiuk06,mantiuk08,fattal,drago,durand,reinhard02,reinhard05,ashikhmin,pattanaik};
+enum TMOperator
+{
+    mantiuk06 = 0,
+    mantiuk08 = 1,
+    fattal = 2,
+    drago = 3,
+    durand = 4,
+    reinhard02 = 5,
+    reinhard05 = 6,
+    ashikhmin = 7,
+    pattanaik = 8
+};
 
 class TonemappingOptions
 {
-private:
 
 public:
     int origxsize;          // this parameter should be coming from the UI
-	int xsize_percent;		// this parameter should be coming from the UI
+    int xsize_percent;		// this parameter should be coming from the UI
     int xsize;              // this parameter should be coming from the frame
     int quality;
     float pregamma;
@@ -116,12 +127,17 @@ public:
     int selection_y_bottom_right;
 
     // default constructor
-    inline TonemappingOptions()
-    {
+    TonemappingOptions() {
         setDefaultParameters();
     }
+    const QString getPostfix();
+
+    /** returns the translated description of the TMO operator**/
+    const QString getCaption(bool pregamma = true, QString separator = QString(" ~ "));
     void setDefaultTonemapParameters();
     void setDefaultParameters();
+    
+    char getRatingForOperator();
 };
 
 /*
@@ -135,13 +151,13 @@ public:
 class TMOptionsOperations {
 public:
         TMOptionsOperations(const TonemappingOptions* opts);
-        static TonemappingOptions* parseFile(QString file);
+        static TonemappingOptions* parseFile(const QString& file);
         static TonemappingOptions* getDefaultTMOptions();
-        QString getPostfix();
-        QString getCaption();
         QString getExifComment();
 private:
         const TonemappingOptions* opts;
+
+
 };
 
 #endif // TONEMAPPINGOPTIONS_H

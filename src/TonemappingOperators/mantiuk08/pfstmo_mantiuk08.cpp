@@ -36,8 +36,9 @@
 #include <math.h>
 #include <fcntl.h>
 
+#include "Libpfs/progress.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/colorspace.h"
+#include "Libpfs/colorspace/colorspace.h"
 #include "display_adaptive_tmo.h"
 
 // TODO: remove this rubbish!
@@ -45,7 +46,7 @@
 
 using namespace std;
 
-void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, ProgressHelper *ph)
+void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, pfs::Progress &ph)
 {
   //--- default tone mapping parameters;
   //float contrast_enhance_factor = 1.f;
@@ -56,10 +57,10 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   if (!setluminance)
     white_y = -2.f;
   
-  if( contrast_enhance_factor <= 0.0f )
+  if ( contrast_enhance_factor <= 0.0f )
     throw pfs::Exception("incorrect contrast enhancement factor, accepted value is any positive number");
   
-  if( saturation_factor < 0.0f || saturation_factor > 2.0f )
+  if ( saturation_factor < 0.0f || saturation_factor > 2.0f )
     throw pfs::Exception("incorrect saturation factor, accepted range is (0..2)");
   
   std::cout << "pfstmo_mantiuk08 (";
@@ -81,23 +82,19 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   ds->print( stderr );
   
   pfs::Channel *inX, *inY, *inZ;
-  frame->getXYZChannels(inX, inY, inZ);
-  int cols = frame->getWidth();
-  int rows = frame->getHeight();
+  frame.getXYZChannels(inX, inY, inZ);
+  int cols = frame.getWidth();
+  int rows = frame.getHeight();
   
-  pfs::Array2D R( cols, rows );
-  pfs::Array2D* Xr = inX->getChannelData();
-  pfs::Array2D* Yr = inY->getChannelData();
-  pfs::Array2D* Zr = inZ->getChannelData();
-  
-  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, &R, Zr);
+  pfs::Array2Df R( cols, rows );
+  pfs::transformColorSpace(pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ);
   
   if( white_y == -2.f )
-  {      
-    const char *white_y_str = frame->getTags().getString( "WHITE_Y" );
-    if( white_y_str != NULL )
+  {
+    std::string white_y_str = frame.getTags().getTag( "WHITE_Y" );
+    if( white_y_str.empty() )
     {
-      white_y = strtod( white_y_str, NULL );
+      white_y = strtod( white_y_str.c_str(), NULL );
       if( white_y == 0 )
       {
         white_y = -1;
@@ -112,14 +109,14 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   else
     fprintf( stderr, "%g\n", white_y );
   
-  const char *lum_data = frame->getTags().getString("LUMINANCE");
-  if( lum_data != NULL && !strcmp( lum_data, "DISPLAY" )) {
+  std::string lum_data = frame.getTags().getTag("LUMINANCE");
+  if( !lum_data.empty() && lum_data != "DISPLAY" ) {
     fprintf( stderr, PROG_NAME " warning: input image should be in linear (not gamma corrected) luminance factor units. Use '--linear' option with pfsin* commands.\n" );
   }
   
   datmoToneCurve tc;
   
-  std::auto_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->getRawData(), ph);
+  std::auto_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->data(), ph);
   if( C.get() == NULL )
     throw pfs::Exception("failed to analyse the image");
   
@@ -128,14 +125,14 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   if( res != PFSTMO_OK )
     throw pfs::Exception( "failed to compute the tone-curve" );    
   
-  res = datmo_apply_tone_curve_cc( inX->getRawData(), R.getRawData(), inZ->getRawData(), cols, rows, inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(), &tc, df, saturation_factor );
+  res = datmo_apply_tone_curve_cc( inX->data(), R.data(), inZ->data(), cols, rows, inX->data(), R.data(), inZ->data(), inY->data(), &tc, df, saturation_factor );
   if( res != PFSTMO_OK )
     throw pfs::Exception( "failed to tone-map the image" );
   
-  ph->newValue( 100 );
+  ph.setValue( 100 );
   
-  pfs::transformColorSpace( pfs::CS_RGB, Xr, &R, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
-  frame->getTags().setString("LUMINANCE", "DISPLAY");
+  pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
+  frame.getTags().setTag("LUMINANCE", "DISPLAY");
   
   delete df;
   delete ds;

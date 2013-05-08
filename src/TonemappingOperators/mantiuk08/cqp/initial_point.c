@@ -34,7 +34,7 @@
 int
 pdip_initial_point_feasible_x(const gsl_matrix *A, const gsl_vector *b, gsl_vector *x)
 {	
-	int status, signum;
+    int status, signum;
 	
 	/* x = A^t*(AA^t)^{-1}*b */
 	
@@ -89,7 +89,6 @@ pdip_initial_point_feasible_x(const gsl_matrix *A, const gsl_vector *b, gsl_vect
 int
 pdip_initial_point_feasible_s(const gsl_matrix * C, const gsl_vector *d, const gsl_vector *x, gsl_vector *s)
 {
-
   int status;
 
   /* s=Cx-d */
@@ -184,7 +183,7 @@ pdip_initial_point_strict_feasible(gsl_vector *x, gsl_vector *s)
 	
 	size_t i;
 	
-	int status;
+    int status;
 	
 	delta_x = GSL_MAX_DBL(-1.5*gsl_vector_min(x),0.0);
 	delta_s = GSL_MAX_DBL(-1.5*gsl_vector_min(s),0.0);

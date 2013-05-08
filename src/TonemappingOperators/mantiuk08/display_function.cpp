@@ -59,13 +59,13 @@ void DisplayFunctionGGBA::init( float gamma, float L_max, float L_black, float E
 DisplayFunctionGGBA::DisplayFunctionGGBA( const char *predefined )
 {
   if( !strcasecmp( predefined, "lcd_office" ) ) {
-    init( 2.2f, 100, 0.8, 400, 0.01 );
+    init( 2.2f, 100, 0.8f, 400, 0.01f );
   } else if( !strcasecmp( predefined, "lcd" ) ) {
-    init( 2.2f, 200, 0.8, 60, 0.01 );
+    init( 2.2f, 200, 0.8f, 60, 0.01f );
   } else if( !strcasecmp( predefined, "lcd_bright" ) ) {
-    init( 2.6f, 500, 0.5, 10, 0.01 );
+    init( 2.6f, 500, 0.5f, 10, 0.01f );
   } else if( !strcasecmp( predefined, "crt" ) ) {
-    init( 2.2f, 80, 1, 60, 0.02 );
+    init( 2.2f, 80, 1.0f, 60, 0.02f );
   } else {
     throw pfs::Exception( "Unknown display type. Recognized types: lcd_office, lcd, lcd_bright, crt." );
   }

@@ -28,16 +28,16 @@
 
 #include <iostream>
 #include <algorithm>
+#include <boost/bind.hpp>
 
 #include "frame.h"
-#include "domio.h"
 #include "channel.h"
 
 using namespace std;
 
 namespace pfs
 {    
-Frame::Frame( int width, int height )
+Frame::Frame(size_t width, size_t height )
     : m_width( width )
     , m_height( height )
 {}
@@ -61,6 +61,16 @@ Frame::~Frame()
     for_each(m_channels.begin(),
              m_channels.end(),
              ChannelDeleter());
+}
+
+//! \brief Changes the size of the frame
+void Frame::resize(size_t width, size_t height)
+{
+    for_each(m_channels.begin(), m_channels.end(),
+             boost::bind(&Channel::ChannelData::resize, _1, width, height));
+
+    m_width = width;
+    m_height = height;
 }
 
 namespace
@@ -206,6 +216,14 @@ TagContainer& Frame::getTags()
 const TagContainer& Frame::getTags() const
 {
     return m_tags;
+}
+
+void Frame::swap(Frame& other)
+{
+    std::swap(m_width, other.m_width);
+    std::swap(m_height, other.m_height);
+    m_channels.swap( other.m_channels );
+    m_tags.swap( other.m_tags );
 }
 
 } // namespace pfs

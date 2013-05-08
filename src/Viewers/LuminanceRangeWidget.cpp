@@ -27,6 +27,7 @@
  * $Id: luminancerange_widget.cpp,v 1.2 2005/09/02 13:10:35 rafm Exp $
  */
 
+#include "LuminanceRangeWidget.h"
 
 #include <QPainter>
 #include <QCursor>
@@ -35,9 +36,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <QMouseEvent>
-#include <assert.h>
+#include <cassert>
 
-#include "LuminanceRangeWidget.h"
+#include <Libpfs/array2d.h>
+
 #include "Histogram.h"
 
 static const float exposureStep = 0.25f;
@@ -265,7 +267,7 @@ void LuminanceRangeWidget::shrinkRange()
   emit updateRangeWindow();
 }
 
-void LuminanceRangeWidget::setHistogramImage( const pfs::Array2D *image )
+void LuminanceRangeWidget::setHistogramImage( const pfs::Array2Df *image )
 {
   histogramImage = image;
   delete histogram;

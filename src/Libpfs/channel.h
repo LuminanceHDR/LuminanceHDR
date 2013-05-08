@@ -29,67 +29,59 @@
 
 #include <string>
 #include <map>
+#include <cstddef>
 
-#include "pfs.h" // SelfPtr
-#include "array2d.h"
-#include "tag.h"
+#include <Libpfs/array2d.h>
+#include <Libpfs/tag.h>
 
-namespace pfs
-{
+namespace pfs {
 
 //! \brief Channel interface represents a 2D rectangular array with
 //! associated tags.
-class Channel
+class Channel : public Array2D<float>
 {
-private:
-    Array2D* channel_impl;
-    std::string name;
-    TagContainer tags;
-
 public:
-    Channel(int width, int height, const std::string& channel_name);
+    typedef Array2D<float> ChannelData;
+
+    Channel(size_t width, size_t height, const std::string& channelName);
 
     virtual ~Channel();
+
+    using ChannelData::data;
+    using ChannelData::resize;
 
     //!
     //! \brief Returns TagContainer that can be used to access or modify
     //! tags associated with this Channel object.
     //!
-    TagContainer *getTags();
-    const TagContainer *getTags() const;
-
-
-    //! \brief For performance reasons, the channels can be accessed as a
-    //! table of float values. Data is given in row-major order, i.e.
-    //! it is indexed data[x+y*width]. If performance is not crucial,
-    //! use Array2D interface instead.
-    //!
-    //! \return a table of floats of the size width*height
-    float *getRawData();
-    const float* getRawData() const;
+    TagContainer &getTags();
+    const TagContainer &getTags() const;
 
     //! \brief Gets width of the channel (in pixels).
     //! This is a synonym for Array2D::getCols().
     //!
-    int getWidth() const;
+    size_t getWidth() const;
 
     //! Gets height of the channel (in pixels).
     //! This is a synonym for Array2D::getRows().
     //!
-    int getHeight() const;
+    size_t getHeight() const;
 
     //! Gets name of the channel.
     //!
     const std::string& getName() const;
 
-    Array2D* getChannelData();
-    const Array2D* getChannelData() const;
+//    //! \brief return handler to the underlying data
+//    inline ChannelData* getChannelData();
+//    inline const ChannelData* getChannelData() const;
 
-    void setChannelData(Array2D *);
+private:
+    std::string     m_name;
+    TagContainer    m_tags;
 };
 
 } // namespace pfs
 
-
+#include <Libpfs/channel.hxx>
 #endif // PFS_CHANNEL_H
 

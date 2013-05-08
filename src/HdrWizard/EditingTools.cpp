@@ -557,14 +557,14 @@ void EditingTools::saveImagesButtonClicked() {
     QString fnameprefix=QFileDialog::getSaveFileName(
                 this,
                 tr("Choose a directory and a prefix"),
-                                m_luminanceOptions.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString());
+                m_luminanceOptions.getDefaultPathLdrIn());
     if (fnameprefix.isEmpty())
         return;
 
     QFileInfo qfi(fnameprefix);
     QFileInfo test(qfi.path());
 
-    m_luminanceOptions.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
+    m_luminanceOptions.setDefaultPathLdrIn(qfi.path());
 
     if (test.isWritable() && test.exists() && test.isDir()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
@@ -608,12 +608,13 @@ void EditingTools::addGoodImage()
 {
     QString filename = movableListWidget->currentItem()->text();
     int idx = m_filesMap[filename];
-    int idxToRemove = movableListWidget->currentRow();
+    int idxGoodImage = movableListWidget->currentRow();
     referenceListWidget->addItem(QFileInfo(m_fileList[idx]).fileName());
     referenceListWidget->setCurrentRow(0);
     m_goodImageIndex = idx;
     m_antiGhostingMasksList[idx]->fill(qRgba(0,0,0,0));
-    movableListWidget->takeItem(idxToRemove);
+    movableListWidget->item(idxGoodImage)->setBackground(QColor(Qt::yellow));
+
     prevBothButton->setDisabled(true);
     nextBothButton->setDisabled(false);
     updatePivot(idx);
@@ -624,7 +625,7 @@ void EditingTools::removeGoodImage()
 {
     QString filename = referenceListWidget->currentItem()->text();
     int idx = m_filesMap[filename];
-    movableListWidget->addItem(QFileInfo(m_fileList[idx]).fileName());
+    movableListWidget->item(idx)->setBackground(QColor(Qt::white));
     referenceListWidget->takeItem(0);
     prevBothButton->setDisabled(false);
     nextBothButton->setDisabled(true);

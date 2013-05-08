@@ -915,20 +915,12 @@ Fortfahren?</translation>
         <translation>Ver&amp;kleinern</translation>
     </message>
     <message>
-        <source>Preview &amp;Mode:</source>
-        <translation>Vorschau&amp;modus:</translation>
-    </message>
-    <message>
         <source>Pivot Only (P)</source>
         <translation>Nur Pivot (P)</translation>
     </message>
     <message>
         <source>Antighosting Mask</source>
         <translation>Anti-Ghosting-Maske</translation>
-    </message>
-    <message>
-        <source>Mask Color</source>
-        <translation>Maskierungsfarbe</translation>
     </message>
     <message>
         <source>Images List</source>
@@ -997,20 +989,8 @@ Das Histogramm des Bildes wird im oberen Feld angezeigt.</translation>
         <translation>Strg+S</translation>
     </message>
     <message>
-        <source>A&amp;dd Mask</source>
-        <translation>Maske h&amp;inzufügen</translation>
-    </message>
-    <message>
-        <source>Remove Mas&amp;k</source>
-        <translation>Maske e&amp;ntfernen</translation>
-    </message>
-    <message>
         <source>Size:</source>
         <translation>Größe:</translation>
-    </message>
-    <message>
-        <source> pixels</source>
-        <translation> Pixel</translation>
     </message>
     <message>
         <source>&amp;Strength:</source>
@@ -1165,6 +1145,50 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Histogram</source>
         <translation>Histogramm</translation>
+    </message>
+    <message>
+        <source>&amp;Mode:</source>
+        <translation>&amp;Modus:</translation>
+    </message>
+    <message>
+        <source>Brush</source>
+        <translation>Pinsel</translation>
+    </message>
+    <message>
+        <source>Lasso</source>
+        <translation>Lasso</translation>
+    </message>
+    <message>
+        <source>Mask</source>
+        <translation>Maske</translation>
+    </message>
+    <message>
+        <source>A&amp;dd</source>
+        <translation>H&amp;inzufügen</translation>
+    </message>
+    <message>
+        <source>&amp;Remove</source>
+        <translation>E&amp;ntfernen</translation>
+    </message>
+    <message>
+        <source>Lasso - Draw a free hand selection area</source>
+        <translation>Lasso - Einen Bereich freihändig auswählen</translation>
+    </message>
+    <message>
+        <source>Brush - Paint the mask using the brush</source>
+        <translation>Pinsel - Die Maske mit dem Pinsel malen</translation>
+    </message>
+    <message>
+        <source>Save mask</source>
+        <translation>Maske speichern</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Apply saved mask</source>
+        <translation>Gespeicherte Maske anwenden</translation>
     </message>
 </context>
 <context>
@@ -1904,14 +1928,6 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
         <translation>Qualität der zu speichernden Datei</translation>
     </message>
     <message>
-        <source>Quality:</source>
-        <translation>Qualität:</translation>
-    </message>
-    <message>
-        <source>File size:</source>
-        <translation>Dateigröße:</translation>
-    </message>
-    <message>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -1926,6 +1942,14 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     <message>
         <source>&amp;Cancel</source>
         <translation>Abbre&amp;chen</translation>
+    </message>
+    <message>
+        <source>File size</source>
+        <translation>Dateigröße</translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation>Qualität</translation>
     </message>
 </context>
 <context>
@@ -2167,28 +2191,8 @@ p, li { white-space: pre-wrap; }
         <translation>Strg+E</translation>
     </message>
     <message>
-        <source>&amp;Align Images...</source>
-        <translation>Bilder a&amp;usrichten ...</translation>
-    </message>
-    <message>
-        <source>WORK IN PROGRESS</source>
-        <translation>WIRD VERARBEITET</translation>
-    </message>
-    <message>
         <source>&amp;About Qt</source>
         <translation>Über &amp;Qt</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation>&amp;Nebeneinander</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation>&amp;Gestapelt</translation>
-    </message>
-    <message>
-        <source>Cascade</source>
-        <translation>Gestapelt</translation>
     </message>
     <message>
         <source>Convert multiple HDR images to LDR</source>
@@ -2365,10 +2369,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Error: %1</source>
         <translation>Fehler: %1</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation>Symbolleisten</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
@@ -2613,6 +2613,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Realtime Previews</source>
         <translation>Echtzeit-Vorschau</translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation>Fattal-Warnung</translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation>Dieser Dynamikkompressionsoperator hängt von der Größe des Quellbildes ab. Diesen Operator auf ein Bild in Originalgröße anzuwenden, wird höchstwahrscheinlich ein anderes Ergebnis zur Folge haben.
+
+Willst du ihn dennoch anwenden?</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Aktualisierung</translation>
     </message>
 </context>
 <context>
@@ -3195,6 +3211,29 @@ p, li { white-space: pre-wrap; }
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation>Farbprofil (*.icc *.ICC *.icm *.ICM)</translation>
     </message>
+    <message>
+        <source>Saves the settings along the program files, to be portable</source>
+        <translation>Speichert die Einstellungen zusammen mit den Programmdateien, um portabel zu sein</translation>
+    </message>
+    <message>
+        <source>Portable mode</source>
+        <translation>Portabler Modus</translation>
+    </message>
+    <message>
+        <source>Restart</source>
+        <translation>Neu starten</translation>
+    </message>
+    <message>
+        <source>For the settings to take effect, please restart the application!</source>
+        <translation>Um die Änderungen zu übernehmen, muss die Anwendung neu gestartet werden!</translation>
+    </message>
+</context>
+<context>
+    <name>PreviewSettings</name>
+    <message>
+        <source>Load settings</source>
+        <translation>Einstellungen laden</translation>
+    </message>
 </context>
 <context>
     <name>ProjectionsDialog</name>
@@ -3288,14 +3327,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Aborting...</source>
-        <translation>Abbrechen ...</translation>
-    </message>
-    <message>
-        <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
-        <translation>Kann das Qt-JPEG-Plug-in nicht finden ...&lt;br&gt;Das DLL-Paket sollte mit der Option &quot;Pfadangaben verwenden&quot; entpackt werden.</translation>
-    </message>
     <message>
         <source>All LDR formats</source>
         <translation>Alle LDR-Formate</translation>
@@ -3399,6 +3430,138 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>I cannot perform the color transform. Please select a different monitor profile.</source>
         <translation>Farbraumkonvertierung konnte nicht durchgeführt werden. Bitte anderes Bildschirmprofil wählen.</translation>
+    </message>
+    <message>
+        <source>PreGamma=%1</source>
+        <translation>Pre-Gamma=%1</translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation>Kontrastausgleich</translation>
+    </message>
+    <message>
+        <source>Contrast</source>
+        <translation>Kontrast</translation>
+    </message>
+    <message>
+        <source>Saturation</source>
+        <translation>Sättigung</translation>
+    </message>
+    <message>
+        <source>Detail</source>
+        <translation>Detail</translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation>Helligkeit</translation>
+    </message>
+    <message>
+        <source>Luminance Level=Auto</source>
+        <translation>Helligkeit=Auto</translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation>Farbsättigung</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation>Kontrasterhöhung</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>NoiseRedux</source>
+        <translation>Rauschunterdrückung</translation>
+    </message>
+    <message>
+        <source>FFTSolver</source>
+        <translation>FFT-Funktion</translation>
+    </message>
+    <message>
+        <source>simple</source>
+        <translation>einfach</translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation>Eqn 2</translation>
+    </message>
+    <message>
+        <source>Equation 4</source>
+        <translation>Eqn 4</translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation>Schwellenwert</translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Spatial</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation>Bereich</translation>
+    </message>
+    <message>
+        <source>Base</source>
+        <translation>Basis</translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation>Multiplikator</translation>
+    </message>
+    <message>
+        <source>AutoLuminance</source>
+        <translation>Auto-Helligkeit</translation>
+    </message>
+    <message>
+        <source>Cone</source>
+        <translation>Zapfen</translation>
+    </message>
+    <message>
+        <source>Rod</source>
+        <translation>Stäbchen</translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation>Hauptwert</translation>
+    </message>
+    <message>
+        <source>Phi</source>
+        <translation>Phi</translation>
+    </message>
+    <message>
+        <source>Scales:</source>
+        <translation>Skalen:</translation>
+    </message>
+    <message>
+        <source>Lower</source>
+        <translation>Untere</translation>
+    </message>
+    <message>
+        <source>Upper</source>
+        <translation>Obere</translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation>Helligkeit</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation>Chromatische Anpassung</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation>Lichtanpassung</translation>
     </message>
 </context>
 <context>
@@ -3653,6 +3816,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>TiffModeDialog</name>
+    <message>
+        <source>Save as ...TIFF</source>
+        <translation>Speichern als TIFF ...</translation>
+    </message>
+</context>
+<context>
     <name>TonemappingPanel</name>
     <message>
         <source>TM Database Problem</source>
@@ -3806,10 +3976,6 @@ Error: %1</source>
     <message>
         <source>&amp;Load from File</source>
         <translation>Aus Datei &amp;laden</translation>
-    </message>
-    <message>
-        <source>Load parameters by comment</source>
-        <translation>Parameter per Kommentar laden</translation>
     </message>
     <message>
         <source>Load saved parameters</source>
@@ -4068,27 +4234,20 @@ Luminace Level</source>
         <translation>Gebräuchlichste Operatoren</translation>
     </message>
     <message>
-        <source>Apply</source>
-        <translation>Anwenden</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
-</context>
-<context>
-    <name>TonemappingWarningDialog</name>
     <message>
-        <source>Fattal Warning</source>
-        <translation>Fattal-Warnung</translation>
+        <source>Comments:</source>
+        <translation>Kommentare:</translation>
     </message>
     <message>
-        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
-
-Do you want to continue?</source>
-        <translation>Dieser Dynamikkompressionsoperator hängt von der Größe des Quellbildes ab. Diesen Operator auf ein Bild in Originalgröße anzuwenden, wird höchstwahrscheinlich ein anderes Ergebnis zur Folge haben.
-
-Willst du ihn dennoch anwenden?</translation>
+        <source>Tonemap</source>
+        <translation>Anwenden</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Laden</translation>
     </message>
 </context>
 <context>
@@ -4204,6 +4363,21 @@ Willst du ihn dennoch anwenden?</translation>
     <message>
         <source>Remind me later</source>
         <translation>Später erinnern</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateChecker</name>
+    <message>
+        <source>A new release is ready for download!</source>
+        <translation>Eine neue Version kann heruntergeladen werden!</translation>
+    </message>
+    <message>
+        <source>Click to download, or select Help-&gt;Update!</source>
+        <translation>Klicken zum Herunterladen oder Hilfe -&gt; Aktualisierung wählen!</translation>
+    </message>
+    <message>
+        <source>Do you want to open the webpage for download now?</source>
+        <translation>Möchtest du jetzt die Webseite für den Download öffnen?</translation>
     </message>
 </context>
 </TS>

@@ -7,13 +7,13 @@ ${CMAKE_CURRENT_SOURCE_DIR}/SavingParametersDialog.h
 ${CMAKE_CURRENT_SOURCE_DIR}/TMOProgressIndicator.h
 ${CMAKE_CURRENT_SOURCE_DIR}/TonemappingPanel.h
 ${CMAKE_CURRENT_SOURCE_DIR}/TonemappingSettings.h
-${CMAKE_CURRENT_SOURCE_DIR}/TonemappingWarnDialog.h)
+)
 SET(FILES_CPP
 ${CMAKE_CURRENT_SOURCE_DIR}/SavingParametersDialog.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/TMOProgressIndicator.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/TonemappingPanel.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/TonemappingSettings.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/TonemappingWarnDialog.cpp)
+)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 

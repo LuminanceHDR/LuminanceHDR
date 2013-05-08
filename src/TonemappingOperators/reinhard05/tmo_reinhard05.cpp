@@ -30,9 +30,9 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
 
-#include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
 #include "tmo_reinhard05.h"
+#include "TonemappingOperators/pfstmo.h"
+#include "Libpfs/progress.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -214,7 +214,7 @@ void tmo_reinhard05(size_t width, size_t height,
                     float* nR, float* nG, float* nB,
                     const float* nY,
                     const Reinhard05Params& params,
-                    ProgressHelper *ph)
+                    pfs::Progress &ph)
 {
     float Cav[] = {0.0f, 0.0f, 0.0f};
 
@@ -233,30 +233,30 @@ void tmo_reinhard05(size_t width, size_t height,
 
     // transform Red Channel
     transformChannel(nR, nY, nR, imSize, Cav[0], params, luminanceProperties, min_col, max_col);
-    ph->newValue(22);
+    ph.setValue(22);
 
     // transform Green Channel
     transformChannel(nG, nY, nG, imSize, Cav[1], params, luminanceProperties, min_col, max_col);
-    ph->newValue(44);
+    ph.setValue(44);
 
     // transform Blue Channel
     transformChannel(nB, nY, nB, imSize, Cav[2], params, luminanceProperties, min_col, max_col);
-    ph->newValue(66);
+    ph.setValue(66);
 
 
-    if (!ph->isTerminationRequested())
+    if (!ph.canceled())
     {
         //--- normalize intensities
         // normalize RED channel
         normalizeChannel(nR, imSize, min_col, max_col);
-        ph->newValue(77);  // done!
+        ph.setValue(77);  // done!
 
         // normalize GREEN channel
         normalizeChannel(nG, imSize, min_col, max_col);
-        ph->newValue(88);
+        ph.setValue(88);
 
         // normalize BLUE channel
         normalizeChannel(nB, imSize, min_col, max_col);
-        ph->newValue(99);
+        ph.setValue(99);
     }
 }

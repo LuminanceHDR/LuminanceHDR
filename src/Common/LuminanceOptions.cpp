@@ -31,6 +31,7 @@
 #include <QApplication>
 #include <QString>
 #include <QLocale>
+#include <QDate>
 #include <QFile>
 #include <QDebug>
 
@@ -62,7 +63,7 @@ void LuminanceOptions::conditionallyDoUpgrade()
         {
             options.setRawWhiteBalanceMethod(1);
 #ifdef DEMOSAICING_GPL3
-            options.setRawUserQuality(10); // AMaZE 
+            options.setRawUserQuality(10); // AMaZE
 #endif
         }
 
@@ -77,7 +78,7 @@ void LuminanceOptions::setPortableMode(bool isPortable)
         QSettings* oldSettings = m_settingHolder;
         LuminanceOptions::isCurrentPortableMode = isPortable;
         initSettings();
-        foreach (QString key, oldSettings->allKeys())
+        foreach (const QString& key, oldSettings->allKeys())
         {
             m_settingHolder->setValue(key, oldSettings->value(key));
         }
@@ -85,7 +86,7 @@ void LuminanceOptions::setPortableMode(bool isPortable)
 
         QString filePath = QDir(QApplication::applicationDirPath()).relativeFilePath("PortableMode.txt");
         QFile file(filePath);
-        if (isPortable && !file.exists()) 
+        if (isPortable && !file.exists())
         {
             if (file.open(QIODevice::WriteOnly))
                 file.close();
@@ -97,6 +98,18 @@ void LuminanceOptions::setPortableMode(bool isPortable)
     }
 }
 
+bool LuminanceOptions::checkForUpdate()
+{
+    QDate date = value("UpdateChecked", QDate(0, 1, 1)).toDate();
+    int diff = date.daysTo(QDate::currentDate());
+    return diff > 0;
+}
+
+void LuminanceOptions::setUpdateChecked()
+{
+    setValue("UpdateChecked", QDate::currentDate());
+}
+
 void LuminanceOptions::initSettings()
 {
     if (LuminanceOptions::isCurrentPortableMode)
@@ -105,12 +118,14 @@ void LuminanceOptions::initSettings()
         m_settingHolder = new QSettings();
 }
 
-void LuminanceOptions::setValue(const QString& key, const QVariant& value)
+void LuminanceOptions::setValue(const QString& key,
+                                const QVariant& value)
 {
     m_settingHolder->setValue(key, value);
 }
 
-QVariant LuminanceOptions::value(const QString & key, const QVariant& defaultValue) const
+QVariant LuminanceOptions::value(const QString & key,
+                                 const QVariant& defaultValue) const
 {
     return m_settingHolder->value(key, defaultValue);
 }
@@ -123,7 +138,7 @@ QString LuminanceOptions::getDatabaseFileName()
         filename = QDir::currentPath();
     }
     else
-    {	
+    {
         filename = QDir(QDir::homePath()).absolutePath();
 #ifdef WIN32
         filename += "/LuminanceHDR";
@@ -140,10 +155,11 @@ QString LuminanceOptions::getDatabaseFileName()
 // write system default language the first time around (discard "_country")
 QString LuminanceOptions::getGuiLang()
 {
-    return m_settingHolder->value(KEY_GUI_LANG, QLocale::system().name().left(2)).toString();
+    return m_settingHolder->value(KEY_GUI_LANG,
+                                  QLocale::system().name().left(2)).toString();
 }
 
-void LuminanceOptions::setGuiLang(QString s)
+void LuminanceOptions::setGuiLang(const QString& s)
 {
     m_settingHolder->setValue(KEY_GUI_LANG, s);
 }
@@ -347,10 +363,10 @@ int LuminanceOptions::getRawOutputColor()
 QString LuminanceOptions::getRawOutputProfile()
 {
     //QFile::encodeName(this->value(KEY_OUTPUT_PROFILE).toString()).constData();
-    return QFile::encodeName(m_settingHolder->value(KEY_OUTPUT_PROFILE, "").toString());
+    return QFile::encodeName(m_settingHolder->value(KEY_OUTPUT_PROFILE).toString());
 }
 
-void LuminanceOptions::setRawOutputProfile(QString v)
+void LuminanceOptions::setRawOutputProfile(const QString& v)
 {
     m_settingHolder->setValue(KEY_OUTPUT_PROFILE, v);
 }
@@ -358,10 +374,10 @@ void LuminanceOptions::setRawOutputProfile(QString v)
 QString LuminanceOptions::getRawCameraProfile()
 {
     // QFile::encodeName(this->value(KEY_CAMERA_PROFILE).toString()).constData();
-    return QFile::encodeName(m_settingHolder->value(KEY_CAMERA_PROFILE, "").toString());
+    return QFile::encodeName(m_settingHolder->value(KEY_CAMERA_PROFILE).toString());
 }
 
-void LuminanceOptions::setRawCameraProfile(QString v)
+void LuminanceOptions::setRawCameraProfile(const QString& v)
 {
     m_settingHolder->setValue(KEY_CAMERA_PROFILE, v);
 }
@@ -499,22 +515,24 @@ void LuminanceOptions::setRawUseChroma(bool b)
     m_settingHolder->setValue(KEY_USE_CHROMA, b);
 }
 
-QString LuminanceOptions::getBatchHdrPathInput(QString defaultPath)
+QString LuminanceOptions::getBatchHdrPathInput(const QString& defaultPath)
 {
-    return m_settingHolder->value(KEY_BATCH_HDR_PATH_INPUT, defaultPath).toString();
+    return m_settingHolder->value(KEY_BATCH_HDR_PATH_INPUT,
+                                  defaultPath).toString();
 }
 
-void LuminanceOptions::setBatchHdrPathInput(QString qstr)
+void LuminanceOptions::setBatchHdrPathInput(const QString& qstr)
 {
     m_settingHolder->setValue(KEY_BATCH_HDR_PATH_INPUT, qstr);
 }
 
-QString LuminanceOptions::getBatchHdrPathOutput(QString defaultPath)
+QString LuminanceOptions::getBatchHdrPathOutput(const QString& defaultPath)
 {
-    return m_settingHolder->value(KEY_BATCH_HDR_PATH_OUTPUT, defaultPath).toString();
+    return m_settingHolder->value(KEY_BATCH_HDR_PATH_OUTPUT,
+                                  defaultPath).toString();
 }
 
-void LuminanceOptions::setBatchHdrPathOutput(QString qstr)
+void LuminanceOptions::setBatchHdrPathOutput(const QString& qstr)
 {
     m_settingHolder->setValue(KEY_BATCH_HDR_PATH_OUTPUT, qstr);
 }
@@ -531,30 +549,33 @@ void LuminanceOptions::setSaveLogLuvTiff(bool b)
 
 QString LuminanceOptions::getBatchTmPathHdrInput()
 {
-    return m_settingHolder->value(KEY_BATCH_TM_PATH_INPUT, QDir::currentPath()).toString();
+    return m_settingHolder->value(KEY_BATCH_TM_PATH_INPUT,
+                                  QDir::currentPath()).toString();
 }
 
-void LuminanceOptions::setBatchTmPathHdrInput(QString s)
+void LuminanceOptions::setBatchTmPathHdrInput(const QString& s)
 {
     m_settingHolder->setValue(KEY_BATCH_TM_PATH_INPUT, s);
 }
 
 QString LuminanceOptions::getBatchTmPathTmoSettings()
 {
-    return m_settingHolder->value(KEY_BATCH_TM_PATH_TMO_SETTINGS, QDir::currentPath()).toString();
+    return m_settingHolder->value(KEY_BATCH_TM_PATH_TMO_SETTINGS,
+                                  QDir::currentPath()).toString();
 }
 
-void LuminanceOptions::setBatchTmPathTmoSettings(QString s)
+void LuminanceOptions::setBatchTmPathTmoSettings(const QString& s)
 {
     m_settingHolder->setValue(KEY_BATCH_TM_PATH_TMO_SETTINGS, s);
 }
 
 QString LuminanceOptions::getBatchTmPathLdrOutput()
 {
-    return m_settingHolder->value(KEY_BATCH_TM_PATH_OUTPUT, QDir::currentPath()).toString();
+    return m_settingHolder->value(KEY_BATCH_TM_PATH_OUTPUT,
+                                  QDir::currentPath()).toString();
 }
 
-void LuminanceOptions::setBatchTmPathLdrOutput(QString s)
+void LuminanceOptions::setBatchTmPathLdrOutput(const QString& s)
 {
     m_settingHolder->setValue(KEY_BATCH_TM_PATH_OUTPUT, s);
 }
@@ -574,7 +595,7 @@ namespace
 #ifdef QT_DEBUG
 struct PrintTempDir
 {
-    PrintTempDir(QString& str):
+    PrintTempDir(const QString& str):
         str_(str)
     {}
 
@@ -584,12 +605,12 @@ struct PrintTempDir
     }
 
 private:
-    QString& str_;
+    const QString& str_;
 };
 #endif // QT_DEBUG
-
 }
 
+#define KEY_TEMP_RESULT_PATH "Tonemapping_Options/TemporaryFilesPath"
 
 QString LuminanceOptions::getTempDir()
 {
@@ -632,52 +653,72 @@ QString LuminanceOptions::getTempDir()
     return temp_dir_name;
 }
 
-void LuminanceOptions::setTempDir(QString path)
-{
+void LuminanceOptions::setTempDir(const QString& path) {
     m_settingHolder->setValue(KEY_TEMP_RESULT_PATH, path);
 }
 
-QString LuminanceOptions::getDefaultPathHdrInOut()
+//--------------------PATHS & co. ----------------
+#define KEY_RECENT_PATH_SAVE_LDR "recent_path_save_ldr"
+#define KEY_RECENT_PATH_LOAD_LDR "recent_path_load_ldr"
+#define KEY_RECENT_PATH_SAVE_HDR "recent_path_save_hdr"
+#define KEY_RECENT_PATH_LOAD_HDR "recent_path_load_hdr"
+
+QString LuminanceOptions::getDefaultPathHdrIn()
 {
-    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
+    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_HDR,
+                                  QDir::currentPath()).toString();
 }
 
-void LuminanceOptions::setDefaultPathHdrInOut(QString path)
+void LuminanceOptions::setDefaultPathHdrIn(const QString& path)
 {
-    m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, path);
+    m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_HDR, path);
+}
+
+QString LuminanceOptions::getDefaultPathHdrOut()
+{
+    return m_settingHolder->value(KEY_RECENT_PATH_SAVE_HDR,
+                                  QDir::currentPath()).toString();
+}
+
+void LuminanceOptions::setDefaultPathHdrOut(const QString& path)
+{
+    m_settingHolder->setValue(KEY_RECENT_PATH_SAVE_HDR, path);
 }
 
 QString LuminanceOptions::getDefaultPathLdrIn()
 {
-    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, QDir::currentPath()).toString();
+    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_LDR,
+                                  QDir::currentPath()).toString();
 }
 
-void LuminanceOptions::setDefaultPathLdrIn(QString path)
+void LuminanceOptions::setDefaultPathLdrIn(const QString& path)
 {
-    m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, path);
+    m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_LDR, path);
 }
 
 QString LuminanceOptions::getDefaultPathLdrOut()
 {
-    return m_settingHolder->value(KEY_RECENT_PATH_SAVE_LDR, QDir::currentPath()).toString();
+    return m_settingHolder->value(KEY_RECENT_PATH_SAVE_LDR,
+                                  QDir::currentPath()).toString();
 }
 
-void LuminanceOptions::setDefaultPathLdrOut(QString path)
+void LuminanceOptions::setDefaultPathLdrOut(const QString& path)
 {
     m_settingHolder->setValue(KEY_RECENT_PATH_SAVE_LDR, path);
 }
 
+#define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "Recent_path_TMO_settings"
+
 QString LuminanceOptions::getDefaultPathTmoSettings()
 {
-    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, QDir::currentPath()).toString();
+    return m_settingHolder->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,
+                                  QDir::currentPath()).toString();
 }
 
-void LuminanceOptions::setDefaultPathTmoSettings(QString path)
+void LuminanceOptions::setDefaultPathTmoSettings(const QString& path)
 {
     m_settingHolder->setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, path);
 }
-
-
 
 /*
 settings->beginGroup(GROUP_EXTERNALTOOLS);
@@ -689,10 +730,11 @@ settings->endGroup();
 */
 QStringList LuminanceOptions::getAlignImageStackOptions()
 {
-    return m_settingHolder->value(KEY_EXTERNAL_AIS_OPTIONS, QStringList() << "-v" << "-a" << "aligned_").toStringList();
+    return m_settingHolder->value(KEY_EXTERNAL_AIS_OPTIONS,
+                                  QStringList() << "-v" << "-a" << "aligned_").toStringList();
 }
 
-void LuminanceOptions::setAlignImageStackOptions(QStringList qstrlist)
+void LuminanceOptions::setAlignImageStackOptions(const QStringList& qstrlist)
 {
     m_settingHolder->setValue(KEY_EXTERNAL_AIS_OPTIONS, qstrlist);
 }
@@ -719,7 +761,8 @@ void LuminanceOptions::setShowFattalWarning(bool b)
 
 int LuminanceOptions::getMainWindowToolBarMode()
 {
-    return m_settingHolder->value(KEY_TOOLBAR_MODE, Qt::ToolButtonTextUnderIcon).toInt();
+    return m_settingHolder->value(KEY_TOOLBAR_MODE,
+                                  Qt::ToolButtonTextUnderIcon).toInt();
 }
 
 void LuminanceOptions::setMainWindowToolBarMode(int mode)
@@ -760,7 +803,7 @@ void LuminanceOptions::setPreviewPanelActive(bool status)
 
 bool LuminanceOptions::isRealtimePreviewsActive()
 {
-    return m_settingHolder->value(KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE, true).toBool();
+    return m_settingHolder->value(KEY_TMOWINDOW_REALTIMEPREVIEWS_ACTIVE, false).toBool();
 }
 
 void LuminanceOptions::setRealtimePreviewsActive(bool status)
@@ -784,7 +827,7 @@ QString LuminanceOptions::getCameraProfileFileName()
 	return m_settingHolder->value(KEY_COLOR_CAMERA_PROFILE_FILENAME, "").toString();
 }
 
-void LuminanceOptions::setCameraProfileFileName(QString fname)
+void LuminanceOptions::setCameraProfileFileName(const QString& fname)
 {
 	m_settingHolder->setValue(KEY_COLOR_CAMERA_PROFILE_FILENAME, fname);
 }
@@ -794,7 +837,7 @@ QString LuminanceOptions::getMonitorProfileFileName()
 	return m_settingHolder->value(KEY_COLOR_MONITOR_PROFILE_FILENAME).toString();
 }
 
-void LuminanceOptions::setMonitorProfileFileName(QString fname)
+void LuminanceOptions::setMonitorProfileFileName(const QString& fname)
 {
 	m_settingHolder->setValue(KEY_COLOR_MONITOR_PROFILE_FILENAME, fname);
 }
@@ -804,7 +847,7 @@ QString LuminanceOptions::getPrinterProfileFileName()
 	return m_settingHolder->value(KEY_COLOR_PRINTER_PROFILE_FILENAME).toString();
 }
 
-void LuminanceOptions::setPrinterProfileFileName(QString fname)
+void LuminanceOptions::setPrinterProfileFileName(const QString& fname)
 {
 	m_settingHolder->setValue(KEY_COLOR_PRINTER_PROFILE_FILENAME, fname);
 }
@@ -814,7 +857,7 @@ int LuminanceOptions::getPreviewPanelMode() // 0 means on the right, 1 on the bo
 	return m_settingHolder->value(KEY_PREVIEW_PANEL_MODE).toInt();
 }
 
-void LuminanceOptions::setPreviewPanelMode(int mode) 
+void LuminanceOptions::setPreviewPanelMode(int mode)
 {
 	m_settingHolder->setValue(KEY_PREVIEW_PANEL_MODE, mode);
 }

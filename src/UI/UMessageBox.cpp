@@ -43,7 +43,7 @@ void UMessageBox::init()
     QGridLayout* layout = reinterpret_cast<QGridLayout*>(this->layout());
     layout->addItem(m_horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
 
-    this->setWindowTitle("Luminance HDR "LUMINANCEVERSION);
+    this->setWindowTitle("Luminance HDR " LUMINANCEVERSION);
 #ifdef Q_WS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
@@ -101,9 +101,6 @@ void UMessageBox::about(QWidget* parent)
     foreach (QString path,paths)
     {
         QString fname(path+QString("/LICENSE"));
-#ifdef WIN32
-        fname+=".txt";
-#endif
         if (QFile::exists(fname))
         {
             QFile file(fname);
@@ -126,7 +123,7 @@ void UMessageBox::about(QWidget* parent)
     about->show();
 }
 
-int UMessageBox::warning(QString title, QString description, QWidget* parent)
+int UMessageBox::warning(const QString &title, const QString &description, QWidget* parent)
 {
     UMessageBox WarningMsgBox(parent);
     WarningMsgBox.setText(title);
@@ -138,7 +135,19 @@ int UMessageBox::warning(QString title, QString description, QWidget* parent)
     return WarningMsgBox.exec();
 }
 
-int UMessageBox::saveDialog(QString title, QString description, QWidget* parent)
+int UMessageBox::question(const QString &title, const QString &description, QWidget* parent)
+{
+    UMessageBox questionMsgBox(parent);
+    questionMsgBox.setText(title);
+    questionMsgBox.setInformativeText(description);
+    questionMsgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    questionMsgBox.setDefaultButton(QMessageBox::No);
+    questionMsgBox.setIcon(QMessageBox::Question);
+
+    return questionMsgBox.exec();
+}
+
+int UMessageBox::saveDialog(const QString &title, const QString &description, QWidget* parent)
 {
     UMessageBox WarningMsgBox(parent);
     WarningMsgBox.setText(title);

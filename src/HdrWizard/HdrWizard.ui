@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>736</width>
-    <height>596</height>
+    <height>633</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -828,37 +828,10 @@ p, li { white-space: pre-wrap; }
                </spacer>
               </item>
               <item>
-               <widget class="QLabel" name="labelThresholdAntighost">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="text">
-                 <string>Ghosting Value</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSlider" name="horizontalSliderGhostingValue">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBoxGhostingValue">
-                <property name="maximum">
-                 <double>1.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.050000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.750000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QLabel" name="labelThreshold">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Threshold</string>
                 </property>
@@ -866,6 +839,9 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <widget class="QSlider" name="horizontalSliderThreshold">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -873,6 +849,9 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <widget class="QDoubleSpinBox" name="doubleSpinBoxThreshold">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="maximum">
                  <double>1.000000000000000</double>
                 </property>
@@ -880,7 +859,7 @@ p, li { white-space: pre-wrap; }
                  <double>0.010000000000000</double>
                 </property>
                 <property name="value">
-                 <double>0.050000000000000</double>
+                 <double>0.100000000000000</double>
                 </property>
                </widget>
               </item>
@@ -1700,11 +1679,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>83</y>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>84</y>
+     <x>178</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -1716,11 +1695,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>84</y>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>84</y>
+     <x>178</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -1732,11 +1711,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>84</y>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
      <x>55</x>
-     <y>113</y>
+     <y>256</y>
     </hint>
    </hints>
   </connection>
@@ -1780,11 +1759,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>84</y>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>85</y>
+     <x>502</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>
@@ -1796,11 +1775,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>83</y>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>55</x>
-     <y>113</y>
+     <y>256</y>
     </hint>
    </hints>
   </connection>
@@ -1812,11 +1791,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>83</y>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>85</x>
-     <y>84</y>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
@@ -1828,219 +1807,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>83</y>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>85</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lineEdit_show_resp</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>641</x>
-     <y>163</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>labelThresholdAntighost</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>289</x>
-     <y>247</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>predefConfigsComboBox</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>453</x>
-     <y>79</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_weights</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>75</x>
-     <y>121</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_model</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>75</x>
-     <y>205</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>customConfigCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>labelThresholdAntighost</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>289</x>
-     <y>247</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lineEdit_showmodel</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>641</x>
-     <y>205</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lineEdit_showWeight</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>641</x>
-     <y>121</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>customConfigCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>antighostingCheckBox</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_predef_configs</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>47</x>
-     <y>56</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_resp</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>75</x>
-     <y>163</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_Iterations</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>538</x>
-     <y>289</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>antighostingCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>spinBoxIterations</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>67</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>708</x>
-     <y>289</y>
+     <x>502</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>
@@ -2084,11 +1855,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>83</y>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>85</x>
-     <y>82</y>
+     <y>287</y>
     </hint>
    </hints>
   </connection>
@@ -2100,11 +1871,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>82</y>
+     <y>287</y>
     </hint>
     <hint type="destinationlabel">
      <x>50</x>
-     <y>112</y>
+     <y>341</y>
     </hint>
    </hints>
   </connection>
@@ -2116,11 +1887,59 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>82</y>
+     <y>287</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>83</y>
+     <x>461</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>antighostingCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>labelThreshold</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>antighostingCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>horizontalSliderThreshold</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>136</x>
+     <y>231</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>521</x>
+     <y>238</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>antighostingCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>doubleSpinBoxThreshold</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>228</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>670</x>
+     <y>238</y>
     </hint>
    </hints>
   </connection>

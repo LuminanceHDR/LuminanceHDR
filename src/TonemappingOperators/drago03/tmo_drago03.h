@@ -28,35 +28,36 @@
 #ifndef TMO_DRAGO03_H
 #define TMO_DRAGO03_H
 
-// forward declaration
-class ProgressHelper;
+#include <Libpfs/array2d_fwd.h>
 
-/**
- * @brief Frederic Drago Logmapping Algorithm
- *
- * Implementation obtained from source code provided
- * by Frederic Drago on 16 May 2003.
- *
- * @param width image width
- * @param height image height
- * @param Y [in] image luminance values
- * @param L [out] tone mapped values
- * @param maxLum maximum luminance in the image
- * @param avLum logarithmic average of luminance in the image
- * @param bias bias parameter of tone mapping algorithm (eg 0.85)
- */
+namespace pfs
+{
+class Progress;
+}
 
-void tmo_drago03(unsigned int width, unsigned int height,
-  const float* Y, float* L,
-  float maxLum, float avLum, float bias, ProgressHelper *ph);
+//! \brief Frederic Drago Logmapping Algorithm
+//!
+//! Original implementation obtained from source code provided
+//! by Frederic Drago on 16 May 2003 (pfstmo)
+//!
+//! \param width image width
+//! \param height image height
+//! \param Y [in] image luminance values
+//! \param L [out] tone mapped values
+//! \param maxLum maximum luminance in the image
+//! \param avLum logarithmic average of luminance in the image
+//! \param bias bias parameter of tone mapping algorithm (eg 0.85)
+//!
+void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
+                 float maxLum, float avLum, float bias, pfs::Progress &ph);
 
-/**
- * @brief Find average and maximum luminance in an image
- * 
- * @param Y [in] image luminance values
- * @param avLum [out] average luminance
- * @param maxLum [out] maximum luminance
- */
-void calculateLuminance(unsigned int width, unsigned int height, const float* Y, float& avLum, float& maxLum );
+//! \brief Find average and maximum luminance in an image
+//!
+//! \param Y [in] image luminance values
+//! \param avLum [out] average luminance
+//! \param maxLum [out] maximum luminance
+//!
+void calculateLuminance(unsigned int width, unsigned int height,
+                        const float* Y, float& avLum, float& maxLum);
 
 #endif

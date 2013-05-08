@@ -34,14 +34,16 @@
 #include <algorithm>
 #include <numeric>
 #include <functional>
-#include <boost/bind.hpp>
 
 #ifdef _OPENMP
 #include <omp.h>
 #endif
 
-#include "Libpfs/vex.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/vex/sse.h"
 #include "Libpfs/vex/vex.h"
+
+using namespace pfs;
 
 namespace
 {
@@ -49,46 +51,7 @@ inline
 size_t downscaleBy2(size_t value)
 {
     return (value >> 1);
-    // return ((value + 1) >> 1);
 }
-}
-
-PyramidS::PyramidS(size_t rows, size_t cols)
-    : m_rows(rows)
-    , m_cols(cols)
-    , m_Gx(rows*cols)
-    , m_Gy(rows*cols)
-{}
-
-PyramidS::PyramidS(const PyramidS &lhs)
-    : m_rows(lhs.m_rows)
-    , m_cols(lhs.m_cols)
-    , m_Gx( lhs.m_Gx.size() )
-    , m_Gy( lhs.m_Gy.size() )
-{}
-
-void PyramidS::transformToR(float detailFactor)
-{
-    ::transformToR(m_Gx.data(), detailFactor, m_rows*m_cols);
-    ::transformToR(m_Gy.data(), detailFactor, m_rows*m_cols);
-}
-
-void PyramidS::transformToG(float detailFactor)
-{
-    ::transformToG(m_Gx.data(), detailFactor, m_rows*m_cols);
-    ::transformToG(m_Gy.data(), detailFactor, m_rows*m_cols);
-}
-
-void PyramidS::scale(float multiplier)
-{
-    VEX_vsmul(m_Gx.data(), multiplier, m_Gx.data(), m_rows*m_cols);
-    VEX_vsmul(m_Gy.data(), multiplier, m_Gy.data(), m_rows*m_cols);
-}
-
-void PyramidS::multiply(const PyramidS& multiplier)
-{
-    vex::vmul(m_Gx.data(), multiplier.gX(), m_Gx.data(), m_rows*m_cols);
-    vex::vmul(m_Gy.data(), multiplier.gY(), m_Gy.data(), m_rows*m_cols);
 }
 
 namespace
@@ -103,7 +66,7 @@ PyramidT::PyramidT(size_t rows, size_t cols)
     size_t referenceSize = std::min( rows, cols );
     while ( referenceSize >= PYRAMID_MIN_PIXELS )
     {
-        m_pyramid.push_back( PyramidS(rows, cols) );
+        m_pyramid.push_back( PyramidS(cols, rows) );
 
         rows = downscaleBy2(rows);                     // division by 2
         cols = downscaleBy2(cols);                     // division by 2
@@ -111,10 +74,11 @@ PyramidT::PyramidT(size_t rows, size_t cols)
     }
 }
 
-typedef PyramidS::Vector Vector;
-
-void PyramidT::computeGradients(const float *Y)
+void PyramidT::computeGradients(const pfs::Array2Df& Y)
 {
+    assert( this->getCols() == Y.getCols() );
+    assert( this->getRows() == Y.getRows() );
+
     if ( !m_pyramid.size() ) return;
 
 #ifndef NDEBUG
@@ -122,76 +86,75 @@ void PyramidT::computeGradients(const float *Y)
     assert((getElems()/16) > 0);
 #endif
 
-    Vector buffer1( getElems()/4 );
-    Vector buffer2( getElems()/16 );
+    Array2Df buffer1(downscaleBy2(Y.getCols()),
+                     downscaleBy2(getRows()));
+    Array2Df buffer2(downscaleBy2(buffer1.getCols()),
+                     downscaleBy2(buffer1.getRows()));
 
-    calculateGradients(m_pyramid[0].getCols(), m_pyramid[0].getRows(),
-                       Y,
-                       m_pyramid[0].gX(), m_pyramid[0].gY());
+    calculateGradients(Y.data(), m_pyramid[0]);
 
     if ( m_pyramid.size() > 1 )
     {
         matrixDownsample(m_pyramid[0].getCols(), m_pyramid[0].getRows(),
-                         Y,
-                         buffer1.data());
-        calculateGradients(m_pyramid[1].getCols(), m_pyramid[1].getRows(),
-                           buffer1.data(),
-                           m_pyramid[1].gX(), m_pyramid[1].gY());
+                         Y.data(), buffer1.data());
+        calculateGradients(buffer1.data(), m_pyramid[1]);
     }
 
     for (size_t idx = 2; idx < m_pyramid.size(); ++idx)
     {
         matrixDownsample(m_pyramid[idx-1].getCols(), m_pyramid[idx-1].getRows(),
-                         buffer1.data(),
-                         buffer2.data());
-        calculateGradients(m_pyramid[idx].getCols(), m_pyramid[idx].getRows(),
-                           buffer2.data(),
-                           m_pyramid[idx].gX(), m_pyramid[idx].gY());
+                         buffer1.data(), buffer2.data());
+        calculateGradients(buffer2.data(), m_pyramid[idx]);
 
         buffer1.swap( buffer2 );
     }
 }
 
-void PyramidT::computeSumOfDivergence(float* sumOfdivG)
+void PyramidT::computeSumOfDivergence(pfs::Array2Df& sumOfdivG)
 {
-    Vector tempMatrix( getElems() >> 2 );
-
-    float* temp = tempMatrix.data();
-
+    // zero dimension Array2D
+    pfs::Array2Df tempSumOfdivG( downscaleBy2(sumOfdivG.getCols()),
+                                 downscaleBy2(sumOfdivG.getRows()) );
+    
     if ( (numLevels() % 2) )
     {
-        std::swap(sumOfdivG, temp);
-        std::fill(temp, temp + getElems(), 0.0f);
-    } else
+        sumOfdivG.swap(tempSumOfdivG);
+        tempSumOfdivG.reset(0.0f);
+    }
+    else
     {
-        std::fill(temp, temp + (getElems() >> 2), 0.0f);
+        tempSumOfdivG.reset(0.0f);
     }
 
-    PyramidContainer::const_reverse_iterator it = m_pyramid.rbegin();
-    PyramidContainer::const_reverse_iterator itEnd = m_pyramid.rend();
-
-    if (it != itEnd)
+    if ( numLevels() != 0 )
     {
-        calculateAndAddDivergence(it->getCols(), it->getRows(),
-                                  it->gX(), it->gY(), temp);
-
-        std::swap(sumOfdivG, temp);
-        ++it;
+        calculateAndAddDivergence(m_pyramid[m_pyramid.size()-1],
+                                  tempSumOfdivG.data());
+        tempSumOfdivG.swap(sumOfdivG);
     }
 
-    while (it != itEnd)
+    for (int idx = numLevels()-2; idx >= 0; idx--)
     {
-        matrixUpsample(it->getCols(), it->getRows(), sumOfdivG, temp);
-        calculateAndAddDivergence(it->getCols(), it->getRows(),
-                                  it->gX(), it->gY(), temp);
-
-        std::swap(sumOfdivG, temp);
-        ++it;
+        matrixUpsample(m_pyramid[idx].getCols(), m_pyramid[idx].getRows(),
+                       sumOfdivG.data(), tempSumOfdivG.data());
+        calculateAndAddDivergence(m_pyramid[idx],
+                                  tempSumOfdivG.data());
+        tempSumOfdivG.swap(sumOfdivG);
     }
-
 }
 
-// possible improvements: parallel_while!
+namespace
+{
+struct CalculateScaleFactor
+{
+    XYGradient operator()(const XYGradient& xyGrad) const
+    {
+        return XYGradient(calculateScaleFactor(xyGrad.gX()),
+                          calculateScaleFactor(xyGrad.gY()));
+    }
+};
+}
+
 void PyramidT::computeScaleFactors( PyramidT& result ) const
 {
     PyramidContainer::const_iterator inCurr = m_pyramid.begin();
@@ -201,58 +164,111 @@ void PyramidT::computeScaleFactors( PyramidT& result ) const
 
     while ( inCurr != inEnd )
     {
-        calculateScaleFactor(inCurr->gX(), outCurr->gX(),
-                             inCurr->getRows()*inCurr->getCols());
-        calculateScaleFactor(inCurr->gY(), outCurr->gY(),
-                             inCurr->getRows()*inCurr->getCols());
+        std::transform(inCurr->begin(), inCurr->end(), outCurr->begin(),
+                       CalculateScaleFactor());
 
         ++outCurr;
         ++inCurr;
     }
 }
 
+namespace
+{
+template<typename Traits>
+struct TransformObj
+{
+    TransformObj(float f) : t_(f) {}
+
+    XYGradient operator()(const XYGradient& xyGrad) const
+    {
+        return XYGradient(t_(xyGrad.gX()),
+                          t_(xyGrad.gY()));
+    }
+private:
+    Traits t_;
+};
+}
+
 void PyramidT::transformToR(float detailFactor)
 {
-    const int iEnd = static_cast<int>(m_pyramid.size());
-#pragma omp parallel for
-    for (int i = 0; i < iEnd; i++)
+    PyramidContainer::iterator itCurr = m_pyramid.begin();
+    PyramidContainer::iterator itEnd = m_pyramid.end();
+
+    TransformObj<TransformToR> transformFunctor(detailFactor);
+
+    while ( itCurr != itEnd )
     {
-        m_pyramid[i].transformToR( detailFactor );
+        std::transform(itCurr->begin(), itCurr->end(), itCurr->begin(),
+                       transformFunctor);
+
+        ++itCurr;
     }
 }
 
 void PyramidT::transformToG(float detailFactor)
 {
-    const int iEnd = static_cast<int>(m_pyramid.size());
-#pragma omp parallel for
-    for (int i = 0; i < iEnd; i++)
+    PyramidContainer::iterator itCurr = m_pyramid.begin();
+    PyramidContainer::iterator itEnd = m_pyramid.end();
+    
+    TransformObj<TransformToG> transformFunctor(detailFactor);
+    
+    while ( itCurr != itEnd )
     {
-        m_pyramid[i].transformToG( detailFactor );
+        std::transform(itCurr->begin(), itCurr->end(), itCurr->begin(),
+                       transformFunctor);
+        
+        ++itCurr;
     }
 }
 
+struct ScalePyramidS
+{
+    ScalePyramidS(float multiplier)
+        : multiplier_(multiplier)
+    {}
+    
+    void operator()(PyramidS& multiply)
+    {
+        vex::vsmul(multiply.data(), multiplier_,
+                   multiply.data(), multiply.size());
+    }
+private:
+    float multiplier_;
+};
+
 void PyramidT::scale(float multiplier)
 {
-    const int iEnd = static_cast<int>(m_pyramid.size());
-#pragma omp parallel for
-    for (int i = 0; i < iEnd; i++)
-    {
-        m_pyramid[i].scale( multiplier );
-    }
+    for_each(m_pyramid.begin(), m_pyramid.end(),
+             ScalePyramidS(multiplier));
 }
 
 // scale gradients for the whole one pyramid with the use of (Cx,Cy)
 // from the other pyramid
-void PyramidT::multiply(const PyramidT &multiplier)
+void PyramidT::multiply(const PyramidT &other)
 {
-    PyramidContainer::const_iterator inCurr = multiplier.m_pyramid.begin();
-    PyramidContainer::const_iterator inEnd = multiplier.m_pyramid.end();
-
+    // check that the pyramids have the same number of levels
+    assert( this->numLevels() == other.numLevels() );
+    // check that the first level of the pyramid has the same size
+    assert( this->getCols() == other.getCols() );
+    assert( this->getRows() == other.getRows() );
+    
+    PyramidContainer::const_iterator inCurr = other.m_pyramid.begin();
+    PyramidContainer::const_iterator inEnd = other.m_pyramid.end();
     PyramidContainer::iterator outCurr = m_pyramid.begin();
 
     for ( ; inCurr != inEnd ; ++outCurr, ++inCurr)
     {
-        outCurr->multiply(*inCurr);
+        PyramidContainer::value_type::const_iterator innerItOther = inCurr->begin();
+        PyramidContainer::value_type::iterator innerIt = outCurr->begin();
+        PyramidContainer::value_type::iterator innerItEnd = outCurr->end();
+
+        while (innerIt != innerItEnd)
+        {
+            *innerIt *= *innerItOther;
+
+            innerIt++;
+            innerItOther++;
+        }
     }
 }
 
@@ -284,7 +300,7 @@ void matrixDownsampleFull(size_t inCols, size_t inRows,
     // (fx2, fy2) is the fraction of the bottom right pixel showing.
 
 #pragma omp parallel for
-    for (int y = 0; y < outRows; y++)
+    for (int y = 0; y < static_cast<int>(outRows); y++)
     {
         const size_t iy1 = (  y   * inRows) / outRows;
         const size_t iy2 = ((y+1) * inRows) / outRows;
@@ -340,7 +356,7 @@ void matrixDownsampleSimple(size_t inCols, size_t inRows,
     // sampling to a simple average.
 
 #pragma omp parallel for
-    for (int y = 0; y < outRows; y++)
+    for (int y = 0; y < static_cast<int>(outRows); y++)
     {
         const int iy1 = y * 2;
         const float* datap = inputData + iy1 * inCols;
@@ -353,7 +369,7 @@ void matrixDownsampleSimple(size_t inCols, size_t inRows,
             resp[x] = ( datap[ix1] +
                         datap[(ix1+1)] +
                         datap[ix1     + inCols] +
-                        datap[(ix1+1) + inCols]) / 4.0f; // * 0.25f; //  /4.0f;
+                        datap[(ix1+1) + inCols]) * 0.25f; // / 4.0f;
         }
     }
 }
@@ -385,11 +401,13 @@ void matrixUpsampleFull(const size_t outCols, const size_t outRows,
     const float dx = static_cast<float>(inCols)/outCols;
     const float dy = static_cast<float>(inRows)/outRows;
 
-    const float factor = 1.0f / (dx*dy); // This gives a genuine upsampling matrix, not the transpose of the downsampling matrix
-    // const float factor = 1.0f; // Theoretically, this should be the best.
+    // This gives a genuine upsampling matrix, not the transpose of the downsampling matrix
+    const float factor = 1.0f / (dx*dy);
+    // Theoretically, this should be the best.
+    // const float factor = 1.0f;
 
 #pragma omp parallel for
-    for (int y = 0; y < outRows; y++)
+    for (int y = 0; y < static_cast<int>(outRows); y++)
     {
         const float sy = y * dy;
         const int iy1 =      (  y   * inRows) / outRows;
@@ -439,61 +457,62 @@ void matrixUpsample(size_t outCols, size_t outRows,
     }
 }
 
-namespace
-{
-void xGradient(size_t ROWS, size_t COLS, const float* lum, float* Gx)
-{
-#pragma omp parallel for
-    for (int ky = 0; ky < ROWS; ky++)
-    {
-        float* currGx = Gx + ky*COLS;
-        float* endGx = currGx + COLS - 1;
-        const float* currLum = lum + ky*COLS;
-
-        while ( currGx != endGx )
-        {
-            *currGx++ = *(currLum + 1) - *currLum; currLum++;
-        }
-        *currGx = 0.0f;
-    }
-}
-
-void yGradient(size_t ROWS, size_t COLS, const float* lum, float* Gy)
-{
-#pragma omp parallel for
-    for (int ky = 0; ky < ROWS-1; ++ky)
-    {
-        float* currGy = Gy + ky*COLS;
-        float* endGy = currGy + COLS;
-        const float* currLumU = lum + ky*COLS;
-        const float* currLumL = lum + (ky + 1)*COLS;
-
-        while ( currGy != endGy )
-        {
-            *currGy++ = *currLumL++ - *currLumU++;
-        }
-    }
-
-    // ...and last row!
-    float* GyLastRow = Gy + COLS*(ROWS-1);
-    std::fill(GyLastRow, GyLastRow + COLS, 0.0f);
-}
-}
-
 // calculate gradients
-void calculateGradients(size_t cols, size_t rows,
-                        const float* inputData,
-                        float* gxData, float* gyData)
+void calculateGradients(const float* inputData, PyramidS& gradient)
 {
-    xGradient(rows, cols, inputData, gxData);
-    yGradient(rows, cols, inputData, gyData);
+    const int COLS = gradient.getCols();
+    const int ROWS = gradient.getRows();
+
+#pragma omp parallel // shared(COLS, ROWS)
+    {
+#pragma omp for nowait
+        for (int ky = 0; ky < (ROWS-1); ++ky)
+        {
+            PyramidS::iterator currGxy = gradient.row_begin(ky);
+            PyramidS::iterator endGxy = gradient.row_end(ky) - 1;
+
+            const float* currLumU = inputData + ky*COLS;
+            const float* currLumL = inputData + (ky + 1)*COLS;
+
+            while ( currGxy != endGxy )
+            {
+                currGxy->gX() = *(currLumU + 1) - *currLumU;
+                currGxy->gY() = *currLumL - *currLumU;
+
+                ++currLumL;
+                ++currLumU;
+                ++currGxy;
+            }
+            // last sample of the row...
+            currGxy->gX() = 0.0f;
+            currGxy->gY() = *currLumL - *currLumU;
+        }
+
+#pragma omp single
+        {
+            PyramidS::iterator currGxy = gradient.row_begin(ROWS-1);
+            PyramidS::iterator endGxy = gradient.row_end(ROWS-1) - 1;
+
+            const float* currLumU = inputData + (ROWS-1)*COLS;
+
+            while ( currGxy != endGxy )
+            {
+                currGxy->gX() = *(currLumU + 1) - *currLumU;
+                currGxy->gY() = 0.0f;
+
+                ++currLumU;
+                ++currGxy;
+            }
+            // last sample of the row...
+            currGxy->gX() = 0.0f;
+            currGxy->gY() = 0.0f;
+        } // pragma omp single
+    } // pragma omp parallel
 }
-
-
 
 namespace
 {
-const float LOG10 = 2.3025850929940456840179914546844f;
+const float LOG10FACTOR = 2.3025850929940456840179914546844f;
 const size_t LOOKUP_W_TO_R = 107;
 
 static float W_table[] = {
@@ -533,10 +552,8 @@ static float R_table[] = {
     0.990566f,1.000000f};
 
 // in_tab and out_tab should contain inccreasing float values
-inline
-float lookup_table(const size_t n,
-                   const float* in_tab, const float* out_tab,
-                   const float val)
+static
+float lookup_table(size_t n, const float* in_tab, const float* out_tab, float val)
 {
     if ( val < in_tab[0] ) return out_tab[0];
 
@@ -553,132 +570,116 @@ float lookup_table(const size_t n,
 }
 }
 
-// transform gradient (Gx,Gy) to R
-void transformToR(float* G, float detailFactor, size_t size)
-{
-    const float log10 = 2.3025850929940456840179914546844*detailFactor;
+TransformToR::TransformToR(float detailFactor)
+    : m_detailFactor(LOG10FACTOR*detailFactor)
+{}
 
-#pragma omp parallel for
-    for (int j = 0; j < size; j++)
+// transform gradient G to R
+float TransformToR::operator ()(float currG) const
+{
+    if (currG < 0.0f)
     {
         // G to W
-        float Curr_G = G[j];
-
-        if (Curr_G < 0.0f)
-        {
-            Curr_G = -(powf(10, (-Curr_G) * log10) - 1.0f);
-        } else {
-            Curr_G = (powf(10, Curr_G * log10) - 1.0f);
-        }
+        currG = std::pow(10, (-currG) * m_detailFactor) - 1.0f;
         // W to RESP
-        if (Curr_G < 0.0f)
-        {
-            Curr_G = -lookup_table(LOOKUP_W_TO_R, W_table, R_table, -Curr_G);
-        } else {
-            Curr_G = lookup_table(LOOKUP_W_TO_R, W_table, R_table, Curr_G);
-        }
-
-        G[j] = Curr_G;
+        return -lookup_table(LOOKUP_W_TO_R, W_table, R_table, currG);
+    }
+    else
+    {
+        // G to W
+        currG = std::pow(10, currG * m_detailFactor) - 1.0f;
+        // W to RESP
+        return lookup_table(LOOKUP_W_TO_R, W_table, R_table, currG);
     }
 }
 
+
+TransformToG::TransformToG(float detailFactor)
+    : m_detailFactor(1.0f/(LOG10FACTOR*detailFactor))
+{}
+
 // transform from R to G
-void transformToG(float* R, float detailFactor, size_t size)
+float TransformToG::operator ()(float currR) const
 {
-    //here we are actually changing the base of logarithm
-    const float log10 = 2.3025850929940456840179914546844*detailFactor;
-
-#pragma omp parallel for
-    for (int j = 0; j < size; j++)
+    if (currR < 0.0f)
     {
-        float Curr_R = R[j];
-
         // RESP to W
-        if (Curr_R < 0.0f)
-        {
-            Curr_R = -lookup_table(LOOKUP_W_TO_R, R_table, W_table, -Curr_R);
-        } else {
-            Curr_R = lookup_table(LOOKUP_W_TO_R, R_table, W_table, Curr_R);
-        }
-
+        currR = lookup_table(LOOKUP_W_TO_R, R_table, W_table, -currR);
         // W to G
-        if (Curr_R < 0.0f)
-        {
-            Curr_R = -log((-Curr_R) + 1.0f) / log10;
-        } else {
-            Curr_R = log(Curr_R + 1.0f) / log10;
-        }
-
-        R[j] = Curr_R;
+        return -std::log(currR + 1.0f) * m_detailFactor;
+    }
+    else
+    {
+        // RESP to W
+        currR = lookup_table(LOOKUP_W_TO_R, R_table, W_table, currR);
+        // W to G
+        return std::log(currR + 1.0f) * m_detailFactor;
     }
 }
 
 //! \brief calculate divergence of two gradient maps (Gx and Gy)
 //! divG(x,y) = [Gx(x,y) - Gx(x-1,y)] + [Gy(x,y) - Gy(x,y-1)]
-void calculateAndAddDivergence(size_t COLS, size_t ROWS,
-                               const float* Gx, const float* Gy, float* divG)
+//! \note \a divG will be used purely as a temporary vector of data, to store
+//! the result. The only requirement is that \a divG size is bigger or equal
+//! to \a G size
+void calculateAndAddDivergence(const PyramidS& G, float* divG)
 {
+    const int ROWS = G.getRows();
+    const int COLS = G.getCols();
+
     float divGx, divGy;
-#pragma omp parallel sections private(divGx, divGy)
+#pragma omp parallel private(divGx, divGy)
     {
-#pragma omp section
-        {
-            // kx = 0 AND ky = 0;
-            divG[0] += Gx[0] + Gy[0];                       // OUT
+        // kx = 0 AND ky = 0;
+        divG[0] += G(0).gX() + G(0).gY();                       // OUT
 
-            // ky = 0
-            for (size_t kx = 1; kx < COLS; kx++)
+        // ky = 0
+#pragma omp for nowait
+        for (int kx = 1; kx < COLS; kx++)
+        {
+            divGx = G(kx).gX() - G(kx - 1).gX();
+            divGy = G(kx).gY();
+            divG[kx] += divGx + divGy;                    // OUT
+        }
+#pragma omp for nowait
+        for (int ky = 1; ky < ROWS; ky++)
+        {
+            // kx = 0
+            divGx = G(ky*COLS).gX();
+            divGy = G(ky*COLS).gY() - G(ky*COLS - COLS).gY();
+            divG[ky*COLS] += divGx + divGy;               // OUT
+
+            // kx > 0
+            for (int kx = 1; kx < COLS; kx++)
             {
-                divGx = Gx[kx] - Gx[kx - 1];
-                divGy = Gy[kx];
-                divG[kx] += divGx + divGy;                    // OUT
+                divGx = G(kx + ky*COLS).gX() - G(kx + ky*COLS-1).gX();
+                divGy = G(kx + ky*COLS).gY() - G(kx + ky*COLS - COLS).gY();
+                divG[kx + ky*COLS] += divGx + divGy;        // OUT
             }
         }
-#pragma omp section
-        {
-#pragma omp parallel for schedule(static) private(divGx, divGy)
-            for (int ky = 1; ky < ROWS; ky++)
-            {
-                // kx = 0
-                divGx = Gx[ky*COLS];
-                divGy = Gy[ky*COLS] - Gy[ky*COLS - COLS];
-                divG[ky*COLS] += divGx + divGy;               // OUT
-
-                // kx > 0
-                for (size_t kx = 1; kx < COLS; kx++)
-                {
-                    divGx = Gx[kx + ky*COLS] - Gx[kx + ky*COLS-1];
-                    divGy = Gy[kx + ky*COLS] - Gy[kx + ky*COLS - COLS];
-                    divG[kx + ky*COLS] += divGx + divGy;        // OUT
-                }
-            }
-        }
-    }   // END PARALLEL SECTIONS
+    }   // end pragma parallel
 }
 
-void calculateScaleFactor(const float* G, float* C, size_t size)
+namespace
 {
-    //  float GFIXATE = 0.1f;
-    //  float EDGE_WEIGHT = 0.01f;
-    const float detectT = 0.001f;
-    const float a = 0.038737f;
-    const float b = 0.537756f;
-
-#pragma omp parallel for schedule(static)
-    for (int i = 0; i < size; i++)
-    {
-        //#if 1
-        const float g = std::max( detectT, std::fabs(G[i]) );
-        C[i] = 1.0f / (a* std::pow(g,b));
-        //#else
-        //    if(fabsf(G[i]) < GFIXATE)
-        //      C[i] = 1.0f / EDGE_WEIGHT;
-        //    else
-        //      C[i] = 1.0f;
-        //#endif
-    }
+//  static const float GFIXATE = 0.1f;
+//  static const float EDGE_WEIGHT = 0.01f;
+static const float detectT = 0.001f;
+static const float a = 0.038737f;
+static const float b = 0.537756f;
 }
 
-
-
+float calculateScaleFactor(float g)
+{
+#if 1
+    return 1.0/(a * std::pow( std::max( detectT,
+                                        std::fabs( g ) )
+                              , b) );
+#else
+    if (std::fabs(G[i]) < GFIXATE)
+        C[i] = 1.0f / EDGE_WEIGHT;
+    else
+        C[i] = 1.0f;
+#endif
+}
 

@@ -30,12 +30,14 @@
 #ifndef FROMLDRPFSTOQIMAGE
 #define FROMLDRPFSTOQIMAGE
 
+#include <stdint.h>
 #include <QImage>
-#include "Common/FloatRgbToQRgb.h"
+
+#include <Libpfs/colorspace/rgbremapper.h>
 
 // forward declaration
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
 //! \brief Build from a pfs::Frame a QImage of the same size
@@ -44,6 +46,6 @@ namespace pfs {
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float min_luminance = 0.0f,
                            float max_luminance = 1.0f,
-                           LumMappingMethod mapping_method = MAP_LINEAR);
+                           RGBMappingType mapping_method = MAP_LINEAR);
 
 #endif

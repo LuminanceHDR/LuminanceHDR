@@ -1,7 +1,8 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Franco Comida, Davide Anastasia
+ * Copyright (C) 2012 Franco Comida
+ * Copyright (C) 2012-2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,42 +18,44 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Franco Comida <fcomida@users.sourceforge.net>
- * Original work
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- * clean up memory management
- *
  */
+
+//! \author Franco Comida <fcomida@users.sourceforge.net>
+//! Original work
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! - clean up memory management
+//! - rewrite for LibHDR
+//! - implementation in-memory writer (to retrieve size)
 
 #ifndef JPEGWRITER_H
 #define JPEGWRITER_H
 
-#include <QObject>
-#include <QImage>
-#include <QString>
+#include <string>
+#include <boost/scoped_ptr.hpp>
+#include <Libpfs/params.h>
+#include <Libpfs/io/ioexception.h>
 
-class JpegWriter : public QObject
+namespace pfs {
+class Frame;
+}
+
+class JpegWriterImpl;
+
+class JpegWriter
 {
-    Q_OBJECT
-
 public:
-	JpegWriter(const QImage *, QString, int);
-	JpegWriter(const QImage *, int);
-	~JpegWriter() {}
+    JpegWriter(const std::string& filename);
+    JpegWriter();
+    ~JpegWriter();
 
-    //! \brief write \c QImage into Jpeg file
-	bool writeQImageToJpeg();
+    //! \brief write a pfs::Frame into file or memory
+    bool write(const pfs::Frame& frame, const pfs::Params& params);
 
     //! \brief return size in bytes of the file written
-	int getFileSize();
+    size_t getFileSize();
 
 private:
-    const QImage *m_out_qimage;
-    QString m_fname;
-    int m_filesize;
-    int m_quality;
-
+    boost::scoped_ptr<JpegWriterImpl> m_impl;
 };
 
 #endif

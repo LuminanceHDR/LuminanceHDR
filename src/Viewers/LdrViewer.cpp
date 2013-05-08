@@ -35,14 +35,17 @@
 #include "Viewers/LdrViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Core/TonemappingOptions.h"
-#include "Libpfs/frame.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "Common/LuminanceOptions.h"
-#include "Common/ResourceHandlerLcms.h"
+
+#include <Libpfs/frame.h>
+#include <Libpfs/utils/resourcehandlerlcms.h>
+
+using namespace pfs;
 
 namespace
 {
-void parseOptions(const TonemappingOptions *opts, QString& caption)
+void parseOptions(TonemappingOptions *opts, QString& caption)
 {
     if (opts == NULL)
     {
@@ -51,8 +54,8 @@ void parseOptions(const TonemappingOptions *opts, QString& caption)
     else
     {
         TMOptionsOperations tmopts(opts);
-        //postfix = tmopts.getPostfix();
-        caption = tmopts.getCaption();
+        //postfix = opts->getPostfix();
+        caption = opts->getCaption();
         //exif_comment = tmopts.getExifComment();
     }
 }
@@ -71,14 +74,14 @@ bool doCMSTransform(QImage& qImage, bool doProof, bool doGamutCheck)
         return false;
     }
 
-    ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
-    ScopedCmsProfile hOut(
+    utils::ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
+    utils::ScopedCmsProfile hOut(
                 cmsOpenProfileFromFile(
                     QFile::encodeName( monitor_fname ).constData(), "r")
                 );
 
-    ScopedCmsProfile hProof;
-    ScopedCmsTransform xform;
+    utils::ScopedCmsProfile hProof;
+    utils::ScopedCmsTransform xform;
 
     // Check whether the output profile is open
     if ( !hOut )
@@ -189,12 +192,7 @@ void LdrViewer::retranslateUi()
 
 QString LdrViewer::getFileNamePostFix()
 {
-    if ( mTonemappingOptions )
-    {
-        TMOptionsOperations tm_ops(mTonemappingOptions);
-        return tm_ops.getPostfix();
-    } else
-        return QString();
+    return mTonemappingOptions ? mTonemappingOptions->getPostfix() : QString();
 }
 
 QString LdrViewer::getExifComment()

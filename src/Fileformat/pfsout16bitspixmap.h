@@ -27,15 +27,15 @@
 #define FROMLDRPFSTO16BITSPIXMAP
 
 #include <QtGlobal>
-#include <Common/FloatRgbToQRgb.h>
+#include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 namespace pfs {
-    class Frame;
+class Frame;
 }
 
 quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe,
                                   float min_luminance = 0.0f,
                                   float max_luminance = 1.0f,
-                                  LumMappingMethod mapping_method = MAP_LINEAR);
+                                  RGBMappingType mapping_method = MAP_LINEAR);
 
 #endif

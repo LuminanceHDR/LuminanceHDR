@@ -39,11 +39,12 @@
 
 #include "Core/IOWorker.h"
 #include "Core/TMWorker.h"
-#include "TonemappingEngine/TonemapOperator.h"
+
+#include "Libpfs/tm/TonemapOperator.h"
 
 #if defined(_MSC_VER)
-	#include <fcntl.h>
-	#include <io.h>
+#include <fcntl.h>
+#include <io.h>
 #endif
 
 namespace
@@ -607,7 +608,11 @@ void  CommandLineInterfaceManager::startTonemap()
             inputfname = inputFiles.first();
 
         // Create an ad-hoc IOWorker to save the file
-        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename, quality, inputfname, hdrCreationManager->getExpotimes(), tmopts.data()) )
+        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename,
+                                        inputfname,
+                                        hdrCreationManager->getExpotimes(),
+                                        tmopts.data(),
+                                        pfs::Params("quality", (size_t)quality) ) )
         {
             // File save successful
             printIfVerbose( tr("Image %1 saved successfully").arg(saveLdrFilename) , verbose);

@@ -33,6 +33,7 @@
 #define DISPLAY_SIZE_H
 
 #include <stdio.h>
+#include <Libpfs/exception.h>
 
 class DisplaySize
 {

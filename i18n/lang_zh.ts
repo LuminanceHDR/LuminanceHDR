@@ -74,66 +74,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main developer QtPfsGui&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main Developers Luminance HDR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Romanian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Andrei Răcăşan&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Chinese translator&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Slovakian translator&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Zuzana Cupkova&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Hindi translator&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Rohit Sharma&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main developer QtPfsGui&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main Developers Luminance HDR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Romanian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Andrei Răcăşan&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Chinese translator&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Slovakian translator&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Zuzana Cupkova&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Hindi translator&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Rohit Sharma&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
     <message>
         <location filename="../src/UI/about.ui" line="188"/>
         <source>&amp;Thanks To</source>
@@ -166,11 +106,21 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/UI/about.ui" line="252"/>
+        <source>Changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/about.ui" line="259"/>
+        <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/about.ui" line="268"/>
         <source>&amp;License Agreement</source>
         <translation type="unfinished">&amp;许可证和协议</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="306"/>
+        <location filename="../src/UI/about.ui" line="322"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -183,7 +133,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="336"/>
+        <location filename="../src/UI/about.ui" line="352"/>
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;确定</translation>
     </message>
@@ -202,249 +152,249 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="46"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="68"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="71"/>
         <source>Select the number of bracketed pictures used to create the HDRs</source>
         <translation type="unfinished">选择用来生成HDR的分阶段曝光的图片数量</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="91"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="97"/>
         <source>Output</source>
         <translation type="unfinished">导出</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="102"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="183"/>
         <source>Output format:</source>
         <translation type="unfinished">导出格式:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="109"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="115"/>
         <source>Choose an HDR output file format</source>
         <translation type="unfinished">选择HDR导出文件格式</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="113"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="119"/>
         <source>hdr</source>
         <translation type="unfinished">hdr</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="118"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="124"/>
         <source>exr</source>
         <translation type="unfinished">exr</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="123"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="129"/>
         <source>PFS</source>
         <translation type="unfinished">PFS</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="128"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="134"/>
         <source>tiff</source>
         <translation type="unfinished">tiff</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="136"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="108"/>
         <source>Predefined profile:</source>
         <translation type="unfinished">预定义配置文件:</translation>
     </message>
     <message>
-        <source>Choose one of the creation predefined profiles. 
-See documentation for more informations.</source>
-        <translation type="obsolete">选择其中一个预定义配置文件.</translation>
-    </message>
-    <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="143"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="142"/>
         <source>Choose one of the creation predefined profiles. 
 See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="151"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="150"/>
         <source>Profile 1</source>
         <translation type="unfinished">配置文件1</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="156"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="155"/>
         <source>Profile 2</source>
         <translation type="unfinished">配置文件2</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="161"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="160"/>
         <source>Profile 3</source>
         <translation type="unfinished">配置文件3</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="166"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="165"/>
         <source>Profile 4</source>
         <translation type="unfinished">配置文件4</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="171"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="170"/>
         <source>Profile 5</source>
         <translation type="unfinished">配置文件5</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="176"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="175"/>
         <source>Profile 6</source>
         <translation type="unfinished">配置文件6</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="191"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="210"/>
         <source>Alignment</source>
         <translation type="unfinished">对齐</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="202"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="221"/>
         <source>Auto align the bracketed pictures</source>
         <translation type="unfinished">自动对齐分阶段曝光图片</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="205"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="224"/>
         <source>Auto-align images</source>
         <translation type="unfinished">自动对齐图片</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="215"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="265"/>
         <source>Auto-crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="225"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="247"/>
         <source>Use Hugin&apos;s align_image_stack engine</source>
         <translation type="unfinished">是用Hugin&apos;s align_image_stack引擎</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="228"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="250"/>
         <source>Hugin&apos;s align_image_stack</source>
         <translation type="unfinished">Hugin&apos;s align_image_stack_engine</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="241"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="234"/>
         <source>Use MTB (Median Threshold Bitmap) engine</source>
         <translation type="unfinished">阀值位图中位数引擎</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="244"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="237"/>
         <source>MTB</source>
         <translation type="unfinished">阀值位图中位数</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="260"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="279"/>
         <source>Progress</source>
         <translation type="unfinished">进度</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="305"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="324"/>
         <source>Folder where created HDRs are saved</source>
         <translation type="unfinished">存储HDRs文件夹</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="308"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="322"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="327"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="341"/>
         <source>Select...</source>
         <translation type="unfinished">选择...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="319"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="338"/>
         <source>Folder where bracketed pictures are located (in alphabetical order)</source>
         <translation type="unfinished">阶段曝光图片存储文件夹(按字母书序)</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="333"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="352"/>
         <source>Input folder:</source>
         <translation type="unfinished">输入文件夹:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="343"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="362"/>
         <source>Output folder:</source>
         <translation type="unfinished">输出文件夹:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="369"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="388"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;取消</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="379"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="398"/>
         <source>&amp;Start</source>
         <translation type="unfinished">&amp;开始</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="386"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="405"/>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;关闭</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="110"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="167"/>
         <source>Choose a source directory</source>
         <translation type="unfinished">选择源目录</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="139"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="196"/>
         <source>Choose a output directory</source>
         <translation type="unfinished">选择输出目录</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="161"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="167"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="184"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="229"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="248"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="254"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="161"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="167"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="248"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="254"/>
         <source>Total number of pictures must be a multiple of number of bracketed images.</source>
         <translation type="unfinished">图片总数必须是多个阶段曝光图片的数量.</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="184"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="229"/>
         <source>The chosen output directory contains HDR files. Those files might be overwritten. 
 
 Continue?</source>
         <translation type="unfinished">选择的输出目录包含HDR文件，这些文件可能会被覆盖。继续?</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="214"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="86"/>
+        <source>Custom config %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="271"/>
         <source>Started processing...</source>
         <translation type="unfinished">开始处理...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="233"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="290"/>
         <source>Creating HDR...</source>
         <translation type="unfinished">生成 HDR...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="253"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="310"/>
         <source>Completed with errors</source>
         <translation type="unfinished">完成但有错误</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="255"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="312"/>
         <source>Completed without errors</source>
         <translation type="unfinished">完成且没有错误</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="264"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="321"/>
         <source>Error: missing EXIF data</source>
         <translation type="unfinished">错误：缺失EXIF数据</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="285"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="342"/>
         <source>Aligning...</source>
         <translation type="unfinished">对齐中...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="326"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="390"/>
         <source>Written </source>
         <translation type="unfinished">写入完成</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="333"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="397"/>
         <source>Error: </source>
         <translation type="unfinished">错误: </translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="367"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="431"/>
         <source>Aborting...</source>
         <translation type="unfinished">终止中...</translation>
     </message>
@@ -584,76 +534,111 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="388"/>
+        <source>Output Format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="396"/>
+        <source>JPEG</source>
+        <translation type="unfinished">JPEG</translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="401"/>
+        <source>TIFF (16 bits)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="406"/>
+        <source>PNG</source>
+        <translation type="unfinished">PNG</translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="411"/>
+        <source>BMP</source>
+        <translation type="unfinished">BMP</translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="416"/>
+        <source>PPM</source>
+        <translation type="unfinished">PPM</translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="421"/>
+        <source>PBM</source>
+        <translation type="unfinished">PBM</translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="429"/>
         <source>Output Folder:</source>
         <translation type="unfinished">输出文件夹:</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="402"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="443"/>
         <source>Selec&amp;t...</source>
         <translation type="unfinished">选&amp;择...</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="420"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="461"/>
         <source>Conversion Log</source>
         <translation type="unfinished">转换日志</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="441"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="482"/>
         <source>Batch operations report</source>
         <translation type="unfinished">批处理运行报告</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="459"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="500"/>
         <source>&amp;Show only:</source>
         <translation type="unfinished">&amp;仅显示:</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="469"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="510"/>
         <source>Filter messages based on severity</source>
         <translation type="unfinished">基于严重度过滤消息</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="476"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="517"/>
         <source>All messages</source>
         <translation type="unfinished">所有消息</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="481"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="522"/>
         <source>Errors only</source>
         <translation type="unfinished">仅错误</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="486"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="527"/>
         <source>Success messages</source>
         <translation type="unfinished">成功消息</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="494"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="535"/>
         <source>&amp;Filter log messages:</source>
         <translation type="unfinished">&amp;过滤日志消息:</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="522"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="563"/>
         <source>Clear filter text</source>
         <translation type="unfinished">清楚过滤文字</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="538"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="579"/>
         <source>Overall completion progress</source>
         <translation type="unfinished">整体完成进度</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="563"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="604"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;取消</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="576"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="617"/>
         <source>Start batch tone mapping</source>
         <translation type="unfinished">开始色调映射批处理</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="579"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="620"/>
         <source>&amp;Start</source>
         <translation type="unfinished">&amp;开始</translation>
     </message>
@@ -661,11 +646,6 @@ Continue?</source>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="98"/>
         <source>Using %1 thread(s)</source>
         <translation type="unfinished">使用%1 线程</translation>
-    </message>
-    <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="99"/>
-        <source>Saving using file format: %1</source>
-        <translation type="unfinished">使用指定文件格式存储: %1</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="118"/>
@@ -691,36 +671,36 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="175"/>
-        <source>LuminanceHDR tone mapping settings text file (*.txt)</source>
-        <translation type="unfinished">LuminanceHDR 色调映射设置文本文件 (*.txt)</translation>
+        <source>Luminance HDR tone mapping settings text file (*.txt)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="517"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="519"/>
         <source>Processing...</source>
         <translation type="unfinished">处理中...</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="519"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="521"/>
         <source>Start processing...</source>
         <translation type="unfinished">开始处理中...</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="528"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="530"/>
         <source>Close</source>
         <translation type="unfinished">关闭</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="530"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="532"/>
         <source>&amp;Done</source>
         <translation type="unfinished">&amp;完成</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="531"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="533"/>
         <source>All tasks completed.</source>
         <translation>所有任务已完成.</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="563"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="565"/>
         <source>Aborting...</source>
         <translation type="unfinished">终止...</translation>
     </message>
@@ -728,27 +708,27 @@ Continue?</source>
 <context>
     <name>BatchTMJob</name>
     <message>
-        <location filename="../src/BatchTM/BatchTMJob.cpp" line="64"/>
+        <location filename="../src/BatchTM/BatchTMJob.cpp" line="67"/>
         <source>[T%1] Start processing %2</source>
         <translation type="unfinished">[T%1] 开始处理中 %2</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMJob.cpp" line="72"/>
+        <location filename="../src/BatchTM/BatchTMJob.cpp" line="75"/>
         <source>[T%1] Successfully load %2</source>
         <translation type="unfinished">[T%1] 成功载入 %2</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMJob.cpp" line="106"/>
+        <location filename="../src/BatchTM/BatchTMJob.cpp" line="115"/>
         <source>[T%1] Successfully saved LDR file: %2</source>
         <translation type="unfinished">[T%1] LDR文件成功保存: %2</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMJob.cpp" line="108"/>
+        <location filename="../src/BatchTM/BatchTMJob.cpp" line="117"/>
         <source>[T%1] ERROR: Cannot save to file: %2</source>
         <translation type="unfinished">[T%1] 出错: 无法保存到文件: %2</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMJob.cpp" line="118"/>
+        <location filename="../src/BatchTM/BatchTMJob.cpp" line="127"/>
         <source>[T%1] ERROR: Loading of %2 failed</source>
         <translation type="unfinished">[T%1] 出错:载入 %2 失败</translation>
     </message>
@@ -756,292 +736,293 @@ Continue?</source>
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="206"/>
+        <location filename="../src/MainCli/commandline.cpp" line="209"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation type="unfinished">出错: 无法识别对齐引擎.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="225"/>
+        <location filename="../src/MainCli/commandline.cpp" line="228"/>
         <source>Error: Wrong HDR creation format.</source>
         <translation type="unfinished">出错: HDR创建格式错误.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="235"/>
+        <location filename="../src/MainCli/commandline.cpp" line="238"/>
         <source>Error: Unknown weight function specified.</source>
         <translation type="unfinished">出错: 指定的加权函数未知.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="250"/>
+        <location filename="../src/MainCli/commandline.cpp" line="253"/>
         <source>Error: Unknown response curve specified.</source>
         <translation type="unfinished">出错: 指定的响应曲线未知.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="259"/>
+        <location filename="../src/MainCli/commandline.cpp" line="262"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation type="unfinished">出错: 指定的HDR生成模型未知.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="265"/>
+        <location filename="../src/MainCli/commandline.cpp" line="268"/>
         <source>Error: Unknown HDR creation format specified.</source>
         <translation type="unfinished">出错:指定的HDR创建格式未知.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="304"/>
+        <location filename="../src/MainCli/commandline.cpp" line="307"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation type="unfinished">出错: 指定的色调映射操作符未知.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="313"/>
+        <location filename="../src/MainCli/commandline.cpp" line="316"/>
         <source>Error: Wrong tone mapping option format.</source>
         <translation type="unfinished">出错: 色调映射选项格式错误.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="402"/>
+        <location filename="../src/MainCli/commandline.cpp" line="405"/>
         <source>Error: Unknown tone mapping option specified.</source>
         <translation type="unfinished">出错: 指定的色调映射选项未知.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="412"/>
+        <location filename="../src/MainCli/commandline.cpp" line="415"/>
         <source>Error: Quality must be in the range [0-100].</source>
         <translation type="unfinished">出错: 质量必须在[0-100]范围之内.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="415"/>
+        <location filename="../src/MainCli/commandline.cpp" line="421"/>
         <source>Error: Unknown option %1.</source>
         <translation type="unfinished">出错: 未知选项 %1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="417"/>
+        <location filename="../src/MainCli/commandline.cpp" line="423"/>
         <source>Error: Missing argument for %1.</source>
         <translation type="unfinished">出错: 缺少 %1参数.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="436"/>
+        <location filename="../src/MainCli/commandline.cpp" line="442"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation type="unfinished">出错: 指定的EV值数量于输入文件数量不同.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="493"/>
+        <location filename="../src/MainCli/commandline.cpp" line="499"/>
         <source>Load file %1 failed</source>
         <translation type="unfinished">载入文件 %1失败</translation>
     </message>
     <message>
-        <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
-        <translation type="obsolete">出错: 图片缺少Exif数据以及EV值未在命令行指定.</translation>
+        <location filename="../src/MainCli/commandline.cpp" line="644"/>
+        <source>-h --help               Display this help.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="502"/>
+        <location filename="../src/MainCli/commandline.cpp" line="645"/>
+        <source>-v --verbose            Print more messages during execution.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="646"/>
+        <source>-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="647"/>
+        <source>-d --savealigned prefix Save aligned images to files which names start with prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="648"/>
+        <source>-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="649"/>
+        <source>-c --config             HDR creation config. Possible values: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="652"/>
+        <source>-l --load HDR_FILE      Load an HDR instead of creating a new one. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="653"/>
+        <source>-s --save HDR_FILE      Save to a HDR file format. (default: don&apos;t save) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="654"/>
+        <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="655"/>
+        <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="656"/>
+        <source>-t --tmo                Tone mapping operator. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="659"/>
+        <source>-p --tmoptions          Tone mapping operator options. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="670"/>
+        <source>-o --output LDR_FILE    File name you want to save your tone mapped LDR to.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="671"/>
+        <source>-q --quality VALUE      Quality of the saved tone mapped file (0-100).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="672"/>
+        <source>                        (No tonemapping is performed unless -o is specified).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="508"/>
         <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="509"/>
+        <location filename="../src/MainCli/commandline.cpp" line="515"/>
         <source>EV values have been assigned.</source>
         <translation type="unfinished">EV值已被指定.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="528"/>
+        <location filename="../src/MainCli/commandline.cpp" line="534"/>
         <source>Failed executing align_image_stack</source>
         <translation type="unfinished">执行对齐图片堆栈失败</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="534"/>
+        <location filename="../src/MainCli/commandline.cpp" line="540"/>
         <source>Failed aligning images.</source>
         <translation type="unfinished">对齐图片失败.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="537"/>
+        <location filename="../src/MainCli/commandline.cpp" line="542"/>
         <source>Creating (in memory) the HDR.</source>
         <translation type="unfinished">正在(寄存器中)创建HDR.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="547"/>
+        <location filename="../src/MainCli/commandline.cpp" line="561"/>
         <source>Saving to file %1.</source>
         <translation type="unfinished">正在保存到文件%1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="552"/>
-        <location filename="../src/MainCli/commandline.cpp" line="594"/>
+        <location filename="../src/MainCli/commandline.cpp" line="566"/>
+        <location filename="../src/MainCli/commandline.cpp" line="618"/>
         <source>Image %1 saved successfully</source>
         <translation type="unfinished">图片 %1 成功保存</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="556"/>
+        <location filename="../src/MainCli/commandline.cpp" line="570"/>
         <source>Could not save %1</source>
         <translation type="unfinished">无法保存%1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="561"/>
+        <location filename="../src/MainCli/commandline.cpp" line="575"/>
         <source>NOT Saving HDR image to file. %1</source>
         <translation type="unfinished">未能保存HDR图片到文件%1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="571"/>
+        <location filename="../src/MainCli/commandline.cpp" line="585"/>
         <source>Tonemapping requested, saving to file %1.</source>
         <translation type="unfinished">已请求色调映射，正在保存到文件%1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="599"/>
+        <location filename="../src/MainCli/commandline.cpp" line="623"/>
         <source>ERROR: Cannot save to file: %1</source>
         <translation type="unfinished">出错:无法保存到文件: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="612"/>
+        <location filename="../src/MainCli/commandline.cpp" line="636"/>
         <source>Failed loading images</source>
         <translation type="unfinished">载入图片失败</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="618"/>
+        <location filename="../src/MainCli/commandline.cpp" line="642"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
         <translation type="unfinished">使用: %1 [选项]...[输入文件]...</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="619"/>
+        <location filename="../src/MainCli/commandline.cpp" line="643"/>
         <source>Commandline interface to %1.</source>
         <translation type="unfinished">命令行接口到%1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="620"/>
-        <source>-h --help              Display this help.</source>
-        <translation type="unfinished">-h --帮助              显示这个帮助.</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="621"/>
-        <source>-v --verbose           Print more messages during execution.</source>
-        <translation type="unfinished">-v --冗长             执行过程中打印更多的消息.</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="622"/>
-        <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation type="unfinished">-a --对齐AIS|MTB     HDR生成过程中使用对齐引擎 (默认:不对其).</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="623"/>
-        <source>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).</source>
-        <translation type="unfinished">-e --ev EV1,EV2,...    指定数值EV值(与输入文件数目相同).</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="624"/>
-        <source>-c --config            HDR creation config. Possible values: </source>
-        <translation type="unfinished">-c --配置             HDR生成配置。 可能的值: </translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="625"/>
+        <location filename="../src/MainCli/commandline.cpp" line="650"/>
         <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
         <translation type="unfinished">加权=三角化|高斯|plateau:响应曲线=来自文件|线性|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="626"/>
+        <location filename="../src/MainCli/commandline.cpp" line="651"/>
         <source>(Default is weight=triangular:response_curve=linear:model=debevec) </source>
         <translation type="unfinished">(Default is weight=triangular:response_curve=linear:model=debevec) </translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="627"/>
-        <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
-        <translation type="unfinished">-l --载入HDR文件     载入HDR而不创建新的HDR.</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="628"/>
-        <source>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation type="unfinished">-s --保存</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="629"/>
-        <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
-        <translation type="unfinished">-g --gamma值        用于色调映射的gamma值(默认:1) </translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="630"/>
-        <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation type="unfinished">-r --调整图像大小值      HDR要调整到的宽度(在设定gamma值和色调映射前调整大小) </translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="631"/>
-        <source>-t --tmo               Tone mapping operator. Legal values are: </source>
-        <translation type="unfinished">-t --tmo              色调映射运算符. 合法值是: </translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="632"/>
+        <location filename="../src/MainCli/commandline.cpp" line="657"/>
         <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</source>
         <translation type="unfinished">ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="633"/>
+        <location filename="../src/MainCli/commandline.cpp" line="658"/>
         <source>(Default is mantiuk06)</source>
         <translation type="unfinished">(默认值为mantiuk06)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="634"/>
-        <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
-        <translation type="unfinished">-p --tmooptions         色调映射运算符选项. 合法值是: </translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="635"/>
+        <location filename="../src/MainCli/commandline.cpp" line="660"/>
         <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
         <translation type="unfinished">alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="636"/>
+        <location filename="../src/MainCli/commandline.cpp" line="661"/>
         <source>contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)</source>
         <translation type="unfinished">contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="637"/>
+        <location filename="../src/MainCli/commandline.cpp" line="662"/>
         <source>colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</source>
         <translation type="unfinished">colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="638"/>
+        <location filename="../src/MainCli/commandline.cpp" line="663"/>
         <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
         <translation type="unfinished">colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="639"/>
+        <location filename="../src/MainCli/commandline.cpp" line="664"/>
         <source>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</source>
         <translation type="unfinished">sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="640"/>
+        <location filename="../src/MainCli/commandline.cpp" line="665"/>
         <source>bias=VALUE (for drago)</source>
         <translation type="unfinished">bias=VALUE (for drago)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="641"/>
+        <location filename="../src/MainCli/commandline.cpp" line="666"/>
         <source>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</source>
         <translation type="unfinished">local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="642"/>
+        <location filename="../src/MainCli/commandline.cpp" line="667"/>
         <source>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</source>
         <translation type="unfinished">scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="643"/>
+        <location filename="../src/MainCli/commandline.cpp" line="668"/>
         <source>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</source>
         <translation type="unfinished">brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="644"/>
+        <location filename="../src/MainCli/commandline.cpp" line="669"/>
         <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
         <translation type="unfinished">默认值：对比度=0.3:均衡=false:饱和度=1.8, 同时参见 -o)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="645"/>
-        <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
-        <translation type="unfinished">-o --输出HDR文件   想要保存色调映射LDR到的文件名.</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="646"/>
-        <source>-q --quality VALUE   Quality of the saved tone mapped file (0-100).</source>
-        <translation type="unfinished">-q --质量值   保存的色调映射文件的质量 (0-100).</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="647"/>
-        <source>                       (No tonemapping is performed unless -o is specified).</source>
-        <translation type="unfinished">                      (除非已经制定了-o,否则色调映射不会执行).</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="648"/>
+        <location filename="../src/MainCli/commandline.cpp" line="673"/>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
         <translation type="unfinished">必须要么载入一个已经存在的HDR文件 (通过-l选项)要么指定输入文件来创建一个新的HDR文件.</translation>
@@ -1093,12 +1074,32 @@ Continue?</source>
 <context>
     <name>EditingTools</name>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="78"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="88"/>
         <source>Pan the image to a region</source>
         <translation type="unfinished">平移图片到一个区域</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="440"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="464"/>
+        <source>Maskable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="465"/>
+        <source>Good image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="500"/>
+        <source>Ed&amp;itable</source>
+        <translation type="unfinished">可&amp;编辑</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="501"/>
+        <source>R&amp;eference</source>
+        <translation type="unfinished">参&amp;考图片</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="559"/>
         <source>Choose a directory and a prefix</source>
         <translation type="unfinished">选择一个目录和前缀</translation>
     </message>
@@ -1156,11 +1157,6 @@ Continue?</source>
         <translation type="unfinished">缩&amp;小</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="208"/>
-        <source>Preview &amp;Mode:</source>
-        <translation type="unfinished">预览&amp;模式:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/EditingTools.ui" line="219"/>
         <source>Difference (E-P)</source>
         <translation type="unfinished">差分(E-P)</translation>
@@ -1186,22 +1182,17 @@ Continue?</source>
         <translation type="unfinished">抗重影蔽光框</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="250"/>
-        <source>Mask Color</source>
-        <translation type="unfinished">蔽光框颜色</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="287"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="294"/>
         <source>Images List</source>
         <translation type="unfinished">图片列表</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="307"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="314"/>
         <source>Ed&amp;itable</source>
         <translation type="unfinished">可&amp;编辑</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="332"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="339"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1209,44 +1200,44 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="338"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="345"/>
         <source>The image currently selected in this list can be translated up,down,left and right using the controls below.
 This image&apos;s histogram is diplayed in the widget above.</source>
         <translation type="unfinished">当前选中列表中的图片可以通过下面的控制上下左右平移。
 图片的直方图显示子在上面的小工具窗口中.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="375"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="382"/>
         <source>Select the previous image in both lists</source>
         <translation type="unfinished">在两个列表中同时选择前面的图片</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="378"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="385"/>
         <source>Use this button to move the selection to the previous image in both lists.</source>
         <translation type="unfinished">使用这个按钮移动在两个列表中都选中的之前的图片。</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="395"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="402"/>
         <source>Select the next image in both lists</source>
         <translation type="unfinished">选择下一个都在两个列表中的图片</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="398"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="405"/>
         <source>Use this button to move the selection to the next image in both lists.</source>
         <translation type="unfinished">使用这个按钮移动下一个同时在两个列表选中的图片。</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="432"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="439"/>
         <source>R&amp;eference</source>
         <translation type="unfinished">参&amp;考图片</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="457"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="464"/>
         <source>The reference image is the one currently selected</source>
         <translation type="unfinished">参考图片为当前选中图片</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="460"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="467"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1254,72 +1245,57 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="483"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="490"/>
         <source>Tools</source>
         <translation type="unfinished">工具</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="519"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="526"/>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
         <translation type="unfinished">左键选中后剪裁堆栈的图片</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="522"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="529"/>
         <source>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</source>
         <translation type="unfinished">点击这个按钮可以剪裁所有图片到之前使用左键选择的图片的大小(按住鼠标左键，并移动指针到一个剪裁区域，然后按这个按钮).</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="525"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="532"/>
         <source>&amp;Crop All Images</source>
         <translation type="unfinished">&amp;剪裁所有图像</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="538"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="545"/>
         <source>Ctrl+X</source>
         <translation type="unfinished">Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="558"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="565"/>
         <source>&amp;Anti Ghosting</source>
         <translation type="unfinished">&amp;消除叠影</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="591"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="598"/>
         <source>&amp;Save Images</source>
         <translation type="unfinished">&amp;保存图像</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="604"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="611"/>
         <source>Ctrl+S</source>
         <translation type="unfinished">Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="662"/>
-        <source>A&amp;dd Mask</source>
-        <translation type="unfinished">&amp;添加蔽光框</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="672"/>
-        <source>Remove Mas&amp;k</source>
-        <translation type="unfinished">去除&amp;蔽光框</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="731"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="784"/>
         <source>Size:</source>
         <translation type="unfinished">大小:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="754"/>
-        <source> pixels</source>
-        <translation type="unfinished">像素</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="770"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="823"/>
         <source>&amp;Strength:</source>
         <translation type="unfinished">&amp;强度:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="822"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1011"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1329,7 +1305,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="854"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1043"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1337,7 +1313,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="860"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1049"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1345,103 +1321,162 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="866"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1055"/>
         <source>Shift values for editable image</source>
         <translation type="unfinished">可编辑图像偏移量</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="886"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1075"/>
         <source>Reset the shift values for the currently selected movable image</source>
         <translation type="unfinished">为当前选中可移动图像重新设定偏移量</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="889"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1078"/>
         <source>&amp;Reset</source>
         <translation type="unfinished">&amp;重设</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="896"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1085"/>
         <source>Reset the shift values for all the images</source>
         <translation type="unfinished">为所有图像重设偏移量</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="899"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1088"/>
         <source>Reset &amp;All</source>
         <translation type="unfinished">重设&amp;所有</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="929"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1118"/>
         <source>&amp;Horizontal:</source>
         <translation type="unfinished">&amp;水平:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="942"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1131"/>
         <source>&amp;Vertical:</source>
         <translation type="unfinished">&amp;垂直:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="955"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1144"/>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
         <translation type="unfinished">为当前选定可移动图像插入一个水平偏移量</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="958"/>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="974"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="807"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1147"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1163"/>
         <source> px</source>
         <translation type="unfinished">px</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="971"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="208"/>
+        <source>&amp;Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="250"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="882"/>
+        <source>Brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="257"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="856"/>
+        <source>Lasso</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="659"/>
+        <source>Mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="715"/>
+        <source>A&amp;dd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="725"/>
+        <source>&amp;Remove</source>
+        <translation type="unfinished">&amp;删除</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="853"/>
+        <source>Lasso - Draw a free hand selection area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="879"/>
+        <source>Brush - Paint the mask using the brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="919"/>
+        <source>Save mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="922"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="945"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="942"/>
+        <source>Apply saved mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1160"/>
         <source>Insert a vertical shift value for the currently selected movable image</source>
         <translation type="unfinished">为当前选定可移动图像插入一个垂直偏移量</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="997"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1186"/>
         <source>Move up of 1 pixel the currently selected movable image</source>
         <translation type="unfinished">将当前选中可移动图像向上移动一个像素</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1010"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1199"/>
         <source>Move down of 1 pixel the currently selected movable image</source>
         <translation type="unfinished">将当前选中可移动图像向下移动一个像素</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1023"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1212"/>
         <source>Move right of 1 pixel the currently selected movable image</source>
         <translation type="unfinished">将当前选中可移动图像向右移动一个像素</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1036"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1225"/>
         <source>Move left of 1 pixel the currently selected movable image</source>
         <translation type="unfinished">将当前选中可移动图像向左移动一个像素</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1060"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1249"/>
         <source>Histogram</source>
         <translation type="unfinished">柱状图</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1086"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1275"/>
         <source>Get information about the graphical elements</source>
         <translation type="unfinished">获取图形元素信息</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1089"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1278"/>
         <source>&amp;What&apos;s this?</source>
         <translation type="unfinished">&amp;这是什么?</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1102"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1291"/>
         <source>Shift+F1</source>
         <translation type="unfinished">Shift+F1</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1122"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1311"/>
         <source>&amp;Next &gt;</source>
         <translation type="unfinished">&amp;下一个 &gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1132"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1321"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;取消</translation>
     </message>
@@ -1449,7 +1484,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GenericViewer</name>
     <message>
-        <location filename="../src/Viewers/GenericViewer.cpp" line="103"/>
+        <location filename="../src/Viewers/GenericViewer.cpp" line="105"/>
         <source>Pan the image to a region</source>
         <translation type="unfinished">平移图像到一个区域</translation>
     </message>
@@ -1457,18 +1492,18 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="242"/>
+        <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="408"/>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
         <translation type="unfinished">图像%1是一个8比特格式(LDR),而前面的图像不是.</translation>
     </message>
     <message>
-        <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="250"/>
-        <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="290"/>
+        <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="415"/>
+        <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="454"/>
         <source>The image %1 has an invalid size.</source>
         <translation type="unfinished">图像%1大小无效.</translation>
     </message>
     <message>
-        <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="282"/>
+        <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="447"/>
         <source>The image %1 is an 16 bit format while the previous ones are not.</source>
         <translation type="unfinished">图像%1是16比特格式，而前面的不是.</translation>
     </message>
@@ -1476,25 +1511,25 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrInputLoader</name>
     <message>
-        <location filename="../src/Threads/HdrInputLoader.cpp" line="76"/>
-        <location filename="../src/Threads/HdrInputLoader.cpp" line="93"/>
-        <location filename="../src/Threads/HdrInputLoader.cpp" line="105"/>
-        <location filename="../src/Threads/HdrInputLoader.cpp" line="120"/>
+        <location filename="../src/Threads/HdrInputLoader.cpp" line="77"/>
+        <location filename="../src/Threads/HdrInputLoader.cpp" line="94"/>
+        <location filename="../src/Threads/HdrInputLoader.cpp" line="106"/>
+        <location filename="../src/Threads/HdrInputLoader.cpp" line="121"/>
         <source>ERROR loading %1</source>
         <translation type="unfinished">错误载入%1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/HdrInputLoader.cpp" line="112"/>
+        <location filename="../src/Threads/HdrInputLoader.cpp" line="113"/>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
         <translation type="unfinished">错误: 文件&lt;br&gt;%1&lt;br&gt;既不是8比特tiff也不是16比特tiff.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/HdrInputLoader.cpp" line="127"/>
+        <location filename="../src/Threads/HdrInputLoader.cpp" line="128"/>
         <source>ERROR: %1</source>
         <translation type="unfinished">错误: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/HdrInputLoader.cpp" line="142"/>
+        <location filename="../src/Threads/HdrInputLoader.cpp" line="143"/>
         <source>ERROR: Failed Loading file: %1</source>
         <translation type="unfinished">错误：载入文件:%1失败</translation>
     </message>
@@ -1502,42 +1537,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrViewer</name>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="112"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="113"/>
         <source>&amp;Mapping:</source>
         <translation type="unfinished">&amp;映射:</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="113"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="114"/>
         <source>Histogram:</source>
         <translation type="unfinished">直方图:</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="119"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="120"/>
         <source>Linear</source>
         <translation type="unfinished">x线性</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="120"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="121"/>
         <source>Gamma 1.4</source>
         <translation type="unfinished">Gamma 1.4</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="121"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="122"/>
         <source>Gamma 1.8</source>
         <translation type="unfinished">Gamma 1.8</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="122"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="123"/>
         <source>Gamma 2.2</source>
         <translation type="unfinished">Gamma 2.2</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="123"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="124"/>
         <source>Gamma 2.6</source>
         <translation type="unfinished">Gamma 2.6</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="124"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="125"/>
         <source>Logarithmic</source>
         <translation type="unfinished">对数</translation>
     </message>
@@ -1548,45 +1583,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/HdrWizard/HdrWizard.ui" line="14"/>
         <source>HDR Creation Wizard</source>
         <translation type="unfinished">HDR生成程序</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="122"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool help you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR生成应用程序&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;这个工具可以帮助你综合一组不同曝光度的图像来生成一个 &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR 图像&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;这组图像必须来自于同一个相机同样的条件下，并且最好使用三脚架.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;这个应用会帮助你经过所有的步骤:导入图像，对齐图像，选择一个配置文件来生成一个HDR.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;约束:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;所有的图像必须是同样的大小&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;所有的图像必须有同样的颜色深度&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="194"/>
@@ -1646,17 +1642,39 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;自动对齐图像</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="566"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="583"/>
         <source>Auto-crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="573"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="560"/>
         <source>Hugin&apos;s align_image_stack</source>
         <translation type="unfinished">Hugin&apos;s 图像对齐堆栈</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="583"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="122"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool helps you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="570"/>
         <source>MTB</source>
         <translation type="unfinished">MTB</translation>
     </message>
@@ -1679,12 +1697,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">[2/2]选择HDR生成设置</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="671"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="663"/>
         <source>Choose one of the predefined profiles:</source>
         <translation type="unfinished">选择其中一个预定义配置:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="684"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="676"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1697,118 +1715,118 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;列表中第一个预定义配置通常会产生最好的效果。只有当生成的图像质量不好时再改变配置.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="692"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="684"/>
         <source>Profile 1</source>
         <translation type="unfinished">配置 1</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="697"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="689"/>
         <source>Profile 2</source>
         <translation type="unfinished">配置 2</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="702"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="694"/>
         <source>Profile 3</source>
         <translation type="unfinished">配置 3</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="707"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="699"/>
         <source>Profile 4</source>
         <translation type="unfinished">配置 4</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="712"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="704"/>
         <source>Profile 5</source>
         <translation type="unfinished">配置 5</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="717"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="709"/>
         <source>Profile 6</source>
         <translation type="unfinished">配置 6</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="735"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="727"/>
         <source>Weighting function:</source>
         <translation type="unfinished">加权函数:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="761"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1120"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="640"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="753"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1105"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="758"/>
         <source>Triangular</source>
         <translation type="unfinished">三角加权</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="784"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="908"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="776"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="900"/>
         <source>Response curve:</source>
         <translation type="unfinished">响应曲线:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="810"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="930"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1209"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="649"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="802"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="922"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1194"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="767"/>
         <source>Linear</source>
         <translation type="unfinished">线性</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="833"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="825"/>
         <source>HDR creation model:</source>
         <translation type="unfinished">HDR生成模型:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="859"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1410"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="662"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="851"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1408"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="780"/>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="885"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="877"/>
         <source>Anti-ghosting (beta!)</source>
         <translation type="unfinished">抗鬼影 (测试!)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="925"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1204"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="651"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="917"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1189"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="769"/>
         <source>Gamma</source>
         <translation type="unfinished">Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="935"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1214"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="927"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1199"/>
         <source>Log</source>
         <translation type="unfinished">对数</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="940"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="932"/>
         <source>Calibration</source>
         <translation type="unfinished">校准</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="974"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="966"/>
         <source>Amount of iterations:</source>
         <translation type="unfinished">迭代数量:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="984"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="976"/>
         <source>Keep it small</source>
         <translation type="unfinished">保持小量</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1009"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1001"/>
         <source>Use this only if the default profiles above do not yield good results</source>
         <translation type="unfinished">仅当以上默认设置给出效果不好时才使用此选项</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1012"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1004"/>
         <source>Use custom configuration</source>
         <translation type="unfinished">使用自定义配置</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1032"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1024"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1821,85 +1839,90 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;选择一个预定义配置文件或者自定义配置&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1053"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1046"/>
         <source>[2/2] Choose Custom Configuration</source>
         <translation type="unfinished">[2/2]选择自定义配置文件</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1073"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1058"/>
         <source>Weights:</source>
         <translation type="unfinished">权重:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1093"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1078"/>
         <source>Choose confidence function over all the possible pixel values:</source>
         <translation type="unfinished">对所有可能的像素值选择置信函数:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1125"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="644"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1110"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="762"/>
         <source>Gaussian</source>
         <translation type="unfinished">高斯</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1130"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="642"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1115"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="760"/>
         <source>Plateau</source>
         <translation type="unfinished">平台</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1149"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1134"/>
         <source>Response Curve:</source>
         <translation type="unfinished">响应曲线:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1171"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1156"/>
         <source>Predefined response curves:</source>
         <translation type="unfinished">预定义响应曲线:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1230"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1215"/>
         <source>Load response function from file</source>
         <translation type="unfinished">从文件中加载响应函数</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1248"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1233"/>
         <source>Load...</source>
         <translation type="unfinished">加载...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1283"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1268"/>
         <source>Use calibration to find response curve (robertson02 algorithm)</source>
         <translation type="unfinished">使用校准寻找响应曲线 (robertson02算法)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1299"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1284"/>
         <source>Save response function to file:</source>
         <translation type="unfinished">保存响应函数到文件:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1323"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1308"/>
         <source>Save As...</source>
         <translation type="unfinished">另存为...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1369"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1367"/>
         <source>HDR Creation Equation:</source>
         <translation type="unfinished">HDR生成方程:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1386"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1384"/>
         <source>Choose model:</source>
         <translation type="unfinished">选择模型:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1415"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="664"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1413"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="782"/>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1454"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1441"/>
+        <source>Save Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1476"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1912,207 +1935,210 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;在这你可以自定义HDR生成过程&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1508"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="428"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1528"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="529"/>
         <source>&amp;Next &gt;</source>
         <translation type="unfinished">&amp;下一步 &gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1515"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1535"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;取消</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="67"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="79"/>
         <source>Image Filename</source>
         <translation type="unfinished">图片文件名</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="67"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="79"/>
         <source>Exposure</source>
         <translation type="unfinished">曝光</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="169"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="106"/>
+        <source>Custom config %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="231"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation type="unfinished">所有格式 (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="170"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="232"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
         <translation type="unfinished">*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="171"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="233"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation type="unfinished">JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="172"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="234"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation type="unfinished">TIFF 图像 (*.tiff *.tif *.TIFF *.TIF);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="173"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="235"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation type="unfinished">未处理图像 (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="174"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="236"/>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
         <translation type="unfinished">*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="178"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="240"/>
         <source>Select the input images</source>
         <translation type="unfinished">选择输入图像</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="189"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="251"/>
         <source>Loading...</source>
         <translation type="unfinished">加载中...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="248"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="348"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="310"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="427"/>
         <source>Start loading a set of images with different exposure</source>
         <translation type="unfinished">开始加载一系列不同曝光度图像</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="294"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="366"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;图像加载完毕.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="296"/>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="370"/>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR无法为下面的图像找到相关的 &lt;i&gt;EXIF&lt;/i&gt; 标签
-:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;你任然可以生成一个HDR文件。但是为了如此你必须插入 &lt;b&gt;以手动方式&lt;/b&gt; EV (曝光度) 或者停止不同的值.		&lt;hr&gt;如果你希望 Luminance HDR 来做这个 &lt;b&gt;已自动方式&lt;/b&gt;, 你载入的图像必须至少有以下的exif数据: 		&lt;ul&gt;&lt;li&gt;快门速度 (秒)&lt;/li&gt;		&lt;li&gt;光圈 (f-数值)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;提示:&lt;/b&gt; 丢失 EXIF 数据 通常在预处理图片时出现.&lt;br&gt;		你可以在两组图片组间进行一次 &lt;b&gt;一对一 exif 数据复制&lt;/b&gt; 通过 &lt;i&gt;&lt;b&gt;&quot;工具-&gt;复制 Exif 数据...&quot;&lt;/b&gt;&lt;/i&gt; 菜单项.</translation>
+ &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
+the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="305"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="379"/>
         <source>EXIF data not found</source>
         <translation type="unfinished">未找到EXIF数据</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="306"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="680"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="380"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="798"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;要继续你需要手动设置曝光值.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; 仍然需要数值.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="345"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="422"/>
         <source>Loading Error: </source>
         <translation type="unfinished">载入错误:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="364"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="452"/>
         <source>Unknown</source>
         <translation type="unfinished">未知</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="375"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="384"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="387"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="393"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="465"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="477"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="480"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="486"/>
         <source>Error...</source>
         <translation type="unfinished">错误...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="375"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="466"/>
         <source>align_image_stack failed to align images.</source>
         <translation type="unfinished">对其图像堆栈对齐图像失败.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="384"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="477"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
         <translation type="unfinished">外部应用程序无法启动 &quot;&lt;em&gt;对其图像堆栈&lt;/em&gt;&quot;.&lt;br&gt;请阅读 &quot;帮助 -&gt; 目录... -&gt; 设置 -&gt;外部工具&quot; 查询更多信息.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="387"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="480"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation type="unfinished">外部应用程序 &quot;&lt;em&gt;对其图像堆栈&lt;/em&gt;&quot; 崩溃...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="393"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="486"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation type="unfinished">在执行 &quot;&lt;em&gt;对齐图像堆栈&lt;/em&gt;&quot; 应用程序时发生未知错误...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="402"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="496"/>
         <source>Now click on next button</source>
         <translation type="unfinished">现在点击下一步按钮</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="426"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="552"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="572"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="525"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="654"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="680"/>
         <source>&amp;Finish</source>
         <translation type="unfinished">&amp;完成</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="504"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="606"/>
         <source>Aligning...</source>
         <translation type="unfinished">对齐中...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="536"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="537"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="638"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="639"/>
         <source>Processing...</source>
         <translation type="unfinished">处理中...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="584"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="692"/>
         <source>Load a camera response curve file</source>
         <translation type="unfinished">载入一个相机响应曲线文件</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="586"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="598"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="694"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="706"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation type="unfinished">相机响应曲线 (*.m);;所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="596"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="704"/>
         <source>Save a camera response curve file</source>
         <translation type="unfinished">保存相机响应曲线文件</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="633"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="746"/>
         <source>Weights: </source>
         <translation type="unfinished">权重: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="633"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="746"/>
         <source> - Response curve: </source>
         <translation type="unfinished"> -响应曲线: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="633"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="746"/>
         <source> - Model: </source>
         <translation type="unfinished"> -模型: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="653"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="771"/>
         <source>Logarithmic</source>
         <translation type="unfinished">对数</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="655"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="773"/>
         <source>From Calibration</source>
         <translation type="unfinished">来自于校准</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="657"/>
-        <source>From File</source>
-        <translation type="unfinished">来自于文件</translation>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="775"/>
+        <source>From File: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="678"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="796"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;已设定所有EV值.&lt;br&gt;现在点击下一步按钮.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -2131,7 +2157,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="50"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="322"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="330"/>
         <source>&amp;Print...</source>
         <translation type="unfinished">&amp;打印...</translation>
     </message>
@@ -2142,7 +2168,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="60"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="324"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="332"/>
         <source>&amp;Find...</source>
         <translation type="unfinished">&amp;查找...</translation>
     </message>
@@ -2163,110 +2189,110 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="80"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="331"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="339"/>
         <source>&amp;Delete</source>
         <translation type="unfinished">&amp;删除</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="85"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="332"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="340"/>
         <source>D&amp;elete All</source>
         <translation type="unfinished">&amp;删除所有</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="236"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="244"/>
         <source>Help SideBar</source>
         <translation type="unfinished">帮助侧边栏</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="315"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="323"/>
         <source>LuminanceHDR Online Help</source>
         <translation type="unfinished">LuminanceHDR 在线帮助</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="317"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="325"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;文件</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="318"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="326"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;编辑</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="319"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="327"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;查看</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="320"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="329"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="328"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="337"/>
         <source>&amp;Bookmarks</source>
         <translation type="unfinished">&amp;书签</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="323"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="331"/>
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;退出</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="325"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="333"/>
         <source>Find &amp;Next</source>
         <translation type="unfinished">查找&amp;下一个</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="326"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="334"/>
         <source>Find &amp;Previous</source>
         <translation type="unfinished">查找&amp;上一个</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="327"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="335"/>
         <source>&amp;Contents</source>
         <translation type="unfinished">&amp;目录</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="328"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="336"/>
         <source>&amp;Search</source>
         <translation type="unfinished">&amp;搜索</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="330"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="338"/>
         <source>&amp;Add Bookmark</source>
         <translation type="unfinished">&amp;添加书签</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="410"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="418"/>
         <source>Find</source>
         <translation type="unfinished">查找</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="410"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="418"/>
         <source>Search Term:</source>
         <translation type="unfinished">搜索词句:</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="442"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="450"/>
         <source>New Bookmark</source>
         <translation type="unfinished">新书签</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="442"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="450"/>
         <source>New Bookmark&apos;s Title:</source>
         <translation type="unfinished">新书签的标题:</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="719"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="668"/>
         <source>&lt;h2&gt;&lt;p&gt;Sorry, no manual is installed!&lt;/p&gt;&lt;p&gt;Please contact your package provider or LuminanceHDR team if you built the application yourself&lt;/p&gt;&lt;/h2&gt;</source>
         <comment>HTML message for no documentation available to show</comment>
         <translation type="unfinished">&lt;h2&gt;&lt;p&gt;对不起，未安装手册指南!&lt;/p&gt;&lt;p&gt;如果你建立了自己的应用程序请联系你的安装包提供商或者 LuminanceHDR团队&lt;/p&gt;&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="789"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="738"/>
         <source>LuminanceHDR - Help Browser</source>
         <translation type="unfinished">LuminanceHDR -帮助文件浏览</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="790"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="739"/>
         <source>This protocol is not handled by the help browser.
 Do you want to open the link with the default application 
 associated with the protocol?</source>
@@ -2331,17 +2357,17 @@ associated with the protocol?</source>
 <context>
     <name>IOWorker</name>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="276"/>
+        <location filename="../src/Core/IOWorker.cpp" line="284"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation type="unfinished">错误: 以下文件不可读: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="335"/>
+        <location filename="../src/Core/IOWorker.cpp" line="350"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation type="unfinished">错误: 文件 %1 还有不支持的扩展名.</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="353"/>
+        <location filename="../src/Core/IOWorker.cpp" line="368"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation type="unfinished">错误: 载入文件失败: %1</translation>
     </message>
@@ -2349,7 +2375,7 @@ associated with the protocol?</source>
 <context>
     <name>ImageQualityDialog</name>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.cpp" line="89"/>
+        <location filename="../src/UI/ImageQualityDialog.cpp" line="97"/>
         <source>Unknown</source>
         <translation type="unfinished">未知</translation>
     </message>
@@ -2357,42 +2383,42 @@ associated with the protocol?</source>
 <context>
     <name>ImgQualityDialog</name>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.ui" line="32"/>
+        <location filename="../src/UI/ImageQualityDialog.ui" line="26"/>
         <source>Save as</source>
         <translation type="unfinished">另存为</translation>
     </message>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.ui" line="43"/>
+        <location filename="../src/UI/ImageQualityDialog.ui" line="38"/>
         <source>Saved File Quality</source>
         <translation type="unfinished">保存文件质量</translation>
     </message>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.ui" line="66"/>
-        <source>Quality:</source>
-        <translation type="unfinished">质量:</translation>
+        <location filename="../src/UI/ImageQualityDialog.ui" line="56"/>
+        <source>File size</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.ui" line="118"/>
-        <source>File size:</source>
-        <translation type="unfinished">文件大小:</translation>
+        <location filename="../src/UI/ImageQualityDialog.ui" line="78"/>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.ui" line="125"/>
+        <location filename="../src/UI/ImageQualityDialog.ui" line="88"/>
         <source>Unknown</source>
         <translation type="unfinished">未知</translation>
     </message>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.ui" line="145"/>
+        <location filename="../src/UI/ImageQualityDialog.ui" line="108"/>
         <source>Ca&amp;lculate</source>
         <translation type="unfinished">计&amp;算</translation>
     </message>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.ui" line="172"/>
+        <location filename="../src/UI/ImageQualityDialog.ui" line="171"/>
         <source>&amp;Save</source>
         <translation type="unfinished">&amp;保存</translation>
     </message>
     <message>
-        <location filename="../src/UI/ImageQualityDialog.ui" line="179"/>
+        <location filename="../src/UI/ImageQualityDialog.ui" line="164"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;取消</translation>
     </message>
@@ -2400,8 +2426,8 @@ associated with the protocol?</source>
 <context>
     <name>LdrViewer</name>
     <message>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="194"/>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="237"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="188"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="222"/>
         <source>LDR image [%1 x %2]</source>
         <translation type="unfinished">LDR图像 【%1 *x %2]</translation>
     </message>
@@ -2481,7 +2507,7 @@ p, li { white-space: pre-wrap; }
     <name>MainWindow</name>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1473"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1604"/>
         <source>Luminance HDR</source>
         <translation type="unfinished">Luminance HDR</translation>
     </message>
@@ -2491,789 +2517,791 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;工具</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="49"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="50"/>
         <source>&amp;Help</source>
         <translation type="unfinished">&amp;帮助</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="60"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="62"/>
         <source>&amp;Windows</source>
         <translation type="unfinished">&amp;窗口</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="71"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="73"/>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;试图</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="78"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="80"/>
         <source>HDR &amp;Histogram</source>
         <translation type="unfinished">HDR &amp;柱状图</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="89"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="91"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished">&amp;工具栏</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="109"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="101"/>
+        <source>Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="119"/>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;文件</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="120"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="130"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;编辑</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="144"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="156"/>
         <source>Main Toolbar</source>
         <translation type="unfinished">主工具栏</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="178"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="190"/>
         <source>&amp;New HDR image...</source>
         <translation type="unfinished">&amp;新HDR图像...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="181"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="193"/>
         <source>New HDR image</source>
         <translation type="unfinished">新HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="184"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="187"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="196"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="199"/>
         <source>Create a new HDR image from a set of LDR or Raw images</source>
         <translation type="unfinished">从一组LDR或者原始图像中创建一个新的HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="190"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="202"/>
         <source>Create a new HDR image from a set of JPEG, Raw, or 8/16 bpc TIFF files</source>
         <translation type="unfinished">从一组JPEG,原始,或者8/16 bpc TIFF 文件中创建一个新的HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="193"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="205"/>
         <source>Ctrl+N</source>
         <translation type="unfinished">Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="202"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="214"/>
         <source>&amp;Open HDR image...</source>
         <translation type="unfinished">&amp;打开HDR 图像...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="205"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="217"/>
         <source>Open HDR image</source>
         <translation type="unfinished">打开HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="208"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="211"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="214"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="220"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="223"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="226"/>
         <source>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
         <translation type="unfinished">载入一个已存在的HDR图像文件(OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="217"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="229"/>
         <source>Ctrl+O</source>
         <translation type="unfinished">Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="229"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="241"/>
         <source>&amp;Save as...</source>
         <translation type="unfinished">&amp;另存为...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="232"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="244"/>
         <source>Save as...</source>
         <translation type="unfinished">另存为...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="235"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="238"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="241"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="247"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="250"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="253"/>
         <source>Save image (HDR or LDR)</source>
         <translation type="unfinished">保存图像(HDR 或者LDR)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="244"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="256"/>
         <source>Ctrl+S</source>
         <translation type="unfinished">Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="253"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="265"/>
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;退出</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="256"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="259"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="268"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="271"/>
         <source>Quit Luminance HDR</source>
         <translation type="unfinished">退出 Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="262"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="274"/>
         <source>Exit</source>
         <translation type="unfinished">退出</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="265"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="277"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="277"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="289"/>
         <source>Rotate c&amp;ounter-clockwise</source>
         <translation type="unfinished">逆时针&amp;旋转</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="280"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="292"/>
         <source>Rotate counter-clockwise</source>
         <translation type="unfinished">逆时针旋转</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="283"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="286"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="289"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="295"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="298"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="301"/>
         <source>Rotate counter-clockwise the HDR image</source>
         <translation type="unfinished">逆时针旋转HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="292"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="304"/>
         <source>&lt;</source>
         <translation type="unfinished">&lt;</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="304"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="316"/>
         <source>Rotate c&amp;lockwise</source>
         <translation type="unfinished">顺时针&amp;旋转</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="307"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="319"/>
         <source>Rotate clockwise</source>
         <translation type="unfinished">顺时针旋转</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="310"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="313"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="316"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="322"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="325"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="328"/>
         <source>Rotate clockwise the HDR image</source>
         <translation type="unfinished">顺时针旋转HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="319"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="331"/>
         <source>&gt;</source>
         <translation type="unfinished">&gt;</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="327"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="339"/>
         <source>Low Dynamic Range</source>
         <translation type="unfinished">低动态范围</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="330"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="839"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="342"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="813"/>
         <source>L</source>
         <translation type="unfinished">L</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="338"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="350"/>
         <source>Fit to Dynamic Range</source>
         <translation type="unfinished">适合动态范围</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="341"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="353"/>
         <source>Fit to dynamic range</source>
         <translation type="unfinished">适合动态范围</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="344"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="356"/>
         <source>\</source>
         <translation type="unfinished">\</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="352"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="364"/>
         <source>Shrink Dynamic Range</source>
         <translation type="unfinished">缩小动态范围</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="355"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="367"/>
         <source>[</source>
         <translation type="unfinished">[</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="363"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="375"/>
         <source>Extend Dynamic Range</source>
         <translation type="unfinished">拉伸动态范围</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="366"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="378"/>
         <source>]</source>
         <translation type="unfinished">]</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="374"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="386"/>
         <source>Decrease Exposure</source>
         <translation type="unfinished">减少曝光</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="377"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="389"/>
         <source>0</source>
         <translation type="unfinished">0</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="385"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="397"/>
         <source>&amp;Increase Exposure</source>
         <translation type="unfinished">&amp;增加曝光</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="388"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="400"/>
         <source>9</source>
         <translation type="unfinished">9</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="397"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="409"/>
         <source>&amp;Contents...</source>
         <translation type="unfinished">&amp;目录...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="400"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="412"/>
         <source>About...</source>
         <translation type="unfinished">关于...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="403"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="406"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="409"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="415"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="418"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="421"/>
         <source>Open user manual for Luminance HDR</source>
         <translation type="unfinished">打开 Luminance HDR用户手册</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="412"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="424"/>
         <source>F1</source>
         <translation type="unfinished">F1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="427"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="439"/>
         <source>&amp;Normal Size</source>
         <translation type="unfinished">&amp;正常大小</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="430"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="442"/>
         <source>Normal size</source>
         <translation type="unfinished">正常大小</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="433"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="436"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="439"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="445"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="448"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="451"/>
         <source>View HDR image at its normal size</source>
         <translation type="unfinished">查看正常大小HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="442"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="454"/>
         <source>O</source>
         <translation type="unfinished">O</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="454"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="466"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished">放&amp;大</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="457"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="460"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="463"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="469"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="472"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="475"/>
         <source>Zoom in</source>
         <translation type="unfinished">放大</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="466"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="478"/>
         <source>+</source>
         <translation type="unfinished">+</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="478"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="490"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished">缩&amp;小</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="481"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="484"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="487"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="493"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="496"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="499"/>
         <source>Zoom out</source>
         <translation type="unfinished">缩小</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="490"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="502"/>
         <source>-</source>
         <translation type="unfinished">-</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="508"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="520"/>
         <source>&amp;Fit in Window</source>
         <translation type="unfinished">&amp;适合窗口</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="511"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="514"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="523"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="526"/>
         <source>Fit in Window</source>
         <translation type="unfinished">适合窗口</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="517"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="520"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="529"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="532"/>
         <source>Make the HDR image fit its window</source>
         <translation type="unfinished">使HDR图像适合窗口</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="523"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="535"/>
         <source>W</source>
         <translation type="unfinished">W</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="532"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="544"/>
         <source>&amp;Preferences...</source>
         <translation type="unfinished">&amp;偏好...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="535"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="547"/>
         <source>Luminance Options</source>
         <translation type="unfinished">Luminance选项</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="538"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="541"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="544"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="550"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="553"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="556"/>
         <source>Set various options of Luminance</source>
         <translation type="unfinished">设置不同Luminance选项</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="547"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="559"/>
         <source>Ctrl+P</source>
         <translation type="unfinished">Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="559"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="571"/>
         <source>&amp;Resize...</source>
         <translation type="unfinished">&amp;调整大小...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="562"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="574"/>
         <source>Resize the HDR image</source>
         <translation type="unfinished">调整HDR图像大小</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="565"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="568"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="571"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="577"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="580"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="583"/>
         <source>Change size of the HDR image</source>
         <translation type="unfinished">改变HDR图像大小</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="574"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="586"/>
         <source>Ctrl+R</source>
         <translation type="unfinished">Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="583"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="595"/>
         <source>Copy &amp;Exif Data...</source>
         <translation type="unfinished">复制&amp;Exif数据...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="586"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="598"/>
         <source>Copy Exif Data</source>
         <translation type="unfinished">复制Exif数据</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="589"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="592"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="595"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="601"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="604"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="607"/>
         <source>Copy Exif data between two sets of files</source>
         <translation type="unfinished">在两组文件间复制Exif数据</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="598"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="610"/>
         <source>Ctrl+E</source>
         <translation type="unfinished">Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="606"/>
-        <source>&amp;Align Images...</source>
-        <translation type="unfinished">&amp;对齐图像...</translation>
+        <location filename="../src/MainWindow/MainWindow.ui" line="971"/>
+        <source>Show on the right</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="609"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="612"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="979"/>
+        <source>Show on the bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="990"/>
+        <source>Realtime Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="999"/>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="615"/>
-        <source>WORK IN PROGRESS</source>
-        <translation type="unfinished">工作进行中</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="620"/>
         <source>&amp;About Qt</source>
         <translation type="unfinished">&amp;关于Qt</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="623"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="618"/>
         <source>Show information about Qt</source>
         <translation type="unfinished">显示关于Qt的信息</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="626"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="629"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="621"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="624"/>
         <source>Show information about Qt library that is used by Luminance</source>
         <translation type="unfinished">显示Luminance使用的Qt库信息</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="634"/>
-        <source>&amp;Tile</source>
-        <translation type="unfinished">&amp;Tile</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="639"/>
-        <source>&amp;Cascade</source>
-        <translation type="unfinished">&amp;级联</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="642"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="645"/>
-        <source>Cascade</source>
-        <translation type="unfinished">级联</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="650"/>
-        <source>Toolbars</source>
-        <translation type="unfinished">工具条</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="658"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="632"/>
         <source>Text &amp;under Icons</source>
         <translation type="unfinished">图标下&amp;文字</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="666"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="640"/>
         <source>&amp;Icons Only</source>
         <translation type="unfinished">&amp;仅图标</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="674"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="648"/>
         <source>&amp;Text Only</source>
         <translation type="unfinished">&amp;仅文字</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="682"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="656"/>
         <source>Text &amp;Alongside Icons</source>
         <translation type="unfinished">图标旁&amp;文字</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="687"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="661"/>
         <source>&amp;Batch Tone Mapping...</source>
         <translation type="unfinished">&amp;批处理色调映射...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="690"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="664"/>
         <source>Convert multiple HDR images to LDR</source>
         <translation type="unfinished">转换多个HDR图像为LDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="693"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="696"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="667"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="670"/>
         <source>Convert multiple HDR images to LDR using existing settings files</source>
         <translation type="unfinished">使用已有设置文件转换多个HDR图像为LDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="699"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="673"/>
         <source>Ctrl+B</source>
         <translation type="unfinished">Ctrl+B</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="708"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="682"/>
         <source>&amp;What&apos;s This?</source>
         <translation type="unfinished">&amp;这是什么?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="711"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="714"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="685"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="688"/>
         <source>Get verbose information about user interface elements</source>
         <translation type="unfinished">获取关于用户界面元素的详细信息</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="720"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="694"/>
         <source>Shift+F1</source>
         <translation type="unfinished">Shift+F1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="725"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="699"/>
         <source>About &amp;Luminance HDR</source>
         <translation type="unfinished">关于&amp;Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="728"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="702"/>
         <source>Show information about Luminance HDR</source>
         <translation type="unfinished">显示关于Luminance HDR信息</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="731"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="734"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="705"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="708"/>
         <source>Show information about Luminance HDR, its authors and contributors</source>
         <translation type="unfinished">显示关于Luminance HDR信息，作者和贡献者</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="742"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="716"/>
         <source>Save HDR image &amp;preview...</source>
         <translation type="unfinished">保存HDR图像&amp;并预览...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="745"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="748"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="751"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="719"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="722"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="725"/>
         <source>Save the current HDR Preview to an LDR file</source>
         <translation type="unfinished">保存当前HDR预览到一个LDR文件</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="759"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="733"/>
         <source>&amp;Projective Transformation...</source>
         <translation type="unfinished">&amp;投影变换...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="762"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="765"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="768"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="736"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="739"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="742"/>
         <source>Apply projective transformation to the current HDR image</source>
         <translation type="unfinished">应用投影转换到当前HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="777"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="751"/>
         <source>&amp;Crop to Selection</source>
         <translation type="unfinished">&amp;裁剪到选择</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="780"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="754"/>
         <source>Crop to Selection</source>
         <translation type="unfinished">裁剪到选择</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="783"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="786"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="757"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="760"/>
         <source>Crop the image to selection rectangle</source>
         <translation type="unfinished">裁剪图像到已选择矩形</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="789"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="763"/>
         <source>Click and drag inside image area to create a selection, then use this button to crop to a new HDR image</source>
         <translation type="unfinished">点击并拖拽内部图像区域来创建一个选择区域，然后使用这个按钮裁剪到一个新的HDR图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="797"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="771"/>
         <source>Remove &amp;Selection</source>
         <translation type="unfinished">删除&amp;选择</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="800"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="774"/>
         <source>Remove selection rectangle</source>
         <translation type="unfinished">删除选择矩形</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="803"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="806"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="777"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="780"/>
         <source>Remove selection rectangle from image area</source>
         <translation type="unfinished">从图像区域删除选择矩形</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="811"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="785"/>
         <source>Make a &amp;Donation</source>
         <translation type="unfinished">请捐&amp;款</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="814"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="788"/>
         <source>Ctrl+D</source>
         <translation type="unfinished">Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="830"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="804"/>
         <source>Lock Viewers</source>
         <translation type="unfinished">锁定查看器</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="833"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="807"/>
         <source>Synchronize viewers mode (fit, fill or 1:1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Syncronize viewers mode (fit, fill or 1:1).</source>
-        <translation type="obsolete">同步查看器模式(适合,填充或者1:1).</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="836"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="810"/>
         <source>Lock the images for sync view</source>
         <translation type="unfinished">为同步查看锁定图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="844"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="818"/>
         <source>Minimize</source>
         <translation type="unfinished">最小化</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="849"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="823"/>
         <source>Maximize</source>
         <translation type="unfinished">最大化</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="854"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="828"/>
         <source>Bring All to Front</source>
         <translation type="unfinished">前置全部</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="868"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="842"/>
         <source>Show Preview Panel</source>
         <translation type="unfinished">显示预览面板</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="871"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="845"/>
         <source>Show/Hide Preview Panel</source>
         <translation type="unfinished">显示/因此预览面板</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="874"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="848"/>
         <source>Ctrl+V</source>
         <translation type="unfinished">Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="889"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="863"/>
         <source>Adjust &amp;Levels</source>
         <translation type="unfinished">调整&amp;色阶</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="892"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="895"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="866"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="869"/>
         <source>Adjust Levels</source>
         <translation type="unfinished">调整色阶</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="898"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="901"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="872"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="875"/>
         <source>Tune the histogram for the current LDR</source>
         <translation type="unfinished">调整当前LDR直方图</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="904"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="878"/>
         <source>Ctrl+L</source>
         <translation type="unfinished">Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="916"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="890"/>
         <source>Save All</source>
         <translation type="unfinished">保存全部</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="919"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="922"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="893"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="896"/>
         <source>Save All LDR files</source>
         <translation type="unfinished">保存全部HDR文件</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="927"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="901"/>
         <source>Remove Tab</source>
         <translation type="unfinished">删除标签</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="930"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="904"/>
         <source>Ctrl+W</source>
         <translation type="unfinished">Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="945"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="919"/>
         <source>Fill Window</source>
         <translation type="unfinished">填充窗口</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="948"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="922"/>
         <source>Fill window with the current viewer</source>
         <translation type="unfinished">用当前查看器填充窗口</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="953"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="927"/>
         <source>Batch HDR...</source>
         <translation type="unfinished">批处理HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="956"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="930"/>
         <source>Ctrl+H</source>
         <translation type="unfinished">Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="971"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="945"/>
         <source>Soft Proofing</source>
         <translation type="unfinished">软打样</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="986"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="960"/>
         <source>Gamut Check</source>
         <translation type="unfinished">域检查</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="351"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="395"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation type="unfinished">已准备好.现在打开一个现有的HDR图像或创建一个新的!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="408"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="456"/>
         <source>All HDR formats </source>
         <translation type="unfinished">所有HDR格式</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="419"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="467"/>
         <source>Load one or more HDR images...</source>
         <translation type="unfinished">载入一个或者多个HDR图像...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="445"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="493"/>
         <source>Save files in</source>
         <translation type="unfinished">保存文件在</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="575"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="658"/>
         <source>Failed to save</source>
         <translation type="unfinished">保存失败</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="942"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1028"/>
         <source>Done!</source>
         <translation type="unfinished">完成!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="950"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1039"/>
         <source>Aborting...</source>
         <translation type="unfinished">终止...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1221"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1341"/>
         <source>Cropped Image</source>
         <translation type="unfinished">剪裁的图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1272"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1394"/>
         <source>Unsaved changes...</source>
         <translation type="unfinished">未保存的改动...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1273"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1395"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation type="unfinished">这个HDR图像还有未保存的改动.&lt;br&gt;你要保存它吗?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1451"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1509"/>
+        <source>Fattal Warning</source>
+        <translation type="unfinished">Fattal 警告</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1510"/>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
+        <translation type="unfinished">色调映射运算符取决于输入图像的大小. 在整个图像上应用这个运算符很可能生成一个不一样的图像。
+
+你想继续吗?</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1582"/>
         <source>Untitled</source>
         <translation type="unfinished">无名</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1453"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1584"/>
         <source>Untitled %1</source>
         <translation type="unfinished">无名 %1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1473"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1605"/>
         <source>Error: %1</source>
         <translation type="unfinished">错误:%1</translation>
     </message>
@@ -3321,194 +3349,103 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">语言</translation>
     </message>
     <message>
-        <source>Czech</source>
-        <translation type="obsolete">捷克语</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="obsolete">英语</translation>
-    </message>
-    <message>
-        <source>Finnish</source>
-        <translation type="obsolete">芬兰语</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation type="obsolete">法语</translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="obsolete">德语</translation>
-    </message>
-    <message>
-        <source>Indonesian</source>
-        <translation type="obsolete">印度尼西亚语</translation>
-    </message>
-    <message>
-        <source>Italian</source>
-        <translation type="obsolete">意大利语</translation>
-    </message>
-    <message>
-        <source>Polish</source>
-        <translation type="obsolete">波兰语</translation>
-    </message>
-    <message>
-        <source>Romanian</source>
-        <translation type="obsolete">罗马尼亚语</translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="obsolete">俄语</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="obsolete">西班牙语</translation>
-    </message>
-    <message>
-        <source>Turkish</source>
-        <translation type="obsolete">土耳其语</translation>
-    </message>
-    <message>
-        <source>Hungarian</source>
-        <translation type="obsolete">匈牙利语</translation>
-    </message>
-    <message>
-        <source>Chinese</source>
-        <translation type="obsolete">中文</translation>
-    </message>
-    <message>
-        <source>Hindi</source>
-        <translation type="obsolete">北印度语</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="425"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="434"/>
         <source>Default Previews Width</source>
         <translation type="unfinished">默认前一个宽度</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="444"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="453"/>
         <source>px</source>
         <translation type="unfinished">px</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="460"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="469"/>
+        <source>Saves the settings along the program files, to be portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="472"/>
+        <source>Portable mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="479"/>
         <source>Always show Preview Panel</source>
         <translation type="unfinished">总显示预览面板</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="470"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="489"/>
         <source>Always show Wizard first page</source>
         <translation type="unfinished">总在第一页显示奇才应用程序</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="494"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="513"/>
         <source>HDR TIFF Default File Format</source>
         <translation type="unfinished">HDR TIFF默认文件格式</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="506"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="525"/>
         <source>Good quality and smaller file size</source>
         <translation type="unfinished">高质量和更小的文件大小</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="509"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="528"/>
         <source>LogLuv TIFF (float, 16bit per color channel)</source>
         <translation type="unfinished">LogLuv TIFF(浮动, 每个颜色通道16比特)</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="519"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="538"/>
         <source>Better quality, larger file size, better compatibility with other applications</source>
         <translation type="unfinished">更好的质量，更大的文件，与其他应用程序更好的兼容性</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="522"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="541"/>
         <source>Float TIFF (float, 32bit per color channel)</source>
         <translation type="unfinished">浮动TIFF(浮动，每个色彩通道32比特)</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="531"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="550"/>
         <source>Show negative numbers as:</source>
         <translation type="unfinished">显示负数为:</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="551"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="570"/>
         <source>Show nan and +/-Inf values as:</source>
         <translation type="unfinished">显示非数值和+/-无穷值为:</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="579"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="598"/>
         <source>Temporary Working Folder</source>
         <translation type="unfinished">临时工作文件夹</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="622"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="641"/>
         <source>&amp;Browse...</source>
         <translation type="unfinished">&amp;浏览...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="648"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="682"/>
-        <source>Which LDR image format to save to</source>
-        <translation type="unfinished">保存为哪一个LDR图像格式</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="651"/>
-        <source>Batch Tonemapping Default Output Format</source>
-        <translation type="unfinished">批处理色调映射默认输出格式</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="686"/>
-        <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="691"/>
-        <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="696"/>
-        <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="701"/>
-        <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="706"/>
-        <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="711"/>
-        <source>TIFF</source>
-        <translation type="unfinished">TIFF</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="719"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="741"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="667"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="689"/>
         <source>Amount of threads to use on multicore/SMP machines</source>
         <translation type="unfinished">在多核/多线程机器上使用的线程数量</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="722"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="670"/>
         <source>Batch Tonemapping Number of Threads</source>
         <translation type="unfinished">批处理色调映射线程数量</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="767"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="715"/>
         <source>General</source>
         <translation type="unfinished">通用</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="775"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="723"/>
         <source>Quality:</source>
         <translation type="unfinished">质量:</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="796"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="744"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3531,49 +3468,49 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;AHD&lt;/span&gt;: use Adaptive Homogeneity-Directed interpolation. This method selects the direction of interpolation so as to maximize a homogeneity metric, thus typically minimizing color artifacts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="809"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="757"/>
         <source>Bilinear</source>
         <translation type="unfinished">双线性</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="814"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="762"/>
         <source>VNG</source>
         <translation type="unfinished">VNG</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="819"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="767"/>
         <source>PPG</source>
         <translation type="unfinished">PPG</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="824"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="772"/>
         <source>AHD</source>
         <translation type="unfinished">AHD</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="835"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="924"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1055"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1174"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1273"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1346"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1429"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1541"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1638"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1735"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1877"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2005"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2108"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="783"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="872"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1003"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1122"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1221"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1294"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1377"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1489"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1586"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1683"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1825"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1953"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2056"/>
         <source>...</source>
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="848"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="796"/>
         <source>Median:</source>
         <translation type="unfinished">中位数:</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="906"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="854"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3588,7 +3525,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the passes used by median filter applied after interpolation to Red-Green and Blue-Green channels.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="937"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="885"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3603,12 +3540,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For Fuji Super CCD cameras, show the image tilted 45 degrees. For cameras with non-square pixels, do not stretch the image to its correct aspect ratio. In any case,                                              this option guarantees that each output pixel corresponds to one RAW pixel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="945"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="893"/>
         <source>Do not stretch or rotate pixels</source>
         <translation type="unfinished">不要拉伸或者旋转像素</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="952"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="900"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3625,22 +3562,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To resume, this option blurs the image a little, but it eliminates false 2x2 mesh patterns with VNG quality method or mazes with AHD quality method.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="961"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="909"/>
         <source>Interpolate RGB using 4 colours</source>
         <translation type="unfinished">使用四种颜色差值RGB</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="971"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="919"/>
         <source>White Balance</source>
         <translation type="unfinished">白平衡</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="992"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="940"/>
         <source>Method</source>
         <translation type="unfinished">方法</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1013"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="961"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3663,33 +3600,33 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Manual&lt;/span&gt;: Set a custom temperature and green level values&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1029"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="977"/>
         <source>Predefined D65</source>
         <translation type="unfinished">预定义的D65</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1034"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2217"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="982"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2165"/>
         <source>Camera</source>
         <translation type="unfinished">摄像头</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1039"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="987"/>
         <source>Auto</source>
         <translation type="unfinished">自动</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1044"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="992"/>
         <source>Manual</source>
         <translation type="unfinished">手动</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1071"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1019"/>
         <source>Temperature (Kelvin)</source>
         <translation type="unfinished">温度(开尔文)</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1147"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1095"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3704,22 +3641,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the color temperature in Kelvin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1190"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1138"/>
         <source>Green</source>
         <translation type="unfinished">绿色</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1251"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1199"/>
         <source>Set here the green component to set magenta color cast removal level</source>
         <translation type="unfinished">在这里设置绿色成分来设置洋红色色偏去除水平</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1286"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1234"/>
         <source>Highlights</source>
         <translation type="unfinished">突出强调</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1307"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1255"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3742,32 +3679,32 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Rebuild&lt;/span&gt;: reconstruct highlights using a level value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1320"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1268"/>
         <source>Solid White</source>
         <translation type="unfinished">纯白</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1325"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1273"/>
         <source>Do not transform</source>
         <translation type="unfinished">不要变换</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1330"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1278"/>
         <source>Blend</source>
         <translation type="unfinished">混合</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1335"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1283"/>
         <source>Reconstruct</source>
         <translation type="unfinished">重建</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1359"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1307"/>
         <source>Level</source>
         <translation type="unfinished">水平</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1411"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1359"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3782,22 +3719,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the reconstruct highlight level. Low values favor whites and high values favor colors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1445"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1393"/>
         <source>Correct false colors in highlights</source>
         <translation type="unfinished">更正突出标注的错误颜色</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1452"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1400"/>
         <source>Auto Brightness</source>
         <translation type="unfinished">自动亮度</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1462"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1410"/>
         <source>Brightness</source>
         <translation type="unfinished">亮度</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1517"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1465"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3812,7 +3749,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the brightness level of output image. The default value is 1.0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1554"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1502"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3827,12 +3764,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific black point value to decode RAW pictures. If you set this option to off, the Black Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1562"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1510"/>
         <source>Black</source>
         <translation type="unfinished">黑色</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1620"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1568"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3847,7 +3784,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific black point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1651"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1599"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3862,12 +3799,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific white point value to decode RAW pictures. If you set this option to off, the White Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1659"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1607"/>
         <source>Saturation</source>
         <translation type="unfinished">饱和度</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1711"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1659"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3882,12 +3819,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific white point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1751"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1699"/>
         <source>NR and CA Correction</source>
         <translation type="unfinished">NR和CA矫正</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1772"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1720"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3902,12 +3839,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use wavelets to erase noise while preserving real detail.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1780"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1728"/>
         <source>Enable noise reduction</source>
         <translation type="unfinished">启用降噪</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1850"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1798"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3922,12 +3859,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the noise reduction threshold value to use.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1893"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1841"/>
         <source>Threshold:</source>
         <translation type="unfinished">阀值:</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1900"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1848"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3942,12 +3879,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enlarge the raw red and blue layers by the given factors, typically 0.999 to 1.001, to correct chromatic aberration.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1908"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1856"/>
         <source>Enable Chromatic Aberration correction</source>
         <translation type="unfinished">启用色差矫正</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1975"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1923"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3962,7 +3899,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the red layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2078"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2026"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3977,86 +3914,54 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the blue layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2124"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2072"/>
         <source>Red Component</source>
         <translation type="unfinished">红色分量</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2134"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2082"/>
         <source>Blue Component</source>
         <translation type="unfinished">蓝色分量</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2153"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2101"/>
         <source>Monitor</source>
         <translation type="unfinished">监视器</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2171"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2119"/>
         <source>Monitor Profile</source>
         <translation type="unfinished">监视器配置文件</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2198"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2284"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2348"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2146"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2232"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2296"/>
         <source>Browse...</source>
         <translation type="unfinished">浏览...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2238"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2186"/>
         <source>Camera profile</source>
         <translation type="unfinished">摄像头配置文件</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Camera Profile&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the input color space used to decode RAW data.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: no input color profile is used during RAW decoding.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Embedded&lt;/span&gt;: use embedded color profile from RAW file if exist.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom input color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Camera Profile&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the input color space used to decode RAW data.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: no input color profile is used during RAW decoding.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Embedded&lt;/span&gt;: use embedded color profile from RAW file if exist.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom input color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">无</translation>
-    </message>
-    <message>
-        <source>Built in</source>
-        <translation type="obsolete">内置</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">自定义</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2303"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2251"/>
         <source>Printer</source>
         <translation type="unfinished">打印机</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2321"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2269"/>
         <source>Printer profile</source>
         <translation type="unfinished">打印机配置文件</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2391"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2339"/>
         <source>align_image_stack command line arguments</source>
         <translation type="unfinished">图像对齐堆栈命令行参数</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2416"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2364"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4069,94 +3974,55 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2448"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2396"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;取消</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2455"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2403"/>
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;确定</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="683"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="326"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="326"/>
+        <source>For the settings to take effect, please restart the application!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="734"/>
         <source>Choose a directory</source>
         <translation type="unfinished">选择一个目录</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="700"/>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="711"/>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="722"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="751"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="762"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="773"/>
         <source>Open ICC Profile</source>
         <translation type="unfinished">打开ICC配置文件</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="702"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="753"/>
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="713"/>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="724"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="764"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="775"/>
         <source>Color profile (*.icc)</source>
         <translation type="unfinished">颜色配置文件 (*.icc)</translation>
     </message>
 </context>
 <context>
-    <name>PreviewPanel</name>
+    <name>PreviewSettings</name>
     <message>
-        <source>Form</source>
-        <translation type="obsolete">Form</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="20"/>
-        <source>Preview</source>
-        <translation type="unfinished">预览</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="103"/>
-        <source>Mantiuk &apos;06</source>
-        <translation type="unfinished">Mantiuk &apos;06</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="128"/>
-        <source>Mantiuk &apos;08</source>
-        <translation type="unfinished">Mantiuk &apos;08</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="153"/>
-        <source>Fattal</source>
-        <translation type="unfinished">Fattal</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="178"/>
-        <source>Drago</source>
-        <translation type="unfinished">Drago</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="203"/>
-        <source>Durand</source>
-        <translation type="unfinished">Durand</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="228"/>
-        <source>Reinhard &apos;02</source>
-        <translation type="unfinished">Reinhard &apos;02</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="253"/>
-        <source>Reinhard &apos;05</source>
-        <translation type="unfinished">Reinhard &apos;05</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="278"/>
-        <source>Ashikhmin</source>
-        <translation type="unfinished">Ashikhmin</translation>
-    </message>
-    <message>
-        <location filename="../src/PreviewPanel/PreviewPanel.ui" line="303"/>
-        <source>Pattanaik</source>
-        <translation type="unfinished">Pattanaik</translation>
+        <location filename="../src/PreviewSettings/PreviewSettings.cpp" line="196"/>
+        <source>Load settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4262,17 +4128,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="118"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="420"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation type="unfinished">错误: 无法载入色调映射设置文件: </translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="139"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="441"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation type="unfinished">错误: 文件太老，无法解析色调映射设置文件: </translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="238"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="541"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation type="unfinished">错误: 无法解析色调映射文件: </translation>
     </message>
@@ -4280,148 +4146,306 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/Fileformat/pfsinraw.cpp" line="134"/>
-        <location filename="../src/Fileformat/pfsinraw.cpp" line="221"/>
+        <location filename="../src/Fileformat/pfsinraw.cpp" line="133"/>
+        <location filename="../src/Fileformat/pfsinraw.cpp" line="220"/>
         <source>Error Opening RAW File</source>
         <translation type="unfinished">打开RAW文件错误</translation>
     </message>
     <message>
-        <location filename="../src/Fileformat/pfsinraw.cpp" line="228"/>
+        <location filename="../src/Fileformat/pfsinraw.cpp" line="227"/>
         <source>Error Unpacking RAW File</source>
         <translation type="unfinished">RAW文件解包错误</translation>
     </message>
     <message>
-        <location filename="../src/Fileformat/pfsinraw.cpp" line="235"/>
+        <location filename="../src/Fileformat/pfsinraw.cpp" line="234"/>
         <source>Error Processing RAW File</source>
         <translation type="unfinished">处理RAW文件错误</translation>
     </message>
     <message>
-        <location filename="../src/Fileformat/pfsinraw.cpp" line="253"/>
+        <location filename="../src/Fileformat/pfsinraw.cpp" line="252"/>
         <source>Memory Error in processing RAW File</source>
         <translation type="unfinished">处理RAW文件内存错误</translation>
     </message>
     <message>
-        <location filename="../src/Fileformat/pfsinraw.cpp" line="264"/>
+        <location filename="../src/Fileformat/pfsinraw.cpp" line="263"/>
         <source>Error Creating PFS Frame</source>
         <translation type="unfinished">创建PFS框架错误</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="87"/>
+        <location filename="../src/MainCli/commandline.cpp" line="88"/>
         <source>Cannot convert %1 to a float</source>
         <translation type="unfinished">无法转换 %1 为浮点数</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="98"/>
+        <location filename="../src/MainCli/commandline.cpp" line="99"/>
         <source>Cannot convert %1 to an integer</source>
         <translation type="unfinished">无法转换 %1 为整数</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="423"/>
+        <location filename="../src/MainCli/commandline.cpp" line="429"/>
         <source>Input file %1</source>
         <translation type="unfinished">输入文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="443"/>
+        <location filename="../src/MainCli/commandline.cpp" line="449"/>
         <source>Running in HDR-creation mode.</source>
         <translation type="unfinished">HDR生成模式运行.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="449"/>
+        <location filename="../src/MainCli/commandline.cpp" line="455"/>
         <source>Running in Load-HDR mode.</source>
         <translation type="unfinished">载入HDR模式运行.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="463"/>
+        <location filename="../src/MainCli/commandline.cpp" line="469"/>
         <source>Temporary directory: %1</source>
         <translation type="unfinished">临时目录: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="464"/>
+        <location filename="../src/MainCli/commandline.cpp" line="470"/>
         <source>Using %1 threads.</source>
         <translation type="unfinished">正在使用%1线程.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="482"/>
+        <location filename="../src/MainCli/commandline.cpp" line="488"/>
         <source>Loading file %1</source>
         <translation type="unfinished">载入文件%1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="488"/>
+        <location filename="../src/MainCli/commandline.cpp" line="494"/>
         <source>Successfully loaded file %1.</source>
         <translation type="unfinished">成功载入文件%1.</translation>
     </message>
     <message>
-        <location filename="../src/MainGui/main.cpp" line="104"/>
-        <source>Aborting...</source>
-        <translation type="unfinished">终止...</translation>
-    </message>
-    <message>
-        <location filename="../src/MainGui/main.cpp" line="105"/>
-        <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
-        <translation type="unfinished">无法找到Qt的JPEG插件...&lt;br&gt;请解压缩DLL包通过激活&quot;使用文件夹名字&quot;选项.</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="91"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="97"/>
         <source>All LDR formats</source>
         <translation type="unfinished">所有LDR格式</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="100"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="106"/>
         <source>Save the LDR image as...</source>
         <translation type="unfinished">LDR图像另存为...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="107"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="113"/>
         <source>All HDR formats </source>
         <translation type="unfinished">所有的HDR格式 </translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="115"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="121"/>
         <source>Save the HDR image as...</source>
         <translation type="unfinished">HDR图像另存为...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="529"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="598"/>
         <source>Save as...</source>
         <translation type="unfinished">另存为...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="127"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="129"/>
         <source>Option -v -a...</source>
         <translation type="unfinished">选项 -v -a...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="128"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="130"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
         <translation type="unfinished">LuminanceHDR要求与&quot;-v -a aligned_&quot;选项一起执行图像对齐堆栈。命令行选项已更正.</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="88"/>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="103"/>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="112"/>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="138"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="90"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="107"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="116"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="142"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="89"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="91"/>
         <source>I cannot open monitor profile. Please select a different one.</source>
         <translation type="unfinished">我打不开监视器配置文件。请选择另一个。</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="104"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="108"/>
         <source>I cannot open printer profile. Please select a different one.</source>
         <translation type="unfinished">我打不开打印机配置文件。请选择另一个。</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="113"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="117"/>
         <source>Please select a printer profile .</source>
         <translation type="unfinished">请选择一个打印机配置文件。</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="139"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="143"/>
         <source>I cannot perform the color transform. Please select a different monitor profile.</source>
         <translation type="unfinished">我无法执行颜色转换。请选择一个不同的监视器配置文件.</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="276"/>
+        <source>PreGamma=%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="287"/>
+        <source>Contrast Equalization</source>
+        <translation type="unfinished">对比均衡</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="289"/>
+        <source>Contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="292"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="326"/>
+        <source>Saturation</source>
+        <translation type="unfinished">饱和度</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="294"/>
+        <source>Detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="305"/>
+        <source>Luminance Level</source>
+        <translation type="unfinished">亮度水平</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="307"/>
+        <source>Luminance Level=Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="310"/>
+        <source>Color Saturation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="311"/>
+        <source>Contrast Enhancement</source>
+        <translation type="unfinished">对比度加强</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="324"/>
+        <source>Alpha</source>
+        <translation type="unfinished">Alpha</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="325"/>
+        <source>Beta</source>
+        <translation type="unfinished">Beta</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="327"/>
+        <source>NoiseRedux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="328"/>
+        <source>FFTSolver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="335"/>
+        <source>simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="338"/>
+        <source>Equation 2</source>
+        <translation type="unfinished">方程2</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="340"/>
+        <source>Equation 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="343"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="372"/>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="350"/>
+        <source>Bias</source>
+        <translation type="unfinished">偏置</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="359"/>
+        <source>Spatial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="360"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="393"/>
+        <source>Range</source>
+        <translation type="unfinished">范围</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="361"/>
+        <source>Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="370"/>
+        <source>Multiplier</source>
+        <translation type="unfinished">乘数</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="374"/>
+        <source>AutoLuminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="376"/>
+        <source>Cone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="377"/>
+        <source>Rod</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="389"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="390"/>
+        <source>Phi</source>
+        <translation type="unfinished">Phi</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="392"/>
+        <source>Scales:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="394"/>
+        <source>Lower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="395"/>
+        <source>Upper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="405"/>
+        <source>Brightness</source>
+        <translation type="unfinished">亮度</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="406"/>
+        <source>Chromatic Adaptation</source>
+        <translation type="unfinished">色彩适应</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="407"/>
+        <source>Light Adaptation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4735,6 +4759,14 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>TiffModeDialog</name>
+    <message>
+        <location filename="../src/UI/TiffModeDialog.ui" line="14"/>
+        <source>Save as ...TIFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TonemappingPanel</name>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="36"/>
@@ -4903,10 +4935,6 @@ Luminace Level</source>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1104"/>
         <source>Noise Reduction</source>
         <translation type="unfinished">降噪</translation>
-    </message>
-    <message>
-        <source>Version Pre 1.8.4</source>
-        <translation type="obsolete">版本 Pre 1.8.4</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1183"/>
@@ -5105,170 +5133,179 @@ Luminace Level</source>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3058"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3078"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3098"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3091"/>
         <source>...</source>
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3075"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3088"/>
         <source>Load saved parameters</source>
         <translation type="unfinished">加载已保存的参数</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3095"/>
-        <source>Load parameters by comment</source>
-        <translation type="unfinished">通过批注载入参数</translation>
-    </message>
-    <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3136"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3116"/>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation type="unfinished">这里你可以对HDR应用一次gamma更正.&lt;br&gt;gamma更正将在色调映射之前应用.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3139"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3119"/>
         <source>Process</source>
         <translation type="unfinished">处理</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3162"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3142"/>
         <source>&amp;Result Size</source>
         <translation type="unfinished">&amp;结果大小</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3193"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3230"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3173"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3210"/>
         <source>Gamma applied before tonemapping</source>
         <translation type="unfinished">色调映射之前应用Gamma</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3233"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3213"/>
         <source>Pre-gamma</source>
         <translation type="unfinished">Pre-gamma</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3282"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3262"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation type="unfinished">恢复pregamma的默认值 (1)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3312"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3292"/>
         <source>Size of the resulting LDR image</source>
         <translation type="unfinished">结果LDR图像大小</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3315"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3295"/>
         <source>Here you can choose the size of the resulting LDR image.</source>
         <translation type="unfinished">这里你可以选择最后LDR图像的大小.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3346"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3326"/>
         <source>Set Custom Output Size</source>
         <translation type="unfinished">设置自定义输出文件大小</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3349"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3329"/>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation type="unfinished">点击这个按钮，你可以给最终结果LDR图像插入一个 &lt;i&gt; 宽度 &lt;/i&gt;值.&lt;br&gt;点击Enter(或者Return)后会自动计算高度值，并且新的大小会被添加到清单中.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="233"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="224"/>
         <source>TM Database Problem</source>
         <translation type="unfinished">TM数据库问题</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="234"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="225"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation type="unfinished">无法打开用以保存TM参数的数据库.
 错误: %1</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="664"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="621"/>
         <source>Load a tonemapping settings text file...</source>
         <translation type="unfinished">载入一个色调映射设置text文件...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="666"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="693"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="623"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="650"/>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
         <translation type="unfinished">LuminanceHDR色调映射设置text文件 (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="672"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="714"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="805"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="825"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="629"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="671"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="762"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="782"/>
         <source>Aborting...</source>
         <translation type="unfinished">终止...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="673"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="630"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation type="unfinished">文件不可读(检查是否存在，权限)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="691"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="648"/>
         <source>Save tonemapping settings text file to...</source>
         <translation type="unfinished">保存色调映射设置text文件到...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="714"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="671"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation type="unfinished">文件不可写(检查权限，路径...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="805"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="762"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation type="unfinished">文件不可读(检查权限,路径...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="825"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="782"/>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished">错误:色调映射设置文件格式已改变. 这(旧)文件不能被用于这个版本的LuminanceHDR.创建一个新的.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="950"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="907"/>
         <source>Custom LDR size</source>
         <translation type="unfinished">自定义LDR大小</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="951"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="908"/>
         <source>Enter the width of the new size:</source>
         <translation type="unfinished">输入新大小的宽度:</translation>
     </message>
 </context>
 <context>
-    <name>TonemappingWarningDialog</name>
+    <name>TonemappingSettings</name>
     <message>
-        <source>Attention!</source>
-        <translation type="obsolete">注意!</translation>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="14"/>
+        <source>Load Custom Settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ask again</source>
-        <translation type="obsolete">再次询问</translation>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="77"/>
+        <source>Sort by</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
-
-Do you want to continue?</source>
-        <translation type="obsolete">色调映射运算符取决于输入图像的大小. 在整个图像上应用这个运算符很可能生成一个不一样的图像。
-
-你想继续吗?</translation>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="84"/>
+        <source>Comments:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingWarnDialog.cpp" line="36"/>
-        <source>Fattal Warning</source>
-        <translation type="unfinished">Fattal 警告</translation>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="111"/>
+        <source>Comment</source>
+        <translation type="unfinished">评论</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingWarnDialog.cpp" line="37"/>
-        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
-
-Do you want to continue?</source>
-        <translation type="unfinished">色调映射运算符取决于输入图像的大小. 在整个图像上应用这个运算符很可能生成一个不一样的图像。
-
-你想继续吗?</translation>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="116"/>
+        <source>Operator</source>
+        <translation type="unfinished">运算符</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="121"/>
+        <source>Most Useful Operators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="162"/>
+        <source>Tonemap</source>
+        <translation type="unfinished">色调映射</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="169"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingSettings.ui" line="176"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5418,6 +5455,24 @@ Do you want to continue?</source>
         <location filename="../src/UI/UMessageBox.cpp" line="163"/>
         <source>Remind me later</source>
         <translation type="unfinished">过后再提醒我</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateChecker</name>
+    <message>
+        <location filename="../src/MainWindow/UpdateChecker.cpp" line="83"/>
+        <source>A new release is ready for download!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/UpdateChecker.cpp" line="99"/>
+        <source>Click to download, or select Help-&gt;Update!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/UpdateChecker.cpp" line="103"/>
+        <source>Do you want to open the webpage for download now?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -30,9 +30,9 @@
 #include <math.h>
 #include <assert.h>
 
-#include "Common/ProgressHelper.h"
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
+#include "Libpfs/progress.h"
 #include "tmo_ashikhmin02.h"
 #include "pyramid.h"
 
@@ -42,7 +42,8 @@
 
 //-------------------------------------------
 
-float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s) {
+float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s)
+{
   float ratio = myPyramid->p[s-1].lambda;  
 
   float newX = (float)x * ratio;
@@ -139,7 +140,7 @@ inline float TM(float lum_val, float maxLum, float minLum) {
 
 ////////////////////////////////////////////////////////
 
-void getMaxMin(pfs::Array2D* lum_map, float& maxLum, float& minLum) {
+void getMaxMin(pfs::Array2Df* lum_map, float& maxLum, float& minLum) {
   maxLum = minLum = 0.0;
 
   for(int i=0; i<lum_map->getCols() * lum_map->getRows(); i++) {
@@ -148,7 +149,7 @@ void getMaxMin(pfs::Array2D* lum_map, float& maxLum, float& minLum) {
   }
 }
 
-void Normalize(pfs::Array2D* lum_map, int nrows, int ncols) {
+void Normalize(pfs::Array2Df* lum_map, int nrows, int ncols) {
   float maxLum, minLum;
   getMaxMin(lum_map, maxLum, minLum);
   float range = maxLum - minLum;
@@ -159,7 +160,7 @@ void Normalize(pfs::Array2D* lum_map, int nrows, int ncols) {
 
 ////////////////////////////////////////////////////////
 
-int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float /*avLum*/, bool simple_flag, float lc_value, int eq, ProgressHelper *ph)
+int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minLum, float /*avLum*/, bool simple_flag, float lc_value, int eq, pfs::Progress &ph)
 {
   assert(Y!=NULL);
   assert(L!=NULL);
@@ -192,10 +193,10 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
   GaussianPyramid *myPyramid = new GaussianPyramid(Y, nrows, ncols);
 
   // LAL calculation
-  pfs::Array2D* la = new pfs::Array2D(ncols, nrows);
+  pfs::Array2Df* la = new pfs::Array2Df(ncols, nrows);
   for(int y=0; y<nrows; y++) {
-	ph->newValue(100*y/nrows);
-	if (ph->isTerminationRequested())
+      ph.setValue(100*y/nrows);
+      if (ph.canceled())
 		break;
     for(int x=0; x<ncols; x++) {
       (*la)(x,y) = LAL(myPyramid, x, y, lc_value);
@@ -206,18 +207,18 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
   delete(myPyramid);
 
   // TM function
-  pfs::Array2D* tm = new pfs::Array2D(ncols, nrows);
+  pfs::Array2Df* tm = new pfs::Array2Df(ncols, nrows);
   for(int y=0; y<nrows; y++) {
-	ph->newValue(100*y/nrows);
-	if (ph->isTerminationRequested())
+    ph.setValue(100*y/nrows);
+    if (ph.canceled())
 		break;
     for(int x=0; x<ncols; x++)
       (*tm)(x,y) = TM((*la)(x,y), maxLum, minLum);
   }
   // final computation for each pixel
   for(int y=0; y<nrows; y++) {
-	ph->newValue(100*y/nrows);
-	if (ph->isTerminationRequested())
+    ph.setValue(100*y/nrows);
+    if (ph.canceled())
 		break;
     for(int x=0; x<ncols; x++)
     {

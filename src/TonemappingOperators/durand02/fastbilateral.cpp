@@ -28,12 +28,12 @@
  */
 
 #include <iostream>
+#include <cmath>
+
 #include <fftw3.h>
-#include <math.h>
 
 #include "Libpfs/array2d.h"
-#include "Common/ProgressHelper.h"
-#include "TonemappingOperators/pfstmo.h"
+#include "Libpfs/progress.h"
 #include "fastbilateral.h"
 
 #ifdef BRANCH_PREDICTION
@@ -44,20 +44,7 @@
 #define unlikely(x)     (x)
 #endif
 
-
 using namespace std;
-
-
-inline float max( float a, float b )
-{
-  return a > b ? a : b;
-}
-
-inline float min( float a, float b )
-{
-  return a < b ? a : b;
-}
-
 
 // TODO: use spatial convolution rather than FFT, should be much
 // faster except for a very large kernels
@@ -85,12 +72,12 @@ public:
   }
 
 
-  void blur( const pfs::Array2D *I, pfs::Array2D *J )
+  void blur( const pfs::Array2Df& I, pfs::Array2Df& J )
   {
     int x,y;
 
-    int nx = I->getCols();
-    int ny = I->getRows();
+    int nx = I.getCols();
+    int ny = I.getRows();
     int nsize = nx * ny;
 
     int ox = nx;
@@ -98,7 +85,7 @@ public:
     
     for( y=0 ; y<ny ; y++ )
       for( x=0 ; x<nx ; x++ )
-        source[x*ny+y] = (*I)(x,y);
+        source[x*ny+y] = I(x,y);
 
     fftwf_execute(fplan_fw);
 
@@ -121,7 +108,7 @@ public:
 
     for( x=0 ; x<nx ; x++ )
       for( y=0 ; y<ny ; y++ )
-        (*J)(x,y) = source[x*ny+y] / nsize;  
+        J(x,y) = source[x*ny+y] / nsize;
   }
   
   ~GaussianBlur()
@@ -241,27 +228,26 @@ PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
     J=J+Jj .*  InterpolationWeight(I, ij )
 */
 
-void fastBilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
-                          float sigma_s, float sigma_r, int /*downsample*/,
-                          ProgressHelper *ph )
+void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
+                         float sigma_s, float sigma_r, int /*downsample*/,
+                         pfs::Progress &ph)
 {
-  int i;
-  int w = I->getCols();
-  int h = I->getRows();
+  int w = I.getCols();
+  int h = I.getRows();
   int size = w * h;
 
   // find range of values in the input array
-  float maxI = (*I)(0);
-  float minI = (*I)(0);
-  for(i=0 ; i<size ; i++)
+  float maxI = I(0);
+  float minI = I(0);
+  for (int i=0 ; i<size ; i++)
   {
-    float v = (*I)(i);
+    float v = I(i);
     if( unlikely( v>maxI ) ) maxI = v;
     if( unlikely( v<minI ) ) minI = v;
-    (*J)(i) = 0.0f;             // zero output
+    J(i) = 0.0f;             // zero output
   }
 
-  pfs::Array2D* JJ;
+  pfs::Array2Df* JJ;
 //  if( downsample != 1 )
 //    JJ = new pfs::Array2D(w,h);
   
@@ -271,13 +257,13 @@ void fastBilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
   int sizeZ = w*h;
 //  pfs::Array2D* Iz = new pfs::Array2D(w,h);
 //  downsampleArray(I,Iz);
-  const pfs::Array2D* Iz = I;
+  const pfs::Array2Df* Iz = &I;
 //  sigma_s /= downsample;
   
-  pfs::Array2D* jJ = new pfs::Array2D(w,h);
-  pfs::Array2D* jG = new pfs::Array2D(w,h);
-  pfs::Array2D* jK = new pfs::Array2D(w,h);
-  pfs::Array2D* jH = new pfs::Array2D(w,h);
+  pfs::Array2Df* jJ = new pfs::Array2Df(w,h);
+  pfs::Array2Df* jG = new pfs::Array2Df(w,h);
+  pfs::Array2Df* jK = new pfs::Array2Df(w,h);
+  pfs::Array2Df* jH = new pfs::Array2Df(w,h);
 
   const int NB_SEGMENTS = (int)ceil((maxI-minI)/sigma_r);
   float stepI = (maxI-minI)/NB_SEGMENTS;
@@ -287,26 +273,26 @@ void fastBilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
   // piecewise bilateral
   for( int j=0 ; j<NB_SEGMENTS ; j++ )
   {
-    ph->newValue( j * 100 / NB_SEGMENTS );
-	if (ph->isTerminationRequested())
+    ph.setValue( j * 100 / NB_SEGMENTS );
+    if (ph.canceled())
 		break;
 
     float jI = minI + j*stepI;        // current intensity value
     
-    for( i=0 ; i<sizeZ ; i++ )
+    for (int i=0 ; i<sizeZ ; i++)
     {
       float dI = (*Iz)(i)-jI;
       (*jG)(i) = exp( -(dI*dI) / (sigma_r*sigma_r) );
-      (*jH)(i) = (*jG)(i) * (*I)(i);
+      (*jH)(i) = (*jG)(i) * I(i);
     }
 
-    gaussian_blur.blur( jG, jK );
-    gaussian_blur.blur( jH, jH );
+    gaussian_blur.blur( *jG, *jK );
+    gaussian_blur.blur( *jH, *jH );
     
 //    convolveArray(jG, sigma_s, jK);
 //    convolveArray(jH, sigma_s, jH);
 
-    for( i=0 ; i<sizeZ ; i++ )
+    for (int i=0 ; i<sizeZ ; i++ )
       if( likely((*jK)(i)!=0.0f) )
         (*jJ)(i) = (*jH)(i) / (*jK)(i);
       else
@@ -319,34 +305,34 @@ void fastBilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
 
     if( j == 0 ) {
       // if the first segment - to account for the range boundary
-      for( i=0 ; i<size ; i++ )
+      for (int i=0 ; i<size ; i++ )
       {
-        if( likely( (*I)(i) > jI + stepI ) )
+        if( likely( I(i) > jI + stepI ) )
           continue;             // wi = 0;        
-        if( likely( (*I)(i) > jI ) ) {
-          float wi = (stepI - ((*I)(i)-jI)) / stepI;
-          (*J)(i) += (*JJ)(i)*wi;
+        if( likely( I(i) > jI ) ) {
+          float wi = (stepI - (I(i)-jI)) / stepI;
+          J(i) += (*JJ)(i)*wi;
         } else          
-          (*J)(i) += (*JJ)(i);
+          J(i) += (*JJ)(i);
       }
     } else if( j == NB_SEGMENTS-1 ) {
       // if the last segment - to account for the range boundary
-      for( i=0 ; i<size ; i++ )
+      for (int i=0 ; i<size ; i++ )
       {
-        if( likely( (*I)(i) < jI - stepI ) )
+        if( likely( I(i) < jI - stepI ) )
           continue;             // wi = 0;        
-        if( likely( (*I)(i) < jI ) ) {
-          float wi = (stepI - (jI-(*I)(i))) / stepI;
-          (*J)(i) += (*JJ)(i)*wi;
+        if( likely( I(i) < jI ) ) {
+          float wi = (stepI - (jI-I(i))) / stepI;
+          J(i) += (*JJ)(i)*wi;
         } else          
-          (*J)(i) += (*JJ)(i);
+          J(i) += (*JJ)(i);
       }
     } else {
-      for( i=0 ; i<size ; i++ )
+      for(int i=0 ; i<size ; i++ )
       {
-        float wi = (stepI - fabs( (*I)(i)-jI )) / stepI;
+        float wi = (stepI - fabs( I(i)-jI )) / stepI;
         if( unlikely( wi>0.0f ) )
-          (*J)(i) += (*JJ)(i)*wi;
+          J(i) += (*JJ)(i)*wi;
       }
     }
   }

@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,36 +19,38 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
-#ifndef PROGRESS_HELPER
-#define PROGRESS_HELPER
+//! \author Franco Comida <fcomida@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+
+#ifndef PROGRESSHELPER_H
+#define PROGRESSHELPER_H
 
 #include <QObject>
+#include "Libpfs/progress.h"
 
-class ProgressHelper : public QObject
+//! \brief glue between pfs::Progress and Qt signal/slot
+class ProgressHelper
+        : public QObject, public pfs::Progress
 {
     Q_OBJECT
 public:
-	ProgressHelper(QObject *p = 0);
+    ProgressHelper(QObject *p = 0);
 
-        ///! backcompatibility
-        void newValue(int progress);
-        void emitSetValue(int progress);
-        void emitSetMaximum(int max);
-        void emitSetMinimum(int min);
-
-        bool isTerminationRequested();
+    void setValue(int value);
+    void setRange(int minimum, int maximum);
+    void setMaximum(int maximum);
+    void setMinimum(int minimum);
 
 public slots:
-        void terminate(bool b = true);
-private:
-	bool m_terminate;
+    void qtCancel(bool b = true);
+
 signals:
-        void setValue(int progress);
-        void setMaximum(int max);
-        void setMinimum(int min);
+    void qtSetValue(int value);
+    void qtSetRange(int minimum, int maximum);
+    void qtSetMaximum(int max);
+    void qtSetMinimum(int min);
 };
 
-#endif
+#endif // PROGRESSHELPER_H

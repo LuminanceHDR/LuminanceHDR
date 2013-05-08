@@ -27,13 +27,16 @@
 
 #include "PreviewPanel.h"
 
-#include "Libpfs/domio.h"
-#include "Filter/pfssize.h"
-#include "Filter/pfscut.h"
+#include "Libpfs/frame.h"
+#include "Libpfs/manip/copy.h"
+#include "Libpfs/manip/resize.h"
+
 #include "Core/TMWorker.h"
+#include "Libpfs/tm/TonemapOperator.h"
+
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"
-#include "TonemappingEngine/TonemapOperator.h"
+
 #include "Common/LuminanceOptions.h"
 #include "UI/FlowLayout.h"
 
@@ -80,10 +83,8 @@ public:
 #endif
         }
 
-        //ProgressHelper fake_progress_helper;
-
         // Copy Reference Frame
-        QSharedPointer<pfs::Frame> temp_frame( pfs::pfscopy(m_ReferenceFrame.data()) );
+        QSharedPointer<pfs::Frame> temp_frame( pfs::copy(m_ReferenceFrame.data()) );
 
         // Tone Mapping
         //QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
@@ -122,7 +123,8 @@ private:
 }
 
 PreviewPanel::PreviewPanel(QWidget *parent):
-    QWidget(parent)
+    QWidget(parent),
+    m_original_width_frame(0)
 {
     //! \note I need to register the new object to pass this class as parameter inside invokeMethod()
     //! see run() inside PreviewLabelUpdater
@@ -217,7 +219,7 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)
 {
     if ( frame == NULL ) return;
 
-    original_width_frame = frame->getWidth();
+    m_original_width_frame = frame->getWidth();
 
     int frame_width = frame->getWidth();
     int frame_height = frame->getHeight();
@@ -229,7 +231,7 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)
         resized_width = PREVIEW_HEIGHT*ratio;
     }
     // 1. make a resized copy
-    QSharedPointer<pfs::Frame> current_frame( pfs::resizeFrame(frame, resized_width));
+    QSharedPointer<pfs::Frame> current_frame( pfs::resize(frame, resized_width));
 
     // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
     if (index == -1) {
@@ -254,7 +256,7 @@ void PreviewPanel::tonemapPreview(TonemappingOptions* opts)
 #endif
 
     opts->xsize = LuminanceOptions().getPreviewWidth();
-    opts->origxsize = original_width_frame;
+    opts->origxsize = m_original_width_frame;
 
     emit startTonemapping(opts);
 }

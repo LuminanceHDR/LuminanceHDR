@@ -63,7 +63,7 @@ Q_SIGNALS:
     void triggered();
 
 private:
-    int original_width_frame;
+    int m_original_width_frame;
     QList<PreviewLabel*> m_ListPreviewLabel;
     FlowLayout *m_flowLayout;
 };

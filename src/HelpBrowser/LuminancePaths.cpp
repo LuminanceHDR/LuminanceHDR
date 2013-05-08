@@ -15,6 +15,7 @@
 #include "help-path.hxx"
 
 #include <QApplication>
+#include <iostream>
 
 LuminancePaths *LuminancePaths::instance = 0;
 LuminancePaths * LuminancePaths::getThis()
@@ -24,31 +25,33 @@ LuminancePaths * LuminancePaths::getThis()
 	return instance;
 }
 
+namespace {
+const QString dirsep(QDir::separator());
+}
+
 QString LuminancePaths::HelpDir()
 {
-	if(getThis()->LuminancePathsDB.contains("HelpDir"))
-		return getThis()->LuminancePathsDB["HelpDir"];
-	QString hf;
-	QString dirsep(QDir::separator());
-
-    hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep);
-    QDir dirHelp(hf);
-    if (!dirHelp.exists())
-    {
-#ifdef Q_WS_MAC
-        hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "../Resources/help/en" + dirsep);
-#elif _WIN32
-        // no fall-back
-#else
-        // hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
-        // hf = LocalizedDirPath("usr" + dirsep + "share" + dirsep + "luminance-hdr" + dirsep + "help" + dirsep);
-        hf = LocalizedDirPath(HELPDIR + dirsep);
-#endif
+    if (getThis()->LuminancePathsDB.contains("HelpDir")) {
+        QString hf = getThis()->LuminancePathsDB["HelpDir"];
+        if ( !hf.isEmpty() && QDir(hf).exists() ) {
+            return hf;
+        }
     }
+
+#ifdef Q_WS_MAC
+    QString hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "../Resources/help/en" + dirsep);
+#elif _WIN32
+    QString hf;
+    // no fall-back
+#else   // UNIX
+    // hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
+    // hf = LocalizedDirPath("usr" + dirsep + "share" + dirsep + "luminance-hdr" + dirsep + "help" + dirsep);
+    QString hf = LocalizedDirPath(HELPDIR + dirsep);
+#endif
 
 	getThis()->LuminancePathsDB["HelpDir"] = hf;
 
-	return getThis()->LuminancePathsDB["HelpDir"];
+    return hf;
 }
 
 QString LuminancePaths::LocalizedDirPath(const QString & base, const QString& fallback )

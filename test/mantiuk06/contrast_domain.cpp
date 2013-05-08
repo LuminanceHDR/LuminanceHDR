@@ -55,16 +55,17 @@
 #include <cstring>
 #include <cmath>
 #include <iostream>
+#include <cassert>
 
 #include "contrast_domain.h"
 #include "arch/malloc.h"
 #include "arch/math.h"
 #include "TonemappingOperators/pfstmo.h"
 
-#include "Libpfs/vex.h"
+#include "Libpfs/vex/sse.h"
 #include "Libpfs/vex/vex.h"
 #include "Libpfs/vex/dotproduct.h"
-#include "Common/msec_timer.h"
+#include "Libpfs/utils/msec_timer.h"
 
 namespace test_mantiuk06
 {
@@ -265,13 +266,13 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
 // copy matix a to b, return = a 
  void matrix_copy(const int n, const float* const a, float* const b)
 {
-  VEX_vcopy(a, b, n);
+     std::copy(a, a + n, b);
 }
 
 // multiply matrix a by scalar val
- void matrix_multiply_const(const int n, float* const a, const float val)
+void matrix_multiply_const(const int n, float* const a, const float val)
 {
-  VEX_vsmul(a, val, a, n);
+     vex::vsmul(a, val, a, n);
 }
 
 // alloc memory for the float table
@@ -679,9 +680,9 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   for (; iter < itmax; iter++)
   {
     // TEST
-    ph->newValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));    
+    ph->setValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));
     // User requested abort
-    if (ph->isTerminationRequested() && iter > 0 ) 
+    if (ph->canceled() && iter > 0 )
     {
       break;
     }
@@ -770,7 +771,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   if (rdotr_curr/bnrm2 > tol2)
   {
     // Not converged
-    ph->newValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));    
+    ph->setValue( (int) (logf(rdotr_curr/irdotr)*percent_sf));
     if (iter == itmax)
     {
       fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(rdotr_curr/bnrm2), tol);
@@ -782,7 +783,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   }
   else 
   {
-    ph->newValue( itmax );
+    ph->setValue( itmax );
   }
   
   matrix_free(x_best);
