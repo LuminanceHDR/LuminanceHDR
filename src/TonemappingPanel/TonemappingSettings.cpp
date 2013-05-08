@@ -86,7 +86,10 @@ TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
         m_previewSettings->selectLabel(0);
     }
     else
+    {
         m_Ui->applyButton->setDisabled(true);
+        m_Ui->btnTonemap->setDisabled(true);
+    }
 
     sortPreviews(0); // by comment
 
