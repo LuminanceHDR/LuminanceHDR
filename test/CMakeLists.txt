@@ -1,5 +1,6 @@
 ADD_SUBDIRECTORY(ImageInspector)
 ADD_SUBDIRECTORY(InputOutputTest)
+ADD_SUBDIRECTORY(FusionAlgorithms)
 
 # workaround for http://code.google.com/p/googletest/issues/detail?id=408
 IF(MSVC_VERSION EQUAL 1700)
@@ -9,6 +10,8 @@ ENDIF()
 FIND_PACKAGE(GTest)
 
 IF(GTEST_FOUND)
+find_package(Boost COMPONENTS program_options REQUIRED)
+
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
 
@@ -141,5 +144,11 @@ TARGET_LINK_LIBRARIES(TestImageQualityDialog ui fileformat pfs common ${LIBS})
 
 ADD_EXECUTABLE(TestHdrCreationWizard TestHdrCreationWizard.cpp)
 TARGET_LINK_LIBRARIES(TestHdrCreationWizard ${LUMINANCE_MODULES_GUI} ${LIBS})
+
+ADD_EXECUTABLE(TestFusionOperator TestFusionOperator.cpp)
+TARGET_LINK_LIBRARIES(TestFusionOperator
+        ${Boost_PROGRAM_OPTIONS_LIBRARY}
+        ${LUMINANCE_MODULES_GUI} ${LIBS})
+
 
 ENDIF(GTEST_FOUND)

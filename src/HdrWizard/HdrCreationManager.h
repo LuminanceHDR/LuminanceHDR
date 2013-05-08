@@ -40,6 +40,7 @@
 #include "arch/math.h"
 #include "HdrCreation/createhdr.h"
 #include "HdrCreation/createhdr_common.h"
+#include "HdrCreation/fusionoperator.h"
 
 // Some other file expect this to be available
 const config_triple predef_confs[6]= {
@@ -60,7 +61,7 @@ public:
     ~HdrCreationItem();
 
     const QString& filename() const     { return m_filename; }
-    FramePtr frame()                    { return m_frame; }
+    const pfs::FramePtr& frame() const  { return m_frame; }
     bool isValid() const                { return m_frame->isValid(); }
 
     bool hasAverageLuminance() const    { return (m_averageLuminance != -1.f); }
@@ -75,10 +76,10 @@ public:
     const QImage& qimage() const        { return m_thumbnail; }
 
 private:
-    QString     m_filename;
-    float       m_averageLuminance;
-    FramePtr    m_frame;
-    QImage      m_thumbnail;
+    QString         m_filename;
+    float           m_averageLuminance;
+    pfs::FramePtr   m_frame;
+    QImage          m_thumbnail;
 };
 
 class HdrCreationManager : public QObject
@@ -90,7 +91,7 @@ private:
     HdrCreationItemContainer m_data;
 
 public:
-	HdrCreationManager(bool = false);
+    HdrCreationManager(bool b = false);
 	~HdrCreationManager();
 
 

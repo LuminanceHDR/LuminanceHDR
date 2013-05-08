@@ -31,6 +31,7 @@
 
 #include "HdrCreation/createhdr.h"
 #include "HdrCreation/responses.h"
+#include "HdrCreation/weights.h"
 #include "HdrCreation/robertson02.h"
 #include "HdrCreation/debevec.h"
 
@@ -280,19 +281,19 @@ pfs::Frame* createHDR(const float* arrayofexptime,
     } break;
     case DEBEVEC:
     {
-        //apply debevec model
-        if (ldrinput) {
-            debevec_applyResponse(*Rj, *Gj, *Bj,
-                                  arrayofexptime,
-                                  Ir.data(), Ig.data(), Ib.data(),
-                                  w.data(), M, *listldr);
-        } else {
-            debevec_applyResponse(*Rj, *Gj, *Bj,
-                                  arrayofexptime,
-                                  Ir.data(), Ig.data(), Ib.data(),
-                                  w.data(), M,
-                                  *listhdrR, *listhdrG, *listhdrB);
-        }
+//        //apply debevec model
+//        if (ldrinput) {
+//            debevec_applyResponse(*Rj, *Gj, *Bj,
+//                                  arrayofexptime,
+//                                  Ir.data(), Ig.data(), Ib.data(),
+//                                  w.data(), M, *listldr);
+//        } else {
+//            debevec_applyResponse(*Rj, *Gj, *Bj,
+//                                  arrayofexptime,
+//                                  Ir.data(), Ig.data(), Ib.data(),
+//                                  w.data(), M,
+//                                  *listhdrR, *listhdrG, *listhdrB);
+//        }
     } break;
     } //end switch
 

@@ -1,7 +1,8 @@
-/**
+/*
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2013 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,9 +19,37 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
-//! \author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#ifndef LIBHDR_FUSION_DEBEVEC_H
+#define LIBHDR_FUSION_DEBEVEC_H
+
+#include <HdrCreation/fusionoperator.h>
+
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! Adaptation for Luminance HDR
+
+namespace libhdr {
+namespace fusion {
+
+//! \brief Debevec Radiance Map operator
+class DebevecOperator : public IFusionOperator
+{
+public:
+    DebevecOperator()
+        : IFusionOperator()
+    {}
+
+private:
+    void computeFusion(const std::vector<FrameEnhanced> &frames, pfs::Frame& frame) const;
+};
+
+}   // fusion
+}   // libhdr
+
+/*
+// old stuff!
 #include <QList>
 #include <QImage>
 #include "HdrCreation/createhdr_common.h"
@@ -68,3 +97,6 @@ int debevec_applyResponse(pfs::Array2Df& xj, pfs::Array2Df& yj, pfs::Array2Df& z
                           const float* Ir, const float* Ig, const float* Ib,
                           const float* w, int M,
                           const QList<QImage*>& list);
+*/
+
+#endif // LIBHDR_FUSION_DEBEVEC_H

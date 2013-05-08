@@ -28,38 +28,66 @@
  * $Id: responses.cpp,v 1.6 2006/09/13 14:27:06 gkrawczyk Exp $
  */
 
-#ifndef RESPONSES_H
-#define RESPONSES_H
+#ifndef LIBHDR_FUSION_RESPONSES_H
+#define LIBHDR_FUSION_RESPONSES_H
+
+namespace libhdr {
+namespace fusion {
+
+enum ResponseFunction {
+    RESPONSE_GAMMA,
+    RESPONSE_LINEAR,
+    RESPONSE_LOG10
+};
+
+class IResponseFunction {
+public:
+    virtual ~IResponseFunction() {}
+
+    //! \brief return the response of the value \c input. \c input is in the
+    //! range [0, 1]
+    virtual float getResponse(float input) const = 0;
+
+    //! \return type of response function implemented
+    virtual ResponseFunction getType() const = 0;
+};
+
+class ResponseGamma : public IResponseFunction
+{
+public:
+    float getResponse(float input) const;
+
+    ResponseFunction getType() const {
+        return RESPONSE_GAMMA;
+    }
+};
+
+class ResponseLinear : public IResponseFunction
+{
+public:
+    float getResponse(float input) const;
+
+    ResponseFunction getType() const {
+        return RESPONSE_LINEAR;
+    }
+};
+
+class ResponseLog10 : public IResponseFunction
+{
+public:
+    float getResponse(float input) const;
+
+    ResponseFunction getType() const {
+        return RESPONSE_LOG10;
+    }
+};
+
+}   // fusion
+}   // libhdr
+
+// Old Stuff
 
 #include <cstdio>
-
-/**
- * @brief Weighting function with "flat" distribution (as in icip06)
- *
- * @param w [out] weights (array size of M)
- * @param M number of camera output levels
- */
-void exposure_weights_icip06( float* w, int M, int Mmin, int Mmax );
-
-/**
- * @brief Weighting function with triangle distribution (as in debevec)
- *
- * @param w [out] weights (array size of M)
- * @param M number of camera output levels
- */
-void weights_triangle( float* w, int M/*, int Mmin, int Mmax */);
-
-/**
- * @brief Weighting function with gaussian distribution
- *
- * @param w [out] weights (array size of M)
- * @param M number of camera output levels
- * @param Mmin minimum registered camera output level
- * @param Mmax maximum registered camera output level
- * @param sigma sigma value for gaussian
- */
-void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma );
-
 
 /**
  * @brief Create gamma response function

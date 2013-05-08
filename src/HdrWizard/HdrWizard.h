@@ -28,6 +28,8 @@
 #include <QString>
 #include <QVector>
 #include <QDebug>
+#include <QFuture>
+#include <QFutureWatcher>
 
 #include "Common/LuminanceOptions.h"
 #include "HdrWizard/HdrCreationManager.h"
@@ -43,6 +45,8 @@ private:
     // members ... private functions are below
     QScopedPointer<Ui::HdrWizard> m_ui;
     QScopedPointer<HdrCreationManager> m_hdrCreationManager;
+
+    QFutureWatcher<void> m_ioFutureWatcher;
 
     QString loadcurvefilename;
     QString savecurvefilename;
@@ -91,6 +95,7 @@ signals:
 
 private slots:
     void loadInputFiles(const QStringList& files);
+    void loadInputFilesDone();
 
     void loadImagesButtonClicked();
     void removeImageButtonClicked();

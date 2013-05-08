@@ -67,6 +67,8 @@ public:
     size_t getHeight() const
     { return m_height; }
 
+    inline size_t size() const { return m_height*m_width; }
+
     //! \brief Changes the size of the frame
     void resize(size_t width, size_t height);
 
@@ -155,8 +157,8 @@ private:
     // ::pfs::exif::exif_data m_exifData;
 };
 
-} // namespace pfs
-
 typedef boost::shared_ptr< pfs::Frame > FramePtr;
+
+} // namespace pfs
 
 #endif // PFS_FRAME_H

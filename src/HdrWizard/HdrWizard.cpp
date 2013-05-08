@@ -22,6 +22,7 @@
  */
 
 #include <cmath>
+#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
 #include <QDebug>
@@ -37,6 +38,7 @@
 #include <QTextStream>
 #include <QProgressDialog>
 #include <QThread>
+#include <QtConcurrentRun>
 
 // --- SQL handling
 #include <QSqlRecord>
@@ -180,6 +182,15 @@ HdrWizard::~HdrWizard()
 
 void HdrWizard::setupConnections()
 {
+    connect(&m_ioFutureWatcher, SIGNAL(finished()), this, SLOT(loadInputFilesDone()));
+
+    // connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT());
+    connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()));
+    connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(reset()));
+    connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()));
+    connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)));
+    connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
+
     connect(m_ui->NextFinishButton, SIGNAL(clicked()), this, SLOT(NextFinishButtonClicked()));
     connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
     connect(m_ui->pagestack, SIGNAL(currentChanged(int)), this, SLOT(currentPageChangedInto(int)));
@@ -469,31 +480,35 @@ void HdrWizard::loadInputFiles(const QStringList& files)
         // loadImagesButton->setEnabled(false);
         // m_ui->confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
 
-        QProgressDialog progressDialog(this);
-        progressDialog.setWindowModality(Qt::WindowModal);
-        progressDialog.setLabelText(QString("Loading %1 file(s) using %2 thread(s)...")
-                                    .arg(files.size())
-                                    .arg(QThread::idealThreadCount())
-                                    );
+//        QProgressDialog progressDialog(this);
+//        progressDialog.setWindowModality(Qt::WindowModal);
+//        progressDialog.setLabelText(QString("Loading %1 file(s) using %2 thread(s)...")
+//                                    .arg(files.size())
+//                                    .arg(QThread::idealThreadCount())
+//                                    );
 
-        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(exec()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(show()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(reset()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(hide()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), &progressDialog, SLOT(setRange(int,int)));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), &progressDialog, SLOT(setValue(int)));
-        connect(&progressDialog, SIGNAL(canceled()), m_hdrCreationManager.data(), SIGNAL(progressCancel()));
+//        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(exec()));
+//        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(show()));
+//        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(reset()));
+//        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(hide()));
+//        connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), &progressDialog, SLOT(setRange(int,int)));
+//        connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), &progressDialog, SLOT(setValue(int)));
+//        connect(&progressDialog, SIGNAL(canceled()), m_hdrCreationManager.data(), SIGNAL(progressCancel()));
 
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
-        m_hdrCreationManager->loadFiles(files);
+        // m_hdrCreationManager->loadFiles(files);
+        m_ioFutureWatcher.setFuture(
+                    QtConcurrent::run(
+                        boost::bind(&HdrCreationManager::loadFiles,
+                                    m_hdrCreationManager.data(),
+                                    files)
+                        )
+                    );
 
-        updateTableGrid();
 
         // Query the progress dialog to check if was canceled.
         // qDebug() << "Canceled?" << progressDialog.wasCanceled();
-
-        QApplication::restoreOverrideCursor();
     }
 
     /*
@@ -512,6 +527,15 @@ void HdrWizard::loadInputFiles(const QStringList& files)
     // m_hdrCreationManager->setFileList(files);
     // m_hdrCreationManager->loadInputFiles();
     */
+}
+
+void HdrWizard::loadInputFilesDone()
+{
+    m_ioFutureWatcher.waitForFinished();    // should breeze over...
+    qDebug() << "HdrWizard::loadInputFilesDone()";
+
+    updateTableGrid();
+    QApplication::restoreOverrideCursor();
 }
 
 /*

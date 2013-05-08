@@ -63,6 +63,8 @@
 #include "HdrCreationManager.h"
 #include "arch/math.h"
 
+#include <HdrCreation/fusionoperator.h>
+
 static const float max_rgb = 65535.0f;
 static const float max_lightness = 65535.0f;
 static const int gridSize = 40;
@@ -162,11 +164,11 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
     // parallel load of the data...
     // Create a QFutureWatcher and connect signals and slots.
     QFutureWatcher<void> futureWatcher;
-    connect(&futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()));
-    connect(&futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()));
-    connect(this, SIGNAL(progressCancel()), &futureWatcher, SLOT(cancel()));
-    connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)));
-    connect(&futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)));
+//    connect(&futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
+//    connect(&futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
+//    connect(this, SIGNAL(progressCancel()), &futureWatcher, SLOT(cancel()), Qt::DirectConnection);
+//    connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
+//    connect(&futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
 
     // Start the computation.
     futureWatcher.setFuture( QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile()) );
@@ -1191,13 +1193,28 @@ void HdrCreationManager::setEV(float new_ev, int image_idx)
     emit expotimeValueChanged(exp2f(new_ev), image_idx);
 }
 
+using namespace libhdr::fusion;
+
 pfs::Frame* HdrCreationManager::createHdr(bool ag, int iterations)
 {
-    //CREATE THE HDR
-    if (inputType == LDR_INPUT_TYPE)
-        return createHDR(expotimes.data(), &chosen_config, ag, iterations, true, &ldrImagesList );
-    else
-        return createHDR(expotimes.data(), &chosen_config, ag, iterations, false, &listmdrR, &listmdrG, &listmdrB );
+    FusionOperatorPtr fusionOperator = IFusionOperator::build(DEBEVEC_NEW);
+
+    std::vector< FrameEnhanced > frames;
+    for ( size_t idx = 0; idx < m_data.size(); ++idx ) {
+        frames.push_back(
+                    FrameEnhanced(m_data[idx].frame(),
+                                  m_data[idx].getAverageLuminance())
+                    );
+    }
+
+    return fusionOperator->computeFusion( frames );
+
+
+//    //CREATE THE HDR
+//    if (inputType == LDR_INPUT_TYPE)
+//        return createHDR(expotimes.data(), &chosen_config, ag, iterations, true, &ldrImagesList );
+//    else
+//        return createHDR(expotimes.data(), &chosen_config, ag, iterations, false, &listmdrR, &listmdrG, &listmdrB );
 }
 
 HdrCreationManager::~HdrCreationManager()
