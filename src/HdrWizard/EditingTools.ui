@@ -23,7 +23,7 @@
    <string>Editing Tools</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
   <property name="modal">
@@ -85,6 +85,11 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="fitButton">
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
                   <property name="toolTip">
                    <string>Fit to window</string>
                   </property>
@@ -108,6 +113,11 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="origSizeButton">
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
                   <property name="toolTip">
                    <string>Original size</string>
                   </property>
@@ -128,6 +138,11 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="zoomInButton">
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
                   <property name="toolTip">
                    <string>Zoom In</string>
                   </property>
@@ -148,6 +163,11 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="zoomOutButton">
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
                   <property name="toolTip">
                    <string>Zoom Out</string>
                   </property>

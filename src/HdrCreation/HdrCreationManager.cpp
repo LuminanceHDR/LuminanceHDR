@@ -210,10 +210,10 @@ float hueSquaredMean(QList<QImage*> list, int k)
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
             for (int h = 0; h < size; h++) {
-                Fh = QColor::fromRgb(list.at(h)->pixel(i, j)).toHsl().lightnessF();
+                Fh = QColor::fromRgb(list.at(h)->pixel(i, j)).toHsl().hueF();
                 hues[h] = Fh;
             }
-            Fk = QColor::fromRgb(list.at(k)->pixel(i, j)).toHsl().lightnessF();
+            Fk = QColor::fromRgb(list.at(k)->pixel(i, j)).toHsl().hueF();
             H = hueMean(hues, size) - Fk;
             HS += H*H;
         }
@@ -266,7 +266,7 @@ qreal averageLightness(const QImage& qImage)
     qreal avgLum = 0.0f;
     for (int i = 0; i < h*w; i++)
     {
-        avgLum += static_cast<float>(QColor::fromRgb( *qImagePtr++ ).toHsl().lightness());
+        avgLum += static_cast<float>(QColor::fromRgb( *qImagePtr++ ).toHsv().value());
     }
     return avgLum / (w * h);
 }
