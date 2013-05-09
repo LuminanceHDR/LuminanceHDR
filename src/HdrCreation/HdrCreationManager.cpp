@@ -20,7 +20,8 @@
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing
+ *
+ * Manual and auto antighosting, improvements, bugfixing
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */
@@ -270,6 +271,17 @@ qreal averageLightness(const QImage& qImage)
     return avgLum / (w * h);
 }
 
+qreal averageLightness(const QImage& qImage, int i, int j, int gridX, int gridY)
+{
+    qreal avgL = 0.0f;
+    for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            avgL += static_cast<qreal>(QColor::fromRgb( qImage.pixel(x, y) ).toHsv().value());
+        }
+    }
+    return avgL / (gridX*gridY);
+}
+
 bool comparePatches(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Array2Df& B1,
                     const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
                     int i, int j, int gridX, int gridY, float threshold, float deltaEV)
@@ -301,7 +313,7 @@ bool comparePatches(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs:
             count++;
     }
 
-    if ((float) count / (float) (gridX*gridY) > threshold)
+    if ((static_cast<float>(count) / static_cast<float>(gridX*gridY)) > threshold)
         return true;
     else
         return false;
@@ -314,7 +326,7 @@ bool comparePatches(const QImage& image1,
     float logRed[gridX*gridY];
     float logGreen[gridX*gridY];
     float logBlue[gridX*gridY];
-   
+
     qreal  r1, g1, b1, alpha1, r2, b2, g2, alpha2; 
     int count = 0;
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
@@ -341,7 +353,7 @@ bool comparePatches(const QImage& image1,
             count++;
     }
 
-    if ((float) count / (float) (gridX*gridY) > threshold)
+    if ((static_cast<float>(count) / static_cast<float>(gridX*gridY)) > threshold)
         return true;
     else
         return false;
@@ -355,7 +367,7 @@ void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Arra
     float avgL = 0.0f;    
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            rgb2hsl(R2(x, y), G2(x, y), B2(x, y), h, s, l);
+            rgb2hsl(R1(x, y), G1(x, y), B1(x, y), h, s, l);
             avgL += l;
         }
     }
@@ -390,24 +402,19 @@ void copyPatch(const QImage& image1,
 {
     QRgb pixValue;
     QColor color;
-    int h, s, l;
-    float avgL = 0.0f;    
-    for (int y = j * gridY; y < (j+1) * gridY; y++) {
-        for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            avgL += static_cast<float>(QColor::fromRgb( image2.pixel(x, y) ).toHsl().lightness());
-        }
-    }
-    avgL /= (gridX*gridY);
-    if ( avgL >= 255.0f || avgL <= 0.0f ) return;
+    qreal h, s, v;
+
+    qreal avgL = averageLightness(image1, i, j, gridX, gridY);
+    if ( avgL >= 255.0f || avgL == 0.0f ) return;
 
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
             pixValue = image1.pixel(x, y);
-            color = QColor::fromRgb(pixValue).toHsl();
-            color.getHsl(&h, &s, &l);
-            l *= sf;
-            if (l > 255) l = 255;
-            color.setHsl(h, s, l);
+            color = QColor::fromRgb(pixValue).toHsv();
+            color.getHsvF(&h, &s, &v);
+            v *= sf;
+            if (v > 1.0f) v = 1.0f;
+            color.setHsvF(h, s, v);
             pixValue = color.rgb();     
             image2.setPixel(x, y, pixValue);
         }
@@ -512,7 +519,7 @@ void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& m
     qreal alpha;
 
     qreal sf = averageLightness(img1) / averageLightness(img2);
-    int h, s, l;
+    qreal h, s, v;
 
     QRgb *img1Ptr = reinterpret_cast<QRgb *>(img1.bits());  
     const QRgb *img2Ptr = reinterpret_cast<const QRgb *>(img2.bits());  
@@ -525,11 +532,11 @@ void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& m
         alpha = (qAlpha(*(maskGoodImagePtr + i)) == 0) ? static_cast<float>(qAlpha(*(maskPtr + i))) / 255 : 
                                                           static_cast<float>(qAlpha(*(maskGoodImagePtr + i))) / 255;
         pixValue = *(img2Ptr + i);
-        color = QColor::fromRgb(pixValue).toHsl();
-        color.getHsl(&h, &s, &l);
-        l *= sf;
-        if (l > 255) l = 255;
-        color.setHsl(h, s, l);
+        color = QColor::fromRgb(pixValue).toHsv();
+        color.getHsvF(&h, &s, &v);
+        v *= sf;
+        if (v > 1.0f) v = 1.0f;
+        color.setHsvF(h, s, v);
         pixValue = color.rgb();     
         pixValue = (1.0f - alpha)*(*(img1Ptr + i)) + alpha*pixValue;
         *(img1Ptr + i) = pixValue;
@@ -1526,7 +1533,7 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
 
 void HdrCreationManager::doAutoAntiGhostingLDR(float threshold)
 {
-    const int size = ldrImagesList.size(); 
+    const int size = ldrImagesList.size();
     float HE[size];
     const int width = ldrImagesList.at(0)->width();
     const int height = ldrImagesList.at(0)->height();
@@ -1541,11 +1548,11 @@ void HdrCreationManager::doAutoAntiGhostingLDR(float threshold)
             patches[i][j] = false;
 
     for (int i = 0; i < size; i++) {
-        avgLightness[i] = averageLightness(*ldrImagesList.at(i)); 
+        avgLightness[i] = averageLightness(*ldrImagesList.at(i));
         qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
     }
 
-    for (int i = 0; i < size; i++) { 
+    for (int i = 0; i < size; i++) {
         HE[i] = hueSquaredMean(ldrImagesList, i);
         qDebug() << "HE[" << i << "]: " << HE[i];
     }
@@ -1556,11 +1563,11 @@ void HdrCreationManager::doAutoAntiGhostingLDR(float threshold)
     float scaleFactor[size];
 
     for (int i = 0; i < size; i++) {
-        scaleFactor[i] = avgLightness[i] / avgLightness[h0];        
+        scaleFactor[i] = avgLightness[i] / avgLightness[h0];
     }
 
     for (int h = 0; h < size; h++) {
-        if (h == h0) 
+        if (h == h0)
             continue;
         for (int j = 0; j < gridSize; j++) {
             for (int i = 0; i < gridSize; i++) {
@@ -1570,7 +1577,7 @@ void HdrCreationManager::doAutoAntiGhostingLDR(float threshold)
                                        i, j, gridX, gridY, threshold, deltaEV)) {
                         patches[i][j] = true;
                     }
-            }                      
+            }
         }
     }
 
