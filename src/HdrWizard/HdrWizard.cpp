@@ -219,6 +219,8 @@ void HdrWizard::setupConnections()
     connect(hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
     connect(hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
 
+    connect(this, SIGNAL(setValue(int)), this, SLOT(updateProgressBar(int)));
+
     connect(this,SIGNAL(rejected()),hdrCreationManager,SLOT(removeTempFiles()));
 
 }
@@ -886,7 +888,17 @@ void HdrWizard::keyPressEvent(QKeyEvent *event) {
 void HdrWizard::writeAisData(QByteArray data)
 {
     qDebug() << data;
+    if (data.contains("[1A"))
+        data.replace("[1A", "");
+    if (data.contains("[2A"))
+        data.replace("[2A", "");
+    if (data.contains(QChar(0x01B).toAscii()))
+        data.replace(QChar(0x01B).toAscii(), "");
     m_Ui->textEdit->append(data);
+    if (data.contains(": remapping")) {
+        data.replace(0,data.size() - 6, " ");
+        emit setValue(QString(data.data()).toInt());
+    }
 }
 
 void HdrWizard::on_pushButtonSaveSettings_clicked()
@@ -920,3 +932,8 @@ void HdrWizard::on_pushButtonSaveSettings_clicked()
     m_Ui->pushButtonSaveSettings->setEnabled(false);
 }
 
+void HdrWizard::updateProgressBar(int value)
+{
+    if (value == 0) m_Ui->progressBar->setMaximum(100);
+    m_Ui->progressBar->setValue(value);
+}

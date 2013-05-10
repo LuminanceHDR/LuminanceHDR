@@ -91,6 +91,9 @@ private:
 
     QScopedPointer<Ui::HdrWizard> m_Ui;
 
+signals:
+    void setValue(int value);
+
 private slots:
 
     void loadInputFiles(const QStringList& files, int count);
@@ -127,5 +130,6 @@ private slots:
 	void writeAisData(QByteArray data);
 	void setupConnections();
 	void on_pushButtonSaveSettings_clicked();
+    void updateProgressBar(int);
 };
 #endif

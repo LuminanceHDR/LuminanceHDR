@@ -1482,6 +1482,13 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
         <number>6</number>
@@ -1531,9 +1538,6 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </item>
-     <item>
-      <widget class="QTextEdit" name="textEdit"/>
-     </item>
     </layout>
    </item>
   </layout>
@@ -1569,7 +1573,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>CurveFileNameSaveLineEdit</tabstop>
   <tabstop>modelComboBox</tabstop>
   <tabstop>saveRespCurveToFileCheckbox</tabstop>
-  <tabstop>textEdit</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
