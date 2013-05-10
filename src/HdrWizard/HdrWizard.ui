@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>736</width>
-    <height>596</height>
+    <height>633</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>HDR Creation Wizard</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_9">
@@ -1489,6 +1489,13 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
         <number>6</number>
@@ -1538,9 +1545,6 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </item>
-     <item>
-      <widget class="QTextEdit" name="textEdit"/>
-     </item>
     </layout>
    </item>
   </layout>
@@ -1577,7 +1581,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>CurveFileNameSaveLineEdit</tabstop>
   <tabstop>modelComboBox</tabstop>
   <tabstop>saveRespCurveToFileCheckbox</tabstop>
-  <tabstop>textEdit</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
