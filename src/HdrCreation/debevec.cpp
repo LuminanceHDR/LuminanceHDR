@@ -98,10 +98,7 @@ void DebevecOperator::computeFusion(const vector<FrameEnhanced> &frames,
     assert(frames.size());
 
     size_t numExposures = frames.size();
-    Frame tempFrame(
-                frames[0].frame()->getWidth(),
-            frames[0].frame()->getHeight()
-            );
+    Frame tempFrame ( frames[0].frame()->getWidth(), frames[0].frame()->getHeight() );
 
     Channel* outputRed;
     Channel* outputGreen;
@@ -114,10 +111,11 @@ void DebevecOperator::computeFusion(const vector<FrameEnhanced> &frames,
 
     fillDataLists(frames, redChannels, greenChannels, blueChannels);
 
-    size_t saturated_pixels = 0;
+    // size_t saturated_pixels = 0;
     float maxAllowedValue = maxTrustedValue();
     float minAllowedValue = minTrustedValue();
 
+#pragma omp parallel for
     for (size_t idx = 0; idx < tempFrame.size(); ++idx)
     {
         // data...
@@ -168,7 +166,7 @@ void DebevecOperator::computeFusion(const vector<FrameEnhanced> &frames,
             if ( (avgLum < minAvgLum) &&
                  ((red > maxAllowedValue) || (green > maxAllowedValue) || (blue > maxAllowedValue)) )
             {
-                PRINT_DEBUG("new min average luminance");
+                // PRINT_DEBUG("new min average luminance");
 
                 minAvgLum               = avgLum;
                 redData.blackValue_     = red;
@@ -181,7 +179,7 @@ void DebevecOperator::computeFusion(const vector<FrameEnhanced> &frames,
             if ( (avgLum > maxAvgLum) &&
                  ((red < minAllowedValue) || (green < minAllowedValue) || (blue < minAllowedValue)) )
             {
-                PRINT_DEBUG("new max average luminance");
+                // PRINT_DEBUG("new max average luminance");
 
                 maxAvgLum               = avgLum;
                 redData.whiteValue_     = red;
@@ -217,7 +215,7 @@ void DebevecOperator::computeFusion(const vector<FrameEnhanced> &frames,
 
         // ...fix red...
         if ( (redData.denominator_ == 0.f) || (greenData.denominator_ == 0.f) || (blueData.denominator_ == 0.f) ) {
-            ++saturated_pixels;
+            // ++saturated_pixels;
 
             PRINT_DEBUG("saturated pixel");
 

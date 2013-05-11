@@ -6,17 +6,20 @@
 namespace libhdr {
 namespace fusion {
 
-static
-const float s_triangularThreshold = 0.06f;
+namespace {
+static const float s_triangularThreshold = 0.03f;
+}
 
 float WeightTriangular::getWeight(float input) const
 {
+    if ( (input < s_triangularThreshold) || (input > (1.f - s_triangularThreshold)) ) {
+        return 0.f;
+    }
+
     input *= 2.f;
     if ( input >= 1.f ) {
         input = 2.f - input;
     }
-    if ( input < s_triangularThreshold )
-        return 0.f;
     return input;
 }
 
@@ -28,15 +31,48 @@ float WeightTriangular::maxTrustedValue() const {
     return 1.f - s_triangularThreshold;
 }
 
+namespace {
+static const float s_gaussianThreshold = 0.0354f;
+static const float s_mu = 0.5f;
+}
 
 float WeightGaussian::getWeight(float input) const
 {
-    return 0.0;
+    // ignore very low weights
+    if ( (input < s_gaussianThreshold) || (input > (1.f - s_gaussianThreshold)) ) {
+        return 0.f;
+    }
+
+    return (exp( -32*(input - s_mu)*(input - s_mu) ));
+}
+
+float WeightGaussian::minTrustedValue() const {
+    return s_gaussianThreshold;
+}
+
+float WeightGaussian::maxTrustedValue() const {
+    return 1.f - s_gaussianThreshold;
+}
+
+namespace {
+static const float s_plateauThreshold = 0.005f;
 }
 
 float WeightPlateau::getWeight(float input) const
 {
-    return 0.0;
+    if ( input < s_plateauThreshold || (input > (1.f - s_plateauThreshold)) ) {
+        return 0.f;
+    }
+
+    return 1.0f - pow( (2.0f*input - 1.0f), 12.0f);
+}
+
+float WeightPlateau::minTrustedValue() const {
+    return s_plateauThreshold;
+}
+
+float WeightPlateau::maxTrustedValue() const {
+    return 1.f - s_plateauThreshold;
 }
 
 }   // fusion
@@ -59,20 +95,20 @@ void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma )
 {
     float mid = Mmin + (Mmax-Mmin)/2.0f - 0.5f;
     float mid2 = (mid-Mmin) * (mid-Mmin);
-    for( int m=0 ; m<M ; m++ )
-        if( m<Mmin || m>Mmax )
+    for( int m=0 ; m<M ; m++ ) {
+        if ( m<Mmin || m>Mmax ) {
             w[m] = 0.0f;
-        else
-        {
+        } else {
             // gkrawczyk: that's not really a gaussian, but equation is
             // taken from Robertson02 paper.
             float weight = exp( -sigma * (m-mid) * (m-mid) / mid2 );
 
-            if( weight<MIN_WEIGHT )           // ignore very low weights
+            if( weight < MIN_WEIGHT )           // ignore very low weights
                 w[m] = 0.0f;
             else
                 w[m] = weight;
         }
+    }
 }
 
 void weights_triangle( float* w, int M /*, int Mmin, int Mmax*/ )

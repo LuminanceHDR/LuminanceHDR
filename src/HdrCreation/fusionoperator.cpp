@@ -30,7 +30,7 @@ namespace fusion {
 
 IFusionOperator::IFusionOperator()
     : m_response(new ResponseLinear)
-    , m_weight(new WeightTriangular)
+    , m_weight(new WeightPlateau) // Triangular) // Gaussian) // Triangular)
 {}
 
 // questa e' da sistemare...

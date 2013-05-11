@@ -52,8 +52,6 @@ inline float min3( float a, float b, float c ) {
 }
 */
 
-const float opt_gauss = 8.0f;
-
 pfs::Frame* createHDR(const float* arrayofexptime,
                       const config_triple* chosen_config,
                       bool antighosting, int /*iterations*/,
@@ -173,7 +171,7 @@ pfs::Frame* createHDR(const float* arrayofexptime,
         weights_triangle(w.data(), M/*, minResponse, maxResponse*/);
         break;
     case GAUSSIAN:
-        weightsGauss(w.data(), M, minResponse, maxResponse, opt_gauss);
+        weightsGauss(w.data(), M, minResponse, maxResponse);
         break;
     case PLATEAU:
         exposure_weights_icip06(w.data(), M, minResponse, maxResponse);

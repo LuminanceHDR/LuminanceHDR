@@ -66,6 +66,9 @@ public:
     WeightFunction getType() const {
         return WEIGHT_GAUSSIAN;
     }
+
+    float minTrustedValue() const;
+    float maxTrustedValue() const;
 };
 
 class WeightPlateau : public IWeightFunction {
@@ -74,6 +77,9 @@ public:
     WeightFunction getType() const {
         return WEIGHT_PLATEAU;
     }
+
+    float minTrustedValue() const;
+    float maxTrustedValue() const;
 };
 
 }   // fusion
@@ -105,7 +111,7 @@ void weights_triangle( float* w, int M/*, int Mmin, int Mmax */);
  * @param Mmax maximum registered camera output level
  * @param sigma sigma value for gaussian
  */
-void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma );
+void weightsGauss(float* w, int M, int Mmin, int Mmax, float sigma  = 8.0f);
 
 
 
