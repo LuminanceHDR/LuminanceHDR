@@ -29,7 +29,7 @@ namespace libhdr {
 namespace fusion {
 
 IFusionOperator::IFusionOperator()
-    : m_response(new ResponseLinear)
+    : m_response(new ResponseSRGB)
     , m_weight(new WeightGaussian)
 {}
 
