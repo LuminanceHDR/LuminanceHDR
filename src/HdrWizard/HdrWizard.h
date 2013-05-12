@@ -89,7 +89,8 @@ private:
 	QString getQStringFromConfig( int type );
 
     void updateTableGrid();
-
+    void enableNextOrWarning(const QStringList& filesWithoutExif);
+    void updateLabelMaybeNext(size_t numFilesWithoutExif);
 signals:
     void setValue(int value);
 
@@ -103,6 +104,8 @@ private slots:
 
     void inputHdrFileSelected(int currentRow);
 
+private slots:
+
     void updateEVSlider(int newValue);
     void updateEVSpinBox(double newValue);
 
@@ -111,6 +114,8 @@ private slots:
     // void errorWhileLoading(const QString& errormessage);
 
     // void updateGraphicalEVvalue(float expotime, int index_in_table);
+
+
 
     void finishedAligning(int);
     void alignSelectionClicked();

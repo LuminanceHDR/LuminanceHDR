@@ -100,8 +100,6 @@ protected:
     boost::scoped_ptr<IWeightFunction> m_weight;
 };
 
-
-
 }   // fusion
 }   // libhdr
 

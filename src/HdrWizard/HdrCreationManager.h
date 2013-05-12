@@ -94,7 +94,6 @@ public:
     HdrCreationManager(bool b = false);
 	~HdrCreationManager();
 
-
     // ----- NEW FUNCTIONS ------
     HdrCreationItem& getFile(size_t idx)                { return m_data[idx]; }
     const HdrCreationItem& getFile(size_t idx) const    { return m_data[idx]; }
@@ -104,9 +103,12 @@ public:
     void clearFiles()                   { m_data.clear(); }
     size_t availableInputFiles() const  { return m_data.size(); }
 
+    QStringList getFilesWithoutExif() const;
+    size_t numFilesWithoutExif() const;
+
     // iterators
-    typedef HdrCreationItemContainer::iterator  iterator;
-    typedef HdrCreationItemContainer::const_iterator const_iterator;
+    typedef HdrCreationItemContainer::iterator          iterator;
+    typedef HdrCreationItemContainer::const_iterator    const_iterator;
 
     iterator begin() { return m_data.begin(); }
     iterator end() { return m_data.end(); }

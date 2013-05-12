@@ -30,7 +30,7 @@ namespace fusion {
 
 IFusionOperator::IFusionOperator()
     : m_response(new ResponseLinear)
-    , m_weight(new WeightPlateau) // Triangular) // Gaussian) // Triangular)
+    , m_weight(new WeightGaussian)
 {}
 
 // questa e' da sistemare...
@@ -51,6 +51,25 @@ FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
         return boost::make_shared<DebevecOperator>();
         break;
     }
+}
+
+bool IFusionOperator::setResponseFunction(ResponseFunction responseFunction)
+{
+    switch (responseFunction) {
+    case RESPONSE_GAMMA:
+        m_response.reset(new ResponseGamma);
+        break;
+    case RESPONSE_LINEAR:
+        m_response.reset(new ResponseLinear);
+        break;
+    case RESPONSE_LOG10:
+        m_response.reset(new ResponseLog10);
+        break;
+    case RESPONSE_SRGB:
+        m_response.reset(new ResponseSRGB);
+        break;
+    }
+    return true;
 }
 
 }   // fusion

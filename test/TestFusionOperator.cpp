@@ -25,6 +25,7 @@ int main(int argc, char** argv)
     // program options
     po::options_description desc("Allowed options: ");
     desc.add_options()
+            ("response-type,r", po::value<std::string>(), "response type")
             ("output-file,o", po::value<std::string>(&outputFile)->required(), "output file")
             ("input-files,i", po::value< vector<string> >(&inputFiles)->required(), "input files (JPEG, TIFF or RAW)")
             ;

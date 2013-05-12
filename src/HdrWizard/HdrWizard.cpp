@@ -258,6 +258,7 @@ void HdrWizard::updateTableGrid()
 
     // insert the row at the bottom of the table widget
     int counter =  0;
+    QStringList filesWithoutExif;
     BOOST_FOREACH(const HdrCreationItem& item, *m_hdrCreationManager)
     {
         qDebug() << QString("Fill row %1: %2 %3EV")
@@ -280,7 +281,11 @@ void HdrWizard::updateTableGrid()
         }
         else
         {
-            //if image doesn't contain (the required) exif tags
+            // if image doesn't contain (the required) exif tags
+            // I keep the name of all the files without exif data...
+            filesWithoutExif.push_back(item.filename());
+
+
             QTableWidgetItem *tableitem = new QTableWidgetItem(QString(tr("Unknown")));
             tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             tableitem->setBackground(QBrush(Qt::yellow));
@@ -305,6 +310,9 @@ void HdrWizard::updateTableGrid()
         m_ui->clearListButton->setEnabled(false);
         m_ui->removeImageButton->setEnabled(false);
     }
+
+    // If I have at least one file with empty EXIF, I raise an error...
+    enableNextOrWarning(filesWithoutExif);
 }
 
 void HdrWizard::removeImageButtonClicked()
@@ -352,6 +360,7 @@ void HdrWizard::updateEVSlider(int newValue)
     }
 
     m_hdrCreationManager->getFile(currentRow).setEV(newEV);
+    updateLabelMaybeNext( m_hdrCreationManager->numFilesWithoutExif() );
 }
 
 void HdrWizard::updateEVSpinBox(double newEV)
@@ -376,6 +385,7 @@ void HdrWizard::updateEVSpinBox(double newEV)
     }
 
     m_hdrCreationManager->getFile(currentRow).setEV(newEV);
+    updateLabelMaybeNext( m_hdrCreationManager->numFilesWithoutExif() );
 }
 
 void HdrWizard::inputHdrFileSelected(int currentRow)
@@ -477,8 +487,8 @@ void HdrWizard::loadInputFiles(const QStringList& files)
         // update the luminance_options
         luminance_options.setDefaultPathLdrIn(QFileInfo(files.at(0)).path());
 
-        // loadImagesButton->setEnabled(false);
-        // m_ui->confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
+        m_ui->loadImagesButton->setEnabled(false);
+        m_ui->confirmloadlabel->setText("<center><h3><b>" + tr("Loading...") + "</b></h3></center>");
 
 //        QProgressDialog progressDialog(this);
 //        progressDialog.setWindowModality(Qt::WindowModal);
@@ -534,8 +544,10 @@ void HdrWizard::loadInputFilesDone()
     m_ioFutureWatcher.waitForFinished();    // should breeze over...
     qDebug() << "HdrWizard::loadInputFilesDone()";
 
-    updateTableGrid();
+    m_ui->loadImagesButton->setEnabled(true);
+
     QApplication::restoreOverrideCursor();
+    updateTableGrid();
 }
 
 /*
@@ -555,15 +567,9 @@ void HdrWizard::fileLoaded(int index, const QString& fname, float expotime)
 }
 */
 
-/*
-void HdrWizard::finishedLoadingInputFiles(const QStringList& filesLackingExif)
+void HdrWizard::enableNextOrWarning(const QStringList& filesWithoutExif)
 {
-    if (filesLackingExif.size() == 0)
-    {
-        m_ui->NextFinishButton->setEnabled(true);
-        m_ui->confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b></h3></font></center>"));
-    }
-    else
+    if ( !filesWithoutExif.empty() )
     {
         QString warning_message = (QString(tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
         Luminance HDR was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>\
@@ -573,10 +579,30 @@ void HdrWizard::finishedLoadingInputFiles(const QStringList& filesLackingExif)
         <ul><li>Shutter Speed (seconds)</li>\
         <li>Aperture (f-number)</li></ul>\
         <hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>\
-        You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item."))).arg(filesLackingExif.join(""));
+        You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item."))).arg(filesWithoutExif.join(""));
         QMessageBox::warning(this,tr("EXIF data not found"),warning_message);
-        m_ui->confirmloadlabel->setText(QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(filesLackingExif.size()));
     }
+    updateLabelMaybeNext(filesWithoutExif.size());
+}
+
+void HdrWizard::updateLabelMaybeNext(size_t numFilesWithoutExif)
+{
+    if ( numFilesWithoutExif == 0 ) {
+        m_ui->NextFinishButton->setEnabled(true);
+        m_ui->confirmloadlabel->setText(
+                    tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b>" \
+                       "</h3></font></center>"));
+    } else {
+        m_ui->confirmloadlabel->setText(
+                    tr("<center><h3><b>To proceed you need to manually " \
+                       "set the exposure values.<br><font color=\"#FF0000\">%1</font> " \
+                       "values still required.</b></h3></center>")
+                    .arg(numFilesWithoutExif));
+    }
+
+}
+
+/*
     //do not load any more images
     //loadImagesButton->setEnabled(false);
     //graphical fix
@@ -1126,9 +1152,6 @@ void HdrWizard::on_pushButtonSaveSettings_clicked()
 
 void HdrWizard::updateProgressBar(int value)
 {
-    if (value == 0) {
-        m_ui->progressBar->setMaximum(100);
-    }
-
+    if (value == 0) m_ui->progressBar->setMaximum(100);
     m_ui->progressBar->setValue(value);
 }

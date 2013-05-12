@@ -116,6 +116,10 @@ struct LoadFile {
                             QFile::encodeName(qfi.filePath()).constData() )
                         );
 
+            qDebug() << QString("HdrCreationItem: Average Luminance for %1 is %2")
+                        .arg(currentItem.filename())
+                        .arg(currentItem.getAverageLuminance());
+
             // build QImage
             QImage tempImage(currentItem.frame()->getWidth(),
                              currentItem.frame()->getHeight(),
@@ -150,7 +154,11 @@ bool checkFileName(const HdrCreationItem& item, const QString& str) {
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
     std::vector<HdrCreationItem> tempItems;
+#ifndef LHDR_CXX11_ENABLED
+    for (const QString& i, filenames) {
+#else
     BOOST_FOREACH(const QString& i, filenames) {
+#endif
         qDebug() << QString("Checking %1").arg(i);
         HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
                                                         boost::bind(&checkFileName, _1, i));
@@ -186,6 +194,27 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
     }
 
     qDebug() << QString("Read %1 out of %2").arg(tempItems.size()).arg(filenames.size());
+}
+
+QStringList HdrCreationManager::getFilesWithoutExif() const
+{
+    QStringList invalidFiles;
+    foreach (const HdrCreationItem& fileData, m_data) {
+        if ( !fileData.hasAverageLuminance() ) {
+            invalidFiles.push_back( fileData.filename() );
+        }
+    }
+    return invalidFiles;
+}
+
+size_t HdrCreationManager::numFilesWithoutExif() const {
+    size_t counter = 0;
+    foreach (const HdrCreationItem& fileData, m_data) {
+        if ( !fileData.hasAverageLuminance() ) {
+            ++counter;
+        }
+    }
+    return counter;
 }
 
 void HdrCreationManager::removeFile(int idx)

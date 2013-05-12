@@ -1,12 +1,9 @@
-/**
- * @brief Standard response functions
- *
- * 
+/*
  * This file is a part of Luminance HDR package
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -20,16 +17,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
- * @author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- *
- * $Id: responses.cpp,v 1.6 2006/09/13 14:27:06 gkrawczyk Exp $
+ * ----------------------------------------------------------------------
  */
+
+//! \brief Standard response functions
+//! \author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//!  Rewrite for LibHDR
 
 #ifndef LIBHDR_FUSION_RESPONSES_H
 #define LIBHDR_FUSION_RESPONSES_H
+
+#include <string>
 
 namespace libhdr {
 namespace fusion {
@@ -37,11 +37,14 @@ namespace fusion {
 enum ResponseFunction {
     RESPONSE_GAMMA,
     RESPONSE_LINEAR,
-    RESPONSE_LOG10
+    RESPONSE_LOG10,
+    RESPONSE_SRGB
 };
 
 class IResponseFunction {
 public:
+    static ResponseFunction fromString(const std::string& type);
+
     virtual ~IResponseFunction() {}
 
     //! \brief return the response of the value \c input. \c input is in the
@@ -65,7 +68,9 @@ public:
 class ResponseLinear : public IResponseFunction
 {
 public:
-    float getResponse(float input) const;
+    float getResponse(float input) const {
+        return input;
+    }
 
     ResponseFunction getType() const {
         return RESPONSE_LINEAR;
@@ -79,6 +84,16 @@ public:
 
     ResponseFunction getType() const {
         return RESPONSE_LOG10;
+    }
+};
+
+class ResponseSRGB : public IResponseFunction
+{
+public:
+    float getResponse(float input) const;
+
+    ResponseFunction getType() const {
+        return RESPONSE_SRGB;
     }
 };
 
