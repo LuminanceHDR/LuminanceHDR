@@ -261,7 +261,7 @@ void HdrWizard::updateTableGrid()
     QStringList filesWithoutExif;
     BOOST_FOREACH(const HdrCreationItem& item, *m_hdrCreationManager)
     {
-        qDebug() << QString("Fill row %1: %2 %3EV")
+        qDebug() << QString("Fill row %1: %2 %3 EV")
                     .arg(counter)
                     .arg(item.filename())
                     .arg(item.getEV());
@@ -306,13 +306,15 @@ void HdrWizard::updateTableGrid()
 
     if ( counter ) {
         m_ui->clearListButton->setEnabled(true);
+
+        enableNextOrWarning(filesWithoutExif);
     } else {
         m_ui->clearListButton->setEnabled(false);
         m_ui->removeImageButton->setEnabled(false);
-    }
+        m_ui->NextFinishButton->setEnabled(false);
 
-    // If I have at least one file with empty EXIF, I raise an error...
-    enableNextOrWarning(filesWithoutExif);
+        m_ui->confirmloadlabel->setText(QString());
+    }
 }
 
 void HdrWizard::removeImageButtonClicked()
@@ -356,6 +358,8 @@ void HdrWizard::updateEVSlider(int newValue)
         QTextStream ts(&EVdisplay);
         ts.setRealNumberPrecision(2);
         ts << right << forcesign << fixed << newEV << " EV";
+        tableitem->setBackground(QBrush(Qt::white));
+        tableitem->setForeground(QBrush(Qt::black));
         tableitem->setText(EVdisplay);
     }
 
@@ -381,6 +385,8 @@ void HdrWizard::updateEVSpinBox(double newEV)
         QTextStream ts(&EVdisplay);
         ts.setRealNumberPrecision(2);
         ts << right << forcesign << fixed << newEV << " EV";
+        tableitem->setBackground(QBrush(Qt::white));
+        tableitem->setForeground(QBrush(Qt::black));
         tableitem->setText(EVdisplay);
     }
 
@@ -567,20 +573,40 @@ void HdrWizard::fileLoaded(int index, const QString& fname, float expotime)
 }
 */
 
+
+
+
+// this function should be called if we have at least a file currently in
+// memory, otherwise it will give a misleading information
 void HdrWizard::enableNextOrWarning(const QStringList& filesWithoutExif)
 {
+    // If I have at least one file with empty EXIF, I raise an error...
     if ( !filesWithoutExif.empty() )
     {
-        QString warning_message = (QString(tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
-        Luminance HDR was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>\
-        %1</ul>\
-        <hr>You can still proceed creating an Hdr. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values.\
-        <hr>If you want Luminance HDR to do this <b>automatically</b>, you have to load images that have at least\nthe following exif data: \
-        <ul><li>Shutter Speed (seconds)</li>\
-        <li>Aperture (f-number)</li></ul>\
-        <hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>\
-        You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item."))).arg(filesWithoutExif.join(""));
-        QMessageBox::warning(this,tr("EXIF data not found"),warning_message);
+        QString warningMessage =
+                tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font> "\
+                   "Luminance HDR was not able to find the relevant <b>EXIF</b> " \
+                   "tags for the following images:" \
+                   "<ul>");
+
+        foreach(const QString& filename, filesWithoutExif) {
+            QFileInfo qfi(filename);
+            warningMessage += "<li>" + qfi.baseName() + "</li>";
+        }
+
+        warningMessage +=
+                tr("</ul>"\
+                   "<hr>You can still proceed creating an Hdr. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values." \
+                   "<hr>If you want Luminance HDR to do this <b>automatically</b>, you have to load images that have at least the following exif data: " \
+                   "<ul><li>Exposure Bias</li></ul>"
+                   "<hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>" \
+                   "You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the " \
+                   "<b>Tools->Copy Exif Data...</b> menu item.");
+
+        // "<ul><li>Shutter Speed (seconds)</li>"
+        // "<li>Aperture (f-number)</li></ul>"
+
+        QMessageBox::warning(this, tr("EXIF data not found"), warningMessage);
     }
     updateLabelMaybeNext(filesWithoutExif.size());
 }
@@ -593,13 +619,13 @@ void HdrWizard::updateLabelMaybeNext(size_t numFilesWithoutExif)
                     tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b>" \
                        "</h3></font></center>"));
     } else {
+        m_ui->NextFinishButton->setEnabled(false);
         m_ui->confirmloadlabel->setText(
                     tr("<center><h3><b>To proceed you need to manually " \
                        "set the exposure values.<br><font color=\"#FF0000\">%1</font> " \
                        "values still required.</b></h3></center>")
                     .arg(numFilesWithoutExif));
     }
-
 }
 
 /*
