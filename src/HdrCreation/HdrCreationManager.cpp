@@ -461,6 +461,8 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
 {
     if (m_loadingError) {
         emit processed();
+        m_loadingError = false;
+        inputType = UNKNOWN_INPUT_TYPE;
         return;
     }
     //newFrame is in CS_RGB but channel names remained X Y Z
@@ -471,6 +473,7 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
     {
         m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 is an 8 bit format (LDR) while the previous ones are not.").arg(newfname));
+        inputType = UNKNOWN_INPUT_TYPE;
         return;
     }
     inputType = MDR_INPUT_TYPE;
@@ -478,6 +481,7 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
     {
         m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
+        inputType = UNKNOWN_INPUT_TYPE;
         return;
     }
     if (!fromCommandLine) {
@@ -504,12 +508,15 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
     if (m_loadingError)
     {
         emit processed();
+        m_loadingError = false;
+        inputType = UNKNOWN_INPUT_TYPE;
         return;
     }
     if (inputType==MDR_INPUT_TYPE)
     {
         m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 is an 16 bit format while the previous ones are not.").arg(newfname));
+        inputType = UNKNOWN_INPUT_TYPE;
         return;
     }
     inputType=LDR_INPUT_TYPE;
@@ -517,6 +524,7 @@ void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, c
     {
         m_loadingError = true;
         emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
+        inputType = UNKNOWN_INPUT_TYPE;
         return;
     }
 
@@ -1034,6 +1042,8 @@ void HdrCreationManager::remove(int index)
     }
     fileList.removeAt(index);
     filesToRemove.remove(index);
+    if (expotimes[index] == -1)
+        filesLackingExif.removeAt(index);
     expotimes.remove(index);
     startedProcessing.removeAt(index);
 }

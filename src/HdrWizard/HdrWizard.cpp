@@ -277,6 +277,9 @@ void HdrWizard::removeImageButtonClicked()
         hdrCreationManager->remove(index);
         m_Ui->tableWidget->removeRow(index);
         inputHdrFileSelected(m_Ui->tableWidget->currentRow());
+        int size = hdrCreationManager->getFilesLackingExif().size();
+        if (size != 0)
+            m_Ui->confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(size));
     }
     connect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 }
