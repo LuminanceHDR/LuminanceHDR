@@ -227,12 +227,6 @@ p, li { white-space: pre-wrap; }
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
                    </spacer>
                   </item>
                  </layout>
@@ -244,6 +238,18 @@ p, li { white-space: pre-wrap; }
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>300</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>300</width>
+                    <height>16777215</height>
+                   </size>
                   </property>
                   <property name="editTriggers">
                    <set>QAbstractItemView::NoEditTriggers</set>
@@ -521,13 +527,6 @@ p, li { white-space: pre-wrap; }
                  </widget>
                 </item>
                 <item>
-                 <widget class="Line" name="line_4">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QGroupBox" name="alignGroupBox">
                   <property name="enabled">
                    <bool>false</bool>
@@ -598,20 +597,6 @@ p, li { white-space: pre-wrap; }
                </layout>
               </item>
              </layout>
-            </item>
-            <item row="0" column="1">
-             <widget class="Line" name="line_5">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" colspan="3">
-             <widget class="Line" name="line">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
             </item>
             <item row="2" column="0" colspan="3">
              <widget class="QLabel" name="confirmloadlabel">

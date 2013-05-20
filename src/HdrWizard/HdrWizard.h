@@ -91,6 +91,7 @@ private:
     void updateTableGrid();
     void enableNextOrWarning(const QStringList& filesWithoutExif);
     void updateLabelMaybeNext(size_t numFilesWithoutExif);
+
 signals:
     void setValue(int value);
 
