@@ -88,38 +88,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QToolButton" name="toolButtonInterface">
-         <property name="text">
-          <string>Interface</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../icons.qrc">
-           <normaloff>:/new/prefix1/images/preferences-desktop-theme.png</normaloff>:/new/prefix1/images/preferences-desktop-theme.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextUnderIcon</enum>
-         </property>
-         <property name="autoRaise">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="3">
         <widget class="QToolButton" name="toolButtonTM">
          <property name="text">
@@ -207,6 +175,38 @@
          </property>
         </spacer>
        </item>
+       <item row="0" column="1">
+        <widget class="QToolButton" name="toolButtonInterface">
+         <property name="text">
+          <string>Interface</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../icons.qrc">
+           <normaloff>:/new/prefix1/images/preferences-desktop-theme.png</normaloff>:/new/prefix1/images/preferences-desktop-theme.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="5">
         <widget class="QToolButton" name="toolButtonCMS">
          <property name="text">
@@ -239,6 +239,22 @@
       </layout>
      </item>
      <item>
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QStackedWidget" name="stackedPagesWidget">
        <property name="maximumSize">
         <size>
@@ -256,6 +272,9 @@
          </property>
          <item row="0" column="0">
           <layout class="QFormLayout" name="formLayout_7">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::ExpandingFieldsGrow</enum>
+           </property>
            <item row="0" column="0">
             <widget class="QLabel" name="label_9">
              <property name="text">
@@ -463,13 +482,13 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
-            <widget class="QCheckBox" name="chkPortableMode">
-             <property name="toolTip">
-              <string>Saves the settings along the program files, to be portable</string>
-             </property>
+           <item row="2" column="1">
+            <widget class="QCheckBox" name="checkBoxWizardShowFirstPage">
              <property name="text">
-              <string>Portable mode</string>
+              <string>Always show Wizard first page</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -483,13 +502,13 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QCheckBox" name="checkBoxWizardShowFirstPage">
-             <property name="text">
-              <string>Always show Wizard first page</string>
+           <item row="4" column="1">
+            <widget class="QCheckBox" name="chkPortableMode">
+             <property name="toolTip">
+              <string>Saves the settings along the program files, to be portable</string>
              </property>
-             <property name="checked">
-              <bool>true</bool>
+             <property name="text">
+              <string>Portable mode</string>
              </property>
             </widget>
            </item>

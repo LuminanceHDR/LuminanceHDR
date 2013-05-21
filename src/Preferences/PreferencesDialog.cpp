@@ -246,6 +246,7 @@ void PreferencesDialog::on_okButton_clicked()
 
     luminance_options.setPreviewWidth( m_Ui->previewsWidthSpinBox->value() );
     luminance_options.setShowFirstPageWizard( m_Ui->checkBoxWizardShowFirstPage->isChecked() );
+    luminance_options.setPreviewPanelActive( m_Ui->checkBoxTMOWindowsPreviewPanel->isChecked() );
 
     if (m_Ui->chkPortableMode->isChecked() != LuminanceOptions::isCurrentPortableMode)
     {
