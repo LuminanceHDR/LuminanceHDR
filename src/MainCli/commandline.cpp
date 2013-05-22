@@ -610,7 +610,7 @@ void  CommandLineInterfaceManager::startTonemap()
         // Create an ad-hoc IOWorker to save the file
         if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename,
                                         inputfname,
-                                        hdrCreationManager->getExpotimes(),
+                                        hdrCreationManager.data() ? hdrCreationManager->getExpotimes(): QVector<float>(),
                                         tmopts.data(),
                                         pfs::Params("quality", (size_t)quality) ) )
         {
