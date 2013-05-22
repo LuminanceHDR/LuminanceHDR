@@ -627,37 +627,34 @@ void calculateAndAddDivergence(const PyramidS& G, float* divG)
     const int ROWS = G.getRows();
     const int COLS = G.getCols();
 
-    float divGx, divGy;
-#pragma omp parallel private(divGx, divGy)
-    {
-        // kx = 0 AND ky = 0;
-        divG[0] += G(0).gX() + G(0).gY();                       // OUT
+    // kx = 0 AND ky = 0;
+    divG[0] += G[0][0].gX() + G[0][0].gY();                       // OUT
 
-        // ky = 0
-#pragma omp for nowait
+    float divGx, divGy;
+    // ky = 0
+#pragma omp parallel for private(divGx, divGy)
+    for (int kx = 1; kx < COLS; kx++)
+    {
+        divGx = G[0][kx].gX() - G[0][kx - 1].gX();
+        divGy = G[0][kx].gY();
+        divG[kx] += divGx + divGy;                    // OUT
+    }
+#pragma omp parallel for private(divGx, divGy)
+    for (int ky = 1; ky < ROWS; ky++)
+    {
+        // kx = 0
+        divGx = G[ky][0].gX();
+        divGy = G[ky][0].gY() - G[ky - 1][0].gY();
+        divG[ky*COLS] += divGx + divGy;               // OUT
+
+        // kx > 0
         for (int kx = 1; kx < COLS; kx++)
         {
-            divGx = G(kx).gX() - G(kx - 1).gX();
-            divGy = G(kx).gY();
-            divG[kx] += divGx + divGy;                    // OUT
+            divGx = G[ky][kx].gX() - G[ky][kx - 1].gX();
+            divGy = G[ky][kx].gY() - G[ky - 1][kx].gY();
+            divG[kx + ky*COLS] += divGx + divGy;        // OUT
         }
-#pragma omp for nowait
-        for (int ky = 1; ky < ROWS; ky++)
-        {
-            // kx = 0
-            divGx = G(ky*COLS).gX();
-            divGy = G(ky*COLS).gY() - G(ky*COLS - COLS).gY();
-            divG[ky*COLS] += divGx + divGy;               // OUT
-
-            // kx > 0
-            for (int kx = 1; kx < COLS; kx++)
-            {
-                divGx = G(kx + ky*COLS).gX() - G(kx + ky*COLS-1).gX();
-                divGy = G(kx + ky*COLS).gY() - G(kx + ky*COLS - COLS).gY();
-                divG[kx + ky*COLS] += divGx + divGy;        // OUT
-            }
-        }
-    }   // end pragma parallel
+    }
 }
 
 namespace
