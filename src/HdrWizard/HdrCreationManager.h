@@ -43,14 +43,7 @@
 #include "HdrCreation/fusionoperator.h"
 
 // Some other file expect this to be available
-const config_triple predef_confs[6]= {
-{TRIANGULAR, LINEAR,DEBEVEC,"",""},
-{TRIANGULAR, GAMMA, DEBEVEC,"",""},
-{PLATEAU, LINEAR,DEBEVEC,"",""},
-{PLATEAU, GAMMA,DEBEVEC,"",""},
-{GAUSSIAN, LINEAR,DEBEVEC,"",""},
-{GAUSSIAN, GAMMA,DEBEVEC,"",""},
-};
+extern const config_triple predef_confs[6];
 
 // defines an element that contains all the informations for this particular
 // image to be used inside the HdrWizard
@@ -90,8 +83,15 @@ private:
 
     HdrCreationItemContainer m_data;
 
+    libhdr::fusion::FusionOperator m_fusionOperator;
+    libhdr::fusion::WeightFunction m_weightFunction;
+    libhdr::fusion::ResponseFunction m_responseFunction;
+
+    QString m_inputResponseCurveFile;
+    QString m_outputResponseCurveFile;
+
 public:
-    HdrCreationManager(bool b = false);
+    HdrCreationManager(bool fromCommandLine = false);
 	~HdrCreationManager();
 
     // ----- NEW FUNCTIONS ------
@@ -110,12 +110,21 @@ public:
     typedef HdrCreationItemContainer::iterator          iterator;
     typedef HdrCreationItemContainer::const_iterator    const_iterator;
 
-    iterator begin() { return m_data.begin(); }
-    iterator end() { return m_data.end(); }
-    const_iterator begin() const { return m_data.begin(); }
-    const_iterator end() const { return m_data.end(); }
+    iterator begin()                { return m_data.begin(); }
+    iterator end()                  { return m_data.end(); }
+    const_iterator begin() const    { return m_data.begin(); }
+    const_iterator end() const      { return m_data.end(); }
 
-   // ----- LEGACY FUNCTIONS ----
+    void setFusionOperator(libhdr::fusion::FusionOperator fo)       { m_fusionOperator = fo; }
+    void setWeightFunction(libhdr::fusion::WeightFunction wf)       { m_weightFunction = wf; }
+    void setResponseFunction(libhdr::fusion::ResponseFunction rf)   { m_responseFunction = rf; }
+
+    void setInputResponseFile(const QString& filename)              { m_inputResponseCurveFile = filename; }
+    void setOutputResponseFile(const QString& filename)             { m_outputResponseCurveFile = filename; }
+
+    const QString& outputResponseFile() const                       { return m_outputResponseCurveFile; }
+
+    // ----- LEGACY FUNCTIONS ----
 
     void setConfig(const config_triple& cfg);
 

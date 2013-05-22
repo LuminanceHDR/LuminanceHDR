@@ -72,6 +72,14 @@ static const int gridSize = 40;
 using namespace pfs;
 using namespace pfs::io;
 
+const config_triple predef_confs[6]= {
+    {TRIANGULAR, LINEAR,DEBEVEC, "", ""},
+    {TRIANGULAR, GAMMA, DEBEVEC, "", ""},
+    {PLATEAU, LINEAR, DEBEVEC, "", ""},
+    {PLATEAU, GAMMA, DEBEVEC, "", ""},
+    {GAUSSIAN, LINEAR, DEBEVEC, "", ""},
+    {GAUSSIAN, GAMMA, DEBEVEC, "", ""},
+};
 
 // --- NEW CODE ---
 HdrCreationItem::HdrCreationItem(const QString &filename)
@@ -783,19 +791,18 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
 
 } // anonymous namespace
 
-HdrCreationManager::HdrCreationManager(bool fromCommandLine) :
-    inputType( UNKNOWN_INPUT_TYPE ),
-    chosen_config( predef_confs[0] ),
-    m_loadingError(false),
-    m_runningThreads(0),
-    m_processedFiles(0),
-    ais( NULL ),
-    m_ais_crop_flag(false),
-    m_shift(0),
-    m_mdrWidth(0),
-    m_mdrHeight(0),
-    fromCommandLine( fromCommandLine )
-    
+HdrCreationManager::HdrCreationManager(bool fromCommandLine)
+    : inputType( UNKNOWN_INPUT_TYPE )
+    , chosen_config( predef_confs[0] )
+    , m_loadingError(false)
+    , m_runningThreads(0)
+    , m_processedFiles(0)
+    , ais( NULL )
+    , m_ais_crop_flag(false)
+    , m_shift(0)
+    , m_mdrWidth(0)
+    , m_mdrHeight(0)
+    , fromCommandLine( fromCommandLine )
 {}
 
 void HdrCreationManager::setConfig(const config_triple &c)

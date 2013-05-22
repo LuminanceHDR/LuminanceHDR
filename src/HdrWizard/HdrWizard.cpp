@@ -64,8 +64,8 @@ HdrWizard::HdrWizard(QWidget *p,
     : QDialog(p)
     , m_ui(new Ui::HdrWizard)
     , m_hdrCreationManager(new HdrCreationManager)
-    , loadcurvefilename()
-    , savecurvefilename()
+//    , loadcurvefilename()
+//    , savecurvefilename()
 //    , m_inputFilesName(inputFilesName)
 //    , m_inputExpoTimes(inputExpoTimes)
 {
@@ -206,8 +206,9 @@ void HdrWizard::setupConnections()
 /*
     connect(m_ui->ais_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
     connect(m_ui->mtb_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
-
+*/
     connect(m_ui->predefConfigsComboBox, SIGNAL(activated(int)), this, SLOT(predefConfigsComboBoxActivated(int)));
+/*
     connect(m_ui->antighostRespCurveCombobox, SIGNAL(activated(int)), this, SLOT(antighostRespCurveComboboxActivated(int)));
     connect(m_ui->customConfigCheckBox, SIGNAL(toggled(bool)), this, SLOT(customConfigCheckBoxToggled(bool)));
     connect(m_ui->triGaussPlateauComboBox, SIGNAL(activated(int)), this, SLOT(triGaussPlateauComboBoxActivated(int)));
@@ -818,7 +819,9 @@ void HdrWizard::predefRespCurveRadioButtonToggled(bool want_predef_resp_curve)
     }
 }
 
-void HdrWizard::loadRespCurveFromFileCheckboxToggled( bool checkedfile ) {
+void HdrWizard::loadRespCurveFromFileCheckboxToggled( bool checkedfile )
+{
+    /*
     //if checkbox is checked AND we have a valid filename
     if (checkedfile && loadcurvefilename != "") {
     //update chosen config
@@ -841,9 +844,12 @@ void HdrWizard::loadRespCurveFromFileCheckboxToggled( bool checkedfile ) {
     //and ENABLE nextbutton
     m_ui->NextFinishButton->setEnabled(true);
     }
+    */
 }
 
-void HdrWizard::saveRespCurveToFileCheckboxToggled( bool checkedfile ) {
+void HdrWizard::saveRespCurveToFileCheckboxToggled( bool checkedfile )
+{
+    /*
     //if checkbox is checked AND we have a valid filename
     if (checkedfile && savecurvefilename != "") {
         m_hdrCreationManager->chosen_config.SaveCurveToFilename = strdup(QFile::encodeName(savecurvefilename).constData());
@@ -860,6 +866,7 @@ void HdrWizard::saveRespCurveToFileCheckboxToggled( bool checkedfile ) {
         //and ENABLE nextbutton
         m_ui->NextFinishButton->setEnabled(true);
     }
+    */
 }
 
 void HdrWizard::NextFinishButtonClicked() {
@@ -962,7 +969,9 @@ void HdrWizard::antighostRespCurveComboboxActivated(int fromgui) {
     gammaLinLogComboBoxActivated(fromgui);
 }
 
-void HdrWizard::loadRespCurveFileButtonClicked() {
+void HdrWizard::loadRespCurveFileButtonClicked()
+{
+    /*
     loadcurvefilename = QFileDialog::getOpenFileName(
             this,
             tr("Load a camera response curve file"),
@@ -972,9 +981,12 @@ void HdrWizard::loadRespCurveFileButtonClicked() {
         m_ui->RespCurveFileLoadedLineEdit->setText(loadcurvefilename);
         loadRespCurveFromFileCheckboxToggled(m_ui->loadRespCurveFromFileCheckbox->isChecked());
     }
+    */
 }
 
-void HdrWizard::saveRespCurveFileButtonClicked() {
+void HdrWizard::saveRespCurveFileButtonClicked()
+{
+    /*
     savecurvefilename = QFileDialog::getSaveFileName(
             this,
             tr("Save a camera response curve file"),
@@ -984,18 +996,59 @@ void HdrWizard::saveRespCurveFileButtonClicked() {
         m_ui->CurveFileNameSaveLineEdit->setText(savecurvefilename);
         saveRespCurveToFileCheckboxToggled(m_ui->saveRespCurveToFileCheckbox->isChecked());
     }
+    */
 }
 
-void HdrWizard::predefConfigsComboBoxActivated( int index_from_gui ) {
-    if (index_from_gui <= 5) {
+void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui)
+{
+    if (index_from_gui <= 5)
+    {
         m_hdrCreationManager->chosen_config = predef_confs[index_from_gui];
     }
-    else {
+    else
+    {
         m_hdrCreationManager->chosen_config = m_customConfig[index_from_gui - 6];
     }
     m_ui->lineEdit_showWeight->setText(getQStringFromConfig(1));
     m_ui->lineEdit_show_resp->setText(getQStringFromConfig(2));
     m_ui->lineEdit_showmodel->setText(getQStringFromConfig(3));
+
+    // update HdrCreationManager (new code)
+    switch (m_hdrCreationManager->chosen_config.model) {
+    case ROBERTSON: {
+        m_hdrCreationManager->setFusionOperator(libhdr::fusion::ROBERTSON02_NEW);
+    } break;
+    case DEBEVEC:
+    default: {
+        m_hdrCreationManager->setFusionOperator(libhdr::fusion::DEBEVEC_NEW);
+    } break;
+    }
+
+    switch (m_hdrCreationManager->chosen_config.response_curve) {
+    case GAMMA: {
+        m_hdrCreationManager->setResponseFunction(libhdr::fusion::RESPONSE_GAMMA);
+    } break;
+    case LOG10: {
+        m_hdrCreationManager->setResponseFunction(libhdr::fusion::RESPONSE_LOG10);
+    } break;
+    case LINEAR:
+    default: {
+        m_hdrCreationManager->setResponseFunction(libhdr::fusion::RESPONSE_LINEAR);
+    } break;
+    }
+
+    switch (m_hdrCreationManager->chosen_config.weights) {
+    case PLATEAU: {
+        m_hdrCreationManager->setWeightFunction(libhdr::fusion::WEIGHT_PLATEAU);
+    } break;
+    case GAUSSIAN: {
+        m_hdrCreationManager->setWeightFunction(libhdr::fusion::WEIGHT_GAUSSIAN);
+    } break;
+    case TRIANGULAR:
+    default: {
+        m_hdrCreationManager->setWeightFunction(libhdr::fusion::WEIGHT_TRIANGULAR);
+    } break;
+    }
 }
 
 void HdrWizard::triGaussPlateauComboBoxActivated(int from_gui) {
@@ -1073,9 +1126,10 @@ QString HdrWizard::getQStringFromConfig( int type )
 // triggered by user interaction
 void HdrWizard::editingEVfinished()
 {
-    //transform from EV value to expotime value
+    // transform from EV value to expotime value
     m_hdrCreationManager->setEV(m_ui->ImageEVdsb->value(), m_ui->tableWidget->currentRow());
-    if (m_hdrCreationManager->getFilesLackingExif().size() == 0) {
+    if (m_hdrCreationManager->getFilesLackingExif().empty())
+    {
         m_ui->NextFinishButton->setEnabled(true);
         //give an offset to the EV values if they are outside of the -10..10 range.
         m_hdrCreationManager->checkEVvalues();
@@ -1169,6 +1223,7 @@ void HdrWizard::writeAisData(QByteArray data)
 
 void HdrWizard::on_pushButtonSaveSettings_clicked()
 {
+    /*
     QSqlQuery query;
     QString response_filename;
     int weight = m_ui->triGaussPlateauComboBox->currentIndex();
@@ -1196,6 +1251,7 @@ void HdrWizard::on_pushButtonSaveSettings_clicked()
     if (res == false)
         qDebug() << "Insert: " << query.lastError();
     m_ui->pushButtonSaveSettings->setEnabled(false);
+    */
 }
 
 void HdrWizard::updateProgressBar(int value)

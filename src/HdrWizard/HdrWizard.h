@@ -48,8 +48,8 @@ private:
 
     QFutureWatcher<void> m_ioFutureWatcher;
 
-    QString loadcurvefilename;
-    QString savecurvefilename;
+//    QString loadcurvefilename;
+//    QString savecurvefilename;
 
     //    QStringList m_inputFilesName;
     //    QVector<float> m_inputExpoTimes;
