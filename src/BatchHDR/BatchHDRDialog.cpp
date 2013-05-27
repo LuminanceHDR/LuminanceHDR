@@ -135,6 +135,7 @@ QDialog(p),
 BatchHDRDialog::~BatchHDRDialog()
 {
     qDebug() << "BatchHDRDialog::~BatchHDRDialog()";
+/*
     QStringList  fnames = m_hdrCreationManager->getFileList();
     int n = fnames.size();
 
@@ -150,6 +151,7 @@ BatchHDRDialog::~BatchHDRDialog()
     }
     // DAVIDE _ HDR WIZARD
     // m_hdrCreationManager->reset();
+*/
     delete m_hdrCreationManager;
     delete m_IO_Worker;
 }
@@ -300,6 +302,7 @@ void BatchHDRDialog::batch_hdr()
         // DAVIDE _ HDR CREATION
         // m_hdrCreationManager->setFileList(toProcess);
         // m_hdrCreationManager->loadInputFiles();
+        m_hdrCreationManager->loadFiles(toProcess);
     }   
     else
     {
@@ -320,6 +323,7 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 {
     if (!filesLackingExif.isEmpty())
     {
+/*
         qDebug() << "BatchHDRDialog::align Error: missing EXIF data";
         m_Ui->textEdit->append(tr("Error: missing EXIF data"));
         foreach (QString fname, filesLackingExif)
@@ -338,6 +342,7 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
         }
         // DAVIDE _ HDR WIZARD
         // m_hdrCreationManager->reset();
+*/
         batch_hdr();
         return;
     }
@@ -376,6 +381,7 @@ void BatchHDRDialog::create_hdr(int)
     m_IO_Worker->write_hdr_frame(resultHDR.get(), outName);
     resultHDR.reset();
     
+/*
     QStringList  fnames = m_hdrCreationManager->getFileList();
     int n = fnames.size();
 
@@ -389,6 +395,7 @@ void BatchHDRDialog::create_hdr(int)
     }
     // DAVIDE _ HDR WIZARD
     // m_hdrCreationManager->reset();
+*/
     int progressValue = m_Ui->progressBar->value() + 1;
     m_Ui->progressBar->setValue(progressValue);
     OsIntegration::getInstance().setProgress(progressValue, m_Ui->progressBar->maximum() - m_Ui->progressBar->minimum());
@@ -403,6 +410,7 @@ void BatchHDRDialog::error_while_loading(QString message)
     m_errors = true;
     m_loading_error = true;
     m_processed++;
+/*
     QStringList  fnames = m_hdrCreationManager->getFileList();
     int n = fnames.size();
 
@@ -414,6 +422,7 @@ void BatchHDRDialog::error_while_loading(QString message)
         thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
         QFile::remove(thumb_name);
     }
+*/
     try_to_continue();
 }
 

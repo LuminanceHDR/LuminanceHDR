@@ -227,6 +227,12 @@ p, li { white-space: pre-wrap; }
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
+                    </property>
                    </spacer>
                   </item>
                  </layout>
@@ -529,7 +535,7 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QGroupBox" name="alignGroupBox">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="title">
                    <string>Alignment</string>
@@ -546,7 +552,7 @@ p, li { white-space: pre-wrap; }
                      <item row="0" column="0">
                       <widget class="QCheckBox" name="alignCheckBox">
                        <property name="enabled">
-                        <bool>false</bool>
+                        <bool>true</bool>
                        </property>
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">

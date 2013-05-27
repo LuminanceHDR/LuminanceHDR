@@ -183,9 +183,10 @@ HdrWizard::~HdrWizard()
 
 void HdrWizard::setupConnections()
 {
-    connect(&m_ioFutureWatcher, SIGNAL(finished()), this, SLOT(loadInputFilesDone()));
+    //connect(&m_ioFutureWatcher, SIGNAL(finished()), this, SLOT(loadInputFilesDone()));
 
     // connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT());
+    connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(loadInputFilesDone()));
     connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()));
     connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(reset()));
     connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()));
@@ -220,17 +221,16 @@ void HdrWizard::setupConnections()
     connect(m_ui->saveRespCurveFileButton, SIGNAL(clicked()), this, SLOT(saveRespCurveFileButtonClicked()));
     connect(m_ui->modelComboBox, SIGNAL(activated(int)), this, SLOT(modelComboBoxActivated(int)));
     connect(m_ui->RespCurveFileLoadedLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(loadRespCurveFilename(const QString&)));
-
     connect(m_hdrCreationManager.data(), SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
     connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
+*/
     connect(m_hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)), this, SLOT(errorWhileLoading(QString)));
-    connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)), this, SLOT(updateGraphicalEVvalue(float,int)));
+    //connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)), this, SLOT(updateGraphicalEVvalue(float,int)));
     connect(m_hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(finishedAligning(int)));
     connect(m_hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
     connect(m_hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
 
     connect(this, SIGNAL(rejected()), m_hdrCreationManager.data(), SLOT(removeTempFiles()));
-*/
 }
 
 void HdrWizard::loadImagesButtonClicked()
@@ -557,6 +557,8 @@ void HdrWizard::loadInputFilesDone()
 
     QApplication::restoreOverrideCursor();
     updateTableGrid();
+    inputHdrFileSelected(0);
+    m_ui->tableWidget->selectRow(0);
 }
 
 /*
@@ -658,7 +660,7 @@ void HdrWizard::updateLabelMaybeNext(size_t numFilesWithoutExif)
 }
 */
 
-/*
+
 void HdrWizard::errorWhileLoading(const QString& error)
 {
     // disconnect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
@@ -669,6 +671,7 @@ void HdrWizard::errorWhileLoading(const QString& error)
     m_ui->progressBar->setValue(0);
     m_ui->progressBar->hide();
     m_ui->previewLabel->clear();
+    m_ui->loadImagesButton->setEnabled(true);
     m_ui->removeImageButton->setEnabled(false);
     m_ui->clearListButton->setEnabled(false);
     m_ui->NextFinishButton->setEnabled(false);
@@ -684,7 +687,7 @@ void HdrWizard::errorWhileLoading(const QString& error)
 
     // connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 }
-*/
+
 
 /*
 void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table)
@@ -936,6 +939,7 @@ void HdrWizard::currentPageChangedInto(int newindex)
         m_hdrCreationManager->removeTempFiles();
         m_ui->NextFinishButton->setText(tr("&Finish"));
         //when at least 2 LDR or MDR inputs perform Manual Alignment
+/*
         int numldrs;
         if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
             numldrs = m_hdrCreationManager->getLDRList().size();
@@ -957,6 +961,7 @@ void HdrWizard::currentPageChangedInto(int newindex)
             }
             delete editingtools;
         }
+*/
     }
     else if (newindex == 3) { //custom config
         predefConfigsComboBoxActivated(1);
@@ -1128,14 +1133,14 @@ void HdrWizard::editingEVfinished()
 {
     // transform from EV value to expotime value
     m_hdrCreationManager->setEV(m_ui->ImageEVdsb->value(), m_ui->tableWidget->currentRow());
-    if (m_hdrCreationManager->getFilesLackingExif().empty())
+    if (m_hdrCreationManager->getFilesWithoutExif().empty())
     {
         m_ui->NextFinishButton->setEnabled(true);
         //give an offset to the EV values if they are outside of the -10..10 range.
         m_hdrCreationManager->checkEVvalues();
         m_ui->confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.<br>Now click on Next button.</b></h3></font></center>"));
     } else {
-        m_ui->confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(m_hdrCreationManager->getFilesLackingExif().size()) );
+        m_ui->confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(m_hdrCreationManager->getFilesWithoutExif().size()) );
     }
 }
 

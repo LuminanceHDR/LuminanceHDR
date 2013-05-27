@@ -75,12 +75,12 @@ private:
     QImage          m_thumbnail;
 };
 
+typedef std::vector< HdrCreationItem > HdrCreationItemContainer;
+
 class HdrCreationManager : public QObject
 {
     Q_OBJECT
 private:
-    typedef std::vector< HdrCreationItem > HdrCreationItemContainer;
-
     HdrCreationItemContainer m_data;
 
     libhdr::fusion::FusionOperator m_fusionOperator;
@@ -149,15 +149,15 @@ public:
 	void align_with_ais();
 	void align_with_mtb();
 
-    const QList<QImage*>& getLDRList() const                { return ldrImagesList; }
-    const QList<QImage*>& getMDRList() const                { return mdrImagesList; }
+    //const QList<QImage*>& getLDRList() const                { return ldrImagesList; }
+    //const QList<QImage*>& getMDRList() const                { return mdrImagesList; }
     const QList<QImage*>& getAntiGhostingMasksList() const  { return antiGhostingMasksList; }
     const QVector<float>& getExpotimes() const              { return expotimes; }
-    const QStringList& getFileList() const                  { return fileList; }
-    bool  inputImageType() const                            { return inputType; }
-    const QStringList& getFilesLackingExif() const          { return filesLackingExif; }
-    bool  isValidEV(int i) const                            { return expotimes[i]!=-1; }
-    float getEV(int i) const                                { return log2f(expotimes[i]); }
+    //const QStringList& getFileList() const                  { return fileList; }
+    //bool  inputImageType() const                            { return inputType; }
+    //const QStringList& getFilesLackingExif() const          { return filesLackingExif; }
+    //bool  isValidEV(int i) const                            { return expotimes[i]!=-1; }
+    //float getEV(int i) const                                { return log2f(expotimes[i]); }
 
     // updates EV value in expotimes array and emits signal
 	void setEV(float newev, int image_idx);
@@ -198,6 +198,7 @@ signals:
     void progressCancel();
     void progressRangeChanged(int,int);
     void progressValueChanged(int);
+    void finishedLoadingFiles();
 
     // legacy code
     void finishedLoadingInputFiles(const QStringList& filesLackingExif);
@@ -217,6 +218,7 @@ signals:
 	void imagesSaved();
 
 private:
+    bool framesHaveSameSize();    
 	void doAutoAntiGhostingMDR(float);
 	void doAutoAntiGhostingLDR(float);
     // List of input files (absolute pathnames)
@@ -264,16 +266,16 @@ private:
 	bool fromCommandLine;
 
     // once a new LDR or MDR pops up, the slots call this function to perform some housekeeping
-    void newResult(int index, float expotime, const QString&);
+    //void newResult(int index, float expotime, const QString&);
 
-    bool ldrsHaveSameSize(int, int);
-    bool mdrsHaveSameSize(size_t, size_t);
+    //bool ldrsHaveSameSize(int, int);
+    //bool mdrsHaveSameSize(size_t, size_t);
 
 private slots:
 	void ais_finished(int,QProcess::ExitStatus);
 	void ais_failed_slot(QProcess::ProcessError);
-    void ldrReady(QImage*, int, float, const QString&, bool);
-    void mdrReady(pfs::Frame*, int, float, const QString&);
+    //void ldrReady(QImage*, int, float, const QString&, bool);
+    //void mdrReady(pfs::Frame*, int, float, const QString&);
     void loadFailed(const QString& fname, int index);
 	void readData();
 };

@@ -40,7 +40,7 @@ int main(int argc, char** argv)
         HdrCreationManager hdrCreationManager;
 
         QStringList inputFilesList;
-        for ( const string & file : inputFiles ) {
+        foreach ( const string & file, inputFiles ) {
             inputFilesList.push_back( QString::fromStdString(file) );
         }
         hdrCreationManager.loadFiles( inputFilesList );

@@ -48,7 +48,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     m_antiGhosting(false)
 {
     setupUi(this);
-
+/*
     if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
         m_originalImagesList=m_hcm->getLDRList();
         m_expotimes = m_hcm->getExpotimes();
@@ -58,6 +58,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     }
 
     m_fileList=m_hcm->getFileList();
+*/
     m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
 
     toolOptionsFrame->setVisible(false);
@@ -256,16 +257,17 @@ void EditingTools::cropStack() {
     //zoom the image to 1:1, so that the crop area is in a one-to-one relationship with the pixel coordinates.
     origSize();
 
+/*
     if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
         m_hcm->applyShiftsToImageStack(m_HV_offsets);
     else
         m_hcm->applyShiftsToMdrImageStack(m_HV_offsets);
-
+*/
     resetAll();
     QRect ca=m_selectionTool->getSelectionRect();
     if(ca.width()<=0 || ca.height()<=0)
         return;
-
+/*
     if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
         m_hcm->cropLDR(ca);
         m_originalImagesList=m_hcm->getLDRList();
@@ -274,7 +276,7 @@ void EditingTools::cropStack() {
         m_hcm->cropMDR(ca);
         m_originalImagesList=m_hcm->getMDRList();
     }
-    
+*/  
     m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
         
     m_selectionTool->removeSelection();
@@ -292,6 +294,7 @@ void EditingTools::cropStack() {
 void EditingTools::nextClicked() {
     Next_Finishbutton->setEnabled(false);
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+/*
     if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) { 
         if (!m_imagesSaved)
             m_hcm->applyShiftsToImageStack(m_HV_offsets);
@@ -304,6 +307,7 @@ void EditingTools::nextClicked() {
         if (m_goodImageIndex != -1)
             m_hcm->doAntiGhosting(m_goodImageIndex);
     }
+*/
     QApplication::restoreOverrideCursor();
     emit accept();
 }
@@ -567,6 +571,7 @@ void EditingTools::saveImagesButtonClicked() {
 
     if (test.isWritable() && test.exists() && test.isDir()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+/*
         if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
             m_hcm->applyShiftsToImageStack(m_HV_offsets);
             m_hcm->saveLDRs(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
@@ -575,6 +580,7 @@ void EditingTools::saveImagesButtonClicked() {
             m_hcm->applyShiftsToMdrImageStack(m_HV_offsets);
             m_hcm->saveMDRs(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
         }
+*/
     }
 }
 
@@ -589,11 +595,13 @@ void EditingTools::restoreSaveImagesButtonState()
     saveImagesButton->setEnabled(true);
     Next_Finishbutton->setEnabled(true);
     QApplication::restoreOverrideCursor();
+/*
     if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
         m_originalImagesList=m_hcm->getLDRList();
         m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
         m_previewWidget->setPivot(m_originalImagesList[referenceListWidget->currentRow()]);
     }
+*/
 }
 
 void EditingTools::setAntiGhostingWidget(QImage *mask, QPair<int, int> HV_offset)

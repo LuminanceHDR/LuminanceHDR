@@ -112,7 +112,7 @@ private slots:
 
     // void fileLoaded(int index, const QString& fname, float expotime);
     // void finishedLoadingInputFiles(const QStringList& NoExifFiles);
-    // void errorWhileLoading(const QString& errormessage);
+    void errorWhileLoading(const QString& errormessage);
 
     // void updateGraphicalEVvalue(float expotime, int index_in_table);
 

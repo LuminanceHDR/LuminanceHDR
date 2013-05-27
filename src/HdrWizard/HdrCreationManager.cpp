@@ -52,6 +52,8 @@
 
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/framereaderfactory.h>
+#include <Libpfs/io/framewriter.h>
+#include <Libpfs/io/framewriterfactory.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/colorspace/convert.h>
 
@@ -65,8 +67,8 @@
 
 #include <HdrCreation/fusionoperator.h>
 
-static const float max_rgb = 65535.0f;
-static const float max_lightness = 65535.0f;
+static const float max_rgb = 1.0f;
+static const float max_lightness = 1.0f;
 static const int gridSize = 40;
 
 using namespace pfs;
@@ -80,158 +82,6 @@ const config_triple predef_confs[6]= {
     {GAUSSIAN, LINEAR, DEBEVEC, "", ""},
     {GAUSSIAN, GAMMA, DEBEVEC, "", ""},
 };
-
-// --- NEW CODE ---
-HdrCreationItem::HdrCreationItem(const QString &filename)
-    : m_filename(filename)
-    , m_averageLuminance(-1.f)
-    , m_frame(boost::make_shared<pfs::Frame>())
-{
-     // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
-}
-
-HdrCreationItem::~HdrCreationItem()
-{
-    // qDebug() << QString("Destroying HdrCreationItem for %1").arg(m_filename);
-}
-
-struct ConvertToQRgb {
-    void operator()(float r, float g, float b, QRgb& rgb) const {
-        uint8_t r8u = colorspace::convertSample<uint8_t>(r);
-        uint8_t g8u = colorspace::convertSample<uint8_t>(g);
-        uint8_t b8u = colorspace::convertSample<uint8_t>(b);
-
-        rgb = qRgb(r8u, g8u, b8u);
-    }
-};
-
-struct LoadFile {
-    void operator()(HdrCreationItem& currentItem)
-    {
-        QFileInfo qfi(currentItem.filename());
-        qDebug() << QString("Loading data for %1").arg(currentItem.filename());
-
-        // read pfs::Frame
-        try
-        {
-            FrameReaderPtr reader = FrameReaderFactory::open(
-                        QFile::encodeName(qfi.filePath()).constData() );
-            reader->read( *currentItem.frame(), Params() );
-
-            // read Average Luminance
-            currentItem.setAverageLuminance(
-                        ExifOperations::getAverageLuminance(
-                            QFile::encodeName(qfi.filePath()).constData() )
-                        );
-
-            qDebug() << QString("HdrCreationItem: Average Luminance for %1 is %2")
-                        .arg(currentItem.filename())
-                        .arg(currentItem.getAverageLuminance());
-
-            // build QImage
-            QImage tempImage(currentItem.frame()->getWidth(),
-                             currentItem.frame()->getHeight(),
-                             QImage::Format_ARGB32_Premultiplied);
-
-            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
-
-            Channel* red;
-            Channel* green;
-            Channel* blue;
-            currentItem.frame()->getXYZChannels(red, green, blue);
-
-            utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
-                             qimageData, ConvertToQRgb());
-
-            currentItem.qimage().swap( tempImage );
-        }
-        catch (std::runtime_error& err)
-        {
-            qDebug() << QString("Cannot load %1: %2")
-                        .arg(currentItem.filename())
-                        .arg(QString::fromStdString(err.what()));
-        }
-    }
-};
-
-static
-bool checkFileName(const HdrCreationItem& item, const QString& str) {
-    return (item.filename().compare(str) == 0);
-}
-
-void HdrCreationManager::loadFiles(const QStringList &filenames)
-{
-    std::vector<HdrCreationItem> tempItems;
-#ifndef LHDR_CXX11_ENABLED
-    for (const QString& i, filenames) {
-#else
-    BOOST_FOREACH(const QString& i, filenames) {
-#endif
-        qDebug() << QString("Checking %1").arg(i);
-        HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
-                                                        boost::bind(&checkFileName, _1, i));
-        // has the file been inserted already?
-        if ( it == m_data.end() ) {
-            qDebug() << QString("Schedule loading for %1").arg(i);
-            tempItems.push_back( HdrCreationItem(i) );
-        }
-    }
-
-    // parallel load of the data...
-    // Create a QFutureWatcher and connect signals and slots.
-    QFutureWatcher<void> futureWatcher;
-//    connect(&futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
-//    connect(&futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
-//    connect(this, SIGNAL(progressCancel()), &futureWatcher, SLOT(cancel()), Qt::DirectConnection);
-//    connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
-//    connect(&futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
-
-    // Start the computation.
-    futureWatcher.setFuture( QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile()) );
-    futureWatcher.waitForFinished();
-
-    if (futureWatcher.isCanceled()) return;
-
-    qDebug() << "Data loaded ... move to internal structure!";
-
-    BOOST_FOREACH(const HdrCreationItem& i, tempItems) {
-        if ( i.isValid() ) {
-            qDebug() << QString("Insert data for %1").arg(i.filename());
-            m_data.push_back(i);
-        }
-    }
-
-    qDebug() << QString("Read %1 out of %2").arg(tempItems.size()).arg(filenames.size());
-}
-
-QStringList HdrCreationManager::getFilesWithoutExif() const
-{
-    QStringList invalidFiles;
-    foreach (const HdrCreationItem& fileData, m_data) {
-        if ( !fileData.hasAverageLuminance() ) {
-            invalidFiles.push_back( fileData.filename() );
-        }
-    }
-    return invalidFiles;
-}
-
-size_t HdrCreationManager::numFilesWithoutExif() const {
-    size_t counter = 0;
-    foreach (const HdrCreationItem& fileData, m_data) {
-        if ( !fileData.hasAverageLuminance() ) {
-            ++counter;
-        }
-    }
-    return counter;
-}
-
-void HdrCreationManager::removeFile(int idx)
-{
-    Q_ASSERT(idx >= 0);
-    Q_ASSERT(idx < m_data.size());
-
-    m_data.erase(m_data.begin() + idx);
-}
 
 // --- LEGACY CODE ---
 namespace
@@ -326,6 +176,101 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
     }
 }
 
+// r,g,b values are from 0 to 1
+// h = [0,360], s = [0,1], v = [0,1]
+//		if s == 0, then h = -1 (undefined)
+
+inline
+void rgb2hsv( float r, float g, float b, float &h, float &s, float &v )
+{
+	float min, max, delta;
+
+	//min = MIN( r, g, b );
+	//max = MAX( r, g, b );
+    max = std::max(r, g);
+    max = std::max(max, b);
+    min = std::min(r, g);
+    min = std::min(min, b);
+	v = max;				// v
+
+	delta = max - min;
+
+	if( max != 0 )
+		s = delta / max;		// s
+	else {
+		// r = g = b = 0		// s = 0, v is undefined
+		s = 0;
+		h = -1;
+		return;
+	}
+
+	if( r == max )
+		h = ( g - b ) / delta;		// between yellow & magenta
+	else if( g == max )
+		h = 2 + ( b - r ) / delta;	// between cyan & yellow
+	else
+		h = 4 + ( r - g ) / delta;	// between magenta & cyan
+
+	h *= 60;				// degrees
+	if( h < 0 )
+		h += 360;
+
+}
+
+inline
+void hsv2rgb( float &r, float &g, float &b, float h, float s, float v )
+{
+	int i;
+	float f, p, q, t;
+
+	if( s == 0 ) {
+		// achromatic (grey)
+		r = g = b = v;
+		return;
+	}
+
+	h /= 60;			// sector 0 to 5
+	i = floor( h );
+	f = h - i;			// factorial part of h
+	p = v * ( 1 - s );
+	q = v * ( 1 - s * f );
+	t = v * ( 1 - s * ( 1 - f ) );
+
+	switch( i ) {
+		case 0:
+			r = v;
+			g = t;
+			b = p;
+			break;
+		case 1:
+			r = q;
+			g = v;
+			b = p;
+			break;
+		case 2:
+			r = p;
+			g = v;
+			b = t;
+			break;
+		case 3:
+			r = p;
+			g = q;
+			b = v;
+			break;
+		case 4:
+			r = t;
+			g = p;
+			b = v;
+			break;
+		default:		// case 5:
+			r = v;
+			g = p;
+			b = q;
+			break;
+	}
+
+}
+
 int findIndex(float *data, int size)
 {
     float max = *std::max_element(data, data + size);
@@ -346,28 +291,36 @@ float hueMean(float *hues, int size)
     return H / size;
 }
 
-float hueSquaredMean(Array2DfList &listR, Array2DfList &listG, Array2DfList &listB, int k)
+float hueSquaredMean(HdrCreationItemContainer& data, int k)
 {
-    int width = listR.at(0)->getCols();
-    int height = listR.at(0)->getRows();
-    int size = listR.size();
+    int width = data[0].frame()->getWidth();
+    int height = data[0].frame()->getHeight();
+    int size = data.size();
     float hues[size];
-    
     float r, g, b, h, s, l;
     float H, HS = 0.0f;
+    Channel *X, *Y, *Z, *Xk, *Yk, *Zk;
+    data[k].frame()->getXYZChannels( Xk, Yk, Zk );
+    Array2Df& Rk = *Xk;
+    Array2Df& Gk = *Yk;
+    Array2Df& Bk = *Zk;
 
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
             for (int w = 0; w < size; w++) {
-                r = (*listR.at(w))(i, j);
-                g = (*listG.at(w))(i, j);
-                b = (*listB.at(w))(i, j);
+                data[w].frame()->getXYZChannels( X, Y, Z );
+                Array2Df& R = *X;
+                Array2Df& G = *Y;
+                Array2Df& B = *Z;
+                r = R(i, j);
+                g = G(i, j);
+                b = B(i, j);
                 rgb2hsl(r, g, b, h, s, l);
                 hues[w] = h;
             }
-            r = (*listR.at(k))(i, j);
-            g = (*listG.at(k))(i, j);
-            b = (*listB.at(k))(i, j);
+            r = Rk(i, j);
+            g = Gk(i, j);
+            b = Bk(i, j);
             rgb2hsl(r, g, b, h, s, l);
             H = hueMean(hues, size) - h;
             HS += H*H;
@@ -376,97 +329,47 @@ float hueSquaredMean(Array2DfList &listR, Array2DfList &listG, Array2DfList &lis
     return HS / (width*height);
 }
 
-float hueSquaredMean(QList<QImage*> list, int k)
+qreal averageLightness(const HdrCreationItem& item)
 {
-    int width = list.at(0)->width();
-    int height = list.at(0)->height();
-    int size = list.size();
-    float hues[size];
-    
-    float Fk, Fh, H;
-    float HS = 0.0f;
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            for (int h = 0; h < size; h++) {
-                Fh = QColor::fromRgb(list.at(h)->pixel(i, j)).toHsl().hueF();
-                hues[h] = Fh;
-            }
-            Fk = QColor::fromRgb(list.at(k)->pixel(i, j)).toHsl().hueF();
-            H = hueMean(hues, size) - Fk;
-            HS += H*H;
-        }
-    }
-    return HS / (width*height);
-}
+    int width = item.frame()->getWidth();
+    int height = item.frame()->getHeight();
 
-qreal maxLightness(const pfs::Array2Df& R,
-                   const pfs::Array2Df& G,
-                   const pfs::Array2Df& B)
-{
-    int width = R.getCols();
-    int height = R.getRows();
+    Channel* C_R, *C_G, *C_B;
+    item.frame()->getXYZChannels(C_R, C_G, C_B);
 
-    qreal maxL = 0.0f;
-
-    float h, s, l;
-    for (int i = 0; i < height*width; i++)
-    {
-        rgb2hsl(R(i), G(i), B(i), h, s, l);
-        if (l > maxL) maxL = l;
-    }
-    return maxL;
-}
-
-qreal averageLightness(const pfs::Array2Df& R,
-                       const pfs::Array2Df& G,
-                       const pfs::Array2Df& B)
-{
-    int width = R.getCols();
-    int height = R.getRows();
+    float *R, *G, *B;
+    R = C_R->data();
+    G = C_G->data();
+    B = C_B->data();
 
     qreal avgLum = 0.0f;
 
     float h, s, l;
     for (int i = 0; i < height*width; i++)
     {
-        rgb2hsl(R(i), G(i), B(i), h, s, l);
+        rgb2hsv(R[i], G[i], B[i], h, s, l);
         avgLum += l;
     }
     return avgLum / (width * height);
+
 }
 
-qreal averageLightness(const QImage& qImage)
-{
-    const int w = qImage.width();
-    const int h = qImage.height();
-    const QRgb* qImagePtr = reinterpret_cast<const QRgb*>(qImage.bits());
-
-    qreal avgLum = 0.0f;
-    for (int i = 0; i < h*w; i++)
-    {
-        avgLum += static_cast<float>(QColor::fromRgb( *qImagePtr++ ).toHsv().value());
-    }
-    return avgLum / (w * h);
-}
-
-qreal averageLightness(const QImage& qImage, int i, int j, int gridX, int gridY)
-{
-    qreal avgL = 0.0f;
-    for (int y = j * gridY; y < (j+1) * gridY; y++) {
-        for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            avgL += static_cast<qreal>(QColor::fromRgb( qImage.pixel(x, y) ).toHsv().value());
-        }
-    }
-    return avgL / (gridX*gridY);
-}
-
-bool comparePatches(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Array2Df& B1,
-                    const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
+bool comparePatches(const HdrCreationItem& item1,
+                    const HdrCreationItem& item2,
                     int i, int j, int gridX, int gridY, float threshold, float deltaEV)
 {
     float logRed[gridX*gridY];
     float logGreen[gridX*gridY];
     float logBlue[gridX*gridY];
+    Channel *X1, *Y1, *Z1, *X2, *Y2, *Z2;
+    item1.frame()->getXYZChannels( X1, Y1, Z1 );
+    item2.frame()->getXYZChannels( X2, Y2, Z2 );
+    Array2Df& R1 = *X1;
+    Array2Df& G1 = *Y1;
+    Array2Df& B1 = *Z1;
+    Array2Df& R2 = *X2;
+    Array2Df& G2 = *Y2;
+    Array2Df& B2 = *Z2;
     
     int count = 0;
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
@@ -495,46 +398,7 @@ bool comparePatches(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs:
         return true;
     else
         return false;
-}
 
-bool comparePatches(const QImage& image1,
-                    const QImage& image2,
-                    int i, int j, int gridX, int gridY, float threshold, float deltaEV)
-{
-    float logRed[gridX*gridY];
-    float logGreen[gridX*gridY];
-    float logBlue[gridX*gridY];
-
-    qreal  r1, g1, b1, alpha1, r2, b2, g2, alpha2; 
-    int count = 0;
-    for (int y = j * gridY; y < (j+1) * gridY; y++) {
-        for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            QColor::fromRgb(image1.pixel(x, y)).getRgbF(&r1, &g1, &b1, &alpha1);
-            QColor::fromRgb(image2.pixel(x, y)).getRgbF(&r2, &g2, &b2, &alpha2);
-            if (deltaEV < 0) {
-                logRed[count] = logf(r1) - logf(r2) - deltaEV;
-                logGreen[count] = logf(g1) - logf(g2) - deltaEV;
-                logBlue[count++] = logf(b1) - logf(b2) - deltaEV;
-            }
-            else {
-                logRed[count] = logf(r2) - logf(r1) + deltaEV;
-                logGreen[count] = logf(g2) - logf(g1) + deltaEV;
-                logBlue[count++] = logf(b2) - logf(b1) + deltaEV;
-            }
-        }
-    }
-  
-    float threshold1 = 0.7f * std::abs(deltaEV);
-    count = 0;
-    for (int h = 0; h < gridX*gridY; h++) {
-        if (std::abs(logRed[h]) > threshold1 || std::abs(logGreen[h]) > threshold1 || std::abs(logBlue[h]) > threshold1)
-            count++;
-    }
-
-    if ((static_cast<float>(count) / static_cast<float>(gridX*gridY)) > threshold)
-        return true;
-    else
-        return false;
 }
 
 void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Array2Df& B1,
@@ -554,10 +418,10 @@ void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Arra
 
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            rgb2hsl(R1(x, y), G1(x, y), B1(x, y), h, s, l);
+            rgb2hsv(R1(x, y), G1(x, y), B1(x, y), h, s, l);
             l *= sf;
             if (l > max_lightness) l = max_lightness;
-            hsl2rgb(h, s, l, r, g, b);
+            hsv2rgb(h, s, l, r, g, b);
 
             if (r > max_rgb) r = max_rgb;
             if (g > max_rgb) g = max_rgb;
@@ -574,161 +438,39 @@ void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Arra
     }
 }
 
-void copyPatch(const QImage& image1,
-               QImage& image2,
-               int i, int j, int gridX, int gridY, float sf)
-{
-    QRgb pixValue;
-    QColor color;
-    qreal h, s, v;
-
-    qreal avgL = averageLightness(image1, i, j, gridX, gridY);
-    if ( avgL >= 255.0f || avgL == 0.0f ) return;
-
-    for (int y = j * gridY; y < (j+1) * gridY; y++) {
-        for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            pixValue = image1.pixel(x, y);
-            color = QColor::fromRgb(pixValue).toHsv();
-            color.getHsvF(&h, &s, &v);
-            v *= sf;
-            if (v > 1.0f) v = 1.0f;
-            color.setHsvF(h, s, v);
-            pixValue = color.rgb();     
-            image2.setPixel(x, y, pixValue);
-        }
-    }
-}
-
-void copyPatches(Array2DfList& listR, 
-                 Array2DfList& listG,
-                 Array2DfList& listB, 
+void copyPatches(HdrCreationItemContainer& data, 
                  bool patches[gridSize][gridSize],
                  int h0, float* scalefactor, int gridX, int gridY)
 {
-    const int size = listR.size(); 
+    const int size = data.size(); 
     for (int h = 0; h < size; h++) {
         if (h == h0) continue;
         for (int j = 0; j < gridSize; j++) {
             for (int i = 0; i < gridSize; i++) {
-                if (patches[i][j])
-                    copyPatch(*listR.at(h0), *listG.at(h0), *listB.at(h0),
-                              *listR.at(h), *listG.at(h), *listB.at(h),
+                if (patches[i][j]) {
+                    Channel *X1, *Y1, *Z1, *X2, *Y2, *Z2;
+                    data[h0].frame()->getXYZChannels(X1, Y1, Z1);
+                    data[h].frame()->getXYZChannels(X2, Y2, Z2);
+                    Array2Df& R1 = *X1;
+                    Array2Df& G1 = *Y1;
+                    Array2Df& B1 = *Z1;
+                    Array2Df& R2 = *X2;
+                    Array2Df& G2 = *Y2;
+                    Array2Df& B2 = *Z2;
+                    copyPatch(R1, G1, B1,
+                              R2, G2, B2,
                               i, j, gridX, gridY, scalefactor[h]);
+                }
             }
         }
     }
-}
-
-void copyPatches(QList<QImage *> list, 
-                 bool patches[gridSize][gridSize],
-                 int h0, float* scalefactor, int gridX, int gridY)
-{
-    const int size = list.size(); 
-    for (int h = 0; h < size; h++) {
-        if (h == h0) continue;
-        for (int j = 0; j < gridSize; j++) {
-            for (int i = 0; i < gridSize; i++) {
-                if (patches[i][j])
-                    copyPatch(*list.at(h0),
-                              *list.at(h),
-                              i, j, gridX, gridY, scalefactor[h]);
-            }
-        }
-    }
-}
-
-/*
-void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& maskGoodImage)
-{
-    qDebug() << "blend";
-#ifdef TIMER_PROFILING
-    msec_timer stop_watch;
-    stop_watch.start();
-#endif
-
-    const int width = img1.width();
-    const int height = img1.height();
-
-    QColor color;
-    QRgb pixValue;
-    qreal alpha;
-
-    qreal sf = averageLightness(img1) / averageLightness(img2);
-    int h, s, l;
-    
-    for (int j = 0; j < height; j++)
-    {
-        for (int i = 0; i < width; i++)
-        {
-            if (qAlpha(mask.pixel(i,j)) == 0 && qAlpha(maskGoodImage.pixel(i,j)) == 0) continue;
-            alpha = (qAlpha(maskGoodImage.pixel(i,j)) == 0) ? static_cast<float>(qAlpha(mask.pixel(i,j))) / 255 : 
-                                                              static_cast<float>(qAlpha(maskGoodImage.pixel(i,j))) / 255;
-            pixValue = img2.pixel(i, j);
-            color = QColor::fromRgb(pixValue).toHsl();
-            color.getHsl(&h, &s, &l);
-            l *= sf;
-            if (l > 255) l = 255;
-            color.setHsl(h, s, l);
-            pixValue = color.rgb();     
-            pixValue = (1.0f - alpha)*img1.pixel(i, j) + alpha*pixValue;
-            img1.setPixel(i, j, pixValue);
-        }
-    } 
-#ifdef TIMER_PROFILING
-    stop_watch.stop_and_update();
-    std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
-#endif
-}
-*/
-
-void blend(QImage& img1, const QImage& img2, const QImage& mask, const QImage& maskGoodImage)
-{
-    qDebug() << "blend";
-#ifdef TIMER_PROFILING
-    msec_timer stop_watch;
-    stop_watch.start();
-#endif
-
-    const int width = img1.width();
-    const int height = img1.height();
-
-    QColor color;
-    QRgb pixValue;
-    qreal alpha;
-
-    qreal sf = averageLightness(img1) / averageLightness(img2);
-    qreal h, s, v;
-
-    QRgb *img1Ptr = reinterpret_cast<QRgb *>(img1.bits());  
-    const QRgb *img2Ptr = reinterpret_cast<const QRgb *>(img2.bits());  
-    const QRgb *maskPtr = reinterpret_cast<const QRgb *>(mask.bits());  
-    const QRgb *maskGoodImagePtr = reinterpret_cast<const QRgb *>(maskGoodImage.bits());  
-    
-    for (int i = 0; i < width*height; i++)
-    {
-        if (qAlpha(*(maskPtr + i)) == 0 && qAlpha(*(maskGoodImagePtr + i)) == 0) continue;
-        alpha = (qAlpha(*(maskGoodImagePtr + i)) == 0) ? static_cast<float>(qAlpha(*(maskPtr + i))) / 255 : 
-                                                          static_cast<float>(qAlpha(*(maskGoodImagePtr + i))) / 255;
-        pixValue = *(img2Ptr + i);
-        color = QColor::fromRgb(pixValue).toHsv();
-        color.getHsvF(&h, &s, &v);
-        v *= sf;
-        if (v > 1.0f) v = 1.0f;
-        color.setHsvF(h, s, v);
-        pixValue = color.rgb();     
-        pixValue = (1.0f - alpha)*(*(img1Ptr + i)) + alpha*pixValue;
-        *(img1Ptr + i) = pixValue;
-    }
-#ifdef TIMER_PROFILING
-    stop_watch.stop_and_update();
-    std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
-#endif
 }
 
 void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
            const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
            const QImage& mask, const QImage& maskGoodImage)
 {
+/*
     qDebug() << "blend MDR";
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
@@ -787,9 +529,200 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
     std::cout << "blend MDR = " << stop_watch.get_time() << " msec" << std::endl;
     qDebug() << "Max lightness: " << maxL;
 #endif
+*/
 }
 
 } // anonymous namespace
+
+// --- NEW CODE ---
+HdrCreationItem::HdrCreationItem(const QString &filename)
+    : m_filename(filename)
+    , m_averageLuminance(-1.f)
+    , m_frame(boost::make_shared<pfs::Frame>())
+{
+     // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
+}
+
+HdrCreationItem::~HdrCreationItem()
+{
+    // qDebug() << QString("Destroying HdrCreationItem for %1").arg(m_filename);
+}
+
+struct ConvertToQRgb {
+    void operator()(float r, float g, float b, QRgb& rgb) const {
+        uint8_t r8u = colorspace::convertSample<uint8_t>(r);
+        uint8_t g8u = colorspace::convertSample<uint8_t>(g);
+        uint8_t b8u = colorspace::convertSample<uint8_t>(b);
+
+        rgb = qRgb(r8u, g8u, b8u);
+    }
+};
+
+struct LoadFile {
+    void operator()(HdrCreationItem& currentItem)
+    {
+        QFileInfo qfi(currentItem.filename());
+        qDebug() << QString("Loading data for %1").arg(currentItem.filename());
+
+        // read pfs::Frame
+        try
+        {
+            FrameReaderPtr reader = FrameReaderFactory::open(
+                        QFile::encodeName(qfi.filePath()).constData() );
+            reader->read( *currentItem.frame(), Params() );
+
+            // read Average Luminance
+            currentItem.setAverageLuminance(
+                        ExifOperations::getAverageLuminance(
+                            QFile::encodeName(qfi.filePath()).constData() )
+                        );
+
+            qDebug() << QString("HdrCreationItem: Average Luminance for %1 is %2")
+                        .arg(currentItem.filename())
+                        .arg(currentItem.getAverageLuminance());
+
+            // build QImage
+            QImage tempImage(currentItem.frame()->getWidth(),
+                             currentItem.frame()->getHeight(),
+                             QImage::Format_ARGB32_Premultiplied);
+
+            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
+
+            Channel* red;
+            Channel* green;
+            Channel* blue;
+            currentItem.frame()->getXYZChannels(red, green, blue);
+
+            utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
+                             qimageData, ConvertToQRgb());
+
+            currentItem.qimage().swap( tempImage );
+        }
+        catch (std::runtime_error& err)
+        {
+            qDebug() << QString("Cannot load %1: %2")
+                        .arg(currentItem.filename())
+                        .arg(QString::fromStdString(err.what()));
+        }
+    }
+};
+
+struct SaveFile {
+    void operator()(HdrCreationItem& currentItem)
+    {
+        QString inputFilename = currentItem.filename();
+        QFileInfo qfi(inputFilename);
+        QString base = qfi.completeBaseName(); 
+        QString filename = base + ".tif";
+        QString tempdir = LuminanceOptions().getTempDir();
+        qDebug() << QString("Saving data for %1 on %2").arg(filename).arg(tempdir);
+        
+
+        QString completeFilename = tempdir + "/" + filename;
+
+        // save pfs::Frame as tiff 16bits
+        try
+        {
+            Params p;
+            p.set("tiff_mode", 1); // 16bits
+            FrameWriterPtr writer = FrameWriterFactory::open(
+                        QFile::encodeName(completeFilename).constData());
+            writer->write( *currentItem.frame(), p );
+
+        }
+        catch (std::runtime_error& err)
+        {
+            qDebug() << QString("Cannot save %1: %2")
+                        .arg(currentItem.filename())
+                        .arg(QString::fromStdString(err.what()));
+        }
+    }
+};
+
+static
+bool checkFileName(const HdrCreationItem& item, const QString& str) {
+    return (item.filename().compare(str) == 0);
+}
+
+void HdrCreationManager::loadFiles(const QStringList &filenames)
+{
+    std::vector<HdrCreationItem> tempItems;
+#ifndef LHDR_CXX11_ENABLED
+    for (const QString& i, filenames) {
+#else
+    BOOST_FOREACH(const QString& i, filenames) {
+#endif
+        qDebug() << QString("Checking %1").arg(i);
+        HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
+                                                        boost::bind(&checkFileName, _1, i));
+        // has the file been inserted already?
+        if ( it == m_data.end() ) {
+            qDebug() << QString("Schedule loading for %1").arg(i);
+            tempItems.push_back( HdrCreationItem(i) );
+        }
+    }
+
+    // parallel load of the data...
+    // Create a QFutureWatcher and connect signals and slots.
+    QFutureWatcher<void> futureWatcher;
+//    connect(&futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
+//    connect(&futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
+//    connect(this, SIGNAL(progressCancel()), &futureWatcher, SLOT(cancel()), Qt::DirectConnection);
+//    connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
+//    connect(&futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
+
+    // Start the computation.
+    futureWatcher.setFuture( QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile()) );
+    futureWatcher.waitForFinished();
+
+    if (futureWatcher.isCanceled()) return;
+
+    qDebug() << "Data loaded ... move to internal structure!";
+
+    BOOST_FOREACH(const HdrCreationItem& i, tempItems) {
+        if ( i.isValid() ) {
+            qDebug() << QString("Insert data for %1").arg(i.filename());
+            m_data.push_back(i);
+        }
+    }
+    qDebug() << QString("Read %1 out of %2").arg(tempItems.size()).arg(filenames.size());
+
+    if (!framesHaveSameSize()) {
+        emit errorWhileLoading(tr("The images have different size."));
+        m_data.clear();
+    }
+    else
+        emit finishedLoadingFiles();
+}
+
+QStringList HdrCreationManager::getFilesWithoutExif() const
+{
+    QStringList invalidFiles;
+    foreach (const HdrCreationItem& fileData, m_data) {
+        if ( !fileData.hasAverageLuminance() ) {
+            invalidFiles.push_back( fileData.filename() );
+        }
+    }
+    return invalidFiles;
+}
+
+size_t HdrCreationManager::numFilesWithoutExif() const {
+    size_t counter = 0;
+    foreach (const HdrCreationItem& fileData, m_data) {
+        if ( !fileData.hasAverageLuminance() ) {
+            ++counter;
+        }
+    }
+    return counter;
+}
+
+void HdrCreationManager::removeFile(int idx)
+{
+    Q_ASSERT(idx >= 0);
+    Q_ASSERT(idx < m_data.size());
+
+    m_data.erase(m_data.begin() + idx);
+}
 
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     : inputType( UNKNOWN_INPUT_TYPE )
@@ -904,6 +837,7 @@ void HdrCreationManager::loadFailed(const QString& message, int /*index*/)
     emit errorWhileLoading(message);
 }
 
+/*
 void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotime, const QString& newfname)
 {
     if (m_loadingError) {
@@ -946,7 +880,7 @@ void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotim
     // loadInputFiles();
 }
 
-void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, const QString& newfname, bool /*ldrtiff*/)
+void HdrCreationManager::ldrReady(QImage* newImage, int index, float expotime, const QString& newfname, bool)
 {
     //qDebug("HCM: ldrReady");
     if (m_loadingError)
@@ -1008,7 +942,21 @@ void HdrCreationManager::newResult(int index, float expotime, const QString& new
     emit fileLoaded(index,fileList[index],expotimes[index]);
     emit processed();
 }
+*/
 
+bool HdrCreationManager::framesHaveSameSize()
+{
+    size_t width = m_data[0].frame()->getWidth();
+    size_t height = m_data[0].frame()->getHeight();
+    for ( HdrCreationItemContainer::const_iterator it = m_data.begin() + 1, 
+          itEnd = m_data.end(); it != itEnd; ++it) {
+        if (it->frame()->getWidth() != width || it->frame()->getHeight() != height)
+            return false; 
+    }
+    return true;
+}
+
+/*
 bool HdrCreationManager::ldrsHaveSameSize(int currentWidth, int currentHeight)
 {
     for (int i = 0; i < ldrImagesList.size(); i++)
@@ -1048,6 +996,7 @@ bool HdrCreationManager::mdrsHaveSameSize(size_t currentWidth, size_t currentHei
     }
     return true;
 }
+*/
 
 void HdrCreationManager::align_with_mtb()
 {
@@ -1083,15 +1032,32 @@ void HdrCreationManager::align_with_ais()
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
 
     if (m_ais_crop_flag) { ais_parameters << "-C"; }
-    if (filesToRemove[0].isEmpty()) { ais_parameters << fileList; }
-    else {
+    //if (filesToRemove[0].isEmpty()) { ais_parameters << fileList; }
+    //else {
         // foreach (QString fname, filesToRemove) {
         // ...using iterators will remove a temporary copy instead than foreach
-        for ( QVector<QString>::const_iterator it = filesToRemove.begin(),
-              itEnd = filesToRemove.end(); it != itEnd; ++it)
-        {
-            ais_parameters << *it;
-        }
+        //for ( QVector<QString>::const_iterator it = filesToRemove.begin(),
+        //      itEnd = filesToRemove.end(); it != itEnd; ++it)
+        //{
+        //    ais_parameters << *it;
+        //}
+    //}
+    QFutureWatcher<void> futureWatcher;
+
+    // Start the computation.
+    futureWatcher.setFuture( QtConcurrent::map(m_data.begin(), m_data.end(), SaveFile()) );
+    futureWatcher.waitForFinished();
+
+    if (futureWatcher.isCanceled()) return;
+
+    for ( HdrCreationItemContainer::const_iterator it = m_data.begin(), 
+          itEnd = m_data.end(); it != itEnd; ++it) {
+        QFileInfo qfi(it->filename());
+        QString base = qfi.completeBaseName(); 
+        QString filename = base + ".tif";
+        QString tempdir = m_luminance_options.getTempDir();
+        QString completeFilename = tempdir + "/" + filename;
+        ais_parameters << completeFilename; 
     }
     qDebug() << "ais_parameters " << ais_parameters;
 #ifdef Q_WS_MAC
@@ -1115,55 +1081,61 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
     {
         // TODO: try-catch
         // DAVIDE _ HDR CREATION
-        // clearlists(false);
-        for (int i = 0; i < fileList.size(); i++)
-        {
-            //align_image_stack can only output tiff files
-            // DAVIDE
-//            QString filename;
-//            if (!fromCommandLine)
-//                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-//            else
-//                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-//            QByteArray fname = QFile::encodeName(filename);
-//            TiffReader reader(fname, "", false);
-//            //if 8bit ldr tiff
-//            if (reader.is8bitTiff())
-//            {
-//                QImage* resultImage = reader.readIntoQImage();
-//                HdrInputLoader::conditionallyRotateImage(QFileInfo(fileList[0]), &resultImage);
-
-//                ldrImagesList.append( resultImage );
-//                if (!fromCommandLine) {
-//                    QImage *img = new QImage(resultImage->width(),resultImage->height(), QImage::Format_ARGB32);
-//                    img->fill(qRgba(0,0,0,0));
-//                    antiGhostingMasksList.append(img);
-//                }
-//            }
-//            //if 16bit (tiff) treat as hdr
-//            else if (reader.is16bitTiff())
-//            {
-//                //TODO: get a 16bit TIFF image and test it
-//                pfs::Frame *newFrame = reader.readIntoPfsFrame();
-//                m_mdrWidth = newFrame->getWidth();
-//                m_mdrHeight = newFrame->getHeight();
-//                pfs::Channel *R, *G, *B;
-//                R = newFrame->getChannel("X");
-//                G = newFrame->getChannel("Y");
-//                B = newFrame->getChannel("Z");
-//                listmdrR.push_back(R);
-//                listmdrG.push_back(G);
-//                listmdrB.push_back(B);
-//                if (!fromCommandLine) {
-//                    mdrImagesList.append(fromHDRPFStoQImage(newFrame));
-//                    QImage *img = new QImage(R->getWidth(),R->getHeight(), QImage::Format_ARGB32);
-//                    img->fill(qRgba(0,0,0,0));
-//                    antiGhostingMasksList.append(img);
-//                }
-//            }
-//            qDebug() << "void HdrCreationManager::ais_finished: remove " << fname;
-//            QFile::remove(fname);
+        std::vector<HdrCreationItem> tempItems;
+        int i = 0;
+        for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
+              itEnd = m_data.end(); it != itEnd; ++it) {
+            QString inputFilename = it->filename(), filename;
+            if (!fromCommandLine)
+                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+            else
+                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+            
+            tempItems.push_back( HdrCreationItem(filename) );
+            ExifOperations::copyExifData(inputFilename.toStdString(), filename.toStdString(), false, "", false, true); 
+            i++;
         }
+
+        // parallel load of the data...
+        // Create a QFutureWatcher and connect signals and slots.
+        QFutureWatcher<void> futureWatcher;
+
+        // Start the computation.
+        futureWatcher.setFuture( QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile()) );
+        futureWatcher.waitForFinished();
+
+        if (futureWatcher.isCanceled()) return;
+        
+        int width = m_data[0].frame()->getWidth();
+        int height = m_data[0].frame()->getHeight();
+        
+        i = 0;
+        for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
+              itEnd = m_data.end(); it != itEnd; ++it) {
+            QString filename;
+            if (!fromCommandLine) {
+                QImage *img = new QImage(width, height, QImage::Format_ARGB32);
+                img->fill(qRgba(0,0,0,0));
+                antiGhostingMasksList.append(img);
+                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+            }
+            else {
+                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+            }
+            QFile::remove(filename);
+            qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
+            QFileInfo qfi(it->filename());
+            QString base = qfi.completeBaseName(); 
+            filename = base + ".tif";
+            QString tempdir = m_luminance_options.getTempDir();
+            QString completeFilename = tempdir + "/" + filename;
+            QFile::remove(QFile::encodeName(completeFilename).constData());
+            qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
+            ++i;
+        }
+
+        m_data.clear();
+        m_data = tempItems;
         QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
         emit finishedAligning(exitcode);
     }
@@ -1637,6 +1609,7 @@ void HdrCreationManager::saveMDRs(const QString& filename)
 
 void HdrCreationManager::doAntiGhosting(int goodImageIndex)
 {
+/*
     qDebug() << "HdrCreationManager::doAntiGhosting";
     if (inputType == LDR_INPUT_TYPE)
     {
@@ -1667,6 +1640,7 @@ void HdrCreationManager::doAntiGhosting(int goodImageIndex)
             }
         }
     }
+*/
 }
 
 void HdrCreationManager::cropAgMasks(const QRect& ca) {
@@ -1682,10 +1656,11 @@ void HdrCreationManager::cropAgMasks(const QRect& ca) {
 
 void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
 {
-    const int size = listmdrR.size(); 
+    const int size = m_data.size(); 
+    assert(size >= 2);
     float HE[size];
-    const int width = listmdrR.at(0)->getCols();
-    const int height = listmdrR.at(0)->getRows();
+    const int width = m_data[0].frame()->getWidth();
+    const int height = m_data[0].frame()->getHeight();
     const int gridX = width / gridSize;
     const int gridY = height / gridSize;
 
@@ -1697,12 +1672,12 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
             patches[i][j] = false;
 
     for (int i = 0; i < size; i++) {
-        avgLightness[i] = averageLightness(*listmdrR.at(i), *listmdrG.at(i), *listmdrB.at(i)); 
+        avgLightness[i] = averageLightness(m_data[i]); 
         qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
     }
 
     for (int i = 0; i < size; i++) { 
-        HE[i] = hueSquaredMean(listmdrR, listmdrG, listmdrB, i);
+        HE[i] = hueSquaredMean(m_data, i);
         qDebug() << "HE[" << i << "]: " << HE[i];
     }
 
@@ -1720,9 +1695,9 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
             continue;
         for (int j = 0; j < gridSize; j++) {
             for (int i = 0; i < gridSize; i++) {
-                    float deltaEV = logf(expotimes.at(h0)) - logf(expotimes.at(h));
-                    if (comparePatches(*listmdrR.at(h0), *listmdrG.at(h0), *listmdrB.at(h0),
-                                       *listmdrR.at(h), *listmdrG.at(h), *listmdrB.at(h),
+                    float deltaEV = m_data[h0].getAverageLuminance() - m_data[h].getAverageLuminance();
+                    if (comparePatches(m_data[h0],
+                                       m_data[h],
                                        i, j, gridX, gridY, threshold, deltaEV)) {
                         patches[i][j] = true;
                     }
@@ -1736,66 +1711,7 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
             if (patches[i][j] == true)
                 count++;
     qDebug() << "Copied patches: " << static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f << "%";
-    copyPatches(listmdrR, listmdrG, listmdrB, patches, h0, scaleFactor, gridX, gridY);
-}
-
-void HdrCreationManager::doAutoAntiGhostingLDR(float threshold)
-{
-    const int size = ldrImagesList.size();
-    float HE[size];
-    const int width = ldrImagesList.at(0)->width();
-    const int height = ldrImagesList.at(0)->height();
-    const int gridX = width / gridSize;
-    const int gridY = height / gridSize;
-
-    float avgLightness[size];
-    bool patches[gridSize][gridSize];
-    
-    for (int i = 0; i < gridSize; i++)
-        for (int j = 0; j < gridSize; j++)
-            patches[i][j] = false;
-
-    for (int i = 0; i < size; i++) {
-        avgLightness[i] = averageLightness(*ldrImagesList.at(i));
-        qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
-    }
-
-    for (int i = 0; i < size; i++) {
-        HE[i] = hueSquaredMean(ldrImagesList, i);
-        qDebug() << "HE[" << i << "]: " << HE[i];
-    }
-
-    int h0 = findIndex(HE, size);
-    qDebug() << "h0: " << h0;
-
-    float scaleFactor[size];
-
-    for (int i = 0; i < size; i++) {
-        scaleFactor[i] = avgLightness[i] / avgLightness[h0];
-    }
-
-    for (int h = 0; h < size; h++) {
-        if (h == h0)
-            continue;
-        for (int j = 0; j < gridSize; j++) {
-            for (int i = 0; i < gridSize; i++) {
-                    float deltaEV = logf(expotimes.at(h0)) - logf(expotimes.at(h));
-                    if (comparePatches(*ldrImagesList.at(h0),
-                                       *ldrImagesList.at(h),
-                                       i, j, gridX, gridY, threshold, deltaEV)) {
-                        patches[i][j] = true;
-                    }
-            }
-        }
-    }
-
-    int count = 0;
-    for (int i = 0; i < gridSize; i++)
-        for (int j = 0; j < gridSize; j++)
-            if (patches[i][j] == true)
-                count++;
-    qDebug() << "Copied patches: " << static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f << "%";
-    copyPatches(ldrImagesList, patches, h0, scaleFactor, gridX, gridY);
+    copyPatches(m_data, patches, h0, scaleFactor, gridX, gridY);
 }
 
 void HdrCreationManager::doAutoAntiGhosting(float threshold)
@@ -1806,7 +1722,8 @@ void HdrCreationManager::doAutoAntiGhosting(float threshold)
     stop_watch.start();
 #endif
 
-    (inputType == LDR_INPUT_TYPE) ? doAutoAntiGhostingLDR(threshold) : doAutoAntiGhostingMDR(threshold);
+//    (inputType == LDR_INPUT_TYPE) ? doAutoAntiGhostingLDR(threshold) : doAutoAntiGhostingMDR(threshold);
+    doAutoAntiGhostingMDR(threshold);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();

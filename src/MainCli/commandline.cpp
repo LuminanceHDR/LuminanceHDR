@@ -543,10 +543,12 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
     printIfVerbose( tr("Creating (in memory) the HDR.") , verbose);
     
     if (errorcode == 0 && alignMode != NO_ALIGN && saveAlignedImagesPrefix != "") {
+/*
         if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
             hdrCreationManager->saveLDRs(saveAlignedImagesPrefix);
         else
             hdrCreationManager->saveMDRs(saveAlignedImagesPrefix);
+*/
     }
 
     hdrCreationManager->removeTempFiles();
