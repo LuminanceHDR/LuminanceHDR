@@ -182,14 +182,14 @@ public:
     // void reset();
     // void remove(int index);
 	void setShift(int shift) { m_shift = shift; }
+    void saveImages(const QString& prefix);
     //void saveLDRs(const QString& filename);
     //void saveMDRs(const QString& filename);
 	void doAntiGhosting(int);
 	void doAutoAntiGhosting(float);
+	void removeTempFiles();
 
 //public slots:
-    // remove temp 8or16 bit tiff files created by libRaw upon raw input.
-	//void removeTempFiles();
 
 signals:
     // computation progress

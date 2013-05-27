@@ -728,6 +728,7 @@ void HdrWizard::finishedAligning(int exitcode)
     m_ui->NextFinishButton->setEnabled(true);
     m_ui->pagestack->setCurrentIndex(2);
     m_ui->progressBar->hide();
+    m_hdrCreationManager->removeTempFiles();
 }
 
 void HdrWizard::ais_failed(QProcess::ProcessError e)

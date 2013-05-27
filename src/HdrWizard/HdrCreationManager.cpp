@@ -1116,29 +1116,20 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
         int width = m_data[0].frame()->getWidth();
         int height = m_data[0].frame()->getHeight();
         
-        i = 0;
         for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
               itEnd = m_data.end(); it != itEnd; ++it) {
-            QString filename;
             if (!fromCommandLine) {
                 QImage *img = new QImage(width, height, QImage::Format_ARGB32);
                 img->fill(qRgba(0,0,0,0));
                 antiGhostingMasksList.append(img);
-                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
             }
-            else {
-                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-            }
-            QFile::remove(filename);
-            qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
             QFileInfo qfi(it->filename());
             QString base = qfi.completeBaseName(); 
-            filename = base + ".tif";
+            QString filename = base + ".tif";
             QString tempdir = m_luminance_options.getTempDir();
             QString completeFilename = tempdir + "/" + filename;
             QFile::remove(QFile::encodeName(completeFilename).constData());
             qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
-            ++i;
         }
 
         m_data.clear();
@@ -1156,6 +1147,24 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
 {
     qDebug() << "align_image_stack failed";
+}
+
+void HdrCreationManager::removeTempFiles()
+{
+    int i = 0;
+    for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
+          itEnd = m_data.end(); it != itEnd; ++it) {
+        QString filename;
+        if (!fromCommandLine) {
+            filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+        }
+        else {
+            filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+        }
+        QFile::remove(filename);
+        qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
+        ++i;
+    }
 }
 
 /*
@@ -1508,6 +1517,24 @@ void interleavedToPlanar(const QImage* image,
 }
 } // anonymous namespace
 
+void HdrCreationManager::saveImages(const QString& prefix)
+{
+    int idx = 0;
+    for ( HdrCreationItemContainer::const_iterator it = m_data.begin(), 
+          itEnd = m_data.end(); it != itEnd; ++it) {
+
+        QString filename = prefix + QString("_%1").arg(idx) + ".tiff";
+        pfs::io::TiffWriter writer(QFile::encodeName(filename).constData());
+        writer.write( *it->frame(), pfs::Params("tiff_mode", 1) );
+
+        QFileInfo qfi(filename);
+        QString absoluteFileName = qfi.absoluteFilePath();
+        QByteArray encodedName = QFile::encodeName(absoluteFileName);
+        ExifOperations::copyExifData(QFile::encodeName(it->filename()).constData(), encodedName.constData(), false);
+        ++idx;
+    }
+    emit imagesSaved();
+}
 /*
 void HdrCreationManager::saveLDRs(const QString& filename)
 {

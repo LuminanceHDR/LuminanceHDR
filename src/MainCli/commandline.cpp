@@ -471,19 +471,13 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         }
 
         hdrCreationManager.reset( new HdrCreationManager(true) );
-        //connect(hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
         connect(hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(finishedLoadingInputFiles()));
         connect(hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(createHDR(int)));
         connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 		connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
-		//connect(hdrCreationManager.data(), SIGNAL(maximumValue(int)),this, SLOT(setProgressBar(int)));
-		//connect(hdrCreationManager.data(), SIGNAL(nextstep(int)),this, SLOT(updateProgressBar(int)));
 		connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
 			
         hdrCreationManager->setConfig(hdrcreationconfig);
-        // DAVIDE _ HDR CREATION
-        // hdrCreationManager->setFileList(inputFiles);
-        // hdrCreationManager->loadInputFiles();
         hdrCreationManager->loadFiles(inputFiles);
     }
     else
@@ -546,15 +540,10 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
     printIfVerbose( tr("Creating (in memory) the HDR.") , verbose);
     
     if (errorcode == 0 && alignMode != NO_ALIGN && saveAlignedImagesPrefix != "") {
-/*
-        if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
-            hdrCreationManager->saveLDRs(saveAlignedImagesPrefix);
-        else
-            hdrCreationManager->saveMDRs(saveAlignedImagesPrefix);
-*/
+        hdrCreationManager->saveImages(saveAlignedImagesPrefix);
     }
 
-    //hdrCreationManager->removeTempFiles();
+    hdrCreationManager->removeTempFiles();
 
     HDR.reset( hdrCreationManager->createHdr(false,1) );
     saveHDR();
