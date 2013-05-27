@@ -471,7 +471,8 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         }
 
         hdrCreationManager.reset( new HdrCreationManager(true) );
-        connect(hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
+        //connect(hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
+        connect(hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(finishedLoadingInputFiles()));
         connect(hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(createHDR(int)));
         connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 		connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
@@ -483,6 +484,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         // DAVIDE _ HDR CREATION
         // hdrCreationManager->setFileList(inputFiles);
         // hdrCreationManager->loadInputFiles();
+        hdrCreationManager->loadFiles(inputFiles);
     }
     else
     {
@@ -502,15 +504,16 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
     }
 }
 
-void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLackingExif)
+void CommandLineInterfaceManager::finishedLoadingInputFiles()
 {
-    if (filesLackingExif.size()!=0 && ev.isEmpty())
+    QStringList filesLackingExif = hdrCreationManager->getFilesWithoutExif();
+    if (filesLackingExif.size() !=0 && ev.isEmpty())
     {
         printErrorAndExit(tr("Error: Exif data missing in images and EV values not specified on the commandline, bailing out."));
     }
     if (!ev.isEmpty())
     {
-        for (int i=0; i < ev.size(); i++)
+        for (int i = 0; i < ev.size(); i++)
             hdrCreationManager->getFile(i).setEV(ev.at(i));
 
         printIfVerbose( tr("EV values have been assigned.") , verbose);
@@ -613,7 +616,7 @@ void  CommandLineInterfaceManager::startTonemap()
         // Create an ad-hoc IOWorker to save the file
         if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename,
                                         inputfname,
-                                        hdrCreationManager->getExpotimes(),
+                                        hdrCreationManager.data() ? hdrCreationManager->getExpotimes(): QVector<float>(),
                                         tmopts.data(),
                                         pfs::Params("quality", (size_t)quality) ) )
         {

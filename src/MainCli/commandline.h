@@ -87,7 +87,7 @@ private:
     void startTonemap();
 
 private slots:
-    void finishedLoadingInputFiles(QStringList);
+    void finishedLoadingInputFiles();
     void ais_failed(QProcess::ProcessError);
 	void errorWhileLoading(QString);
     void createHDR(int);

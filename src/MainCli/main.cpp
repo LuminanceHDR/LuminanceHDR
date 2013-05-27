@@ -23,6 +23,7 @@
 
 #include <QCoreApplication>
 
+#include "Common/config.h"
 #include "Common/LuminanceOptions.h"
 #include "Common/TranslatorManager.h"
 
@@ -31,6 +32,8 @@
 
 int main( int argc, char ** argv )
 {
+    QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
+    QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
     QCoreApplication application( argc, argv );
     LuminanceOptions lumOpts;
 
