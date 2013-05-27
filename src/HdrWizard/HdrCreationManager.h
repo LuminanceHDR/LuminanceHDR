@@ -152,7 +152,7 @@ public:
     //const QList<QImage*>& getLDRList() const                { return ldrImagesList; }
     //const QList<QImage*>& getMDRList() const                { return mdrImagesList; }
     const QList<QImage*>& getAntiGhostingMasksList() const  { return antiGhostingMasksList; }
-    const QVector<float>& getExpotimes() const              { return expotimes; }
+    const QVector<float> getExpotimes() const;
     //const QStringList& getFileList() const                  { return fileList; }
     //bool  inputImageType() const                            { return inputType; }
     //const QStringList& getFilesLackingExif() const          { return filesLackingExif; }
@@ -160,7 +160,7 @@ public:
     //float getEV(int i) const                                { return log2f(expotimes[i]); }
 
     // updates EV value in expotimes array and emits signal
-	void setEV(float newev, int image_idx);
+	//void setEV(float newev, int image_idx);
 
     // the configuration used to create the hdr
     // this is public so that the wizard (or the cli?) can modify it directly.
@@ -170,26 +170,26 @@ public:
     // if the correspondent EV value span is >10EV or <-10EV,
     // add an offset to the expotimes array to make it stay inside boundaries (-10..+10).
     // the EV values cannot cover more than 20EV values
-	void checkEVvalues();
-	void makeSureLDRsHaveAlpha();
-    void applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets);
-    void applyShiftsToMdrImageStack(const QList< QPair<int,int> >& HV_offsets);
+	//void checkEVvalues();
+	//void makeSureLDRsHaveAlpha();
+    //void applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets);
+    //void applyShiftsToMdrImageStack(const QList< QPair<int,int> >& HV_offsets);
 
-    void cropLDR(const QRect& ca);
-    void cropMDR(const QRect& ca);
+    //void cropLDR(const QRect& ca);
+    //void cropMDR(const QRect& ca);
     void cropAgMasks(const QRect& ca);
 
     // void reset();
     // void remove(int index);
 	void setShift(int shift) { m_shift = shift; }
-    void saveLDRs(const QString& filename);
-    void saveMDRs(const QString& filename);
+    //void saveLDRs(const QString& filename);
+    //void saveMDRs(const QString& filename);
 	void doAntiGhosting(int);
 	void doAutoAntiGhosting(float);
 
-public slots:
+//public slots:
     // remove temp 8or16 bit tiff files created by libRaw upon raw input.
-	void removeTempFiles();
+	//void removeTempFiles();
 
 signals:
     // computation progress
@@ -222,34 +222,34 @@ private:
 	void doAutoAntiGhostingMDR(float);
 	void doAutoAntiGhostingLDR(float);
     // List of input files (absolute pathnames)
-	QStringList fileList;
+	//QStringList fileList;
 	//data structures that hold the input images' payload
-	QList<QImage*> ldrImagesList;  //ldr input
-	QList<QImage*> mdrImagesList;  //QImages rappresenting a PFS frame for editing tools
-	QList<QImage*> mdrImagesToRemove;  //QImages need to be deleted
+	//QList<QImage*> ldrImagesList;  //ldr input
+	//QList<QImage*> mdrImagesList;  //QImages rappresenting a PFS frame for editing tools
+	//QList<QImage*> mdrImagesToRemove;  //QImages need to be deleted
 	QList<QImage*> antiGhostingMasksList;  //QImages used for manual anti ghosting
-	QList<bool> tiffLdrList;  //tiff ldr input
-    Array2DfList listmdrR,listmdrG,listmdrB; //mdr input
+	//QList<bool> tiffLdrList;  //tiff ldr input
+    //Array2DfList listmdrR,listmdrG,listmdrB; //mdr input
 	//if startedProcessing[i]==true, we started a thread for the i-th file
-	QList<bool> startedProcessing;
+	//QList<bool> startedProcessing;
     // time equivalent array (from exif data)
     // float *expotimes;
-	QVector<float> expotimes;
+	//QVector<float> expotimes;
 
     // Filled on every successful load and left untouched afterwards.
     // Value emitted after all the loading has been completed
-	QStringList filesLackingExif;
+	//QStringList filesLackingExif;
     // Filled when we have raw files as input.
     // QStringList filesToRemove;
-	QVector<QString>  filesToRemove;
+	//QVector<QString>  filesToRemove;
     // set to true as soon as we find out that we cannot load a file or when we find out that a file has a different width/height than the other previously loaded ones.
     // This variable prevents "incoming" threads to do anything.
-	bool m_loadingError;
+	//bool m_loadingError;
 
     // number of running threads at any given time
-	int m_runningThreads;
+	//int m_runningThreads;
     // cumulative number of successfully loaded files
-	int m_processedFiles;
+	//int m_processedFiles;
 
     LuminanceOptions m_luminance_options;
 
@@ -276,7 +276,7 @@ private slots:
 	void ais_failed_slot(QProcess::ProcessError);
     //void ldrReady(QImage*, int, float, const QString&, bool);
     //void mdrReady(pfs::Frame*, int, float, const QString&);
-    void loadFailed(const QString& fname, int index);
+    //void loadFailed(const QString& fname, int index);
 	void readData();
 };
 #endif

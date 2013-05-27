@@ -511,11 +511,11 @@ void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLac
     if (!ev.isEmpty())
     {
         for (int i=0; i < ev.size(); i++)
-            hdrCreationManager->setEV(ev.at(i),i);
+            hdrCreationManager->getFile(i).setEV(ev.at(i));
 
         printIfVerbose( tr("EV values have been assigned.") , verbose);
     }
-    hdrCreationManager->checkEVvalues();
+    //hdrCreationManager->checkEVvalues();
     if (alignMode == AIS_ALIGN)
     {
         hdrCreationManager->align_with_ais();
@@ -551,7 +551,7 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
 */
     }
 
-    hdrCreationManager->removeTempFiles();
+    //hdrCreationManager->removeTempFiles();
 
     HDR.reset( hdrCreationManager->createHdr(false,1) );
     saveHDR();

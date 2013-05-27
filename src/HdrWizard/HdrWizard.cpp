@@ -936,7 +936,7 @@ void HdrWizard::currentPageChangedInto(int newindex)
     //predefined configs page
     // m_ui->textEdit->hide();
     if (newindex == 2) {
-        m_hdrCreationManager->removeTempFiles();
+        //m_hdrCreationManager->removeTempFiles();
         m_ui->NextFinishButton->setText(tr("&Finish"));
         //when at least 2 LDR or MDR inputs perform Manual Alignment
 /*
@@ -1132,12 +1132,12 @@ QString HdrWizard::getQStringFromConfig( int type )
 void HdrWizard::editingEVfinished()
 {
     // transform from EV value to expotime value
-    m_hdrCreationManager->setEV(m_ui->ImageEVdsb->value(), m_ui->tableWidget->currentRow());
+    //m_hdrCreationManager->setEV(m_ui->ImageEVdsb->value(), m_ui->tableWidget->currentRow());
     if (m_hdrCreationManager->getFilesWithoutExif().empty())
     {
         m_ui->NextFinishButton->setEnabled(true);
         //give an offset to the EV values if they are outside of the -10..10 range.
-        m_hdrCreationManager->checkEVvalues();
+        //m_hdrCreationManager->checkEVvalues();
         m_ui->confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.<br>Now click on Next button.</b></h3></font></center>"));
     } else {
         m_ui->confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(m_hdrCreationManager->getFilesWithoutExif().size()) );

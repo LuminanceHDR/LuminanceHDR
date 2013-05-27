@@ -727,14 +727,14 @@ void HdrCreationManager::removeFile(int idx)
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     : inputType( UNKNOWN_INPUT_TYPE )
     , chosen_config( predef_confs[0] )
-    , m_loadingError(false)
-    , m_runningThreads(0)
-    , m_processedFiles(0)
+    //, m_loadingError(false)
+    //, m_runningThreads(0)
+    //, m_processedFiles(0)
     , ais( NULL )
     , m_ais_crop_flag(false)
     , m_shift(0)
-    , m_mdrWidth(0)
-    , m_mdrHeight(0)
+    //, m_mdrWidth(0)
+    //, m_mdrHeight(0)
     , fromCommandLine( fromCommandLine )
 {}
 
@@ -828,16 +828,14 @@ void HdrCreationManager::loadInputFiles()
         }
     }
 }
-*/
 
-void HdrCreationManager::loadFailed(const QString& message, int /*index*/)
+void HdrCreationManager::loadFailed(const QString& message, int )
 {
     //check for correct image size: update list that will be sent once all is over.
     m_loadingError = true;
     emit errorWhileLoading(message);
 }
 
-/*
 void HdrCreationManager::mdrReady(pfs::Frame* newFrame, int index, float expotime, const QString& newfname)
 {
     if (m_loadingError) {
@@ -943,6 +941,15 @@ void HdrCreationManager::newResult(int index, float expotime, const QString& new
     emit processed();
 }
 */
+const QVector<float> HdrCreationManager::getExpotimes() const
+{
+    QVector<float> expotimes;
+    for ( HdrCreationItemContainer::const_iterator it = m_data.begin(), 
+          itEnd = m_data.end(); it != itEnd; ++it) {
+        expotimes.push_back(it->getEV());
+    }
+    return expotimes;
+}
 
 bool HdrCreationManager::framesHaveSameSize()
 {
@@ -1000,7 +1007,7 @@ bool HdrCreationManager::mdrsHaveSameSize(size_t currentWidth, size_t currentHei
 
 void HdrCreationManager::align_with_mtb()
 {
-    mtb_alignment(ldrImagesList);
+    //mtb_alignment(ldrImagesList);
     emit finishedAligning(0);
 }
 
@@ -1151,6 +1158,7 @@ void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
     qDebug() << "align_image_stack failed";
 }
 
+/*
 void HdrCreationManager::removeTempFiles()
 {
     foreach (QString tempfname, filesToRemove) {
@@ -1200,6 +1208,7 @@ void HdrCreationManager::setEV(float new_ev, int image_idx)
     expotimes[image_idx] = exp2f(new_ev);
     emit expotimeValueChanged(exp2f(new_ev), image_idx);
 }
+*/
 
 using namespace libhdr::fusion;
 
@@ -1273,7 +1282,6 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
         antiGhostingMasksList.clear();
     }
 }
-*/
 
 void HdrCreationManager::makeSureLDRsHaveAlpha()
 {
@@ -1360,13 +1368,13 @@ void HdrCreationManager::cropMDR(const QRect& ca)
     int newWidth = x_br-x_ul;
     int newHeight = y_br-y_ul;
 
-    /*
+    
     // crop all the images
-    int origlistsize = listmdrR.size();
-    pfs::Frame *frame;
-    pfs::Channel *Xc, *Yc, *Zc;
-    pfs::Frame *cropped_frame;
-    */
+    //int origlistsize = listmdrR.size();
+    //pfs::Frame *frame;
+    //pfs::Channel *Xc, *Yc, *Zc;
+    //pfs::Frame *cropped_frame;
+    
 
     // all R channels
     for ( size_t idx = 0; idx < listmdrR.size(); ++idx )
@@ -1394,23 +1402,6 @@ void HdrCreationManager::cropMDR(const QRect& ca)
 
     for ( int idx = 0; idx < mdrImagesList.size(); ++idx )
     {
-        /*
-        frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
-        frame->createXYZChannels( Xc, Yc, Zc );
-        Xc->setChannelData(listmdrR[idx]);
-        Yc->setChannelData(listmdrG[idx]);
-        Zc->setChannelData(listmdrB[idx]);
-
-        cropped_frame = pfs::cut(frame, x_ul, y_ul, x_br, y_br);
-
-        pfs::DOMIO::freeFrame(frame);
-
-        pfs::Channel *R, *G, *B;
-        cropped_frame->getXYZChannels( R, G, B);
-        listmdrR[idx] = R->getChannelData();
-        listmdrG[idx] = G->getChannelData();
-        listmdrB[idx] = B->getChannelData();
-        */
 
         QImage *newimage = new QImage(mdrImagesList.at(0)->copy(ca));
         if (newimage == NULL)
@@ -1427,7 +1418,6 @@ void HdrCreationManager::cropMDR(const QRect& ca)
     cropAgMasks(ca);
 }
 
-/*
 void HdrCreationManager::reset()
 {
     ais = NULL;
@@ -1518,6 +1508,7 @@ void interleavedToPlanar(const QImage* image,
 }
 } // anonymous namespace
 
+/*
 void HdrCreationManager::saveLDRs(const QString& filename)
 {
 #ifdef QT_DEBUG
@@ -1606,7 +1597,7 @@ void HdrCreationManager::saveMDRs(const QString& filename)
     }
     emit imagesSaved();
 }
-
+*/
 void HdrCreationManager::doAntiGhosting(int goodImageIndex)
 {
 /*
