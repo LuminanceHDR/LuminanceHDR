@@ -143,11 +143,6 @@ public:
     // this is public so that the wizard (or the cli?) can modify it directly.
 	config_triple chosen_config;
 
-    //void applyShiftsToImageStack(const QList< QPair<int,int> >& HV_offsets);
-    //void applyShiftsToMdrImageStack(const QList< QPair<int,int> >& HV_offsets);
-
-    //void cropLDR(const QRect& ca);
-    //void cropMDR(const QRect& ca);
     void applyShiftsToItems(const QList<QPair<int,int> >&);
     void cropItems(const QRect& ca);
     void cropAgMasks(const QRect& ca);

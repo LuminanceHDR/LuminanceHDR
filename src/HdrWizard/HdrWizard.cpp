@@ -188,7 +188,7 @@ void HdrWizard::setupConnections()
     // connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT());
     connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(loadInputFilesDone()));
     connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()));
-    connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(reset()));
+    //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(reset()));
     connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()));
     connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)));
     connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
@@ -514,6 +514,10 @@ void HdrWizard::loadInputFiles(const QStringList& files)
         connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), &progressDialog, SLOT(setValue(int)));
         connect(&progressDialog, SIGNAL(canceled()), m_hdrCreationManager.data(), SIGNAL(progressCancel()));
 */
+        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
         // m_hdrCreationManager->loadFiles(files);
@@ -529,23 +533,6 @@ void HdrWizard::loadInputFiles(const QStringList& files)
         // Query the progress dialog to check if was canceled.
         // qDebug() << "Canceled?" << progressDialog.wasCanceled();
     }
-
-    /*
-
-    int shift = m_ui->tableWidget->rowCount();
-    m_ui->tableWidget->setEnabled(false);
-    m_ui->tableWidget->setRowCount(shift + count);
-    m_ui->progressBar->setMaximum(count);
-    m_ui->progressBar->setValue(0);
-    //connect(m_hdrCreationManager, SIGNAL(maximumValue(int)), progressBar, SLOT(setMaximum(int)));
-    //connect(m_hdrCreationManager, SIGNAL(nextstep(int)), progressBar, SLOT(setValue(int)));
-    m_ui->progressBar->show();
-    
-    // DAVIDE _ HDR CREATION
-    // m_hdrCreationManager->setShift(shift);
-    // m_hdrCreationManager->setFileList(files);
-    // m_hdrCreationManager->loadInputFiles();
-    */
 }
 
 void HdrWizard::loadInputFilesDone()

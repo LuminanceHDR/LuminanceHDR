@@ -329,6 +329,20 @@ float hueSquaredMean(HdrCreationItemContainer& data, int k)
     return HS / (width*height);
 }
 
+qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B)
+{
+    int width = R.getCols();
+    int height = R.getRows();
+    qreal avgLum = 0.0f;
+
+    float h, s, l;
+    for (int i = 0; i < height*width; i++)
+    {
+        rgb2hsv(R(i), G(i), B(i), h, s, l);
+        avgLum += l;
+    }
+    return avgLum / (width * height);
+}
 qreal averageLightness(const HdrCreationItem& item)
 {
     int width = item.frame()->getWidth();
@@ -351,7 +365,6 @@ qreal averageLightness(const HdrCreationItem& item)
         avgLum += l;
     }
     return avgLum / (width * height);
-
 }
 
 bool comparePatches(const HdrCreationItem& item1,
@@ -470,8 +483,6 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
            const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
            const QImage& mask, const QImage& maskGoodImage)
 {
-/*
-    qDebug() << "blend MDR";
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
@@ -485,9 +496,6 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
     float h, s, l;
     float r1, g1, b1;
     float r2, g2, b2;
-    float maxL1 = maxLightness(R1, G1, B1);
-    float maxL2 = maxLightness(R2, G2, B2);
-    float maxL = std::max(maxL1, maxL2);
 
     for (int j = 0; j < height; j++)
     {
@@ -507,7 +515,7 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
 
             rgb2hsl(r2, g2, b2, h, s, l);
             l *= sf;
-            if (l > maxL) l = maxL;
+            if (l > max_lightness) l = max_lightness;
 
             hsl2rgb(h, s, l, r2, g2, b2);
 
@@ -526,10 +534,8 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
     }
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
-    std::cout << "blend MDR = " << stop_watch.get_time() << " msec" << std::endl;
-    qDebug() << "Max lightness: " << maxL;
+    std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
-*/
 }
 
 void shiftItem(HdrCreationItem& item, int dx, int dy)
@@ -542,12 +548,10 @@ void shiftItem(HdrCreationItem& item, int dx, int dy)
     Array2Df *Rout = shift( Rin, dx, dy);
     Array2Df *Gout = shift( Gin, dx, dy);
     Array2Df *Bout = shift( Bin, dx, dy);
-    //Frame tempFrame(item.frame()->getWidth(), item.frame()->getHeight());
-    //Channel *redOut, *greenOut, *blueOut;
-    //tempFrame.createXYZChannels( redOut, greenOut, blueOut);
     red->swap(*Rout);
     green->swap(*Gout);
     blue->swap(*Bout);
+    item.qimage()->swap(*shiftQImage(item.qimage(), dx, dy));
 }
 
 } // anonymous namespace
@@ -683,11 +687,11 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
     // parallel load of the data...
     // Create a QFutureWatcher and connect signals and slots.
     QFutureWatcher<void> futureWatcher;
-//    connect(&futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
-//    connect(&futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
-//    connect(this, SIGNAL(progressCancel()), &futureWatcher, SLOT(cancel()), Qt::DirectConnection);
-//    connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
-//    connect(&futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
+    connect(&futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
+    connect(&futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
+    connect(this, SIGNAL(progressCancel()), &futureWatcher, SLOT(cancel()), Qt::DirectConnection);
+    connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
+    connect(&futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
 
     // Start the computation.
     futureWatcher.setFuture( QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile()) );
@@ -696,7 +700,6 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
     if (futureWatcher.isCanceled()) return;
 
     qDebug() << "Data loaded ... move to internal structure!";
-
     BOOST_FOREACH(const HdrCreationItem& i, tempItems) {
         if ( i.isValid() ) {
             qDebug() << QString("Insert data for %1").arg(i.filename());
@@ -1431,38 +1434,25 @@ void HdrCreationManager::saveMDRs(const QString& filename)
 */
 void HdrCreationManager::doAntiGhosting(int goodImageIndex)
 {
-/*
-    qDebug() << "HdrCreationManager::doAntiGhosting";
-    if (inputType == LDR_INPUT_TYPE)
-    {
-        int origlistsize = ldrImagesList.size();
-        for (int idx = 0; idx < origlistsize; idx++)
-        {
-            if (idx != goodImageIndex)
-            {
-                blend(*ldrImagesList[idx],
-                      *ldrImagesList[goodImageIndex],
-                      *antiGhostingMasksList[idx],
-                      *antiGhostingMasksList[goodImageIndex]);
-            }
-        }
+    Channel *red_goodImage, *green_goodImage, *blue_goodImage;
+    m_data[goodImageIndex].frame()->getXYZChannels( red_goodImage, green_goodImage, blue_goodImage);
+    Array2Df& R_goodImage = *red_goodImage;
+    Array2Df& G_goodImage = *green_goodImage;
+    Array2Df& B_goodImage = *blue_goodImage;
+
+    int size = m_data.size();
+    for (int idx = 0; idx < size; idx++) {
+        if (idx == goodImageIndex) continue;
+        Channel *red, *green, *blue;
+        m_data[idx].frame()->getXYZChannels( red, green, blue);
+        Array2Df& R = *red;
+        Array2Df& G = *green;
+        Array2Df& B = *blue;
+        blend( R, G, B, 
+               R_goodImage, G_goodImage, B_goodImage,
+               *antiGhostingMasksList[idx],
+               *antiGhostingMasksList[goodImageIndex] );
     }
-    else {
-        int origlistsize = listmdrR.size();
-        for (int idx = 0; idx < origlistsize; idx++)
-        {
-            if (idx != goodImageIndex)
-            {
-                blend(*listmdrR[idx], *listmdrG[idx], *listmdrB[idx],
-                      *listmdrR[goodImageIndex],
-                      *listmdrG[goodImageIndex],
-                      *listmdrB[goodImageIndex],
-                      *antiGhostingMasksList[idx],
-                      *antiGhostingMasksList[goodImageIndex]);
-            }
-        }
-    }
-*/
 }
 
 void HdrCreationManager::cropAgMasks(const QRect& ca) {
