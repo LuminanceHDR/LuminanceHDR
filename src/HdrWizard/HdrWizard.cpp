@@ -435,7 +435,7 @@ void HdrWizard::inputHdrFileSelected(int currentRow)
         // load QImage...
         m_ui->previewLabel->setPixmap(
                     QPixmap::fromImage(
-                        m_hdrCreationManager->getFile(currentRow).qimage().scaled(
+                        m_hdrCreationManager->getFile(currentRow).qimage()->scaled(
                             m_ui->previewLabel->size(), Qt::KeepAspectRatio)
                         ));
 
@@ -940,20 +940,18 @@ void HdrWizard::currentPageChangedInto(int newindex)
         //m_hdrCreationManager->removeTempFiles();
         m_ui->NextFinishButton->setText(tr("&Finish"));
         //when at least 2 LDR or MDR inputs perform Manual Alignment
+        int num_images = m_hdrCreationManager->getData().size();
 /*
-        int numldrs;
         if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
             numldrs = m_hdrCreationManager->getLDRList().size();
         else
             numldrs = m_hdrCreationManager->getMDRList().size();
-        
+      
         qDebug() << "numldrs = " << numldrs;
+*/
         //if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
-        if (numldrs >= 2) {
+        if (num_images >= 2) {
             this->setDisabled(true);
-            //fix for some platforms/Qt versions: makes sure LDR images have alpha channel
-            if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
-                m_hdrCreationManager->makeSureLDRsHaveAlpha();
             EditingTools *editingtools = new EditingTools(m_hdrCreationManager.data());
             if (editingtools->exec() == QDialog::Accepted) {
                 this->setDisabled(false);
@@ -962,7 +960,6 @@ void HdrWizard::currentPageChangedInto(int newindex)
             }
             delete editingtools;
         }
-*/
     }
     else if (newindex == 3) { //custom config
         predefConfigsComboBoxActivated(1);
@@ -1156,7 +1153,7 @@ void HdrWizard::resizeEvent( QResizeEvent * )
     {
         m_ui->previewLabel->setPixmap(
                     QPixmap::fromImage(
-                        m_hdrCreationManager->getFile(currentRow).qimage().scaled(
+                        m_hdrCreationManager->getFile(currentRow).qimage()->scaled(
                             m_ui->previewLabel->size(), Qt::KeepAspectRatio)
                         ));
     }
