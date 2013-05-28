@@ -187,11 +187,11 @@ void HdrWizard::setupConnections()
 
     // connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT());
     connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(loadInputFilesDone()));
-    connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()));
+    connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()), Qt::DirectConnection);
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(reset()));
-    connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()));
-    connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)));
-    connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
+    connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()), Qt::DirectConnection);
+    connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
+    connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
 
     connect(m_ui->NextFinishButton, SIGNAL(clicked()), this, SLOT(NextFinishButtonClicked()));
     connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
@@ -514,14 +514,13 @@ void HdrWizard::loadInputFiles(const QStringList& files)
         connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), &progressDialog, SLOT(setValue(int)));
         connect(&progressDialog, SIGNAL(canceled()), m_hdrCreationManager.data(), SIGNAL(progressCancel()));
 */
-        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
         // m_hdrCreationManager->loadFiles(files);
-        m_ioFutureWatcher.setFuture(
+        //connect(&m_futureWatcher, SIGNAL(started()), m_ui->progressBar, SLOT(show()));
+        //connect(&m_futureWatcher, SIGNAL(finished()), m_ui->progressBar, SLOT(hide()));
+
+        m_futureWatcher.setFuture(
                     QtConcurrent::run(
                         boost::bind(&HdrCreationManager::loadFiles,
                                     m_hdrCreationManager.data(),
@@ -537,7 +536,7 @@ void HdrWizard::loadInputFiles(const QStringList& files)
 
 void HdrWizard::loadInputFilesDone()
 {
-    m_ioFutureWatcher.waitForFinished();    // should breeze over...
+    m_futureWatcher.waitForFinished();    // should breeze over...
     qDebug() << "HdrWizard::loadInputFilesDone()";
 
     m_ui->loadImagesButton->setEnabled(true);
@@ -909,14 +908,36 @@ void HdrWizard::NextFinishButtonClicked() {
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
         if (m_ui->antighostingCheckBox->isChecked()) {
-            m_hdrCreationManager->doAutoAntiGhosting(m_ui->doubleSpinBoxThreshold->value());
+            //m_hdrCreationManager->doAutoAntiGhosting(m_ui->doubleSpinBoxThreshold->value());
+            connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdr()), Qt::DirectConnection);
+            m_futureWatcher.setFuture( QtConcurrent::run( boost::bind(&HdrCreationManager::doAutoAntiGhosting,
+                                                                       m_hdrCreationManager.data(),
+                                                                       m_ui->doubleSpinBoxThreshold->value())) );
         }
-        m_pfsFrameHDR = m_hdrCreationManager->createHdr(false, m_ui->spinBoxIterations->value());
-
-        QApplication::restoreOverrideCursor();
-        accept();
-        return;
+        else
+            createHdr();
     }
+}
+
+void HdrWizard::createHdr()
+{
+    //m_pfsFrameHDR = m_hdrCreationManager->createHdr(false, m_ui->spinBoxIterations->value());
+
+    m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr, 
+                                               m_hdrCreationManager.data(),
+                                               false, 
+                                               m_ui->spinBoxIterations->value()));
+
+    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
+    m_futureWatcher.setFuture(m_future);
+}
+
+void HdrWizard::createHdrFinished()
+{
+    m_pfsFrameHDR = m_future.result();
+
+    QApplication::restoreOverrideCursor();
+    accept();
 }
 
 void HdrWizard::currentPageChangedInto(int newindex)

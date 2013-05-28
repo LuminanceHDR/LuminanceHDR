@@ -46,7 +46,8 @@ private:
     QScopedPointer<Ui::HdrWizard> m_ui;
     QScopedPointer<HdrCreationManager> m_hdrCreationManager;
 
-    QFutureWatcher<void> m_ioFutureWatcher;
+    QFutureWatcher<void> m_futureWatcher;
+    QFuture<pfs::Frame*> m_future;
 
 //    QString loadcurvefilename;
 //    QString savecurvefilename;
@@ -105,8 +106,6 @@ private slots:
 
     void inputHdrFileSelected(int currentRow);
 
-private slots:
-
     void updateEVSlider(int newValue);
     void updateEVSpinBox(double newValue);
 
@@ -142,5 +141,7 @@ private slots:
 	void setupConnections();
 	void on_pushButtonSaveSettings_clicked();
     void updateProgressBar(int);
+    void createHdr();
+    void createHdrFinished();
 };
 #endif
