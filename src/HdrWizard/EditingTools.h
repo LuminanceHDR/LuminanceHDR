@@ -36,7 +36,6 @@
 #include "Viewers/SelectionTool.h"
 #include "HdrWizard/HdrCreationManager.h"
 #include "PreviewWidget.h"
-#include "AntiGhostingWidget.h"
 #include "Common/LuminanceOptions.h"
 
 class HistogramLDR;
@@ -54,19 +53,16 @@ protected:
 private:
 	QList<QImage*> m_originalImagesList;
 	QList<QImage*> m_antiGhostingMasksList;
+    int m_currentAgMaskIndex;
 	QStringList m_fileList;
 	HdrCreationManager *m_hcm;
     QMap<QString, int> m_filesMap;
 	QScrollArea *m_scrollArea;
 	PreviewWidget *m_previewWidget;
-	AntiGhostingWidget *m_agWidget;
 	int m_additionalShiftValue;
 	QList< QPair<int,int> > m_HV_offsets;
 	HistogramLDR *m_histogram;
 	QSize m_previousPreviewWidgetSize;
-	PanIconWidget *m_panIconWidget;
-	QToolButton *m_cornerButton;
-	SelectionTool *m_selectionTool;
 	bool m_imagesSaved;
     int m_goodImageIndex;
     bool m_antiGhosting;
@@ -75,9 +71,6 @@ private:
 
 	void setAntiGhostingWidget(QImage*, QPair<int, int>);
 private slots:
-	void slotPanIconSelectionMoved(QRect);
-	void slotPanIconHidden();
-	void slotCornerButtonPressed();
 	void saveImagesButtonClicked();
 	void updatePivot(int);
 	void updateMovable(int);
@@ -98,7 +91,8 @@ private slots:
 	void enterWhatsThis();
 	void zoomIn();
 	void zoomOut();
-	void fitPreview(bool);
+	void fitPreview();
+	void fillPreview();
 	void origSize();
 	void cropStack();
 	void nextClicked();
@@ -107,7 +101,6 @@ private slots:
 	void antighostToolButtonToggled(bool);
 	void blendModeCBIndexChanged(int);
 	void setupConnections();
-	void updateScrollBars(QPoint diff);
 	void restoreSaveImagesButtonState();
     void addGoodImage();
     void removeGoodImage();

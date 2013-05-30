@@ -109,6 +109,43 @@
                   <property name="checkable">
                    <bool>true</bool>
                   </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                  <property name="autoExclusive">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="fillButton">
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Fill the window</string>
+                  </property>
+                  <property name="text">
+                   <string>Fill &amp;window</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../icons.qrc">
+                    <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>22</width>
+                    <height>22</height>
+                   </size>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="autoExclusive">
+                   <bool>true</bool>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -134,55 +171,11 @@
                     <height>22</height>
                    </size>
                   </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="zoomInButton">
-                  <property name="font">
-                   <font>
-                    <pointsize>8</pointsize>
-                   </font>
+                  <property name="checkable">
+                   <bool>true</bool>
                   </property>
-                  <property name="toolTip">
-                   <string>Zoom In</string>
-                  </property>
-                  <property name="text">
-                   <string>Zoom &amp;In</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/viewmag_inc.png</normaloff>:/new/prefix1/images/viewmag_inc.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="zoomOutButton">
-                  <property name="font">
-                   <font>
-                    <pointsize>8</pointsize>
-                   </font>
-                  </property>
-                  <property name="toolTip">
-                   <string>Zoom Out</string>
-                  </property>
-                  <property name="text">
-                   <string>Zoom &amp;Out</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/viewmag_dec.png</normaloff>:/new/prefix1/images/viewmag_dec.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>22</width>
-                    <height>22</height>
-                   </size>
+                  <property name="autoExclusive">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -1013,7 +1006,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QFrame" name="previewImageFrame">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Ignored">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -1363,9 +1356,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>referenceListWidget</tabstop>
   <tabstop>movableListWidget</tabstop>
   <tabstop>blendModeCB</tabstop>
-  <tabstop>zoomOutButton</tabstop>
-  <tabstop>zoomInButton</tabstop>
-  <tabstop>origSizeButton</tabstop>
+  <tabstop>fillButton</tabstop>
   <tabstop>fitButton</tabstop>
   <tabstop>whatsThisButton</tabstop>
   <tabstop>Next_Finishbutton</tabstop>

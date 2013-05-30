@@ -137,6 +137,7 @@ public:
 
     const HdrCreationItemContainer& getData() const         { return m_data; } 
     const QList<QImage*>& getAntiGhostingMasksList() const  { return antiGhostingMasksList; }
+    void setAntiGhostingMasksList(QList<QImage*>& list)     { antiGhostingMasksList = list; }
     const QVector<float> getExpotimes() const;
 
     // the configuration used to create the hdr

@@ -26,22 +26,37 @@
 
 #include <QColor>
 #include <QResizeEvent>
+#include <QMouseEvent>
 #include <QScrollBar>
 #include <QScrollArea>
 #include <QImage>
+#include <QToolButton>
+#include <QVBoxLayout>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+
+class IGraphicsView; 
+class IGraphicsPixmapItem;
+class PanIconWidget;
 
 class PreviewWidget : public QWidget
 {
 Q_OBJECT
 public:
+    //! \brief Enum containing the list of possible view mode
+    enum ViewerMode
+    {
+        FIT_WINDOW = 0,
+        FILL_WINDOW = 1,
+        NORMAL_SIZE = 2
+    };
+
     PreviewWidget(QWidget *parent, QImage *m, const QImage *p);
     ~PreviewWidget();
     QSize sizeHint () const {
         return m_previewImage->size();
     }
-    float getScaleFactor() {
-        return m_scaleFactor;
-    }
+    float getScaleFactor(); 
     QImage * getPreviewImage() {
         renderPreviewImage(blendmode);
         return m_previewImage;
@@ -54,17 +69,71 @@ public:
     void updateHorizShiftMovable(int h);
     void updateHorizShiftPivot(int h);
     void updateVertShiftPivot(int v);
+    int getWidth();
+    int getHeight();
+    bool isFittedToWindow();
+    bool isFilledToWindow();
+    bool isNormalSize();
+
+    void setMask(QImage *mask); 
+    QImage* getMask(); // Conversion to QImage to QPixmap is made for speed optimization
+                       // we need to return a QImage from the modified QPixmap
+
+    void setHV_offset(QPair<int, int> HV_offset) {
+        m_mx = HV_offset.first;
+        m_my = HV_offset.second;
+    }
+
+    void setDrawWithBrush();
+    void setDrawPath();
 
 public slots:
     void requestedBlendMode(int);
+    void updateView();  // tells the Viewer to update the View area
+    void updatePreviewImage();
+
+    void zoomIn();
+    void zoomOut();
+
+    void fitToWindow();  
+    void fillToWindow();
+    void normalSize();
+
+    //! \brief get viewer mode (Fit, Fill or Normal Size)
+    ViewerMode getViewerMode();
+
+    //! \brief set viewer mode (Fit, Fill or Normal Size)
+    void setViewerMode(ViewerMode viewer_mode);
+
+    // selection properties!
+    bool hasSelection();
+    void setSelectionTool(bool);
+    QRect getSelectionRect();
+    void removeSelection();
+
+    void switchAntighostingMode(bool);
+    void setBrushSize(const int);
+    void setBrushStrength(const int);
+    void setBrushColor(const QColor);
+    void setLassoColor(const QColor);
+    void setBrushMode(bool);
+    void saveAgMask();
+    QImage *getSavedAgMask();
+
+protected slots:
+    void slotPanIconSelectionMoved(QRect);
+    void slotPanIconHidden();
+    void slotCornerButtonPressed();
+    void scrollBarChanged(int /*value*/);
+
 signals:
     void moved(QPoint diff);
+    void selectionReady(bool isReady);
+    void changed(PreviewWidget *v);     // emitted when zoomed in/out, scrolled ....
+
 protected:
-    void paintEvent( QPaintEvent * );
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void resizeEvent(QResizeEvent *event);
+    bool eventFilter(QObject* object, QEvent* event); 
+    virtual void timerEvent(QTimerEvent *event);
 
 private:
     //5 blending modes
@@ -116,18 +185,49 @@ private:
     QImage *m_previewImage;
     QImage *m_movableImage;
     const QImage *m_pivotImage;
+    QImage *m_agMask;
+    QPixmap *m_agMaskPixmap;
+    QImage *m_savedMask;
+
+    QToolButton* mCornerButton;
+    PanIconWidget* mPanIconWidget;
+
+    QVBoxLayout *mVBL;
+
+    QGraphicsScene* mScene;
+    IGraphicsView* mView;
+    ViewerMode mViewerMode;
+    IGraphicsPixmapItem *mPixmap, *mAgPixmap;
+    bool m_agPixmapChanged;
 
     QRegion m_prevComputed;
-
+    QRect m_rect;
     //movable and pivot's x,y shifts
     int m_mx, m_my, m_px, m_py;
     //zoom factor
-    float m_scaleFactor;
+    //float m_scaleFactor;
 
-    //for panning with mid-button
-    QPoint m_mousePos;
+    int m_timerid;
+    QPixmap *m_agcursorPixmap;
+    int m_requestedPixmapSize, m_previousPixmapSize;
+    int m_requestedPixmapStrength, m_previousPixmapStrength;
+    QColor m_requestedPixmapColor, m_previousPixmapColor, m_requestedLassoColor;
+    bool m_brushAddMode;//false means brush is in remove mode.
+    void fillAntiGhostingCursorPixmap();
+    void drawWithBrush();
+    void drawPath();
+ 
+    //int m_mx, m_my;
 
-    enum {LB_nomode,LB_antighostingmode} m_leftButtonMode;
+    QPointF m_mousePos;
+    QPointF m_firstPoint;
+    QPointF m_lastPoint;
+    QPointF m_currentPoint;
+    QPainterPath m_path;
+    bool m_drawingPathEnded;
+
+    enum {BRUSH, PATH} m_drawingMode;
+    enum {EditingMode, AntighostingMode} m_mode;
 };
 
 #endif

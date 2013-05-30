@@ -86,7 +86,10 @@ void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void IGraphicsPixmapItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (!mIsSelectionEnabled) return;
+    if (!mIsSelectionEnabled) {
+        event->ignore();
+        return;
+    }
 
     mMouseState = SELECTING;
 
@@ -140,6 +143,8 @@ void IGraphicsPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
         unsetCursor();
     }
+    else
+        event->ignore();
 }
 
 

@@ -31,11 +31,16 @@
 #include <QResizeEvent>
 #include <QEvent>
 
-class AntiGhostingWidget : public QWidget
+#include "PreviewWidget.h"
+
+class QGraphicsScene;
+class IGraphicsPixmapItem;
+
+class AntiGhostingWidget : public QGraphicsScene
 {
 Q_OBJECT
 public:
-    AntiGhostingWidget(QWidget *parent, QImage *mask);
+    AntiGhostingWidget(QGraphicsScene *parent, QImage *mask);
     ~AntiGhostingWidget();
     
     QSize sizeHint () const {
@@ -57,6 +62,8 @@ public:
 
     void setDrawWithBrush();
     void setDrawPath();
+    IGraphicsPixmapItem* getPixmap() { return mPixmap; }
+
 public slots:
     void switchAntighostingMode(bool);
     void setBrushSize(const int);
@@ -66,6 +73,7 @@ public slots:
     void setBrushMode(bool);
     void saveAgMask();
     QImage *getSavedAgMask();
+    void scale(PreviewWidget *);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -79,6 +87,8 @@ protected:
 private:
     QImage *m_agMask;
     QImage *m_savedMask;
+    IGraphicsPixmapItem* mPixmap;
+
     QPoint m_mousePos;
     int m_timerid;
     QPixmap *m_agcursorPixmap;
