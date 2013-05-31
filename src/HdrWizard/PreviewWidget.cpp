@@ -126,6 +126,8 @@ PreviewWidget::~PreviewWidget()
 {
     delete m_previewImage;
     delete mPixmap;
+    if (m_agMaskPixmap)
+        delete m_agMaskPixmap;
 }
 
 QRgb outofbounds = qRgba(0,0,0,255);
@@ -148,6 +150,7 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
         } else //image already rendered fullsize
             return;
     }
+/*
     if (m_agMaskPixmap) {
         QRegion exposed(m_agMaskPixmap->rect()); 
         if (m_prev_mx != 0 ||  m_prev_my != 0) {
@@ -158,9 +161,14 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
             m_agMaskPixmap->scroll(m_mx, m_my, m_agMaskPixmap->rect(), &exposed);
             m_prev_mx = m_mx;
             m_prev_my = m_my;
+            QPainter p(m_agMaskPixmap);
+            p.setPen(Qt::NoPen);
+            p.setBrush(QBrush(QColor::fromRgb(255,0,0,0)));
+            p.drawRect(0, -m_my, m_agMaskPixmap->width(), m_my);
+            mAgPixmap->setPixmap(*m_agMaskPixmap);
         }
-        mAgPixmap->setPixmap(*m_agMaskPixmap);
     }
+*/
     //these kind of things can happen and lead to strange and nasty runtime errors!
     //usually it's an error of 2,3 px
     if ((originy + H - 1) >= m_movableImage->height())
@@ -170,12 +178,22 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 
     const QRgb *movVal = NULL;
     const QRgb *pivVal = NULL;
+    const QRgba *maskVal = NULL;
     QRgb* movLine = NULL;
     QRgb* pivLine = NULL;
+    QRgb* maskLine = NULL;
+
+    if (m_agMask) {
+        delete m_agMask;
+        m_agMask = new QImage(m_agMaskPixmap->toImage());
+    }
 
     //for all the rows that we have to paint
     for(int i = originy; i < originy+H; i++) {
         QRgb* out = (QRgb*)m_previewImage->scanLine(i);
+        QRgb* outMask = NULL;
+        if (m_agMask)
+            outMask = (QRgb*)m_agMask->scanLine(i);
 
         //if within bounds considering vertical offset
         if ( !( (i - m_my) < 0 || (i - m_my) >= m_movableImage->height()) )
@@ -188,6 +206,13 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
         else
             pivLine = NULL;
         
+        if (m_agMask) {
+            if ( !( (i - m_my) < 0 || (i - m_my) >= m_agMask->height()) )
+                maskLine = (QRgb*)(m_agMask->scanLine(i - m_my));
+            else
+                maskLine = NULL;
+        }
+
         //for all the columns that we have to paint
         for(int j = originx; j < originx + W; j++) {
             //if within bounds considering horizontal offset
@@ -201,12 +226,25 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
             else
                 pivVal = &pivLine[j - m_px];
 
+            if (m_agMask) {
+                if (maskLine == NULL || (j - m_mx) < 0 || (j - m_mx) >= m_agMask->width())
+                    maskVal = &outofbounds;
+                else
+                    maskVal = &maskLine[j - m_mx];
+            }
+
             if (m_pivotImage == m_movableImage)
                 out[j] = *movVal;
             else
                 out[j] = (this->*rendermode)(movVal,pivVal);
             
+            if (m_agMask)
+                outMask[j] = *maskVal;
         }
+    }
+    if (m_agMask) {
+        delete m_agMaskPixmap;
+        m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
     }
 }
 
