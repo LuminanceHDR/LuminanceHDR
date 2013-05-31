@@ -1055,9 +1055,7 @@ HdrCreationManager::~HdrCreationManager()
     if (ais != NULL && ais->state() != QProcess::NotRunning) {
         ais->kill();
     }
-    // DAVIDE _ HDR CREATION
-    // clearlists(true);
-    qDeleteAll(antiGhostingMasksList);
+    //qDeleteAll(antiGhostingMasksList);
 }
 
 /*

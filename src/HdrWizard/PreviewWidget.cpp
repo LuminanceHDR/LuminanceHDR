@@ -19,6 +19,9 @@
  * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ *
+ * Implementation based on QGraphicsView, anti ghosting:
+ * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
 #include <cassert>
@@ -111,6 +114,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
 
     mAgPixmap = new IGraphicsPixmapItem(mPixmap);
     mAgPixmap->setZValue(1);
+    mAgPixmap->setVisible(false);
     mScene->addItem(mPixmap);
     
     mAgPixmap->setAcceptedMouseButtons(0);
@@ -142,6 +146,9 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
         } else //image already rendered fullsize
             return;
     }
+    if (m_agMaskPixmap) {
+        m_agMaskPixmap->scroll(m_mx, m_my, m_agMaskPixmap->rect());
+    }
     //these kind of things can happen and lead to strange and nasty runtime errors!
     //usually it's an error of 2,3 px
     if ((originy + H - 1) >= m_movableImage->height())
@@ -168,7 +175,7 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
             pivLine = (QRgb*)(m_pivotImage->scanLine(i - m_py));
         else
             pivLine = NULL;
-
+        
         //for all the columns that we have to paint
         for(int j = originx; j < originx + W; j++) {
             //if within bounds considering horizontal offset
@@ -186,6 +193,7 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
                 out[j] = *movVal;
             else
                 out[j] = (this->*rendermode)(movVal,pivVal);
+            
         }
     }
 }
@@ -208,10 +216,8 @@ void PreviewWidget::requestedBlendMode(int newindex) {
 
 bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
 {   
-    qDebug() << "PreviewWidget::eventFilter";
     if (m_mode == EditingMode) return false;
     if (event->type() == QEvent::MouseButtonPress) {
-        qDebug() << "QEvent::MouseButtonPress";
         QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
         if (mouse->buttons() == Qt::MidButton) {
             QApplication::setOverrideCursor( QCursor(Qt::ClosedHandCursor) );
@@ -232,7 +238,6 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
         }
     }
     else if (event->type() == QEvent::MouseMove) {
-        qDebug() << "QEvent::MouseMove";
         QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
         if (mouse->buttons() == Qt::MidButton) {
             QPointF pos = mView->mapToScene(mouse->pos());
@@ -250,11 +255,9 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
             QPointF shifted(sx,sy);
             m_currentPoint = shifted;
         }
-        //mAgPixmap->setPixmap(QPixmap::fromImage(*m_agMask));
         mAgPixmap->setPixmap(*m_agMaskPixmap);
     }
     else if (event->type() == QEvent::MouseButtonRelease) {
-        qDebug() << "QEvent::MouseButtonRelease";
         QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
         if (mouse->button() == Qt::LeftButton) {
             QObject::killTimer(m_timerid);
@@ -266,20 +269,25 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
         }
         else if (mouse->button() == Qt::MidButton) {
             QApplication::restoreOverrideCursor();      
-            if (m_drawingMode == BRUSH) {
-                fillAntiGhostingCursorPixmap();
-                this->unsetCursor();
-                this->setCursor(*m_agcursorPixmap);
-            }
-            else {
-                this->unsetCursor();
-                this->setCursor( QCursor(Qt::CrossCursor) );
-            }
         }
         m_agPixmapChanged = false;
-        //mAgPixmap->setPixmap(QPixmap::fromImage(*m_agMask));
         mAgPixmap->setPixmap(*m_agMaskPixmap);
     }
+    else if (event->type() == QEvent::Enter) {
+        if (m_mode == EditingMode)
+            QApplication::restoreOverrideCursor();      
+        else {
+            if (m_drawingMode == BRUSH) {        
+                fillAntiGhostingCursorPixmap();
+                QApplication::setOverrideCursor(*m_agcursorPixmap);
+            }
+            else
+                QApplication::setOverrideCursor(Qt::CrossCursor);
+        }
+    }
+    else if (event->type() == QEvent::Leave)
+       QApplication::restoreOverrideCursor();      
+    
     return false;
 }
 
@@ -595,20 +603,17 @@ void PreviewWidget::updatePreviewImage()
 {
     renderPreviewImage(blendmode, m_rect);
     mPixmap->setPixmap(QPixmap::fromImage(*m_previewImage));
+    mAgPixmap->setPixmap(*m_agMaskPixmap);
 }
 
 void PreviewWidget::setDrawWithBrush()
 {
     m_drawingMode = BRUSH;
-    unsetCursor();
-    fillAntiGhostingCursorPixmap();
 }
 
 void PreviewWidget::setDrawPath()
 {
     m_drawingMode = PATH;
-    unsetCursor();
-    setCursor(Qt::CrossCursor);
 }
 
 void PreviewWidget::setBrushSize (const int newsize) {
@@ -652,15 +657,10 @@ void PreviewWidget::fillAntiGhostingCursorPixmap() {
 
 void PreviewWidget::switchAntighostingMode(bool ag) {
     if (ag) {
-        if (m_drawingMode == BRUSH)
-            this->setCursor(*m_agcursorPixmap);
-        else
-            this->setCursor(Qt::CrossCursor);
         mPixmap->setAcceptedMouseButtons(0);
         mAgPixmap->setVisible(true);
         m_mode = AntighostingMode;
     } else {
-        this->unsetCursor();
         mPixmap->setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton|Qt::MidButton);
         mAgPixmap->setVisible(false);
         m_mode = EditingMode;
@@ -681,19 +681,16 @@ QImage * PreviewWidget::getSavedAgMask()
 
 void PreviewWidget::timerEvent(QTimerEvent *) 
 {
-    qDebug() << "PreviewWidget::timerEvent";
     (m_drawingMode == BRUSH) ? drawWithBrush() : drawPath();
 }
 
 void PreviewWidget::drawWithBrush()
 {
-    qDebug() << "PreviewWidget::drawWithBrush";
     QPointF relativeToWidget = mView->mapToScene(mapFromGlobal(QCursor::pos()));
     float scaleFactor = getScaleFactor();
     int sx = relativeToWidget.x() - m_mx;
     int sy = relativeToWidget.y() - m_my;
     QPointF shifted(sx,sy);
-    //QPainter p(m_agMask);
     QPainter p(m_agMaskPixmap);
     p.setPen(Qt::NoPen);
     p.setBrush(QBrush(m_requestedPixmapColor, Qt::SolidPattern));
@@ -705,7 +702,6 @@ void PreviewWidget::drawWithBrush()
 
 void PreviewWidget::drawPath()
 {
-    //QPainter painter(m_agMask);
     QPainter painter(m_agMaskPixmap);
     painter.setPen(QPen(m_requestedLassoColor, 0, Qt::SolidLine,
                      Qt::FlatCap, Qt::MiterJoin));

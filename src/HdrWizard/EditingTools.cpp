@@ -158,7 +158,7 @@ void EditingTools::setupConnections() {
     connect(toolButtonApplyMask,SIGNAL(clicked()),this,SLOT(applySavedAgMask()));
 
     connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
-    connect(m_previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
+    //connect(m_previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
     connect(removeMaskRadioButton,SIGNAL(toggled(bool)),m_previewWidget,SLOT(setBrushMode(bool)));
 
     connect(m_hcm, SIGNAL(imagesSaved()), this, SLOT(restoreSaveImagesButtonState()));
@@ -246,6 +246,7 @@ void EditingTools::nextClicked()
     if (m_goodImageIndex != -1) {
         m_hcm->setAntiGhostingMasksList(m_antiGhostingMasksList);
         m_hcm->doAntiGhosting(m_goodImageIndex);
+        qDeleteAll(m_antiGhostingMasksList);
     }
 
     QApplication::restoreOverrideCursor();
@@ -300,6 +301,7 @@ void EditingTools::horizShiftChanged(int v) {
 void EditingTools::resetCurrent() {
     horizShiftSB->setValue(0);
     vertShiftSB->setValue(0);
+    m_previewWidget->updatePreviewImage();
 }
 
 void EditingTools::resetAll() {
@@ -403,7 +405,6 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
             nextBothButton->setDisabled(false);
             referenceListWidget->addItem(QFileInfo(m_fileList[m_goodImageIndex]).fileName());
             referenceListWidget->setCurrentRow(0);
-            movableListWidget->takeItem(m_goodImageIndex);
             movableListWidget->setCurrentRow(0);
             updatePivot(m_goodImageIndex);
             QString filename = movableListWidget->currentItem()->text();
