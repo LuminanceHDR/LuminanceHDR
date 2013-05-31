@@ -178,7 +178,7 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 
     const QRgb *movVal = NULL;
     const QRgb *pivVal = NULL;
-    const QRgba *maskVal = NULL;
+    const QRgb *maskVal = NULL;
     QRgb* movLine = NULL;
     QRgb* pivLine = NULL;
     QRgb* maskLine = NULL;
