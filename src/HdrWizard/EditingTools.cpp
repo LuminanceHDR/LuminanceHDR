@@ -210,6 +210,10 @@ void EditingTools::cropStack()
     if(ca.width()<=0 || ca.height()<=0)
         return;
 
+    QImage* tmp = m_previewWidget->getMask();
+    delete m_antiGhostingMasksList[m_currentAgMaskIndex];
+    m_antiGhostingMasksList.replace(m_currentAgMaskIndex, tmp);
+    m_hcm->setAntiGhostingMasksList(m_antiGhostingMasksList);
     m_hcm->cropItems(ca);
     m_originalImagesList.clear();
     HdrCreationItemContainer data = m_hcm->getData();
@@ -218,15 +222,13 @@ void EditingTools::cropStack()
         m_originalImagesList.push_back(it->qimage());
     }
     
+    m_antiGhostingMasksList.clear();
     m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
         
     m_previewWidget->removeSelection();
 
     m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
     m_previewWidget->setPivot(m_originalImagesList[referenceListWidget->currentRow()]);
-    QImage* tmp = m_previewWidget->getMask();
-    delete m_antiGhostingMasksList[m_currentAgMaskIndex];
-    m_antiGhostingMasksList.replace(m_currentAgMaskIndex, tmp);
     m_currentAgMaskIndex = movableListWidget->currentRow();
     m_previewWidget->setMask(m_antiGhostingMasksList[m_currentAgMaskIndex]);
     //restore fit
