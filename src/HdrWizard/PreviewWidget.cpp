@@ -55,6 +55,8 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     m_my(0),
     m_px(0),
     m_py(0),
+    m_prev_mx(0),
+    m_prev_my(0),
     m_agcursorPixmap(NULL),
     m_drawingMode(BRUSH) 
 {
@@ -147,7 +149,17 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
             return;
     }
     if (m_agMaskPixmap) {
-        m_agMaskPixmap->scroll(m_mx, m_my, m_agMaskPixmap->rect());
+        QRegion exposed(m_agMaskPixmap->rect()); 
+        if (m_prev_mx != 0 ||  m_prev_my != 0) {
+            m_agMaskPixmap->scroll(-m_prev_mx, -m_prev_my, m_agMaskPixmap->rect(), &exposed);
+            m_prev_mx = m_prev_my = 0;
+        }
+        if (m_mx != m_prev_mx || m_my != m_prev_my) {
+            m_agMaskPixmap->scroll(m_mx, m_my, m_agMaskPixmap->rect(), &exposed);
+            m_prev_mx = m_mx;
+            m_prev_my = m_my;
+        }
+        mAgPixmap->setPixmap(*m_agMaskPixmap);
     }
     //these kind of things can happen and lead to strange and nasty runtime errors!
     //usually it's an error of 2,3 px
@@ -334,11 +346,13 @@ QImage *PreviewWidget::getMask()
 }
 
 void PreviewWidget::updateVertShiftMovable(int v) {
+    m_prev_my = m_my;
     m_my = v;
     m_prevComputed = QRegion();
 }
 
 void PreviewWidget::updateHorizShiftMovable(int h) {
+    m_prev_mx = m_mx;
     m_mx = h;
     m_prevComputed = QRegion();
 }
@@ -671,7 +685,7 @@ void PreviewWidget::saveAgMask()
 {
     if (m_savedMask)
         delete m_savedMask;
-    m_savedMask = new QImage(*m_agMask);
+    m_savedMask = new QImage(m_agMaskPixmap->toImage());
 }
 
 QImage * PreviewWidget::getSavedAgMask()

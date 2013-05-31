@@ -203,7 +203,7 @@ private:
     QRegion m_prevComputed;
     QRect m_rect;
     //movable and pivot's x,y shifts
-    int m_mx, m_my, m_px, m_py;
+    int m_mx, m_my, m_px, m_py, m_prev_mx, m_prev_my;
     //zoom factor
     //float m_scaleFactor;
 

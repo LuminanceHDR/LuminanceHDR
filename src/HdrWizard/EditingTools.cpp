@@ -405,11 +405,12 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
             nextBothButton->setDisabled(false);
             referenceListWidget->addItem(QFileInfo(m_fileList[m_goodImageIndex]).fileName());
             referenceListWidget->setCurrentRow(0);
-            movableListWidget->setCurrentRow(0);
+            //movableListWidget->setCurrentRow(0);
             updatePivot(m_goodImageIndex);
             QString filename = movableListWidget->currentItem()->text();
             int idx = m_filesMap[filename];
             updateMovable(idx);
+            m_previewWidget->updatePreviewImage();
         }
         connect(movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
     }
@@ -566,6 +567,8 @@ void EditingTools::applySavedAgMask()
     int idx = m_filesMap[filename];
     delete m_antiGhostingMasksList[idx];
     m_antiGhostingMasksList[idx] = new QImage(*m_previewWidget->getSavedAgMask());    
+    m_previewWidget->setMask(m_antiGhostingMasksList[idx]);
+    m_previewWidget->updatePreviewImage();
 }
 
 void EditingTools::antighostToolButtonPaintToggled(bool toggled)
