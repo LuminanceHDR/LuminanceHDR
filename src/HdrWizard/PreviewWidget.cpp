@@ -183,18 +183,21 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
     QRgb* pivLine = NULL;
     QRgb* maskLine = NULL;
 
+/*
     if (m_agMask) {
         delete m_agMask;
         m_agMask = new QImage(m_agMaskPixmap->toImage());
+        qDebug() << m_agMask->hasAlphaChannel();
     }
-
+*/
     //for all the rows that we have to paint
     for(int i = originy; i < originy+H; i++) {
         QRgb* out = (QRgb*)m_previewImage->scanLine(i);
         QRgb* outMask = NULL;
+/*
         if (m_agMask)
             outMask = (QRgb*)m_agMask->scanLine(i);
-
+*/
         //if within bounds considering vertical offset
         if ( !( (i - m_my) < 0 || (i - m_my) >= m_movableImage->height()) )
             movLine = (QRgb*)(m_movableImage->scanLine(i - m_my));
@@ -205,14 +208,14 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
             pivLine = (QRgb*)(m_pivotImage->scanLine(i - m_py));
         else
             pivLine = NULL;
-        
+ /*       
         if (m_agMask) {
             if ( !( (i - m_my) < 0 || (i - m_my) >= m_agMask->height()) )
                 maskLine = (QRgb*)(m_agMask->scanLine(i - m_my));
             else
                 maskLine = NULL;
         }
-
+*/
         //for all the columns that we have to paint
         for(int j = originx; j < originx + W; j++) {
             //if within bounds considering horizontal offset
@@ -225,27 +228,31 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
                 pivVal = &outofbounds;
             else
                 pivVal = &pivLine[j - m_px];
-
+/*
             if (m_agMask) {
                 if (maskLine == NULL || (j - m_mx) < 0 || (j - m_mx) >= m_agMask->width())
                     maskVal = &outofbounds;
                 else
                     maskVal = &maskLine[j - m_mx];
             }
-
+*/
             if (m_pivotImage == m_movableImage)
                 out[j] = *movVal;
             else
                 out[j] = (this->*rendermode)(movVal,pivVal);
-            
+  
+/*          
             if (m_agMask)
                 outMask[j] = *maskVal;
+*/
         }
     }
+/*
     if (m_agMask) {
         delete m_agMaskPixmap;
         m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
     }
+*/
 }
 
 void PreviewWidget::requestedBlendMode(int newindex) {
@@ -373,6 +380,8 @@ void PreviewWidget::setMask(QImage *mask) {
     m_agMask = mask;
     m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
     mAgPixmap->setPixmap(*m_agMaskPixmap);
+    //qDebug() << m_agMaskPixmap->hasAlpha();
+    //qDebug() << m_agMaskPixmap->hasAlphaChannel();
     m_mx = m_my = 0;
 }
 
