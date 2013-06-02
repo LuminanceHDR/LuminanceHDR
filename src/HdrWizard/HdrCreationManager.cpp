@@ -38,6 +38,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <vector>
 #include <boost/make_shared.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -71,6 +72,7 @@ static const float max_rgb = 1.0f;
 static const float max_lightness = 1.0f;
 static const int gridSize = 40;
 
+using namespace std;
 using namespace pfs;
 using namespace pfs::io;
 
@@ -371,9 +373,10 @@ bool comparePatches(const HdrCreationItem& item1,
                     const HdrCreationItem& item2,
                     int i, int j, int gridX, int gridY, float threshold, float deltaEV)
 {
-    float logRed[gridX*gridY];
-    float logGreen[gridX*gridY];
-    float logBlue[gridX*gridY];
+    vector<float> logRed(gridX*gridY);
+    vector<float> logGreen(gridX*gridY);
+    vector<float> logBlue(gridX*gridY);
+
     Channel *X1, *Y1, *Z1, *X2, *Y2, *Z2;
     item1.frame()->getXYZChannels( X1, Y1, Z1 );
     item2.frame()->getXYZChannels( X2, Y2, Z2 );
