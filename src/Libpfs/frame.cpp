@@ -40,6 +40,9 @@ namespace pfs
 Frame::Frame(size_t width, size_t height )
     : m_width( width )
     , m_height( height )
+    , m_X(NULL)
+    , m_Y(NULL)
+    , m_Z(NULL)
 {}
 
 namespace
@@ -54,7 +57,6 @@ struct ChannelDeleter
     }
 };
 }
-
 
 Frame::~Frame()
 {
@@ -77,7 +79,7 @@ namespace
 {
 struct FindChannel
 {
-    FindChannel(const std::string& nameChannel)
+    FindChannel(const string& nameChannel)
         : nameChannel_(nameChannel)
     {}
 
@@ -88,46 +90,56 @@ struct FindChannel
     }
 
 private:
-    std::string nameChannel_;
+    string nameChannel_;
 };
 }
 
 void Frame::getXYZChannels(const Channel* &X, const Channel* &Y, const Channel* &Z ) const
 {
     // find X
-    ChannelContainer::const_iterator it(
-                std::find_if(m_channels.begin(),
-                             m_channels.end(),
-                             FindChannel("X"))
-                );
-    if ( it == m_channels.end() )
+    if ( m_X == NULL || m_Y == NULL || m_Z == NULL )
     {
-        X = Y = Z = NULL;
+        X = NULL; Y = NULL; Z = NULL;
         return;
     }
-    X = *it;
 
-    // find Y
-    it = std::find_if(m_channels.begin(),
-                      m_channels.end(),
-                      FindChannel("Y"));
-    if ( it == m_channels.end() )
-    {
-        X = Y = Z = NULL;
-        return;
-    }
-    Y = *it;
+    X = m_X;
+    Y = m_Y;
+    Z = m_Z;
 
-    // find Y
-    it = std::find_if(m_channels.begin(),
-                      m_channels.end(),
-                      FindChannel("Z"));
-    if ( it == m_channels.end() )
-    {
-        X = Y = Z = NULL;
-        return;
-    }
-    Z = *it;
+//    ChannelContainer::const_iterator it(
+//                find_if(m_channels.begin(),
+//                             m_channels.end(),
+//                             FindChannel("X"))
+//                );
+//    if ( it == m_channels.end() )
+//    {
+//        X = Y = Z = NULL;
+//        return;
+//    }
+//    X = *it;
+
+//    // find Y
+//    it = find_if(m_channels.begin(),
+//                      m_channels.end(),
+//                      FindChannel("Y"));
+//    if ( it == m_channels.end() )
+//    {
+//        X = Y = Z = NULL;
+//        return;
+//    }
+//    Y = *it;
+
+//    // find Y
+//    it = find_if(m_channels.begin(),
+//                      m_channels.end(),
+//                      FindChannel("Z"));
+//    if ( it == m_channels.end() )
+//    {
+//        X = Y = Z = NULL;
+//        return;
+//    }
+//    Z = *it;
 }
 
 void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
@@ -150,9 +162,9 @@ void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
     Z = createChannel("Z");
 }
 
-const Channel* Frame::getChannel(const std::string &name) const
+const Channel* Frame::getChannel(const string &name) const
 {
-    ChannelContainer::const_iterator it = std::find_if(m_channels.begin(),
+    ChannelContainer::const_iterator it = find_if(m_channels.begin(),
                                               m_channels.end(),
                                               FindChannel(name));
     if ( it == m_channels.end() )
@@ -161,33 +173,44 @@ const Channel* Frame::getChannel(const std::string &name) const
         return *it;
 }
 
-Channel* Frame::getChannel(const std::string& name)
+Channel* Frame::getChannel(const string& name)
 {
     return const_cast<Channel*>(static_cast<const Frame&>(*this).getChannel(name));
 }
 
-Channel* Frame::createChannel(const std::string& name)
+Channel* Frame::createChannel(const string& name)
 {
-    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
-                                              m_channels.end(),
-                                              FindChannel(name));
+    Channel* ch = NULL;
+    ChannelContainer::iterator it = find_if(m_channels.begin(),
+                                                 m_channels.end(),
+                                                 FindChannel(name));
     if ( it != m_channels.end() )
     {
-        return *it;
+        ch = *it;
     }
     else
     {
-        Channel* ch = new Channel( m_width, m_height, name );
-
+        ch = new Channel( m_width, m_height, name );
         m_channels.push_back( ch );
-
-        return ch;
     }
+
+    // update the cache, if necessary
+    if ( name == "X" ) {
+        m_X = ch;
+    }
+    else if ( name == "Y" ) {
+        m_Y = ch;
+    }
+    else if ( name == "Z" ) {
+        m_Z = ch;
+    }
+
+    return ch;
 }
 
-void Frame::removeChannel(const std::string& channel)
+void Frame::removeChannel(const string& channel)
 {
-    ChannelContainer::iterator it = std::find_if(m_channels.begin(),
+    ChannelContainer::iterator it = find_if(m_channels.begin(),
                                                  m_channels.end(),
                                                  FindChannel(channel));
     if ( it != m_channels.end() )
@@ -195,6 +218,14 @@ void Frame::removeChannel(const std::string& channel)
         Channel* ch = *it;
         m_channels.erase( it );
         delete ch;
+
+        if (channel == "X") {
+            m_X = NULL;
+        } else if (channel == "Y") {
+            m_Y = NULL;
+        } else if (channel == "Z") {
+            m_Z = NULL;
+        }
     }
 }
 
@@ -220,10 +251,16 @@ const TagContainer& Frame::getTags() const
 
 void Frame::swap(Frame& other)
 {
-    std::swap(m_width, other.m_width);
-    std::swap(m_height, other.m_height);
+    using std::swap;
+
+    swap(m_width, other.m_width);
+    swap(m_height, other.m_height);
     m_channels.swap( other.m_channels );
     m_tags.swap( other.m_tags );
+
+    swap(m_X, other.m_X);
+    swap(m_Y, other.m_Y);
+    swap(m_Z, other.m_Z);
 }
 
 } // namespace pfs
