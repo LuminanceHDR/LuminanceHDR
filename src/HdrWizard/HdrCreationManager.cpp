@@ -273,9 +273,9 @@ void hsv2rgb( float &r, float &g, float &b, float h, float s, float v )
 
 }
 
-int findIndex(float *data, int size)
+int findIndex(const vector<float>& data, int size)
 {
-    float max = *std::max_element(data, data + size);
+    float max = *std::max_element(&data.front(), &data.front() + size);
     int i;
     for (i = 0; i < size; i++)
         if (data[i] == max) 
@@ -284,7 +284,7 @@ int findIndex(float *data, int size)
     return i;
 }
 
-float hueMean(float *hues, int size)
+float hueMean(const vector<float>& hues, int size)
 {
     float H = 0.0f;
     for (int k = 0; k < size; k++)
@@ -298,7 +298,7 @@ float hueSquaredMean(HdrCreationItemContainer& data, int k)
     int width = data[0].frame()->getWidth();
     int height = data[0].frame()->getHeight();
     int size = data.size();
-    float hues[size];
+    vector<float> hues (size);
     float r, g, b, h, s, l;
     float H, HS = 0.0f;
     Channel *X, *Y, *Z, *Xk, *Yk, *Zk;
@@ -456,7 +456,7 @@ void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Arra
 
 void copyPatches(HdrCreationItemContainer& data, 
                  bool patches[gridSize][gridSize],
-                 int h0, float* scalefactor, int gridX, int gridY)
+                 int h0, const vector<float>& scalefactor, int gridX, int gridY)
 {
     const int size = data.size(); 
     for (int h = 0; h < size; h++) {
@@ -1471,13 +1471,13 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
 {
     const int size = m_data.size(); 
     assert(size >= 2);
-    float HE[size];
+    vector<float> HE (size);
     const int width = m_data[0].frame()->getWidth();
     const int height = m_data[0].frame()->getHeight();
     const int gridX = width / gridSize;
     const int gridY = height / gridSize;
 
-    float avgLightness[size];
+    vector<float> avgLightness (size);
     bool patches[gridSize][gridSize];
     
     for (int i = 0; i < gridSize; i++)
@@ -1497,7 +1497,7 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
     int h0 = findIndex(HE, size);
     qDebug() << "h0: " << h0;
 
-    float scaleFactor[size];
+    vector<float> scaleFactor (size);
 
     for (int i = 0; i < size; i++) {
         scaleFactor[i] = avgLightness[i] / avgLightness[h0];        

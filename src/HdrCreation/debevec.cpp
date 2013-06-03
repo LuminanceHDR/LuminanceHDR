@@ -116,7 +116,7 @@ void DebevecOperator::computeFusion(const vector<FrameEnhanced> &frames,
     float minAllowedValue = minTrustedValue();
 
 #pragma omp parallel for
-    for (size_t idx = 0; idx < tempFrame.size(); ++idx)
+    for (int idx = 0; idx < tempFrame.size(); ++idx)
     {
         // data...
         ColorData redData;
