@@ -275,60 +275,67 @@ void hsv2rgb( float &r, float &g, float &b, float h, float s, float v )
 
 int findIndex(float *data, int size)
 {
-    float max = *std::max_element(data, data + size);
-    int i;
-    for (i = 0; i < size; i++)
-        if (data[i] == max) 
-            return i;
+    assert(size > 0);
 
-    return i;
+    int idx = 0;
+    float currentMax = data[0];
+    for (int i = 0; i < size; i++) {
+        if ( data[i] > currentMax ) {
+            currentMax = data[i];
+            idx = i;
+        }
+    }
+    return idx;
 }
 
-float hueMean(float *hues, int size)
-{
-    float H = 0.0f;
-    for (int k = 0; k < size; k++)
-        H += hues[k];
+typedef vector<float> BufferF;
 
-    return H / size;
+inline
+float hueMean(const BufferF& data)
+{
+    return std::accumulate(data.begin(), data.end(), 0.0f)/data.size();
 }
 
-float hueSquaredMean(HdrCreationItemContainer& data, int k)
+void hueSquaredMean(const HdrCreationItemContainer& data,
+                    vector<float>& HE)
 {
-    int width = data[0].frame()->getWidth();
-    int height = data[0].frame()->getHeight();
-    int size = data.size();
-    float hues[size];
+    size_t width = data[0].frame()->getWidth();
+    size_t height = data[0].frame()->getHeight();
+    size_t numItems = data.size();
+
     float r, g, b, h, s, l;
-    float H, HS = 0.0f;
-    Channel *X, *Y, *Z, *Xk, *Yk, *Zk;
-    data[k].frame()->getXYZChannels( Xk, Yk, Zk );
-    Array2Df& Rk = *Xk;
-    Array2Df& Gk = *Yk;
-    Array2Df& Bk = *Zk;
 
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            for (int w = 0; w < size; w++) {
+    BufferF hues(numItems, 0.f);
+    BufferF HS(numItems, 0.f);
+
+    const Channel *X, *Y, *Z;
+
+    for (size_t j = 0; j < height; j++) {
+        for (size_t i = 0; i < width; i++) {
+            for (size_t w = 0; w < numItems; w++) {
                 data[w].frame()->getXYZChannels( X, Y, Z );
-                Array2Df& R = *X;
-                Array2Df& G = *Y;
-                Array2Df& B = *Z;
-                r = R(i, j);
-                g = G(i, j);
-                b = B(i, j);
+
+                r = (*X)(i, j);
+                g = (*Y)(i, j);
+                b = (*Z)(i, j);
                 rgb2hsl(r, g, b, h, s, l);
                 hues[w] = h;
             }
-            r = Rk(i, j);
-            g = Gk(i, j);
-            b = Bk(i, j);
-            rgb2hsl(r, g, b, h, s, l);
-            H = hueMean(hues, size) - h;
-            HS += H*H;
+
+            float hueMean_ = hueMean(hues);
+
+            for (size_t w = 0; w < numItems; w++) {
+                float H = hueMean_ - hues[w];
+                HS[w] += H*H;
+            }
         }
     }
-    return HS / (width*height);
+
+    for (size_t w = 0; w < numItems; w++) {
+        HE[w] = HS[w] / (width*height);
+
+        qDebug() << "HE[" << w << "]: " << HE[w];
+    }
 }
 
 qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B)
@@ -1471,7 +1478,7 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
 {
     const int size = m_data.size(); 
     assert(size >= 2);
-    float HE[size];
+    vector<float> HE(size);
     const int width = m_data[0].frame()->getWidth();
     const int height = m_data[0].frame()->getHeight();
     const int gridX = width / gridSize;
@@ -1489,12 +1496,9 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
         qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
     }
 
-    for (int i = 0; i < size; i++) { 
-        HE[i] = hueSquaredMean(m_data, i);
-        qDebug() << "HE[" << i << "]: " << HE[i];
-    }
+    hueSquaredMean(m_data, HE);
 
-    int h0 = findIndex(HE, size);
+    int h0 = findIndex(HE.data(), size);
     qDebug() << "h0: " << h0;
 
     float scaleFactor[size];
