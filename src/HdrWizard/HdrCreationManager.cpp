@@ -57,6 +57,7 @@
 #include <Libpfs/io/framewriterfactory.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/colorspace/convert.h>
+#include <Libpfs/vex/minmax.h>
 
 #include "Fileformat/pfsouthdrimage.h"
 
@@ -86,8 +87,8 @@ const config_triple predef_confs[6]= {
 };
 
 // --- LEGACY CODE ---
-namespace
-{
+namespace {
+
 inline
 void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
 {
@@ -95,10 +96,9 @@ void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
     h = 0.0f;
     s = 0.0f;
     l = 0.0f;
-    v = std::max(r, g);
-    v = std::max(v, b);
-    m = std::min(r, g);
-    m = std::min(m, b);
+
+    vex::minmax(r, g, b, m, v);
+
     l = (m + v) / 2.0f;
     if (l <= 0.0f)
         return;
@@ -185,38 +185,37 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
 inline
 void rgb2hsv( float r, float g, float b, float &h, float &s, float &v )
 {
-	float min, max, delta;
+    float min, max;
 
 	//min = MIN( r, g, b );
 	//max = MAX( r, g, b );
-    max = std::max(r, g);
-    max = std::max(max, b);
-    min = std::min(r, g);
-    min = std::min(min, b);
+
+    vex::minmax(r, g, b, min, max);
+
 	v = max;				// v
 
-	delta = max - min;
+    float delta = max - min;
 
-	if( max != 0 )
+    if ( max != 0 ) {
 		s = delta / max;		// s
-	else {
+    } else {
 		// r = g = b = 0		// s = 0, v is undefined
 		s = 0;
 		h = -1;
 		return;
 	}
 
-	if( r == max )
+    if ( r == max )
 		h = ( g - b ) / delta;		// between yellow & magenta
-	else if( g == max )
+    else if ( g == max )
 		h = 2 + ( b - r ) / delta;	// between cyan & yellow
 	else
 		h = 4 + ( r - g ) / delta;	// between magenta & cyan
 
 	h *= 60;				// degrees
-	if( h < 0 )
+    if ( h < 0 ) {
 		h += 360;
-
+    }
 }
 
 inline
@@ -225,7 +224,7 @@ void hsv2rgb( float &r, float &g, float &b, float h, float s, float v )
 	int i;
 	float f, p, q, t;
 
-	if( s == 0 ) {
+    if ( s == 0 ) {
 		// achromatic (grey)
 		r = g = b = v;
 		return;

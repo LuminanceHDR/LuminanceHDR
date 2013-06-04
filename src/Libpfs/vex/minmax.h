@@ -22,8 +22,10 @@
 #ifndef VEX_MINMAX_H
 #define VEX_MINMAX_H
 
-namespace vex
-{
+#include <cstddef>
+
+// NOTE: the name vex has to change in the future...
+namespace vex {
 
 template <typename _Type>
 _Type minElement(const _Type* data, size_t size);
@@ -31,7 +33,12 @@ _Type minElement(const _Type* data, size_t size);
 template <typename _Type>
 _Type maxElement(const _Type* data, size_t size);
 
-}
+//! \brief computes the maximum and the minumum between 3 samples using the
+//! least amount of compares
+template <typename Type>
+void minmax(Type i1, Type i2, Type i3, Type& min, Type& max);
+
+}   // vex
 
 #include "minmax.hxx"
 #endif // VEX_MINMAX_H
