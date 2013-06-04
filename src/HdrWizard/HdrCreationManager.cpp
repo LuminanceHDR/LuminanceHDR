@@ -272,7 +272,7 @@ void hsv2rgb( float &r, float &g, float &b, float h, float s, float v )
 
 }
 
-int findIndex(float *data, int size)
+int findIndex(const float* data, int size)
 {
     assert(size > 0);
 
@@ -462,7 +462,7 @@ void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Arra
 
 void copyPatches(HdrCreationItemContainer& data, 
                  bool patches[gridSize][gridSize],
-                 int h0, float* scalefactor, int gridX, int gridY)
+                 int h0, const vector<float>& scalefactor, int gridX, int gridY)
 {
     const int size = data.size(); 
     for (int h = 0; h < size; h++) {
@@ -754,7 +754,7 @@ size_t HdrCreationManager::numFilesWithoutExif() const {
 void HdrCreationManager::removeFile(int idx)
 {
     Q_ASSERT(idx >= 0);
-    Q_ASSERT(idx < m_data.size());
+    Q_ASSERT(idx < (int)m_data.size());
 
     m_data.erase(m_data.begin() + idx);
 }
@@ -1303,6 +1303,8 @@ void HdrCreationManager::readData()
     emit aisDataReady(data);
 }
 
+/*
+
 namespace {
 
 inline float toFloat(int value) {
@@ -1329,7 +1331,10 @@ void interleavedToPlanar(const QImage* image,
         }
     }
 }
+
 } // anonymous namespace
+
+*/
 
 void HdrCreationManager::saveImages(const QString& prefix)
 {
@@ -1477,13 +1482,15 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
 {
     const int size = m_data.size(); 
     assert(size >= 2);
+
     vector<float> HE(size);
+
     const int width = m_data[0].frame()->getWidth();
     const int height = m_data[0].frame()->getHeight();
     const int gridX = width / gridSize;
     const int gridY = height / gridSize;
 
-    float avgLightness[size];
+    vector<float> avgLightness (size);
     bool patches[gridSize][gridSize];
     
     for (int i = 0; i < gridSize; i++)
@@ -1500,7 +1507,7 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
     int h0 = findIndex(HE.data(), size);
     qDebug() << "h0: " << h0;
 
-    float scaleFactor[size];
+    vector<float> scaleFactor (size);
 
     for (int i = 0; i < size; i++) {
         scaleFactor[i] = avgLightness[i] / avgLightness[h0];        
