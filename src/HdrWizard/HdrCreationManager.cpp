@@ -42,6 +42,8 @@
 #include <boost/make_shared.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
+#include <boost/numeric/conversion/bounds.hpp>
+#include <boost/limits.hpp>
 
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
@@ -50,6 +52,7 @@
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/io/tiffwriter.h>
 #include <Libpfs/io/tiffreader.h>
+#include <Libpfs/progress.h>
 
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/framereaderfactory.h>
@@ -60,13 +63,13 @@
 
 #include "Fileformat/pfsouthdrimage.h"
 
+#include "TonemappingOperators/fattal02/pde.h"
 #include "Exif/ExifOperations.h"
 #include "HdrWizard/HdrInputLoader.h"
 #include "HdrCreation/mtb_alignment.h"
 #include "HdrCreationManager.h"
 #include "arch/math.h"
 
-#include <HdrCreation/fusionoperator.h>
 
 static const float max_rgb = 1.0f;
 static const float max_lightness = 1.0f;
@@ -331,6 +334,19 @@ float hueSquaredMean(HdrCreationItemContainer& data, int k)
     return HS / (width*height);
 }
 
+qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B, const int i, const int j, const int gridX, const int gridY)
+{
+    float h, s, l;
+    float avgL = 0.0f;    
+    for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            rgb2hsv(R(x, y), G(x, y), B(x, y), h, s, l);
+            avgL += l;
+        }
+    }
+    return avgL / (gridX*gridY);
+}
+
 qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B)
 {
     int width = R.getCols();
@@ -345,6 +361,7 @@ qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B)
     }
     return avgLum / (width * height);
 }
+
 qreal averageLightness(const HdrCreationItem& item)
 {
     int width = item.frame()->getWidth();
@@ -422,19 +439,15 @@ void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Arra
                int i, int j, int gridX, int gridY, float sf)
 {
     float h, s, l, r, g, b;
-    float avgL = 0.0f;    
-    for (int y = j * gridY; y < (j+1) * gridY; y++) {
-        for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            rgb2hsl(R1(x, y), G1(x, y), B1(x, y), h, s, l);
-            avgL += l;
-        }
-    }
-    avgL /= (gridX*gridY);
-    if ( avgL >= max_lightness || avgL <= 0.0f ) return;
+    float avgL1 = averageLightness(R1, G1, B1, i, j , gridX, gridY);
+    if ( avgL1 >= max_lightness || avgL1 <= 0.0f ) return;
+
+    float avgL2 = averageLightness(R2, G2, B2, i, j , gridX, gridY);
 
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
             rgb2hsv(R1(x, y), G1(x, y), B1(x, y), h, s, l);
+            sf = avgL2/avgL1;
             l *= sf;
             if (l > max_lightness) l = max_lightness;
             hsv2rgb(h, s, l, r, g, b);
@@ -456,7 +469,7 @@ void copyPatch(const pfs::Array2Df& R1, const pfs::Array2Df& G1, const pfs::Arra
 
 void copyPatches(HdrCreationItemContainer& data, 
                  bool patches[gridSize][gridSize],
-                 int h0, float* scalefactor, int gridX, int gridY)
+                 const int h0, const float* scalefactor, const int gridX, const int gridY)
 {
     const int size = data.size(); 
     for (int h = 0; h < size; h++) {
@@ -480,6 +493,137 @@ void copyPatches(HdrCreationItemContainer& data,
             }
         }
     }
+}
+
+void computeIrradiance(Array2Df* &irradiance, const Array2Df* in)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    const int width = in->getCols();
+    const int height = in->getRows();
+
+    #pragma omp parallel for schedule(static)
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            (*irradiance)(i, j) = std::exp((*in)(i, j));
+        }
+    }
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "computeIrradiance = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
+
+void computeLogIrradiance(Array2Df* &logIrradiance, const Array2Df* Bad, const Array2Df* Good, 
+                          float expotimeBad, float expotimeGood,
+                          libhdr::fusion::FusionOperatorPtr& fusionOperatorPtr,
+                          const bool patches[gridSize][gridSize], const int gridX, const int gridY)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    const int width = Bad->getCols();
+    const int height = Bad->getRows();
+    
+    const float minValue = boost::numeric::bounds<float>::lowest();
+    
+    float ir, logIr;
+    int x, y;
+
+    #pragma omp parallel for private(x, y, ir, logIr) schedule(static)
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            x = floor(fmod(static_cast<float>(i)/gridX, static_cast<float>(gridX)));
+            y = floor(fmod(static_cast<float>(j)/gridY, static_cast<float>(gridY)));
+            if (patches[x][y]) {
+                ir = fusionOperatorPtr->inverseResponse((*Bad)(i, j));
+                if (ir <= 0.0f)
+                    logIr = minValue;
+                else
+                    logIr = std::log(ir);
+                (*logIrradiance)(i, j) = logIr - std::log(expotimeBad);
+            }
+            else {
+                ir = fusionOperatorPtr->inverseResponse((*Good)(i, j));
+                if (ir <= 0.0f)
+                    logIr = minValue;
+                else
+                    logIr = std::log(ir);
+                (*logIrradiance)(i, j) = logIr - std::log(expotimeGood);
+            }
+        }
+    }
+ 
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "computeLogIrradiance = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
+
+void computeGradient(Array2Df* &gradientX, Array2Df* &gradientY, const Array2Df* in)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    const int width = in->getCols();
+    const int height = in->getRows();
+
+    float gx, gy;
+
+    #pragma omp parallel for private(gx, gy) schedule(static)
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            if (i == 0) {
+                gx = (*in)(i+1, j) - (*in)(i, j);
+            }
+            else if (i == width - 1) {
+                gx = (*in)(i, j) - (*in)(i-1, j);
+            }
+            else {
+                gx = 0.5f * ((*in)(i+1, j) - (*in)(i-1, j));
+            }
+            (*gradientX)(i, j) = gx;
+            if (j == 0) {
+                gy = (*in)(i, j+1) - (*in)(i, j);
+            }
+            else if (j == height - 1) {
+                gy = (*in)(i, j) - (*in)(i, j-1);
+            }
+            else {
+                gy = 0.5f * ((*in)(i, j+1) - (*in)(i, j-1));
+            }
+            (*gradientY)(i, j) = gy;
+        }
+    }
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "computeGradient = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
+
+void computeDivergence(Array2Df* &divergence, const Array2Df* gradientX, const Array2Df* gradientY)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    const int width = gradientX->getCols();
+    const int height = gradientX->getRows();
+
+    #pragma omp parallel for schedule(static)
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            (*divergence)(i, j) = (*gradientX)(i, j) + (*gradientY)(i, j);
+        }
+    }
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "computeDivergence = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
 }
 
 void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
@@ -516,7 +660,7 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
             g2 = G2(i, j);
             b2 = B2(i, j);
 
-            rgb2hsl(r2, g2, b2, h, s, l);
+            rgb2hsv(r2, g2, b2, h, s, l);
             l *= sf;
             if (l > max_lightness) l = max_lightness;
 
@@ -563,6 +707,7 @@ void shiftItem(HdrCreationItem& item, int dx, int dy)
 HdrCreationItem::HdrCreationItem(const QString &filename)
     : m_filename(filename)
     , m_averageLuminance(-1.f)
+    , m_exposureTime(-1.f)
     , m_frame(boost::make_shared<pfs::Frame>())
 {
      // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
@@ -599,6 +744,12 @@ struct LoadFile {
             // read Average Luminance
             currentItem.setAverageLuminance(
                         ExifOperations::getAverageLuminance(
+                            QFile::encodeName(qfi.filePath()).constData() )
+                        );
+
+            // read Exposure Time
+            currentItem.setExposureTime(
+                        ExifOperations::getExposureTime(
                             QFile::encodeName(qfi.filePath()).constData() )
                         );
 
@@ -668,7 +819,7 @@ static
 bool checkFileName(const HdrCreationItem& item, const QString& str) {
     return (item.filename().compare(str) == 0);
 }
-
+  
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
     std::vector<HdrCreationItem> tempItems;
@@ -753,12 +904,15 @@ void HdrCreationManager::removeFile(int idx)
     m_data.erase(m_data.begin() + idx);
 }
 
+using namespace libhdr::fusion;
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     : chosen_config( predef_confs[0] )
     , ais( NULL )
     , m_ais_crop_flag(false)
     , fromCommandLine( fromCommandLine )
-{}
+{
+    m_fusionOperatorPtr = IFusionOperator::build(DEBEVEC_NEW);
+}
 
 void HdrCreationManager::setConfig(const config_triple &c)
 {
@@ -905,8 +1059,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
             qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
         }
 
-        m_data.clear();
-        m_data = tempItems;
+        m_data.swap(tempItems);
         QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
         emit finishedAligning(exitcode);
     }
@@ -992,12 +1145,9 @@ void HdrCreationManager::setEV(float new_ev, int image_idx)
 }
 */
 
-using namespace libhdr::fusion;
 
 pfs::Frame* HdrCreationManager::createHdr(bool ag, int iterations)
 {
-    FusionOperatorPtr fusionOperator = IFusionOperator::build(DEBEVEC_NEW);
-
     std::vector< FrameEnhanced > frames;
     for ( size_t idx = 0; idx < m_data.size(); ++idx ) {
         frames.push_back(
@@ -1006,7 +1156,7 @@ pfs::Frame* HdrCreationManager::createHdr(bool ag, int iterations)
                     );
     }
 
-    return fusionOperator->computeFusion( frames );
+    return m_fusionOperatorPtr->computeFusion( frames );
 
 
 //    //CREATE THE HDR
@@ -1467,8 +1617,14 @@ void HdrCreationManager::cropAgMasks(const QRect& ca) {
     }
 }
 
-void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
+pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
 {
+    qDebug() << "HdrCreationManager::doAutoAntiGhosting";
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+
     const int size = m_data.size(); 
     assert(size >= 2);
     float HE[size];
@@ -1477,17 +1633,19 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
     const int gridX = width / gridSize;
     const int gridY = height / gridSize;
 
-    float avgLightness[size];
+    //float avgLightness[size];
     bool patches[gridSize][gridSize];
     
     for (int i = 0; i < gridSize; i++)
         for (int j = 0; j < gridSize; j++)
             patches[i][j] = false;
 
+/*
     for (int i = 0; i < size; i++) {
         avgLightness[i] = averageLightness(m_data[i]); 
         qDebug() << "avgLightness[" << i << "] = " << avgLightness[i];
     }
+*/
 
     for (int i = 0; i < size; i++) { 
         HE[i] = hueSquaredMean(m_data, i);
@@ -1497,11 +1655,17 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
     int h0 = findIndex(HE, size);
     qDebug() << "h0: " << h0;
 
+/*
     float scaleFactor[size];
 
     for (int i = 0; i < size; i++) {
         scaleFactor[i] = avgLightness[i] / avgLightness[h0];        
     }
+
+    for (int i = 0; i < size; i++) {
+        scaleFactor[i] = m_data[i].getAverageLuminance() / m_data[h0].getAverageLuminance();        
+    }
+*/
 
     for (int h = 0; h < size; h++) {
         if (h == h0) 
@@ -1517,29 +1681,123 @@ void HdrCreationManager::doAutoAntiGhostingMDR(float threshold)
             }                      
         }
     }
+    
+    Array2Df* gradientX_R;
+    Array2Df* gradientY_R;
+    Array2Df* divergence_R;
+    Array2Df* irradiance_R;
+    Array2Df* logIrradiance_R;
 
+    Array2Df* gradientX_G;
+    Array2Df* gradientY_G;
+    Array2Df* divergence_G;
+    Array2Df* irradiance_G;
+    Array2Df* logIrradiance_G;
+    
+    Array2Df* gradientX_B;
+    Array2Df* gradientY_B;
+    Array2Df* divergence_B;
+    Array2Df* irradiance_B;
+    Array2Df* logIrradiance_B;
+    
+    const Channel *Rc, *Gc, *Bc;
+    const Channel *Good_Rc, *Good_Gc, *Good_Bc;
+
+    m_data[h0].frame().get()->getXYZChannels(Good_Rc, Good_Gc, Good_Bc);
+    float expotimeGood = m_data[h0].getExposureTime();
+
+    pfs::Progress ph;
+
+    for (int h = 0; h < size; h++) { 
+        if (h == h0) {
+            continue;
+        }
+        m_data[h].frame().get()->getXYZChannels(Rc, Gc, Bc);
+        float expotimeBad =  m_data[h].getExposureTime();
+        qDebug() << "expotime : " << expotimeBad;
+
+        irradiance_R = new Array2Df(width, height);
+        irradiance_G = new Array2Df(width, height);
+        irradiance_B = new Array2Df(width, height);
+        logIrradiance_R = new Array2Df(width, height);
+        logIrradiance_G = new Array2Df(width, height);
+        logIrradiance_B = new Array2Df(width, height);
+        gradientX_R = new Array2Df(width, height);
+        gradientY_R = new Array2Df(width, height);
+        gradientX_G = new Array2Df(width, height);
+        gradientY_G = new Array2Df(width, height);
+        gradientX_B = new Array2Df(width, height);
+        gradientY_B = new Array2Df(width, height);
+        divergence_R = new Array2Df(width, height);
+        divergence_G = new Array2Df(width, height);
+        divergence_B = new Array2Df(width, height);
+    
+        computeLogIrradiance(logIrradiance_R, Rc, Good_Rc, expotimeBad, expotimeGood, m_fusionOperatorPtr,
+                             patches, gridX, gridY);
+        computeIrradiance(irradiance_R, logIrradiance_R);
+        computeGradient(gradientX_R, gradientY_R, irradiance_R);
+        computeDivergence(divergence_R, gradientX_R, gradientY_R);
+    
+        computeLogIrradiance(logIrradiance_G, Gc, Good_Gc, expotimeBad, expotimeGood, m_fusionOperatorPtr,
+                             patches, gridX, gridY);
+        computeIrradiance(irradiance_G, logIrradiance_G);
+        computeGradient(gradientX_G, gradientY_G, irradiance_G);
+        computeDivergence(divergence_G, gradientX_G, gradientY_G);
+    
+        computeLogIrradiance(logIrradiance_B, Rc, Good_Bc, expotimeBad, expotimeGood, m_fusionOperatorPtr,
+                             patches, gridX, gridY);
+        computeIrradiance(irradiance_B, logIrradiance_B);
+        computeGradient(gradientX_B, gradientY_B, irradiance_B);
+        computeDivergence(divergence_B, gradientX_B, gradientY_B);
+
+        Frame *frame = new Frame(width, height);
+        Channel *Urc, *Ugc, *Ubc;
+        frame->createXYZChannels(Urc, Ugc, Ubc);
+
+        solve_pde_fft(divergence_R, Urc, ph, false);
+        qDebug() << "solve_pde_fft";
+        qDebug() << "residual: " << residual_pde(Urc, divergence_R);
+        
+        solve_pde_fft(divergence_G, Ugc, ph, false);
+        qDebug() << "solve_pde_fft";
+        qDebug() << "residual: " << residual_pde(Ugc, divergence_G);
+
+        solve_pde_fft(divergence_B, Ubc, ph, false);
+        qDebug() << "solve_pde_fft";
+        qDebug() << "residual: " << residual_pde(Ubc, divergence_B);
+
+        m_data[h].frame()->swap(*frame);
+
+        delete irradiance_R;
+        delete irradiance_G;
+        delete irradiance_B;
+        delete logIrradiance_R;
+        delete logIrradiance_G;
+        delete logIrradiance_B;
+        delete gradientX_R;
+        delete gradientY_R;
+        delete gradientX_G;
+        delete gradientY_G;
+        delete gradientX_B;
+        delete gradientY_B;
+        delete divergence_R;
+        delete divergence_G;
+        delete divergence_B;
+    }
+    
+    Frame* deghosted = createHdr(false, 1);
+    
     int count = 0;
     for (int i = 0; i < gridSize; i++)
         for (int j = 0; j < gridSize; j++)
             if (patches[i][j] == true)
                 count++;
-    qDebug() << "Copied patches: " << static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f << "%";
-    copyPatches(m_data, patches, h0, scaleFactor, gridX, gridY);
-}
-
-void HdrCreationManager::doAutoAntiGhosting(float threshold)
-{
-    qDebug() << "HdrCreationManager::doAutoAntiGhosting";
-#ifdef TIMER_PROFILING
-    msec_timer stop_watch;
-    stop_watch.start();
-#endif
-
-//    (inputType == LDR_INPUT_TYPE) ? doAutoAntiGhostingLDR(threshold) : doAutoAntiGhostingMDR(threshold);
-    doAutoAntiGhostingMDR(threshold);
-
+    qDebug() << "Total patches: " << static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f << "%";
+    
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "doAutoAntiGhosting = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
+    return deghosted;
 }
+

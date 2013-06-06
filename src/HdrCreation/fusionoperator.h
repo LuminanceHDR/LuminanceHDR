@@ -85,6 +85,8 @@ public:
 
     pfs::Frame* computeFusion(const std::vector<FrameEnhanced>& frames) const;
 
+    inline float response( float in ) const { return m_response->getResponse(in); }
+    inline float inverseResponse( float in ) const { return m_response->getInverseResponse(in); }
 protected:
     IFusionOperator();
 
@@ -93,8 +95,6 @@ protected:
     inline float weight( float in ) const { return m_weight->getWeight(in); }
     inline float minTrustedValue() const  { return m_weight->minTrustedValue(); }
     inline float maxTrustedValue() const  { return m_weight->maxTrustedValue(); }
-
-    inline float response( float in ) const { return m_response->getResponse(in); }
 
     boost::scoped_ptr<IResponseFunction> m_response;
     boost::scoped_ptr<IWeightFunction> m_weight;

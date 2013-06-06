@@ -47,16 +47,14 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     m_movableImage(m), 
     m_pivotImage(p), 
     m_agMask(NULL),
+    m_originalAgMask(NULL),
     m_agMaskPixmap(NULL),
     m_savedMask(NULL),
-    m_agPixmapChanged(false),
     m_prevComputed(),
     m_mx(0),
     m_my(0),
     m_px(0),
     m_py(0),
-    m_prev_mx(0),
-    m_prev_my(0),
     m_agcursorPixmap(NULL),
     m_drawingMode(BRUSH) 
 {
@@ -150,25 +148,6 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
         } else //image already rendered fullsize
             return;
     }
-/*
-    if (m_agMaskPixmap) {
-        QRegion exposed(m_agMaskPixmap->rect()); 
-        if (m_prev_mx != 0 ||  m_prev_my != 0) {
-            m_agMaskPixmap->scroll(-m_prev_mx, -m_prev_my, m_agMaskPixmap->rect(), &exposed);
-            m_prev_mx = m_prev_my = 0;
-        }
-        if (m_mx != m_prev_mx || m_my != m_prev_my) {
-            m_agMaskPixmap->scroll(m_mx, m_my, m_agMaskPixmap->rect(), &exposed);
-            m_prev_mx = m_mx;
-            m_prev_my = m_my;
-            QPainter p(m_agMaskPixmap);
-            p.setPen(Qt::NoPen);
-            p.setBrush(QBrush(QColor::fromRgb(255,0,0,0)));
-            p.drawRect(0, -m_my, m_agMaskPixmap->width(), m_my);
-            mAgPixmap->setPixmap(*m_agMaskPixmap);
-        }
-    }
-*/
     //these kind of things can happen and lead to strange and nasty runtime errors!
     //usually it's an error of 2,3 px
     if ((originy + H - 1) >= m_movableImage->height())
@@ -178,26 +157,15 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 
     const QRgb *movVal = NULL;
     const QRgb *pivVal = NULL;
-    const QRgb *maskVal = NULL;
-    QRgb* movLine = NULL;
-    QRgb* pivLine = NULL;
-    QRgb* maskLine = NULL;
+    QRgb *movLine = NULL;
+    QRgb *pivLine = NULL;
+    QRgb *out = NULL;
 
-/*
-    if (m_agMask) {
-        delete m_agMask;
-        m_agMask = new QImage(m_agMaskPixmap->toImage());
-        qDebug() << m_agMask->hasAlphaChannel();
-    }
-*/
     //for all the rows that we have to paint
+    #pragma omp parallel for private(out, movVal, pivVal, movLine, pivLine)
     for(int i = originy; i < originy+H; i++) {
-        QRgb* out = (QRgb*)m_previewImage->scanLine(i);
-        QRgb* outMask = NULL;
-/*
-        if (m_agMask)
-            outMask = (QRgb*)m_agMask->scanLine(i);
-*/
+        out = (QRgb*)m_previewImage->scanLine(i);
+
         //if within bounds considering vertical offset
         if ( !( (i - m_my) < 0 || (i - m_my) >= m_movableImage->height()) )
             movLine = (QRgb*)(m_movableImage->scanLine(i - m_my));
@@ -208,14 +176,7 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
             pivLine = (QRgb*)(m_pivotImage->scanLine(i - m_py));
         else
             pivLine = NULL;
- /*       
-        if (m_agMask) {
-            if ( !( (i - m_my) < 0 || (i - m_my) >= m_agMask->height()) )
-                maskLine = (QRgb*)(m_agMask->scanLine(i - m_my));
-            else
-                maskLine = NULL;
-        }
-*/
+       
         //for all the columns that we have to paint
         for(int j = originx; j < originx + W; j++) {
             //if within bounds considering horizontal offset
@@ -228,31 +189,49 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
                 pivVal = &outofbounds;
             else
                 pivVal = &pivLine[j - m_px];
-/*
-            if (m_agMask) {
-                if (maskLine == NULL || (j - m_mx) < 0 || (j - m_mx) >= m_agMask->width())
-                    maskVal = &outofbounds;
-                else
-                    maskVal = &maskLine[j - m_mx];
-            }
-*/
+
             if (m_pivotImage == m_movableImage)
                 out[j] = *movVal;
             else
                 out[j] = (this->*rendermode)(movVal,pivVal);
-  
-/*          
-            if (m_agMask)
-                outMask[j] = *maskVal;
-*/
         }
     }
-/*
-    if (m_agMask) {
-        delete m_agMaskPixmap;
-        m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
+}
+
+void PreviewWidget::renderAgMask()
+{
+    int W = 0, H = 0;
+    const QRgb *maskVal = NULL;
+    const QRgb *maskLine = NULL;
+    QRgb *outMask = NULL;
+
+    if (m_agMaskPixmap) {
+        W = m_originalAgMask->width();
+        H = m_originalAgMask->height();
+
+        //for all the rows that we have to paint
+        //#pragma omp parallel for private(outMask, maskVal, maskLine)
+        for(int i = 0; i < H; i++) {
+            outMask = (QRgb *)m_agMask->scanLine(i);
+
+            if ( !( (i - m_my) < 0 || (i - m_my) >= H ))
+                maskLine = (QRgb *)m_originalAgMask->scanLine(i - m_my);
+            else
+                maskLine = NULL;
+
+            //for all the columns that we have to paint
+            for(int j = 0; j < W; j++) {
+                //if within bounds considering horizontal offset
+                if (maskLine == NULL || (j - m_mx) < 0 || (j - m_mx) >= W)
+                    //maskVal = reinterpret_cast<uchar *>(&outofbounds);
+                    maskVal = &outofbounds;
+                else
+                    maskVal = &maskLine[j - m_mx];
+
+                outMask[j] = *maskVal;
+            }
+        }
     }
-*/
 }
 
 void PreviewWidget::requestedBlendMode(int newindex) {
@@ -291,7 +270,6 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
                 m_drawingPathEnded = false;
             }
             m_timerid = QObject::startTimer(0);
-            m_agPixmapChanged = true;
         }
     }
     else if (event->type() == QEvent::MouseMove) {
@@ -327,8 +305,11 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
         else if (mouse->button() == Qt::MidButton) {
             QApplication::restoreOverrideCursor();      
         }
-        m_agPixmapChanged = false;
         mAgPixmap->setPixmap(*m_agMaskPixmap);
+        delete m_originalAgMask;
+        m_agMaskPixmap->scroll(-m_mx, -m_my, m_agMaskPixmap->rect());
+        m_originalAgMask = new QImage(m_agMaskPixmap->toImage());
+        m_agMaskPixmap->scroll(m_mx, m_my, m_agMaskPixmap->rect());
     }
     else if (event->type() == QEvent::Enter) {
         if (m_mode == EditingMode)
@@ -377,29 +358,30 @@ void PreviewWidget::setMovable(QImage *m) {
 void PreviewWidget::setMask(QImage *mask) {
     if (m_agMaskPixmap) 
         delete m_agMaskPixmap;
-    m_agMask = mask;
+    m_originalAgMask = new QImage(*mask);
+    m_agMask = new QImage(*mask);
     m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
     mAgPixmap->setPixmap(*m_agMaskPixmap);
-    //qDebug() << m_agMaskPixmap->hasAlpha();
-    //qDebug() << m_agMaskPixmap->hasAlphaChannel();
     m_mx = m_my = 0;
 }
 
 QImage *PreviewWidget::getMask()
 {
-    if (m_agMaskPixmap)
+    if (m_agMaskPixmap) {
+        m_mx = m_my = 0;
+        renderAgMask();
         return new QImage(m_agMaskPixmap->toImage());
+    }
     return NULL;
 }
 
 void PreviewWidget::updateVertShiftMovable(int v) {
-    m_prev_my = m_my;
     m_my = v;
     m_prevComputed = QRegion();
+
 }
 
 void PreviewWidget::updateHorizShiftMovable(int h) {
-    m_prev_mx = m_mx;
     m_mx = h;
     m_prevComputed = QRegion();
 }
@@ -663,7 +645,10 @@ void PreviewWidget::scrollBarChanged(int /*value*/)
 void PreviewWidget::updatePreviewImage()
 {
     renderPreviewImage(blendmode, m_rect);
+    renderAgMask();
     mPixmap->setPixmap(QPixmap::fromImage(*m_previewImage));
+    delete m_agMaskPixmap;
+    m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
     mAgPixmap->setPixmap(*m_agMaskPixmap);
 }
 
@@ -752,6 +737,7 @@ void PreviewWidget::drawWithBrush()
     int sx = relativeToWidget.x() - m_mx;
     int sy = relativeToWidget.y() - m_my;
     QPointF shifted(sx,sy);
+    m_agMaskPixmap->scroll(-m_mx, -m_my, m_agMaskPixmap->rect());
     QPainter p(m_agMaskPixmap);
     p.setPen(Qt::NoPen);
     p.setBrush(QBrush(m_requestedPixmapColor, Qt::SolidPattern));
@@ -759,10 +745,13 @@ void PreviewWidget::drawWithBrush()
         p.setCompositionMode(QPainter::CompositionMode_Clear);
     int pixSize = m_requestedPixmapSize/(2*scaleFactor);
     p.drawEllipse(shifted, pixSize, pixSize);
+    p.end();
+    m_agMaskPixmap->scroll(m_mx, m_my, m_agMaskPixmap->rect());
 }
 
 void PreviewWidget::drawPath()
 {
+    m_agMaskPixmap->scroll(-m_mx, -m_my, m_agMaskPixmap->rect());
     QPainter painter(m_agMaskPixmap);
     painter.setPen(QPen(m_requestedLassoColor, 0, Qt::SolidLine,
                      Qt::FlatCap, Qt::MiterJoin));
@@ -786,5 +775,7 @@ void PreviewWidget::drawPath()
         m_lastPoint = m_currentPoint;
         painter.drawPath(m_path);
     }
+    painter.end();
+    m_agMaskPixmap->scroll(m_mx, m_my, m_agMaskPixmap->rect());
 }
 

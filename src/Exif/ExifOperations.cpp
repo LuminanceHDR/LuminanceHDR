@@ -342,6 +342,58 @@ float obtain_avg_lum(const std::string& filename)
 }
 */
 
+float getExposureTime(const std::string& filename)
+{
+    try
+    {
+        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        image->readMetadata();
+        Exiv2::ExifData &exifData = image->exifData();
+        if (exifData.empty())
+            return -1;
+
+        Exiv2::ExifData::const_iterator iexpo = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureTime"));
+        Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue"));
+        Exiv2::ExifData::const_iterator iiso  = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"));
+        Exiv2::ExifData::const_iterator ifnum = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"));
+        Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"));
+
+        float expo  = -1;
+
+        if (iexpo != exifData.end())
+        {
+            expo = iexpo->toFloat();
+        }
+        else if (iexpo2 != exifData.end())
+        {
+            long num = 1;
+            long div = 1;
+            double tmp = std::exp(std::log(2.0) * iexpo2->toFloat());
+            if (tmp > 1)
+            {
+                div = static_cast<long>(tmp + 0.5);
+            }
+            else
+            {
+                num = static_cast<long>(1/tmp + 0.5);
+            }
+            expo = static_cast<float>(num)/static_cast<float>(div);
+        }
+        if (expo != -1)
+        {
+            return expo;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    catch (Exiv2::AnyError& e)
+    {
+        return -1;
+    }
+}
+
 float getAverageLuminance(const std::string& filename)
 {
     try

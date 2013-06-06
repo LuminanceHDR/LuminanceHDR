@@ -180,12 +180,14 @@ private:
 
     QRgb(PreviewWidget::*blendmode)(const QRgb*,const QRgb*)const;
     void renderPreviewImage(QRgb(PreviewWidget::*f)(const QRgb*,const QRgb*)const,const QRect a = QRect());
+    void renderAgMask();
 
     // the out and 2 in images
     QImage *m_previewImage;
     QImage *m_movableImage;
     const QImage *m_pivotImage;
     QImage *m_agMask;
+    QImage *m_originalAgMask;
     QPixmap *m_agMaskPixmap;
     QImage *m_savedMask;
 
@@ -198,12 +200,11 @@ private:
     IGraphicsView* mView;
     ViewerMode mViewerMode;
     IGraphicsPixmapItem *mPixmap, *mAgPixmap;
-    bool m_agPixmapChanged;
 
     QRegion m_prevComputed;
     QRect m_rect;
     //movable and pivot's x,y shifts
-    int m_mx, m_my, m_px, m_py, m_prev_mx, m_prev_my;
+    int m_mx, m_my, m_px, m_py;
     //zoom factor
     //float m_scaleFactor;
 

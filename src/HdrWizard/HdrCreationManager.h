@@ -36,6 +36,7 @@
 #include <QSharedPointer>
 
 #include <Libpfs/frame.h>
+#include <HdrCreation/fusionoperator.h>
 
 #include "Common/LuminanceOptions.h"
 #include "arch/math.h"
@@ -63,6 +64,10 @@ public:
     void setAverageLuminance(float avl) { m_averageLuminance = avl; }
     float getAverageLuminance() const   { return m_averageLuminance; }
 
+    bool hasExposureTime() const        { return (m_exposureTime != -1.f); }
+    void setExposureTime(float e)       { m_exposureTime = e; }
+    float getExposureTime() const       { return m_exposureTime; }
+
     bool hasEV() const                  { return hasAverageLuminance(); }
     void setEV(float ev)                { m_averageLuminance = std::pow(2.f, ev); }
     float getEV() const                 { return log2(m_averageLuminance); }
@@ -74,6 +79,7 @@ public:
 private:
     QString                 m_filename;
     float                   m_averageLuminance;
+    float                   m_exposureTime;
     pfs::FramePtr           m_frame;
     QSharedPointer<QImage>  m_thumbnail;
 };
@@ -87,6 +93,7 @@ private:
     HdrCreationItemContainer m_data;
 
     libhdr::fusion::FusionOperator m_fusionOperator;
+    libhdr::fusion::FusionOperatorPtr m_fusionOperatorPtr;
     libhdr::fusion::WeightFunction m_weightFunction;
     libhdr::fusion::ResponseFunction m_responseFunction;
 
@@ -150,7 +157,7 @@ public:
 
     void saveImages(const QString& prefix);
 	void doAntiGhosting(int);
-	void doAutoAntiGhosting(float);
+	pfs::Frame* doAutoAntiGhosting(float);
 	void removeTempFiles();
 
 signals:
@@ -177,8 +184,6 @@ signals:
 
 private:
     bool framesHaveSameSize();    
-	void doAutoAntiGhostingMDR(float);
-	void doAutoAntiGhostingLDR(float);
 
 	QList<QImage*> antiGhostingMasksList;  //QImages used for manual anti ghosting
     LuminanceOptions m_luminance_options;

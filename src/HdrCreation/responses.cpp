@@ -73,6 +73,11 @@ float ResponseGamma::getResponse(float input) const
     return std::pow( 4.f * input, 1.7f ) + 1e-4;
 }
 
+float ResponseGamma::getInverseResponse(float input) const
+{
+    return std::pow( 0.25f * (input - 1e-4), 0.588235);
+}
+
 // I use a namespace to avoid name collision
 namespace details_log10
 {
@@ -88,9 +93,19 @@ float ResponseLog10::getResponse(float input) const
             std::pow(10.0f, ((input/details_log10::s_norm) - 8.f) );
 }
 
+float ResponseLog10::getInverseResponse(float input) const
+{
+    return input;
+}
+
 float ResponseSRGB::getResponse(float input) const
 {
     return pfs::colorspace::ConvertSRGB2RGB()(input);
+}
+
+float ResponseSRGB::getInverseResponse(float input) const
+{
+    return pfs::colorspace::ConvertRGB2SRGB()(input);
 }
 
 }   // fusion
