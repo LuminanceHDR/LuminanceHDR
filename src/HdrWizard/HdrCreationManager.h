@@ -67,7 +67,6 @@ public:
     void setEV(float ev)                { m_averageLuminance = std::pow(2.f, ev); }
     float getEV() const                 { return log2(m_averageLuminance); }
 
-    void setThumbnail(QImage* thumbnail){ QSharedPointer<QImage> other(thumbnail); m_thumbnail.swap(other); } 
     QImage* qimage()                    { return m_thumbnail.data(); }
     const QImage* qimage() const        { return m_thumbnail.data(); }
 

@@ -1,7 +1,7 @@
 /*
 * This file is a part of Luminance HDR package.
 * ----------------------------------------------------------------------
-* Copyright (C) 2012 Davide Anastasia
+* Copyright (C) 2013 Davide Anastasia
 *
 *  This library is free software; you can redistribute it and/or
 *  modify it under the terms of the GNU Lesser General Public
@@ -19,25 +19,38 @@
 * ----------------------------------------------------------------------
 */
 
-#ifndef PFS_SHIFT_H
-#define PFS_SHIFT_H
+#include <Libpfs/manip/shift.h>
 
-#include <Libpfs/array2d_fwd.h>
-#include <Libpfs/frame.h>
+namespace pfs {
 
-namespace pfs
+Frame* shift(const Frame& frame, int dx, int dy)
 {
-//! \brief shift \c Array2D by \a dx \a dy
-template <typename Type>
-void shift(const Array2D<Type>& in, int dx, int dy, Array2D<Type>& out);
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
 
-//! \brief shift image by \a dx \a dy
-pfs::Frame* shift(const pfs::Frame& in, int dx, int dy);
+    pfs::Frame *shiftedFrame = new pfs::Frame( frame.getWidth(), frame.getHeight() );
 
-// template <typename Type>
-// pfs::Array2D<Type>* shift(const pfs::Array2D<Type>& in, int dx, int dy);
+    const ChannelContainer& channels = frame.getChannels();
 
-} // pfs
+    for ( ChannelContainer::const_iterator it = channels.begin();
+          it != channels.end();
+          ++it)
+    {
+        pfs::Channel *newCh = shiftedFrame->createChannel((*it)->getName());
 
-#include <Libpfs/manip/shift.hxx>
-#endif // PFS_SHIFT_H
+        shift(**it, dx, dy, *newCh);
+    }
+
+    pfs::copyTags( &frame, shiftedFrame );
+
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "rotateFrame() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
+
+    return shiftedFrame;
+}
+
+}

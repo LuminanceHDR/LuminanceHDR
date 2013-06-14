@@ -58,7 +58,7 @@ public:
     Array2D();
 
     //! \brief init \c Array2D with a matrix of \a cols times \a rows
-    Array2D(size_t cols, size_t rows);
+    Array2D(size_t cols, size_t rows); // (width, height)
 
     //! \brief copy ctor
     //! \note If you want to build an empty \c Array2D with the same size of the
