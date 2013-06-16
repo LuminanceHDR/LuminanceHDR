@@ -47,9 +47,11 @@ TEST(TestPfsShift, MinusMinus)
     Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2Df> output( shift(input, -2, -1) );
+    Array2Df output(cols, rows);
 
-    const float* outData = output->data();
+    shift(input, -2, -1, output);
+
+    const float* outData = output.data();
 
     // print(input);
     // print(*output);
@@ -74,9 +76,10 @@ TEST(TestPfsShift, PlusMinus)
     Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2Df> output( shift(input, 2, -1) );
+    Array2Df output(cols, rows);
+    shift(input, 2, -1, output);
 
-    const float* outData = output->data();
+    const float* outData = output.data();
 
     // print(input);
     // print(*output);
@@ -101,9 +104,10 @@ TEST(TestPfsShift, StillMinus)
     Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2Df> output( shift(input, 0, -1) );
+    Array2Df output(cols, rows);
+    shift(input, 0, -1, output);
 
-    const float* outData = output->data();
+    const float* outData = output.data();
 
     // print(input);
     // print(*output);
@@ -127,9 +131,10 @@ TEST(TestPfsShift, MinusPlus)
     Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2Df> output( shift(input, -2, 1) );
+    Array2Df output(cols, rows);
+    shift(input, -2, 1, output);
 
-    const float* outData = output->data();
+    const float* outData = output.data();
 
     // print(input);
     // print(*output);
@@ -154,9 +159,10 @@ TEST(TestPfsShift, PlusPlus)
     Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2Df> output( shift(input, 2, 1) );
+    Array2Df output(cols, rows);
+    shift(input, 2, 1, output);
 
-    const float* outData = output->data();
+    const float* outData = output.data();
 
     // print(input);
     // print(*output);
@@ -181,9 +187,10 @@ TEST(TestPfsShift, StillStill)
     Array2Df input(cols, rows);
     std::generate(input.begin(), input.end(), SeqInt());
 
-    boost::scoped_ptr<Array2Df> output( shift(input, 0, 0) );
+    Array2Df output(cols, rows);
+    shift(input, 0, 0, output);
 
-    const float* outData = output->data();
+    const float* outData = output.data();
 
     // print(input);
     // print(*output);

@@ -903,20 +903,36 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
 #endif
 }
 
+QImage* shiftQImage(const QImage *in, int dx, int dy)
+{
+    QImage *out = new QImage(in->size(),QImage::Format_ARGB32);
+    assert(out!=NULL);
+    out->fill(qRgba(0,0,0,0)); //transparent black
+    for(int i = 0; i < in->height(); i++)
+    {
+        if( (i+dy) < 0 ) continue;
+        if( (i+dy) >= in->height()) break;
+        QRgb *inp = (QRgb*)in->scanLine(i);
+        QRgb *outp = (QRgb*)out->scanLine(i+dy);
+        for(int j = 0; j < in->width(); j++)
+        {
+            if( (j+dx) >= in->width()) break;
+            if( (j+dx) >= 0 ) outp[j+dx] = *inp;
+            inp++;
+        }
+    }
+    return out;
+}
+
 void shiftItem(HdrCreationItem& item, int dx, int dy)
 {
-    Channel *red, *green, *blue;
-    item.frame()->getXYZChannels( red, green, blue); 
-    Array2Df& Rin = *red;
-    Array2Df& Gin = *green;
-    Array2Df& Bin = *blue;
-    Array2Df *Rout = shift( Rin, dx, dy);
-    Array2Df *Gout = shift( Gin, dx, dy);
-    Array2Df *Bout = shift( Bin, dx, dy);
-    red->swap(*Rout);
-    green->swap(*Gout);
-    blue->swap(*Bout);
-    item.qimage()->swap(*shiftQImage(item.qimage(), dx, dy));
+    FramePtr shiftedFrame( pfs::shift(*item.frame(), dx, dy) );
+    item.frame().swap(shiftedFrame);
+    shiftedFrame.reset();       // release memory
+
+    QScopedPointer<QImage> img(shiftQImage(item.qimage(), dx, dy));
+    item.qimage()->swap( *img );
+    img.reset();    // release memory
 }
 
 } // anonymous namespace
@@ -927,6 +943,7 @@ HdrCreationItem::HdrCreationItem(const QString &filename)
     , m_averageLuminance(-1.f)
     , m_exposureTime(-1.f)
     , m_frame(boost::make_shared<pfs::Frame>())
+    , m_thumbnail(new QImage())
 {
      // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
 }
@@ -952,7 +969,6 @@ struct LoadFile {
         QFileInfo qfi(currentItem.filename());
         qDebug() << QString("Loading data for %1").arg(currentItem.filename());
 
-        // read pfs::Frame
         try
         {
             FrameReaderPtr reader = FrameReaderFactory::open(
@@ -976,11 +992,11 @@ struct LoadFile {
                         .arg(currentItem.getAverageLuminance());
 
             // build QImage
-            QImage* tempImage = new QImage(currentItem.frame()->getWidth(),
+            QImage tempImage(currentItem.frame()->getWidth(),
                              currentItem.frame()->getHeight(),
                              QImage::Format_ARGB32_Premultiplied);
 
-            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage->bits());
+            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
 
             Channel* red;
             Channel* green;
@@ -990,7 +1006,40 @@ struct LoadFile {
             utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
                              qimageData, ConvertToQRgb());
 
-            currentItem.setThumbnail( tempImage );
+            currentItem.qimage()->swap( tempImage );
+        }
+        catch (std::runtime_error& err)
+        {
+            qDebug() << QString("Cannot load %1: %2")
+                        .arg(currentItem.filename())
+                        .arg(QString::fromStdString(err.what()));
+        }
+    }
+};
+
+struct RefreshPreview {
+    void operator()(HdrCreationItem& currentItem)
+    {
+        qDebug() << QString("Refresh preview for %1").arg(currentItem.filename());
+
+        try
+        {
+            // build QImage
+            QImage tempImage(currentItem.frame()->getWidth(),
+                             currentItem.frame()->getHeight(),
+                             QImage::Format_ARGB32_Premultiplied);
+
+            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
+
+            Channel* red;
+            Channel* green;
+            Channel* blue;
+            currentItem.frame()->getXYZChannels(red, green, blue);
+
+            utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
+                             qimageData, ConvertToQRgb());
+
+            currentItem.qimage()->swap( tempImage );
         }
         catch (std::runtime_error& err)
         {
@@ -1161,7 +1210,21 @@ bool HdrCreationManager::framesHaveSameSize()
 
 void HdrCreationManager::align_with_mtb()
 {
-    //mtb_alignment(ldrImagesList);
+    // build temporary container...
+    vector<FramePtr> frames;
+    for (size_t i = 0; i < m_data.size(); ++i) {
+        frames.push_back( m_data[i].frame() );
+    }
+
+    // run MTB
+    libhdr::mtb_alignment(frames);
+
+    // rebuild previews
+    QFutureWatcher<void> futureWatcher;
+    futureWatcher.setFuture( QtConcurrent::map(m_data.begin(), m_data.end(), RefreshPreview()) );
+    futureWatcher.waitForFinished();
+
+    // emit finished
     emit finishedAligning(0);
 }
 
@@ -1173,7 +1236,7 @@ void HdrCreationManager::set_ais_crop_flag(bool flag)
 void HdrCreationManager::align_with_ais()
 {
     ais = new QProcess(this);
-    if (ais == NULL) exit(1);       //TODO: exit gracefully
+    if (ais == NULL) exit(1);       // TODO: exit gracefully
     if (!fromCommandLine) {
         ais->setWorkingDirectory(m_luminance_options.getTempDir());
     }
