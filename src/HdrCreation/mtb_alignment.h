@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  *  Copyright (C) 2007 Nicholas Phillips
