@@ -50,7 +50,6 @@ public:
     //! \brief return the response of the value \c input. \c input is in the
     //! range [0, 1]
     virtual float getResponse(float input) const = 0;
-    virtual float getInverseResponse(float input) const = 0;
 
     //! \return type of response function implemented
     virtual ResponseFunction getType() const = 0;
@@ -60,7 +59,6 @@ class ResponseGamma : public IResponseFunction
 {
 public:
     float getResponse(float input) const;
-    float getInverseResponse(float input) const;
 
     ResponseFunction getType() const {
         return RESPONSE_GAMMA;
@@ -73,9 +71,6 @@ public:
     float getResponse(float input) const {
         return input;
     }
-    float getInverseResponse(float input) const {
-        return input;
-    }
 
     ResponseFunction getType() const {
         return RESPONSE_LINEAR;
@@ -86,7 +81,6 @@ class ResponseLog10 : public IResponseFunction
 {
 public:
     float getResponse(float input) const;
-    float getInverseResponse(float input) const;
 
     ResponseFunction getType() const {
         return RESPONSE_LOG10;
@@ -97,7 +91,6 @@ class ResponseSRGB : public IResponseFunction
 {
 public:
     float getResponse(float input) const;
-    float getInverseResponse(float input) const;
 
     ResponseFunction getType() const {
         return RESPONSE_SRGB;

@@ -85,10 +85,9 @@ public:
 
     pfs::Frame* computeFusion(const std::vector<FrameEnhanced>& frames) const;
 
-    inline float response( float in ) const { return m_response->getResponse(in); }
-    inline float inverseResponse( float in ) const { return m_response->getInverseResponse(in); }
 protected:
     IFusionOperator();
+    inline float response( float in ) const { return m_response->getResponse(in); }
 
     virtual void computeFusion(const std::vector<FrameEnhanced>& frames, pfs::Frame& outFrame) const = 0;
 

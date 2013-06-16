@@ -913,6 +913,9 @@ void HdrWizard::NextFinishButtonClicked() {
                                                        m_hdrCreationManager.data(),
                                                        m_ui->doubleSpinBoxThreshold->value()));
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
+            connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
+            connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
+            m_ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);
         }
         else
@@ -945,6 +948,7 @@ void HdrWizard::autoAntighostingFinished()
 {
     m_pfsFrameHDR = m_future.result();
 
+    m_ui->progressBar->hide();
     QApplication::restoreOverrideCursor();
     accept();
 }
