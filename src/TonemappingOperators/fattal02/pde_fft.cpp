@@ -125,7 +125,7 @@ void transform_ev2normal(pfs::Array2Df *A, pfs::Array2Df *T)
   // executes 2d discrete cosine transform
   fftwf_plan p;
   p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
-                        FFTW_REDFT10, FFTW_REDFT10, FFTW_ESTIMATE);
+                        FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
   fftwf_execute(p); 
   fftwf_destroy_plan(p);
 }
@@ -141,7 +141,7 @@ void transform_normal2ev(pfs::Array2Df *A, pfs::Array2Df *T)
   // executes 2d discrete cosine transform
   fftwf_plan p;
   p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
-                        FFTW_REDFT01, FFTW_REDFT01, FFTW_ESTIMATE);
+                        FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
   fftwf_execute(p); 
   fftwf_destroy_plan(p);
 

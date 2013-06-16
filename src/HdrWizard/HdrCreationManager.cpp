@@ -285,34 +285,37 @@ void solve_pde_dct(Array2Df *F, Array2Df *U)
   const int height = U->getRows();
   assert((int)F->getCols()==width && (int)F->getRows()==height);
 
-  Array2Df *Ftr = new Array2Df(width, height);
-
   fftwf_plan p;
-  p=fftwf_plan_r2r_2d(height, width, F->data(), Ftr->data(),
-                        FFTW_REDFT10, FFTW_REDFT10, FFTW_ESTIMATE);
-  fftwf_execute(p);
-  fftwf_destroy_plan(p);
+  float c[width];
+  float x[width];
+  float xtr[width];
 
-  Array2Df *Utr = new Array2Df(width, height);
-
-  for ( int j = 0; j < height; j++ )
-  {
-    for ( int i = 0; i < width; i++ )
-    {
-        float den = cos(M_PI*i/width)+cos(M_PI*j/height) - 2.0f;
-        if (den == 0.0f)
-            den = 1e-16;
-        (*Utr)(i, j) = 0.5f*(*Ftr)(i,j)/den;
+  for (int j = 0; j < height; j++) {
+    for (int i = 0; i < width; i++) {
+      x[i] = (*F)(i, j);
     }
-  } 
-  fftwf_plan s;
-  s=fftwf_plan_r2r_2d(height, width, Utr->data(), U->data(),
-                        FFTW_REDFT01, FFTW_REDFT01, FFTW_ESTIMATE);
-  fftwf_execute(s);
-  fftwf_destroy_plan(s);
-
-  delete Ftr;
-  delete Utr;
+    for (int i = 0; i < width; i++) {
+      c[i] = 1.0f;
+    }
+    p=fftwf_plan_r2r_1d(width, x, xtr, FFTW_REDFT10, FFTW_ESTIMATE);
+    fftwf_execute(p);
+    c[0] /= -3.0f;
+    xtr[0] /= -3.0f;
+    for (int i = 1; i < width; i++) {
+      float m = 1.0f / (-4.0f + cos(M_PI*i/width) - c[i-1]);
+      c[i] *= m;
+      xtr[i] = (xtr[i] - xtr[i-1])*m;
+    }
+    for (int i = width-2; i >= 0; i--) {
+      xtr[i] = xtr[i] - c[i]*xtr[i+1];
+    }
+    p=fftwf_plan_r2r_1d(width, xtr, x, FFTW_REDFT01, FFTW_ESTIMATE);
+    fftwf_execute(p);
+    for (int i = 0; i < width; i++) {
+      (*U)(i, j) = x[i];
+    }
+  }
+  fftwf_destroy_plan(p);
 }
 
 float max(Array2Df *u)
@@ -2083,25 +2086,25 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
     deghosted->createXYZChannels(Urc, Ugc, Ubc);
     
     qDebug() << "solve_pde";
-    //solve_pde_dct(divergence_R, logIrradiance_R);
-    //solve_pde_fft(divergence_R, logIrradiance_R, ph, false);
-    solve_pde_multigrid(divergence_R, logIrradiance_R, ph);
+    solve_pde_dct(divergence_R, logIrradiance_R);
+    //solve_pde_fft(divergence_R, logIrradiance_R, ph, true);
+    //solve_pde_multigrid(divergence_R, logIrradiance_R, ph);
     //solve_poisson(divergence_R, logIrradiance_R, logIrradiance_R);
     qDebug() << "residual: " << residual_pde(logIrradiance_R, divergence_R);
     ph.setValue(60);
 
     qDebug() << "solve_pde";
-    //solve_pde_dct(divergence_G, logIrradiance_G);
-    //solve_pde_fft(divergence_G, logIrradiance_G, ph, false);
-    solve_pde_multigrid(divergence_G, logIrradiance_G, ph);
+    solve_pde_dct(divergence_G, logIrradiance_G);
+    //solve_pde_fft(divergence_G, logIrradiance_G, ph, true);
+    //solve_pde_multigrid(divergence_G, logIrradiance_G, ph);
     //solve_poisson(divergence_G, logIrradiance_G, logIrradiance_G);
     qDebug() << "residual: " << residual_pde(logIrradiance_G, divergence_G);
     ph.setValue(76);
 
     qDebug() << "solve_pde";
-    //solve_pde_dct(divergence_B, logIrradiance_B);
-    //solve_pde_fft(divergence_B, logIrradiance_B, ph, false);
-    solve_pde_multigrid(divergence_B, logIrradiance_B, ph);
+    solve_pde_dct(divergence_B, logIrradiance_B);
+    //solve_pde_fft(divergence_B, logIrradiance_B, ph, true);
+    //solve_pde_multigrid(divergence_B, logIrradiance_B, ph);
     //solve_poisson(divergence_B, logIrradiance_B, logIrradiance_B);
     qDebug() << "residual: " << residual_pde(logIrradiance_B, divergence_B);
     ph.setValue(93);
