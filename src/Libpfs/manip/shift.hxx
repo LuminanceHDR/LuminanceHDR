@@ -49,7 +49,7 @@ void shift(const Array2D<Type>& in, int dx, int dy, Array2D<Type>& out)
     // fill first row... if any!
     for (int idx = 0; idx < -dy; idx++)
     {
-        fill(out.row_begin(idx), out.row_end(idx), 0.0f);
+        fill(out.row_begin(idx), out.row_end(idx), Type());
     }
 
     // fill middle portion
@@ -65,7 +65,7 @@ void shift(const Array2D<Type>& in, int dx, int dy, Array2D<Type>& out)
             typename Array2DType::iterator itTh = itBegin - dx;
 
             // fill zero at the begin of the line
-            fill(itBegin, itTh, 0.0f);
+            fill(itBegin, itTh, Type());
             // copy data
             copy(in.row_begin(row + dy),
                  in.row_end(row + dy) + dx,
@@ -82,7 +82,7 @@ void shift(const Array2D<Type>& in, int dx, int dy, Array2D<Type>& out)
             copy(in.row_begin(row + dy) + dx, in.row_end(row + dy),
                  out.row_begin(row));
             // fill zero
-            fill(out.row_end(row) - dx, out.row_end(row), 0.0f);
+            fill(out.row_end(row) - dx, out.row_end(row), Type());
         }
     }
     else
@@ -102,7 +102,7 @@ void shift(const Array2D<Type>& in, int dx, int dy, Array2D<Type>& out)
     {
         fill(out.row_begin(out.getRows() - idx),
              out.row_end(out.getRows() - idx),
-             0.0f);
+             Type());
     }
 
 #ifdef TIMER_PROFILING

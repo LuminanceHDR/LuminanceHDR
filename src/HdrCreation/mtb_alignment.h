@@ -21,9 +21,10 @@
  * 
  */
 
-//! @author Nicholas Phillips <ngphillips@gmail.com>
-//! @author Giuseppe Rota (small modifications for Qt4)
-//! @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \brief Implementation of the MTB algorithm for image alignment
+//! \author Nicholas Phillips <ngphillips@gmail.com>
+//! \author Giuseppe Rota (small modifications for Qt4)
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! Remove dependency from Qt and refactoring for new libhdr library
 
 #include <vector>

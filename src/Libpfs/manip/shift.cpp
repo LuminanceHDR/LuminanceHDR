@@ -47,7 +47,7 @@ Frame* shift(const Frame& frame, int dx, int dy)
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
-    std::cout << "rotateFrame() = " << f_timer.get_time() << " msec" << std::endl;
+    std::cout << "shift() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
 
     return shiftedFrame;
