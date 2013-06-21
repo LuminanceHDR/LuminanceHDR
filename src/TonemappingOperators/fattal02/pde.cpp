@@ -61,7 +61,7 @@ using namespace std;
 #define BCG_TOL 1e-3             // orig: 1e-3
 #define V_CYCLE 2                // orig: 2
 // post improvement of the solution using additional cg-iterations
-#define BCG_POST_IMPROVE true
+#define BCG_POST_IMPROVE false
 #define BCG_POST_STEPS 1000      // very slow if > 100, only use on small image
 #define BCG_POST_TOL 1e-7
 

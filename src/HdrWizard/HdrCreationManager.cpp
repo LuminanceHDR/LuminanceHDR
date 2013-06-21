@@ -279,46 +279,7 @@ void hsv2rgb( float &r, float &g, float &b, float h, float s, float v )
 
 }
 
-void solve_pde_dct(Array2Df *F, Array2Df *U)
-{
-  const int width = U->getCols();
-  const int height = U->getRows();
-  assert((int)F->getCols()==width && (int)F->getRows()==height);
-
-  fftwf_plan p;
-  float c[width];
-  float x[width];
-  float xtr[width];
-
-  for (int j = 0; j < height; j++) {
-    for (int i = 0; i < width; i++) {
-      x[i] = (*F)(i, j);
-    }
-    for (int i = 0; i < width; i++) {
-      c[i] = 1.0f;
-    }
-    p=fftwf_plan_r2r_1d(width, x, xtr, FFTW_REDFT10, FFTW_ESTIMATE);
-    fftwf_execute(p);
-    c[0] /= -3.0f;
-    xtr[0] /= -3.0f;
-    for (int i = 1; i < width; i++) {
-      float m = 1.0f / (-4.0f + cos(M_PI*i/width) - c[i-1]);
-      c[i] *= m;
-      xtr[i] = (xtr[i] - xtr[i-1])*m;
-    }
-    for (int i = width-2; i >= 0; i--) {
-      xtr[i] = xtr[i] - c[i]*xtr[i+1];
-    }
-    p=fftwf_plan_r2r_1d(width, xtr, x, FFTW_REDFT01, FFTW_ESTIMATE);
-    fftwf_execute(p);
-    for (int i = 0; i < width; i++) {
-      (*U)(i, j) = x[i];
-    }
-  }
-  fftwf_destroy_plan(p);
-}
-
-float max(Array2Df *u)
+float max(const Array2Df *u)
 {
   const int nx = u->getCols();
   const int ny = u->getRows();
@@ -326,12 +287,189 @@ float max(Array2Df *u)
   return *std::max_element(u->data(), u->data() + nx*ny);
 }
 
-float min(Array2Df *u)
+float min(const Array2Df *u)
 {
   const int nx = u->getCols();
   const int ny = u->getRows();
 
   return *std::min_element(u->data(), u->data() + nx*ny);
+}
+
+void buildA(Array2Df *A, float b)
+{
+    const int height = A->getRows();
+
+    for ( int j = 0; j < height; j++ ) {
+        for ( int i = 0; i < height; i++ ) {
+            (*A)(i, j) = 0.0f;
+        }
+    }
+
+    for ( int j = 0; j < height; j++ ) {
+        for ( int i = 0; i < height; i++ ) {
+            if ( i == j ) {
+                (*A)(i, j) = b;
+                if (i > 0) {
+                    (*A)(i-1, j) = 1.0f;
+                }
+                if (i < height - 1) {
+                    (*A)(i+1, j) = 1.0f;
+                }
+            }
+        }
+    }
+}
+
+float norm(int N, vector<float> &x, vector<float> &y)
+{
+    float n = 0.0f;
+    for ( int i = 0; i < N; i++ ) {
+        n += (x[i] - y[i])*(x[i] - y[i]);
+    }
+    return sqrt(n);
+}
+
+void multiply(Array2Df *A, vector<float> &x, vector<float> &y)
+{
+    const int width = A->getCols();
+    const int height = A->getRows();
+    
+    for ( int i = 0; i < width; i++ ) {
+        y[i] = 0.0f;
+    }
+
+    for ( int j = 0; j < height; j++ ) {
+        for ( int i = 0; i < width; i++ ) {
+            y[j] += (*A)(i, j) * x[i];
+        }
+    }
+}
+
+void solve_pde_dft(Array2Df *F, Array2Df *U)
+{
+    const int width = U->getCols();
+    const int height = U->getRows();
+    assert((int)F->getCols()==width && (int)F->getRows()==height);
+
+    Array2Df *Ftr = new Array2Df(width, height);
+    Array2Df *Utr = new Array2Df(width, height);
+
+    fftwf_plan p = fftwf_plan_r2r_2d(height, width, F->data(), Ftr->data(), FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
+    fftwf_execute(p);
+
+    for ( int j = 0; j < height; j++ ) {
+        for ( int i = 0; i < width; i++ ) {
+            float wi = M_PI*i/width;
+            float wj = M_PI*j/height;
+            (*Utr)(i, j) = 0.5f*(*Ftr)(i, j)/(cos(wi) + cos(wj) - 2.0f);
+        }
+    }
+    
+    (*Utr)(0, 0) = 0.5f*(*Ftr)(0, 0);
+
+    p = fftwf_plan_r2r_2d(height, width, Utr->data(), U->data(), FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
+    fftwf_execute(p);
+    fftwf_execute(p);
+    
+    for ( int j = 0; j < height; j++ ) {
+        for ( int i = 0; i < width; i++ ) {
+            (*U)(i, j) /= 4.0f*((width-1)*(height-1));
+        }
+    }
+
+    delete Ftr;
+    delete Utr;
+    fftwf_destroy_plan(p);
+}
+
+
+void solve_pde_dct(Array2Df *F, Array2Df *U)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    const int width = U->getCols();
+    const int height = U->getRows();
+    assert((int)F->getCols()==width && (int)F->getRows()==height);
+
+    //vector<float> x(height);
+    //vector<float> y(height);
+    vector<float> c(height);
+    //vector<float> known(height);
+    //Array2Df *A = new Array2Df(height, height);
+    Array2Df *Ftr = new Array2Df(width, height);
+
+    fftwf_plan p;
+    #pragma omp parallel for private(p) schedule(static)
+    for ( int j = 0; j < height; j++ ) {
+        #pragma omp critical (make_plan)
+        p = fftwf_plan_r2r_1d(width, F->data()+width*j, Ftr->data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
+        fftwf_execute(p); 
+    }
+    
+    for ( int i = 0; i < width; i++ ) {
+/*
+        for (int j = 0; j < height; j++) {
+            y[j] = (*Ftr)(i, j);
+            c[j] = 1.0f; 
+            //known[j] = y[j];
+        }
+        float b = 2.0f*(cos(M_PI*i/width) - 2.0f); 
+        c[0] /= b;
+        y[0] /= b;
+        for (int j = 1; j < height - 1; j++ ) {
+            float m = (b - c[j-1]);
+            c[j] /= m;
+            y[j] = (y[j] - y[j-1])/m;   
+        }
+        y[height - 1] = (y[height - 1] - y[height - 2])/(b - c[height - 2]);
+        x[height - 1] = y[height - 1];
+        for (int j = height - 2; j >= 0; j--) {
+            x[j] = y[j] - c[j]*x[j+1];
+        }
+        //buildA(A, b);
+        //multiply(A, x, y);
+        //cout << norm(height, known, y) << endl;
+        for (int j = 0; j < height; j++) {
+            (*U)(i, j) = x[j];
+        }
+*/
+        for (int j = 0; j < height; j++) {
+            c[j] = 1.0f; 
+        }
+        float b = 2.0f*(cos(M_PI*i/width) - 2.0f); 
+        c[0] /= b;
+        (*Ftr)(i, 0) /= b;
+        for (int j = 1; j < height - 1; j++ ) {
+            float m = (b - c[j-1]);
+            c[j] /= m;
+            (*Ftr)(i, j) = ((*Ftr)(i, j) - (*Ftr)(i, j-1))/m;   
+        }
+        (*Ftr)(i, height - 1) = ((*Ftr)(i, height - 1) - (*Ftr)(i, height - 2))/(b - c[height - 2]);
+        (*U)(i, height - 1) = (*Ftr)(i, height - 1);
+        for (int j = height - 2; j >= 0; j--) {
+            (*U)(i, j) = (*Ftr)(i, j) - c[j]*(*U)(i, j+1);
+        }
+    }
+    delete Ftr;
+    //delete A;
+
+    #pragma omp parallel for private(p) schedule(static)
+    for ( int j = 0; j < height; j++ ) {
+        #pragma omp critical (make_plan)
+        p = fftwf_plan_r2r_1d(width, U->data()+width*j, U->data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
+        fftwf_execute(p); 
+        for ( int i = 0; i < width; i++ ) {
+            (*U)(i, j) /= (2.0f*(width-1));
+        }
+    }
+
+    fftwf_destroy_plan(p);
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "solve_pde_dct = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
 }
 
 void clampToZero(Array2Df &R, Array2Df &G, Array2Df &B, float m)
@@ -692,24 +830,13 @@ void computeIrradiance(Array2Df* irradiance, const Array2Df* in)
     #pragma omp parallel for schedule(static)
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
-            (*irradiance)(i, j) = std::exp((*in)(i, j)) - 1.0f;
+            (*irradiance)(i, j) = std::exp((*in)(i, j));
         }
     }
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "computeIrradiance = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
-}
-
-bool compare(const Array2Df* in1, const Array2Df* in2)
-{
-    const int width = in1->getCols();
-    const int height = in2->getRows();
-    
-    for (int i = 0; i < width*height; i++)
-        if (((*in1)(i) - (*in2)(i)) > 1e-6)
-            return false;
-    return true;
 }
 
 void computeLogIrradiance(Array2Df* &logIrradiance, const Array2Df* u) 
@@ -721,9 +848,15 @@ void computeLogIrradiance(Array2Df* &logIrradiance, const Array2Df* u)
     const int width = u->getCols();
     const int height = u->getRows();
     
-    #pragma omp parallel for schedule(static)
+    float ir, logIr;
+    #pragma omp parallel for private (ir, logIr) schedule(static)
     for (int i = 0; i < width*height; i++) {
-            (*logIrradiance)(i) = std::log(1.0f+ (*u)(i));
+            ir = (*u)(i);
+            if (ir == 0.0f)
+                logIr = -11.09f;
+            else
+                logIr = std::log(ir);
+            (*logIrradiance)(i) = logIr;
     }
  
 #ifdef TIMER_PROFILING
@@ -741,35 +874,29 @@ void computeGradient(Array2Df* &gradientX, Array2Df* &gradientY, const Array2Df*
     const int width = in->getCols();
     const int height = in->getRows();
 
-    float gx, gy;
-
-    #pragma omp parallel for private(gx, gy) schedule(static)
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            if (i == 0) {
-                gx =  (*in)(i+1, j) - (*in)(i, j);
-            }
-            else if (i == width - 1) {
-                //gx = (*ddin)(i, j) - (*in)(i-1, j);
-                gx = 0.0f;
-            }
-            else {
-                gx = (*in)(i+1, j) - (*in)(i, j);
-            }
-            (*gradientX)(i, j) = gx;
-            if (j == 0) {
-                gy =  (*in)(i, j+1) - (*in)(i, j);
-            }
-            else if (j == height - 1) {
-                //gy = (*in)(i, j) - (*in)(i, j-1);
-                gy = 0.0f;
-            }
-            else {
-                gy = (*in)(i, j+1) - (*in)(i, j);
-            }
-            (*gradientY)(i, j) = gy;
+    #pragma omp parallel for schedule(static)
+    for (int j = 1; j < height-1; j++) {
+        for (int i = 1; i < width-1; i++) {
+            (*gradientX)(i, j) = 0.5f*((*in)(i+1, j) - (*in)(i-1, j));
+            (*gradientY)(i, j) = 0.5f*((*in)(i, j+1) - (*in)(i, j-1));
         }
     }
+    #pragma omp parallel for schedule(static)
+    for (int i = 1; i < width-1; i++) {
+        (*gradientX)(i, 0) = 0.5f*((*in)(i+1, 0) - (*in)(i-1, 0));
+        (*gradientX)(i, height-1) = 0.5f*((*in)(i+1, height-1) - (*in)(i-1, height-1));
+        (*gradientY)(i, 0) = 0.0f;
+        (*gradientY)(i, height-1) = 0.0f;
+    }
+    #pragma omp parallel for schedule(static)
+    for (int j = 1; j < height-1; j++) {
+        (*gradientX)(0, j) = 0.0f;
+        (*gradientX)(width-1, j) = 0.0f;
+        (*gradientY)(0, j) = 0.5f*((*in)(0, j+1) - (*in)(0, j-1));
+        (*gradientY)(width-1, j) = 0.5f*((*in)(width-1, j+1) - (*in)(width-1, j-1));
+    }
+    (*gradientX)(0, 0) = (*gradientX)(0, height-1) = (*gradientX)(width-1, 0) = (*gradientX)(width-1, height-1) = 0.0f;
+    (*gradientY)(0, 0) = (*gradientY)(0, height-1) = (*gradientY)(width-1, 0) = (*gradientY)(width-1, height-1) = 0.0f;
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "computeGradient = " << stop_watch.get_time() << " msec" << std::endl;
@@ -785,18 +912,25 @@ void computeDivergence(Array2Df* &divergence, const Array2Df* gradientX, const A
     const int width = gradientX->getCols();
     const int height = gradientX->getRows();
 
+    (*divergence)(0, 0) = (*gradientX)(0, 0) + (*gradientY)(0, 0);
     #pragma omp parallel for schedule(static)
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            if (i == 0 && j == 0)
-                (*divergence)(i, j) = (*gradientX)(i, j) + (*gradientY)(i, j);
-            else if (i == 0 && j > 0)
-                (*divergence)(i, j) = (*gradientX)(i, j) + (*gradientY)(i, j) - (*gradientY)(i, j-1);
-            else if (i > 0 && j == 0)
-                (*divergence)(i, j) = (*gradientX)(i, j) - (*gradientX)(i-1, j) + (*gradientY)(i, j);
-            else
-                (*divergence)(i, j) = (*gradientX)(i, j) - (*gradientX)(i-1, j) + (*gradientY)(i, j) - (*gradientY)(i, j-1);
+    for (int j = 1; j < height-1; j++) {
+        for (int i = 1; i < width-1; i++) {
+            (*divergence)(i, j) = 0.5f*((*gradientX)(i+1, j) - (*gradientX)(i-1, j)) + 
+                                  0.5f*((*gradientY)(i, j+1) - (*gradientY)(i, j-1));
         }
+    }
+    #pragma omp parallel for schedule(static)
+    for (int j = 1; j < height-1; j++) {
+        (*divergence)(0, j) = (*gradientX)(1, j) - (*gradientX)(0, j) + 0.5f*((*gradientY)(0, j+1) - (*gradientY)(0, j-1));
+        (*divergence)(width-1, j) = (*gradientX)(width-1, j) - (*gradientX)(width-2, j) + 
+                                    0.5f*((*gradientY)(width-1, j) - (*gradientY)(width-1, j-1));
+    }
+    #pragma omp parallel for schedule(static)
+    for (int i = 1; i < width-1; i++) {
+        (*divergence)(i, 0) = 0.5f*((*gradientX)(i, 0) - (*gradientX)(i-1, 0)) + (*gradientY)(i, 0);    
+        (*divergence)(i, height-1) = 0.5f*((*gradientX)(i+1, height-1) - (*gradientX)(i-1, height-1)) + 
+                                     (*gradientY)(i, height-1) - (*gradientY)(i, height-2);
     }
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
@@ -837,12 +971,13 @@ void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
     }
 }
 
-void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F)
+void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const int y)
 {
     const int width = U.getCols();
     const int height = U.getRows();
     
-    float sf = F(50,50) /  U(50,50);
+    float sf = F(x, y) /  U(x, y);
+    #pragma omp parallel for schedule(static)
     for (int i = 0; i < width*height; i++)
         U(i) = sf * U(i);
 } 
@@ -1946,8 +2081,7 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
             continue;
         for (int j = 0; j < gridSize; j++) {
             for (int i = 0; i < gridSize; i++) {
-                    float deltaEV = m_data[h0].getAverageLuminance() - m_data[h].getAverageLuminance();
-                    //float deltaEV = log(m_data[h0].getExposureTime()) - log(m_data[h].getExposureTime());
+                    float deltaEV = log(m_data[h0].getExposureTime()) - log(m_data[h].getExposureTime());
                     if (comparePatches(m_data[h0],
                                        m_data[h],
                                        i, j, gridX, gridY, threshold, deltaEV)) {
@@ -2086,6 +2220,7 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
     deghosted->createXYZChannels(Urc, Ugc, Ubc);
     
     qDebug() << "solve_pde";
+    //solve_pde_dft(divergence_R, logIrradiance_R);
     solve_pde_dct(divergence_R, logIrradiance_R);
     //solve_pde_fft(divergence_R, logIrradiance_R, ph, true);
     //solve_pde_multigrid(divergence_R, logIrradiance_R, ph);
@@ -2094,6 +2229,7 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
     ph.setValue(60);
 
     qDebug() << "solve_pde";
+    //solve_pde_dft(divergence_G, logIrradiance_G);
     solve_pde_dct(divergence_G, logIrradiance_G);
     //solve_pde_fft(divergence_G, logIrradiance_G, ph, true);
     //solve_pde_multigrid(divergence_G, logIrradiance_G, ph);
@@ -2102,6 +2238,7 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
     ph.setValue(76);
 
     qDebug() << "solve_pde";
+    //solve_pde_dft(divergence_B, logIrradiance_B);
     solve_pde_dct(divergence_B, logIrradiance_B);
     //solve_pde_fft(divergence_B, logIrradiance_B, ph, true);
     //solve_pde_multigrid(divergence_B, logIrradiance_B, ph);
@@ -2145,12 +2282,18 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
     qDebug() << max(Ugc);
     qDebug() << min(Ubc);
     qDebug() << max(Ubc);
+    
+    int i, j;
+    for (i = 0; i < gridSize; i++)
+        for (j = 0; j < gridSize; j++)
+            if (patches[i][j] == false)
+                break;
 
-    colorBalance(*Urc, *Rc);
+    colorBalance(*Urc, *Rc, i*gridX, j*gridY);
     ph.setValue(97);
-    colorBalance(*Ugc, *Gc);
+    colorBalance(*Ugc, *Gc, i*gridX, j*gridY);
     ph.setValue(98);
-    colorBalance(*Ubc, *Bc);
+    colorBalance(*Ubc, *Bc, i*gridX, j*gridY);
 
     ph.setValue(100);
 
