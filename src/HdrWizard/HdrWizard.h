@@ -143,5 +143,6 @@ private slots:
     void updateProgressBar(int);
     void createHdr();
     void createHdrFinished();
+    void autoAntighostingFinished();
 };
 #endif

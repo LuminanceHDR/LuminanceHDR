@@ -33,7 +33,6 @@
 #include "ui_EditingTools.h"
 #include "PreviewWidget.h"
 #include "Common/global.h"
-#include "Viewers/SelectionTool.h"
 #include "HdrWizard/HdrCreationManager.h"
 #include "PreviewWidget.h"
 #include "Common/LuminanceOptions.h"

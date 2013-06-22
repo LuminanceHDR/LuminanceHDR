@@ -50,6 +50,8 @@ int obtain_rotation(const std::string& filename);
 //! \return Average Luminance (as 2^EV) or -1 if the value cannot be calculated
 float getAverageLuminance(const std::string& filename);
 
+float getExposureTime(const std::string& filename);
+
 }
 
 #endif

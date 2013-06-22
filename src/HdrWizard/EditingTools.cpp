@@ -303,6 +303,8 @@ void EditingTools::horizShiftChanged(int v) {
 void EditingTools::resetCurrent() {
     horizShiftSB->setValue(0);
     vertShiftSB->setValue(0);
+    m_previewWidget->updateVertShiftMovable(0);
+    m_previewWidget->updateHorizShiftMovable(0);
     m_previewWidget->updatePreviewImage();
 }
 
@@ -317,11 +319,6 @@ void EditingTools::resetAll() {
     resetCurrent(); //graphical update
     horizShiftSB->blockSignals(false);
     vertShiftSB->blockSignals(false);
-    m_previewWidget->updateHorizShiftMovable(0);
-    m_previewWidget->updateVertShiftMovable(0);
-    m_previewWidget->updateHorizShiftPivot(0);
-    m_previewWidget->updateVertShiftPivot(0);
-    m_previewWidget->updatePreviewImage();
 }
 
 void EditingTools::prevLeft() {

@@ -908,11 +908,15 @@ void HdrWizard::NextFinishButtonClicked() {
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
         if (m_ui->antighostingCheckBox->isChecked()) {
-            //m_hdrCreationManager->doAutoAntiGhosting(m_ui->doubleSpinBoxThreshold->value());
-            connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdr()), Qt::DirectConnection);
-            m_futureWatcher.setFuture( QtConcurrent::run( boost::bind(&HdrCreationManager::doAutoAntiGhosting,
-                                                                       m_hdrCreationManager.data(),
-                                                                       m_ui->doubleSpinBoxThreshold->value())) );
+            //m_pfsFrameHDR = m_hdrCreationManager->doAutoAntiGhosting(m_ui->doubleSpinBoxThreshold->value());
+            m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAutoAntiGhosting,
+                                                       m_hdrCreationManager.data(),
+                                                       m_ui->doubleSpinBoxThreshold->value()));
+            connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
+            connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
+            connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
+            m_ui->progressBar->show();
+            m_futureWatcher.setFuture(m_future);
         }
         else
             createHdr();
@@ -936,6 +940,15 @@ void HdrWizard::createHdrFinished()
 {
     m_pfsFrameHDR = m_future.result();
 
+    QApplication::restoreOverrideCursor();
+    accept();
+}
+
+void HdrWizard::autoAntighostingFinished()
+{
+    m_pfsFrameHDR = m_future.result();
+
+    m_ui->progressBar->hide();
     QApplication::restoreOverrideCursor();
     accept();
 }
