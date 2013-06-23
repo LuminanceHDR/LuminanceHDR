@@ -78,7 +78,6 @@
 
 static const float max_rgb = 1.0f;
 static const float max_lightness = 1.0f;
-static const int gridSize = 40;
 
 using namespace std;
 using namespace pfs;
@@ -953,12 +952,25 @@ void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
 #endif
 }
 
-void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const int y)
+void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const int y, const int gridX, const int gridY)
 {
     const int width = U.getCols();
     const int height = U.getRows();
     
-    float sf = F(x, y) /  U(x, y);
+    float umean = 0.0f;
+    for (int i = x; i < x+gridX; i++) 
+        for (int j = y; j < y+gridY; j++) 
+            umean += U(i, j);
+    umean /= gridX*gridY;
+
+    float fmean = 0.0f;
+    for (int i = x; i < x+gridX; i++) 
+        for (int j = y; j < y+gridY; j++) 
+            fmean += F(i, j);
+    fmean /= gridX*gridY;
+ 
+    //float sf = F(x, y) /  U(x, y);
+    float sf = fmean /  umean;
     #pragma omp parallel for schedule(static)
     for (int i = 0; i < width*height; i++)
         U(i) = sf * U(i);
@@ -1299,6 +1311,9 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     , fromCommandLine( fromCommandLine )
 {
     m_fusionOperatorPtr = IFusionOperator::build(DEBEVEC_NEW);
+    for (int i = 0; i < gridSize; i++)
+        for (int j = 0; j < gridSize; j++)
+            m_patches[i][j] = false;
 }
 
 void HdrCreationManager::setConfig(const config_triple &c)
@@ -2023,51 +2038,44 @@ void HdrCreationManager::cropAgMasks(const QRect& ca) {
     }
 }
 
-pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
+int HdrCreationManager::computePatches(float threshold, bool patches[][gridSize], float &percent)
 {
-    qDebug() << "HdrCreationManager::doAutoAntiGhosting";
+    qDebug() << "HdrCreationManager::computePatches";
+    qDebug() << threshold;
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-
-    ProgressHelper ph;
-    connect(&ph, SIGNAL(qtSetRange(int, int)), this, SIGNAL(progressRangeChanged(int, int)));
-    connect(&ph, SIGNAL(qtSetValue(int)), this, SIGNAL(progressValueChanged(int)));
-    ph.setRange(0,100);
-    ph.setValue(0);
-
+    const int width = m_data[0].frame()->getWidth();
+    const int height = m_data[0].frame()->getHeight();
+    const int gridX = width / gridSize;
+    const int gridY = height / gridSize;
     const int size = m_data.size(); 
     assert(size >= 2);
 
     vector<float> HE(size);
 
-    const int width = m_data[0].frame()->getWidth();
-    const int height = m_data[0].frame()->getHeight();
-    const int gridX = width / gridSize;
-    const int gridY = height / gridSize;
-
-    bool patches[gridSize][gridSize];
-    
-    for (int i = 0; i < gridSize; i++)
-        for (int j = 0; j < gridSize; j++)
-            patches[i][j] = false;
-
     hueSquaredMean(m_data, HE);
 
-    int h0 = findIndex(HE.data(), size);
-    qDebug() << "h0: " << h0;
+    m_agGoodImageIndex = findIndex(HE.data(), size);
+    qDebug() << "h0: " << m_agGoodImageIndex;
+
+    for (int j = 0; j < gridSize; j++) {
+        for (int i = 0; i < gridSize; i++) {
+            m_patches[i][j] = false;
+        }
+    }
 
     for (int h = 0; h < size; h++) {
-        if (h == h0) 
+        if (h == m_agGoodImageIndex) 
             continue;
         for (int j = 0; j < gridSize; j++) {
             for (int i = 0; i < gridSize; i++) {
-                    float deltaEV = log(m_data[h0].getExposureTime()) - log(m_data[h].getExposureTime());
-                    if (comparePatches(m_data[h0],
+                    float deltaEV = log(m_data[m_agGoodImageIndex].getExposureTime()) - log(m_data[h].getExposureTime());
+                    if (comparePatches(m_data[m_agGoodImageIndex],
                                        m_data[h],
                                        i, j, gridX, gridY, threshold, deltaEV)) {
-                        patches[i][j] = true;
+                        m_patches[i][j] = true;
                     }
             }                      
         }
@@ -2076,10 +2084,36 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
     int count = 0;
     for (int i = 0; i < gridSize; i++)
         for (int j = 0; j < gridSize; j++)
-            if (patches[i][j] == true)
+            if (m_patches[i][j] == true)
                 count++;
-    qDebug() << "Total patches: " << static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f << "%";
-    ph.setValue(10);
+    percent = static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f;
+    qDebug() << "Total patches: " << percent << "%";
+
+    memcpy(patches, m_patches, gridSize*gridSize);
+
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "computePatches = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+    return m_agGoodImageIndex;
+}
+
+pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][gridSize], int h0)
+{
+    qDebug() << "HdrCreationManager::doAutoAntiGhosting";
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    const int width = m_data[0].frame()->getWidth();
+    const int height = m_data[0].frame()->getHeight();
+    const int gridX = width / gridSize;
+    const int gridY = height / gridSize;
+    ProgressHelper ph;
+    connect(&ph, SIGNAL(qtSetRange(int, int)), this, SIGNAL(progressRangeChanged(int, int)));
+    connect(&ph, SIGNAL(qtSetValue(int)), this, SIGNAL(progressValueChanged(int)));
+    ph.setRange(0,100);
+    ph.setValue(0);
 
     const Channel *Good_Rc, *Good_Gc, *Good_Bc;
     m_data[h0].frame().get()->getXYZChannels(Good_Rc, Good_Gc, Good_Bc);
@@ -2254,16 +2288,16 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
     qDebug() << max(Ubc);
     
     int i, j;
-    for (i = 0; i < gridSize; i++)
-        for (j = 0; j < gridSize; j++)
+    for (i = gridSize-1; i >= 0; i--)
+        for (j = gridSize-1; j >=0; j--)
             if (patches[i][j] == false)
                 break;
 
-    colorBalance(*Urc, *Rc, i*gridX, j*gridY);
+    colorBalance(*Urc, *Rc, i*gridX, j*gridY, gridX, gridY);
     ph.setValue(97);
-    colorBalance(*Ugc, *Gc, i*gridX, j*gridY);
+    colorBalance(*Ugc, *Gc, i*gridX, j*gridY, gridX, gridY);
     ph.setValue(98);
-    colorBalance(*Ubc, *Bc, i*gridX, j*gridY);
+    colorBalance(*Ubc, *Bc, i*gridX, j*gridY, gridX, gridY);
 
     ph.setValue(100);
 
@@ -2275,3 +2309,9 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(float threshold)
     return deghosted;
 }
 
+void HdrCreationManager::getAgData(bool patches[][gridSize], int &h0)
+{
+    memcpy(patches, m_patches, gridSize*gridSize);
+
+    h0 = m_agGoodImageIndex;
+}

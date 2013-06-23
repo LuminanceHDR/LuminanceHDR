@@ -35,6 +35,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
+const int _gridSize = 40;
+
 class IGraphicsView; 
 class IGraphicsPixmapItem;
 class PanIconWidget;
@@ -86,6 +88,7 @@ public:
 
     void setDrawWithBrush();
     void setDrawPath();
+    void renderPatchesMask(bool patches[][_gridSize], const int gridX, const int gridY);
 
 public slots:
     void requestedBlendMode(int);
@@ -112,6 +115,7 @@ public slots:
     void removeSelection();
 
     void switchAntighostingMode(bool);
+    void switchViewPatchesMode(bool);
     void setBrushSize(const int);
     void setBrushStrength(const int);
     void setBrushColor(const QColor);
@@ -228,7 +232,7 @@ private:
     bool m_drawingPathEnded;
 
     enum {BRUSH, PATH} m_drawingMode;
-    enum {EditingMode, AntighostingMode} m_mode;
+    enum {EditingMode, AntighostingMode, ViewPatches} m_mode;
 };
 
 #endif

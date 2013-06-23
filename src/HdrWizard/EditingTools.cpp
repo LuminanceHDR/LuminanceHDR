@@ -40,6 +40,8 @@
 #include "Exif/ExifOperations.h"
 #include "HdrCreation/mtb_alignment.h"
 
+extern const int gridSize;
+
 EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     QDialog(parent),
     m_currentAgMaskIndex(0),
@@ -47,9 +49,14 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     m_additionalShiftValue(0),
     m_imagesSaved(false),
     m_goodImageIndex(-1),
-    m_antiGhosting(false)
+    m_antiGhosting(false),
+    m_doAutoAntighosting(false)
 {
     setupUi(this);
+   
+    for (int i = 0; i < gridSize; i++)
+        for (int j = 0; j < gridSize; j++)
+            m_patches[i][j] = false;
 
     HdrCreationItemContainer data = m_hcm->getData();
     for ( HdrCreationItemContainer::iterator it = data.begin(), 
@@ -57,6 +64,12 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
         m_originalImagesList.push_back(it->qimage());
         m_fileList.push_back(it->filename());
     }
+    
+    int width = m_originalImagesList.at(0)->width();
+    int height = m_originalImagesList.at(0)->height();
+    m_gridX = width/gridSize;
+    m_gridY = height/gridSize;
+
     m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
     m_expotimes = m_hcm->getExpotimes();
 
@@ -574,3 +587,31 @@ void EditingTools::antighostToolButtonPaintToggled(bool toggled)
 {
     (toggled) ? m_previewWidget->setDrawWithBrush() :  m_previewWidget->setDrawPath();
 }
+
+void EditingTools::on_recomputePatches_pushButton_clicked()
+{
+    float patchesPercent;
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+    recomputePatches_pushButton->setEnabled(false);
+    m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent);
+    m_previewWidget->switchViewPatchesMode(true);
+    m_previewWidget->renderPatchesMask(m_patches, m_gridX, m_gridY);
+    totalPatches_lineEdit->setText(QString::number(patchesPercent,'g', 2)+"%");
+    recomputePatches_pushButton->setEnabled(true);
+    QApplication::restoreOverrideCursor();
+}
+
+void EditingTools::on_autoAG_checkBox_toggled(bool toggled)
+{
+    if (toggled) {
+        m_doAutoAntighosting = true;
+        antighostToolButton->setEnabled(false);
+        m_previewWidget->switchViewPatchesMode(false);
+    }
+    else {
+        m_doAutoAntighosting = false;
+        antighostToolButton->setEnabled(true);
+        m_previewWidget->switchViewPatchesMode(false);
+    }
+}
+

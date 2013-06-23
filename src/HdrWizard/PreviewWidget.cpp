@@ -234,6 +234,29 @@ void PreviewWidget::renderAgMask()
     }
 }
 
+void PreviewWidget::renderPatchesMask(bool patches[][_gridSize], const int gridX, const int gridY)
+{
+    m_agMaskPixmap->fill(QColor::fromRgb(0,0,0,255));
+	QPainter painter(m_agMask);
+	painter.setPen(Qt::NoPen);
+	painter.setBrush(QColor::fromRgb(255,255,255,128));
+    painter.setCompositionMode(QPainter::CompositionMode_Clear);
+    painter.drawRect(0, 0, gridX*_gridSize, gridY*_gridSize);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    for (int i = 0; i < _gridSize; i++) {
+        for (int j = 0; j < _gridSize; j++) {
+            if (patches[i][j] == true)
+    	        painter.drawRect(i*gridX, j*gridY, gridX, gridY);
+        }
+    }
+    painter.end();
+    renderPreviewImage(blendmode, m_rect);
+    mPixmap->setPixmap(QPixmap::fromImage(*m_previewImage));
+    delete m_agMaskPixmap;
+    m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
+    mAgPixmap->setPixmap(*m_agMaskPixmap);
+}
+
 void PreviewWidget::requestedBlendMode(int newindex) {
     if (newindex == 0)
         blendmode = &PreviewWidget::computeDiffRgba;
@@ -252,7 +275,7 @@ void PreviewWidget::requestedBlendMode(int newindex) {
 
 bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
 {   
-    if (m_mode == EditingMode) return false;
+    if (m_mode == EditingMode || m_mode == ViewPatches) return false;
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
         if (mouse->buttons() == Qt::MidButton) {
@@ -706,6 +729,17 @@ void PreviewWidget::switchAntighostingMode(bool ag) {
         mPixmap->setAcceptedMouseButtons(0);
         mAgPixmap->setVisible(true);
         m_mode = AntighostingMode;
+    } else {
+        mPixmap->setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton|Qt::MidButton);
+        mAgPixmap->setVisible(false);
+        m_mode = EditingMode;
+    }
+}
+
+void PreviewWidget::switchViewPatchesMode(bool pp) {
+    if (pp) {
+        mAgPixmap->setVisible(true);
+        m_mode = ViewPatches;
     } else {
         mPixmap->setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton|Qt::MidButton);
         mAgPixmap->setVisible(false);

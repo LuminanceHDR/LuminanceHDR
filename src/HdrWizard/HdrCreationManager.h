@@ -46,6 +46,7 @@
 
 // Some other file expect this to be available
 extern const config_triple predef_confs[6];
+static const int gridSize = 40;
 
 // defines an element that contains all the informations for this particular
 // image to be used inside the HdrWizard
@@ -156,7 +157,9 @@ public:
 
     void saveImages(const QString& prefix);
 	void doAntiGhosting(int);
-	pfs::Frame* doAutoAntiGhosting(float);
+    int computePatches(float threshold, bool patches[][gridSize], float &percent);
+	pfs::Frame* doAutoAntiGhosting(bool patches[][gridSize], int h0);
+    void getAgData(bool patches[][gridSize], int &h0);
 	void removeTempFiles();
 
 signals:
@@ -192,6 +195,8 @@ private:
 
     bool m_ais_crop_flag;
 	bool fromCommandLine;
+    int m_agGoodImageIndex;
+    bool m_patches[gridSize][gridSize];
 
 private slots:
 	void ais_finished(int,QProcess::ExitStatus);

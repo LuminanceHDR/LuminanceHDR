@@ -535,7 +535,7 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QGroupBox" name="alignGroupBox">
                   <property name="enabled">
-                   <bool>true</bool>
+                   <bool>false</bool>
                   </property>
                   <property name="title">
                    <string>Alignment</string>
@@ -552,7 +552,7 @@ p, li { white-space: pre-wrap; }
                      <item row="0" column="0">
                       <widget class="QCheckBox" name="alignCheckBox">
                        <property name="enabled">
-                        <bool>true</bool>
+                        <bool>false</bool>
                        </property>
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -567,6 +567,9 @@ p, li { white-space: pre-wrap; }
                      </item>
                      <item row="1" column="0" colspan="2">
                       <widget class="QRadioButton" name="ais_radioButton">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
                        <property name="text">
                         <string>Hugin's align_image_stack</string>
                        </property>
@@ -577,6 +580,9 @@ p, li { white-space: pre-wrap; }
                      </item>
                      <item row="2" column="0" colspan="2">
                       <widget class="QRadioButton" name="mtb_radioButton">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
                        <property name="text">
                         <string>MTB</string>
                        </property>
@@ -584,6 +590,9 @@ p, li { white-space: pre-wrap; }
                      </item>
                      <item row="3" column="0">
                       <widget class="QCheckBox" name="autoCropCheckBox">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                          <horstretch>0</horstretch>
@@ -646,7 +655,7 @@ p, li { white-space: pre-wrap; }
             <string>[2/2] Choose Settings for HDR Creation</string>
            </property>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="1" column="0">
+            <item row="4" column="0">
              <layout class="QHBoxLayout">
               <property name="spacing">
                <number>6</number>
@@ -655,45 +664,89 @@ p, li { white-space: pre-wrap; }
                <number>6</number>
               </property>
               <item>
-               <widget class="QLabel" name="label_weights">
-                <property name="text">
-                 <string>Weighting function:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <spacer>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>112</width>
+                  <width>80</width>
                   <height>20</height>
                  </size>
                 </property>
                </spacer>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_showWeight">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
+               <widget class="QLabel" name="label_Iterations">
+                <property name="enabled">
+                 <bool>false</bool>
                 </property>
                 <property name="text">
-                 <string>Triangular</string>
+                 <string>Amount of iterations:</string>
                 </property>
-                <property name="alignment">
-                 <set>Qt::AlignHCenter</set>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBoxIterations">
+                <property name="enabled">
+                 <bool>false</bool>
                 </property>
-                <property name="readOnly">
-                 <bool>true</bool>
+                <property name="toolTip">
+                 <string>Keep it small</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>22</number>
+                </property>
+                <property name="value">
+                 <number>1</number>
                 </property>
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="7" column="0">
+             <spacer>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>691</width>
+                <height>103</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="5" column="0">
+             <widget class="Line" name="line_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QCheckBox" name="customConfigCheckBox">
+              <property name="toolTip">
+               <string>Use this only if the default profiles above do not yield good results</string>
+              </property>
+              <property name="text">
+               <string>Use custom configuration</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="settings_label">
+              <property name="text">
+               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Choose one of the predefined profiles or use  a  custom configuration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
             </item>
             <item row="2" column="0">
              <layout class="QHBoxLayout">
@@ -793,7 +846,7 @@ p, li { white-space: pre-wrap; }
               </item>
              </layout>
             </item>
-            <item row="4" column="0">
+            <item row="1" column="0">
              <layout class="QHBoxLayout">
               <property name="spacing">
                <number>6</number>
@@ -802,12 +855,9 @@ p, li { white-space: pre-wrap; }
                <number>6</number>
               </property>
               <item>
-               <widget class="QCheckBox" name="antighostingCheckBox">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
+               <widget class="QLabel" name="label_weights">
                 <property name="text">
-                 <string>Anti-ghosting</string>
+                 <string>Weighting function:</string>
                 </property>
                </widget>
               </item>
@@ -818,142 +868,32 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>72</width>
-                  <height>23</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="labelThreshold">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Threshold</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSlider" name="horizontalSliderThreshold">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBoxThreshold">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <double>1.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.100000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="5" column="0">
-             <layout class="QHBoxLayout">
-              <property name="spacing">
-               <number>6</number>
-              </property>
-              <property name="margin">
-               <number>6</number>
-              </property>
-              <item>
-               <spacer>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>80</width>
+                  <width>112</width>
                   <height>20</height>
                  </size>
                 </property>
                </spacer>
               </item>
               <item>
-               <widget class="QLabel" name="label_Iterations">
-                <property name="enabled">
-                 <bool>false</bool>
+               <widget class="QLineEdit" name="lineEdit_showWeight">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Amount of iterations:</string>
+                 <string>Triangular</string>
                 </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="spinBoxIterations">
-                <property name="enabled">
-                 <bool>false</bool>
+                <property name="alignment">
+                 <set>Qt::AlignHCenter</set>
                 </property>
-                <property name="toolTip">
-                 <string>Keep it small</string>
-                </property>
-                <property name="minimum">
-                 <number>1</number>
-                </property>
-                <property name="maximum">
-                 <number>22</number>
-                </property>
-                <property name="value">
-                 <number>1</number>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
              </layout>
-            </item>
-            <item row="8" column="0">
-             <spacer>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>691</width>
-                <height>103</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="6" column="0">
-             <widget class="Line" name="line_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="0">
-             <widget class="QCheckBox" name="customConfigCheckBox">
-              <property name="toolTip">
-               <string>Use this only if the default profiles above do not yield good results</string>
-              </property>
-              <property name="text">
-               <string>Use custom configuration</string>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="0">
-             <widget class="QLabel" name="settings_label">
-              <property name="text">
-               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Choose one of the predefined profiles or use  a  custom configuration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-             </widget>
             </item>
             <item row="0" column="0">
              <layout class="QHBoxLayout">
@@ -1556,7 +1496,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>lineEdit_showWeight</tabstop>
   <tabstop>lineEdit_show_resp</tabstop>
   <tabstop>lineEdit_showmodel</tabstop>
-  <tabstop>antighostingCheckBox</tabstop>
   <tabstop>spinBoxIterations</tabstop>
   <tabstop>customConfigCheckBox</tabstop>
   <tabstop>triGaussPlateauComboBox</tabstop>
@@ -1582,12 +1521,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>75</x>
-     <y>121</y>
+     <x>53</x>
+     <y>51</y>
     </hint>
    </hints>
   </connection>
@@ -1598,12 +1537,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>641</x>
-     <y>121</y>
+     <x>92</x>
+     <y>51</y>
     </hint>
    </hints>
   </connection>
@@ -1614,12 +1553,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>75</x>
-     <y>163</y>
+     <x>53</x>
+     <y>50</y>
     </hint>
    </hints>
   </connection>
@@ -1630,12 +1569,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>641</x>
-     <y>163</y>
+     <x>92</x>
+     <y>50</y>
     </hint>
    </hints>
   </connection>
@@ -1646,12 +1585,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>75</x>
-     <y>205</y>
+     <x>53</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -1662,12 +1601,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>641</x>
-     <y>205</y>
+     <x>92</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -1679,11 +1618,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>262</y>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
-     <x>178</x>
-     <y>229</y>
+     <x>84</x>
+     <y>84</y>
     </hint>
    </hints>
   </connection>
@@ -1695,11 +1634,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>202</y>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
-     <x>178</x>
-     <y>229</y>
+     <x>84</x>
+     <y>84</y>
     </hint>
    </hints>
   </connection>
@@ -1711,11 +1650,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>202</y>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
      <x>55</x>
-     <y>256</y>
+     <y>113</y>
     </hint>
    </hints>
   </connection>
@@ -1726,12 +1665,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>453</x>
-     <y>79</y>
+     <x>92</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
@@ -1742,12 +1681,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>47</x>
-     <y>56</y>
+     <x>52</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
@@ -1759,11 +1698,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>202</y>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
-     <x>502</x>
-     <y>170</y>
+     <x>84</x>
+     <y>85</y>
     </hint>
    </hints>
   </connection>
@@ -1775,11 +1714,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>262</y>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>55</x>
-     <y>256</y>
+     <y>113</y>
     </hint>
    </hints>
   </connection>
@@ -1791,11 +1730,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>262</y>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>85</x>
-     <y>202</y>
+     <y>84</y>
     </hint>
    </hints>
   </connection>
@@ -1807,11 +1746,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>262</y>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
-     <x>502</x>
-     <y>170</y>
+     <x>84</x>
+     <y>85</y>
     </hint>
    </hints>
   </connection>
@@ -1822,12 +1761,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>538</x>
-     <y>289</y>
+     <x>59</x>
+     <y>48</y>
     </hint>
    </hints>
   </connection>
@@ -1838,12 +1777,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>327</y>
+     <x>98</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>708</x>
-     <y>289</y>
+     <x>92</x>
+     <y>48</y>
     </hint>
    </hints>
   </connection>
@@ -1855,11 +1794,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>262</y>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>85</x>
-     <y>287</y>
+     <y>82</y>
     </hint>
    </hints>
   </connection>
@@ -1871,11 +1810,11 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>287</y>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>50</x>
-     <y>341</y>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -1887,59 +1826,59 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>287</y>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
-     <x>461</x>
-     <y>314</y>
+     <x>84</x>
+     <y>83</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>antighostingCheckBox</sender>
+   <sender>alignCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>labelThreshold</receiver>
+   <receiver>ais_radioButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>147</x>
-     <y>230</y>
+     <x>514</x>
+     <y>352</y>
     </hint>
     <hint type="destinationlabel">
-     <x>392</x>
-     <y>241</y>
+     <x>526</x>
+     <y>370</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>antighostingCheckBox</sender>
+   <sender>alignCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>horizontalSliderThreshold</receiver>
+   <receiver>mtb_radioButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>136</x>
-     <y>231</y>
+     <x>495</x>
+     <y>351</y>
     </hint>
     <hint type="destinationlabel">
-     <x>521</x>
-     <y>238</y>
+     <x>463</x>
+     <y>406</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>antighostingCheckBox</sender>
+   <sender>alignCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBoxThreshold</receiver>
+   <receiver>autoCropCheckBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>148</x>
-     <y>228</y>
+     <x>440</x>
+     <y>349</y>
     </hint>
     <hint type="destinationlabel">
-     <x>670</x>
-     <y>238</y>
+     <x>441</x>
+     <y>431</y>
     </hint>
    </hints>
   </connection>

@@ -57,6 +57,7 @@
 #include "HdrWizard/EditingTools.h"
 #include "HdrWizard/HdrCreationManager.h"
 
+
 HdrWizard::HdrWizard(QWidget *p,
                      const QStringList &files,
                      const QStringList &/*inputFilesName*/,
@@ -545,6 +546,10 @@ void HdrWizard::loadInputFilesDone()
     updateTableGrid();
     inputHdrFileSelected(0);
     m_ui->tableWidget->selectRow(0);
+    m_ui->alignGroupBox->setEnabled(true);
+    if (m_ui->tableWidget->rowCount() > 1) {
+        m_ui->alignCheckBox->setEnabled(true);
+    }
 }
 
 /*
@@ -907,11 +912,13 @@ void HdrWizard::NextFinishButtonClicked() {
         repaint();
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
-        if (m_ui->antighostingCheckBox->isChecked()) {
-            //m_pfsFrameHDR = m_hdrCreationManager->doAutoAntiGhosting(m_ui->doubleSpinBoxThreshold->value());
+        //if (m_ui->antighostingCheckBox->isChecked()) {
+        if (m_doAutoAntighosting) {
+            int h0;
+            m_hdrCreationManager->getAgData(m_patches, h0);
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAutoAntiGhosting,
                                                        m_hdrCreationManager.data(),
-                                                       m_ui->doubleSpinBoxThreshold->value()));
+                                                       m_patches, h0));
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
             connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
             connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
@@ -975,6 +982,7 @@ void HdrWizard::currentPageChangedInto(int newindex)
             this->setDisabled(true);
             EditingTools *editingtools = new EditingTools(m_hdrCreationManager.data());
             if (editingtools->exec() == QDialog::Accepted) {
+                m_doAutoAntighosting = editingtools->isAutoAntighostingEnabled();
                 this->setDisabled(false);
             } else {
                 emit reject();

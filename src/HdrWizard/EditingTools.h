@@ -34,8 +34,9 @@
 #include "PreviewWidget.h"
 #include "Common/global.h"
 #include "HdrWizard/HdrCreationManager.h"
-#include "PreviewWidget.h"
 #include "Common/LuminanceOptions.h"
+
+extern const int gridSize;
 
 class HistogramLDR;
 class PanIconWidget;
@@ -46,6 +47,7 @@ Q_OBJECT
 public:
 	EditingTools(HdrCreationManager *, QWidget *parent=0);
 	~EditingTools();
+    bool isAutoAntighostingEnabled() { return m_doAutoAntighosting == true; }
 protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
@@ -67,8 +69,14 @@ private:
     bool m_antiGhosting;
 	LuminanceOptions m_luminanceOptions;
 	QVector<float> m_expotimes;
+    int m_agGoodImageIndex;
+    bool m_patches[gridSize][gridSize];
+    int m_gridX;
+    int m_gridY;
+    bool m_doAutoAntighosting;
 
 	void setAntiGhostingWidget(QImage*, QPair<int, int>);
+
 private slots:
 	void saveImagesButtonClicked();
 	void updatePivot(int);
@@ -107,6 +115,8 @@ private slots:
     void antighostToolButtonPaintToggled(bool);
     void saveAgMask();
     void applySavedAgMask();
+    void on_recomputePatches_pushButton_clicked();
+    void on_autoAG_checkBox_toggled(bool toggled);
 };
 
 #endif
