@@ -1,7 +1,8 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  *	Copyright (C) 2007 by Nicholas Phillips
+ *  Copyright (C) 2013 Davide Anastasia
  *
  *	This program is free software; you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -17,9 +18,6 @@
  *	along with this program; if not, write to the Free Software
  *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
- * @author Nicholas Phillips <ngphillips@gmail.com>
- *		   Giuseppe Rota (small modifications for Qt4)
  *
  */
 
@@ -260,12 +258,16 @@ void mtb_alignment(std::vector<pfs::FramePtr> &framePtrList)
         cumulativeX += shiftsX[i - 1];
         cumulativeY += shiftsY[i - 1];
 
-        PRINT_DEBUG("Cumulative shift for image " << i << " = (" << cumulativeX
-                    << "," <<cumulativeY << ")");
+        // avoid shifting if cumulativeX and cumulativeY are zero
+        if ( cumulativeX || cumulativeY )
+        {
+            PRINT_DEBUG("Cumulative shift for image " << i << " = (" << cumulativeX
+                        << "," <<cumulativeY << ")");
 
-        FramePtr shiftedFrame( pfs::shift(*framePtrList[i], cumulativeX, cumulativeY) );
+            FramePtr shiftedFrame( pfs::shift(*framePtrList[i], cumulativeX, cumulativeY) );
 
-        framePtrList[i]->swap( *shiftedFrame );
+            framePtrList[i]->swap( *shiftedFrame );
+        }
     }
 }
 
