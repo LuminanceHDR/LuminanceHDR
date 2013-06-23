@@ -4,7 +4,7 @@ ADD_SUBDIRECTORY(FusionAlgorithms)
 
 # workaround for http://code.google.com/p/googletest/issues/detail?id=408
 IF(MSVC_VERSION EQUAL 1700)
-    ADD_DEFINITIONS(-D_VARIADIC_MAX=10)
+ADD_DEFINITIONS(-D_VARIADIC_MAX=10)
 ENDIF()
 
 FIND_PACKAGE(GTest)
@@ -154,10 +154,13 @@ ADD_EXECUTABLE(TestImageQualityDialog TestImageQualityDialog.cpp)
 TARGET_LINK_LIBRARIES(TestImageQualityDialog ui fileformat pfs common ${LIBS})
 
 ADD_EXECUTABLE(TestHdrCreationWizard TestHdrCreationWizard.cpp)
-IF(APPLE||MSVC)
-    TARGET_LINK_LIBRARIES(TestHdrCreationWizard ${LUMINANCE_MODULES_GUI} ${LIBS})
+IF(APPLE OR MSVC)
+    TARGET_LINK_LIBRARIES(TestHdrCreationWizard
+    ${LUMINANCE_MODULES_GUI} ${LIBS})
 ELSEIF(UNIX)
-    TARGET_LINK_LIBRARIES(TestHdrCreationWizard -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group ${LIBS})
+    TARGET_LINK_LIBRARIES(TestHdrCreationWizard
+    -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group
+    ${LIBS})
 ENDIF()
 
 ADD_EXECUTABLE(TestFusionOperator TestFusionOperator.cpp)
