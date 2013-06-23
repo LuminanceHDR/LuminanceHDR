@@ -149,6 +149,7 @@ static struct option cmdLineOptions[] = {
     { "output", required_argument, NULL, 'o' },
     { "quality", required_argument, NULL, 'q' },
     { "savealigned", required_argument, NULL, 'd' },
+    { "autoag", required_argument, NULL, 'b' },
     { NULL, 0, NULL, 0 }
 };
 
@@ -160,6 +161,8 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     tmopts(TMOptionsOperations::getDefaultTMOptions()),
     verbose(false),
 	quality(100),
+    threshold(0.5f),
+    doAutoAntighosting(false),
     saveAlignedImagesPrefix("")
 {
     hdrcreationconfig.weights = TRIANGULAR;
@@ -180,7 +183,7 @@ void CommandLineInterfaceManager::parseArgs()
 //        cliOptions += cmdLineOptions[i].val;
 //    }
 
-    while( (c = getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:u:q:d:", cmdLineOptions, &optionIndex)) != -1 )
+    while( (c = getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:u:q:d:b:", cmdLineOptions, &optionIndex)) != -1 )
     {
         switch ( c )
         {
@@ -417,6 +420,12 @@ void CommandLineInterfaceManager::parseArgs()
         case 'd':
             saveAlignedImagesPrefix = QString(optarg);
             break;
+        case 'b':
+            threshold = QString(optarg).toFloat();
+			if (threshold < 0.0f ||  threshold > 1.0f)
+            	printErrorAndExit(tr("Error: Threshold must be in the range [0-1]."));
+            doAutoAntighosting = true;
+            break;
         case '?':
             printErrorAndExit(tr("Error: Unknown option %1.").arg(optopt));
         case ':':
@@ -469,7 +478,6 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
             printIfVerbose(QObject::tr("Temporary directory: %1").arg(luminance_options.getTempDir()), verbose);
             printIfVerbose(QObject::tr("Using %1 threads.").arg(luminance_options.getNumThreads()), verbose);
         }
-
         hdrCreationManager.reset( new HdrCreationManager(true) );
         connect(hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(finishedLoadingInputFiles()));
         connect(hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(createHDR(int)));
@@ -544,8 +552,15 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
     }
 
     hdrCreationManager->removeTempFiles();
-
-    HDR.reset( hdrCreationManager->createHdr(false,1) );
+    if (doAutoAntighosting) {
+        bool patches[gridSize][gridSize];
+        float patchesPercent;
+        int h0 = hdrCreationManager->computePatches(threshold, patches, patchesPercent);
+        HDR.reset( hdrCreationManager->doAutoAntiGhosting(patches, h0) );
+    }
+    else {
+        HDR.reset( hdrCreationManager->createHdr(false,1) );
+    }
     saveHDR();
 }
 
@@ -664,6 +679,7 @@ void CommandLineInterfaceManager::printHelp(char * progname)
             "\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
             "\t" + tr("-o --output LDR_FILE    File name you want to save your tone mapped LDR to.") + "\n" +
             "\t" + tr("-q --quality VALUE      Quality of the saved tone mapped file (0-100).") + "\n" +
+            "\t" + tr("-b --autoag THRESHOLD   Enable auto antighosting with given threshold.") + "\n" +
             "\t" + tr("                        (No tonemapping is performed unless -o is specified).") + "\n\n" +
             tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
     printErrorAndExit(help);

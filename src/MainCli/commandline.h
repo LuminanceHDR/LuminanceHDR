@@ -82,6 +82,8 @@ private:
 	int maximum;
 	bool started;
 	int quality;
+    float threshold;
+    bool doAutoAntighosting;
     QString saveAlignedImagesPrefix;
 
     void startTonemap();

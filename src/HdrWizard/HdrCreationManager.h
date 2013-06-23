@@ -43,48 +43,11 @@
 #include "HdrCreation/createhdr.h"
 #include "HdrCreation/createhdr_common.h"
 #include "HdrCreation/fusionoperator.h"
+#include "HdrCreationItem.h"
+#include "AutoAntighosting.h"
 
 // Some other file expect this to be available
 extern const config_triple predef_confs[6];
-static const int gridSize = 40;
-
-// defines an element that contains all the informations for this particular
-// image to be used inside the HdrWizard
-class HdrCreationItem
-{
-public:
-    HdrCreationItem(const QString& filename);
-    ~HdrCreationItem();
-
-    const QString& filename() const     { return m_filename; }
-    const pfs::FramePtr& frame() const  { return m_frame; }
-    pfs::FramePtr& frame()              { return m_frame; }
-    bool isValid() const                { return m_frame->isValid(); }
-
-    bool hasAverageLuminance() const    { return (m_averageLuminance != -1.f); }
-    void setAverageLuminance(float avl) { m_averageLuminance = avl; }
-    float getAverageLuminance() const   { return m_averageLuminance; }
-
-    bool hasExposureTime() const        { return (m_exposureTime != -1.f); }
-    void setExposureTime(float e)       { m_exposureTime = e; }
-    float getExposureTime() const       { return m_exposureTime; }
-
-    bool hasEV() const                  { return hasAverageLuminance(); }
-    void setEV(float ev)                { m_averageLuminance = std::pow(2.f, ev); }
-    float getEV() const                 { return log2(m_averageLuminance); }
-
-    QImage* qimage()                    { return m_thumbnail.data(); }
-    const QImage* qimage() const        { return m_thumbnail.data(); }
-
-private:
-    QString                 m_filename;
-    float                   m_averageLuminance;
-    float                   m_exposureTime;
-    pfs::FramePtr           m_frame;
-    QSharedPointer<QImage>  m_thumbnail;
-};
-
-typedef std::vector< HdrCreationItem > HdrCreationItemContainer;
 
 class HdrCreationManager : public QObject
 {
