@@ -81,6 +81,7 @@ public:
     QImage* getMask(); // Conversion to QImage to QPixmap is made for speed optimization
                        // we need to return a QImage from the modified QPixmap
 
+    void setPatchesMask(QImage *mask);
     void setHV_offset(QPair<int, int> HV_offset) {
         m_mx = HV_offset.first;
         m_my = HV_offset.second;
@@ -192,6 +193,7 @@ private:
     const QImage *m_pivotImage;
     QImage *m_agMask;
     QImage *m_originalAgMask;
+    QImage *m_patchesMask;
     QPixmap *m_agMaskPixmap;
     QImage *m_savedMask;
 

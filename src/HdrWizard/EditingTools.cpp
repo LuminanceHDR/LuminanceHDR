@@ -92,7 +92,9 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     m_previewWidget->setLassoColor(lassocolor);
     m_previewWidget->adjustSize();
     m_previewWidget->update();
-
+    m_patchesMask = new QImage(width, height, QImage::Format_ARGB32);
+    m_previewWidget->setPatchesMask(m_patchesMask);
+    
     qvl->addWidget(m_previewWidget);
     previewImageFrame->setLayout(qvl);
 
@@ -181,6 +183,7 @@ EditingTools::~EditingTools()
 {
     delete m_previewWidget;
     delete m_histogram;
+    delete m_patchesMask;
 }
 
 void EditingTools::keyPressEvent(QKeyEvent *event)
@@ -258,7 +261,11 @@ void EditingTools::nextClicked()
     
     if (!m_imagesSaved)
         m_hcm->applyShiftsToItems(m_HV_offsets);
-    if (m_goodImageIndex != -1) {
+    if (m_doAutoAntighosting) {
+            float patchesPercent;
+            m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent);
+    }
+    else if (m_goodImageIndex != -1) {
         m_hcm->setAntiGhostingMasksList(m_antiGhostingMasksList);
         m_hcm->doAntiGhosting(m_goodImageIndex);
         qDeleteAll(m_antiGhostingMasksList);

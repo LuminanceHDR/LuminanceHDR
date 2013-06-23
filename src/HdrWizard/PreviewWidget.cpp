@@ -48,6 +48,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     m_pivotImage(p), 
     m_agMask(NULL),
     m_originalAgMask(NULL),
+    m_patchesMask(NULL),
     m_agMaskPixmap(NULL),
     m_savedMask(NULL),
     m_prevComputed(),
@@ -236,10 +237,9 @@ void PreviewWidget::renderAgMask()
 
 void PreviewWidget::renderPatchesMask(bool patches[][_gridSize], const int gridX, const int gridY)
 {
-    m_agMaskPixmap->fill(QColor::fromRgb(0,0,0,255));
-	QPainter painter(m_agMask);
+	QPainter painter(m_patchesMask);
 	painter.setPen(Qt::NoPen);
-	painter.setBrush(QColor::fromRgb(255,255,255,128));
+	painter.setBrush(QColor::fromRgb(255,255,255,60));
     painter.setCompositionMode(QPainter::CompositionMode_Clear);
     painter.drawRect(0, 0, gridX*_gridSize, gridY*_gridSize);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
@@ -253,7 +253,7 @@ void PreviewWidget::renderPatchesMask(bool patches[][_gridSize], const int gridX
     renderPreviewImage(blendmode, m_rect);
     mPixmap->setPixmap(QPixmap::fromImage(*m_previewImage));
     delete m_agMaskPixmap;
-    m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
+    m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_patchesMask));
     mAgPixmap->setPixmap(*m_agMaskPixmap);
 }
 
@@ -386,6 +386,11 @@ void PreviewWidget::setMask(QImage *mask) {
     m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
     mAgPixmap->setPixmap(*m_agMaskPixmap);
     m_mx = m_my = 0;
+}
+
+void PreviewWidget::setPatchesMask(QImage *mask) {
+    if (m_agMaskPixmap) 
+    m_patchesMask = new QImage(*mask);
 }
 
 QImage *PreviewWidget::getMask()
@@ -727,6 +732,9 @@ void PreviewWidget::fillAntiGhostingCursorPixmap() {
 void PreviewWidget::switchAntighostingMode(bool ag) {
     if (ag) {
         mPixmap->setAcceptedMouseButtons(0);
+        delete m_agMaskPixmap;
+        m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
+        mAgPixmap->setPixmap(*m_agMaskPixmap);
         mAgPixmap->setVisible(true);
         m_mode = AntighostingMode;
     } else {

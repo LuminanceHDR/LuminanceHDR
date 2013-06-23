@@ -74,6 +74,7 @@ private:
     int m_gridX;
     int m_gridY;
     bool m_doAutoAntighosting;
+    QImage* m_patchesMask;
 
 	void setAntiGhostingWidget(QImage*, QPair<int, int>);
 
