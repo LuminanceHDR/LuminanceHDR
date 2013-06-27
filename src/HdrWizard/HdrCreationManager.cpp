@@ -317,8 +317,8 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     , fromCommandLine( fromCommandLine )
 {
     m_fusionOperatorPtr = IFusionOperator::build(DEBEVEC_NEW);
-    for (int i = 0; i < gridSize; i++)
-        for (int j = 0; j < gridSize; j++)
+    for (int i = 0; i < agGridSize; i++)
+        for (int j = 0; j < agGridSize; j++)
             m_patches[i][j] = false;
 }
 
@@ -1044,7 +1044,7 @@ void HdrCreationManager::cropAgMasks(const QRect& ca) {
     }
 }
 
-int HdrCreationManager::computePatches(float threshold, bool patches[][gridSize], float &percent)
+int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSize], float &percent, QList <QPair<int, int> > HV_offset)
 {
     qDebug() << "HdrCreationManager::computePatches";
     qDebug() << threshold;
@@ -1054,8 +1054,8 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][gridSize]
 #endif
     const int width = m_data[0].frame()->getWidth();
     const int height = m_data[0].frame()->getHeight();
-    const int gridX = width / gridSize;
-    const int gridY = height / gridSize;
+    const int gridX = width / agGridSize;
+    const int gridY = height / agGridSize;
     const int size = m_data.size(); 
     assert(size >= 2);
 
@@ -1066,8 +1066,8 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][gridSize]
     m_agGoodImageIndex = findIndex(HE.data(), size);
     qDebug() << "h0: " << m_agGoodImageIndex;
 
-    for (int j = 0; j < gridSize; j++) {
-        for (int i = 0; i < gridSize; i++) {
+    for (int j = 0; j < agGridSize; j++) {
+        for (int i = 0; i < agGridSize; i++) {
             m_patches[i][j] = false;
         }
     }
@@ -1075,12 +1075,16 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][gridSize]
     for (int h = 0; h < size; h++) {
         if (h == m_agGoodImageIndex) 
             continue;
-        for (int j = 0; j < gridSize; j++) {
-            for (int i = 0; i < gridSize; i++) {
-                    float deltaEV = log(m_data[m_agGoodImageIndex].getExposureTime()) - log(m_data[h].getExposureTime());
+        float deltaEV;
+        #pragma omp parallel for private (deltaEV) schedule(static)
+        for (int j = 0; j < agGridSize; j++) {
+            for (int i = 0; i < agGridSize; i++) {
+                    deltaEV = log(m_data[m_agGoodImageIndex].getExposureTime()) - log(m_data[h].getExposureTime());
+                    int dx = HV_offset[m_agGoodImageIndex].first - HV_offset[h].first;
+                    int dy = HV_offset[m_agGoodImageIndex].second - HV_offset[h].second;
                     if (comparePatches(m_data[m_agGoodImageIndex],
                                        m_data[h],
-                                       i, j, gridX, gridY, threshold, deltaEV)) {
+                                       i, j, gridX, gridY, threshold, deltaEV, dx, dy)) {
                         m_patches[i][j] = true;
                     }
             }                      
@@ -1088,14 +1092,14 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][gridSize]
     }
 
     int count = 0;
-    for (int i = 0; i < gridSize; i++)
-        for (int j = 0; j < gridSize; j++)
+    for (int i = 0; i < agGridSize; i++)
+        for (int j = 0; j < agGridSize; j++)
             if (m_patches[i][j] == true)
                 count++;
-    percent = static_cast<float>(count) / static_cast<float>(gridSize*gridSize) * 100.0f;
+    percent = static_cast<float>(count) / static_cast<float>(agGridSize*agGridSize) * 100.0f;
     qDebug() << "Total patches: " << percent << "%";
 
-    memcpy(patches, m_patches, gridSize*gridSize);
+    memcpy(patches, m_patches, agGridSize*agGridSize);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
@@ -1104,7 +1108,7 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][gridSize]
     return m_agGoodImageIndex;
 }
 
-pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][gridSize], int h0)
+pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][agGridSize], int h0)
 {
     qDebug() << "HdrCreationManager::doAutoAntiGhosting";
 #ifdef TIMER_PROFILING
@@ -1113,8 +1117,8 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][gridSize], int
 #endif
     const int width = m_data[0].frame()->getWidth();
     const int height = m_data[0].frame()->getHeight();
-    const int gridX = width / gridSize;
-    const int gridY = height / gridSize;
+    const int gridX = width / agGridSize;
+    const int gridY = height / agGridSize;
     ProgressHelper ph;
     connect(&ph, SIGNAL(qtSetRange(int, int)), this, SIGNAL(progressRangeChanged(int, int)));
     connect(&ph, SIGNAL(qtSetValue(int)), this, SIGNAL(progressValueChanged(int)));
@@ -1294,8 +1298,8 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][gridSize], int
     qDebug() << max(Ubc);
     
     int i, j;
-    for (i = gridSize-1; i >= 0; i--)
-        for (j = gridSize-1; j >=0; j--)
+    for (i = agGridSize-1; i >= 0; i--)
+        for (j = agGridSize-1; j >=0; j--)
             if (patches[i][j] == false)
                 break;
 
@@ -1315,9 +1319,9 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][gridSize], int
     return deghosted;
 }
 
-void HdrCreationManager::getAgData(bool patches[][gridSize], int &h0)
+void HdrCreationManager::getAgData(bool patches[][agGridSize], int &h0)
 {
-    memcpy(patches, m_patches, gridSize*gridSize);
+    memcpy(patches, m_patches, agGridSize*agGridSize);
 
     h0 = m_agGoodImageIndex;
 }

@@ -40,8 +40,6 @@
 #include "Exif/ExifOperations.h"
 #include "HdrCreation/mtb_alignment.h"
 
-extern const int gridSize;
-
 EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     QDialog(parent),
     m_currentAgMaskIndex(0),
@@ -54,8 +52,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
 {
     setupUi(this);
    
-    for (int i = 0; i < gridSize; i++)
-        for (int j = 0; j < gridSize; j++)
+    for (int i = 0; i < agGridSize; i++)
+        for (int j = 0; j < agGridSize; j++)
             m_patches[i][j] = false;
 
     HdrCreationItemContainer data = m_hcm->getData();
@@ -67,8 +65,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     
     int width = m_originalImagesList.at(0)->width();
     int height = m_originalImagesList.at(0)->height();
-    m_gridX = width/gridSize;
-    m_gridY = height/gridSize;
+    m_gridX = width/agGridSize;
+    m_gridY = height/agGridSize;
 
     m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
     m_expotimes = m_hcm->getExpotimes();
@@ -171,6 +169,8 @@ void EditingTools::setupConnections() {
     connect(toolButtonSaveMask,SIGNAL(clicked()),m_previewWidget,SLOT(saveAgMask()));
     connect(toolButtonSaveMask,SIGNAL(clicked()),this,SLOT(saveAgMask()));
     connect(toolButtonApplyMask,SIGNAL(clicked()),this,SLOT(applySavedAgMask()));
+    connect(threshold_horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
+    connect(threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateThresholdSpinBox(double)));
 
     connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
     //connect(m_previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
@@ -262,8 +262,13 @@ void EditingTools::nextClicked()
     if (!m_imagesSaved)
         m_hcm->applyShiftsToItems(m_HV_offsets);
     if (m_doAutoAntighosting) {
-            float patchesPercent;
-            m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent);
+        QStringList::ConstIterator it = m_fileList.begin();
+        while( it != m_fileList.end() ) {
+            m_HV_offsets.append(qMakePair(0,0));
+            ++it;
+        }
+        float patchesPercent;
+        m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent, m_HV_offsets);
     }
     else if (m_goodImageIndex != -1) {
         m_hcm->setAntiGhostingMasksList(m_antiGhostingMasksList);
@@ -323,9 +328,8 @@ void EditingTools::horizShiftChanged(int v) {
 void EditingTools::resetCurrent() {
     horizShiftSB->setValue(0);
     vertShiftSB->setValue(0);
-    m_previewWidget->updateVertShiftMovable(0);
-    m_previewWidget->updateHorizShiftMovable(0);
-    m_previewWidget->updatePreviewImage();
+//    m_previewWidget->updateVertShiftMovable(0);
+//    m_previewWidget->updateHorizShiftMovable(0);
 }
 
 void EditingTools::resetAll() {
@@ -334,11 +338,11 @@ void EditingTools::resetAll() {
         m_HV_offsets[i].second=0;
     }
     //prevent a change in the spinboxes to start a useless calculation
-    horizShiftSB->blockSignals(true);
-    vertShiftSB->blockSignals(true);
+    //horizShiftSB->blockSignals(true);
+    //vertShiftSB->blockSignals(true);
     resetCurrent(); //graphical update
-    horizShiftSB->blockSignals(false);
-    vertShiftSB->blockSignals(false);
+    //horizShiftSB->blockSignals(false);
+    //vertShiftSB->blockSignals(false);
 }
 
 void EditingTools::prevLeft() {
@@ -600,7 +604,7 @@ void EditingTools::on_recomputePatches_pushButton_clicked()
     float patchesPercent;
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     recomputePatches_pushButton->setEnabled(false);
-    m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent);
+    m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent, m_HV_offsets);
     m_previewWidget->switchViewPatchesMode(true);
     m_previewWidget->renderPatchesMask(m_patches, m_gridX, m_gridY);
     totalPatches_lineEdit->setText(QString::number(patchesPercent,'g', 2)+"%");
@@ -620,5 +624,20 @@ void EditingTools::on_autoAG_checkBox_toggled(bool toggled)
         antighostToolButton->setEnabled(true);
         m_previewWidget->switchViewPatchesMode(false);
     }
+}
+
+void EditingTools::updateThresholdSlider(int newValue)
+{
+    float newThreshold = ((float)newValue)/1000.f;
+    bool oldState = threshold_doubleSpinBox->blockSignals(true);
+    threshold_doubleSpinBox->setValue( newThreshold );
+    threshold_doubleSpinBox->blockSignals(oldState);
+}
+
+void EditingTools::updateThresholdSpinBox(double newThreshold)
+{
+    bool oldState = threshold_horizontalSlider->blockSignals(true);
+    threshold_horizontalSlider->setValue( (int)(newThreshold*1000) );
+    threshold_horizontalSlider->blockSignals(oldState);
 }
 

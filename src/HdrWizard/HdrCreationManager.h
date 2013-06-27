@@ -120,9 +120,9 @@ public:
 
     void saveImages(const QString& prefix);
 	void doAntiGhosting(int);
-    int computePatches(float threshold, bool patches[][gridSize], float &percent);
-	pfs::Frame* doAutoAntiGhosting(bool patches[][gridSize], int h0);
-    void getAgData(bool patches[][gridSize], int &h0);
+    int computePatches(float threshold, bool patches[][agGridSize], float &percent, QList<QPair<int, int> > HV_offset);
+	pfs::Frame* doAutoAntiGhosting(bool patches[][agGridSize], int h0);
+    void getAgData(bool patches[][agGridSize], int &h0);
 	void removeTempFiles();
 
 signals:
@@ -159,7 +159,7 @@ private:
     bool m_ais_crop_flag;
 	bool fromCommandLine;
     int m_agGoodImageIndex;
-    bool m_patches[gridSize][gridSize];
+    bool m_patches[agGridSize][agGridSize];
 
 private slots:
 	void ais_finished(int,QProcess::ExitStatus);

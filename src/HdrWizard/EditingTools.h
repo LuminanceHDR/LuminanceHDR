@@ -36,8 +36,6 @@
 #include "HdrWizard/HdrCreationManager.h"
 #include "Common/LuminanceOptions.h"
 
-extern const int gridSize;
-
 class HistogramLDR;
 class PanIconWidget;
 
@@ -70,7 +68,7 @@ private:
 	LuminanceOptions m_luminanceOptions;
 	QVector<float> m_expotimes;
     int m_agGoodImageIndex;
-    bool m_patches[gridSize][gridSize];
+    bool m_patches[agGridSize][agGridSize];
     int m_gridX;
     int m_gridY;
     bool m_doAutoAntighosting;
@@ -118,6 +116,8 @@ private slots:
     void applySavedAgMask();
     void on_recomputePatches_pushButton_clicked();
     void on_autoAG_checkBox_toggled(bool toggled);
+    void updateThresholdSlider(int newValue);
+    void updateThresholdSpinBox(double newThreshold);
 };
 
 #endif

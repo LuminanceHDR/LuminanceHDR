@@ -35,7 +35,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
-const int _gridSize = 40;
+#include "AutoAntighosting.h" // Just for agGridSize !!!
 
 class IGraphicsView; 
 class IGraphicsPixmapItem;
@@ -89,7 +89,7 @@ public:
 
     void setDrawWithBrush();
     void setDrawPath();
-    void renderPatchesMask(bool patches[][_gridSize], const int gridX, const int gridY);
+    void renderPatchesMask(bool patches[][agGridSize], const int gridX, const int gridY);
 
 public slots:
     void requestedBlendMode(int);
@@ -186,6 +186,7 @@ private:
     QRgb(PreviewWidget::*blendmode)(const QRgb*,const QRgb*)const;
     void renderPreviewImage(QRgb(PreviewWidget::*f)(const QRgb*,const QRgb*)const,const QRect a = QRect());
     void renderAgMask();
+    void scrollAgMask(int, int);
 
     // the out and 2 in images
     QImage *m_previewImage;
@@ -211,6 +212,7 @@ private:
     QRect m_rect;
     //movable and pivot's x,y shifts
     int m_mx, m_my, m_px, m_py;
+    int m_old_mx, m_old_my;
     //zoom factor
     //float m_scaleFactor;
 
@@ -224,8 +226,6 @@ private:
     void drawWithBrush();
     void drawPath();
  
-    //int m_mx, m_my;
-
     QPointF m_mousePos;
     QPointF m_firstPoint;
     QPointF m_lastPoint;

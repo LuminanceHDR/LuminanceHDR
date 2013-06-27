@@ -25,10 +25,10 @@
 
 #include "HdrCreationItem.h"
 
+#define agGridSize 40
+
 using namespace std;
 using namespace pfs;
-
-const int gridSize = 40;
 
 float max(const Array2Df *u);
 float min(const Array2Df *u);
@@ -39,7 +39,8 @@ void hueSquaredMean(const HdrCreationItemContainer& data,
                     vector<float>& HE);
 bool comparePatches(const HdrCreationItem& item1,
                     const HdrCreationItem& item2,
-                    int i, int j, int gridX, int gridY, float threshold, float deltaEV);
+                    int i, int j, int gridX, int gridY, float threshold, float deltaEV,
+                    int dx, int dy);
 void computeIrradiance(Array2Df* irradiance, const Array2Df* in);
 void computeLogIrradiance(Array2Df* &logIrradiance, const Array2Df* u);
 void computeGradient(Array2Df* &gradientX, Array2Df* &gradientY, const Array2Df* in);
@@ -47,7 +48,7 @@ void computeDivergence(Array2Df* &divergence, const Array2Df* gradientX, const A
 void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
                     Array2Df* &gradientX, Array2Df* &gradientY,
                     Array2Df* &gradientXGood, Array2Df* &gradientYGood,
-                    bool patches[gridSize][gridSize], const int gridX, const int gridY);
+                    bool patches[agGridSize][agGridSize], const int gridX, const int gridY);
 void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, 
 		  const int x, const int y, const int gridX, const int gridY);
 qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B, 

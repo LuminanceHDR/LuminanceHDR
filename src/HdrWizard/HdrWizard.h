@@ -34,8 +34,6 @@
 #include "Common/LuminanceOptions.h"
 #include "HdrWizard/HdrCreationManager.h"
 
-extern const int gridSize;
-
 namespace Ui {
 class HdrWizard;
 }
@@ -67,7 +65,7 @@ private:
     TModel models_in_gui[2];
     TWeight weights_in_gui[3];
     QVector<config_triple> m_customConfig;
-    bool m_patches[gridSize][gridSize];
+    bool m_patches[agGridSize][agGridSize];
     bool m_doAutoAntighosting;
 
 public:

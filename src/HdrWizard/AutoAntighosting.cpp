@@ -569,7 +569,7 @@ void hueSquaredMean(const HdrCreationItemContainer& data,
 
 bool comparePatches(const HdrCreationItem& item1,
                     const HdrCreationItem& item2,
-                    int i, int j, int gridX, int gridY, float threshold, float deltaEV)
+                    int i, int j, int gridX, int gridY, float threshold, float deltaEV, int dx, int dy)
 {
     vector<float> logRed(gridX*gridY);
     vector<float> logGreen(gridX*gridY);
@@ -585,18 +585,24 @@ bool comparePatches(const HdrCreationItem& item1,
     Array2Df& G2 = *Y2;
     Array2Df& B2 = *Z2;
     
+    int width = gridX*agGridSize;
+    int height = gridY*agGridSize;
     int count = 0;
     for (int y = j * gridY; y < (j+1) * gridY; y++) {
+        if (y+dy < 0 || y+dy > height-1)
+            continue;
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
+            if (x+dx < 0 || x+dx > width-1)
+                continue;
             if (deltaEV < 0) {
-                logRed[count] = logf(R1(x, y)) - logf(R2(x, y)) - deltaEV;
-                logGreen[count] = logf(G1(x, y)) - logf(G2(x, y)) - deltaEV;
-                logBlue[count++] = logf(B1(x, y)) - logf(B2(x, y)) - deltaEV;
+                logRed[count] = logf(R1(x, y)) - logf(R2(x+dx, y+dy)) - deltaEV;
+                logGreen[count] = logf(G1(x, y)) - logf(G2(x+dx, y+dy)) - deltaEV;
+                logBlue[count++] = logf(B1(x, y)) - logf(B2(x+dx, y+dy)) - deltaEV;
             }
             else {
-                logRed[count] = logf(R2(x, y)) - logf(R1(x, y)) + deltaEV;
-                logGreen[count] = logf(G2(x, y)) - logf(G1(x, y)) + deltaEV;
-                logBlue[count++] = logf(B2(x, y)) - logf(B1(x, y)) + deltaEV;
+                logRed[count] = logf(R2(x, y)) - logf(R1(x+dx, y+dy)) + deltaEV;
+                logGreen[count] = logf(G2(x, y)) - logf(G1(x+dx, y+dy)) + deltaEV;
+                logBlue[count++] = logf(B2(x, y)) - logf(B1(x+dx, y+dy)) + deltaEV;
             }
         }
     }
@@ -604,7 +610,7 @@ bool comparePatches(const HdrCreationItem& item1,
     float threshold1 = 0.7f * std::abs(deltaEV);
     count = 0;
     for (int h = 0; h < gridX*gridY; h++) {
-        if (std::abs(logRed[h]) > threshold1 || std::abs(logGreen[h]) > threshold1 || std::abs(logBlue[h]) > threshold1)
+        if (std::abs(logRed[h]) > threshold1 && std::abs(logGreen[h]) > threshold1 && std::abs(logBlue[h]) > threshold1)
             count++;
     }
 
@@ -738,7 +744,7 @@ void computeDivergence(Array2Df* &divergence, const Array2Df* gradientX, const A
 void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
                     Array2Df* &gradientX, Array2Df* &gradientY,
                     Array2Df* &gradientXGood, Array2Df* &gradientYGood,
-                    bool patches[gridSize][gridSize], const int gridX, const int gridY)
+                    bool patches[agGridSize][agGridSize], const int gridX, const int gridY)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;

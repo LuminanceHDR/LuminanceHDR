@@ -553,9 +553,15 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
 
     hdrCreationManager->removeTempFiles();
     if (doAutoAntighosting) {
-        bool patches[gridSize][gridSize];
+        QList<QPair<int, int> > dummyOffset;
+        QStringList::ConstIterator it = inputFiles.begin();
+        while( it != inputFiles.end() ) {
+            dummyOffset.append(qMakePair(0,0));
+            ++it;
+        }
+        bool patches[agGridSize][agGridSize];
         float patchesPercent;
-        int h0 = hdrCreationManager->computePatches(threshold, patches, patchesPercent);
+        int h0 = hdrCreationManager->computePatches(threshold, patches, patchesPercent, dummyOffset);
         HDR.reset( hdrCreationManager->doAutoAntiGhosting(patches, h0) );
     }
     else {
