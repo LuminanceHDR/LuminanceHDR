@@ -279,7 +279,7 @@ void MainWindow::createCentralWidget()
     m_PreviewPanel = new PreviewPanel();
 
     // create tonemapping panel
-    tmPanel = new TonemappingPanel(m_PreviewPanel); //(m_centralwidget_splitter);
+    tmPanel = new TonemappingPanel(sm_NumMainWindows, m_PreviewPanel); //(m_centralwidget_splitter);
 
     connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), tmPanel, SLOT(setRealtimePreviews(bool)));
     connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), luminance_options, SLOT(setRealtimePreviewsActive(bool)));
@@ -1031,6 +1031,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
         MainWindow *other = new MainWindow(new_hdr_frame, new_fname, inputFileNames, needSaving);
         other->move(x() + 40, y() + 40);
         other->show();
+        sm_NumMainWindows++;
     }
     else
     {
