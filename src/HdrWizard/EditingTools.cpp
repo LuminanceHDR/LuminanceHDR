@@ -653,7 +653,7 @@ void EditingTools::on_autoAG_checkBox_toggled(bool toggled)
     if (toggled) {
         m_doAutoAntighosting = true;
         antighostToolButton->setEnabled(false);
-        m_previewWidget->switchViewPatchesMode(false);
+        m_previewWidget->switchViewPatchesMode(true);
     }
     else {
         m_doAutoAntighosting = false;

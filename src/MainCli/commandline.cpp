@@ -562,7 +562,7 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
         bool patches[agGridSize][agGridSize];
         float patchesPercent;
         int h0 = hdrCreationManager->computePatches(threshold, patches, patchesPercent, dummyOffset);
-        HDR.reset( hdrCreationManager->doAutoAntiGhosting(patches, h0, false) );
+        HDR.reset( hdrCreationManager->doAntiGhosting(patches, h0, false) ); // false meand auto anti ghosting
     }
     else {
         HDR.reset( hdrCreationManager->createHdr(false,1) );

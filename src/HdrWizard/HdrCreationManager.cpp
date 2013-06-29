@@ -1097,9 +1097,9 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSiz
     return m_agGoodImageIndex;
 }
 
-pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg)
+pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg)
 {
-    qDebug() << "HdrCreationManager::doAutoAntiGhosting";
+    qDebug() << "HdrCreationManager::doAntiGhosting";
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
@@ -1321,7 +1321,7 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][agGridSize], i
     delete ghosted;
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
-    std::cout << "doAutoAntiGhosting = " << stop_watch.get_time() << " msec" << std::endl;
+    std::cout << "doAntiGhosting = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
     return deghosted;
 }

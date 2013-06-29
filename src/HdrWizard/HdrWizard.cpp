@@ -912,13 +912,12 @@ void HdrWizard::NextFinishButtonClicked() {
         repaint();
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
-        //if (m_ui->antighostingCheckBox->isChecked()) {
         if (m_doAutoAntighosting) {
             int h0;
             m_hdrCreationManager->getAgData(m_patches, h0);
-            m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAutoAntiGhosting,
+            m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                        m_hdrCreationManager.data(),
-                                                       m_patches, h0, false));
+                                                       m_patches, h0, false)); // false means auto anti ghosting
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
             connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
             connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
@@ -926,9 +925,9 @@ void HdrWizard::NextFinishButtonClicked() {
             m_futureWatcher.setFuture(m_future);
         }
         else if (m_doManualAntighosting) {
-            m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAutoAntiGhosting,
+            m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                        m_hdrCreationManager.data(),
-                                                       m_patches, m_agGoodImageIndex, true));
+                                                       m_patches, m_agGoodImageIndex, true)); // true means manual anti ghosting
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
             connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
             connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));

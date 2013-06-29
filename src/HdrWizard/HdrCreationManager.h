@@ -122,7 +122,7 @@ public:
     void saveImages(const QString& prefix);
 	//void doAntiGhosting(int);
     int computePatches(float threshold, bool patches[][agGridSize], float &percent, QList<QPair<int, int> > HV_offset);
-	pfs::Frame* doAutoAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg);
+	pfs::Frame* doAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg);
     void getAgData(bool patches[][agGridSize], int &h0);
 	void removeTempFiles();
 
