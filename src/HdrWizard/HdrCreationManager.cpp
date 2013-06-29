@@ -263,11 +263,6 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
         if ( i.isValid() ) {
             qDebug() << QString("Insert data for %1").arg(i.filename());
             m_data.push_back(i);
-            if (!fromCommandLine) {
-                QImage *img = new QImage(i.frame()->getWidth(), i.frame()->getHeight(), QImage::Format_ARGB32);
-                img->fill(qRgba(0,0,0,0));
-                antiGhostingMasksList.append(img);
-            }
         }
     }
     qDebug() << QString("Read %1 out of %2").arg(tempItems.size()).arg(filenames.size());
@@ -312,6 +307,7 @@ void HdrCreationManager::removeFile(int idx)
 using namespace libhdr::fusion;
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     : chosen_config( predef_confs[0] )
+    , m_agMask( NULL )
     , ais( NULL )
     , m_ais_crop_flag(false)
     , fromCommandLine( fromCommandLine )
@@ -462,16 +458,8 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 
         if (futureWatcher.isCanceled()) return;
         
-        int width = m_data[0].frame()->getWidth();
-        int height = m_data[0].frame()->getHeight();
-        
         for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
               itEnd = m_data.end(); it != itEnd; ++it) {
-            if (!fromCommandLine) {
-                QImage *img = new QImage(width, height, QImage::Format_ARGB32);
-                img->fill(qRgba(0,0,0,0));
-                antiGhostingMasksList.append(img);
-            }
             QFileInfo qfi(it->filename());
             QString base = qfi.completeBaseName(); 
             QString filename = base + ".tif";
@@ -622,7 +610,7 @@ void HdrCreationManager::cropItems(const QRect& ca)
         m_data[idx].frame().swap(shared);
     
     }
-    cropAgMasks(ca);
+    //cropAgMasks(ca);
 }
 
 HdrCreationManager::~HdrCreationManager()
@@ -630,7 +618,7 @@ HdrCreationManager::~HdrCreationManager()
     if (ais != NULL && ais->state() != QProcess::NotRunning) {
         ais->kill();
     }
-    //qDeleteAll(antiGhostingMasksList);
+    delete m_agMask;
 }
 
 /*
@@ -648,8 +636,8 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
     {
         qDeleteAll(ldrImagesList);
         ldrImagesList.clear();
-        qDeleteAll(antiGhostingMasksList);
-        antiGhostingMasksList.clear();
+        qDeleteAll(m_antiGhostingMasksList);
+        m_antiGhostingMasksList.clear();
     }
     if (listmdrR.size()!=0 && listmdrG.size()!=0 && listmdrB.size()!=0)
     {
@@ -667,8 +655,8 @@ void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
         mdrImagesList.clear();
         qDeleteAll(mdrImagesToRemove);
         mdrImagesToRemove.clear();
-        qDeleteAll(antiGhostingMasksList);
-        antiGhostingMasksList.clear();
+        qDeleteAll(m_antiGhostingMasksList);
+        m_antiGhostingMasksList.clear();
     }
 }
 
@@ -799,8 +787,8 @@ void HdrCreationManager::cropMDR(const QRect& ca)
         mdrImagesToRemove.append(mdrImagesList.takeAt(0));
         QImage *img = new QImage(newWidth, newHeight, QImage::Format_ARGB32);
         img->fill(qRgba(0,0,0,0));
-        antiGhostingMasksList.append(img);
-        antiGhostingMasksList.takeAt(0);
+        m_antiGhostingMasksList.append(img);
+        m_antiGhostingMasksList.takeAt(0);
     }
     m_mdrWidth = newWidth;
     m_mdrHeight = newHeight;
@@ -1010,6 +998,7 @@ void HdrCreationManager::saveMDRs(const QString& filename)
     emit imagesSaved();
 }
 */
+/*
 void HdrCreationManager::doAntiGhosting(int goodImageIndex)
 {
     Channel *red_goodImage, *green_goodImage, *blue_goodImage;
@@ -1028,12 +1017,11 @@ void HdrCreationManager::doAntiGhosting(int goodImageIndex)
         Array2Df& B = *blue;
         blend( R, G, B, 
                R_goodImage, G_goodImage, B_goodImage,
-               *antiGhostingMasksList[idx],
-               *antiGhostingMasksList[goodImageIndex] );
+               *m_antiGhostingMasksList[idx],
+               *m_antiGhostingMasksList[goodImageIndex] );
     }
 }
-
-void HdrCreationManager::cropAgMasks(const QRect& ca) {
+void HdrCreationManager::cropAgMasks(const QRect& ca, QList<QImage*>& antiGhostingMasksList) {
     int origlistsize = antiGhostingMasksList.size();
     for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
         QImage *newimage = new QImage(antiGhostingMasksList.at(0)->copy(ca));
@@ -1043,6 +1031,7 @@ void HdrCreationManager::cropAgMasks(const QRect& ca) {
         delete antiGhostingMasksList.takeAt(0);
     }
 }
+*/
 
 int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSize], float &percent, QList <QPair<int, int> > HV_offset)
 {
@@ -1108,7 +1097,7 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSiz
     return m_agGoodImageIndex;
 }
 
-pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][agGridSize], int h0)
+pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg)
 {
     qDebug() << "HdrCreationManager::doAutoAntiGhosting";
 #ifdef TIMER_PROFILING
@@ -1163,10 +1152,16 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][agGridSize], i
     ph.setValue(33);
     computeGradient(gradientX_R, gradientY_R, logIrradiance_R);
     ph.setValue(34);
-    blendGradients(gradientXBlended_R, gradientYBlended_R,
-                   gradientX_R, gradientY_R,
-                   gradientXGood_R, gradientYGood_R,
-                   patches, gridX, gridY);
+    if (manualAg)
+        blendGradients(gradientXBlended_R, gradientYBlended_R,
+                       gradientX_R, gradientY_R,
+                       gradientXGood_R, gradientYGood_R,
+                       *m_agMask);
+    else
+        blendGradients(gradientXBlended_R, gradientYBlended_R,
+                       gradientX_R, gradientY_R,
+                       gradientXGood_R, gradientYGood_R,
+                       patches, gridX, gridY);
     delete gradientX_R;
     delete gradientY_R;
     delete gradientXGood_R;
@@ -1184,10 +1179,16 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][agGridSize], i
     ph.setValue(36);
     computeGradient(gradientX_G, gradientY_G, logIrradiance_G);
     ph.setValue(37);
-    blendGradients(gradientXBlended_G, gradientYBlended_G,
-                   gradientX_G, gradientY_G,
-                   gradientXGood_G, gradientYGood_G,
-                   patches, gridX, gridY);
+    if (manualAg)
+        blendGradients(gradientXBlended_G, gradientYBlended_G,
+                       gradientX_G, gradientY_G,
+                       gradientXGood_G, gradientYGood_G,
+                       *m_agMask);
+    else
+        blendGradients(gradientXBlended_G, gradientYBlended_G,
+                       gradientX_G, gradientY_G,
+                       gradientXGood_G, gradientYGood_G,
+                       patches, gridX, gridY);
     delete gradientX_G;
     delete gradientY_G;
     delete gradientXGood_G;
@@ -1205,10 +1206,16 @@ pfs::Frame *HdrCreationManager::doAutoAntiGhosting(bool patches[][agGridSize], i
     ph.setValue(39);
     computeGradient(gradientX_B, gradientY_B, logIrradiance_B);
     ph.setValue(40);
-    blendGradients(gradientXBlended_B, gradientYBlended_B,
-                   gradientX_B, gradientY_B,
-                   gradientXGood_B, gradientYGood_B,
-                   patches, gridX, gridY);
+    if (manualAg)
+        blendGradients(gradientXBlended_B, gradientYBlended_B,
+                       gradientX_B, gradientY_B,
+                       gradientXGood_B, gradientYGood_B,
+                       *m_agMask);
+    else
+        blendGradients(gradientXBlended_B, gradientYBlended_B,
+                       gradientX_B, gradientY_B,
+                       gradientXGood_B, gradientYGood_B,
+                       patches, gridX, gridY);
     delete gradientX_B;
     delete gradientY_B;
     delete gradientXGood_B;

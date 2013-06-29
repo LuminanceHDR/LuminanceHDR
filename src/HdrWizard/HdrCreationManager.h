@@ -106,8 +106,9 @@ public:
 	void align_with_mtb();
 
     const HdrCreationItemContainer& getData() const         { return m_data; } 
-    const QList<QImage*>& getAntiGhostingMasksList() const  { return antiGhostingMasksList; }
-    void setAntiGhostingMasksList(QList<QImage*>& list)     { antiGhostingMasksList = list; }
+    //const QList<QImage*>& getAntiGhostingMasksList() const  { return m_antiGhostingMasksList; }
+    //void setAntiGhostingMasksList(QList<QImage*>& list)     { m_antiGhostingMasksList.swap(list); }
+    void setAntiGhostingMask(QImage* mask) { m_agMask = new QImage(*mask); }
     const QVector<float> getExpotimes() const;
 
     // the configuration used to create the hdr
@@ -119,9 +120,9 @@ public:
     void cropAgMasks(const QRect& ca);
 
     void saveImages(const QString& prefix);
-	void doAntiGhosting(int);
+	//void doAntiGhosting(int);
     int computePatches(float threshold, bool patches[][agGridSize], float &percent, QList<QPair<int, int> > HV_offset);
-	pfs::Frame* doAutoAntiGhosting(bool patches[][agGridSize], int h0);
+	pfs::Frame* doAutoAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg);
     void getAgData(bool patches[][agGridSize], int &h0);
 	void removeTempFiles();
 
@@ -150,7 +151,8 @@ signals:
 private:
     bool framesHaveSameSize();    
 
-	QList<QImage*> antiGhostingMasksList;  //QImages used for manual anti ghosting
+	//QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti ghosting
+    QImage* m_agMask;
     LuminanceOptions m_luminance_options;
 
     // align_image_stack

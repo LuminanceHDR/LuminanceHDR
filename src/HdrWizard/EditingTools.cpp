@@ -46,9 +46,10 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     m_hcm(hcm),
     m_additionalShiftValue(0),
     m_imagesSaved(false),
-    m_goodImageIndex(-1),
+    m_agGoodImageIndex(-1),
     m_antiGhosting(false),
-    m_doAutoAntighosting(false)
+    m_doAutoAntighosting(false),
+    m_doManualAntighosting(false)
 {
     setupUi(this);
    
@@ -62,13 +63,21 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
         m_originalImagesList.push_back(it->qimage());
         m_fileList.push_back(it->filename());
     }
-    
+
     int width = m_originalImagesList.at(0)->width();
     int height = m_originalImagesList.at(0)->height();
     m_gridX = width/agGridSize;
     m_gridY = height/agGridSize;
 
-    m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
+    int size = m_originalImagesList.size();
+    for ( int h = 0; h < size; h++) { 
+        QImage *img = new QImage(width, height, QImage::Format_ARGB32);
+        img->fill(qRgba(0,0,0,0));
+        m_antiGhostingMasksList.append(img);
+    }
+    m_antiGhostingMask = new QImage(width, height, QImage::Format_ARGB32);
+    m_antiGhostingMask->fill(qRgba(0,0,0,0));
+
     m_expotimes = m_hcm->getExpotimes();
 
     toolOptionsFrame->setVisible(false);
@@ -184,6 +193,8 @@ EditingTools::~EditingTools()
     delete m_previewWidget;
     delete m_histogram;
     delete m_patchesMask;
+    qDeleteAll(m_antiGhostingMasksList);
+    delete m_antiGhostingMask;
 }
 
 void EditingTools::keyPressEvent(QKeyEvent *event)
@@ -229,7 +240,7 @@ void EditingTools::cropStack()
     QImage* tmp = m_previewWidget->getMask();
     delete m_antiGhostingMasksList[m_currentAgMaskIndex];
     m_antiGhostingMasksList.replace(m_currentAgMaskIndex, tmp);
-    m_hcm->setAntiGhostingMasksList(m_antiGhostingMasksList);
+    cropAgMasks(ca);
     m_hcm->cropItems(ca);
     m_originalImagesList.clear();
     HdrCreationItemContainer data = m_hcm->getData();
@@ -238,11 +249,7 @@ void EditingTools::cropStack()
         m_originalImagesList.push_back(it->qimage());
     }
     
-    m_antiGhostingMasksList.clear();
-    m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
-        
     m_previewWidget->removeSelection();
-
     m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
     m_previewWidget->setPivot(m_originalImagesList[referenceListWidget->currentRow()]);
     m_currentAgMaskIndex = movableListWidget->currentRow();
@@ -252,6 +259,35 @@ void EditingTools::cropStack()
         fitPreview();
     //and start it up
     m_previewWidget->updatePreviewImage();
+}
+
+void EditingTools::cropAgMasks(const QRect& ca) {
+    int origlistsize = m_antiGhostingMasksList.size();
+    for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
+        QImage *newimage = new QImage(m_antiGhostingMasksList.at(0)->copy(ca));
+        if (newimage == NULL)
+            exit(1); // TODO: exit gracefully
+        m_antiGhostingMasksList.append(newimage);
+        delete m_antiGhostingMasksList.takeAt(0);
+    }
+}
+
+void EditingTools::computeAgMask()
+{
+    const int width = m_antiGhostingMasksList.at(0)->width();
+    const int height = m_antiGhostingMasksList.at(0)->height();
+    const int size = m_antiGhostingMasksList.size();
+    QImage* tmp = m_previewWidget->getMask();
+    delete m_antiGhostingMasksList[m_currentAgMaskIndex];
+    m_antiGhostingMasksList.replace(m_currentAgMaskIndex, tmp);
+    for (int h = 0; h < size; h++) {
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                if (qAlpha(m_antiGhostingMasksList.at(h)->pixel(i,j)) != 0) 
+                    m_antiGhostingMask->setPixel(i, j, m_antiGhostingMasksList.at(h)->pixel(i, j));
+            }
+        }   
+    }
 }
 
 void EditingTools::nextClicked()
@@ -270,10 +306,10 @@ void EditingTools::nextClicked()
         float patchesPercent;
         m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent, m_HV_offsets);
     }
-    else if (m_goodImageIndex != -1) {
-        m_hcm->setAntiGhostingMasksList(m_antiGhostingMasksList);
-        m_hcm->doAntiGhosting(m_goodImageIndex);
-        qDeleteAll(m_antiGhostingMasksList);
+    else if (m_agGoodImageIndex != -1) {
+        computeAgMask();
+        m_hcm->setAntiGhostingMask(m_antiGhostingMask);
+        m_doManualAntighosting = true;
     }
 
     QApplication::restoreOverrideCursor();
@@ -422,14 +458,14 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         connect(prevBothButton,SIGNAL(clicked()),this,SLOT(addGoodImage()));
         connect(nextBothButton,SIGNAL(clicked()),this,SLOT(removeGoodImage()));
         referenceListWidget->clear();
-        if (m_goodImageIndex != -1) {
+        if (m_agGoodImageIndex != -1) {
             m_previewWidget->show();
             prevBothButton->setDisabled(true);
             nextBothButton->setDisabled(false);
-            referenceListWidget->addItem(QFileInfo(m_fileList[m_goodImageIndex]).fileName());
+            referenceListWidget->addItem(QFileInfo(m_fileList[m_agGoodImageIndex]).fileName());
             referenceListWidget->setCurrentRow(0);
             //movableListWidget->setCurrentRow(0);
-            updatePivot(m_goodImageIndex);
+            updatePivot(m_agGoodImageIndex);
             QString filename = movableListWidget->currentItem()->text();
             int idx = m_filesMap[filename];
             updateMovable(idx);
@@ -545,7 +581,7 @@ void EditingTools::addGoodImage()
     int idxGoodImage = movableListWidget->currentRow();
     referenceListWidget->addItem(QFileInfo(m_fileList[idx]).fileName());
     referenceListWidget->setCurrentRow(0);
-    m_goodImageIndex = idx;
+    m_agGoodImageIndex = idx;
     m_antiGhostingMasksList[idx]->fill(qRgba(0,0,0,0));
     movableListWidget->item(idxGoodImage)->setBackground(QColor(Qt::yellow));
 
@@ -563,7 +599,7 @@ void EditingTools::removeGoodImage()
     referenceListWidget->takeItem(0);
     prevBothButton->setDisabled(false);
     nextBothButton->setDisabled(true);
-    m_goodImageIndex = -1;
+    m_agGoodImageIndex = -1;
     m_previewWidget->hide();
 }
 
@@ -628,7 +664,7 @@ void EditingTools::on_autoAG_checkBox_toggled(bool toggled)
 
 void EditingTools::updateThresholdSlider(int newValue)
 {
-    float newThreshold = ((float)newValue)/1000.f;
+    float newThreshold = ((float)newValue)/10000.f;
     bool oldState = threshold_doubleSpinBox->blockSignals(true);
     threshold_doubleSpinBox->setValue( newThreshold );
     threshold_doubleSpinBox->blockSignals(oldState);
@@ -637,7 +673,7 @@ void EditingTools::updateThresholdSlider(int newValue)
 void EditingTools::updateThresholdSpinBox(double newThreshold)
 {
     bool oldState = threshold_horizontalSlider->blockSignals(true);
-    threshold_horizontalSlider->setValue( (int)(newThreshold*1000) );
+    threshold_horizontalSlider->setValue( (int)(newThreshold*10000) );
     threshold_horizontalSlider->blockSignals(oldState);
 }
 

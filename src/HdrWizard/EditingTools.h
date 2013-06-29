@@ -45,13 +45,16 @@ Q_OBJECT
 public:
 	EditingTools(HdrCreationManager *, QWidget *parent=0);
 	~EditingTools();
-    bool isAutoAntighostingEnabled() { return m_doAutoAntighosting == true; }
+    bool isAutoAntighostingEnabled()   { return m_doAutoAntighosting == true; }
+    bool isManualAntighostingEnabled() { return m_doManualAntighosting == true; }
+    int getAgGoodImageIndex()          { return m_agGoodImageIndex; }
 protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 private:
 	QList<QImage*> m_originalImagesList;
 	QList<QImage*> m_antiGhostingMasksList;
+    QImage* m_antiGhostingMask;
     int m_currentAgMaskIndex;
 	QStringList m_fileList;
 	HdrCreationManager *m_hcm;
@@ -63,18 +66,20 @@ private:
 	HistogramLDR *m_histogram;
 	QSize m_previousPreviewWidgetSize;
 	bool m_imagesSaved;
-    int m_goodImageIndex;
+    int m_agGoodImageIndex;
     bool m_antiGhosting;
 	LuminanceOptions m_luminanceOptions;
 	QVector<float> m_expotimes;
-    int m_agGoodImageIndex;
     bool m_patches[agGridSize][agGridSize];
     int m_gridX;
     int m_gridY;
     bool m_doAutoAntighosting;
+    bool m_doManualAntighosting;
     QImage* m_patchesMask;
 
 	void setAntiGhostingWidget(QImage*, QPair<int, int>);
+    void cropAgMasks(const QRect& ca);
+    void computeAgMask();
 
 private slots:
 	void saveImagesButtonClicked();

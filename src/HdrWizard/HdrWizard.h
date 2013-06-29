@@ -67,6 +67,8 @@ private:
     QVector<config_triple> m_customConfig;
     bool m_patches[agGridSize][agGridSize];
     bool m_doAutoAntighosting;
+    bool m_doManualAntighosting;
+    int m_agGoodImageIndex;
 
 public:
     HdrWizard(QWidget *parent,

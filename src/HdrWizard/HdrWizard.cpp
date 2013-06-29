@@ -918,7 +918,17 @@ void HdrWizard::NextFinishButtonClicked() {
             m_hdrCreationManager->getAgData(m_patches, h0);
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAutoAntiGhosting,
                                                        m_hdrCreationManager.data(),
-                                                       m_patches, h0));
+                                                       m_patches, h0, false));
+            connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
+            connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
+            connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
+            m_ui->progressBar->show();
+            m_futureWatcher.setFuture(m_future);
+        }
+        else if (m_doManualAntighosting) {
+            m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAutoAntiGhosting,
+                                                       m_hdrCreationManager.data(),
+                                                       m_patches, m_agGoodImageIndex, true));
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
             connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
             connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
@@ -983,6 +993,8 @@ void HdrWizard::currentPageChangedInto(int newindex)
             EditingTools *editingtools = new EditingTools(m_hdrCreationManager.data());
             if (editingtools->exec() == QDialog::Accepted) {
                 m_doAutoAntighosting = editingtools->isAutoAntighostingEnabled();
+                m_doManualAntighosting = editingtools->isManualAntighostingEnabled();
+                m_agGoodImageIndex = editingtools->getAgGoodImageIndex();
                 this->setDisabled(false);
             } else {
                 emit reject();

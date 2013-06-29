@@ -783,6 +783,37 @@ void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
 #endif
 }
 
+void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
+                    Array2Df* &gradientX, Array2Df* &gradientY,
+                    Array2Df* &gradientXGood, Array2Df* &gradientYGood,
+                    const QImage& agMask)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    int width = gradientX->getCols();
+    int height = gradientY->getRows();
+
+    #pragma omp parallel for schedule(static)
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            if (qAlpha(agMask.pixel(i,j))  != 0) {
+                (*gradientXBlended)(i, j) = (*gradientXGood)(i, j);
+                (*gradientYBlended)(i, j) = (*gradientYGood)(i, j);
+            }
+            else {
+                (*gradientXBlended)(i, j) = (*gradientX)(i, j);
+                (*gradientYBlended)(i, j) = (*gradientY)(i, j);
+            }
+        }
+    }
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "blendGradients = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
+
 void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const int y, const int gridX, const int gridY)
 {
     const int width = U.getCols();
