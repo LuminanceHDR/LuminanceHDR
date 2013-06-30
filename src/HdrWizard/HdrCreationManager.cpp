@@ -1065,12 +1065,13 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSiz
         if (h == m_agGoodImageIndex) 
             continue;
         float deltaEV;
-        #pragma omp parallel for private (deltaEV) schedule(static)
+        int dx, dy;
+        #pragma omp parallel for private (deltaEV, dx, dy) schedule(static)
         for (int j = 0; j < agGridSize; j++) {
             for (int i = 0; i < agGridSize; i++) {
                     deltaEV = log(m_data[m_agGoodImageIndex].getExposureTime()) - log(m_data[h].getExposureTime());
-                    int dx = HV_offset[m_agGoodImageIndex].first - HV_offset[h].first;
-                    int dy = HV_offset[m_agGoodImageIndex].second - HV_offset[h].second;
+                    dx = HV_offset[m_agGoodImageIndex].first - HV_offset[h].first;
+                    dy = HV_offset[m_agGoodImageIndex].second - HV_offset[h].second;
                     if (comparePatches(m_data[m_agGoodImageIndex],
                                        m_data[h],
                                        i, j, gridX, gridY, threshold, deltaEV, dx, dy)) {
