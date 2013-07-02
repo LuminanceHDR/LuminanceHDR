@@ -89,7 +89,8 @@ public:
 
     void setDrawWithBrush();
     void setDrawPath();
-    void renderPatchesMask(bool patches[][agGridSize], const int gridX, const int gridY);
+    //void renderPatchesMask(bool patches[][agGridSize], const int gridX, const int gridY);
+    void renderPatchesMask();
 
 public slots:
     void requestedBlendMode(int);
@@ -116,7 +117,8 @@ public slots:
     void removeSelection();
 
     void switchAntighostingMode(bool);
-    void switchViewPatchesMode(bool);
+    void switchViewPatchesMode(bool, bool [][agGridSize], const int, const int);
+    void getPatches(bool [][agGridSize]);
     void setBrushSize(const int);
     void setBrushStrength(const int);
     void setBrushColor(const QColor);
@@ -135,6 +137,7 @@ signals:
     void moved(QPoint diff);
     void selectionReady(bool isReady);
     void changed(PreviewWidget *v);     // emitted when zoomed in/out, scrolled ....
+    void patchesEdited();
 
 protected:
     bool eventFilter(QObject* object, QEvent* event); 
@@ -232,6 +235,10 @@ private:
     QPointF m_currentPoint;
     QPainterPath m_path;
     bool m_drawingPathEnded;
+
+    bool m_patches[agGridSize][agGridSize];
+    int m_gridX;
+    int m_gridY;
 
     enum {BRUSH, PATH} m_drawingMode;
     enum {EditingMode, AntighostingMode, ViewPatches} m_mode;

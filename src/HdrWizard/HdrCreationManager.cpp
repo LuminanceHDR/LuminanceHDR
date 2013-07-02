@@ -1335,3 +1335,8 @@ void HdrCreationManager::getAgData(bool patches[][agGridSize], int &h0)
 
     h0 = m_agGoodImageIndex;
 }
+
+void HdrCreationManager::setPatches(bool patches[][agGridSize])
+{
+    memcpy(m_patches, patches, agGridSize*agGridSize);
+}

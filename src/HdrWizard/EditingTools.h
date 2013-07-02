@@ -76,6 +76,7 @@ private:
     bool m_doAutoAntighosting;
     bool m_doManualAntighosting;
     QImage* m_patchesMask;
+    bool m_patchesEdited;
 
 	void setAntiGhostingWidget(QImage*, QPair<int, int>);
     void cropAgMasks(const QRect& ca);
@@ -123,6 +124,7 @@ private slots:
     void on_autoAG_checkBox_toggled(bool toggled);
     void updateThresholdSlider(int newValue);
     void updateThresholdSpinBox(double newThreshold);
+    void setPatchesEdited();
 };
 
 #endif

@@ -254,18 +254,19 @@ void PreviewWidget::renderAgMask()
     }
 }
 
-void PreviewWidget::renderPatchesMask(bool patches[][agGridSize], const int gridX, const int gridY)
+//void PreviewWidget::renderPatchesMask(bool patches[][agGridSize], const int gridX, const int gridY)
+void PreviewWidget::renderPatchesMask()
 {
 	QPainter painter(m_patchesMask);
 	painter.setPen(Qt::NoPen);
 	painter.setBrush(QColor::fromRgb(255,255,255,60));
     painter.setCompositionMode(QPainter::CompositionMode_Clear);
-    painter.drawRect(0, 0, gridX*agGridSize, gridY*agGridSize);
+    painter.drawRect(0, 0, m_gridX*agGridSize, m_gridY*agGridSize);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     for (int i = 0; i < agGridSize; i++) {
         for (int j = 0; j < agGridSize; j++) {
-            if (patches[i][j] == true)
-    	        painter.drawRect(i*gridX, j*gridY, gridX, gridY);
+            if (m_patches[i][j] == true)
+    	        painter.drawRect(i*m_gridX, j*m_gridY, m_gridX, m_gridY);
         }
     }
     painter.end();
@@ -294,7 +295,8 @@ void PreviewWidget::requestedBlendMode(int newindex) {
 
 bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
 {   
-    if (m_mode == EditingMode || m_mode == ViewPatches) return false;
+    //if (m_mode == EditingMode || m_mode == ViewPatches) return false;
+    if (m_mode == EditingMode) return false;
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent* mouse = static_cast<QMouseEvent*>(event);
         if (mouse->buttons() == Qt::MidButton) {
@@ -302,20 +304,30 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
             m_mousePos = mView->mapToScene(mouse->pos());
         }
         else if (mouse->buttons() == Qt::LeftButton) {
-            if (m_drawingMode == PATH) {
+            if (m_mode == ViewPatches) {
                 QPointF relativeToWidget = mView->mapToScene(mapFromGlobal(QCursor::pos()));
-                //int sx = relativeToWidget.x() - m_mx;
-                //int sy = relativeToWidget.y() - m_my;
-                //QPointF shifted(sx,sy);
-                //m_firstPoint = m_lastPoint = m_currentPoint = shifted;
-                m_firstPoint = m_lastPoint = m_currentPoint = relativeToWidget;
-                m_path = QPainterPath(m_firstPoint);
-                m_drawingPathEnded = false;
+                int i = floor(relativeToWidget.x()/m_gridX);
+                int j = floor(relativeToWidget.y()/m_gridY);
+                m_patches[i][j] = !m_patches[i][j];
+                renderPatchesMask();
+                emit patchesEdited();
             }
-            else if (m_drawingMode == BRUSH)
-                drawWithBrush();
-            mAgPixmap->setPixmap(*m_agMaskPixmap);
-            m_timerid = QObject::startTimer(0);
+            else {
+                if (m_drawingMode == PATH) {
+                    QPointF relativeToWidget = mView->mapToScene(mapFromGlobal(QCursor::pos()));
+                    //int sx = relativeToWidget.x() - m_mx;
+                    //int sy = relativeToWidget.y() - m_my;
+                    //QPointF shifted(sx,sy);
+                    //m_firstPoint = m_lastPoint = m_currentPoint = shifted;
+                    m_firstPoint = m_lastPoint = m_currentPoint = relativeToWidget;
+                    m_path = QPainterPath(m_firstPoint);
+                    m_drawingPathEnded = false;
+                }
+                else if (m_drawingMode == BRUSH)
+                    drawWithBrush();
+                mAgPixmap->setPixmap(*m_agMaskPixmap);
+                m_timerid = QObject::startTimer(0);
+            }
         }
     }
     else if (event->type() == QEvent::MouseMove) {
@@ -359,7 +371,9 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
     }
     else if (event->type() == QEvent::Enter) {
         if (m_mode == EditingMode)
-            QApplication::restoreOverrideCursor();      
+            QApplication::restoreOverrideCursor();
+        else if (m_mode == ViewPatches)
+            QApplication::setOverrideCursor(Qt::PointingHandCursor);
         else {
             if (m_drawingMode == BRUSH) {        
                 fillAntiGhostingCursorPixmap();
@@ -797,10 +811,14 @@ void PreviewWidget::switchAntighostingMode(bool ag) {
     }
 }
 
-void PreviewWidget::switchViewPatchesMode(bool pp) {
+void PreviewWidget::switchViewPatchesMode(bool pp, bool patches[][agGridSize], const int gridX, const int gridY) {
     if (pp) {
+        mPixmap->setAcceptedMouseButtons(0);
         mAgPixmap->setVisible(true);
         m_mode = ViewPatches;
+        m_gridX = gridX;
+        m_gridY = gridY;
+        memcpy(m_patches, patches, agGridSize*agGridSize);
     } else {
         mPixmap->setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton|Qt::MidButton);
         mAgPixmap->setVisible(false);
@@ -871,3 +889,7 @@ void PreviewWidget::drawPath()
     painter.end();
 }
 
+void PreviewWidget::getPatches(bool patches[][agGridSize])
+{
+    memcpy(patches, m_patches, agGridSize*agGridSize);
+}

@@ -49,7 +49,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     m_agGoodImageIndex(-1),
     m_antiGhosting(false),
     m_doAutoAntighosting(false),
-    m_doManualAntighosting(false)
+    m_doManualAntighosting(false),
+    m_patchesEdited(false)
 {
     setupUi(this);
    
@@ -163,6 +164,7 @@ void EditingTools::setupConnections() {
     connect(fillButton,SIGNAL(clicked()),this,SLOT(fillPreview()));
     connect(cropButton,SIGNAL(clicked()),this,SLOT(cropStack()));
     connect(m_previewWidget,SIGNAL(selectionReady(bool)),cropButton,SLOT(setEnabled(bool))); 
+    connect(m_previewWidget,SIGNAL(patchesEdited()),this,SLOT(setPatchesEdited())); 
     connect(saveImagesButton,SIGNAL(clicked()),this,SLOT(saveImagesButtonClicked()));
     connect(blendModeCB,SIGNAL(currentIndexChanged(int)),m_previewWidget,SLOT(requestedBlendMode(int)));
     connect(blendModeCB,SIGNAL(currentIndexChanged(int)),this,SLOT(blendModeCBIndexChanged(int)));
@@ -303,8 +305,14 @@ void EditingTools::nextClicked()
             m_HV_offsets.append(qMakePair(0,0));
             ++it;
         }
-        float patchesPercent;
-        m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent, m_HV_offsets);
+        if (m_patchesEdited) {
+            m_previewWidget->getPatches(m_patches);
+            m_hcm->setPatches(m_patches);
+        }
+        else {
+            float patchesPercent;
+            m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent, m_HV_offsets);
+        }
     }
     else if (m_agGoodImageIndex != -1) {
         computeAgMask();
@@ -639,10 +647,11 @@ void EditingTools::on_recomputePatches_pushButton_clicked()
 {
     float patchesPercent;
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+    m_patchesEdited = false;
     recomputePatches_pushButton->setEnabled(false);
     m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent, m_HV_offsets);
-    m_previewWidget->switchViewPatchesMode(true);
-    m_previewWidget->renderPatchesMask(m_patches, m_gridX, m_gridY);
+    m_previewWidget->switchViewPatchesMode(true, m_patches, m_gridX, m_gridY);
+    m_previewWidget->renderPatchesMask();
     totalPatches_lineEdit->setText(QString::number(patchesPercent,'g', 2)+"%");
     recomputePatches_pushButton->setEnabled(true);
     QApplication::restoreOverrideCursor();
@@ -652,13 +661,15 @@ void EditingTools::on_autoAG_checkBox_toggled(bool toggled)
 {
     if (toggled) {
         m_doAutoAntighosting = true;
+        m_patchesEdited = false;
         antighostToolButton->setEnabled(false);
-        m_previewWidget->switchViewPatchesMode(true);
+        m_previewWidget->switchViewPatchesMode(true, m_patches, m_gridX, m_gridY);
     }
     else {
         m_doAutoAntighosting = false;
         antighostToolButton->setEnabled(true);
-        m_previewWidget->switchViewPatchesMode(false);
+        m_previewWidget->switchViewPatchesMode(false, m_patches, m_gridX, m_gridY);
+        m_agGoodImageIndex = -1;
     }
 }
 
@@ -677,3 +688,7 @@ void EditingTools::updateThresholdSpinBox(double newThreshold)
     threshold_horizontalSlider->blockSignals(oldState);
 }
 
+void EditingTools::setPatchesEdited()
+{
+    m_patchesEdited = true;
+}
