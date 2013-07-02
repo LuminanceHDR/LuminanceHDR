@@ -1070,7 +1070,9 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSiz
         for (int j = 0; j < agGridSize; j++) {
             for (int i = 0; i < agGridSize; i++) {
                     deltaEV = log(m_data[m_agGoodImageIndex].getExposureTime()) - log(m_data[h].getExposureTime());
+                    #pragma omp critical (get_dx)
                     dx = HV_offset[m_agGoodImageIndex].first - HV_offset[h].first;
+                    #pragma omp critical (get_dy)
                     dy = HV_offset[m_agGoodImageIndex].second - HV_offset[h].second;
                     if (comparePatches(m_data[m_agGoodImageIndex],
                                        m_data[h],

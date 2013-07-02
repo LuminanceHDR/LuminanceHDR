@@ -165,5 +165,11 @@ TARGET_LINK_LIBRARIES(TestFusionOperator
         ${Boost_PROGRAM_OPTIONS_LIBRARY}
         ${LUMINANCE_MODULES_CLI} ${LUMINANCE_MODULES_GUI} ${LIBS})
 
+ADD_EXECUTABLE(TestPoissonSolver TestPoissonSolver.cpp)
+TARGET_LINK_LIBRARIES(TestPoissonSolver hdrwizard pfs pfstmo 
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${LIBS})
+ADD_TEST(TestPoissonSolver TestPoissonSolver)
 
 ENDIF(GTEST_FOUND)
