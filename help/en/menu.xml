@@ -18,6 +18,7 @@
 
 	<area text="Creating HDR Images" file="creating_hdr.html">
 		<submenuitem text="Interactive" file="creating_hdr_interactive.html" />
+		<submenuitem text="Editing Tools" file="editing_tools.html" />
 		<submenuitem text="Batch Mode" file="creating_hdr_batch.html" />
 		<submenuitem text="From console" file="creating_hdr_cli.html" />
 	</area>

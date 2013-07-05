@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1122</width>
-    <height>644</height>
+    <width>1120</width>
+    <height>680</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -505,6 +505,9 @@ p, li { white-space: pre-wrap; }
            <layout class="QGridLayout" name="gridLayout_8">
             <item row="0" column="0">
              <widget class="QFrame" name="frame_2">
+              <property name="whatsThis">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -523,6 +526,9 @@ p, li { white-space: pre-wrap; }
                  </item>
                  <item>
                   <widget class="QCheckBox" name="autoAG_checkBox">
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
                    <property name="text">
                     <string>Auto anti ghosting</string>
                    </property>
@@ -585,6 +591,12 @@ p, li { white-space: pre-wrap; }
                      <height>16777215</height>
                     </size>
                    </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -605,6 +617,9 @@ p, li { white-space: pre-wrap; }
                   <widget class="QSlider" name="threshold_horizontalSlider">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                    <property name="maximum">
                     <number>10000</number>
@@ -631,6 +646,9 @@ p, li { white-space: pre-wrap; }
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
                    <property name="decimals">
                     <number>4</number>
                    </property>
@@ -649,6 +667,9 @@ p, li { white-space: pre-wrap; }
                   <widget class="QPushButton" name="recomputePatches_pushButton">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                    <property name="text">
                     <string>Recompute</string>
@@ -793,6 +814,9 @@ p, li { white-space: pre-wrap; }
             </item>
             <item row="1" column="0">
              <widget class="QFrame" name="drawingModeFrame">
+              <property name="whatsThis">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -875,6 +899,9 @@ p, li { white-space: pre-wrap; }
                           </item>
                           <item>
                            <widget class="QRadioButton" name="addMaskRadioButton">
+                            <property name="toolTip">
+                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                            </property>
                             <property name="text">
                              <string>A&amp;dd</string>
                             </property>
@@ -885,6 +912,9 @@ p, li { white-space: pre-wrap; }
                           </item>
                           <item>
                            <widget class="QRadioButton" name="removeMaskRadioButton">
+                            <property name="toolTip">
+                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                            </property>
                             <property name="text">
                              <string>&amp;Remove</string>
                             </property>
@@ -915,6 +945,9 @@ p, li { white-space: pre-wrap; }
                           </property>
                           <item row="0" column="1">
                            <widget class="QSlider" name="agBrushSizeQSlider">
+                            <property name="toolTip">
+                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                            </property>
                             <property name="minimum">
                              <number>1</number>
                             </property>
@@ -934,6 +967,9 @@ p, li { white-space: pre-wrap; }
                           </item>
                           <item row="1" column="2">
                            <widget class="QSpinBox" name="agBrushStrengthQSpinbox">
+                            <property name="toolTip">
+                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                            </property>
                             <property name="minimum">
                              <number>1</number>
                             </property>
@@ -954,6 +990,9 @@ p, li { white-space: pre-wrap; }
                           </item>
                           <item row="1" column="1">
                            <widget class="QSlider" name="agBrushStrengthQSlider">
+                            <property name="toolTip">
+                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                            </property>
                             <property name="minimum">
                              <number>1</number>
                             </property>
@@ -973,6 +1012,9 @@ p, li { white-space: pre-wrap; }
                           </item>
                           <item row="0" column="2">
                            <widget class="QSpinBox" name="agBrushSizeQSpinbox">
+                            <property name="toolTip">
+                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                            </property>
                             <property name="suffix">
                              <string> px</string>
                             </property>

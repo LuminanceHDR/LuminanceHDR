@@ -814,28 +814,15 @@ void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
 #endif
 }
 
-void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const int y, const int gridX, const int gridY)
+void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const int y)
 {
     const int width = U.getCols();
     const int height = U.getRows();
     
-    float umean = 0.0f;
-    for (int i = x; i < x+gridX; i++) 
-        for (int j = y; j < y+gridY; j++) 
-            umean += U(i, j);
-    umean /= gridX*gridY;
-
-    float fmean = 0.0f;
-    for (int i = x; i < x+gridX; i++) 
-        for (int j = y; j < y+gridY; j++) 
-            fmean += F(i, j);
-    fmean /= gridX*gridY;
- 
-    //float sf = F(x, y) /  U(x, y);
-    float sf = fmean /  umean;
+    float sf = F(x, y) / U(x, y);
     #pragma omp parallel for schedule(static)
     for (int i = 0; i < width*height; i++)
-        U(i) = sf * U(i);
+        U(i) *= sf;
 } 
 
 qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B, const int i, const int j, const int gridX, const int gridY)

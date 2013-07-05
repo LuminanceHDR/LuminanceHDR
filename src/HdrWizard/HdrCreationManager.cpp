@@ -57,6 +57,7 @@
 #include <Libpfs/manip/cut.h>
 #include <Libpfs/colorspace/convert.h>
 #include <Libpfs/colorspace/rgbremapper.h>
+#include "Libpfs/colorspace/colorspace.h"
 
 #include <Common/ProgressHelper.h>
 
@@ -1285,6 +1286,35 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     delete logIrradiance_B;
     ph.setValue(96);
 
+    int i, j;
+    for (i = 0; i < agGridSize; i++)
+        for (j = 0; j < agGridSize; j++)
+            if (patches[i][j] == false)
+                break;
+
+    int x = i*gridX;
+    int y = j*gridY;
+    float sf1 = (*Rc)(x, y) - (*Urc)(x, y);
+    float sf2 = (*Gc)(x, y) - (*Ugc)(x, y);
+    float sf3 = (*Bc)(x, y) - (*Ubc)(x, y);
+    float sf = (sf1+sf2+sf3) / 3.0f;
+
+    #pragma omp parallel for schedule(static)
+    for (int i = 0; i < width*height; i++)
+        (*Urc)(i) -= sf1;
+    #pragma omp parallel for schedule(static)
+    for (int i = 0; i < width*height; i++)
+        (*Ugc)(i) -= sf2;
+    #pragma omp parallel for schedule(static)
+    for (int i = 0; i < width*height; i++)
+        (*Ubc)(i) -= sf3;
+/*
+    colorBalance(*Urc, *Rc, i*gridX, j*gridY);
+    ph.setValue(97);
+    colorBalance(*Ugc, *Gc, i*gridX, j*gridY);
+    ph.setValue(98);
+    colorBalance(*Ubc, *Bc, i*gridX, j*gridY);
+*/
     qDebug() << min(Urc);
     qDebug() << max(Urc);
     qDebug() << min(Ugc);
@@ -1307,18 +1337,6 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     qDebug() << min(Ubc);
     qDebug() << max(Ubc);
     
-    int i, j;
-    for (i = agGridSize-1; i >= 0; i--)
-        for (j = agGridSize-1; j >=0; j--)
-            if (patches[i][j] == false)
-                break;
-
-    colorBalance(*Urc, *Rc, i*gridX, j*gridY, gridX, gridY);
-    ph.setValue(97);
-    colorBalance(*Ugc, *Gc, i*gridX, j*gridY, gridX, gridY);
-    ph.setValue(98);
-    colorBalance(*Ubc, *Bc, i*gridX, j*gridY, gridX, gridY);
-
     ph.setValue(100);
 
     delete ghosted;

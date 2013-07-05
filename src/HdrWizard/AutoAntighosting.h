@@ -54,7 +54,7 @@ void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
                     Array2Df* &gradientXGood, Array2Df* &gradientYGood,
                     const QImage& agMask);
 void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, 
-		  const int x, const int y, const int gridX, const int gridY);
+        		  const int x, const int y);
 qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B, 
 		       const int i, const int j, const int gridX, const int gridY);
 qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B);

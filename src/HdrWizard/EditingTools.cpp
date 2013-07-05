@@ -458,6 +458,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         saveImagesButton->setDisabled(true);
         prevBothButton->setIcon(QIcon(":new/prefix1/images/forward.png"));  
         nextBothButton->setIcon(QIcon(":new/prefix1/images/back.png")); 
+        prevBothButton->setToolTip(tr("Add good image"));
+        nextBothButton->setToolTip(tr("Remove good image"));
         nextBothButton->setDisabled(true);
         disconnect(prevBothButton,SIGNAL(clicked()),this,SLOT(prevBoth()));
         disconnect(nextBothButton,SIGNAL(clicked()),this,SLOT(nextBoth()));
@@ -489,6 +491,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         label_reference_list->setText(tr("R&eference"));
         prevBothButton->setIcon(QIcon(":new/prefix1/images/uparrow.png"));  
         nextBothButton->setIcon(QIcon(":new/prefix1/images/downarrow.png"));    
+        prevBothButton->setToolTip(tr("Select the previous image in both lists"));
+        nextBothButton->setToolTip(tr("Select the next image in both lists"));
         prevBothButton->setDisabled(false);
         nextBothButton->setDisabled(false);
         saveImagesButton->setDisabled(false);
