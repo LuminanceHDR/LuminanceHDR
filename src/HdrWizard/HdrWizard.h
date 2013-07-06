@@ -61,9 +61,6 @@ private:
     pfs::Frame* m_pfsFrameHDR;
 
     // hdr creation parameters
-    TResponse responses_in_gui[4];
-    TModel models_in_gui[2];
-    TWeight weights_in_gui[3];
     QVector<config_triple> m_customConfig;
     bool m_patches[agGridSize][agGridSize];
     bool m_doAutoAntighosting;

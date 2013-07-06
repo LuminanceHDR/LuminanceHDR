@@ -313,7 +313,6 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     , m_ais_crop_flag(false)
     , fromCommandLine( fromCommandLine )
 {
-    m_fusionOperatorPtr = IFusionOperator::build(DEBEVEC_NEW);
     for (int i = 0; i < agGridSize; i++)
         for (int j = 0; j < agGridSize; j++)
             m_patches[i][j] = false;
@@ -557,7 +556,7 @@ void HdrCreationManager::setEV(float new_ev, int image_idx)
 */
 
 
-pfs::Frame* HdrCreationManager::createHdr(bool ag, int iterations)
+pfs::Frame* HdrCreationManager::createHdr(bool /*ag*/, int /*iterations*/)
 {
     std::vector< FrameEnhanced > frames;
     for ( size_t idx = 0; idx < m_data.size(); ++idx ) {
@@ -567,14 +566,11 @@ pfs::Frame* HdrCreationManager::createHdr(bool ag, int iterations)
                     );
     }
 
-    return m_fusionOperatorPtr->computeFusion( frames );
+    libhdr::fusion::FusionOperatorPtr fusionOperatorPtr = IFusionOperator::build(m_fusionOperator);
+    fusionOperatorPtr->setResponseFunction(m_responseFunction);
+    fusionOperatorPtr->setWeightFunction(m_weightFunction);
 
-
-//    //CREATE THE HDR
-//    if (inputType == LDR_INPUT_TYPE)
-//        return createHDR(expotimes.data(), &chosen_config, ag, iterations, true, &ldrImagesList );
-//    else
-//        return createHDR(expotimes.data(), &chosen_config, ag, iterations, false, &listmdrR, &listmdrG, &listmdrB );
+    return fusionOperatorPtr->computeFusion( frames );
 }
 
 void HdrCreationManager::applyShiftsToItems(const QList<QPair<int,int> >& hvOffsets)

@@ -58,6 +58,11 @@
 #include "HdrWizard/HdrCreationManager.h"
 
 
+const TResponse responses_in_gui[4] = { GAMMA, LINEAR, LOG10, FROM_ROBERTSON };
+const TModel models_in_gui[2] = { DEBEVEC, ROBERTSON };
+const TWeight weights_in_gui[3] = { TRIANGULAR, GAUSSIAN, PLATEAU };
+
+
 HdrWizard::HdrWizard(QWidget *p,
                      const QStringList &files,
                      const QStringList &/*inputFilesName*/,
@@ -73,16 +78,6 @@ HdrWizard::HdrWizard(QWidget *p,
     m_ui->setupUi(this);
     setAcceptDrops(true);
     setupConnections();
-
-    weights_in_gui[0] = TRIANGULAR;
-    weights_in_gui[1] = GAUSSIAN;
-    weights_in_gui[2] = PLATEAU;
-    responses_in_gui[0] = GAMMA;
-    responses_in_gui[1] = LINEAR;
-    responses_in_gui[2] = LOG10;
-    responses_in_gui[3] = FROM_ROBERTSON;
-    models_in_gui[0] = DEBEVEC;
-    models_in_gui[1] = ROBERTSON;
 
     m_ui->tableWidget->setHorizontalHeaderLabels(
                 QStringList() << tr("Image Filename") << tr("Exposure")
@@ -205,26 +200,34 @@ void HdrWizard::setupConnections()
     connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
     connect(m_ui->EVSlider, SIGNAL(valueChanged(int)), this, SLOT(updateEVSlider(int)));
     connect(m_ui->ImageEVdsb, SIGNAL(valueChanged(double)), this, SLOT(updateEVSpinBox(double)));
-/*
+    /*
     connect(m_ui->ais_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
     connect(m_ui->mtb_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
 */
     connect(m_ui->predefConfigsComboBox, SIGNAL(activated(int)), this, SLOT(predefConfigsComboBoxActivated(int)));
-/*
+    /*
     connect(m_ui->antighostRespCurveCombobox, SIGNAL(activated(int)), this, SLOT(antighostRespCurveComboboxActivated(int)));
+    */
     connect(m_ui->customConfigCheckBox, SIGNAL(toggled(bool)), this, SLOT(customConfigCheckBoxToggled(bool)));
     connect(m_ui->triGaussPlateauComboBox, SIGNAL(activated(int)), this, SLOT(triGaussPlateauComboBoxActivated(int)));
+    /*
     connect(m_ui->predefRespCurveRadioButton, SIGNAL(toggled(bool)), this, SLOT(predefRespCurveRadioButtonToggled(bool)));
+    */
+
     connect(m_ui->gammaLinLogComboBox, SIGNAL(activated(int)), this, SLOT(gammaLinLogComboBoxActivated(int)));
+    /*
     connect(m_ui->loadRespCurveFromFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(loadRespCurveFromFileCheckboxToggled(bool)));
     connect(m_ui->loadRespCurveFileButton, SIGNAL(clicked()), this, SLOT(loadRespCurveFileButtonClicked()));
     connect(m_ui->saveRespCurveToFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(saveRespCurveToFileCheckboxToggled(bool)));
     connect(m_ui->saveRespCurveFileButton, SIGNAL(clicked()), this, SLOT(saveRespCurveFileButtonClicked()));
+    */
     connect(m_ui->modelComboBox, SIGNAL(activated(int)), this, SLOT(modelComboBoxActivated(int)));
+    /*
     connect(m_ui->RespCurveFileLoadedLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(loadRespCurveFilename(const QString&)));
     connect(m_hdrCreationManager.data(), SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
     connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
 */
+
     connect(m_hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)), this, SLOT(errorWhileLoading(QString)));
     //connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)), this, SLOT(updateGraphicalEVvalue(float,int)));
     connect(m_hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(finishedAligning(int)));
@@ -299,7 +302,7 @@ void HdrWizard::updateTableGrid()
         ++counter;
     }
 
-    if ( currentRow >= 0 && currentRow < m_hdrCreationManager->availableInputFiles()) {
+    if ( currentRow >= 0 && currentRow < (int)m_hdrCreationManager->availableInputFiles()) {
         m_ui->tableWidget->selectRow(currentRow);
     } else if (currentRow >= 0) {
         m_ui->tableWidget->selectRow(0);
@@ -1042,6 +1045,61 @@ void HdrWizard::saveRespCurveFileButtonClicked()
     */
 }
 
+namespace {
+
+void updateHdrCreationManagerModel(HdrCreationManager& manager, TModel model)
+{
+    qDebug() << "Change model to " << (int)model;
+
+    switch (model) {
+    case ROBERTSON: {
+        manager.setFusionOperator(libhdr::fusion::ROBERTSON02_NEW);
+    } break;
+    case DEBEVEC:
+    default: {
+        manager.setFusionOperator(libhdr::fusion::DEBEVEC_NEW);
+    } break;
+    }
+}
+
+void updateHdrCreationManagerResponse(HdrCreationManager& manager, TResponse response)
+{
+    qDebug() << "Change response to " << (int)response;
+
+    switch (response) {
+    case GAMMA: {
+        manager.setResponseFunction(libhdr::fusion::RESPONSE_GAMMA);
+    } break;
+    case LOG10: {
+        manager.setResponseFunction(libhdr::fusion::RESPONSE_LOG10);
+    } break;
+    case LINEAR:
+    default: {
+        manager.setResponseFunction(libhdr::fusion::RESPONSE_LINEAR);
+    } break;
+    }
+}
+
+void updateHdrCreationManagerWeight(HdrCreationManager& manager, TWeight weight)
+{
+    qDebug() << "Change weights to " << (int)weight;
+
+    switch (weight) {
+    case PLATEAU: {
+        manager.setWeightFunction(libhdr::fusion::WEIGHT_PLATEAU);
+    } break;
+    case GAUSSIAN: {
+        manager.setWeightFunction(libhdr::fusion::WEIGHT_GAUSSIAN);
+    } break;
+    case TRIANGULAR:
+    default: {
+        manager.setWeightFunction(libhdr::fusion::WEIGHT_TRIANGULAR);
+    } break;
+    }
+}
+
+}
+
 void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui)
 {
     if (index_from_gui <= 5)
@@ -1056,54 +1114,35 @@ void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui)
     m_ui->lineEdit_show_resp->setText(getQStringFromConfig(2));
     m_ui->lineEdit_showmodel->setText(getQStringFromConfig(3));
 
+
     // update HdrCreationManager (new code)
-    switch (m_hdrCreationManager->chosen_config.model) {
-    case ROBERTSON: {
-        m_hdrCreationManager->setFusionOperator(libhdr::fusion::ROBERTSON02_NEW);
-    } break;
-    case DEBEVEC:
-    default: {
-        m_hdrCreationManager->setFusionOperator(libhdr::fusion::DEBEVEC_NEW);
-    } break;
-    }
-
-    switch (m_hdrCreationManager->chosen_config.response_curve) {
-    case GAMMA: {
-        m_hdrCreationManager->setResponseFunction(libhdr::fusion::RESPONSE_GAMMA);
-    } break;
-    case LOG10: {
-        m_hdrCreationManager->setResponseFunction(libhdr::fusion::RESPONSE_LOG10);
-    } break;
-    case LINEAR:
-    default: {
-        m_hdrCreationManager->setResponseFunction(libhdr::fusion::RESPONSE_LINEAR);
-    } break;
-    }
-
-    switch (m_hdrCreationManager->chosen_config.weights) {
-    case PLATEAU: {
-        m_hdrCreationManager->setWeightFunction(libhdr::fusion::WEIGHT_PLATEAU);
-    } break;
-    case GAUSSIAN: {
-        m_hdrCreationManager->setWeightFunction(libhdr::fusion::WEIGHT_GAUSSIAN);
-    } break;
-    case TRIANGULAR:
-    default: {
-        m_hdrCreationManager->setWeightFunction(libhdr::fusion::WEIGHT_TRIANGULAR);
-    } break;
-    }
+    updateHdrCreationManagerModel(*m_hdrCreationManager,
+                                  m_hdrCreationManager->chosen_config.model);
+    updateHdrCreationManagerResponse(*m_hdrCreationManager,
+                                     m_hdrCreationManager->chosen_config.response_curve);
+    updateHdrCreationManagerWeight(*m_hdrCreationManager,
+                                   m_hdrCreationManager->chosen_config.weights);
 }
 
 void HdrWizard::triGaussPlateauComboBoxActivated(int from_gui) {
     m_hdrCreationManager->chosen_config.weights = weights_in_gui[from_gui];
+
+    updateHdrCreationManagerWeight(*m_hdrCreationManager,
+                                   m_hdrCreationManager->chosen_config.weights);
 }
 
 void HdrWizard::gammaLinLogComboBoxActivated(int from_gui) {
     m_hdrCreationManager->chosen_config.response_curve = responses_in_gui[from_gui];
+
+    updateHdrCreationManagerResponse(*m_hdrCreationManager,
+                                     m_hdrCreationManager->chosen_config.response_curve);
 }
 
 void HdrWizard::modelComboBoxActivated(int from_gui) {
     m_hdrCreationManager->chosen_config.model = models_in_gui[from_gui];
+
+    updateHdrCreationManagerModel(*m_hdrCreationManager,
+                                  m_hdrCreationManager->chosen_config.model);
 }
 
 void HdrWizard::loadRespCurveFilename( const QString & filename_from_gui) {

@@ -68,7 +68,7 @@ typedef boost::shared_ptr<IFusionOperator> FusionOperatorPtr;
 class IFusionOperator
 {
 public:
-    // ~IFusionOperator() {}
+    virtual ~IFusionOperator() {}
 
     //! \brief create an instance of the IFusionOperator from a member of
     //! the \c FusionOperator enum
@@ -98,6 +98,11 @@ protected:
     boost::scoped_ptr<IResponseFunction> m_response;
     boost::scoped_ptr<IWeightFunction> m_weight;
 };
+
+typedef vector<float*> DataList;
+
+void fillDataLists(const vector<FrameEnhanced> &frames,
+                   DataList& redChannels, DataList& greenChannels, DataList& blueChannels);
 
 }   // fusion
 }   // libhdr
