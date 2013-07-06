@@ -25,14 +25,22 @@
 #include <TonemappingOperators/fattal02/pde.h>
 #include <HdrWizard/AutoAntighosting.h>
 
+#include <cmath>
+
 TEST(solve_pde_dct, Test1)
 {
     Array2Df U(100,100);
     Array2Df divergence(100,100);
 
     for (int j = 0; j < 100; j++)
+    {
         for (int i = 0; i < 100; i++)
-            divergence(i, j) = std::exp(-std::pow(-(i-50), 2)/.2 - std::pow(-(j-50), 2)/.2);
+        {
+            divergence(i, j) = std::exp(
+                        -std::pow(-(i-50.f), 2.f)/0.2f -
+                        std::pow(-(j-50.f), 2.f)/0.2f);
+        }
+    }
 
     solve_pde_dct(&divergence, &U);
     float residual = residual_pde(&U, &divergence);

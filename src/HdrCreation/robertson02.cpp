@@ -33,9 +33,151 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <Libpfs/array2d.h>
+#include <iterator>
 
-#include "HdrCreation/robertson02.h"
+#include <boost/bind.hpp>
+#include <boost/limits.hpp>
+#include <boost/numeric/conversion/bounds.hpp>
+
+#include <Libpfs/array2d.h>
+#include <HdrCreation/robertson02.h>
+
+#ifndef NDEBUG
+#define PRINT_DEBUG(str) std::cerr << "Robertson: " << str << std::endl
+#else
+#define PRINT_DEBUG(str)
+#endif
+
+using namespace pfs;
+using namespace std;
+
+namespace libhdr {
+namespace fusion {
+
+void RobertsonOperator::computeChannel(const DataList& inputData, float* outputData,
+                                       size_t width, size_t height,
+                                       float minAllowedValue, float maxAllowedValue,
+                                       const float* arrayofexptime) const
+{
+    assert( inputData.size() );
+
+    size_t saturatedPixels = 0;
+
+    int numPixels = (int) width*height;
+    for ( int j = 0; j < numPixels; ++j )
+    {
+        // all exposures for each pixel
+        float sum = 0.0f;
+        float div = 0.0f;
+        float maxti = -1e6f;
+        float minti = +1e6f;
+
+        // for all exposures
+        for ( int i = 0; i < (int)inputData.size(); ++i )
+        {
+            float m = inputData[i][j];
+            float ti = arrayofexptime[i];
+
+            float w = weight(m);
+            float r = response(m);
+            // --- anti saturation: observe minimum exposure time at which
+            // saturated value is present, and maximum exp time at which
+            // black value is present
+            if ( m > maxAllowedValue ) {
+                minti = std::min(minti, ti);
+            }
+            if ( m < minAllowedValue ) {
+                maxti = std::max(maxti, ti);
+            }
+
+            // --- anti ghosting: monotonous increase in time should result
+            // in monotonous increase in intensity; make forward and
+            // backward check, ignore value if condition not satisfied
+//            int m_lower = inputData.getSample(i_lower[i], j);
+//            int m_upper = inputData.getSample(i_upper[i], j);
+
+//            if ( N > 1) {
+//                if ( m_lower > m || m_upper < m ) {
+//                    continue;
+//                }
+//            }
+
+            sum += w * ti * r;
+            div += w * ti * ti;
+        }
+
+        // --- anti saturation: if a meaningful representation of pixel
+        // was not found, replace it with information from observed data
+        if ( div == 0.0f ) {
+            ++saturatedPixels;
+        }
+        if ( div == 0.0f && maxti > -1e6f ) {
+            sum = minAllowedValue;
+            div = maxti;
+        }
+        if ( div == 0.0f && minti < +1e6f ) {
+            sum = maxAllowedValue;
+            div = minti;
+        }
+
+        if ( div != 0.0f ) {
+            outputData[j] = sum/div;
+        } else {
+            outputData[j] = 0.0f;
+        }
+    }
+
+    PRINT_DEBUG("Saturated pixels: " << saturatedPixels);
+}
+
+void RobertsonOperator::computeFusion(const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
+{
+    assert( frames.size() );
+
+    size_t numExposures = frames.size();
+    Frame tempFrame ( frames[0].frame()->getWidth(), frames[0].frame()->getHeight() );
+
+    Channel* outputRed;
+    Channel* outputGreen;
+    Channel* outputBlue;
+    tempFrame.createXYZChannels(outputRed, outputGreen, outputBlue);
+
+    DataList redChannels(numExposures);
+    DataList greenChannels(numExposures);
+    DataList blueChannels(numExposures);
+
+    fillDataLists(frames, redChannels, greenChannels, blueChannels);
+
+    float maxAllowedValue = maxTrustedValue();
+    float minAllowedValue = minTrustedValue();
+
+    std::vector<float> averageLuminances;
+    std::transform(frames.begin(), frames.end(),
+                   std::back_inserter(averageLuminances),
+                   boost::bind(&FrameEnhanced::averageLuminance, _1));
+
+    computeChannel(redChannels, outputRed->data(),
+                   tempFrame.getWidth(), tempFrame.getHeight(),
+                   minAllowedValue, maxAllowedValue,
+                   averageLuminances.data());       // red
+    computeChannel(blueChannels, outputBlue->data(),
+                   tempFrame.getWidth(), tempFrame.getHeight(),
+                   minAllowedValue, maxAllowedValue,
+                   averageLuminances.data());       // blue
+    computeChannel(greenChannels, outputGreen->data(),
+                   tempFrame.getWidth(), tempFrame.getHeight(),
+                   minAllowedValue, maxAllowedValue,
+                   averageLuminances.data());       // green
+
+    frame.swap( tempFrame );
+}
+
+}
+}
+
+
+
+
 
 namespace {
 

@@ -56,7 +56,6 @@ private:
     HdrCreationItemContainer m_data;
 
     libhdr::fusion::FusionOperator m_fusionOperator;
-    libhdr::fusion::FusionOperatorPtr m_fusionOperatorPtr;
     libhdr::fusion::WeightFunction m_weightFunction;
     libhdr::fusion::ResponseFunction m_responseFunction;
 
@@ -125,7 +124,9 @@ public:
 	pfs::Frame* doAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg);
     void getAgData(bool patches[][agGridSize], int &h0);
     void setPatches(bool patches[][agGridSize]);
-	void removeTempFiles();
+
+public slots:
+    void removeTempFiles();
 
 signals:
     // computation progress

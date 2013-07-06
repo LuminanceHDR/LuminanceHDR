@@ -21,9 +21,14 @@
 
 #include "fusionoperator.h"
 #include "debevec.h"
+#include "robertson02.h"
 
 #include <cassert>
 #include <boost/make_shared.hpp>
+
+#include <Libpfs/frame.h>
+
+using namespace pfs;
 
 namespace libhdr {
 namespace fusion {
@@ -44,7 +49,7 @@ pfs::Frame* IFusionOperator::computeFusion(const std::vector<FrameEnhanced>& fra
 FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
     switch (type) {
     case ROBERTSON02_NEW:
-        assert(false);
+        return boost::make_shared<RobertsonOperator>();
         break;
     case DEBEVEC_NEW:
     default:
@@ -66,10 +71,49 @@ bool IFusionOperator::setResponseFunction(ResponseFunction responseFunction)
         m_response.reset(new ResponseLog10);
         break;
     case RESPONSE_SRGB:
+    default:
         m_response.reset(new ResponseSRGB);
         break;
     }
     return true;
+}
+
+bool IFusionOperator::setWeightFunction(WeightFunction weightFunction)
+{
+    switch (weightFunction) {
+    case WEIGHT_TRIANGULAR:
+        m_weight.reset(new WeightTriangular);
+        break;
+    case WEIGHT_PLATEAU:
+        m_weight.reset(new WeightPlateau);
+        break;
+    case WEIGHT_GAUSSIAN:
+    default:
+        m_weight.reset(new WeightGaussian);
+        break;
+    }
+    return true;
+}
+
+void fillDataLists(const vector<FrameEnhanced> &frames,
+                   DataList& redChannels, DataList& greenChannels, DataList& blueChannels)
+{
+    assert(frames.size() == redChannels.size());
+    assert(frames.size() == greenChannels.size());
+    assert(frames.size() == blueChannels.size());
+
+    // build temporary data structure
+    for ( size_t exp = 0; exp < frames.size(); ++exp )
+    {
+        Channel* red;
+        Channel* green;
+        Channel* blue;
+        frames[exp].frame()->getXYZChannels(red, green, blue);
+
+        redChannels[exp] = red->data();
+        greenChannels[exp] = green->data();
+        blueChannels[exp] = blue->data();
+    }
 }
 
 }   // fusion

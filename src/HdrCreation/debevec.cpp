@@ -49,8 +49,6 @@ using namespace std;
 namespace libhdr {
 namespace fusion {
 
-typedef vector<float*> DataList;
-
 struct ColorData {
     ColorData()
         : numerator_(0.f)
@@ -69,28 +67,6 @@ struct ColorData {
     float blackValue_;
     float whiteValue_;
 };
-
-static
-void fillDataLists(const vector<FrameEnhanced> &frames,
-                   DataList& redChannels, DataList& greenChannels, DataList& blueChannels)
-{
-    assert(frames.size() == redChannels.size());
-    assert(frames.size() == greenChannels.size());
-    assert(frames.size() == blueChannels.size());
-
-    // build temporary data structure
-    for ( size_t exp = 0; exp < frames.size(); ++exp )
-    {
-        Channel* red;
-        Channel* green;
-        Channel* blue;
-        frames[exp].frame()->getXYZChannels(red, green, blue);
-
-        redChannels[exp] = red->data();
-        greenChannels[exp] = green->data();
-        blueChannels[exp] = blue->data();
-    }
-}
 
 void DebevecOperator::computeFusion(const vector<FrameEnhanced> &frames,
                                     pfs::Frame &frame) const
