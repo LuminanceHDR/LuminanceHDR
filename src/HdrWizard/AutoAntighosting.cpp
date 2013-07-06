@@ -969,3 +969,175 @@ void shiftItem(HdrCreationItem& item, int dx, int dy)
     img.reset();    // release memory
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief get the min/max of a float array
+ *
+ * @param data input array
+ * @param size array size
+ * @param ptr_min, ptr_max pointers to the returned values, ignored if NULL
+ */
+static void minmax_f32(const float *data, size_t size,
+                       float *ptr_min, float *ptr_max)
+{
+    float min, max;
+    size_t i;
+
+    /* compute min and max */
+    min = data[0];
+    max = data[0];
+    for (i = 1; i < size; i++) {
+        if (data[i] < min)
+            min = data[i];
+        if (data[i] > max)
+            max = data[i];
+    }
+
+    /* save min and max to the returned pointers if available */
+    if (NULL != ptr_min)
+        *ptr_min = min;
+    if (NULL != ptr_max)
+        *ptr_max = max;
+    return;
+}
+
+/**
+ * @brief float comparison
+ *
+ * IEEE754 floats can be compared as integers. Not *converted* to
+ * integers, but *read* as integers while maintaining an order.
+ * cf. http://www.cygnus-software.com/papers/comparingfloats/Comparing%20floating%20point%20numbers.htm#_Toc135149455
+ */
+static int cmp_f32(const void *a, const void *b)
+{
+    if (*(const int *) a > *(const int *) b)
+        return 1;
+    if (*(const int *) a < *(const int *) b)
+        return -1;
+    return 0;
+}
+
+/**
+ * @brief get quantiles from a float array such that a given
+ * number of pixels is out of this interval
+ *
+ * This function computes min (resp. max) such that the number of
+ * pixels < min (resp. > max) is inferior or equal to nb_min
+ * (resp. nb_max). It uses a sorting algorithm.
+ *
+ * @param data input/output
+ * @param size data array size
+ * @param nb_min, nb_max number of pixels to flatten
+ * @param ptr_min, ptr_max computed min/max output, ignored if NULL
+ *
+ * @todo instead of sorting the whole array (expensive), select
+ * pertinent values with a 128 bins histogram then sort the bins
+ * around the good bin
+ */
+static void quantiles_f32(const float *data, size_t size,
+                          size_t nb_min, size_t nb_max,
+                          float *ptr_min, float *ptr_max)
+{
+    float *data_tmp;
+
+    data_tmp = (float *) malloc(size * sizeof(float));
+
+    /* copy the data and sort */
+    memcpy(data_tmp, data, size * sizeof(float));
+    qsort(data_tmp, size, sizeof(float), &cmp_f32);
+
+    /* get the min/max */
+    if (NULL != ptr_min)
+        *ptr_min = data_tmp[nb_min];
+    if (NULL != ptr_max)
+        *ptr_max = data_tmp[size - 1 - nb_max];
+
+    free(data_tmp);
+    return;
+}
+
+/**
+ * @brief rescale a float array
+ *
+ * This function operates in-place. It rescales the data by a bounded
+ * affine function such that min becomes 0 and max becomes 1.
+ * Warnings similar to the ones mentioned in rescale_u8() apply about
+ * the risks of rounding errors.
+ *
+ * @param data input/output array
+ * @param size array size
+ * @param min, max the minimum and maximum of the input array
+ *
+ * @return data
+ */
+static float *rescale_f32(float *data, size_t size, float min, float max)
+{
+    size_t i;
+
+    if (max <= min)
+        for (i = 0; i < size; i++)
+            data[i] = .5;
+    else
+        for (i = 0; i < size; i++)
+            data[i] = (min > data[i] ? 0. :
+                       (max < data[i] ? 1. : (data[i] - min) / (max - min)));
+
+    return data;
+}
+/**
+ * @brief normalize a float array
+ *
+ * This function operates in-place. It computes the minimum and
+ * maximum values of the data, and rescales the data to
+ * [0-1], with optionally flattening some extremal pixels.
+ *
+ * @param data input/output array
+ * @param size array size
+ * @param nb_min, nb_max number extremal pixels flattened
+ *
+ * @return data
+ */
+float *balance_f32(float *data, size_t size, size_t nb_min, size_t nb_max)
+{
+    float min, max;
+
+    /* sanity checks */
+    if (NULL == data) {
+        fprintf(stderr, "a pointer is NULL and should not be so\n");
+        abort();
+    }
+    if (nb_min + nb_max >= size) {
+        nb_min = (size - 1) / 2;
+        nb_max = (size - 1) / 2;
+        fprintf(stderr, "the number of pixels to flatten is too large\n");
+        fprintf(stderr, "using (size - 1) / 2\n");
+    }
+
+    /* get the min/max */
+    if (0 != nb_min || 0 != nb_max)
+        quantiles_f32(data, size, nb_min, nb_max, &min, &max);
+    else
+        minmax_f32(data, size, &min, &max);
+
+    /* rescale */
+    (void) rescale_f32(data, size, min, max);
+
+    return data;
+}
+
+/**
+ ** @brief simplest color balance on RGB channels
+ **
+ ** The input image is normalized by affine transformation on each RGB
+ ** channel, saturating a percentage of the pixels at the beginning and
+ ** end of the color space on each channel.
+ **/
+void colorbalance_rgb_f32(Array2Df& R, Array2Df& G, Array2Df& B, size_t size,
+                                   size_t nb_min, size_t nb_max)
+{
+    (void) balance_f32(R.data(), size, nb_min, nb_max);
+    (void) balance_f32(G.data(), size, nb_min, nb_max);
+    (void) balance_f32(B.data(), size, nb_min, nb_max);
+}
+

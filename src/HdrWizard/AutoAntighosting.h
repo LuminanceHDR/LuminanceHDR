@@ -64,3 +64,5 @@ void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
            const QImage& mask, const QImage& maskGoodImage);
 QImage* shiftQImage(const QImage *in, int dx, int dy);
 void shiftItem(HdrCreationItem& item, int dx, int dy);
+void colorbalance_rgb_f32(Array2Df& R, Array2Df& G, Array2Df& B, size_t size,
+                                   size_t nb_min, size_t nb_max);

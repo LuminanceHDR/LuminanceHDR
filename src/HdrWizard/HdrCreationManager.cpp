@@ -1286,6 +1286,7 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     delete logIrradiance_B;
     ph.setValue(96);
 
+/*
     int i, j;
     for (i = 0; i < agGridSize; i++)
         for (j = 0; j < agGridSize; j++)
@@ -1308,7 +1309,6 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     #pragma omp parallel for schedule(static)
     for (int i = 0; i < width*height; i++)
         (*Ubc)(i) -= sf3;
-/*
     colorBalance(*Urc, *Rc, i*gridX, j*gridY);
     ph.setValue(97);
     colorBalance(*Ugc, *Gc, i*gridX, j*gridY);
@@ -1337,6 +1337,8 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     qDebug() << min(Ubc);
     qDebug() << max(Ubc);
     
+    colorbalance_rgb_f32(*Urc, *Ugc, *Ubc, width*height, 0, 3);
+
     ph.setValue(100);
 
     delete ghosted;
