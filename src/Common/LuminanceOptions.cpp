@@ -392,7 +392,7 @@ int LuminanceOptions::getRawUserFlip() const
 #elif DEMOSAICING_GPL2
 #define USER_QUALITY 5          // using AHDv2
 #else
-#define USER_QUALITY 3;         // using AHD
+#define USER_QUALITY 3          // using AHD
 #endif
 
 int LuminanceOptions::getRawUserQuality() const

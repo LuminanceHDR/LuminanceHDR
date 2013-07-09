@@ -74,9 +74,13 @@ void transformRGB2XYZ(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*i
                       Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
 void transformRGB2Y(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
                     Array2Df*outC1);
+void transformRGB2Yuv(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                      Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
 
 // Yuv -> *
 void transformYuv2XYZ(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
+                      Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
+void transformYuv2RGB(const Array2Df*inC1, const Array2Df*inC2, const Array2Df*inC3,
                       Array2Df*outC1, Array2Df*outC2, Array2Df*outC3);
 
 // Yxy -> *

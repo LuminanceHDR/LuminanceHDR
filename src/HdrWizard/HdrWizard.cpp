@@ -914,6 +914,8 @@ void HdrWizard::NextFinishButtonClicked() {
         m_ui->customize_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
         repaint();
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+        m_ui->NextFinishButton->setEnabled(false);
+        m_ui->cancelButton->setEnabled(false);
 
         if (m_doAutoAntighosting) {
             int h0;

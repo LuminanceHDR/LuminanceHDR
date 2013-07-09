@@ -102,7 +102,7 @@ void temperatureToRGB(double T, double RGB[3])
 #elif DEMOSAICING_GPL2
 #define USER_QUALITY 5          // using AHDv2
 #else
-#define USER_QUALITY 3;         // using AHD
+#define USER_QUALITY 3          // using AHD
 #endif
 
 struct RAWReaderParams {

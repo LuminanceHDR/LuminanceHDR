@@ -25,6 +25,7 @@
 
 #include <QDebug>
 #include <Libpfs/frame.h>
+#include "Libpfs/colorspace/colorspace.h"
 #include <Libpfs/manip/shift.h>
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/vex/minmax.h>
@@ -1139,5 +1140,110 @@ void colorbalance_rgb_f32(Array2Df& R, Array2Df& G, Array2Df& B, size_t size,
     (void) balance_f32(R.data(), size, nb_min, nb_max);
     (void) balance_f32(G.data(), size, nb_min, nb_max);
     (void) balance_f32(B.data(), size, nb_min, nb_max);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    const int width = R_orig->getCols();
+    const int height = R_orig->getRows();
+    float u = 0.1f;
+    float a = 0.8f;
+    float b = 0.001f;
+    float T = 0.3f;
+    int iterMax = 1000;
+    float gain[3] = {1.0f, 1.0f, 1.0f};
+
+    Array2Df* R = new Array2Df(width, height);
+    Array2Df* G = new Array2Df(width, height);
+    Array2Df* B = new Array2Df(width, height);
+    Array2Df* Y = new Array2Df(width, height);
+    Array2Df* U = new Array2Df(width, height);
+    Array2Df* V = new Array2Df(width, height);
+    Array2Df* F = new Array2Df(width, height);
+
+    vector<float> gray_r;
+    vector<float> gray_b;
+
+    copy(R_orig, R);
+    copy(G_orig, G);
+    copy(B_orig, B);
+
+    for (int it = 0; it < iterMax; it++) {
+        transformRGB2Yuv(R, G, B, Y, U, V); 
+        #pragma omp parallel for
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                (*F)(i, j) = (abs((*U)(i, j)) + abs((*V)(i, j)))/(*Y)(i, j); 
+            }
+        }
+        int sum = 0;
+        //#pragma omp parallel for reduction(+:sum)
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                if ((*F)(i, j) < T) {
+                    sum = sum + 1; 
+                    gray_r.push_back((*U)(i,j));
+                    gray_b.push_back((*V)(i,j));
+                }
+            }
+        }
+        if (sum == 0)
+            break;
+        float U_bar = accumulate(gray_r.begin(), gray_r.end(), 0.0f)/gray_r.size();
+        float V_bar = accumulate(gray_b.begin(), gray_b.end(), 0.0f)/gray_b.size();
+        float err;
+        float delta;
+        int ch;
+        gray_r.clear();
+        gray_b.clear();
+        if (abs(U_bar) > abs(V_bar)) {
+            err = U_bar;
+            ch = 2;
+        }
+        else {
+            err = V_bar;
+            ch = 0;
+        }
+        if (abs(err) >= a) {
+            delta = 2.0f*(err/abs(err))*u;
+        }
+        else if (abs(err) < b) {
+            delta = 0.0f;
+            break;
+        }
+        else {
+            delta = err*u;
+        }
+        gain[ch] -= delta;
+        #pragma omp parallel for
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                (*R)(i, j) = (*R_orig)(i, j) * gain[0];
+                //(*G)(i, j) = (*G_orig)(i, j) * gain[1];
+                (*B)(i, j) = (*B_orig)(i, j) * gain[2];
+            }
+        }  
+        cout << it << " : " << err << endl;
+    }
+    copy(R, R_orig);
+    //copy(G, G_orig);
+    copy(B, B_orig);
+    delete R;
+    delete G;
+    delete B;
+    delete Y;
+    delete U;
+    delete V;
+    delete F;
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "robustAWB = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
 }
 

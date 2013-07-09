@@ -42,6 +42,7 @@
 #include "Libpfs/utils/transform.h"
 #include "Libpfs/colorspace/rgb.h"
 #include "Libpfs/colorspace/xyz.h"
+#include "Libpfs/colorspace/yuv.h"
 
 #include <boost/assign.hpp>
 
@@ -104,6 +105,24 @@ void transformRGB2Y(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *
 {
     utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
                      outC1->begin(), colorspace::ConvertRGB2Y());
+}
+
+void transformRGB2Yuv(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                      Array2Df *outC1, Array2Df *outC2, Array2Df *outC3)
+{
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+
+    utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
+                     outC1->begin(), outC2->begin(), outC3->begin(),
+                     colorspace::ConvertRGB2YUV());
+
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "transformRGB2Yuv() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
 }
 
 void transformXYZ2SRGB(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
@@ -182,6 +201,24 @@ void transformYuv2XYZ( const Array2Df *inC1, const Array2Df *inC2, const Array2D
     }
 }
 
+void transformYuv2RGB(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
+                      Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 )
+{
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+
+    utils::transform(inC1->begin(), inC1->end(), inC2->begin(), inC3->begin(),
+                     outC1->begin(), outC2->begin(), outC3->begin(),
+                     colorspace::ConvertYUV2RGB());
+
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "transformYuv2RGB() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
+}
+
 void transformYxy2XYZ( const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
                        Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 )
 {
@@ -247,8 +284,10 @@ void transformColorSpace(ColorSpace inCS, const Array2Df *inC1, const Array2Df *
             (CSTransformProfile(CS_SRGB, CS_XYZ), transformSRGB2XYZ)
             // RGB -> *
             (CSTransformProfile(CS_RGB, CS_XYZ), transformRGB2XYZ)
+            (CSTransformProfile(CS_RGB, CS_YUV), transformRGB2Yuv)
             // Yuv -> *
             (CSTransformProfile(CS_YUV, CS_XYZ), transformYuv2XYZ)
+            (CSTransformProfile(CS_YUV, CS_RGB), transformYuv2RGB)
             // Yxy -> *
             (CSTransformProfile(CS_Yxy, CS_XYZ), transformYxy2XYZ)
             ;
