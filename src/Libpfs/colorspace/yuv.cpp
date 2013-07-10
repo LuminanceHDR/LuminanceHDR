@@ -25,8 +25,7 @@
 namespace pfs {
 namespace colorspace {
 
-//! \brief Basic matrices for the SRGB <-> XYZ conversion
-//! \ref http://www.brucelidbloom.com/Eqn_RGB_XYZ_Matrix.html
+//! \brief Basic matrices for the RGB <-> YUV conversion
 const float rgb2yuvMat[3][3] =
 { { 0.299f, 0.587f, 0.144f },
   { -0.299f, -0.587f, 0.886f },

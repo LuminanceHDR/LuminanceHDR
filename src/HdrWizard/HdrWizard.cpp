@@ -74,6 +74,8 @@ HdrWizard::HdrWizard(QWidget *p,
 //    , savecurvefilename()
 //    , m_inputFilesName(inputFilesName)
 //    , m_inputExpoTimes(inputExpoTimes)
+    , m_doAutoAntighosting(false)
+    , m_doManualAntighosting(false)
 {
     m_ui->setupUi(this);
     setAcceptDrops(true);
