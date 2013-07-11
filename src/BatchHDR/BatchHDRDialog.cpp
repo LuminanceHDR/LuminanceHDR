@@ -66,8 +66,11 @@ QDialog(p),
 
     connect(m_Ui->MTBRadioButton, SIGNAL(clicked()), this, SLOT(align_selection_clicked()));
     connect(m_Ui->aisRadioButton, SIGNAL(clicked()), this, SLOT(align_selection_clicked()));
+    connect(m_Ui->threshold_horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
+    connect(m_Ui->threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateThresholdSpinBox(double)));
 
-    connect(m_hdrCreationManager, SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(align(QStringList)));
+    //connect(m_hdrCreationManager, SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(align(QStringList)));
+    connect(m_hdrCreationManager, SIGNAL(finishedLoadingFiles()), this, SLOT(align()));
     connect(m_hdrCreationManager, SIGNAL(finishedAligning(int)), this, SLOT(create_hdr(int)));
     connect(m_hdrCreationManager, SIGNAL(errorWhileLoading(QString)), this, SLOT(error_while_loading(QString)));
     connect(m_hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
@@ -319,16 +322,18 @@ void BatchHDRDialog::batch_hdr()
     }
 }
 
-void BatchHDRDialog::align(QStringList filesLackingExif)
+//void BatchHDRDialog::align(QStringList filesLackingExif)
+void BatchHDRDialog::align()
 {
+    QStringList filesLackingExif = m_hdrCreationManager->getFilesWithoutExif();
     if (!filesLackingExif.isEmpty())
     {
-/*
         qDebug() << "BatchHDRDialog::align Error: missing EXIF data";
         m_Ui->textEdit->append(tr("Error: missing EXIF data"));
         foreach (QString fname, filesLackingExif)
             m_Ui->textEdit->append(fname);
         m_errors = true;
+/*
         QStringList  fnames = m_hdrCreationManager->getFileList();
         int n = fnames.size();
 
@@ -374,8 +379,26 @@ void BatchHDRDialog::create_hdr(int)
         m_hdrCreationManager->chosen_config = m_customConfig[idx - 6];
     }
 
-    boost::scoped_ptr<pfs::Frame> resultHDR( m_hdrCreationManager->createHdr(false, 1) );
+    boost::scoped_ptr<pfs::Frame> resultHDR;
 
+    if (m_Ui->autoAG_checkBox->isChecked()) {
+        QList<QPair<int, int> > HV_offsets;
+        for (int i = 0; i < m_Ui->spinBox->value(); i++ ) {
+            HV_offsets.append(qMakePair(0,0));
+        
+        }
+        float patchesPercent;
+        bool patches[agGridSize][agGridSize];
+        int h0 = m_hdrCreationManager->computePatches(m_Ui->threshold_doubleSpinBox->value(), patches, patchesPercent, HV_offsets);
+        boost::scoped_ptr<pfs::Frame> tmp(m_hdrCreationManager->doAntiGhosting(patches, h0, false));
+        resultHDR.swap(tmp);
+        
+    }
+    else {
+        boost::scoped_ptr<pfs::Frame> tmp(m_hdrCreationManager->createHdr(false, 1));
+        resultHDR.swap(tmp);
+    }
+    
     int paddingLength = ceil(log10(m_total + 1.0f));
     QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
     m_IO_Worker->write_hdr_frame(resultHDR.get(), outName);
@@ -472,5 +495,20 @@ void BatchHDRDialog::try_to_continue()
             batch_hdr(); // try to continue
         }
     }
+}
+
+void BatchHDRDialog::updateThresholdSlider(int newValue)
+{
+    float newThreshold = ((float)newValue)/10000.f;
+    bool oldState = m_Ui->threshold_doubleSpinBox->blockSignals(true);
+    m_Ui->threshold_doubleSpinBox->setValue( newThreshold );
+    m_Ui->threshold_doubleSpinBox->blockSignals(oldState);
+}
+
+void BatchHDRDialog::updateThresholdSpinBox(double newThreshold)
+{
+    bool oldState = m_Ui->threshold_horizontalSlider->blockSignals(true);
+    m_Ui->threshold_horizontalSlider->setValue( (int)(newThreshold*10000) );
+    m_Ui->threshold_horizontalSlider->blockSignals(oldState);
 }
 

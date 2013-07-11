@@ -123,250 +123,301 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="26"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="22"/>
         <source>Number of bracketed images:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="46"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="71"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="42"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="67"/>
         <source>Select the number of bracketed pictures used to create the HDRs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="97"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="96"/>
         <source>Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="183"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="182"/>
         <source>Output format:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="115"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="114"/>
         <source>Choose an HDR output file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="119"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="118"/>
         <source>hdr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="124"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="123"/>
         <source>exr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="129"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="128"/>
         <source>PFS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="134"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="133"/>
         <source>tiff</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="108"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="107"/>
         <source>Predefined profile:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="142"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="141"/>
         <source>Choose one of the creation predefined profiles. 
 See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="150"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="149"/>
         <source>Profile 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="155"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="154"/>
         <source>Profile 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="160"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="159"/>
         <source>Profile 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="165"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="164"/>
         <source>Profile 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="170"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="169"/>
         <source>Profile 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="175"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="174"/>
         <source>Profile 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="210"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="209"/>
         <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="221"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="220"/>
         <source>Auto align the bracketed pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="224"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="223"/>
         <source>Auto-align images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="265"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="264"/>
         <source>Auto-crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="247"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="246"/>
         <source>Use Hugin&apos;s align_image_stack engine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="250"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="249"/>
         <source>Hugin&apos;s align_image_stack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="234"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="233"/>
         <source>Use MTB (Median Threshold Bitmap) engine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="237"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="236"/>
         <source>MTB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="279"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="278"/>
         <source>Progress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="324"/>
-        <source>Folder where created HDRs are saved</source>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="345"/>
+        <source>Anti ghosting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="327"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="341"/>
-        <source>Select...</source>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="351"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="338"/>
-        <source>Folder where bracketed pictures are located (in alphabetical order)</source>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="365"/>
+        <source>O. Gallo and others</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="352"/>
-        <source>Input folder:</source>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="372"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="362"/>
-        <source>Output folder:</source>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="375"/>
+        <source>Auto anti ghosting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="388"/>
-        <source>&amp;Cancel</source>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="386"/>
+        <source>Artifact-free High Dynamic Range Imaging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="398"/>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="408"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="436"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="461"/>
+        <source>Input/Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="483"/>
+        <source>Folder where created HDRs are saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="486"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="500"/>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="497"/>
+        <source>Folder where bracketed pictures are located (in alphabetical order)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="511"/>
+        <source>Input folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="521"/>
+        <source>Output folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="319"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="329"/>
         <source>&amp;Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="405"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="336"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="170"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="173"/>
         <source>Choose a source directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="199"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="202"/>
         <source>Choose a output directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="232"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="251"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="257"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="235"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="254"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="260"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="251"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="257"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="254"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="260"/>
         <source>Total number of pictures must be a multiple of number of bracketed images.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="232"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="235"/>
         <source>The chosen output directory contains HDR files. Those files might be overwritten. 
 
 Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="86"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="89"/>
         <source>Custom config %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="274"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="277"/>
         <source>Started processing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="294"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="297"/>
         <source>Creating HDR...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="316"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="319"/>
         <source>Completed with errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="318"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="321"/>
         <source>Completed without errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="351"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="332"/>
+        <source>Error: missing EXIF data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="356"/>
         <source>Aligning...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="402"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="425"/>
         <source>Written </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="409"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="432"/>
         <source>Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="445"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="468"/>
         <source>Aborting...</source>
         <translation type="unfinished"></translation>
     </message>

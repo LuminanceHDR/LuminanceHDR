@@ -225,7 +225,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Error: missing EXIF data</source>
-        <translation type="obsolete">Hata: yanlış EXIF verisi</translation>
+        <translation type="unfinished">Hata: yanlış EXIF verisi</translation>
     </message>
     <message>
         <source>Aligning...</source>
@@ -328,6 +328,42 @@ Continue?</source>
     </message>
     <message>
         <source>Custom config %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anti ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Artifact-free High Dynamic Range Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input/Output</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

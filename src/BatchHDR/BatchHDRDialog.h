@@ -55,7 +55,8 @@ protected slots:
 	void add_output_directory(QString dir = QString());
 	void on_startButton_clicked();
 	void batch_hdr();
-	void align(QStringList);
+	//void align(QStringList);
+	void align();
 	void create_hdr(int);
 	void error_while_loading(QString);
 	void writeAisData(QByteArray);
@@ -64,6 +65,8 @@ protected slots:
     void align_selection_clicked();
 	void processed();
 	void try_to_continue();
+    void updateThresholdSlider(int);
+    void updateThresholdSpinBox(double);
 
 protected:
 	LuminanceOptions m_luminance_options;

@@ -217,7 +217,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Error: missing EXIF data</source>
-        <translation type="obsolete">Errore: dati EXIF mancanti</translation>
+        <translation>Errore: dati EXIF mancanti</translation>
     </message>
     <message>
         <source>Aligning...</source>
@@ -318,6 +318,42 @@ Continuare?</translation>
     <message>
         <source>Custom config %1</source>
         <translation>Configurazione personalizzata %1</translation>
+    </message>
+    <message>
+        <source>Anti ghosting</source>
+        <translation>Anti ghosting</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qui puoi attivare l&apos;algoritmo di auto antighosting, settare il valore di soglia e ricalcolare  le patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation>O. Gallo e altri</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Auto anti ghosting</source>
+        <translation>Auto anti ghosting</translation>
+    </message>
+    <message>
+        <source>Artifact-free High Dynamic Range Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation>Soglia</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Input/Output</source>
+        <translation>Input/Output</translation>
     </message>
 </context>
 <context>
