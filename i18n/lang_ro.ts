@@ -98,7 +98,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
+        <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -236,7 +236,7 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>Error: missing EXIF data</source>
-        <translation type="unfinished">Eroare: lipseşte EXIF</translation>
+        <translation type="obsolete">Eroare: lipseşte EXIF</translation>
     </message>
     <message>
         <source>Aligning...</source>
@@ -807,6 +807,14 @@ Continue?</source>
         <source>                        (No tonemapping is performed unless -o is specified).</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error: Threshold must be in the range [0-1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-b --autoag THRESHOLD   Enable auto antighosting with given threshold.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DnDOption</name>
@@ -847,7 +855,7 @@ Continue?</source>
     <name>EditingTools</name>
     <message>
         <source>Pan the image to a region</source>
-        <translation type="unfinished">Deplasează imaginea la o regiune</translation>
+        <translation type="obsolete">Deplasează imaginea la o regiune</translation>
     </message>
     <message>
         <source>Choose a directory and a prefix</source>
@@ -868,6 +876,22 @@ Continue?</source>
     <message>
         <source>R&amp;eference</source>
         <translation type="unfinished">R&amp;eferință</translation>
+    </message>
+    <message>
+        <source>Add good image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove good image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the previous image in both lists</source>
+        <translation type="unfinished">Selectează imaginea precedentă în ambele liste</translation>
+    </message>
+    <message>
+        <source>Select the next image in both lists</source>
+        <translation type="unfinished">Selectează imaginea următoare în ambele liste</translation>
     </message>
 </context>
 <context>
@@ -898,19 +922,11 @@ Continue?</source>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished">Mărește</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Mărește</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished">Mișorează</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Mișorează</translation>
     </message>
     <message>
         <source>Difference (E-P)</source>
@@ -1188,6 +1204,78 @@ p, li { white-space: pre-wrap; }
         <source>Apply saved mask</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fill the window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill &amp;window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Artifact-free HDR Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Patches:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recompute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1200,34 +1288,34 @@ p, li { white-space: pre-wrap; }
     <name>HdrCreationManager</name>
     <message>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation type="unfinished">Imaginea %1 este în format 8 bit (LDR) în timp ce precedentele nu sunt.</translation>
+        <translation type="obsolete">Imaginea %1 este în format 8 bit (LDR) în timp ce precedentele nu sunt.</translation>
     </message>
     <message>
         <source>The image %1 has an invalid size.</source>
-        <translation type="unfinished">Imaginea %1 are o dimensiune invalidă.</translation>
+        <translation type="obsolete">Imaginea %1 are o dimensiune invalidă.</translation>
     </message>
     <message>
         <source>The image %1 is an 16 bit format while the previous ones are not.</source>
-        <translation type="unfinished">Imaginea %1 este în format 16 bit în timp ce precedentele nu sunt.</translation>
+        <translation type="obsolete">Imaginea %1 este în format 16 bit în timp ce precedentele nu sunt.</translation>
+    </message>
+    <message>
+        <source>The images have different size.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>HdrInputLoader</name>
     <message>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="unfinished">EROARE: Fișierul&lt;br&gt;%1 nu este un tiff 8 bit sau 16 bit.</translation>
+        <translation type="obsolete">EROARE: Fișierul&lt;br&gt;%1 nu este un tiff 8 bit sau 16 bit.</translation>
     </message>
     <message>
         <source>ERROR: %1</source>
-        <translation type="unfinished">EROARE: %1</translation>
+        <translation type="obsolete">EROARE: %1</translation>
     </message>
     <message>
         <source>ERROR: Failed Loading file: %1</source>
-        <translation type="unfinished">EROARE: Eșuat în a încărca fișierul: %1</translation>
-    </message>
-    <message>
-        <source>ERROR loading %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">EROARE: Eșuat în a încărca fișierul: %1</translation>
     </message>
 </context>
 <context>
@@ -1405,7 +1493,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Anti-ghosting (beta!)</source>
-        <translation type="unfinished">Anti-reflexii (beta!)</translation>
+        <translation type="obsolete">Anti-reflexii (beta!)</translation>
     </message>
     <message>
         <source>Gamma</source>
@@ -1417,7 +1505,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Calibration</source>
-        <translation type="unfinished">Calibrare</translation>
+        <translation type="obsolete">Calibrare</translation>
     </message>
     <message>
         <source>Amount of iterations:</source>
@@ -1617,15 +1705,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load a camera response curve file</source>
-        <translation type="unfinished">Încarcă curba de răspuns a camerei</translation>
+        <translation type="obsolete">Încarcă curba de răspuns a camerei</translation>
     </message>
     <message>
         <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="unfinished">Curbă de răspuns a camerei (*.m);;Toate fișierele (*)</translation>
+        <translation type="obsolete">Curbă de răspuns a camerei (*.m);;Toate fișierele (*)</translation>
     </message>
     <message>
         <source>Save a camera response curve file</source>
-        <translation type="unfinished">Salvează fișierul curbă de răspuns a camerei</translation>
+        <translation type="obsolete">Salvează fișierul curbă de răspuns a camerei</translation>
     </message>
     <message>
         <source>Weights: </source>
@@ -1685,18 +1773,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Custom config %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>From File: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3260,26 +3345,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error Opening RAW File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error Unpacking RAW File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error Processing RAW File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Memory Error in processing RAW File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error Creating PFS Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

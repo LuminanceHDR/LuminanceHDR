@@ -13,7 +13,7 @@ SET(FILES_H
     ${CMAKE_CURRENT_SOURCE_DIR}/LuminanceOptions.h)
 SET(FILES_HXX
     ${CMAKE_CURRENT_SOURCE_DIR}/archs.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/config.h
+    #${CMAKE_CURRENT_SOURCE_DIR}/config.h
     #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandler.h
     #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandlerCommon.h
     #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandlerLcms.h
