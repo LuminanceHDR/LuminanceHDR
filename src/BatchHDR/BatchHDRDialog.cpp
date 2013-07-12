@@ -376,6 +376,7 @@ void BatchHDRDialog::align()
         m_Ui->textEdit->append(tr("Aligning..."));
         if (m_Ui->aisRadioButton->isChecked())
         {
+            m_Ui->progressBar_2->show();
             m_hdrCreationManager->set_ais_crop_flag(m_Ui->autoCropCheckBox->isChecked());
             m_hdrCreationManager->align_with_ais();
         }
@@ -390,6 +391,7 @@ void BatchHDRDialog::create_hdr(int)
 {
     qDebug() << "BatchHDRDialog::create_hdr()";
 
+    m_Ui->progressBar_2->hide();
     m_Ui->textEdit->append(tr("Creating HDR..."));
     int idx = m_Ui->profileComboBox->currentIndex();
     if (idx <= 5) {
