@@ -325,7 +325,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qui puoi attivare l&apos;algoritmo di auto antighosting, settare il valore di soglia e ricalcolare  le patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qui puoi attivare l&apos;algoritmo di auto antighosting, settare il valore di soglia e ricalcolare  le patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>O. Gallo and others</source>
@@ -354,6 +354,14 @@ Continuare?</translation>
     <message>
         <source>Input/Output</source>
         <translation>Input/Output</translation>
+    </message>
+    <message>
+        <source>Loading files...</source>
+        <translation>Caricando i files...</translation>
+    </message>
+    <message>
+        <source>Doing auto anti ghosting...</source>
+        <translation>Eseguendo l&apos;auto anti ghosting...</translation>
     </message>
 </context>
 <context>

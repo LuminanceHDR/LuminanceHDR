@@ -278,169 +278,174 @@ See documentation for more information.</source>
         <translation type="unfinished">进度</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="345"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="352"/>
         <source>Anti ghosting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="351"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="365"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="431"/>
         <source>O. Gallo and others</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="372"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="451"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="375"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="454"/>
         <source>Auto anti ghosting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="386"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="360"/>
         <source>Artifact-free High Dynamic Range Imaging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="398"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="372"/>
         <source>Threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="408"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="436"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="382"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="410"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="461"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="466"/>
         <source>Input/Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="483"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="488"/>
         <source>Folder where created HDRs are saved</source>
         <translation type="unfinished">存储HDRs文件夹</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="486"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="500"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="491"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="505"/>
         <source>Select...</source>
         <translation type="unfinished">选择...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="497"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="502"/>
         <source>Folder where bracketed pictures are located (in alphabetical order)</source>
         <translation type="unfinished">阶段曝光图片存储文件夹(按字母书序)</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="511"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="516"/>
         <source>Input folder:</source>
         <translation type="unfinished">输入文件夹:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="521"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="526"/>
         <source>Output folder:</source>
         <translation type="unfinished">输出文件夹:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="319"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="326"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;取消</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="329"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="336"/>
         <source>&amp;Start</source>
         <translation type="unfinished">&amp;开始</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="336"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="343"/>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;关闭</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="173"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="186"/>
         <source>Choose a source directory</source>
         <translation type="unfinished">选择源目录</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="202"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="215"/>
         <source>Choose a output directory</source>
         <translation type="unfinished">选择输出目录</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="235"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="254"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="260"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="248"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="267"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="273"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="254"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="260"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="267"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="273"/>
         <source>Total number of pictures must be a multiple of number of bracketed images.</source>
         <translation type="unfinished">图片总数必须是多个阶段曝光图片的数量.</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="235"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="248"/>
         <source>The chosen output directory contains HDR files. Those files might be overwritten. 
 
 Continue?</source>
         <translation type="unfinished">选择的输出目录包含HDR文件，这些文件可能会被覆盖。继续?</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="89"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="102"/>
         <source>Custom config %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="277"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="295"/>
         <source>Started processing...</source>
         <translation type="unfinished">开始处理...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="297"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="395"/>
         <source>Creating HDR...</source>
         <translation type="unfinished">生成 HDR...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="319"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="339"/>
         <source>Completed with errors</source>
         <translation type="unfinished">完成但有错误</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="321"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="315"/>
+        <source>Loading files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="341"/>
         <source>Completed without errors</source>
         <translation type="unfinished">完成且没有错误</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="332"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="352"/>
         <source>Error: missing EXIF data</source>
         <translation type="unfinished">错误：缺失EXIF数据</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="356"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="376"/>
         <source>Aligning...</source>
         <translation type="unfinished">对齐中...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="425"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="405"/>
+        <source>Doing auto anti ghosting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="450"/>
         <source>Written </source>
         <translation type="unfinished">写入完成</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="432"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="457"/>
         <source>Error: </source>
         <translation type="unfinished">错误: </translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="468"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="505"/>
         <source>Aborting...</source>
         <translation type="unfinished">终止中...</translation>
     </message>
@@ -857,82 +862,82 @@ Continue?</source>
         <translation type="unfinished">载入文件 %1失败</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="660"/>
+        <location filename="../src/MainCli/commandline.cpp" line="661"/>
         <source>-h --help               Display this help.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="661"/>
+        <location filename="../src/MainCli/commandline.cpp" line="662"/>
         <source>-v --verbose            Print more messages during execution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="662"/>
+        <location filename="../src/MainCli/commandline.cpp" line="663"/>
         <source>-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="663"/>
+        <location filename="../src/MainCli/commandline.cpp" line="664"/>
         <source>-d --savealigned prefix Save aligned images to files which names start with prefix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="664"/>
+        <location filename="../src/MainCli/commandline.cpp" line="665"/>
         <source>-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="665"/>
+        <location filename="../src/MainCli/commandline.cpp" line="666"/>
         <source>-c --config             HDR creation config. Possible values: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="668"/>
+        <location filename="../src/MainCli/commandline.cpp" line="669"/>
         <source>-l --load HDR_FILE      Load an HDR instead of creating a new one. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="669"/>
+        <location filename="../src/MainCli/commandline.cpp" line="670"/>
         <source>-s --save HDR_FILE      Save to a HDR file format. (default: don&apos;t save) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="670"/>
+        <location filename="../src/MainCli/commandline.cpp" line="671"/>
         <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="671"/>
+        <location filename="../src/MainCli/commandline.cpp" line="672"/>
         <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="672"/>
+        <location filename="../src/MainCli/commandline.cpp" line="673"/>
         <source>-t --tmo                Tone mapping operator. Legal values are: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="675"/>
+        <location filename="../src/MainCli/commandline.cpp" line="676"/>
         <source>-p --tmoptions          Tone mapping operator options. Legal values are: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="686"/>
+        <location filename="../src/MainCli/commandline.cpp" line="687"/>
         <source>-o --output LDR_FILE    File name you want to save your tone mapped LDR to.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="687"/>
+        <location filename="../src/MainCli/commandline.cpp" line="688"/>
         <source>-q --quality VALUE      Quality of the saved tone mapped file (0-100).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="688"/>
+        <location filename="../src/MainCli/commandline.cpp" line="689"/>
         <source>-b --autoag THRESHOLD   Enable auto antighosting with given threshold.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="689"/>
+        <location filename="../src/MainCli/commandline.cpp" line="690"/>
         <source>                        (No tonemapping is performed unless -o is specified).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -962,123 +967,123 @@ Continue?</source>
         <translation type="unfinished">正在(寄存器中)创建HDR.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="577"/>
+        <location filename="../src/MainCli/commandline.cpp" line="578"/>
         <source>Saving to file %1.</source>
         <translation type="unfinished">正在保存到文件%1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="582"/>
-        <location filename="../src/MainCli/commandline.cpp" line="634"/>
+        <location filename="../src/MainCli/commandline.cpp" line="583"/>
+        <location filename="../src/MainCli/commandline.cpp" line="635"/>
         <source>Image %1 saved successfully</source>
         <translation type="unfinished">图片 %1 成功保存</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="586"/>
+        <location filename="../src/MainCli/commandline.cpp" line="587"/>
         <source>Could not save %1</source>
         <translation type="unfinished">无法保存%1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="591"/>
+        <location filename="../src/MainCli/commandline.cpp" line="592"/>
         <source>NOT Saving HDR image to file. %1</source>
         <translation type="unfinished">未能保存HDR图片到文件%1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="601"/>
+        <location filename="../src/MainCli/commandline.cpp" line="602"/>
         <source>Tonemapping requested, saving to file %1.</source>
         <translation type="unfinished">已请求色调映射，正在保存到文件%1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="639"/>
+        <location filename="../src/MainCli/commandline.cpp" line="640"/>
         <source>ERROR: Cannot save to file: %1</source>
         <translation type="unfinished">出错:无法保存到文件: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="652"/>
+        <location filename="../src/MainCli/commandline.cpp" line="653"/>
         <source>Failed loading images</source>
         <translation type="unfinished">载入图片失败</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="658"/>
+        <location filename="../src/MainCli/commandline.cpp" line="659"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
         <translation type="unfinished">使用: %1 [选项]...[输入文件]...</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="659"/>
+        <location filename="../src/MainCli/commandline.cpp" line="660"/>
         <source>Commandline interface to %1.</source>
         <translation type="unfinished">命令行接口到%1.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="666"/>
+        <location filename="../src/MainCli/commandline.cpp" line="667"/>
         <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
         <translation type="unfinished">加权=三角化|高斯|plateau:响应曲线=来自文件|线性|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="667"/>
+        <location filename="../src/MainCli/commandline.cpp" line="668"/>
         <source>(Default is weight=triangular:response_curve=linear:model=debevec) </source>
         <translation type="unfinished">(Default is weight=triangular:response_curve=linear:model=debevec) </translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="673"/>
+        <location filename="../src/MainCli/commandline.cpp" line="674"/>
         <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</source>
         <translation type="unfinished">ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="674"/>
+        <location filename="../src/MainCli/commandline.cpp" line="675"/>
         <source>(Default is mantiuk06)</source>
         <translation type="unfinished">(默认值为mantiuk06)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="676"/>
+        <location filename="../src/MainCli/commandline.cpp" line="677"/>
         <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
         <translation type="unfinished">alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="677"/>
+        <location filename="../src/MainCli/commandline.cpp" line="678"/>
         <source>contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)</source>
         <translation type="unfinished">contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="678"/>
+        <location filename="../src/MainCli/commandline.cpp" line="679"/>
         <source>colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</source>
         <translation type="unfinished">colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="679"/>
+        <location filename="../src/MainCli/commandline.cpp" line="680"/>
         <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
         <translation type="unfinished">colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="680"/>
+        <location filename="../src/MainCli/commandline.cpp" line="681"/>
         <source>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</source>
         <translation type="unfinished">sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="681"/>
+        <location filename="../src/MainCli/commandline.cpp" line="682"/>
         <source>bias=VALUE (for drago)</source>
         <translation type="unfinished">bias=VALUE (for drago)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="682"/>
+        <location filename="../src/MainCli/commandline.cpp" line="683"/>
         <source>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</source>
         <translation type="unfinished">local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="683"/>
+        <location filename="../src/MainCli/commandline.cpp" line="684"/>
         <source>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</source>
         <translation type="unfinished">scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="684"/>
+        <location filename="../src/MainCli/commandline.cpp" line="685"/>
         <source>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</source>
         <translation type="unfinished">brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="685"/>
+        <location filename="../src/MainCli/commandline.cpp" line="686"/>
         <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
         <translation type="unfinished">默认值：对比度=0.3:均衡=false:饱和度=1.8, 同时参见 -o)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="690"/>
+        <location filename="../src/MainCli/commandline.cpp" line="691"/>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
         <translation type="unfinished">必须要么载入一个已经存在的HDR文件 (通过-l选项)要么指定输入文件来创建一个新的HDR文件.</translation>
@@ -1668,7 +1673,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">图像%1是16比特格式，而前面的不是.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="272"/>
+        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="265"/>
         <source>The images have different size.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1910,7 +1915,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="886"/>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1035"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1178"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1177"/>
         <source>Triangular</source>
         <translation type="unfinished">三角加权</translation>
     </message>
@@ -1922,7 +1927,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="788"/>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1124"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1188"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1187"/>
         <source>Linear</source>
         <translation type="unfinished">线性</translation>
     </message>
@@ -1934,7 +1939,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="837"/>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1338"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1202"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1201"/>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
     </message>
@@ -1944,7 +1949,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1119"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1190"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1189"/>
         <source>Gamma</source>
         <translation type="unfinished">Gamma</translation>
     </message>
@@ -2007,13 +2012,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1040"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1182"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1181"/>
         <source>Gaussian</source>
         <translation type="unfinished">高斯</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1045"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1180"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1179"/>
         <source>Plateau</source>
         <translation type="unfinished">平台</translation>
     </message>
@@ -2064,7 +2069,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1343"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1204"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1203"/>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
@@ -2098,12 +2103,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;取消</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="85"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="86"/>
         <source>Image Filename</source>
         <translation type="unfinished">图片文件名</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="85"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="86"/>
         <source>Exposure</source>
         <translation type="unfinished">曝光</translation>
     </message>
@@ -2164,7 +2169,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="625"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1224"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1223"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;要继续你需要手动设置曝光值.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; 仍然需要数值.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
@@ -2223,8 +2228,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="795"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="985"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1013"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="984"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1012"/>
         <source>&amp;Finish</source>
         <translation type="unfinished">&amp;完成</translation>
     </message>
@@ -2234,8 +2239,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">对齐中...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="915"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="916"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="917"/>
         <source>Processing...</source>
         <translation type="unfinished">处理中...</translation>
     </message>
@@ -2252,37 +2257,37 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">保存相机响应曲线文件</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1161"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1160"/>
         <source>Weights: </source>
         <translation type="unfinished">权重: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1162"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1161"/>
         <source> - Response curve: </source>
         <translation type="unfinished"> -响应曲线: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1163"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1162"/>
         <source> - Model: </source>
         <translation type="unfinished"> -模型: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1192"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1191"/>
         <source>Logarithmic</source>
         <translation type="unfinished">对数</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1194"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1193"/>
         <source>From Calibration</source>
         <translation type="unfinished">来自于校准</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1196"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1195"/>
         <source>From File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1222"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1221"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;已设定所有EV值.&lt;br&gt;现在点击下一步按钮.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>

@@ -335,10 +335,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>O. Gallo and others</source>
         <translation type="unfinished"></translation>
     </message>
@@ -364,6 +360,14 @@ Continue?</source>
     </message>
     <message>
         <source>Input/Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doing auto anti ghosting...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
