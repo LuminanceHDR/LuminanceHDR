@@ -27,8 +27,11 @@
 #define BATCH_HDR_IMPL_H
 
 #include <QDialog>
+#include <QFuture>
+#include <QFutureWatcher>
 
 #include "Common/LuminanceOptions.h"
+#include "Common/ProgressHelper.h"
 #include "HdrWizard/HdrCreationManager.h"
 
 // Forward declaration
@@ -47,6 +50,9 @@ private:
 public:
 	BatchHDRDialog(QWidget *parent = 0);
 	~BatchHDRDialog();
+
+signals:
+    void setValue(int);
 
 protected slots:
 	void num_bracketed_changed(int);
@@ -67,6 +73,8 @@ protected slots:
 	void try_to_continue();
     void updateThresholdSlider(int);
     void updateThresholdSpinBox(double);
+    void ais_failed(QProcess::ProcessError);
+    void createHdrFinished();
 
 protected:
 	LuminanceOptions m_luminance_options;
@@ -87,5 +95,9 @@ protected:
 	bool m_abort;
 	bool m_processing;
 	QVector<config_triple> m_customConfig;
+    QFutureWatcher<void> m_futureWatcher;
+    QFuture<pfs::Frame*> m_future;
+    ProgressHelper m_ph;
+    bool m_patches[agGridSize][agGridSize];
 };
 #endif

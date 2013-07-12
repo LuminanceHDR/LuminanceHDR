@@ -66,6 +66,8 @@ private:
     bool m_doAutoAntighosting;
     bool m_doManualAntighosting;
     int m_agGoodImageIndex;
+    bool m_processing;
+    ProgressHelper m_ph;
 
 public:
     HdrWizard(QWidget *parent,

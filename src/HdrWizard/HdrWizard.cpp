@@ -76,6 +76,7 @@ HdrWizard::HdrWizard(QWidget *p,
 //    , m_inputExpoTimes(inputExpoTimes)
     , m_doAutoAntighosting(false)
     , m_doManualAntighosting(false)
+    , m_processing(false)
 {
     m_ui->setupUi(this);
     setAcceptDrops(true);
@@ -183,11 +184,10 @@ void HdrWizard::setupConnections()
 {
     //connect(&m_ioFutureWatcher, SIGNAL(finished()), this, SLOT(loadInputFilesDone()));
 
-    // connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT());
     connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(loadInputFilesDone()));
-    connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()), Qt::DirectConnection);
+    //connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()), Qt::DirectConnection);
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(reset()));
-    connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()), Qt::DirectConnection);
+    //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()), Qt::DirectConnection);
     connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
     connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
 
@@ -912,32 +912,29 @@ void HdrWizard::NextFinishButtonClicked() {
             break;
         }
     case 3:
+        m_processing = true;
         m_ui->settings_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
         m_ui->customize_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
         repaint();
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
         m_ui->NextFinishButton->setEnabled(false);
-        m_ui->cancelButton->setEnabled(false);
+        //m_ui->cancelButton->setEnabled(false);
 
         if (m_doAutoAntighosting) {
             int h0;
             m_hdrCreationManager->getAgData(m_patches, h0);
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                        m_hdrCreationManager.data(),
-                                                       m_patches, h0, false)); // false means auto anti ghosting
+                                                       m_patches, h0, false, &m_ph)); // false means auto anti ghosting
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
-            connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
-            connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
             m_ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);
         }
         else if (m_doManualAntighosting) {
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                        m_hdrCreationManager.data(),
-                                                       m_patches, m_agGoodImageIndex, true)); // true means manual anti ghosting
+                                                       m_patches, m_agGoodImageIndex, true, &m_ph)); // true means manual anti ghosting
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
-            connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int, int)), m_ui->progressBar, SLOT(setRange(int,int)));
-            connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)));
             m_ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);
         }
@@ -970,10 +967,12 @@ void HdrWizard::createHdrFinished()
 void HdrWizard::autoAntighostingFinished()
 {
     m_pfsFrameHDR = m_future.result();
-
     m_ui->progressBar->hide();
     QApplication::restoreOverrideCursor();
-    accept();
+    if (m_pfsFrameHDR == NULL)
+        QDialog::reject();
+    else
+        accept();
 }
 
 void HdrWizard::currentPageChangedInto(int newindex)
@@ -1280,7 +1279,13 @@ void HdrWizard::alignSelectionClicked()
 
 void HdrWizard::reject() {
     QApplication::restoreOverrideCursor();
-    QDialog::reject();
+    if (m_processing) {
+        m_ph.qtCancel();
+    }
+    else {
+        m_hdrCreationManager->reset();
+        QDialog::reject();
+    }
 }
 
 void HdrWizard::keyPressEvent(QKeyEvent *event) {

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>571</width>
-    <height>583</height>
+    <height>672</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,7 +85,7 @@
    <item row="2" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1">
      <item>
-      <widget class="QGroupBox" name="groupBox_3">
+      <widget class="QGroupBox" name="groupBoxOutput">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
          <horstretch>0</horstretch>
@@ -204,7 +204,7 @@ See documentation for more information.</string>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="groupBoxAlignment">
          <property name="title">
           <string>Alignment</string>
          </property>
@@ -286,6 +286,13 @@ See documentation for more information.</string>
        </widget>
       </item>
       <item>
+       <widget class="QProgressBar" name="progressBar_2">
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QProgressBar" name="progressBar">
         <property name="value">
          <number>0</number>
@@ -340,7 +347,7 @@ See documentation for more information.</string>
     </layout>
    </item>
    <item row="3" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox_4">
+    <widget class="QGroupBox" name="groupBoxAg">
      <property name="title">
       <string>Anti ghosting</string>
      </property>
@@ -456,7 +463,7 @@ See documentation for more information.</string>
     </widget>
    </item>
    <item row="4" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox_5">
+    <widget class="QGroupBox" name="groupBoxIO">
      <property name="title">
       <string>Input/Output</string>
      </property>

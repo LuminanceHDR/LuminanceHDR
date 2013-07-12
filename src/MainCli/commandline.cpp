@@ -559,10 +559,11 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
             dummyOffset.append(qMakePair(0,0));
             ++it;
         }
+        ProgressHelper ph;
         bool patches[agGridSize][agGridSize];
         float patchesPercent;
         int h0 = hdrCreationManager->computePatches(threshold, patches, patchesPercent, dummyOffset);
-        HDR.reset( hdrCreationManager->doAntiGhosting(patches, h0, false) ); // false meand auto anti ghosting
+        HDR.reset( hdrCreationManager->doAntiGhosting(patches, h0, false, &ph) ); // false means auto anti ghosting
     }
     else {
         HDR.reset( hdrCreationManager->createHdr(false,1) );

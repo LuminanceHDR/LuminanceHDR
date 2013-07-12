@@ -31,8 +31,10 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QSqlError>
+#include <QtConcurrentRun>
 
 #include <boost/scoped_ptr.hpp>
+#include <boost/bind.hpp>
 
 #include <Libpfs/frame.h>
 
@@ -57,6 +59,7 @@ QDialog(p),
     m_Ui->setupUi(this);
 
     m_Ui->closeButton->hide();
+    m_Ui->progressBar_2->hide();
 
     m_hdrCreationManager = new HdrCreationManager;
     m_IO_Worker = new IOWorker;
@@ -74,7 +77,17 @@ QDialog(p),
     connect(m_hdrCreationManager, SIGNAL(finishedAligning(int)), this, SLOT(create_hdr(int)));
     connect(m_hdrCreationManager, SIGNAL(errorWhileLoading(QString)), this, SLOT(error_while_loading(QString)));
     connect(m_hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
+    connect(m_hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
     connect(m_hdrCreationManager, SIGNAL(processed()), this, SLOT(processed()));
+
+    connect(m_hdrCreationManager, SIGNAL(progressStarted()), m_Ui->progressBar_2, SLOT(show()));
+    connect(m_hdrCreationManager, SIGNAL(progressFinished()), m_Ui->progressBar_2, SLOT(reset()));
+    connect(m_hdrCreationManager, SIGNAL(progressFinished()), m_Ui->progressBar_2, SLOT(hide()));
+    connect(m_hdrCreationManager, SIGNAL(progressRangeChanged(int,int)), m_Ui->progressBar_2, SLOT(setRange(int,int)));
+    connect(m_hdrCreationManager, SIGNAL(progressValueChanged(int)), m_Ui->progressBar_2, SLOT(setValue(int)));
+    connect(this, SIGNAL(setValue(int)), m_Ui->progressBar_2, SLOT(setValue(int)));
+
+    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
 
     m_tempDir = m_luminance_options.getTempDir();
     m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput("");
@@ -152,9 +165,9 @@ BatchHDRDialog::~BatchHDRDialog()
         thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
         QFile::remove(thumb_name);
     }
-    // DAVIDE _ HDR WIZARD
-    // m_hdrCreationManager->reset();
 */
+    // DAVIDE _ HDR WIZARD
+    m_hdrCreationManager->reset();
     delete m_hdrCreationManager;
     delete m_IO_Worker;
 }
@@ -264,13 +277,18 @@ void BatchHDRDialog::on_startButton_clicked()
     if (doStart) {
         m_Ui->horizontalSlider->setEnabled(false);
         m_Ui->spinBox->setEnabled(false);
+/*
         m_Ui->profileComboBox->setEnabled(false);
         m_Ui->formatComboBox->setEnabled(false);
         m_Ui->selectInputFolder->setEnabled(false);
         m_Ui->inputLineEdit->setEnabled(false);
         m_Ui->selectOutputFolder->setEnabled(false);
         m_Ui->outputLineEdit->setEnabled(false);
-        m_Ui->groupBox->setEnabled(false);
+*/
+        m_Ui->groupBoxOutput->setEnabled(false);
+        m_Ui->groupBoxAlignment->setEnabled(false);
+        m_Ui->groupBoxAg->setEnabled(false);
+        m_Ui->groupBoxIO->setEnabled(false);
         m_Ui->startButton->setEnabled(false);
         m_total = m_bracketed.count() / m_Ui->spinBox->value();
         m_Ui->progressBar->setMaximum(m_total);
@@ -289,12 +307,12 @@ void BatchHDRDialog::batch_hdr()
         qDebug() << "Aborted";
         QApplication::restoreOverrideCursor();
         // DAVIDE _ HDR WIZARD
-        // m_hdrCreationManager->reset();
+        //m_hdrCreationManager->reset();
         this->reject();
     }
     if (!m_bracketed.isEmpty())
     {
-        m_Ui->textEdit->append(tr("Creating HDR..."));
+        m_Ui->textEdit->append(tr("Loading files..."));
         m_numProcessed++;
         QStringList toProcess;
         for (int i = 0; i < m_Ui->spinBox->value(); ++i)
@@ -303,9 +321,11 @@ void BatchHDRDialog::batch_hdr()
         }
         qDebug() << "BatchHDRDialog::batch_hdr() Files to process: " << toProcess;
         // DAVIDE _ HDR CREATION
-        // m_hdrCreationManager->setFileList(toProcess);
-        // m_hdrCreationManager->loadInputFiles();
-        m_hdrCreationManager->loadFiles(toProcess);
+        QtConcurrent::run(
+                boost::bind(&HdrCreationManager::loadFiles,
+                            m_hdrCreationManager,
+                            toProcess)
+                );
     }   
     else
     {
@@ -345,9 +365,9 @@ void BatchHDRDialog::align()
             thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
             QFile::remove(thumb_name);
         }
-        // DAVIDE _ HDR WIZARD
-        // m_hdrCreationManager->reset();
 */
+        // DAVIDE _ HDR WIZARD
+        m_hdrCreationManager->reset();
         batch_hdr();
         return;
     }
@@ -369,8 +389,8 @@ void BatchHDRDialog::align()
 void BatchHDRDialog::create_hdr(int)
 {
     qDebug() << "BatchHDRDialog::create_hdr()";
-    QString suffix = m_Ui->formatComboBox->currentText();
 
+    m_Ui->textEdit->append(tr("Creating HDR..."));
     int idx = m_Ui->profileComboBox->currentIndex();
     if (idx <= 5) {
         m_hdrCreationManager->chosen_config = predef_confs[idx];
@@ -379,46 +399,49 @@ void BatchHDRDialog::create_hdr(int)
         m_hdrCreationManager->chosen_config = m_customConfig[idx - 6];
     }
 
-    boost::scoped_ptr<pfs::Frame> resultHDR;
-
     if (m_Ui->autoAG_checkBox->isChecked()) {
+        m_Ui->textEdit->append(tr("Doing auto anti ghosting..."));
         QList<QPair<int, int> > HV_offsets;
         for (int i = 0; i < m_Ui->spinBox->value(); i++ ) {
             HV_offsets.append(qMakePair(0,0));
         
         }
         float patchesPercent;
-        bool patches[agGridSize][agGridSize];
-        int h0 = m_hdrCreationManager->computePatches(m_Ui->threshold_doubleSpinBox->value(), patches, patchesPercent, HV_offsets);
-        boost::scoped_ptr<pfs::Frame> tmp(m_hdrCreationManager->doAntiGhosting(patches, h0, false));
-        resultHDR.swap(tmp);
+        int h0 = m_hdrCreationManager->computePatches(m_Ui->threshold_doubleSpinBox->value(), m_patches, patchesPercent, HV_offsets);
+        m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
+                                                   m_hdrCreationManager,
+                                                   m_patches, h0, false, &m_ph)); // false means auto anti ghosting
+
+        m_futureWatcher.setFuture(m_future);
         
     }
     else {
-        boost::scoped_ptr<pfs::Frame> tmp(m_hdrCreationManager->createHdr(false, 1));
-        resultHDR.swap(tmp);
+        m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr, 
+                                                   m_hdrCreationManager,
+                                                   false, 
+                                                   1));
+
+        m_futureWatcher.setFuture(m_future);
     }
-    
+}
+
+void BatchHDRDialog::createHdrFinished()
+{
+    boost::scoped_ptr<pfs::Frame> resultHDR(m_future.result());
+    if (resultHDR.get() == NULL) {
+        qDebug() << "Aborted";
+        QApplication::restoreOverrideCursor();
+        this->reject();
+        return;
+    }
+    QString suffix = m_Ui->formatComboBox->currentText();
     int paddingLength = ceil(log10(m_total + 1.0f));
     QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
     m_IO_Worker->write_hdr_frame(resultHDR.get(), outName);
     resultHDR.reset();
     
-/*
-    QStringList  fnames = m_hdrCreationManager->getFileList();
-    int n = fnames.size();
-
-    for (int i = 0; i < n; i++) {
-        QString fname = m_hdrCreationManager->getFileList().at(i);
-        QFileInfo qfi(fname);
-        QString thumb_name = QString(m_tempDir + "/"+  qfi.completeBaseName() + ".thumb.jpg");
-        QFile::remove(thumb_name);
-        thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
-        QFile::remove(thumb_name);
-    }
     // DAVIDE _ HDR WIZARD
-    // m_hdrCreationManager->reset();
-*/
+    m_hdrCreationManager->reset();
     int progressValue = m_Ui->progressBar->value() + 1;
     m_Ui->progressBar->setValue(progressValue);
     OsIntegration::getInstance().setProgress(progressValue, m_Ui->progressBar->maximum() - m_Ui->progressBar->minimum());
@@ -452,7 +475,17 @@ void BatchHDRDialog::error_while_loading(QString message)
 void BatchHDRDialog::writeAisData(QByteArray data)
 {
     qDebug() << data;
+    if (data.contains("[1A"))
+        data.replace("[1A", "");
+    if (data.contains("[2A"))
+        data.replace("[2A", "");
+    if (data.contains(QChar(0x01B).toAscii()))
+        data.replace(QChar(0x01B).toAscii(), "");
     m_Ui->textEdit->append(data);
+    if (data.contains(": remapping")) {
+        data.replace(0,data.size() - 6, " ");
+        emit setValue(QString(data.data()).toInt());
+    }
 }
 
 void BatchHDRDialog::check_start_button()
@@ -465,6 +498,8 @@ void BatchHDRDialog::on_cancelButton_clicked()
 {
     if (m_processing) {
         m_abort = true;
+        m_ph.qtCancel();
+        m_hdrCreationManager->reset();
         m_Ui->cancelButton->setText(tr("Aborting..."));
         m_Ui->cancelButton->setEnabled(false);
     }
@@ -491,10 +526,16 @@ void BatchHDRDialog::try_to_continue()
         if (m_loading_error) {
             m_loading_error = false;
             // DAVIDE _ HDR WIZARD
-            // m_hdrCreationManager->reset();
+            m_hdrCreationManager->reset();
             batch_hdr(); // try to continue
         }
     }
+}
+void BatchHDRDialog::ais_failed(QProcess::ProcessError error)
+{
+    qDebug() << "Aborted";
+    QApplication::restoreOverrideCursor();
+    this->reject();
 }
 
 void BatchHDRDialog::updateThresholdSlider(int newValue)

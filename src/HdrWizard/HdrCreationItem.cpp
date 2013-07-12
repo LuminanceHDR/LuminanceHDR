@@ -38,3 +38,9 @@ HdrCreationItem::HdrCreationItem(const QString &filename)
 {
      // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
 }
+
+HdrCreationItem::~HdrCreationItem()
+{
+    // qDebug() << QString("Destroying HdrCreationItem for %1").arg(m_filename);
+}
+

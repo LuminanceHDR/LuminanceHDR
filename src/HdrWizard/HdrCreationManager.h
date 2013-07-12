@@ -39,6 +39,7 @@
 #include <HdrCreation/fusionoperator.h>
 
 #include "Common/LuminanceOptions.h"
+#include "Common/ProgressHelper.h"
 #include "arch/math.h"
 #include "HdrCreation/createhdr.h"
 #include "HdrCreation/createhdr_common.h"
@@ -121,10 +122,11 @@ public:
     void saveImages(const QString& prefix);
 	//void doAntiGhosting(int);
     int computePatches(float threshold, bool patches[][agGridSize], float &percent, QList<QPair<int, int> > HV_offset);
-	pfs::Frame* doAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg);
+	pfs::Frame* doAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg, ProgressHelper *ph);
     void getAgData(bool patches[][agGridSize], int &h0);
     void setPatches(bool patches[][agGridSize]);
 
+    void reset();
 public slots:
     void removeTempFiles();
 
