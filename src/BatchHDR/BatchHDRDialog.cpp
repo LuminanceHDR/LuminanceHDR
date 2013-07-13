@@ -85,6 +85,7 @@ QDialog(p),
     connect(m_hdrCreationManager, SIGNAL(progressFinished()), m_Ui->progressBar_2, SLOT(hide()));
     connect(m_hdrCreationManager, SIGNAL(progressRangeChanged(int,int)), m_Ui->progressBar_2, SLOT(setRange(int,int)));
     connect(m_hdrCreationManager, SIGNAL(progressValueChanged(int)), m_Ui->progressBar_2, SLOT(setValue(int)));
+    connect(m_hdrCreationManager, SIGNAL(loadFilesAborted()), this, SLOT(loadFilesAborted()));
     connect(this, SIGNAL(setValue(int)), m_Ui->progressBar_2, SLOT(setValue(int)));
 
     connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
@@ -151,21 +152,6 @@ QDialog(p),
 BatchHDRDialog::~BatchHDRDialog()
 {
     qDebug() << "BatchHDRDialog::~BatchHDRDialog()";
-/*
-    QStringList  fnames = m_hdrCreationManager->getFileList();
-    int n = fnames.size();
-
-    for (int i = 0; i < n; i++) {
-        QString fname = m_hdrCreationManager->getFileList().at(i);
-        QFileInfo qfi(fname);
-
-        QString thumb_name = QString(m_tempDir + "/"+  qfi.completeBaseName() + ".thumb.jpg");
-        QFile::remove(thumb_name);
-
-        thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
-        QFile::remove(thumb_name);
-    }
-*/
     // DAVIDE _ HDR WIZARD
     m_hdrCreationManager->reset();
     delete m_hdrCreationManager;
@@ -509,6 +495,13 @@ void BatchHDRDialog::try_to_continue()
     }
 }
 void BatchHDRDialog::ais_failed(QProcess::ProcessError error)
+{
+    qDebug() << "Aborted";
+    QApplication::restoreOverrideCursor();
+    this->reject();
+}
+
+void BatchHDRDialog::loadFilesAborted()
 {
     qDebug() << "Aborted";
     QApplication::restoreOverrideCursor();

@@ -61,7 +61,6 @@ protected slots:
 	void add_output_directory(QString dir = QString());
 	void on_startButton_clicked();
 	void batch_hdr();
-	//void align(QStringList);
 	void align();
 	void create_hdr(int);
 	void error_while_loading(QString);
@@ -75,6 +74,7 @@ protected slots:
     void updateThresholdSpinBox(double);
     void ais_failed(QProcess::ProcessError);
     void createHdrFinished();
+    void loadFilesAborted();
 
 protected:
 	LuminanceOptions m_luminance_options;

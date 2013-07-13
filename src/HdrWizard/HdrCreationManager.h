@@ -153,6 +153,7 @@ signals:
     void aisDataReady(const QByteArray& data);
 	void processed();
 	void imagesSaved();
+    void loadFilesAborted();
 
 private:
     bool framesHaveSameSize();    

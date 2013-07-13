@@ -134,6 +134,9 @@ struct LoadFile {
             Channel* blue;
             currentItem.frame()->getXYZChannels(red, green, blue);
 
+            if (red != NULL || green != NULL || blue != NULL)
+                throw std::runtime_error("Null frame");
+
             utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
                              qimageData, ConvertToQRgb());
 
@@ -1482,14 +1485,21 @@ void HdrCreationManager::setPatches(bool patches[][agGridSize])
 
 void HdrCreationManager::reset()
 {
-    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
-    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
-    m_data.clear();
-    m_tmpdata.clear();
-    removeTempFiles();
     if (ais != NULL && ais->state() != QProcess::NotRunning) {
         ais->kill();
         delete ais;
         ais = NULL;
     }
+    if (m_futureWatcher.isRunning()) {
+        qDebug() << "Aborting loadFiles...";
+        m_futureWatcher.cancel();
+        m_futureWatcher.waitForFinished();
+        emit loadFilesAborted();
+    }
+    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
+    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
+    removeTempFiles();
+    m_data.clear();
+    m_tmpdata.clear();
 }
+
