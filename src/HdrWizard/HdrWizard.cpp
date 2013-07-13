@@ -190,6 +190,7 @@ void HdrWizard::setupConnections()
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()), Qt::DirectConnection);
     connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
     connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
+    connect(this, SIGNAL(setValue(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
 
     connect(m_ui->NextFinishButton, SIGNAL(clicked()), this, SLOT(NextFinishButtonClicked()));
     connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
@@ -521,6 +522,7 @@ void HdrWizard::loadInputFiles(const QStringList& files)
         connect(&progressDialog, SIGNAL(canceled()), m_hdrCreationManager.data(), SIGNAL(progressCancel()));
 */
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+        m_ui->progressBar->show();
 
         // m_hdrCreationManager->loadFiles(files);
         //connect(&m_futureWatcher, SIGNAL(started()), m_ui->progressBar, SLOT(show()));
@@ -545,6 +547,7 @@ void HdrWizard::loadInputFilesDone()
     m_futureWatcher.waitForFinished();    // should breeze over...
     qDebug() << "HdrWizard::loadInputFilesDone()";
 
+    m_ui->progressBar->hide();
     m_ui->loadImagesButton->setEnabled(true);
 
     QApplication::restoreOverrideCursor();
@@ -894,6 +897,8 @@ void HdrWizard::NextFinishButtonClicked() {
             m_ui->progressBar->setMinimum(0);
             m_ui->progressBar->show();
             if (m_ui->ais_radioButton->isChecked()) {
+                m_ui->progressBar->setRange(0,100);
+                m_ui->progressBar->setValue(0);
                 m_ui->textEdit->show();
                 m_hdrCreationManager->set_ais_crop_flag(m_ui->autoCropCheckBox->isChecked());
                 m_hdrCreationManager->align_with_ais();

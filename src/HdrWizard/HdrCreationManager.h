@@ -34,6 +34,7 @@
 #include <QProcess>
 #include <QPair>
 #include <QSharedPointer>
+#include <QFutureWatcher>
 
 #include <Libpfs/frame.h>
 #include <HdrCreation/fusionoperator.h>
@@ -55,6 +56,7 @@ class HdrCreationManager : public QObject
     Q_OBJECT
 private:
     HdrCreationItemContainer m_data;
+    HdrCreationItemContainer m_tmpdata;
 
     libhdr::fusion::FusionOperator m_fusionOperator;
     libhdr::fusion::WeightFunction m_weightFunction;
@@ -155,6 +157,7 @@ signals:
 private:
     bool framesHaveSameSize();    
 
+    QFutureWatcher<void> m_futureWatcher;
 	//QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti ghosting
     QImage* m_agMask;
     LuminanceOptions m_luminance_options;
@@ -171,5 +174,7 @@ private slots:
 	void ais_finished(int,QProcess::ExitStatus);
 	void ais_failed_slot(QProcess::ProcessError);
 	void readData();
+    void loadFilesDone();
+    void alignedFilesLoaded();
 };
 #endif

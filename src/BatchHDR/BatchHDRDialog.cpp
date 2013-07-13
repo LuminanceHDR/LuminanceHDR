@@ -342,7 +342,6 @@ void BatchHDRDialog::batch_hdr()
     }
 }
 
-//void BatchHDRDialog::align(QStringList filesLackingExif)
 void BatchHDRDialog::align()
 {
     QStringList filesLackingExif = m_hdrCreationManager->getFilesWithoutExif();
@@ -353,19 +352,6 @@ void BatchHDRDialog::align()
         foreach (QString fname, filesLackingExif)
             m_Ui->textEdit->append(fname);
         m_errors = true;
-/*
-        QStringList  fnames = m_hdrCreationManager->getFileList();
-        int n = fnames.size();
-
-        for (int i = 0; i < n; i++) {
-            QString fname = m_hdrCreationManager->getFileList().at(i);
-            QFileInfo qfi(fname);
-            QString thumb_name = QString(m_tempDir + "/"+  qfi.completeBaseName() + ".thumb.jpg");
-            QFile::remove(thumb_name);
-            thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
-            QFile::remove(thumb_name);
-        }
-*/
         // DAVIDE _ HDR WIZARD
         m_hdrCreationManager->reset();
         batch_hdr();
@@ -377,6 +363,8 @@ void BatchHDRDialog::align()
         if (m_Ui->aisRadioButton->isChecked())
         {
             m_Ui->progressBar_2->show();
+            m_Ui->progressBar_2->setRange(0,100);
+            m_Ui->progressBar_2->setValue(0);
             m_hdrCreationManager->set_ais_crop_flag(m_Ui->autoCropCheckBox->isChecked());
             m_hdrCreationManager->align_with_ais();
         }
@@ -458,19 +446,6 @@ void BatchHDRDialog::error_while_loading(QString message)
     m_errors = true;
     m_loading_error = true;
     m_processed++;
-/*
-    QStringList  fnames = m_hdrCreationManager->getFileList();
-    int n = fnames.size();
-
-    for (int i = 0; i < n; i++) {
-        QString fname = m_hdrCreationManager->getFileList().at(i);
-        QFileInfo qfi(fname);
-        QString thumb_name = QString(m_tempDir + "/"+  qfi.completeBaseName() + ".thumb.jpg");
-        QFile::remove(thumb_name);
-        thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
-        QFile::remove(thumb_name);
-    }
-*/
     try_to_continue();
 }
 

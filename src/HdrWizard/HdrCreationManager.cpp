@@ -33,7 +33,6 @@
 #include <QColor>
 #include <QtConcurrentMap>
 #include <QtConcurrentFilter>
-#include <QFutureWatcher>
 
 #include <algorithm>
 #include <cmath>
@@ -221,7 +220,6 @@ bool checkFileName(const HdrCreationItem& item, const QString& str) {
   
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
-    std::vector<HdrCreationItem> tempItems;
 #ifndef LHDR_CXX11_ENABLED
     for (const QString& i, filenames) {
 #else
@@ -233,33 +231,27 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
         // has the file been inserted already?
         if ( it == m_data.end() ) {
             qDebug() << QString("Schedule loading for %1").arg(i);
-            tempItems.push_back( HdrCreationItem(i) );
+            m_tmpdata.push_back( HdrCreationItem(i) );
         }
     }
 
     // parallel load of the data...
-    // Create a QFutureWatcher and connect signals and slots.
-    QFutureWatcher<void> futureWatcher;
-    connect(&futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
-    connect(&futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
-    connect(this, SIGNAL(progressCancel()), &futureWatcher, SLOT(cancel()), Qt::DirectConnection);
-    connect(&futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
-    connect(&futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
+    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()), Qt::DirectConnection);
 
     // Start the computation.
-    futureWatcher.setFuture( QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile()) );
-    futureWatcher.waitForFinished();
+    m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
+}
 
-    if (futureWatcher.isCanceled()) return;
-
+void HdrCreationManager::loadFilesDone()
+{ 
     qDebug() << "Data loaded ... move to internal structure!";
-    BOOST_FOREACH(const HdrCreationItem& i, tempItems) {
+    BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata) {
         if ( i.isValid() ) {
             qDebug() << QString("Insert data for %1").arg(i.filename());
             m_data.push_back(i);
         }
     }
-    qDebug() << QString("Read %1 out of %2").arg(tempItems.size()).arg(filenames.size());
+    //qDebug() << QString("Read %1 out of %2").arg(m_tmpdata.size()).arg(filenames.size());
 
     if (!framesHaveSameSize()) {
         emit errorWhileLoading(tr("The images have different size."));
@@ -309,6 +301,12 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     for (int i = 0; i < agGridSize; i++)
         for (int j = 0; j < agGridSize; j++)
             m_patches[i][j] = false;
+
+    connect(&m_futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
+    connect(&m_futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
+    connect(this, SIGNAL(progressCancel()), &m_futureWatcher, SLOT(cancel()), Qt::DirectConnection);
+    connect(&m_futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
+    connect(&m_futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
 }
 
 void HdrCreationManager::setConfig(const config_triple &c)
@@ -426,7 +424,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
     {
         // TODO: try-catch
         // DAVIDE _ HDR CREATION
-        std::vector<HdrCreationItem> tempItems;
+        m_tmpdata.clear();
         int i = 0;
         for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
               itEnd = m_data.end(); it != itEnd; ++it) {
@@ -436,41 +434,40 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
             else
                 filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
             
-            tempItems.push_back( HdrCreationItem(filename) );
+            m_tmpdata.push_back( HdrCreationItem(filename) );
             ExifOperations::copyExifData(inputFilename.toStdString(), filename.toStdString(), false, "", false, true); 
             i++;
         }
 
         // parallel load of the data...
-        // Create a QFutureWatcher and connect signals and slots.
-        QFutureWatcher<void> futureWatcher;
-
         // Start the computation.
-        futureWatcher.setFuture( QtConcurrent::map(tempItems.begin(), tempItems.end(), LoadFile()) );
-        futureWatcher.waitForFinished();
-
-        if (futureWatcher.isCanceled()) return;
-        
-        for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
-              itEnd = m_data.end(); it != itEnd; ++it) {
-            QFileInfo qfi(it->filename());
-            QString base = qfi.completeBaseName(); 
-            QString filename = base + ".tif";
-            QString tempdir = m_luminance_options.getTempDir();
-            QString completeFilename = tempdir + "/" + filename;
-            QFile::remove(QFile::encodeName(completeFilename).constData());
-            qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
-        }
-
-        m_data.swap(tempItems);
-        QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
-        emit finishedAligning(exitcode);
+        disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
+        connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()), Qt::DirectConnection);
+        m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
     }
     else
     {
         qDebug() << "align_image_stack exited with exit code " << exitcode;
         emit finishedAligning(exitcode);
     }
+}
+
+void HdrCreationManager::alignedFilesLoaded()
+{
+    for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
+          itEnd = m_data.end(); it != itEnd; ++it) {
+        QFileInfo qfi(it->filename());
+        QString base = qfi.completeBaseName(); 
+        QString filename = base + ".tif";
+        QString tempdir = m_luminance_options.getTempDir();
+        QString completeFilename = tempdir + "/" + filename;
+        QFile::remove(QFile::encodeName(completeFilename).constData());
+        qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
+    }
+
+    m_data.swap(m_tmpdata);
+    QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
+    emit finishedAligning(0);
 }
 
 void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
@@ -1485,7 +1482,10 @@ void HdrCreationManager::setPatches(bool patches[][agGridSize])
 
 void HdrCreationManager::reset()
 {
+    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
+    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
     m_data.clear();
+    m_tmpdata.clear();
     removeTempFiles();
     if (ais != NULL && ais->state() != QProcess::NotRunning) {
         ais->kill();
