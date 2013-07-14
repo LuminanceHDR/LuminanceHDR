@@ -30,6 +30,7 @@
 #include <Libpfs/frame.h>
 
 #include <cmath>
+#include "arch/math.h"
 
 // defines an element that contains all the informations for this particular
 // image to be used inside the HdrWizard

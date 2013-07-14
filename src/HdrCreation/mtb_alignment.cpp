@@ -22,14 +22,14 @@
  */
 
 #include "mtb_alignment.h"
-#include "arch/math.h"
 
+#include <boost/lexical_cast.hpp>
 #include <cmath>
+#include <iso646.h>
 #include <cassert>
 #include <vector>
 #include <cmath>
 #include <iostream>
-#include <boost/lexical_cast.hpp>
 
 #include <Libpfs/array2d.h>
 #include <Libpfs/frame.h>
@@ -40,6 +40,7 @@
 #include <Libpfs/manip/shift.h>
 
 #include <Libpfs/io/jpegwriter.h>
+#include "arch/math.h"
 
 using namespace std;
 using namespace pfs;
