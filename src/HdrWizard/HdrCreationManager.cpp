@@ -134,7 +134,7 @@ struct LoadFile {
             Channel* blue;
             currentItem.frame()->getXYZChannels(red, green, blue);
 
-            if (red != NULL || green != NULL || blue != NULL)
+            if (red == NULL || green == NULL || blue == NULL)
                 throw std::runtime_error("Null frame");
 
             utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
