@@ -25,16 +25,29 @@
 
 OsIntegration* OsIntegration::instance = 0;
 
-OsIntegration::OsIntegration() {
+OsIntegration::OsIntegration()
+    : QObject((QObject*)0),
+    m_progressMin(0), 
+    m_progressMax(100)
+{
 	#ifdef Q_WS_WIN
 		winProgressbar = new EcWin7();
 	#endif
 }
 
+OsIntegration::~OsIntegration()
+{ }
+
 OsIntegration& OsIntegration::getInstance() {
 	if (!instance)
 		instance = new OsIntegration();
 	return *instance;
+}
+
+OsIntegration* OsIntegration::getInstancePtr() {
+	if (!instance)
+		instance = new OsIntegration();
+	return instance;
 }
 
 void OsIntegration::init(QWidget* mainWindow) {
@@ -43,7 +56,8 @@ void OsIntegration::init(QWidget* mainWindow) {
 	#endif
 }
 
-void OsIntegration::setProgress(int value, int max) {
+void OsIntegration::setProgress(int value, int max)
+{
 	#ifdef Q_WS_WIN
 		if (value < 0)
 			winProgressbar->setProgressState(EcWin7::NoProgress);
@@ -52,6 +66,20 @@ void OsIntegration::setProgress(int value, int max) {
 			winProgressbar->setProgressValue(value, max);
 		}
 	#endif
+}
+
+void OsIntegration::setProgressValue(int value)
+{
+#ifdef Q_WS_WIN
+    winProgressbar->setProgressState(EcWin7::Normal);
+    winProgressbar->setProgressValue(value, m_progressMax - m_progressMin);
+#endif
+}
+
+void OsIntegration::setProgressRange(int min, int max)
+{
+    m_progressMin = min;
+    m_progressMax = max;
 }
 
 void OsIntegration::addRecentFile(const QString& filename)

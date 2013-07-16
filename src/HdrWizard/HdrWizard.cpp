@@ -54,6 +54,7 @@
 #include "arch/freebsd/math.h"
 #include "Common/config.h"
 #include "Common/global.h"
+#include "OsIntegration/osintegration.h"
 #include "HdrWizard/EditingTools.h"
 #include "HdrWizard/HdrCreationManager.h"
 
@@ -188,9 +189,15 @@ void HdrWizard::setupConnections()
     //connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()), Qt::DirectConnection);
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(reset()));
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()), Qt::DirectConnection);
-    connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), m_ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
-    connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
+    
+    connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(setRange(int,int)), Qt::DirectConnection);
+    connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), this, SIGNAL(setValue(int)), Qt::DirectConnection);
+    
     connect(this, SIGNAL(setValue(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
+    connect(this, SIGNAL(setRange(int,int)), m_ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
+
+    connect(this, SIGNAL(setValue(int)), OsIntegration::getInstancePtr(), SLOT(setProgressValue(int)), Qt::DirectConnection);
+    connect(this, SIGNAL(setRange(int,int)), OsIntegration::getInstancePtr(), SLOT(setProgressRange(int,int)), Qt::DirectConnection);
 
     connect(m_ui->NextFinishButton, SIGNAL(clicked()), this, SLOT(NextFinishButtonClicked()));
     connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
@@ -238,6 +245,7 @@ void HdrWizard::setupConnections()
     connect(m_hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
 
     connect(this, SIGNAL(rejected()), m_hdrCreationManager.data(), SLOT(removeTempFiles()));
+    //connect(this, SIGNAL(rejected()), OsIntegration::getInstancePtr(), SLOT(setProgressValue(-1)), Qt::DirectConnection);
 }
 
 void HdrWizard::loadImagesButtonClicked()
@@ -964,7 +972,7 @@ void HdrWizard::createHdr()
 void HdrWizard::createHdrFinished()
 {
     m_pfsFrameHDR = m_future.result();
-
+    OsIntegration::getInstance().setProgress(-1);
     QApplication::restoreOverrideCursor();
     accept();
 }
@@ -973,6 +981,7 @@ void HdrWizard::autoAntighostingFinished()
 {
     m_pfsFrameHDR = m_future.result();
     m_ui->progressBar->hide();
+    OsIntegration::getInstance().setProgress(-1);
     QApplication::restoreOverrideCursor();
     if (m_pfsFrameHDR == NULL)
         QDialog::reject();

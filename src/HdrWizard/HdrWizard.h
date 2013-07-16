@@ -98,6 +98,7 @@ private:
 
 signals:
     void setValue(int value);
+    void setRange(int min, int max);
 
 private slots:
     void loadInputFiles(const QStringList& files);

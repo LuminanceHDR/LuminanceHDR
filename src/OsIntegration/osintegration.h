@@ -24,32 +24,44 @@
 #ifndef OSINTEGRATION_H
 #define OSINTEGRATION_H
 
+#include <QObject>
 #include <QWidget>
 
 #ifdef Q_WS_WIN
 	#include "ecwin7.h"
 #endif
 
-class OsIntegration
+class OsIntegration : public QObject
 {
-
+    Q_OBJECT
+    
 public:
 	static OsIntegration& getInstance();
+    static OsIntegration* getInstancePtr();
 
 	void init(QWidget* mainWindow);
 	void setProgress(int value, int max = 100);
+
+    ~OsIntegration();
+
 #ifdef Q_WS_WIN
 	bool winEvent(MSG * message, long * result);
 #endif
     void addRecentFile(const QString& filename);
 
+public Q_SLOTS:	
+	void setProgressValue(int value);
+	void setProgressRange(int min, int max);
+
 private:
 	OsIntegration();
 	OsIntegration(const OsIntegration&);
 	OsIntegration& operator=(const OsIntegration&);
-	~OsIntegration();
+	
 
 	static OsIntegration* instance;
+	int m_progressMin;
+	int m_progressMax;
 #ifdef Q_WS_WIN
 	EcWin7* winProgressbar;
 #endif
