@@ -28,6 +28,6 @@
 #ifdef __FreeBSD__
 #define BASEDIR  "/usr/local/"
 #else
-#define BASEDIR "/usr/"
+#define BASEDIR @BASEDIR@
 #endif
 
