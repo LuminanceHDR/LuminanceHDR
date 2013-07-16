@@ -75,7 +75,7 @@ public:
 
     void loadFiles(const QStringList& filenames);
     void removeFile(int idx);
-    void clearFiles()                   { m_data.clear(); }
+    void clearFiles()                   { m_data.clear(); m_tmpdata.clear(); }
     size_t availableInputFiles() const  { return m_data.size(); }
 
     QStringList getFilesWithoutExif() const;

@@ -685,7 +685,7 @@ void HdrWizard::errorWhileLoading(const QString& error)
     m_ui->EVgroupBox->setEnabled(false);
     QMessageBox::critical(this,tr("Loading Error: "), error);
     // DAVIDE _ HDR CREATION
-    // m_hdrCreationManager->clearlists(true);
+    m_hdrCreationManager->clearFiles();
     QApplication::restoreOverrideCursor();
 
     m_ui->confirmloadlabel->setText("<center><h3><b>"+

@@ -248,6 +248,7 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
 void HdrCreationManager::loadFilesDone()
 { 
     qDebug() << "Data loaded ... move to internal structure!";
+    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
     BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata) {
         if ( i.isValid() ) {
             qDebug() << QString("Insert data for %1").arg(i.filename());
@@ -444,7 +445,6 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 
         // parallel load of the data...
         // Start the computation.
-        disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
         connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()), Qt::DirectConnection);
         m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
     }
@@ -457,6 +457,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 
 void HdrCreationManager::alignedFilesLoaded()
 {
+    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
     for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
           itEnd = m_data.end(); it != itEnd; ++it) {
         QFileInfo qfi(it->filename());
