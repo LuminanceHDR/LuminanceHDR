@@ -175,7 +175,7 @@ struct TiffReaderData
         typedef std::pair<uint16, uint16> RegistryKey;
         typedef std::map<RegistryKey, Callback> Registry;
 
-        static Registry sm_registry = map_list_of
+        /*static*/ Registry sm_registry = map_list_of
                 // (RegistryKey(PHOTOMETRIC_LOGLUV, 32), boost::bind(&TiffReaderData::readLogLuv, _1, _2, _3)) // <
                 (RegistryKey(PHOTOMETRIC_LOGLUV, 16),       boost::bind(&TiffReaderData::readLogLuv, _1, _2, _3))
                 (RegistryKey(PHOTOMETRIC_SEPARATED, 8),     boost::bind(&TiffReaderData::readCMYK<uint8_t>, _1, _2, _3))
