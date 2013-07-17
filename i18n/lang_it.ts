@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>Informazioni su &amp;Qt</translation>
+        <translation>&amp;Informazioni</translation>
     </message>
     <message>
         <source>A&amp;uthors</source>

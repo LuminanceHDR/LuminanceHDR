@@ -1152,7 +1152,7 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
 #endif
     const int width = R_orig->getCols();
     const int height = R_orig->getRows();
-    float u = 0.1f;
+    float u = 0.3f;
     float a = 0.8f;
     float b = 0.001f;
     float T = 0.3f;
@@ -1229,7 +1229,7 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
                 (*B)(i, j) = (*B_orig)(i, j) * gain[2];
             }
         }  
-        cout << it << " : " << err << endl;
+        qDebug() << it << " : " << err;
     }
     copy(R, R_orig);
     //copy(G, G_orig);
