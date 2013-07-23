@@ -19,10 +19,13 @@
  * ----------------------------------------------------------------------
  */
 
-//! @brief SSE for high performance vector operations (Vector EXtension - VEX)
+//! @brief SSE for high performance vector operations
 //! @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
 
-#include "vex.h"
+#include <Libpfs/utils/numeric.h>
+
+namespace pfs {
+namespace utils {
 
 #ifdef LUMINANCE_USE_SSE
 
@@ -111,4 +114,8 @@ v4sf _mm_pow_ps(v4sf x, v4sf y)
     return _mm_exp2_ps(_mm_log2_ps(x) * y);
 }
 
+
 #endif // LUMINANCE_USE_SSE
+
+}   // utils
+}   // pfs

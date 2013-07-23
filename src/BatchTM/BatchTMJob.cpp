@@ -34,8 +34,6 @@
 
 #include "Core/IOWorker.h"
 #include "Common/LuminanceOptions.h"
-#include "Fileformat/pfsout16bitspixmap.h"
-#include "Fileformat/pfsoutldrimage.h"
 
 #include <QFileInfo>
 #include <QByteArray>

@@ -28,7 +28,7 @@
 #include "Libpfs/colorspace/colorspace.h"
 #include <Libpfs/manip/shift.h>
 #include <Libpfs/manip/copy.h>
-#include <Libpfs/vex/minmax.h>
+#include <Libpfs/utils/minmax.h>
 #include <fftw3.h>
 
 #include "AutoAntighosting.h"
@@ -44,7 +44,7 @@ void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
     s = 0.0f;
     l = 0.0f;
 
-    vex::minmax(r, g, b, m, v);
+    pfs::utils::minmax(r, g, b, m, v);
 
     l = (m + v) / 2.0f;
     if (l <= 0.0f)
@@ -137,7 +137,7 @@ void rgb2hsv( float r, float g, float b, float &h, float &s, float &v )
 	//min = MIN( r, g, b );
 	//max = MAX( r, g, b );
 
-    vex::minmax(r, g, b, min, max);
+    pfs::utils::minmax(r, g, b, min, max);
 
 	v = max;				// v
 

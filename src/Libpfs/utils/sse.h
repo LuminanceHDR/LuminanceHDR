@@ -1,8 +1,8 @@
 /*
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ * Copyright (C) 2011 Davide Anastasia
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,29 +17,43 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
- *  Original Work
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- *  Improvements, bugfixing 
- * @author Franco Comida <fcomida@users.sourceforge.net>
- * 
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *
  */
 
-#ifndef FROMHDRPFSTOQIMAGE
-#define FROMHDRPFSTOQIMAGE
+//! @brief SSE for high performance vector operations
+//! @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
 
-#include <QImage>
+#ifndef PFS_UTILS_SSE_H
+#define PFS_UTILS_SSE_H
 
-// forward declaration
 namespace pfs {
-    class Frame;
-}
+namespace utils {
 
-//! \brief Build from a pfs::Frame a QImage of the same size
-//! \param[in] in_frame is a pointer to pfs::Frame*
-//! \return Pointer to QImage containing an 8 bit/channel representation of the input frame
-QImage* fromHDRPFStoQImage(pfs::Frame* in_frame);
+#ifdef __SSE__
 
+//#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
+//#include <ppc_intrinsics.h>
+#if __i386__ || __x86_64__
+// #define LUMINANCE_USE_SSE
+#include <mm_malloc.h>
+#include <xmmintrin.h>
+#include <mm_malloc.h>
+//#include <pmmintrin.h>
+//#include <tmmintrin.h>
+
+#else
+#error unsupported architecture
 #endif
+
+#endif // __SSE__
+
+#ifdef LUMINANCE_USE_SSE
+typedef __v4sf v4sf;
+v4sf _mm_log2_ps(v4sf);
+v4sf _mm_exp2_ps(v4sf);
+v4sf _mm_pow_ps(v4sf, v4sf);
+#endif
+
+}   // utils
+}   // pfs
+
+#endif // PFS_UTILS_SSE_H

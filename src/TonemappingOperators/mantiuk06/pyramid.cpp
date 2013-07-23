@@ -40,8 +40,8 @@
 #endif
 
 #include "Libpfs/array2d.h"
-#include "Libpfs/vex/sse.h"
-#include "Libpfs/vex/vex.h"
+#include "Libpfs/utils/sse.h"
+#include "Libpfs/utils/numeric.h"
 
 using namespace pfs;
 
@@ -119,11 +119,11 @@ void PyramidT::computeSumOfDivergence(pfs::Array2Df& sumOfdivG)
     if ( (numLevels() % 2) )
     {
         sumOfdivG.swap(tempSumOfdivG);
-        tempSumOfdivG.reset(0.0f);
+        tempSumOfdivG.fill(0.0f);
     }
     else
     {
-        tempSumOfdivG.reset(0.0f);
+        tempSumOfdivG.fill(0.0f);
     }
 
     if ( numLevels() != 0 )
@@ -229,8 +229,8 @@ struct ScalePyramidS
     
     void operator()(PyramidS& multiply)
     {
-        vex::vsmul(multiply.data(), multiplier_,
-                   multiply.data(), multiply.size());
+        pfs::utils::vsmul(multiply.data(), multiplier_,
+                          multiply.data(), multiply.size());
     }
 private:
     float multiplier_;

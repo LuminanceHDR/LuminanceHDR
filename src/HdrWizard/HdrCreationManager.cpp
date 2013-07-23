@@ -58,11 +58,8 @@
 #include <Libpfs/colorspace/rgbremapper.h>
 #include "Libpfs/colorspace/colorspace.h"
 
-#include "Fileformat/pfsouthdrimage.h"
-
 #include "TonemappingOperators/fattal02/pde.h"
 #include "Exif/ExifOperations.h"
-#include "HdrWizard/HdrInputLoader.h"
 #include "HdrCreation/mtb_alignment.h"
 #include "HdrCreationManager.h"
 #include "arch/math.h"

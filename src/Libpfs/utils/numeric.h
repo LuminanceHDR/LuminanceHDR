@@ -19,24 +19,20 @@
 * ----------------------------------------------------------------------
 */
 
-#ifndef VEX_VEX_H
-#define VEX_VEX_H
+#ifndef PFS_UTILS_NUMERIC_H
+#define PFS_UTILS_NUMERIC_H
 
 //! \brief This file contains a series of extensions for vector operations
-//! exploiting TBB to improve parallelism
-//! It will slowly replace the old vex header
-//! \note VEX stays for Vector EXtensions
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 #include <functional>
 #include <numeric>
 #include <cstddef>
 
-namespace vex
-{
-namespace numeric
-{
+namespace pfs {
+namespace utils {
 
+namespace numeric {
 //! \brief Extension of std::plus to compute A + s*B
 template <typename T>
 struct vadds
@@ -62,8 +58,7 @@ struct vsubs
 private:
     T s_;
 };
-
-} // vex::numeric
+}   // numeric
 
 //! \brief multiplies element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] * B[i]
@@ -105,8 +100,8 @@ void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size
 template <typename _Type>
 void vsmul(const _Type* I, float c, _Type* O, size_t size);
 
-} // vex
+}   // utils
+}   // pfs
 
-#include "vex.hxx"
-
-#endif // VEX_VEX_H
+#include <Libpfs/utils/numeric.hxx>
+#endif // PFS_UTILS_NUMERIC_H

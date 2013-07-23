@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include <Libpfs/vex/minmax.h>
+#include <Libpfs/utils/minmax.h>
 
-using namespace vex;
+using namespace pfs::utils;
 
 TEST(MinMax, Test1) {
 

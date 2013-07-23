@@ -19,16 +19,16 @@
 * ----------------------------------------------------------------------
 */
 
-#ifndef VEX_MINMAX_HXX
-#define VEX_MINMAX_HXX
+#ifndef PFS_UTILS_MINMAX_HXX
+#define PFS_UTILS_MINMAX_HXX
 
-#include "minmax.h"
+#include <Libpfs/utils/minmax.h>
 
 #include <algorithm>
 #include <numeric>
 
-namespace vex
-{
+namespace pfs {
+namespace utils {
 
 template<typename _Type>
 _Type minElement(const _Type* vector, size_t vectorSize)
@@ -76,6 +76,7 @@ void minmax(Type i1, Type i2, Type i3, Type& min, Type& max)
     }
 }
 
-} // namespace vex
+}   // utils
+}   // pfs
 
-#endif // VEX_MINMAX_HXX
+#endif // PFS_UTILS_MINMAX_HXX

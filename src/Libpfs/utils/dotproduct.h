@@ -19,39 +19,35 @@
 * ----------------------------------------------------------------------
 */
 
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+#ifndef PFS_UTILS_DOTPRODUCT_H
+#define PFS_UTILS_DOTPRODUCT_H
 
-#ifndef VEX_DOTPRODUCT_HXX
-#define VEX_DOTPRODUCT_HXX
+#include <cstddef>
 
-#include "dotproduct.h"
+//! \file dotproduct.h
+//! \brief Multithread function for the calculation of the dot product between
+//! vectors
+//! \author Davide Anastasia <davideanastasia@gmail.com>
+//! \date 2012.08.28
 
-namespace vex
-{
+namespace pfs {
+namespace utils {
 
+//! \brief Perform the dotProduct of the element of \c v1 and \c v2
+//! output = \sum_{i=0}^{n}{v1[i] * v2[i]}
+// v1 . v2
 template <typename _Type>
-_Type dotProduct(const _Type* v1, const _Type* v2, size_t N)
-{
-    double dotProd = _Type();
-#pragma omp parallel for reduction(+:dotProd)
-    for (int idx = 0; idx < static_cast<int>(N); idx++)
-    {
-        dotProd = dotProd + (v1[idx] * v2[idx]);
-    }
-    return static_cast<_Type>(dotProd);
-}
+_Type dotProduct(const _Type* v1, const _Type* v2, size_t N);
 
+//! \brief Perform the dotProduct element-wise of the vector \c v1
+//! output = \sum_{i=0}^{n}{v1[i] * v1[i]}
+//! \note this version is slightly more optimized of the binary version
+// v1 . v1
 template <typename _Type>
-_Type dotProduct(const _Type* v1, size_t N)
-{
-    double dotProd = _Type();
-#pragma omp parallel for reduction(+:dotProd)
-    for (int idx = 0; idx < static_cast<int>(N); idx++)
-    {
-        dotProd = dotProd + (v1[idx] * v1[idx]);
-    }
-    return static_cast<_Type>(dotProd);
-}
-}
+_Type dotProduct(const _Type* v1, size_t N);
 
-#endif // VEX_DOTPRODUCT_HXX
+}   // utils
+}   // pfs
+
+#include <Libpfs/utils/dotproduct.hxx>
+#endif // PFS_UTILS_DOTPRODUCT_H

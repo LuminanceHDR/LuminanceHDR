@@ -19,13 +19,13 @@
 * ----------------------------------------------------------------------
 */
 
-#ifndef VEX_MINMAX_H
-#define VEX_MINMAX_H
+#ifndef PFS_UTILS_MINMAX_H
+#define PFS_UTILS_MINMAX_H
 
 #include <cstddef>
 
-// NOTE: the name vex has to change in the future...
-namespace vex {
+namespace pfs {
+namespace utils {
 
 template <typename _Type>
 _Type minElement(const _Type* data, size_t size);
@@ -38,7 +38,8 @@ _Type maxElement(const _Type* data, size_t size);
 template <typename Type>
 void minmax(Type i1, Type i2, Type i3, Type& min, Type& max);
 
-}   // vex
+}   // utils
+}   // pfs
 
-#include "minmax.hxx"
-#endif // VEX_MINMAX_H
+#include <Libpfs/utils/minmax.hxx>
+#endif // PFS_UTILS_MINMAX_H

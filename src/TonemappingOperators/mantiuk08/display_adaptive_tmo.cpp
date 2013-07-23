@@ -52,7 +52,7 @@
 
 #include "Libpfs/progress.h"
 #include "Libpfs/array2d.h"
-#include "Libpfs/vex/sse.h"
+#include "Libpfs/utils/sse.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)

@@ -19,19 +19,19 @@
 * ----------------------------------------------------------------------
 */
 
-#ifndef VEX_VEX_HXX
-#define VEX_VEX_HXX
+#ifndef PFS_NUMERIC_HXX
+#define PFS_NUMERIC_HXX
 
-#include "vex.h"
+#include <Libpfs/utils/numeric.h>
 
 #include <algorithm>
 #include <numeric>
 #include <functional>
 
-namespace vex
-{
-namespace detail
-{
+namespace pfs {
+namespace utils {
+
+namespace detail {
 
 template<typename _Type, typename _Op>
 inline
@@ -44,7 +44,7 @@ void op(const _Type* A, const _Type* B, _Type* C, size_t size, const _Op& currOp
     }
 }
 
-}
+} // detail
 
 template <typename _Type>
 void vmul(const _Type* A, const _Type* B, _Type* C, size_t size)
@@ -93,6 +93,7 @@ void vsmul(const _Type* I, float c, _Type* O, size_t size)
     }
 }
 
-} // vex
+}   // utils
+}   // pfs
 
-#endif // VEX_VEX_HXX
+#endif // PFS_NUMERIC_HXX

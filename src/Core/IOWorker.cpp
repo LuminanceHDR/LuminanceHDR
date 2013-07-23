@@ -38,12 +38,12 @@
 
 #include "Core/IOWorker.h"
 #include "Libpfs/frame.h"
-#include "Fileformat/pfs_file_format.h"
 
 #include "Viewers/GenericViewer.h"
 #include "Common/LuminanceOptions.h"
 #include "Core/TonemappingOptions.h"
 #include "Exif/ExifOperations.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 #include <Libpfs/io/pfsreader.h>
 #include <Libpfs/io/rgbereader.h>

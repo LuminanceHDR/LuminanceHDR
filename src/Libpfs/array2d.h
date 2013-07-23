@@ -91,28 +91,24 @@ public:
     const Type& operator()( size_t index ) const;
 
     //! \brief Get number of columns or, in case of an image, width.
-    size_t getCols() const
-    { return m_cols; }
+    size_t getCols() const      { return m_cols; }
 
     //! \brief Get number of rows or, in case of an image, height.
-    size_t getRows() const
-    { return m_rows; }
+    size_t getRows() const      { return m_rows; }
 
-    size_t size() const
-    { return m_rows*m_cols; }
+    size_t size() const         { return m_rows*m_cols; }
 
     void resize(size_t width, size_t height);
 
     //! \brief Direct access to the raw data
-    Type*       data()
-    { return m_data.data(); }
-
+    Type*       data()          { return m_data.data(); }
     //! \brief Direct access to the raw data
-    const Type* data() const
-    { return m_data.data(); }
+    const Type* data() const    { return m_data.data(); }
 
-    //! \brief Reset the entire vector data to the value "value"
-    void reset(const Type& value = Type());
+    //! \brief fill the entire vector data to the value "value"
+    void fill(const Type& value);
+    //! \brief fill the entire vector data with the default value for \c Type
+    void reset();
 
     //! \brief Swap the content of the current instance with \a other
     void swap(self& other);
@@ -171,31 +167,6 @@ private:
 
 //! \brief typedef provided for backward compatibility with the old API
 typedef ::pfs::Array2D<float> Array2Df;
-
-//! \brief Set all elements of the array to a give value.
-//!
-//! \param array array to modify
-//! \param value all elements of the array will be set to this value
-template <typename Type>
-void setArray(Array2D<Type>& array, const Type& value);
-
-//! \brief Perform element-by-element multiplication: z = x * y.
-//! z must be the same as x or y.
-//!
-//! \param z array where the result is stored
-//! \param x first element of the multiplication
-//! \param y second element of the multiplication
-template <typename Type>
-void multiplyArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& y);
-
-//! \brief Perform element-by-element division: z = x / y.
-//! z must be the same as x or y.
-//!
-//! \param z array where the result is stored
-//! \param x first element of the division
-//! \param y second element of the division
-template <typename Type>
-void divideArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& y);
 
 } // namespace pfs
 

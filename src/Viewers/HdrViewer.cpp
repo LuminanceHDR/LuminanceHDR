@@ -43,7 +43,7 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/vex/sse.h"
+#include "Libpfs/utils/sse.h"
 #include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/colorspace/rgbremapper.h"
 

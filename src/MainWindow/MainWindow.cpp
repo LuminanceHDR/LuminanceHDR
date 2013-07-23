@@ -70,7 +70,6 @@
 #include "OsIntegration/osintegration.h"
 #include "BatchHDR/BatchHDRDialog.h"
 #include "BatchTM/BatchTMDialog.h"
-#include "Fileformat/pfs_file_format.h"
 
 #include "TransplantExif/TransplantExifDialog.h"
 #include "Viewers/HdrViewer.h"

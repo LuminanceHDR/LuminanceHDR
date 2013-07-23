@@ -35,7 +35,7 @@
 #include <cstdio>
 
 #include "arch/math.h"
-#include "Libpfs/vex/sse.h"
+#include "Libpfs/utils/sse.h"
 #include <Libpfs/exception.h>
 
 class DisplayFunction
