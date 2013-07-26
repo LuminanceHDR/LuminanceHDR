@@ -40,7 +40,7 @@ Frame* shift(const Frame& frame, int dx, int dy)
     {
         pfs::Channel *newCh = shiftedFrame->createChannel((*it)->getName());
 
-        shift(**it, dx, dy, *newCh);
+        shift(**it, -dx, -dy, *newCh);
     }
 
     pfs::copyTags( &frame, shiftedFrame );
