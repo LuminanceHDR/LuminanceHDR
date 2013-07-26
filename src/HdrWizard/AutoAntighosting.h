@@ -32,7 +32,7 @@ using namespace pfs;
 
 float max(const Array2Df *u);
 float min(const Array2Df *u);
-void solve_pde_dct(Array2Df *F, Array2Df *U);
+void solve_pde_dct(Array2Df &F, Array2Df &U);
 void clampToZero(Array2Df &R, Array2Df &G, Array2Df &B, float m);
 int findIndex(const float* data, int size);
 void hueSquaredMean(const HdrCreationItemContainer& data,
@@ -66,4 +66,4 @@ QImage* shiftQImage(const QImage *in, int dx, int dy);
 void shiftItem(HdrCreationItem& item, int dx, int dy);
 void colorbalance_rgb_f32(Array2Df& R, Array2Df& G, Array2Df& B, size_t size,
                                    size_t nb_min, size_t nb_max);
-void robustAWB(Array2Df* R, Array2Df* G, Array2Df* B);
+void robustAWB(Array2Df& R, Array2Df& G, Array2Df& B);

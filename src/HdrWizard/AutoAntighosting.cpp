@@ -323,23 +323,23 @@ void solve_pde_dft(Array2Df *F, Array2Df *U)
 }
 
 
-void solve_pde_dct(Array2Df *F, Array2Df *U)
+void solve_pde_dct(Array2Df &F, Array2Df &U)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    const int width = U->getCols();
-    const int height = U->getRows();
-    assert((int)F->getCols()==width && (int)F->getRows()==height);
+    const int width = U.getCols();
+    const int height = U.getRows();
+    assert((int)F.getCols()==width && (int)F.getRows()==height);
 
-    Array2Df *Ftr = new Array2Df(width, height);
+    Array2Df Ftr(width, height);
 
     fftwf_plan p;
     #pragma omp parallel for private(p) schedule(static)
     for ( int j = 0; j < height; j++ ) {
         #pragma omp critical (make_plan)
-        p = fftwf_plan_r2r_1d(width, F->data()+width*j, Ftr->data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
+        p = fftwf_plan_r2r_1d(width, F.data()+width*j, Ftr.data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
         fftwf_execute(p); 
     }
     
@@ -353,28 +353,27 @@ void solve_pde_dct(Array2Df *F, Array2Df *U)
         }
         float b = 2.0f*(cos(M_PI*i/width) - 2.0f); 
         c[0] /= b;
-        (*Ftr)(i, 0) /= b;
+        Ftr(i, 0) /= b;
         for (int j = 1; j < height - 1; j++ ) {
             float m = (b - c[j-1]);
             c[j] /= m;
-            (*Ftr)(i, j) = ((*Ftr)(i, j) - (*Ftr)(i, j-1))/m;   
+            Ftr(i, j) = (Ftr(i, j) - Ftr(i, j-1))/m;   
         }
-        (*Ftr)(i, height - 1) = ((*Ftr)(i, height - 1) - (*Ftr)(i, height - 2))/(b - c[height - 2]);
-        (*U)(i, height - 1) = (*Ftr)(i, height - 1);
+        Ftr(i, height - 1) = (Ftr(i, height - 1) - Ftr(i, height - 2))/(b - c[height - 2]);
+        U(i, height - 1) = Ftr(i, height - 1);
         for (int j = height - 2; j >= 0; j--) {
-            (*U)(i, j) = (*Ftr)(i, j) - c[j]*(*U)(i, j+1);
+            U(i, j) = Ftr(i, j) - c[j]*U(i, j+1);
         }
     }
   }
-    delete Ftr;
 
     #pragma omp parallel for private(p) schedule(static)
     for ( int j = 0; j < height; j++ ) {
         #pragma omp critical (make_plan)
-        p = fftwf_plan_r2r_1d(width, U->data()+width*j, U->data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
+        p = fftwf_plan_r2r_1d(width, U.data()+width*j, U.data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
         fftwf_execute(p); 
         for ( int i = 0; i < width; i++ ) {
-            (*U)(i, j) /= (2.0f*(width-1));
+            U(i, j) /= (2.0f*(width-1));
         }
     }
 
@@ -1144,14 +1143,14 @@ void colorbalance_rgb_f32(Array2Df& R, Array2Df& G, Array2Df& B, size_t size,
 
 /////////////////////////////////////////////////////////////////////////////
 
-void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
+void robustAWB(Array2Df& R_orig, Array2Df& G_orig, Array2Df& B_orig)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    const int width = R_orig->getCols();
-    const int height = R_orig->getRows();
+    const int width = R_orig.getCols();
+    const int height = R_orig.getRows();
     float u = 0.3f;
     float a = 0.8f;
     float b = 0.001f;
@@ -1159,38 +1158,33 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
     int iterMax = 1000;
     float gain[3] = {1.0f, 1.0f, 1.0f};
 
-    Array2Df* R = new Array2Df(width, height);
-    Array2Df* G = new Array2Df(width, height);
-    Array2Df* B = new Array2Df(width, height);
-    Array2Df* Y = new Array2Df(width, height);
-    Array2Df* U = new Array2Df(width, height);
-    Array2Df* V = new Array2Df(width, height);
-    Array2Df* F = new Array2Df(width, height);
+    Array2Df R(width, height);
+    Array2Df G(width, height);
+    Array2Df B(width, height);
+    Array2Df Y(width, height);
+    Array2Df U(width, height);
+    Array2Df V(width, height);
+    Array2Df F(width, height);
 
     vector<float> gray_r;
     vector<float> gray_b;
 
-    copy(R_orig, R);
-    copy(G_orig, G);
-    copy(B_orig, B);
+    copy(&R_orig, &R);
+    copy(&G_orig, &G);
+    copy(&B_orig, &B);
 
     for (int it = 0; it < iterMax; it++) {
-        transformRGB2Yuv(R, G, B, Y, U, V); 
-        #pragma omp parallel for
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                (*F)(i, j) = (abs((*U)(i, j)) + abs((*V)(i, j)))/(*Y)(i, j); 
-            }
-        }
+        transformRGB2Yuv(&R, &G, &B, &Y, &U, &V); 
+        #pragma omp parallel for 
+        for (int i = 0; i < width*height; i++)
+            F(i) = (abs(U(i)) + abs(V(i)))/Y(i); 
         int sum = 0;
         //#pragma omp parallel for reduction(+:sum)
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                if ((*F)(i, j) < T) {
-                    sum = sum + 1; 
-                    gray_r.push_back((*U)(i,j));
-                    gray_b.push_back((*V)(i,j));
-                }
+        for (int i = 0; i < width*height; i++) {
+            if (F(i) < T) {
+                sum = sum + 1; 
+                gray_r.push_back(U(i));
+                gray_b.push_back(V(i));
             }
         }
         if (sum == 0)
@@ -1222,25 +1216,14 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
         }
         gain[ch] -= delta;
         #pragma omp parallel for
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                (*R)(i, j) = (*R_orig)(i, j) * gain[0];
-                //(*G)(i, j) = (*G_orig)(i, j) * gain[1];
-                (*B)(i, j) = (*B_orig)(i, j) * gain[2];
-            }
-        }  
+        for (int i = 0; i < width*height; i++) {
+            R(i) = R_orig(i) * gain[0];
+            B(i) = B_orig(i) * gain[2];
+        }
         qDebug() << it << " : " << err;
     }
-    copy(R, R_orig);
-    //copy(G, G_orig);
-    copy(B, B_orig);
-    delete R;
-    delete G;
-    delete B;
-    delete Y;
-    delete U;
-    delete V;
-    delete F;
+    copy(&R, &R_orig);
+    copy(&B, &B_orig);
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "robustAWB = " << stop_watch.get_time() << " msec" << std::endl;

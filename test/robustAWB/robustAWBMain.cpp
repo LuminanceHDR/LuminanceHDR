@@ -89,7 +89,7 @@ int main( int argc, char ** argv )
         Channel *R, *G, *B;
         frame->getXYZChannels(R, G, B);
         
-        robustAWB(R, G, B);
+        robustAWB(*R, *G, *B);
 
         JpegWriter writer(outfilename.toLocal8Bit().constData());
         writer.write(*frame, params);

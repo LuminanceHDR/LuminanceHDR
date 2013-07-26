@@ -1341,7 +1341,7 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
 
     qDebug() << "solve_pde";
     //solve_pde_dft(divergence_R, logIrradiance_R);
-    solve_pde_dct(divergence_R, logIrradiance_R);
+    solve_pde_dct(*divergence_R, *logIrradiance_R);
     //solve_pde_fft(divergence_R, logIrradiance_R, ph-> true);
     //solve_pde_multigrid(divergence_R, logIrradiance_R, ph->;
     //solve_poisson(divergence_R, logIrradiance_R, logIrradiance_R);
@@ -1355,7 +1355,7 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
 
     qDebug() << "solve_pde";
     //solve_pde_dft(divergence_G, logIrradiance_G);
-    solve_pde_dct(divergence_G, logIrradiance_G);
+    solve_pde_dct(*divergence_G, *logIrradiance_G);
     //solve_pde_fft(divergence_G, logIrradiance_G, ph-> true);
     //solve_pde_multigrid(divergence_G, logIrradiance_G, ph->;
     //solve_poisson(divergence_G, logIrradiance_G, logIrradiance_G);
@@ -1369,7 +1369,7 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
 
     qDebug() << "solve_pde";
     //solve_pde_dft(divergence_B, logIrradiance_B);
-    solve_pde_dct(divergence_B, logIrradiance_B);
+    solve_pde_dct(*divergence_B, *logIrradiance_B);
     //solve_pde_fft(divergence_B, logIrradiance_B, ph-> true);
     //solve_pde_multigrid(divergence_B, logIrradiance_B, ph->;
     //solve_poisson(divergence_B, logIrradiance_B, logIrradiance_B);
