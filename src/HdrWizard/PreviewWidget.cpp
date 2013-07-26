@@ -412,7 +412,7 @@ void PreviewWidget::setMovable(QImage *m) {
     //TODO: check this
     delete m_previewImage;
     m_previewImage = new QImage(m_movableImage->size(), QImage::Format_ARGB32);
-    resize(m_movableImage->size());
+    updateView();
 }
 
 void PreviewWidget::setMask(QImage *mask) {
