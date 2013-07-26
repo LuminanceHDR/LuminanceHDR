@@ -87,6 +87,9 @@ public:
     virtual TonemappingOptions* getTonemappingOptions() { return NULL; }
 
 public Q_SLOTS:
+    //! \brief Update viewer's pixmap when a new frame is set by setFrame() or AWB is performed
+    virtual void updatePixmap() = 0;
+
     /*virtual*/ void updateView();  // tells the Viewer to update the View area
 
     /*virtual*/ void zoomIn();
@@ -163,9 +166,6 @@ protected Q_SLOTS:
     /*virtual*/  void slotPanIconHidden();
     /*virtual*/  void slotCornerButtonPressed();
     /*virtual*/  void scrollBarChanged(int /*value*/);
-
-    //! \brief Update viewer's pixmap when a new frame is set by setFrame()
-    virtual void updatePixmap() = 0;
 
 	void startDragging();
 

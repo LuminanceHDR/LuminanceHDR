@@ -47,6 +47,9 @@
 #include <QDesktopServices>
 #include <QTimer>
 #include <QString>
+#include <QtConcurrentRun>
+
+#include <boost/bind.hpp>
 
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DnDOption.h"
@@ -89,6 +92,7 @@
 #include "Core/IOWorker.h"
 #include "Core/TMWorker.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
+#include "HdrWizard/AutoAntighosting.h"
 
 namespace
 {
@@ -399,6 +403,7 @@ void MainWindow::createConnections()
 {
     windowMapper = new QSignalMapper(this);
     connect(windowMapper, SIGNAL(mapped(QWidget*)), this, SLOT(setActiveMainWindow(QWidget*)));
+    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(whiteBalanceDone()));
 }
 
 void MainWindow::loadOptions()
@@ -702,6 +707,7 @@ void MainWindow::updateActions( int w )
     m_Ui->rotatecw->setEnabled(isHdr);
 
     m_Ui->actionFix_Histogram->setEnabled(isLdr);
+    m_Ui->actionWhite_Balance->setEnabled(hasImage && !m_processingAWB);
     m_Ui->actionSoft_Proofing->setEnabled(isLdr && hasPrinterProfile);
     m_Ui->actionGamut_Check->setEnabled(isLdr && hasPrinterProfile);
 
@@ -1865,6 +1871,36 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
 
         m_Ui->actionFix_Histogram->setDisabled(false);
         m_Ui->actionFix_Histogram->setChecked(false);
+    }
+}
+
+void MainWindow::on_actionWhite_Balance_triggered()
+{
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+    m_Ui->actionWhite_Balance->setEnabled(false);
+    m_processingAWB = true;
+	m_viewerToProcess = (GenericViewer*) m_tabwidget->currentWidget();
+    
+    Frame *frame = m_viewerToProcess->getFrame();
+    Channel *Rc, *Gc, *Bc;
+    frame->getXYZChannels(Rc, Gc, Bc);
+
+    m_futureWatcher.setFuture(
+                QtConcurrent::run(
+                        boost::bind(robustAWB, *Rc, *Gc, *Bc)
+                    )
+                );
+}
+
+void MainWindow::whiteBalanceDone()
+{
+    QApplication::restoreOverrideCursor();
+    m_Ui->actionWhite_Balance->setEnabled(true);
+    m_processingAWB = false;
+    m_viewerToProcess->updatePixmap();
+    if (m_viewerToProcess->isHDR()) {
+        m_viewerToProcess->setNeedsSaving(true);
+        m_PreviewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
     }
 }
 

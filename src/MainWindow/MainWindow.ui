@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>24</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -177,6 +177,7 @@
    <addaction name="normalSizeAct"/>
    <addaction name="separator"/>
    <addaction name="actionFix_Histogram"/>
+   <addaction name="actionWhite_Balance"/>
    <addaction name="separator"/>
    <addaction name="actionSoft_Proofing"/>
    <addaction name="actionGamut_Check"/>
@@ -1000,6 +1001,21 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionWhite_Balance">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/preview_white_balance.png</normaloff>:/new/prefix1/images/preview_white_balance.png</iconset>
+   </property>
+   <property name="text">
+    <string>White Balance</string>
+   </property>
+   <property name="toolTip">
+    <string>Fix color cast, can be slow</string>
    </property>
   </action>
  </widget>
