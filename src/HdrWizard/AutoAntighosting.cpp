@@ -1143,14 +1143,14 @@ void colorbalance_rgb_f32(Array2Df& R, Array2Df& G, Array2Df& B, size_t size,
 
 /////////////////////////////////////////////////////////////////////////////
 
-void robustAWB(Array2Df& R_orig, Array2Df& G_orig, Array2Df& B_orig)
+void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    const int width = R_orig.getCols();
-    const int height = R_orig.getRows();
+    const int width = R_orig->getCols();
+    const int height = R_orig->getRows();
     float u = 0.3f;
     float a = 0.8f;
     float b = 0.001f;
@@ -1169,9 +1169,9 @@ void robustAWB(Array2Df& R_orig, Array2Df& G_orig, Array2Df& B_orig)
     vector<float> gray_r;
     vector<float> gray_b;
 
-    copy(&R_orig, &R);
-    copy(&G_orig, &G);
-    copy(&B_orig, &B);
+    copy(R_orig, &R);
+    copy(G_orig, &G);
+    copy(B_orig, &B);
 
     for (int it = 0; it < iterMax; it++) {
         transformRGB2Yuv(&R, &G, &B, &Y, &U, &V); 
@@ -1217,13 +1217,13 @@ void robustAWB(Array2Df& R_orig, Array2Df& G_orig, Array2Df& B_orig)
         gain[ch] -= delta;
         #pragma omp parallel for
         for (int i = 0; i < width*height; i++) {
-            R(i) = R_orig(i) * gain[0];
-            B(i) = B_orig(i) * gain[2];
+            R(i) = (*R_orig)(i) * gain[0];
+            B(i) = (*B_orig)(i) * gain[2];
         }
         qDebug() << it << " : " << err;
     }
-    copy(&R, &R_orig);
-    copy(&B, &B_orig);
+    copy(&R, R_orig);
+    copy(&B, B_orig);
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "robustAWB = " << stop_watch.get_time() << " msec" << std::endl;

@@ -250,6 +250,10 @@ void EditingTools::cropStack()
           itEnd = data.end(); it != itEnd; ++it) {
         m_originalImagesList.push_back(it->qimage());
     }
+    int width = m_originalImagesList.at(0)->width();
+    int height = m_originalImagesList.at(0)->height();
+    m_gridX = width/agGridSize;
+    m_gridY = height/agGridSize;
     
     m_previewWidget->removeSelection();
     m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);

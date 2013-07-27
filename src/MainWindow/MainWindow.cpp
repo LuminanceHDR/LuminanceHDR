@@ -1887,7 +1887,7 @@ void MainWindow::on_actionWhite_Balance_triggered()
 
     m_futureWatcher.setFuture(
                 QtConcurrent::run(
-                        boost::bind(robustAWB, *Rc, *Gc, *Bc)
+                        boost::bind(robustAWB, Rc, Gc, Bc)
                     )
                 );
 }
