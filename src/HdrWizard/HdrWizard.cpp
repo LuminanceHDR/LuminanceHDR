@@ -35,6 +35,7 @@
 #include <QMessageBox>
 #include <QMimeData>
 #include <QProcess>
+#include <QRegExp>
 #include <QTextStream>
 #include <QProgressDialog>
 #include <QThread>
@@ -1321,8 +1322,10 @@ void HdrWizard::writeAisData(QByteArray data)
         data.replace(QChar(0x01B).toAscii(), "");
     m_ui->textEdit->append(data);
     if (data.contains(": remapping")) {
-        data.replace(0,data.size() - 6, " ");
-        emit setValue(QString(data.data()).toInt());
+        QRegExp exp("\\:\\s*(\\d+)\\s*");
+        exp.indexIn(QString(data.data()));
+        emit setRange(0, 100);
+        emit setValue(exp.cap(1).toInt());
     }
 }
 
