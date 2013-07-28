@@ -87,7 +87,7 @@ QDialog(p),
     connect(m_hdrCreationManager, SIGNAL(progressRangeChanged(int,int)), m_Ui->progressBar_2, SLOT(setRange(int,int)));
     connect(m_hdrCreationManager, SIGNAL(progressValueChanged(int)), m_Ui->progressBar_2, SLOT(setValue(int)));
     connect(m_hdrCreationManager, SIGNAL(loadFilesAborted()), this, SLOT(loadFilesAborted()));
-    connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar_2, SLOT(setRange(int,int)));
+    //connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar_2, SLOT(setRange(int,int)));
     connect(this, SIGNAL(setValue(int)), m_Ui->progressBar_2, SLOT(setValue(int)));
 
     connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
@@ -450,7 +450,6 @@ void BatchHDRDialog::writeAisData(QByteArray data)
     if (data.contains(": remapping")) {
         QRegExp exp("\\:\\s*(\\d+)\\s*");
         exp.indexIn(QString(data.data()));
-        emit setRange(0, 100);
         emit setValue(exp.cap(1).toInt());
     }
 }
