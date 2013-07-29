@@ -31,6 +31,8 @@
 #include "Common/LuminanceOptions.h"
 #include "Common/TranslatorManager.h"
 
+#include "Core/IOWorker.h"
+
 #include <Libpfs/frame.h>
 #include <Libpfs/params.h>
 #include <Libpfs/io/fitsreader.h>
@@ -70,7 +72,7 @@ int main( int argc, char ** argv )
         cout << "Start reading..." << std::flush;
 
         Params params;
-        Frame* frame = new Frame();
+        Frame* frame = new Frame(0, 0);
         FitsReader reader(infilename.toLocal8Bit().constData());
         reader.read(*frame, params);
 
@@ -84,6 +86,10 @@ int main( int argc, char ** argv )
             application.exit(-1);
         }
         
+        IOWorker worker;
+
+        worker.write_hdr_frame(frame, outfilename.toLocal8Bit().constData(), params);
+                
         application.exit(0);
     }
 }

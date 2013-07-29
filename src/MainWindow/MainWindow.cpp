@@ -60,6 +60,7 @@
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/rotate.h"
 #include "Libpfs/manip/gamma_levels.h"
+#include "Libpfs/io/fitsreader3ch.h"
 
 #include "Common/archs.h"
 #include "Common/config.h"
@@ -77,6 +78,7 @@
 #include "UI/TiffModeDialog.h"
 #include "UI/UMessageBox.h"
 #include "UI/GammaAndLevels.h"
+#include "UI/FitsImporter.h"
 
 #include "PreviewPanel/PreviewPanel.h"
 #include "HelpBrowser/helpbrowser.h"
@@ -454,11 +456,12 @@ void MainWindow::createNewHdr(const QStringList& files)
 void MainWindow::on_fileOpenAction_triggered()
 {
     QString filetypes = tr("All HDR formats ");
-    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.srw";
-    filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;" ;
+    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.fit *.fits *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.srw";
+    filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.FIT *.FITS *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;" ;
     filetypes += "OpenEXR (*.exr *.EXR);;" ;
     filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
     filetypes += "TIFF images (*.TIFF *.TIF *.tiff *.tif);;";
+    filetypes += "FITS (*.fit *.FIT *.fits *.FITS);;";
     filetypes += "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw *.srw";
     filetypes +=             "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;";
     filetypes += "PFS stream (*.pfs *.PFS)";
@@ -1945,4 +1948,26 @@ void MainWindow::showPreviewsOnTheBottom()
 {
     m_PreviewscrollArea->setParent(m_bottom_splitter);
     luminance_options->setPreviewPanelMode(1);
+}
+
+void MainWindow::on_actionFits_Importer_triggered()
+{
+    FitsImporter importer;
+
+    if (importer.exec()) {
+        QString redChannel = importer.getRedChannel();
+        QString greenChannel = importer.getGreenChannel();
+        QString blueChannel = importer.getBlueChannel();
+
+        pfs::Frame *frame = new pfs::Frame(0, 0);
+        try {
+            pfs::io::FitsReader3Ch reader(QFile::encodeName(redChannel).constData(), 
+                                          QFile::encodeName(greenChannel).constData(), 
+                                          QFile::encodeName(blueChannel).constData());
+            reader.read(*frame);
+            emit load_success(frame, "FITS Image", QStringList(), true); 
+        }
+        catch (...) {
+        }       
+    }
 }

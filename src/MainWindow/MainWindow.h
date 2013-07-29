@@ -200,6 +200,8 @@ protected Q_SLOTS:
 	void on_actionGamut_Check_toggled(bool);
 	void updateSoftProofing(int);
 
+    void on_actionFits_Importer_triggered();
+
 Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);

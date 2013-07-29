@@ -50,6 +50,7 @@
 #include <Libpfs/io/rgbereader.h>
 #include <Libpfs/io/exrwriter.h>
 #include <Libpfs/io/exrreader.h>
+#include <Libpfs/io/fitsreader.h>
 
 using namespace pfs::io;
 
@@ -328,6 +329,12 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
             connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
             connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
             hdrpfsframe = reader.readIntoPfsFrame();
+        }
+        else if (extension.startsWith("FIT"))
+        {
+            hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
+            FitsReader reader(encodedFileName.constData());
+            reader.read( *hdrpfsframe, pfs::Params());
         }
         else if ( rawextensions.indexOf(extension) != -1 )
         {

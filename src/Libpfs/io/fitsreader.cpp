@@ -19,6 +19,7 @@
  * ----------------------------------------------------------------------
  */
 
+#include <QDebug>
 #include <iostream>
 
 #include <Libpfs/io/fitsreader.h>
@@ -59,14 +60,30 @@ void FitsReader::close()
 
 void FitsReader::read(Frame &frame, const Params &/*params*/)
 {
+    if (m_image->axes() != 2)
+        throw InvalidFile("No image in file " + filename());
+
     if ( !isOpen() ) open();
 
-    std::valarray<unsigned long>  contents;
+    std::valarray<float>  contents;
     m_image->read(contents);
-    int ax1(m_image->axis(0));
-    int ax2(m_image->axis(1));    
-    Frame tempFrame(ax1, ax2);
 
+    qDebug() << "contents.size = " << contents.size();
+
+    int ax1 = m_image->axis(0);
+    int ax2 = m_image->axis(1); 
+    qDebug() << "ax1 = " << ax1 << " , ax2 = " << ax2;
+
+    Frame tempFrame(ax1, ax2);
+    Channel *Xc, *Yc, *Zc;
+    tempFrame.createXYZChannels(Xc, Yc, Zc);
+
+    for (long i = 0; i < ax1*ax2; i++) 
+    {
+            (*Xc)(i) = contents[i];
+            (*Yc)(i) = (*Zc)(i) = (*Xc)(i);
+    }     
+        
 #ifdef HAVE_SETMODE
     setmode( fileno( inputStream ), old_mode );
 #endif

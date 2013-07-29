@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>19</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -44,6 +44,7 @@
     <addaction name="actionBatch_HDR"/>
     <addaction name="actionBatch_Tone_Mapping"/>
     <addaction name="OptionsAction"/>
+    <addaction name="actionFits_Importer"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1000,6 +1001,14 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionFits_Importer">
+   <property name="text">
+    <string>Fits Importer...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import 3 FITS files rapresenting red, green and blue channels</string>
    </property>
   </action>
  </widget>
