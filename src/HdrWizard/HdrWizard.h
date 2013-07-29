@@ -113,9 +113,6 @@ private slots:
     void updateEVSlider(int newValue);
     void updateEVSpinBox(double newValue);
 
-signals:
-    void setValue(int value);
-
 private slots:
     // void fileLoaded(int index, const QString& fname, float expotime);
     // void finishedLoadingInputFiles(const QStringList& NoExifFiles);

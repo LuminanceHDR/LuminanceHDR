@@ -1369,8 +1369,3 @@ void HdrWizard::updateProgressBar(int value)
     m_ui->progressBar->setValue(value);
 }
 
-void HdrWizard::updateProgressBar(int value)
-{
-    if (value == 0) m_Ui->progressBar->setMaximum(100);
-    m_Ui->progressBar->setValue(value);
-}

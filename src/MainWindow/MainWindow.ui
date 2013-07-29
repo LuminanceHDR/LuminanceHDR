@@ -1013,6 +1013,8 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+  </action>
   <action name="actionWhite_Balance">
    <property name="enabled">
     <bool>false</bool>
