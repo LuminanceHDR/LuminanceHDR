@@ -20,7 +20,8 @@
  *
  * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing, anti ghosting
+ *
+ * Improvements, bugfixing, anti ghosting, new preview widget based on QGraphicsView
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */
@@ -35,31 +36,50 @@
 #include "Common/config.h"
 #include "UI/GammaAndLevels.h"
 #include "Viewers/PanIconWidget.h"
-#include "Fileformat/tiffreader.h"
 #include "HdrWizard/EditingTools.h"
 #include "Exif/ExifOperations.h"
 #include "HdrCreation/mtb_alignment.h"
 
 EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     QDialog(parent),
+    m_currentAgMaskIndex(0),
     m_hcm(hcm),
     m_additionalShiftValue(0),
     m_imagesSaved(false),
-    m_goodImageIndex(-1),
-    m_antiGhosting(false)
+    m_agGoodImageIndex(-1),
+    m_antiGhosting(false),
+    m_doAutoAntighosting(false),
+    m_doManualAntighosting(false),
+    m_patchesEdited(false)
 {
     setupUi(this);
+   
+    for (int i = 0; i < agGridSize; i++)
+        for (int j = 0; j < agGridSize; j++)
+            m_patches[i][j] = false;
 
-    if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
-        m_originalImagesList=m_hcm->getLDRList();
-        m_expotimes = m_hcm->getExpotimes();
-    }
-    else {
-        m_originalImagesList=m_hcm->getMDRList();
+    HdrCreationItemContainer data = m_hcm->getData();
+    for ( HdrCreationItemContainer::iterator it = data.begin(), 
+          itEnd = data.end(); it != itEnd; ++it) {
+        m_originalImagesList.push_back(it->qimage());
+        m_fileList.push_back(it->filename());
     }
 
-    m_fileList=m_hcm->getFileList();
-    m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
+    int width = m_originalImagesList.at(0)->width();
+    int height = m_originalImagesList.at(0)->height();
+    m_gridX = width/agGridSize;
+    m_gridY = height/agGridSize;
+
+    int size = m_originalImagesList.size();
+    for ( int h = 0; h < size; h++) { 
+        QImage *img = new QImage(width, height, QImage::Format_ARGB32);
+        img->fill(qRgba(0,0,0,0));
+        m_antiGhostingMasksList.append(img);
+    }
+    m_antiGhostingMask = new QImage(width, height, QImage::Format_ARGB32);
+    m_antiGhostingMask->fill(qRgba(0,0,0,0));
+
+    m_expotimes = m_hcm->getExpotimes();
 
     toolOptionsFrame->setVisible(false);
     maskColorButton->setVisible(false);
@@ -74,26 +94,16 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     qvl->setMargin(0);
     qvl->setSpacing(0);
 
-    m_scrollArea = new QScrollArea(previewImageFrame);
-    m_previewWidget = new PreviewWidget(this,m_originalImagesList[1],m_originalImagesList[0]);
+    m_previewWidget = new PreviewWidget(this, m_originalImagesList[1],m_originalImagesList[0]);
+    m_previewWidget->setMask(m_antiGhostingMasksList[0]);
+    m_previewWidget->setBrushColor(maskcolor);
+    m_previewWidget->setLassoColor(lassocolor);
     m_previewWidget->adjustSize();
     m_previewWidget->update();
-    m_agWidget = new AntiGhostingWidget(m_previewWidget, m_antiGhostingMasksList[1]);
-    m_agWidget->setBrushColor(maskcolor);
-    m_agWidget->setLassoColor(lassocolor);
-    m_agWidget->adjustSize();
-    m_agWidget->update();
-
-    m_cornerButton = new QToolButton(this);
-    m_cornerButton->setToolTip(tr("Pan the image to a region"));
-    m_cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
-    m_scrollArea->setCornerWidget(m_cornerButton);
-
-    m_scrollArea->setFocusPolicy(Qt::NoFocus);
-    m_scrollArea->setBackgroundRole(QPalette::Window);
-    m_scrollArea->setWidget(m_previewWidget);
-
-    qvl->addWidget(m_scrollArea);
+    m_patchesMask = new QImage(width, height, QImage::Format_ARGB32);
+    m_previewWidget->setPatchesMask(m_patchesMask);
+    
+    qvl->addWidget(m_previewWidget);
     previewImageFrame->setLayout(qvl);
 
     int idx = 0;
@@ -107,8 +117,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
 
     fitButton->setToolButtonStyle(style);
     origSizeButton->setToolButtonStyle(style);
-    zoomOutButton->setToolButtonStyle(style);
-    zoomInButton->setToolButtonStyle(style);
+    fillButton->setToolButtonStyle(style);
     whatsThisButton->setToolButtonStyle(style);
     cropButton->setToolButtonStyle(style);
     saveImagesButton->setToolButtonStyle(style);
@@ -131,14 +140,10 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     ((QGridLayout*)(groupBoxHistogram->layout()))->addWidget(m_histogram);
     m_previewWidget->setFocus();
 
-    m_selectionTool = new SelectionTool(m_previewWidget);
-    m_selectionTool->show();
-    
     setupConnections();
 } //end of constructor
 
 void EditingTools::setupConnections() {
-    connect(m_cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
     connect(upToolButton,SIGNAL(clicked()),this,SLOT(upClicked()));
     connect(rightToolButton,SIGNAL(clicked()),this,SLOT(rightClicked()));
     connect(downToolButton,SIGNAL(clicked()),this,SLOT(downClicked()));
@@ -154,79 +159,48 @@ void EditingTools::setupConnections() {
     connect(nextBothButton,SIGNAL(clicked()),this,SLOT(nextBoth()));
 
     connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
-    connect(fitButton,SIGNAL(toggled(bool)),this,SLOT(fitPreview(bool)));
+    connect(fitButton,SIGNAL(clicked()),this,SLOT(fitPreview()));
     connect(origSizeButton,SIGNAL(clicked()),this,SLOT(origSize()));
-    connect(zoomOutButton,SIGNAL(clicked()),this,SLOT(zoomOut()));
-    connect(zoomInButton,SIGNAL(clicked()),this,SLOT(zoomIn()));
+    connect(fillButton,SIGNAL(clicked()),this,SLOT(fillPreview()));
     connect(cropButton,SIGNAL(clicked()),this,SLOT(cropStack()));
+    connect(m_previewWidget,SIGNAL(selectionReady(bool)),cropButton,SLOT(setEnabled(bool))); 
+    connect(m_previewWidget,SIGNAL(patchesEdited()),this,SLOT(setPatchesEdited())); 
     connect(saveImagesButton,SIGNAL(clicked()),this,SLOT(saveImagesButtonClicked()));
     connect(blendModeCB,SIGNAL(currentIndexChanged(int)),m_previewWidget,SLOT(requestedBlendMode(int)));
     connect(blendModeCB,SIGNAL(currentIndexChanged(int)),this,SLOT(blendModeCBIndexChanged(int)));
     //connect(antighostToolButton,SIGNAL(toggled(bool)),toolOptionsFrame,SLOT(setVisible(bool)));
     connect(antighostToolButton,SIGNAL(toggled(bool)),drawingModeFrame,SLOT(setVisible(bool)));
-    connect(antighostToolButton,SIGNAL(toggled(bool)),m_agWidget,SLOT(switchAntighostingMode(bool)));
+    connect(antighostToolButton,SIGNAL(toggled(bool)),m_previewWidget,SLOT(switchAntighostingMode(bool)));
     connect(antighostToolButton,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonToggled(bool)));
     connect(toolButtonPaint,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonPaintToggled(bool)));
-    connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),m_agWidget,SLOT(setBrushSize(int)));
-    connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),m_agWidget,SLOT(setBrushStrength(int)));
+    connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),m_previewWidget,SLOT(setBrushSize(int)));
+    connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),m_previewWidget,SLOT(setBrushStrength(int)));
     connect(maskColorButton,SIGNAL(clicked()),this,SLOT(maskColorButtonClicked()));
     connect(lassoColorButton,SIGNAL(clicked()),this,SLOT(lassoColorButtonClicked()));
-    connect(toolButtonSaveMask,SIGNAL(clicked()),m_agWidget,SLOT(saveAgMask()));
+    connect(toolButtonSaveMask,SIGNAL(clicked()),m_previewWidget,SLOT(saveAgMask()));
     connect(toolButtonSaveMask,SIGNAL(clicked()),this,SLOT(saveAgMask()));
     connect(toolButtonApplyMask,SIGNAL(clicked()),this,SLOT(applySavedAgMask()));
+    connect(threshold_horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
+    connect(threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateThresholdSpinBox(double)));
 
     connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
-    connect(m_previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
-    connect(m_agWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
-    connect(m_selectionTool,SIGNAL(selectionReady(bool)),cropButton,SLOT(setEnabled(bool)));
-    connect(m_selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
-    connect(removeMaskRadioButton,SIGNAL(toggled(bool)),m_agWidget,SLOT(setBrushMode(bool)));
+    //connect(m_previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
+    connect(removeMaskRadioButton,SIGNAL(toggled(bool)),m_previewWidget,SLOT(setBrushMode(bool)));
 
     connect(m_hcm, SIGNAL(imagesSaved()), this, SLOT(restoreSaveImagesButtonState()));
 }
 
-void EditingTools::slotCornerButtonPressed() {
-    m_panIconWidget=new PanIconWidget;
-    m_panIconWidget->setImage(m_previewWidget->getPreviewImage());
-    float zf=m_previewWidget->getScaleFactor();
-    float leftviewpos=(float)(m_scrollArea->horizontalScrollBar()->value());
-    float topviewpos=(float)(m_scrollArea->verticalScrollBar()->value());
-    float wps_w=(float)(m_scrollArea->maximumViewportSize().width());
-    float wps_h=(float)(m_scrollArea->maximumViewportSize().height());
-    QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
-    m_panIconWidget->setRegionSelection(r);
-    m_panIconWidget->setMouseFocus();
-    connect(m_panIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
-    connect(m_panIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
-    QPoint g = m_scrollArea->mapToGlobal(m_scrollArea->viewport()->pos());
-    g.setX(g.x()+ m_scrollArea->viewport()->size().width());
-    g.setY(g.y()+ m_scrollArea->viewport()->size().height());
-    m_panIconWidget->popup(QPoint(g.x() - m_panIconWidget->width()/2,
-                    g.y() - m_panIconWidget->height()/2));
-
-    m_panIconWidget->setCursorToLocalRegionSelectionCenter();
-}
-
-void EditingTools::slotPanIconSelectionMoved(QRect gotopos) {
-    m_scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*m_previewWidget->getScaleFactor()));
-    m_scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*m_previewWidget->getScaleFactor()));
-}
-
-void EditingTools::slotPanIconHidden()
+EditingTools::~EditingTools()
 {
-    m_panIconWidget->close();
-    m_cornerButton->blockSignals(true);
-    m_cornerButton->animateClick();
-    m_cornerButton->blockSignals(false);
-}
-
-EditingTools::~EditingTools() {
     delete m_previewWidget;
     delete m_histogram;
-    delete m_cornerButton;
+    delete m_patchesMask;
+    qDeleteAll(m_antiGhostingMasksList);
+    delete m_antiGhostingMask;
 }
 
-void EditingTools::keyPressEvent(QKeyEvent *event) {
+void EditingTools::keyPressEvent(QKeyEvent *event)
+{
     int key=event->key();
     Qt::KeyboardModifiers mods=event->modifiers();
     if ((mods & Qt::ShiftModifier)!=0 && (mods & Qt::ControlModifier)!=0)
@@ -248,68 +222,114 @@ void EditingTools::keyPressEvent(QKeyEvent *event) {
         reject();
 }
 
-void EditingTools::keyReleaseEvent ( QKeyEvent * event ) {
+void EditingTools::keyReleaseEvent ( QKeyEvent * event )
+{
     m_additionalShiftValue=0;
     event->ignore();
 }
 
-void EditingTools::cropStack() {
+void EditingTools::cropStack()
+{
     //zoom the image to 1:1, so that the crop area is in a one-to-one relationship with the pixel coordinates.
     origSize();
 
-    if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
-        m_hcm->applyShiftsToImageStack(m_HV_offsets);
-    else
-        m_hcm->applyShiftsToMdrImageStack(m_HV_offsets);
-
+    m_hcm->applyShiftsToItems(m_HV_offsets);
     resetAll();
-    QRect ca=m_selectionTool->getSelectionRect();
+    QRect ca = m_previewWidget->getSelectionRect();
     if(ca.width()<=0 || ca.height()<=0)
         return;
 
-    if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
-        m_hcm->cropLDR(ca);
-        m_originalImagesList=m_hcm->getLDRList();
+    QImage* tmp = m_previewWidget->getMask();
+    delete m_antiGhostingMasksList[m_currentAgMaskIndex];
+    m_antiGhostingMasksList.replace(m_currentAgMaskIndex, tmp);
+    cropAgMasks(ca);
+    m_hcm->cropItems(ca);
+    m_originalImagesList.clear();
+    HdrCreationItemContainer data = m_hcm->getData();
+    for ( HdrCreationItemContainer::iterator it = data.begin(), 
+          itEnd = data.end(); it != itEnd; ++it) {
+        m_originalImagesList.push_back(it->qimage());
     }
-    else {
-        m_hcm->cropMDR(ca);
-        m_originalImagesList=m_hcm->getMDRList();
-    }
+    int width = m_originalImagesList.at(0)->width();
+    int height = m_originalImagesList.at(0)->height();
+    m_gridX = width/agGridSize;
+    m_gridY = height/agGridSize;
     
-    m_antiGhostingMasksList = m_hcm->getAntiGhostingMasksList();
-        
-    m_selectionTool->removeSelection();
-
+    m_previewWidget->removeSelection();
     m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
     m_previewWidget->setPivot(m_originalImagesList[referenceListWidget->currentRow()]);
-    m_agWidget->setMask(m_antiGhostingMasksList[movableListWidget->currentRow()]);
+    m_currentAgMaskIndex = movableListWidget->currentRow();
+    m_previewWidget->setMask(m_antiGhostingMasksList[m_currentAgMaskIndex]);
     //restore fit
     if (fitButton->isChecked())
-        fitPreview(true);
+        fitPreview();
     //and start it up
-    m_previewWidget->update();
+    m_previewWidget->updatePreviewImage();
 }
 
-void EditingTools::nextClicked() {
+void EditingTools::cropAgMasks(const QRect& ca) {
+    int origlistsize = m_antiGhostingMasksList.size();
+    for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
+        QImage *newimage = new QImage(m_antiGhostingMasksList.at(0)->copy(ca));
+        if (newimage == NULL)
+            exit(1); // TODO: exit gracefully
+        m_antiGhostingMasksList.append(newimage);
+        delete m_antiGhostingMasksList.takeAt(0);
+    }
+}
+
+void EditingTools::computeAgMask()
+{
+    const int width = m_antiGhostingMasksList.at(0)->width();
+    const int height = m_antiGhostingMasksList.at(0)->height();
+    const int size = m_antiGhostingMasksList.size();
+    QImage* tmp = m_previewWidget->getMask();
+    delete m_antiGhostingMasksList[m_currentAgMaskIndex];
+    m_antiGhostingMasksList.replace(m_currentAgMaskIndex, tmp);
+    for (int h = 0; h < size; h++) {
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                if (qAlpha(m_antiGhostingMasksList.at(h)->pixel(i,j)) != 0) 
+                    m_antiGhostingMask->setPixel(i, j, m_antiGhostingMasksList.at(h)->pixel(i, j));
+            }
+        }   
+    }
+}
+
+void EditingTools::nextClicked()
+{
     Next_Finishbutton->setEnabled(false);
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) { 
-        if (!m_imagesSaved)
-            m_hcm->applyShiftsToImageStack(m_HV_offsets);
-        if (m_goodImageIndex != -1)
-            m_hcm->doAntiGhosting(m_goodImageIndex);
+    
+    if (!m_imagesSaved)
+        m_hcm->applyShiftsToItems(m_HV_offsets);
+    if (m_doAutoAntighosting) {
+        QStringList::ConstIterator it = m_fileList.begin();
+        while( it != m_fileList.end() ) {
+            m_HV_offsets.append(qMakePair(0,0));
+            ++it;
+        }
+        if (m_patchesEdited) {
+            m_previewWidget->getPatches(m_patches);
+            m_hcm->setPatches(m_patches);
+        }
+        else {
+            float patchesPercent;
+            m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent, m_HV_offsets);
+        }
     }
-    else {
-        if (!m_imagesSaved)
-            m_hcm->applyShiftsToMdrImageStack(m_HV_offsets);
-        if (m_goodImageIndex != -1)
-            m_hcm->doAntiGhosting(m_goodImageIndex);
+    else if (m_agGoodImageIndex != -1) {
+        computeAgMask();
+        m_hcm->setAntiGhostingMask(m_antiGhostingMask);
+        m_doManualAntighosting = true;
     }
+
     QApplication::restoreOverrideCursor();
     emit accept();
 }
 
-void EditingTools::updateMovable(int newidx) {
+void EditingTools::updateMovable(int newidx)
+{
     //inform display_widget of the change
     m_previewWidget->setMovable(m_originalImagesList[newidx], m_HV_offsets[newidx].first, m_HV_offsets[newidx].second);
     //prevent a change in the spinboxes to start a useless calculation
@@ -319,14 +339,14 @@ void EditingTools::updateMovable(int newidx) {
     vertShiftSB->blockSignals(true);
     vertShiftSB->setValue(m_HV_offsets[newidx].second);
     vertShiftSB->blockSignals(false);
-    m_previewWidget->update();
+    m_previewWidget->updatePreviewImage();
     m_histogram->setData(m_originalImagesList[newidx]);
     m_histogram->update();
 }
 
 void EditingTools::updatePivot(int newidx) {
     m_previewWidget->setPivot(m_originalImagesList[newidx],m_HV_offsets[newidx].first, m_HV_offsets[newidx].second);
-    m_previewWidget->update();
+    m_previewWidget->updatePreviewImage();
 }
 
 void EditingTools::upClicked() {
@@ -345,21 +365,19 @@ void EditingTools::leftClicked() {
 void EditingTools::vertShiftChanged(int v) {
     m_HV_offsets[movableListWidget->currentRow()].second=v;
     m_previewWidget->updateVertShiftMovable(v);
-    m_agWidget->updateVertShift(v);
-    m_previewWidget->update();
-    m_agWidget->update();
+    m_previewWidget->updatePreviewImage();
 }
 void EditingTools::horizShiftChanged(int v) {
     m_HV_offsets[movableListWidget->currentRow()].first=v;
     m_previewWidget->updateHorizShiftMovable(v);
-    m_agWidget->updateHorizShift(v);
-    m_previewWidget->update();
-    m_agWidget->update();
+    m_previewWidget->updatePreviewImage();
 }
 
 void EditingTools::resetCurrent() {
     horizShiftSB->setValue(0);
     vertShiftSB->setValue(0);
+//    m_previewWidget->updateVertShiftMovable(0);
+//    m_previewWidget->updateHorizShiftMovable(0);
 }
 
 void EditingTools::resetAll() {
@@ -368,16 +386,11 @@ void EditingTools::resetAll() {
         m_HV_offsets[i].second=0;
     }
     //prevent a change in the spinboxes to start a useless calculation
-    horizShiftSB->blockSignals(true);
-    vertShiftSB->blockSignals(true);
+    //horizShiftSB->blockSignals(true);
+    //vertShiftSB->blockSignals(true);
     resetCurrent(); //graphical update
-    horizShiftSB->blockSignals(false);
-    vertShiftSB->blockSignals(false);
-    m_previewWidget->updateHorizShiftMovable(0);
-    m_previewWidget->updateVertShiftMovable(0);
-    m_previewWidget->updateHorizShiftPivot(0);
-    m_previewWidget->updateVertShiftPivot(0);
-    m_previewWidget->update();
+    //horizShiftSB->blockSignals(false);
+    //vertShiftSB->blockSignals(false);
 }
 
 void EditingTools::prevLeft() {
@@ -415,60 +428,42 @@ void EditingTools::enterWhatsThis() {
 }
 
 void EditingTools::zoomIn() {
-    m_previewWidget->resize(m_previewWidget->size()*1.25f);
-    m_agWidget->resize(m_previewWidget->size()*1.25f);
-    zoomOutButton->setEnabled(true);
-    zoomInButton->setEnabled(m_previewWidget->getScaleFactor() < 6.0);
+    m_previewWidget->zoomIn();
 }
 
 void EditingTools::zoomOut() {
-    m_previewWidget->resize(m_previewWidget->size()*0.8f);
-    m_agWidget->resize(m_previewWidget->size()*0.8f);
-    zoomInButton->setEnabled(true);
-    zoomOutButton->setEnabled(m_previewWidget->getScaleFactor() > 0.166);
+    m_previewWidget->zoomOut();
 }
 
-void EditingTools::fitPreview(bool checked) {
-    if (!m_antiGhosting) {
-        zoomInButton->setEnabled(!checked);
-        zoomOutButton->setEnabled(!checked);
-    }
-    origSizeButton->setEnabled(!checked);
-    if (checked) {
-        m_previousPreviewWidgetSize=m_previewWidget->size();
-        QSize fillWinSize=m_originalImagesList.at(0)->size();
-        fillWinSize.scale(m_scrollArea->maximumViewportSize(),Qt::KeepAspectRatio);
-        m_previewWidget->resize(fillWinSize);
-        m_agWidget->resize(fillWinSize);
-    } else {
-        m_previewWidget->resize(m_previousPreviewWidgetSize);
-        m_agWidget->resize(m_previousPreviewWidgetSize);
-    }
+void EditingTools::fitPreview() {
+    m_previewWidget->fitToWindow();
 }
 
+void EditingTools::fillPreview() {
+    m_previewWidget->fillToWindow();
+}
 void EditingTools::origSize() {
-    zoomInButton->setEnabled(true);
-    zoomOutButton->setEnabled(true);
-    m_previewWidget->resize(m_originalImagesList.at(0)->size());
-    m_agWidget->resize(m_originalImagesList.at(0)->size());
+    m_previewWidget->normalSize();
 }
 
 void EditingTools::antighostToolButtonToggled(bool toggled) {
     m_previewWidget->update();
-    toggled ? m_selectionTool->disable() : m_selectionTool->enable();
+    toggled ? m_previewWidget->setSelectionTool(false) : m_previewWidget->setSelectionTool(true);
     if (toggled) {
         m_antiGhosting = true;
+        QImage* tmp = m_previewWidget->getMask();
+        delete m_antiGhostingMasksList[m_currentAgMaskIndex];
+        m_antiGhostingMasksList.replace(m_currentAgMaskIndex, tmp);
+        m_currentAgMaskIndex = movableListWidget->currentRow();
+        m_previewWidget->setMask(m_antiGhostingMasksList[m_currentAgMaskIndex]);
         m_previewWidget->hide();
-        m_agWidget->show();
-        m_agWidget->update();
         label_editable_list->setText(tr("Maskable"));
         label_reference_list->setText(tr("Good image"));
-        origSizeButton->setDisabled(true);
-        zoomInButton->setDisabled(true);
-        zoomOutButton->setDisabled(true);
         saveImagesButton->setDisabled(true);
         prevBothButton->setIcon(QIcon(":new/prefix1/images/forward.png"));  
         nextBothButton->setIcon(QIcon(":new/prefix1/images/back.png")); 
+        prevBothButton->setToolTip(tr("Add good image"));
+        nextBothButton->setToolTip(tr("Remove good image"));
         nextBothButton->setDisabled(true);
         disconnect(prevBothButton,SIGNAL(clicked()),this,SLOT(prevBoth()));
         disconnect(nextBothButton,SIGNAL(clicked()),this,SLOT(nextBoth()));
@@ -477,35 +472,33 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         connect(prevBothButton,SIGNAL(clicked()),this,SLOT(addGoodImage()));
         connect(nextBothButton,SIGNAL(clicked()),this,SLOT(removeGoodImage()));
         referenceListWidget->clear();
-        if (m_goodImageIndex != -1) {
+        if (m_agGoodImageIndex != -1) {
             m_previewWidget->show();
             prevBothButton->setDisabled(true);
             nextBothButton->setDisabled(false);
-            referenceListWidget->addItem(QFileInfo(m_fileList[m_goodImageIndex]).fileName());
+            referenceListWidget->addItem(QFileInfo(m_fileList[m_agGoodImageIndex]).fileName());
             referenceListWidget->setCurrentRow(0);
-            movableListWidget->takeItem(m_goodImageIndex);
-            movableListWidget->setCurrentRow(0);
-            updatePivot(m_goodImageIndex);
+            //movableListWidget->setCurrentRow(0);
+            updatePivot(m_agGoodImageIndex);
             QString filename = movableListWidget->currentItem()->text();
             int idx = m_filesMap[filename];
             updateMovable(idx);
+            m_previewWidget->updatePreviewImage();
         }
         connect(movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
     }
     else {
         m_antiGhosting = false;
         m_previewWidget->show();
-        m_agWidget->hide();
         disconnect(movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
         label_editable_list->setText(tr("Ed&itable"));
         label_reference_list->setText(tr("R&eference"));
         prevBothButton->setIcon(QIcon(":new/prefix1/images/uparrow.png"));  
         nextBothButton->setIcon(QIcon(":new/prefix1/images/downarrow.png"));    
+        prevBothButton->setToolTip(tr("Select the previous image in both lists"));
+        nextBothButton->setToolTip(tr("Select the next image in both lists"));
         prevBothButton->setDisabled(false);
         nextBothButton->setDisabled(false);
-        origSizeButton->setDisabled(false);
-        zoomInButton->setDisabled(false);
-        zoomOutButton->setDisabled(false);
         saveImagesButton->setDisabled(false);
         movableListWidget->clear();
         referenceListWidget->clear();
@@ -527,7 +520,7 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
 void EditingTools::maskColorButtonClicked() {
     QColor returned = QColorDialog::getColor();
     if (returned.isValid()) {
-        m_agWidget->setBrushColor(returned);
+        m_previewWidget->setBrushColor(returned);
         maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
         m_luminanceOptions.setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
     }
@@ -536,7 +529,7 @@ void EditingTools::maskColorButtonClicked() {
 void EditingTools::lassoColorButtonClicked() {
     QColor returned = QColorDialog::getColor();
     if (returned.isValid()) {
-        m_agWidget->setLassoColor(returned);
+        m_previewWidget->setLassoColor(returned);
         lassoColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
         m_luminanceOptions.setValue(KEY_MANUAL_AG_LASSO_COLOR,returned.rgb());
     }
@@ -546,9 +539,9 @@ void EditingTools::blendModeCBIndexChanged(int newindex) {
     maskColorButton->setVisible(newindex == 4);
     lassoColorButton->setVisible(newindex == 4);
     if (newindex == 4 && !m_antiGhosting)
-        m_agWidget->show();
+        ;//m_agWidget->show();
     else if (newindex != 4 && !m_antiGhosting)
-        m_agWidget->hide();
+        ;//m_agWidget->hide();
 }
 
 void EditingTools::saveImagesButtonClicked() {
@@ -568,20 +561,9 @@ void EditingTools::saveImagesButtonClicked() {
 
     if (test.isWritable() && test.exists() && test.isDir()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
-            m_hcm->applyShiftsToImageStack(m_HV_offsets);
-            m_hcm->saveLDRs(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
-        }
-        else {
-            m_hcm->applyShiftsToMdrImageStack(m_HV_offsets);
-            m_hcm->saveMDRs(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
-        }
+        m_hcm->applyShiftsToItems(m_HV_offsets);
+        m_hcm->saveImages(QFile::encodeName((qfi.path() + "/" + qfi.fileName())));
     }
-}
-
-void EditingTools::updateScrollBars(QPoint diff) {
-    m_scrollArea->verticalScrollBar()->setValue(m_scrollArea->verticalScrollBar()->value() + diff.y());
-    m_scrollArea->horizontalScrollBar()->setValue(m_scrollArea->horizontalScrollBar()->value() + diff.x());
 }
 
 void EditingTools::restoreSaveImagesButtonState()
@@ -590,18 +572,22 @@ void EditingTools::restoreSaveImagesButtonState()
     saveImagesButton->setEnabled(true);
     Next_Finishbutton->setEnabled(true);
     QApplication::restoreOverrideCursor();
-    if (m_hcm->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
-        m_originalImagesList=m_hcm->getLDRList();
-        m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
-        m_previewWidget->setPivot(m_originalImagesList[referenceListWidget->currentRow()]);
+
+    m_originalImagesList.clear();
+    HdrCreationItemContainer data = m_hcm->getData();
+    for ( HdrCreationItemContainer::iterator it = data.begin(), 
+          itEnd = data.end(); it != itEnd; ++it) {
+        m_originalImagesList.push_back(it->qimage());
     }
+    
+    m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
+    m_previewWidget->setPivot(m_originalImagesList[referenceListWidget->currentRow()]);
 }
 
 void EditingTools::setAntiGhostingWidget(QImage *mask, QPair<int, int> HV_offset)
 {
-    m_agWidget->setMask(mask);
-    m_agWidget->setHV_offset(HV_offset);
-    m_agWidget->show();
+    m_previewWidget->setMask(mask);
+    m_previewWidget->setHV_offset(HV_offset);
 }
 
 void EditingTools::addGoodImage()
@@ -611,7 +597,7 @@ void EditingTools::addGoodImage()
     int idxGoodImage = movableListWidget->currentRow();
     referenceListWidget->addItem(QFileInfo(m_fileList[idx]).fileName());
     referenceListWidget->setCurrentRow(0);
-    m_goodImageIndex = idx;
+    m_agGoodImageIndex = idx;
     m_antiGhostingMasksList[idx]->fill(qRgba(0,0,0,0));
     movableListWidget->item(idxGoodImage)->setBackground(QColor(Qt::yellow));
 
@@ -629,8 +615,7 @@ void EditingTools::removeGoodImage()
     referenceListWidget->takeItem(0);
     prevBothButton->setDisabled(false);
     nextBothButton->setDisabled(true);
-    m_goodImageIndex = -1;
-    m_agWidget->hide();
+    m_agGoodImageIndex = -1;
     m_previewWidget->hide();
 }
 
@@ -638,6 +623,10 @@ void EditingTools::updateAgMask(int)
 {
     QString filename = movableListWidget->currentItem()->text();
     int idx = m_filesMap[filename];
+    QImage* tmp = m_previewWidget->getMask();
+    delete m_antiGhostingMasksList[m_currentAgMaskIndex];
+    m_antiGhostingMasksList.replace(m_currentAgMaskIndex, tmp);
+    m_currentAgMaskIndex = idx;
     setAntiGhostingWidget(m_antiGhostingMasksList[idx], m_HV_offsets[idx]);
     updateMovable(idx);
 }
@@ -652,11 +641,62 @@ void EditingTools::applySavedAgMask()
     QString filename = movableListWidget->currentItem()->text();
     int idx = m_filesMap[filename];
     delete m_antiGhostingMasksList[idx];
-    m_antiGhostingMasksList[idx] = new QImage(*m_agWidget->getSavedAgMask());    
-    m_agWidget->update();
+    m_antiGhostingMasksList[idx] = new QImage(*m_previewWidget->getSavedAgMask());    
+    m_previewWidget->setMask(m_antiGhostingMasksList[idx]);
+    m_previewWidget->updatePreviewImage();
 }
 
 void EditingTools::antighostToolButtonPaintToggled(bool toggled)
 {
-    (toggled) ? m_agWidget->setDrawWithBrush() :  m_agWidget->setDrawPath();
+    (toggled) ? m_previewWidget->setDrawWithBrush() :  m_previewWidget->setDrawPath();
+}
+
+void EditingTools::on_recomputePatches_pushButton_clicked()
+{
+    float patchesPercent;
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+    m_patchesEdited = false;
+    recomputePatches_pushButton->setEnabled(false);
+    m_agGoodImageIndex = m_hcm->computePatches(threshold_doubleSpinBox->value(), m_patches, patchesPercent, m_HV_offsets);
+    m_previewWidget->switchViewPatchesMode(true, m_patches, m_gridX, m_gridY);
+    m_previewWidget->renderPatchesMask();
+    totalPatches_lineEdit->setText(QString::number(patchesPercent,'g', 2)+"%");
+    recomputePatches_pushButton->setEnabled(true);
+    QApplication::restoreOverrideCursor();
+}
+
+void EditingTools::on_autoAG_checkBox_toggled(bool toggled)
+{
+    if (toggled) {
+        m_doAutoAntighosting = true;
+        m_patchesEdited = false;
+        antighostToolButton->setEnabled(false);
+        m_previewWidget->switchViewPatchesMode(true, m_patches, m_gridX, m_gridY);
+    }
+    else {
+        m_doAutoAntighosting = false;
+        antighostToolButton->setEnabled(true);
+        m_previewWidget->switchViewPatchesMode(false, m_patches, m_gridX, m_gridY);
+        m_agGoodImageIndex = -1;
+    }
+}
+
+void EditingTools::updateThresholdSlider(int newValue)
+{
+    float newThreshold = ((float)newValue)/10000.f;
+    bool oldState = threshold_doubleSpinBox->blockSignals(true);
+    threshold_doubleSpinBox->setValue( newThreshold );
+    threshold_doubleSpinBox->blockSignals(oldState);
+}
+
+void EditingTools::updateThresholdSpinBox(double newThreshold)
+{
+    bool oldState = threshold_horizontalSlider->blockSignals(true);
+    threshold_horizontalSlider->setValue( (int)(newThreshold*10000) );
+    threshold_horizontalSlider->blockSignals(oldState);
+}
+
+void EditingTools::setPatchesEdited()
+{
+    m_patchesEdited = true;
 }

@@ -5,6 +5,7 @@
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
+ * Copytight (C) 2013 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,9 +21,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- * 
- * @author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
  * $Id: robertson02.h,v 1.3 2006/09/13 11:52:56 gkrawczyk Exp $
  */
@@ -30,12 +28,42 @@
 #ifndef ROBERTSON02_H
 #define ROBERTSON02_H
 
+//! \author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! Adaptation for Luminance HDR
+
 #include <QList>
 #include <QImage>
 
-#include "Libpfs/array2d.h"
-
 #include "HdrCreation/createhdr_common.h"
+
+#include <Libpfs/array2d.h>
+#include <Libpfs/frame.h>
+#include <HdrCreation/fusionoperator.h>
+
+namespace libhdr {
+namespace fusion {
+
+//! \brief Debevec Radiance Map operator
+class RobertsonOperator : public IFusionOperator
+{
+public:
+    RobertsonOperator()
+        : IFusionOperator()
+    {}
+
+private:
+    void computeFusion(const std::vector<FrameEnhanced> &frames, pfs::Frame& frame) const;
+
+    void computeChannel(const DataList& inputData, float* outputData,
+                        size_t width, size_t height,
+                        float minAllowedValue, float maxAllowedValue,
+                        const float* arrayofexptime) const;
+};
+
+}   // fusion
+}   // libhdr
 
 //*
 // * @brief Create HDR image by applying response curve to given images taken with different exposures

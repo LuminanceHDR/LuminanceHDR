@@ -125,7 +125,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
-        <translation>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</translation>
+        <translation type="obsolete">http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</translation>
     </message>
     <message>
         <source>&amp;License Agreement</source>
@@ -146,6 +146,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -338,7 +342,7 @@ Fortsæt?</translation>
     </message>
     <message>
         <source>Error: missing EXIF data</source>
-        <translation>Fejl: Manglende EXIF-data</translation>
+        <translation type="unfinished">Fejl: Manglende EXIF-data</translation>
     </message>
     <message>
         <source>Aligning...</source>
@@ -355,6 +359,46 @@ Fortsæt?</translation>
     <message>
         <source>Aborting...</source>
         <translation>Afbryder...</translation>
+    </message>
+    <message>
+        <source>Anti ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Artifact-free High Dynamic Range Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input/Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doing auto anti ghosting...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -854,6 +898,14 @@ Fortsæt?</translation>
 </source>
         <translation>Du skal enten indlæse en eksisterende HDR-fil (via -l option) eller specificere INPUTFILER for at oprette en ny HDR.</translation>
     </message>
+    <message>
+        <source>Error: Threshold must be in the range [0-1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-b --autoag THRESHOLD   Enable auto antighosting with given threshold.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DnDOption</name>
@@ -894,7 +946,7 @@ Fortsæt?</translation>
     <name>EditingTools</name>
     <message>
         <source>Pan the image to a region</source>
-        <translation>Panorér billedet to en region</translation>
+        <translation type="obsolete">Panorér billedet to en region</translation>
     </message>
     <message>
         <source>Maskable</source>
@@ -915,6 +967,22 @@ Fortsæt?</translation>
     <message>
         <source>Choose a directory and a prefix</source>
         <translation>Vælg en mappe og et præfiks</translation>
+    </message>
+    <message>
+        <source>Add good image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove good image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the previous image in both lists</source>
+        <translation type="unfinished">Vælg det forrige billede i begge lister</translation>
+    </message>
+    <message>
+        <source>Select the next image in both lists</source>
+        <translation type="unfinished">Vælg det næste billede i begge lister</translation>
     </message>
 </context>
 <context>
@@ -945,19 +1013,19 @@ Fortsæt?</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation>Zoom ind</translation>
+        <translation type="obsolete">Zoom ind</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;ind</translation>
+        <translation type="obsolete">Zoom &amp;ind</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation>Zoom ud</translation>
+        <translation type="obsolete">Zoom ud</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>Zoom &amp;ud</translation>
+        <translation type="obsolete">Zoom &amp;ud</translation>
     </message>
     <message>
         <source>&amp;Mode:</source>
@@ -1235,6 +1303,78 @@ p, li { white-space: pre-wrap; }
         <source>&amp;Cancel</source>
         <translation>&amp;Annuller</translation>
     </message>
+    <message>
+        <source>Fill the window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill &amp;window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Artifact-free HDR Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Patches:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recompute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1247,34 +1387,38 @@ p, li { white-space: pre-wrap; }
     <name>HdrCreationManager</name>
     <message>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation>Billedet %1 er et 8-bit-format (LDR), mens de forrige ikke er det.</translation>
+        <translation type="obsolete">Billedet %1 er et 8-bit-format (LDR), mens de forrige ikke er det.</translation>
     </message>
     <message>
         <source>The image %1 has an invalid size.</source>
-        <translation>Billedet %1 har en ugyldig størrelse.</translation>
+        <translation type="obsolete">Billedet %1 har en ugyldig størrelse.</translation>
     </message>
     <message>
         <source>The image %1 is an 16 bit format while the previous ones are not.</source>
-        <translation>Billedet %1 er et 16-bit-format, mens de forrige ikke er det.</translation>
+        <translation type="obsolete">Billedet %1 er et 16-bit-format, mens de forrige ikke er det.</translation>
+    </message>
+    <message>
+        <source>The images have different size.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>HdrInputLoader</name>
     <message>
         <source>ERROR loading %1</source>
-        <translation>FEJL under indlæsning af %1</translation>
+        <translation type="obsolete">FEJL under indlæsning af %1</translation>
     </message>
     <message>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation>FEJL: Filen&lt;br&gt;%1&lt;br&gt; er ikke en 8-bit eller 16-bit tiff.</translation>
+        <translation type="obsolete">FEJL: Filen&lt;br&gt;%1&lt;br&gt; er ikke en 8-bit eller 16-bit tiff.</translation>
     </message>
     <message>
         <source>ERROR: %1</source>
-        <translation>FEJL: %1</translation>
+        <translation type="obsolete">FEJL: %1</translation>
     </message>
     <message>
         <source>ERROR: Failed Loading file: %1</source>
-        <translation>FEJL: Fejl under indlæsning af fil: %1</translation>
+        <translation type="obsolete">FEJL: Fejl under indlæsning af fil: %1</translation>
     </message>
 </context>
 <context>
@@ -1495,7 +1639,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Anti-ghosting (beta!)</source>
-        <translation>Anti-ghosting (beta!)</translation>
+        <translation type="obsolete">Anti-ghosting (beta!)</translation>
     </message>
     <message>
         <source>Gamma</source>
@@ -1507,7 +1651,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Calibration</source>
-        <translation>Kalibrering</translation>
+        <translation type="obsolete">Kalibrering</translation>
     </message>
     <message>
         <source>Amount of iterations:</source>
@@ -1631,7 +1775,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Custom config %1</source>
-        <translation>Brugerdefineret konfiguration %1</translation>
+        <translation type="obsolete">Brugerdefineret konfiguration %1</translation>
     </message>
     <message>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
@@ -1678,7 +1822,7 @@ p, li { white-space: pre-wrap; }
 for the following images:
  &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
 the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ADVARSEL:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR kunne ikke finde de relevante &lt;i&gt;EXIF&lt;/i&gt;-tags
+        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ADVARSEL:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR kunne ikke finde de relevante &lt;i&gt;EXIF&lt;/i&gt;-tags
 for de følgende billeder:
  &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;Du kan stadig fortsætte med at oprette et HDR. For at gøre dette, skal du &lt;b&gt;manualt&lt;/b&gt; indsætte EV (eksponeringsværdier) eller stop-forskelsværdier.        &lt;hr&gt;Hvis du vil have Luminance HDR til at gøre dette &lt;b&gt;automatically&lt;/b&gt;, skal du indlæse billeder, der har mindst det følgende EXIF-data:         &lt;ul&gt;&lt;li&gt;Lukkerhastighed (seconder)&lt;/li&gt;        &lt;li&gt;Blænde (f-tal)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Bearbejdning af billeder leder ofte til tab af EXIF-data.&lt;br&gt;        Du kan foretage en &lt;b&gt;en-til-en-kopiering af EXIF-data&lt;/b&gt; mellem to mængder af billeder via &lt;i&gt;&lt;b&gt;&quot;Værktøjer-&gt;Kopiér EXIF-data...&quot;&lt;/b&gt;&lt;/i&gt;-menupunktet.</translation>
     </message>
@@ -1736,15 +1880,15 @@ for de følgende billeder:
     </message>
     <message>
         <source>Load a camera response curve file</source>
-        <translation>Indlæs en kamera-responskurve-fil</translation>
+        <translation type="obsolete">Indlæs en kamera-responskurve-fil</translation>
     </message>
     <message>
         <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation>Kamera-responskurve (*.m);;Alle filer (*)</translation>
+        <translation type="obsolete">Kamera-responskurve (*.m);;Alle filer (*)</translation>
     </message>
     <message>
         <source>Save a camera response curve file</source>
-        <translation>Gem en kamera-responskurve-fil</translation>
+        <translation type="obsolete">Gem en kamera-responskurve-fil</translation>
     </message>
     <message>
         <source>Weights: </source>
@@ -1773,6 +1917,14 @@ for de følgende billeder:
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Alle EV-værdierne er angivet.&lt;br&gt;Klik nu på næste-knappen.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3405,23 +3557,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Error Opening RAW File</source>
-        <translation>Fejl under indlæsning af RAW-fil</translation>
+        <translation type="obsolete">Fejl under indlæsning af RAW-fil</translation>
     </message>
     <message>
         <source>Error Unpacking RAW File</source>
-        <translation>Fejl under udpakning af RAW-fil</translation>
+        <translation type="obsolete">Fejl under udpakning af RAW-fil</translation>
     </message>
     <message>
         <source>Error Processing RAW File</source>
-        <translation>Fejl under behandling af RAW-fil</translation>
+        <translation type="obsolete">Fejl under behandling af RAW-fil</translation>
     </message>
     <message>
         <source>Memory Error in processing RAW File</source>
-        <translation>Hukommelsesfejl under behandling af RAW-fil</translation>
+        <translation type="obsolete">Hukommelsesfejl under behandling af RAW-fil</translation>
     </message>
     <message>
         <source>Error Creating PFS Frame</source>
-        <translation>Fejl under oprettelse af PFS Frame</translation>
+        <translation type="obsolete">Fejl under oprettelse af PFS Frame</translation>
     </message>
     <message>
         <source>Cannot convert %1 to a float</source>

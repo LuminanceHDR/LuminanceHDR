@@ -33,16 +33,18 @@
 # License along with CCFITS. If not, see <http://www.gnu.org/licenses/>.
 #
 
-if(NOT CCFITS_FOUND)
+#if(NOT CCFITS_FOUND)
 
     find_path(CCFITS_INCLUDE_DIR
         NAMES CCfits/CCfits.h
-        HINTS $ENV{CCFITS_ROOT_DIR}
+        HINTS $ENV{CCFITS_ROOT_DIR} /opt/local/include
+		PATH_SUFFIXES include include/cfitsio /opt/local/include
         DOC "CCFITS include directory.")
         
     find_library(CCFITS_LIBRARY
         NAMES libCCfits.so libCCfits.a libCCfits.dylib libCCfits.la
-        HINTS $ENV{CCFITS_ROOT_DIR}
+        HINTS $ENV{CCFITS_ROOT_DIR} /opt/local/lib
+        PATH_SUFFIXES lib
         DOC "CCFITS library.")
   
     find_package(CFITSIO REQUIRED)
@@ -56,5 +58,5 @@ if(NOT CCFITS_FOUND)
     set(CCFITS_INCLUDE_DIRS ${CCFITS_INCLUDE_DIR} ${CFITSIO_INCLUDE_DIR})
     set(CCFITS_LIBRARIES ${CCFITS_LIBRARY} ${CFITSIO_LIBRARY})
 
-endif(NOT CCFITS_FOUND)
+#endif(NOT CCFITS_FOUND)
 

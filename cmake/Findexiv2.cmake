@@ -37,7 +37,7 @@ if (NOT WIN32)
    # use pkg-config to get the directories and then use these values
    # in the FIND_PATH() and FIND_LIBRARY() calls
    find_package(PkgConfig)
-   pkg_check_modules(PC_EXIV2 QUIET exiv2)
+   pkg_check_modules(PC_EXIV2 exiv2)
    set(EXIV2_DEFINITIONS ${PC_EXIV2_CFLAGS_OTHER})
 endif (NOT WIN32)
 

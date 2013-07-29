@@ -46,9 +46,8 @@ pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
     f_timer.start();
 #endif
 
-    int xSize = frame->getHeight();
-    int ySize = frame->getWidth();
-    pfs::Frame *resizedFrame = new pfs::Frame( xSize, ySize );
+    pfs::Frame *resizedFrame = new pfs::Frame( frame->getHeight(),
+                                               frame->getWidth() );
     
     const ChannelContainer& channels = frame->getChannels();
 

@@ -45,6 +45,7 @@
 #include <QProgressBar>
 #include <QScrollArea>
 #include <QScopedPointer>
+#include <QFutureWatcher>
 
 #include "Common/LuminanceOptions.h"
 
@@ -144,6 +145,8 @@ protected Q_SLOTS:
     void on_Transplant_Exif_Data_action_triggered();
 
     void on_actionFix_Histogram_toggled(bool checked);
+    void on_actionWhite_Balance_triggered();
+    void whiteBalanceDone();
 
     // Tool Bar Handling
     void Text_Under_Icons();
@@ -297,6 +300,10 @@ private:
     TMOProgressIndicator* m_TMProgressBar;
     // Tone Mapping Panel
     TonemappingPanel *tmPanel;
+
+    QFutureWatcher<void> m_futureWatcher;
+    GenericViewer *m_viewerToProcess;
+    bool m_processingAWB;
     
     static QScopedPointer<UpdateChecker> sm_updateChecker;
 };

@@ -41,8 +41,8 @@
 #include <math.h>
 
 #include "Libpfs/progress.h"
-#include "Libpfs/vex/vex.h"
-#include "Libpfs/vex/sse.h"
+#include "Libpfs/utils/numeric.h"
+#include "Libpfs/utils/sse.h"
 #include "Libpfs/array2d.h"
 #include "Libpfs/manip/copy.h"
 
@@ -54,7 +54,7 @@ using namespace std;
 
 // tune the multi-level solver
 #define MODYF 0 /* 1 or 0 (1 is better) */
-#define MINS 16	/* minimum size 4 6 or 100 */
+#define MINS 16 /* minimum size 4 6 or 100 */
 //#define MODYF_SQRT -1.0f /* -1 or 0 */
 #define SMOOTH_IT 1              // orig: 1
 #define BCG_STEPS 20             // orig: 20
@@ -240,7 +240,7 @@ static void exact_sollution( pfs::Array2Df */*F*/, pfs::Array2Df *U )
 //   }
 //   else
 //   {
-//     setArray( U, 0.0f); return;   /* also works well?? */
+//     U.fill(0.0f); return;   /* also works well?? */
   
 //     // TODO: this produces incorrect results
 // //     solve_pde_sor(F,U);
@@ -611,8 +611,8 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		}
 		else {
 			bk=bknum/bkden;
-            vex::vadds(z, bk, p, p, n);
-            vex::vadds(zz, bk, pp, pp, n);
+            pfs::utils::vadds(z, bk, p, p, n);
+            pfs::utils::vadds(zz, bk, pp, pp, n);
 		}                
 		bkden=bknum;
 		atimes(p,z,rows,cols);
@@ -624,9 +624,9 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
         }
 		ak=bknum/akden;
 		atimes(pp,zz,rows,cols);
-        vex::vadds(x, ak, p, x, n);
-        vex::vsubs(r, ak, z, r, n);
-        vex::vsubs(rr, ak, zz, rr, n);
+        pfs::utils::vadds(x, ak, p, x, n);
+        pfs::utils::vsubs(r, ak, z, r, n);
+        pfs::utils::vsubs(rr, ak, zz, rr, n);
 		asolve(r,z, rows, cols);
         znrm = 1.0f;
         *err = snrm(n,r)/bnrm;

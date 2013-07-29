@@ -34,7 +34,7 @@
 #include <QScopedPointer>
 
 #include "Core/TonemappingOptions.h"
-#include "HdrCreation/HdrCreationManager.h"
+#include "HdrWizard/HdrCreationManager.h"
 #include "Libpfs/frame.h"
 #include "ezETAProgressBar.hpp"
 
@@ -82,12 +82,14 @@ private:
 	int maximum;
 	bool started;
 	int quality;
+    float threshold;
+    bool doAutoAntighosting;
     QString saveAlignedImagesPrefix;
 
     void startTonemap();
 
 private slots:
-    void finishedLoadingInputFiles(QStringList);
+    void finishedLoadingInputFiles();
     void ais_failed(QProcess::ProcessError);
 	void errorWhileLoading(QString);
     void createHDR(int);

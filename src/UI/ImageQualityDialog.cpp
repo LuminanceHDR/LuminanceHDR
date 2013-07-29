@@ -30,8 +30,8 @@
 #include "ImageQualityDialog.h"
 #include "ui_ImageQualityDialog.h"
 
-#include <Fileformat/jpegwriter.h>
-#include <Fileformat/pngwriter.h>
+#include <Libpfs/io/jpegwriter.h>
+#include <Libpfs/io/pngwriter.h>
 
 ImageQualityDialog::~ImageQualityDialog() {}
 
@@ -66,13 +66,13 @@ void ImageQualityDialog::on_getSizeButton_clicked()
     int size = 0;
     if (m_format.startsWith("jp"))
     {
-        JpegWriter writer;
+        pfs::io::JpegWriter writer;
         writer.write(*m_frame, params);
         size = writer.getFileSize();
 	}
     else if (m_format.startsWith("png"))
     {
-        PngWriter writer;
+        pfs::io::PngWriter writer;
         writer.write(*m_frame, params);
         size = writer.getFileSize();
 	}

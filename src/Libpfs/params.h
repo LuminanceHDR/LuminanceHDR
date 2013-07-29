@@ -31,11 +31,9 @@
 #include <string>
 #include <boost/any.hpp>
 
-namespace pfs {
+#include <Libpfs/utils/string.h>
 
-struct StringUnsensitiveComp {
-    bool operator()(const std::string& str1, const std::string& str2) const;
-};
+namespace pfs {
 
 struct Param
 {
@@ -62,7 +60,7 @@ struct Param
         }
     }
 
-    //! \throws boost::bad_any_cast
+    //! \throws boost::::bad_any_cast
     template <typename Type>
     const Type& as() const {
         return boost::any_cast<const Type&>(value_);
@@ -80,7 +78,7 @@ private:
 class Params
 {
 public:
-    typedef std::map< std::string, Param, StringUnsensitiveComp > ParamsHolder;
+    typedef std::map< std::string, Param, utils::StringUnsensitiveComp > ParamsHolder;
     typedef ParamsHolder::iterator iterator;
     typedef ParamsHolder::const_iterator const_iterator;
 
@@ -111,6 +109,21 @@ public:
         return holder_.count(key);
     }
 
+    template <typename Type>
+    bool get(const std::string& key, Type& value) const {
+        ParamsHolder::const_iterator it = holder_.find(key);
+        if ( it == holder_.end() ) {
+            return false;
+        }
+
+        try {
+            value = it->second.as<Type>();
+            return true;
+        } catch ( boost::bad_any_cast& ex ) {
+            return false;
+        }
+    }
+
     operator const ParamsHolder& () {
         return holder_;
     }
@@ -124,8 +137,6 @@ public:
 private:
     ParamsHolder holder_;
 };
-
-
 
 } // pfs
 

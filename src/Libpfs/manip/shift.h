@@ -22,18 +22,22 @@
 #ifndef PFS_SHIFT_H
 #define PFS_SHIFT_H
 
-#include "Libpfs/array2d_fwd.h"
+#include <Libpfs/array2d_fwd.h>
+#include <Libpfs/frame.h>
 
 namespace pfs
 {
-// forward declare
+//! \brief shift \c Array2D by \a dx \a dy
+template <typename Type>
+void shift(const Array2D<Type>& in, int dx, int dy, Array2D<Type>& out);
 
 //! \brief shift image by \a dx \a dy
-template <typename Type>
-pfs::Array2D<Type>* shift(const pfs::Array2D<Type>& in, int dx, int dy);
+pfs::Frame* shift(const pfs::Frame& in, int dx, int dy);
+
+// template <typename Type>
+// pfs::Array2D<Type>* shift(const pfs::Array2D<Type>& in, int dx, int dy);
 
 } // pfs
 
-#include "shift.hxx"
-
+#include <Libpfs/manip/shift.hxx>
 #endif // PFS_SHIFT_H

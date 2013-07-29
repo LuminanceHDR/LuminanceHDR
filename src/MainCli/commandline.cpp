@@ -149,6 +149,7 @@ static struct option cmdLineOptions[] = {
     { "output", required_argument, NULL, 'o' },
     { "quality", required_argument, NULL, 'q' },
     { "savealigned", required_argument, NULL, 'd' },
+    { "autoag", required_argument, NULL, 'b' },
     { NULL, 0, NULL, 0 }
 };
 
@@ -160,6 +161,8 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     tmopts(TMOptionsOperations::getDefaultTMOptions()),
     verbose(false),
 	quality(100),
+    threshold(0.5f),
+    doAutoAntighosting(false),
     saveAlignedImagesPrefix("")
 {
     hdrcreationconfig.weights = TRIANGULAR;
@@ -180,7 +183,7 @@ void CommandLineInterfaceManager::parseArgs()
 //        cliOptions += cmdLineOptions[i].val;
 //    }
 
-    while( (c = getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:u:q:d:", cmdLineOptions, &optionIndex)) != -1 )
+    while( (c = getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:u:q:d:b:", cmdLineOptions, &optionIndex)) != -1 )
     {
         switch ( c )
         {
@@ -417,6 +420,12 @@ void CommandLineInterfaceManager::parseArgs()
         case 'd':
             saveAlignedImagesPrefix = QString(optarg);
             break;
+        case 'b':
+            threshold = QString(optarg).toFloat();
+			if (threshold < 0.0f ||  threshold > 1.0f)
+            	printErrorAndExit(tr("Error: Threshold must be in the range [0-1]."));
+            doAutoAntighosting = true;
+            break;
         case '?':
             printErrorAndExit(tr("Error: Unknown option %1.").arg(optopt));
         case ':':
@@ -469,19 +478,15 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
             printIfVerbose(QObject::tr("Temporary directory: %1").arg(luminance_options.getTempDir()), verbose);
             printIfVerbose(QObject::tr("Using %1 threads.").arg(luminance_options.getNumThreads()), verbose);
         }
-
         hdrCreationManager.reset( new HdrCreationManager(true) );
-        connect(hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
+        connect(hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(finishedLoadingInputFiles()));
         connect(hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(createHDR(int)));
         connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 		connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
-		//connect(hdrCreationManager.data(), SIGNAL(maximumValue(int)),this, SLOT(setProgressBar(int)));
-		//connect(hdrCreationManager.data(), SIGNAL(nextstep(int)),this, SLOT(updateProgressBar(int)));
 		connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
 			
         hdrCreationManager->setConfig(hdrcreationconfig);
-        hdrCreationManager->setFileList(inputFiles);
-        hdrCreationManager->loadInputFiles();
+        hdrCreationManager->loadFiles(inputFiles);
     }
     else
     {
@@ -501,20 +506,21 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
     }
 }
 
-void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLackingExif)
+void CommandLineInterfaceManager::finishedLoadingInputFiles()
 {
-    if (filesLackingExif.size()!=0 && ev.isEmpty())
+    QStringList filesLackingExif = hdrCreationManager->getFilesWithoutExif();
+    if (filesLackingExif.size() !=0 && ev.isEmpty())
     {
         printErrorAndExit(tr("Error: Exif data missing in images and EV values not specified on the commandline, bailing out."));
     }
     if (!ev.isEmpty())
     {
-        for (int i=0; i < ev.size(); i++)
-            hdrCreationManager->setEV(ev.at(i),i);
+        for (int i = 0; i < ev.size(); i++)
+            hdrCreationManager->getFile(i).setEV(ev.at(i));
 
         printIfVerbose( tr("EV values have been assigned.") , verbose);
     }
-    hdrCreationManager->checkEVvalues();
+    //hdrCreationManager->checkEVvalues();
     if (alignMode == AIS_ALIGN)
     {
         hdrCreationManager->align_with_ais();
@@ -542,15 +548,26 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
     printIfVerbose( tr("Creating (in memory) the HDR.") , verbose);
     
     if (errorcode == 0 && alignMode != NO_ALIGN && saveAlignedImagesPrefix != "") {
-        if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) 
-            hdrCreationManager->saveLDRs(saveAlignedImagesPrefix);
-        else
-            hdrCreationManager->saveMDRs(saveAlignedImagesPrefix);
+        hdrCreationManager->saveImages(saveAlignedImagesPrefix);
     }
 
     hdrCreationManager->removeTempFiles();
-
-    HDR.reset( hdrCreationManager->createHdr(false,1) );
+    if (doAutoAntighosting) {
+        QList<QPair<int, int> > dummyOffset;
+        QStringList::ConstIterator it = inputFiles.begin();
+        while( it != inputFiles.end() ) {
+            dummyOffset.append(qMakePair(0,0));
+            ++it;
+        }
+        ProgressHelper ph;
+        bool patches[agGridSize][agGridSize];
+        float patchesPercent;
+        int h0 = hdrCreationManager->computePatches(threshold, patches, patchesPercent, dummyOffset);
+        HDR.reset( hdrCreationManager->doAntiGhosting(patches, h0, false, &ph) ); // false means auto anti ghosting
+    }
+    else {
+        HDR.reset( hdrCreationManager->createHdr(false,1) );
+    }
     saveHDR();
 }
 
@@ -669,6 +686,7 @@ void CommandLineInterfaceManager::printHelp(char * progname)
             "\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
             "\t" + tr("-o --output LDR_FILE    File name you want to save your tone mapped LDR to.") + "\n" +
             "\t" + tr("-q --quality VALUE      Quality of the saved tone mapped file (0-100).") + "\n" +
+            "\t" + tr("-b --autoag THRESHOLD   Enable auto antighosting with given threshold.") + "\n" +
             "\t" + tr("                        (No tonemapping is performed unless -o is specified).") + "\n\n" +
             tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
     printErrorAndExit(help);

@@ -31,7 +31,7 @@
 #include <cassert>
 
 #include <Libpfs/array2d.h>
-#include <Libpfs/vex/vex.h>
+#include <Libpfs/utils/numeric.h>
 
 using namespace std;
 
@@ -136,41 +136,15 @@ const Type& Array2D<Type>::operator()( size_t index ) const
 }
 
 template <typename Type>
-void Array2D<Type>::reset(const Type& value)
+void Array2D<Type>::fill(const Type& value)
 {
     std::fill(m_data.begin(), m_data.end(), value);
 }
 
 template <typename Type>
-void setArray(Array2D<Type>& array, const Type& value)
+void Array2D<Type>::reset()
 {
-    array.reset(value);
-}
-
-template <typename Type>
-void multiplyArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& y)
-{
-    assert( x.getRows() == y.getRows() );
-    assert( x.getCols() == y.getCols() );
-    assert( x.getRows() == z.getRows() );
-    assert( x.getCols() == z.getCols() );
-
-    vex::vmul(x.getRawData(), y.getRawData(),
-              z.getRawData(),
-              x.getRows()*x.getCols());
-}
-
-template <typename Type>
-void divideArray(Array2D<Type>& z, const Array2D<Type>& x, const Array2D<Type>& y)
-{
-    assert( x.getRows() == y.getRows() );
-    assert( x.getCols() == y.getCols() );
-    assert( x.getRows() == z.getRows() );
-    assert( x.getCols() == z.getCols() );
-
-    vex::vdiv( x.getRawData(), y.getRawData(),
-               z.getRawData(),
-               x.getRows()*x.getCols() );
+    std::fill(m_data.begin(), m_data.end(), Type());
 }
 
 } // Libpfs

@@ -1,14 +1,20 @@
 ADD_SUBDIRECTORY(ImageInspector)
 ADD_SUBDIRECTORY(fits)
+ADD_SUBDIRECTORY(InputOutputTest)
+ADD_SUBDIRECTORY(FusionAlgorithms)
+ADD_SUBDIRECTORY(WhiteBalance)
+ADD_SUBDIRECTORY(robustAWB)
 
 # workaround for http://code.google.com/p/googletest/issues/detail?id=408
 IF(MSVC_VERSION EQUAL 1700)
-    ADD_DEFINITIONS(-D_VARIADIC_MAX=10)
+ADD_DEFINITIONS(-D_VARIADIC_MAX=10)
 ENDIF()
 
 FIND_PACKAGE(GTest)
 
 IF(GTEST_FOUND)
+find_package(Boost COMPONENTS program_options REQUIRED)
+
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
 
@@ -36,6 +42,12 @@ TARGET_LINK_LIBRARIES(TestXYZ2RGB pfs PrintArray2D
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestXYZ2RGB TestXYZ2RGB)
+
+ADD_EXECUTABLE(TestCMYK2RGB TestCMYK2RGB.cpp)
+TARGET_LINK_LIBRARIES(TestCMYK2RGB PrintArray2D
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT})
+ADD_TEST(TestCMYK2RGB TestCMYK2RGB)
 
 ADD_LIBRARY(ContrastDomain STATIC
     mantiuk06/contrast_domain.cpp
@@ -104,6 +116,12 @@ TARGET_LINK_LIBRARIES(TestPfsShift pfs
     ${CMAKE_THREAD_LIBS_INIT})
 ADD_TEST(TestPfsShift TestPfsShift)
 
+ADD_EXECUTABLE(TestConvertSample TestConvertSample.cpp)
+TARGET_LINK_LIBRARIES(TestConvertSample PrintArray2D
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT})
+ADD_TEST(TestConvertSample TestConvertSample)
+
 ADD_EXECUTABLE(TestPfsCut TestPfsCut.cpp SeqInt.h)
 TARGET_LINK_LIBRARIES(TestPfsCut pfs PrintArray2D
     ${GTEST_BOTH_LIBRARIES}
@@ -124,7 +142,40 @@ TARGET_LINK_LIBRARIES(TestFloatRgb common pfs
     ${LIBS})
 ADD_TEST(TestFloatRgb TestFloatRgb)
 
+ADD_EXECUTABLE(TestMTB TestMTB.cpp)
+TARGET_LINK_LIBRARIES(TestMTB common pfs hdrcreation
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${LIBS})
+ADD_TEST(TestMTB TestMTB)
+
+ADD_EXECUTABLE(TestMinMax TestMinMax.cpp)
+TARGET_LINK_LIBRARIES(TestMinMax ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+ADD_TEST(TestMinMax TestMinMax)
+
 ADD_EXECUTABLE(TestImageQualityDialog TestImageQualityDialog.cpp)
 TARGET_LINK_LIBRARIES(TestImageQualityDialog ui fileformat pfs common ${LIBS})
+
+ADD_EXECUTABLE(TestHdrCreationWizard TestHdrCreationWizard.cpp)
+IF(APPLE OR MSVC)
+    TARGET_LINK_LIBRARIES(TestHdrCreationWizard
+    ${LUMINANCE_MODULES_GUI} ${LIBS})
+ELSEIF(UNIX)
+    TARGET_LINK_LIBRARIES(TestHdrCreationWizard
+    -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group
+    ${LIBS})
+ENDIF()
+
+ADD_EXECUTABLE(TestFusionOperator TestFusionOperator.cpp)
+TARGET_LINK_LIBRARIES(TestFusionOperator
+        ${Boost_PROGRAM_OPTIONS_LIBRARY}
+        ${LUMINANCE_MODULES_CLI} ${LUMINANCE_MODULES_GUI} ${LIBS})
+
+ADD_EXECUTABLE(TestPoissonSolver TestPoissonSolver.cpp)
+TARGET_LINK_LIBRARIES(TestPoissonSolver hdrwizard pfs pfstmo 
+    ${GTEST_BOTH_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${LIBS})
+ADD_TEST(TestPoissonSolver TestPoissonSolver)
 
 ENDIF(GTEST_FOUND)

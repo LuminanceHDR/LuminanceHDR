@@ -53,30 +53,31 @@ public:
     RGBMappingType getMappingType() const { return m_MappingMethod; }
 
     void toQRgb(float r, float g, float b, QRgb& qrgb) const;
+    void operator()(float r, float g, float b, QRgb& qrgb) const {
+        this->toQRgb(r,g,b,qrgb);
+    }
 
     void toUint8(float rI, float gI, float bI,
                  uint8_t& rO, uint8_t& gO, uint8_t& bO) const;
     void operator()(float rI, float gI, float bI,
-                    uint8_t& rO, uint8_t& gO, uint8_t& bO) const
-    {
+                    uint8_t& rO, uint8_t& gO, uint8_t& bO) const {
         this->toUint8(rI, gI, bI, rO, gO, bO);
     }
 
     void toUint16(float r, float g, float b,
                   uint16_t& red, uint16_t& green, uint16_t& blue) const;
     void operator()(float rI, float gI, float bI,
-                    uint16_t& rO, uint16_t& gO, uint16_t& bO) const
-    {
+                    uint16_t& rO, uint16_t& gO, uint16_t& bO) const {
         this->toUint16(rI, gI, bI, rO, gO, bO);
     }
 
     void toFloat(float rI, float gI, float bI,
                  float& rO, float& gO, float& bO) const;
     void operator()(float rI, float gI, float bI,
-                    float& rO, float& gO, float& bO) const
-    {
+                    float& rO, float& gO, float& bO) const {
         this->toFloat(rI, gI, bI, rO, gO, bO);
     }
+
 private:
     struct RgbF3 {
         RgbF3(float r, float g, float b)

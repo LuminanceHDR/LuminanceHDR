@@ -32,6 +32,7 @@
 
 #include <string>
 #include <vector>
+#include <boost/shared_ptr.hpp>
 
 #include <Libpfs/channel.h>
 #include <Libpfs/tag.h>
@@ -49,18 +50,19 @@ typedef std::vector< Channel* > ChannelContainer;
 class Frame
 {
 public:
-    Frame(size_t width, size_t height);
+    Frame(size_t width = 0, size_t height = 0);
     ~Frame();
 
-    //! \return width of the frame (in pixels).
-    inline
-    size_t getWidth() const
-    { return m_width; }
+    bool isValid() const {
+        return (getWidth() > 0 && getHeight() > 0);
+    }
 
+    //! \return width of the frame (in pixels).
+    inline size_t getWidth() const  { return m_width; }
     //! \return height of the frame (in pixels).
-    inline
-    size_t getHeight() const
-    { return m_height; }
+    inline size_t getHeight() const { return m_height; }
+    //! \return height * width
+    inline size_t size() const      { return m_height*m_width; }
 
     //! \brief Changes the size of the frame
     void resize(size_t width, size_t height);
@@ -118,7 +120,6 @@ public:
 
     const ChannelContainer& getChannels() const;
 
-
     //! \brief Returns TagContainer that can be used to access or modify
     //! tags associated with this Frame object.
     TagContainer& getTags();
@@ -126,17 +127,6 @@ public:
     //! Returns TagContainer that can be used to access or modify
     //! tags associated with this Frame object.
     const TagContainer& getTags() const;
-
-    //! \brief exif data for the current \c Frame
-//    const ::pfs::exif::exif_data& exif() const
-//    {
-//        return m_exifData;
-//    }
-
-//    ::pfs::exif::exif_data& exif()
-//    {
-//        return m_exifData;
-//    }
 
     void swap(Frame& other);
 
@@ -147,8 +137,13 @@ private:
     TagContainer m_tags;
     ChannelContainer m_channels;
 
-    // ::pfs::exif::exif_data m_exifData;
+    // cache for X Y Z
+    Channel* m_X;
+    Channel* m_Y;
+    Channel* m_Z;
 };
+
+typedef boost::shared_ptr< pfs::Frame > FramePtr;
 
 } // namespace pfs
 

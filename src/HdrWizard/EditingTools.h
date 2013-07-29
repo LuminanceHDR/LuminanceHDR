@@ -33,10 +33,7 @@
 #include "ui_EditingTools.h"
 #include "PreviewWidget.h"
 #include "Common/global.h"
-#include "Viewers/SelectionTool.h"
-#include "HdrCreation/HdrCreationManager.h"
-#include "PreviewWidget.h"
-#include "AntiGhostingWidget.h"
+#include "HdrWizard/HdrCreationManager.h"
 #include "Common/LuminanceOptions.h"
 
 class HistogramLDR;
@@ -48,36 +45,44 @@ Q_OBJECT
 public:
 	EditingTools(HdrCreationManager *, QWidget *parent=0);
 	~EditingTools();
+    bool isAutoAntighostingEnabled()   { return m_doAutoAntighosting == true; }
+    bool isManualAntighostingEnabled() { return m_doManualAntighosting == true; }
+    int getAgGoodImageIndex()          { return m_agGoodImageIndex; }
 protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 private:
 	QList<QImage*> m_originalImagesList;
 	QList<QImage*> m_antiGhostingMasksList;
+    QImage* m_antiGhostingMask;
+    int m_currentAgMaskIndex;
 	QStringList m_fileList;
 	HdrCreationManager *m_hcm;
     QMap<QString, int> m_filesMap;
 	QScrollArea *m_scrollArea;
 	PreviewWidget *m_previewWidget;
-	AntiGhostingWidget *m_agWidget;
 	int m_additionalShiftValue;
 	QList< QPair<int,int> > m_HV_offsets;
 	HistogramLDR *m_histogram;
 	QSize m_previousPreviewWidgetSize;
-	PanIconWidget *m_panIconWidget;
-	QToolButton *m_cornerButton;
-	SelectionTool *m_selectionTool;
 	bool m_imagesSaved;
-    int m_goodImageIndex;
+    int m_agGoodImageIndex;
     bool m_antiGhosting;
 	LuminanceOptions m_luminanceOptions;
 	QVector<float> m_expotimes;
+    bool m_patches[agGridSize][agGridSize];
+    int m_gridX;
+    int m_gridY;
+    bool m_doAutoAntighosting;
+    bool m_doManualAntighosting;
+    QImage* m_patchesMask;
+    bool m_patchesEdited;
 
 	void setAntiGhostingWidget(QImage*, QPair<int, int>);
+    void cropAgMasks(const QRect& ca);
+    void computeAgMask();
+
 private slots:
-	void slotPanIconSelectionMoved(QRect);
-	void slotPanIconHidden();
-	void slotCornerButtonPressed();
 	void saveImagesButtonClicked();
 	void updatePivot(int);
 	void updateMovable(int);
@@ -98,7 +103,8 @@ private slots:
 	void enterWhatsThis();
 	void zoomIn();
 	void zoomOut();
-	void fitPreview(bool);
+	void fitPreview();
+	void fillPreview();
 	void origSize();
 	void cropStack();
 	void nextClicked();
@@ -107,7 +113,6 @@ private slots:
 	void antighostToolButtonToggled(bool);
 	void blendModeCBIndexChanged(int);
 	void setupConnections();
-	void updateScrollBars(QPoint diff);
 	void restoreSaveImagesButtonState();
     void addGoodImage();
     void removeGoodImage();
@@ -115,6 +120,11 @@ private slots:
     void antighostToolButtonPaintToggled(bool);
     void saveAgMask();
     void applySavedAgMask();
+    void on_recomputePatches_pushButton_clicked();
+    void on_autoAG_checkBox_toggled(bool toggled);
+    void updateThresholdSlider(int newValue);
+    void updateThresholdSpinBox(double newThreshold);
+    void setPatchesEdited();
 };
 
 #endif

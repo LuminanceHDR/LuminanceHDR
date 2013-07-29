@@ -30,9 +30,7 @@
 #ifndef FROMLDRPFSTOQIMAGE
 #define FROMLDRPFSTOQIMAGE
 
-#include <stdint.h>
 #include <QImage>
-
 #include <Libpfs/colorspace/rgbremapper.h>
 
 // forward declaration

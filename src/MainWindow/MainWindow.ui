@@ -178,6 +178,7 @@
    <addaction name="normalSizeAct"/>
    <addaction name="separator"/>
    <addaction name="actionFix_Histogram"/>
+   <addaction name="actionWhite_Balance"/>
    <addaction name="separator"/>
    <addaction name="actionSoft_Proofing"/>
    <addaction name="actionGamut_Check"/>
@@ -837,7 +838,7 @@
     <bool>false</bool>
    </property>
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Show Preview Panel</string>
@@ -1012,6 +1013,19 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+  <action name="actionWhite_Balance">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/preview_white_balance.png</normaloff>:/new/prefix1/images/preview_white_balance.png</iconset>
+   </property>
+   <property name="text">
+    <string>White Balance</string>
+   </property>
+   <property name="toolTip">
+    <string>Fix color cast, can be slow</string>
    </property>
   </action>
  </widget>

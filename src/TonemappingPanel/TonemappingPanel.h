@@ -108,6 +108,7 @@ protected:
     PreviewPanel *m_previewPanel;
 
     void createDatabase();
+    int m_mainWinNumber;
 
     pfs::Frame *m_currentFrame;
     QScopedPointer<Ui::TonemappingPanel> m_Ui;
@@ -145,7 +146,7 @@ protected Q_SLOTS:
     void updatePreviewsRB(bool);
 
 public:
-    TonemappingPanel(PreviewPanel *p = 0, QWidget *parent = 0);
+    TonemappingPanel(int mainWinNumber, PreviewPanel *p = 0, QWidget *parent = 0);
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();

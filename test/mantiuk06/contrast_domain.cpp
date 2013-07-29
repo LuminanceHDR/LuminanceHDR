@@ -62,9 +62,9 @@
 #include "arch/math.h"
 #include "TonemappingOperators/pfstmo.h"
 
-#include "Libpfs/vex/sse.h"
-#include "Libpfs/vex/vex.h"
-#include "Libpfs/vex/dotproduct.h"
+#include "Libpfs/utils/sse.h"
+#include "Libpfs/utils/numeric.h"
+#include "Libpfs/utils/dotproduct.h"
 #include "Libpfs/utils/msec_timer.h"
 
 namespace test_mantiuk06
@@ -260,7 +260,7 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
 // return = a - b
  void matrix_subtract(const int n, const float* const a, float* const b)
 {
-    vex::vsub(a, b, b, n);
+    pfs::utils::vsub(a, b, b, n);
 }
 
 // copy matix a to b, return = a 
@@ -272,7 +272,7 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
 // multiply matrix a by scalar val
 void matrix_multiply_const(const int n, float* const a, const float val)
 {
-     vex::vsmul(a, val, a, n);
+     pfs::utils::vsmul(a, val, a, n);
 }
 
 // alloc memory for the float table
@@ -312,7 +312,7 @@ void matrix_multiply_const(const int n, float* const a, const float val)
 // multiply vector by vector (each vector should have one dimension equal to 1)
 float matrix_DotProduct(const int n, const float* const a, const float* const b)
 {
-  return vex::dotProduct(a, b, n);
+    return pfs::utils::dotProduct(a, b, n);
 }
 
 // set zeros for matrix elements
@@ -441,7 +441,7 @@ void pyramid_calculate_scale_factor(const pyramid_t* pyramid, pyramid_t* pC)
 // G = G * C
  void scale_gradient(const int n, float* G, const float* C)
 {
-    vex::vmul(G, C, G, n); // VEX_vmul(G, C, G, n);
+    pfs::utils::vmul(G, C, G, n);
 }
 
 // scale gradients for the whole one pyramid with the use of (Cx,Cy) from the other pyramid
@@ -1056,7 +1056,6 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   
   const float clip_min = 1e-7f*Ymax;
   
-  //TODO: use VEX, if you can
   for (int j = 0; j < n; j++)
   {
     if ( unlikely(R[j] < clip_min) ) R[j] = clip_min;

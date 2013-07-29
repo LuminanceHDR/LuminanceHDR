@@ -42,9 +42,11 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
+#include <Libpfs/utils/transform.h>
 #include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 using namespace std;
+using namespace pfs;
 using namespace boost::assign;
 
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
@@ -65,25 +67,12 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     in_frame->getXYZChannels( Xc, Yc, Zc );
     assert( Xc != NULL && Yc != NULL && Zc != NULL );
 
-    const int width   = in_frame->getWidth();
-    const int height  = in_frame->getHeight();
+    QImage* temp_qimage = new QImage(in_frame->getWidth(), in_frame->getHeight(),
+                                     QImage::Format_RGB32);
 
-    QImage* temp_qimage = new QImage(width, height, QImage::Format_RGB32);
-
-    // DAVIDE - FIX THIS FUNCTION
-    const float* p_R = Xc->data();
-    const float* p_G = Yc->data();
-    const float* p_B = Zc->data();
-
-    QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
-
-    RGBRemapper rgbRemapper(min_luminance, max_luminance, mapping_method);
-
-#pragma omp parallel for shared(pixels)
-    for (int idx = 0; idx < height*width; ++idx)
-    {
-        rgbRemapper.toQRgb(p_R[idx], p_G[idx], p_B[idx], pixels[idx]);
-    }
+    utils::transform(Xc->begin(), Xc->end(), Yc->begin(), Zc->begin(),
+                     reinterpret_cast<QRgb*>(temp_qimage->bits()),
+                     RGBRemapper(min_luminance, max_luminance, mapping_method));
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();

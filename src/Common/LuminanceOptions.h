@@ -57,76 +57,92 @@ public:
 
 public Q_SLOTS:
     // RAW settings
-    bool    isRawFourColorRGB();
+    bool    isRawFourColorRGB() const;
     void    setRawFourColorRGB(bool);
-    bool    isRawDoNotUseFujiRotate();
+    bool    isRawDoNotUseFujiRotate() const;
     void    setRawDoNotUseFujiRotate(bool);
-    double  getRawAber0();
+
+    // Chromatic Aberation
+    bool    isRawUseChromaAber() const;
+    void    setRawUseChromaAber(bool);
+    double  getRawAber0() const;
     void    setRawAber0(double);
-    double  getRawAber1();
+    double  getRawAber1() const;
     void    setRawAber1(double);
-    double  getRawAber2();
+    double  getRawAber2() const;
     void    setRawAber2(double);
-    double  getRawAber3();
+    double  getRawAber3() const;
     void    setRawAber3(double);
-    double  getRawGamm0();
+    double  getRawGamm0() const;
     void    setRawGamm0(double);
-    double  getRawGamm1();
+    double  getRawGamm1() const;
     void    setRawGamm1(double);
-    int     getRawTemperatureKelvin();
-    void    setRawTemperatureKelvin(int);
-    float   getRawGreen();
-    void    setRawGreen(float);
-    float   getRawUserMul0();
-    void    setRawUserMul0(float);
-    float   getRawUserMul1();
-    void    setRawUserMul1(float);
-    float   getRawUserMul2();
-    void    setRawUserMul2(float);
-    float   getRawUserMul3();
-    void    setRawUserMul3(float);
-    bool    isRawAutoBrightness();
-    void    setRawAutoBrightness(bool);
-    float   getRawBrightness();
-    void    setRawBrightness(float f);
-    int     getRawHalfSize();
-    void    setRawHalfSize(int);
-    int     getRawWhiteBalanceMethod();
+    // ---
+    // White Balance
+    int     getRawWhiteBalanceMethod() const;
     void    setRawWhiteBalanceMethod(int);
-    int     getRawOutputColor();
+    int     getRawTemperatureKelvin() const;
+    void    setRawTemperatureKelvin(int);
+    float   getRawGreen() const;
+    void    setRawGreen(float);
+    float   getRawUserMul0() const;
+    void    setRawUserMul0(float);
+    float   getRawUserMul1() const;
+    void    setRawUserMul1(float);
+    float   getRawUserMul2() const;
+    void    setRawUserMul2(float);
+    float   getRawUserMul3() const;
+    void    setRawUserMul3(float);
+    // ----
+    // Brightness
+    bool    isRawAutoBrightness() const;
+    void    setRawAutoBrightness(bool);
+    float   getRawAutoBrightnessThreshold() const;
+    void    setRawAutoBrightnessThreshold(float);
+    float   getRawBrightness() const;
+    void    setRawBrightness(float f);
+    // ---
+    // Noise Reduction
+    // ---
+    int     getRawHalfSize() const;
+    void    setRawHalfSize(int);
+    int     getRawOutputColor() const;
     //void    setRawOutputColor(int);
-    QString getRawOutputProfile();
+    QString getRawOutputProfile() const;
     void    setRawOutputProfile(const QString&);
-    QString getRawCameraProfile();
+    QString getRawCameraProfile() const;
     void    setRawCameraProfile(const QString&);
-    int     getRawUserFlip();
+    int     getRawUserFlip() const;
     //void    setRawUserFlip(int);
-    int     getRawUserQuality();
+    int     getRawUserQuality() const;
     void    setRawUserQuality(int);
-    int     getRawMedPasses();
+    int     getRawMedPasses() const;
     void    setRawMedPasses(int);
-    int     getRawHighlightsMode();
+    // Highlights
+    int     getRawHighlightsMode() const;
     void    setRawHighlightsMode(int);
-    int     getRawLevel();
+    int     getRawLevel() const; // reconstruction level
     void    setRawLevel(int);
-    float   getRawBrightnessThreshold();
-    void    setRawBrightnessThreshold(float);
-    float   getRawMaximumThreshold();
+    // ---
+    float   getRawMaximumThreshold() const;
     void    setRawMaximumThreshold(float);
-    bool    isRawUseBlack();
+
+    // Black/White Point
+    bool    isRawUseBlack() const;
     void    setRawUseBlack(bool);
-    int     getRawUserBlack();
+    int     getRawUserBlack() const;
     void    setRawUserBlack(int);
-    bool    isRawUseSaturation();
+    bool    isRawUseSaturation() const;
     void    setRawUseSaturation(bool);
-    int     getRawUserSaturation();
+    int     getRawUserSaturation() const;
     void    setRawUserSaturation(int);
-    bool    isRawUseNoiseReduction();
+    // ---
+    // Noise Reduction
+    bool    isRawUseNoiseReduction() const;
     void    setRawUseNoiseReduction(bool);
-    float   getRawNoiseReductionThreshold();
+    float   getRawNoiseReductionThreshold() const;
     void    setRawNoiseReductionThreshold(float);
-    bool    isRawUseChroma();
-    void    setRawUseChroma(bool);
+    // ---
 
     // Language
     // 2-chars ISO 639 language code for Luminance's user interface

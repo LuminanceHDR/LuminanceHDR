@@ -4,7 +4,6 @@ FILE(GLOB LIBPFS_HXX *.hxx)
 # List all .cpp files in this directory
 FILE(GLOB LIBPFS_CPP *.cpp)
 
-ADD_SUBDIRECTORY(vex)
 ADD_SUBDIRECTORY(manip)
 ADD_SUBDIRECTORY(utils)
 ADD_SUBDIRECTORY(tm)

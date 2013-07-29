@@ -30,7 +30,7 @@
 #include <numeric>
 #include <functional>
 
-#include <Libpfs/vex/vex.h>
+#include <Libpfs/utils/numeric.h>
 #include <boost/assign/std/vector.hpp> // for 'operator+=()'
 
 using namespace std;
@@ -176,7 +176,7 @@ protected:
                        this->input1.end(),
                        this->input2.begin(),
                        this->outputReference.begin(),
-                       vex::numeric::vadds<ValueType>(s_));
+                       pfs::utils::numeric::vadds<ValueType>(s_));
     }
 
     void computeVsub()
@@ -193,7 +193,7 @@ protected:
                        this->input1.end(),
                        this->input2.begin(),
                        this->outputReference.begin(),
-                       vex::numeric::vsubs<ValueType>(s_));
+                       pfs::utils::numeric::vsubs<ValueType>(s_));
     }
 
     void compareTime(double timeOld, double timeNew)
@@ -222,7 +222,7 @@ TYPED_TEST_CASE(TestVex, Implementations);
 
 TYPED_TEST(TestVex, vmul)
 {
-    vex::vmul(this->input1.data(),
+    pfs::utils::vmul(this->input1.data(),
               this->input2.data(),
               this->outputComputed.data(),
               this->outputComputed.size());
@@ -233,7 +233,7 @@ TYPED_TEST(TestVex, vmul)
 
 TYPED_TEST(TestVex, vdiv)
 {
-    vex::vdiv(this->input1.data(),
+    pfs::utils::vdiv(this->input1.data(),
               this->input2.data(),
               this->outputComputed.data(),
               this->outputComputed.size());
@@ -244,7 +244,7 @@ TYPED_TEST(TestVex, vdiv)
 
 TYPED_TEST(TestVex, vadd)
 {
-    vex::vadd(this->input1.data(),
+    pfs::utils::vadd(this->input1.data(),
               this->input2.data(),
               this->outputComputed.data(),
               this->outputComputed.size());
@@ -254,7 +254,7 @@ TYPED_TEST(TestVex, vadd)
 }
 TYPED_TEST(TestVex, vadds)
 {
-    vex::vadds(this->input1.data(),
+    pfs::utils::vadds(this->input1.data(),
                this->s_,
                this->input2.data(),
                this->outputComputed.data(),
@@ -266,7 +266,7 @@ TYPED_TEST(TestVex, vadds)
 
 TYPED_TEST(TestVex, vsub)
 {
-    vex::vsub(this->input1.data(),
+    pfs::utils::vsub(this->input1.data(),
               this->input2.data(),
               this->outputComputed.data(),
               this->outputComputed.size());
@@ -276,7 +276,7 @@ TYPED_TEST(TestVex, vsub)
 }
 TYPED_TEST(TestVex, vsubs)
 {
-    vex::vsubs(this->input1.data(),
+    pfs::utils::vsubs(this->input1.data(),
                this->s_,
                this->input2.data(),
                this->outputComputed.data(),

@@ -295,7 +295,7 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setRawUseBlack( m_Ui->use_black_CB->isChecked() );
     luminance_options.setRawUseSaturation( m_Ui->use_sat_CB->isChecked() );
     luminance_options.setRawUseNoiseReduction( m_Ui->use_noise_CB->isChecked() );
-    luminance_options.setRawUseChroma( m_Ui->use_chroma_CB->isChecked() );
+    luminance_options.setRawUseChromaAber( m_Ui->use_chroma_CB->isChecked() );
     luminance_options.setRawNoiseReductionThreshold( m_Ui->threshold_spinBox->value() );
     luminance_options.setRawUserBlack( m_Ui->user_black_spinBox->value() );
     luminance_options.setRawUserSaturation( m_Ui->user_sat_spinBox->value() );
@@ -688,7 +688,7 @@ void PreferencesDialog::from_options_to_gui()
 
     m_Ui->threshold_horizontalSlider->setValue( luminance_options.getRawNoiseReductionThreshold() );
     m_Ui->threshold_spinBox->setValue( luminance_options.getRawNoiseReductionThreshold() );
-    m_Ui->use_chroma_CB->setChecked( luminance_options.isRawUseChroma() );
+    m_Ui->use_chroma_CB->setChecked( luminance_options.isRawUseChromaAber() );
 
     double r_minv = m_Ui->red_doubleSpinBox->minimum();
     double r_maxv = m_Ui->red_doubleSpinBox->maximum();

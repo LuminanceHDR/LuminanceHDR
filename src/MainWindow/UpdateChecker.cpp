@@ -39,7 +39,7 @@ UpdateChecker::UpdateChecker(QWidget *parent) //, QNetworkAccessManager* network
     LuminanceOptions options;
     if (options.checkForUpdate())
     {
-        connect(this, SIGNAL(updateAvailable()), parent, SLOT(on_updateAvailable()));
+        connect(this, SIGNAL(updateAvailable()), parent, SLOT(onUpdateAvailable()));
         connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
         connect(m_tray, SIGNAL(messageClicked()), this, SLOT(trayMessageClicked()));
         connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayMessageClicked()));

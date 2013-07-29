@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>Informazioni su &amp;Qt</translation>
+        <translation>&amp;Informazioni</translation>
     </message>
     <message>
         <source>A&amp;uthors</source>
@@ -107,8 +107,8 @@ p, li { white-space: pre-wrap; }
         <translation>Lista dei cambiamenti</translation>
     </message>
     <message>
-        <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
-        <translation></translation>
+        <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -318,6 +318,50 @@ Continuare?</translation>
     <message>
         <source>Custom config %1</source>
         <translation>Configurazione personalizzata %1</translation>
+    </message>
+    <message>
+        <source>Anti ghosting</source>
+        <translation>Anti ghosting</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qui puoi attivare l&apos;algoritmo di auto antighosting, settare il valore di soglia e ricalcolare  le patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation>O. Gallo e altri</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Auto anti ghosting</source>
+        <translation>Auto anti ghosting</translation>
+    </message>
+    <message>
+        <source>Artifact-free High Dynamic Range Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation>Soglia</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Input/Output</source>
+        <translation>Input/Output</translation>
+    </message>
+    <message>
+        <source>Loading files...</source>
+        <translation>Caricando i files...</translation>
+    </message>
+    <message>
+        <source>Doing auto anti ghosting...</source>
+        <translation>Eseguendo l&apos;auto anti ghosting...</translation>
     </message>
 </context>
 <context>
@@ -792,11 +836,11 @@ Continuare?</translation>
     </message>
     <message>
         <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
-        <translation>-g --gamma VALUE        Gamma da utilizzare durante il tone mapping. (default: 1) </translation>
+        <translation>-g --gamma VALORE       Gamma da utilizzare durante il tone mapping. (default: 1) </translation>
     </message>
     <message>
         <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation>-r --resize VALUE       Larghezza alla quale vuole ridimensione l&apos;HDR (ridimensionamento applicato prima del gamma e del tone mapping)</translation>
+        <translation>-r --resize VALORE      Larghezza alla quale vuole ridimensione l&apos;HDR (ridimensionamento applicato prima del gamma e del tone mapping)</translation>
     </message>
     <message>
         <source>-t --tmo                Tone mapping operator. Legal values are: </source>
@@ -808,15 +852,23 @@ Continuare?</translation>
     </message>
     <message>
         <source>-o --output LDR_FILE    File name you want to save your tone mapped LDR to.</source>
-        <translation>-o --output LDR_FILE    Name del file in cui salvare l&apos;immagine dopo il tone mapping.</translation>
+        <translation>-o --output LDR_FILE    Nome del file in cui salvare l&apos;immagine dopo il tone mapping.</translation>
     </message>
     <message>
         <source>-q --quality VALUE      Quality of the saved tone mapped file (0-100).</source>
-        <translation>-q --quality VALUE      Qualità dell&apos;immagine che contiene il tone mapping (0-100).</translation>
+        <translation>-q --quality VALORE     Qualità dell&apos;immagine che contiene il tone mapping (0-100).</translation>
     </message>
     <message>
         <source>                        (No tonemapping is performed unless -o is specified).</source>
         <translation>                        (Nessun tonemapping verrà effettuato senza specificare -o).</translation>
+    </message>
+    <message>
+        <source>Error: Threshold must be in the range [0-1].</source>
+        <translation>Errore: La soglia deve essere nell&apos;intervallo [0-1].</translation>
+    </message>
+    <message>
+        <source>-b --autoag THRESHOLD   Enable auto antighosting with given threshold.</source>
+        <translation>-b --autoag SOGLIA      Abilita l&apos;auto antighosting con il dato valore di soglia. </translation>
     </message>
 </context>
 <context>
@@ -858,7 +910,7 @@ Continuare?</translation>
     <name>EditingTools</name>
     <message>
         <source>Pan the image to a region</source>
-        <translation>Inquadra una regione differente dell&apos;immagine</translation>
+        <translation type="obsolete">Inquadra una regione differente dell&apos;immagine</translation>
     </message>
     <message>
         <source>Choose a directory and a prefix</source>
@@ -880,6 +932,22 @@ Continuare?</translation>
     <message>
         <source>R&amp;eference</source>
         <translation>&amp;Riferimento</translation>
+    </message>
+    <message>
+        <source>Add good image</source>
+        <translation>Aggiungi l&apos;immagine buona</translation>
+    </message>
+    <message>
+        <source>Remove good image</source>
+        <translation>Rimuovi l&apos;immagine buona</translation>
+    </message>
+    <message>
+        <source>Select the previous image in both lists</source>
+        <translation>Seleziona in entrambe le liste l&apos;immagine precedente</translation>
+    </message>
+    <message>
+        <source>Select the next image in both lists</source>
+        <translation>Seleziona in entrambe le liste l&apos;immagine successiva</translation>
     </message>
 </context>
 <context>
@@ -910,19 +978,19 @@ Continuare?</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation>Zoom In</translation>
+        <translation type="obsolete">Zoom In</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;In</translation>
+        <translation type="obsolete">Zoom &amp;In</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation>Zoom Out</translation>
+        <translation type="obsolete">Zoom Out</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>Zoom &amp;Out</translation>
+        <translation type="obsolete">Zoom &amp;Out</translation>
     </message>
     <message>
         <source>Pivot Only (P)</source>
@@ -1200,6 +1268,78 @@ p, li { white-space: pre-wrap; }
         <source>Apply saved mask</source>
         <translation>Applica la maschera salvata</translation>
     </message>
+    <message>
+        <source>Fill the window</source>
+        <translation>Riempi la finestra</translation>
+    </message>
+    <message>
+        <source>Fill &amp;window</source>
+        <translation>&amp;Riempi</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qui puoi attivare l&apos;algoritmo di auto antighosting, settare il valore di soglia e ricalcolare  le patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation>O. Gallo e altri</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Auto anti ghosting</source>
+        <translation>Auto anti ghosting</translation>
+    </message>
+    <message>
+        <source>Artifact-free HDR Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Patches:</source>
+        <translation>Patches totali:</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mostra in percentuale il numero di patches calcolate dall&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation>Soglia</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Clicca qui per ricalcolare le patches in base alla soglia selezionata&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Recompute</source>
+        <translation>Ricalcola</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qui puoi selezionare il metodo usato per disegnare la maschera, dimensione del pennello e &quot;forza&quot; della maschera, salvare e applicare una maschera precedentemente salvata&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aggiungi una maschera usando il lazo o il pennello&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Removi la maschera usando il lazo o il pennello&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensione del pennello&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&quot;Forza&quot; della maschera (semi transparente)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1212,34 +1352,38 @@ p, li { white-space: pre-wrap; }
     <name>HdrCreationManager</name>
     <message>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation>L&apos;immagine %1 e&apos; un formato ad 8 bit (LDR) al contrario delle precedenti.</translation>
+        <translation type="obsolete">L&apos;immagine %1 e&apos; un formato ad 8 bit (LDR) al contrario delle precedenti.</translation>
     </message>
     <message>
         <source>The image %1 has an invalid size.</source>
-        <translation>L&apos;immagine %1 ha una dimensione non valida.</translation>
+        <translation type="obsolete">L&apos;immagine %1 ha una dimensione non valida.</translation>
     </message>
     <message>
         <source>The image %1 is an 16 bit format while the previous ones are not.</source>
-        <translation>L&apos;immagine %1 è in formato 16 bit mentre le precedenti non lo sono.</translation>
+        <translation type="obsolete">L&apos;immagine %1 è in formato 16 bit mentre le precedenti non lo sono.</translation>
+    </message>
+    <message>
+        <source>The images have different size.</source>
+        <translation>Le immagini hanno dimensione differente.</translation>
     </message>
 </context>
 <context>
     <name>HdrInputLoader</name>
     <message>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation>ERRORE: Il file&lt;br&gt;%1&lt;br&gt; non è un tiff da 8 o 16 bit.</translation>
+        <translation type="obsolete">ERRORE: Il file&lt;br&gt;%1&lt;br&gt; non è un tiff da 8 o 16 bit.</translation>
     </message>
     <message>
         <source>ERROR: %1</source>
-        <translation>ERRORE:%1</translation>
+        <translation type="obsolete">ERRORE:%1</translation>
     </message>
     <message>
         <source>ERROR: Failed Loading file: %1</source>
-        <translation>ERRORE: Impossibile caricare il file: %1</translation>
+        <translation type="obsolete">ERRORE: Impossibile caricare il file: %1</translation>
     </message>
     <message>
         <source>ERROR loading %1</source>
-        <translation>ERRORE caricando %1</translation>
+        <translation type="obsolete">ERRORE caricando %1</translation>
     </message>
 </context>
 <context>
@@ -1469,7 +1613,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Calibration</source>
-        <translation>Calibrazione</translation>
+        <translation type="obsolete">Calibrazione</translation>
     </message>
     <message>
         <source>[2/2] Choose Custom Configuration</source>
@@ -1601,15 +1745,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load a camera response curve file</source>
-        <translation>Carica il file contenente la curva di risposta</translation>
+        <translation type="obsolete">Carica il file contenente la curva di risposta</translation>
     </message>
     <message>
         <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation>Curva di risposta fotocamera (*.m);;All Files (*)</translation>
+        <translation type="obsolete">Curva di risposta fotocamera (*.m);;All Files (*)</translation>
     </message>
     <message>
         <source>Save a camera response curve file</source>
-        <translation>Salva la curva di risposta</translation>
+        <translation type="obsolete">Salva la curva di risposta</translation>
     </message>
     <message>
         <source> - Response curve: </source>
@@ -1641,7 +1785,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Anti-ghosting (beta!)</source>
-        <translation>Anti-ghosting (beta!)</translation>
+        <translation type="obsolete">Anti-ghosting (beta!)</translation>
     </message>
     <message>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
@@ -1698,7 +1842,24 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Assistente creazione HDR&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Questo assistente vi guiderà nel fondere più immagini con differenti esposizioni in un&apos;unica&lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt; immagine HDR&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Le immagini devono essere riprese dalla stessa macchina fotografica nelle medesime condizioni di luce e possibilmente con l&apos;uso di un cavalletto.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sarete guidati attraverso tutti i passi: importare le immagini,  allinearle, scegliere un profilo per creare l&apos;HDR.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vincoli:&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tutte le immagini devono avere la stessa dimensione&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tutte le immagini devono avere la stessa profondità di colore&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Save Settings</source>
@@ -1706,19 +1867,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Custom config %1</source>
-        <translation>Configurazione personalizzata %1</translation>
+        <translation type="obsolete">Configurazione personalizzata %1</translation>
     </message>
     <message>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
 the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ATTENZIONE:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR non è stato capace di trovare i dati &lt;i&gt;EXIF&lt;/i&gt; per le seguenti immagini:
+        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ATTENZIONE:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR non è stato capace di trovare i dati &lt;i&gt;EXIF&lt;/i&gt; per le seguenti immagini:
  &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;Puoi ancora procedere alla creazione di un HDR, definendo &lt;b&gt;manualmente &lt;/b&gt; il valore EV (exposure values) o la differenza in F/Stops.        &lt;hr&gt;Se vuoi che Luminance HDR faccia questo &lt;b&gt;automaticamente&lt;/b&gt;, devi caricare immagini che abbiano almeno i seguenti dati EXIF::         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;NOTA:&lt;/b&gt; Generalmente i dati EXIF vengono persi durante la postproduzione delle immagini.&lt;br&gt;        Puoi effettuare una copia &lt;b&gt;uno-a-uno dei dati exif&lt;/b&gt; tra due set di immagini utilizzando l&apos;opzione:&lt;i&gt;&lt;b&gt;&quot;Strumenti-&gt;Copia Dati Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
         <source>From File: </source>
         <translation>Da file: </translation>
+    </message>
+    <message>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ATTENZIONE:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR non è stato capace di trovare i dati &lt;i&gt;EXIF&lt;/i&gt; per le seguenti immagini:&lt;ul&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
+        <translation>&lt;/ul&gt;        &lt;hr&gt;Puoi ancora procedere alla creazione di un HDR, definendo &lt;b&gt;manualmente &lt;/b&gt; il valore EV (exposure values) o la differenza in F/Stops.        &lt;hr&gt;Se vuoi che Luminance HDR faccia questo &lt;b&gt;automaticamente&lt;/b&gt;, devi caricare immagini che abbiano almeno i seguenti dati EXIF::         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;NOTA:&lt;/b&gt; Generalmente i dati EXIF vengono persi durante la postproduzione delle immagini.&lt;br&gt;        Puoi effettuare una copia &lt;b&gt;uno-a-uno dei dati exif&lt;/b&gt; tra due set di immagini utilizzando l&apos;opzione:&lt;i&gt;&lt;b&gt;&quot;Strumenti-&gt;Copia Dati Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
 </context>
 <context>
@@ -2605,7 +2774,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Realtime Previews</source>
-        <translation></translation>
+        <translation>Anteprime in tempo reale</translation>
     </message>
     <message>
         <source>Update</source>
@@ -3390,23 +3559,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Error Opening RAW File</source>
-        <translation>Errore nell&apos;apertura del file RAW</translation>
+        <translation type="obsolete">Errore nell&apos;apertura del file RAW</translation>
     </message>
     <message>
         <source>Error Unpacking RAW File</source>
-        <translation>Errore nello scompattare il file RAW</translation>
+        <translation type="obsolete">Errore nello scompattare il file RAW</translation>
     </message>
     <message>
         <source>Error Processing RAW File</source>
-        <translation>Errore nel processare il file RAW</translation>
+        <translation type="obsolete">Errore nel processare il file RAW</translation>
     </message>
     <message>
         <source>Memory Error in processing RAW File</source>
-        <translation>Errore di memoria nel processare il file RAW</translation>
+        <translation type="obsolete">Errore di memoria nel processare il file RAW</translation>
     </message>
     <message>
         <source>Error Creating PFS Frame</source>
-        <translation>Errore nel creare il frame PFS</translation>
+        <translation type="obsolete">Errore nel creare il frame PFS</translation>
     </message>
     <message>
         <source>I cannot open monitor profile. Please select a different one.</source>

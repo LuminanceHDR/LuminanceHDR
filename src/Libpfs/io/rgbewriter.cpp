@@ -171,7 +171,7 @@ void writeRadiance(FILE *file,
         fwrite(header, sizeof(header), 1, file);
 
         // each channel is encoded separately
-        for ( int x=0 ; x < width ; x++ )
+        for ( size_t x=0 ; x < width ; x++ )
         {
             Trgbe_pixel p;
             rgb2rgbe( X(x,y), Y(x,y), Z(x,y), p );
@@ -194,6 +194,9 @@ RGBEWriter::RGBEWriter(const std::string &filename)
 bool RGBEWriter::write(const Frame &frame, const Params &/*params*/)
 {
     utils::ScopedStdIoFile outputStream(fopen(filename().c_str(), "wb"));
+    if (!outputStream) {
+        throw pfs::io::InvalidFile("RGBEWriter: cannot open " + filename());
+    }
 
     const pfs::Channel *X, *Y, *Z;        // X Y Z Channels contain R G B data
     frame.getXYZChannels(X, Y, Z);

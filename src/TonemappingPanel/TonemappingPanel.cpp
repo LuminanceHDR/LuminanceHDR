@@ -53,10 +53,11 @@
 #include "UI/Gang.h"
 #include "ui_TonemappingPanel.h"
 
-TonemappingPanel::TonemappingPanel(PreviewPanel *panel, QWidget *parent):
+TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidget *parent):
     QWidget(parent),
 	adding_custom_size(false),
     m_previewPanel(panel),
+    m_mainWinNumber(mainWinNumber),
     m_Ui(new Ui::TonemappingPanel)
 {
     m_Ui->setupUi(this);
@@ -200,8 +201,10 @@ TonemappingPanel::~TonemappingPanel()
 
 	qDeleteAll(toneMappingOptionsToDelete);
 
-	QSqlDatabase db = QSqlDatabase::database();
-	db.close();
+    if (m_mainWinNumber == 0) {
+    	QSqlDatabase db = QSqlDatabase::database();
+	    db.close();
+    }
 }
 
 void TonemappingPanel::changeEvent(QEvent *event)

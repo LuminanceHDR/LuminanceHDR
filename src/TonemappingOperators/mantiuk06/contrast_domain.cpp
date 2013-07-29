@@ -78,16 +78,18 @@
 
 #include "pyramid.h"
 
-#include "Libpfs/vex/sse.h"
-#include "Libpfs/vex/vex.h"
-#include "Libpfs/vex/minmax.h"
-#include "Libpfs/vex/dotproduct.h"
+#include "Libpfs/utils/sse.h"
+#include "Libpfs/utils/numeric.h"
+#include "Libpfs/utils/minmax.h"
+#include "Libpfs/utils/dotproduct.h"
 #include "Libpfs/utils/msec_timer.h"
 #include "Libpfs/progress.h"
 
+using namespace pfs;
+
 // divG_sum = A * x = sum(divG(x))
 void multiplyA(PyramidT& px, const PyramidT& pC,
-               const pfs::Array2Df& x, pfs::Array2Df& sumOfDivG)
+               const Array2Df& x, Array2Df& sumOfDivG)
 {
     px.computeGradients( x );
 
@@ -110,9 +112,9 @@ const int NUM_BACKWARDS_CEILING = 3;
 }
 
 void lincg(PyramidT& pyramid, PyramidT& pC,
-           const pfs::Array2Df& b, pfs::Array2Df& x,
+           const Array2Df& b, Array2Df& x,
            const int itmax, const float tol,
-           pfs::Progress &ph)
+           Progress &ph)
 {
     float rdotr_curr;
     float rdotr_prev;
@@ -125,20 +127,20 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
     const size_t n      = rows*cols;
     const float tol2    = tol*tol;
 
-    pfs::Array2Df x_best(cols, rows);
-    pfs::Array2Df r(cols, rows);
-    pfs::Array2Df p(cols, rows);
-    pfs::Array2Df Ap(cols, rows);
+    Array2Df x_best(cols, rows);
+    Array2Df r(cols, rows);
+    Array2Df p(cols, rows);
+    Array2Df Ap(cols, rows);
 
     // bnrm2 = ||b||
-    const float bnrm2 = vex::dotProduct(b.data(), n);
+    const float bnrm2 = utils::dotProduct(b.data(), n);
 
     // r = b - Ax
     multiplyA(pyramid, pC, x, r);     // r = A x
-    vex::vsub(b.data(), r.data(), r.data(), n);     // r = b - r
+    utils::vsub(b.data(), r.data(), r.data(), n);     // r = b - r
 
     // rdotr = r.r
-    rdotr_best = rdotr_curr = vex::dotProduct(r.data(), n);
+    rdotr_best = rdotr_curr = utils::dotProduct(r.data(), n);
 
     // Setup initial vector
     std::copy(r.begin(), r.end(), p.begin());   // p = r
@@ -165,14 +167,14 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
         multiplyA(pyramid, pC, p, Ap);
 
         // alpha = r.r / (p . Ap)
-        alpha = rdotr_curr / vex::dotProduct(p.data(), Ap.data(), n);
+        alpha = rdotr_curr / utils::dotProduct(p.data(), Ap.data(), n);
 
         // r = r - alpha Ap
-        vex::vsubs(r.data(), alpha, Ap.data(), r.data(), n);
+        utils::vsubs(r.data(), alpha, Ap.data(), r.data(), n);
 
         // rdotr = r.r
         rdotr_prev = rdotr_curr;
-        rdotr_curr = vex::dotProduct(r.data(), n);
+        rdotr_curr = utils::dotProduct(r.data(), n);
 
         // Have we gone unstable?
         if (rdotr_curr > rdotr_prev)
@@ -192,7 +194,7 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
         }
 
         // x = x + alpha * p
-        vex::vadds(x.data(), alpha, p.data(), x.data(), n);
+        utils::vadds(x.data(), alpha, p.data(), x.data(), n);
 
         // Exit if we're done
         // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
@@ -209,10 +211,10 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
             multiplyA(pyramid, pC, x, r);
 
             // r = b - r
-            vex::vsub(b.data(), r.data(), r.data(), n);
+            utils::vsub(b.data(), r.data(), r.data(), n);
 
             // rdotr = r.r
-            rdotr_best = rdotr_curr = vex::dotProduct(r.data(), r.size());
+            rdotr_best = rdotr_curr = utils::dotProduct(r.data(), r.size());
 
             // p = r
             std::copy(r.begin(), r.end(), p.begin());
@@ -221,7 +223,7 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
         {
             // p = r + beta * p
             beta = rdotr_curr/rdotr_prev;
-            vex::vadds(r.data(), beta, p.data(), p.data(), n);
+            utils::vadds(r.data(), beta, p.data(), p.data(), n);
         }
     }
 
@@ -262,9 +264,9 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
     }
 }
 
-void transformToLuminance(PyramidT& pp, pfs::Array2Df& Y,
+void transformToLuminance(PyramidT& pp, Array2Df& Y,
                           const int itmax, const float tol,
-                          pfs::Progress& ph)
+                          Progress& ph)
 {
     PyramidT pC = pp; // copy ctor
 
@@ -274,7 +276,7 @@ void transformToLuminance(PyramidT& pp, pfs::Array2Df& Y,
     pp.multiply( pC );
 
     // size of the first level of the pyramid
-    pfs::Array2Df b( pp.getCols(), pp.getRows() );
+    Array2Df b( pp.getCols(), pp.getRows() );
 
     // calculate the sum of divergences (equal to b)
     pp.computeSumOfDivergence( b );
@@ -378,10 +380,10 @@ namespace
 const float CUT_MARGIN = 0.1f;
 const float DISP_DYN_RANGE = 2.3f;
 
-void normalizeLuminanceAndRGB(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
-                              pfs::Array2Df& Y)
+void normalizeLuminanceAndRGB(Array2Df& R, Array2Df& G, Array2Df& B,
+                              Array2Df& Y)
 {
-    const float Ymax = vex::maxElement(Y.data(), Y.size());
+    const float Ymax = utils::maxElement(Y.data(), Y.size());
     const float clip_min = 1e-7f*Ymax;
 
     // std::cout << "clip_min = " << clip_min << std::endl;
@@ -404,7 +406,7 @@ void normalizeLuminanceAndRGB(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df&
 }
 
 /* Renormalize luminance */
-void denormalizeLuminance(pfs::Array2Df& Y)
+void denormalizeLuminance(Array2Df& Y)
 {
     const size_t size = Y.size();
 
@@ -445,7 +447,7 @@ T decode(const T& value)
     return (1.055f * std::pow( value, 1.f/2.4f ) - 0.055f);
 }
 
-void denormalizeRGB(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B, const pfs::Array2Df& Y,
+void denormalizeRGB(Array2Df& R, Array2Df& G, Array2Df& B, const Array2Df& Y,
                     float saturationFactor)
 {
     const int size = static_cast<int>(Y.size());
@@ -463,14 +465,14 @@ void denormalizeRGB(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B, const 
 }
 
 // tone mapping
-int tmo_mantiuk06_contmap(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
-                          pfs::Array2Df& Y,
+int tmo_mantiuk06_contmap(Array2Df& R, Array2Df& G, Array2Df& B,
+                          Array2Df& Y,
                           const float contrastFactor,
                           const float saturationFactor,
                           float detailfactor,
                           const int itmax,
                           const float tol,
-                          pfs::Progress &ph)
+                          Progress &ph)
 {
     assert( R.getCols() == G.getCols() );
     assert( G.getCols() == B.getCols() );

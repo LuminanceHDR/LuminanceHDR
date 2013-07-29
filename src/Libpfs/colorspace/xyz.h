@@ -28,6 +28,9 @@
 namespace pfs {
 namespace colorspace {
 
+extern const float rgb2xyzD65Mat[3][3];
+extern const float xyz2rgbD65Mat[3][3];
+
 struct ConvertRGB2XYZ {
     void operator()(float i1, float i2, float i3,
                     float& o1, float& o2, float& o3) const;
@@ -39,7 +42,8 @@ struct ConvertSRGB2XYZ {
 };
 
 struct ConvertRGB2Y {
-    void operator()(float i1, float i2, float i3, float& o) const;
+    template <typename TypeIn, typename TypeOut>
+    void operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeOut& o) const;
 };
 
 struct ConvertSRGB2Y {
@@ -55,8 +59,6 @@ struct ConvertXYZ2SRGB {
     void operator()(float i1, float i2, float i3,
                     float& o1, float& o2, float& o3) const;
 };
-
-
 
 }
 }

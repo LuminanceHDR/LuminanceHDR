@@ -27,32 +27,35 @@
  *
  */
 
+#include <stdexcept>
+#include <sstream>
+
 #include <QFileInfo>
 #include <QString>
 #include <QByteArray>
 #include <QDebug>
 #include <QScopedPointer>
-#include <stdexcept>
 
 #include "Core/IOWorker.h"
-
 #include "Libpfs/frame.h"
-#include "Fileformat/pfs_file_format.h"
-#include "Fileformat/jpegwriter.h"
+
 #include "Viewers/GenericViewer.h"
 #include "Common/LuminanceOptions.h"
 #include "Core/TonemappingOptions.h"
 #include "Exif/ExifOperations.h"
+#include "Fileformat/pfsoutldrimage.h"
 
-#include <Libpfs/io/pfswriter.h>
 #include <Libpfs/io/pfsreader.h>
-#include <Libpfs/io/rgbewriter.h>
 #include <Libpfs/io/rgbereader.h>
-#include <Libpfs/io/exrwriter.h>
 #include <Libpfs/io/exrreader.h>
 #include <Libpfs/io/fitsreader.h>
+#include <Libpfs/io/rawreader.h>
+
+#include <Libpfs/io/exrwriter.h>            // default for HDR saving
+#include <Libpfs/io/framewriterfactory.h>
 
 using namespace pfs::io;
+using namespace std;
 
 IOWorker::IOWorker(QObject* parent)
     : QObject(parent)
@@ -98,41 +101,31 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-    if (qfi.suffix().toUpper() == "EXR")
-    {
-        EXRWriter writer(encodedName.constData());
-        writer.write(*hdr_frame, params);
-    }
-    else if (qfi.suffix().toUpper() == "HDR")
-    {
-        RGBEWriter writer(encodedName.constData());
-        writer.write(*hdr_frame, params);
-    }
-    else if (qfi.suffix().toUpper().startsWith("TIF"))
-    {
-        pfs::Params writerParams(params);
-        if ( !writerParams.count("tiff_mode") ) {
-            LuminanceOptions lumOpts;
-            // LogLuv is not implemented yet in the new TiffWriter...
-            if ( lumOpts.isSaveLogLuvTiff() ) {
-                writerParams.set( "tiff_mode", 3 );
-            } else {
-                writerParams.set( "tiff_mode", 2 );
-            }
+    // add parameters for TiffWriter HDR
+    pfs::Params writerParams(params);
+    if ( !writerParams.count("tiff_mode") ) {
+        LuminanceOptions lumOpts;
+        if ( lumOpts.isSaveLogLuvTiff() ) {
+            writerParams.set( "tiff_mode", 3 );
+        } else {
+            writerParams.set( "tiff_mode", 2 );
         }
+    }
 
-        TiffWriter writer(encodedName.constData());
-        status = writer.write(*hdr_frame, writerParams);
-    }
-    else if (qfi.suffix().toUpper() == "PFS")
+    try
     {
-        pfs::io::PfsWriter writer(encodedName.constData());
-        status = writer.write(*hdr_frame, pfs::Params());
+        FrameWriterPtr writer = FrameWriterFactory::open(encodedName.constData());
+        writer->write(*hdr_frame, writerParams);
     }
-    else
-    {
+    catch (pfs::io::InvalidFile& exInvalid) {
+        qDebug() << "Unsupported format for " << exInvalid.what();
+
         EXRWriter writer(encodedName.constData());
-        writer.write(*hdr_frame, params);
+        writer.write(*hdr_frame, writerParams);
+    }
+    catch (std::runtime_error& ex) {
+        qDebug() << ex.what();
+        status = false;
     }
 
     if ( status ) {
@@ -182,24 +175,6 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
                                TonemappingOptions* tmopts,
                                const pfs::Params& params)
 {
-    /*
-     // in the future I would like it to be like this:
-
-     try {
-        FrameWriterPtr fr = FrameWriter::create( filename );
-
-        fr->write( frame, params);
-
-        // ...do some more stuff!
-
-        retur true;
-     } catch ( Exception& e) {
-
-        return false;
-     }
-
-     */
-
     bool status = true;
     emit IO_init();
 
@@ -212,27 +187,24 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-    if (qfi.suffix().toUpper().startsWith("TIF"))
+    try
     {
-        TiffWriter writer( encodedName.constData() );
-        status = writer.write(*ldr_input, params);
+        FrameWriterPtr writer = FrameWriterFactory::open(encodedName.constData());
+        writer->write(*ldr_input, params);
     }
-    else if (qfi.suffix().toUpper().startsWith("JP"))
-    {
-        JpegWriter writer( encodedName.constData() );
-        status = writer.write(*ldr_input, params);
-	}
-    else if (qfi.suffix().toUpper().startsWith("PNG"))
-    {
-        PngWriter writer(filename.toStdString());
-        status = writer.write(*ldr_input, params);
-	}
-    else
-    {
+    catch (pfs::io::UnsupportedFormat& exUnsupported) {
+        qDebug() << "Exception: " << exUnsupported.what();
+
         QString format = qfi.suffix();
         // QScopedPointer will call delete when this object goes out of scope
         QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input, 0.f, 1.f));
         status = image->save(filename, format.toLocal8Bit(), -1);
+    }
+    catch (pfs::io::InvalidFile& /*exInvalid*/) {
+        status = false;
+    }
+    catch (pfs::io::WriteException& /*exWrite*/) {
+        status = false;
     }
 
     if ( status )
@@ -325,10 +297,12 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         else if (extension.startsWith("TIF"))
         {
             // from 8,16,32,logluv to pfs::Frame
-            TiffReader reader(encodedFileName, TempPath, false );
-            connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
-            connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
-            hdrpfsframe = reader.readIntoPfsFrame();
+
+            // DAVIDE _ TIFFREADER
+//            TiffReader reader(encodedFileName, TempPath, false );
+//            connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
+//            connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
+//            hdrpfsframe = reader.readIntoPfsFrame();
         }
         else if (extension.startsWith("FIT"))
         {
@@ -339,34 +313,28 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         else if ( rawextensions.indexOf(extension) != -1 )
         {
             // raw file detected
-            try {
-                hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminanceOptions, false, progress_cb, this);
-            }
-            catch (QString& err)
-            {
-                qDebug("TH: catched exception");
-                emit read_hdr_failed((err + " : %1").arg(filename));
-                return NULL;
-            }
+            hdrpfsframe = new pfs::Frame(0,0);
+
+            pfs::io::RAWReader reader(encodedFileName.constData());
+            reader.read( *hdrpfsframe, getRawSettings(luminanceOptions) );
+            reader.close();
         }
         else
         {
-#ifdef QT_DEBUG
             qDebug("TH: File %s has unsupported extension.", qPrintable(filename));
-#endif
+
             emit read_hdr_failed(tr("ERROR: File %1 has unsupported extension.").arg(filename));
             return NULL;
         }
-
-        if (hdrpfsframe == NULL)
-        {
-            return NULL;
-        }
     }
-	catch (const std::runtime_error& err)
+    catch (std::runtime_error& err)
 	{
-		qDebug() << err.what();
-		emit read_hdr_failed(err.what()); 
+        qDebug("TH: catched exception");
+        std::stringstream ss;
+        ss << err.what();
+        ss << " : %1";
+
+        emit read_hdr_failed(QString::fromStdString(ss.str()).arg(filename));
 		return NULL;
 	}
     catch (...)
@@ -375,11 +343,16 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         emit read_hdr_failed(tr("ERROR: Failed loading file: %1").arg(filename));
         return NULL;
     }
-    emit read_hdr_success(hdrpfsframe, filename);
 
     emit IO_finish();
 
-    return hdrpfsframe;
+    if (hdrpfsframe != NULL)
+    {
+        emit read_hdr_success(hdrpfsframe, filename);
+        return hdrpfsframe;
+    } else {
+        return NULL;
+    }
 }
 
 void IOWorker::emitNextStep(int iteration)
@@ -400,3 +373,57 @@ int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected)
     return 0;
 }
 
+// moves settings from LuminanceOptions into Params, for the underlying
+// processing engine
+pfs::Params getRawSettings(const LuminanceOptions& opts)
+{
+    pfs::Params p;
+    // general parameters
+    if ( opts.isRawFourColorRGB() )
+    { p.set("raw.four_color", 1); }
+    if ( opts.isRawDoNotUseFujiRotate() )
+    { p.set("raw.fuji_rotate", 0); }
+
+    p.set("raw.user_quality", opts.getRawUserQuality());
+    p.set("raw.med_passes", opts.getRawMedPasses());
+
+    // white balance
+    p.set("raw.wb_method", opts.getRawWhiteBalanceMethod());
+    p.set("raw.wb_temperature", opts.getRawTemperatureKelvin());
+    p.set("raw.wb_green", opts.getRawGreen());
+
+    // highlights
+    p.set("raw.highlights", opts.getRawHighlightsMode());
+    p.set("raw.highlights_rebuild", opts.getRawLevel());
+
+    // colors
+    if ( opts.isRawUseBlack() )
+    { p.set("raw.black_level", opts.getRawUserBlack()); }
+    if ( opts.isRawUseSaturation() )
+    { p.set("raw.saturation", opts.getRawUserSaturation()); }
+    // brightness
+    if ( opts.isRawAutoBrightness() )
+    { p.set("raw.auto_brightness", true); }
+    p.set("raw.brightness", opts.getRawBrightness());
+    p.set("raw.auto_brightness_threshold", opts.getRawAutoBrightnessThreshold());
+    // noise reduction
+    if ( opts.isRawUseNoiseReduction() )
+    { p.set("raw.noise_reduction_threshold", opts.getRawNoiseReductionThreshold()); }
+
+    if ( opts.isRawUseChromaAber() ) {
+        p.set("raw.chroma_aber", true);
+        p.set("raw.chroma_aber_0", opts.getRawAber0());
+        p.set("raw.chroma_aber_1", opts.getRawAber1());
+        p.set("raw.chroma_aber_2", opts.getRawAber2());
+        p.set("raw.chroma_aber_3", opts.getRawAber3());
+    }
+
+    if ( !opts.getRawCameraProfile().isEmpty() ) {
+        p.set("raw.camera_profile",
+              std::string(
+                  QFile::encodeName( opts.getRawCameraProfile() ).constData()
+                  ));
+    }
+
+    return p;
+}

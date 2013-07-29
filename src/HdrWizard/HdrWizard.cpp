@@ -1,7 +1,9 @@
-/**
+/*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyrighr (C) 2010,2011,2012 Franco Comida
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,13 +19,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * Original Work
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing
- * @author Franco Comida <fcomida@users.sourceforge.net>
- *
  */
+
+#include <cmath>
+#include <boost/bind.hpp>
+#include <boost/foreach.hpp>
+
 #include <QDebug>
 
 #include <QStringList>
@@ -34,11 +35,18 @@
 #include <QMessageBox>
 #include <QMimeData>
 #include <QProcess>
+#include <QRegExp>
 #include <QTextStream>
+#include <QProgressDialog>
+#include <QThread>
+#include <QtConcurrentRun>
+
+// --- SQL handling
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QSqlError>
+// --- end SQL handling
 
 #include "HdrWizard.h"
 #include "ui_HdrWizard.h"
@@ -46,64 +54,65 @@
 #include "arch/math.h"
 #include "arch/freebsd/math.h"
 #include "Common/config.h"
+#include "Common/global.h"
+#include "OsIntegration/osintegration.h"
 #include "HdrWizard/EditingTools.h"
-#include "UI/Gang.h"
-#include "HdrCreation/HdrCreationManager.h"
+#include "HdrWizard/HdrCreationManager.h"
+
+
+const TResponse responses_in_gui[4] = { GAMMA, LINEAR, LOG10, FROM_ROBERTSON };
+const TModel models_in_gui[2] = { DEBEVEC, ROBERTSON };
+const TWeight weights_in_gui[3] = { TRIANGULAR, GAUSSIAN, PLATEAU };
+
 
 HdrWizard::HdrWizard(QWidget *p,
                      const QStringList &files,
-                     const QStringList &inputFilesName,
-                     const QVector<float> &inputExpoTimes) :
-    QDialog(p),
-    hdrCreationManager(new HdrCreationManager),
-    loadcurvefilename(),
-    savecurvefilename(),
-    m_inputFilesName(inputFilesName),
-    m_inputExpoTimes(inputExpoTimes),
-    m_Ui(new Ui::HdrWizard)
+                     const QStringList &/*inputFilesName*/,
+                     const QVector<float> &/*inputExpoTimes*/)
+    : QDialog(p)
+    , m_ui(new Ui::HdrWizard)
+    , m_hdrCreationManager(new HdrCreationManager)
+//    , loadcurvefilename()
+//    , savecurvefilename()
+//    , m_inputFilesName(inputFilesName)
+//    , m_inputExpoTimes(inputExpoTimes)
+    , m_doAutoAntighosting(false)
+    , m_doManualAntighosting(false)
+    , m_processing(false)
 {
-    m_Ui->setupUi(this);
+    m_ui->setupUi(this);
     setAcceptDrops(true);
+    setupConnections();
 
-    weights_in_gui[0] = TRIANGULAR;
-    weights_in_gui[1] = GAUSSIAN;
-    weights_in_gui[2] = PLATEAU;
-    responses_in_gui[0] = GAMMA;
-    responses_in_gui[1] = LINEAR;
-    responses_in_gui[2] = LOG10;
-    responses_in_gui[3] = FROM_ROBERTSON;
-    models_in_gui[0] = DEBEVEC;
-    models_in_gui[1] = ROBERTSON;
-
-    m_Ui->tableWidget->setHorizontalHeaderLabels(
-                QStringList() << tr("Image Filename") << tr("Exposure"));
-    m_Ui->tableWidget->resizeColumnsToContents();
+    m_ui->tableWidget->setHorizontalHeaderLabels(
+                QStringList() << tr("Image Filename") << tr("Exposure")
+                );
+    m_ui->tableWidget->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
+    m_ui->tableWidget->verticalHeader()->hide();
+    // m_ui->tableWidget->resizeColumnsToContents();
     
-    EVgang = new Gang(m_Ui->EVSlider, m_Ui->ImageEVdsb, NULL, NULL, NULL,NULL, -10,10,0);
-
     if ( !luminance_options.isShowFirstPageWizard() )
     {
-        m_Ui->NextFinishButton->setEnabled(false);
-        m_Ui->pagestack->setCurrentIndex(1);
+        m_ui->NextFinishButton->setEnabled(false);
+        m_ui->pagestack->setCurrentIndex(1);
     }
 
-    m_Ui->progressBar->hide();
-    m_Ui->textEdit->hide();
-
-    setupConnections();
+    m_ui->progressBar->hide();
+    m_ui->textEdit->hide();
 
     if (files.size())
     {
-        m_Ui->pagestack->setCurrentIndex(1);
+        m_ui->pagestack->setCurrentIndex(1);
 
         QMetaObject::invokeMethod(this, "loadInputFiles", Qt::QueuedConnection,
-                                  Q_ARG(QStringList, files), Q_ARG(int, files.size()));
+                                  Q_ARG(QStringList, files));
     }
 
+    /*
     QSqlQueryModel model;
     model.setQuery("SELECT * FROM parameters"); 
     for (int i = 0; i < model.rowCount(); i++) {
-        m_Ui->predefConfigsComboBox->addItem(tr("Custom config %1").arg(i+1));
+        m_ui->predefConfigsComboBox->addItem(tr("Custom config %1").arg(i+1));
         int weight_ = model.record(i).value("weight").toInt(); 
         int response_ = model.record(i).value("response").toInt(); 
         int model_ = model.record(i).value("model").toInt(); 
@@ -149,6 +158,7 @@ HdrWizard::HdrWizard(QWidget *p,
         }
         m_customConfig.push_back(ct);   
     }
+    */
 }
 
 HdrWizard::~HdrWizard()
@@ -156,78 +166,91 @@ HdrWizard::~HdrWizard()
 #ifdef QT_DEBUG
     qDebug() << "HdrWizard::~HdrWizard()";
 #endif
-    
-    QStringList  fnames = hdrCreationManager->getFileList();
+/*
+    QStringList  fnames = m_hdrCreationManager->getFileList();
     int n = fnames.size();
 
     for (int i = 0; i < n; i++)
     {
-        QString fname = hdrCreationManager->getFileList().at(i);
+        QString fname = m_hdrCreationManager->getFileList().at(i);
         QFileInfo qfi(fname);
         QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
         QFile::remove(thumb_name);
         thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
         QFile::remove(thumb_name);
     }
-
-    delete EVgang;
-    delete hdrCreationManager;
+*/
 }
 
 void HdrWizard::setupConnections()
 {
-    connect(EVgang, SIGNAL(finished()), this, SLOT(editingEVfinished()));
-    connect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    //connect(&m_ioFutureWatcher, SIGNAL(finished()), this, SLOT(loadInputFilesDone()));
 
-    connect(m_Ui->NextFinishButton,SIGNAL(clicked()),this,SLOT(NextFinishButtonClicked()));
-    connect(m_Ui->cancelButton,SIGNAL(clicked()),this,SLOT(reject()));
-    connect(m_Ui->pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
+    connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(loadInputFilesDone()));
+    //connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_ui->progressBar, SLOT(show()), Qt::DirectConnection);
+    //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(reset()));
+    //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_ui->progressBar, SLOT(hide()), Qt::DirectConnection);
+    
+    connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(setRange(int,int)), Qt::DirectConnection);
+    connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), this, SIGNAL(setValue(int)), Qt::DirectConnection);
+    
+    connect(this, SIGNAL(setValue(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
+    connect(this, SIGNAL(setRange(int,int)), m_ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
 
-    connect(m_Ui->ais_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
-    connect(m_Ui->mtb_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
+    connect(this, SIGNAL(setValue(int)), OsIntegration::getInstancePtr(), SLOT(setProgressValue(int)), Qt::DirectConnection);
+    connect(this, SIGNAL(setRange(int,int)), OsIntegration::getInstancePtr(), SLOT(setProgressRange(int,int)), Qt::DirectConnection);
 
-    connect(m_Ui->predefConfigsComboBox,SIGNAL(activated(int)),this,
-    SLOT(predefConfigsComboBoxActivated(int)));
-    connect(m_Ui->antighostRespCurveCombobox,SIGNAL(activated(int)),this,
-    SLOT(antighostRespCurveComboboxActivated(int)));
-    connect(m_Ui->customConfigCheckBox,SIGNAL(toggled(bool)),this,
-    SLOT(customConfigCheckBoxToggled(bool)));
-    connect(m_Ui->triGaussPlateauComboBox,SIGNAL(activated(int)),this,
-    SLOT(triGaussPlateauComboBoxActivated(int)));
-    connect(m_Ui->predefRespCurveRadioButton,SIGNAL(toggled(bool)),this,
-    SLOT(predefRespCurveRadioButtonToggled(bool)));
-    connect(m_Ui->gammaLinLogComboBox,SIGNAL(activated(int)),this,
-    SLOT(gammaLinLogComboBoxActivated(int)));
-    connect(m_Ui->loadRespCurveFromFileCheckbox,SIGNAL(toggled(bool)),this,
-    SLOT(loadRespCurveFromFileCheckboxToggled(bool)));
-    connect(m_Ui->loadRespCurveFileButton,SIGNAL(clicked()),this,
-    SLOT(loadRespCurveFileButtonClicked()));
-    connect(m_Ui->saveRespCurveToFileCheckbox,SIGNAL(toggled(bool)),this,
-    SLOT(saveRespCurveToFileCheckboxToggled(bool)));
-    connect(m_Ui->saveRespCurveFileButton,SIGNAL(clicked()),this,
-    SLOT(saveRespCurveFileButtonClicked()));
-    connect(m_Ui->modelComboBox,SIGNAL(activated(int)),this,
-    SLOT(modelComboBoxActivated(int)));
-    connect(m_Ui->RespCurveFileLoadedLineEdit,SIGNAL(textChanged(const QString&)),this,
-    SLOT(loadRespCurveFilename(const QString&)));
-    connect(m_Ui->loadImagesButton,SIGNAL(clicked()),this,SLOT(loadImagesButtonClicked()));
-    connect(m_Ui->removeImageButton,SIGNAL(clicked()),this,SLOT(removeImageButtonClicked()));
-    connect(m_Ui->clearListButton,SIGNAL(clicked()),this,SLOT(clearListButtonClicked()));
-    connect(hdrCreationManager, SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
-    connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
-    connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
-    connect(hdrCreationManager,SIGNAL(expotimeValueChanged(float,int)),this, SLOT(updateGraphicalEVvalue(float,int)));
-    connect(hdrCreationManager, SIGNAL(finishedAligning(int)), this, SLOT(finishedAligning(int)));
-    connect(hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
-    connect(hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
+    connect(m_ui->NextFinishButton, SIGNAL(clicked()), this, SLOT(NextFinishButtonClicked()));
+    connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(m_ui->pagestack, SIGNAL(currentChanged(int)), this, SLOT(currentPageChangedInto(int)));
 
-    connect(this, SIGNAL(setValue(int)), this, SLOT(updateProgressBar(int)));
+    connect(m_ui->loadImagesButton, SIGNAL(clicked()), this, SLOT(loadImagesButtonClicked()));
+    connect(m_ui->removeImageButton, SIGNAL(clicked()), this, SLOT(removeImageButtonClicked()));
+    connect(m_ui->clearListButton, SIGNAL(clicked()), this, SLOT(clearListButtonClicked()));
 
-    connect(this,SIGNAL(rejected()),hdrCreationManager,SLOT(removeTempFiles()));
+    connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    connect(m_ui->EVSlider, SIGNAL(valueChanged(int)), this, SLOT(updateEVSlider(int)));
+    connect(m_ui->ImageEVdsb, SIGNAL(valueChanged(double)), this, SLOT(updateEVSpinBox(double)));
+    /*
+    connect(m_ui->ais_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
+    connect(m_ui->mtb_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
+*/
+    connect(m_ui->predefConfigsComboBox, SIGNAL(activated(int)), this, SLOT(predefConfigsComboBoxActivated(int)));
+    /*
+    connect(m_ui->antighostRespCurveCombobox, SIGNAL(activated(int)), this, SLOT(antighostRespCurveComboboxActivated(int)));
+    */
+    connect(m_ui->customConfigCheckBox, SIGNAL(toggled(bool)), this, SLOT(customConfigCheckBoxToggled(bool)));
+    connect(m_ui->triGaussPlateauComboBox, SIGNAL(activated(int)), this, SLOT(triGaussPlateauComboBoxActivated(int)));
+    /*
+    connect(m_ui->predefRespCurveRadioButton, SIGNAL(toggled(bool)), this, SLOT(predefRespCurveRadioButtonToggled(bool)));
+    */
 
+    connect(m_ui->gammaLinLogComboBox, SIGNAL(activated(int)), this, SLOT(gammaLinLogComboBoxActivated(int)));
+    /*
+    connect(m_ui->loadRespCurveFromFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(loadRespCurveFromFileCheckboxToggled(bool)));
+    connect(m_ui->loadRespCurveFileButton, SIGNAL(clicked()), this, SLOT(loadRespCurveFileButtonClicked()));
+    connect(m_ui->saveRespCurveToFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(saveRespCurveToFileCheckboxToggled(bool)));
+    connect(m_ui->saveRespCurveFileButton, SIGNAL(clicked()), this, SLOT(saveRespCurveFileButtonClicked()));
+    */
+    connect(m_ui->modelComboBox, SIGNAL(activated(int)), this, SLOT(modelComboBoxActivated(int)));
+    /*
+    connect(m_ui->RespCurveFileLoadedLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(loadRespCurveFilename(const QString&)));
+    connect(m_hdrCreationManager.data(), SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
+    connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
+*/
+
+    connect(m_hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)), this, SLOT(errorWhileLoading(QString)));
+    //connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)), this, SLOT(updateGraphicalEVvalue(float,int)));
+    connect(m_hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(finishedAligning(int)));
+    connect(m_hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
+    connect(m_hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
+
+    connect(this, SIGNAL(rejected()), m_hdrCreationManager.data(), SLOT(removeTempFiles()));
+    //connect(this, SIGNAL(rejected()), OsIntegration::getInstancePtr(), SLOT(setProgressValue(-1)), Qt::DirectConnection);
 }
 
-void HdrWizard::loadImagesButtonClicked() {
+void HdrWizard::loadImagesButtonClicked()
+{
     QString filetypes;
     // when changing these filetypes, also change in DnDOption - for Drag and Drop
     filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw");
@@ -237,88 +260,239 @@ void HdrWizard::loadImagesButtonClicked() {
     filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw");
     filetypes += tr("*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)");
 
-    QString RecentDirInputLDRs = luminance_options.getDefaultPathLdrIn();
+    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), luminance_options.getDefaultPathLdrIn(), filetypes );
 
-    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirInputLDRs, filetypes );
+    loadInputFiles(files);
+}
 
-    if (!files.isEmpty() ) {
-        QFileInfo qfi(files.at(0));
-        // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the luminance_options.
-        if (RecentDirInputLDRs != qfi.path()) {
-            // update internal field variable
-            RecentDirInputLDRs = qfi.path();
-            luminance_options.setDefaultPathLdrIn(RecentDirInputLDRs);
+void HdrWizard::updateTableGrid()
+{
+    qDebug() << "Fill grid with values in the m_data structure";
+
+    int currentRow = m_ui->tableWidget->currentRow();
+
+    // empty grid...
+    m_ui->tableWidget->setRowCount(0);
+
+    // insert the row at the bottom of the table widget
+    int counter = 0;
+    QStringList filesWithoutExif;
+    BOOST_FOREACH(const HdrCreationItem& item, *m_hdrCreationManager)
+    {
+        qDebug() << QString("Fill row %1: %2 %3 EV")
+                    .arg(counter)
+                    .arg(item.filename())
+                    .arg(item.getEV());
+
+        // fill graphical list
+        m_ui->tableWidget->insertRow(counter);
+        m_ui->tableWidget->setItem(counter, 0, new QTableWidgetItem(QFileInfo(item.filename()).fileName()));
+        if (item.hasEV())
+        {
+            QString EVdisplay;
+            QTextStream ts(&EVdisplay);
+            ts.setRealNumberPrecision(2);
+            ts << right << forcesign << fixed << item.getEV() << " EV";
+            QTableWidgetItem *tableitem = new QTableWidgetItem(EVdisplay);
+            tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            m_ui->tableWidget->setItem(counter, 1, tableitem);
         }
-        //loadImagesButton->setEnabled(false);
-        m_Ui->confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
-        loadInputFiles(files, files.count());
-        QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
-    } //if (!files.isEmpty())
+        else
+        {
+            // if image doesn't contain (the required) exif tags
+            // I keep the name of all the files without exif data...
+            filesWithoutExif.push_back(item.filename());
+
+
+            QTableWidgetItem *tableitem = new QTableWidgetItem(QString(tr("Unknown")));
+            tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            tableitem->setBackground(QBrush(Qt::yellow));
+            tableitem->setForeground(QBrush(Qt::red));
+            m_ui->tableWidget->setItem(counter, 1, tableitem);
+        }
+
+        ++counter;
+    }
+
+    if ( currentRow >= 0 && currentRow < (int)m_hdrCreationManager->availableInputFiles()) {
+        m_ui->tableWidget->selectRow(currentRow);
+    } else if (currentRow >= 0) {
+        m_ui->tableWidget->selectRow(0);
+    } else {
+        m_ui->tableWidget->selectRow(-1);
+    }
+
+    if ( counter ) {
+        m_ui->clearListButton->setEnabled(true);
+
+        enableNextOrWarning(filesWithoutExif);
+    } else {
+        m_ui->clearListButton->setEnabled(false);
+        m_ui->removeImageButton->setEnabled(false);
+        m_ui->NextFinishButton->setEnabled(false);
+
+        m_ui->confirmloadlabel->setText(QString());
+    }
 }
 
 void HdrWizard::removeImageButtonClicked()
 {
-    disconnect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
-    int index = m_Ui->tableWidget->currentRow();
+    qDebug() << "HdrWizard::removeImageButtonClicked()";
 
-    if (m_Ui->tableWidget->rowCount() == 1)
-    {
-        clearListButtonClicked();
-    }
-    else 
-    {
-        QString fname = hdrCreationManager->getFileList().at(index);
-        QFileInfo qfi(fname);
-                QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
-        QFile::remove(thumb_name);
-                thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
-        QFile::remove(thumb_name);
+    int index = m_ui->tableWidget->currentRow();
 
-        hdrCreationManager->remove(index);
-        m_Ui->tableWidget->removeRow(index);
-        inputHdrFileSelected(m_Ui->tableWidget->currentRow());
-        int size = hdrCreationManager->getFilesLackingExif().size();
-        if (size != 0)
-            m_Ui->confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(size));
-    }
-    connect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < m_hdrCreationManager->availableInputFiles());
+
+    m_hdrCreationManager->removeFile(index);
+
+    updateTableGrid();
 }
 
 void HdrWizard::clearListButtonClicked()
 {
-    disconnect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
-    m_Ui->previewLabel->clear();
-    for (int i = m_Ui->tableWidget->rowCount()-1; i >= 0; --i)
-        m_Ui->tableWidget->removeRow(i);
+    qDebug() << "HdrWizard::clearListButtonClicked()";
 
-    QStringList  fnames = hdrCreationManager->getFileList();
-    int n = fnames.size();
-    
-    for (int i = 0; i < n; i++) {
-        QString fname = hdrCreationManager->getFileList().at(i);
-        QFileInfo qfi(fname);
-                QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
-        QFile::remove(thumb_name);
-                thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
-        QFile::remove(thumb_name);
-    }
+    m_hdrCreationManager->clearFiles();
 
-    hdrCreationManager->reset();
-    m_Ui->removeImageButton->setEnabled(false);
-    m_Ui->clearListButton->setEnabled(false);
-    m_Ui->EVgroupBox->setEnabled(false);
-    m_Ui->alignGroupBox->setEnabled(false);
-    //EVSlider->setValue(0);
-    m_Ui->NextFinishButton->setEnabled(false);
-    m_Ui->progressBar->setValue(0);
-    m_Ui->progressBar->hide();
-    m_Ui->confirmloadlabel->setText("<center><h3><b>"+tr("Start loading a set of images with different exposure")+"</b></h3></center>");
-    connect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+    updateTableGrid();
 }
 
-void HdrWizard::dragEnterEvent(QDragEnterEvent *event) {
-    if (m_Ui->loadImagesButton->isEnabled())
+void HdrWizard::updateEVSlider(int newValue)
+{
+    int currentRow = m_ui->tableWidget->currentRow();
+    float newEV = ((float)newValue)/100.f;
+    bool oldState = m_ui->ImageEVdsb->blockSignals(true);
+    m_ui->ImageEVdsb->setValue( newEV );
+    m_ui->ImageEVdsb->blockSignals(oldState);
+
+    qDebug() << QString("HdrWizard::updateEVSlider(%1) for %2")
+                .arg(newEV).arg(currentRow);
+
+    QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
+    if ( tableitem )
+    {
+        QString EVdisplay;
+        QTextStream ts(&EVdisplay);
+        ts.setRealNumberPrecision(2);
+        ts << right << forcesign << fixed << newEV << " EV";
+        tableitem->setBackground(QBrush(Qt::white));
+        tableitem->setForeground(QBrush(Qt::black));
+        tableitem->setText(EVdisplay);
+    }
+
+    m_hdrCreationManager->getFile(currentRow).setEV(newEV);
+    updateLabelMaybeNext( m_hdrCreationManager->numFilesWithoutExif() );
+}
+
+void HdrWizard::updateEVSpinBox(double newEV)
+{
+    int currentRow = m_ui->tableWidget->currentRow();
+
+    bool oldState = m_ui->EVSlider->blockSignals(true);
+    m_ui->EVSlider->setValue( (int)(newEV*100) );
+    m_ui->EVSlider->blockSignals(oldState);
+
+    qDebug() << QString("HdrWizard::updateEVSpinBox(%1) for %2")
+                .arg(newEV).arg(currentRow);
+
+    QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
+    if ( tableitem )
+    {
+        QString EVdisplay;
+        QTextStream ts(&EVdisplay);
+        ts.setRealNumberPrecision(2);
+        ts << right << forcesign << fixed << newEV << " EV";
+        tableitem->setBackground(QBrush(Qt::white));
+        tableitem->setForeground(QBrush(Qt::black));
+        tableitem->setText(EVdisplay);
+    }
+
+    m_hdrCreationManager->getFile(currentRow).setEV(newEV);
+    updateLabelMaybeNext( m_hdrCreationManager->numFilesWithoutExif() );
+}
+
+void HdrWizard::inputHdrFileSelected(int currentRow)
+{
+    qDebug() << QString("HdrWizard::inputHdrFileSelected(%1)").arg(currentRow);
+
+    if ( currentRow < 0 || m_ui->tableWidget->rowCount() < 0 ) {
+        // no selection...
+        m_ui->EVgroupBox->setEnabled(false);
+        m_ui->removeImageButton->setEnabled(false);
+        m_ui->clearListButton->setEnabled(false);
+        m_ui->NextFinishButton->setEnabled(false);
+        m_ui->previewLabel->clear();
+    }
+    else // if ( m_ui->tableWidget->rowCount() > 0 )
+    {
+        // enable remove button
+        m_ui->removeImageButton->setEnabled(true);
+        m_ui->clearListButton->setEnabled(true);
+
+        // update ev slider and spinbox
+        m_ui->ImageEVdsb->blockSignals(true);
+        m_ui->EVSlider->blockSignals(true);
+
+        m_ui->EVgroupBox->setEnabled(true);
+        if ( m_hdrCreationManager->getFile(currentRow).hasEV() )
+        {
+            m_ui->ImageEVdsb->setValue( m_hdrCreationManager->getFile(currentRow).getEV() );
+            m_ui->EVSlider->setValue( (int)(m_hdrCreationManager->getFile(currentRow).getEV()*100.f + 0.5f) );
+        }
+        else
+        {
+            m_ui->ImageEVdsb->setValue( 0.0 );
+            m_ui->EVSlider->setValue( 0 );
+        }
+        m_ui->ImageEVdsb->blockSignals(false);
+        m_ui->EVSlider->blockSignals(false);
+
+        // load QImage...
+        m_ui->previewLabel->setPixmap(
+                    QPixmap::fromImage(
+                        m_hdrCreationManager->getFile(currentRow).qimage()->scaled(
+                            m_ui->previewLabel->size(), Qt::KeepAspectRatio)
+                        ));
+
+        m_ui->ImageEVdsb->setFocus();
+    }
+/*
+    if (m_hdrCreationManager->isValidEV(i))
+        m_ui->ImageEVdsb->setValue(m_hdrCreationManager->getEV(i));
+    if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
+        QImage *image = m_hdrCreationManager->getLDRList().at(i);
+        m_ui->previewLabel->setPixmap(QPixmap::fromImage(image->scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
+    }
+    else { // load preview from thumbnail previously created on disk
+        QString fname = m_hdrCreationManager->getFileList().at(i);
+        QFileInfo qfi(fname);
+        QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
+
+        if (QFile::exists(thumb_name))
+        {
+            QImage thumb_image(thumb_name);
+            m_ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
+        }
+        else
+        {
+            QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
+            if ( QFile::exists(thumb_name))  {
+                QImage thumb_image(thumb_name);
+                m_ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
+            }
+        }
+    }
+    m_ui->ImageEVdsb->setFocus();
+*/
+}
+
+
+void HdrWizard::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (m_ui->loadImagesButton->isEnabled()) {
         event->acceptProposedAction();
+    }
 }
 
 void HdrWizard::dropEvent(QDropEvent *event)
@@ -326,116 +500,204 @@ void HdrWizard::dropEvent(QDropEvent *event)
     if (event->mimeData()->hasUrls())
     {
         QStringList files = convertUrlListToFilenameList(event->mimeData()->urls());
-        if (files.size() > 0)
-            loadInputFiles(files, files.size());
+        loadInputFiles(files);
     }
     event->acceptProposedAction();
 }
 
-void HdrWizard::loadInputFiles(const QStringList& files, int count)
+void HdrWizard::loadInputFiles(const QStringList& files)
 {
-    int shift = m_Ui->tableWidget->rowCount();
-    m_Ui->tableWidget->setEnabled(false);
-    m_Ui->tableWidget->setRowCount(shift + count);
-    m_Ui->progressBar->setMaximum(count);
-    m_Ui->progressBar->setValue(0);
-    //connect(hdrCreationManager, SIGNAL(maximumValue(int)), progressBar, SLOT(setMaximum(int)));
-    //connect(hdrCreationManager, SIGNAL(nextstep(int)), progressBar, SLOT(setValue(int)));
-    m_Ui->progressBar->show();
-    
-    hdrCreationManager->setShift(shift);
-    hdrCreationManager->setFileList(files);
-    hdrCreationManager->loadInputFiles();
+    if ( !files.isEmpty() )
+    {
+        // update the luminance_options
+        luminance_options.setDefaultPathLdrIn(QFileInfo(files.at(0)).path());
+
+        m_ui->loadImagesButton->setEnabled(false);
+        m_ui->confirmloadlabel->setText("<center><h3><b>" + tr("Loading...") + "</b></h3></center>");
+/*
+        QProgressDialog progressDialog(this);
+        progressDialog.setWindowModality(Qt::WindowModal);
+        progressDialog.setLabelText(QString("Loading %1 file(s) using %2 thread(s)...")
+                                    .arg(files.size())
+                                    .arg(QThread::idealThreadCount())
+                                    );
+
+        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(exec()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(show()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(reset()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(hide()));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), &progressDialog, SLOT(setRange(int,int)));
+        connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), &progressDialog, SLOT(setValue(int)));
+        connect(&progressDialog, SIGNAL(canceled()), m_hdrCreationManager.data(), SIGNAL(progressCancel()));
+*/
+        QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+        m_ui->progressBar->show();
+
+        // m_hdrCreationManager->loadFiles(files);
+        //connect(&m_futureWatcher, SIGNAL(started()), m_ui->progressBar, SLOT(show()));
+        //connect(&m_futureWatcher, SIGNAL(finished()), m_ui->progressBar, SLOT(hide()));
+
+        m_futureWatcher.setFuture(
+                    QtConcurrent::run(
+                        boost::bind(&HdrCreationManager::loadFiles,
+                                    m_hdrCreationManager.data(),
+                                    files)
+                        )
+                    );
+
+
+        // Query the progress dialog to check if was canceled.
+        // qDebug() << "Canceled?" << progressDialog.wasCanceled();
+    }
 }
 
+void HdrWizard::loadInputFilesDone()
+{
+    m_futureWatcher.waitForFinished();    // should breeze over...
+    qDebug() << "HdrWizard::loadInputFilesDone()";
+
+    m_ui->progressBar->hide();
+    m_ui->loadImagesButton->setEnabled(true);
+
+    QApplication::restoreOverrideCursor();
+    updateTableGrid();
+    inputHdrFileSelected(0);
+    m_ui->tableWidget->selectRow(0);
+    m_ui->alignGroupBox->setEnabled(true);
+    if (m_ui->tableWidget->rowCount() > 1) {
+        m_ui->alignCheckBox->setEnabled(true);
+    }
+}
+
+/*
 void HdrWizard::fileLoaded(int index, const QString& fname, float expotime)
 {
     qDebug("WIZ: fileLoaded, expotimes[%d]=%f --- EV=%f",
            index, expotime, log2f(expotime));
 
     updateGraphicalEVvalue(expotime,index);
-    m_inputFilesName.push_back(fname);
-    m_inputExpoTimes.push_back(expotime);
+    // m_inputFilesName.push_back(fname);
+    // m_inputExpoTimes.push_back(expotime);
     //fill graphical list
     QFileInfo qfi(fname);
-    m_Ui->tableWidget->setItem(index, 0, new QTableWidgetItem(qfi.fileName()));
+    m_ui->tableWidget->setItem(index, 0, new QTableWidgetItem(qfi.fileName()));
     // increment progressbar
-    m_Ui->progressBar->setValue(m_Ui->progressBar->value()+1);
+    m_ui->progressBar->setValue(m_ui->progressBar->value()+1);
+}
+*/
+
+
+
+
+// this function should be called if we have at least a file currently in
+// memory, otherwise it will give a misleading information
+void HdrWizard::enableNextOrWarning(const QStringList& filesWithoutExif)
+{
+    // If I have at least one file with empty EXIF, I raise an error...
+    if ( !filesWithoutExif.empty() )
+    {
+        QString warningMessage =
+                tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font> "\
+                   "Luminance HDR was not able to find the relevant <b>EXIF</b> " \
+                   "tags for the following images:" \
+                   "<ul>");
+
+        foreach(const QString& filename, filesWithoutExif) {
+            QFileInfo qfi(filename);
+            warningMessage += "<li>" + qfi.baseName() + "</li>";
+        }
+
+        warningMessage +=
+                tr("</ul>"\
+                   "<hr>You can still proceed creating an Hdr. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values." \
+                   "<hr>If you want Luminance HDR to do this <b>automatically</b>, you have to load images that have at least the following exif data: " \
+                   "<ul><li>Exposure Bias</li></ul>"
+                   "<hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>" \
+                   "You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the " \
+                   "<b>Tools->Copy Exif Data...</b> menu item.");
+
+        // "<ul><li>Shutter Speed (seconds)</li>"
+        // "<li>Aperture (f-number)</li></ul>"
+
+        QMessageBox::warning(this, tr("EXIF data not found"), warningMessage);
+    }
+    updateLabelMaybeNext(filesWithoutExif.size());
 }
 
-void HdrWizard::finishedLoadingInputFiles(const QStringList& filesLackingExif)
+void HdrWizard::updateLabelMaybeNext(size_t numFilesWithoutExif)
 {
-    if (filesLackingExif.size() == 0)
-    {
-        m_Ui->NextFinishButton->setEnabled(true);
-        m_Ui->confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b></h3></font></center>"));
+    if ( numFilesWithoutExif == 0 ) {
+        m_ui->NextFinishButton->setEnabled(true);
+        m_ui->confirmloadlabel->setText(
+                    tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b>" \
+                       "</h3></font></center>"));
+    } else {
+        m_ui->NextFinishButton->setEnabled(false);
+        m_ui->confirmloadlabel->setText(
+                    tr("<center><h3><b>To proceed you need to manually " \
+                       "set the exposure values.<br><font color=\"#FF0000\">%1</font> " \
+                       "values still required.</b></h3></center>")
+                    .arg(numFilesWithoutExif));
     }
-    else
-    {
-        QString warning_message = (QString(tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
-        Luminance HDR was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>\
-        %1</ul>\
-        <hr>You can still proceed creating an Hdr. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values.\
-        <hr>If you want Luminance HDR to do this <b>automatically</b>, you have to load images that have at least\nthe following exif data: \
-        <ul><li>Shutter Speed (seconds)</li>\
-        <li>Aperture (f-number)</li></ul>\
-        <hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>\
-        You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item."))).arg(filesLackingExif.join(""));
-        QMessageBox::warning(this,tr("EXIF data not found"),warning_message);
-        m_Ui->confirmloadlabel->setText(QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(filesLackingExif.size()));
-    }
+}
+
+/*
     //do not load any more images
     //loadImagesButton->setEnabled(false);
     //graphical fix
-    m_Ui->tableWidget->resizeColumnsToContents();
+    m_ui->tableWidget->resizeColumnsToContents();
     //enable user EV input
-    m_Ui->EVgroupBox->setEnabled(true);
-    m_Ui->tableWidget->selectRow(0);
-    m_Ui->tableWidget->setEnabled(true);
+    m_ui->EVgroupBox->setEnabled(true);
+    m_ui->tableWidget->selectRow(0);
+    m_ui->tableWidget->setEnabled(true);
 
     //FIXME mtb doesn't work with 16bit data yet (and probably ever)
-    if ((m_Ui->tableWidget->rowCount() >= 2) && (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)) {
-        m_Ui->alignCheckBox->setEnabled(true);
-        m_Ui->alignGroupBox->setEnabled(true);
+    if ((m_ui->tableWidget->rowCount() >= 2) && (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)) {
+        m_ui->alignCheckBox->setEnabled(true);
+        m_ui->alignGroupBox->setEnabled(true);
     }
-    else if ((m_Ui->tableWidget->rowCount() >= 2) && (hdrCreationManager->inputImageType() == HdrCreationManager::MDR_INPUT_TYPE)) {
-        m_Ui->alignCheckBox->setEnabled(true);
-        m_Ui->alignGroupBox->setEnabled(true);
-        m_Ui->mtb_radioButton->setEnabled(false);
+    else if ((m_ui->tableWidget->rowCount() >= 2) && (m_hdrCreationManager->inputImageType() == HdrCreationManager::MDR_INPUT_TYPE)) {
+        m_ui->alignCheckBox->setEnabled(true);
+        m_ui->alignGroupBox->setEnabled(true);
+        m_ui->mtb_radioButton->setEnabled(false);
     }
-    m_Ui->removeImageButton->setEnabled(true);
-    m_Ui->clearListButton->setEnabled(true);
-    m_Ui->progressBar->hide();
+    m_ui->removeImageButton->setEnabled(true);
+    m_ui->clearListButton->setEnabled(true);
+    m_ui->progressBar->hide();
     QApplication::restoreOverrideCursor();
 }
+*/
+
 
 void HdrWizard::errorWhileLoading(const QString& error)
 {
-    disconnect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)),
-               this, SLOT(inputHdrFileSelected(int)));
+    // disconnect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 
-    m_Ui->tableWidget->clear();
-    m_Ui->tableWidget->setRowCount(0);
-    m_Ui->tableWidget->setEnabled(true);
-    m_Ui->progressBar->setValue(0);
-    m_Ui->progressBar->hide();
-    m_Ui->previewLabel->clear();
-    m_Ui->removeImageButton->setEnabled(false);
-    m_Ui->clearListButton->setEnabled(false);
-    m_Ui->NextFinishButton->setEnabled(false);
-    m_Ui->EVgroupBox->setEnabled(false);
+    m_ui->tableWidget->clear();
+    m_ui->tableWidget->setRowCount(0);
+    m_ui->tableWidget->setEnabled(true);
+    m_ui->progressBar->setValue(0);
+    m_ui->progressBar->hide();
+    m_ui->previewLabel->clear();
+    m_ui->loadImagesButton->setEnabled(true);
+    m_ui->removeImageButton->setEnabled(false);
+    m_ui->clearListButton->setEnabled(false);
+    m_ui->NextFinishButton->setEnabled(false);
+    m_ui->EVgroupBox->setEnabled(false);
     QMessageBox::critical(this,tr("Loading Error: "), error);
-    hdrCreationManager->clearlists(true);
+    // DAVIDE _ HDR CREATION
+    m_hdrCreationManager->clearFiles();
     QApplication::restoreOverrideCursor();
 
-    m_Ui->confirmloadlabel->setText("<center><h3><b>"+
+    m_ui->confirmloadlabel->setText("<center><h3><b>"+
                                     tr("Start loading a set of images with different exposure") +
                                     "</b></h3></center>");
 
-    connect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)),
-            this, SLOT(inputHdrFileSelected(int)));
+    // connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 }
 
+
+/*
 void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table)
 {
     qDebug("WIZ: updateGraphicalEVvalue EV[%d]=%f",
@@ -449,7 +711,7 @@ void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table)
         ts << right << forcesign << fixed << log2f(expotime) << " EV";
         QTableWidgetItem *tableitem = new QTableWidgetItem(EVdisplay);
         tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        m_Ui->tableWidget->setItem(index_in_table,1,tableitem);
+        m_ui->tableWidget->setItem(index_in_table,1,tableitem);
     }
     else
     {
@@ -458,9 +720,10 @@ void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table)
         tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         tableitem->setBackground(QBrush(Qt::yellow));
         tableitem->setForeground(QBrush(Qt::red));
-        m_Ui->tableWidget->setItem(index_in_table,1,tableitem);
+        m_ui->tableWidget->setItem(index_in_table,1,tableitem);
     }
 }
+*/
 
 void HdrWizard::finishedAligning(int exitcode)
 {
@@ -470,9 +733,10 @@ void HdrWizard::finishedAligning(int exitcode)
         QMessageBox::warning(this, tr("Error..."),
                              tr("align_image_stack failed to align images."));
     }
-    m_Ui->NextFinishButton->setEnabled(true);
-    m_Ui->pagestack->setCurrentIndex(2);
-    m_Ui->progressBar->hide();
+    m_ui->NextFinishButton->setEnabled(true);
+    m_ui->pagestack->setCurrentIndex(2);
+    m_ui->progressBar->hide();
+    m_hdrCreationManager->removeTempFiles();
 }
 
 void HdrWizard::ais_failed(QProcess::ProcessError e)
@@ -491,13 +755,13 @@ void HdrWizard::ais_failed(QProcess::ProcessError e)
         QMessageBox::warning(this, tr("Error..."), tr("An unknown error occurred while executing the \"<em>align_image_stack</em>\" application..."));
     break;
     }
-    m_Ui->progressBar->hide();
-    m_Ui->textEdit->hide();
+    m_ui->progressBar->hide();
+    m_ui->textEdit->hide();
     QApplication::restoreOverrideCursor();
-    m_Ui->alignGroupBox->setEnabled(true);
-    m_Ui->alignCheckBox->setChecked(false);
-    m_Ui->NextFinishButton->setEnabled(true);
-    m_Ui->confirmloadlabel->setText("<center><h3><b>" +
+    m_ui->alignGroupBox->setEnabled(true);
+    m_ui->alignCheckBox->setChecked(false);
+    m_ui->NextFinishButton->setEnabled(true);
+    m_ui->confirmloadlabel->setText("<center><h3><b>" +
                                     tr("Now click on next button") +
                                     "</b></h3></center>");
 }
@@ -506,32 +770,46 @@ void HdrWizard::customConfigCheckBoxToggled(bool want_custom)
 {
     if (!want_custom)
     {
-        if (!m_Ui->antighostingCheckBox->isChecked())
+        /*
+        if (!m_ui->antighostingCheckBox->isChecked())
         {
-            m_Ui->label_RespCurve_Antighost->setDisabled(true);
-            m_Ui->antighostRespCurveCombobox->setDisabled(true);
-            m_Ui->label_Iterations->setDisabled(true);
-            m_Ui->spinBoxIterations->setDisabled(true);
+            m_ui->label_RespCurve_Antighost->setDisabled(true);
+            m_ui->antighostRespCurveCombobox->setDisabled(true);
+            m_ui->label_Iterations->setDisabled(true);
+            m_ui->spinBoxIterations->setDisabled(true);
             //temporary disable anti-ghosting until it's fixed
-            m_Ui->antighostingCheckBox->setDisabled(true);
+            m_ui->antighostingCheckBox->setDisabled(true);
+
         }
         else
         {
-            m_Ui->label_predef_configs->setDisabled(true);
-            m_Ui->predefConfigsComboBox->setDisabled(true);
-            m_Ui->label_weights->setDisabled(true);
-            m_Ui->lineEdit_showWeight->setDisabled(true);
-            m_Ui->label_resp->setDisabled(true);
-            m_Ui->lineEdit_show_resp->setDisabled(true);
-            m_Ui->label_model->setDisabled(true);
-            m_Ui->lineEdit_showmodel->setDisabled(true);
+            m_ui->label_predef_configs->setDisabled(true);
+            m_ui->predefConfigsComboBox->setDisabled(true);
+            m_ui->label_weights->setDisabled(true);
+            m_ui->lineEdit_showWeight->setDisabled(true);
+            m_ui->label_resp->setDisabled(true);
+            m_ui->lineEdit_show_resp->setDisabled(true);
+            m_ui->label_model->setDisabled(true);
+            m_ui->lineEdit_showmodel->setDisabled(true);
         }
-        predefConfigsComboBoxActivated(m_Ui->predefConfigsComboBox->currentIndex());
-        m_Ui->NextFinishButton->setText(tr("&Finish"));
+        */
+        m_ui->label_Iterations->setDisabled(true);
+        m_ui->spinBoxIterations->setDisabled(true);
+        m_ui->label_predef_configs->setDisabled(true);
+        m_ui->predefConfigsComboBox->setDisabled(true);
+        m_ui->label_weights->setDisabled(true);
+        m_ui->lineEdit_showWeight->setDisabled(true);
+        m_ui->label_resp->setDisabled(true);
+        m_ui->lineEdit_show_resp->setDisabled(true);
+        m_ui->label_model->setDisabled(true);
+        m_ui->lineEdit_showmodel->setDisabled(true);
+        predefConfigsComboBoxActivated(m_ui->predefConfigsComboBox->currentIndex());
+        m_ui->NextFinishButton->setText(tr("&Finish"));
+
     }
     else
     {
-        m_Ui->NextFinishButton->setText(tr("&Next >"));
+        m_ui->NextFinishButton->setText(tr("&Next >"));
     }
 }
 
@@ -539,140 +817,204 @@ void HdrWizard::predefRespCurveRadioButtonToggled(bool want_predef_resp_curve)
 {
     if (want_predef_resp_curve) {
         //ENABLE load_curve_button and lineedit when "load from file" is checked.
-        if (!m_Ui->loadRespCurveFromFileCheckbox->isChecked()) {
-            m_Ui->loadRespCurveFileButton->setEnabled(false);
-            m_Ui->RespCurveFileLoadedLineEdit->setEnabled(false);
+        if (!m_ui->loadRespCurveFromFileCheckbox->isChecked()) {
+            m_ui->loadRespCurveFileButton->setEnabled(false);
+            m_ui->RespCurveFileLoadedLineEdit->setEnabled(false);
         }
-        loadRespCurveFromFileCheckboxToggled(m_Ui->loadRespCurveFromFileCheckbox->isChecked());
+        loadRespCurveFromFileCheckboxToggled(m_ui->loadRespCurveFromFileCheckbox->isChecked());
     } else { //want to recover response curve via robertson02
-        //update hdrCreationManager->chosen_config
-        hdrCreationManager->chosen_config.response_curve = FROM_ROBERTSON;
+        //update m_hdrCreationManager->chosen_config
+        m_hdrCreationManager->chosen_config.response_curve = FROM_ROBERTSON;
         //always enable
-        m_Ui->NextFinishButton->setEnabled(true);
-        saveRespCurveToFileCheckboxToggled(m_Ui->saveRespCurveToFileCheckbox->isChecked());
+        m_ui->NextFinishButton->setEnabled(true);
+        saveRespCurveToFileCheckboxToggled(m_ui->saveRespCurveToFileCheckbox->isChecked());
     }
 }
 
-void HdrWizard::loadRespCurveFromFileCheckboxToggled( bool checkedfile ) {
+void HdrWizard::loadRespCurveFromFileCheckboxToggled( bool checkedfile )
+{
+    /*
     //if checkbox is checked AND we have a valid filename
     if (checkedfile && loadcurvefilename != "") {
     //update chosen config
-    hdrCreationManager->chosen_config.response_curve = FROM_FILE;
-    hdrCreationManager->chosen_config.LoadCurveFromFilename = strdup(QFile::encodeName(loadcurvefilename).constData());
+    m_hdrCreationManager->chosen_config.response_curve = FROM_FILE;
+    m_hdrCreationManager->chosen_config.LoadCurveFromFilename = strdup(QFile::encodeName(loadcurvefilename).constData());
     //and ENABLE nextbutton
-    m_Ui->NextFinishButton->setEnabled(true);
+    m_ui->NextFinishButton->setEnabled(true);
     }
     //if checkbox is checked AND no valid filename
     else  if (checkedfile && loadcurvefilename == "") {
     // DISABLE nextbutton until situation is fixed
-    m_Ui->NextFinishButton->setEnabled(false);
+    m_ui->NextFinishButton->setEnabled(false);
 //  qDebug("Load checkbox is checked AND no valid filename");
     }
     //checkbox not checked
     else {
     // update chosen config
-    hdrCreationManager->chosen_config.response_curve = responses_in_gui[m_Ui->gammaLinLogComboBox->currentIndex()];
-    hdrCreationManager->chosen_config.LoadCurveFromFilename = "";
+    m_hdrCreationManager->chosen_config.response_curve = responses_in_gui[m_ui->gammaLinLogComboBox->currentIndex()];
+    m_hdrCreationManager->chosen_config.LoadCurveFromFilename = "";
     //and ENABLE nextbutton
-    m_Ui->NextFinishButton->setEnabled(true);
+    m_ui->NextFinishButton->setEnabled(true);
     }
+    */
 }
 
-void HdrWizard::saveRespCurveToFileCheckboxToggled( bool checkedfile ) {
+void HdrWizard::saveRespCurveToFileCheckboxToggled( bool checkedfile )
+{
+    /*
     //if checkbox is checked AND we have a valid filename
     if (checkedfile && savecurvefilename != "") {
-        hdrCreationManager->chosen_config.SaveCurveToFilename = strdup(QFile::encodeName(savecurvefilename).constData());
-        m_Ui->NextFinishButton->setEnabled(true);
+        m_hdrCreationManager->chosen_config.SaveCurveToFilename = strdup(QFile::encodeName(savecurvefilename).constData());
+        m_ui->NextFinishButton->setEnabled(true);
     }
     //if checkbox is checked AND no valid filename
     else  if (checkedfile && savecurvefilename == "") {
         // DISABLE nextbutton until situation is fixed
-        m_Ui->NextFinishButton->setEnabled(false);
+        m_ui->NextFinishButton->setEnabled(false);
     }
     //checkbox not checked
     else {
-        hdrCreationManager->chosen_config.SaveCurveToFilename = "";
+        m_hdrCreationManager->chosen_config.SaveCurveToFilename = "";
         //and ENABLE nextbutton
-        m_Ui->NextFinishButton->setEnabled(true);
+        m_ui->NextFinishButton->setEnabled(true);
     }
+    */
 }
 
 void HdrWizard::NextFinishButtonClicked() {
-    int currentpage = m_Ui->pagestack->currentIndex();
+    int currentpage = m_ui->pagestack->currentIndex();
     switch (currentpage) {
     case 0:
-        m_Ui->pagestack->setCurrentIndex(1);
-        m_Ui->NextFinishButton->setDisabled(true);
+        m_ui->pagestack->setCurrentIndex(1);
+        m_ui->NextFinishButton->setDisabled(true);
         break;
     case 1:
         //now align, if requested
-        if (m_Ui->alignCheckBox->isChecked()) {
+        if (m_ui->alignCheckBox->isChecked()) {
             QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
-            m_Ui->confirmloadlabel->setText("<center><h3><b>"+tr("Aligning...")+"</b></h3></center>");
-            m_Ui->loadImagesButton->setDisabled(true);
-            m_Ui->removeImageButton->setDisabled(true);
-            m_Ui->clearListButton->setDisabled(true);
-            m_Ui->previewLabel->setDisabled(true);
-            m_Ui->NextFinishButton->setDisabled(true);
-            m_Ui->alignGroupBox->setDisabled(true);
-            m_Ui->EVgroupBox->setDisabled(true);
-            m_Ui->tableWidget->setDisabled(true);
+            m_ui->confirmloadlabel->setText("<center><h3><b>"+tr("Aligning...")+"</b></h3></center>");
+            m_ui->loadImagesButton->setDisabled(true);
+            m_ui->removeImageButton->setDisabled(true);
+            m_ui->clearListButton->setDisabled(true);
+            m_ui->previewLabel->setDisabled(true);
+            m_ui->NextFinishButton->setDisabled(true);
+            m_ui->alignGroupBox->setDisabled(true);
+            m_ui->EVgroupBox->setDisabled(true);
+            m_ui->tableWidget->setDisabled(true);
             repaint();
-            m_Ui->progressBar->setMaximum(0);
-            m_Ui->progressBar->setMinimum(0);
-            m_Ui->progressBar->show();
-            if (m_Ui->ais_radioButton->isChecked()) {
-                m_Ui->textEdit->show();
-                hdrCreationManager->set_ais_crop_flag(m_Ui->autoCropCheckBox->isChecked());
-                hdrCreationManager->align_with_ais();
+            m_ui->progressBar->setMaximum(0);
+            m_ui->progressBar->setMinimum(0);
+            m_ui->progressBar->show();
+            if (m_ui->ais_radioButton->isChecked()) {
+                m_ui->progressBar->setRange(0,100);
+                m_ui->progressBar->setValue(0);
+                m_ui->textEdit->show();
+                m_hdrCreationManager->set_ais_crop_flag(m_ui->autoCropCheckBox->isChecked());
+                m_hdrCreationManager->align_with_ais();
             }
             else
-                hdrCreationManager->align_with_mtb();
+                m_hdrCreationManager->align_with_mtb();
             return;
         }
-        m_Ui->pagestack->setCurrentIndex(2);
+        m_ui->pagestack->setCurrentIndex(2);
         break;
     case 2:
-        if(!m_Ui->customConfigCheckBox->isChecked()) {
+        if(!m_ui->customConfigCheckBox->isChecked()) {
             currentpage = 3;
         } else {
-            m_Ui->pagestack->setCurrentIndex(3);
+            m_ui->pagestack->setCurrentIndex(3);
             break;
         }
     case 3:
-        m_Ui->settings_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
-        m_Ui->customize_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
+        m_processing = true;
+        m_ui->settings_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
+        m_ui->customize_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
         repaint();
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
-        PfsFrameHDR = hdrCreationManager->createHdr(m_Ui->antighostingCheckBox->isChecked(),m_Ui->spinBoxIterations->value());
-        QApplication::restoreOverrideCursor();
-        accept();
-        return;
+        m_ui->NextFinishButton->setEnabled(false);
+        //m_ui->cancelButton->setEnabled(false);
+
+        if (m_doAutoAntighosting) {
+            int h0;
+            m_hdrCreationManager->getAgData(m_patches, h0);
+            m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
+                                                       m_hdrCreationManager.data(),
+                                                       m_patches, h0, false, &m_ph)); // false means auto anti ghosting
+            connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
+            m_ui->progressBar->show();
+            m_futureWatcher.setFuture(m_future);
+        }
+        else if (m_doManualAntighosting) {
+            m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
+                                                       m_hdrCreationManager.data(),
+                                                       m_patches, m_agGoodImageIndex, true, &m_ph)); // true means manual anti ghosting
+            connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
+            m_ui->progressBar->show();
+            m_futureWatcher.setFuture(m_future);
+        }
+        else
+            createHdr();
     }
 }
 
-void HdrWizard::currentPageChangedInto(int newindex) {
+void HdrWizard::createHdr()
+{
+    //m_pfsFrameHDR = m_hdrCreationManager->createHdr(false, m_ui->spinBoxIterations->value());
+
+    m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr, 
+                                               m_hdrCreationManager.data(),
+                                               false, 
+                                               m_ui->spinBoxIterations->value()));
+
+    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
+    m_futureWatcher.setFuture(m_future);
+}
+
+void HdrWizard::createHdrFinished()
+{
+    m_pfsFrameHDR = m_future.result();
+    OsIntegration::getInstance().setProgress(-1);
+    QApplication::restoreOverrideCursor();
+    accept();
+}
+
+void HdrWizard::autoAntighostingFinished()
+{
+    m_pfsFrameHDR = m_future.result();
+    m_ui->progressBar->hide();
+    OsIntegration::getInstance().setProgress(-1);
+    QApplication::restoreOverrideCursor();
+    if (m_pfsFrameHDR == NULL)
+        QDialog::reject();
+    else
+        accept();
+}
+
+void HdrWizard::currentPageChangedInto(int newindex)
+{
     //predefined configs page
-    // m_Ui->textEdit->hide();
+    // m_ui->textEdit->hide();
     if (newindex == 2) {
-        hdrCreationManager->removeTempFiles();
-        m_Ui->NextFinishButton->setText(tr("&Finish"));
+        //m_hdrCreationManager->removeTempFiles();
+        m_ui->NextFinishButton->setText(tr("&Finish"));
         //when at least 2 LDR or MDR inputs perform Manual Alignment
-        int numldrs;
-        if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
-            numldrs = hdrCreationManager->getLDRList().size();
+        int num_images = m_hdrCreationManager->getData().size();
+/*
+        if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
+            numldrs = m_hdrCreationManager->getLDRList().size();
         else
-            numldrs = hdrCreationManager->getMDRList().size();
-        
+            numldrs = m_hdrCreationManager->getMDRList().size();
+      
         qDebug() << "numldrs = " << numldrs;
-        //if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
-        if (numldrs >= 2) {
+*/
+        //if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
+        if (num_images >= 2) {
             this->setDisabled(true);
-            //fix for some platforms/Qt versions: makes sure LDR images have alpha channel
-            if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)
-                hdrCreationManager->makeSureLDRsHaveAlpha();
-            EditingTools *editingtools = new EditingTools(hdrCreationManager);
+            EditingTools *editingtools = new EditingTools(m_hdrCreationManager.data());
             if (editingtools->exec() == QDialog::Accepted) {
+                m_doAutoAntighosting = editingtools->isAutoAntighostingEnabled();
+                m_doManualAntighosting = editingtools->isManualAntighostingEnabled();
+                m_agGoodImageIndex = editingtools->getAgGoodImageIndex();
                 this->setDisabled(false);
             } else {
                 emit reject();
@@ -682,7 +1024,7 @@ void HdrWizard::currentPageChangedInto(int newindex) {
     }
     else if (newindex == 3) { //custom config
         predefConfigsComboBoxActivated(1);
-        m_Ui->NextFinishButton->setText(tr("&Finish"));
+        m_ui->NextFinishButton->setText(tr("&Finish"));
         return;
     }
 }
@@ -691,190 +1033,279 @@ void HdrWizard::antighostRespCurveComboboxActivated(int fromgui) {
     gammaLinLogComboBoxActivated(fromgui);
 }
 
-void HdrWizard::loadRespCurveFileButtonClicked() {
+void HdrWizard::loadRespCurveFileButtonClicked()
+{
+    /*
     loadcurvefilename = QFileDialog::getOpenFileName(
             this,
             tr("Load a camera response curve file"),
             QDir::currentPath(),
             tr("Camera response curve (*.m);;All Files (*)") );
     if (!loadcurvefilename.isEmpty())  {
-        m_Ui->RespCurveFileLoadedLineEdit->setText(loadcurvefilename);
-        loadRespCurveFromFileCheckboxToggled(m_Ui->loadRespCurveFromFileCheckbox->isChecked());
+        m_ui->RespCurveFileLoadedLineEdit->setText(loadcurvefilename);
+        loadRespCurveFromFileCheckboxToggled(m_ui->loadRespCurveFromFileCheckbox->isChecked());
     }
+    */
 }
 
-void HdrWizard::saveRespCurveFileButtonClicked() {
+void HdrWizard::saveRespCurveFileButtonClicked()
+{
+    /*
     savecurvefilename = QFileDialog::getSaveFileName(
             this,
             tr("Save a camera response curve file"),
             QDir::currentPath(),
             tr("Camera response curve (*.m);;All Files (*)") );
     if (!savecurvefilename.isEmpty())  {
-        m_Ui->CurveFileNameSaveLineEdit->setText(savecurvefilename);
-        saveRespCurveToFileCheckboxToggled(m_Ui->saveRespCurveToFileCheckbox->isChecked());
+        m_ui->CurveFileNameSaveLineEdit->setText(savecurvefilename);
+        saveRespCurveToFileCheckboxToggled(m_ui->saveRespCurveToFileCheckbox->isChecked());
+    }
+    */
+}
+
+namespace {
+
+void updateHdrCreationManagerModel(HdrCreationManager& manager, TModel model)
+{
+    qDebug() << "Change model to " << (int)model;
+
+    switch (model) {
+    case ROBERTSON: {
+        manager.setFusionOperator(libhdr::fusion::ROBERTSON02_NEW);
+    } break;
+    case DEBEVEC:
+    default: {
+        manager.setFusionOperator(libhdr::fusion::DEBEVEC_NEW);
+    } break;
     }
 }
 
-void HdrWizard::predefConfigsComboBoxActivated( int index_from_gui ) {
-    if (index_from_gui <= 5) {
-        hdrCreationManager->chosen_config = predef_confs[index_from_gui];
+void updateHdrCreationManagerResponse(HdrCreationManager& manager, TResponse response)
+{
+    qDebug() << "Change response to " << (int)response;
+
+    switch (response) {
+    case GAMMA: {
+        manager.setResponseFunction(libhdr::fusion::RESPONSE_GAMMA);
+    } break;
+    case LOG10: {
+        manager.setResponseFunction(libhdr::fusion::RESPONSE_LOG10);
+    } break;
+    case LINEAR:
+    default: {
+        manager.setResponseFunction(libhdr::fusion::RESPONSE_LINEAR);
+    } break;
     }
-    else {
-        hdrCreationManager->chosen_config = m_customConfig[index_from_gui - 6];
+}
+
+void updateHdrCreationManagerWeight(HdrCreationManager& manager, TWeight weight)
+{
+    qDebug() << "Change weights to " << (int)weight;
+
+    switch (weight) {
+    case PLATEAU: {
+        manager.setWeightFunction(libhdr::fusion::WEIGHT_PLATEAU);
+    } break;
+    case GAUSSIAN: {
+        manager.setWeightFunction(libhdr::fusion::WEIGHT_GAUSSIAN);
+    } break;
+    case TRIANGULAR:
+    default: {
+        manager.setWeightFunction(libhdr::fusion::WEIGHT_TRIANGULAR);
+    } break;
     }
-    m_Ui->lineEdit_showWeight->setText(getQStringFromConfig(1));
-    m_Ui->lineEdit_show_resp->setText(getQStringFromConfig(2));
-    m_Ui->lineEdit_showmodel->setText(getQStringFromConfig(3));
+}
+
+}
+
+void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui)
+{
+    if (index_from_gui <= 5)
+    {
+        m_hdrCreationManager->chosen_config = predef_confs[index_from_gui];
+    }
+    else
+    {
+        m_hdrCreationManager->chosen_config = m_customConfig[index_from_gui - 6];
+    }
+    m_ui->lineEdit_showWeight->setText(getQStringFromConfig(1));
+    m_ui->lineEdit_show_resp->setText(getQStringFromConfig(2));
+    m_ui->lineEdit_showmodel->setText(getQStringFromConfig(3));
+
+
+    // update HdrCreationManager (new code)
+    updateHdrCreationManagerModel(*m_hdrCreationManager,
+                                  m_hdrCreationManager->chosen_config.model);
+    updateHdrCreationManagerResponse(*m_hdrCreationManager,
+                                     m_hdrCreationManager->chosen_config.response_curve);
+    updateHdrCreationManagerWeight(*m_hdrCreationManager,
+                                   m_hdrCreationManager->chosen_config.weights);
 }
 
 void HdrWizard::triGaussPlateauComboBoxActivated(int from_gui) {
-    hdrCreationManager->chosen_config.weights = weights_in_gui[from_gui];
+    m_hdrCreationManager->chosen_config.weights = weights_in_gui[from_gui];
+
+    updateHdrCreationManagerWeight(*m_hdrCreationManager,
+                                   m_hdrCreationManager->chosen_config.weights);
 }
 
 void HdrWizard::gammaLinLogComboBoxActivated(int from_gui) {
-    hdrCreationManager->chosen_config.response_curve = responses_in_gui[from_gui];
+    m_hdrCreationManager->chosen_config.response_curve = responses_in_gui[from_gui];
+
+    updateHdrCreationManagerResponse(*m_hdrCreationManager,
+                                     m_hdrCreationManager->chosen_config.response_curve);
 }
 
 void HdrWizard::modelComboBoxActivated(int from_gui) {
-    hdrCreationManager->chosen_config.model = models_in_gui[from_gui];
+    m_hdrCreationManager->chosen_config.model = models_in_gui[from_gui];
+
+    updateHdrCreationManagerModel(*m_hdrCreationManager,
+                                  m_hdrCreationManager->chosen_config.model);
 }
 
 void HdrWizard::loadRespCurveFilename( const QString & filename_from_gui) {
     if (!filename_from_gui.isEmpty()) {
-        hdrCreationManager->chosen_config.response_curve = FROM_FILE;
-        hdrCreationManager->chosen_config.LoadCurveFromFilename = strdup(QFile::encodeName(filename_from_gui).constData());
+        m_hdrCreationManager->chosen_config.response_curve = FROM_FILE;
+        m_hdrCreationManager->chosen_config.LoadCurveFromFilename = strdup(QFile::encodeName(filename_from_gui).constData());
     }
 }
 
 QString HdrWizard::getCaptionTEXT()
 {
-    return tr("Weights: ")+getQStringFromConfig(1) + tr(" - Response curve: ") + getQStringFromConfig(2) + tr(" - Model: ") + getQStringFromConfig(3);
+    return QString(tr("Weights: ") + getQStringFromConfig(1) +
+                   tr(" - Response curve: ") + getQStringFromConfig(2) +
+                   tr(" - Model: ") + getQStringFromConfig(3));
 }
 
 QStringList HdrWizard::getInputFilesNames()
 {
-    return m_inputFilesName;
+    return QStringList();
+    // return m_inputFilesName;
 }
 
-QString HdrWizard::getQStringFromConfig( int type ) {
-    if (type == 1) { //return String for weights
-    switch (hdrCreationManager->chosen_config.weights) {
-    case TRIANGULAR:
-        return tr("Triangular");
-    case PLATEAU:
-        return tr("Plateau");
-    case GAUSSIAN:
-        return tr("Gaussian");
-    }
-    } else if (type == 2) {   //return String for response curve
-    switch (hdrCreationManager->chosen_config.response_curve) {
-    case LINEAR:
-        return tr("Linear");
-    case GAMMA:
-        return tr("Gamma");
-    case LOG10:
-        return tr("Logarithmic");
-    case FROM_ROBERTSON:
-        return tr("From Calibration");
-    case FROM_FILE:
-        return tr("From File: ") + hdrCreationManager->chosen_config.LoadCurveFromFilename;
-    }
-    } else if (type == 3) {   //return String for model
-    switch (hdrCreationManager->chosen_config.model) {
-    case DEBEVEC:
-        return tr("Debevec");
-    case ROBERTSON:
-        return tr("Robertson");
-    }
-    } else return "";
-return "";
-}
-
-//triggered by user interaction
-void HdrWizard::editingEVfinished() {
-    //transform from EV value to expotime value
-    hdrCreationManager->setEV(m_Ui->ImageEVdsb->value(), m_Ui->tableWidget->currentRow());
-    if (hdrCreationManager->getFilesLackingExif().size() == 0) {
-        m_Ui->NextFinishButton->setEnabled(true);
-        //give an offset to the EV values if they are outside of the -10..10 range.
-        hdrCreationManager->checkEVvalues();
-        m_Ui->confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.<br>Now click on Next button.</b></h3></font></center>"));
-    } else {
-        m_Ui->confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(hdrCreationManager->getFilesLackingExif().size()) );
-    }
-}
-
-void HdrWizard::inputHdrFileSelected(int i) {
-    if (hdrCreationManager->isValidEV(i))
-        m_Ui->ImageEVdsb->setValue(hdrCreationManager->getEV(i));
-    if (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
-        QImage *image = hdrCreationManager->getLDRList().at(i);
-        m_Ui->previewLabel->setPixmap(QPixmap::fromImage(image->scaled(m_Ui->previewLabel->size(), Qt::KeepAspectRatio)));
-    }
-    else { // load preview from thumbnail previously created on disk
-        QString fname = hdrCreationManager->getFileList().at(i);
-        QFileInfo qfi(fname);
-        QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
-
-        if (QFile::exists(thumb_name))
-        {
-            QImage thumb_image(thumb_name);
-            m_Ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_Ui->previewLabel->size(), Qt::KeepAspectRatio)));
-        }
-        else
-        {
-            QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
-            if ( QFile::exists(thumb_name))  {
-                QImage thumb_image(thumb_name);
-                m_Ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_Ui->previewLabel->size(), Qt::KeepAspectRatio)));
-            }
-        }
-    }
-    m_Ui->ImageEVdsb->setFocus();
-}
-
-void HdrWizard::resizeEvent ( QResizeEvent * )
+QString HdrWizard::getQStringFromConfig( int type )
 {
-    //qDebug() << "void HdrWizard::resizeEvent ( QResizeEvent * )";
-    //make sure we ask for a thumbnail only when we need it
-    if ((m_Ui->pagestack->currentIndex() == 0) && (m_Ui->tableWidget->currentRow() != -1) && (hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)) {
-        QImage *image = hdrCreationManager->getLDRList().at(m_Ui->tableWidget->currentRow());
-        m_Ui->previewLabel->setPixmap(QPixmap::fromImage(image->scaled(m_Ui->previewLabel->size(), Qt::KeepAspectRatio)));
+    if (type == 1) {
+        // return String for weights
+        switch (m_hdrCreationManager->chosen_config.weights) {
+        case TRIANGULAR:
+            return tr("Triangular");
+        case PLATEAU:
+            return tr("Plateau");
+        case GAUSSIAN:
+            return tr("Gaussian");
+        }
+    } else if (type == 2) {
+        // return String for response curve
+        switch (m_hdrCreationManager->chosen_config.response_curve) {
+        case LINEAR:
+            return tr("Linear");
+        case GAMMA:
+            return tr("Gamma");
+        case LOG10:
+            return tr("Logarithmic");
+        case FROM_ROBERTSON:
+            return tr("From Calibration");
+        case FROM_FILE:
+            return tr("From File: ") + m_hdrCreationManager->chosen_config.LoadCurveFromFilename;
+        }
+    } else if (type == 3) {
+        // return String for model
+        switch (m_hdrCreationManager->chosen_config.model) {
+        case DEBEVEC:
+            return tr("Debevec");
+        case ROBERTSON:
+            return tr("Robertson");
+        }
+    } else {
+        return "";
     }
-    else if ((m_Ui->pagestack->currentIndex() == 0) && (m_Ui->tableWidget->currentRow() != -1) && (hdrCreationManager->inputImageType() != HdrCreationManager::LDR_INPUT_TYPE))
-    { // load preview from thumbnail previously created on disk
-        QString fname = hdrCreationManager->getFileList().at(m_Ui->tableWidget->currentRow());
+    return "";
+}
+
+// triggered by user interaction
+void HdrWizard::editingEVfinished()
+{
+    // transform from EV value to expotime value
+    //m_hdrCreationManager->setEV(m_ui->ImageEVdsb->value(), m_ui->tableWidget->currentRow());
+    if (m_hdrCreationManager->getFilesWithoutExif().empty())
+    {
+        m_ui->NextFinishButton->setEnabled(true);
+        //give an offset to the EV values if they are outside of the -10..10 range.
+        //m_hdrCreationManager->checkEVvalues();
+        m_ui->confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.<br>Now click on Next button.</b></h3></font></center>"));
+    } else {
+        m_ui->confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(m_hdrCreationManager->getFilesWithoutExif().size()) );
+    }
+}
+
+void HdrWizard::resizeEvent( QResizeEvent * )
+{
+    qDebug() << "void HdrWizard::resizeEvent(QResizeEvent*)";
+
+    int currentRow = m_ui->tableWidget->currentRow();
+    int numberOfRow = m_ui->tableWidget->rowCount();
+
+    if ( currentRow >= 0 && currentRow < numberOfRow )
+    {
+        m_ui->previewLabel->setPixmap(
+                    QPixmap::fromImage(
+                        m_hdrCreationManager->getFile(currentRow).qimage()->scaled(
+                            m_ui->previewLabel->size(), Qt::KeepAspectRatio)
+                        ));
+    }
+    else {
+        m_ui->previewLabel->setText(QString());
+    }
+
+/*
+    // make sure we ask for a thumbnail only when we need it
+    if ((m_ui->pagestack->currentIndex() == 0) && (m_ui->tableWidget->currentRow() != -1) && (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE)) {
+        QImage *image = m_hdrCreationManager->getLDRList().at(m_ui->tableWidget->currentRow());
+        m_ui->previewLabel->setPixmap(QPixmap::fromImage(image->scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
+    }
+    else if ((m_ui->pagestack->currentIndex() == 0) && (m_ui->tableWidget->currentRow() != -1) && (m_hdrCreationManager->inputImageType() != HdrCreationManager::LDR_INPUT_TYPE))
+    {
+        // load preview from thumbnail previously created on disk
+        QString fname = m_hdrCreationManager->getFileList().at(m_ui->tableWidget->currentRow());
         QFileInfo qfi(fname);
                 QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
 
         if ( QFile::exists(thumb_name))  {
             QImage thumb_image(thumb_name);
-            m_Ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_Ui->previewLabel->size(), Qt::KeepAspectRatio)));
+            m_ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
         }
         else
         {
             QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
             if ( QFile::exists(thumb_name))  {
                 QImage thumb_image(thumb_name);
-                m_Ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_Ui->previewLabel->size(), Qt::KeepAspectRatio)));
+                m_ui->previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(m_ui->previewLabel->size(), Qt::KeepAspectRatio)));
             }
         }
     }
+*/
 }
 
 void HdrWizard::alignSelectionClicked()
 {
-    m_Ui->autoCropCheckBox->setEnabled(m_Ui->ais_radioButton->isChecked());
+    m_ui->autoCropCheckBox->setEnabled(m_ui->ais_radioButton->isChecked());
 }
 
 void HdrWizard::reject() {
     QApplication::restoreOverrideCursor();
-    QDialog::reject();
+    if (m_processing) {
+        m_ph.qtCancel();
+    }
+    else {
+        m_hdrCreationManager->reset();
+        QDialog::reject();
+    }
 }
 
 void HdrWizard::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
-        m_Ui->tableWidget->selectRow((m_Ui->tableWidget->currentRow() == m_Ui->tableWidget->rowCount()-1) ? 0 : m_Ui->tableWidget->currentRow()+1);
+        m_ui->tableWidget->selectRow((m_ui->tableWidget->currentRow() == m_ui->tableWidget->rowCount()-1) ? 0 : m_ui->tableWidget->currentRow()+1);
     } else if (event->key() == Qt::Key_Escape) {
         emit reject();
     }
@@ -889,30 +1320,34 @@ void HdrWizard::writeAisData(QByteArray data)
         data.replace("[2A", "");
     if (data.contains(QChar(0x01B).toAscii()))
         data.replace(QChar(0x01B).toAscii(), "");
-    m_Ui->textEdit->append(data);
+
+    m_ui->textEdit->append(data);
     if (data.contains(": remapping")) {
-        data.replace(0,data.size() - 6, " ");
-        emit setValue(QString(data.data()).toInt());
+        QRegExp exp("\\:\\s*(\\d+)\\s*");
+        exp.indexIn(QString(data.data()));
+        emit setRange(0, 100);
+        emit setValue(exp.cap(1).toInt());
     }
 }
 
 void HdrWizard::on_pushButtonSaveSettings_clicked()
 {
+    /*
     QSqlQuery query;
     QString response_filename;
-    int weight = m_Ui->triGaussPlateauComboBox->currentIndex();
+    int weight = m_ui->triGaussPlateauComboBox->currentIndex();
     int response;
-    if (m_Ui->predefRespCurveRadioButton->isChecked()) {
-        response = m_Ui->gammaLinLogComboBox->currentIndex();
+    if (m_ui->predefRespCurveRadioButton->isChecked()) {
+        response = m_ui->gammaLinLogComboBox->currentIndex();
     }
-    else if (m_Ui->loadRespCurveFromFileCheckbox->isChecked()) {
+    else if (m_ui->loadRespCurveFromFileCheckbox->isChecked()) {
         response = FROM_FILE;
-        response_filename = m_Ui->RespCurveFileLoadedLineEdit->text();
+        response_filename = m_ui->RespCurveFileLoadedLineEdit->text();
     }
     else
         response = FROM_ROBERTSON;
 
-    int model = m_Ui->modelComboBox->currentIndex();
+    int model = m_ui->modelComboBox->currentIndex();
 
     query.prepare("INSERT INTO parameters (weight, response, model, filename) "
                 "VALUES (:weight, :response, :model, :filename)");
@@ -924,7 +1359,14 @@ void HdrWizard::on_pushButtonSaveSettings_clicked()
     bool res = query.exec();
     if (res == false)
         qDebug() << "Insert: " << query.lastError();
-    m_Ui->pushButtonSaveSettings->setEnabled(false);
+    m_ui->pushButtonSaveSettings->setEnabled(false);
+    */
+}
+
+void HdrWizard::updateProgressBar(int value)
+{
+    if (value == 0) m_ui->progressBar->setMaximum(100);
+    m_ui->progressBar->setValue(value);
 }
 
 void HdrWizard::updateProgressBar(int value)

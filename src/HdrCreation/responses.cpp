@@ -1,7 +1,4 @@
-/**
- * @brief Standard response functions
- *
- * 
+/*
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
@@ -21,23 +18,83 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- * 
- * @author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- *
- * $Id: responses.cpp,v 1.6 2006/09/13 14:27:06 gkrawczyk Exp $
  */
 
+//! \brief Standard response functions
+//! \author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+
+#include <string>
+#include <map>
 #include <iostream>
 #include <vector>
+#include <cassert>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+
+#include <boost/assign.hpp>
 
 #include "responses.h"
+#include <Libpfs/colorspace/rgb.h>
+#include <Libpfs/utils/string.h>
 
-#define MIN_WEIGHT 1e-3
+using namespace std;
+using namespace boost;
+using namespace boost::assign;
+
+namespace libhdr {
+namespace fusion {
+
+ResponseFunction fromString(const std::string& type)
+{
+    typedef map<string, ResponseFunction, pfs::utils::StringUnsensitiveComp> Dict;
+    static Dict v =
+            map_list_of
+            ("log10", RESPONSE_LOG10)
+            ("log", RESPONSE_LOG10)
+            ("linear", RESPONSE_LINEAR)
+            ("gamma", RESPONSE_GAMMA)
+            ("srgb", RESPONSE_SRGB)
+            ;
+
+    Dict::const_iterator it = v.find(type);
+    if ( it != v.end() ) {
+        return it->second;
+    }
+    return RESPONSE_LINEAR;
+}
+
+
+float ResponseGamma::getResponse(float input) const
+{
+    return std::pow( 4.f * input, 1.7f ) + 1e-4;
+}
+
+// I use a namespace to avoid name collision
+namespace details_log10
+{
+const float s_mid               = 0.5f;
+const float s_norm              = 0.0625f;
+// the value 8.f is s_mid/s_norm. The actual formula is 10^((i - mid)/norm)
+const float s_inverseMaxValue   = 1.f/1e8; // == 1.f/std::pow(10.0f, (1.f/norm - 8.f));
+}
+
+float ResponseLog10::getResponse(float input) const
+{
+    return details_log10::s_inverseMaxValue *   // normalization between [0, 1]
+            std::pow(10.0f, ((input/details_log10::s_norm) - 8.f) );
+}
+
+float ResponseSRGB::getResponse(float input) const
+{
+    return pfs::colorspace::ConvertSRGB2RGB()(input);
+}
+
+}   // fusion
+}   // libhdr
 
 void dump_gnuplot( const char* filename, const float* array, int M )
 {
@@ -54,59 +111,6 @@ void dump_gnuplot( const char* filename, const float* array, int M, int counter 
   char fn[2048];
   sprintf(fn, filename, counter);
   dump_gnuplot(fn, array, M);
-}
-
-void exposure_weights_icip06( float* w, int M, int Mmin, int Mmax )
-{
-  for( int m=0 ; m<M ; m++ )
-    if( m<Mmin || m>Mmax )
-      w[m] = 0.0f;
-    else
-      w[m]=1.0f-pow( ( (2.0f*float(m-Mmin)/float(Mmax-Mmin)) - 1.0f), 12.0f);
-}
-
-void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma )
-{
-  float mid = Mmin + (Mmax-Mmin)/2.0f - 0.5f;
-  float mid2 = (mid-Mmin) * (mid-Mmin);
-  for( int m=0 ; m<M ; m++ )
-    if( m<Mmin || m>Mmax )
-      w[m] = 0.0f;
-    else
-    {
-      // gkrawczyk: that's not really a gaussian, but equation is
-      // taken from Robertson02 paper.
-      float weight = exp( -sigma * (m-mid) * (m-mid) / mid2 );
-      
-      if( weight<MIN_WEIGHT )           // ignore very low weights
-        w[m] = 0.0f;
-      else
-        w[m] = weight;
-    }
-}
-
-void weights_triangle( float* w, int M/*, int Mmin, int Mmax*/ )
-{
-	for(int i=0;i<int(float(M)/2.0f);i++) {
-	  w[i]=i/ (float(M)/2.0f);
-	  if (w[i]<0.06f)w[i]=0;
-	}
-	for(int i=int(float(M)/2.0f);i<M;i++) {
-	  w[i]=(M-1-i)/(float(M)/2.0f);
-	  if (w[i]<0.06f)w[i]=0;
-	}
-//   for( int m=0 ; m<M ; m++ )
-//     if( m<Mmin || m>Mmax )
-//       w[m] = 0.0f;
-//     else
-//     {
-// 	if ( m<int(Mmin+ (Mmax-Mmin)/2.0f +1) )
-// 		w[m]=(m-Mmin)/float(Mmin+(Mmax-Mmin)/2.0f);
-// 	else
-// 		w[m]=( -m+Mmin+((Mmax-Mmin)) )/float(Mmin+(Mmax-Mmin)/2.0f);
-//     }
-
-// 	  if (w[i]<0.06f)w[i]=0;
 }
 
 void responseLinear( float* I, int M )
@@ -128,13 +132,15 @@ void responseGamma( float* I, int M )
 
 void responseLog10( float* I, int M )
 {
-  float mid = 0.5f * M;
-  float norm = 0.0625f * M;
-  
-  for( int m=0 ; m<M ; m++ )
-    I[m] = powf(10.0f, float(m - mid) / norm);
-}
+    const float mid = 0.5f * M;
+    const float norm = 0.0625f * M;
+    const float maxValue = powf(10.0f, float(M-1 - mid) / norm);
 
+    for( int m=0 ; m < M; ++m)
+    {
+        I[m] = powf(10.0f, float(m - mid) / norm) / maxValue;
+    }
+}
 
 void responseSave( FILE* file, const float* Ir, const float* Ig, const float* Ib, int M)
 {

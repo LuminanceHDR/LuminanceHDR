@@ -259,6 +259,7 @@ void copyExifData(const std::string& from, const std::string& to,
  *
  * F-number and shutter speed are mandatory in exif data for EV calculation, iso is not.
  */
+/*
 float obtain_avg_lum(const std::string& filename)
 {
     try
@@ -337,6 +338,91 @@ float obtain_avg_lum(const std::string& filename)
     catch (Exiv2::AnyError& e)
     {
         return -1;
+    }
+}
+*/
+
+float getExposureTime(const std::string& filename)
+{
+    try
+    {
+        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        image->readMetadata();
+        Exiv2::ExifData &exifData = image->exifData();
+        if (exifData.empty())
+            return -1;
+
+        Exiv2::ExifData::const_iterator iexpo = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureTime"));
+        Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue"));
+        Exiv2::ExifData::const_iterator iiso  = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"));
+        Exiv2::ExifData::const_iterator ifnum = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"));
+        Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"));
+
+        float expo  = -1;
+
+        if (iexpo != exifData.end())
+        {
+            expo = iexpo->toFloat();
+        }
+        else if (iexpo2 != exifData.end())
+        {
+            long num = 1;
+            long div = 1;
+            double tmp = std::exp(std::log(2.0) * iexpo2->toFloat());
+            if (tmp > 1)
+            {
+                div = static_cast<long>(tmp + 0.5);
+            }
+            else
+            {
+                num = static_cast<long>(1/tmp + 0.5);
+            }
+            expo = static_cast<float>(num)/static_cast<float>(div);
+        }
+        if (expo != -1)
+        {
+            return expo;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    catch (Exiv2::AnyError& e)
+    {
+        return -1;
+    }
+}
+
+float getAverageLuminance(const std::string& filename)
+{
+    try
+    {
+        Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+        image->readMetadata();
+        Exiv2::ExifData &exifData = image->exifData();
+
+        // Exif.Image.ExposureBiasValue
+        Exiv2::ExifData::const_iterator itExpValue =
+                exifData.findKey(Exiv2::ExifKey("Exif.Image.ExposureBiasValue"));
+        if ( itExpValue != exifData.end() ) {
+            return pow(2.0f, itExpValue->toFloat());
+        }
+
+        // Exif.Photo.ExposureBiasValue
+        itExpValue =
+                exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureBiasValue"));
+        if ( itExpValue != exifData.end() ) {
+            return pow(2.0f, itExpValue->toFloat());
+        }
+
+        std::clog << "Cannot find ExposureBiasValue for " << filename << std::endl;
+
+        return -1.0;
+    }
+    catch (Exiv2::AnyError& e)
+    {
+        return -1.0;
     }
 }
 

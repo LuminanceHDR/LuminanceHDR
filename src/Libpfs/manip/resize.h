@@ -38,6 +38,12 @@ Frame* resize(Frame* frame, int xSize);
 
 template <typename Type>
 void resize(const Array2D<Type> *from, Array2D<Type> *to);
+
+template <typename Type>
+void resize(const Array2D<Type>& from, Array2D<Type>& to) {
+    resize(&from, &to);
+}
+
 }
 
 #include "resize.hxx"

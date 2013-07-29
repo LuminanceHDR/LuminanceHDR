@@ -26,6 +26,7 @@
 #define PFS_IO_FRAMEREADER_H
 
 #include <string>
+#include <boost/shared_ptr.hpp>
 #include <Libpfs/params.h>
 
 namespace pfs {
@@ -40,14 +41,12 @@ public:
 
     virtual ~FrameReader();
 
-    const std::string& filename() const
-    { return m_filename; }
-
-    size_t width() const
-    { return m_width; }
-
-    size_t height() const
-    { return m_height; }
+    //! \brief filename of the file being read
+    const std::string& filename() const     { return m_filename; }
+    //! \brief return the width of the file being read
+    size_t width() const                    { return m_width; }
+    //! \brief return the height of the file being read
+    size_t height() const                   { return m_height; }
 
     virtual void open() = 0;
     virtual bool isOpen() const = 0;
@@ -55,11 +54,8 @@ public:
     virtual void read(pfs::Frame& frame, const pfs::Params& params) = 0;
 
 protected:
-    void setWidth(size_t width)
-    { m_width = width; }
-
-    void setHeight(size_t height)
-    { m_height = height; }
+    void setWidth(size_t width)     { m_width = width; }
+    void setHeight(size_t height)   { m_height = height; }
 
 private:
     std::string m_filename;
@@ -67,7 +63,9 @@ private:
     size_t m_height;
 };
 
-}
-}
+typedef ::boost::shared_ptr<FrameReader> FrameReaderPtr;
+
+}   // io
+}   // pfs
 
 #endif // PFS_IO_FRAMEREADER_H

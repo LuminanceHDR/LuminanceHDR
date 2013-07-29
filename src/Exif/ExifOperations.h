@@ -34,12 +34,24 @@ void copyExifData(const std::string& from, const std::string& to,
                   const std::string& comment = std::string(),
                   bool destIsLDR = false,
                   bool keepRotation = true);
-//!
-//!
-float obtain_avg_lum(const std::string& filename);
+
 //!
 //!
 int obtain_rotation(const std::string& filename);
+
+//!
+//!
+// float obtain_avg_lum(const std::string& filename);
+
+// //! \brief retrieve exposure bias from \c filename
+// float getExposureBias(const std::string& filename);
+
+//! \brief compute average luminance from exposure bias
+//! \return Average Luminance (as 2^EV) or -1 if the value cannot be calculated
+float getAverageLuminance(const std::string& filename);
+
+float getExposureTime(const std::string& filename);
+
 }
 
 #endif

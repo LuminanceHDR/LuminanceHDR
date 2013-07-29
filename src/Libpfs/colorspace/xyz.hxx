@@ -27,9 +27,20 @@
 
 #include <Libpfs/colorspace/xyz.h>
 #include <Libpfs/colorspace/rgb.h>
+#include <Libpfs/colorspace/convert.h>
 
 namespace pfs {
 namespace colorspace {
+
+template <typename TypeIn, typename TypeOut>
+void ConvertRGB2Y::operator()(TypeIn i1, TypeIn i2, TypeIn i3, TypeOut& o) const
+{
+    o = convertSample<TypeOut>(
+                rgb2xyzD65Mat[1][0]*convertSample<float>(i1) +
+                rgb2xyzD65Mat[1][1]*convertSample<float>(i2) +
+                rgb2xyzD65Mat[1][2]*convertSample<float>(i3)
+            );
+}
 
 inline
 void ConvertSRGB2XYZ::operator()(float i1, float i2, float i3,

@@ -59,8 +59,15 @@ public:
     {}
 };
 
-}
-}
+class UnsupportedFormat : public Exception
+{
+public:
+    UnsupportedFormat(const std::string& message)
+        : Exception(message)
+    {}
+};
 
+}
+}
 
 #endif // PFS_IO_IOEXCEPTION_H

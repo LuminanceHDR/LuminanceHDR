@@ -4,6 +4,8 @@ CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/global.hxx.in
                 ${CMAKE_CURRENT_BINARY_DIR}/global.hxx @ONLY)
 CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
                 ${CMAKE_CURRENT_BINARY_DIR}/config.h @ONLY)
+CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/archs.h.in
+                ${CMAKE_CURRENT_BINARY_DIR}/archs.h @ONLY)
 
 SET(FILES_UI 
     ${CMAKE_CURRENT_SOURCE_DIR}/SavedParametersDialog.ui)
@@ -12,8 +14,8 @@ SET(FILES_H
     ${CMAKE_CURRENT_SOURCE_DIR}/ProgressHelper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/LuminanceOptions.h)
 SET(FILES_HXX
-    ${CMAKE_CURRENT_SOURCE_DIR}/archs.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/config.h
+    #${CMAKE_CURRENT_SOURCE_DIR}/archs.h
+    #${CMAKE_CURRENT_SOURCE_DIR}/config.h
     #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandler.h
     #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandlerCommon.h
     #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandlerLcms.h

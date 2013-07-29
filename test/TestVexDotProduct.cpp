@@ -25,11 +25,13 @@
 #include <cmath>
 #include <boost/bind.hpp>
 
-#include <Libpfs/vex/dotproduct.h>
+#include <Libpfs/utils/dotproduct.h>
+
+using namespace pfs::utils;
 
 float myRand()
 {
-    return ( static_cast<float>(rand())/(RAND_MAX) )*2000;
+    return ( static_cast<float>(rand())/(RAND_MAX) );
 }
 
 TEST(TestVexDotProduct, SmallSize)
@@ -40,7 +42,7 @@ TEST(TestVexDotProduct, SmallSize)
     float avg = std::inner_product(inputVector.begin(), inputVector.end(),
                                    inputVector.begin(), 0.0f);
 
-    float avgVex = vex::dotProduct(inputVector.data(), inputVector.size());
+    float avgVex = dotProduct(inputVector.data(), inputVector.size());
 
     EXPECT_NEAR(avg, avgVex, 10e2);
 }
@@ -53,7 +55,7 @@ TEST(TestVexDotProduct, MediumSize)
     float avg = std::inner_product(inputVector.begin(), inputVector.end(),
                                    inputVector.begin(), 0.0f);
 
-    float avgVex = vex::dotProduct(inputVector.data(), inputVector.size());
+    float avgVex = dotProduct(inputVector.data(), inputVector.size());
 
     EXPECT_NEAR(avg, avgVex, 10e2);
 }
@@ -66,7 +68,7 @@ TEST(TestVexDotProduct, BigSize)
     float avg = std::inner_product(inputVector.begin(), inputVector.end(),
                                    inputVector.begin(), 0.0f);
 
-    float avgVex = vex::dotProduct(inputVector.data(), inputVector.size());
+    float avgVex = dotProduct(inputVector.data(), inputVector.size());
 
     EXPECT_NEAR(avg, avgVex, 10e2);
 }
@@ -79,7 +81,7 @@ TEST(TestVexDotProduct, HugeSize)
     float avg = std::inner_product(inputVector.begin(), inputVector.end(),
                                    inputVector.begin(), 0.0f);
 
-    float avgVex = vex::dotProduct(inputVector.data(), inputVector.size());
+    float avgVex = dotProduct(inputVector.data(), inputVector.size());
 
     EXPECT_NEAR(avg, avgVex, 10e2);
 }

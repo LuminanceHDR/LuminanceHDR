@@ -33,11 +33,11 @@
 # License along with CCOIFITS. If not, see <http://www.gnu.org/licenses/>.
 #
 
-if(NOT CFITSIO_FOUND)
+# if(NOT CFITSIO_FOUND)
 
     find_path(CFITSIO_INCLUDE_DIR fitsio.h
         HINTS $ENV{CFITSIO_ROOT_DIR}
-        PATH_SUFFIXES include include/cfitsio)
+        PATH_SUFFIXES include include/cfitsio /opt/local/include)
     find_library(CFITSIO_LIBRARY cfitsio
         HINTS $ENV{CFITSIO_ROOT_DIR}
         PATH_SUFFIXES lib)
@@ -51,5 +51,5 @@ if(NOT CFITSIO_FOUND)
     set(CFITSIO_INCLUDE_DIRS ${CFITSIO_INCLUDE_DIR})
     set(CFITSIO_LIBRARIES ${CFITSIO_LIBRARY})
 
-endif(NOT CFITSIO_FOUND)
+#endif(NOT CFITSIO_FOUND)
 

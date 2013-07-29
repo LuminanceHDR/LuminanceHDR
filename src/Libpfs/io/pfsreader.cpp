@@ -124,7 +124,7 @@ void PfsReader::read(Frame &frame, const Params &/*params*/)
 
     // read channel IDs and tags
     std::list<Channel*> orderedChannel;
-    for ( int i = 0; i < m_channelCount; i++ )
+    for ( size_t i = 0; i < m_channelCount; i++ )
     {
         char channelName[MAX_CHANNEL_NAME+1], *rs;
         rs = fgets( channelName, MAX_CHANNEL_NAME, m_file.data() );

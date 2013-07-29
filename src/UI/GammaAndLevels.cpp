@@ -297,8 +297,6 @@ void HistogramLDR::setData(const QImage* data)
 
 void HistogramLDR::paintEvent( QPaintEvent * )
 {
-    qDebug() << "void HistogramLDR::paintEvent( QPaintEvent * )";
-
     const qreal skew = (qreal)width()/256;
 
     QPainter painter(this);
