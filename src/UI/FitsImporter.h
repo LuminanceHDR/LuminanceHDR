@@ -48,6 +48,8 @@ protected slots:
     void on_pushButtonBlue_clicked();
 
 protected:
+    void checkOKButton();
+
     QString m_redChannel;
     QString m_greenChannel;
     QString m_blueChannel;

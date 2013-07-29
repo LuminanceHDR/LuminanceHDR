@@ -1955,6 +1955,7 @@ void MainWindow::on_actionFits_Importer_triggered()
     FitsImporter importer;
 
     if (importer.exec()) {
+        QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         QString redChannel = importer.getRedChannel();
         QString greenChannel = importer.getGreenChannel();
         QString blueChannel = importer.getBlueChannel();
@@ -1967,7 +1968,14 @@ void MainWindow::on_actionFits_Importer_triggered()
             reader.read(*frame);
             emit load_success(frame, "FITS Image", QStringList(), true); 
         }
+        catch(pfs::Exception& e) {
+            QApplication::restoreOverrideCursor();
+            QMessageBox::warning(0,"", tr("Failed to load FITS images. %1").arg(e.what()), QMessageBox::Ok, QMessageBox::NoButton);
+        }
         catch (...) {
+            QApplication::restoreOverrideCursor();
+            QMessageBox::warning(0,"", tr("Failed to load FITS images"), QMessageBox::Ok, QMessageBox::NoButton);
         }       
+        QApplication::restoreOverrideCursor();
     }
 }

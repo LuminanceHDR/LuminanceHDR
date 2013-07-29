@@ -51,6 +51,7 @@ void FitsImporter::on_pushButtonRed_clicked()
                                                       LuminanceOptions().getDefaultPathHdrIn(),
                                                       filetypes );
     m_ui->lineEditRed->setText(m_redChannel);
+    checkOKButton();
 }
 
 void FitsImporter::on_pushButtonGreen_clicked()
@@ -61,6 +62,7 @@ void FitsImporter::on_pushButtonGreen_clicked()
                                                       LuminanceOptions().getDefaultPathHdrIn(),
                                                       filetypes );
     m_ui->lineEditGreen->setText(m_greenChannel);
+    checkOKButton();
 }
 
 void FitsImporter::on_pushButtonBlue_clicked()
@@ -71,5 +73,11 @@ void FitsImporter::on_pushButtonBlue_clicked()
                                                       LuminanceOptions().getDefaultPathHdrIn(),
                                                       filetypes );
     m_ui->lineEditBlue->setText(m_blueChannel);
+    checkOKButton();
 }
 
+void FitsImporter::checkOKButton()
+{
+    if (m_redChannel != "" && m_greenChannel != "" && m_blueChannel != "")
+        m_ui->pushButtonOK->setEnabled(true);
+}

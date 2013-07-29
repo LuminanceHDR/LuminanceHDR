@@ -20,7 +20,6 @@
  */
 
 #include <QDebug>
-#include <iostream>
 
 #include <Libpfs/io/fitsreader.h>
 #include <Libpfs/frame.h>
@@ -41,14 +40,8 @@ void FitsReader::open()
         throw InvalidFile("Cannot open file " + filename());
     }
 
-#ifdef HAVE_SETMODE
-    // Needed under MS windows (text translation IO for stdin/out)
-    int old_mode = setmode( fileno( inputStream ), _O_BINARY );
-#endif
-
     m_image = &m_file->pHDU();
     m_image->readAllKeys();
-    std::cout << *m_image << std::endl;
 }
 
 void FitsReader::close()
@@ -80,14 +73,10 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
 
     for (long i = 0; i < ax1*ax2; i++) 
     {
-            (*Xc)(i) = contents[i];
-            (*Yc)(i) = (*Zc)(i) = (*Xc)(i);
+        (*Xc)(i) = contents[i];
+        (*Yc)(i) = (*Zc)(i) = (*Xc)(i);
     }     
         
-#ifdef HAVE_SETMODE
-    setmode( fileno( inputStream ), old_mode );
-#endif
-
     frame.swap( tempFrame );
 }
 
