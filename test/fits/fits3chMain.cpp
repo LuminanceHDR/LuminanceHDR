@@ -47,22 +47,34 @@ int main( int argc, char ** argv )
     TranslatorManager::setLanguage( lumOpts.getGuiLang(), false );
 
     QStringList arguments = QCoreApplication::arguments();
-    if ( arguments.size() <= 4 )
+    if ( arguments.size() <= 5 )
     {
         std::cout << "Usage: " << arguments[0].toLocal8Bit().constData()
-                  << " <infilenameRed> " << " <infilenameGreen> " << " <infilenameBlue> " << " <outfilename> " << std::endl;
+                  << " <infilenameLuminosity> "
+                  << " <infilenameRed> "
+                  << " <infilenameGreen> " 
+                  << " <infilenameBlue> " 
+                  << " <outfilename> " << std::endl;
 
         application.exit( -1 );
     }
     else
     {
-        QString infilenameRed = arguments[1];
-        QString infilenameGreen = arguments[2];
-        QString infilenameBlue = arguments[3];
-        QString outfilename = arguments[4];
+        QString infilenameLuminosity = arguments[1];
+        QString infilenameRed = arguments[2];
+        QString infilenameGreen = arguments[3];
+        QString infilenameBlue = arguments[4];
+        QString outfilename = arguments[5];
         using namespace pfs;
         using namespace io;
 
+        if ( !QFile::exists( infilenameLuminosity ) )
+        {
+            cout << "File " << infilenameLuminosity.toLocal8Bit().constData()
+                << " does not exist" << endl;
+
+            application.exit(-1);
+        }
         if ( !QFile::exists( infilenameRed ) )
         {
             cout << "File " << infilenameRed.toLocal8Bit().constData()
@@ -89,7 +101,8 @@ int main( int argc, char ** argv )
 
         Params params;
         Frame* frame = new Frame(0, 0);
-        FitsReader3Ch reader(infilenameRed.toLocal8Bit().constData(), 
+        FitsReader3Ch reader(infilenameLuminosity.toLocal8Bit().constData(),
+                             infilenameRed.toLocal8Bit().constData(), 
                              infilenameGreen.toLocal8Bit().constData(), 
                              infilenameBlue.toLocal8Bit().constData());
         reader.read(*frame);

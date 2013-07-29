@@ -1956,13 +1956,15 @@ void MainWindow::on_actionFits_Importer_triggered()
 
     if (importer.exec()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+        QString luminosityChannel = importer.getLuminosityChannel();
         QString redChannel = importer.getRedChannel();
         QString greenChannel = importer.getGreenChannel();
         QString blueChannel = importer.getBlueChannel();
 
         pfs::Frame *frame = new pfs::Frame(0, 0);
         try {
-            pfs::io::FitsReader3Ch reader(QFile::encodeName(redChannel).constData(), 
+            pfs::io::FitsReader3Ch reader(QFile::encodeName(luminosityChannel).constData(),
+                                          QFile::encodeName(redChannel).constData(), 
                                           QFile::encodeName(greenChannel).constData(), 
                                           QFile::encodeName(blueChannel).constData());
             reader.read(*frame);

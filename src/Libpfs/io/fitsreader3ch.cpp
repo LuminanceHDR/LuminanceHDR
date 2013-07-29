@@ -27,7 +27,11 @@
 namespace pfs {
 namespace io {
 
-FitsReader3Ch::FitsReader3Ch(const std::string& redChannel, const std::string& greenChannel, const std::string& blueChannel) :
+FitsReader3Ch::FitsReader3Ch(const std::string& luminosityChannel,
+                             const std::string& redChannel, 
+                             const std::string& greenChannel, 
+                             const std::string& blueChannel) :
+    m_luminosityChannel(luminosityChannel), 
     m_redChannel(redChannel), 
     m_greenChannel(greenChannel), 
     m_blueChannel(blueChannel)
@@ -37,6 +41,14 @@ FitsReader3Ch::FitsReader3Ch(const std::string& redChannel, const std::string& g
 
 void FitsReader3Ch::open()
 {
+    m_fileLuminosity.reset( new FITS(m_luminosityChannel, Read, true) );
+    if ( !m_fileLuminosity ) {
+        throw InvalidFile("Cannot open file " + m_luminosityChannel);
+    }
+
+    m_imageLuminosity = &m_fileLuminosity->pHDU();
+    m_imageLuminosity->readAllKeys();
+
     m_fileRed.reset( new FITS(m_redChannel, Read, true) );
     if ( !m_fileRed ) {
         throw InvalidFile("Cannot open file " + m_redChannel);
@@ -64,6 +76,7 @@ void FitsReader3Ch::open()
 
 void FitsReader3Ch::close()
 {
+    m_fileLuminosity.reset();
     m_fileRed.reset();
     m_fileGreen.reset();
     m_fileBlue.reset();
@@ -71,6 +84,8 @@ void FitsReader3Ch::close()
 
 void FitsReader3Ch::read(Frame &frame)
 {
+    if (m_imageLuminosity->axes() != 2)
+        throw InvalidFile("No image in file " + m_luminosityChannel);
     if (m_imageRed->axes() != 2)
         throw InvalidFile("No image in file " + m_redChannel);
     if (m_imageGreen->axes() != 2)
@@ -79,17 +94,19 @@ void FitsReader3Ch::read(Frame &frame)
         throw InvalidFile("No image in file " + m_blueChannel);
 
 
-    if (m_imageRed->axis(0) != m_imageGreen->axis(0) || m_imageRed->axis(0) != m_imageBlue->axis(0))
+    if (m_imageLuminosity->axis(0) != m_imageRed->axis(0) || m_imageRed->axis(0) != m_imageGreen->axis(0) || m_imageRed->axis(0) != m_imageBlue->axis(0))
          throw InvalidFile("Images have different size");
 
-    if (m_imageRed->axis(1) != m_imageGreen->axis(1) || m_imageRed->axis(1) != m_imageBlue->axis(1))
+    if (m_imageLuminosity->axis(1) != m_imageRed->axis(1) || m_imageRed->axis(1) != m_imageGreen->axis(1) || m_imageRed->axis(1) != m_imageBlue->axis(1))
          throw InvalidFile("Images have different size");
 
     if ( !isOpen() ) open();
 
+    std::valarray<float>  contentsLuminosity;
     std::valarray<float>  contentsRed;
     std::valarray<float>  contentsGreen;
     std::valarray<float>  contentsBlue;
+    m_imageLuminosity->read(contentsLuminosity);
     m_imageRed->read(contentsRed);
     m_imageGreen->read(contentsGreen);
     m_imageBlue->read(contentsBlue);

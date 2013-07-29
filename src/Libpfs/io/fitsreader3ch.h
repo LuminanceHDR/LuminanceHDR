@@ -44,7 +44,10 @@ namespace io {
 class FitsReader3Ch
 {
 public:
-    FitsReader3Ch(const std::string& redChannel, const std::string& greenChannel, const std::string& blueChannel);
+    FitsReader3Ch(const std::string& luminosityChannel, 
+                  const std::string& redChannel, 
+                  const std::string& greenChannel, 
+                  const std::string& blueChannel);
 
     bool isOpen() const
     { return m_fileRed.get(); }
@@ -54,12 +57,15 @@ public:
     void read(Frame &frame);
 
 private:
+    std::string m_luminosityChannel;
     std::string m_redChannel;
     std::string m_greenChannel;
     std::string m_blueChannel;
+    boost::scoped_ptr<FITS> m_fileLuminosity;
     boost::scoped_ptr<FITS> m_fileRed;
     boost::scoped_ptr<FITS> m_fileGreen;
     boost::scoped_ptr<FITS> m_fileBlue;
+    PHDU *m_imageLuminosity;
     PHDU *m_imageRed;
     PHDU *m_imageGreen;
     PHDU *m_imageBlue;

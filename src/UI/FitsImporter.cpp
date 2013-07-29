@@ -43,6 +43,17 @@ FitsImporter::FitsImporter(QWidget *parent)
 #endif
 }
 
+void FitsImporter::on_pushButtonLuminosity_clicked()
+{
+    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";
+    m_luminosityChannel = QFileDialog::getOpenFileName(this,
+                                                      tr("Load one FITS image..."),
+                                                      LuminanceOptions().getDefaultPathHdrIn(),
+                                                      filetypes );
+    m_ui->lineEditLuminosity->setText(m_luminosityChannel);
+    checkOKButton();
+}
+
 void FitsImporter::on_pushButtonRed_clicked()
 {
     QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";

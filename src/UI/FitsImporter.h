@@ -38,11 +38,13 @@ public:
     FitsImporter(QWidget *parent = 0);
     ~FitsImporter();
 
+    QString getLuminosityChannel() { return m_luminosityChannel; };
     QString getRedChannel() { return m_redChannel; };
     QString getGreenChannel() { return m_greenChannel; };
     QString getBlueChannel() { return m_blueChannel; };
 
 protected slots:
+    void on_pushButtonLuminosity_clicked();
     void on_pushButtonRed_clicked();
     void on_pushButtonGreen_clicked();
     void on_pushButtonBlue_clicked();
@@ -50,6 +52,7 @@ protected slots:
 protected:
     void checkOKButton();
 
+    QString m_luminosityChannel;
     QString m_redChannel;
     QString m_greenChannel;
     QString m_blueChannel;
