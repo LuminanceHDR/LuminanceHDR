@@ -1966,7 +1966,7 @@ void MainWindow::on_actionFits_Importer_triggered()
                                           QFile::encodeName(greenChannel).constData(), 
                                           QFile::encodeName(blueChannel).constData());
             reader.read(*frame);
-            emit load_success(frame, "FITS Image", QStringList(), true); 
+            emit load_success(frame, tr("FITS Image"), QStringList(), true); 
         }
         catch(pfs::Exception& e) {
             QApplication::restoreOverrideCursor();

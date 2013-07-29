@@ -1005,10 +1005,13 @@
   </action>
   <action name="actionFits_Importer">
    <property name="text">
-    <string>Fits Importer...</string>
+    <string>FITS Importer...</string>
    </property>
    <property name="toolTip">
     <string>Import 3 FITS files rapresenting red, green and blue channels</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
  </widget>
