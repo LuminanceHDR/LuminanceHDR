@@ -45,15 +45,11 @@
 #include "Exif/ExifOperations.h"
 #include "Fileformat/pfsoutldrimage.h"
 
-#include <Libpfs/io/pfsreader.h>
-#include <Libpfs/io/rgbereader.h>
-#include <Libpfs/io/exrreader.h>
-#include <Libpfs/io/fitsreader.h>
-#include <Libpfs/io/rawreader.h>
-
 #include <Libpfs/io/exrwriter.h>            // default for HDR saving
 #include <Libpfs/io/framewriterfactory.h>
+#include <Libpfs/io/framereaderfactory.h>
 
+using namespace pfs;
 using namespace pfs::io;
 using namespace std;
 
@@ -258,74 +254,26 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         return NULL;
     }
 
-    pfs::Frame* hdrpfsframe = NULL;
-    QStringList rawextensions;
-    rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF"
-                  << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF"
-                  << "X3F" << "RAW" << "SR2" << "3FR" << "RW2" << "MEF"
-                  << "MOS" << "ERF" << "NRW" << "SRW";
-
+    QScopedPointer<pfs::Frame> hdrpfsframe(new pfs::Frame());
     try
     {
         LuminanceOptions luminanceOptions;
 
-        QString extension = qfi.suffix().toUpper();
-        QByteArray TempPath = QFile::encodeName(luminanceOptions.getTempDir());
+        // QString extension = qfi.suffix().toUpper();
+        // QByteArray TempPath = QFile::encodeName(luminanceOptions.getTempDir());
         QByteArray encodedFileName = QFile::encodeName(qfi.absoluteFilePath());
 
-        if ( extension=="EXR" )
-        {
-            hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
-            pfs::io::EXRReader reader(encodedFileName.constData());
-            reader.read( *hdrpfsframe, pfs::Params() );
-            reader.close();
-        }
-        else if ( extension=="HDR" )
-        {
-            hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
-            pfs::io::RGBEReader reader(encodedFileName.constData());
-            reader.read( *hdrpfsframe, pfs::Params() );
-            reader.close();
-        }
-        else if (extension=="PFS")
-        {
-            hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
-            pfs::io::PfsReader reader(encodedFileName.constData());
-            reader.read( *hdrpfsframe, pfs::Params() );
-            reader.close();
-        }
-        else if (extension.startsWith("TIF"))
-        {
-            // from 8,16,32,logluv to pfs::Frame
+        pfs::Params params = getRawSettings(luminanceOptions);
+        FrameReaderPtr reader = FrameReaderFactory::open(encodedFileName.constData());
+        reader->read( *hdrpfsframe, params );
+        reader->close();
+    }
+    catch (pfs::io::UnsupportedFormat& exUnsupported)
+    {
+        qDebug("TH: File %s has unsupported extension.", qPrintable(filename));
 
-            // DAVIDE _ TIFFREADER
-//            TiffReader reader(encodedFileName, TempPath, false );
-//            connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
-//            connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
-//            hdrpfsframe = reader.readIntoPfsFrame();
-        }
-        else if (extension.startsWith("FIT"))
-        {
-            hdrpfsframe = new pfs::Frame(0, 0); // < To improve!
-            FitsReader reader(encodedFileName.constData());
-            reader.read( *hdrpfsframe, pfs::Params());
-        }
-        else if ( rawextensions.indexOf(extension) != -1 )
-        {
-            // raw file detected
-            hdrpfsframe = new pfs::Frame(0,0);
-
-            pfs::io::RAWReader reader(encodedFileName.constData());
-            reader.read( *hdrpfsframe, getRawSettings(luminanceOptions) );
-            reader.close();
-        }
-        else
-        {
-            qDebug("TH: File %s has unsupported extension.", qPrintable(filename));
-
-            emit read_hdr_failed(tr("ERROR: File %1 has unsupported extension.").arg(filename));
-            return NULL;
-        }
+        emit read_hdr_failed(tr("ERROR: File %1 has unsupported extension.").arg(filename));
+        return NULL;
     }
     catch (std::runtime_error& err)
 	{
@@ -346,10 +294,12 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
 
     emit IO_finish();
 
-    if (hdrpfsframe != NULL)
+    if ( hdrpfsframe )
     {
-        emit read_hdr_success(hdrpfsframe, filename);
-        return hdrpfsframe;
+        pfs::Frame* frame = hdrpfsframe.take();
+
+        emit read_hdr_success(frame, filename);
+        return frame;
     } else {
         return NULL;
     }
