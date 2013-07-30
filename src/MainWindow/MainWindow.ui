@@ -43,8 +43,8 @@
     <addaction name="Transplant_Exif_Data_action"/>
     <addaction name="actionBatch_HDR"/>
     <addaction name="actionBatch_Tone_Mapping"/>
-    <addaction name="OptionsAction"/>
     <addaction name="actionFits_Importer"/>
+    <addaction name="OptionsAction"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -659,6 +659,10 @@
    </property>
   </action>
   <action name="actionBatch_Tone_Mapping">
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/running_process.png</normaloff>:/new/prefix1/images/running_process.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Batch Tone Mapping...</string>
    </property>
@@ -731,6 +735,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/perspective.png</normaloff>:/new/prefix1/images/perspective.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Projective Transformation...</string>
    </property>
@@ -768,6 +776,10 @@
   <action name="removeSelectionAction">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/tool_rect_selection.png</normaloff>:/new/prefix1/images/tool_rect_selection.png</iconset>
    </property>
    <property name="text">
     <string>Remove &amp;Selection</string>
@@ -925,6 +937,10 @@
    </property>
   </action>
   <action name="actionBatch_HDR">
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/running_process.png</normaloff>:/new/prefix1/images/running_process.png</iconset>
+   </property>
    <property name="text">
     <string>Batch HDR...</string>
    </property>
@@ -1005,6 +1021,10 @@
    </property>
   </action>
   <action name="actionFits_Importer">
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/applications-astronomy.png</normaloff>:/new/prefix1/images/applications-astronomy.png</iconset>
+   </property>
    <property name="text">
     <string>FITS Importer...</string>
    </property>
