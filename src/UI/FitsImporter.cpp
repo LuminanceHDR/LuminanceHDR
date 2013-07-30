@@ -89,6 +89,6 @@ void FitsImporter::on_pushButtonBlue_clicked()
 
 void FitsImporter::checkOKButton()
 {
-    if (m_redChannel != "" && m_greenChannel != "" && m_blueChannel != "")
+    if (m_luminosityChannel != "" && m_redChannel != "" && m_greenChannel != "" && m_blueChannel != "")
         m_ui->pushButtonOK->setEnabled(true);
 }
