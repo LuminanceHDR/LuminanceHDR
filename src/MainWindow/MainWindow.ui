@@ -1029,7 +1029,7 @@
     <string>FITS Importer...</string>
    </property>
    <property name="toolTip">
-    <string>Import 3 FITS files rapresenting red, green and blue channels</string>
+    <string>Import four FITS files rapresenting luminosity, red, green and blue channels</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
