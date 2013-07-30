@@ -41,20 +41,25 @@ bool comparePatches(const HdrCreationItem& item1,
                     const HdrCreationItem& item2,
                     int i, int j, int gridX, int gridY, float threshold, float deltaEV,
                     int dx, int dy);
-void computeIrradiance(Array2Df* irradiance, const Array2Df* in);
-void computeLogIrradiance(Array2Df* &logIrradiance, const Array2Df* u);
-void computeGradient(Array2Df* &gradientX, Array2Df* &gradientY, const Array2Df* in);
-void computeDivergence(Array2Df* &divergence, const Array2Df* gradientX, const Array2Df* gradientY);
-void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
-                    Array2Df* &gradientX, Array2Df* &gradientY,
-                    Array2Df* &gradientXGood, Array2Df* &gradientYGood,
-                    bool patches[agGridSize][agGridSize], const int gridX, const int gridY);
-void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
-                    Array2Df* &gradientX, Array2Df* &gradientY,
-                    Array2Df* &gradientXGood, Array2Df* &gradientYGood,
+
+void computeIrradiance(Array2Df& irradiance, const Array2Df& in);
+void computeLogIrradiance(Array2Df &logIrradiance, const Array2Df& u);
+
+void computeGradient(Array2Df &gradientX, Array2Df &gradientY, const Array2Df &in);
+void computeDivergence(Array2Df &divergence, const Array2Df& gradientX,
+                       const Array2Df& gradientY);
+
+void blendGradients(Array2Df &gradientXBlended, Array2Df &gradientYBlended,
+                    const Array2Df &gradientX, const Array2Df &gradientY,
+                    const Array2Df &gradientXGood, const Array2Df &gradientYGood,
+                    bool patches[agGridSize][agGridSize], int gridX, int gridY);
+
+void blendGradients(Array2Df &gradientXBlended, Array2Df &gradientYBlended,
+                    const Array2Df &gradientX, const Array2Df &gradientY,
+                    const Array2Df &gradientXGood, const Array2Df &gradientYGood,
                     const QImage& agMask);
-void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, 
-        		  const int x, const int y);
+
+void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F,  int x, int y);
 qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B, 
 		       const int i, const int j, const int gridX, const int gridY);
 qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B);

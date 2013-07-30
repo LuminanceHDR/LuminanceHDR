@@ -24,11 +24,13 @@
  */
 
 #include <QDebug>
+
 #include <Libpfs/frame.h>
-#include "Libpfs/colorspace/colorspace.h"
+#include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/manip/shift.h>
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/utils/minmax.h>
+
 #include <fftw3.h>
 
 #include "AutoAntighosting.h"
@@ -621,45 +623,46 @@ bool comparePatches(const HdrCreationItem& item1,
 
 }
 
-void computeIrradiance(Array2Df* irradiance, const Array2Df* in)
+void computeIrradiance(Array2Df& irradiance, const Array2Df& in)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    const int width = in->getCols();
-    const int height = in->getRows();
 
-    #pragma omp parallel for schedule(static)
-    for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-            (*irradiance)(i, j) = std::exp((*in)(i, j));
-        }
+    const int width = in.getCols();
+    const int height = in.getRows();
+
+#pragma omp parallel for schedule(static)
+    for (int i = 0; i < width*height; ++i) {
+        irradiance(i) = std::exp( in(i) );
     }
+
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "computeIrradiance = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 }
 
-void computeLogIrradiance(Array2Df* &logIrradiance, const Array2Df* u) 
+void computeLogIrradiance(Array2Df &logIrradiance, const Array2Df &u)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    const int width = u->getCols();
-    const int height = u->getRows();
+    const int width = u.getCols();
+    const int height = u.getRows();
     
     float ir, logIr;
     #pragma omp parallel for private (ir, logIr) schedule(static)
     for (int i = 0; i < width*height; i++) {
-            ir = (*u)(i);
+            ir = u(i);
             if (ir == 0.0f)
                 logIr = -11.09f;
             else
                 logIr = std::log(ir);
-            (*logIrradiance)(i) = logIr;
+
+            logIrradiance(i) = logIr;
     }
  
 #ifdef TIMER_PROFILING
@@ -668,72 +671,73 @@ void computeLogIrradiance(Array2Df* &logIrradiance, const Array2Df* u)
 #endif
 }
 
-void computeGradient(Array2Df* &gradientX, Array2Df* &gradientY, const Array2Df* in)
+void computeGradient(Array2Df &gradientX, Array2Df &gradientY, const Array2Df& in)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    const int width = in->getCols();
-    const int height = in->getRows();
+
+    const int width = in.getCols();
+    const int height = in.getRows();
 
     #pragma omp parallel for schedule(static)
     for (int j = 1; j < height-1; j++) {
         for (int i = 1; i < width-1; i++) {
-            (*gradientX)(i, j) = 0.5f*((*in)(i+1, j) - (*in)(i-1, j));
-            (*gradientY)(i, j) = 0.5f*((*in)(i, j+1) - (*in)(i, j-1));
+            gradientX(i, j) = 0.5f*(in(i+1, j) - in(i-1, j));
+            gradientY(i, j) = 0.5f*(in(i, j+1) - in(i, j-1));
         }
     }
     #pragma omp parallel for schedule(static)
     for (int i = 1; i < width-1; i++) {
-        (*gradientX)(i, 0) = 0.5f*((*in)(i+1, 0) - (*in)(i-1, 0));
-        (*gradientX)(i, height-1) = 0.5f*((*in)(i+1, height-1) - (*in)(i-1, height-1));
-        (*gradientY)(i, 0) = 0.0f;
-        (*gradientY)(i, height-1) = 0.0f;
+        gradientX(i, 0) = 0.5f*(in(i+1, 0) - in(i-1, 0));
+        gradientX(i, height-1) = 0.5f*(in(i+1, height-1) - in(i-1, height-1));
+        gradientY(i, 0) = 0.0f;
+        gradientY(i, height-1) = 0.0f;
     }
     #pragma omp parallel for schedule(static)
     for (int j = 1; j < height-1; j++) {
-        (*gradientX)(0, j) = 0.0f;
-        (*gradientX)(width-1, j) = 0.0f;
-        (*gradientY)(0, j) = 0.5f*((*in)(0, j+1) - (*in)(0, j-1));
-        (*gradientY)(width-1, j) = 0.5f*((*in)(width-1, j+1) - (*in)(width-1, j-1));
+        gradientX(0, j) = 0.0f;
+        gradientX(width-1, j) = 0.0f;
+        gradientY(0, j) = 0.5f*(in(0, j+1) - in(0, j-1));
+        gradientY(width-1, j) = 0.5f*(in(width-1, j+1) - in(width-1, j-1));
     }
-    (*gradientX)(0, 0) = (*gradientX)(0, height-1) = (*gradientX)(width-1, 0) = (*gradientX)(width-1, height-1) = 0.0f;
-    (*gradientY)(0, 0) = (*gradientY)(0, height-1) = (*gradientY)(width-1, 0) = (*gradientY)(width-1, height-1) = 0.0f;
+    gradientX(0, 0) = gradientX(0, height-1) = gradientX(width-1, 0) = gradientX(width-1, height-1) = 0.0f;
+    gradientY(0, 0) = gradientY(0, height-1) = gradientY(width-1, 0) = gradientY(width-1, height-1) = 0.0f;
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "computeGradient = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 }
 
-void computeDivergence(Array2Df* &divergence, const Array2Df* gradientX, const Array2Df* gradientY)
+void computeDivergence(Array2Df &divergence, const Array2Df& gradientX, const Array2Df& gradientY)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    const int width = gradientX->getCols();
-    const int height = gradientX->getRows();
+    const int width = gradientX.getCols();
+    const int height = gradientX.getRows();
 
-    (*divergence)(0, 0) = (*gradientX)(0, 0) + (*gradientY)(0, 0);
+    divergence(0, 0) = gradientX(0, 0) + gradientY(0, 0);
     #pragma omp parallel for schedule(static)
     for (int j = 1; j < height-1; j++) {
         for (int i = 1; i < width-1; i++) {
-            (*divergence)(i, j) = 0.5f*((*gradientX)(i+1, j) - (*gradientX)(i-1, j)) + 
-                                  0.5f*((*gradientY)(i, j+1) - (*gradientY)(i, j-1));
+            divergence(i, j) = 0.5f*(gradientX(i+1, j) - gradientX(i-1, j)) +
+                                  0.5f*(gradientY(i, j+1) - gradientY(i, j-1));
         }
     }
     #pragma omp parallel for schedule(static)
     for (int j = 1; j < height-1; j++) {
-        (*divergence)(0, j) = (*gradientX)(1, j) - (*gradientX)(0, j) + 0.5f*((*gradientY)(0, j+1) - (*gradientY)(0, j-1));
-        (*divergence)(width-1, j) = (*gradientX)(width-1, j) - (*gradientX)(width-2, j) + 
-                                    0.5f*((*gradientY)(width-1, j) - (*gradientY)(width-1, j-1));
+        divergence(0, j) = gradientX(1, j) - gradientX(0, j) + 0.5f*(gradientY(0, j+1) - gradientY(0, j-1));
+        divergence(width-1, j) = gradientX(width-1, j) - gradientX(width-2, j) +
+                                    0.5f*(gradientY(width-1, j) - gradientY(width-1, j-1));
     }
     #pragma omp parallel for schedule(static)
     for (int i = 1; i < width-1; i++) {
-        (*divergence)(i, 0) = 0.5f*((*gradientX)(i, 0) - (*gradientX)(i-1, 0)) + (*gradientY)(i, 0);    
-        (*divergence)(i, height-1) = 0.5f*((*gradientX)(i+1, height-1) - (*gradientX)(i-1, height-1)) + 
-                                     (*gradientY)(i, height-1) - (*gradientY)(i, height-2);
+        divergence(i, 0) = 0.5f*(gradientX(i, 0) - gradientX(i-1, 0)) + gradientY(i, 0);
+        divergence(i, height-1) = 0.5f*(gradientX(i+1, height-1) - gradientX(i-1, height-1)) +
+                                     gradientY(i, height-1) - gradientY(i, height-2);
     }
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
@@ -741,17 +745,17 @@ void computeDivergence(Array2Df* &divergence, const Array2Df* gradientX, const A
 #endif
 }
 
-void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
-                    Array2Df* &gradientX, Array2Df* &gradientY,
-                    Array2Df* &gradientXGood, Array2Df* &gradientYGood,
+void blendGradients(Array2Df &gradientXBlended, Array2Df &gradientYBlended,
+                    const Array2Df &gradientX, const Array2Df &gradientY,
+                    const Array2Df &gradientXGood, const Array2Df &gradientYGood,
                     bool patches[agGridSize][agGridSize], const int gridX, const int gridY)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    int width = gradientX->getCols();
-    int height = gradientY->getRows();
+    int width = gradientX.getCols();
+    int height = gradientY.getRows();
 
     int x, y;
     #pragma omp parallel for private(x, y) schedule(static)
@@ -760,20 +764,20 @@ void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
         for (int i = 0; i < width; i++) {
             x = floor(static_cast<float>(i)/gridX);
             if (patches[x][y] == true) {
-                (*gradientXBlended)(i, j) = (*gradientXGood)(i, j);
-                (*gradientYBlended)(i, j) = (*gradientYGood)(i, j);
+                gradientXBlended(i, j) = gradientXGood(i, j);
+                gradientYBlended(i, j) = gradientYGood(i, j);
                 if (i % gridX == 0) {
-                    (*gradientXBlended)(i+1, j) = (*gradientXGood)(i+1, j);
-                    (*gradientYBlended)(i+1, j) = (*gradientYGood)(i+1, j);
+                    gradientXBlended(i+1, j) = gradientXGood(i+1, j);
+                    gradientYBlended(i+1, j) = gradientYGood(i+1, j);
                 }
                 if (j % gridY == 0) {
-                    (*gradientXBlended)(i, j+1) = (*gradientXGood)(i, j+1);
-                    (*gradientYBlended)(i, j+1) = (*gradientYGood)(i, j+1);
+                    gradientXBlended(i, j+1) = gradientXGood(i, j+1);
+                    gradientYBlended(i, j+1) = gradientYGood(i, j+1);
                 }
             }
             else {
-                (*gradientXBlended)(i, j) = (*gradientX)(i, j);
-                (*gradientYBlended)(i, j) = (*gradientY)(i, j);
+                gradientXBlended(i, j) = gradientX(i, j);
+                gradientYBlended(i, j) = gradientY(i, j);
             }
         }
     }
@@ -783,28 +787,28 @@ void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
 #endif
 }
 
-void blendGradients(Array2Df* &gradientXBlended, Array2Df* &gradientYBlended,
-                    Array2Df* &gradientX, Array2Df* &gradientY,
-                    Array2Df* &gradientXGood, Array2Df* &gradientYGood,
+void blendGradients(Array2Df &gradientXBlended, Array2Df &gradientYBlended,
+                    const Array2Df &gradientX, const Array2Df &gradientY,
+                    const Array2Df &gradientXGood, const Array2Df &gradientYGood,
                     const QImage& agMask)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    int width = gradientX->getCols();
-    int height = gradientY->getRows();
+    int width = gradientX.getCols();
+    int height = gradientY.getRows();
 
     #pragma omp parallel for schedule(static)
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
             if (qAlpha(agMask.pixel(i,j))  != 0) {
-                (*gradientXBlended)(i, j) = (*gradientXGood)(i, j);
-                (*gradientYBlended)(i, j) = (*gradientYGood)(i, j);
+                gradientXBlended(i, j) = gradientXGood(i, j);
+                gradientYBlended(i, j) = gradientYGood(i, j);
             }
             else {
-                (*gradientXBlended)(i, j) = (*gradientX)(i, j);
-                (*gradientYBlended)(i, j) = (*gradientY)(i, j);
+                gradientXBlended(i, j) = gradientX(i, j);
+                gradientYBlended(i, j) = gradientY(i, j);
             }
         }
     }

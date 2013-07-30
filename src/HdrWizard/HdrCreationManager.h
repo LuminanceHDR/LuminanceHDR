@@ -46,6 +46,7 @@
 #include "HdrCreation/createhdr_common.h"
 #include "HdrCreation/fusionoperator.h"
 #include "HdrCreationItem.h"
+
 #include "AutoAntighosting.h"
 
 // Some other file expect this to be available
