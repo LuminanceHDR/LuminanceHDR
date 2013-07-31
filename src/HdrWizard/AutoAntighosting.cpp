@@ -27,7 +27,6 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/colorspace.h>
-#include <Libpfs/manip/shift.h>
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/utils/minmax.h>
 
@@ -35,8 +34,6 @@
 
 #include "AutoAntighosting.h"
 // --- LEGACY CODE ---
-static const float max_rgb = 1.0f;
-static const float max_lightness = 1.0f;
 
 inline
 void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
@@ -127,100 +124,6 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
     }
 }
 
-// r,g,b values are from 0 to 1
-// h = [0,360], s = [0,1], v = [0,1]
-//		if s == 0, then h = -1 (undefined)
-
-inline
-void rgb2hsv( float r, float g, float b, float &h, float &s, float &v )
-{
-    float min, max;
-
-	//min = MIN( r, g, b );
-	//max = MAX( r, g, b );
-
-    pfs::utils::minmax(r, g, b, min, max);
-
-	v = max;				// v
-
-    float delta = max - min;
-
-    if ( max != 0 ) {
-		s = delta / max;		// s
-    } else {
-		// r = g = b = 0		// s = 0, v is undefined
-		s = 0;
-		h = -1;
-		return;
-	}
-
-    if ( r == max )
-		h = ( g - b ) / delta;		// between yellow & magenta
-    else if ( g == max )
-		h = 2 + ( b - r ) / delta;	// between cyan & yellow
-	else
-		h = 4 + ( r - g ) / delta;	// between magenta & cyan
-
-	h *= 60;				// degrees
-    if ( h < 0 ) {
-		h += 360;
-    }
-}
-
-inline
-void hsv2rgb( float &r, float &g, float &b, float h, float s, float v )
-{
-	int i;
-	float f, p, q, t;
-
-    if ( s == 0 ) {
-		// achromatic (grey)
-		r = g = b = v;
-		return;
-	}
-
-	h /= 60;			// sector 0 to 5
-	i = floor( h );
-	f = h - i;			// factorial part of h
-	p = v * ( 1 - s );
-	q = v * ( 1 - s * f );
-	t = v * ( 1 - s * ( 1 - f ) );
-
-	switch( i ) {
-		case 0:
-			r = v;
-			g = t;
-			b = p;
-			break;
-		case 1:
-			r = q;
-			g = v;
-			b = p;
-			break;
-		case 2:
-			r = p;
-			g = v;
-			b = t;
-			break;
-		case 3:
-			r = p;
-			g = q;
-			b = v;
-			break;
-		case 4:
-			r = t;
-			g = p;
-			b = v;
-			break;
-		default:		// case 5:
-			r = v;
-			g = p;
-			b = q;
-			break;
-	}
-
-}
-
 float max(const Array2Df *u)
 {
   const int nx = u->getCols();
@@ -236,94 +139,6 @@ float min(const Array2Df *u)
 
   return *std::min_element(u->data(), u->data() + nx*ny);
 }
-
-void buildA(Array2Df *A, float b)
-{
-    const int height = A->getRows();
-
-    for ( int j = 0; j < height; j++ ) {
-        for ( int i = 0; i < height; i++ ) {
-            (*A)(i, j) = 0.0f;
-        }
-    }
-
-    for ( int j = 0; j < height; j++ ) {
-        for ( int i = 0; i < height; i++ ) {
-            if ( i == j ) {
-                (*A)(i, j) = b;
-                if (i > 0) {
-                    (*A)(i-1, j) = 1.0f;
-                }
-                if (i < height - 1) {
-                    (*A)(i+1, j) = 1.0f;
-                }
-            }
-        }
-    }
-}
-
-float norm(int N, vector<float> &x, vector<float> &y)
-{
-    float n = 0.0f;
-    for ( int i = 0; i < N; i++ ) {
-        n += (x[i] - y[i])*(x[i] - y[i]);
-    }
-    return sqrt(n);
-}
-
-void multiply(Array2Df *A, vector<float> &x, vector<float> &y)
-{
-    const int width = A->getCols();
-    const int height = A->getRows();
-    
-    for ( int i = 0; i < width; i++ ) {
-        y[i] = 0.0f;
-    }
-
-    for ( int j = 0; j < height; j++ ) {
-        for ( int i = 0; i < width; i++ ) {
-            y[j] += (*A)(i, j) * x[i];
-        }
-    }
-}
-
-void solve_pde_dft(Array2Df *F, Array2Df *U)
-{
-    const int width = U->getCols();
-    const int height = U->getRows();
-    assert((int)F->getCols()==width && (int)F->getRows()==height);
-
-    Array2Df *Ftr = new Array2Df(width, height);
-    Array2Df *Utr = new Array2Df(width, height);
-
-    fftwf_plan p = fftwf_plan_r2r_2d(height, width, F->data(), Ftr->data(), FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
-    fftwf_execute(p);
-
-    for ( int j = 0; j < height; j++ ) {
-        for ( int i = 0; i < width; i++ ) {
-            float wi = M_PI*i/width;
-            float wj = M_PI*j/height;
-            (*Utr)(i, j) = 0.5f*(*Ftr)(i, j)/(cos(wi) + cos(wj) - 2.0f);
-        }
-    }
-    
-    (*Utr)(0, 0) = 0.5f*(*Ftr)(0, 0);
-
-    p = fftwf_plan_r2r_2d(height, width, Utr->data(), U->data(), FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
-    fftwf_execute(p);
-    fftwf_execute(p);
-    
-    for ( int j = 0; j < height; j++ ) {
-        for ( int i = 0; i < width; i++ ) {
-            (*U)(i, j) /= 4.0f*((width-1)*(height-1));
-        }
-    }
-
-    delete Ftr;
-    delete Utr;
-    fftwf_destroy_plan(p);
-}
-
 
 void solve_pde_dct(Array2Df &F, Array2Df &U)
 {
@@ -398,110 +213,6 @@ void clampToZero(Array2Df &R, Array2Df &G, Array2Df &B, float m)
     G(i) -= m;
     B(i) -= m;
   }
-}
-
-float norm_max( int nx, int ny, Array2Df *u)
-{
-  float norm = 0.0f;
-  #pragma omp parallel for
-  for ( int i = 0; i < nx*ny; i++ )
-  {
-      if (abs((*u)(i)) > norm)
-          norm = abs((*u)(i));
-  }
-  return norm;
-}
-
-void sweep ( int nx, int ny, Array2Df* f, 
-  Array2Df* u, Array2Df* unew )
-{
-  #pragma omp parallel for
-  for ( int j = 0; j < ny; j++ )
-  {
-    for ( int i = 0; i < nx; i++ )
-    {
-      if ( i == 0 || j == 0 || i == nx - 1 || j == ny - 1 )
-      {
-        (*unew)(i, j) = (*f)(i, j);
-      }
-      else
-      { 
-        (*unew)(i, j) = 0.25 * ( 
-          (*u)(i-1, j) + (*u)(i, j+1) + (*u)(i, j-1) + (*u)(i+1, j) - (*f)(i, j));
-      }
-    }
-  }
-}
-
-void solve_poisson(Array2Df* f, Array2Df* u, const Array2Df* uapprox)
-{
-  bool converged;
-  float diff;
-  const int it_max = 100000;
-  const int nx = u->getCols();
-  const int ny = u->getRows();
-  float tolerance = 3e-5;
-  Array2Df* udiff = new Array2Df(nx, ny);
-  Array2Df* unew = new Array2Df(nx, ny);
-//
-//  Set the initial solution estimate.
-//  We are "allowed" to pick up the boundary conditions exactly.
-//
-  #pragma omp parallel for
-  for ( int i = 0; i < nx*ny; i++ )
-  {
-    (*unew)(i) = (*uapprox)(i);
-  }
-//
-//  Do the iteration.
-//
-  converged = false;
-
-  for ( int it = 1; it <= it_max; it++ )
-  {
-    #pragma omp parallel for
-    for ( int j = 0; j < ny; j++ )
-    {
-      for ( int i = 0; i < nx; i++ )
-      {
-        (*u)(i, j) = (*unew)(i, j);
-      }
-    }
-//
-//  UNEW is derived from U by one Jacobi step.
-//
-    sweep ( nx, ny, f, u, unew );
-//
-//  Check for convergence.
-//
-    #pragma omp parallel for
-    for ( int i = 0; i < nx*ny; i++ )
-    {
-      (*udiff)(i) = (*unew)(i) - (*u)(i);
-    }
-    diff = norm_max ( nx, ny, udiff );
-    cout << it << "\t" << diff << endl;
-    if ( diff <= tolerance )
-    {
-      converged = true;
-      break;
-    }
-
-  }
-
-  if ( converged )
-  {
-    cout << "  The iteration has converged.\n";
-  }
-  else
-  {
-    cout << "  The iteration has NOT converged.\n";
-  }
-  delete udiff;
-  delete unew;
-//
-//  Terminate.
-//
 }
 
 int findIndex(const float* data, int size)
@@ -829,118 +540,7 @@ void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const i
         U(i) *= sf;
 } 
 
-qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B, const int i, const int j, const int gridX, const int gridY)
-{
-    float h, s, l;
-    float avgL = 0.0f;    
-    for (int y = j * gridY; y < (j+1) * gridY; y++) {
-        for (int x = i * gridX; x < (i+1) * gridX; x++) {
-            rgb2hsv(R(x, y), G(x, y), B(x, y), h, s, l);
-            avgL += l;
-        }
-    }
-    return avgL / (gridX*gridY);
-}
-
-
-qreal averageLightness(const Array2Df& R, const Array2Df& G, const Array2Df& B)
-{
-    int width = R.getCols();
-    int height = R.getRows();
-    qreal avgLum = 0.0f;
-
-    float h, s, l;
-    for (int i = 0; i < height*width; i++)
-    {
-        rgb2hsv(R(i), G(i), B(i), h, s, l);
-        avgLum += l;
-    }
-    return avgLum / (width * height);
-}
-
-qreal averageLightness(const HdrCreationItem& item)
-{
-    int width = item.frame()->getWidth();
-    int height = item.frame()->getHeight();
-
-    Channel* C_R, *C_G, *C_B;
-    item.frame()->getXYZChannels(C_R, C_G, C_B);
-
-    float *R, *G, *B;
-    R = C_R->data();
-    G = C_G->data();
-    B = C_B->data();
-
-    qreal avgLum = 0.0f;
-
-    float h, s, l;
-    for (int i = 0; i < height*width; i++)
-    {
-        rgb2hsv(R[i], G[i], B[i], h, s, l);
-        avgLum += l;
-    }
-    return avgLum / (width * height);
-}
-
-void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
-           const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
-           const QImage& mask, const QImage& maskGoodImage)
-{
-#ifdef TIMER_PROFILING
-    msec_timer stop_watch;
-    stop_watch.start();
-#endif
-    const int width = R1.getCols();
-    const int height = R1.getRows();
-
-    float alpha = 0.0f;
-    qreal sf = averageLightness(R1, G1, B1) / averageLightness(R2, G2, B2);
-
-    float h, s, l;
-    float r1, g1, b1;
-    float r2, g2, b2;
-
-    for (int j = 0; j < height; j++)
-    {
-        for (int i = 0; i < width; i++)
-        {
-            if (qAlpha(mask.pixel(i,j)) == 0 && qAlpha(maskGoodImage.pixel(i,j)) == 0) continue;
-            alpha = (qAlpha(maskGoodImage.pixel(i,j)) == 0) ? static_cast<float>(qAlpha(mask.pixel(i,j))) / 255 : 
-                                                              static_cast<float>(qAlpha(maskGoodImage.pixel(i,j))) / 255;
-
-            r1 = R1(i, j);
-            g1 = G1(i, j);
-            b1 = B1(i, j);
-
-            r2 = R2(i, j);
-            g2 = G2(i, j);
-            b2 = B2(i, j);
-
-            rgb2hsv(r2, g2, b2, h, s, l);
-            l *= sf;
-            if (l > max_lightness) l = max_lightness;
-
-            hsl2rgb(h, s, l, r2, g2, b2);
-
-            if (r2 > max_rgb) r2 = max_rgb;
-            if (g2 > max_rgb) g2 = max_rgb;
-            if (b2 > max_rgb) b2 = max_rgb;
-
-            if (r2 < 0.0f) r2 = 0.0f;
-            if (g2 < 0.0f) g2 = 0.0f;
-            if (b2 < 0.0f) b2 = 0.0f;
-
-            R1(i, j) = (1.0f - alpha)*r1 + alpha*r2;
-            G1(i, j) = (1.0f - alpha)*g1 + alpha*g2;
-            B1(i, j) = (1.0f - alpha)*b1 + alpha*b2;
-        }
-    }
-#ifdef TIMER_PROFILING
-    stop_watch.stop_and_update();
-    std::cout << "blend = " << stop_watch.get_time() << " msec" << std::endl;
-#endif
-}
-
+/*
 QImage* shiftQImage(const QImage *in, int dx, int dy)
 {
     QImage *out = new QImage(in->size(),QImage::Format_ARGB32);
@@ -972,7 +572,7 @@ void shiftItem(HdrCreationItem& item, int dx, int dy)
     item.qimage()->swap( *img );
     img.reset();    // release memory
 }
-
+*/
 //////////////////////////////////////////////////////////////////////////////////////
 
 /**

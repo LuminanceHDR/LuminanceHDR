@@ -53,6 +53,8 @@
 #include <Libpfs/io/framewriter.h>
 #include <Libpfs/io/framewriterfactory.h>
 #include <Libpfs/utils/transform.h>
+#include <Libpfs/manip/shift.h>
+#include <Libpfs/manip/copy.h>
 #include <Libpfs/manip/cut.h>
 #include <Libpfs/colorspace/convert.h>
 #include <Libpfs/colorspace/rgbremapper.h>
@@ -79,8 +81,39 @@ const config_triple predef_confs[6]= {
 
 
 // --- NEW CODE ---
+namespace {
+QImage* shiftQImage(const QImage *in, int dx, int dy)
+{
+    QImage *out = new QImage(in->size(),QImage::Format_ARGB32);
+    assert(out!=NULL);
+    out->fill(qRgba(0,0,0,0)); //transparent black
+    for(int i = 0; i < in->height(); i++)
+    {
+        if( (i+dy) < 0 ) continue;
+        if( (i+dy) >= in->height()) break;
+        QRgb *inp = (QRgb*)in->scanLine(i);
+        QRgb *outp = (QRgb*)out->scanLine(i+dy);
+        for(int j = 0; j < in->width(); j++)
+        {
+            if( (j+dx) >= in->width()) break;
+            if( (j+dx) >= 0 ) outp[j+dx] = *inp;
+            inp++;
+        }
+    }
+    return out;
+}
 
+void shiftItem(HdrCreationItem& item, int dx, int dy)
+{
+    FramePtr shiftedFrame( pfs::shift(*item.frame(), dx, dy) );
+    item.frame().swap(shiftedFrame);
+    shiftedFrame.reset();       // release memory
 
+    QScopedPointer<QImage> img(shiftQImage(item.qimage(), dx, dy));
+    item.qimage()->swap( *img );
+    img.reset();    // release memory
+}
+}
 struct ConvertToQRgb {
     void operator()(float r, float g, float b, QRgb& rgb) const {
         uint8_t r8u = colorspace::convertSample<uint8_t>(r);
