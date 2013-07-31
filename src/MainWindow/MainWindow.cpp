@@ -716,6 +716,8 @@ void MainWindow::updateActions( int w )
     bool hasCropping = isHdr && tm_status.curr_tm_frame && tm_status.curr_tm_frame->hasSelection();
     m_Ui->cropToSelectionAction->setEnabled(hasCropping);
     m_Ui->removeSelectionAction->setEnabled(hasCropping);
+
+    m_Ui->actionLock->setEnabled(hasImage && curr_num_ldr_open >= 1);
 }
 
 void MainWindow::on_rotateccw_triggered()

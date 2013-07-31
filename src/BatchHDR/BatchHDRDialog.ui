@@ -227,7 +227,7 @@ See documentation for more information.</string>
             <item row="3" column="0" colspan="2">
              <widget class="QRadioButton" name="MTBRadioButton">
               <property name="enabled">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="toolTip">
                <string>Use MTB (Median Threshold Bitmap) engine</string>
@@ -240,7 +240,7 @@ See documentation for more information.</string>
             <item row="2" column="0" colspan="2">
              <widget class="QRadioButton" name="aisRadioButton">
               <property name="enabled">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="toolTip">
                <string>Use Hugin's align_image_stack engine</string>
@@ -258,7 +258,7 @@ See documentation for more information.</string>
           <item row="1" column="0">
            <widget class="QCheckBox" name="autoCropCheckBox">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Auto-crop</string>
@@ -594,8 +594,8 @@ See documentation for more information.</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>522</x>
-     <y>560</y>
+     <x>560</x>
+     <y>691</y>
     </hint>
     <hint type="destinationlabel">
      <x>285</x>
@@ -610,12 +610,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>218</y>
+     <x>549</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
-     <x>307</x>
-     <y>270</y>
+     <x>402</x>
+     <y>302</y>
     </hint>
    </hints>
   </connection>
@@ -626,12 +626,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>377</x>
-     <y>222</y>
+     <x>549</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
-     <x>481</x>
-     <y>271</y>
+     <x>550</x>
+     <y>305</y>
     </hint>
    </hints>
   </connection>
@@ -642,12 +642,60 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>414</x>
-     <y>219</y>
+     <x>549</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
-     <x>79</x>
-     <y>265</y>
+     <x>89</x>
+     <y>305</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAlignCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>aisRadioButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>117</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAlignCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MTBRadioButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>336</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>335</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAlignCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoCropCheckBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>317</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>317</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
