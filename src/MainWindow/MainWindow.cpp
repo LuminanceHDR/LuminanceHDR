@@ -1882,6 +1882,7 @@ void MainWindow::on_actionWhite_Balance_triggered()
     m_Ui->actionWhite_Balance->setEnabled(false);
     m_processingAWB = true;
 	m_viewerToProcess = (GenericViewer*) m_tabwidget->currentWidget();
+    m_tabwidget->setTabEnabled(m_tabwidget->currentIndex(), false);
     
     Frame *frame = m_viewerToProcess->getFrame();
     Channel *Rc, *Gc, *Bc;
@@ -1898,6 +1899,8 @@ void MainWindow::whiteBalanceDone()
 {
     QApplication::restoreOverrideCursor();
     m_Ui->actionWhite_Balance->setEnabled(true);
+    m_viewerToProcess->setEnabled(true);
+    m_tabwidget->setTabEnabled(m_tabwidget->indexOf(m_viewerToProcess), true);
     m_processingAWB = false;
     m_viewerToProcess->updatePixmap();
     if (m_viewerToProcess->isHDR()) {
