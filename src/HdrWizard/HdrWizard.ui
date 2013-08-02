@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>736</width>
-    <height>633</height>
+    <width>905</width>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,12 @@
    <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_9">
+  <layout class="QGridLayout" name="gridLayout_11">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_9">
+     <property name="spacing">
+      <number>-1</number>
+     </property>
      <property name="margin">
       <number>6</number>
      </property>
@@ -32,94 +35,131 @@
         <number>0</number>
        </property>
        <widget class="QWidget" name="page">
-        <layout class="QGridLayout" name="gridLayout_13">
-         <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_12">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_10">
-             <item>
-              <widget class="QLabel" name="camera_label">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="../../icons.qrc">:/splash/images/camera.png</pixmap>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_11">
-               <item>
-                <spacer name="horizontalSpacer_8">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="stack_label">
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="pixmap">
-                  <pixmap resource="../../icons.qrc">:/splash/images/stack.png</pixmap>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_9">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="Line" name="line_3">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_8">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_10">
-               <item>
-                <spacer name="horizontalSpacer_10">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>10</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_5">
-                 <property name="text">
-                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>10</y>
+           <width>869</width>
+           <height>357</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_17">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <spacer name="horizontalSpacer_16">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="camera_label">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../../icons.qrc">:/splash/images/camera.png</pixmap>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_17">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <spacer name="horizontalSpacer_8">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="stack_label">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../../icons.qrc">:/splash/images/stack.png</pixmap>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <spacer name="horizontalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>10</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -137,54 +177,53 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                 </property>
-                 <property name="wordWrap">
-                  <bool>true</bool>
-                 </property>
-                 <property name="openExternalLinks">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_11">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>10</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+                <property name="openExternalLinks">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>10</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </widget>
        <widget class="QWidget" name="choose_files">
         <layout class="QGridLayout" name="gridLayout_12">
@@ -193,44 +232,189 @@ p, li { white-space: pre-wrap; }
            <property name="title">
             <string>[1/2] Load Input Images</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_11">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0" rowspan="2" colspan="2">
+             <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout">
-                <property name="margin">
-                 <number>3</number>
-                </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout">
+                 <layout class="QVBoxLayout" name="verticalLayout">
+                  <property name="margin">
+                   <number>3</number>
+                  </property>
                   <item>
-                   <widget class="QLabel" name="label_2">
+                   <layout class="QHBoxLayout" name="horizontalLayout">
+                    <item>
+                     <widget class="QLabel" name="label_2">
+                      <property name="maximumSize">
+                       <size>
+                        <width>222</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Currently Loaded &amp;Files</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                      <property name="buddy">
+                       <cstring>tableWidget</cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QTableWidget" name="tableWidget">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>300</width>
+                      <height>0</height>
+                     </size>
+                    </property>
                     <property name="maximumSize">
                      <size>
-                      <width>222</width>
+                      <width>16777215</width>
                       <height>16777215</height>
                      </size>
                     </property>
+                    <property name="editTriggers">
+                     <set>QAbstractItemView::NoEditTriggers</set>
+                    </property>
+                    <property name="selectionMode">
+                     <enum>QAbstractItemView::SingleSelection</enum>
+                    </property>
+                    <property name="selectionBehavior">
+                     <enum>QAbstractItemView::SelectRows</enum>
+                    </property>
+                    <property name="columnCount">
+                     <number>2</number>
+                    </property>
+                    <attribute name="horizontalHeaderStretchLastSection">
+                     <bool>true</bool>
+                    </attribute>
+                    <column/>
+                    <column/>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_4">
+                  <item>
+                   <spacer name="verticalSpacer_2">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="loadImagesButton">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>42</width>
+                      <height>42</height>
+                     </size>
+                    </property>
+                    <property name="toolTip">
+                     <string>Add Images</string>
+                    </property>
                     <property name="text">
-                     <string>Currently Loaded &amp;Files</string>
+                     <string>...</string>
                     </property>
-                    <property name="alignment">
-                     <set>Qt::AlignCenter</set>
-                    </property>
-                    <property name="buddy">
-                     <cstring>tableWidget</cstring>
+                    <property name="icon">
+                     <iconset resource="../../icons.qrc">
+                      <normaloff>:/new/prefix1/images/list-add.png</normaloff>:/new/prefix1/images/list-add.png</iconset>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <spacer name="horizontalSpacer">
+                   <widget class="QToolButton" name="removeImageButton">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>42</width>
+                      <height>42</height>
+                     </size>
+                    </property>
+                    <property name="toolTip">
+                     <string>Remove Selected Image</string>
+                    </property>
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../icons.qrc">
+                      <normaloff>:/new/prefix1/images/list-remove.png</normaloff>:/new/prefix1/images/list-remove.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="clearListButton">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>42</width>
+                      <height>42</height>
+                     </size>
+                    </property>
+                    <property name="toolTip">
+                     <string>Clear List</string>
+                    </property>
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../icons.qrc">
+                      <normaloff>:/new/prefix1/images/edit-clear-list.png</normaloff>:/new/prefix1/images/edit-clear-list.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_4">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>0</width>
-                      <height>0</height>
+                      <width>20</width>
+                      <height>40</height>
                      </size>
                     </property>
                    </spacer>
@@ -238,300 +422,160 @@ p, li { white-space: pre-wrap; }
                  </layout>
                 </item>
                 <item>
-                 <widget class="QTableWidget" name="tableWidget">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>300</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <property name="editTriggers">
-                   <set>QAbstractItemView::NoEditTriggers</set>
-                  </property>
-                  <property name="selectionMode">
-                   <enum>QAbstractItemView::SingleSelection</enum>
-                  </property>
-                  <property name="selectionBehavior">
-                   <enum>QAbstractItemView::SelectRows</enum>
-                  </property>
-                  <property name="columnCount">
-                   <number>2</number>
-                  </property>
-                  <attribute name="horizontalHeaderStretchLastSection">
-                   <bool>true</bool>
-                  </attribute>
-                  <column/>
-                  <column/>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_4">
-                <item>
-                 <spacer name="verticalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="loadImagesButton">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>42</width>
-                    <height>42</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Add Images</string>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/list-add.png</normaloff>:/new/prefix1/images/list-add.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="removeImageButton">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>42</width>
-                    <height>42</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Remove Selected Image</string>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/list-remove.png</normaloff>:/new/prefix1/images/list-remove.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="clearListButton">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>42</width>
-                    <height>42</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Clear List</string>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/edit-clear-list.png</normaloff>:/new/prefix1/images/edit-clear-list.png</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="verticalSpacer_4">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_3">
-                <property name="spacing">
-                 <number>6</number>
-                </property>
-                <property name="margin">
-                 <number>3</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>Preview</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QFrame" name="previewFrame">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::StyledPanel</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Sunken</enum>
-                  </property>
-                  <layout class="QGridLayout">
-                   <property name="margin">
-                    <number>0</number>
-                   </property>
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="previewLabel">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="EVgroupBox">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="title">
-                   <string>Selected Image &amp;Exposure</string>
-                  </property>
-                  <layout class="QGridLayout" name="gridLayout_2">
-                   <property name="spacing">
-                    <number>9</number>
-                   </property>
-                   <item row="0" column="0">
-                    <layout class="QHBoxLayout" name="horizontalLayout_3">
-                     <property name="spacing">
-                      <number>6</number>
-                     </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <item>
+                   <widget class="QLabel" name="label_3">
+                    <property name="text">
+                     <string>Preview</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QFrame" name="previewFrame">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Sunken</enum>
+                    </property>
+                    <layout class="QGridLayout">
                      <property name="margin">
-                      <number>6</number>
+                      <number>0</number>
                      </property>
-                     <item>
-                      <widget class="QLabel" name="label">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="previewLabel">
                        <property name="sizePolicy">
-                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                        <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
                        <property name="text">
-                        <string>EV:</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSlider" name="EVSlider">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="minimum">
-                        <number>-1000</number>
-                       </property>
-                       <property name="maximum">
-                        <number>1000</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>100</number>
-                       </property>
-                       <property name="value">
-                        <number>0</number>
-                       </property>
-                       <property name="sliderPosition">
-                        <number>0</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksAbove</enum>
-                       </property>
-                       <property name="tickInterval">
-                        <number>100</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QDoubleSpinBox" name="ImageEVdsb">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="prefix">
                         <string/>
                        </property>
-                       <property name="decimals">
-                        <number>2</number>
-                       </property>
-                       <property name="minimum">
-                        <double>-10.000000000000000</double>
-                       </property>
-                       <property name="maximum">
-                        <double>10.000000000000000</double>
-                       </property>
-                       <property name="singleStep">
-                        <double>0.100000000000000</double>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
                        </property>
                       </widget>
                      </item>
                     </layout>
-                   </item>
-                  </layout>
-                 </widget>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="EVgroupBox">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="title">
+                     <string>Selected Image &amp;Exposure</string>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_9">
+                     <property name="margin">
+                      <number>6</number>
+                     </property>
+                     <property name="spacing">
+                      <number>6</number>
+                     </property>
+                     <item row="0" column="0">
+                      <layout class="QHBoxLayout" name="horizontalLayout_18">
+                       <property name="spacing">
+                        <number>6</number>
+                       </property>
+                       <property name="margin">
+                        <number>6</number>
+                       </property>
+                       <item>
+                        <widget class="QLabel" name="label_9">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>EV:</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSlider" name="EVSlider">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimum">
+                          <number>-1000</number>
+                         </property>
+                         <property name="maximum">
+                          <number>1000</number>
+                         </property>
+                         <property name="pageStep">
+                          <number>100</number>
+                         </property>
+                         <property name="value">
+                          <number>0</number>
+                         </property>
+                         <property name="sliderPosition">
+                          <number>0</number>
+                         </property>
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="tickPosition">
+                          <enum>QSlider::TicksAbove</enum>
+                         </property>
+                         <property name="tickInterval">
+                          <number>100</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="ImageEVdsb">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="prefix">
+                          <string/>
+                         </property>
+                         <property name="decimals">
+                          <number>2</number>
+                         </property>
+                         <property name="minimum">
+                          <double>-10.000000000000000</double>
+                         </property>
+                         <property name="maximum">
+                          <double>10.000000000000000</double>
+                         </property>
+                         <property name="singleStep">
+                          <double>0.100000000000000</double>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
                 </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
                  <widget class="QGroupBox" name="alignGroupBox">
                   <property name="enabled">
@@ -541,8 +585,11 @@ p, li { white-space: pre-wrap; }
                    <string>Alignment</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_3">
+                   <property name="margin">
+                    <number>6</number>
+                   </property>
                    <property name="spacing">
-                    <number>9</number>
+                    <number>6</number>
                    </property>
                    <item row="0" column="0">
                     <layout class="QGridLayout" name="gridLayout1">
@@ -609,38 +656,205 @@ p, li { white-space: pre-wrap; }
                   </layout>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QGroupBox" name="agGroupBox">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="title">
+                   <string>Anti ghosting</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_8">
+                   <property name="margin">
+                    <number>6</number>
+                   </property>
+                   <property name="spacing">
+                    <number>6</number>
+                   </property>
+                   <item row="0" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_13">
+                     <property name="margin">
+                      <number>6</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="label_6">
+                       <property name="text">
+                        <string>O. Gallo and others</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="autoAG_checkBox">
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="text">
+                        <string>Auto anti ghosting</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="1" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_14">
+                     <property name="margin">
+                      <number>6</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="label_8">
+                       <property name="text">
+                        <string>Artifact-free HDR Imaging</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="horizontalSpacer_14">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="2" column="0">
+                    <layout class="QHBoxLayout" name="horizontalLayout_15">
+                     <property name="spacing">
+                      <number>6</number>
+                     </property>
+                     <property name="margin">
+                      <number>6</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="label_7">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="text">
+                        <string>Threshold</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSlider" name="threshold_horizontalSlider">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="maximum">
+                        <number>10000</number>
+                       </property>
+                       <property name="singleStep">
+                        <number>1</number>
+                       </property>
+                       <property name="pageStep">
+                        <number>10</number>
+                       </property>
+                       <property name="value">
+                        <number>1000</number>
+                       </property>
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="tickPosition">
+                        <enum>QSlider::NoTicks</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QDoubleSpinBox" name="threshold_doubleSpinBox">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="decimals">
+                        <number>4</number>
+                       </property>
+                       <property name="maximum">
+                        <double>1.000000000000000</double>
+                       </property>
+                       <property name="singleStep">
+                        <double>0.001000000000000</double>
+                       </property>
+                       <property name="value">
+                        <double>0.100000000000000</double>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
                </layout>
               </item>
              </layout>
             </item>
-            <item row="2" column="0" colspan="3">
-             <widget class="QLabel" name="confirmloadlabel">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>42</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>42</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+            <item row="2" column="0" colspan="2">
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_16">
+                <item>
+                 <spacer name="horizontalSpacer_15">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="checkBoxEditingTools">
+                  <property name="text">
+                   <string>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti Ghosting</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QLabel" name="confirmloadlabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>42</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>42</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Start loading a set of images with different exposure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-              </property>
-             </widget>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
@@ -898,7 +1112,7 @@ p, li { white-space: pre-wrap; }
             <item row="0" column="0">
              <layout class="QHBoxLayout">
               <property name="spacing">
-               <number>14</number>
+               <number>6</number>
               </property>
               <property name="margin">
                <number>6</number>
@@ -976,6 +1190,9 @@ p, li { white-space: pre-wrap; }
             <string>[2/2] Choose Custom Configuration</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
+            <property name="spacing">
+             <number>-1</number>
+            </property>
             <item row="0" column="0">
              <widget class="QGroupBox" name="groupBox_4">
               <property name="sizePolicy">
@@ -988,7 +1205,7 @@ p, li { white-space: pre-wrap; }
                <string>Weights:</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_15">
-               <property name="verticalSpacing">
+               <property name="spacing">
                 <number>6</number>
                </property>
                <item row="0" column="0">
@@ -1064,7 +1281,7 @@ p, li { white-space: pre-wrap; }
                <string>Response Curve:</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_6">
-               <property name="verticalSpacing">
+               <property name="spacing">
                 <number>6</number>
                </property>
                <item row="0" column="0">
@@ -1297,7 +1514,7 @@ p, li { white-space: pre-wrap; }
                <string>HDR Creation Equation:</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_7">
-               <property name="verticalSpacing">
+               <property name="spacing">
                 <number>6</number>
                </property>
                <item row="0" column="0">
@@ -1479,7 +1696,7 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="0" margin="0"/>
+ <layoutdefault spacing="6" margin="6"/>
  <tabstops>
   <tabstop>NextFinishButton</tabstop>
   <tabstop>cancelButton</tabstop>
@@ -1487,8 +1704,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>removeImageButton</tabstop>
   <tabstop>clearListButton</tabstop>
   <tabstop>tableWidget</tabstop>
-  <tabstop>EVSlider</tabstop>
-  <tabstop>ImageEVdsb</tabstop>
   <tabstop>alignCheckBox</tabstop>
   <tabstop>ais_radioButton</tabstop>
   <tabstop>mtb_radioButton</tabstop>
@@ -1521,12 +1736,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>53</x>
-     <y>51</y>
+     <x>58</x>
+     <y>55</y>
     </hint>
    </hints>
   </connection>
@@ -1537,12 +1752,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>92</x>
-     <y>51</y>
+     <x>88</x>
+     <y>55</y>
     </hint>
    </hints>
   </connection>
@@ -1553,12 +1768,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>53</x>
-     <y>50</y>
+     <x>58</x>
+     <y>53</y>
     </hint>
    </hints>
   </connection>
@@ -1569,12 +1784,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>92</x>
-     <y>50</y>
+     <x>88</x>
+     <y>53</y>
     </hint>
    </hints>
   </connection>
@@ -1585,12 +1800,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>53</x>
-     <y>49</y>
+     <x>58</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
@@ -1601,12 +1816,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>92</x>
-     <y>49</y>
+     <x>88</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
@@ -1617,12 +1832,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>83</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>84</y>
+     <x>77</x>
+     <y>82</y>
     </hint>
    </hints>
   </connection>
@@ -1633,12 +1848,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>84</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>84</y>
+     <x>77</x>
+     <y>82</y>
     </hint>
    </hints>
   </connection>
@@ -1649,12 +1864,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>84</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>55</x>
-     <y>113</y>
+     <x>56</x>
+     <y>111</y>
     </hint>
    </hints>
   </connection>
@@ -1665,12 +1880,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>92</x>
-     <y>52</y>
+     <x>88</x>
+     <y>56</y>
     </hint>
    </hints>
   </connection>
@@ -1681,12 +1896,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>52</x>
-     <y>52</y>
+     <x>57</x>
+     <y>56</y>
     </hint>
    </hints>
   </connection>
@@ -1697,12 +1912,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>84</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>85</y>
+     <x>76</x>
+     <y>82</y>
     </hint>
    </hints>
   </connection>
@@ -1713,12 +1928,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>83</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>55</x>
-     <y>113</y>
+     <x>56</x>
+     <y>111</y>
     </hint>
    </hints>
   </connection>
@@ -1729,12 +1944,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>83</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>85</x>
-     <y>84</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
    </hints>
   </connection>
@@ -1745,12 +1960,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>83</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>85</y>
+     <x>76</x>
+     <y>82</y>
     </hint>
    </hints>
   </connection>
@@ -1761,12 +1976,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>59</x>
-     <y>48</y>
+     <x>64</x>
+     <y>50</y>
     </hint>
    </hints>
   </connection>
@@ -1777,12 +1992,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>98</x>
-     <y>40</y>
+     <x>94</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
-     <x>92</x>
-     <y>48</y>
+     <x>88</x>
+     <y>50</y>
     </hint>
    </hints>
   </connection>
@@ -1793,12 +2008,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>83</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>85</x>
-     <y>82</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
    </hints>
   </connection>
@@ -1809,12 +2024,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>82</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>50</x>
-     <y>112</y>
+     <x>55</x>
+     <y>111</y>
     </hint>
    </hints>
   </connection>
@@ -1825,12 +2040,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>82</y>
+     <x>77</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
-     <x>84</x>
-     <y>83</y>
+     <x>76</x>
+     <y>82</y>
     </hint>
    </hints>
   </connection>
@@ -1841,12 +2056,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>514</x>
-     <y>352</y>
+     <x>622</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
-     <x>526</x>
-     <y>370</y>
+     <x>791</x>
+     <y>258</y>
     </hint>
    </hints>
   </connection>
@@ -1857,12 +2072,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>351</y>
+     <x>622</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
-     <x>463</x>
-     <y>406</y>
+     <x>791</x>
+     <y>278</y>
     </hint>
    </hints>
   </connection>
@@ -1873,12 +2088,60 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>440</x>
-     <y>349</y>
+     <x>622</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
-     <x>441</x>
-     <y>431</y>
+     <x>572</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_7</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>671</x>
+     <y>373</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>520</x>
+     <y>443</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>threshold_horizontalSlider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>756</x>
+     <y>373</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>658</x>
+     <y>446</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>threshold_doubleSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>774</x>
+     <y>371</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>779</x>
+     <y>439</y>
     </hint>
    </hints>
   </connection>

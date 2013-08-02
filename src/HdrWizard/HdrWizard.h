@@ -144,6 +144,8 @@ private slots:
 	void setupConnections();
 	void on_pushButtonSaveSettings_clicked();
     void updateProgressBar(int);
+    void updateThresholdSlider(int);
+    void updateThresholdSpinBox(double);
 
     void createHdr();
     void createHdrFinished();

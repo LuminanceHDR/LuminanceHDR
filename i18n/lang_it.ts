@@ -1940,6 +1940,38 @@ the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;
         <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
         <translation>&lt;/ul&gt;        &lt;hr&gt;Puoi ancora procedere alla creazione di un HDR, definendo &lt;b&gt;manualmente &lt;/b&gt; il valore EV (exposure values) o la differenza in F/Stops.        &lt;hr&gt;Se vuoi che Luminance HDR faccia questo &lt;b&gt;automaticamente&lt;/b&gt;, devi caricare immagini che abbiano almeno i seguenti dati EXIF::         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;NOTA:&lt;/b&gt; Generalmente i dati EXIF vengono persi durante la postproduzione delle immagini.&lt;br&gt;        Puoi effettuare una copia &lt;b&gt;uno-a-uno dei dati exif&lt;/b&gt; tra due set di immagini utilizzando l&apos;opzione:&lt;i&gt;&lt;b&gt;&quot;Strumenti-&gt;Copia Dati Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
+    <message>
+        <source>Anti ghosting</source>
+        <translation>Anti ghosting</translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation>O. Gallo e altri</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Auto anti ghosting</source>
+        <translation>Auto anti ghosting</translation>
+    </message>
+    <message>
+        <source>Artifact-free HDR Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation>Soglia</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti Ghosting</source>
+        <translation>Abilita lo strumento di editing - Utenti esperti, Allineamento manuale e anti ghosting manuale</translation>
+    </message>
 </context>
 <context>
     <name>HelpBrowser</name>
@@ -3722,15 +3754,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>NoiseRedux</source>
-        <translation type="unfinished"></translation>
+        <translation>Riduzione Rumore</translation>
     </message>
     <message>
         <source>FFTSolver</source>
-        <translation type="unfinished"></translation>
+        <translation>Solutore FFT</translation>
     </message>
     <message>
         <source>simple</source>
-        <translation type="unfinished"></translation>
+        <translation>semplice</translation>
     </message>
     <message>
         <source>Equation 2</source>
@@ -3778,23 +3810,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished">Key</translation>
+        <translation>Key</translation>
     </message>
     <message>
         <source>Phi</source>
-        <translation type="unfinished">Phi</translation>
+        <translation>Phi</translation>
     </message>
     <message>
         <source>Scales:</source>
-        <translation type="unfinished"></translation>
+        <translation>Scale:</translation>
     </message>
     <message>
         <source>Lower</source>
-        <translation type="unfinished"></translation>
+        <translation>Inferiore</translation>
     </message>
     <message>
         <source>Upper</source>
-        <translation type="unfinished"></translation>
+        <translation>Superiore</translation>
     </message>
     <message>
         <source>Brightness</source>

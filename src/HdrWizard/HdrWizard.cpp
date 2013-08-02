@@ -247,6 +247,8 @@ void HdrWizard::setupConnections()
 
     connect(this, SIGNAL(rejected()), m_hdrCreationManager.data(), SLOT(removeTempFiles()));
     //connect(this, SIGNAL(rejected()), OsIntegration::getInstancePtr(), SLOT(setProgressValue(-1)), Qt::DirectConnection);
+    connect(m_ui->threshold_horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
+    connect(m_ui->threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateThresholdSpinBox(double)));
 }
 
 void HdrWizard::loadImagesButtonClicked()
@@ -564,6 +566,7 @@ void HdrWizard::loadInputFilesDone()
     inputHdrFileSelected(0);
     m_ui->tableWidget->selectRow(0);
     m_ui->alignGroupBox->setEnabled(true);
+    m_ui->agGroupBox->setEnabled(true);
     if (m_ui->tableWidget->rowCount() > 1) {
         m_ui->alignCheckBox->setEnabled(true);
     }
@@ -899,6 +902,7 @@ void HdrWizard::NextFinishButtonClicked() {
             m_ui->previewLabel->setDisabled(true);
             m_ui->NextFinishButton->setDisabled(true);
             m_ui->alignGroupBox->setDisabled(true);
+            m_ui->agGroupBox->setDisabled(true);
             m_ui->EVgroupBox->setDisabled(true);
             m_ui->tableWidget->setDisabled(true);
             repaint();
@@ -933,7 +937,16 @@ void HdrWizard::NextFinishButtonClicked() {
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
         m_ui->NextFinishButton->setEnabled(false);
         //m_ui->cancelButton->setEnabled(false);
-
+        if (m_ui->autoAG_checkBox->isChecked() && !m_ui->checkBoxEditingTools->isChecked()) {
+            int num_images = m_hdrCreationManager->getData().size();
+            QList< QPair<int,int> > HV_offsets;
+            for (int i = 0; i < num_images; i++) {
+                HV_offsets.append(qMakePair(0,0));
+            }
+            float patchesPercent;
+            m_agGoodImageIndex = m_hdrCreationManager->computePatches(m_ui->threshold_doubleSpinBox->value(), m_patches, patchesPercent, HV_offsets);
+            m_doAutoAntighosting = true; 
+        }
         if (m_doAutoAntighosting) {
             int h0;
             m_hdrCreationManager->getAgData(m_patches, h0);
@@ -1008,9 +1021,9 @@ void HdrWizard::currentPageChangedInto(int newindex)
         qDebug() << "numldrs = " << numldrs;
 */
         //if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {
-        if (num_images >= 2) {
+        if (m_ui->checkBoxEditingTools->isChecked() && num_images >= 2) {
             this->setDisabled(true);
-            EditingTools *editingtools = new EditingTools(m_hdrCreationManager.data());
+            EditingTools *editingtools = new EditingTools(m_hdrCreationManager.data(), m_ui->autoAG_checkBox->isChecked());
             if (editingtools->exec() == QDialog::Accepted) {
                 m_doAutoAntighosting = editingtools->isAutoAntighostingEnabled();
                 m_doManualAntighosting = editingtools->isManualAntighostingEnabled();
@@ -1367,5 +1380,20 @@ void HdrWizard::updateProgressBar(int value)
 {
     if (value == 0) m_ui->progressBar->setMaximum(100);
     m_ui->progressBar->setValue(value);
+}
+
+void HdrWizard::updateThresholdSlider(int newValue)
+{
+    float newThreshold = ((float)newValue)/10000.f;
+    bool oldState = m_ui->threshold_doubleSpinBox->blockSignals(true);
+    m_ui->threshold_doubleSpinBox->setValue( newThreshold );
+    m_ui->threshold_doubleSpinBox->blockSignals(oldState);
+}
+
+void HdrWizard::updateThresholdSpinBox(double newThreshold)
+{
+    bool oldState = m_ui->threshold_horizontalSlider->blockSignals(true);
+    m_ui->threshold_horizontalSlider->setValue( (int)(newThreshold*10000) );
+    m_ui->threshold_horizontalSlider->blockSignals(oldState);
 }
 

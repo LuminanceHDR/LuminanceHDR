@@ -40,7 +40,7 @@
 #include "Exif/ExifOperations.h"
 #include "HdrCreation/mtb_alignment.h"
 
-EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
+EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent) :
     QDialog(parent),
     m_currentAgMaskIndex(0),
     m_hcm(hcm),
@@ -48,7 +48,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
     m_imagesSaved(false),
     m_agGoodImageIndex(-1),
     m_antiGhosting(false),
-    m_doAutoAntighosting(false),
+    m_doAutoAntighosting(autoAg),
     m_doManualAntighosting(false),
     m_patchesEdited(false)
 {
@@ -139,6 +139,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) :
 
     ((QGridLayout*)(groupBoxHistogram->layout()))->addWidget(m_histogram);
     m_previewWidget->setFocus();
+    
+    autoAG_checkBox->setChecked(m_doAutoAntighosting);
 
     setupConnections();
 } //end of constructor

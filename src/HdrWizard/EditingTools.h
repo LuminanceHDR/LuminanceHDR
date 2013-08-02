@@ -43,7 +43,7 @@ class EditingTools : public QDialog, private Ui::EditingToolsDialog
 {
 Q_OBJECT
 public:
-	EditingTools(HdrCreationManager *, QWidget *parent=0);
+	EditingTools(HdrCreationManager *, bool autoAg, QWidget *parent=0);
 	~EditingTools();
     bool isAutoAntighostingEnabled()   { return m_doAutoAntighosting == true; }
     bool isManualAntighostingEnabled() { return m_doManualAntighosting == true; }

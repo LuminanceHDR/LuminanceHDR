@@ -1112,47 +1112,47 @@ Continue?</source>
 <context>
     <name>EditingTools</name>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="460"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="462"/>
         <source>Maskable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="461"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="463"/>
         <source>Good image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="465"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="467"/>
         <source>Add good image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="466"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="468"/>
         <source>Remove good image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="494"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="496"/>
         <source>Ed&amp;itable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="495"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="497"/>
         <source>R&amp;eference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="498"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="500"/>
         <source>Select the previous image in both lists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="499"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="501"/>
         <source>Select the next image in both lists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="552"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="554"/>
         <source>Choose a directory and a prefix</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1676,7 +1676,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="258"/>
+        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="291"/>
         <source>The images have different size.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1732,74 +1732,74 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="194"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="233"/>
         <source>[1/2] Load Input Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="215"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="256"/>
         <source>Currently Loaded &amp;Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="311"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="352"/>
         <source>Add Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="314"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="337"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="360"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="355"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="378"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="401"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="334"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="375"/>
         <source>Remove Selected Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="357"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="398"/>
         <source>Clear List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="394"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="429"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="444"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="479"/>
         <source>Selected Image &amp;Exposure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="467"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="505"/>
         <source>EV:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="541"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="585"/>
         <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="564"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="611"/>
         <source>&amp;Autoalign images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="603"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="650"/>
         <source>Auto-crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="574"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="621"/>
         <source>Hugin&apos;s align_image_stack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="122"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="162"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1821,12 +1821,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="587"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="634"/>
         <source>MTB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="637"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="849"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1835,17 +1835,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="655"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="869"/>
         <source>[2/2] Choose Settings for HDR Creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="909"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1123"/>
         <source>Choose one of the predefined profiles:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="922"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1136"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1854,104 +1854,145 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="930"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1144"/>
         <source>Profile 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="935"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1149"/>
         <source>Profile 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="940"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1154"/>
         <source>Profile 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="945"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1159"/>
         <source>Profile 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="950"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1164"/>
         <source>Profile 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="955"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1169"/>
         <source>Profile 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="860"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1074"/>
         <source>Weighting function:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="886"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1035"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1192"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1100"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1252"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1205"/>
         <source>Triangular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="762"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="976"/>
         <source>Response curve:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="788"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1124"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1202"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1002"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1341"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1215"/>
         <source>Linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="811"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1025"/>
         <source>HDR creation model:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="837"/>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1338"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1216"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1051"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1555"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1229"/>
         <source>Debevec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1119"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1204"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1336"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1217"/>
         <source>Gamma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1129"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1346"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="685"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="899"/>
         <source>Amount of iterations:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="695"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="665"/>
+        <source>Anti ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="682"/>
+        <source>O. Gallo and others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="689"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="692"/>
+        <source>Auto anti ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="706"/>
+        <source>Artifact-free HDR Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="739"/>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="749"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="777"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="822"/>
+        <source>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti Ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="909"/>
         <source>Keep it small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="733"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="947"/>
         <source>Use this only if the default profiles above do not yield good results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="736"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="950"/>
         <source>Use custom configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="743"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="957"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1960,90 +2001,90 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="976"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1190"/>
         <source>[2/2] Choose Custom Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="988"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1205"/>
         <source>Weights:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1008"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1225"/>
         <source>Choose confidence function over all the possible pixel values:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1040"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1196"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1257"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1209"/>
         <source>Gaussian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1045"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1194"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1262"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1207"/>
         <source>Plateau</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1064"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1281"/>
         <source>Response Curve:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1086"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1303"/>
         <source>Predefined response curves:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1145"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1362"/>
         <source>Load response function from file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1163"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1380"/>
         <source>Load...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1198"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1415"/>
         <source>Use calibration to find response curve (robertson02 algorithm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1214"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1431"/>
         <source>Save response function to file:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1238"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1455"/>
         <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1297"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1514"/>
         <source>HDR Creation Equation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1314"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1531"/>
         <source>Choose model:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1343"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1218"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1560"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1231"/>
         <source>Robertson</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1371"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1588"/>
         <source>Save Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1406"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1623"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2052,13 +2093,13 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1465"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="812"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1682"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="815"/>
         <source>&amp;Next &gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1472"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1689"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2073,169 +2114,169 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="256"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="258"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="257"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="259"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="258"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="260"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="259"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="261"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="260"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="262"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="261"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="263"/>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="263"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="265"/>
         <source>Select the input images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="516"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="518"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="693"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="696"/>
         <source>Start loading a set of images with different exposure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="632"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="635"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="622"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="625"/>
         <source>EXIF data not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="637"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1238"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="640"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1251"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="687"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="690"/>
         <source>Loading Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="307"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="309"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="600"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="603"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="611"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="614"/>
         <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="733"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="746"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="736"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="749"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="755"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="752"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="758"/>
         <source>Error...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="734"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="737"/>
         <source>align_image_stack failed to align images.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="746"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="749"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="749"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="752"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="755"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="758"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="765"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="768"/>
         <source>Now click on next button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="807"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="999"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1027"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="810"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1012"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1040"/>
         <source>&amp;Finish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="895"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="898"/>
         <source>Aligning...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="930"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="931"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="934"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="935"/>
         <source>Processing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1175"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1188"/>
         <source>Weights: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1176"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1189"/>
         <source> - Response curve: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1177"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1190"/>
         <source> - Model: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1206"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1219"/>
         <source>Logarithmic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1208"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1221"/>
         <source>From Calibration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1210"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1223"/>
         <source>From File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1236"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1249"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2453,17 +2494,17 @@ associated with the protocol?</source>
 <context>
     <name>IOWorker</name>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="257"/>
+        <location filename="../src/Core/IOWorker.cpp" line="253"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="326"/>
+        <location filename="../src/Core/IOWorker.cpp" line="275"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="343"/>
+        <location filename="../src/Core/IOWorker.cpp" line="291"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2594,7 +2635,7 @@ p, li { white-space: pre-wrap; }
     <name>MainWindow</name>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1591"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1593"/>
         <source>Luminance HDR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3364,69 +3405,69 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1019"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1021"/>
         <source>Done!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1030"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1032"/>
         <source>Aborting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1335"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1337"/>
         <source>Cropped Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1388"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1390"/>
         <source>Unsaved changes...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1389"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1391"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1496"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1498"/>
         <source>Fattal Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1497"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1499"/>
         <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
 
 Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1569"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1571"/>
         <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1571"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1573"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1592"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1594"/>
         <source>Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="2007"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="2012"/>
         <source>FITS Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="2011"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="2016"/>
         <source>Failed to load FITS images. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="2015"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="2020"/>
         <source>Failed to load FITS images</source>
         <translation type="unfinished"></translation>
     </message>

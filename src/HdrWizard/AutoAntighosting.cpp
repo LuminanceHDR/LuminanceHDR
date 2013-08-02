@@ -758,6 +758,7 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
     float u = 0.3f;
     float a = 0.8f;
     float b = 0.001f;
+    float c = 1.0f;
     float T = 0.3f;
     int iterMax = 1000;
     float gain[3] = {1.0f, 1.0f, 1.0f};
@@ -808,8 +809,11 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
             err = V_bar;
             ch = 0;
         }
-        if (abs(err) >= a) {
+        if (abs(err) >= a && abs(err) < c) {
             delta = 2.0f*(err/abs(err))*u;
+        }
+        else if (abs(err) >= c) {
+            break;
         }
         else if (abs(err) < b) {
             delta = 0.0f;
