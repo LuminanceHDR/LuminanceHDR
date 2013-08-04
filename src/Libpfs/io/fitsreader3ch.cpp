@@ -135,7 +135,7 @@ FitsReader3Ch::FitsReader3Ch(const std::string& luminosityChannel,
 
 void FitsReader3Ch::open()
 {
-    m_fileLuminosity.reset( new FITS(m_luminosityChannel, Read, true) );
+    m_fileLuminosity.reset( new CCfits::FITS(m_luminosityChannel, CCfits::Read, true) );
     if ( !m_fileLuminosity ) {
         throw InvalidFile("Cannot open file " + m_luminosityChannel);
     }
@@ -143,7 +143,7 @@ void FitsReader3Ch::open()
     m_imageLuminosity = &m_fileLuminosity->pHDU();
     m_imageLuminosity->readAllKeys();
 
-    m_fileRed.reset( new FITS(m_redChannel, Read, true) );
+    m_fileRed.reset( new CCfits::FITS(m_redChannel, CCfits::Read, true) );
     if ( !m_fileRed ) {
         throw InvalidFile("Cannot open file " + m_redChannel);
     }
@@ -151,7 +151,7 @@ void FitsReader3Ch::open()
     m_imageRed = &m_fileRed->pHDU();
     m_imageRed->readAllKeys();
 
-    m_fileGreen.reset( new FITS(m_greenChannel, Read, true) );
+    m_fileGreen.reset( new CCfits::FITS(m_greenChannel, CCfits::Read, true) );
     if ( !m_fileGreen ) {
         throw InvalidFile("Cannot open file " + m_greenChannel);
     }
@@ -159,7 +159,7 @@ void FitsReader3Ch::open()
     m_imageGreen = &m_fileGreen->pHDU();
     m_imageGreen->readAllKeys();
 
-    m_fileBlue.reset( new FITS(m_blueChannel, Read, true) );
+    m_fileBlue.reset( new CCfits::FITS(m_blueChannel, CCfits::Read, true) );
     if ( !m_fileBlue ) {
         throw InvalidFile("Cannot open file " + m_blueChannel);
     }

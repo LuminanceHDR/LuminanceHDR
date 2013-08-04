@@ -24,6 +24,7 @@
 #include <Libpfs/io/fitsreader.h>
 #include <Libpfs/frame.h>
 
+
 namespace pfs {
 namespace io {
 
@@ -35,7 +36,7 @@ FitsReader::FitsReader(const std::string& filename)
 
 void FitsReader::open()
 {
-    m_file.reset( new FITS(filename(), Read, true) );
+    m_file.reset( new CCfits::FITS(filename(), CCfits::Read, true) );
     if ( !m_file ) {
         throw InvalidFile("Cannot open file " + filename());
     }

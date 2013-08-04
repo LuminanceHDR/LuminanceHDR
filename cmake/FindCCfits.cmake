@@ -42,7 +42,7 @@
         DOC "CCFITS include directory.")
         
     find_library(CCFITS_LIBRARY
-        NAMES libCCfits.so libCCfits.a libCCfits.dylib libCCfits.la
+        NAMES libCCfits.so libCCfits.a libCCfits.dylib libCCfits.la CCfits
         HINTS $ENV{CCFITS_ROOT_DIR} /opt/local/lib
         PATH_SUFFIXES lib
         DOC "CCFITS library.")
@@ -55,8 +55,8 @@
     find_package_handle_standard_args(CCFITS DEFAULT_MSG
           CCFITS_LIBRARY CCFITS_INCLUDE_DIR)
 
-    set(CCFITS_INCLUDE_DIRS ${CCFITS_INCLUDE_DIR} ${CFITSIO_INCLUDE_DIR})
-    set(CCFITS_LIBRARIES ${CCFITS_LIBRARY} ${CFITSIO_LIBRARY})
+    set(CCFITS_INCLUDE_DIRS ${CFITSIO_INCLUDE_DIRS} ${CCFITS_INCLUDE_DIR})
+    set(CCFITS_LIBRARIES ${CFITSIO_LIBRARIES} ${CCFITS_LIBRARY})
 
 #endif(NOT CCFITS_FOUND)
 

@@ -25,7 +25,6 @@
 #ifndef PFS_IO_FITSREADER_H
 #define PFS_IO_FITSREADER_H
 
-#include <CCfits>
 #include <boost/scoped_ptr.hpp>
 
 #include <string>
@@ -34,7 +33,13 @@
 #include <Libpfs/io/ioexception.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
 
-using namespace CCfits;
+// include windows.h to avoid TBYTE define clashes with fitsio.h
+#ifdef Q_WS_WIN
+#define _WINSOCKAPI_    // stops windows.h including winsock.h
+#include <windows.h>
+#endif
+
+#include <CCfits/CCfits>
 
 namespace pfs {
 class Frame;
@@ -54,8 +59,8 @@ public:
     void read(Frame &frame, const Params &);
 
 private:
-    boost::scoped_ptr<FITS> m_file;
-    PHDU *m_image;
+    boost::scoped_ptr<CCfits::FITS> m_file;
+    CCfits::PHDU *m_image;
 };
 
 }   // io

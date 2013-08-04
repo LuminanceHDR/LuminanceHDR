@@ -25,7 +25,6 @@
 #ifndef PFS_IO_FITSREADER3CH_H
 #define PFS_IO_FITSREADER3CH_H
 
-#include <CCfits>
 #include <boost/scoped_ptr.hpp>
 
 #include <string>
@@ -34,7 +33,13 @@
 #include <Libpfs/io/ioexception.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
 
-using namespace CCfits;
+// include windows.h to avoid TBYTE define clashes with fitsio.h
+#ifdef Q_WS_WIN
+#define _WINSOCKAPI_    // stops windows.h including winsock.h
+#include <windows.h>
+#endif
+
+#include <CCfits/CCfits>
 
 namespace pfs {
 class Frame;
@@ -61,14 +66,14 @@ private:
     std::string m_redChannel;
     std::string m_greenChannel;
     std::string m_blueChannel;
-    boost::scoped_ptr<FITS> m_fileLuminosity;
-    boost::scoped_ptr<FITS> m_fileRed;
-    boost::scoped_ptr<FITS> m_fileGreen;
-    boost::scoped_ptr<FITS> m_fileBlue;
-    PHDU *m_imageLuminosity;
-    PHDU *m_imageRed;
-    PHDU *m_imageGreen;
-    PHDU *m_imageBlue;
+    boost::scoped_ptr<CCfits::FITS> m_fileLuminosity;
+    boost::scoped_ptr<CCfits::FITS> m_fileRed;
+    boost::scoped_ptr<CCfits::FITS> m_fileGreen;
+    boost::scoped_ptr<CCfits::FITS> m_fileBlue;
+    CCfits::PHDU *m_imageLuminosity;
+    CCfits::PHDU *m_imageRed;
+    CCfits::PHDU *m_imageGreen;
+    CCfits::PHDU *m_imageBlue;
 };
 
 }   // io
