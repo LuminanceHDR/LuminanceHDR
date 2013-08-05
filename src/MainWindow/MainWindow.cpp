@@ -212,6 +212,7 @@ void MainWindow::init()
     num_ldr_generated = 0;
     curr_num_ldr_open = 0;
     splash = 0;
+    m_processingAWB = false;
 
     if ( sm_NumMainWindows == 1 )
     {

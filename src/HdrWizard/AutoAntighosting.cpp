@@ -184,13 +184,15 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
     }
   }
 
-    #pragma omp parallel for private(p) schedule(static)
+    const float invDivisor = 1.0f / (2.0f*(width-1));
+    #pragma omp parallel for schedule(static) lastprivate(p)
     for ( int j = 0; j < height; j++ ) {
         #pragma omp critical (make_plan)
         p = fftwf_plan_r2r_1d(width, U.data()+width*j, U.data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
         fftwf_execute(p); 
+        
         for ( int i = 0; i < width; i++ ) {
-            U(i, j) /= (2.0f*(width-1));
+            U(i, j) *= invDivisor;
         }
     }
 
@@ -284,9 +286,10 @@ bool comparePatches(const HdrCreationItem& item1,
                     const HdrCreationItem& item2,
                     int i, int j, int gridX, int gridY, float threshold, float deltaEV, int dx, int dy)
 {
-    vector<float> logRed(gridX*gridY);
-    vector<float> logGreen(gridX*gridY);
-    vector<float> logBlue(gridX*gridY);
+    int gridSize = gridX * gridY;
+    vector<float> logRed(gridSize);
+    vector<float> logGreen(gridSize);
+    vector<float> logBlue(gridSize);
 
     Channel *X1, *Y1, *Z1, *X2, *Y2, *Z2;
     item1.frame()->getXYZChannels( X1, Y1, Z1 );
@@ -322,16 +325,12 @@ bool comparePatches(const HdrCreationItem& item1,
   
     float threshold1 = 0.7f * std::abs(deltaEV);
     count = 0;
-    for (int h = 0; h < gridX*gridY; h++) {
+    for (int h = 0; h < gridSize; h++) {
         if (std::abs(logRed[h]) > threshold1 && std::abs(logGreen[h]) > threshold1 && std::abs(logBlue[h]) > threshold1)
             count++;
     }
 
-    if ((static_cast<float>(count) / static_cast<float>(gridX*gridY)) > threshold)
-        return true;
-    else
-        return false;
-
+    return (static_cast<float>(count) / static_cast<float>(gridX*gridY)) > threshold;
 }
 
 void computeIrradiance(Array2Df& irradiance, const Array2Df& in)
@@ -345,7 +344,7 @@ void computeIrradiance(Array2Df& irradiance, const Array2Df& in)
     const int height = in.getRows();
 
 #pragma omp parallel for schedule(static)
-    for (int i = 0; i < width*height; ++i) {
+    for (int i = 0; i < width * height; ++i) {
         irradiance(i) = std::exp( in(i) );
     }
 
@@ -536,7 +535,7 @@ void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const i
     
     float sf = F(x, y) / U(x, y);
     #pragma omp parallel for schedule(static)
-    for (int i = 0; i < width*height; i++)
+    for (int i = 0; i < width * height; i++)
         U(i) *= sf;
 } 
 
