@@ -124,11 +124,13 @@ namespace io {
 FitsReader3Ch::FitsReader3Ch(const std::string& luminosityChannel,
                              const std::string& redChannel, 
                              const std::string& greenChannel, 
-                             const std::string& blueChannel) :
+                             const std::string& blueChannel,
+                             const std::string& hChannel) :
     m_luminosityChannel(luminosityChannel), 
     m_redChannel(redChannel), 
     m_greenChannel(greenChannel), 
-    m_blueChannel(blueChannel)
+    m_blueChannel(blueChannel),
+    m_hChannel(hChannel)
 {
     FitsReader3Ch::open();
 }
@@ -166,6 +168,16 @@ void FitsReader3Ch::open()
 
     m_imageBlue = &m_fileBlue->pHDU();
     m_imageBlue->readAllKeys();
+
+    if (m_hChannel != "") {
+        m_fileH.reset( new CCfits::FITS(m_hChannel, CCfits::Read, true) );
+        if ( !m_fileBlue ) {
+            throw InvalidFile("Cannot open file " + m_hChannel);
+        }
+
+        m_imageH = &m_fileH->pHDU();
+        m_imageH->readAllKeys();
+    }
 }
 
 void FitsReader3Ch::close()
@@ -174,6 +186,7 @@ void FitsReader3Ch::close()
     m_fileRed.reset();
     m_fileGreen.reset();
     m_fileBlue.reset();
+    m_fileH.reset();
 }
 
 void FitsReader3Ch::read(Frame &frame)
@@ -186,7 +199,10 @@ void FitsReader3Ch::read(Frame &frame)
         throw InvalidFile("No image in file " + m_greenChannel);
     if (m_imageBlue->axes() != 2)
         throw InvalidFile("No image in file " + m_blueChannel);
-
+    if (m_hChannel != "") {
+        if (m_imageH->axes() != 2)
+            throw InvalidFile("No image in file " + m_hChannel);
+    }
 
     if (m_imageLuminosity->axis(0) != m_imageRed->axis(0) || m_imageRed->axis(0) != m_imageGreen->axis(0) || m_imageRed->axis(0) != m_imageBlue->axis(0))
          throw InvalidFile("Images have different size");
@@ -200,6 +216,7 @@ void FitsReader3Ch::read(Frame &frame)
     std::valarray<float>  contentsRed;
     std::valarray<float>  contentsGreen;
     std::valarray<float>  contentsBlue;
+    std::valarray<float>  contentsH;
     m_imageLuminosity->read(contentsLuminosity);
     m_imageRed->read(contentsRed);
     m_imageGreen->read(contentsGreen);
@@ -208,6 +225,14 @@ void FitsReader3Ch::read(Frame &frame)
     int ax1 = m_imageRed->axis(0);
     int ax2 = m_imageRed->axis(1); 
     qDebug() << "ax1 = " << ax1 << " , ax2 = " << ax2;
+
+    if (m_hChannel != "") 
+        m_imageH->read(contentsH);
+    else {
+        contentsH.resize(ax1*ax2);
+        for (int i = 0; i < ax1*ax2; i++)
+            contentsH[i] = 0.0f;
+    }
 
     Frame tempFrame(ax1, ax2);
     Channel *Xc, *Yc, *Zc;
@@ -218,7 +243,7 @@ void FitsReader3Ch::read(Frame &frame)
         float r, g, b, h, s, l;
         rgb2hsl(contentsRed[i], contentsGreen[i], contentsBlue[i], h, s, l);
         hsl2rgb(h,s, contentsLuminosity[i], r, g, b);
-        (*Xc)(i) = r;
+        (*Xc)(i) = r + contentsH[i];
         (*Yc)(i) = g;
         (*Zc)(i) = b;
     }     

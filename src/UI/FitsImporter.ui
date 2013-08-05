@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>350</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>700</width>
-    <height>350</height>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>700</width>
-    <height>350</height>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -159,10 +159,10 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <widget class="QLabel" name="label_5">
@@ -192,9 +192,16 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>H-alpha Channel (optional)</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
-        <item row="0" column="1">
+        <item>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -257,6 +264,24 @@
             </item>
             <item>
              <widget class="QPushButton" name="pushButtonBlue">
+              <property name="text">
+               <string>Select...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../icons.qrc">
+                <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QLineEdit" name="lineEditH"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonH">
               <property name="text">
                <string>Select...</string>
               </property>

@@ -87,6 +87,17 @@ void FitsImporter::on_pushButtonBlue_clicked()
     checkOKButton();
 }
 
+void FitsImporter::on_pushButtonH_clicked()
+{
+    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";
+    m_hChannel = QFileDialog::getOpenFileName(this,
+                                                      tr("Load one FITS image..."),
+                                                      LuminanceOptions().getDefaultPathHdrIn(),
+                                                      filetypes );
+    m_ui->lineEditH->setText(m_hChannel);
+    checkOKButton();
+}
+
 void FitsImporter::checkOKButton()
 {
     if (m_luminosityChannel != "" && m_redChannel != "" && m_greenChannel != "" && m_blueChannel != "")

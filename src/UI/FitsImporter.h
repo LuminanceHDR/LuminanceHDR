@@ -42,12 +42,14 @@ public:
     QString getRedChannel() { return m_redChannel; };
     QString getGreenChannel() { return m_greenChannel; };
     QString getBlueChannel() { return m_blueChannel; };
+    QString getHChannel() { return m_hChannel; };
 
 protected slots:
     void on_pushButtonLuminosity_clicked();
     void on_pushButtonRed_clicked();
     void on_pushButtonGreen_clicked();
     void on_pushButtonBlue_clicked();
+    void on_pushButtonH_clicked();
 
 protected:
     void checkOKButton();
@@ -56,6 +58,7 @@ protected:
     QString m_redChannel;
     QString m_greenChannel;
     QString m_blueChannel;
+    QString m_hChannel;
 
     QScopedPointer<Ui::FitsImporter> m_ui;
 };

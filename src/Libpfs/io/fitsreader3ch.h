@@ -52,7 +52,8 @@ public:
     FitsReader3Ch(const std::string& luminosityChannel, 
                   const std::string& redChannel, 
                   const std::string& greenChannel, 
-                  const std::string& blueChannel);
+                  const std::string& blueChannel,
+                  const std::string& hChannel);
 
     bool isOpen() const
     { return m_fileRed.get(); }
@@ -66,14 +67,17 @@ private:
     std::string m_redChannel;
     std::string m_greenChannel;
     std::string m_blueChannel;
+    std::string m_hChannel;
     boost::scoped_ptr<CCfits::FITS> m_fileLuminosity;
     boost::scoped_ptr<CCfits::FITS> m_fileRed;
     boost::scoped_ptr<CCfits::FITS> m_fileGreen;
     boost::scoped_ptr<CCfits::FITS> m_fileBlue;
+    boost::scoped_ptr<CCfits::FITS> m_fileH;
     CCfits::PHDU *m_imageLuminosity;
     CCfits::PHDU *m_imageRed;
     CCfits::PHDU *m_imageGreen;
     CCfits::PHDU *m_imageBlue;
+    CCfits::PHDU *m_imageH;
 };
 
 }   // io

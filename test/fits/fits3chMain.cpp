@@ -104,7 +104,8 @@ int main( int argc, char ** argv )
         FitsReader3Ch reader(infilenameLuminosity.toLocal8Bit().constData(),
                              infilenameRed.toLocal8Bit().constData(), 
                              infilenameGreen.toLocal8Bit().constData(), 
-                             infilenameBlue.toLocal8Bit().constData());
+                             infilenameBlue.toLocal8Bit().constData(),
+                             "");
         reader.read(*frame);
 
         cout << " done!" << std::endl;

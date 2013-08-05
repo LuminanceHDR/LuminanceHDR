@@ -2001,13 +2001,15 @@ void MainWindow::on_actionFits_Importer_triggered()
         QString redChannel = importer.getRedChannel();
         QString greenChannel = importer.getGreenChannel();
         QString blueChannel = importer.getBlueChannel();
+        QString hChannel = importer.getHChannel();
 
         pfs::Frame *frame = new pfs::Frame(0, 0);
         try {
             pfs::io::FitsReader3Ch reader(QFile::encodeName(luminosityChannel).constData(),
                                           QFile::encodeName(redChannel).constData(), 
                                           QFile::encodeName(greenChannel).constData(), 
-                                          QFile::encodeName(blueChannel).constData());
+                                          QFile::encodeName(blueChannel).constData(),
+                                          QFile::encodeName(hChannel).constData());
             reader.read(*frame);
             emit load_success(frame, tr("FITS Image"), QStringList(), true); 
         }
