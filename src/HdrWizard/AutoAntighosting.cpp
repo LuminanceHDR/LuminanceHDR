@@ -25,6 +25,9 @@
 
 #include <QDebug>
 
+#include <boost/bind.hpp>
+#include <cmath>
+
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/manip/copy.h>
@@ -540,39 +543,6 @@ void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const i
         U(i) *= sf;
 } 
 
-/*
-QImage* shiftQImage(const QImage *in, int dx, int dy)
-{
-    QImage *out = new QImage(in->size(),QImage::Format_ARGB32);
-    assert(out!=NULL);
-    out->fill(qRgba(0,0,0,0)); //transparent black
-    for(int i = 0; i < in->height(); i++)
-    {
-        if( (i+dy) < 0 ) continue;
-        if( (i+dy) >= in->height()) break;
-        QRgb *inp = (QRgb*)in->scanLine(i);
-        QRgb *outp = (QRgb*)out->scanLine(i+dy);
-        for(int j = 0; j < in->width(); j++)
-        {
-            if( (j+dx) >= in->width()) break;
-            if( (j+dx) >= 0 ) outp[j+dx] = *inp;
-            inp++;
-        }
-    }
-    return out;
-}
-
-void shiftItem(HdrCreationItem& item, int dx, int dy)
-{
-    FramePtr shiftedFrame( pfs::shift(*item.frame(), dx, dy) );
-    item.frame().swap(shiftedFrame);
-    shiftedFrame.reset();       // release memory
-
-    QScopedPointer<QImage> img(shiftQImage(item.qimage(), dx, dy));
-    item.qimage()->swap( *img );
-    img.reset();    // release memory
-}
-*/
 //////////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -758,7 +728,7 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
     float u = 0.3f;
     float a = 0.8f;
     float b = 0.001f;
-    float c = 1.0f;
+    float c = 10.0f;
     float T = 0.3f;
     int iterMax = 1000;
     float gain[3] = {1.0f, 1.0f, 1.0f};
@@ -838,3 +808,44 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
 #endif
 }
 
+void shadesOfGrayAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
+{
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
+    const int width = R_orig->getCols();
+    const int height = R_orig->getRows();
+    
+    float sumR, sumB, sumG;
+    sumR = sumG = sumB = 0.0f;
+    for (int i = 0; i < width*height; i++) {
+        sumR += std::pow( (*R_orig)(i), 6.0f );
+        sumG += std::pow( (*G_orig)(i), 6.0f );
+        sumB += std::pow( (*B_orig)(i), 6.0f );
+    }
+    sumR /= width*height;
+    sumG /= width*height;
+    sumB /= width*height;
+    float eR = std::pow( sumR, 1.0f/6.0f );
+    float eG = std::pow( sumG, 1.0f/6.0f );
+    float eB = std::pow( sumB, 1.0f/6.0f );
+    float norm = std::sqrt(eR*eR + eG*eG + eB*eB);
+    eR /= norm;
+    eG /= norm;
+    eB /= norm;
+    float maximum= std::max(eR, std::max(eG, eB));
+    float gainR = maximum / eR;
+    float gainG = maximum / eG;
+    float gainB = maximum / eB;
+    #pragma omp parallel for
+    for (int i = 0; i < width*height; i++) {
+        (*R_orig)(i) *= gainR;
+        (*G_orig)(i) *= gainG;
+        (*B_orig)(i) *= gainB;
+    }
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    std::cout << "shadesOfGrayAWB = " << stop_watch.get_time() << " msec" << std::endl;
+#endif
+}
