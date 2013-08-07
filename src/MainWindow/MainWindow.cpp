@@ -1997,14 +1997,12 @@ void MainWindow::on_actionFits_Importer_triggered()
     FitsImporter importer;
 
     if (importer.exec()) {
-        QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        QString luminosityChannel = importer.getLuminosityChannel();
-        QString redChannel = importer.getRedChannel();
-        QString greenChannel = importer.getGreenChannel();
-        QString blueChannel = importer.getBlueChannel();
-        QString hChannel = importer.getHChannel();
+//        QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
-        pfs::Frame *frame = new pfs::Frame(0, 0);
+        pfs::Frame *frame = importer.getFrame();
+        emit load_success(frame, tr("FITS Image"), QStringList(), true); 
+        
+/*
         try {
             pfs::io::FitsReader3Ch reader(QFile::encodeName(luminosityChannel).constData(),
                                           QFile::encodeName(redChannel).constData(), 
@@ -2021,7 +2019,8 @@ void MainWindow::on_actionFits_Importer_triggered()
         catch (...) {
             QApplication::restoreOverrideCursor();
             QMessageBox::warning(0,"", tr("Failed to load FITS images"), QMessageBox::Ok, QMessageBox::NoButton);
-        }       
+        }  
         QApplication::restoreOverrideCursor();
+*/     
     }
 }

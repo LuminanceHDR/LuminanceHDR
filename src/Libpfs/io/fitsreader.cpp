@@ -24,7 +24,6 @@
 #include <Libpfs/io/fitsreader.h>
 #include <Libpfs/frame.h>
 
-
 namespace pfs {
 namespace io {
 
@@ -74,10 +73,11 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
 
     for (long i = 0; i < ax1*ax2; i++) 
     {
-        (*Xc)(i) = contents[i];
-        (*Yc)(i) = (*Zc)(i) = (*Xc)(i);
+        (*Yc)(i) = (*Zc)(i) = (*Xc)(i) = contents[i];;
     }     
-        
+
+    qDebug() << "FITS min luminance: " << *std::min_element(Xc->begin(), Xc->end());
+    qDebug() << "FITS max luminance: " << *std::max_element(Xc->begin(), Xc->end());
     frame.swap( tempFrame );
 }
 

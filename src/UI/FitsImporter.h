@@ -25,6 +25,12 @@
 #define FITSIMPORTER_H
 
 #include <QDialog>
+#include <QProcess>
+#include <QFutureWatcher>
+
+#include "PreviewFrame.h"
+#include "Common/LuminanceOptions.h"
+#include "HdrWizard/HdrCreationItem.h"
 
 namespace Ui {
 class FitsImporter;
@@ -38,11 +44,7 @@ public:
     FitsImporter(QWidget *parent = 0);
     ~FitsImporter();
 
-    QString getLuminosityChannel() { return m_luminosityChannel; };
-    QString getRedChannel() { return m_redChannel; };
-    QString getGreenChannel() { return m_greenChannel; };
-    QString getBlueChannel() { return m_blueChannel; };
-    QString getHChannel() { return m_hChannel; };
+    pfs::Frame *getFrame() { return m_frame; }
 
 protected slots:
     void on_pushButtonLuminosity_clicked();
@@ -50,15 +52,48 @@ protected slots:
     void on_pushButtonGreen_clicked();
     void on_pushButtonBlue_clicked();
     void on_pushButtonH_clicked();
+    void on_pushButtonOK_clicked();
+    void on_pushButtonLoad_clicked();
+    void on_pushButtonClockwise_clicked();
+    void on_pushButtonPreview_clicked();
+    void loadFilesDone();
+    void ais_finished(int,QProcess::ExitStatus);
+    void alignedFilesLoaded();
+    void ais_failed_slot(QProcess::ProcessError);
+    void readData();
+    void previewLabelSelected(int index);
+
+signals:
+    void setValue(int);
+    void setRange(int, int);
 
 protected:
-    void checkOKButton();
+    void checkLoadButton();
+    bool framesHaveSameSize();
+    void buildFrame();
+    void align_with_ais();
+    void align_with_mtb();
 
+    pfs::Frame *m_frame;
+    PreviewFrame *m_previewFrame;
+    QLabel* m_previewLabel;
+
+    LuminanceOptions m_luminance_options;
+
+    QStringList m_channels;
     QString m_luminosityChannel;
     QString m_redChannel;
     QString m_greenChannel;
     QString m_blueChannel;
     QString m_hChannel;
+
+    HdrCreationItemContainer m_data;
+    HdrCreationItemContainer m_tmpdata;
+
+    QFutureWatcher<void> m_futureWatcher;
+
+    // align_image_stack
+	QProcess *m_ais;
 
     QScopedPointer<Ui::FitsImporter> m_ui;
 };

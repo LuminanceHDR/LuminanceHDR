@@ -31,6 +31,8 @@
 //! \author Davide Anastasia <davideanastasia@sourceforge.net>
 //! Complete rewrite/refactoring
 
+#include <QDebug>
+
 #include <Libpfs/io/tiffwriter.h>
 #include <Libpfs/io/tiffcommon.h>
 
@@ -279,6 +281,8 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
+    qDebug() << params.minLuminance_;
+    qDebug() << params.maxLuminance_;
     std::vector<float> stripBuffer( width*3 );
     RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
                             MAP_LINEAR); // maybe I have to force to be linear?!
