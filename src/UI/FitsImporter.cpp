@@ -159,8 +159,8 @@ struct ConvertToQRgb {
     float m;
     float M;
     void operator()(float r, float g, float b, QRgb& rgb) const {
-        float logRange = std::log2f(M/m);
 /*
+        float logRange = std::log2f(M/m);
         uint8_t r8u = colorspace::convertSample<uint8_t>(std::log2(r/m)/logRange);
         uint8_t g8u = colorspace::convertSample<uint8_t>(std::log2(g/m)/logRange);
         uint8_t b8u = colorspace::convertSample<uint8_t>(std::log2(b/m)/logRange);
@@ -442,6 +442,8 @@ void FitsImporter::loadFilesDone()
             m_data.clear();
             m_tmpdata.clear();
             m_channels.clear();
+            m_ui->pushButtonLoad->setEnabled(true);
+            QApplication::restoreOverrideCursor();
             return;
         }
     }
@@ -451,6 +453,9 @@ void FitsImporter::loadFilesDone()
         m_data.clear();
         m_tmpdata.clear();
         m_channels.clear();
+        m_ui->pushButtonLoad->setEnabled(true);
+        m_ui->pushButtonPreview->setEnabled(true);
+        QApplication::restoreOverrideCursor();
         return;
     }
     m_ui->pushButtonLoad->setEnabled(true);
@@ -574,6 +579,8 @@ void FitsImporter::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
         m_data.clear();
         m_tmpdata.clear();
         m_channels.clear();
+        QApplication::restoreOverrideCursor();
+        return;
     }
     if (exitcode == 0)
     {
@@ -598,7 +605,9 @@ void FitsImporter::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
     }
     else
     {
+        QApplication::restoreOverrideCursor();
         qDebug() << "align_image_stack exited with exit code " << exitcode;
+        QMessageBox::warning(0,"", tr("align_image_stack exited with exit code %1").arg(exitcode), QMessageBox::Ok, QMessageBox::NoButton);
         m_data.clear();
         m_tmpdata.clear();
         m_channels.clear();
@@ -620,12 +629,15 @@ void FitsImporter::alignedFilesLoaded()
 
     m_data.swap(m_tmpdata);
     QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
+    QApplication::restoreOverrideCursor();
     buildFrame();
 }
 
 void FitsImporter::ais_failed_slot(QProcess::ProcessError error)
 {
     qDebug() << "align_image_stack failed";
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning(0,"", tr("align_image_stack failed with error"), QMessageBox::Ok, QMessageBox::NoButton);
     m_data.clear();
     m_tmpdata.clear();
     m_channels.clear();
