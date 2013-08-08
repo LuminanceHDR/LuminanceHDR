@@ -313,6 +313,11 @@ FitsImporter::FitsImporter(QWidget *parent)
     m_previewLabel = new QLabel(this);
     m_previewLabel->resize(600,400);
     m_previewLabel->setScaledContents(true);
+    QPalette* palette = new QPalette(); 
+    palette->setColor(QPalette::Foreground,Qt::red);
+    m_previewLabel->setPalette(*palette);
+    m_previewLabel->setFrameStyle(QFrame::Box);
+    m_previewLabel->setLineWidth(3);
     m_previewLabel->hide();
     m_previewFrame = new PreviewFrame;
     m_ui->verticalLayoutPreviews->addWidget(m_previewFrame);
