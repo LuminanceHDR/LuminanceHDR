@@ -59,8 +59,7 @@ protected slots:
     void on_pushButtonOK_clicked();
     void on_pushButtonLoad_clicked();
     void on_pushButtonClockwise_clicked();
-    void on_pushButtonPreview_pressed();
-    void on_pushButtonPreview_released();
+    void on_pushButtonPreview_clicked();
     void loadFilesDone();
     void ais_finished(int,QProcess::ExitStatus);
     void alignedFilesLoaded();

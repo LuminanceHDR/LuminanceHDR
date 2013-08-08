@@ -177,10 +177,6 @@ struct ConvertToQRgb {
 };
 
 struct LoadFile {
-
-    FitsImporter *instance;
-    LoadFile(FitsImporter *w): instance(w) {}
-
     void operator()(HdrCreationItem& currentItem)
     {
         QFileInfo qfi(currentItem.filename());
@@ -188,14 +184,10 @@ struct LoadFile {
 
         try
         {
-            instance->m_fitsreader_mutex.lock();
-
             FrameReaderPtr reader = FrameReaderFactory::open(
                         QFile::encodeName(qfi.filePath()).constData() );
             reader->read( *currentItem.frame(), Params() );
 
-            instance->m_fitsreader_mutex.unlock();
-            
             // build QImage
             QImage tempImage(currentItem.frame()->getWidth(),
                              currentItem.frame()->getHeight(),
@@ -431,8 +423,7 @@ void FitsImporter::on_pushButtonLoad_clicked()
     connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()), Qt::DirectConnection);
 
     // Start the computation.
-    LoadFile loadfile(this);
-    m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), loadfile) );
+    m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
 }
 
 void FitsImporter::loadFilesDone()
@@ -610,8 +601,7 @@ void FitsImporter::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
         disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
         connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()), Qt::DirectConnection);
       
-        LoadFile loadfile(this);
-        m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), loadfile) );
+        m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
         
     }
     else
@@ -720,15 +710,14 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     QApplication::restoreOverrideCursor();
 }
 
-void FitsImporter::on_pushButtonPreview_pressed()
+void FitsImporter::on_pushButtonPreview_clicked()
 {
-    m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
-    m_previewLabel->show();
-}
-
-void FitsImporter::on_pushButtonPreview_released()
-{
-    m_previewLabel->hide();
+    if (m_ui->pushButtonPreview->isChecked()) {
+        m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
+        m_previewLabel->show();
+    }
+    else
+        m_previewLabel->hide();
 }
 
 void FitsImporter::previewLabelSelected(int index)
