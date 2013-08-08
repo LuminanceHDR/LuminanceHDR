@@ -1357,7 +1357,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load four FITS images containing &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity, Red, Green and Blue Channels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Carica quattro immagini FITS contenenti  &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;luminosità, canale rosso,  verde e    blu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Carica quattro immagini FITS contenenti  &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;luminosità, canale rosso,  verde e    blu&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosity Channel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1390,6 +1390,78 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Load one FITS image...</source>
         <translation>Carica un&apos;immagine FITS...</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load four or five FITS images containing &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity, Red, Green, Blue Channels &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;and (optional) H-alpha Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Carica quattro o cinque immagini FITS contenenti &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;luminosità e canali rosso, verde e blu &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;più un (opzionale) canale H-alpha&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>FITS Files</source>
+        <translation>Files FITS</translation>
+    </message>
+    <message>
+        <source>H-alpha Channel (optional)</source>
+        <translation>Canale H-alpha (opzionale)</translation>
+    </message>
+    <message>
+        <source>Load Images</source>
+        <translation>Carica le immagini</translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation>Allineamento</translation>
+    </message>
+    <message>
+        <source>&amp;Autoalign images</source>
+        <translation>&amp;Autoallinea immagini</translation>
+    </message>
+    <message>
+        <source>Hugin&apos;s align_image_stack</source>
+        <translation>align_image_stack da Hugin</translation>
+    </message>
+    <message>
+        <source>MTB</source>
+        <translation>MTB</translation>
+    </message>
+    <message>
+        <source>Auto-crop</source>
+        <translation>Auto-ritaglio</translation>
+    </message>
+    <message>
+        <source>Messages</source>
+        <translation>Messaggi</translation>
+    </message>
+    <message>
+        <source>Shows a larger preview of selected image</source>
+        <translation>Mostra una più grande anteprima dell&apos;immagine selezionata </translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Anteprima</translation>
+    </message>
+    <message utf8="true">
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ruota l&apos;immagine selezionata di 180°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Previews</source>
+        <translation>Anteprime</translation>
+    </message>
+    <message>
+        <source>Cannot load FITS image %1</source>
+        <translation>Non posso calricare l&apos;immagine FITS %1</translation>
+    </message>
+    <message>
+        <source>FITS images have different size</source>
+        <translation>Le immagini FITS hanno dimensioni differentii</translation>
+    </message>
+    <message>
+        <source>align_image_stack exited with exit code %1</source>
+        <translation>align_image_stack è uscito con codice %1</translation>
+    </message>
+    <message>
+        <source>align_image_stack failed with error</source>
+        <translation>align_image_stack ha terminato con errori</translation>
     </message>
 </context>
 <context>
@@ -2897,11 +2969,11 @@ Vuoi continuare?</translation>
     </message>
     <message>
         <source>Failed to load FITS images. %1</source>
-        <translation>Impossibile caricare le immagini FITS. %1</translation>
+        <translation type="obsolete">Impossibile caricare le immagini FITS. %1</translation>
     </message>
     <message>
         <source>Failed to load FITS images</source>
-        <translation>Impossibile caricare le immagini FITS</translation>
+        <translation type="obsolete">Impossibile caricare le immagini FITS</translation>
     </message>
     <message>
         <source>Import four FITS files rapresenting luminosity, red, green and blue channels</source>

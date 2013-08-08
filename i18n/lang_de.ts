@@ -1334,10 +1334,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load four FITS images containing &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity, Red, Green and Blue Channels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosity Channel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1367,6 +1363,78 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load one FITS image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load four or five FITS images containing &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity, Red, Green, Blue Channels &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;and (optional) H-alpha Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FITS Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>H-alpha Channel (optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation type="unfinished">Ausrichtung</translation>
+    </message>
+    <message>
+        <source>&amp;Autoalign images</source>
+        <translation type="unfinished">Bilder &amp;automatisch ausrichten</translation>
+    </message>
+    <message>
+        <source>Hugin&apos;s align_image_stack</source>
+        <translation type="unfinished">Hugins align_image_stack</translation>
+    </message>
+    <message>
+        <source>MTB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-crop</source>
+        <translation type="unfinished">Bilder automatisch zuschneiden</translation>
+    </message>
+    <message>
+        <source>Messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shows a larger preview of selected image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Vorschau</translation>
+    </message>
+    <message utf8="true">
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load FITS image %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FITS images have different size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>align_image_stack exited with exit code %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>align_image_stack failed with error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2871,14 +2939,6 @@ Willst du ihn dennoch anwenden?</translation>
     </message>
     <message>
         <source>FITS Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to load FITS images. %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to load FITS images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
