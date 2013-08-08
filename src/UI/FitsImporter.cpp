@@ -149,6 +149,8 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
 struct Normalize {
     float m;
     float M;
+    Normalize(float m, float M) : m(m), M(M) {}
+
     float operator()(float i) {
         return (i - m)/(M-m);
     }
@@ -158,6 +160,7 @@ const float GAMMA_2_2 = 1.0f/2.2f;
 struct ConvertToQRgb {
     float m;
     float M;
+    ConvertToQRgb(float m, float M) : m(m), M(M) {}
     void operator()(float r, float g, float b, QRgb& rgb) const {
 /*
         float logRange = std::log2f(M/m);
@@ -174,6 +177,10 @@ struct ConvertToQRgb {
 };
 
 struct LoadFile {
+
+    FitsImporter *instance;
+    LoadFile(FitsImporter *w): instance(w) {}
+
     void operator()(HdrCreationItem& currentItem)
     {
         QFileInfo qfi(currentItem.filename());
@@ -181,10 +188,14 @@ struct LoadFile {
 
         try
         {
+            instance->m_fitsreader_mutex.lock();
+
             FrameReaderPtr reader = FrameReaderFactory::open(
                         QFile::encodeName(qfi.filePath()).constData() );
             reader->read( *currentItem.frame(), Params() );
 
+            instance->m_fitsreader_mutex.unlock();
+            
             // build QImage
             QImage tempImage(currentItem.frame()->getWidth(),
                              currentItem.frame()->getHeight(),
@@ -204,8 +215,8 @@ struct LoadFile {
                             currentItem.frame()->getHeight(), "X");
             float m = *std::min_element(red->begin(), red->end());
             float M = *std::max_element(red->begin(), red->end());
-            Normalize normalize = {m, M};
-            ConvertToQRgb convert = {m, M};
+            Normalize normalize(m, M);
+            ConvertToQRgb convert(m, M);
             std::transform(red->begin(), red->end(), redNorm.begin(), normalize);
 
             utils::transform(redNorm.begin(), redNorm.end(), redNorm.begin(), redNorm.begin(),
@@ -279,8 +290,8 @@ struct RefreshPreview {
                             currentItem.frame()->getHeight(), "X");
             float m = *std::min_element(red->begin(), red->end());
             float M = *std::max_element(red->begin(), red->end());
-            Normalize normalize = {m, M};
-            ConvertToQRgb convert = {m, M};
+            Normalize normalize(m, M);
+            ConvertToQRgb convert(m, M);
             std::transform(red->begin(), red->end(), redNorm.begin(), normalize);
 
             utils::transform(redNorm.begin(), redNorm.end(), redNorm.begin(), redNorm.begin(),
@@ -343,65 +354,59 @@ FitsImporter::FitsImporter(QWidget *parent)
     connect(m_previewFrame->getLabel(4), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
 }
 
-void FitsImporter::on_pushButtonLuminosity_clicked()
+void FitsImporter::selectInputFile(QLineEdit* textField, QString* channel)
 {
     QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";
-    m_luminosityChannel = QFileDialog::getOpenFileName(this,
-                                                      tr("Load one FITS image..."),
+    *channel = QFileDialog::getOpenFileName(this, tr("Load one FITS image..."),
                                                       m_luminance_options.getDefaultPathHdrIn(),
                                                       filetypes );
-    m_ui->lineEditLuminosity->setText(m_luminosityChannel);
+    textField->setText(*channel);
     checkLoadButton();
+
+    if (!channel->isEmpty())
+    {
+        QFileInfo qfi(*channel);
+        m_luminance_options.setDefaultPathHdrIn( qfi.path() );
+    }
+
+    if (!m_luminosityChannel.isEmpty() && !m_redChannel.isEmpty() && !m_greenChannel.isEmpty() &&
+        !m_blueChannel.isEmpty() && !m_hChannel.isEmpty())
+    {
+        on_pushButtonLoad_clicked();
+    }
+}
+
+void FitsImporter::on_pushButtonLuminosity_clicked()
+{
+    selectInputFile(m_ui->lineEditLuminosity, &m_luminosityChannel);
 }
 
 void FitsImporter::on_pushButtonRed_clicked()
 {
-    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";
-    m_redChannel = QFileDialog::getOpenFileName(this,
-                                                      tr("Load one FITS image..."),
-                                                      m_luminance_options.getDefaultPathHdrIn(),
-                                                      filetypes );
-    m_ui->lineEditRed->setText(m_redChannel);
-    checkLoadButton();
+    selectInputFile(m_ui->lineEditRed, &m_redChannel);
 }
 
 void FitsImporter::on_pushButtonGreen_clicked()
 {
-    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";
-    m_greenChannel = QFileDialog::getOpenFileName(this,
-                                                      tr("Load one FITS image..."),
-                                                      m_luminance_options.getDefaultPathHdrIn(),
-                                                      filetypes );
-    m_ui->lineEditGreen->setText(m_greenChannel);
-    checkLoadButton();
+    selectInputFile(m_ui->lineEditGreen, &m_greenChannel);
 }
 
 void FitsImporter::on_pushButtonBlue_clicked()
 {
-    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";
-    m_blueChannel = QFileDialog::getOpenFileName(this,
-                                                      tr("Load one FITS image..."),
-                                                      m_luminance_options.getDefaultPathHdrIn(),
-                                                      filetypes );
-    m_ui->lineEditBlue->setText(m_blueChannel);
-    checkLoadButton();
+    selectInputFile(m_ui->lineEditBlue, &m_blueChannel);
 }
 
 void FitsImporter::on_pushButtonH_clicked()
 {
-    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";
-    m_hChannel = QFileDialog::getOpenFileName(this,
-                                                      tr("Load one FITS image..."),
-                                                      m_luminance_options.getDefaultPathHdrIn(),
-                                                      filetypes );
-    m_ui->lineEditH->setText(m_hChannel);
-    checkLoadButton();
+    selectInputFile(m_ui->lineEditH, &m_hChannel);
 }
 
 void FitsImporter::checkLoadButton()
 {
-    if (m_luminosityChannel != "" && m_redChannel != "" && m_greenChannel != "" && m_blueChannel != "")
-        m_ui->pushButtonLoad->setEnabled(true);
+    m_ui->pushButtonLoad->setEnabled(!m_luminosityChannel.isEmpty() && 
+                                     !m_redChannel.isEmpty() &&
+                                     !m_greenChannel.isEmpty() &&
+                                     !m_blueChannel.isEmpty());
 }
 
 void FitsImporter::on_pushButtonLoad_clicked()
@@ -415,7 +420,7 @@ void FitsImporter::on_pushButtonLoad_clicked()
                << m_redChannel
                << m_greenChannel
                << m_blueChannel;
-    if (m_hChannel != "")
+    if (!m_hChannel.isEmpty())
         m_channels << m_hChannel;
 
     BOOST_FOREACH(const QString& i, m_channels) {
@@ -426,8 +431,8 @@ void FitsImporter::on_pushButtonLoad_clicked()
     connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()), Qt::DirectConnection);
 
     // Start the computation.
-    m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
-    
+    LoadFile loadfile(this);
+    m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), loadfile) );
 }
 
 void FitsImporter::loadFilesDone()
@@ -605,7 +610,8 @@ void FitsImporter::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
         disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
         connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()), Qt::DirectConnection);
       
-        m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
+        LoadFile loadfile(this);
+        m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), loadfile) );
         
     }
     else
@@ -714,14 +720,15 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     QApplication::restoreOverrideCursor();
 }
 
-void FitsImporter::on_pushButtonPreview_clicked()
+void FitsImporter::on_pushButtonPreview_pressed()
 {
-    if (m_ui->pushButtonPreview->isChecked()) {
-        m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
-        m_previewLabel->show();
-    }
-    else 
-        m_previewLabel->hide();
+    m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
+    m_previewLabel->show();
+}
+
+void FitsImporter::on_pushButtonPreview_released()
+{
+    m_previewLabel->hide();
 }
 
 void FitsImporter::previewLabelSelected(int index)

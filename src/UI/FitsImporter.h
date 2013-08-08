@@ -25,6 +25,8 @@
 #define FITSIMPORTER_H
 
 #include <QDialog>
+#include <QLineEdit>
+#include <QMutex>
 #include <QProcess>
 #include <QFutureWatcher>
 
@@ -45,6 +47,8 @@ public:
     ~FitsImporter();
 
     pfs::Frame *getFrame() { return m_frame; }
+    
+    QMutex          m_fitsreader_mutex;
 
 protected slots:
     void on_pushButtonLuminosity_clicked();
@@ -55,7 +59,8 @@ protected slots:
     void on_pushButtonOK_clicked();
     void on_pushButtonLoad_clicked();
     void on_pushButtonClockwise_clicked();
-    void on_pushButtonPreview_clicked();
+    void on_pushButtonPreview_pressed();
+    void on_pushButtonPreview_released();
     void loadFilesDone();
     void ais_finished(int,QProcess::ExitStatus);
     void alignedFilesLoaded();
@@ -96,6 +101,9 @@ protected:
 	QProcess *m_ais;
 
     QScopedPointer<Ui::FitsImporter> m_ui;
+
+private:
+    void selectInputFile(QLineEdit* textField, QString* channel);
 };
 
 #endif 
