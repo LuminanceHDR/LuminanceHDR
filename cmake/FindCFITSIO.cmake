@@ -1,55 +1,67 @@
-# - Try to find CFITSIO.
-# Once executed, this module will define:
-# Variables defined by this module:
-# CFITSIO_FOUND - system has CFITSIO
-# CFITSIO_INCLUDE_DIR - the CFITSIO include directory (cached)
-# CFITSIO_INCLUDE_DIRS - the CFITSIO include directories
-# (identical to CFITSIO_INCLUDE_DIR)
-# CFITSIO_LIBRARY - the CFITSIO library (cached)
-# CFITSIO_LIBRARIES - the CFITSIO libraries
-# (identical to CFITSIO_LIBRARY)
+# - Try to find CFITSIO
+# Once done this will define
 #
-# This module will use the following enviornmental variable
-# when searching for CFITSIO:
-# CFITSIO_ROOT_DIR - CFITSIO root directory
-#
+#  CFITSIO_FOUND - system has CFITSIO
+#  CFITSIO_INCLUDE_DIR - the CFITSIO include directory
+#  CFITSIO_LIBRARIES - Link these to use CFITSIO
+#  CFITSIO_VERSION_STRING - Human readable version number of cfitsio
+#  CFITSIO_VERSION_MAJOR  - Major version number of cfitsio
+#  CFITSIO_VERSION_MINOR  - Minor version number of cfitsio
 
+# Copyright (c) 2006, Jasem Mutlaq <mutlaqja@ikarustech.com>
+# Based on FindLibfacile by Carsten Niehaus, <cniehaus@gmx.de>
 #
-# Copyright (c) 2012 Brian Kloppenborg
-#
-# This file is part of the C++ OIFITS Library (CCOIFITS).
-#
-# CCOIFITS is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation, either version 3
-# of the License, or (at your option) any later version.
-#
-# CCOIFITS is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public
-# License along with CCOIFITS. If not, see <http://www.gnu.org/licenses/>.
-#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-# if(NOT CFITSIO_FOUND)
+if (CFITSIO_INCLUDE_DIR AND CFITSIO_LIBRARIES)
 
-    find_path(CFITSIO_INCLUDE_DIR fitsio.h
-        HINTS $ENV{CFITSIO_ROOT_DIR}
-        PATH_SUFFIXES include include/cfitsio /opt/local/include)
-    find_library(CFITSIO_LIBRARY cfitsio
-        HINTS $ENV{CFITSIO_ROOT_DIR}
-        PATH_SUFFIXES lib)
-  
-    mark_as_advanced(CFITSIO_INCLUDE_DIR CFITSIO_LIBRARY)
+  # in cache already, be quiet
+  set(CFITSIO_FIND_QUIETLY TRUE)
 
-    include(FindPackageHandleStandardArgs)
-    find_package_handle_standard_args(CFITSIO DEFAULT_MSG
-        CFITSIO_LIBRARY CFITSIO_INCLUDE_DIR)
+else (CFITSIO_INCLUDE_DIR AND CFITSIO_LIBRARIES)
 
-    set(CFITSIO_INCLUDE_DIRS ${CFITSIO_INCLUDE_DIR})
-    set(CFITSIO_LIBRARIES ${CFITSIO_LIBRARY})
+  # JM: Packages from different distributions have different suffixes
+  find_path(CFITSIO_INCLUDE_DIR fitsio.h
+    PATH_SUFFIXES libcfitsio3 libcfitsio0 cfitsio
+    PATHS
+    $ENV{CFITSIO}
+    ${_obIncDir}
+    ${GNUWIN32_DIR}/include
+  )
 
-#endif(NOT CFITSIO_FOUND)
+  find_library(CFITSIO_LIBRARIES NAMES cfitsio
+    PATHS
+    $ENV{CFITSIO}
+    ${_obLinkDir}
+    ${GNUWIN32_DIR}/lib
+  )
 
+  if(CFITSIO_INCLUDE_DIR AND CFITSIO_LIBRARIES)
+    set(CFITSIO_FOUND TRUE)
+  else (CFITSIO_INCLUDE_DIR AND CFITSIO_LIBRARIES)
+    set(CFITSIO_FOUND FALSE)
+  endif(CFITSIO_INCLUDE_DIR AND CFITSIO_LIBRARIES)
+
+
+  if (CFITSIO_FOUND)
+
+    # Find the version of the cfitsio header
+    FILE(READ "${CFITSIO_INCLUDE_DIR}/fitsio.h" FITSIO_H)
+    STRING(REGEX REPLACE ".*#define CFITSIO_VERSION[^0-9]*([0-9]+)\\.([0-9]+).*" "\\1.\\2" CFITSIO_VERSION_STRING "${FITSIO_H}")
+    STRING(REGEX REPLACE "^([0-9]+)[.]([0-9]+)" "\\1" CFITSIO_VERSION_MAJOR ${CFITSIO_VERSION_STRING})
+    STRING(REGEX REPLACE "^([0-9]+)[.]([0-9]+)" "\\2" CFITSIO_VERSION_MINOR ${CFITSIO_VERSION_STRING})
+    message(STATUS "found version string ${CFITSIO_VERSION_STRING}")
+
+    if (NOT CFITSIO_FIND_QUIETLY)
+      message(STATUS "Found CFITSIO ${CFITSIO_VERSION_MAJOR}.${CFITSIO_VERSION_MINOR}: ${CFITSIO_LIBRARIES}")
+    endif (NOT CFITSIO_FIND_QUIETLY)
+  else (CFITSIO_FOUND)
+    if (CFITSIO_FIND_REQUIRED)
+      message(STATUS "CFITSIO not found.")
+    endif (CFITSIO_FIND_REQUIRED)
+  endif (CFITSIO_FOUND)
+
+  mark_as_advanced(CFITSIO_INCLUDE_DIR CFITSIO_LIBRARIES)
+
+endif (CFITSIO_INCLUDE_DIR AND CFITSIO_LIBRARIES)
