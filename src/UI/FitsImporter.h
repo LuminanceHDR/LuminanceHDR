@@ -26,7 +26,6 @@
 
 #include <QDialog>
 #include <QLineEdit>
-#include <QMutex>
 #include <QProcess>
 #include <QFutureWatcher>
 
@@ -48,8 +47,6 @@ public:
 
     pfs::Frame *getFrame() { return m_frame; }
     
-    QMutex          m_fitsreader_mutex;
-
 protected slots:
     void on_pushButtonLuminosity_clicked();
     void on_pushButtonRed_clicked();
