@@ -28,6 +28,7 @@
 #include <boost/bind.hpp>
 #include <cmath>
 
+#include "Common/CommonFunctions.h"
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/manip/copy.h>
@@ -37,95 +38,6 @@
 
 #include "AutoAntighosting.h"
 // --- LEGACY CODE ---
-
-inline
-void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
-{
-    float v, m, vm, r2, g2, b2;
-    h = 0.0f;
-    s = 0.0f;
-    l = 0.0f;
-
-    pfs::utils::minmax(r, g, b, m, v);
-
-    l = (m + v) / 2.0f;
-    if (l <= 0.0f)
-        return;
-    vm = v - m;
-    s = vm;
-    //if (s >= 0.0f)
-    if (s > 0.0f)
-        s /= (l <= 0.5f) ? (v + m) : (2.0f - v - m);
-    else return;
-    r2 = (v - r) / vm;
-    g2 = (v - g) / vm;
-    b2 = (v - b) / vm;
-    if (r == v)
-        h = (g == m ? 5.0f + b2 : 1.0f - g2);
-    else if (g == v)
-        h = (b == m ? 1.0f + r2 : 3.0f - b2);
-    else
-        h = (r == m ? 3.0f + g2 : 5.0f - r2);
-    h /= 6.0f;
-}
-
-inline
-void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
-{
-    float v;
-    r = l;
-    g = l;
-    b = l;
-    v = (l <= 0.5f) ? (l * (1.0f + sl)) : (l + sl - l * sl);
-    if (v > 0.0f)
-    {
-        float m;
-        float sv;
-        int sextant;
-        float fract, vsf, mid1, mid2;
-        m = l + l - v;
-        sv = (v - m ) / v;
-        h *= 6.0f;
-        sextant = (int)h;
-        fract = h - sextant;
-        vsf = v * sv * fract;
-        mid1 = m + vsf;
-        mid2 = v - vsf;
-        switch (sextant)
-        {
-        case 0:
-            r = v;
-            g = mid1;
-            b = m;
-            break;
-        case 1:
-            r = mid2;
-            g = v;
-            b = m;
-            break;
-        case 2:
-            r = m;
-            g = v;
-            b = mid1;
-            break;
-        case 3:
-            r = m;
-            g = mid2;
-            b = v;
-            break;
-        case 4:
-            r = mid1;
-            g = m;
-            b = v;
-            break;
-        case 5:
-            r = v;
-            g = m;
-            b = mid2;
-            break;
-        }
-    }
-}
 
 float max(const Array2Df *u)
 {

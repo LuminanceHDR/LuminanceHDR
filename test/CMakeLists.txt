@@ -170,7 +170,7 @@ ENDIF()
 ADD_EXECUTABLE(TestFusionOperator TestFusionOperator.cpp)
 TARGET_LINK_LIBRARIES(TestFusionOperator
         ${Boost_PROGRAM_OPTIONS_LIBRARY}
-        ${LUMINANCE_MODULES_CLI} ${LUMINANCE_MODULES_GUI} ${LIBS})
+    -Xlinker --start-group ${LUMINANCE_MODULES_CLI} ${LUMINANCE_MODULES_GUI} -Xlinker --end-group ${LIBS})
 
 ADD_EXECUTABLE(TestPoissonSolver TestPoissonSolver.cpp)
 TARGET_LINK_LIBRARIES(TestPoissonSolver hdrwizard pfs pfstmo 

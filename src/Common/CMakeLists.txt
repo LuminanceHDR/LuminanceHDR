@@ -12,6 +12,7 @@ SET(FILES_UI
 SET(FILES_H
     ${CMAKE_CURRENT_SOURCE_DIR}/SavedParametersDialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ProgressHelper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/CommonFunctions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/LuminanceOptions.h)
 SET(FILES_HXX
     #${CMAKE_CURRENT_SOURCE_DIR}/archs.h
@@ -25,6 +26,7 @@ SET(FILES_CPP
     ${CMAKE_CURRENT_SOURCE_DIR}/global.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LuminanceOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ProgressHelper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/CommonFunctions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TranslatorManager.cpp)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})

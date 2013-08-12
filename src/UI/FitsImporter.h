@@ -31,6 +31,7 @@
 #include <QFutureWatcher>
 
 #include "PreviewFrame.h"
+#include "Alignment/Align.h"
 #include "Common/LuminanceOptions.h"
 #include "HdrWizard/HdrCreationItem.h"
 
@@ -61,10 +62,9 @@ protected slots:
     void on_pushButtonClockwise_clicked();
     void on_pushButtonPreview_clicked();
     void loadFilesDone();
-    void ais_finished(int,QProcess::ExitStatus);
-    void alignedFilesLoaded();
+    void ais_finished(int);
     void ais_failed_slot(QProcess::ProcessError);
-    void readData();
+    void readData(QByteArray);
     void previewLabelSelected(int index);
 
 signals:
@@ -96,8 +96,8 @@ protected:
 
     QFutureWatcher<void> m_futureWatcher;
 
-    // align_image_stack
-	QProcess *m_ais;
+    // alignment
+	Align *m_align;
 
     QScopedPointer<Ui::FitsImporter> m_ui;
 

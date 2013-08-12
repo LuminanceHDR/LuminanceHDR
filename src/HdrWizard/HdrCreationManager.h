@@ -39,6 +39,7 @@
 #include <Libpfs/frame.h>
 #include <HdrCreation/fusionoperator.h>
 
+#include "Alignment/Align.h"
 #include "Common/LuminanceOptions.h"
 #include "Common/ProgressHelper.h"
 #include "arch/math.h"
@@ -164,8 +165,8 @@ private:
     QImage* m_agMask;
     LuminanceOptions m_luminance_options;
 
-    // align_image_stack
-	QProcess *ais;
+    // alignment
+	Align* m_align;
 
     bool m_ais_crop_flag;
 	bool fromCommandLine;
@@ -173,10 +174,7 @@ private:
     bool m_patches[agGridSize][agGridSize];
 
 private slots:
-	void ais_finished(int,QProcess::ExitStatus);
 	void ais_failed_slot(QProcess::ProcessError);
-	void readData();
     void loadFilesDone();
-    void alignedFilesLoaded();
 };
 #endif
