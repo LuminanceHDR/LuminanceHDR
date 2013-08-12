@@ -29,6 +29,8 @@ SimplePreviewLabel::SimplePreviewLabel(int index, QWidget *parent):
     m_selected(false)
 {
     setScaledContents(true);
+    setMinimumSize(130, 100);
+    setMaximumSize(130, 100);
 }
 
 SimplePreviewLabel::~SimplePreviewLabel()
