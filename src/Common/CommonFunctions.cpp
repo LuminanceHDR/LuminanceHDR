@@ -83,6 +83,9 @@ void ConvertToQRgb::operator()(float r, float g, float b, QRgb& rgb) const {
 
 void LoadFile::operator()(HdrCreationItem& currentItem)
 {
+    if (currentItem.filename().isEmpty()) {
+        return;
+    }
     QFileInfo qfi(currentItem.filename());
     qDebug() << QString("Loading data for %1").arg(currentItem.filename());
 

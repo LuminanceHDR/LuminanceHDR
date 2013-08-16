@@ -142,9 +142,11 @@ void FitsImporter::on_pushButtonH_clicked()
 
 void FitsImporter::checkLoadButton()
 {
-    m_ui->pushButtonLoad->setEnabled(!m_redChannel.isEmpty() &&
-                                     !m_greenChannel.isEmpty() &&
-                                     !m_blueChannel.isEmpty());
+    m_ui->pushButtonLoad->setEnabled(!m_redChannel.isEmpty() ||
+                                     !m_greenChannel.isEmpty() ||
+                                     !m_blueChannel.isEmpty() ||
+                                     !m_luminosityChannel.isEmpty() ||
+                                     !m_hChannel.isEmpty());
 }
 
 void FitsImporter::on_pushButtonLoad_clicked()
@@ -156,11 +158,9 @@ void FitsImporter::on_pushButtonLoad_clicked()
     m_channels.clear();
     m_channels << m_redChannel
                << m_greenChannel
-               << m_blueChannel;
-    if (!m_luminosityChannel.isEmpty())
-        m_channels << m_luminosityChannel;
-    if (!m_hChannel.isEmpty())
-        m_channels << m_hChannel;
+               << m_blueChannel
+               << m_luminosityChannel
+               << m_hChannel;
 
     BOOST_FOREACH(const QString& i, m_channels) {
         m_tmpdata.push_back( HdrCreationItem(i) );
@@ -183,7 +183,12 @@ void FitsImporter::loadFilesDone()
             qDebug() << QString("Insert data for %1").arg(i.filename());
             m_data.push_back(i);
             m_previewFrame->getLabel(idx)->setPixmap(QPixmap::fromImage(*(i.qimage())));
-            m_previewFrame->getLabel(idx++)->setEnabled(true);
+            m_previewFrame->getLabel(idx)->setEnabled(true);
+        }
+        else if (i.filename().isEmpty()) {
+            m_data.push_back(i);
+            idx++;
+            continue;
         }
         else {
             QMessageBox::warning(0,"", tr("Cannot load FITS image %1").arg(i.filename()), QMessageBox::Ok, QMessageBox::NoButton);
@@ -194,8 +199,15 @@ void FitsImporter::loadFilesDone()
             QApplication::restoreOverrideCursor();
             return;
         }
+        idx++;
     }
-    m_previewFrame->labelSelected(0);
+
+    size_t i;
+    for (i = 0; i < m_tmpdata.size(); i++)
+        if (!m_tmpdata[i].filename().isEmpty())
+            break;
+    m_previewFrame->labelSelected(i);
+
     if (!framesHaveSameSize()) {
         QMessageBox::warning(0,"", tr("FITS images have different size"), QMessageBox::Ok, QMessageBox::NoButton);
         m_data.clear();
@@ -227,10 +239,18 @@ void FitsImporter::on_pushButtonOK_clicked()
         buildFrame();
 }
 
+bool isValid(HdrCreationItem& item)
+{
+    return !item.filename().isEmpty();
+}
+
 void FitsImporter::buildFrame()
 {
-    const int width = m_data[0].frame()->getWidth();
-    const int height = m_data[0].frame()->getHeight();
+    HdrCreationItemContainer::iterator it;
+    it = std::find_if(m_data.begin(), m_data.end(), isValid);
+    const size_t width = it->frame()->getWidth();
+    const size_t height = it->frame()->getHeight();
+    qDebug() << width << "," << height;
 
     float redRed = m_ui->dsbRedRed->value();
     float redGreen = m_ui->dsbRedGreen->value();
@@ -242,68 +262,45 @@ void FitsImporter::buildFrame()
     float blueGreen = m_ui->dsbBlueGreen->value();
     float blueBlue = m_ui->dsbBlueBlue->value();
 
-    std::vector<float> contentsL(width*height);
-    std::vector<float> contentsH(width*height);
+    std::vector<std::vector<float> > contents;
 
-    if (m_luminosityChannel != "" && m_hChannel != "") {
-        Channel *Lc = m_data[3].frame()->getChannel("X");
-        Channel *Hc = m_data[4].frame()->getChannel("X");
-        std::copy(Lc->begin(), Lc->end(), contentsL.begin()); 
-        std::copy(Hc->begin(), Hc->end(), contentsH.begin()); 
-    }
-    else if (m_luminosityChannel != "" && m_hChannel == "") {
-        Channel *Lc = m_data[3].frame()->getChannel("X");
-        std::copy(Lc->begin(), Lc->end(), contentsL.begin()); 
-        std::fill(contentsH.begin(), contentsH.end(), 0.0f);
-    }
-    else if (m_luminosityChannel == "" && m_hChannel != "") { 
-        std::fill(contentsL.begin(), contentsL.end(), 0.0f);
-        Channel *Hc = m_data[3].frame()->getChannel("X");
-        std::copy(Hc->begin(), Hc->end(), contentsH.begin()); 
-    }
-    else {
-        std::fill(contentsL.begin(), contentsL.end(), 0.0f);
-        std::fill(contentsH.begin(), contentsH.end(), 0.0f);
+    for (size_t i = 0; i < m_data.size(); i++) {
+         contents.push_back(std::vector<float>(width*height));
     }
 
     m_frame = new Frame(width, height);
     Channel *Xc, *Yc, *Zc;
     m_frame->createXYZChannels(Xc, Yc, Zc);
 
-    std::vector<FramePtr> frames;
-    std::vector<Channel *> channels;
-    
-    for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
-          itEnd = m_data.end(); it != itEnd; ++it) {
-        frames.push_back(it->frame());
+    for (size_t i = 0; i < m_data.size(); i++) {
+        if (m_data[i].filename().isEmpty())
+            std::fill(contents[i].begin(), contents[i].end(), 0.0f);
+        else {
+            Channel *C = m_data[i].frame()->getChannel("X");
+            std::copy(C->begin(), C->end(), contents[i].begin()); 
+        }
     }
-    
-    for ( std::vector<FramePtr>::iterator it = frames.begin(), 
-          itEnd = frames.end(); it != itEnd; ++it) {
-        channels.push_back((*it)->getChannel("X"));
-    }
-   
     if (m_luminosityChannel != "") {
-        for (long i = 0; i < width*height; i++) 
+        for (size_t i = 0; i < width*height; i++) 
         {
-            float r = redRed * (*channels[0])(i) + redGreen * (*channels[1])(i) + redBlue * (*channels[2])(i);
-            float g = greenRed * (*channels[0])(i) + greenGreen * (*channels[1])(i) + greenBlue * (*channels[2])(i);
-            float b = blueRed * (*channels[0])(i) + blueGreen * (*channels[1])(i) + blueBlue * (*channels[2])(i);
+            float r = redRed * contents[0][i] + redGreen * contents[1][i] + redBlue * contents[2][i];
+            float g = greenRed * contents[0][i] + greenGreen * contents[1][i] + greenBlue * contents[2][i];
+            float b = blueRed * contents[0][i] + blueGreen * contents[1][i] + blueBlue * contents[2][i];
             float h, s, l;
             rgb2hsl(r, g, b, h, s, l);
-            hsl2rgb(h, s, contentsL[i], r, g, b);
-            (*Xc)(i) = r + contentsH[i];
+            hsl2rgb(h, s, contents[3][i], r, g, b);
+            (*Xc)(i) = r + contents[4][i];
             (*Yc)(i) = g;
             (*Zc)(i) = b;
         } 
     }
     else {
-        for (long i = 0; i < width*height; i++) 
+        for (size_t i = 0; i < width*height; i++) 
         {
-            float r = redRed * (*channels[0])(i) + redGreen * (*channels[1])(i) + redBlue * (*channels[2])(i);
-            float g = greenRed * (*channels[0])(i) + greenGreen * (*channels[1])(i) + greenBlue * (*channels[2])(i);
-            float b = blueRed * (*channels[0])(i) + blueGreen * (*channels[1])(i) + blueBlue * (*channels[2])(i);
-            (*Xc)(i) = r + contentsH[i];
+            float r = redRed * contents[0][i] + redGreen * contents[1][i] + redBlue * contents[2][i];
+            float g = greenRed * contents[0][i] + greenGreen * contents[1][i] + greenBlue * contents[2][i];
+            float b = blueRed * contents[0][i] + blueGreen * contents[1][i] + blueBlue * contents[2][i];
+            (*Xc)(i) = r + contents[4][i];
             (*Yc)(i) = g;
             (*Zc)(i) = b;
         } 
@@ -354,10 +351,14 @@ void FitsImporter::ais_failed_slot(QProcess::ProcessError error)
 
 bool FitsImporter::framesHaveSameSize()
 {
-    size_t width = m_data[0].frame()->getWidth();
-    size_t height = m_data[0].frame()->getHeight();
+    HdrCreationItemContainer::iterator it;
+    it = std::find_if(m_data.begin(), m_data.end(), isValid);
+    const size_t width = it->frame()->getWidth();
+    const size_t height = it->frame()->getHeight();
     for ( HdrCreationItemContainer::const_iterator it = m_data.begin() + 1, 
           itEnd = m_data.end(); it != itEnd; ++it) {
+        if (it->filename().isEmpty())
+            continue;
         if (it->frame()->getWidth() != width || it->frame()->getHeight() != height)
             return false; 
     }
