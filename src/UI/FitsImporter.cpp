@@ -395,8 +395,7 @@ void FitsImporter::on_pushButtonH_clicked()
 
 void FitsImporter::checkLoadButton()
 {
-    m_ui->pushButtonLoad->setEnabled(!m_luminosityChannel.isEmpty() && 
-                                     !m_redChannel.isEmpty() &&
+    m_ui->pushButtonLoad->setEnabled(!m_redChannel.isEmpty() &&
                                      !m_greenChannel.isEmpty() &&
                                      !m_blueChannel.isEmpty());
 }
@@ -408,10 +407,11 @@ void FitsImporter::on_pushButtonLoad_clicked()
     m_data.clear();
     m_tmpdata.clear();
     m_channels.clear();
-    m_channels << m_luminosityChannel 
-               << m_redChannel
+    m_channels << m_redChannel
                << m_greenChannel
                << m_blueChannel;
+    if (!m_luminosityChannel.isEmpty())
+        m_channels << m_luminosityChannel;
     if (!m_hChannel.isEmpty())
         m_channels << m_hChannel;
 
@@ -485,13 +485,38 @@ void FitsImporter::buildFrame()
     const int width = m_data[0].frame()->getWidth();
     const int height = m_data[0].frame()->getHeight();
 
+    float redRed = m_ui->dsbRedRed->value();
+    float redGreen = m_ui->dsbRedGreen->value();
+    float redBlue = m_ui->dsbRedBlue->value();
+    float greenRed = m_ui->dsbGreenRed->value();
+    float greenGreen = m_ui->dsbGreenGreen->value();
+    float greenBlue = m_ui->dsbGreenBlue->value();
+    float blueRed = m_ui->dsbBlueRed->value();
+    float blueGreen = m_ui->dsbBlueGreen->value();
+    float blueBlue = m_ui->dsbBlueBlue->value();
+
+    std::vector<float> contentsL(width*height);
     std::vector<float> contentsH(width*height);
-    if (m_hChannel == "") { 
+
+    if (m_luminosityChannel != "" && m_hChannel != "") {
+        Channel *Lc = m_data[3].frame()->getChannel("X");
+        Channel *Hc = m_data[4].frame()->getChannel("X");
+        std::copy(Lc->begin(), Lc->end(), contentsL.begin()); 
+        std::copy(Hc->begin(), Hc->end(), contentsH.begin()); 
+    }
+    else if (m_luminosityChannel != "" && m_hChannel == "") {
+        Channel *Lc = m_data[3].frame()->getChannel("X");
+        std::copy(Lc->begin(), Lc->end(), contentsL.begin()); 
         std::fill(contentsH.begin(), contentsH.end(), 0.0f);
     }
-    else {
-        Channel *Hc = m_data[4].frame()->getChannel("X");
+    else if (m_luminosityChannel == "" && m_hChannel != "") { 
+        std::fill(contentsL.begin(), contentsL.end(), 0.0f);
+        Channel *Hc = m_data[3].frame()->getChannel("X");
         std::copy(Hc->begin(), Hc->end(), contentsH.begin()); 
+    }
+    else {
+        std::fill(contentsL.begin(), contentsL.end(), 0.0f);
+        std::fill(contentsH.begin(), contentsH.end(), 0.0f);
     }
 
     m_frame = new Frame(width, height);
@@ -510,16 +535,32 @@ void FitsImporter::buildFrame()
           itEnd = frames.end(); it != itEnd; ++it) {
         channels.push_back((*it)->getChannel("X"));
     }
-    
-    for (long i = 0; i < width*height; i++) 
-    {
-        float r, g, b, h, s, l;
-        rgb2hsl((*channels[1])(i), (*channels[2])(i), (*channels[3])(i), h, s, l);
-        hsl2rgb(h,s, (*channels[0])(i), r, g, b);
-        (*Xc)(i) = r + contentsH[i];
-        (*Yc)(i) = g;
-        (*Zc)(i) = b;
-    }     
+   
+    if (m_luminosityChannel != "") {
+        for (long i = 0; i < width*height; i++) 
+        {
+            float r = redRed * (*channels[0])(i) + redGreen * (*channels[1])(i) + redBlue * (*channels[2])(i);
+            float g = greenRed * (*channels[0])(i) + greenGreen * (*channels[1])(i) + greenBlue * (*channels[2])(i);
+            float b = blueRed * (*channels[0])(i) + blueGreen * (*channels[1])(i) + blueBlue * (*channels[2])(i);
+            float h, s, l;
+            rgb2hsl(r, g, b, h, s, l);
+            hsl2rgb(h, s, contentsL[i], r, g, b);
+            (*Xc)(i) = r + contentsH[i];
+            (*Yc)(i) = g;
+            (*Zc)(i) = b;
+        } 
+    }
+    else {
+        for (long i = 0; i < width*height; i++) 
+        {
+            float r = redRed * (*channels[0])(i) + redGreen * (*channels[1])(i) + redBlue * (*channels[2])(i);
+            float g = greenRed * (*channels[0])(i) + greenGreen * (*channels[1])(i) + greenBlue * (*channels[2])(i);
+            float b = blueRed * (*channels[0])(i) + blueGreen * (*channels[1])(i) + blueBlue * (*channels[2])(i);
+            (*Xc)(i) = r + contentsH[i];
+            (*Yc)(i) = g;
+            (*Zc)(i) = b;
+        } 
+    }    
     accept();
 }
 
@@ -725,5 +766,140 @@ void FitsImporter::previewLabelSelected(int index)
     if (m_ui->pushButtonPreview->isChecked()) {
         m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
     }
+}
+
+void FitsImporter::on_hsRedRed_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbRedRed->blockSignals(true);
+    m_ui->dsbRedRed->setValue( value );
+    m_ui->dsbRedRed->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbRedRed_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsRedRed->blockSignals(true);
+    m_ui->hsRedRed->setValue( (int)(newValue*10000) );
+    m_ui->hsRedRed->blockSignals(oldState);
+}
+
+void FitsImporter::on_hsRedGreen_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbRedGreen->blockSignals(true);
+    m_ui->dsbRedGreen->setValue( value );
+    m_ui->dsbRedGreen->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbRedGreen_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsRedGreen->blockSignals(true);
+    m_ui->hsRedGreen->setValue( (int)(newValue*10000) );
+    m_ui->hsRedGreen->blockSignals(oldState);
+}
+
+void FitsImporter::on_hsRedBlue_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbRedBlue->blockSignals(true);
+    m_ui->dsbRedBlue->setValue( value );
+    m_ui->dsbRedBlue->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbRedBlue_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsRedBlue->blockSignals(true);
+    m_ui->hsRedBlue->setValue( (int)(newValue*10000) );
+    m_ui->hsRedBlue->blockSignals(oldState);
+}
+
+void FitsImporter::on_hsGreenRed_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbGreenRed->blockSignals(true);
+    m_ui->dsbGreenRed->setValue( value );
+    m_ui->dsbGreenRed->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbGreenRed_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsGreenRed->blockSignals(true);
+    m_ui->hsGreenRed->setValue( (int)(newValue*10000) );
+    m_ui->hsGreenRed->blockSignals(oldState);
+}
+
+void FitsImporter::on_hsGreenGreen_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbGreenGreen->blockSignals(true);
+    m_ui->dsbGreenGreen->setValue( value );
+    m_ui->dsbGreenGreen->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbGreenGreen_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsGreenGreen->blockSignals(true);
+    m_ui->hsGreenGreen->setValue( (int)(newValue*10000) );
+    m_ui->hsGreenGreen->blockSignals(oldState);
+}
+
+void FitsImporter::on_hsGreenBlue_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbGreenBlue->blockSignals(true);
+    m_ui->dsbGreenBlue->setValue( value );
+    m_ui->dsbGreenBlue->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbGreenBlue_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsGreenBlue->blockSignals(true);
+    m_ui->hsGreenBlue->setValue( (int)(newValue*10000) );
+    m_ui->hsGreenBlue->blockSignals(oldState);
+}
+
+void FitsImporter::on_hsBlueRed_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbBlueRed->blockSignals(true);
+    m_ui->dsbBlueRed->setValue( value );
+    m_ui->dsbBlueRed->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbBlueRed_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsBlueRed->blockSignals(true);
+    m_ui->hsBlueRed->setValue( (int)(newValue*10000) );
+    m_ui->hsBlueRed->blockSignals(oldState);
+}
+
+void FitsImporter::on_hsBlueGreen_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbBlueGreen->blockSignals(true);
+    m_ui->dsbBlueGreen->setValue( value );
+    m_ui->dsbBlueGreen->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbBlueGreen_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsBlueGreen->blockSignals(true);
+    m_ui->hsBlueGreen->setValue( (int)(newValue*10000) );
+    m_ui->hsBlueGreen->blockSignals(oldState);
+}
+
+void FitsImporter::on_hsBlueBlue_valueChanged(int newValue)
+{
+    float value = ((float)newValue)/10000.f;
+    bool oldState = m_ui->dsbBlueBlue->blockSignals(true);
+    m_ui->dsbBlueBlue->setValue( value );
+    m_ui->dsbBlueBlue->blockSignals(oldState);
+}
+
+void FitsImporter::on_dsbBlueBlue_valueChanged(double newValue)
+{
+    bool oldState = m_ui->hsBlueBlue->blockSignals(true);
+    m_ui->hsBlueBlue->setValue( (int)(newValue*10000) );
+    m_ui->hsBlueBlue->blockSignals(oldState);
 }
 

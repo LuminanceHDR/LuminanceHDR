@@ -42,6 +42,7 @@ void FitsReader::open()
 
     m_image = &m_file->pHDU();
     m_image->readAllKeys();
+    std::cout << *m_image << std::endl;
 }
 
 void FitsReader::close()

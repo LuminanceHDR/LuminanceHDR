@@ -29,7 +29,7 @@ endif(NOT Exiv2_FIND_VERSION)
 
 # the minimum version of exiv2 we require
 if(NOT Exiv2_FIND_VERSION)
-  set(Exiv2_FIND_VERSION "0.12")
+  set(Exiv2_FIND_VERSION "0.21")
 endif(NOT Exiv2_FIND_VERSION)
 
 
@@ -73,8 +73,10 @@ endif(EXIV2_INCLUDE_DIR  AND NOT  EXIV2_VERSION)
 set(EXIV2_LIBRARIES "${EXIV2_LIBRARY}")
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Exiv2  REQUIRED_VARS  EXIV2_LIBRARY EXIV2_INCLUDE_DIR
-                                         VERSION_VAR  EXIV2_VERSION)
+#find_package_handle_standard_args(Exiv2  REQUIRED_VARS  EXIV2_LIBRARY EXIV2_INCLUDE_DIR
+#                                         VERSION_VAR  EXIV2_VERSION)
 
+find_package_handle_standard_args(Exiv2  REQUIRED_VARS  EXIV2_LIBRARY EXIV2_INCLUDE_DIR
+                                         EXIV2_VERSION)
 mark_as_advanced(EXIV2_INCLUDE_DIR EXIV2_LIBRARY)
 
