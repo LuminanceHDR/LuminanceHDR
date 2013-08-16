@@ -44,6 +44,7 @@
 #include <boost/numeric/conversion/bounds.hpp>
 #include <boost/limits.hpp>
 
+#include "Common/CommonFunctions.h"
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/io/tiffwriter.h>
@@ -114,137 +115,6 @@ void shiftItem(HdrCreationItem& item, int dx, int dy)
     img.reset();    // release memory
 }
 }
-struct ConvertToQRgb {
-    void operator()(float r, float g, float b, QRgb& rgb) const {
-        uint8_t r8u = colorspace::convertSample<uint8_t>(r);
-        uint8_t g8u = colorspace::convertSample<uint8_t>(g);
-        uint8_t b8u = colorspace::convertSample<uint8_t>(b);
-
-        rgb = qRgb(r8u, g8u, b8u);
-    }
-};
-
-struct LoadFile {
-    void operator()(HdrCreationItem& currentItem)
-    {
-        QFileInfo qfi(currentItem.filename());
-        qDebug() << QString("Loading data for %1").arg(currentItem.filename());
-
-        try
-        {
-            FrameReaderPtr reader = FrameReaderFactory::open(
-                        QFile::encodeName(qfi.filePath()).constData() );
-            reader->read( *currentItem.frame(), Params() );
-
-            // read Average Luminance
-            currentItem.setAverageLuminance(
-                        ExifOperations::getAverageLuminance(
-                            QFile::encodeName(qfi.filePath()).constData() )
-                        );
-
-            // read Exposure Time
-            currentItem.setExposureTime(
-                        ExifOperations::getExposureTime(
-                            QFile::encodeName(qfi.filePath()).constData() )
-                        );
-
-            qDebug() << QString("HdrCreationItem: Average Luminance for %1 is %2")
-                        .arg(currentItem.filename())
-                        .arg(currentItem.getAverageLuminance());
-
-            // build QImage
-            QImage tempImage(currentItem.frame()->getWidth(),
-                             currentItem.frame()->getHeight(),
-                             QImage::Format_ARGB32_Premultiplied);
-
-            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
-
-            Channel* red;
-            Channel* green;
-            Channel* blue;
-            currentItem.frame()->getXYZChannels(red, green, blue);
-
-            if (red == NULL || green == NULL || blue == NULL)
-                throw std::runtime_error("Null frame");
-
-            utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
-                             qimageData, ConvertToQRgb());
-
-            currentItem.qimage()->swap( tempImage );
-        }
-        catch (std::runtime_error& err)
-        {
-            qDebug() << QString("Cannot load %1: %2")
-                        .arg(currentItem.filename())
-                        .arg(QString::fromStdString(err.what()));
-        }
-    }
-};
-
-struct RefreshPreview {
-    void operator()(HdrCreationItem& currentItem)
-    {
-        qDebug() << QString("Refresh preview for %1").arg(currentItem.filename());
-
-        try
-        {
-            // build QImage
-            QImage tempImage(currentItem.frame()->getWidth(),
-                             currentItem.frame()->getHeight(),
-                             QImage::Format_ARGB32_Premultiplied);
-
-            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
-
-            Channel* red;
-            Channel* green;
-            Channel* blue;
-            currentItem.frame()->getXYZChannels(red, green, blue);
-
-            utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
-                             qimageData, ConvertToQRgb());
-
-            currentItem.qimage()->swap( tempImage );
-        }
-        catch (std::runtime_error& err)
-        {
-            qDebug() << QString("Cannot load %1: %2")
-                        .arg(currentItem.filename())
-                        .arg(QString::fromStdString(err.what()));
-        }
-    }
-};
-
-struct SaveFile {
-    void operator()(HdrCreationItem& currentItem)
-    {
-        QString inputFilename = currentItem.filename();
-        QFileInfo qfi(inputFilename);
-        QString base = qfi.completeBaseName(); 
-        QString filename = base + ".tif";
-        QString tempdir = LuminanceOptions().getTempDir();
-        qDebug() << QString("Saving data for %1 on %2").arg(filename).arg(tempdir);
-        
-
-        QString completeFilename = tempdir + "/" + filename;
-
-        // save pfs::Frame as tiff 16bits
-        try
-        {
-            Params p;
-            p.set("tiff_mode", 1); // 16bits
-            FrameWriterPtr writer = FrameWriterFactory::open(
-                        QFile::encodeName(completeFilename).constData());
-            writer->write( *currentItem.frame(), p );
-
-        }
-        catch (std::runtime_error& err)
-        {
-            qDebug() << QString("Cannot save %1: %2")
-                        .arg(currentItem.filename())
-                        .arg(QString::fromStdString(err.what()));
-        }
-    }
-};
 
 static
 bool checkFileName(const HdrCreationItem& item, const QString& str) {
@@ -328,7 +198,7 @@ using namespace libhdr::fusion;
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     : chosen_config( predef_confs[0] )
     , m_agMask( NULL )
-    , ais( NULL )
+    , m_align( NULL )
     , m_ais_crop_flag(false)
     , fromCommandLine( fromCommandLine )
 {
@@ -397,111 +267,13 @@ void HdrCreationManager::set_ais_crop_flag(bool flag)
 
 void HdrCreationManager::align_with_ais()
 {
-    ais = new QProcess(this);
-    if (ais == NULL) exit(1);       // TODO: exit gracefully
-    if (!fromCommandLine) {
-        ais->setWorkingDirectory(m_luminance_options.getTempDir());
-    }
-    QStringList env = QProcess::systemEnvironment();
-#ifdef WIN32
-    QString separator(";");
-#else
-    QString separator(":");
-#endif
-    env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
-    ais->setEnvironment(env);
-    connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
-    connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
-    connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
-    connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
-    
-    QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
-
-    if (m_ais_crop_flag) { ais_parameters << "-C"; }
-
-    QFutureWatcher<void> futureWatcher;
-
-    // Start the computation.
-    futureWatcher.setFuture( QtConcurrent::map(m_data.begin(), m_data.end(), SaveFile()) );
-    futureWatcher.waitForFinished();
-
-    if (futureWatcher.isCanceled()) return;
-
-    for ( HdrCreationItemContainer::const_iterator it = m_data.begin(), 
-          itEnd = m_data.end(); it != itEnd; ++it) {
-        QFileInfo qfi(it->filename());
-        QString base = qfi.completeBaseName(); 
-        QString filename = base + ".tif";
-        QString tempdir = m_luminance_options.getTempDir();
-        QString completeFilename = tempdir + "/" + filename;
-        ais_parameters << completeFilename; 
-    }
-    qDebug() << "ais_parameters " << ais_parameters;
-#ifdef Q_WS_MAC
-    qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
-    ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
-#else
-    ais->start("align_image_stack", ais_parameters );
-#endif
-    qDebug() << "ais started";
-}
-
-void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
-{
-    if (exitstatus != QProcess::NormalExit)
-    {
-        qDebug() << "ais failed";
-        //emit ais_failed(QProcess::Crashed);
-        return;
-    }
-    if (exitcode == 0)
-    {
-        // TODO: try-catch
-        // DAVIDE _ HDR CREATION
-        m_tmpdata.clear();
-        int i = 0;
-        for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
-              itEnd = m_data.end(); it != itEnd; ++it) {
-            QString inputFilename = it->filename(), filename;
-            if (!fromCommandLine)
-                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-            else
-                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-            
-            m_tmpdata.push_back( HdrCreationItem(filename) );
-            ExifOperations::copyExifData(inputFilename.toStdString(), filename.toStdString(), false, "", false, true); 
-            i++;
-        }
-
-        // parallel load of the data...
-        // Start the computation.
-        connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()), Qt::DirectConnection);
-        m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
-    }
-    else
-    {
-        qDebug() << "align_image_stack exited with exit code " << exitcode;
-        emit finishedAligning(exitcode);
-    }
-}
-
-void HdrCreationManager::alignedFilesLoaded()
-{
-    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
-    for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
-          itEnd = m_data.end(); it != itEnd; ++it) {
-        QFileInfo qfi(it->filename());
-        QString base = qfi.completeBaseName(); 
-        QString filename = base + ".tif";
-        QString tempdir = m_luminance_options.getTempDir();
-        QString completeFilename = tempdir + "/" + filename;
-        QFile::remove(QFile::encodeName(completeFilename).constData());
-        qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
-    }
-
-    m_data.swap(m_tmpdata);
-    QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
-    emit finishedAligning(0);
+    m_align = new Align(&m_data, fromCommandLine, 1); 
+    connect(m_align, SIGNAL(finishedAligning(int)), this, SIGNAL(finishedAligning(int)));
+    connect(m_align, SIGNAL(failedAligning(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
+    connect(m_align, SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
+    connect(m_align, SIGNAL(dataReady(QByteArray)), this, SIGNAL(aisDataReady(QByteArray)));
+  
+    m_align->align_with_ais(m_ais_crop_flag);
 }
 
 void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
@@ -511,20 +283,7 @@ void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
 
 void HdrCreationManager::removeTempFiles()
 {
-    int i = 0;
-    for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
-          itEnd = m_data.end(); it != itEnd; ++it) {
-        QString filename;
-        if (!fromCommandLine) {
-            filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-        }
-        else {
-            filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-        }
-        QFile::remove(filename);
-        qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
-        ++i;
-    }
+    m_align->removeTempFiles();
 }
 
 /*
@@ -636,10 +395,14 @@ void HdrCreationManager::cropItems(const QRect& ca)
 
 HdrCreationManager::~HdrCreationManager()
 {
+/*
     if (ais != NULL && ais->state() != QProcess::NotRunning) {
         ais->kill();
         delete ais;
     }
+*/
+    if (m_align)
+        delete m_align;
     delete m_agMask;
 }
 
@@ -871,15 +634,6 @@ void HdrCreationManager::remove(int index)
     expotimes.remove(index);
     startedProcessing.removeAt(index);
 }
-*/
-
-void HdrCreationManager::readData()
-{
-    QByteArray data = ais->readAll();
-    emit aisDataReady(data);
-}
-
-/*
 
 namespace {
 
@@ -1517,10 +1271,16 @@ void HdrCreationManager::setPatches(bool patches[][agGridSize])
 
 void HdrCreationManager::reset()
 {
+/*
     if (ais != NULL && ais->state() != QProcess::NotRunning) {
         ais->kill();
         delete ais;
         ais = NULL;
+    }
+*/
+    if (m_align != NULL) {
+        m_align->reset();
+        m_align->removeTempFiles();
     }
     if (m_futureWatcher.isRunning()) {
         qDebug() << "Aborting loadFiles...";
@@ -1529,8 +1289,6 @@ void HdrCreationManager::reset()
         emit loadFilesAborted();
     }
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
-    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
-    removeTempFiles();
     m_data.clear();
     m_tmpdata.clear();
 }

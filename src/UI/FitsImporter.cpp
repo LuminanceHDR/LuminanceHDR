@@ -38,274 +38,21 @@
 #include "FitsImporter.h"
 #include "ui_FitsImporter.h"
 
-#include <Libpfs/frame.h>
-#include <Libpfs/utils/msec_timer.h>
-#include <Libpfs/utils/minmax.h>
-#include <Libpfs/io/framereader.h>
-#include <Libpfs/io/framereaderfactory.h>
-#include <Libpfs/io/framewriter.h>
-#include <Libpfs/io/framewriterfactory.h>
-#include <Libpfs/utils/transform.h>
-#include <Libpfs/colorspace/convert.h>
-#include <Libpfs/colorspace/rgbremapper.h>
-#include "Libpfs/colorspace/colorspace.h"
+#include "Common/CommonFunctions.h"
 #include "Libpfs/manip/rotate.h"
 #include "HdrCreation/mtb_alignment.h"
 
 using namespace pfs;
-using namespace pfs::io;
 
-namespace {
-
-inline
-void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
+FitsImporter::~FitsImporter() 
 {
-    float v, m, vm, r2, g2, b2;
-    h = 0.0f;
-    s = 0.0f;
-    l = 0.0f;
-
-    pfs::utils::minmax(r, g, b, m, v);
-
-    l = (m + v) / 2.0f;
-    if (l <= 0.0f)
-        return;
-    vm = v - m;
-    s = vm;
-    //if (s >= 0.0f)
-    if (s > 0.0f)
-        s /= (l <= 0.5f) ? (v + m) : (2.0f - v - m);
-    else return;
-    r2 = (v - r) / vm;
-    g2 = (v - g) / vm;
-    b2 = (v - b) / vm;
-    if (r == v)
-        h = (g == m ? 5.0f + b2 : 1.0f - g2);
-    else if (g == v)
-        h = (b == m ? 1.0f + r2 : 3.0f - b2);
-    else
-        h = (r == m ? 3.0f + g2 : 5.0f - r2);
-    h /= 6.0f;
+    if (m_align)
+        delete m_align;
 }
-
-inline
-void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
-{
-    float v;
-    r = l;
-    g = l;
-    b = l;
-    v = (l <= 0.5f) ? (l * (1.0f + sl)) : (l + sl - l * sl);
-    if (v > 0.0f)
-    {
-        float m;
-        float sv;
-        int sextant;
-        float fract, vsf, mid1, mid2;
-        m = l + l - v;
-        sv = (v - m ) / v;
-        h *= 6.0f;
-        sextant = (int)h;
-        fract = h - sextant;
-        vsf = v * sv * fract;
-        mid1 = m + vsf;
-        mid2 = v - vsf;
-        switch (sextant)
-        {
-        case 0:
-            r = v;
-            g = mid1;
-            b = m;
-            break;
-        case 1:
-            r = mid2;
-            g = v;
-            b = m;
-            break;
-        case 2:
-            r = m;
-            g = v;
-            b = mid1;
-            break;
-        case 3:
-            r = m;
-            g = mid2;
-            b = v;
-            break;
-        case 4:
-            r = mid1;
-            g = m;
-            b = v;
-            break;
-        case 5:
-            r = v;
-            g = m;
-            b = mid2;
-            break;
-        }
-    }
-}
-
-struct Normalize {
-    float m;
-    float M;
-    Normalize(float m, float M) : m(m), M(M) {}
-
-    float operator()(float i) {
-        return (i - m)/(M-m);
-    }
-};
-
-const float GAMMA_2_2 = 1.0f/2.2f;
-struct ConvertToQRgb {
-    float m;
-    float M;
-    ConvertToQRgb(float m, float M) : m(m), M(M) {}
-    void operator()(float r, float g, float b, QRgb& rgb) const {
-/*
-        float logRange = std::log2f(M/m);
-        uint8_t r8u = colorspace::convertSample<uint8_t>(std::log2(r/m)/logRange);
-        uint8_t g8u = colorspace::convertSample<uint8_t>(std::log2(g/m)/logRange);
-        uint8_t b8u = colorspace::convertSample<uint8_t>(std::log2(b/m)/logRange);
-*/
-        uint8_t r8u = colorspace::convertSample<uint8_t>(std::pow(r, GAMMA_2_2));
-        uint8_t g8u = colorspace::convertSample<uint8_t>(std::pow(g, GAMMA_2_2));
-        uint8_t b8u = colorspace::convertSample<uint8_t>(std::pow(b, GAMMA_2_2));
-
-        rgb = qRgb(r8u, g8u, b8u);
-    }
-};
-
-struct LoadFile {
-    void operator()(HdrCreationItem& currentItem)
-    {
-        QFileInfo qfi(currentItem.filename());
-        qDebug() << QString("Loading data for %1").arg(currentItem.filename());
-
-        try
-        {
-            FrameReaderPtr reader = FrameReaderFactory::open(
-                        QFile::encodeName(qfi.filePath()).constData() );
-            reader->read( *currentItem.frame(), Params() );
-
-            // build QImage
-            QImage tempImage(currentItem.frame()->getWidth(),
-                             currentItem.frame()->getHeight(),
-                             QImage::Format_ARGB32_Premultiplied);
-
-            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
-
-            Channel* red;
-            Channel* green;
-            Channel* blue;
-            currentItem.frame()->getXYZChannels(red, green, blue);
-
-            if (red == NULL || green == NULL || blue == NULL)
-                throw std::runtime_error("Null frame");
-
-            Channel redNorm(currentItem.frame()->getWidth(),
-                            currentItem.frame()->getHeight(), "X");
-            float m = *std::min_element(red->begin(), red->end());
-            float M = *std::max_element(red->begin(), red->end());
-            Normalize normalize(m, M);
-            ConvertToQRgb convert(m, M);
-            std::transform(red->begin(), red->end(), redNorm.begin(), normalize);
-
-            utils::transform(redNorm.begin(), redNorm.end(), redNorm.begin(), redNorm.begin(),
-                             qimageData, convert);
-
-            currentItem.qimage()->swap( tempImage );
-        }
-        catch (std::runtime_error& err)
-        {
-            qDebug() << QString("Cannot load %1: %2")
-                        .arg(currentItem.filename())
-                        .arg(QString::fromStdString(err.what()));
-        }
-    }
-};
-
-struct SaveFile {
-    void operator()(HdrCreationItem& currentItem)
-    {
-        qDebug() << currentItem.isValid();
-        QString inputFilename = currentItem.filename();
-        QFileInfo qfi(inputFilename);
-        QString base = qfi.completeBaseName(); 
-        QString filename = base + ".tif";
-        QString tempdir = LuminanceOptions().getTempDir();
-        qDebug() << QString("Saving data for %1 on %2").arg(filename).arg(tempdir);
-        
-
-        QString completeFilename = tempdir + "/" + filename;
-
-        // save pfs::Frame as tiff 32bits
-        try
-        {
-            Params p;
-            p.set("tiff_mode", 2); // 32bits
-            p.set("min_luminance", 0.0f);
-            p.set("max_luminance", 65535.0f);
-            FrameWriterPtr writer = FrameWriterFactory::open(
-                        QFile::encodeName(completeFilename).constData());
-            writer->write( *currentItem.frame(), p );
-        }
-        catch (std::runtime_error& err)
-        {
-            qDebug() << QString("Cannot save %1: %2")
-                        .arg(currentItem.filename())
-                        .arg(QString::fromStdString(err.what()));
-        }
-    }
-};
-
-struct RefreshPreview {
-    void operator()(HdrCreationItem& currentItem)
-    {
-        qDebug() << QString("Refresh preview for %1").arg(currentItem.filename());
-
-        try
-        {
-            // build QImage
-            QImage tempImage(currentItem.frame()->getWidth(),
-                             currentItem.frame()->getHeight(),
-                             QImage::Format_ARGB32_Premultiplied);
-
-            QRgb* qimageData = reinterpret_cast<QRgb*>(tempImage.bits());
-
-            Channel* red;
-            Channel* green;
-            Channel* blue;
-            currentItem.frame()->getXYZChannels(red, green, blue);
-
-            Channel redNorm(currentItem.frame()->getWidth(),
-                            currentItem.frame()->getHeight(), "X");
-            float m = *std::min_element(red->begin(), red->end());
-            float M = *std::max_element(red->begin(), red->end());
-            Normalize normalize(m, M);
-            ConvertToQRgb convert(m, M);
-            std::transform(red->begin(), red->end(), redNorm.begin(), normalize);
-
-            utils::transform(redNorm.begin(), redNorm.end(), redNorm.begin(), redNorm.begin(),
-                             qimageData, convert);
-
-            currentItem.qimage()->swap( tempImage );
-        }
-        catch (std::runtime_error& err)
-        {
-            qDebug() << QString("Cannot load %1: %2")
-                        .arg(currentItem.filename())
-                        .arg(QString::fromStdString(err.what()));
-        }
-    }
-};
-
-}
-
-FitsImporter::~FitsImporter() {}
 
 FitsImporter::FitsImporter(QWidget *parent)
     : QDialog(parent)
+    , m_align(NULL)
     , m_ui(new Ui::FitsImporter)
 {
     m_ui->setupUi(this);
@@ -566,86 +313,20 @@ void FitsImporter::buildFrame()
 
 void FitsImporter::align_with_ais()
 {
+    m_align = new Align(&m_data, false, 2, 0.0f, 65535.0f); 
+    connect(m_align, SIGNAL(finishedAligning(int)), this, SLOT(ais_finished(int)));
+    connect(m_align, SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
+    connect(m_align, SIGNAL(dataReady(QByteArray)), this, SLOT(readData(QByteArray)));
+  
+    m_align->align_with_ais(m_ui->autoCropCheckBox->isChecked());
+
     m_ui->pushButtonOK->setEnabled(false);
-    m_ais = new QProcess(this);
-    if (m_ais == NULL) exit(1);       // TODO: exit gracefully
-    m_ais->setWorkingDirectory(m_luminance_options.getTempDir());
-    QStringList env = QProcess::systemEnvironment();
-#ifdef WIN32
-    QString separator(";");
-#else
-    QString separator(":");
-#endif
-    env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
-    m_ais->setEnvironment(env);
-    connect(m_ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
-    connect(m_ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
-    connect(m_ais, SIGNAL(readyRead()), this, SLOT(readData()));
-    
-    QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
-
-    if (m_ui->autoCropCheckBox->isChecked()) { ais_parameters << "-C"; }
-
-    QFutureWatcher<void> futureWatcher;
-
-    // Start the computation.
-    futureWatcher.setFuture( QtConcurrent::map(m_data.begin(), m_data.end(), SaveFile()) );
-    futureWatcher.waitForFinished();
-
-    if (futureWatcher.isCanceled()) return;
-
-    BOOST_FOREACH(const QString& i, m_channels) {
-        QFileInfo qfi(i);
-        QString base = qfi.completeBaseName(); 
-        QString filename = base + ".tif";
-        QString tempdir = m_luminance_options.getTempDir();
-        QString completeFilename = tempdir + "/" + filename;
-        ais_parameters << completeFilename; 
-    }
-
-    qDebug() << "ais_parameters " << ais_parameters;
-#ifdef Q_WS_MAC
-    qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
-    m_ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
-#else
-    m_ais->start("align_image_stack", ais_parameters );
-#endif
-    qDebug() << "ais started";
 }
 
-void FitsImporter::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
+void FitsImporter::ais_finished(int exitcode)
 {
-    if (exitstatus != QProcess::NormalExit)
-    {
-        qDebug() << "ais failed";
-        m_data.clear();
-        m_tmpdata.clear();
-        m_channels.clear();
-        QApplication::restoreOverrideCursor();
-        return;
-    }
-    if (exitcode == 0)
-    {
-        m_tmpdata.clear();
-        int i = 0;
-        for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
-              itEnd = m_data.end(); it != itEnd; ++it) {
-            QString inputFilename = it->filename(), filename;
-            filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-            
-            m_tmpdata.push_back( HdrCreationItem(filename) );
-            i++;
-        }
-
-        // parallel load of the data...
-        // Start the computation.
-        disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
-        connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()), Qt::DirectConnection);
-      
-        m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
-        
-    }
-    else
+    m_align->removeTempFiles();
+    if (exitcode != 0)
     {
         QApplication::restoreOverrideCursor();
         qDebug() << "align_image_stack exited with exit code " << exitcode;
@@ -654,30 +335,16 @@ void FitsImporter::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
         m_tmpdata.clear();
         m_channels.clear();
     }
-}
-
-void FitsImporter::alignedFilesLoaded()
-{
-    for ( HdrCreationItemContainer::iterator it = m_data.begin(), 
-          itEnd = m_data.end(); it != itEnd; ++it) {
-        QFileInfo qfi(it->filename());
-        QString base = qfi.completeBaseName(); 
-        QString filename = base + ".tif";
-        QString tempdir = m_luminance_options.getTempDir();
-        QString completeFilename = tempdir + "/" + filename;
-        QFile::remove(QFile::encodeName(completeFilename).constData());
-        qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
+    else {
+        QApplication::restoreOverrideCursor();
+        buildFrame();
     }
-
-    m_data.swap(m_tmpdata);
-    QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
-    QApplication::restoreOverrideCursor();
-    buildFrame();
 }
 
 void FitsImporter::ais_failed_slot(QProcess::ProcessError error)
 {
     qDebug() << "align_image_stack failed";
+    m_align->removeTempFiles();
     QApplication::restoreOverrideCursor();
     QMessageBox::warning(0,"", tr("align_image_stack failed with error"), QMessageBox::Ok, QMessageBox::NoButton);
     m_data.clear();
@@ -697,9 +364,8 @@ bool FitsImporter::framesHaveSameSize()
     return true;
 }
 
-void FitsImporter::readData()
+void FitsImporter::readData(QByteArray data)
 {
-    QByteArray data = m_ais->readAll();
     qDebug() << data;
     if (data.contains("[1A"))
         data.replace("[1A", "");
