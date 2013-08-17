@@ -89,9 +89,14 @@ signals:
 protected:
     void checkLoadButton();
     bool framesHaveSameSize();
+    void buildContents();
     void buildFrame();
+    void buildPreview();
     void align_with_ais();
     void align_with_mtb();
+
+    size_t m_width;
+    size_t m_height;
 
     pfs::Frame *m_frame;
     PreviewFrame *m_previewFrame;
@@ -108,6 +113,8 @@ protected:
 
     HdrCreationItemContainer m_data;
     HdrCreationItemContainer m_tmpdata;
+    std::vector<std::vector<float> > m_contents;
+    std::vector<QImage> m_qimages;
 
     QFutureWatcher<void> m_futureWatcher;
 
