@@ -82,6 +82,8 @@ void Align::align_with_ais(bool ais_crop_flag)
 
     for ( HdrCreationItemContainer::const_iterator it = m_data->begin(), 
           itEnd = m_data->end(); it != itEnd; ++it) {
+        if (it->filename().isEmpty())
+            continue;
         QFileInfo qfi(it->filename());
         QString base = qfi.completeBaseName(); 
         QString filename = base + ".tif";
@@ -116,14 +118,18 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
         for ( HdrCreationItemContainer::iterator it = m_data->begin(), 
               itEnd = m_data->end(); it != itEnd; ++it) {
             QString inputFilename = it->filename(), filename;
-            if (!m_fromCommandLine)
-                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-            else
-                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+            if (!inputFilename.isEmpty()) {
+                if (!m_fromCommandLine)
+                    filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+                else
+                    filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
             
-            m_tmpdata.push_back( HdrCreationItem(filename) );
-            ExifOperations::copyExifData(inputFilename.toStdString(), filename.toStdString(), false, "", false, true); 
-            i++;
+                m_tmpdata.push_back( HdrCreationItem(filename) );
+                ExifOperations::copyExifData(inputFilename.toStdString(), filename.toStdString(), false, "", false, true); 
+                i++;
+            }
+            else
+                m_tmpdata.push_back( HdrCreationItem("") );
         }
 
         // parallel load of the data...
@@ -143,6 +149,8 @@ void Align::alignedFilesLoaded()
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
     for ( HdrCreationItemContainer::iterator it = m_data->begin(), 
           itEnd = m_data->end(); it != itEnd; ++it) {
+        if (it->filename().isEmpty())
+            continue;
         QFileInfo qfi(it->filename());
         QString base = qfi.completeBaseName(); 
         QString filename = base + ".tif";
@@ -182,15 +190,17 @@ void Align::removeTempFiles()
     for ( HdrCreationItemContainer::iterator it = m_data->begin(), 
           itEnd = m_data->end(); it != itEnd; ++it) {
         QString filename;
-        if (!m_fromCommandLine) {
-            filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+        if (!it->filename().isEmpty()) {
+            if (!m_fromCommandLine) {
+                filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+            }
+            else {
+                filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+            }
+            QFile::remove(filename);
+            qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
+            ++i;
         }
-        else {
-            filename = QString("aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
-        }
-        QFile::remove(filename);
-        qDebug() << "void HdrCreationManager::ais_finished: remove " << filename;
-        ++i;
     }
 }
 

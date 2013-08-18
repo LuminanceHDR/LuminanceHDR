@@ -45,6 +45,9 @@
 
 using namespace pfs;
 
+static const int previewWidth = 300;
+static const int previewHeight = 200;
+
 FitsImporter::~FitsImporter() 
 {
     if (m_align)
@@ -157,6 +160,8 @@ void FitsImporter::on_pushButtonLoad_clicked()
     m_data.clear();
     m_tmpdata.clear();
     m_channels.clear();
+    m_contents.clear();
+    m_qimages.clear();
     m_channels << m_redChannel
                << m_greenChannel
                << m_blueChannel
@@ -177,6 +182,7 @@ void FitsImporter::on_pushButtonLoad_clicked()
 void FitsImporter::loadFilesDone()
 { 
     qDebug() << "Data loaded ... move to internal structure!";
+    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
 
     int idx = 0;
     BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata) {
@@ -196,6 +202,8 @@ void FitsImporter::loadFilesDone()
             m_data.clear();
             m_tmpdata.clear();
             m_channels.clear();
+            m_contents.clear();
+            m_qimages.clear();
             m_ui->pushButtonLoad->setEnabled(true);
             QApplication::restoreOverrideCursor();
             return;
@@ -214,6 +222,8 @@ void FitsImporter::loadFilesDone()
         m_data.clear();
         m_tmpdata.clear();
         m_channels.clear();
+        m_contents.clear();
+        m_qimages.clear();
         m_ui->pushButtonLoad->setEnabled(true);
         m_ui->pushButtonPreview->setEnabled(true);
         QApplication::restoreOverrideCursor();
@@ -241,9 +251,10 @@ void FitsImporter::loadFilesDone()
     m_ui->hsBlueRed->setEnabled(true);
     m_ui->hsBlueGreen->setEnabled(true);
     m_ui->hsBlueBlue->setEnabled(true);
-    QApplication::restoreOverrideCursor();
+    m_tmpdata.clear();
     buildContents();
     buildPreview();
+    QApplication::restoreOverrideCursor();
 }
 
 void FitsImporter::on_pushButtonOK_clicked()
@@ -265,7 +276,6 @@ bool isValid(HdrCreationItem& item)
     return !item.filename().isEmpty();
 }
 
-
 void FitsImporter::buildPreview()
 {
     float redRed = m_ui->dsbRedRed->value();
@@ -278,14 +288,15 @@ void FitsImporter::buildPreview()
     float blueGreen = m_ui->dsbBlueGreen->value();
     float blueBlue = m_ui->dsbBlueBlue->value();
 
-    QImage tempImage(300,
-                     200,
+
+    QImage tempImage(previewWidth,
+                     previewHeight,
                      QImage::Format_ARGB32_Premultiplied);
     
     if (m_luminosityChannel != "") {
-        for (size_t j = 0; j < 200; j++) 
+        for (int j = 0; j < previewHeight; j++) 
         {
-            for (size_t i = 0; i < 300; i++) 
+            for (int i = 0; i < previewWidth; i++) 
             {
                 float red = qRed(m_qimages[0].pixel(i, j))/255.0f;
                 float green = qRed(m_qimages[1].pixel(i, j))/255.0f;
@@ -298,17 +309,20 @@ void FitsImporter::buildPreview()
                 float h, s, l;
                 rgb2hsl(r, g, b, h, s, l);
                 hsl2rgb(h, s, luminance, r, g, b);
+                float redH = r + h_alpha;
+                if (redH > 1.0f)
+                    redH = 1.0f;
                 QRgb rgb;
                 ConvertToQRgb convert;
-                convert(r + h_alpha, g, b, rgb); 
+                convert(redH, g, b, rgb); 
                 tempImage.setPixel(i, j, rgb);
             }
         } 
     }
     else {
-        for (size_t j = 0; j < 200; j++) 
+        for (int j = 0; j < previewHeight; j++) 
         {
-            for (size_t i = 0; i < 300; i++) 
+            for (int i = 0; i < previewWidth; i++) 
             {
                 float red = qRed(m_qimages[0].pixel(i, j))/255.0f;
                 float green = qRed(m_qimages[1].pixel(i, j))/255.0f;
@@ -317,9 +331,12 @@ void FitsImporter::buildPreview()
                 float r = redRed * red + redGreen * green + redBlue * blue;
                 float g = greenRed * red + greenGreen * green + greenBlue * blue;
                 float b = blueRed * red + blueGreen * green + blueBlue * blue;
+                float redH = r + h_alpha;
+                if (redH > 1.0f)
+                    redH = 1.0f;
                 QRgb rgb;
                 ConvertToQRgb convert;
-                convert(r + h_alpha, g, b, rgb); 
+                convert(redH, g, b, rgb); 
                 tempImage.setPixel(i, j, rgb);
             }
         } 
@@ -341,19 +358,17 @@ void FitsImporter::buildContents()
     for (size_t i = 0; i < m_data.size(); i++) {
         if (m_data[i].filename().isEmpty()) {
             std::fill(m_contents[i].begin(), m_contents[i].end(), 0.0f);
-            QImage tmpImage(300, 200, QImage::Format_ARGB32_Premultiplied);
+            QImage tmpImage(previewWidth, previewHeight, QImage::Format_ARGB32_Premultiplied);
             tmpImage.fill(0);
             m_qimages.push_back(tmpImage);
         }
         else {
             Channel *C = m_data[i].frame()->getChannel("X");
             std::copy(C->begin(), C->end(), m_contents[i].begin()); 
-            m_qimages.push_back(m_data[i].qimage()->scaled(300, 200));
+            m_qimages.push_back(m_data[i].qimage()->scaled(previewWidth, previewHeight));
             
         }
     }
-    m_data.clear();
-    m_tmpdata.clear();
 }
 
 void FitsImporter::buildFrame()
@@ -402,6 +417,7 @@ void FitsImporter::buildFrame()
 
 void FitsImporter::align_with_ais()
 {
+    m_contents.clear();
     m_align = new Align(&m_data, false, 2, 0.0f, 65535.0f); 
     connect(m_align, SIGNAL(finishedAligning(int)), this, SLOT(ais_finished(int)));
     connect(m_align, SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
@@ -420,12 +436,10 @@ void FitsImporter::ais_finished(int exitcode)
         QApplication::restoreOverrideCursor();
         qDebug() << "align_image_stack exited with exit code " << exitcode;
         QMessageBox::warning(0,"", tr("align_image_stack exited with exit code %1").arg(exitcode), QMessageBox::Ok, QMessageBox::NoButton);
-        m_data.clear();
-        m_tmpdata.clear();
-        m_channels.clear();
     }
     else {
         QApplication::restoreOverrideCursor();
+        buildContents();
         buildFrame();
     }
 }
@@ -436,9 +450,6 @@ void FitsImporter::ais_failed_slot(QProcess::ProcessError error)
     m_align->removeTempFiles();
     QApplication::restoreOverrideCursor();
     QMessageBox::warning(0,"", tr("align_image_stack failed with error"), QMessageBox::Ok, QMessageBox::NoButton);
-    m_data.clear();
-    m_tmpdata.clear();
-    m_channels.clear();
 }
 
 bool FitsImporter::framesHaveSameSize()
@@ -478,15 +489,19 @@ void FitsImporter::readData(QByteArray data)
 
 void FitsImporter::align_with_mtb()
 {
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+    m_contents.clear();
     // build temporary container...
     vector<FramePtr> frames;
     for (size_t i = 0; i < m_data.size(); ++i) {
-        frames.push_back( m_data[i].frame() );
+        if (!m_data[i].filename().isEmpty())
+            frames.push_back( m_data[i].frame() );
     }
-
     // run MTB
     libhdr::mtb_alignment(frames);
 
+    QApplication::restoreOverrideCursor();
+    buildContents();
     buildFrame();
 }
 
@@ -506,6 +521,11 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     if (m_ui->pushButtonPreview->isChecked()) {
         m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
     }
+    Channel *C = m_data[index].frame()->getChannel("X");
+    std::copy(C->begin(), C->end(), m_contents[index].begin()); 
+    QImage tmp = m_data[index].qimage()->scaled(previewWidth, previewHeight);
+    m_qimages[index].swap(tmp);
+    buildPreview();
     m_ui->pushButtonClockwise->setEnabled(true);
     QApplication::restoreOverrideCursor();
 }
