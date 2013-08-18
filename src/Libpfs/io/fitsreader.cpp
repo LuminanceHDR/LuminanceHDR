@@ -21,9 +21,6 @@
 
 #include <QDebug>
 
-#include <CCfits/ExtHDU.h>
-#include <CCfits/FitsError.h>
-
 #include <Libpfs/io/fitsreader.h>
 #include <Libpfs/frame.h>
 

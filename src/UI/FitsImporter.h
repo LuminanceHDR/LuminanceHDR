@@ -24,10 +24,12 @@
 #ifndef FITSIMPORTER_H
 #define FITSIMPORTER_H
 
-#include <QDialog>
+#include <QDoubleSpinBox>
 #include <QLineEdit>
 #include <QProcess>
 #include <QFutureWatcher>
+#include <QSlider>
+#include <QWizard>
 
 #include "PreviewFrame.h"
 #include "Alignment/Align.h"
@@ -38,7 +40,7 @@ namespace Ui {
 class FitsImporter;
 }
 
-class FitsImporter : public QDialog 
+class FitsImporter : public QWizard
 {
     Q_OBJECT
 
@@ -63,24 +65,20 @@ protected slots:
     void ais_failed_slot(QProcess::ProcessError);
     void readData(QByteArray);
     void previewLabelSelected(int index);
-    void on_hsRedRed_valueChanged(int newValue);
-    void on_dsbRedRed_valueChanged(double newValue);
-    void on_hsRedGreen_valueChanged(int newValue);
-    void on_dsbRedGreen_valueChanged(double newValue);
-    void on_hsRedBlue_valueChanged(int newValue);
-    void on_dsbRedBlue_valueChanged(double newValue);
-    void on_hsGreenRed_valueChanged(int newValue);
-    void on_dsbGreenRed_valueChanged(double newValue);
-    void on_hsGreenGreen_valueChanged(int newValue);
-    void on_dsbGreenGreen_valueChanged(double newValue);
-    void on_hsGreenBlue_valueChanged(int newValue);
-    void on_dsbGreenBlue_valueChanged(double newValue);
-    void on_hsBlueRed_valueChanged(int newValue);
-    void on_dsbBlueRed_valueChanged(double newValue);
-    void on_hsBlueGreen_valueChanged(int newValue);
-    void on_dsbBlueGreen_valueChanged(double newValue);
-    void on_hsBlueBlue_valueChanged(int newValue);
-    void on_dsbBlueBlue_valueChanged(double newValue);
+
+    void on_hsChannelRed_valueChanged(int newValue);
+    void on_dsbChannelRed_valueChanged(double newValue);
+    void on_hsChannelGreen_valueChanged(int newValue);
+    void on_dsbChannelGreen_valueChanged(double newValue);
+    void on_hsChannelBlue_valueChanged(int newValue);
+    void on_dsbChannelBlue_valueChanged(double newValue);
+    void on_hsChannelH_valueChanged(int newValue);
+    void on_dsbChannelH_valueChanged(double newValue);
+
+    void on_pushButtonColorRed_clicked();
+    void on_pushButtonColorGreen_clicked();
+    void on_pushButtonColorBlue_clicked();
+    void on_pushButtonColorH_clicked();
 
 signals:
     void setValue(int);
@@ -125,6 +123,17 @@ protected:
 
 private:
     void selectInputFile(QLineEdit* textField, QString* channel);
+    void hScrollValueChanged(int newValue, QDoubleSpinBox* spinBox);
+    void spinBoxValueChanged(int newValue, QSlider* slider);
+    void chooseColor(QWidget* colorWidget, QColor& mColor);
+    void initColors();
+
+    QColor m_colorRed;
+    QColor m_colorGreen;
+    QColor m_colorBlue;
+    QColor m_colorH;
+
+
 };
 
 #endif 

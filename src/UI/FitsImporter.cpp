@@ -21,6 +21,7 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
+#include <QColorDialog>
 #include <QLabel>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -55,12 +56,15 @@ FitsImporter::~FitsImporter()
 }
 
 FitsImporter::FitsImporter(QWidget *parent)
-    : QDialog(parent)
+    : QWizard(parent)
     , m_align(NULL)
     , m_ui(new Ui::FitsImporter)
 {
     m_ui->setupUi(this);
 
+#ifdef WIN32
+    setWizardStyle(WizardStyle::ModernStyle);
+#endif
 #ifdef Q_WS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
@@ -95,6 +99,21 @@ FitsImporter::FitsImporter(QWidget *parent)
     connect(m_previewFrame->getLabel(2), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
     connect(m_previewFrame->getLabel(3), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
     connect(m_previewFrame->getLabel(4), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
+
+    initColors();
+}
+
+void FitsImporter::initColors()
+{
+    m_colorRed = QColor(255, 0, 0);
+    m_colorGreen = QColor(0, 255, 0);
+    m_colorBlue = QColor(0, 0, 255);
+    m_colorH = QColor(255, 0, 0);
+    
+    m_ui->pushButtonColorRed->setStyleSheet("background-color:" + m_colorRed.name());
+    m_ui->pushButtonColorGreen->setStyleSheet("background-color:" + m_colorGreen.name());
+    m_ui->pushButtonColorBlue->setStyleSheet("background-color:" + m_colorBlue.name());
+    m_ui->pushButtonColorH->setStyleSheet("background-color:" + m_colorH.name());
 }
 
 void FitsImporter::selectInputFile(QLineEdit* textField, QString* channel)
@@ -230,27 +249,28 @@ void FitsImporter::loadFilesDone()
         return;
     }
     m_ui->pushButtonLoad->setEnabled(true);
-    m_ui->pushButtonOK->setEnabled(true);
+    // TODO: 
+    //m_ui->pushButtonOK->setEnabled(true);
     m_ui->pushButtonClockwise->setEnabled(true);
     m_ui->pushButtonPreview->setEnabled(true);
-    m_ui->dsbRedRed->setEnabled(true);
-    m_ui->dsbRedGreen->setEnabled(true);
-    m_ui->dsbRedBlue->setEnabled(true);
-    m_ui->dsbGreenRed->setEnabled(true);
-    m_ui->dsbGreenGreen->setEnabled(true);
-    m_ui->dsbGreenBlue->setEnabled(true);
-    m_ui->dsbBlueRed->setEnabled(true);
-    m_ui->dsbBlueGreen->setEnabled(true);
-    m_ui->dsbBlueBlue->setEnabled(true);
-    m_ui->hsRedRed->setEnabled(true);
-    m_ui->hsRedGreen->setEnabled(true);
-    m_ui->hsRedBlue->setEnabled(true);
-    m_ui->hsGreenRed->setEnabled(true);
-    m_ui->hsGreenGreen->setEnabled(true);
-    m_ui->hsGreenBlue->setEnabled(true);
-    m_ui->hsBlueRed->setEnabled(true);
-    m_ui->hsBlueGreen->setEnabled(true);
-    m_ui->hsBlueBlue->setEnabled(true);
+    //m_ui->dsbRedRed->setEnabled(true);
+    //m_ui->dsbRedGreen->setEnabled(true);
+    //m_ui->dsbRedBlue->setEnabled(true);
+    //m_ui->dsbGreenRed->setEnabled(true);
+    //m_ui->dsbGreenGreen->setEnabled(true);
+    //m_ui->dsbGreenBlue->setEnabled(true);
+    //m_ui->dsbBlueRed->setEnabled(true);
+    //m_ui->dsbBlueGreen->setEnabled(true);
+    //m_ui->dsbBlueBlue->setEnabled(true);
+    //m_ui->hsRedRed->setEnabled(true);
+    //m_ui->hsRedGreen->setEnabled(true);
+    //m_ui->hsRedBlue->setEnabled(true);
+    //m_ui->hsGreenRed->setEnabled(true);
+    //m_ui->hsGreenGreen->setEnabled(true);
+    //m_ui->hsGreenBlue->setEnabled(true);
+    //m_ui->hsBlueRed->setEnabled(true);
+    //m_ui->hsBlueGreen->setEnabled(true);
+    //m_ui->hsBlueBlue->setEnabled(true);
     m_tmpdata.clear();
     buildContents();
     buildPreview();
@@ -278,69 +298,55 @@ bool isValid(HdrCreationItem& item)
 
 void FitsImporter::buildPreview()
 {
-    float redRed = m_ui->dsbRedRed->value();
-    float redGreen = m_ui->dsbRedGreen->value();
-    float redBlue = m_ui->dsbRedBlue->value();
-    float greenRed = m_ui->dsbGreenRed->value();
-    float greenGreen = m_ui->dsbGreenGreen->value();
-    float greenBlue = m_ui->dsbGreenBlue->value();
-    float blueRed = m_ui->dsbBlueRed->value();
-    float blueGreen = m_ui->dsbBlueGreen->value();
-    float blueBlue = m_ui->dsbBlueBlue->value();
+    double alphaRed = m_ui->dsbChannelRed->value();
+    double alphaGreen = m_ui->dsbChannelGreen->value();
+    double alphaBlue = m_ui->dsbChannelBlue->value();
+    double alphaH = m_ui->dsbChannelH->value();
 
+    float redRed = m_colorRed.redF() * alphaRed;
+    float redGreen = m_colorRed.greenF() * alphaRed;
+    float redBlue = m_colorRed.blueF() * alphaRed;
+    float greenRed = m_colorGreen.redF() * alphaGreen;
+    float greenGreen = m_colorGreen.greenF() * alphaGreen;
+    float greenBlue = m_colorGreen.blueF() * alphaGreen;
+    float blueRed = m_colorBlue.redF() * alphaBlue;
+    float blueGreen = m_colorBlue.greenF() * alphaBlue;
+    float blueBlue = m_colorBlue.blueF() * alphaBlue;
+    float hRed = m_colorH.redF() * alphaH;
+    float hGreen = m_colorH.greenF() * alphaH;
+    float hBlue = m_colorH.blueF() * alphaH;
 
     QImage tempImage(previewWidth,
                      previewHeight,
                      QImage::Format_ARGB32_Premultiplied);
     
-    if (m_luminosityChannel != "") {
-        for (int j = 0; j < previewHeight; j++) 
+    for (int j = 0; j < previewHeight; j++) 
+    {
+        for (int i = 0; i < previewWidth; i++) 
         {
-            for (int i = 0; i < previewWidth; i++) 
+            float red = qRed(m_qimages[0].pixel(i, j))/255.0f;
+            float green = qRed(m_qimages[1].pixel(i, j))/255.0f;
+            float blue = qRed(m_qimages[2].pixel(i, j))/255.0f;
+            float h_alpha = qRed(m_qimages[4].pixel(i, j))/255.0f;
+            float r = redRed * red + greenRed * green + blueRed * blue + hRed * h_alpha;
+            float g = redGreen * red + greenGreen * green + blueGreen * blue + hGreen * h_alpha;
+            float b = redBlue * red + greenBlue * green + blueBlue * blue + hBlue * h_alpha;
+
+            if (!m_luminosityChannel.isEmpty())
             {
-                float red = qRed(m_qimages[0].pixel(i, j))/255.0f;
-                float green = qRed(m_qimages[1].pixel(i, j))/255.0f;
-                float blue = qRed(m_qimages[2].pixel(i, j))/255.0f;
                 float luminance = qRed(m_qimages[3].pixel(i, j))/255.0f;
-                float h_alpha = qRed(m_qimages[4].pixel(i, j))/255.0f;
-                float r = redRed * red + redGreen * green + redBlue * blue;
-                float g = greenRed * red + greenGreen * green + greenBlue * blue;
-                float b = blueRed * red + blueGreen * green + blueBlue * blue;
                 float h, s, l;
                 rgb2hsl(r, g, b, h, s, l);
                 hsl2rgb(h, s, luminance, r, g, b);
-                float redH = r + h_alpha;
-                if (redH > 1.0f)
-                    redH = 1.0f;
-                QRgb rgb;
-                ConvertToQRgb convert;
-                convert(redH, g, b, rgb); 
-                tempImage.setPixel(i, j, rgb);
             }
-        } 
-    }
-    else {
-        for (int j = 0; j < previewHeight; j++) 
-        {
-            for (int i = 0; i < previewWidth; i++) 
-            {
-                float red = qRed(m_qimages[0].pixel(i, j))/255.0f;
-                float green = qRed(m_qimages[1].pixel(i, j))/255.0f;
-                float blue = qRed(m_qimages[2].pixel(i, j))/255.0f;
-                float h_alpha = qRed(m_qimages[4].pixel(i, j))/255.0f;
-                float r = redRed * red + redGreen * green + redBlue * blue;
-                float g = greenRed * red + greenGreen * green + greenBlue * blue;
-                float b = blueRed * red + blueGreen * green + blueBlue * blue;
-                float redH = r + h_alpha;
-                if (redH > 1.0f)
-                    redH = 1.0f;
-                QRgb rgb;
-                ConvertToQRgb convert;
-                convert(redH, g, b, rgb); 
-                tempImage.setPixel(i, j, rgb);
-            }
-        } 
-    }    
+            QRgb rgb;
+            ConvertToQRgb convert;
+            convert(r, g, b, rgb); 
+            tempImage.setPixel(i, j, rgb);
+        }
+    } 
+
+
     m_ui->previewLabel->setPixmap(QPixmap::fromImage(tempImage));
 }
 
@@ -373,46 +379,46 @@ void FitsImporter::buildContents()
 
 void FitsImporter::buildFrame()
 {
-    float redRed = m_ui->dsbRedRed->value();
-    float redGreen = m_ui->dsbRedGreen->value();
-    float redBlue = m_ui->dsbRedBlue->value();
-    float greenRed = m_ui->dsbGreenRed->value();
-    float greenGreen = m_ui->dsbGreenGreen->value();
-    float greenBlue = m_ui->dsbGreenBlue->value();
-    float blueRed = m_ui->dsbBlueRed->value();
-    float blueGreen = m_ui->dsbBlueGreen->value();
-    float blueBlue = m_ui->dsbBlueBlue->value();
+    //float redRed = m_ui->dsbRedRed->value();
+    //float redGreen = m_ui->dsbRedGreen->value();
+    //float redBlue = m_ui->dsbRedBlue->value();
+    //float greenRed = m_ui->dsbGreenRed->value();
+    //float greenGreen = m_ui->dsbGreenGreen->value();
+    //float greenBlue = m_ui->dsbGreenBlue->value();
+    //float blueRed = m_ui->dsbBlueRed->value();
+    //float blueGreen = m_ui->dsbBlueGreen->value();
+    //float blueBlue = m_ui->dsbBlueBlue->value();
 
-    m_frame = new Frame(m_width, m_height);
-    Channel *Xc, *Yc, *Zc;
-    m_frame->createXYZChannels(Xc, Yc, Zc);
+    //m_frame = new Frame(m_width, m_height);
+    //Channel *Xc, *Yc, *Zc;
+    //m_frame->createXYZChannels(Xc, Yc, Zc);
 
-    if (m_luminosityChannel != "") {
-        for (size_t i = 0; i < m_width*m_height; i++) 
-        {
-            float r = redRed * m_contents[0][i] + redGreen * m_contents[1][i] + redBlue * m_contents[2][i];
-            float g = greenRed * m_contents[0][i] + greenGreen * m_contents[1][i] + greenBlue * m_contents[2][i];
-            float b = blueRed * m_contents[0][i] + blueGreen * m_contents[1][i] + blueBlue * m_contents[2][i];
-            float h, s, l;
-            rgb2hsl(r, g, b, h, s, l);
-            hsl2rgb(h, s, m_contents[3][i], r, g, b);
-            (*Xc)(i) = r + m_contents[4][i];
-            (*Yc)(i) = g;
-            (*Zc)(i) = b;
-        } 
-    }
-    else {
-        for (size_t i = 0; i < m_width*m_height; i++) 
-        {
-            float r = redRed * m_contents[0][i] + redGreen * m_contents[1][i] + redBlue * m_contents[2][i];
-            float g = greenRed * m_contents[0][i] + greenGreen * m_contents[1][i] + greenBlue * m_contents[2][i];
-            float b = blueRed * m_contents[0][i] + blueGreen * m_contents[1][i] + blueBlue * m_contents[2][i];
-            (*Xc)(i) = r + m_contents[4][i];
-            (*Yc)(i) = g;
-            (*Zc)(i) = b;
-        } 
-    }    
-    accept();
+    //if (m_luminosityChannel != "") {
+    //    for (size_t i = 0; i < m_width*m_height; i++) 
+    //    {
+    //        float r = redRed * m_contents[0][i] + redGreen * m_contents[1][i] + redBlue * m_contents[2][i];
+    //        float g = greenRed * m_contents[0][i] + greenGreen * m_contents[1][i] + greenBlue * m_contents[2][i];
+    //        float b = blueRed * m_contents[0][i] + blueGreen * m_contents[1][i] + blueBlue * m_contents[2][i];
+    //        float h, s, l;
+    //        rgb2hsl(r, g, b, h, s, l);
+    //        hsl2rgb(h, s, m_contents[3][i], r, g, b);
+    //        (*Xc)(i) = r + m_contents[4][i];
+    //        (*Yc)(i) = g;
+    //        (*Zc)(i) = b;
+    //    } 
+    //}
+    //else {
+    //    for (size_t i = 0; i < m_width*m_height; i++) 
+    //    {
+    //        float r = redRed * m_contents[0][i] + redGreen * m_contents[1][i] + redBlue * m_contents[2][i];
+    //        float g = greenRed * m_contents[0][i] + greenGreen * m_contents[1][i] + greenBlue * m_contents[2][i];
+    //        float b = blueRed * m_contents[0][i] + blueGreen * m_contents[1][i] + blueBlue * m_contents[2][i];
+    //        (*Xc)(i) = r + m_contents[4][i];
+    //        (*Yc)(i) = g;
+    //        (*Zc)(i) = b;
+    //    } 
+    //}    
+    //accept();
 }
 
 void FitsImporter::align_with_ais()
@@ -425,7 +431,8 @@ void FitsImporter::align_with_ais()
   
     m_align->align_with_ais(m_ui->autoCropCheckBox->isChecked());
 
-    m_ui->pushButtonOK->setEnabled(false);
+    // TODO:
+    //m_ui->pushButtonOK->setEnabled(false);
 }
 
 void FitsImporter::ais_finished(int exitcode)
@@ -547,156 +554,95 @@ void FitsImporter::previewLabelSelected(int index)
     }
 }
 
-void FitsImporter::on_hsRedRed_valueChanged(int newValue)
+void FitsImporter::hScrollValueChanged(int newValue, QDoubleSpinBox* spinBox)
 {
     float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbRedRed->blockSignals(true);
-    m_ui->dsbRedRed->setValue( value );
-    m_ui->dsbRedRed->blockSignals(oldState);
+    bool oldState = spinBox->blockSignals(true);
+    spinBox->setValue( value );
+    spinBox->blockSignals(oldState);
     buildPreview();
 }
 
-void FitsImporter::on_dsbRedRed_valueChanged(double newValue)
+void FitsImporter::spinBoxValueChanged(int newValue, QSlider* slider)
 {
-    bool oldState = m_ui->hsRedRed->blockSignals(true);
-    m_ui->hsRedRed->setValue( (int)(newValue*10000) );
-    m_ui->hsRedRed->blockSignals(oldState);
+    bool oldState = slider->blockSignals(true);
+    slider->setValue( (int)(newValue*10000) );
+    slider->blockSignals(oldState);
     buildPreview();
 }
 
-void FitsImporter::on_hsRedGreen_valueChanged(int newValue)
+void FitsImporter::on_hsChannelRed_valueChanged(int newValue)
 {
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbRedGreen->blockSignals(true);
-    m_ui->dsbRedGreen->setValue( value );
-    m_ui->dsbRedGreen->blockSignals(oldState);
-    buildPreview();
+    hScrollValueChanged(newValue, m_ui->dsbChannelRed);
 }
 
-void FitsImporter::on_dsbRedGreen_valueChanged(double newValue)
+void FitsImporter::on_dsbChannelRed_valueChanged(double newValue)
 {
-    bool oldState = m_ui->hsRedGreen->blockSignals(true);
-    m_ui->hsRedGreen->setValue( (int)(newValue*10000) );
-    m_ui->hsRedGreen->blockSignals(oldState);
-    buildPreview();
+    spinBoxValueChanged(newValue, m_ui->hsChannelRed);
 }
 
-void FitsImporter::on_hsRedBlue_valueChanged(int newValue)
+void FitsImporter::on_hsChannelGreen_valueChanged(int newValue)
 {
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbRedBlue->blockSignals(true);
-    m_ui->dsbRedBlue->setValue( value );
-    m_ui->dsbRedBlue->blockSignals(oldState);
-    buildPreview();
+    hScrollValueChanged(newValue, m_ui->dsbChannelGreen);
 }
 
-void FitsImporter::on_dsbRedBlue_valueChanged(double newValue)
+void FitsImporter::on_dsbChannelGreen_valueChanged(double newValue)
 {
-    bool oldState = m_ui->hsRedBlue->blockSignals(true);
-    m_ui->hsRedBlue->setValue( (int)(newValue*10000) );
-    m_ui->hsRedBlue->blockSignals(oldState);
-    buildPreview();
+    spinBoxValueChanged(newValue, m_ui->hsChannelGreen);
 }
 
-void FitsImporter::on_hsGreenRed_valueChanged(int newValue)
+void FitsImporter::on_hsChannelBlue_valueChanged(int newValue)
 {
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbGreenRed->blockSignals(true);
-    m_ui->dsbGreenRed->setValue( value );
-    m_ui->dsbGreenRed->blockSignals(oldState);
-    buildPreview();
+    hScrollValueChanged(newValue, m_ui->dsbChannelBlue);
 }
 
-void FitsImporter::on_dsbGreenRed_valueChanged(double newValue)
+void FitsImporter::on_dsbChannelBlue_valueChanged(double newValue)
 {
-    bool oldState = m_ui->hsGreenRed->blockSignals(true);
-    m_ui->hsGreenRed->setValue( (int)(newValue*10000) );
-    m_ui->hsGreenRed->blockSignals(oldState);
-    buildPreview();
+    spinBoxValueChanged(newValue, m_ui->hsChannelBlue);
 }
 
-void FitsImporter::on_hsGreenGreen_valueChanged(int newValue)
+void FitsImporter::on_hsChannelH_valueChanged(int newValue)
 {
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbGreenGreen->blockSignals(true);
-    m_ui->dsbGreenGreen->setValue( value );
-    m_ui->dsbGreenGreen->blockSignals(oldState);
-    buildPreview();
+    hScrollValueChanged(newValue, m_ui->dsbChannelH);
 }
 
-void FitsImporter::on_dsbGreenGreen_valueChanged(double newValue)
+void FitsImporter::on_dsbChannelH_valueChanged(double newValue)
 {
-    bool oldState = m_ui->hsGreenGreen->blockSignals(true);
-    m_ui->hsGreenGreen->setValue( (int)(newValue*10000) );
-    m_ui->hsGreenGreen->blockSignals(oldState);
-    buildPreview();
+    spinBoxValueChanged(newValue, m_ui->hsChannelH);
 }
 
-void FitsImporter::on_hsGreenBlue_valueChanged(int newValue)
+
+void FitsImporter::on_pushButtonColorRed_clicked()
 {
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbGreenBlue->blockSignals(true);
-    m_ui->dsbGreenBlue->setValue( value );
-    m_ui->dsbGreenBlue->blockSignals(oldState);
-    buildPreview();
+    chooseColor(m_ui->pushButtonColorRed, m_colorRed);
 }
 
-void FitsImporter::on_dsbGreenBlue_valueChanged(double newValue)
+void FitsImporter::on_pushButtonColorGreen_clicked()
 {
-    bool oldState = m_ui->hsGreenBlue->blockSignals(true);
-    m_ui->hsGreenBlue->setValue( (int)(newValue*10000) );
-    m_ui->hsGreenBlue->blockSignals(oldState);
-    buildPreview();
+    chooseColor(m_ui->pushButtonColorGreen, m_colorGreen);
 }
 
-void FitsImporter::on_hsBlueRed_valueChanged(int newValue)
+void FitsImporter::on_pushButtonColorBlue_clicked()
 {
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbBlueRed->blockSignals(true);
-    m_ui->dsbBlueRed->setValue( value );
-    m_ui->dsbBlueRed->blockSignals(oldState);
-    buildPreview();
+    chooseColor(m_ui->pushButtonColorBlue, m_colorBlue);
 }
 
-void FitsImporter::on_dsbBlueRed_valueChanged(double newValue)
+void FitsImporter::on_pushButtonColorH_clicked()
 {
-    bool oldState = m_ui->hsBlueRed->blockSignals(true);
-    m_ui->hsBlueRed->setValue( (int)(newValue*10000) );
-    m_ui->hsBlueRed->blockSignals(oldState);
-    buildPreview();
+    chooseColor(m_ui->pushButtonColorH, m_colorH);
 }
 
-void FitsImporter::on_hsBlueGreen_valueChanged(int newValue)
-{
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbBlueGreen->blockSignals(true);
-    m_ui->dsbBlueGreen->setValue( value );
-    m_ui->dsbBlueGreen->blockSignals(oldState);
-    buildPreview();
+void FitsImporter::chooseColor(QWidget* colorWidget, QColor& mColor)
+{    
+    QColor selectedColor = QColorDialog::getColor();   
+    if (selectedColor.isValid())
+    {
+        bool newColor = mColor != selectedColor;
+        mColor = selectedColor;
+        QString colorName = selectedColor.name();
+        // auto-fill-background of the button must be active
+        colorWidget->setStyleSheet("background-color:" + colorName);
+        if (newColor)
+            buildPreview();
+    }
 }
-
-void FitsImporter::on_dsbBlueGreen_valueChanged(double newValue)
-{
-    bool oldState = m_ui->hsBlueGreen->blockSignals(true);
-    m_ui->hsBlueGreen->setValue( (int)(newValue*10000) );
-    m_ui->hsBlueGreen->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_hsBlueBlue_valueChanged(int newValue)
-{
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbBlueBlue->blockSignals(true);
-    m_ui->dsbBlueBlue->setValue( value );
-    m_ui->dsbBlueBlue->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_dsbBlueBlue_valueChanged(double newValue)
-{
-    bool oldState = m_ui->hsBlueBlue->blockSignals(true);
-    m_ui->hsBlueBlue->setValue( (int)(newValue*10000) );
-    m_ui->hsBlueBlue->blockSignals(oldState);
-    buildPreview();
-}
-
