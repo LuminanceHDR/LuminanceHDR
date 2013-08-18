@@ -21,6 +21,9 @@
 
 #include <QDebug>
 
+#include <CCfits/ExtHDU.h>
+#include <CCfits/FitsError.h>
+
 #include <Libpfs/io/fitsreader.h>
 #include <Libpfs/frame.h>
 
@@ -42,7 +45,7 @@ void FitsReader::open()
 
     m_image = &m_file->pHDU();
     m_image->readAllKeys();
-    std::cout << *m_image << std::endl;
+    //std::cout << *m_image << std::endl;
 }
 
 void FitsReader::close()
@@ -54,19 +57,38 @@ void FitsReader::close()
 
 void FitsReader::read(Frame &frame, const Params &/*params*/)
 {
-    if (m_image->axes() != 2)
-        throw InvalidFile("No image in file " + filename());
-
     if ( !isOpen() ) open();
 
     std::valarray<float>  contents;
-    m_image->read(contents);
 
-    qDebug() << "contents.size = " << contents.size();
+    int ax1, ax2;
 
-    int ax1 = m_image->axis(0);
-    int ax2 = m_image->axis(1); 
+    if (!(m_image->axes() == 2 || m_image->axes() == 3)) {
+        const std::multimap< std::string, CCfits::ExtHDU * > extensions = m_file->extension();
+        std::multimap< std::string, CCfits::ExtHDU * >::const_iterator it, itEnd = extensions.end();
+        for (it = extensions.begin(); it != itEnd; it++) {
+            //std::cout << it->first << std::endl;
+            it->second->readAllKeys();
+            //std::cout << *it->second << std::endl;
+            if (!(it->second->axes() == 2 || it->second->axes() == 3))
+                continue;
+            else { 
+                it->second->read(contents);
+                ax1 = it->second->axis(0);
+                ax2 = it->second->axis(1);
+                break;
+            }
+        }
+        if (it == extensions.end())
+            throw InvalidFile("No image in file " + filename());
+    }
+    else {
+        m_image->read(contents);
+        ax1 = m_image->axis(0);
+        ax2 = m_image->axis(1); 
+    }
     qDebug() << "ax1 = " << ax1 << " , ax2 = " << ax2;
+    qDebug() << "contents.size = " << contents.size();
 
     Frame tempFrame(ax1, ax2);
     Channel *Xc, *Yc, *Zc;
@@ -74,7 +96,7 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
 
     for (long i = 0; i < ax1*ax2; i++) 
     {
-        (*Yc)(i) = (*Zc)(i) = (*Xc)(i) = contents[i];;
+        (*Yc)(i) = (*Zc)(i) = (*Xc)(i) = contents[i];
     }     
 
     qDebug() << "FITS min luminance: " << *std::min_element(Xc->begin(), Xc->end());
