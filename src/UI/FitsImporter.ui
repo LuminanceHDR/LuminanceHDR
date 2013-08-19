@@ -155,23 +155,25 @@
                <item row="0" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_22">
                  <item>
-                  <spacer name="horizontalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                  <widget class="QLabel" name="label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
+                   <property name="minimumSize">
                     <size>
-                     <width>36</width>
-                     <height>20</height>
+                     <width>150</width>
+                     <height>0</height>
                     </size>
                    </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
@@ -352,23 +354,25 @@
                <item row="0" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_23">
                  <item>
-                  <spacer name="horizontalSpacer_8">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                  <widget class="QLabel" name="label_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
+                   <property name="minimumSize">
                     <size>
-                     <width>20</width>
-                     <height>20</height>
+                     <width>150</width>
+                     <height>0</height>
                     </size>
                    </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_2">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 2 (Green)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
@@ -549,23 +553,25 @@
                <item row="0" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_24">
                  <item>
-                  <spacer name="horizontalSpacer_9">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                  <widget class="QLabel" name="label_3">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
+                   <property name="minimumSize">
                     <size>
-                     <width>32</width>
-                     <height>20</height>
+                     <width>150</width>
+                     <height>0</height>
                     </size>
                    </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_3">
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 3 (Blue)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
@@ -734,23 +740,25 @@
             <item row="3" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_21">
               <item>
-               <spacer name="horizontalSpacer_10">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+               <widget class="QLabel" name="label_5">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
+                <property name="minimumSize">
                  <size>
-                  <width>5</width>
-                  <height>20</height>
+                  <width>150</width>
+                  <height>0</height>
                  </size>
                 </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_5">
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosity (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
@@ -783,25 +791,27 @@
             <item row="4" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_25">
               <item>
-               <spacer name="horizontalSpacer_11">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+               <widget class="QLabel" name="label_8">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
+                <property name="minimumSize">
                  <size>
-                  <width>26</width>
-                  <height>20</height>
+                  <width>150</width>
+                  <height>0</height>
                  </size>
                 </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_8">
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="text">
-                 <string>H-alpha (optional)</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;H-alpha (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -830,12 +840,6 @@
              </layout>
             </item>
            </layout>
-           <zorder></zorder>
-           <zorder>dsbGreenRed</zorder>
-           <zorder>hsGreenRed</zorder>
-           <zorder>frame</zorder>
-           <zorder>frame_2</zorder>
-           <zorder>frame_3</zorder>
           </widget>
          </item>
          <item>
@@ -968,8 +972,6 @@
                </widget>
               </item>
              </layout>
-             <zorder>previewLabel</zorder>
-             <zorder>previewLabel</zorder>
             </widget>
            </item>
           </layout>
