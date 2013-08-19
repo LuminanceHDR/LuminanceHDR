@@ -73,6 +73,7 @@ FitsImporter::FitsImporter(QWidget *parent)
     m_previewLabel->setFrameStyle(QFrame::Box);
     m_previewLabel->setLineWidth(3);
     m_previewLabel->hide();
+    m_ui->previewLabel->setPalette(*palette);
     m_previewFrame = new PreviewFrame;
     m_ui->verticalLayoutPreviews->addWidget(m_previewFrame);
     m_previewFrame->addLabel(new SimplePreviewLabel(0));
