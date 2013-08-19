@@ -1680,140 +1680,163 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="86"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load four or five FITS images containing &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity, Red, Green, Blue Channels &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;and (optional) H-alpha Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/FitsImporter.ui" line="137"/>
-        <source>FITS Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/FitsImporter.ui" line="149"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosity Channel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/FitsImporter.ui" line="156"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Red Channel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/FitsImporter.ui" line="163"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Green Channel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/FitsImporter.ui" line="170"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Blue Channel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/FitsImporter.ui" line="177"/>
-        <source>H-alpha Channel (optional)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/UI/FitsImporter.ui" line="193"/>
-        <location filename="../src/UI/FitsImporter.ui" line="211"/>
-        <location filename="../src/UI/FitsImporter.ui" line="229"/>
-        <location filename="../src/UI/FitsImporter.ui" line="247"/>
-        <location filename="../src/UI/FitsImporter.ui" line="265"/>
+        <location filename="../src/UI/FitsImporter.ui" line="194"/>
+        <location filename="../src/UI/FitsImporter.ui" line="393"/>
+        <location filename="../src/UI/FitsImporter.ui" line="592"/>
+        <location filename="../src/UI/FitsImporter.ui" line="779"/>
+        <location filename="../src/UI/FitsImporter.ui" line="830"/>
         <source>Select...</source>
         <translation type="unfinished">选择...</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="300"/>
+        <location filename="../src/UI/FitsImporter.ui" line="814"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;H-alpha (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="925"/>
         <source>Load Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="317"/>
+        <location filename="../src/UI/FitsImporter.ui" line="987"/>
         <source>Alignment</source>
         <translation type="unfinished">对齐</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="343"/>
+        <location filename="../src/UI/FitsImporter.ui" line="1046"/>
         <source>&amp;Autoalign images</source>
         <translation type="unfinished">&amp;自动对齐图像</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="353"/>
+        <location filename="../src/UI/FitsImporter.ui" line="1001"/>
         <source>Hugin&apos;s align_image_stack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="366"/>
+        <location filename="../src/UI/FitsImporter.ui" line="1030"/>
         <source>MTB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="382"/>
+        <location filename="../src/UI/FitsImporter.ui" line="1020"/>
         <source>Auto-crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="407"/>
+        <location filename="../src/UI/FitsImporter.ui" line="1106"/>
         <source>Messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="461"/>
+        <location filename="../src/UI/FitsImporter.ui" line="883"/>
         <source>Shows a larger preview of selected image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="464"/>
+        <location filename="../src/UI/FitsImporter.ui" line="886"/>
+        <location filename="../src/UI/FitsImporter.ui" line="940"/>
         <source>Preview</source>
         <translation type="unfinished">预览</translation>
     </message>
     <message utf8="true">
-        <location filename="../src/UI/FitsImporter.ui" line="483"/>
+        <location filename="../src/UI/FitsImporter.ui" line="866"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="536"/>
+        <location filename="../src/UI/FitsImporter.ui" line="84"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load three, four or five FITS images containing Red, Green, Blue Channels and (optional)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity and H-alpha Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="137"/>
+        <source>FITS Channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="178"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="211"/>
+        <location filename="../src/UI/FitsImporter.ui" line="410"/>
+        <location filename="../src/UI/FitsImporter.ui" line="609"/>
+        <source>R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="258"/>
+        <location filename="../src/UI/FitsImporter.ui" line="451"/>
+        <location filename="../src/UI/FitsImporter.ui" line="650"/>
+        <source>G</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="299"/>
+        <location filename="../src/UI/FitsImporter.ui" line="498"/>
+        <location filename="../src/UI/FitsImporter.ui" line="691"/>
+        <source>B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="377"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 2 (Green)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="576"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 3 (Blue)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="763"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosity (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="869"/>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="1152"/>
         <source>Previews</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="578"/>
+        <location filename="../src/UI/FitsImporter.ui" line="1194"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="585"/>
+        <location filename="../src/UI/FitsImporter.ui" line="1201"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="350"/>
-        <location filename="../src/UI/FitsImporter.cpp" line="361"/>
-        <location filename="../src/UI/FitsImporter.cpp" line="372"/>
-        <location filename="../src/UI/FitsImporter.cpp" line="383"/>
-        <location filename="../src/UI/FitsImporter.cpp" line="394"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="103"/>
         <source>Load one FITS image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="446"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="201"/>
         <source>Cannot load FITS image %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="457"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="221"/>
         <source>FITS images have different size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="615"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="450"/>
         <source>align_image_stack exited with exit code %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="645"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="464"/>
         <source>align_image_stack failed with error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1841,7 +1864,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">图像%1是16比特格式，而前面的不是.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="291"/>
+        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="161"/>
         <source>The images have different size.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2865,7 +2888,7 @@ p, li { white-space: pre-wrap; }
     <name>MainWindow</name>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1594"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1593"/>
         <source>Luminance HDR</source>
         <translation type="unfinished">Luminance HDR</translation>
     </message>
@@ -3610,62 +3633,62 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">域检查</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="401"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="400"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation type="unfinished">已准备好.现在打开一个现有的HDR图像或创建一个新的!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="463"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="462"/>
         <source>All HDR formats </source>
         <translation type="unfinished">所有HDR格式</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="475"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="474"/>
         <source>Load one or more HDR images...</source>
         <translation type="unfinished">载入一个或者多个HDR图像...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="501"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="500"/>
         <source>Save files in</source>
         <translation type="unfinished">保存文件在</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="649"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="648"/>
         <source>Failed to save</source>
         <translation type="unfinished">保存失败</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1022"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1021"/>
         <source>Done!</source>
         <translation type="unfinished">完成!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1033"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1032"/>
         <source>Aborting...</source>
         <translation type="unfinished">终止...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1338"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1337"/>
         <source>Cropped Image</source>
         <translation type="unfinished">剪裁的图像</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1391"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1390"/>
         <source>Unsaved changes...</source>
         <translation type="unfinished">未保存的改动...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1392"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1391"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation type="unfinished">这个HDR图像还有未保存的改动.&lt;br&gt;你要保存它吗?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1499"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1498"/>
         <source>Fattal Warning</source>
         <translation type="unfinished">Fattal 警告</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1500"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1499"/>
         <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
 
 Do you want to continue?</source>
@@ -3674,22 +3697,22 @@ Do you want to continue?</source>
 你想继续吗?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1572"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1571"/>
         <source>Untitled</source>
         <translation type="unfinished">无名</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1574"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1573"/>
         <source>Untitled %1</source>
         <translation type="unfinished">无名 %1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1595"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1594"/>
         <source>Error: %1</source>
         <translation type="unfinished">错误:%1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="2003"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="2002"/>
         <source>FITS Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4599,27 +4622,27 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">成功载入文件%1.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="102"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="101"/>
         <source>All LDR formats</source>
         <translation type="unfinished">所有LDR格式</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="111"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="110"/>
         <source>Save the LDR image as...</source>
         <translation type="unfinished">LDR图像另存为...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="118"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="117"/>
         <source>All HDR formats </source>
         <translation type="unfinished">所有的HDR格式 </translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="126"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="125"/>
         <source>Save the HDR image as...</source>
         <translation type="unfinished">HDR图像另存为...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="594"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="593"/>
         <source>Save as...</source>
         <translation type="unfinished">另存为...</translation>
     </message>
