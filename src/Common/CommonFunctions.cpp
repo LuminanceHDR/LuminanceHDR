@@ -132,7 +132,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
             Channel redNorm(currentItem.frame()->getWidth(),
                             currentItem.frame()->getHeight(), "X");
             Normalize normalize(m, M);
-            ConvertToQRgb convert(2.2f);
+            ConvertToQRgb convert(5.0f);
             std::transform(red->begin(), red->end(), redNorm.begin(), normalize);
             utils::transform(redNorm.begin(), redNorm.end(), redNorm.begin(), redNorm.begin(),
                              qimageData, convert);

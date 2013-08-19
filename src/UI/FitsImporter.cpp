@@ -310,6 +310,12 @@ void FitsImporter::buildPreview()
                 rgb2hsl(r, g, b, h, s, l);
                 hsl2rgb(h, s, luminance, r, g, b);
                 float redH = r + h_alpha;
+                if (r > 1.0f)
+                    r = 1.0f;
+                if (g > 1.0f)
+                    g = 1.0f;
+                if (b > 1.0f)
+                    b = 1.0f;
                 if (redH > 1.0f)
                     redH = 1.0f;
                 QRgb rgb;
@@ -332,6 +338,12 @@ void FitsImporter::buildPreview()
                 float g = greenRed * red + greenGreen * green + greenBlue * blue;
                 float b = blueRed * red + blueGreen * green + blueBlue * blue;
                 float redH = r + h_alpha;
+                if (r > 1.0f)
+                    r = 1.0f;
+                if (g > 1.0f)
+                    g = 1.0f;
+                if (b > 1.0f)
+                    b = 1.0f;
                 if (redH > 1.0f)
                     redH = 1.0f;
                 QRgb rgb;
