@@ -60,7 +60,6 @@ public:
 
 private:
     boost::scoped_ptr<CCfits::FITS> m_file;
-    CCfits::PHDU *m_image;
 };
 
 }   // io

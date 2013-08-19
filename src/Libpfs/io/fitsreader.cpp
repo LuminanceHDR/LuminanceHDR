@@ -42,10 +42,6 @@ void FitsReader::open()
     if ( !m_file ) {
         throw InvalidFile("Cannot open file " + filename());
     }
-
-    m_image = &m_file->pHDU();
-    m_image->readAllKeys();
-    //std::cout << *m_image << std::endl;
 }
 
 void FitsReader::close()
@@ -60,10 +56,13 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
     if ( !isOpen() ) open();
 
     std::valarray<float>  contents;
-
     int ax1, ax2;
 
-    if (!(m_image->axes() == 2 || m_image->axes() == 3)) {
+    CCfits::PHDU& image = m_file->pHDU();
+    image.readAllKeys();
+    //std::cout << *image << std::endl;
+
+    if (!(image.axes() == 2 || image.axes() == 3)) {
         const std::multimap< std::string, CCfits::ExtHDU * > extensions = m_file->extension();
         std::multimap< std::string, CCfits::ExtHDU * >::const_iterator it, itEnd = extensions.end();
         for (it = extensions.begin(); it != itEnd; it++) {
@@ -79,13 +78,13 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
                 break;
             }
         }
-        if (it == extensions.end())
+        if (it == itEnd)
             throw InvalidFile("No image in file " + filename());
     }
     else {
-        m_image->read(contents);
-        ax1 = m_image->axis(0);
-        ax2 = m_image->axis(1); 
+        image.read(contents);
+        ax1 = image.axis(0);
+        ax2 = image.axis(1); 
     }
     qDebug() << "ax1 = " << ax1 << " , ax2 = " << ax2;
     qDebug() << "contents.size = " << contents.size();
