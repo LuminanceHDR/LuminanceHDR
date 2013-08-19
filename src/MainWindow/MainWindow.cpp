@@ -63,7 +63,6 @@
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/rotate.h"
 #include "Libpfs/manip/gamma_levels.h"
-#include "Libpfs/io/fitsreader3ch.h"
 
 #include "Common/archs.h"
 #include "Common/config.h"
