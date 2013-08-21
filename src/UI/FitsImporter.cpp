@@ -158,11 +158,6 @@ void FitsImporter::on_pushButtonLoad_clicked()
 {
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     m_ui->pushButtonLoad->setEnabled(false);
-    m_data.clear();
-    m_tmpdata.clear();
-    m_channels.clear();
-    m_contents.clear();
-    m_qimages.clear();
     m_channels << m_redChannel
                << m_greenChannel
                << m_blueChannel
@@ -216,7 +211,7 @@ void FitsImporter::loadFilesDone()
     for (i = 0; i < m_tmpdata.size(); i++)
         if (!m_tmpdata[i].filename().isEmpty())
             break;
-    m_previewFrame->labelSelected(i);
+    m_previewFrame->selectLabel(i);
 
     if (!framesHaveSameSize()) {
         QMessageBox::warning(0,"", tr("FITS images have different size"), QMessageBox::Ok, QMessageBox::NoButton);
@@ -230,7 +225,7 @@ void FitsImporter::loadFilesDone()
         QApplication::restoreOverrideCursor();
         return;
     }
-    m_ui->pushButtonLoad->setEnabled(true);
+    m_ui->pushButtonReset->setEnabled(true);
     m_ui->pushButtonOK->setEnabled(true);
     m_ui->pushButtonClockwise->setEnabled(true);
     m_ui->pushButtonPreview->setEnabled(true);
@@ -252,6 +247,7 @@ void FitsImporter::loadFilesDone()
     m_ui->hsBlueRed->setEnabled(true);
     m_ui->hsBlueGreen->setEnabled(true);
     m_ui->hsBlueBlue->setEnabled(true);
+    m_ui->vsGamma->setEnabled(true);
     m_tmpdata.clear();
     buildContents();
     buildPreview();
@@ -288,6 +284,7 @@ void FitsImporter::buildPreview()
     float blueRed = m_ui->dsbBlueRed->value();
     float blueGreen = m_ui->dsbBlueGreen->value();
     float blueBlue = m_ui->dsbBlueBlue->value();
+    float gamma = m_ui->vsGamma->value()/10000.0f;
 
 
     QImage tempImage(previewWidth,
@@ -310,7 +307,7 @@ void FitsImporter::buildPreview()
                 float h, s, l;
                 rgb2hsl(r, g, b, h, s, l);
                 hsl2rgb(h, s, luminance, r, g, b);
-                float redH = r + h_alpha;
+                float redH = r + 0.2f * h_alpha;
                 if (r > 1.0f)
                     r = 1.0f;
                 if (g > 1.0f)
@@ -320,7 +317,7 @@ void FitsImporter::buildPreview()
                 if (redH > 1.0f)
                     redH = 1.0f;
                 QRgb rgb;
-                ConvertToQRgb convert;
+                ConvertToQRgb convert(gamma);
                 convert(redH, g, b, rgb); 
                 tempImage.setPixel(i, j, rgb);
             }
@@ -338,7 +335,7 @@ void FitsImporter::buildPreview()
                 float r = redRed * red + redGreen * green + redBlue * blue;
                 float g = greenRed * red + greenGreen * green + greenBlue * blue;
                 float b = blueRed * red + blueGreen * green + blueBlue * blue;
-                float redH = r + h_alpha;
+                float redH = r + 0.2f * h_alpha;
                 if (r > 1.0f)
                     r = 1.0f;
                 if (g > 1.0f)
@@ -348,7 +345,7 @@ void FitsImporter::buildPreview()
                 if (redH > 1.0f)
                     redH = 1.0f;
                 QRgb rgb;
-                ConvertToQRgb convert;
+                ConvertToQRgb convert(gamma);
                 convert(redH, g, b, rgb); 
                 tempImage.setPixel(i, j, rgb);
             }
@@ -713,3 +710,54 @@ void FitsImporter::on_dsbBlueBlue_valueChanged(double newValue)
     buildPreview();
 }
 
+void FitsImporter::on_vsGamma_valueChanged(int newValue)
+{
+    buildPreview();
+}
+
+void FitsImporter::on_pushButtonReset_clicked()
+{
+    m_data.clear();
+    m_tmpdata.clear();
+    m_channels.clear();
+    m_contents.clear();
+    m_qimages.clear();
+    m_ui->lineEditRed->clear();
+    m_ui->lineEditGreen->clear();
+    m_ui->lineEditBlue->clear();
+    m_ui->lineEditLuminosity->clear();
+    m_ui->lineEditH->clear();
+    m_ui->previewLabel->clear();
+    m_previewFrame->getLabel(0)->clear();
+    m_previewFrame->getLabel(1)->clear();
+    m_previewFrame->getLabel(2)->clear();
+    m_previewFrame->getLabel(3)->clear();
+    m_previewFrame->getLabel(4)->clear();
+    m_previewFrame->getLabel(0)->setEnabled(false);
+    m_previewFrame->getLabel(1)->setEnabled(false);
+    m_previewFrame->getLabel(2)->setEnabled(false);
+    m_previewFrame->getLabel(3)->setEnabled(false);
+    m_previewFrame->getLabel(4)->setEnabled(false);
+    m_ui->dsbRedRed->setEnabled(false);
+    m_ui->dsbRedGreen->setEnabled(false);
+    m_ui->dsbRedBlue->setEnabled(false);
+    m_ui->dsbGreenRed->setEnabled(false);
+    m_ui->dsbGreenGreen->setEnabled(false);
+    m_ui->dsbGreenBlue->setEnabled(false);
+    m_ui->dsbBlueRed->setEnabled(false);
+    m_ui->dsbBlueGreen->setEnabled(false);
+    m_ui->dsbBlueBlue->setEnabled(false);
+    m_ui->hsRedRed->setEnabled(false);
+    m_ui->hsRedGreen->setEnabled(false);
+    m_ui->hsRedBlue->setEnabled(false);
+    m_ui->hsGreenRed->setEnabled(false);
+    m_ui->hsGreenGreen->setEnabled(false);
+    m_ui->hsGreenBlue->setEnabled(false);
+    m_ui->hsBlueRed->setEnabled(false);
+    m_ui->hsBlueGreen->setEnabled(false);
+    m_ui->hsBlueBlue->setEnabled(false);
+    m_ui->vsGamma->setEnabled(false);
+    m_ui->pushButtonOK->setEnabled(false);
+    m_ui->pushButtonPreview->setEnabled(false);
+    m_ui->pushButtonClockwise->setEnabled(false);
+}

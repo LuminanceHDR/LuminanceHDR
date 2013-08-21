@@ -28,7 +28,8 @@ PreviewFrame::PreviewFrame(QWidget *parent) :
     QFrame(parent),
     m_index(0) 
 {
-    setLayout(&m_v_l);
+    m_flowLayout = new FlowLayout;
+    setLayout(m_flowLayout);
     QPalette* palette = new QPalette(); 
     palette->setColor(QPalette::Foreground,Qt::red);
     setPalette(*palette);
@@ -40,13 +41,13 @@ PreviewFrame::~PreviewFrame()
 
 void PreviewFrame::addLabel(SimplePreviewLabel* label)
 {
-    connect(label, SIGNAL(selected(int)), this, SLOT(labelSelected(int)));
+    connect(label, SIGNAL(selected(int)), this, SLOT(selectLabel(int)));
     label->setFrameStyle(QFrame::Box);
     m_labels.push_back(label);
-    m_v_l.addWidget(label);
+    m_flowLayout->addWidget(label);
 }
 
-void PreviewFrame::labelSelected(int index)
+void PreviewFrame::selectLabel(int index)
 {
     m_labels[m_index]->setLineWidth(1);
     m_index = index;

@@ -25,7 +25,7 @@
 #define PREVIEWFRAME_H
 
 #include <QFrame>
-#include <QVBoxLayout>
+#include "FlowLayout.h"
 
 #include "SimplePreviewLabel.h"
 
@@ -42,12 +42,12 @@ public:
     int getSelectedLabel() { return m_index; }
  
 public slots:
-    void labelSelected(int index);
+    void selectLabel(int index);
 
 protected:
     QList<SimplePreviewLabel *> m_labels;
     int m_index;
-    QVBoxLayout m_v_l;
+    FlowLayout *m_flowLayout;
 };
 
 #endif

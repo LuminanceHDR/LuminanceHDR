@@ -81,6 +81,8 @@ protected slots:
     void on_dsbBlueGreen_valueChanged(double newValue);
     void on_hsBlueBlue_valueChanged(int newValue);
     void on_dsbBlueBlue_valueChanged(double newValue);
+    void on_vsGamma_valueChanged(int newValue);
+    void on_pushButtonReset_clicked();
 
 signals:
     void setValue(int);
