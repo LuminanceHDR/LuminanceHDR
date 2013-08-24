@@ -123,7 +123,7 @@ bool checkFileName(const HdrCreationItem& item, const QString& str) {
   
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
-#ifndef LHDR_CXX11_ENABLED
+#ifdef LHDR_CXX11_ENABLED
     for (const QString& i, filenames) {
 #else
     BOOST_FOREACH(const QString& i, filenames) {
