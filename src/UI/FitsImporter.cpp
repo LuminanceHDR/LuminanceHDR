@@ -55,12 +55,15 @@ FitsImporter::~FitsImporter()
 }
 
 FitsImporter::FitsImporter(QWidget *parent)
-    : QDialog(parent)
+    : QWizard(parent)
     , m_align(NULL)
     , m_ui(new Ui::FitsImporter)
 {
     m_ui->setupUi(this);
 
+#ifdef WIN32
+    setWizardStyle(WizardStyle::ModernStyle);
+#endif
 #ifdef Q_WS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
@@ -226,7 +229,7 @@ void FitsImporter::loadFilesDone()
         return;
     }
     m_ui->pushButtonReset->setEnabled(true);
-    m_ui->pushButtonOK->setEnabled(true);
+    //m_ui->pushButtonOK->setEnabled(true);
     m_ui->pushButtonClockwise->setEnabled(true);
     m_ui->pushButtonPreview->setEnabled(true);
     m_ui->dsbRedRed->setEnabled(true);
@@ -254,19 +257,19 @@ void FitsImporter::loadFilesDone()
     QApplication::restoreOverrideCursor();
 }
 
-void FitsImporter::on_pushButtonOK_clicked()
-{
-    if (m_ui->alignCheckBox->isChecked())
-        if (m_ui->ais_radioButton->isChecked()) {
-            m_ui->groupBoxMessages->setVisible(true);
-            m_ui->progressBar->setVisible(true);
-            align_with_ais();
-        }
-        else
-            align_with_mtb();
-    else
-        buildFrame();
-}
+//void FitsImporter::on_pushButtonOK_clicked()
+//{
+//    if (m_ui->alignCheckBox->isChecked())
+//        if (m_ui->ais_radioButton->isChecked()) {
+//            m_ui->groupBoxMessages->setVisible(true);
+//            m_ui->progressBar->setVisible(true);
+//            align_with_ais();
+//        }
+//        else
+//            align_with_mtb();
+//    else
+//        buildFrame();
+//}
 
 bool isValid(HdrCreationItem& item)
 {
@@ -435,7 +438,7 @@ void FitsImporter::align_with_ais()
   
     m_align->align_with_ais(m_ui->autoCropCheckBox->isChecked());
 
-    m_ui->pushButtonOK->setEnabled(false);
+    //m_ui->pushButtonOK->setEnabled(false);
 }
 
 void FitsImporter::ais_finished(int exitcode)
@@ -757,7 +760,7 @@ void FitsImporter::on_pushButtonReset_clicked()
     m_ui->hsBlueGreen->setEnabled(false);
     m_ui->hsBlueBlue->setEnabled(false);
     m_ui->vsGamma->setEnabled(false);
-    m_ui->pushButtonOK->setEnabled(false);
+    //m_ui->pushButtonOK->setEnabled(false);
     m_ui->pushButtonPreview->setEnabled(false);
     m_ui->pushButtonClockwise->setEnabled(false);
 }
