@@ -28,6 +28,8 @@
 #include <QLineEdit>
 #include <QProcess>
 #include <QFutureWatcher>
+#include <QSlider>
+#include <QWizard>
 
 #include "PreviewFrame.h"
 #include "Alignment/Align.h"
@@ -38,7 +40,7 @@ namespace Ui {
 class FitsImporter;
 }
 
-class FitsImporter : public QDialog 
+class FitsImporter : public QWizard
 {
     Q_OBJECT
 
@@ -54,7 +56,7 @@ protected slots:
     void on_pushButtonGreen_clicked();
     void on_pushButtonBlue_clicked();
     void on_pushButtonH_clicked();
-    void on_pushButtonOK_clicked();
+    //void on_pushButtonOK_clicked();
     void on_pushButtonLoad_clicked();
     void on_pushButtonClockwise_clicked();
     void on_pushButtonPreview_clicked();
