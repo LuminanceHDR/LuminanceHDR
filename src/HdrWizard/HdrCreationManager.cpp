@@ -283,7 +283,8 @@ void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
 
 void HdrCreationManager::removeTempFiles()
 {
-    m_align->removeTempFiles();
+    if (m_align)
+        m_align->removeTempFiles();
 }
 
 /*
