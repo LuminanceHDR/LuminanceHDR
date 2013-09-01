@@ -1995,7 +1995,7 @@ void MainWindow::on_actionFits_Importer_triggered()
 {
     FitsImporter importer;
 
-    if (importer.exec()) {
+    if (importer.exec() == QDialog::Accepted) {
 //        QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
         pfs::Frame *frame = importer.getFrame();

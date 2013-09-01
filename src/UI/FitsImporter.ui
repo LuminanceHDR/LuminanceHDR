@@ -20,7 +20,7 @@
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
-  <widget class="QWizardPage" name="wizardPage1">
+  <widget class="QWizardPage" name="wizardPageIntro">
    <layout class="QGridLayout" name="gridLayout_5">
     <item row="0" column="0">
      <widget class="QLabel" name="label_4">
@@ -87,10 +87,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWizardPage" name="wizardPage2">
+  <widget class="QWizardPage" name="wizardPageLoadFiles">
    <property name="subTitle">
     <string>Load channels TODO...................</string>
    </property>
+   <attribute name="pageId">
+    <string notr="true">21</string>
+   </attribute>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
@@ -571,12 +574,12 @@
      <rect>
       <x>720</x>
       <y>320</y>
-      <width>75</width>
+      <width>71</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Load Images</string>
+     <string>Load Previews</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonReset">
@@ -596,13 +599,16 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWizardPage" name="wizardPage3">
+  <widget class="QWizardPage" name="wizardPageAlignment">
    <property name="title">
     <string/>
    </property>
    <property name="subTitle">
     <string>ALIGN Proces.......................</string>
    </property>
+   <attribute name="pageId">
+    <string notr="true">22</string>
+   </attribute>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
@@ -698,13 +704,16 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QWizardPage" name="wizardPage">
+  <widget class="QWizardPage" name="wizardPagePreview">
    <property name="title">
     <string/>
    </property>
    <property name="subTitle">
     <string>Preview................</string>
    </property>
+   <attribute name="pageId">
+    <string notr="true">99</string>
+   </attribute>
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>

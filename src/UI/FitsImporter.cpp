@@ -99,6 +99,16 @@ FitsImporter::FitsImporter(QWidget *parent)
     connect(m_previewFrame->getLabel(2), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
     connect(m_previewFrame->getLabel(3), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
     connect(m_previewFrame->getLabel(4), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
+    
+    // wizard stuff
+    m_ui->wizardPageLoadFiles->setCommitPage(true);
+    m_ui->wizardPageAlignment->setCommitPage(true);
+}
+
+pfs::Frame* FitsImporter::getFrame()
+{
+    buildFrame();
+    return m_frame;
 }
 
 void FitsImporter::selectInputFile(QLineEdit* textField, QString* channel)
@@ -763,4 +773,16 @@ void FitsImporter::on_pushButtonReset_clicked()
     //m_ui->pushButtonOK->setEnabled(false);
     m_ui->pushButtonPreview->setEnabled(false);
     m_ui->pushButtonClockwise->setEnabled(false);
+}
+
+int FitsImporter::nextId() const
+{
+    int current = currentId();
+    if (current == 21) // load files
+    {
+        return  m_ui->alignCheckBox->isChecked()
+            ? 22  // alignment progress
+            : 99; // preview page
+    }
+    return QWizard::nextId();
 }

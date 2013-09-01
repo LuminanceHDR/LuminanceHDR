@@ -48,7 +48,7 @@ public:
     FitsImporter(QWidget *parent = 0);
     ~FitsImporter();
 
-    pfs::Frame *getFrame() { return m_frame; }
+    pfs::Frame *getFrame();
     
 protected slots:
     void on_pushButtonLuminosity_clicked();
@@ -88,9 +88,10 @@ protected slots:
 
 signals:
     void setValue(int);
-    void setRange(int, int);
+    void setRange(int, int);    
 
 protected:
+    virtual int nextId() const;
     void checkLoadButton();
     bool framesHaveSameSize();
     void buildContents();
