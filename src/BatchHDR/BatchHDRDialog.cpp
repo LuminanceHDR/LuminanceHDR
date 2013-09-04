@@ -378,7 +378,7 @@ void BatchHDRDialog::create_hdr(int)
     }
 
     if (m_Ui->autoAG_checkBox->isChecked()) {
-        m_Ui->textEdit->append(tr("Doing auto anti ghosting..."));
+        m_Ui->textEdit->append(tr("Doing auto anti-ghosting..."));
         QList<QPair<int, int> > HV_offsets;
         for (int i = 0; i < m_Ui->spinBox->value(); i++ ) {
             HV_offsets.append(qMakePair(0,0));
@@ -388,7 +388,7 @@ void BatchHDRDialog::create_hdr(int)
         int h0 = m_hdrCreationManager->computePatches(m_Ui->threshold_doubleSpinBox->value(), m_patches, patchesPercent, HV_offsets);
         m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                    m_hdrCreationManager,
-                                                   m_patches, h0, false, &m_ph)); // false means auto anti ghosting
+                                                   m_patches, h0, false, &m_ph)); // false means auto anti-ghosting
 
         m_futureWatcher.setFuture(m_future);
         

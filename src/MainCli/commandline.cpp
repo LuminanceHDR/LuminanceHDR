@@ -563,7 +563,7 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
         bool patches[agGridSize][agGridSize];
         float patchesPercent;
         int h0 = hdrCreationManager->computePatches(threshold, patches, patchesPercent, dummyOffset);
-        HDR.reset( hdrCreationManager->doAntiGhosting(patches, h0, false, &ph) ); // false means auto anti ghosting
+        HDR.reset( hdrCreationManager->doAntiGhosting(patches, h0, false, &ph) ); // false means auto anti-ghosting
     }
     else {
         HDR.reset( hdrCreationManager->createHdr(false,1) );
@@ -686,7 +686,7 @@ void CommandLineInterfaceManager::printHelp(char * progname)
             "\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
             "\t" + tr("-o --output LDR_FILE    File name you want to save your tone mapped LDR to.") + "\n" +
             "\t" + tr("-q --quality VALUE      Quality of the saved tone mapped file (0-100).") + "\n" +
-            "\t" + tr("-b --autoag THRESHOLD   Enable auto antighosting with given threshold.") + "\n" +
+            "\t" + tr("-b --autoag THRESHOLD   Enable auto anti-ghosting with given threshold.") + "\n" +
             "\t" + tr("                        (No tonemapping is performed unless -o is specified).") + "\n\n" +
             tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
     printErrorAndExit(help);

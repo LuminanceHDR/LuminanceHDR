@@ -21,7 +21,7 @@
  * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
- * Improvements, bugfixing, anti ghosting, new preview widget based on QGraphicsView
+ * Improvements, bugfixing, anti-ghosting, new preview widget based on QGraphicsView
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */

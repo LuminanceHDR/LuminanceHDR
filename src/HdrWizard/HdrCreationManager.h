@@ -161,7 +161,7 @@ private:
     bool framesHaveSameSize();    
 
     QFutureWatcher<void> m_futureWatcher;
-	//QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti ghosting
+	//QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti-ghosting
     QImage* m_agMask;
     LuminanceOptions m_luminance_options;
 

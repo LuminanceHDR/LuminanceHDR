@@ -21,7 +21,7 @@
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_9">
      <property name="spacing">
-      <number>-1</number>
+      <number>6</number>
      </property>
      <property name="margin">
       <number>6</number>
@@ -662,7 +662,7 @@ p, li { white-space: pre-wrap; }
                    <bool>false</bool>
                   </property>
                   <property name="title">
-                   <string>Anti ghosting</string>
+                   <string>Anti-ghosting</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_8">
                    <property name="margin">
@@ -686,10 +686,10 @@ p, li { white-space: pre-wrap; }
                      <item>
                       <widget class="QCheckBox" name="autoAG_checkBox">
                        <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                        </property>
                        <property name="text">
-                        <string>Auto anti ghosting</string>
+                        <string>Auto anti-ghosting</string>
                        </property>
                       </widget>
                      </item>
@@ -746,7 +746,7 @@ p, li { white-space: pre-wrap; }
                         <bool>false</bool>
                        </property>
                        <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                        </property>
                        <property name="maximum">
                         <number>10000</number>
@@ -774,7 +774,7 @@ p, li { white-space: pre-wrap; }
                         <bool>false</bool>
                        </property>
                        <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                        </property>
                        <property name="decimals">
                         <number>4</number>
@@ -819,7 +819,7 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QCheckBox" name="checkBoxEditingTools">
                   <property name="text">
-                   <string>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti Ghosting</string>
+                   <string>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti-Ghosting</string>
                   </property>
                  </widget>
                 </item>
@@ -1191,7 +1191,7 @@ p, li { white-space: pre-wrap; }
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
             <property name="spacing">
-             <number>-1</number>
+             <number>6</number>
             </property>
             <item row="0" column="0">
              <widget class="QGroupBox" name="groupBox_4">

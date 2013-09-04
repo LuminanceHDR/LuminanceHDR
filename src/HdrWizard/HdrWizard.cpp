@@ -952,7 +952,7 @@ void HdrWizard::NextFinishButtonClicked() {
             m_hdrCreationManager->getAgData(m_patches, h0);
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                        m_hdrCreationManager.data(),
-                                                       m_patches, h0, false, &m_ph)); // false means auto anti ghosting
+                                                       m_patches, h0, false, &m_ph)); // false means auto anti-ghosting
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
             m_ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);
@@ -960,7 +960,7 @@ void HdrWizard::NextFinishButtonClicked() {
         else if (m_doManualAntighosting) {
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                        m_hdrCreationManager.data(),
-                                                       m_patches, m_agGoodImageIndex, true, &m_ph)); // true means manual anti ghosting
+                                                       m_patches, m_agGoodImageIndex, true, &m_ph)); // true means manual anti-ghosting
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
             m_ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);

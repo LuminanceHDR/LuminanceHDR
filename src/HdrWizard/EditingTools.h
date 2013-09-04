@@ -20,7 +20,7 @@
  *
  * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing, anti ghosting
+ * Improvements, bugfixing, anti-ghosting
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */

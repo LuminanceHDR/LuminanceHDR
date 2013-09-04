@@ -102,7 +102,7 @@ pfs::Frame* createHDR(const float* arrayofexptime,
 
     if (antighosting)
     {
-    	qDebug("antighosting, setting model debevec and weights plateau");
+    	qDebug("anti-ghosting, setting model debevec and weights plateau");
         opt_weight = PLATEAU;
         opt_model = DEBEVEC;
     }

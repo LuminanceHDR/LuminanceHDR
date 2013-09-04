@@ -20,7 +20,7 @@
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
- * Implementation based on QGraphicsView, anti ghosting:
+ * Implementation based on QGraphicsView, anti-ghosting:
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 

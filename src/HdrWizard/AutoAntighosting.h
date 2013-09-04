@@ -18,7 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * Manual and auto antighosting functions
+ * Manual and auto anti-ghosting functions
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */

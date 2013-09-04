@@ -59,7 +59,7 @@ LuminanceHDR is an open source graphical user interface application that provide
 <dd>Shorthand for "Tone Mapping Operator".</dd>
 <dt>RAW</dt>
 <dd>Another umbrella definition for several (minimally processed) image formats. Raw files can have 12 or 14 bits per color channel, but noise usually cuts down the available dynamic range to something like 1000:1, roughly 10 bits. For all intents and purposes they are HDR files.</dd>
-<dt>Antighosting</dt>
+<dt>Anti-ghosting</dt>
 <dd>The HDR creation process involves merging a stack of images. An object changing position in the image set creates a strange effect in which the object is partially visible (like a ghost) in the final HDR. This problem can be corrected by automatic or manual procedures.</dd>
 </dl>
 
@@ -151,7 +151,7 @@ The first feature will enable the user to add to each image in the set additiona
 The user is able to shift each image in set by one pixel by first selecting an image in the left (editable) list and then clicking one of the arrow buttons in the bottom-left panel. The same effect can also be obtained by using one of the WSAD or IKJL key combinations. Pressing Shift will shift by ten pixels, pressing control will shift by 50 pixels and pressing both Shift and Control will shift by 100 pixels.<br>
 By dragging a rectangle with the mouse, the user can also select a crop area for all the images in the set. Clicking the "Crop All Images" button will effectively crop the images in the set.<br>
 This window contains also the interactive anti-ghosting feature.<br>
-The user switches to anti-ghosting mode by pressing the "Anti Ghosting" button. It is then possible to draw a mask over the regions of the images that contain moving objects.<br>
+The user switches to anti-ghosting mode by pressing the "Anti-Ghosting" button. It is then possible to draw a mask over the regions of the images that contain moving objects.<br>
 The user can select the size of the brush, its strength and whether the brush is adding or removing the mask.<br>
 The same window contains a button that enables the user to save the set of images after all the cropping has taken place and with all the anti-ghosting masks and shifts applied. The images will be saved in TIFF format, and the mask is saved as a 0-valued alpha channel in the image set.<br>
 The following page of the wizard will also ask you which kind of configuration you want to use to create the hdr from the source images: usually the first choice leads to good results, so feel free to accept the default "Config 1" option by pressing next.<br>

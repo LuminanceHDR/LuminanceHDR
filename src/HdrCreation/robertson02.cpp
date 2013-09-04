@@ -90,7 +90,7 @@ void RobertsonOperator::computeChannel(const DataList& inputData, float* outputD
                 maxti = std::max(maxti, ti);
             }
 
-            // --- anti ghosting: monotonous increase in time should result
+            // --- anti-ghosting: monotonous increase in time should result
             // in monotonous increase in intensity; make forward and
             // backward check, ignore value if condition not satisfied
 //            int m_lower = inputData.getSample(i_lower[i], j);
@@ -305,7 +305,7 @@ int robertson02ApplyResponseCore(pfs::Array2Df& xj, const float* arrayofexptime,
     int maxM = M-1;
     computeTrustRange(w, M, minM, maxM);
 
-    // --- anti ghosting: for each image i, find images with
+    // --- anti-ghosting: for each image i, find images with
     // the immediately higher and lower exposure times
     std::vector<int> i_lower(N);
     std::vector<int> i_upper(N);
@@ -335,7 +335,7 @@ int robertson02ApplyResponseCore(pfs::Array2Df& xj, const float* arrayofexptime,
                 maxti = std::max(maxti, ti);
             }
 
-            // --- anti ghosting: monotonous increase in time should result
+            // --- anti-ghosting: monotonous increase in time should result
             // in monotonous increase in intensity; make forward and
             // backward check, ignore value if condition not satisfied
             int m_lower = inputData.getSample(i_lower[i], j);
