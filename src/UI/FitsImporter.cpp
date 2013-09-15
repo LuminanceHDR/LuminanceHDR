@@ -67,6 +67,9 @@ FitsImporter::FitsImporter(QWidget *parent)
 #ifdef Q_WS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
+
+    setPixmap(WizardPixmap::LogoPixmap, QIcon(":/new/prefix1/images/Galaxy-icon.png").pixmap(48, 48));
+
     m_previewLabel = new QLabel(this);
     m_previewLabel->resize(600,400);
     m_previewLabel->setScaledContents(true);
@@ -79,30 +82,27 @@ FitsImporter::FitsImporter(QWidget *parent)
     m_ui->previewLabel->setPalette(*palette);
     m_previewFrame = new PreviewFrame;
     m_ui->verticalLayoutPreviews->addWidget(m_previewFrame);
-    m_previewFrame->addLabel(new SimplePreviewLabel(0));
-    m_previewFrame->addLabel(new SimplePreviewLabel(1));
-    m_previewFrame->addLabel(new SimplePreviewLabel(2));
-    m_previewFrame->addLabel(new SimplePreviewLabel(3));
-    m_previewFrame->addLabel(new SimplePreviewLabel(4));
+
+    for (int i = 0; i < 5; i++)
+    {
+        SimplePreviewLabel* label = new SimplePreviewLabel(i);
+        m_previewFrame->addLabel(label);
+        label->setEnabled(false);
+        connect(label, SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
+    }
     m_previewFrame->show();
-    m_previewFrame->getLabel(0)->setEnabled(false);
-    m_previewFrame->getLabel(1)->setEnabled(false);
-    m_previewFrame->getLabel(2)->setEnabled(false);
-    m_previewFrame->getLabel(3)->setEnabled(false);
-    m_previewFrame->getLabel(4)->setEnabled(false);
-    m_ui->groupBoxMessages->setVisible(false);
-    m_ui->progressBar->setVisible(false);
     connect(this, SIGNAL(setValue(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
     connect(this, SIGNAL(setRange(int,int)), m_ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
-    connect(m_previewFrame->getLabel(0), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
-    connect(m_previewFrame->getLabel(1), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
-    connect(m_previewFrame->getLabel(2), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
-    connect(m_previewFrame->getLabel(3), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
-    connect(m_previewFrame->getLabel(4), SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
     
     // wizard stuff
-    m_ui->wizardPageLoadFiles->setCommitPage(true);
-    m_ui->wizardPageAlignment->setCommitPage(true);
+    
+    m_ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
+    m_ui->wizardPageLoadFiles->registerExtField("lineEditRed*", m_ui->lineEditRed);
+    m_ui->wizardPageLoadFiles->registerExtField("lineEditGreen*", m_ui->lineEditGreen);
+    m_ui->wizardPageLoadFiles->registerExtField("lineEditBlue*", m_ui->lineEditBlue);
+
+    m_ui->wizardPagePreview->setCommitPage(true);
+    m_ui->wizardPageAlignment->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
 }
 
 pfs::Frame* FitsImporter::getFrame()
@@ -169,8 +169,11 @@ void FitsImporter::checkLoadButton()
 
 void FitsImporter::on_pushButtonLoad_clicked()
 {
+    m_ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
+
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     m_ui->pushButtonLoad->setEnabled(false);
+
     m_channels << m_redChannel
                << m_greenChannel
                << m_blueChannel
@@ -239,47 +242,14 @@ void FitsImporter::loadFilesDone()
         return;
     }
     m_ui->pushButtonReset->setEnabled(true);
-    //m_ui->pushButtonOK->setEnabled(true);
     m_ui->pushButtonClockwise->setEnabled(true);
     m_ui->pushButtonPreview->setEnabled(true);
-    m_ui->dsbRedRed->setEnabled(true);
-    m_ui->dsbRedGreen->setEnabled(true);
-    m_ui->dsbRedBlue->setEnabled(true);
-    m_ui->dsbGreenRed->setEnabled(true);
-    m_ui->dsbGreenGreen->setEnabled(true);
-    m_ui->dsbGreenBlue->setEnabled(true);
-    m_ui->dsbBlueRed->setEnabled(true);
-    m_ui->dsbBlueGreen->setEnabled(true);
-    m_ui->dsbBlueBlue->setEnabled(true);
-    m_ui->hsRedRed->setEnabled(true);
-    m_ui->hsRedGreen->setEnabled(true);
-    m_ui->hsRedBlue->setEnabled(true);
-    m_ui->hsGreenRed->setEnabled(true);
-    m_ui->hsGreenGreen->setEnabled(true);
-    m_ui->hsGreenBlue->setEnabled(true);
-    m_ui->hsBlueRed->setEnabled(true);
-    m_ui->hsBlueGreen->setEnabled(true);
-    m_ui->hsBlueBlue->setEnabled(true);
-    m_ui->vsGamma->setEnabled(true);
     m_tmpdata.clear();
     buildContents();
-    buildPreview();
+    //buildPreview();
     QApplication::restoreOverrideCursor();
+    m_ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::Undefined);
 }
-
-//void FitsImporter::on_pushButtonOK_clicked()
-//{
-//    if (m_ui->alignCheckBox->isChecked())
-//        if (m_ui->ais_radioButton->isChecked()) {
-//            m_ui->groupBoxMessages->setVisible(true);
-//            m_ui->progressBar->setVisible(true);
-//            align_with_ais();
-//        }
-//        else
-//            align_with_mtb();
-//    else
-//        buildFrame();
-//}
 
 bool isValid(HdrCreationItem& item)
 {
@@ -435,7 +405,6 @@ void FitsImporter::buildFrame()
             (*Zc)(i) = b;
         } 
     }    
-    accept();
 }
 
 void FitsImporter::align_with_ais()
@@ -447,8 +416,6 @@ void FitsImporter::align_with_ais()
     connect(m_align, SIGNAL(dataReady(QByteArray)), this, SLOT(readData(QByteArray)));
   
     m_align->align_with_ais(m_ui->autoCropCheckBox->isChecked());
-
-    //m_ui->pushButtonOK->setEnabled(false);
 }
 
 void FitsImporter::ais_finished(int exitcode)
@@ -463,8 +430,9 @@ void FitsImporter::ais_finished(int exitcode)
     else {
         QApplication::restoreOverrideCursor();
         buildContents();
-        buildFrame();
+        //buildFrame();
     }
+    m_ui->wizardPageAlignment->setCompleteStatus(ExtWizardPage::CompleteStatus::Undefined);
 }
 
 void FitsImporter::ais_failed_slot(QProcess::ProcessError error)
@@ -525,7 +493,7 @@ void FitsImporter::align_with_mtb()
 
     QApplication::restoreOverrideCursor();
     buildContents();
-    buildFrame();
+    //buildFrame();
 }
 
 void FitsImporter::on_pushButtonClockwise_clicked()
@@ -548,7 +516,7 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     std::copy(C->begin(), C->end(), m_contents[index].begin()); 
     QImage tmp = m_data[index].qimage()->scaled(previewWidth, previewHeight);
     m_qimages[index].swap(tmp);
-    buildPreview();
+    //buildPreview();
     m_ui->pushButtonClockwise->setEnabled(true);
     QApplication::restoreOverrideCursor();
 }
@@ -751,26 +719,6 @@ void FitsImporter::on_pushButtonReset_clicked()
     m_previewFrame->getLabel(2)->setEnabled(false);
     m_previewFrame->getLabel(3)->setEnabled(false);
     m_previewFrame->getLabel(4)->setEnabled(false);
-    m_ui->dsbRedRed->setEnabled(false);
-    m_ui->dsbRedGreen->setEnabled(false);
-    m_ui->dsbRedBlue->setEnabled(false);
-    m_ui->dsbGreenRed->setEnabled(false);
-    m_ui->dsbGreenGreen->setEnabled(false);
-    m_ui->dsbGreenBlue->setEnabled(false);
-    m_ui->dsbBlueRed->setEnabled(false);
-    m_ui->dsbBlueGreen->setEnabled(false);
-    m_ui->dsbBlueBlue->setEnabled(false);
-    m_ui->hsRedRed->setEnabled(false);
-    m_ui->hsRedGreen->setEnabled(false);
-    m_ui->hsRedBlue->setEnabled(false);
-    m_ui->hsGreenRed->setEnabled(false);
-    m_ui->hsGreenGreen->setEnabled(false);
-    m_ui->hsGreenBlue->setEnabled(false);
-    m_ui->hsBlueRed->setEnabled(false);
-    m_ui->hsBlueGreen->setEnabled(false);
-    m_ui->hsBlueBlue->setEnabled(false);
-    m_ui->vsGamma->setEnabled(false);
-    //m_ui->pushButtonOK->setEnabled(false);
     m_ui->pushButtonPreview->setEnabled(false);
     m_ui->pushButtonClockwise->setEnabled(false);
 }
@@ -785,4 +733,27 @@ int FitsImporter::nextId() const
             : 99; // preview page
     }
     return QWizard::nextId();
+}
+
+bool FitsImporter::validateCurrentPage()
+{
+    //int current = currentId();
+    return QWizard::validateCurrentPage();
+}
+
+void FitsImporter::initializePage(int id)
+{
+    int current = currentId();
+    if (current == 22)  // alignment progress
+    { 
+        if (m_ui->ais_radioButton->isChecked()) {
+            align_with_ais();
+        }
+        else
+            align_with_mtb();
+    }
+    else if (current == 99) // preview page
+    {
+        buildPreview();
+    }
 }

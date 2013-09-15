@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>832</width>
-    <height>594</height>
+    <width>836</width>
+    <height>619</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,77 +17,7 @@
    <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/applications-astronomy.png</normaloff>:/new/prefix1/images/applications-astronomy.png</iconset>
   </property>
-  <property name="sizeGripEnabled">
-   <bool>false</bool>
-  </property>
-  <widget class="QWizardPage" name="wizardPageIntro">
-   <layout class="QGridLayout" name="gridLayout_5">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load three, four or five FITS images containing &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Red, Green, Blue Channels &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;and (optional) Luminosity and H-alpha Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_6">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>80</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>80</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../../icons.qrc">:/new/prefix1/images/telescope.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_7">
-      <property name="minimumSize">
-       <size>
-        <width>80</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>80</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../../icons.qrc">:/new/prefix1/images/Galaxy-icon.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWizardPage" name="wizardPageLoadFiles">
+  <widget class="ExtWizardPage" name="wizardPageLoadFiles">
    <property name="subTitle">
     <string>Load channels TODO...................</string>
    </property>
@@ -599,7 +529,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWizardPage" name="wizardPageAlignment">
+  <widget class="ExtWizardPage" name="wizardPageAlignment">
    <property name="title">
     <string/>
    </property>
@@ -609,100 +539,44 @@
    <attribute name="pageId">
     <string notr="true">22</string>
    </attribute>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>181</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TODO: Aligning in progress</string>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="progressBar">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>250</y>
-      <width>484</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>0</number>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxMessages">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>700</y>
-      <width>977</width>
-      <height>133</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="title">
-     <string>Messages</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QTextEdit" name="textEdit">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxMessages_2">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>70</y>
-      <width>741</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="title">
-     <string>Messages</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="0">
-      <widget class="QTextEdit" name="textEdit_2">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="1">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>Progress:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QGroupBox" name="groupBoxMessages_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Messages</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QTextEdit" name="textEdit">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QWizardPage" name="wizardPagePreview">
    <property name="title">
@@ -845,9 +719,6 @@
      </item>
      <item row="0" column="1">
       <widget class="QSlider" name="vsGamma">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="maximum">
         <number>10000</number>
        </property>
@@ -893,9 +764,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_11">
        <item>
         <widget class="QSlider" name="hsRedGreen">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
@@ -908,9 +776,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
           <widget class="QDoubleSpinBox" name="dsbRedGreen">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -994,9 +859,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_28">
        <item>
         <widget class="QSlider" name="hsRedBlue">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
@@ -1009,9 +871,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
           <widget class="QDoubleSpinBox" name="dsbRedBlue">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -1097,9 +956,6 @@
         <layout class="QHBoxLayout" name="horizontalLayout_8">
          <item>
           <widget class="QSlider" name="hsRedRed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <number>10000</number>
            </property>
@@ -1117,9 +973,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
           <widget class="QDoubleSpinBox" name="dsbRedRed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -1206,9 +1059,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_29">
        <item>
         <widget class="QSlider" name="hsGreenBlue">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
@@ -1221,9 +1071,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
           <widget class="QDoubleSpinBox" name="dsbGreenBlue">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -1307,9 +1154,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_27">
        <item>
         <widget class="QSlider" name="hsGreenGreen">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
@@ -1325,9 +1169,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_9">
          <item>
           <widget class="QDoubleSpinBox" name="dsbGreenGreen">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -1414,9 +1255,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_16">
        <item>
         <widget class="QSlider" name="hsGreenRed">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
@@ -1429,9 +1267,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_10">
          <item>
           <widget class="QDoubleSpinBox" name="dsbGreenRed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -1515,9 +1350,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_20">
        <item>
         <widget class="QSlider" name="hsBlueRed">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
@@ -1530,9 +1362,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_11">
          <item>
           <widget class="QDoubleSpinBox" name="dsbBlueRed">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -1616,9 +1445,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_30">
        <item>
         <widget class="QSlider" name="hsBlueGreen">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
@@ -1631,9 +1457,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_12">
          <item>
           <widget class="QDoubleSpinBox" name="dsbBlueGreen">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -1717,9 +1540,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_32">
        <item>
         <widget class="QSlider" name="hsBlueBlue">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="maximum">
           <number>10000</number>
          </property>
@@ -1735,9 +1555,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_13">
          <item>
           <widget class="QDoubleSpinBox" name="dsbBlueBlue">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="maximum">
             <double>1.000000000000000</double>
            </property>
@@ -1800,8 +1617,65 @@
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ExtWizardPage</class>
+   <extends>QWizardPage</extends>
+   <header>extwizardpage.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>alignCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ais_radioButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>501</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>501</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>alignCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>mtb_radioButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>501</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>309</x>
+     <y>501</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>alignCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoCropCheckBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>501</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>83</x>
+     <y>526</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

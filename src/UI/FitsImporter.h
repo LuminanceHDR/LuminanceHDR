@@ -92,6 +92,10 @@ signals:
 
 protected:
     virtual int nextId() const;
+    virtual bool validateCurrentPage();
+    virtual void initializePage(int id);
+
+    
     void checkLoadButton();
     bool framesHaveSameSize();
     void buildContents();
