@@ -1621,7 +1621,7 @@
   <customwidget>
    <class>ExtWizardPage</class>
    <extends>QWizardPage</extends>
-   <header>extwizardpage.h</header>
+   <header>UI/ExtWizardPage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
