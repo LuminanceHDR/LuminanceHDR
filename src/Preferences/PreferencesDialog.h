@@ -26,6 +26,7 @@
 
 #include <QDialog>
 #include <QMap>
+#include <QLineEdit>
 #include <QSignalMapper>
 
 namespace Ui
@@ -102,5 +103,7 @@ private Q_SLOTS:
 	void on_printer_toolButton_clicked();
 
 	void toolButton_clicked(int);
+
+    void openColorProfile(QLineEdit* lineEdit);
 };
 #endif

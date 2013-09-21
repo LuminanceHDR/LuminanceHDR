@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>759</width>
-    <height>505</height>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,21 @@
    <attribute name="pageId">
     <string notr="true">21</string>
    </attribute>
-   <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,1,0,0,0">
+   <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,1,0">
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="lineEditRed">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>H-alpha (optional)</string>
+      </property>
+     </widget>
+    </item>
     <item row="4" column="1">
      <widget class="QLineEdit" name="lineEditH">
       <property name="readOnly">
@@ -35,15 +49,33 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_3">
+    <item row="1" column="2">
+     <widget class="QPushButton" name="pushButtonGreen">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 3 (Blue)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>Select...</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../icons.qrc">
+        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="pushButtonGreen">
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="lineEditBlue">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Channel 1 (Red)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QPushButton" name="pushButtonBlue">
       <property name="text">
        <string>Select...</string>
       </property>
@@ -67,21 +99,14 @@
     <item row="3" column="0">
      <widget class="QLabel" name="label_5">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosity (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>Luminosity (optional)</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_8">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>H-alpha (optional)</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>Channel 2 (Green)</string>
       </property>
      </widget>
     </item>
@@ -96,45 +121,6 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="lineEditLuminosity">
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEditRed">
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 2 (Green)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QPushButton" name="pushButtonBlue">
-      <property name="text">
-       <string>Select...</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../icons.qrc">
-        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="lineEditBlue">
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="1">
      <widget class="QLineEdit" name="lineEditGreen">
       <property name="readOnly">
@@ -142,7 +128,21 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="0" colspan="3">
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Channel 3 (Blue)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="lineEditLuminosity">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0" colspan="3">
      <widget class="QWidget" name="widget" native="true">
       <layout class="QGridLayout" name="gridLayout">
        <property name="margin">
@@ -151,69 +151,7 @@
        <property name="spacing">
         <number>0</number>
        </property>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="pushButtonPreview">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="toolTip">
-          <string>Shows a larger preview of selected image</string>
-         </property>
-         <property name="text">
-          <string>Preview</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../icons.qrc">
-           <normaloff>:/new/prefix1/images/zoom-in.png</normaloff>:/new/prefix1/images/zoom-in.png</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-         <property name="default">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="pushButtonReset">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Reset</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QPushButton" name="pushButtonLoad">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Load Previews</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../icons.qrc">
-           <normaloff>:/new/prefix1/images/apply.png</normaloff>:/new/prefix1/images/apply.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="shortcut">
-          <string>Ctrl+R</string>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
+       <item row="0" column="5">
         <widget class="QPushButton" name="pushButtonClockwise">
          <property name="enabled">
           <bool>false</bool>
@@ -243,16 +181,115 @@
          </property>
         </spacer>
        </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pushButtonReset">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Reset</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButtonLoad">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Load Previews</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../icons.qrc">
+           <normaloff>:/new/prefix1/images/apply.png</normaloff>:/new/prefix1/images/apply.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+R</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="pushButtonPreview">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Shows a larger preview of selected image</string>
+         </property>
+         <property name="text">
+          <string>Preview</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../icons.qrc">
+           <normaloff>:/new/prefix1/images/zoom-in.png</normaloff>:/new/prefix1/images/zoom-in.png</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+         <property name="default">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
       <zorder>pushButtonReset</zorder>
-      <zorder>pushButtonReset</zorder>
-      <zorder>pushButtonPreview</zorder>
       <zorder>pushButtonClockwise</zorder>
-      <zorder>pushButtonLoad</zorder>
       <zorder>horizontalSpacer</zorder>
+      <zorder>pushButtonLoad</zorder>
+      <zorder>pushButtonPreview</zorder>
      </widget>
     </item>
-    <item row="10" column="0" rowspan="2" colspan="3">
+    <item row="6" column="0" rowspan="3" colspan="3">
+     <widget class="QGroupBox" name="grpPreviews">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>700</width>
+        <height>130</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Previews</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="verticalLayoutPreviews"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QPushButton" name="pushButtonH">
+      <property name="text">
+       <string>Select...</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../icons.qrc">
+        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="0" colspan="3">
      <widget class="QGroupBox" name="alignGroupBox">
       <property name="enabled">
        <bool>true</bool>
@@ -357,44 +394,6 @@
           </spacer>
          </item>
         </layout>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="4" column="2">
-     <widget class="QPushButton" name="pushButtonH">
-      <property name="text">
-       <string>Select...</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../icons.qrc">
-        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0" rowspan="3" colspan="3">
-     <widget class="QGroupBox" name="grpPreviews">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>700</width>
-        <height>130</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Previews</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <property name="margin">
-        <number>0</number>
-       </property>
-       <item>
-        <layout class="QHBoxLayout" name="verticalLayoutPreviews"/>
        </item>
       </layout>
      </widget>

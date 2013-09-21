@@ -749,33 +749,25 @@ void PreferencesDialog::enterWhatsThis()
 
 void PreferencesDialog::on_camera_toolButton_clicked()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
-		ICC_PATH,
-		tr("Color profile (*.icc *.ICC *.icm *.ICM)")
-	);
-	if (!fileName.isEmpty()) {
-		m_Ui->camera_lineEdit->setText(fileName);
-	}
+    openColorProfile(m_Ui->camera_lineEdit);
 }
 
 void PreferencesDialog::on_monitor_toolButton_clicked()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
-		ICC_PATH,
-		tr("Color profile (*.icc)")
-	);
-	if (!fileName.isEmpty()) {
-		m_Ui->monitor_lineEdit->setText(fileName);
-	}
+    openColorProfile(m_Ui->monitor_lineEdit);
 }
 
 void PreferencesDialog::on_printer_toolButton_clicked()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
+    openColorProfile(m_Ui->printer_lineEdit);
+}
+
+void PreferencesDialog::openColorProfile(QLineEdit* lineEdit)
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
 		ICC_PATH,
-		tr("Color profile (*.icc)")
+		tr("Color profile (*.icc *.ICC *.icm *.ICM)")
 	);
-	if (!fileName.isEmpty()) {
-		m_Ui->printer_lineEdit->setText(fileName);
-	}
+	if (!fileName.isEmpty())
+		lineEdit->setText(fileName);
 }
