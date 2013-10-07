@@ -454,7 +454,7 @@
     <string>Preview</string>
    </property>
    <property name="subTitle">
-    <string>Please fine-tune the color part of the the channels.</string>
+    <string>Please fine-tune the color part of the channels.</string>
    </property>
    <attribute name="pageId">
     <string notr="true">99</string>
