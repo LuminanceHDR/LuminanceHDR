@@ -55,7 +55,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -64,7 +64,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -91,7 +91,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -99,7 +99,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -203,6 +203,18 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <translation></translation>
     </message>
     <message>
+        <source>Anti-ghosting</source>
+        <translation>Anti-Ghosting</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatischen Anti-Ghosting-Algorithmus aktivieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation>Autom. Anti-Ghosting</translation>
+    </message>
+    <message>
         <source>Folder where bracketed pictures are located (in alphabetical order)</source>
         <translation>Ordner mit Aufnahmen der Belichtungsreihe (alphabetisch sortiert)</translation>
     </message>
@@ -236,7 +248,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Error: missing EXIF data</source>
-        <translation type="unfinished">Fehler: fehlende EXIF-Daten</translation>
+        <translation>Fehler: fehlende EXIF-Daten</translation>
     </message>
     <message>
         <source>Aligning...</source>
@@ -245,6 +257,10 @@ In der Dokumentation findest du weitere Informationen.</translation>
     <message>
         <source>Creating HDR...</source>
         <translation>Erzeuge HDR ...</translation>
+    </message>
+    <message>
+        <source>Doing auto anti-ghosting...</source>
+        <translation>Führe autom. Anti-Ghosting durch ...</translation>
     </message>
     <message>
         <source>Written </source>
@@ -273,6 +289,10 @@ In der Dokumentation findest du weitere Informationen.</translation>
     <message>
         <source>Progress</source>
         <translation>Fortschritt</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vom automatischen Anti-Ghosting-Algorithmus verwendeter Schwellenwert. Ein niedrigerer Schwellenwert sorgt für eine aggressivere Verarbeitung, kann aber den erzielten Dynamikumfang verringern. Verwende die &amp;quot;Recompute&amp;quot;-Schaltfläche, um die tatsächliche Fleckenbildung zu sehen und den Schwellenwert entsprechend anzupassen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Select...</source>
@@ -311,44 +331,24 @@ Fortfahren?</translation>
         <translation>Eigene Konfiguration %1</translation>
     </message>
     <message>
-        <source>Anti ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>O. Gallo and others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto anti ghosting</source>
-        <translation type="unfinished"></translation>
+        <translation>O. Gallo und andere</translation>
     </message>
     <message>
         <source>Artifact-free High Dynamic Range Imaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Artefaktfreie HDR-Bilderzeugung</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwellenwert</translation>
     </message>
     <message>
         <source>Input/Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Quelle/Ausgabe</translation>
     </message>
     <message>
         <source>Loading files...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doing auto anti ghosting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Dateien ...</translation>
     </message>
 </context>
 <context>
@@ -846,16 +846,16 @@ Fortfahren?</translation>
         <translation>-q --quality VALUE      Qualität der gespeicherten dynamikkomprimierten Datei (0-100).</translation>
     </message>
     <message>
+        <source>-b --autoag THRESHOLD   Enable auto anti-ghosting with given threshold.</source>
+        <translation>-b --autoag THRESHOLD   Autom. Anti-Ghosting mit angegebenem Schwellenwert aktivieren.</translation>
+    </message>
+    <message>
         <source>                        (No tonemapping is performed unless -o is specified).</source>
         <translation>                        (Dynamikkompression wird nur ausgeführt, falls -o angegeben ist).</translation>
     </message>
     <message>
         <source>Error: Threshold must be in the range [0-1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-b --autoag THRESHOLD   Enable auto antighosting with given threshold.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: Schwellenwert muss im Bereich [0-1] liegen.</translation>
     </message>
 </context>
 <context>
@@ -896,10 +896,6 @@ Fortfahren?</translation>
 <context>
     <name>EditingTools</name>
     <message>
-        <source>Pan the image to a region</source>
-        <translation type="obsolete">Bild auf einen Ausschnitt ausrichten</translation>
-    </message>
-    <message>
         <source>Choose a directory and a prefix</source>
         <translation>Verzeichnis und Präfix wählen</translation>
     </message>
@@ -921,19 +917,19 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Add good image</source>
-        <translation type="unfinished"></translation>
+        <translation>Gutes Bild hinzufügen</translation>
     </message>
     <message>
         <source>Remove good image</source>
-        <translation type="unfinished"></translation>
+        <translation>Gutes Bild entfernen</translation>
     </message>
     <message>
         <source>Select the previous image in both lists</source>
-        <translation type="unfinished">Vorheriges Bild in beiden Listen wählen</translation>
+        <translation>Vorheriges Bild in beiden Listen wählen</translation>
     </message>
     <message>
         <source>Select the next image in both lists</source>
-        <translation type="unfinished">Nächstes Bild in beiden Listen wählen</translation>
+        <translation>Nächstes Bild in beiden Listen wählen</translation>
     </message>
 </context>
 <context>
@@ -961,22 +957,6 @@ Fortfahren?</translation>
     <message>
         <source>Origina&amp;l Size</source>
         <translation>Origina&amp;lgröße</translation>
-    </message>
-    <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Vergrößern</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">Ver&amp;größern</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Verkleinern</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Ver&amp;kleinern</translation>
     </message>
     <message>
         <source>Pivot Only (P)</source>
@@ -1025,6 +1005,26 @@ Das Histogramm des Bildes wird im oberen Feld angezeigt.</translation>
         <translation>Werkzeuge</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti-ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hier kannst du den autom. Anti-Ghosting-Algorithmus aktivieren, den Schwellenwert setzen und Korrekturen neu berechnen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatischen Anti-Ghosting-Algorithmus aktivieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation>Autom. Anti-Ghosting</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zeigt die prozentuale Anzahl der durch den autom. Anti-Ghosting Algorithmus berechneten Korrekturen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vom automatischen Anti-Ghosting-Algorithmus verwendeter Schwellenwert. Ein niedrigerer Schwellenwert sorgt für eine aggressivere Verarbeitung, kann aber den erzielten Dynamikumfang verringern. Verwende die &amp;quot;Recompute&amp;quot;-Schaltfläche, um die tatsächliche Fleckenbildung zu sehen und den Schwellenwert entsprechend anzupassen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
         <translation>Schneidet die Bilder zu, nachdem eine Auswahl mit der linken Maustaste festgelegt wurde</translation>
     </message>
@@ -1039,10 +1039,6 @@ Das Histogramm des Bildes wird im oberen Feld angezeigt.</translation>
     <message>
         <source>Ctrl+X</source>
         <translation>Strg+X</translation>
-    </message>
-    <message>
-        <source>&amp;Anti Ghosting</source>
-        <translation>&amp;Anti Ghosting</translation>
     </message>
     <message>
         <source>&amp;Save Images</source>
@@ -1091,6 +1087,14 @@ Das Histogramm des Bildes wird im oberen Feld angezeigt.</translation>
     <message>
         <source> px</source>
         <translation> px</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vom automatischen Anti-Ghosting-Algorithmus verwendeter Schwellenwert. Ein niedrigerer Schwellenwert sorgt für eine aggressivere Verarbeitung, kann aber den erzielten Dynamikumfang verringern. Verwende die &amp;quot;Recompute&amp;quot;-Schaltfläche, um die tatsächliche Fleckenbildung zu sehen und den Schwellenwert entsprechend anzupassen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&amp;Anti-Ghosting</source>
+        <translation></translation>
     </message>
     <message>
         <source>Insert a vertical shift value for the currently selected movable image</source>
@@ -1256,202 +1260,218 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Fill the window</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenster füllen</translation>
     </message>
     <message>
         <source>Fill &amp;window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenster f&amp;üllen</translation>
     </message>
     <message>
         <source>O. Gallo and others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto anti ghosting</source>
-        <translation type="unfinished"></translation>
+        <translation>O. Gallo und andere</translation>
     </message>
     <message>
         <source>Artifact-free HDR Imaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Artefaktfreie HDR-Bilderzeugung</translation>
     </message>
     <message>
         <source>Total Patches:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Korrekturen insgesamt:</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwellenwert</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hier klicken, um Korrekturen basierend auf dem gewählten Schwellenwert neu zu berechnen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Recompute</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu berechnen</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hier kannst du die Methode zum Zeichnen einer Maske, die Pinselgröße und die Maskenstärke wählen, eine Maske speichern sowie eine gespeicherte Maske anwenden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eine Maske mittels Lasso oder Pinsel hinzufügen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maske mittels Lasso oder Pinsel entfernen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Größe des Pinsels&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Stärke der Maske (halbtransparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>FitsImporter</name>
     <message>
-        <source>FITS Importer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select...</source>
-        <translation type="unfinished">Wählen ...</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Wählen ...</translation>
     </message>
     <message>
         <source>Load one FITS image...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein FITS-Bild laden ...</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Ausrichtung</translation>
+        <translation>Ausrichtung</translation>
     </message>
     <message>
         <source>&amp;Autoalign images</source>
-        <translation type="unfinished">Bilder &amp;automatisch ausrichten</translation>
+        <translation>Bilder &amp;automatisch ausrichten</translation>
     </message>
     <message>
         <source>Hugin&apos;s align_image_stack</source>
-        <translation type="unfinished">Hugins align_image_stack</translation>
+        <translation>Hugins align_image_stack</translation>
     </message>
     <message>
         <source>MTB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Auto-crop</source>
-        <translation type="unfinished">Bilder automatisch zuschneiden</translation>
+        <translation>Bilder automatisch zuschneiden</translation>
+    </message>
+    <message>
+        <source>The alignment of the input files is in progress. Please be patient!</source>
+        <translation>Die Quellbilder werden ausgerichtet. Bitte hab Geduld!</translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation>Fortschritt:</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Meldungen</translation>
     </message>
     <message>
         <source>Shows a larger preview of selected image</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeigt eine größere Vorschau des gewählten Bildes</translation>
+    </message>
+    <message>
+        <source>Setup files</source>
+        <translation>Dateien festlegen</translation>
+    </message>
+    <message>
+        <source>Select the different files for the channels. Optionally, they can be aligned.</source>
+        <translation>Wähle die unterschiedlichen Dateien für die Kanäle. Sie können optional ausgerichtet werden.</translation>
+    </message>
+    <message>
+        <source>Channel 1 (Red)</source>
+        <translation>Kanal 1 (rot)</translation>
+    </message>
+    <message>
+        <source>Luminosity (optional)</source>
+        <translation>Leuchtkraft (optional)</translation>
+    </message>
+    <message>
+        <source>Channel 2 (Green)</source>
+        <translation>Kanal 2 (grün)</translation>
+    </message>
+    <message>
+        <source>Channel 3 (Blue)</source>
+        <translation>Kanal 3 (blau)</translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <translation>Strg+R</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished">Vorschau</translation>
-    </message>
-    <message utf8="true">
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschau</translation>
     </message>
     <message>
         <source>Previews</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschaubilder</translation>
     </message>
     <message>
         <source>Cannot load FITS image %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann FITS-Bild %1 nicht laden</translation>
     </message>
     <message>
         <source>FITS images have different size</source>
-        <translation type="unfinished"></translation>
+        <translation>FITS-Bilder sind unterschiedlich groß</translation>
     </message>
     <message>
         <source>align_image_stack exited with exit code %1</source>
-        <translation type="unfinished"></translation>
+        <translation>align_image_stack wurde mit Code %1 beendet</translation>
     </message>
     <message>
         <source>align_image_stack failed with error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load three, four or five FITS images containing Red, Green, Blue Channels and (optional)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity and H-alpha Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FITS Channels</source>
-        <translation type="unfinished"></translation>
+        <translation>align_image_stack schlug fehl</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Kanal 1 (Rot)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 2 (Green)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Kanal 2 (Grün)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 3 (Blue)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosity (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Kanal 3 (Blau)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Drehen</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;H-alpha (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>Import FITS files</source>
+        <translation>FITS-Dateien importieren</translation>
+    </message>
+    <message>
+        <source>H-alpha (optional)</source>
+        <translation></translation>
+    </message>
+    <message utf8="true">
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180Â°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ausgewähltes Bild um 180° drehen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Load Previews</source>
+        <translation>Vorschaubilder laden</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Zurücksetzen</translation>
+    </message>
+    <message>
+        <source>Please fine-tune the color part of the channels.</source>
+        <translation>Bitte stell den Farbanteil der Kanäle ein.</translation>
+    </message>
+    <message>
+        <source>Color presets</source>
+        <translation>Farbvorgaben</translation>
+    </message>
+    <message>
+        <source>RGB</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Ha OIII Sii</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1465,38 +1485,19 @@ p, li { white-space: pre-wrap; }
     <name>HdrCreationManager</name>
     <message>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation type="obsolete">Das Bild %1 ist in einem 8-Bit-Format (LDR), die anderen Bilder jedoch nicht.</translation>
+        <translation>Das Bild %1 ist in einem 8-Bit-Format (LDR), die vorherigen Bilder jedoch nicht.</translation>
     </message>
     <message>
         <source>The image %1 has an invalid size.</source>
-        <translation type="obsolete">Das Bild %1 hat eine ungültige Größe.</translation>
+        <translation>Das Bild %1 hat eine ungültige Größe.</translation>
     </message>
     <message>
         <source>The image %1 is an 16 bit format while the previous ones are not.</source>
-        <translation type="obsolete">Das Bild %1 ist in einem 16-Bit-Format, die anderen Bilder jedoch nicht.</translation>
+        <translation>Das Bild %1 ist in einem 16-Bit-Format, die vorherigen Bilder jedoch nicht.</translation>
     </message>
     <message>
         <source>The images have different size.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HdrInputLoader</name>
-    <message>
-        <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="obsolete">FEHLER: Die Datei&lt;br&gt;%1&lt;br&gt; ist keine 8- oder 16-Bit-TIFF-Datei.</translation>
-    </message>
-    <message>
-        <source>ERROR: %1</source>
-        <translation type="obsolete">FEHLER: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed Loading file: %1</source>
-        <translation type="obsolete">FEHLER: Datei konnte nicht geladen werden: %1</translation>
-    </message>
-    <message>
-        <source>ERROR loading %1</source>
-        <translation type="obsolete">FEHLER beim Laden von %1</translation>
+        <translation>Die Bilder sind unterschiedlich groß.</translation>
     </message>
 </context>
 <context>
@@ -1561,6 +1562,10 @@ p, li { white-space: pre-wrap; }
         <translation>Ausrichtung</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vom automatischen Anti-Ghosting-Algorithmus verwendeter Schwellenwert. Ein niedrigerer Schwellenwert sorgt für eine aggressivere Verarbeitung, kann aber den erzielten Dynamikumfang verringern. Verwende die &amp;quot;Recompute&amp;quot;-Schaltfläche, um die tatsächliche Fleckenbildung zu sehen und den Schwellenwert entsprechend anzupassen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1603,6 +1608,26 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>MTB</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Anti-ghosting</source>
+        <translation>Anti-Ghosting</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatischen Anti-Ghosting-Algorithmus aktivieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation>Autom. Anti-Ghosting</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vom automatischen Anti-Ghosting-Algorithmus verwendeter Schwellenwert. Ein niedrigerer Schwellenwert sorgt für eine aggressivere Verarbeitung, kann aber den erzielten Dynamikumfang verringern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti-Ghosting</source>
+        <translation>Bearbeitungswerkzeuge aktivieren - Erfahrene Nutzer, manuelle Ausrichtung, manuelles Anti-Ghosting</translation>
     </message>
     <message>
         <source>[2/2] Choose Settings for HDR Creation</source>
@@ -1663,10 +1688,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>HDR creation model:</source>
         <translation>Modell zur HDR-Erzeugung:</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting (beta!)</source>
-        <translation type="obsolete">Anti Ghosting (Beta!)</translation>
     </message>
     <message>
         <source>Amount of iterations:</source>
@@ -1735,10 +1756,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Log</source>
         <translation>Protokoll</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Kalibrierung</translation>
     </message>
     <message>
         <source>[2/2] Choose Custom Configuration</source>
@@ -1893,18 +1910,6 @@ p, li { white-space: pre-wrap; }
         <translation>Verarbeite ...</translation>
     </message>
     <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Datei mit Kamera-Verlaufskurve laden</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Kamera-Verlaufskurve (*.m);;Alle Dateien (*)</translation>
-    </message>
-    <message>
-        <source>Save a camera response curve file</source>
-        <translation type="obsolete">Datei mit Kamera-Verlaufskurve speichern</translation>
-    </message>
-    <message>
         <source> - Response curve: </source>
         <translation> - Verlaufskurve: </translation>
     </message>
@@ -1979,60 +1984,28 @@ p, li { white-space: pre-wrap; }
         <translation>Einstellungen speichern</translation>
     </message>
     <message>
-        <source>Custom config %1</source>
-        <translation type="obsolete">Eigene Konfiguration %1</translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNUNG:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR konnte die relevanten &lt;i&gt;EXIF&lt;/i&gt;-Tags in den folgenden Bildern nicht finden:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;Es kann dennoch ein HDR-Bild erzeugt werden. Dazu müssen die Belichtungswerte (EV) oder die Blendenstufenabstände &lt;b&gt;manuell&lt;/b&gt; festgelegt werden.		&lt;hr&gt;Falls dies &lt;b&gt;automatisch&lt;/b&gt; geschehen soll, müssen in den Bilddateien zumindest die folgenden EXIF-Daten vorhanden sein: 		&lt;ul&gt;&lt;li&gt;Verschlusszeit (in Sekunden)&lt;/li&gt;		&lt;li&gt;Blende (f-Wert)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINWEIS:&lt;/b&gt; EXIF-Daten gehen meist bei der Vorverarbeitung der Bilder verloren.&lt;br&gt;		Zum &lt;b&gt;Kopieren der EXIF-Daten&lt;/b&gt; zwischen zwei Gruppen von Dateien steht der Menüpunkt &lt;i&gt;&lt;b&gt;&quot;Extras -&gt; EXIF-Daten kopieren ...&quot;&lt;/b&gt;&lt;/i&gt; zur Verfügung.</translation>
-    </message>
-    <message>
         <source>From File: </source>
         <translation>Aus Datei: </translation>
     </message>
     <message>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNUNG:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR konnte die relevanten &lt;b&gt;EXIF&lt;/b&gt;-Tags in den folgenden Bildern nicht finden&lt;ul&gt;</translation>
     </message>
     <message>
         <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Anti ghosting</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;/ul&gt;&lt;hr&gt;Es kann dennoch ein HDR-Bild erzeugt werden. Dazu müssen die Belichtungswerte (EV) oder die Blendenstufenabstände &lt;b&gt;manuell&lt;/b&gt; festgelegt werden&lt;hr&gt;Falls dies &lt;b&gt;automatisch&lt;/b&gt; geschehen soll, müssen in den Bilddateien zumindest die folgenden EXIF-Daten vorhanden sein: &lt;ul&gt;&lt;li&gt;Belichtungskorrektur&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINWEIS:&lt;/b&gt; EXIF-Daten gehen meist bei der Vorverarbeitung der Bilder verloren.&lt;br&gt;Zum &lt;b&gt;Kopieren der EXIF-Daten&lt;/b&gt; zwischen zwei Gruppen von Dateien steht der Menüpunkt &lt;b&gt;&quot;Extras -&gt; EXIF-Daten kopieren ...&quot;&lt;/b&gt; zur Verfügung.</translation>
     </message>
     <message>
         <source>O. Gallo and others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto anti ghosting</source>
-        <translation type="unfinished"></translation>
+        <translation>O. Gallo und andere</translation>
     </message>
     <message>
         <source>Artifact-free HDR Imaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Artefaktfreie HDR-Bilderzeugung</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti Ghosting</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwellenwert</translation>
     </message>
 </context>
 <context>
@@ -2939,27 +2912,27 @@ Willst du ihn dennoch anwenden?</translation>
     </message>
     <message>
         <source>FITS Importer...</source>
-        <translation type="unfinished"></translation>
+        <translation>FITS-Import ...</translation>
+    </message>
+    <message>
+        <source>Import four FITS files representing luminosity, red, green and blue channels</source>
+        <translation>Importiere vier FITS-Dateien, die Leuchtkraft, Rot-, Grün- und Blaukanal bilden</translation>
     </message>
     <message>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+F</translation>
     </message>
     <message>
         <source>White Balance</source>
-        <translation type="unfinished">Weißabgleich</translation>
+        <translation>Weißabgleich</translation>
     </message>
     <message>
         <source>Fix color cast, can be slow</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbstich korrigieren, kann langsam sein</translation>
     </message>
     <message>
         <source>FITS Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import four FITS files rapresenting luminosity, red, green and blue channels</source>
-        <translation type="unfinished"></translation>
+        <translation>FITS-Bild</translation>
     </message>
 </context>
 <context>
@@ -3527,10 +3500,6 @@ p, li { white-space: pre-wrap; }
         <translation>ICC-Profil öffnen</translation>
     </message>
     <message>
-        <source>Color profile (*.icc)</source>
-        <translation>Farbprofil (*.icc)</translation>
-    </message>
-    <message>
         <source>&amp;Browse...</source>
         <translation>&amp;Durchsuchen ...</translation>
     </message>
@@ -3725,26 +3694,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Warning</source>
         <translation>Warnung</translation>
-    </message>
-    <message>
-        <source>Error Opening RAW File</source>
-        <translation type="obsolete">Fehler beim Laden der RAW-Datei</translation>
-    </message>
-    <message>
-        <source>Error Unpacking RAW File</source>
-        <translation type="obsolete">Fehler beim Entpacken der RAW-Datei</translation>
-    </message>
-    <message>
-        <source>Error Processing RAW File</source>
-        <translation type="obsolete">Fehler beim Verarbeiten der RAW-Datei</translation>
-    </message>
-    <message>
-        <source>Memory Error in processing RAW File</source>
-        <translation type="obsolete">Speicherfehler beim Verarbeiten der RAW-Datei</translation>
-    </message>
-    <message>
-        <source>Error Creating PFS Frame</source>
-        <translation type="obsolete">Fehler beim Erzeugen des PFS-Frames</translation>
     </message>
     <message>
         <source>I cannot open monitor profile. Please select a different one.</source>
