@@ -42,7 +42,7 @@ void ImageInspectorStats::operator()(float value)
         return;
     }
 
-    if ( finite(value) )
+    if ( !finite(value) )
     {
         m_numInf++;
         return;
