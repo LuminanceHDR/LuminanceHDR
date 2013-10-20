@@ -73,8 +73,8 @@ public:
     //! \brief create an instance of the IFusionOperator from a member of
     //! the \c FusionOperator enum
     static FusionOperatorPtr build(FusionOperator type);
-    //! \brief create an instance of the \c IFusionOperator from a string. Valid
-    //! values are "debevec" and "robertson02". Useful in a CLI interface
+    // //! \brief create an instance of the \c IFusionOperator from a string. Valid
+    // //! values are "debevec" and "robertson02". Useful in a CLI interface
     // static FusionOperatorPtr build(const std::string& name);
 
     bool setResponseFunction(ResponseFunction responseFunction);
