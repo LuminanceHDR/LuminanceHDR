@@ -1,5 +1,4 @@
 ADD_SUBDIRECTORY(ImageInspector)
-ADD_SUBDIRECTORY(fits)
 ADD_SUBDIRECTORY(InputOutputTest)
 ADD_SUBDIRECTORY(FusionAlgorithms)
 ADD_SUBDIRECTORY(WhiteBalance)
