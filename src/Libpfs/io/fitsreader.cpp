@@ -21,8 +21,13 @@
 
 #include <QDebug>
 
+#include <cmath>
+#ifndef NDEBUG
+#include <boost/algorithm/minmax_element.hpp>
+#endif
 #include <Libpfs/io/fitsreader.h>
 #include <Libpfs/frame.h>
+#include <Libpfs/colorspace/normalizer.h>
 
 namespace pfs {
 namespace io {
@@ -59,16 +64,22 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
     image.readAllKeys();
     //std::cout << *image << std::endl;
 
-    if (!(image.axes() == 2 || image.axes() == 3)) {
-        const std::multimap< std::string, CCfits::ExtHDU * > extensions = m_file->extension();
-        std::multimap< std::string, CCfits::ExtHDU * >::const_iterator it, itEnd = extensions.end();
-        for (it = extensions.begin(); it != itEnd; it++) {
+    if (!(image.axes() == 2 || image.axes() == 3))
+    {
+        const CCfits::ExtMap& extensions = m_file->extension();
+        CCfits::ExtMap::const_iterator it = extensions.begin();
+        CCfits::ExtMap::const_iterator itEnd = extensions.end();
+        for (; it != itEnd; it++)
+        {
             //std::cout << it->first << std::endl;
             it->second->readAllKeys();
             //std::cout << *it->second << std::endl;
             if (!(it->second->axes() == 2 || it->second->axes() == 3))
+            {
                 continue;
-            else { 
+            }
+            else
+            {
                 it->second->read(contents);
                 ax1 = it->second->axis(0);
                 ax2 = it->second->axis(1);
@@ -76,28 +87,39 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
             }
         }
         if (it == itEnd)
+        {
             throw InvalidFile("No image in file " + filename());
+        }
     }
-    else {
+    else
+    {
         image.read(contents);
         ax1 = image.axis(0);
         ax2 = image.axis(1); 
     }
-    qDebug() << "ax1 = " << ax1 << " , ax2 = " << ax2;
-    qDebug() << "contents.size = " << contents.size();
+    qDebug() << "size (" << ax1 << ", " << ax2 << ")";
+    qDebug() << "contents.size (pixels) = " << contents.size();
 
     Frame tempFrame(ax1, ax2);
     Channel *Xc, *Yc, *Zc;
     tempFrame.createXYZChannels(Xc, Yc, Zc);
 
-    for (long i = 0; i < ax1*ax2; i++) 
-    {
-        (*Yc)(i) = (*Zc)(i) = (*Xc)(i) = contents[i];
-    }     
+    float max = std::pow(2.f, std::floor(std::log2(contents.max()) + 1)) - 1;
 
-    qDebug() << "FITS min luminance: " << *std::min_element(Xc->begin(), Xc->end());
-    qDebug() << "FITS max luminance: " << *std::max_element(Xc->begin(), Xc->end());
-    frame.swap( tempFrame );
+    std::transform(&contents[0], &contents[0] + contents.size(),
+                   Xc->begin(), Normalizer(0.f, max));
+    std::copy(Xc->begin(), Xc->end(), Yc->begin());
+    std::copy(Xc->begin(), Xc->end(), Zc->begin());
+
+#ifndef NDEBUG
+    std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator> minmax =
+            boost::minmax_element(Xc->begin(), Xc->end());
+
+    qDebug() << "FITS min luminance: " << *minmax.first << " (" << contents.min() << ")";
+    qDebug() << "FITS max luminance: " << *minmax.second << " (" << contents.max() << ")";
+#endif
+
+    frame.swap(tempFrame);
 }
 
 }   // io

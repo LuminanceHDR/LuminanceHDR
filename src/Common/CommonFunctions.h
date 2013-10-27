@@ -116,14 +116,6 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
     }
 }
 
-struct Normalize {
-    float m;
-    float M;
-    Normalize(float m, float M);
-
-    float operator()(float i);
-};
-
 struct ConvertToQRgb {
     float gamma;
     ConvertToQRgb(float gamma = 1.0f);
