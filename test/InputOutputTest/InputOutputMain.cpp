@@ -51,8 +51,10 @@ int main(int argc, char** argv)
         t.start();
 
         FrameWriterPtr writer = FrameWriterFactory::open(argv[2]);
-        writer->write(myFrame,
-                      pfs::Params( "min_luminance", 0.f )( "max_luminance", 1.f ));
+        writer->write(myFrame, pfs::Params
+                      ("min_luminance", 0.f) //std::min(*outRed.first, std::min(*outGreen.first,*outBlue.first)))
+                      ("max_luminance", std::max(*outRed.second, std::max(*outGreen.second,*outBlue.second)))
+                      );
 
         t.stop_and_update();
         std::cout << "Write time: " << t.get_time() << std::endl;

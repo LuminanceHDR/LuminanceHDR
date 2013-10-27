@@ -27,7 +27,7 @@ namespace utils {
 
 template <typename Func1, typename Func2>
 struct Chain {
-    Chain(const Func1& func1, const Func2& func2)
+    Chain(const Func1& func1 = Func1(), const Func2& func2 = Func2())
         : func1_(func1), func2_(func2)
     {}
 
