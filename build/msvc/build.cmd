@@ -17,7 +17,7 @@ SET OPENEXR_COMMIT_LONG=2e607fcc77954f8a630ac9f9329240631ca75208
 rem  http://www.boost.org/
 SET BOOST_MINOR=54
 
-SET LCMS_COMMIT_LONG=cde00fd7dbe74e275aceb4a9055bbb1ae6bf93b2
+SET LCMS_COMMIT_LONG=1d2643cb8153c48dcfdee3d5cda43a38f7e719e2
 
 SET LIBRAW_COMMIT_LONG=c4126b3f82b4dcd5931d5bdba18df9f2a269e090
 SET LIBRAW_DEMOS2_COMMIT_LONG=339375c351708a10bae384dc4e0e92b7e4cf6ef3
@@ -645,7 +645,7 @@ robocopy LibRaw-%LIBRAW_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR
     
 robocopy lcms2-%LCMS_COMMIT%\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
 robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
-robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
+rem robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
 
 robocopy libjpeg-turbo-%LIBJPEG_COMMIT% LuminanceHdrStuff\DEPs\include\libjpeg *.h /MIR >nul
 robocopy libjpeg-turbo-%LIBJPEG_COMMIT%.build\sharedlib\%Configuration% LuminanceHdrStuff\DEPs\lib\libjpeg *.lib /MIR /NJS >nul
@@ -730,14 +730,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
         robocopy cfit3350.build\%Configuration% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% cfitsio.dll >nul 
         robocopy %PTHREADS_CURRENT_DIR% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% pthreadVC2.dll >nul 
        
-        IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\lcms2.dll (
-            pushd LuminanceHdrStuff\DEPs\bin
-            for %%v in ("lcms2\lcms2_DLL.dll", ) do (
-                copy %%v ..\..\qtpfsgui.build\%ConfigurationLuminance%
-            )
-            popd
-            ren LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\lcms2_DLL.dll lcms2.dll
-        )
+        robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% lcms2.dll >nul 
 
         IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\i18n\ (
             mkdir LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\i18n

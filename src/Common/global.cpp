@@ -44,7 +44,11 @@ bool matchesLdrFilename(const QString& file)
 
 bool matchesHdrFilename(const QString& file)
 {
+#ifdef HAVE_CCFITS
 	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
+#else
+	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
+#endif
 	return exp.exactMatch(file);
 }
 

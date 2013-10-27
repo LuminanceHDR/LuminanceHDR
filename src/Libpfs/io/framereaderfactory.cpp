@@ -73,7 +73,9 @@ bool FrameReaderFactory::isSupported(const std::string& format)
 #include <Libpfs/io/rgbereader.h>
 #include <Libpfs/io/rawreader.h>
 #include <Libpfs/io/tiffreader.h>
-#include <Libpfs/io/fitsreader.h>
+#ifdef HAVE_CCFITS
+    #include <Libpfs/io/fitsreader.h>
+#endif
 
 namespace pfs {
 namespace io {
@@ -118,9 +120,11 @@ FrameReaderFactory::FrameReaderCreatorMap FrameReaderFactory::sm_registry =
         // tiff
         ("tif", creator<TiffReader>)
         ("tiff", creator<TiffReader>)
+#ifdef HAVE_CCFITS
         // fits
         ("fit", creator<FitsReader>)
         ("fits", creator<FitsReader>)
+#endif
         ;
 
 }   // io
