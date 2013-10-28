@@ -19,15 +19,16 @@
  * ----------------------------------------------------------------------
  */
 
-#include <QDebug>
-
 #include <cmath>
+#include <math.h>
 #ifndef NDEBUG
 #include <boost/algorithm/minmax_element.hpp>
 #endif
 #include <Libpfs/io/fitsreader.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/normalizer.h>
+
+using namespace std;
 
 namespace pfs {
 namespace io {
@@ -97,14 +98,17 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
         ax1 = image.axis(0);
         ax2 = image.axis(1); 
     }
-    qDebug() << "size (" << ax1 << ", " << ax2 << ")";
-    qDebug() << "contents.size (pixels) = " << contents.size();
+
+#ifndef NDEBUG
+    std::cout << "size (" << ax1 << ", " << ax2 << ")";
+    std::cout << "contents.size (pixels) = " << contents.size();
+#endif
 
     Frame tempFrame(ax1, ax2);
     Channel *Xc, *Yc, *Zc;
     tempFrame.createXYZChannels(Xc, Yc, Zc);
 
-    float max = std::pow(2.f, std::floor(std::log2(contents.max()) + 1)) - 1;
+    float max = std::pow(2.f, std::floor(log2f(contents.max()) + 1)) - 1;
 
     std::transform(&contents[0], &contents[0] + contents.size(),
                    Xc->begin(), Normalizer(0.f, max));
@@ -115,8 +119,8 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
     std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator> minmax =
             boost::minmax_element(Xc->begin(), Xc->end());
 
-    qDebug() << "FITS min luminance: " << *minmax.first << " (" << contents.min() << ")";
-    qDebug() << "FITS max luminance: " << *minmax.second << " (" << contents.max() << ")";
+    std::cout << "FITS min luminance: " << *minmax.first << " (" << contents.min() << ")";
+    std::cout << "FITS max luminance: " << *minmax.second << " (" << contents.max() << ")";
 #endif
 
     frame.swap(tempFrame);
