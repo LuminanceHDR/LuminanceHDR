@@ -303,3 +303,27 @@ void shadesOfGrayAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
     std::cout << "shadesOfGrayAWB = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 }
+
+void whiteBalance(Frame& frame, WhiteBalanceType type)
+{
+    Channel* r;
+    Channel* g;
+    Channel* b;
+    frame.getXYZChannels(r, g, b);
+
+    switch (type)
+    {
+    case WB_COLORBALANCE:
+    {
+        colorbalance_rgb_f32(*r, *g, *b, frame.size(), 3, 97);
+    } break;
+    case WB_ROBUST:
+    {
+        robustAWB(r, g, b);
+    } break;
+    case WB_SHADESOFGRAY:
+    {
+        shadesOfGrayAWB(r, g, b);
+    } break;
+    }
+}

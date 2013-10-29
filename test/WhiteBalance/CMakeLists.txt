@@ -12,4 +12,4 @@ ELSE()
     TARGET_LINK_LIBRARIES(WhiteBalance -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
 ENDIF()
 # Link shared library
-TARGET_LINK_LIBRARIES(WhiteBalance ${LIBS})
+TARGET_LINK_LIBRARIES(WhiteBalance ${LIBS} ${Boost_PROGRAM_OPTIONS_LIBRARY})

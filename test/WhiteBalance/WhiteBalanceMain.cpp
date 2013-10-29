@@ -23,14 +23,11 @@
 //! \date July 8th, 2013
 
 #include <iostream>
+#include <string>
 
-#include <QCoreApplication>
-#include <QStringList>
-#include <QString>
-
-#include "Common/LuminanceOptions.h"
-#include "Common/TranslatorManager.h"
 #include "HdrWizard/WhiteBalance.h"
+
+#include <boost/program_options.hpp>
 
 #include <Libpfs/frame.h>
 #include <Libpfs/channel.h>
@@ -39,63 +36,45 @@
 #include <Libpfs/io/jpegwriter.h>
 
 using namespace std;
+using namespace pfs;
+using namespace pfs::io;
+
+namespace po = boost::program_options;
+
+void getParameters(int argc, char** argv, std::string& input, std::string& output, int& wbMode)
+{
+    po::options_description desc("Allowed options: ");
+    desc.add_options()
+            ("output,o", po::value<std::string>(&output)->required(), "output file")
+            ("input,i", po::value<std::string>(&input)->required(), "input file")
+            ("mode,m", po::value<int>(&wbMode)->default_value(0), "auto-scale")
+            ;
+
+    po::variables_map vm;
+    po::store(po::command_line_parser(argc, argv).
+              options(desc).allow_unregistered().run(), vm);
+    po::notify(vm);
+
+    if (wbMode < 0) wbMode = 0;
+    if (wbMode > 2) wbMode = 2;
+}
 
 int main( int argc, char ** argv )
 {
-    QCoreApplication application( argc, argv );
-    LuminanceOptions lumOpts;
+    std::string inputFile;
+    std::string outputFile;
+    int wbMode;
 
-    TranslatorManager::setLanguage( lumOpts.getGuiLang(), false );
+    getParameters(argc, argv, inputFile, outputFile, wbMode);
 
-    QStringList arguments = QCoreApplication::arguments();
-    if ( arguments.size() <= 2 )
-    {
-        std::cout << "Usage: " << arguments[0].toLocal8Bit().constData()
-                  << " <infilename> " << " <outfilename> " << std::endl;
+    Frame frame;
+    JpegReader reader(inputFile);
+    reader.read(frame, Params());
 
-        application.exit( -1 );
-    }
-    else
-    {
-        QString infilename = arguments[1];
-        QString outfilename = arguments[2];
-        using namespace pfs;
-        using namespace io;
+    whiteBalance(frame, static_cast<WhiteBalanceType>(wbMode));
 
-        if ( !QFile::exists( infilename ) )
-        {
-            cout << "File " << infilename.toLocal8Bit().constData()
-                << " does not exist" << endl;
+    JpegWriter writer(outputFile);
+    writer.write(frame, Params());
 
-            application.exit(-1);
-        }
-
-        cout << "Start reading..." << std::flush;
-
-        Params params;
-        Frame* frame = new Frame();
-        JpegReader reader(infilename.toLocal8Bit().constData());
-        reader.read(*frame, params);
-
-        cout << " done!" << std::endl;
-
-        if ( !frame )
-        {
-            cout << "I cannot read " << infilename.toLocal8Bit().constData()
-                << endl;
-
-            application.exit(-1);
-        }
-        int width = frame->getWidth();
-        int height = frame->getHeight();
-        Channel *R, *G, *B;
-        frame->getXYZChannels(R, G, B);
-        
-        colorbalance_rgb_f32(*R, *G, *B, width*height, 3, 97);
-
-        JpegWriter writer(outfilename.toLocal8Bit().constData());
-        writer.write(*frame, params);
-        
-        application.exit(0);
-    }
+    return 0;
 }
