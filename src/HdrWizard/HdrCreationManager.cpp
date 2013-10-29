@@ -1247,7 +1247,7 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     
     //colorbalance_rgb_f32(*Urc, *Ugc, *Ubc, width*height, 3, 97);
     //robustAWB(Urc, Ugc, Ubc);
-    shadesOfGrayAWB(Urc, Ugc, Ubc);
+    shadesOfGrayAWB(*Urc, *Ugc, *Ubc);
 
     ph->setValue(100);
 

@@ -1910,7 +1910,7 @@ void MainWindow::on_actionWhite_Balance_triggered()
 
     m_futureWatcher.setFuture(
                 QtConcurrent::run(
-                        boost::bind(shadesOfGrayAWB, Rc, Gc, Bc)
+                        boost::bind(shadesOfGrayAWB, *Rc, *Gc, *Bc)
                     )
                 );
 }

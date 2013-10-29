@@ -4,6 +4,7 @@
 
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/colorspace/colorspace.h>
+#include <Libpfs/utils/numeric.h>
 
 using namespace pfs;
 
@@ -262,42 +263,75 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
 #endif
 }
 
-void shadesOfGrayAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
+
+float computeAccumulation(pfs::Array2Df& matrix)
+{
+    float acc = 0.f;
+    for (int i = 0; i < matrix.size(); i++)
+    {
+        acc += std::pow(matrix(i), 6.0f);
+    }
+    return std::pow(acc/matrix.size(), 1.f/6.f);
+}
+
+void shadesOfGrayAWB(Array2Df& R, Array2Df& G, Array2Df& B)
 {
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-    const int width = R_orig->getCols();
-    const int height = R_orig->getRows();
 
-    float sumR, sumB, sumG;
-    sumR = sumG = sumB = 0.0f;
-    for (int i = 0; i < width*height; i++) {
-        sumR += std::pow( (*R_orig)(i), 6.0f );
-        sumG += std::pow( (*G_orig)(i), 6.0f );
-        sumB += std::pow( (*B_orig)(i), 6.0f );
+    float eR = 0.f;
+    float eG = 0.f;
+    float eB = 0.f;
+
+#pragma omp parallel sections
+    {
+#pragma omp section
+        {
+            /* Executes in thread 1 */
+            eR = computeAccumulation(R);
+        }
+#pragma omp section
+        {
+            /* Executes in thread 2 */
+            eB = computeAccumulation(B);
+        }
+#pragma omp section
+        {
+            /* Executes in thread 3 */
+            eG = computeAccumulation(G);
+        }
     }
-    sumR /= width*height;
-    sumG /= width*height;
-    sumB /= width*height;
-    float eR = std::pow( sumR, 1.0f/6.0f );
-    float eG = std::pow( sumG, 1.0f/6.0f );
-    float eB = std::pow( sumB, 1.0f/6.0f );
     float norm = std::sqrt(eR*eR + eG*eG + eB*eB);
+
     eR /= norm;
     eG /= norm;
     eB /= norm;
-    float maximum= std::max(eR, std::max(eG, eB));
+    float maximum = std::max(eR, std::max(eG, eB));
     float gainR = maximum / eR;
     float gainG = maximum / eG;
     float gainB = maximum / eB;
-    #pragma omp parallel for
-    for (int i = 0; i < width*height; i++) {
-        (*R_orig)(i) *= gainR;
-        (*G_orig)(i) *= gainG;
-        (*B_orig)(i) *= gainB;
+
+#pragma omp parallel sections
+    {
+#pragma omp section
+        {
+            /* Executes in thread 1 */
+            pfs::utils::vsmul(R.data(), gainR, R.data(), R.size());
+        }
+#pragma omp section
+        {
+            /* Executes in thread 2 */
+            pfs::utils::vsmul(G.data(), gainG, G.data(), G.size());
+        }
+#pragma omp section
+        {
+            /* Executes in thread 3 */
+            pfs::utils::vsmul(B.data(), gainB, B.data(), B.size());
+        }
     }
+
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "shadesOfGrayAWB = " << stop_watch.get_time() << " msec" << std::endl;
@@ -323,7 +357,7 @@ void whiteBalance(Frame& frame, WhiteBalanceType type)
     } break;
     case WB_SHADESOFGRAY:
     {
-        shadesOfGrayAWB(r, g, b);
+        shadesOfGrayAWB(*r, *g, *b);
     } break;
     }
 }

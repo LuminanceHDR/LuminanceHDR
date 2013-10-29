@@ -32,8 +32,8 @@
 #include <Libpfs/frame.h>
 #include <Libpfs/channel.h>
 #include <Libpfs/params.h>
-#include <Libpfs/io/jpegreader.h>
-#include <Libpfs/io/jpegwriter.h>
+#include <Libpfs/io/framewriterfactory.h>
+#include <Libpfs/io/framereaderfactory.h>
 
 using namespace std;
 using namespace pfs;
@@ -68,13 +68,13 @@ int main( int argc, char ** argv )
     getParameters(argc, argv, inputFile, outputFile, wbMode);
 
     Frame frame;
-    JpegReader reader(inputFile);
-    reader.read(frame, Params());
+    FrameReaderPtr reader = FrameReaderFactory::open(inputFile);
+    reader->read(frame, Params());
 
     whiteBalance(frame, static_cast<WhiteBalanceType>(wbMode));
 
-    JpegWriter writer(outputFile);
-    writer.write(frame, Params());
+    FrameWriterPtr writer = FrameWriterFactory::open(outputFile);
+    writer->write(frame, Params());
 
     return 0;
 }
