@@ -1,6 +1,7 @@
 #include "WhiteBalance.h"
 
 #include <cmath>
+#include <cstring>
 
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/colorspace/colorspace.h>
@@ -264,10 +265,10 @@ void robustAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig)
 }
 
 
-float computeAccumulation(pfs::Array2Df& matrix)
+float computeAccumulation(const pfs::Array2Df& matrix)
 {
     float acc = 0.f;
-    for (int i = 0; i < matrix.size(); i++)
+    for (size_t i = 0; i < matrix.size(); i++)
     {
         acc += std::pow(matrix(i), 6.0f);
     }
