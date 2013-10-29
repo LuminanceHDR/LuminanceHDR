@@ -96,6 +96,7 @@
 #include "Core/TMWorker.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
 #include "HdrWizard/AutoAntighosting.h"
+#include "HdrWizard/WhiteBalance.h"
 
 namespace
 {

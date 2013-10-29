@@ -30,8 +30,8 @@
 using namespace std;
 using namespace pfs;
 
-float max(const Array2Df *u);
-float min(const Array2Df *u);
+float max(const Array2Df& u);
+float min(const Array2Df& u);
 void solve_pde_dct(Array2Df &F, Array2Df &U);
 void clampToZero(Array2Df &R, Array2Df &G, Array2Df &B, float m);
 int findIndex(const float* data, int size);
@@ -67,7 +67,3 @@ qreal averageLightness(const HdrCreationItem& item);
 void blend(pfs::Array2Df& R1, pfs::Array2Df& G1, pfs::Array2Df& B1,
            const pfs::Array2Df& R2, const pfs::Array2Df& G2, const pfs::Array2Df& B2,
            const QImage& mask, const QImage& maskGoodImage);
-void colorbalance_rgb_f32(Array2Df& R, Array2Df& G, Array2Df& B, size_t size,
-                                   size_t nb_min, size_t nb_max);
-void robustAWB(Array2Df* R, Array2Df* G, Array2Df* B);
-void shadesOfGrayAWB(Array2Df* R_orig, Array2Df* G_orig, Array2Df* B_orig);

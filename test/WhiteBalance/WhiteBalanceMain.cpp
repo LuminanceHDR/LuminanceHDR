@@ -30,7 +30,7 @@
 
 #include "Common/LuminanceOptions.h"
 #include "Common/TranslatorManager.h"
-#include "HdrWizard/AutoAntighosting.h"
+#include "HdrWizard/WhiteBalance.h"
 
 #include <Libpfs/frame.h>
 #include <Libpfs/channel.h>
