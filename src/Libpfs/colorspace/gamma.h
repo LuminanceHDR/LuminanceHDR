@@ -19,31 +19,49 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief Base class for C++ exceptions inside the library
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+#ifndef PFS_COLORSPACE_GAMMA_H
+#define PFS_COLORSPACE_GAMMA_H
 
-#ifndef PFS_EXCEPTION_H
-#define PFS_EXCEPTION_H
+#include <Libpfs/colorspace/convert.h>
 
-#include <stdexcept>
+#include <cmath>
 
 namespace pfs {
+namespace colorspace {
 
-/**
- * General exception class used to throw exceptions from pfs library.
- */
-class Exception : public std::runtime_error
-{
-public:
-    Exception(const std::string& message)
-        : std::runtime_error(message)
-    {}
-
-    Exception(const char* message)
-        : std::runtime_error(message)
-    {}
+struct Gamma2_2 {
+    static float gamma() { return 1/2.2f; }
 };
 
-}
+struct Gamma1_8 {
+    static float gamma() { return 1/1.8f; }
+};
 
-#endif // PFS_EXCEPTION_H
+template <typename GammaFactor>
+struct Gamma
+{
+    template <typename TypeIn, typename TypeOut>
+    TypeOut operator()(TypeIn sample) const
+    {
+        return ConvertSample<TypeOut, float>()(
+                std::pow(
+                        convertSample<float>(sample), GammaFactor::gamma()
+                    )
+                );
+    }
+
+    template <typename TypeIn, typename TypeOut>
+    void operator()(TypeIn v1, TypeIn v2, TypeIn v3,
+                    TypeOut& o1, TypeOut& o2, TypeOut& o3)
+    {
+        o1 = operator ()<TypeIn, TypeOut>(v1);
+        o2 = operator ()<TypeIn, TypeOut>(v2);
+        o3 = operator ()<TypeIn, TypeOut>(v3);
+    }
+};
+
+
+}   // colorspace
+}   // pfs
+
+#endif // PFS_COLORSPACE_GAMMA_H

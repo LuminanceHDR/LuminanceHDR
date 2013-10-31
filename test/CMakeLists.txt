@@ -1,10 +1,7 @@
 ADD_SUBDIRECTORY(ImageInspector)
-ADD_SUBDIRECTORY(fits)
 ADD_SUBDIRECTORY(InputOutputTest)
 ADD_SUBDIRECTORY(FusionAlgorithms)
 ADD_SUBDIRECTORY(WhiteBalance)
-ADD_SUBDIRECTORY(robustAWB)
-ADD_SUBDIRECTORY(shadesOfGrayAWB)
 
 # workaround for http://code.google.com/p/googletest/issues/detail?id=408
 IF(MSVC_VERSION EQUAL 1700)
@@ -168,9 +165,15 @@ ELSEIF(UNIX)
 ENDIF()
 
 ADD_EXECUTABLE(TestFusionOperator TestFusionOperator.cpp)
+IF(APPLE OR MSVC)
 TARGET_LINK_LIBRARIES(TestFusionOperator
-        ${Boost_PROGRAM_OPTIONS_LIBRARY}
+    ${Boost_PROGRAM_OPTIONS_LIBRARY} ${LUMINANCE_MODULES_CLI}
+    ${LUMINANCE_MODULES_GUI} ${LIBS})
+ELSE(UNIX)
+TARGET_LINK_LIBRARIES(TestFusionOperator
+    ${Boost_PROGRAM_OPTIONS_LIBRARY}
     -Xlinker --start-group ${LUMINANCE_MODULES_CLI} ${LUMINANCE_MODULES_GUI} -Xlinker --end-group ${LIBS})
+ENDIF()
 
 ADD_EXECUTABLE(TestPoissonSolver TestPoissonSolver.cpp)
 TARGET_LINK_LIBRARIES(TestPoissonSolver hdrwizard pfs pfstmo 

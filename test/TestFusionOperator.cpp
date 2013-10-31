@@ -7,14 +7,34 @@
 
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/io/framewriterfactory.h>
+#include <Libpfs/io/framereaderfactory.h>
 
-#include <HdrWizard/HdrCreationManager.h>
-// #include <HdrCreation/fusionoperator.h>
+#include <HdrCreation/fusionoperator.h>
+#include <Exif/ExifOperations.h>
+
+#include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 using namespace std;
 using namespace pfs;
 using namespace pfs::io;
+
+using namespace libhdr;
+using namespace libhdr::fusion;
+
 namespace po = boost::program_options;
+
+libhdr::fusion::FrameEnhanced loadFile(const std::string& filename)
+{
+    FrameReaderPtr reader = FrameReaderFactory::open(filename);
+
+    FramePtr image(new Frame);
+    reader->read(*image, pfs::Params());
+
+    float averageLuminace = ExifOperations::getAverageLuminance(filename);
+
+    return libhdr::fusion::FrameEnhanced(image, averageLuminace);
+}
+
 
 int main(int argc, char** argv)
 {
@@ -37,13 +57,11 @@ int main(int argc, char** argv)
                   options(desc).allow_unregistered().run(), vm);
         po::notify(vm);
 
-        HdrCreationManager hdrCreationManager;
-
-        QStringList inputFilesList;
-        foreach ( const string & file, inputFiles ) {
-            inputFilesList.push_back( QString::fromStdString(file) );
+        std::vector<libhdr::fusion::FrameEnhanced> images;
+        foreach(const string& filename, inputFiles)
+        {
+            images.push_back(loadFile(filename));
         }
-        hdrCreationManager.loadFiles( inputFilesList );
 
         cout << "Are you ready?\n";
         char c;
@@ -52,8 +70,10 @@ int main(int argc, char** argv)
         msec_timer t;
         t.start();
 
-        pfs::Frame* newHdr = hdrCreationManager.createHdr(true, 0);
-        if ( newHdr == NULL ) {
+        FusionOperatorPtr fusionOperator = IFusionOperator::build(DEBEVEC_NEW);
+        pfs::FramePtr newHdr(fusionOperator->computeFusion(images));
+        if ( newHdr == NULL )
+        {
             return -1;
         }
 
@@ -75,12 +95,24 @@ int main(int argc, char** argv)
                 boost::minmax_element(blue->begin(), blue->end());
         cout << "Blue: (" << *outBlue.first << ", " << *outBlue.second << ")" << endl;
 
+        float min = std::min(*outRed.first,
+                             std::min(*outGreen.first, *outBlue.first));
+        float max = std::max(*outRed.second,
+                             std::max(*outGreen.second, *outBlue.second));
+
+        cout << "Min/Max: " << min << ", " << max << std::endl;
+
         FrameWriterPtr writer = FrameWriterFactory::open(outputFile);
-        writer->write( *newHdr, pfs::Params() );
+        writer->write(*newHdr,
+                      pfs::Params("mapping_method", MAP_GAMMA2_2)
+                      ("min_luminance", min)
+                      ("max_luminance", max));
 
         return 0;
     }
-    catch (std::exception& ex) {
+    catch (std::exception& ex)
+    {
+        cout << ex.what() << "\n";
         cout << desc << "\n";
         return -1;
     }

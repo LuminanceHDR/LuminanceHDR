@@ -79,7 +79,10 @@
 #include "UI/TiffModeDialog.h"
 #include "UI/UMessageBox.h"
 #include "UI/GammaAndLevels.h"
-#include "UI/FitsImporter.h"
+
+#ifdef HAVE_CCFITS
+    #include "UI/FitsImporter.h"
+#endif
 
 #include "PreviewPanel/PreviewPanel.h"
 #include "HelpBrowser/helpbrowser.h"
@@ -93,6 +96,7 @@
 #include "Core/TMWorker.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
 #include "HdrWizard/AutoAntighosting.h"
+#include "HdrWizard/WhiteBalance.h"
 
 namespace
 {
@@ -393,6 +397,10 @@ void MainWindow::createMenus()
     //recent files
     initRecentFileActions();
     updateRecentFileActions();
+    
+#ifndef HAVE_CCFITS
+    m_Ui->actionFits_Importer->setVisible(false);
+#endif
 }
 
 void MainWindow::createStatusBar()
@@ -460,12 +468,22 @@ void MainWindow::createNewHdr(const QStringList& files)
 void MainWindow::on_fileOpenAction_triggered()
 {
     QString filetypes = tr("All HDR formats ");
-    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.fit *.fits *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.srw";
-    filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.FIT *.FITS *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;" ;
+    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif";
+#if HAVE_CCFITS
+    filetypes += " *.fit *.fits";
+#endif
+    filetypes += " *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.srw";
+    filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF";
+#if HAVE_CCFITS
+    filetypes +=  " *.FIT *.FITS";
+#endif
+    filetypes +=  " *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;" ;
     filetypes += "OpenEXR (*.exr *.EXR);;" ;
     filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
     filetypes += "TIFF images (*.TIFF *.TIF *.tiff *.tif);;";
+#if HAVE_CCFITS
     filetypes += "FITS (*.fit *.FIT *.fits *.FITS);;";
+#endif
     filetypes += "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw *.srw";
     filetypes +=             "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;";
     filetypes += "PFS stream (*.pfs *.PFS)";
@@ -1887,12 +1905,10 @@ void MainWindow::on_actionWhite_Balance_triggered()
     m_tabwidget->setTabEnabled(m_tabwidget->currentIndex(), false);
     
     Frame *frame = m_viewerToProcess->getFrame();
-    Channel *Rc, *Gc, *Bc;
-    frame->getXYZChannels(Rc, Gc, Bc);
 
     m_futureWatcher.setFuture(
                 QtConcurrent::run(
-                        boost::bind(shadesOfGrayAWB, Rc, Gc, Bc)
+                        boost::bind(whiteBalance, boost::ref(*frame), WB_COLORBALANCE)
                     )
                 );
 }
@@ -1993,6 +2009,7 @@ void MainWindow::showPreviewsOnTheBottom()
 
 void MainWindow::on_actionFits_Importer_triggered()
 {
+#ifdef HAVE_CCFITS
     FitsImporter importer;
 
     if (importer.exec() == QDialog::Accepted) {
@@ -2022,4 +2039,5 @@ void MainWindow::on_actionFits_Importer_triggered()
         QApplication::restoreOverrideCursor();
 */     
     }
+#endif
 }

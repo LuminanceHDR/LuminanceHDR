@@ -1,7 +1,7 @@
 /*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Davide Anastasia
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,42 +19,33 @@
  * ----------------------------------------------------------------------
  */
 
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//! \date October 20th, 2012
+#ifndef PFS_UTILS_CLAMP_H
+#define PFS_UTILS_CLAMP_H
 
-#ifndef IMAGEINSPECTOR_H
-#define IMAGEINSPECTOR_H
+namespace pfs {
+namespace utils {
 
-#include <iosfwd>
-
-#include <QObject>
-#include <QString>
-#include <QScopedPointer>
-
-#include <Core/IOWorker.h>
-#include <Libpfs/frame.h>
-
-#include "ImageInspectorStats.h"
-
-class ImageInspector : public QObject
+template <typename Type>
+struct Clamp
 {
-    Q_OBJECT
-public:
-    ImageInspector();
-    ~ImageInspector();
+    Clamp(Type min, Type max)
+        : m_min(min)
+        , m_max(max)
+    {}
 
-    //! \return true if the inspection has been completed
-    bool inspect(const QString& filename, std::ostream &out);
+    Type operator()(Type in) const
+    {
+        if (in < m_min) return m_min;
+        if (in > m_max) return m_max;
+        return in;
+    }
 
 private:
-    // IO Worker
-    QScopedPointer<IOWorker> m_ioWorker;
-
-    // Current file stats
-    QString m_currentFilename;
-    QScopedPointer<pfs::Frame> m_currentFrame;
-
-    ImageInspectorStats m_stats;
+    Type m_min;
+    Type m_max;
 };
 
-#endif // IMAGEINSPECTOR_H
+}   // utils
+}   // pfs
+
+#endif // PFS_UTILS_CLAMP_H

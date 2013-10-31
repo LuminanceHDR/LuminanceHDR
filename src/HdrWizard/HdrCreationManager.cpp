@@ -26,6 +26,8 @@
  *
  */
 
+#include "HdrCreationManager.h"
+
 #include <QDebug>
 #include <QApplication>
 #include <QFileInfo>
@@ -59,13 +61,13 @@
 #include <Libpfs/manip/cut.h>
 #include <Libpfs/colorspace/convert.h>
 #include <Libpfs/colorspace/rgbremapper.h>
-#include "Libpfs/colorspace/colorspace.h"
+#include <Libpfs/colorspace/colorspace.h>
 
+#include "arch/math.h"
 #include "TonemappingOperators/fattal02/pde.h"
 #include "Exif/ExifOperations.h"
 #include "HdrCreation/mtb_alignment.h"
-#include "HdrCreationManager.h"
-#include "arch/math.h"
+#include "WhiteBalance.h"
 
 using namespace std;
 using namespace pfs;
@@ -1221,31 +1223,31 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     ph->setValue(98);
     colorBalance(*Ubc, *Bc, i*gridX, j*gridY);
 */
-    qDebug() << min(Urc);
-    qDebug() << max(Urc);
-    qDebug() << min(Ugc);
-    qDebug() << max(Ugc);
-    qDebug() << min(Ubc);
-    qDebug() << max(Ubc);
+    qDebug() << min(*Urc);
+    qDebug() << max(*Urc);
+    qDebug() << min(*Ugc);
+    qDebug() << max(*Ugc);
+    qDebug() << min(*Ubc);
+    qDebug() << max(*Ubc);
 
-    float mr = min(Urc);
-    float mg = min(Ugc);
-    float mb = min(Ubc);
+    float mr = min(*Urc);
+    float mg = min(*Ugc);
+    float mb = min(*Ubc);
     float t = min(mr, mg);
     float m = min(t,mb);
 
     clampToZero(*Urc, *Ugc, *Ubc, m);
 
-    qDebug() << min(Urc);
-    qDebug() << max(Urc);
-    qDebug() << min(Ugc);
-    qDebug() << max(Ugc);
-    qDebug() << min(Ubc);
-    qDebug() << max(Ubc);
+    qDebug() << min(*Urc);
+    qDebug() << max(*Urc);
+    qDebug() << min(*Ugc);
+    qDebug() << max(*Ugc);
+    qDebug() << min(*Ubc);
+    qDebug() << max(*Ubc);
     
     //colorbalance_rgb_f32(*Urc, *Ugc, *Ubc, width*height, 3, 97);
     //robustAWB(Urc, Ugc, Ubc);
-    shadesOfGrayAWB(Urc, Ugc, Ubc);
+    shadesOfGrayAWB(*Urc, *Ugc, *Ubc);
 
     ph->setValue(100);
 

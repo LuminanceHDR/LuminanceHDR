@@ -1,7 +1,7 @@
 /*
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Davide Anastasia
+ * Copyright (C) 2013 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,41 +19,17 @@
  * ----------------------------------------------------------------------
  */
 
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//! \date October 21st, 2012
+#ifndef PFS_COLORSPACE_NORMALIZER_H
+#define PFS_COLORSPACE_NORMALIZER_H
 
-#ifndef IMAGEINSPECTORSTATS_H
-#define IMAGEINSPECTORSTATS_H
-
-#include <cstddef>
-#include <limits>
-#include <iosfwd>
-
-class ImageInspectorStats
+struct Normalizer
 {
-public:
-    ImageInspectorStats()
-        : m_parsedSamples(0)
-        , m_max( -std::numeric_limits<float>::max() )
-        , m_min( std::numeric_limits<float>::max() )
-        , m_numInf(0)
-        , m_numNan(0)
-    {}
+    Normalizer(float m, float M);
 
-    void operator()(float value);
-
-    friend std::ostream& operator<<(std::ostream& out, const ImageInspectorStats& stats);
-
+    float operator()(float i);
 private:
-    size_t m_parsedSamples;
-
-    float m_max;
-    float m_min;
-
-    size_t m_numInf;
-    size_t m_numNan;
+    float m;
+    float M;
 };
 
-std::ostream& operator<<(std::ostream& out, const ImageInspectorStats& stats);
-
-#endif // IMAGEINSPECTORSTATS_H
+#endif

@@ -39,6 +39,7 @@
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/fixedstrideiterator.h>
 #include <Libpfs/colorspace/copy.h>
+#include <Libpfs/colorspace/gamma.h>
 
 using namespace pfs;
 
@@ -486,7 +487,7 @@ void RAWReader::read(Frame &frame, const Params &params)
                      FixedStrideIterator<const uint16_t*, 3>(raw_data + 1),
                      FixedStrideIterator<const uint16_t*, 3>(raw_data + 2),
                      Xc->begin(), Yc->begin(), Zc->begin(),
-                     colorspace::Copy());
+                     colorspace::Gamma<pfs::colorspace::Gamma1_8>());
 
     qDebug() << "Data size: " << image->data_size << " " << W*H*3*sizeof(uint16_t);
     qDebug() << "W: " << W << " H: " << H;

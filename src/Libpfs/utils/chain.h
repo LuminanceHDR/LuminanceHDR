@@ -27,17 +27,24 @@ namespace utils {
 
 template <typename Func1, typename Func2>
 struct Chain {
-    Chain(const Func1& func1, const Func2& func2)
+    Chain(const Func1& func1 = Func1(), const Func2& func2 = Func2())
         : func1_(func1), func2_(func2)
     {}
 
     template <typename Type>
     void operator()(Type v1, Type v2, Type v3,
-                  Type& o1, Type& o2, Type& o3)
+                    Type& o1, Type& o2, Type& o3)
     {
         func1_(v1, v2, v3, v1, v2, v3);
         func2_(v1, v2, v3, o1, o2, o3);
     }
+
+    template <typename Type>
+    Type operator()(Type v1)
+    {
+        return func2_(func1_(v1));
+    }
+
 private:
     Func1 func1_;
     Func2 func2_;
