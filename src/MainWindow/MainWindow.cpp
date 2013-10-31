@@ -1905,12 +1905,10 @@ void MainWindow::on_actionWhite_Balance_triggered()
     m_tabwidget->setTabEnabled(m_tabwidget->currentIndex(), false);
     
     Frame *frame = m_viewerToProcess->getFrame();
-    Channel *Rc, *Gc, *Bc;
-    frame->getXYZChannels(Rc, Gc, Bc);
 
     m_futureWatcher.setFuture(
                 QtConcurrent::run(
-                        boost::bind(shadesOfGrayAWB, *Rc, *Gc, *Bc)
+                        boost::bind(whiteBalance, boost::ref(*frame), WB_COLORBALANCE)
                     )
                 );
 }

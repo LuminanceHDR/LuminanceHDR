@@ -19,39 +19,33 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef PFS_UTILS_CHAIN_H
-#define PFS_UTILS_CHAIN_H
+#ifndef PFS_UTILS_CLAMP_H
+#define PFS_UTILS_CLAMP_H
 
 namespace pfs {
 namespace utils {
 
-template <typename Func1, typename Func2>
-struct Chain {
-    Chain(const Func1& func1 = Func1(), const Func2& func2 = Func2())
-        : func1_(func1), func2_(func2)
+template <typename Type>
+struct Clamp
+{
+    Clamp(Type min, Type max)
+        : m_min(min)
+        , m_max(max)
     {}
 
-    template <typename Type>
-    void operator()(Type v1, Type v2, Type v3,
-                    Type& o1, Type& o2, Type& o3)
+    Type operator()(Type in) const
     {
-        func1_(v1, v2, v3, v1, v2, v3);
-        func2_(v1, v2, v3, o1, o2, o3);
-    }
-
-    template <typename Type>
-    Type operator()(Type v1)
-    {
-        return func2_(func1_(v1));
+        if (in < m_min) return m_min;
+        if (in > m_max) return m_max;
+        return in;
     }
 
 private:
-    Func1 func1_;
-    Func2 func2_;
+    Type m_min;
+    Type m_max;
 };
 
 }   // utils
 }   // pfs
 
-
-#endif // PFS_UTILS_CHAIN_H
+#endif // PFS_UTILS_CLAMP_H

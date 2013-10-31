@@ -1,175 +1,142 @@
 #include "WhiteBalance.h"
 
 #include <cmath>
-#include <cstring>
+#include <algorithm>
+#include <numeric>
+#include <cassert>
+#include <iomanip>
+
+#include <boost/algorithm/minmax_element.hpp>
 
 #include <Libpfs/manip/copy.h>
-#include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/utils/numeric.h>
+#include <Libpfs/utils/transform.h>
+#include <Libpfs/utils/chain.h>
+#include <Libpfs/utils/clamp.h>
+#include <Libpfs/colorspace/colorspace.h>
+#include <Libpfs/colorspace/normalizer.h>
 
 using namespace pfs;
 
-/**
- * @brief get the min/max of a float array
- *
- * @param data input array
- * @param size array size
- * @param ptr_min, ptr_max pointers to the returned values, ignored if NULL
- */
-static void minmax_f32(const float *data, size_t size,
-                       float *ptr_min, float *ptr_max)
+void computeHistogram(const pfs::Array2Df& data, std::vector<size_t>& histogram,
+                      float min, float max)
 {
-    float min, max;
-    size_t i;
+    Normalizer norm(min, max);
+    for (pfs::Array2Df::const_iterator it = data.begin(), itEnd = data.end(); it != itEnd; ++it)
+    {
+        // 1.0f -> histogram.size() - 1
 
-    /* compute min and max */
-    min = data[0];
-    max = data[0];
-    for (i = 1; i < size; i++) {
-        if (data[i] < min)
-            min = data[i];
-        if (data[i] > max)
-            max = data[i];
+        size_t bin = static_cast<size_t>(norm(*it)*(histogram.size()-1)+0.5f);
+        ++histogram[bin];
+    }
+}
+
+std::pair<float, float> quantiles(const pfs::Array2Df& data,
+                                  float nb_min, float nb_max,
+                                  float min, float max)
+{
+    // compute histogram (less expensive than sorting the entire sequence...
+    std::vector<size_t> hist(65535, 0);
+    computeHistogram(data, hist, min, max);
+
+    // normalize percentiles to image size...
+    size_t lb_percentile = static_cast<size_t>(nb_min*data.size() + 0.5f);
+    size_t ub_percentile = static_cast<size_t>(nb_max*data.size() + 0.5f);
+
+    size_t counter = 0;
+    std::pair<float, float> minmax;
+    for (size_t idx = 0; idx < hist.size(); ++idx)
+    {
+        counter += hist[idx];
+        if (counter >= lb_percentile) {
+            minmax.first = static_cast<float>(idx)/(hist.size()-1)*(max - min) + min;
+            break;
+        }
     }
 
-    /* save min and max to the returned pointers if available */
-    if (NULL != ptr_min)
-        *ptr_min = min;
-    if (NULL != ptr_max)
-        *ptr_max = max;
-    return;
-}
-
-/**
- * @brief float comparison
- *
- * IEEE754 floats can be compared as integers. Not *converted* to
- * integers, but *read* as integers while maintaining an order.
- * cf. http://www.cygnus-software.com/papers/comparingfloats/Comparing%20floating%20point%20numbers.htm#_Toc135149455
- */
-static int cmp_f32(const void *a, const void *b)
-{
-    if (*(const int *) a > *(const int *) b)
-        return 1;
-    if (*(const int *) a < *(const int *) b)
-        return -1;
-    return 0;
-}
-
-/**
- * @brief get quantiles from a float array such that a given
- * number of pixels is out of this interval
- *
- * This function computes min (resp. max) such that the number of
- * pixels < min (resp. > max) is inferior or equal to nb_min
- * (resp. nb_max). It uses a sorting algorithm.
- *
- * @param data input/output
- * @param size data array size
- * @param nb_min, nb_max number of pixels to flatten
- * @param ptr_min, ptr_max computed min/max output, ignored if NULL
- *
- * @todo instead of sorting the whole array (expensive), select
- * pertinent values with a 128 bins histogram then sort the bins
- * around the good bin
- */
-static void quantiles_f32(const float *data, size_t size,
-                          size_t nb_min, size_t nb_max,
-                          float *ptr_min, float *ptr_max)
-{
-    float *data_tmp;
-
-    data_tmp = (float *) malloc(size * sizeof(float));
-
-    /* copy the data and sort */
-    memcpy(data_tmp, data, size * sizeof(float));
-    qsort(data_tmp, size, sizeof(float), &cmp_f32);
-
-    /* get the min/max */
-    if (NULL != ptr_min)
-        *ptr_min = data_tmp[nb_min];
-    if (NULL != ptr_max)
-        *ptr_max = data_tmp[size - 1 - nb_max];
-
-    free(data_tmp);
-    return;
-}
-
-/**
- * @brief rescale a float array
- *
- * This function operates in-place. It rescales the data by a bounded
- * affine function such that min becomes 0 and max becomes 1.
- * Warnings similar to the ones mentioned in rescale_u8() apply about
- * the risks of rounding errors.
- *
- * @param data input/output array
- * @param size array size
- * @param min, max the minimum and maximum of the input array
- *
- * @return data
- */
-static float *rescale_f32(float *data, size_t size, float min, float max)
-{
-    size_t i;
-
-    if (max <= min)
-        for (i = 0; i < size; i++)
-            data[i] = .5;
-    else
-        for (i = 0; i < size; i++)
-            data[i] = (min > data[i] ? 0. :
-                       (max < data[i] ? 1. : (data[i] - min) / (max - min)));
-
-    return data;
-}
-/**
- * @brief normalize a float array
- *
- * This function operates in-place. It computes the minimum and
- * maximum values of the data, and rescales the data to
- * [0-1], with optionally flattening some extremal pixels.
- *
- * @param data input/output array
- * @param size array size
- * @param nb_min, nb_max number extremal pixels flattened
- *
- * @return data
- */
-float *balance_f32(float *data, size_t size, size_t nb_min, size_t nb_max)
-{
-    float min, max;
-
-    /* sanity checks */
-    if (NULL == data) {
-        fprintf(stderr, "a pointer is NULL and should not be so\n");
-        abort();
-    }
-    if (nb_min + nb_max >= size) {
-        nb_min = (size - 1) / 2;
-        nb_max = (size - 1) / 2;
-        fprintf(stderr, "the number of pixels to flatten is too large\n");
-        fprintf(stderr, "using (size - 1) / 2\n");
+    counter = 0;
+    for (size_t idx = 0; idx < hist.size(); ++idx)
+    {
+        counter += hist[idx];
+        if (counter >= ub_percentile) {
+            minmax.second = static_cast<float>(idx)/(hist.size()-1)*(max - min) + min;
+            break;
+        }
     }
 
-    /* get the min/max */
-    if (0 != nb_min || 0 != nb_max)
-        quantiles_f32(data, size, nb_min, nb_max, &min, &max);
-    else
-        minmax_f32(data, size, &min, &max);
+#ifndef NDEBUG
+    std::cout << "([" << nb_min << ", " << min << ", " << lb_percentile << "]"
+                 ", [" << nb_max << ", " << max << ", " << ub_percentile << "])" << std::endl;
+#endif
 
-    /* rescale */
-    (void) rescale_f32(data, size, min, max);
-
-    return data;
+    return minmax;
 }
 
-void colorbalance_rgb_f32(Array2Df& R, Array2Df& G, Array2Df& B, size_t size,
-                                   size_t nb_min, size_t nb_max)
+std::pair<float, float> getMinMax(const pfs::Array2Df& data)
 {
-    (void) balance_f32(R.data(), size, nb_min, nb_max);
-    (void) balance_f32(G.data(), size, nb_min, nb_max);
-    (void) balance_f32(B.data(), size, nb_min, nb_max);
+    std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator> minmax =
+            boost::minmax_element(data.begin(), data.end());
+
+    return std::pair<float, float>(*minmax.first, *minmax.second);
+}
+
+void balance(pfs::Array2Df& data, float nb_min, float nb_max)
+{
+    typedef utils::Clamp<float> Clampf;
+    typedef utils::Chain<
+            Clampf,
+            Normalizer
+            > Transform;
+
+    std::pair<float, float> minmax = getMinMax(data);
+    if (nb_min > 0.f || nb_max < 1.f)
+    {
+        minmax = quantiles(data, nb_min, nb_max, minmax.first, minmax.second);
+    }
+    std::transform(data.begin(), data.end(), data.begin(),
+                   Transform(Clampf(minmax.first, minmax.second),
+                             Normalizer(minmax.first, minmax.second)));
+}
+
+void checkParameterValidity(float& nb_min, float& nb_max)
+{
+    if (nb_min < 0.f)
+    {
+        nb_min = 0.f;
+    }
+    if (nb_max > 1.f)
+    {
+        nb_max = 1.f;
+    }
+    if (nb_min > nb_max)
+    {
+        std::swap(nb_min, nb_max);
+    }
+}
+
+void colorBalanceRGB(Array2Df& R, Array2Df& G, Array2Df& B,
+                     float nb_min, float nb_max)
+{
+    checkParameterValidity(nb_min, nb_max);
+
+#pragma omp parallel sections
+    {
+#pragma omp section
+        {
+            /* Executes in thread 1 */
+            balance(R, nb_min, nb_max);
+        }
+#pragma omp section
+        {
+            /* Executes in thread 2 */
+            balance(G, nb_min, nb_max);
+        }
+#pragma omp section
+        {
+            /* Executes in thread 3 */
+            balance(B, nb_min, nb_max);
+        }
+    }
 }
 
 
@@ -295,17 +262,16 @@ void shadesOfGrayAWB(Array2Df& R, Array2Df& G, Array2Df& B)
         }
 #pragma omp section
         {
-            /* Executes in thread 2 */
-            eB = computeAccumulation(B);
-        }
-#pragma omp section
-        {
             /* Executes in thread 3 */
             eG = computeAccumulation(G);
         }
+#pragma omp section
+        {
+            /* Executes in thread 2 */
+            eB = computeAccumulation(B);
+        }
     }
     float norm = std::sqrt(eR*eR + eG*eG + eB*eB);
-
     eR /= norm;
     eG /= norm;
     eB /= norm;
@@ -315,7 +281,7 @@ void shadesOfGrayAWB(Array2Df& R, Array2Df& G, Array2Df& B)
     float gainB = maximum / eB;
 
 #pragma omp parallel sections
-    {
+{
 #pragma omp section
         {
             /* Executes in thread 1 */
@@ -339,6 +305,7 @@ void shadesOfGrayAWB(Array2Df& R, Array2Df& G, Array2Df& B)
 #endif
 }
 
+
 void whiteBalance(Frame& frame, WhiteBalanceType type)
 {
     Channel* r;
@@ -346,19 +313,24 @@ void whiteBalance(Frame& frame, WhiteBalanceType type)
     Channel* b;
     frame.getXYZChannels(r, g, b);
 
+    whiteBalance(*r, *g, *b, type);
+}
+
+void whiteBalance(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B, WhiteBalanceType type)
+{
     switch (type)
     {
     case WB_COLORBALANCE:
     {
-        colorbalance_rgb_f32(*r, *g, *b, frame.size(), 3, 97);
+        colorBalanceRGB(R, G, B, 0.005, 0.995);
     } break;
     case WB_ROBUST:
     {
-        robustAWB(r, g, b);
+        robustAWB(&R, &G, &B);
     } break;
     case WB_SHADESOFGRAY:
     {
-        shadesOfGrayAWB(*r, *g, *b);
+        shadesOfGrayAWB(R, G, B);
     } break;
     }
 }
