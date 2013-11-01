@@ -1,3 +1,5 @@
+find_package(Boost COMPONENTS program_options REQUIRED)
+
 ADD_SUBDIRECTORY(ImageInspector)
 ADD_SUBDIRECTORY(InputOutputTest)
 ADD_SUBDIRECTORY(FusionAlgorithms)
@@ -11,7 +13,6 @@ ENDIF()
 FIND_PACKAGE(GTest)
 
 IF(GTEST_FOUND)
-find_package(Boost COMPONENTS program_options REQUIRED)
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
 INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
