@@ -20,7 +20,7 @@
  */
 
 #include <cmath>
-#include <math.h>
+#include "arch/math.h"
 #ifndef NDEBUG
 #include <boost/algorithm/minmax_element.hpp>
 #endif

@@ -25,9 +25,9 @@
 #include <iostream>
 #include <string>
 
-#include "HdrWizard/WhiteBalance.h"
-
 #include <boost/program_options.hpp>
+
+#include "HdrWizard/WhiteBalance.h"
 
 #include <Libpfs/frame.h>
 #include <Libpfs/channel.h>

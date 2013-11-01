@@ -22,18 +22,18 @@
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \date October 20th, 2012
 
+#include <boost/program_options.hpp>
+
 #include <iostream>
 #include <cstddef>
 #include <limits>
 #include <iosfwd>
 #include <cfloat>
-#include <cmath>
+#include "arch/math.h"
 #include <sstream>
 
 #include <Libpfs/frame.h>
 #include <Libpfs/io/framereaderfactory.h>
-
-#include <boost/program_options.hpp>
 
 using namespace std;
 using namespace pfs;
