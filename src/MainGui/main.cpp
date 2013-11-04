@@ -35,6 +35,11 @@
 #include "Common/TranslatorManager.h"
 #include "MainWindow/MainWindow.h"
 
+#ifdef WIN32
+#include <lcms2.h>
+
+#endif
+
 namespace
 {
 QStringList getCliFiles(const QStringList& arguments)
@@ -82,6 +87,17 @@ void customMessageHandler(QtMsgType type, const char *msg)
         ts << txt << endl;
 	}
 }
+
+void LcmsErrorHandler(cmsContext ContextID, cmsUInt32Number ErrorCode, const char *Text)
+{
+    QString txt = QString("[LCMS] Error %1: %2").arg(ErrorCode).arg(Text);
+    QFile outFile("errorlog.txt");
+	if (outFile.open(QIODevice::WriteOnly | QIODevice::Append))
+	{
+        QTextStream ts(&outFile);
+        ts << txt << endl;
+	}
+}
 #endif
 
 int main( int argc, char ** argv )
@@ -90,7 +106,8 @@ int main( int argc, char ** argv )
     QApplication application( argc, argv );
 
 #ifdef WIN32
-    // qInstallMsgHandler(customMessageHandler);
+    qInstallMsgHandler(customMessageHandler);
+    cmsSetLogErrorHandler(LcmsErrorHandler);
 #endif
 
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
