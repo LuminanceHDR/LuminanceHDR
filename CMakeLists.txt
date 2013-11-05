@@ -1,5 +1,5 @@
 PROJECT("Luminance HDR") # luminance-hdr)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 
 # set include path for FindXXX.cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
@@ -10,23 +10,30 @@ include(cmake/GlobalSettings.cmake)
 include(cmake/CompilerSettings.cmake)
 include(cmake/Internationalization.cmake)
 
-# find and setup Qt4 for this project
-FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit QtSql QtNetwork REQUIRED)
+# find and setup Qt5 for this project
 
-# add Qt modules here, the include will setup QT_LIBRARIES
-SET(QT_USE_QTXML TRUE)
-SET(QT_USE_QTWEBKIT TRUE)
-SET(QT_USE_QTSQL TRUE)
-SET(QT_USE_QTNETWORK TRUE)
+# Tell CMake to run moc when necessary:
+  #set(CMAKE_AUTOMOC ON)
+  # As moc files are generated in the binary dir, tell CMake
+  # to always look for includes there:
+  #set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+find_package(Qt5Core)
+find_package(Qt5Concurrent)
+find_package(Qt5Widgets)
+find_package(Qt5Gui)
+find_package(Qt5Declarative)
+find_package(Qt5WebKit)
+find_package(Qt5WebKitWidgets)
+find_package(Qt5Xml)
+find_package(Qt5Sql)
+find_package(Qt5Network)
+find_package(Qt5LinguistTools)
 
 # Include the qtmain lib if we are on the windows platform
 IF(WIN32)
-#    LINK_LIBRARIES(${QT_QTMAIN_LIBRARY})
-    SET(LIBS ${LIBS} ${QT_QTMAIN_LIBRARY})
+    SET(LIBS ${LIBS} ${Qt5Core_QTMAIN_LIBRARIES})
 ENDIF(WIN32)
-
-INCLUDE(${QT_USE_FILE})
-ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 set(LIBS ${LIBS}
     ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTNETWORK_LIBRARIES}
@@ -61,9 +68,6 @@ IF(WIN32)
     	ADD_DEFINITIONS(/arch:SSE2)
     ENDIF() 
 
-    # Don't "Treat WChar_t As Build in Type", in order to be able to use Qts (from|to)StdWString functions
-    ADD_DEFINITIONS(/Zc:wchar_t-)
-	
     ADD_DEFINITIONS(-DUNICODE )
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_REENTRANT)
     SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
@@ -160,7 +164,7 @@ SET(LUMINANCE_HDR_H ${LUMINANCE_HDR_H}
 )
 
 SET(LUMINANCE_HDR_RCCS icons.qrc)
-QT4_ADD_RESOURCES(LUMINANCE_HDR_RCCS_SRCS ${LUMINANCE_HDR_RCCS})
+QT5_ADD_RESOURCES(LUMINANCE_HDR_RCCS_SRCS ${LUMINANCE_HDR_RCCS})
 
 ENABLE_TESTING()
 
@@ -172,15 +176,22 @@ FILE(GLOB LUMINANCE_TS i18n/*.ts)
 
 IF(UPDATE_TRANSLATIONS)
     IF(LUPDATE_NOOBSOLETE)
-        QT4_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS} OPTIONS -noobsolete)
+        QT5_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS} OPTIONS -noobsolete)
     ELSE()
-        QT4_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS})
+        QT5_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS})
     ENDIF()
 ELSE(UPDATE_TRANSLATIONS)
-    QT4_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
+    MESSAGE(STATUS "xxxxxxxxxxxxxxxxxxxxxx add translation")
+    MESSAGE(STATUS ${LUMINANCE_TS})
+    QT5_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
 ENDIF(UPDATE_TRANSLATIONS)
 
 ADD_CUSTOM_TARGET(translations_target DEPENDS ${LUMINANCE_QM})
+
+    MESSAGE(STATUS "xxxxxxxxxxxxxxxxxxxxxx")
+    FOREACH(qm ${LUMINANCE_QM})
+        MESSAGE(STATUS ${qm})
+    ENDFOREACH()
 
 SET(LUMINANCE_FILES
     ${LUMINANCE_HDR_H}
@@ -236,6 +247,10 @@ IF(APPLE)
             BUNDLE DESTINATION . COMPONENT Runtime
             RUNTIME DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS COMPONENT Runtime)
 
+    qt5_use_modules(luminance-hdr Core Gui Widgets)
+    qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
+
+
     # Link libraries
     TARGET_LINK_LIBRARIES(${LHDR_OSX_EXECUTABLE_TARGET} ${LUMINANCE_MODULES_GUI} ${LIBS})
     TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
@@ -246,6 +261,9 @@ ELSEIF(UNIX)
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
+
+    qt5_use_modules(luminance-hdr Core Gui Widgets)
+    qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 
     # link libraries
     TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
@@ -277,42 +295,15 @@ ELSEIF(WIN32)
     ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
   
+    qt5_use_modules(luminance-hdr Core Gui Widgets)
+    qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
+
     # Link libraries
     TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI} ${LIBS})
     TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
 
-    # copies all necessary Qt dlls from the Qt binary dir to the output folder
-    SET(QT_RELEASE_DLLS
-        phonon4.dll
-        QtCore4.dll
-        QtGui4.dll
-        QtMultimedia4.dll
-        QtNetwork4.dll
-        QtSql4.dll
-        QtWebKit4.dll
-        QtXml4.dll
-        QtXmlPatterns4.dll
-    )
-    FOREACH(dll ${QT_RELEASE_DLLS})
-        FILE(COPY "${QT_BINARY_DIR}/${dll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release")
-        #STRING(REPLACE "4" "d4" debugdll ${dll})
-        #FILE(COPY "${QT_BINARY_DIR}/${debugdll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug")
-    ENDFOREACH()
-    
-    FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpeg4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/imageformats")
-    #FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpegd4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/imageformats")
-    FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlite4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/sqldrivers")
-    #FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlited4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/sqldrivers")
-
-    FILE(GLOB QtI18nAll "${QT_TRANSLATIONS_DIR}/qt_*.qm")
-    FILE(GLOB QtI18nHelp "${QT_TRANSLATIONS_DIR}/qt_help_*.qm")
-    LIST(LENGTH QtI18nHelp QtI18nHelp_length)
-    IF(${QtI18nHelp_length} GREATER 0)
-        LIST(REMOVE_ITEM QtI18nAll ${QtI18nHelp})
-    ENDIF()
-    
-    FILE(COPY ${QtI18nAll} DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/i18n/")
 ENDIF()
 
 # Packaging must go at the bottom
 include(${CMAKE_SOURCE_DIR}/build/Packaging.cmake)
+

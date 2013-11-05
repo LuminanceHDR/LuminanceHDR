@@ -24,7 +24,7 @@
 #include <QWidget>
 
 // Windows only data definitions
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 
 #define _WINSOCKAPI_    // stops windows.h including winsock.h
 #include <windows.h>
@@ -42,9 +42,9 @@ public:
 
 	// Initialization methods
     EcWin7();
-    void init(WId wid);
-#ifdef Q_WS_WIN
-    bool winEvent(MSG * message, long * result);
+    void init(const QWidget* wid);
+#ifdef Q_OS_WIN
+    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 #endif
     void addRecentFile(const QString& filename);
 
@@ -62,9 +62,13 @@ public:
     void setProgressValue(int value, int max);
     void setProgressState(ToolBarProgressState state);
 
+    HWND getHWNDForWidget(const QWidget* widget);
+    QWindow* windowForWidget(const QWidget* widget); 
+
+
 private:
-    WId mWindowId;
-#ifdef Q_WS_WIN
+    HWND mWindowId;
+#ifdef Q_OS_WIN
     UINT mTaskbarMessageId;
     ITaskbarList3 *mTaskbar;
     HICON mOverlayIcon;

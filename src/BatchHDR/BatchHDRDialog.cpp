@@ -444,8 +444,8 @@ void BatchHDRDialog::writeAisData(QByteArray data)
         data.replace("[1A", "");
     if (data.contains("[2A"))
         data.replace("[2A", "");
-    if (data.contains(QChar(0x01B).toAscii()))
-        data.replace(QChar(0x01B).toAscii(), "");
+    if (data.contains(QChar(0x01B).toLatin1()))
+        data.replace(QChar(0x01B).toLatin1(), "");
     m_Ui->textEdit->append(data);
     if (data.contains(": remapping")) {
         QRegExp exp("\\:\\s*(\\d+)\\s*");

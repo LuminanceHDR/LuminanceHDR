@@ -30,7 +30,7 @@ OsIntegration::OsIntegration()
     m_progressMin(0), 
     m_progressMax(100)
 {
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		winProgressbar = new EcWin7();
 	#endif
 }
@@ -51,14 +51,14 @@ OsIntegration* OsIntegration::getInstancePtr() {
 }
 
 void OsIntegration::init(QWidget* mainWindow) {
-	#ifdef Q_WS_WIN
-		winProgressbar->init(mainWindow->winId());
+	#ifdef Q_OS_WIN
+		winProgressbar->init(mainWindow);
 	#endif
 }
 
 void OsIntegration::setProgress(int value, int max)
 {
-	#ifdef Q_WS_WIN
+	#ifdef Q_OS_WIN
 		if (value < 0)
 			winProgressbar->setProgressState(EcWin7::NoProgress);
 		else {
@@ -89,9 +89,10 @@ void OsIntegration::addRecentFile(const QString& filename)
 #endif
 	}
 
-#ifdef Q_WS_WIN
-	bool OsIntegration::winEvent(MSG * message, long * result)
-	{
-		return winProgressbar->winEvent(message, result);
-	}
+
+bool OsIntegration::nativeEvent(const QByteArray& eventType, void* message, long* result)
+{
+#ifdef Q_OS_WIN
+	return winProgressbar->nativeEvent(eventType, message, result);
 #endif
+}

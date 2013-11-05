@@ -19,8 +19,11 @@
 
 #include "ecwin7.h"
 
+#include <QtGui/5.1.1/QtGui/qpa/qplatformnativeinterface.h>
+#include <QGuiApplication>
+
 // Windows only GUID definitions
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
 DEFINE_GUID(CLSID_TaskbarList,0x56fdf344,0xfd6d,0x11d0,0x95,0x8a,0x0,0x60,0x97,0xc9,0xa0,0x90);
 DEFINE_GUID(IID_ITaskbarList3,0xea1afb91,0x9e28,0x4b86,0x90,0xE9,0x9e,0x9f,0x8a,0x5e,0xef,0xaf);
 #endif
@@ -28,7 +31,7 @@ DEFINE_GUID(IID_ITaskbarList3,0xea1afb91,0x9e28,0x4b86,0x90,0xE9,0x9e,0x9f,0x8a,
 // Constructor: variabiles initialization
 EcWin7::EcWin7()
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     mTaskbar = NULL;
     mOverlayIcon = NULL;
     mTaskbarMessageId = RegisterWindowMessage(L"TaskbarButtonCreated");
@@ -37,17 +40,41 @@ EcWin7::EcWin7()
 }
 
 // Init taskbar communication
-void EcWin7::init(WId wid)
+void EcWin7::init(const QWidget* widget)
 {
-    mWindowId = wid;
+    mWindowId = getHWNDForWidget(widget);
 }
+
+QWindow* EcWin7::windowForWidget(const QWidget* widget) 
+{
+    QWindow* window = widget->windowHandle();
+    if (window)
+        return window;
+    const QWidget* nativeParent = widget->nativeParentWidget();
+    if (nativeParent) 
+        return nativeParent->windowHandle();
+    return 0; 
+}
+
+HWND EcWin7::getHWNDForWidget(const QWidget* widget)
+{
+    QWindow* window = windowForWidget(widget);
+    if (window)
+    {
+        QPlatformNativeInterface* interfacep = QGuiApplication::platformNativeInterface();
+        return static_cast<HWND>(interfacep->nativeResourceForWindow(QByteArrayLiteral("handle"), window));
+    }
+    return 0; 
+}
+
 
 // Windows event handler callback function
 // (handles taskbar communication initial message)
-#ifdef Q_WS_WIN
-bool EcWin7::winEvent(MSG * message, long * result)
+#ifdef Q_OS_WIN
+bool EcWin7::nativeEvent(const QByteArray& eventType, void* message, long* result)
 {
-    if (message->message == mTaskbarMessageId)
+    MSG* msg = reinterpret_cast<MSG*>(message);
+    if (msg->message == mTaskbarMessageId)
     {
         HRESULT hr = CoCreateInstance(CLSID_TaskbarList,
                                       0,
@@ -72,7 +99,7 @@ void EcWin7::addRecentFile(const QString& filename)
 // Set progress bar current value
 void EcWin7::setProgressValue(int value, int max)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     if (!mTaskbar) return;
     mTaskbar->SetProgressValue(mWindowId, value, max);
 #endif
@@ -81,7 +108,7 @@ void EcWin7::setProgressValue(int value, int max)
 // Set progress bar current state (active, error, pause, ecc...)
 void EcWin7::setProgressState(ToolBarProgressState state)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     if (!mTaskbar) return;
     mTaskbar->SetProgressState(mWindowId, (TBPFLAG)state);
 #endif
@@ -91,7 +118,7 @@ void EcWin7::setProgressState(ToolBarProgressState state)
 // (call with iconName == "" and description == "" to remove any previous overlay icon)
 void EcWin7::setOverlayIcon(QString iconName, QString description)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     if (!mTaskbar) return;
     HICON oldIcon = NULL;
     if (mOverlayIcon != NULL) oldIcon = mOverlayIcon;

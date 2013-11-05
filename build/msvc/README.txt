@@ -16,25 +16,40 @@ This build process works for 32 and 64 bit compilation.
 
 This build process requires:
 * Windows
-* MS Visual Studio 2008 or higher, ExpressEditions should work (currently testing with VS2012)
+* MS Visual Studio 2010 or higher, ExpressEditions should work (currently testing with VS2012)
 * Qt for MSVC installed
-  - either official 32 bit Qt from: http://qt.nokia.com/downloads/downloads#qt-lib
+  - either official 32 bit Qt from: http://qt-project.org/downloads
   - or Qt self compiled
   ATTENTION: Do not mix the compilation with different versions of MSVC. If you 
-             compile Luminance with VC2010 you should also have Qt compiled
+             compile Luminance with VC2012 you should also have Qt compiled
              with VC2010. If you don't find any precompiled Qt with a 
              specific MSVC or platform version, you can just download the 
              latest version of a precompiled Qt with any VC compiler (or just the Qt source version), 
-             open the VC command prompt in the Qt main directory and then run:
-             > configure.exe -mp -fast
+             open the VC command prompt in the Qt main directory and then:
+             
+             First open this solution and build all projects for your configuration (ex. Release/x64)
+             > icu\source\allinone\allinone.sln
+             
+             And then run: (change your paths to match the installation
+             > set include=%include%;C:\Data\Develop\Qt\icu\include
+             > set lib=%lib%;C:\Data\Develop\Qt\icu\lib64
+             (Change lib64 to lib for the x32 build)
+             
+             > set path=%path%;C:\Data\Programs\ruby-1.9.3-p385-i386-mingw32\bin
+             > configure -release -mp -nomake tests -nomake examples -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-avx2
              > nmake
-             > nmake confclean
-             > del /S /Q *.obj lib*.dll
+             > nmake -f Makefile confclean
+             > del /S /Q *.obj
              This recompiles the whole Qt and takes from 30 minutes to several hours...
              This reconfiguration can also be applied for generating x64 Qt versions!
   ATTENTION: If you move the Qt folder AFTER the compilation you have to redo the 
-             > configure.exe -mp -fast
+             > configure ... step
              (without doing the actual compilation with nmake)
+             Moreover you need to manually adapt the paths in qtbase\lib\cmake\Qt5LinguistTools\Qt5LinguistToolsConfig.cmake
+
+             Afterwards copy the icu-dlls into the qtbase/bin folder, along with the platforms folder from the plugins directory.
+             Don't forget the d3dcompiler_46.dll from the local VS-folder!
+             At the end programs like linguist.exe, designer.exe must be able to run!!!
 			 
              
 * CMake

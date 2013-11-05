@@ -1812,7 +1812,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
             mainWin->updateRecentFileActions();
     }
     
-    OsIntegration::getInstance().addRecentFile(fileName);
+    // OsIntegration::getInstance().addRecentFile(fileName);
     
 }
 
@@ -1963,12 +1963,10 @@ void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 	}
 }
 
-#ifdef Q_WS_WIN
-bool MainWindow::winEvent(MSG * message, long * result)
+bool QWidget::nativeEvent(const QByteArray& eventType, void* message, long* result) 
 {
-    return OsIntegration::getInstance().winEvent(message, result);
+    return OsIntegration::getInstance().nativeEvent(eventType, message, result);
 }
-#endif
 
 void MainWindow::updateSoftProofing(int i)
 {

@@ -27,7 +27,7 @@
 #include <QObject>
 #include <QWidget>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	#include "ecwin7.h"
 #endif
 
@@ -44,8 +44,8 @@ public:
 
     ~OsIntegration();
 
-#ifdef Q_WS_WIN
-	bool winEvent(MSG * message, long * result);
+#ifdef Q_OS_WIN
+    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 #endif
     void addRecentFile(const QString& filename);
 
@@ -62,7 +62,7 @@ private:
 	static OsIntegration* instance;
 	int m_progressMin;
 	int m_progressMax;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	EcWin7* winProgressbar;
 #endif
 

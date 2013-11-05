@@ -56,7 +56,7 @@ SavedParametersDialog::SavedParametersDialog(QWidget *parent):
     model->setHeaderData(1, Qt::Horizontal, tr("TM Operator"));
 
     m_Ui->tableView->setModel(model);
-    m_Ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+    m_Ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_Ui->tableView->show();
 }
 
@@ -149,7 +149,7 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
 
     m_Ui->tableView->setModel(model);
     m_Ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    m_Ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+    m_Ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     m_Ui->tableView->show();
 }
 

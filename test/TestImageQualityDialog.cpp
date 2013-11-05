@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QApplication>
 
 #include <Libpfs/frame.h>
 #include <UI/ImageQualityDialog.h>

@@ -3,8 +3,8 @@ SET CYGWIN_DIR=c:\cygwin
 SET TEMP_DIR=.downloaddir
 SET CMAKE_DIR=C:\Data\Programs\cmake-2.8.10.1-win32-x86
 SET VISUAL_STUDIO_VC_REDIST=C:\Program Files (x86)\%VS_PROG_FILES%\VC\redist\%RawPlatform%
-rem SET QTDIR=C:\Data\Develop\Qt\5.0.1-x64\qtbase
-SET QTDIR=C:\Data\Develop\Qt\4.8.4-x64
+SET QTDIR=C:\Data\Develop\Qt\install-Qt5.1.1-msvc2012-x64
+rem SET QTDIR=C:\Data\Develop\Qt\4.8.2-x64
 
 REM Options:  -------------------------------------------
 

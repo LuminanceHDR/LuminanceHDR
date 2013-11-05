@@ -1,9 +1,11 @@
 
-QT4_WRAP_CPP(FILES_MOC)
+QT5_WRAP_CPP(FILES_MOC)
 
 ADD_EXECUTABLE(WhiteBalance
     WhiteBalanceMain.cpp
     ${FILES_MOC})
+
+qt5_use_modules(WhiteBalance Core Gui Widgets)
 
 # Link sub modules
 IF(MSVC OR APPLE)

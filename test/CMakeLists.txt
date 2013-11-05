@@ -55,6 +55,9 @@ ADD_LIBRARY(ContrastDomain STATIC
 ADD_LIBRARY(PrintArray2D STATIC
     PrintArray2D.cpp PrintArray2D.h)
 
+qt5_use_modules(ContrastDomain Core)
+
+
 # Mantiuk06
 ADD_EXECUTABLE(TestMantiuk06Basic
     TestMantiuk06Basic.cpp)
@@ -71,6 +74,8 @@ ELSE()
         ${CMAKE_THREAD_LIBS_INIT}
         ${LIBS} -lrt)
 ENDIF()
+qt5_use_modules(TestMantiuk06Basic Core)
+
 ADD_TEST(TestMantiuk06Basic TestMantiuk06Basic)
 
 ADD_EXECUTABLE(TestMantiuk06Pyramid
@@ -89,6 +94,7 @@ ELSE()
         ${CMAKE_THREAD_LIBS_INIT}
         ${LIBS} -lrt)
 ENDIF()
+qt5_use_modules(TestMantiuk06Pyramid Core)
 ADD_TEST(TestMantiuk06Pyramid TestMantiuk06Pyramid)
 
 ADD_EXECUTABLE(TestVex TestVex.cpp)
@@ -140,6 +146,7 @@ TARGET_LINK_LIBRARIES(TestFloatRgb common pfs
     ${CMAKE_THREAD_LIBS_INIT}
     ${LIBS})
 ADD_TEST(TestFloatRgb TestFloatRgb)
+qt5_use_modules(TestFloatRgb Core Gui Widgets)
 
 ADD_EXECUTABLE(TestMTB TestMTB.cpp)
 TARGET_LINK_LIBRARIES(TestMTB common pfs hdrcreation
@@ -154,6 +161,7 @@ ADD_TEST(TestMinMax TestMinMax)
 
 ADD_EXECUTABLE(TestImageQualityDialog TestImageQualityDialog.cpp)
 TARGET_LINK_LIBRARIES(TestImageQualityDialog ui fileformat pfs common ${LIBS})
+qt5_use_modules(TestImageQualityDialog Core Gui Widgets)
 
 ADD_EXECUTABLE(TestHdrCreationWizard TestHdrCreationWizard.cpp)
 IF(APPLE OR MSVC)
@@ -164,6 +172,7 @@ ELSEIF(UNIX)
     -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group
     ${LIBS})
 ENDIF()
+qt5_use_modules(TestHdrCreationWizard Core Gui Widgets)
 
 ADD_EXECUTABLE(TestFusionOperator TestFusionOperator.cpp)
 IF(APPLE OR MSVC)
@@ -175,6 +184,7 @@ TARGET_LINK_LIBRARIES(TestFusionOperator
     ${Boost_PROGRAM_OPTIONS_LIBRARY}
     -Xlinker --start-group ${LUMINANCE_MODULES_CLI} ${LUMINANCE_MODULES_GUI} -Xlinker --end-group ${LIBS})
 ENDIF()
+qt5_use_modules(TestFusionOperator Core Gui Widgets)
 
 ADD_EXECUTABLE(TestPoissonSolver TestPoissonSolver.cpp)
 TARGET_LINK_LIBRARIES(TestPoissonSolver hdrwizard pfs pfstmo 

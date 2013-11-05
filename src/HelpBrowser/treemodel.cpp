@@ -28,7 +28,7 @@
     models.
 */
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "treeitem.h"
 #include "treemodel.h"
