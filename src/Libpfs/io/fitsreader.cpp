@@ -108,7 +108,7 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
     Channel *Xc, *Yc, *Zc;
     tempFrame.createXYZChannels(Xc, Yc, Zc);
 
-    float max = std::pow(2.f, std::floor(log2f(contents.max()) + 1)) - 1;
+    float max = std::pow(2.0, std::floor(log2f(contents.max()) + 1)) - 1;
 
     std::transform(&contents[0], &contents[0] + contents.size(),
                    Xc->begin(), Normalizer(0.f, max));

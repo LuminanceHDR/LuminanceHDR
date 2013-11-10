@@ -125,11 +125,7 @@ bool checkFileName(const HdrCreationItem& item, const QString& str) {
   
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
-#ifdef LHDR_CXX11_ENABLED
-    for (const QString& i: filenames) {
-#else
     BOOST_FOREACH(const QString& i, filenames) {
-#endif
         qDebug() << QString("Checking %1").arg(i);
         HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
                                                         boost::bind(&checkFileName, _1, i));
