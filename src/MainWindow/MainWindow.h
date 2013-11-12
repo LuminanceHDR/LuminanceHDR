@@ -240,10 +240,9 @@ protected:
     void dropEvent(QDropEvent *);
     void changeEvent(QEvent* event);
     void closeEvent(QCloseEvent *);
+	bool event(QEvent * event);
     //!
-
-
-
+	
     void dispatchrotate(bool clockwise);
 
     void updateRecentFileActions();
@@ -280,11 +279,12 @@ protected:
     PreviewPanel *m_PreviewPanel;
 
 #ifdef Q_OS_WIN
-    bool winEvent(MSG * message, long * result);
+   bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 #endif
 
 private:
     static int sm_NumMainWindows;
+	int firstWindow;
 
     // I/O
     QThread *m_IOThread;

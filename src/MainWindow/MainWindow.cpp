@@ -210,6 +210,7 @@ void MainWindow::init()
     luminance_options = new LuminanceOptions();
 
     sm_NumMainWindows++;
+	firstWindow = 0;
 
     helpBrowser = NULL;
     num_ldr_generated = 0;
@@ -251,16 +252,23 @@ void MainWindow::init()
     setupTM();
     createConnections();
 
-    if ( sm_NumMainWindows == 1 ) {
-        // SPLASH SCREEN    ---------------------------------------------------
-        showSplash();
-        // UMessageBox::donationSplashMB();
-        // END SPLASH SCREEN    -----------------------------------------------
-        sm_updateChecker.reset(new UpdateChecker(this));
-        connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), this, SLOT(onUpdateAvailable()));
-    }
-
     OsIntegration::getInstance().init(this);
+
+    if ( sm_NumMainWindows == 1 ) {
+        if (OsIntegration::getInstance().isRunningOnSameCpuPlatform()) 
+        {
+			// SPLASH SCREEN    ---------------------------------------------------
+			showSplash();
+			// UMessageBox::donationSplashMB();
+			// END SPLASH SCREEN    -----------------------------------------------
+			sm_updateChecker.reset(new UpdateChecker(this));
+			connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), this, SLOT(onUpdateAvailable()));
+
+			firstWindow = 2;
+        }
+		else
+			firstWindow = 1;
+    }
 }
 
 void MainWindow::createUI()
@@ -1395,7 +1403,16 @@ void MainWindow::closeEvent( QCloseEvent *event )
     }
 }
 
-
+bool MainWindow::event(QEvent* event)
+{
+	bool result = QMainWindow::event(event);
+	if (event->type() == QEvent::WindowActivate && firstWindow == 1)
+	{
+		firstWindow = 2;
+		QMessageBox::warning(this, "Luminance HDR 32-bit on 64-bit", tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);        
+	}
+	return result;
+}
 
 bool MainWindow::maybeSave()
 {
@@ -1963,7 +1980,7 @@ void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 	}
 }
 
-bool QWidget::nativeEvent(const QByteArray& eventType, void* message, long* result) 
+bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long* result) 
 {
     return OsIntegration::getInstance().nativeEvent(eventType, message, result);
 }
