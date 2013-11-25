@@ -91,18 +91,12 @@ HdrWizard::HdrWizard(QWidget *p,
     m_ui->tableWidget->verticalHeader()->hide();
     // m_ui->tableWidget->resizeColumnsToContents();
     
-    if ( !luminance_options.isShowFirstPageWizard() )
-    {
-        m_ui->NextFinishButton->setEnabled(false);
-        m_ui->pagestack->setCurrentIndex(1);
-    }
-
     m_ui->progressBar->hide();
     m_ui->textEdit->hide();
 
     if (files.size())
     {
-        m_ui->pagestack->setCurrentIndex(1);
+        m_ui->pagestack->setCurrentIndex(0);
 
         QMetaObject::invokeMethod(this, "loadInputFiles", Qt::QueuedConnection,
                                   Q_ARG(QStringList, files));
@@ -737,7 +731,7 @@ void HdrWizard::finishedAligning(int exitcode)
                              tr("align_image_stack failed to align images."));
     }
     m_ui->NextFinishButton->setEnabled(true);
-    m_ui->pagestack->setCurrentIndex(2);
+    m_ui->pagestack->setCurrentIndex(1);
     m_ui->progressBar->hide();
     m_hdrCreationManager->removeTempFiles();
 }
@@ -888,10 +882,6 @@ void HdrWizard::NextFinishButtonClicked() {
     int currentpage = m_ui->pagestack->currentIndex();
     switch (currentpage) {
     case 0:
-        m_ui->pagestack->setCurrentIndex(1);
-        m_ui->NextFinishButton->setDisabled(true);
-        break;
-    case 1:
         //now align, if requested
         if (m_ui->alignCheckBox->isChecked()) {
             QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -920,16 +910,16 @@ void HdrWizard::NextFinishButtonClicked() {
                 m_hdrCreationManager->align_with_mtb();
             return;
         }
-        m_ui->pagestack->setCurrentIndex(2);
+        m_ui->pagestack->setCurrentIndex(1);
         break;
-    case 2:
+    case 1:
         if(!m_ui->customConfigCheckBox->isChecked()) {
             currentpage = 3;
         } else {
-            m_ui->pagestack->setCurrentIndex(3);
+            m_ui->pagestack->setCurrentIndex(2);
             break;
         }
-    case 3:
+    case 2:
         m_processing = true;
         m_ui->settings_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
         m_ui->customize_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
@@ -1007,7 +997,7 @@ void HdrWizard::currentPageChangedInto(int newindex)
 {
     //predefined configs page
     // m_ui->textEdit->hide();
-    if (newindex == 2) {
+    if (newindex == 1) {
         //m_hdrCreationManager->removeTempFiles();
         m_ui->NextFinishButton->setText(tr("&Finish"));
         //when at least 2 LDR or MDR inputs perform Manual Alignment
@@ -1035,7 +1025,7 @@ void HdrWizard::currentPageChangedInto(int newindex)
             delete editingtools;
         }
     }
-    else if (newindex == 3) { //custom config
+    else if (newindex == 2) { //custom config
         predefConfigsComboBoxActivated(1);
         m_ui->NextFinishButton->setText(tr("&Finish"));
         return;

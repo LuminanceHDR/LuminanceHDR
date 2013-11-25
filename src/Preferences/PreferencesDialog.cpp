@@ -245,7 +245,6 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setTempDir( m_Ui->lineEditTempPath->text() );
 
     luminance_options.setPreviewWidth( m_Ui->previewsWidthSpinBox->value() );
-    luminance_options.setShowFirstPageWizard( m_Ui->checkBoxWizardShowFirstPage->isChecked() );
     luminance_options.setPreviewPanelActive( m_Ui->checkBoxTMOWindowsPreviewPanel->isChecked() );
 
     if (m_Ui->chkPortableMode->isChecked() != LuminanceOptions::isCurrentPortableMode)
@@ -629,7 +628,6 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->previewsWidthSpinBox->setValue( luminance_options.getPreviewWidth() );
 
     m_Ui->checkBoxTMOWindowsPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
-    m_Ui->checkBoxWizardShowFirstPage->setChecked(luminance_options.isShowFirstPageWizard());
 
     m_Ui->chkPortableMode->setChecked(LuminanceOptions::isCurrentPortableMode);
 
