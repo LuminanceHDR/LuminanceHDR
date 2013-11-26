@@ -286,22 +286,12 @@ void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
 void HdrCreationManager::removeTempFiles()
 {
     if (m_align)
+    {
         m_align->removeTempFiles();
+    }
 }
 
 /*
-void HdrCreationManager::removeTempFiles()
-{
-    foreach (QString tempfname, filesToRemove) {
-        qDebug() << "void HdrCreationManager::removeTempFiles(): "
-                 << qPrintable(tempfname);
-        if (!tempfname.isEmpty()) {
-            QFile::remove(tempfname);
-        }
-    }
-    filesToRemove.clear();
-}
-
 void HdrCreationManager::checkEVvalues()
 {
     float max=-20, min=+20;
@@ -329,16 +319,6 @@ void HdrCreationManager::checkEVvalues()
     //qDebug("HCM::END checkEVvalues");
 }
 
-void HdrCreationManager::setEV(float new_ev, int image_idx)
-{
-    if (expotimes[image_idx] == -1) {
-        //remove always the first one
-        //after the initial printing we only need to know the size of the list
-        filesLackingExif.removeAt(0);
-    }
-    expotimes[image_idx] = exp2f(new_ev);
-    emit expotimeValueChanged(exp2f(new_ev), image_idx);
-}
 */
 
 
@@ -393,281 +373,16 @@ void HdrCreationManager::cropItems(const QRect& ca)
         m_data[idx].frame().swap(shared);
     
     }
-    //cropAgMasks(ca);
 }
 
 HdrCreationManager::~HdrCreationManager()
 {
-/*
-    if (ais != NULL && ais->state() != QProcess::NotRunning) {
-        ais->kill();
-        delete ais;
-    }
-*/
     if (m_align)
+    {
         delete m_align;
+    }
     delete m_agMask;
 }
-
-/*
-void HdrCreationManager::clearlists(bool deleteExpotimeAsWell)
-{
-    startedProcessing.clear();
-    filesLackingExif.clear();
-
-    if (deleteExpotimeAsWell)
-    {
-        fileList.clear();
-        expotimes.clear();
-    }
-    if (ldrImagesList.size() != 0)
-    {
-        qDeleteAll(ldrImagesList);
-        ldrImagesList.clear();
-        qDeleteAll(m_antiGhostingMasksList);
-        m_antiGhostingMasksList.clear();
-    }
-    if (listmdrR.size()!=0 && listmdrG.size()!=0 && listmdrB.size()!=0)
-    {
-        Array2DfList::iterator itR=listmdrR.begin(), itG=listmdrG.begin(), itB=listmdrB.begin();
-        for (; itR!=listmdrR.end(); itR++,itG++,itB++ )
-        {
-            delete *itR;
-            delete *itG;
-            delete *itB;
-        }
-        listmdrR.clear();
-        listmdrG.clear();
-        listmdrB.clear();
-        qDeleteAll(mdrImagesList);
-        mdrImagesList.clear();
-        qDeleteAll(mdrImagesToRemove);
-        mdrImagesToRemove.clear();
-        qDeleteAll(m_antiGhostingMasksList);
-        m_antiGhostingMasksList.clear();
-    }
-}
-
-void HdrCreationManager::makeSureLDRsHaveAlph->()
-{
-    if (ldrImagesList.at(0)->format()==QImage::Format_RGB32) {
-        int origlistsize = ldrImagesList.size();
-        for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
-            QImage *newimage = new QImage(ldrImagesList.at(0)->convertToFormat(QImage::Format_ARGB32));
-            if (newimage == NULL)
-                exit(1); // TODO: exit gracefully;
-            ldrImagesList.append(newimage);
-            delete ldrImagesList.takeAt(0);
-        }
-    }
-}
-
-void HdrCreationManager::applyShiftsToImageStack(const QList<QPair<int,int> >& hvOffsets)
-{
-    int originalsize = ldrImagesList.count();
-    //shift the images
-    for (int i = 0; i < originalsize; i++)
-    {
-        if ( hvOffsets[i].first == hvOffsets[i].second &&
-             hvOffsets[i].first == 0 )
-        {
-            continue;
-        }
-        QImage *shifted = shiftQImage(ldrImagesList[i],
-                                      hvOffsets[i].first,
-                                      hvOffsets[i].second);
-        delete ldrImagesList.takeAt(i);
-        ldrImagesList.insert(i, shifted);
-    }
-}
-
-void HdrCreationManager::applyShiftsToMdrImageStack(const QList<QPair<int,int> >& hvOffsets)
-{
-    qDebug() << "HdrCreationManager::applyShiftsToMdrImageStack";
-    int originalsize = mdrImagesList.count();
-    for (int i = 0; i < originalsize; i++)
-    {
-        if ( hvOffsets[i].first == hvOffsets[i].second &&
-             hvOffsets[i].first == 0 )
-        {
-            continue;
-        }
-        pfs::Array2Df *shiftedR = shift(*listmdrR[i],
-                                        hvOffsets[i].first,
-                                        hvOffsets[i].second);
-        pfs::Array2Df *shiftedG = shift(*listmdrG[i],
-                                        hvOffsets[i].first,
-                                        hvOffsets[i].second);
-        pfs::Array2Df *shiftedB = shift(*listmdrB[i],
-                                        hvOffsets[i].first,
-                                        hvOffsets[i].second);
-        delete listmdrR[i];
-        delete listmdrG[i];
-        delete listmdrB[i];
-        listmdrR[i] = shiftedR;
-        listmdrG[i] = shiftedG;
-        listmdrB[i] = shiftedB;
-    }
-}
-
-
-void HdrCreationManager::cropLDR(const QRect& ca)
-{
-    //crop all the images
-    int origlistsize = ldrImagesList.size();
-    for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
-        QImage *newimage = new QImage(ldrImagesList.at(0)->copy(ca));
-        if (newimage == NULL)
-            exit(1); // TODO: exit gracefully
-        ldrImagesList.append(newimage);
-        delete ldrImagesList.takeAt(0);
-    }
-    cropAgMasks(ca);
-}
-
-void HdrCreationManager::cropMDR(const QRect& ca)
-{
-    int x_ul, y_ul, x_br, y_br;
-    ca.getCoords(&x_ul, &y_ul, &x_br, &y_br);
-
-    int newWidth = x_br-x_ul;
-    int newHeight = y_br-y_ul;
-
-    
-    // crop all the images
-    //int origlistsize = listmdrR.size();
-    //pfs::Frame *frame;
-    //pfs::Channel *Xc, *Yc, *Zc;
-    //pfs::Frame *cropped_frame;
-    
-
-    // all R channels
-    for ( size_t idx = 0; idx < listmdrR.size(); ++idx )
-    {
-        pfs::Array2Df tmp( newWidth, newHeight );
-        pfs::cut(listmdrR[idx], &tmp, x_ul, y_ul, x_br, y_br);
-        listmdrR[idx]->swap( tmp );
-    }
-
-    // all G channels
-    for ( size_t idx = 0; idx < listmdrG.size(); ++idx )
-    {
-        pfs::Array2Df tmp( newWidth, newHeight );
-        pfs::cut(listmdrG[idx], &tmp, x_ul, y_ul, x_br, y_br);
-        listmdrG[idx]->swap( tmp );
-    }
-
-    // all B channel
-    for ( size_t idx = 0; idx < listmdrB.size(); ++idx )
-    {
-        pfs::Array2Df tmp( newWidth, newHeight );
-        pfs::cut(listmdrB[idx], &tmp, x_ul, y_ul, x_br, y_br);
-        listmdrB[idx]->swap( tmp );
-    }
-
-    for ( int idx = 0; idx < mdrImagesList.size(); ++idx )
-    {
-
-        QImage *newimage = new QImage(mdrImagesList.at(0)->copy(ca));
-        if (newimage == NULL)
-            exit(1); // TODO: exit gracefully
-        mdrImagesList.append(newimage);
-        mdrImagesToRemove.append(mdrImagesList.takeAt(0));
-        QImage *img = new QImage(newWidth, newHeight, QImage::Format_ARGB32);
-        img->fill(qRgba(0,0,0,0));
-        m_antiGhostingMasksList.append(img);
-        m_antiGhostingMasksList.takeAt(0);
-    }
-    m_mdrWidth = newWidth;
-    m_mdrHeight = newHeight;
-    cropAgMasks(ca);
-}
-
-void HdrCreationManager::reset()
-{
-    ais = NULL;
-    m_shift = 0;
-    chosen_config = predef_confs[0];
-    inputType = UNKNOWN_INPUT_TYPE;
-    fileList.clear();
-    // DAVIDE _ HDR CREATION
-    // clearlists(true);
-    removeTempFiles();
-}
-*/
-
-/*
-void HdrCreationManager::remove(int index)
-{
-    switch (inputType) {
-    case LDR_INPUT_TYPE:
-    {
-        ldrImagesList.removeAt(index);          
-    }
-        break;
-    case MDR_INPUT_TYPE:
-    {
-            Array2DfList::iterator itR = listmdrR.begin() + index;
-            delete *itR;
-            listmdrR.erase(itR);
-
-            Array2DfList::iterator itG = listmdrG.begin() + index;
-            delete *itG;
-            listmdrG.erase(itG);
-
-            Array2DfList::iterator itB = listmdrB.begin() + index;
-            delete *itB;
-            listmdrB.erase(itB);
-            
-            delete mdrImagesList[index];            
-            mdrImagesList.removeAt(index);          
-            
-            QString fname = filesToRemove.at(index);
-            qDebug() << "void HdrCreationManager::remove(int index): filename " << fname;
-            QFile::remove(fname);
-    }
-        break;
-        // ...in this case, do nothing!
-    case UNKNOWN_INPUT_TYPE:
-    default:{}
-        break;
-    }
-    fileList.removeAt(index);
-    filesToRemove.remove(index);
-    expotimes.remove(index);
-    startedProcessing.removeAt(index);
-}
-
-namespace {
-
-inline float toFloat(int value) {
-    return (static_cast<float>(value)/255.f);
-}
-
-void interleavedToPlanar(const QImage* image,
-                         pfs::Array2Df* r, pfs::Array2Df* g, pfs::Array2Df* b)
-{
-    for (int row = 0; row < image->height(); ++row)
-    {
-        const QRgb* data = reinterpret_cast<const QRgb*>(image->scanLine(row));
-        pfs::Array2Df::iterator itRed = r->row_begin(row);
-        pfs::Array2Df::iterator itGreen = g->row_begin(row);
-        pfs::Array2Df::iterator itBlue = g->row_begin(row);
-
-        for ( int col = 0; col < image->width(); ++col )
-        {
-            *itRed++ = toFloat(qRed(*data));
-            *itGreen++ = toFloat(qGreen(*data));
-            *itBlue++ = toFloat(qBlue(*data));
-
-            ++data;
-        }
-    }
-}
-
-} // anonymous namespace
-
-*/
 
 void HdrCreationManager::saveImages(const QString& prefix)
 {
@@ -687,96 +402,7 @@ void HdrCreationManager::saveImages(const QString& prefix)
     }
     emit imagesSaved();
 }
-/*
-void HdrCreationManager::saveLDRs(const QString& filename)
-{
-#ifdef QT_DEBUG
-    qDebug() << "HdrCreationManager::saveLDRs";
-#endif
 
-    for (int idx = 0, origlistsize = ldrImagesList.size(); idx < origlistsize;
-         ++idx)
-    {
-        QImage* currentImage = ldrImagesList[idx];
-
-        QString fname = filename + QString("_%1").arg(idx) + ".tiff";
-
-        pfs::Frame frame(currentImage->width(), currentImage->height());
-        pfs::Channel* R;
-        pfs::Channel* G;
-        pfs::Channel* B;
-        frame.createXYZChannels(R, G, B);
-        interleavedToPlanar(currentImage, R, G, B);
-
-        pfs::io::TiffWriter writer(QFile::encodeName(fname).constData());
-        writer.write( frame, pfs::Params("tiff_mode", 1) );
-
-        // DAVIDE_TIFF
-        // TiffWriter writer(QFile::encodeName(fname).constData(), ldrImagesList[idx]);
-        // writer.write8bitTiff();
-
-        QFileInfo qfi(filename);
-        QString absoluteFileName = qfi.absoluteFilePath();
-        QByteArray encodedName = QFile::encodeName(absoluteFileName + QString("_%1").arg(idx) + ".tiff");
-        ExifOperations::copyExifData(QFile::encodeName(fileList[idx]).constData(), encodedName.constData(), false);
-    }
-    emit imagesSaved();
-}
-
-void HdrCreationManager::saveMDRs(const QString& filename)
-{
-#ifdef QT_DEBUG
-    qDebug() << "HdrCreationManager::saveMDRs";
-#endif
-
-    int origlistsize = listmdrR.size();
-    for (int idx = 0; idx < origlistsize; idx++)
-    {
-        QString fname = filename + QString("_%1").arg(idx) + ".tiff";
-
-//        pfs::Frame *frame = pfs::DOMIO::createFrame( m_mdrWidth, m_mdrHeight );
-//        pfs::Channel *Xc, *Yc, *Zc;
-//        frame->createXYZChannels( Xc, Yc, Zc );
-//        Xc->setChannelData(listmdrR[idx]);
-//        Yc->setChannelData(listmdrG[idx]);
-//        Zc->setChannelData(listmdrB[idx]);
-
-//        TiffWriter writer(, frame);
-//        writer.writePFSFrame16bitTiff();
-
-        pfs::Frame frame( m_mdrWidth, m_mdrHeight );
-        pfs::Channel* R;
-        pfs::Channel* G;
-        pfs::Channel* B;
-        frame.createXYZChannels(R, G, B);
-
-        pfs::copy(listmdrR[idx], R);
-        pfs::copy(listmdrG[idx], G);
-        pfs::copy(listmdrB[idx], B);
-
-        pfs::io::TiffWriter writer( QFile::encodeName(fname).constData() );
-        // tiff_mode = 2 (16 bit tiff)
-        // min_luminance = 0
-        // max_luminance = 2^16 - 1
-        // note: this is due to the fact the reader do read the native
-        // data into float, without doing any conversion into the [0, 1] range
-        // (definitely something to think about when we touch the readers)
-        writer.write(frame,
-                     pfs::Params("tiff_mode", 2)
-                        ("min_luminance", (float)0)
-                        ("max_luminance", (float)65535) );
-
-        QFileInfo qfi(filename);
-        QString absoluteFileName = qfi.absoluteFilePath();
-        QByteArray encodedName = QFile::encodeName(
-                    absoluteFileName + QString("_%1").arg(idx) + ".tiff");
-        ExifOperations::copyExifData(
-                    QFile::encodeName(fileList[idx]).constData(),
-                    encodedName.constData(), false);
-    }
-    emit imagesSaved();
-}
-*/
 /*
 void HdrCreationManager::doAntiGhosting(int goodImageIndex)
 {
@@ -1274,23 +900,19 @@ void HdrCreationManager::setPatches(bool patches[][agGridSize])
 
 void HdrCreationManager::reset()
 {
-/*
-    if (ais != NULL && ais->state() != QProcess::NotRunning) {
-        ais->kill();
-        delete ais;
-        ais = NULL;
-    }
-*/
     if (m_align != NULL) {
         m_align->reset();
         m_align->removeTempFiles();
     }
-    if (m_futureWatcher.isRunning()) {
+
+    if (m_futureWatcher.isRunning())
+    {
         qDebug() << "Aborting loadFiles...";
         m_futureWatcher.cancel();
         m_futureWatcher.waitForFinished();
         emit loadFilesAborted();
     }
+
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
     m_data.clear();
     m_tmpdata.clear();
