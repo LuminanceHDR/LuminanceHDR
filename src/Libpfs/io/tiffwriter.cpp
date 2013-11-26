@@ -48,6 +48,8 @@
 #include <algorithm>
 #include <stdint.h>
 
+#include <boost/lexical_cast.hpp>
+
 #include <Libpfs/io/ioexception.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/colorspace/rgbremapper.h>
@@ -194,7 +196,8 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
-            throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
+            throw pfs::io::WriteException("TiffWriter: Error writing strip " +
+                                          boost::lexical_cast<std::string>(s));
             return false;
         }
     }
@@ -244,7 +247,8 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          rgbRemapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
-            throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
+            throw pfs::io::WriteException("TiffWriter: Error writing strip " +
+                                          boost::lexical_cast<std::string>(s));
             return false;
         }
     }
@@ -297,7 +301,8 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          rgbRemapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) == 0)
         {
-            throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
+            throw pfs::io::WriteException("TiffWriter: Error writing strip " +
+                                          boost::lexical_cast<std::string>(s));
 
             return -1;
         }
@@ -354,7 +359,8 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          func);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
-            throw pfs::io::WriteException("TiffWriter: Error writing strip " + s);
+            throw pfs::io::WriteException("TiffWriter: Error writing strip " +
+                                          boost::lexical_cast<std::string>(s));
 
             return -1;
         }
