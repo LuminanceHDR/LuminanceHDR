@@ -43,7 +43,9 @@ public:
 	void setProgress(int value, int max = 100);
 
     ~OsIntegration();
-
+    
+    bool isRunningOnSameCpuPlatform();
+    
 #ifdef Q_OS_WIN
     bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 #endif

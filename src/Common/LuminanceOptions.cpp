@@ -739,16 +739,6 @@ void LuminanceOptions::setAlignImageStackOptions(const QStringList& qstrlist)
     m_settingHolder->setValue(KEY_EXTERNAL_AIS_OPTIONS, qstrlist);
 }
 
-bool LuminanceOptions::isShowFirstPageWizard()
-{
-    return m_settingHolder->value(KEY_WIZARD_SHOWFIRSTPAGE,true).toBool();
-}
-
-void LuminanceOptions::setShowFirstPageWizard(bool b)
-{
-    m_settingHolder->setValue(KEY_WIZARD_SHOWFIRSTPAGE, b);
-}
-
 bool LuminanceOptions::isShowFattalWarning()
 {
     return m_settingHolder->value(KEY_TMOWARNING_FATTALSMALL,true).toBool();

@@ -194,9 +194,6 @@ public Q_SLOTS:
     // commandline options for align_image_stack
     QStringList getAlignImageStackOptions();
     void        setAlignImageStackOptions(const QStringList&);
-    // if true always show first page of hdr wizard
-    bool    isShowFirstPageWizard();
-    void    setShowFirstPageWizard(bool b);
 
     bool    isShowFattalWarning();
     void    setShowFattalWarning(bool b);

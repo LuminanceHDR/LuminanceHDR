@@ -23,6 +23,11 @@
 
 #include "osintegration.h"
 
+#ifdef Q_OS_WIN
+	typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+	LPFN_ISWOW64PROCESS fnIsWow64Process;
+#endif
+
 OsIntegration* OsIntegration::instance = 0;
 
 OsIntegration::OsIntegration()
@@ -94,5 +99,23 @@ bool OsIntegration::nativeEvent(const QByteArray& eventType, void* message, long
 {
 #ifdef Q_OS_WIN
 	return winProgressbar->nativeEvent(eventType, message, result);
+#endif
+}
+
+bool OsIntegration::isRunningOnSameCpuPlatform() {
+#if defined(_WIN32)
+    // 32-bit programs run on both 32-bit and 64-bit Windows
+    // so must sniff
+    BOOL f64 = true;
+    LPFN_ISWOW64PROCESS fnIsWow64Process;
+
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
+    if(NULL != fnIsWow64Process)
+    {
+        return !(fnIsWow64Process(GetCurrentProcess(),&f64) && f64);
+    }
+    return true;
+#else
+    return true;
 #endif
 }

@@ -483,16 +483,6 @@
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QCheckBox" name="checkBoxWizardShowFirstPage">
-             <property name="text">
-              <string>Always show Wizard first page</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
             <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
              <property name="text">
               <string>Always show Preview Panel</string>
@@ -502,7 +492,7 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
+           <item row="3" column="1">
             <widget class="QCheckBox" name="chkPortableMode">
              <property name="toolTip">
               <string>Saves the settings along the program files, to be portable</string>
