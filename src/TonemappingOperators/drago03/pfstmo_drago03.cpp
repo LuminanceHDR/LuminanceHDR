@@ -38,20 +38,6 @@
 #include "Libpfs/exception.h"
 #include "tmo_drago03.h"
 
-namespace
-{
-template <typename T>
-inline
-T decode(const T& value)
-{
-    if ( value <= 0.0031308f )
-    {
-        return (value * 12.92f);
-    }
-    return (1.055f * std::pow( value, 1.f/2.4f ) - 0.055f);
-}
-}
-
 void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress &ph)
 {
     std::cout << "pfstmo_drago03 (";
@@ -87,9 +73,9 @@ void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress &ph)
         for (int y=0 ; y<h ; y++)
         {
             float scale = L(x,y) / Yr(x,y);
-            Yr(x,y) = decode( Yr(x,y) * scale );
-            Xr(x,y) = decode( Xr(x,y) * scale );
-            Zr(x,y) = decode( Zr(x,y) * scale );
+            Yr(x,y) = Yr(x,y) * scale;
+            Xr(x,y) = Xr(x,y) * scale;
+            Zr(x,y) = Zr(x,y) * scale;
         }
     }
 
