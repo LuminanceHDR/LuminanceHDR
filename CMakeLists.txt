@@ -247,7 +247,7 @@ IF(APPLE)
             BUNDLE DESTINATION . COMPONENT Runtime
             RUNTIME DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS COMPONENT Runtime)
 
-    qt5_use_modules(luminance-hdr Core Gui Widgets)
+    qt5_use_modules(${LHDR_OSX_EXECUTABLE_TARGET} Core Gui Widgets)
     qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 
 
