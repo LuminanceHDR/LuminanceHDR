@@ -88,19 +88,19 @@ void OsIntegration::setProgressRange(int min, int max)
 }
 
 void OsIntegration::addRecentFile(const QString& filename)
-	{
-#ifdef Q_OS_WIN
-	winProgressbar->addRecentFile(filename);
-#endif
-	}
-
-
-bool OsIntegration::nativeEvent(const QByteArray& eventType, void* message, long* result)
 {
 #ifdef Q_OS_WIN
-	return winProgressbar->nativeEvent(eventType, message, result);
+    winProgressbar->addRecentFile(filename);
 #endif
 }
+
+
+#ifdef Q_OS_WIN
+bool OsIntegration::nativeEvent(const QByteArray& eventType, void* message, long* result)
+{
+    return winProgressbar->nativeEvent(eventType, message, result);
+}
+#endif
 
 bool OsIntegration::isRunningOnSameCpuPlatform() {
 #if defined(_WIN32)

@@ -1980,10 +1980,12 @@ void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 	}
 }
 
+#ifdef Q_OS_WIN
 bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long* result) 
 {
     return OsIntegration::getInstance().nativeEvent(eventType, message, result);
 }
+#endif
 
 void MainWindow::updateSoftProofing(int i)
 {
