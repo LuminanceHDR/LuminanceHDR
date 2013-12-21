@@ -3817,5 +3817,53 @@ Luminace Level</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoYcheckbox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>147</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>coneSlider</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>182</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rodSlider</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
