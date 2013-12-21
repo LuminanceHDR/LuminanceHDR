@@ -52,6 +52,7 @@ class LuminanceOptions;
 
 int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
 
+pfs::Params getRawSettings();
 pfs::Params getRawSettings(const LuminanceOptions& opts);
 
 class IOWorker : public QObject

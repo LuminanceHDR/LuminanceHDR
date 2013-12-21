@@ -106,10 +106,10 @@ void temperatureToRGB(double T, double RGB[3])
 #define USER_QUALITY 3          // using AHD
 #endif
 
-struct RAWReaderParams {
+struct RAWReaderParams
+{
     RAWReaderParams()
-        // : gamma0_(1.0), gamma1_(1.0)
-        : gamma0_(1/2.4), gamma1_(12.92)
+        : gamma0_(1.f/2.4), gamma1_(12.92)
         , fourColorRGB_(0)
         , useFujiRotate_(-1)
         , userQuality_(USER_QUALITY), medPasses_(0)
@@ -153,7 +153,7 @@ struct RAWReaderParams {
             wbTemperature_ = tempInt;
         }
         if ( params.get("raw.wb_green", tempFloat) ) {
-            wbGreen_ = tempInt;
+            wbGreen_ = tempFloat;
         }
         // highlight handling
         if ( params.get("raw.highlights", tempInt) ) {
@@ -268,12 +268,12 @@ ostream& operator<<(ostream& out, const RAWReaderParams& p)
     ss << ", WB Green: " << p.wbGreen_;
     ss << ", Highlight Method: " << p.highlightsMethod_;
     ss << ", Highlight Rebuild: " << p.highlightsRebuildMethod_;
-    if (p.isBlackLevel() ) {
+    if (p.isBlackLevel()) {
         ss << ", Black Level: " << p.blackLevel_;
     } else {
         ss << ", Black Level: N/A";
     }
-    if ( p.isSaturation() ) {
+    if (p.isSaturation()) {
         ss << ", Saturation: " << p.saturation_;
     } else {
         ss << ", Saturation: N/A";
@@ -281,7 +281,7 @@ ostream& operator<<(ostream& out, const RAWReaderParams& p)
     ss << ", Auto Brightness: " << p.autoBrightness_;
     ss << ", Auto Brightness Threshold: " << p.autoBrightnessThreshold_;
     ss << ", Brightness: " << p.brightness_;
-    if ( p.isNoiseReduction() ) {
+    if (p.isNoiseReduction()) {
         ss << ", Noise Reduction: ON";
         ss << ", Noise Reduction Threshold: " << p.noiseReductionThreshold_;
     } else {
@@ -289,7 +289,7 @@ ostream& operator<<(ostream& out, const RAWReaderParams& p)
     }
 
     ss << ", Chromatic Aberation: " << p.chromaAberation_;
-    if ( p.chromaAberation_ ) {
+    if (p.chromaAberation_) {
         ss << ", Chroma {" << p.chroma0_ << ", " << p.chroma1_;
         ss << ", " << p.chroma2_ << ", " << p.chroma3_ << "}";
     }
@@ -298,7 +298,7 @@ ostream& operator<<(ostream& out, const RAWReaderParams& p)
     return (out << ss.str());
 }
 
-const char embbededProfile[] = "embed";
+const char* embbededProfile = "embed";
 
 static
 void setParams(LibRaw& processor, const RAWReaderParams& params)
@@ -317,7 +317,7 @@ void setParams(LibRaw& processor, const RAWReaderParams& params)
     outParams.user_qual         = params.userQuality_;
     outParams.med_passes        = params.medPasses_;
 
-    switch ( params.wbMethod_ ) {
+    switch (params.wbMethod_) {
     case 1: // camera
     {
         outParams.use_camera_wb = 1;
@@ -332,30 +332,23 @@ void setParams(LibRaw& processor, const RAWReaderParams& params)
         RGB[1] = RGB[1] / params.wbGreen_;
 
         bool identify = true;
-        if ( processor.adjust_sizes_info_only() != LIBRAW_SUCCESS )
+        if (processor.adjust_sizes_info_only() != LIBRAW_SUCCESS)
         {
             identify = false;
         }
 
-        int numcolors = /*P1. */processor.imgdata.idata.colors;
-        std::vector<double> daylightMult(numcolors);
-
-        for(int c = 0 ; c < numcolors ; c++) {
-            daylightMult[c] = processor.imgdata.color.pre_mul[c];
+        if (identify && processor.imgdata.idata.colors >= 3)
+        {
+            RGB[0] = processor.imgdata.color.pre_mul[0] / RGB[0];
+            RGB[1] = processor.imgdata.color.pre_mul[1] / RGB[1];
+            RGB[2] = processor.imgdata.color.pre_mul[2] / RGB[2];
         }
-
-        if (identify) { //TODO
-            RGB[0] = daylightMult[0] / RGB[0];
-            RGB[1] = daylightMult[1] / RGB[1];
-            RGB[2] = daylightMult[2] / RGB[2];
-        }
-        else {
+        else
+        {
             RGB[0] = 1.0 / RGB[0];
             RGB[1] = 1.0 / RGB[1];
             RGB[2] = 1.0 / RGB[2];
         }
-
-        processor.recycle();
 
         outParams.user_mul[0] = RGB[0];
         outParams.user_mul[1] = RGB[1];
@@ -369,7 +362,8 @@ void setParams(LibRaw& processor, const RAWReaderParams& params)
     }
 
     outParams.highlight     = params.highlightsMethod_;
-    if ( params.highlightsMethod_ >= 3 ) {
+    if (params.highlightsMethod_ >= 3)
+    {
         outParams.highlight += params.highlightsRebuildMethod_;
     }
 
@@ -382,7 +376,8 @@ void setParams(LibRaw& processor, const RAWReaderParams& params)
     if ( params.isNoiseReduction() ) { outParams.threshold = params.noiseReductionThreshold_; }
 
     // chromatic aberation
-    if ( params.chromaAberation_ ) {
+    if (params.chromaAberation_)
+    {
         outParams.aber[0] = params.chroma0_;
         // outParams.aber[1] = params.chroma1_;
         outParams.aber[2] = params.chroma2_;
@@ -390,9 +385,12 @@ void setParams(LibRaw& processor, const RAWReaderParams& params)
     }
 
     // camera profile
-    if ( params.cameraProfile_.empty() ) {
-        outParams.camera_profile = (char*)"embed";
-    } else {
+    if (params.cameraProfile_.empty())
+    {
+        outParams.camera_profile = (char*)embbededProfile;
+    }
+    else
+    {
         outParams.camera_profile = (char*)params.cameraProfile_.c_str();
     }
 }
@@ -404,28 +402,37 @@ void setParams(LibRaw& processor, const RAWReaderParams& params)
 #define P2 m_processor.imgdata.other
 #define OUT m_processor.imgdata.params
 
-RAWReader::RAWReader(const std::string& filename):
-    FrameReader(filename)
-{ RAWReader::open(); }
+RAWReader::RAWReader(const std::string& filename)
+    : FrameReader(filename)
+{
+    RAWReader::open();
+}
 
-RAWReader::~RAWReader() {
+RAWReader::~RAWReader()
+{
     RAWReader::close();
 }
 
-void RAWReader::open() {
-    if ( m_processor.open_file( filename().c_str() )  != LIBRAW_SUCCESS )
+void RAWReader::open()
+{
+    RAWReader::close();
+    if (m_processor.open_file(filename().c_str())  != LIBRAW_SUCCESS)
     {
         throw pfs::io::InvalidFile("RAWReader: cannot open file " + filename());
     }
-    setWidth( S.width );
-    setHeight( S.height );
+    setWidth(S.width);
+    setHeight(S.height);
 }
 
-bool RAWReader::isOpen() const {
+bool RAWReader::isOpen() const
+{
     return true;
 }
 
-void RAWReader::close() { m_processor.recycle(); }
+void RAWReader::close()
+{
+    m_processor.recycle();
+}
 
 void RAWReader::read(Frame &frame, const Params &params)
 {
@@ -437,16 +444,16 @@ void RAWReader::read(Frame &frame, const Params &params)
     setParams(m_processor, p);
     // m_processor.set_progress_handler(cb, callback_data);
 
-    if ( m_processor.unpack() != LIBRAW_SUCCESS )
+    open();
+
+    if (m_processor.unpack() != LIBRAW_SUCCESS)
     {
-        qDebug() << "Error Unpacking RAW File";
         m_processor.recycle();
         throw pfs::io::ReadException("Error Unpacking RAW File");
     }
 
-    if ( m_processor.dcraw_process() != LIBRAW_SUCCESS )
+    if (m_processor.dcraw_process() != LIBRAW_SUCCESS)
     {
-        qDebug() << "Error Processing RAW File";
         m_processor.recycle();
         throw pfs::io::ReadException("Error Processing RAW File");
     }
@@ -461,11 +468,11 @@ void RAWReader::read(Frame &frame, const Params &params)
     qDebug() << "Aperture: " << P2.aperture;
     qDebug() << "Focal Length: " << P2.focal_len;
 #endif
-    int ret;
-    libraw_processed_image_t *image = m_processor.dcraw_make_mem_image(&ret);
 
-    // ret != LIBRAW_SUCCESS ||
-    if ( image == NULL ) {
+    libraw_processed_image_t *image = m_processor.dcraw_make_mem_image();
+
+    if (!image) // ret != LIBRAW_SUCCESS ||
+    {
         qDebug() << "Memory Error in processing RAW File";
         m_processor.recycle();
         throw pfs::io::ReadException("Memory Error in processing RAW File");
@@ -491,25 +498,6 @@ void RAWReader::read(Frame &frame, const Params &params)
 
     qDebug() << "Data size: " << image->data_size << " " << W*H*3*sizeof(uint16_t);
     qDebug() << "W: " << W << " H: " << H;
-
-//    if (writeOnDisk)   // for align_image_stack and thumbnails
-//    {
-//        QString fname = QFile::decodeName(filename);
-//        QString tmpdir = QFile::decodeName(tempdir);
-//        QFileInfo qfi(fname);
-//        QString outname = tmpdir + "/" + qfi.baseName() + ".tiff";
-
-//        m_processor.dcraw_ppm_tiff_writer(QFile::encodeName(outname));
-
-//        if( (ret = m_processor.unpack_thumb() ) == LIBRAW_SUCCESS)
-//        {
-//            QString suffix = T.tformat == LIBRAW_THUMBNAIL_JPEG ? "thumb.jpg" : "thumb.ppm";
-//            QString thumbname = tmpdir + "/" + qfi.baseName() + "." + suffix;
-//            m_processor.dcraw_thumb_writer(QFile::encodeName(thumbname));
-//        }
-//        qDebug() << "Filename: " << filename;
-//        qDebug() << "Outname: " << qPrintable(outname);
-//    }
 
     LibRaw::dcraw_clear_mem(image);
     m_processor.recycle();

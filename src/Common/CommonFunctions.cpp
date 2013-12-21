@@ -25,6 +25,7 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QRgb>
+#include <QByteArray>
 
 #include "CommonFunctions.h"
 #include "LuminanceOptions.h"
@@ -46,6 +47,9 @@
 #include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/colorspace/normalizer.h>
+
+#include "Core/IOWorker.h"
+
 
 using namespace std;
 using namespace pfs;
@@ -83,21 +87,16 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
 
     try
     {
-        FrameReaderPtr reader = FrameReaderFactory::open(
-                    QFile::encodeName(qfi.filePath()).constData() );
-        reader->read( *currentItem.frame(), Params() );
+        QByteArray filePath = QFile::encodeName(qfi.filePath());
+
+        FrameReaderPtr reader = FrameReaderFactory::open(filePath.constData());
+        reader->read( *currentItem.frame(), getRawSettings() );
 
         // read Average Luminance
-        currentItem.setAverageLuminance(
-                    ExifOperations::getAverageLuminance(
-                        QFile::encodeName(qfi.filePath()).constData() )
-                    );
+        currentItem.setAverageLuminance(ExifOperations::getAverageLuminance(filePath.constData()));
 
         // read Exposure Time
-        currentItem.setExposureTime(
-                    ExifOperations::getExposureTime(
-                        QFile::encodeName(qfi.filePath()).constData() )
-                    );
+        currentItem.setExposureTime(ExifOperations::getExposureTime(filePath.constData()));
 
         qDebug() << QString("HdrCreationItem: Average Luminance for %1 is %2")
                     .arg(currentItem.filename())

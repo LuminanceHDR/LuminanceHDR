@@ -38,9 +38,6 @@
 // typedef int (*progress_callback)(void *callback_data,
 //                enum LibRaw_progress stage, int iteration, int expected);
 //
-// pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir,
-//                                  LuminanceOptions *options, bool writeOnDisk,
-//                                  progress_callback cb, void *);
 
 namespace pfs {
 namespace io {
