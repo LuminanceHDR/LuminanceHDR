@@ -1,22 +1,3 @@
-/* EcWin7 - Support library for integrating Windows 7 taskbar features
- * into any Qt application
- * Copyright (C) 2010 Emanuele Colombo
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */
-
 #ifndef ECWIN7_H
 #define ECWIN7_H
 
@@ -26,15 +7,12 @@
 // Windows only data definitions
 #ifdef Q_OS_WIN
 
-#define _WINSOCKAPI_    // stops windows.h including winsock.h
-#include <windows.h>
-#include <initguid.h>
-#include <Shlobj.h>
+#include <QtWinExtras/QWinTaskbarButton>
+#include <QtWinExtras/QWinTaskbarProgress>
+#include <QtWinExtras/QWinJumpList>
+#include <QtWinExtras/QWinJumpListCategory>
 
 #endif
-
-// ********************************************************************
-// EcWin7 class - Windows 7 taskbar handling for Qt and MinGW
 
 class EcWin7
 {
@@ -42,37 +20,19 @@ public:
 
 	// Initialization methods
     EcWin7();
-    void init(const QWidget* wid);
-#ifdef Q_OS_WIN
-    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
-#endif
+    void init(QWidget* wid);
     void addRecentFile(const QString& filename);
 
-	// Overlay icon handling
-	void setOverlayIcon(QString iconName, QString description);
-	
-	// Progress indicator handling
-	enum ToolBarProgressState {
-        NoProgress = 0,
-        Indeterminate = 1,
-        Normal = 2,
-        Error = 4,
-        Paused = 8
-    };
     void setProgressValue(int value, int max);
-    void setProgressState(ToolBarProgressState state);
-
-    HWND getHWNDForWidget(const QWidget* widget);
-    QWindow* windowForWidget(const QWidget* widget); 
-
 
 private:
+    void associateFileTypes(const QStringList &fileTypes);
+
     HWND mWindowId;
-#ifdef Q_OS_WIN
-    UINT mTaskbarMessageId;
-    ITaskbarList3 *mTaskbar;
-    HICON mOverlayIcon;
-#endif
+
+    QWinTaskbarButton* taskbarButton;
+    QWinTaskbarProgress* taskbarProgress;
+    QWinJumpList* jumplist;
 };
 
 #endif // ECWIN7_H

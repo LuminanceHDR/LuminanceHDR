@@ -160,7 +160,7 @@ QScopedPointer<UpdateChecker> MainWindow::sm_updateChecker;
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
-    m_Ui(new Ui::MainWindow)
+    m_Ui(new Ui::MainWindow), firstWindow(0)
 {
     init();
 }
@@ -169,7 +169,7 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
                        const QStringList& inputFileNames,
                        bool needSaving, QWidget *parent):
     QMainWindow(parent),
-    m_Ui(new Ui::MainWindow)
+    m_Ui(new Ui::MainWindow), firstWindow(0)
 {
     init();
 
@@ -269,6 +269,7 @@ void MainWindow::init()
 		else
 			firstWindow = 1;
     }
+    
 }
 
 void MainWindow::createUI()
@@ -476,16 +477,13 @@ void MainWindow::createNewHdr(const QStringList& files)
 void MainWindow::on_fileOpenAction_triggered()
 {
     QString filetypes = tr("All HDR formats ");
-    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif";
-#if HAVE_CCFITS
-    filetypes += " *.fit *.fits";
-#endif
-    filetypes += " *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.srw";
-    filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF";
-#if HAVE_CCFITS
-    filetypes +=  " *.FIT *.FITS";
-#endif
-    filetypes +=  " *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;" ;
+    QStringList hdrExtensionsList = getAllHdrFileExtensions();
+    filetypes += "(";
+    foreach(QString s, hdrExtensionsList)
+    {
+        filetypes += "*" + s + " ";
+    }
+    filetypes +=  ");;" ;
     filetypes += "OpenEXR (*.exr *.EXR);;" ;
     filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
     filetypes += "TIFF images (*.TIFF *.TIF *.tiff *.tif);;";
@@ -1408,6 +1406,10 @@ bool MainWindow::event(QEvent* event)
 	bool result = QMainWindow::event(event);
 	if (event->type() == QEvent::WindowActivate && firstWindow == 1)
 	{
+
+    
+
+	
 		firstWindow = 2;
 		QMessageBox::warning(this, "Luminance HDR 32-bit on 64-bit", tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);        
 	}
@@ -1829,7 +1831,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
             mainWin->updateRecentFileActions();
     }
     
-    // OsIntegration::getInstance().addRecentFile(fileName);
+    OsIntegration::getInstance().addRecentFile(fileName);
     
 }
 
@@ -1978,11 +1980,6 @@ void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 		qDebug() << "MainWindow:: undo gamut check";
 		viewer->undoSoftProofing();
 	}
-}
-
-bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long* result) 
-{
-    return OsIntegration::getInstance().nativeEvent(eventType, message, result);
 }
 
 void MainWindow::updateSoftProofing(int i)

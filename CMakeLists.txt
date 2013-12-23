@@ -29,6 +29,9 @@ find_package(Qt5Xml)
 find_package(Qt5Sql)
 find_package(Qt5Network)
 find_package(Qt5LinguistTools)
+IF(WIN32)
+	find_package(Qt5WinExtras)
+ENDIF()
 
 # Include the qtmain lib if we are on the windows platform
 IF(WIN32)
@@ -288,7 +291,7 @@ ELSEIF(WIN32)
     ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
   
-    qt5_use_modules(luminance-hdr Core Gui Widgets)
+    qt5_use_modules(luminance-hdr Core Gui Widgets WinExtras)
     qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 
     # Link libraries

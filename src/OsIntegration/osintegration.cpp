@@ -24,6 +24,9 @@
 #include "osintegration.h"
 
 #ifdef Q_OS_WIN
+    #define _WINSOCKAPI_    // stops windows.h including winsock.h
+    #include <windows.h>
+
 	typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
 	LPFN_ISWOW64PROCESS fnIsWow64Process;
 #endif
@@ -64,19 +67,13 @@ void OsIntegration::init(QWidget* mainWindow) {
 void OsIntegration::setProgress(int value, int max)
 {
 	#ifdef Q_OS_WIN
-		if (value < 0)
-			winProgressbar->setProgressState(EcWin7::NoProgress);
-		else {
-			winProgressbar->setProgressState(EcWin7::Normal);
-			winProgressbar->setProgressValue(value, max);
-		}
+		winProgressbar->setProgressValue(value, max);
 	#endif
 }
 
 void OsIntegration::setProgressValue(int value)
 {
-#ifdef Q_WS_WIN
-    winProgressbar->setProgressState(EcWin7::Normal);
+#ifdef Q_OS_WIN
     winProgressbar->setProgressValue(value, m_progressMax - m_progressMin);
 #endif
 }
@@ -93,14 +90,6 @@ void OsIntegration::addRecentFile(const QString& filename)
 	winProgressbar->addRecentFile(filename);
 #endif
 	}
-
-
-bool OsIntegration::nativeEvent(const QByteArray& eventType, void* message, long* result)
-{
-#ifdef Q_OS_WIN
-	return winProgressbar->nativeEvent(eventType, message, result);
-#endif
-}
 
 bool OsIntegration::isRunningOnSameCpuPlatform() {
 #if defined(_WIN32)

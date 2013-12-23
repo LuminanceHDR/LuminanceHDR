@@ -52,6 +52,24 @@ bool matchesHdrFilename(const QString& file)
 	return exp.exactMatch(file);
 }
 
+QStringList getAllHdrFileExtensions()
+{
+    QStringList listAll;
+    QStringList list;
+    list << ".exr" << ".hdr" << ".pic" << ".tiff" << ".tif";
+#if HAVE_CCFITS
+    list << ".fit" << ".fits";
+#endif
+    list << ".pfs" << ".crw" << ".cr2" << ".nef" << ".dng" << ".mrw" << ".orf" << ".kdc" << ".dcr" << ".arw" << ".raf" << ".ptx" << ".pef" << ".x3f" << ".raw" << ".rw2" << ".sr2" << ".3fr" << ".mef" << ".mos" << ".erf" << ".nrw" << ".srw";
+
+    foreach(QString s, list)
+    {
+        listAll << s;
+        listAll << s.toUpper();
+    }
+    return listAll;
+}
+
 bool matchesValidHDRorLDRfilename(const QString& file)
 {
 	return matchesLdrFilename(file) || matchesHdrFilename(file);

@@ -236,11 +236,11 @@ protected:
     QVector<float> m_inputExpoTimes;
 
     //! \group Event handler
-    void dragEnterEvent(QDragEnterEvent *);
-    void dropEvent(QDropEvent *);
-    void changeEvent(QEvent* event);
-    void closeEvent(QCloseEvent *);
-	bool event(QEvent * event);
+    virtual void dragEnterEvent(QDragEnterEvent *);
+    virtual void dropEvent(QDropEvent *);
+    virtual void changeEvent(QEvent* event);
+    virtual void closeEvent(QCloseEvent *);
+	virtual bool event(QEvent * event);
     //!
 	
     void dispatchrotate(bool clockwise);
@@ -277,10 +277,6 @@ protected:
     // Preview Panel
     QScrollArea *m_PreviewscrollArea;
     PreviewPanel *m_PreviewPanel;
-
-#ifdef Q_OS_WIN
-   bool nativeEvent(const QByteArray& eventType, void* message, long* result);
-#endif
 
 private:
     static int sm_NumMainWindows;

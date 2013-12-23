@@ -57,7 +57,7 @@ QStringList getCliFiles(const QStringList& arguments)
 }
 
 #ifdef WIN32
-void customMessageHandler(QtMsgType type, const char *msg)
+void customMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
 	QString txt;
 	switch (type) {
@@ -90,7 +90,7 @@ int main( int argc, char ** argv )
     QApplication application( argc, argv );
 
 #ifdef WIN32
-    // qInstallMsgHandler(customMessageHandler);
+    // qInstallMessageHandler(customMessageHandler);
 #endif
 
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);

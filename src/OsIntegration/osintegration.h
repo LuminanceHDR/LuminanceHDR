@@ -46,9 +46,6 @@ public:
     
     bool isRunningOnSameCpuPlatform();
     
-#ifdef Q_OS_WIN
-    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
-#endif
     void addRecentFile(const QString& filename);
 
 public Q_SLOTS:	
@@ -59,7 +56,6 @@ private:
 	OsIntegration();
 	OsIntegration(const OsIntegration&);
 	OsIntegration& operator=(const OsIntegration&);
-	
 
 	static OsIntegration* instance;
 	int m_progressMin;

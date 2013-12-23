@@ -38,5 +38,6 @@ bool matchesLdrFilename(const QString& file);
 bool matchesHdrFilename(const QString& file);
 bool matchesValidHDRorLDRfilename(const QString& file);
 QStringList convertUrlListToFilenameList(const QList<QUrl>& urls);
+QStringList getAllHdrFileExtensions();
 
 #endif
