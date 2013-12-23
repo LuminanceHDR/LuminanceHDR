@@ -282,14 +282,14 @@ struct TonemapOperatorPattanaik00
         pfstmo_pattanaik00(workingframe,
                            opts->operator_options.pattanaikoptions.local,
                            opts->operator_options.pattanaikoptions.multiplier,
-                           opts->operator_options.pattanaikoptions.cone,
-                           opts->operator_options.pattanaikoptions.rod,
+                           opts->operator_options.pattanaikoptions.cone*1000,
+                           opts->operator_options.pattanaikoptions.rod*1000,
                            opts->operator_options.pattanaikoptions.autolum,
                            ph);
 
 
         pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
-                                 pfs::CS_SRGB, X, Y, Z);
+                                 pfs::CS_RGB, X, Y, Z);
     }
 };
 

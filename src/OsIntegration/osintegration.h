@@ -26,9 +26,11 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QString>
+#include <QByteArray>
 
 #ifdef Q_OS_WIN
-	#include "ecwin7.h"
+#include "ecwin7.h"
 #endif
 
 class OsIntegration : public QObject
@@ -60,6 +62,7 @@ private:
 	static OsIntegration* instance;
 	int m_progressMin;
 	int m_progressMax;
+
 #ifdef Q_OS_WIN
 	EcWin7* winProgressbar;
 #endif

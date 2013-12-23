@@ -241,66 +241,63 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
 {
     emit IO_init();
 
-    if ( filename.isEmpty() )
+    if (filename.isEmpty())
+    {
         return NULL;
+    }
 
     QFileInfo qfi(filename);
-    if ( !qfi.isReadable() )
+    if (!qfi.isReadable())
     {
-#ifdef QT_DEBUG
-        qDebug("File %s is not readable.", qPrintable(filename));
-#endif
-        emit read_hdr_failed(tr("ERROR: The following file is not readable: %1").arg(filename));
+        emit read_hdr_failed(tr("IOWorker: The following file is not readable: %1").arg(filename));
         return NULL;
     }
 
     QScopedPointer<pfs::Frame> hdrpfsframe(new pfs::Frame());
     try
     {
-        LuminanceOptions luminanceOptions;
-
-        // QString extension = qfi.suffix().toUpper();
-        // QByteArray TempPath = QFile::encodeName(luminanceOptions.getTempDir());
         QByteArray encodedFileName = QFile::encodeName(qfi.absoluteFilePath());
 
-        pfs::Params params = getRawSettings(luminanceOptions);
+        pfs::Params params = getRawSettings();
         FrameReaderPtr reader = FrameReaderFactory::open(encodedFileName.constData());
         reader->read( *hdrpfsframe, params );
         reader->close();
     }
     catch (pfs::io::UnsupportedFormat& exUnsupported)
     {
-        qDebug("TH: File %s has unsupported extension.", qPrintable(filename));
+        emit read_hdr_failed(tr("IOWorker: file %1 has unsupported extension: %2")
+                             .arg(filename)
+                             .arg(exUnsupported.what()));
 
-        emit read_hdr_failed(tr("ERROR: File %1 has unsupported extension.").arg(filename));
-        return NULL;
+        hdrpfsframe.reset();
     }
     catch (std::runtime_error& err)
 	{
-        qDebug("TH: catched exception");
-        std::stringstream ss;
-        ss << err.what();
-        ss << " : %1";
+        emit read_hdr_failed(tr("IOWorker: caught exception reading %1: %2")
+                             .arg(filename)
+                             .arg(err.what()));
 
-        emit read_hdr_failed(QString::fromStdString(ss.str()).arg(filename));
-		return NULL;
+        hdrpfsframe.reset();
 	}
     catch (...)
     {
-        qDebug("TH: catched exception");
-        emit read_hdr_failed(tr("ERROR: Failed loading file: %1").arg(filename));
-        return NULL;
+        emit read_hdr_failed(tr("IOWorker: failed loading file: %1")
+                             .arg(filename));
+
+        hdrpfsframe.reset();
     }
 
     emit IO_finish();
 
-    if ( hdrpfsframe )
+    if (hdrpfsframe)
     {
         pfs::Frame* frame = hdrpfsframe.take();
 
         emit read_hdr_success(frame, filename);
         return frame;
-    } else {
+    }
+    else
+    {
         return NULL;
     }
 }
@@ -328,14 +325,14 @@ int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected)
 pfs::Params getRawSettings(const LuminanceOptions& opts)
 {
     pfs::Params p;
-    // general parameters
-    if ( opts.isRawFourColorRGB() )
-    { p.set("raw.four_color", 1); }
-    if ( opts.isRawDoNotUseFujiRotate() )
-    { p.set("raw.fuji_rotate", 0); }
+//    // general parameters
+//    if ( opts.isRawFourColorRGB() )
+//    { p.set("raw.four_color", 1); }
+//    if ( opts.isRawDoNotUseFujiRotate() )
+//    { p.set("raw.fuji_rotate", 0); }
 
-    p.set("raw.user_quality", opts.getRawUserQuality());
-    p.set("raw.med_passes", opts.getRawMedPasses());
+//    p.set("raw.user_quality", opts.getRawUserQuality());
+//    p.set("raw.med_passes", opts.getRawMedPasses());
 
     // white balance
     p.set("raw.wb_method", opts.getRawWhiteBalanceMethod());
@@ -347,20 +344,32 @@ pfs::Params getRawSettings(const LuminanceOptions& opts)
     p.set("raw.highlights_rebuild", opts.getRawLevel());
 
     // colors
-    if ( opts.isRawUseBlack() )
-    { p.set("raw.black_level", opts.getRawUserBlack()); }
-    if ( opts.isRawUseSaturation() )
-    { p.set("raw.saturation", opts.getRawUserSaturation()); }
+    if (opts.isRawUseBlack())
+    {
+        p.set("raw.black_level", opts.getRawUserBlack());
+    }
+    if (opts.isRawUseSaturation())
+    {
+        p.set("raw.saturation", opts.getRawUserSaturation());
+    }
+
     // brightness
-    if ( opts.isRawAutoBrightness() )
-    { p.set("raw.auto_brightness", true); }
+    if (opts.isRawAutoBrightness())
+    {
+        p.set("raw.auto_brightness", true);
+    }
+
     p.set("raw.brightness", opts.getRawBrightness());
     p.set("raw.auto_brightness_threshold", opts.getRawAutoBrightnessThreshold());
-    // noise reduction
-    if ( opts.isRawUseNoiseReduction() )
-    { p.set("raw.noise_reduction_threshold", opts.getRawNoiseReductionThreshold()); }
 
-    if ( opts.isRawUseChromaAber() ) {
+    // noise reduction
+    if (opts.isRawUseNoiseReduction())
+    {
+        p.set("raw.noise_reduction_threshold", opts.getRawNoiseReductionThreshold());
+    }
+
+    if (opts.isRawUseChromaAber())
+    {
         p.set("raw.chroma_aber", true);
         p.set("raw.chroma_aber_0", opts.getRawAber0());
         p.set("raw.chroma_aber_1", opts.getRawAber1());
@@ -368,7 +377,8 @@ pfs::Params getRawSettings(const LuminanceOptions& opts)
         p.set("raw.chroma_aber_3", opts.getRawAber3());
     }
 
-    if ( !opts.getRawCameraProfile().isEmpty() ) {
+    if (!opts.getRawCameraProfile().isEmpty())
+    {
         p.set("raw.camera_profile",
               std::string(
                   QFile::encodeName( opts.getRawCameraProfile() ).constData()
@@ -376,4 +386,9 @@ pfs::Params getRawSettings(const LuminanceOptions& opts)
     }
 
     return p;
+}
+
+pfs::Params getRawSettings()
+{
+    return getRawSettings(LuminanceOptions());
 }

@@ -12,15 +12,12 @@ SET(FILES_UI
 SET(FILES_H
     ${CMAKE_CURRENT_SOURCE_DIR}/SavedParametersDialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ProgressHelper.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/CommonFunctions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/LuminanceOptions.h)
 SET(FILES_HXX
     #${CMAKE_CURRENT_SOURCE_DIR}/archs.h
     #${CMAKE_CURRENT_SOURCE_DIR}/config.h
-    #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandler.h
-    #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandlerCommon.h
-    #${CMAKE_CURRENT_SOURCE_DIR}/ResourceHandlerLcms.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/TranslatorManager.h)
+    ${CMAKE_CURRENT_SOURCE_DIR}/TranslatorManager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/CommonFunctions.h)
 SET(FILES_CPP
     ${CMAKE_CURRENT_SOURCE_DIR}/SavedParametersDialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global.cpp
@@ -40,7 +37,6 @@ ADD_LIBRARY(common ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_HXX} ${FILES_UI_
     ${CMAKE_CURRENT_BINARY_DIR}/GitSHA1.cpp)
 
 qt5_use_modules(common Core Gui Widgets Xml Sql)
-
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} ${FILES_UI} ${FILES_HXX} PARENT_SCOPE)
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} common PARENT_SCOPE)

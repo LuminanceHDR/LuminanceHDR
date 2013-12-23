@@ -505,7 +505,7 @@ void MainWindow::on_fileOpenAction_triggered()
     // All the files are in the same folder, so I pick the first as reference to update the settings
     QFileInfo qfi(files.first());
 
-    luminance_options->setDefaultPathHdrIn( qfi.path() );
+    luminance_options->setDefaultPathHdrIn(qfi.absolutePath());
 
     foreach (const QString& filename, files)
     {
