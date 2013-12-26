@@ -279,28 +279,29 @@ protected:
     PreviewPanel *m_PreviewPanel;
 
 private:
-    static int sm_NumMainWindows;
-	int firstWindow;
+    // UI declaration
+    Ui::MainWindow* m_Ui;
+
+    // Tone Mapping Panel
+    TonemappingPanel *m_tonemapPanel;
 
     // I/O
     QThread *m_IOThread;
     IOWorker *m_IOWorker;
     QProgressBar* m_ProgressBar;
 
-    // UI declaration
-    Ui::MainWindow* m_Ui;
-
     // TM thread
     QThread* m_TMThread;
     TMWorker* m_TMWorker;
     TMOProgressIndicator* m_TMProgressBar;
-    // Tone Mapping Panel
-    TonemappingPanel *tmPanel;
+
 
     QFutureWatcher<void> m_futureWatcher;
     GenericViewer *m_viewerToProcess;
     bool m_processingAWB;
+    int m_firstWindow;
     
+    static int sm_NumMainWindows;
     static QScopedPointer<UpdateChecker> sm_updateChecker;
 };
 

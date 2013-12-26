@@ -157,19 +157,20 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
 int MainWindow::sm_NumMainWindows = 0;
 QScopedPointer<UpdateChecker> MainWindow::sm_updateChecker;
 
-
-MainWindow::MainWindow(QWidget *parent):
-    QMainWindow(parent),
-    m_Ui(new Ui::MainWindow), firstWindow(0)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , m_Ui(new Ui::MainWindow)
+    , m_firstWindow(0)
 {
     init();
 }
 
 MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
                        const QStringList& inputFileNames,
-                       bool needSaving, QWidget *parent):
-    QMainWindow(parent),
-    m_Ui(new Ui::MainWindow), firstWindow(0)
+                       bool needSaving, QWidget *parent)
+    : QMainWindow(parent)
+    , m_Ui(new Ui::MainWindow)
+    , m_firstWindow(0)
 {
     init();
 
@@ -210,7 +211,7 @@ void MainWindow::init()
     luminance_options = new LuminanceOptions();
 
     sm_NumMainWindows++;
-	firstWindow = 0;
+    m_firstWindow = 0;
 
     helpBrowser = NULL;
     num_ldr_generated = 0;
@@ -264,10 +265,10 @@ void MainWindow::init()
 			sm_updateChecker.reset(new UpdateChecker(this));
 			connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), this, SLOT(onUpdateAvailable()));
 
-			firstWindow = 2;
+            m_firstWindow = 2;
         }
 		else
-			firstWindow = 1;
+            m_firstWindow = 1;
     }
     
 }
@@ -297,18 +298,18 @@ void MainWindow::createCentralWidget()
     m_PreviewPanel = new PreviewPanel();
 
     // create tonemapping panel
-    tmPanel = new TonemappingPanel(sm_NumMainWindows, m_PreviewPanel); //(m_centralwidget_splitter);
+    m_tonemapPanel = new TonemappingPanel(sm_NumMainWindows, m_PreviewPanel); //(m_centralwidget_splitter);
 
-    connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), tmPanel, SLOT(setRealtimePreviews(bool)));
+    connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), m_tonemapPanel, SLOT(setRealtimePreviews(bool)));
     connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), luminance_options, SLOT(setRealtimePreviewsActive(bool)));
-    tmPanel->setRealtimePreviews(luminance_options->isRealtimePreviewsActive());
+    m_tonemapPanel->setRealtimePreviews(luminance_options->isRealtimePreviewsActive());
 
     m_tabwidget = new QTabWidget; //(m_centralwidget_splitter);
 
     m_tabwidget->setDocumentMode(true);
     m_tabwidget->setTabsClosable(true);
 
-    m_centralwidget_splitter->addWidget(tmPanel);
+    m_centralwidget_splitter->addWidget(m_tonemapPanel);
     m_centralwidget_splitter->addWidget(m_bottom_splitter);
 
     m_bottom_splitter->addWidget(m_tabwidget);
@@ -335,8 +336,8 @@ void MainWindow::createCentralWidget()
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateSoftProofing(int)));
-    connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-    connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
+    connect(m_tonemapPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+    connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_tonemapPanel, SLOT(updatedHDR(pfs::Frame*)));
     connect(this, SIGNAL(destroyed()), m_PreviewPanel, SLOT(deleteLater()));
 
     m_centralwidget_splitter->restoreState(luminance_options->value("MainWindowSplitterState").toByteArray());
@@ -1115,8 +1116,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
 
         m_tabwidget->setCurrentWidget(newhdr);
 
-        tmPanel->setEnabled(true);
-        tmPanel->updatedHDR(new_hdr_frame);
+        m_tonemapPanel->setEnabled(true);
+        m_tonemapPanel->updatedHDR(new_hdr_frame);
         m_Ui->actionShowPreviewPanel->setEnabled(true);
 
         showPreviewPanel(m_Ui->actionShowPreviewPanel->isChecked());
@@ -1403,13 +1404,9 @@ void MainWindow::closeEvent( QCloseEvent *event )
 bool MainWindow::event(QEvent* event)
 {
 	bool result = QMainWindow::event(event);
-	if (event->type() == QEvent::WindowActivate && firstWindow == 1)
-	{
-
-    
-
-	
-		firstWindow = 2;
+    if (event->type() == QEvent::WindowActivate && m_firstWindow == 1)
+    {
+        m_firstWindow = 2;
 		QMessageBox::warning(this, "Luminance HDR 32-bit on 64-bit", tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);        
 	}
 	return result;
@@ -1468,7 +1465,7 @@ void MainWindow::setupTM()
     tm_status.curr_tm_frame = NULL;
     tm_status.curr_tm_options = NULL;
 
-    tmPanel->setEnabled(false);
+    m_tonemapPanel->setEnabled(false);
 
     m_TMProgressBar = new TMOProgressIndicator;
     m_TMProgressBar->hide();
@@ -1589,7 +1586,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
     GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
-    if (tmPanel->replaceLdr() && n != NULL && !n->isHDR())
+    if (m_tonemapPanel->replaceLdr() && n != NULL && !n->isHDR())
     {
         n->setFrame(frame, tm_options);
     }
@@ -1630,7 +1627,7 @@ void MainWindow::tonemapFailed(const QString& error_msg)
                           tr("Error: %1").arg(error_msg),
                           QMessageBox::Ok, QMessageBox::NoButton);
 
-    tmPanel->setEnabled(true);
+    m_tonemapPanel->setEnabled(true);
     m_TMProgressBar->hide();
 }
 
@@ -1678,7 +1675,7 @@ void MainWindow::showPreviewPanel(bool b)
             // connect signals
             connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
             connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-            connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+            connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
         }
     }
     else
@@ -1688,7 +1685,7 @@ void MainWindow::showPreviewPanel(bool b)
         // disconnect signals
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
         disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-        disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+        disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
     }
 }
 
@@ -1756,7 +1753,7 @@ void MainWindow::removeTab(int t)
 			tm_status.curr_tm_frame = NULL;
 			tm_status.curr_tm_options = NULL;
 
-			tmPanel->setEnabled(false);
+            m_tonemapPanel->setEnabled(false);
 
             m_inputFilesName.clear();
             m_inputExpoTimes.clear();
