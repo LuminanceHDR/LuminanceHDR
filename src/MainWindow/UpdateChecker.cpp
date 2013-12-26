@@ -50,8 +50,8 @@ UpdateChecker::UpdateChecker(QWidget *parent) //, QNetworkAccessManager* network
 
 UpdateChecker::~UpdateChecker() {
     m_tray->hide();
-    m_tray->deleteLater();
-    m_networkManager->deleteLater();
+    delete m_tray;
+    delete m_networkManager;
 }
 
 void UpdateChecker::trayMessageClicked() const

@@ -1065,7 +1065,6 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
         MainWindow *other = new MainWindow(new_hdr_frame, new_fname, inputFileNames, needSaving);
         other->move(x() + 40, y() + 40);
         other->show();
-        sm_NumMainWindows++;
     }
     else
     {
