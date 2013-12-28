@@ -2,31 +2,34 @@
 SETLOCAL
 
 REM  http://dev.exiv2.org/projects/exiv2/repository/
-SET EXIV2_COMMIT=3196
+SET EXIV2_COMMIT=3212
 
 REM  sourceforge.net/p/libjpeg-turbo/code/
-SET LIBJPEG_COMMIT=1082
+SET LIBJPEG_COMMIT=1093
 
 
 rem  https://github.com/madler/zlib/commits
 SET ZLIB_COMMIT_LONG=50893291621658f355bc5b4d450a8d06a563053d
 
 rem  https://github.com/danielkaneider/openexr
-SET OPENEXR_COMMIT_LONG=2e607fcc77954f8a630ac9f9329240631ca75208
+SET OPENEXR_COMMIT_LONG=032bc30184de4bdb43992f9e2adb7ca3e6b966f9
 
 rem  http://www.boost.org/
-SET BOOST_MINOR=54
+SET BOOST_MINOR=55
 
 rem https://github.com/mm2/Little-CMS
-SET LCMS_COMMIT_LONG=69ecafd3b1638cc76ae0b005277120fe15c5bbda
+SET LCMS_COMMIT_LONG=579b3aad051b9fcf858ea308f9d8f6714f84c7a8
 
 rem https://github.com/LibRaw/LibRaw
-SET LIBRAW_COMMIT_LONG=9e04d49595af65cd1c2af028a047ef9f4864334b
+SET LIBRAW_COMMIT_LONG=8db38a63b69a1fedee1790cae8306828eda8795e
 SET LIBRAW_DEMOS2_COMMIT_LONG=ffea825e121e92aa780ae587b65f80fc5847637c
 SET LIBRAW_DEMOS3_COMMIT_LONG=f0895891fdaa775255af02275fce426a5bf5c9fc
 
 rem ftp://sourceware.org/pub/pthreads-win32/
 SET PTHREADS_DIR=prebuilt-dll-2-9-1-release
+
+rem http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c
+SET CFITSIO_VER=3360
 
 
 IF EXIST .settings\vsexpress.txt (
@@ -203,12 +206,12 @@ IF NOT EXIST zlib-%ZLIB_COMMIT% (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\lpng170b22.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng170b22.zip http://sourceforge.net/projects/libpng/files/libpng17/1.7.0beta22/lp170b22.zip/download
+IF NOT EXIST %TEMP_DIR%\lpng170b25.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng170b25.zip http://sourceforge.net/projects/libpng/files/libpng17/1.7.0beta25/lp170b25.zip/download
 )
-IF NOT EXIST lp170b22 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng170b22.zip
-	pushd lp170b22
+IF NOT EXIST lp170b25 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng170b25.zip
+	pushd lp170b25
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DZLIB_ROOT=..\zlib-%ZLIB_COMMIT%;..\zlib-%ZLIB_COMMIT%\%Configuration%
 	IF errorlevel 1	goto error_end
 	%VSCOMMAND% libpng.sln /build "%Configuration%|%Platform%" /Project png17
@@ -361,28 +364,26 @@ IF NOT EXIST %PTHREADS_CURRENT_DIR% (
     robocopy %TEMP_DIR%\%PTHREADS_CURRENT_DIR% %PTHREADS_CURRENT_DIR% >nul
 )
 
-IF NOT EXIST %TEMP_DIR%\cfit3350.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/cfit3350.zip ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfit3350.zip
-    %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/cfitsio3350patch.zip http://qtpfsgui.sourceforge.net/win/cfitsio3350patch.zip
+IF NOT EXIST %TEMP_DIR%\cfit%CFITSIO_VER%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/cfit%CFITSIO_VER%.zip ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfit%CFITSIO_VER%.zip
 )
-IF NOT EXIST cfit3350 (
-    %CYGWIN_DIR%\bin\unzip.exe -o -q -d cfit3350 %TEMP_DIR%/cfit3350.zip
-    %CYGWIN_DIR%\bin\unzip.exe -o -q -d cfit3350 %TEMP_DIR%/cfitsio3350patch.zip
+IF NOT EXIST cfit%CFITSIO_VER% (
+    %CYGWIN_DIR%\bin\unzip.exe -o -q -d cfit%CFITSIO_VER% %TEMP_DIR%/cfit%CFITSIO_VER%.zip
 )
-IF NOT EXIST cfit3350.build (
-    mkdir cfit3350.build
-    pushd cfit3350.build
+IF NOT EXIST cfit%CFITSIO_VER%.build (
+    mkdir cfit%CFITSIO_VER%.build
+    pushd cfit%CFITSIO_VER%.build
     
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\cfit3350 -DUSE_PTHREADS=1 -DCMAKE_INCLUDE_PATH=..\%PTHREADS_CURRENT_DIR% -DCMAKE_LIBRARY_PATH=..\%PTHREADS_CURRENT_DIR%
+    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\cfit%CFITSIO_VER% -DUSE_PTHREADS=1 -DCMAKE_INCLUDE_PATH=..\%PTHREADS_CURRENT_DIR% -DCMAKE_LIBRARY_PATH=..\%PTHREADS_CURRENT_DIR%
 	IF errorlevel 1 goto error_end
     %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target cfitsio
     IF errorlevel 1 goto error_end   
     popd
 )
-pushd cfit3350
+pushd cfit%CFITSIO_VER%
 SET CFITSIO=%CD%
 popd
-pushd cfit3350.build\%Configuration%
+pushd cfit%CFITSIO_VER%.build\%Configuration%
 SET CFITSIO=%CFITSIO%;%CD%
 popd
 
@@ -400,7 +401,7 @@ IF NOT EXIST CCfits2.4.build (
     mkdir CCfits2.4.build
     
     pushd CCfits2.4.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit3350 -DCMAKE_LIBRARY_PATH=..\cfit3350.build\%Configuration%
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% -DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
 	IF errorlevel 1 goto error_end
     %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target CCfits
 	IF errorlevel 1 goto error_end
@@ -482,7 +483,6 @@ IF %Platform% EQU Win32 (
 ) ELSE (
 	IF NOT EXIST %TEMP_DIR%\fftw-3.3.3-dll64.zip (
 		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.3-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.3-dll64.zip
-		
 	)
 )
 
@@ -635,9 +635,9 @@ robocopy exiv2-%EXIV2_COMMIT%\include LuminanceHdrStuff\DEPs\include\exiv2 *.h *
 robocopy exiv2-%EXIV2_COMMIT%\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\lib\exiv2 *.lib /MIR >nul
 robocopy exiv2-%EXIV2_COMMIT%\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\bin\exiv2 *.dll /MIR >nul
 
-robocopy lp170b22 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
-robocopy lp170b22\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
-robocopy lp170b22\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
+robocopy lp170b25 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
+robocopy lp170b25\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
+robocopy lp170b25\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
 	
 
 robocopy LibRaw-%LIBRAW_COMMIT%\libraw LuminanceHdrStuff\DEPs\include\libraw\libraw /MIR >nul
@@ -689,6 +689,7 @@ IF EXIST ..\..\gtest-1.6.0 (
 )
 
 %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
+IF errorlevel 1 goto error_end
 popd
 
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\Luminance HDR.sln (
@@ -725,7 +726,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
         robocopy libpng ..\..\qtpfsgui.build\%ConfigurationLuminance% libpng17.dll >nul
         popd
 
-        robocopy cfit3350.build\%Configuration% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% cfitsio.dll >nul 
+        robocopy cfit%CFITSIO_VER%.build\%Configuration% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% cfitsio.dll >nul 
         robocopy %PTHREADS_CURRENT_DIR% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% pthreadVC2.dll >nul 
        
         robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% lcms2.dll >nul 
@@ -744,7 +745,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
         REM ----- QT Stuff (Dlls, translations) --------------------------------------------
         pushd LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%
 
-        for %%v in ( "Qt5Concurrent.dll", "Qt5Core.dll", "Qt5Gui.dll", "Qt5Multimedia.dll", "Qt5MultimediaWidgets.dll", "Qt5Network.dll", "Qt5OpenGL.dll", "Qt5PrintSupport.dll", "Qt5Qml.dll", "Qt5Quick.dll", "Qt5Sensors.dll", "Qt5Sql.dll", "Qt5V8.dll", "Qt5WebKit.dll", "Qt5WebKitWidgets.dll", "Qt5Widgets.dll", "Qt5Xml.dll", "icudt51.dll", "icuin51.dll", "icuuc51.dll" ) do (
+        for %%v in ( "Qt5Concurrent.dll", "Qt5Core.dll", "Qt5Gui.dll", "Qt5Multimedia.dll", "Qt5MultimediaWidgets.dll", "Qt5Network.dll", "Qt5Positioning.dll", "Qt5WinExtras.dll", "Qt5OpenGL.dll", "Qt5PrintSupport.dll", "Qt5Qml.dll", "Qt5Quick.dll", "Qt5Sensors.dll", "Qt5Sql.dll", "Qt5V8.dll", "Qt5WebKit.dll", "Qt5WebKitWidgets.dll", "Qt5Widgets.dll", "Qt5Xml.dll", "icudt51.dll", "icuin51.dll", "icuuc51.dll" ) do (
             robocopy %QTDIR%\bin . %%v >nul
         )
         for %%v in ("imageformats", "sqldrivers", "platforms") do (
