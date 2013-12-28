@@ -64,7 +64,7 @@ FitsImporter::FitsImporter(QWidget *parent)
 #ifdef WIN32
     setWizardStyle(WizardStyle::ModernStyle);
 #endif
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
 

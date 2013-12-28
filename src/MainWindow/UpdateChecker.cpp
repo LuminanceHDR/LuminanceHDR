@@ -96,7 +96,7 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
 
                 emit updateAvailable();
 
-#if defined(Q_WS_MAC) || defined(Q_WS_X11)
+#if defined(Q_OS_MAC) || defined(Q_OS_X11)
                 if ( UMessageBox::question(msgTitle, msgContent + "\n\n" +
                                       tr("Do you want to open the webpage for download now?"),
                                            widgetP)

@@ -92,7 +92,7 @@ void Align::align_with_ais(bool ais_crop_flag)
         ais_parameters << completeFilename; 
     }
     qDebug() << "ais_parameters " << ais_parameters;
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
     m_ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 #else

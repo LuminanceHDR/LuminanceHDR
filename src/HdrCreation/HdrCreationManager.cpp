@@ -653,7 +653,7 @@ void HdrCreationManager::align_with_ais()
         }
     }
     qDebug() << "ais_parameters " << ais_parameters;
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
     ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 #else

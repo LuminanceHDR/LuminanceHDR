@@ -48,7 +48,7 @@ ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
             this, SLOT(reset(int)));
     connect(m_ui->horizontalSlider, SIGNAL(valueChanged(int)),
             this, SLOT(reset(int)));
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
 }

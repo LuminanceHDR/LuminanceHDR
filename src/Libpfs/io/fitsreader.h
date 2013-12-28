@@ -34,7 +34,7 @@
 #include <Libpfs/utils/resourcehandlerstdio.h>
 
 // include windows.h to avoid TBYTE define clashes with fitsio.h
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #define _WINSOCKAPI_    // stops windows.h including winsock.h
 #include <windows.h>
 #endif
