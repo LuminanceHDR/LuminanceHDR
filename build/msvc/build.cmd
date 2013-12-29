@@ -31,6 +31,9 @@ SET PTHREADS_DIR=prebuilt-dll-2-9-1-release
 rem http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c
 SET CFITSIO_VER=3360
 
+rem Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
+SET HUGIN_VER=201300
+
 
 IF EXIST .settings\vsexpress.txt (
     SET VSCOMMAND=vcexpress
@@ -173,18 +176,11 @@ IF NOT EXIST vcDlls\selected (
 	%CYGWIN_DIR%\bin\cp.exe vcDlls/**/msv* vcDlls/selected
 )
 
-IF NOT EXIST %TEMP_DIR%\%RawPlatform% (
-    mkdir %TEMP_DIR%\%RawPlatform%
-)
-
-IF NOT EXIST %TEMP_DIR%\%RawPlatform%\align_image_stack.exe (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/align_image_stack.exe qtpfsgui.sourceforge.net/win/%RawPlatform%/align_image_stack.exe
-  	IF %Platform% EQU Win32 (
-        %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/huginbase.dll qtpfsgui.sourceforge.net/win/%RawPlatform%/huginbase.dll
-        %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/huginvigraimpex.dll qtpfsgui.sourceforge.net/win/%RawPlatform%/huginvigraimpex.dll
-        %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/msvcp100.dll qtpfsgui.sourceforge.net/win/%RawPlatform%/msvcp100.dll
-        %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/%RawPlatform%/msvcr100.dll qtpfsgui.sourceforge.net/win/%RawPlatform%/msvcr100.dll
+IF NOT EXIST %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/hugin-%HUGIN_VER%-%RawPlatform%.zip qtpfsgui.sourceforge.net/win/hugin-%HUGIN_VER%-%RawPlatform%.zip
 	)
+IF NOT EXIST hugin-%HUGIN_VER%-%RawPlatform% (
+    %CYGWIN_DIR%\bin\unzip.exe -o -q -d hugin-%HUGIN_VER%-%RawPlatform% %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip
 )
 
 SET ZLIB_COMMIT=%ZLIB_COMMIT_LONG:~0,7%
@@ -709,8 +705,6 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
             copy vcDlls\selected\* LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\
         )
         
-        robocopy %TEMP_DIR%\%RawPlatform% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance% align_image_stack.exe >nul
-	
         pushd LuminanceHdrStuff\DEPs\bin
         robocopy libjpeg ..\..\qtpfsgui.build\%ConfigurationLuminance% jpeg8.dll >nul
         robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% exiv2.dll >nul
@@ -759,6 +753,8 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
 		robocopy %QTDIR%\translations i18n qt_??.qm >nul
 		robocopy %QTDIR%\translations i18n qt_??_*.qm >nul
         popd
+        
+        robocopy hugin-%HUGIN_VER%-%RawPlatform% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\hugin /MIR >nul
 	)
 )
 
