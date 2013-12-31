@@ -40,7 +40,9 @@
 
 class UMessageBox : public QMessageBox
 {
-public:
+    Q_OBJECT
+ 
+ public:
     explicit UMessageBox(QWidget *parent = 0);
 
     UMessageBox(const QString &title, const QString &text, Icon icon,
