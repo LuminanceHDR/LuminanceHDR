@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="it">
+<TS version="2.1" language="it">
 <context>
     <name>AboutLuminance</name>
     <message>
@@ -74,7 +74,7 @@ p, li { white-space: pre-wrap; }
         <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -83,7 +83,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -329,7 +329,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>Anti ghosting</source>
-        <translation>Anti ghosting</translation>
+        <translation type="vanished">Anti ghosting</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -341,11 +341,11 @@ Continuare?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Auto anti ghosting</source>
-        <translation>Auto anti ghosting</translation>
+        <translation type="vanished">Auto anti ghosting</translation>
     </message>
     <message>
         <source>Artifact-free High Dynamic Range Imaging</source>
@@ -357,7 +357,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Input/Output</source>
@@ -369,7 +369,27 @@ Continuare?</translation>
     </message>
     <message>
         <source>Doing auto anti ghosting...</source>
-        <translation>Eseguendo l&apos;auto anti ghosting...</translation>
+        <translation type="vanished">Eseguendo l&apos;auto anti ghosting...</translation>
+    </message>
+    <message>
+        <source>Anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doing auto anti-ghosting...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -876,7 +896,11 @@ Continuare?</translation>
     </message>
     <message>
         <source>-b --autoag THRESHOLD   Enable auto antighosting with given threshold.</source>
-        <translation>-b --autoag SOGLIA      Abilita l&apos;auto antighosting con il dato valore di soglia. </translation>
+        <translation type="vanished">-b --autoag SOGLIA      Abilita l&apos;auto antighosting con il dato valore di soglia. </translation>
+    </message>
+    <message>
+        <source>-b --autoag THRESHOLD   Enable auto anti-ghosting with given threshold.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1064,7 +1088,7 @@ L&apos;istogramma dell&apos;immagine e&apos; visualizzato sopra.</translation>
     </message>
     <message>
         <source>&amp;Anti Ghosting</source>
-        <translation>&amp;Anti Ghosting</translation>
+        <translation type="vanished">&amp;Anti Ghosting</translation>
     </message>
     <message>
         <source>&amp;Save Images</source>
@@ -1286,7 +1310,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qui puoi attivare l&apos;algoritmo di auto antighosting, settare il valore di soglia e ricalcolare  le patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qui puoi attivare l&apos;algoritmo di auto antighosting, settare il valore di soglia e ricalcolare  le patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>O. Gallo and others</source>
@@ -1294,11 +1318,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Auto anti ghosting</source>
-        <translation>Auto anti ghosting</translation>
+        <translation type="vanished">Auto anti ghosting</translation>
     </message>
     <message>
         <source>Artifact-free HDR Imaging</source>
@@ -1310,7 +1334,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mostra in percentuale il numero di patches calcolate dall&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mostra in percentuale il numero di patches calcolate dall&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Threshold</source>
@@ -1318,7 +1342,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1348,12 +1372,40 @@ p, li { white-space: pre-wrap; }
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&quot;Forza&quot; della maschera (semi transparente)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti-ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Anti-Ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FitsImporter</name>
     <message>
         <source>FITS Importer</source>
-        <translation>Importa immagini FITS</translation>
+        <translation type="vanished">Importa immagini FITS</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load four FITS images containing &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity, Red, Green and Blue Channels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1381,11 +1433,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="vanished">OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation type="vanished">Cancella</translation>
     </message>
     <message>
         <source>Load one FITS image...</source>
@@ -1405,7 +1457,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load Images</source>
-        <translation>Carica le immagini</translation>
+        <translation type="vanished">Carica le immagini</translation>
     </message>
     <message>
         <source>Alignment</source>
@@ -1439,9 +1491,9 @@ p, li { white-space: pre-wrap; }
         <source>Preview</source>
         <translation>Anteprima</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ruota l&apos;immagine selezionata di 180°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ruota l&apos;immagine selezionata di 180°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Previews</source>
@@ -1465,11 +1517,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Load three, four or five FITS images containing Red, Green, Blue Channels and (optional)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Luminosity and H-alpha Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Carica tre, quattro o cinque immagini FITS contenenti canali rosso, verde, blu e (opzionale)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;luminosità e canale H-alpha&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Carica tre, quattro o cinque immagini FITS contenenti canali rosso, verde, blu e (opzionale)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;luminosità e canale H-alpha&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>FITS Channels</source>
-        <translation>Canali FITS</translation>
+        <translation type="vanished">Canali FITS</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1497,11 +1549,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosity (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosità (opzionale)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Luminosità (opzionale)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>H-alpha (optional)</source>
-        <translation type="obsolete">H-alpha (opzionale)</translation>
+        <translation type="unfinished">H-alpha (opzionale)</translation>
     </message>
     <message>
         <source>Rotate</source>
@@ -1509,7 +1561,75 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;H-alpha (optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;H-alpha (opzionale)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;H-alpha (opzionale)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Import FITS files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setup files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the different files for the channels. Optionally, they can be aligned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel 1 (Red)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminosity (optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel 2 (Green)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Channel 3 (Blue)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180Â°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <translation type="unfinished">Ctrl+R</translation>
+    </message>
+    <message>
+        <source>The alignment of the input files is in progress. Please be patient!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please fine-tune the color part of the channels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color presets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RGB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ha OIII Sii</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2013,7 +2133,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2062,23 +2182,19 @@ the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;
     </message>
     <message>
         <source>Anti ghosting</source>
-        <translation>Anti ghosting</translation>
+        <translation type="vanished">Anti ghosting</translation>
     </message>
     <message>
         <source>O. Gallo and others</source>
-        <translation>O. Gallo e altri</translation>
+        <translation type="vanished">O. Gallo e altri</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Abilita l&apos;algoritmo di auto anti ghosting&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Auto anti ghosting</source>
-        <translation>Auto anti ghosting</translation>
-    </message>
-    <message>
-        <source>Artifact-free HDR Imaging</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Auto anti ghosting</translation>
     </message>
     <message>
         <source>Threshold</source>
@@ -2086,11 +2202,39 @@ the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti ghosting algorithm. A lower threshold means a more agressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Soglia utilizzata dall&apos;algoritmo di auto anti ghosting. Un valore basso significa un procedimento più agressivo che può portare ad una diminuzione dell&apos;intervallo dinamico finale. Usa il pulsante &amp;quot;Ricalcola&amp;quot; per visualizzare l&apos;attuale copertura delle patches e aggiusta la soglia di conseguenza&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti Ghosting</source>
-        <translation>Abilita lo strumento di editing - Utenti esperti, Allineamento manuale e anti ghosting manuale</translation>
+        <translation type="vanished">Abilita lo strumento di editing - Utenti esperti, Allineamento manuale e anti ghosting manuale</translation>
+    </message>
+    <message>
+        <source>Anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable the auto anti-ghosting algorithm (by O. Gallo and others)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced Editing Tools</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2263,15 +2407,31 @@ Vuoi aprire il link con l&apos; applicazione predefinita associata con il protoc
     <name>IOWorker</name>
     <message>
         <source>ERROR: The following file is not readable: %1</source>
-        <translation>ERRORE: Il seguente file non e&apos; accessibile: %1</translation>
+        <translation type="vanished">ERRORE: Il seguente file non e&apos; accessibile: %1</translation>
     </message>
     <message>
         <source>ERROR: File %1 has unsupported extension.</source>
-        <translation>ERRORE: Il file %1 ha una estensione non supportata.</translation>
+        <translation type="vanished">ERRORE: Il file %1 ha una estensione non supportata.</translation>
     </message>
     <message>
         <source>ERROR: Failed loading file: %1</source>
-        <translation>ERRORE: impossibile caricare il file: %1</translation>
+        <translation type="vanished">ERRORE: impossibile caricare il file: %1</translation>
+    </message>
+    <message>
+        <source>IOWorker: The following file is not readable: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IOWorker: file %1 has unsupported extension: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IOWorker: caught exception reading %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IOWorker: failed loading file: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3025,7 +3185,15 @@ Vuoi continuare?</translation>
     </message>
     <message>
         <source>Import four FITS files rapresenting luminosity, red, green and blue channels</source>
-        <translation>Importa quattro files FITS contenenti la luminosità, il canale rosso, verde  blu rispettivamente</translation>
+        <translation type="vanished">Importa quattro files FITS contenenti la luminosità, il canale rosso, verde  blu rispettivamente</translation>
+    </message>
+    <message>
+        <source>Import four FITS files representing luminosity, red, green and blue channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3358,7 +3526,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Always show Wizard first page</source>
-        <translation>Mostra sempre la prima pagina del Wizard</translation>
+        <translation type="vanished">Mostra sempre la prima pagina del Wizard</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3594,7 +3762,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color profile (*.icc)</source>
-        <translation>Profilo di colore (*.icc)</translation>
+        <translation type="vanished">Profilo di colore (*.icc)</translation>
     </message>
     <message>
         <source>&amp;Browse...</source>
@@ -3670,7 +3838,7 @@ p, li { white-space: pre-wrap; }
         <source>Angles:</source>
         <translation>Angoli:</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>

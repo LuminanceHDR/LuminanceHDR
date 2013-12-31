@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>AboutLuminance</name>
     <message>
@@ -57,7 +57,7 @@ p, li { white-space: pre-wrap; }
         <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
         <translation></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -66,7 +66,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1445,7 +1445,7 @@ p, li { white-space: pre-wrap; }
         <source>H-alpha (optional)</source>
         <translation></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180Â°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ausgewähltes Bild um 180° drehen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1485,15 +1485,15 @@ p, li { white-space: pre-wrap; }
     <name>HdrCreationManager</name>
     <message>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation>Das Bild %1 ist in einem 8-Bit-Format (LDR), die vorherigen Bilder jedoch nicht.</translation>
+        <translation type="vanished">Das Bild %1 ist in einem 8-Bit-Format (LDR), die vorherigen Bilder jedoch nicht.</translation>
     </message>
     <message>
         <source>The image %1 has an invalid size.</source>
-        <translation>Das Bild %1 hat eine ungültige Größe.</translation>
+        <translation type="vanished">Das Bild %1 hat eine ungültige Größe.</translation>
     </message>
     <message>
         <source>The image %1 is an 16 bit format while the previous ones are not.</source>
-        <translation>Das Bild %1 ist in einem 16-Bit-Format, die vorherigen Bilder jedoch nicht.</translation>
+        <translation type="vanished">Das Bild %1 ist in einem 16-Bit-Format, die vorherigen Bilder jedoch nicht.</translation>
     </message>
     <message>
         <source>The images have different size.</source>
@@ -1615,7 +1615,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatischen Anti-Ghosting-Algorithmus aktivieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatischen Anti-Ghosting-Algorithmus aktivieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Auto anti-ghosting</source>
@@ -1627,7 +1627,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti-Ghosting</source>
-        <translation>Bearbeitungswerkzeuge aktivieren - Erfahrene Nutzer, manuelle Ausrichtung, manuelles Anti-Ghosting</translation>
+        <translation type="vanished">Bearbeitungswerkzeuge aktivieren - Erfahrene Nutzer, manuelle Ausrichtung, manuelles Anti-Ghosting</translation>
     </message>
     <message>
         <source>[2/2] Choose Settings for HDR Creation</source>
@@ -1960,7 +1960,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
 &lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -1997,15 +1997,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>O. Gallo and others</source>
-        <translation>O. Gallo und andere</translation>
+        <translation type="vanished">O. Gallo und andere</translation>
     </message>
     <message>
         <source>Artifact-free HDR Imaging</source>
-        <translation>Artefaktfreie HDR-Bilderzeugung</translation>
+        <translation type="vanished">Artefaktfreie HDR-Bilderzeugung</translation>
     </message>
     <message>
         <source>Threshold</source>
         <translation>Schwellenwert</translation>
+    </message>
+    <message>
+        <source>Enable the auto anti-ghosting algorithm (by O. Gallo and others)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced Editing Tools</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2179,15 +2191,31 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     <name>IOWorker</name>
     <message>
         <source>ERROR: The following file is not readable: %1</source>
-        <translation>FEHLER: Die folgende Datei ist nicht lesbar: %1</translation>
+        <translation type="vanished">FEHLER: Die folgende Datei ist nicht lesbar: %1</translation>
     </message>
     <message>
         <source>ERROR: File %1 has unsupported extension.</source>
-        <translation>FEHLER: Datei %1 hat eine nicht unterstützte Erweiterung.</translation>
+        <translation type="vanished">FEHLER: Datei %1 hat eine nicht unterstützte Erweiterung.</translation>
     </message>
     <message>
         <source>ERROR: Failed loading file: %1</source>
-        <translation>FEHLER: Datei konnte nicht geladen werden: %1</translation>
+        <translation type="vanished">FEHLER: Datei konnte nicht geladen werden: %1</translation>
+    </message>
+    <message>
+        <source>IOWorker: The following file is not readable: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IOWorker: file %1 has unsupported extension: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IOWorker: caught exception reading %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IOWorker: failed loading file: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2934,6 +2962,10 @@ Willst du ihn dennoch anwenden?</translation>
         <source>FITS Image</source>
         <translation>FITS-Bild</translation>
     </message>
+    <message>
+        <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -3407,7 +3439,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Always show Wizard first page</source>
-        <translation>Erste Seite des Assistenten immer anzeigen</translation>
+        <translation type="vanished">Erste Seite des Assistenten immer anzeigen</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3573,7 +3605,7 @@ p, li { white-space: pre-wrap; }
         <source>Angles:</source>
         <translation>Winkel:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation></translation>
     </message>
