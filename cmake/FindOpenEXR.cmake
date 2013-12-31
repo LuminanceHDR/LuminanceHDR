@@ -1,98 +1,108 @@
-# Locate OpenEXR
+# - Find OpenEXR library
+# Find the native OpenEXR includes and library
 # This module defines
-# OPENEXR_LIBRARY
-# OPENEXR_FOUND, if false, do not try to link to OpenEXR 
-# OPENEXR_INCLUDE_DIR, where to find the headers
+#  OPENEXR_INCLUDE_DIRS, where to find ImfXdr.h, etc. Set when
+#                        OPENEXR_INCLUDE_DIR is found.
+#  OPENEXR_LIBRARIES, libraries to link against to use OpenEXR.
+#  OPENEXR_ROOT_DIR, The base directory to search for OpenEXR.
+#                    This can also be an environment variable.
+#  OPENEXR_FOUND, If false, do not try to use OpenEXR.
 #
-# $OPENEXR_DIR is an environment variable that would
-# correspond to the ./configure --prefix=$OPENEXR_DIR
+# For individual library access these advanced settings are available
+#  OPENEXR_HALF_LIBRARY, Path to Half library
+#  OPENEXR_IEX_LIBRARY, Path to Half library
+#  OPENEXR_ILMIMF_LIBRARY, Path to Ilmimf library
+#  OPENEXR_ILMTHREAD_LIBRARY, Path to IlmThread library
+#  OPENEXR_IMATH_LIBRARY, Path to Imath library
 #
-# Created by Robert Osfield. 
+# also defined, but not for general use are
+#  OPENEXR_LIBRARY, where to find the OpenEXR library.
 
-FIND_PATH(OPENEXR_INCLUDE_DIR OpenEXR/ImfIO.h
-    $ENV{OPENEXR_DIR}/include
-    $ENV{OPENEXR_DIR}
-    $ENV{OSGDIR}/include
-    $ENV{OSGDIR}
-    $ENV{OSG_ROOT}/include
-    ~/Library/Frameworks
-    /Library/Frameworks
-    /usr/local/include
-    /usr/include
-    /sw/include # Fink
-    /opt/local/include # DarwinPorts
-    /opt/csw/include # Blastwave
-    /opt/include
-    [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OSG_ROOT]/include
-    /usr/freeware/include
+#=============================================================================
+# Copyright 2011 Blender Foundation.
+#
+# Distributed under the OSI-approved BSD License (the "License");
+# see accompanying file Copyright.txt for details.
+#
+# This software is distributed WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the License for more information.
+#=============================================================================
+
+# If OPENEXR_ROOT_DIR was defined in the environment, use it.
+IF(NOT OPENEXR_ROOT_DIR AND NOT $ENV{OPENEXR_ROOT_DIR} STREQUAL "")
+  SET(OPENEXR_ROOT_DIR $ENV{OPENEXR_ROOT_DIR})
+ENDIF()
+
+if (NOT OPENEXR_VERSION)
+  SET(OPENEXR_VERSION "2.0.1")
+endif()
+if (${OPENEXR_VERSION} VERSION_LESS "2.1")
+  SET(_openexr_FIND_COMPONENTS
+    Half
+    Iex
+    IlmImf
+    IlmThread
+    Imath
+  )
+else ()
+  string(REGEX REPLACE "([0-9]+)[.]([0-9]+).*" "\\1_\\2" _openexr_libs_ver ${OPENEXR_VERSION})
+  SET(_openexr_FIND_COMPONENTS
+    Half
+    Iex-${_openexr_libs_ver}
+    IlmImf-${_openexr_libs_ver}
+    IlmThread-${_openexr_libs_ver}
+    Imath-${_openexr_libs_ver}
+  )
+endif ()
+
+SET(_openexr_SEARCH_DIRS
+  ${OPENEXR_ROOT_DIR}
+  /usr/local
+  /sw # Fink
+  /opt/local # DarwinPorts
+  /opt/csw # Blastwave
 )
 
-FIND_LIBRARY(OPENEXR_IlmIlf_LIBRARY 
-    NAMES IlmImf
-    PATHS
-    $ENV{OPENEXR_DIR}/lib
-    $ENV{OPENEXR_DIR}
-    $ENV{OSGDIR}/lib
-    $ENV{OSGDIR}
-    $ENV{OSG_ROOT}/lib
-    ~/Library/Frameworks
-    /Library/Frameworks
-    /usr/local/lib
-    /usr/lib
-    /sw/lib
-    /opt/local/lib
-    /opt/csw/lib
-    /opt/lib
-    [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OSG_ROOT]/lib
-    /usr/freeware/lib64
+FIND_PATH(OPENEXR_INCLUDE_DIR
+  NAMES
+    OpenEXR/ImfXdr.h
+  HINTS
+    ${_openexr_SEARCH_DIRS}
+  PATH_SUFFIXES
+    include
 )
 
-FIND_LIBRARY(OPENEXR_Half_LIBRARY 
-    NAMES Half
-    PATHS
-    $ENV{OPENEXR_DIR}/lib
-    $ENV{OPENEXR_DIR}
-    $ENV{OSGDIR}/lib
-    $ENV{OSGDIR}
-    $ENV{OSG_ROOT}/lib
-    ~/Library/Frameworks
-    /Library/Frameworks
-    /usr/local/lib
-    /usr/lib
-    /sw/lib
-    /opt/local/lib
-    /opt/csw/lib
-    /opt/lib
-    [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OSG_ROOT]/lib
-    /usr/freeware/lib64
-)
+SET(_openexr_LIBRARIES)
+FOREACH(COMPONENT ${_openexr_FIND_COMPONENTS})
+  STRING(TOUPPER ${COMPONENT} UPPERCOMPONENT)
 
-FIND_LIBRARY(OPENEXR_Iex_LIBRARY 
-    NAMES Iex
-    PATHS
-    $ENV{OPENEXR_DIR}/lib
-    $ENV{OPENEXR_DIR}
-    $ENV{OSGDIR}/lib
-    $ENV{OSGDIR}
-    $ENV{OSG_ROOT}/lib
-    ~/Library/Frameworks
-    /Library/Frameworks
-    /usr/local/lib
-    /usr/lib
-    /sw/lib
-    /opt/local/lib
-    /opt/csw/lib
-    /opt/lib
-    [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OSG_ROOT]/lib
-    /usr/freeware/lib64
-)
-
-SET(OPENEXR_FOUND "NO")
-IF(OPENEXR_INCLUDE_DIR AND OPENEXR_IlmIlf_LIBRARY AND OPENEXR_Half_LIBRARY)
-    SET(OPENEXR_LIBRARIES
-        ${OPENEXR_IlmIlf_LIBRARY}
-        ${OPENEXR_Half_LIBRARY}
-        ${OPENEXR_Iex_LIBRARY}
+  FIND_LIBRARY(OPENEXR_${UPPERCOMPONENT}_LIBRARY
+    NAMES
+      ${COMPONENT}
+    HINTS
+      ${_openexr_SEARCH_DIRS}
+    PATH_SUFFIXES
+      lib64 lib
     )
-    SET(OPENEXR_FOUND "YES")
-ENDIF(OPENEXR_INCLUDE_DIR AND OPENEXR_IlmIlf_LIBRARY AND OPENEXR_Half_LIBRARY)
+  LIST(APPEND _openexr_LIBRARIES "${OPENEXR_${UPPERCOMPONENT}_LIBRARY}")
+ENDFOREACH()
+
+# handle the QUIETLY and REQUIRED arguments and set OPENEXR_FOUND to TRUE if 
+# all listed variables are TRUE
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(OpenEXR  DEFAULT_MSG
+    _openexr_LIBRARIES OPENEXR_INCLUDE_DIR)
+
+IF(OPENEXR_FOUND)
+  SET(OPENEXR_LIBRARIES ${_openexr_LIBRARIES})
+  # Both include paths are needed because of dummy OSL headers mixing #include <OpenEXR/foo.h> and #include <foo.h> :(
+  SET(OPENEXR_INCLUDE_DIRS ${OPENEXR_INCLUDE_DIR} ${OPENEXR_INCLUDE_DIR}/OpenEXR)
+  message(STATUS "OpenEXR found")
+ENDIF()
+
+MARK_AS_ADVANCED(OPENEXR_INCLUDE_DIR)
+FOREACH(COMPONENT ${_openexr_FIND_COMPONENTS})
+  STRING(TOUPPER ${COMPONENT} UPPERCOMPONENT)
+  MARK_AS_ADVANCED(OPENEXR_${UPPERCOMPONENT}_LIBRARY)
+ENDFOREACH()
