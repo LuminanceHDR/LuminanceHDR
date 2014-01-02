@@ -23,6 +23,8 @@
 
 #include "osintegration.h"
 
+#include <QSysInfo>
+
 #ifdef Q_OS_WIN
     #define _WINSOCKAPI_    // stops windows.h including winsock.h
     #include <windows.h>
@@ -36,10 +38,12 @@ OsIntegration* OsIntegration::instance = 0;
 OsIntegration::OsIntegration()
     : QObject((QObject*)0),
     m_progressMin(0), 
-    m_progressMax(100)
+    m_progressMax(100),
+    m_winProgressbar(0)
 {
 	#ifdef Q_OS_WIN
-		winProgressbar = new EcWin7();
+        if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
+    		m_winProgressbar = new EcWin7();
 	#endif
 }
 
@@ -60,21 +64,24 @@ OsIntegration* OsIntegration::getInstancePtr() {
 
 void OsIntegration::init(QWidget* mainWindow) {
 	#ifdef Q_OS_WIN
-		winProgressbar->init(mainWindow);
+        if (m_winProgressbar)        
+			m_winProgressbar->init(mainWindow);
 	#endif
 }
 
 void OsIntegration::setProgress(int value, int max)
 {
-	#ifdef Q_OS_WIN
-		winProgressbar->setProgressValue(value, max);
-	#endif
+#ifdef Q_OS_WIN
+	if (m_winProgressbar)        
+		m_winProgressbar->setProgressValue(value, max);
+#endif
 }
 
 void OsIntegration::setProgressValue(int value)
 {
 #ifdef Q_OS_WIN
-    winProgressbar->setProgressValue(value, m_progressMax - m_progressMin);
+	if (m_winProgressbar)        
+		m_winProgressbar->setProgressValue(value, m_progressMax - m_progressMin);
 #endif
 }
 
@@ -85,11 +92,12 @@ void OsIntegration::setProgressRange(int min, int max)
 }
 
 void OsIntegration::addRecentFile(const QString& filename)
-	{
+{
 #ifdef Q_OS_WIN
-	winProgressbar->addRecentFile(filename);
+    if (m_winProgressbar)        
+		m_winProgressbar->addRecentFile(filename);
 #endif
-	}
+}
 
 bool OsIntegration::isRunningOnSameCpuPlatform() {
 #if defined(_WIN32)

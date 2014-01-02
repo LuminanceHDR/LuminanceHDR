@@ -64,7 +64,7 @@ private:
 	int m_progressMax;
 
 #ifdef Q_OS_WIN
-	EcWin7* winProgressbar;
+	EcWin7* m_winProgressbar;
 #endif
 
 };

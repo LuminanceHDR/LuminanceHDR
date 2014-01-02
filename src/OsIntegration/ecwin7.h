@@ -4,15 +4,10 @@
 #include <QtGlobal>
 #include <QWidget>
 
-// Windows only data definitions
-#ifdef Q_OS_WIN
-
 #include <QtWinExtras/QWinTaskbarButton>
 #include <QtWinExtras/QWinTaskbarProgress>
 #include <QtWinExtras/QWinJumpList>
 #include <QtWinExtras/QWinJumpListCategory>
-
-#endif
 
 class EcWin7
 {
@@ -27,8 +22,6 @@ public:
 
 private:
     void associateFileTypes(const QStringList &fileTypes);
-
-    HWND mWindowId;
 
     QWinTaskbarButton* taskbarButton;
     QWinTaskbarProgress* taskbarProgress;
