@@ -1485,15 +1485,15 @@ p, li { white-space: pre-wrap; }
     <name>HdrCreationManager</name>
     <message>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation type="vanished">Das Bild %1 ist in einem 8-Bit-Format (LDR), die vorherigen Bilder jedoch nicht.</translation>
+        <translation>Das Bild %1 ist in einem 8-Bit-Format (LDR), die vorherigen Bilder jedoch nicht.</translation>
     </message>
     <message>
         <source>The image %1 has an invalid size.</source>
-        <translation type="vanished">Das Bild %1 hat eine ungültige Größe.</translation>
+        <translation>Das Bild %1 hat eine ungültige Größe.</translation>
     </message>
     <message>
         <source>The image %1 is an 16 bit format while the previous ones are not.</source>
-        <translation type="vanished">Das Bild %1 ist in einem 16-Bit-Format, die vorherigen Bilder jedoch nicht.</translation>
+        <translation>Das Bild %1 ist in einem 16-Bit-Format, die vorherigen Bilder jedoch nicht.</translation>
     </message>
     <message>
         <source>The images have different size.</source>
@@ -1614,20 +1614,12 @@ p, li { white-space: pre-wrap; }
         <translation>Anti-Ghosting</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Automatischen Anti-Ghosting-Algorithmus aktivieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Auto anti-ghosting</source>
         <translation>Autom. Anti-Ghosting</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vom automatischen Anti-Ghosting-Algorithmus verwendeter Schwellenwert. Ein niedrigerer Schwellenwert sorgt für eine aggressivere Verarbeitung, kann aber den erzielten Dynamikumfang verringern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Enable Editing Tools - Advanced Users, Manual Alignment, Manual Anti-Ghosting</source>
-        <translation type="vanished">Bearbeitungswerkzeuge aktivieren - Erfahrene Nutzer, manuelle Ausrichtung, manuelles Anti-Ghosting</translation>
     </message>
     <message>
         <source>[2/2] Choose Settings for HDR Creation</source>
@@ -1942,44 +1934,6 @@ p, li { white-space: pre-wrap; }
         <translation>Bilder automatisch zuschneiden</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool helps you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Assistent zur HDR-Erzeugung&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dieses Werkzeug hilft dabei, aus Fotos, die mit unterschiedlicher Belichtung aufgenommen wurden, ein &lt;a href=&quot;http://de.wikipedia.org/wiki/High_Dynamic_Range_Image&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR-Bild&lt;/span&gt;&lt;/a&gt; zu erzeugen. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Die unterschiedlich belichteten Fotos müssen mit derselben Kamera, unter gleichen Bedingungen und möglichst mit einem Stativ aufgenommen werden.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dieser Assistent führt durch alle Schritte: Bildimport, Ausrichtung und Wahl des Profils zur HDR-Erzeugung.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bedingungen:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Alle Bilder müssen dasselbe Ausmaß haben.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Alle Bilder müssen dieselbe Farbtiefe besitzen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Save Settings</source>
         <translation>Einstellungen speichern</translation>
     </message>
@@ -1996,28 +1950,20 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;/ul&gt;&lt;hr&gt;Es kann dennoch ein HDR-Bild erzeugt werden. Dazu müssen die Belichtungswerte (EV) oder die Blendenstufenabstände &lt;b&gt;manuell&lt;/b&gt; festgelegt werden&lt;hr&gt;Falls dies &lt;b&gt;automatisch&lt;/b&gt; geschehen soll, müssen in den Bilddateien zumindest die folgenden EXIF-Daten vorhanden sein: &lt;ul&gt;&lt;li&gt;Belichtungskorrektur&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINWEIS:&lt;/b&gt; EXIF-Daten gehen meist bei der Vorverarbeitung der Bilder verloren.&lt;br&gt;Zum &lt;b&gt;Kopieren der EXIF-Daten&lt;/b&gt; zwischen zwei Gruppen von Dateien steht der Menüpunkt &lt;b&gt;&quot;Extras -&gt; EXIF-Daten kopieren ...&quot;&lt;/b&gt; zur Verfügung.</translation>
     </message>
     <message>
-        <source>O. Gallo and others</source>
-        <translation type="vanished">O. Gallo und andere</translation>
-    </message>
-    <message>
-        <source>Artifact-free HDR Imaging</source>
-        <translation type="vanished">Artefaktfreie HDR-Bilderzeugung</translation>
-    </message>
-    <message>
         <source>Threshold</source>
         <translation>Schwellenwert</translation>
     </message>
     <message>
         <source>Enable the auto anti-ghosting algorithm (by O. Gallo and others)</source>
-        <translation type="unfinished"></translation>
+        <translation>Autom. Anti-Ghosting-Algorithmus (von O. Gallo und anderen) aktivieren</translation>
     </message>
     <message>
         <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivier diese Option für manuelle Ausrichtung und manuelles Anti-Ghosting. Sie ist nur für Nutzer mit fundierten Kenntnissen der verschiedenen Schritte der HDR-Erzeugung gedacht!</translation>
     </message>
     <message>
         <source>Advanced Editing Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortgeschrittene Bearbeitungswerkzeuge</translation>
     </message>
 </context>
 <context>
@@ -2190,32 +2136,20 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
 <context>
     <name>IOWorker</name>
     <message>
-        <source>ERROR: The following file is not readable: %1</source>
-        <translation type="vanished">FEHLER: Die folgende Datei ist nicht lesbar: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="vanished">FEHLER: Datei %1 hat eine nicht unterstützte Erweiterung.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation type="vanished">FEHLER: Datei konnte nicht geladen werden: %1</translation>
-    </message>
-    <message>
         <source>IOWorker: The following file is not readable: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>IOWorker: Die folgende Datei ist nicht lesbar: %1</translation>
     </message>
     <message>
         <source>IOWorker: file %1 has unsupported extension: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>IOWorker: Datei %1 hat eine nicht unterstützte Erweiterung: %2</translation>
     </message>
     <message>
         <source>IOWorker: caught exception reading %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>IOWorker: Ausnahme beim Lesen von %1: %2</translation>
     </message>
     <message>
         <source>IOWorker: failed loading file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>IOWorker: Datei konnte nicht geladen werden: %1</translation>
     </message>
 </context>
 <context>
@@ -2964,7 +2898,7 @@ Willst du ihn dennoch anwenden?</translation>
     </message>
     <message>
         <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
-        <translation type="unfinished"></translation>
+        <translation>Anscheinend verwendest du die 32-Bit-Version von &lt;strong&gt;Luminance HDR&lt;/strong&gt; auf einem 64-Bit-System. &lt;br&gt;Für das beste Luminance-HDR-Erlebnis lad bitte die&lt;strong&gt;64-Bit&lt;/strong&gt;-Version von &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; herunter!</translation>
     </message>
 </context>
 <context>
@@ -3436,10 +3370,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Always show Preview Panel</source>
         <translation>Vorschaubereich immer anzeigen</translation>
-    </message>
-    <message>
-        <source>Always show Wizard first page</source>
-        <translation type="vanished">Erste Seite des Assistenten immer anzeigen</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
