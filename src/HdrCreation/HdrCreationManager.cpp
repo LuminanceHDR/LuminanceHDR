@@ -657,7 +657,7 @@ void HdrCreationManager::align_with_ais()
     qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
     ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 #elseif Q_OS_WIN
-    ais->start("hugin/align_image_stack.exe", ais_parameters);
+    ais->start("hugin\\align_image_stack.exe", ais_parameters);
 #else
     ais->start("align_image_stack", ais_parameters );
 #endif

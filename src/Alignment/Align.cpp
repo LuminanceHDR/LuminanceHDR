@@ -64,7 +64,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
     m_ais->setEnvironment(env);
     connect(m_ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
-    connect(m_ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
+    connect(m_ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
     connect(m_ais, SIGNAL(readyRead()), this, SLOT(readData()));
     
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
@@ -96,7 +96,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
     m_ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 #elseif Q_OS_WIN
-    m_ais->start("hugin/align_image_stack.exe", ais_parameters );
+    m_ais->start("hugin\\align_image_stack.exe", ais_parameters );
 #else
     m_ais->start("align_image_stack", ais_parameters );
 #endif
