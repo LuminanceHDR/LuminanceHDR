@@ -130,7 +130,8 @@ struct SaveFile {
     int m_mode;
     float m_minLum;
     float m_maxLum;
-    SaveFile(int mode, float minLum = 0.0f, float maxLum = 1.0f);
+    bool m_deflateCompression;
+    SaveFile(int mode, float minLum = 0.0f, float maxLum = 1.0f, bool deflateCompression = true);
     void operator()(HdrCreationItem& currentItem);
 };
 

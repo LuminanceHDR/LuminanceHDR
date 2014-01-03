@@ -132,10 +132,11 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
     }
 }
 
-SaveFile::SaveFile(int mode, float minLum, float maxLum) : 
+SaveFile::SaveFile(int mode, float minLum, float maxLum, bool deflateCompression) : 
     m_mode(mode),
     m_minLum(minLum),
-    m_maxLum(maxLum)
+    m_maxLum(maxLum),
+    m_deflateCompression(deflateCompression)
 {
 }
 
@@ -158,6 +159,8 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
         p.set("tiff_mode", m_mode); // 16bits or 32bits
         p.set("min_luminance", m_minLum); 
         p.set("max_luminance", m_maxLum); 
+        p.set("deflateCompression", m_deflateCompression); 
+        
         FrameWriterPtr writer = FrameWriterFactory::open(
                     QFile::encodeName(completeFilename).constData());
         writer->write( *currentItem.frame(), p );

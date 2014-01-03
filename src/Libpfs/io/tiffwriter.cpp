@@ -74,6 +74,7 @@ struct TiffWriterParams
         , maxLuminance_(1.f)
         , luminanceMapping_(MAP_LINEAR)
         , tiffWriterMode_(0)        // 8bit uint by default
+        , deflateCompression_(true)
     {}
 
     void parse(const Params& params)
@@ -99,6 +100,11 @@ struct TiffWriterParams
             }
             if ( it->first == "tiff_mode" ) {
                 tiffWriterMode_ = it->second.as<int>(tiffWriterMode_);
+                continue;
+            }
+            if ( it->first == "deflateCompression" ) {
+                deflateCompression_ = it->second.as<bool>(deflateCompression_);
+                //continue;
             }
         }
     }
@@ -108,6 +114,7 @@ struct TiffWriterParams
     float maxLuminance_;
     RGBMappingType luminanceMapping_;
     int tiffWriterMode_;
+    bool deflateCompression_;
 };
 
 ostream& operator<<(ostream& out, const TiffWriterParams& params)
@@ -119,6 +126,7 @@ ostream& operator<<(ostream& out, const TiffWriterParams& params)
     ss << "min_luminance: " << params.minLuminance_ << ", ";
     ss << "max_luminance: " << params.maxLuminance_ << ", ";
     ss << "mapping_method: " << params.luminanceMapping_ << "]";
+    ss << "deflateCompression: " << params.deflateCompression_ << "]";
 
     return (out << ss.str());
 }
@@ -166,7 +174,8 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     writeCommonHeader(tif, width, height);
     writeSRGBProfile(tif);
 
-    TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
+	if (params.deflateCompression_)
+    	TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
     TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(uint8_t));
@@ -217,7 +226,8 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     writeCommonHeader(tif, width, height);
     writeSRGBProfile(tif);
 
-    TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
+    if (params.deflateCompression_)
+        TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
     TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(uint16_t));
@@ -362,7 +372,7 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
             throw pfs::io::WriteException("TiffWriter: Error writing strip " +
                                           boost::lexical_cast<std::string>(s));
 
-            return -1;
+            return false;
         }
     }
 

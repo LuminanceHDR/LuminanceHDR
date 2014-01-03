@@ -72,7 +72,12 @@ void Align::align_with_ais(bool ais_crop_flag)
     QFutureWatcher<void> futureWatcher;
 
     // Start the computation.
-    SaveFile saveFile(m_savingMode, m_minLum, m_maxLum);
+#ifdef WIN32
+    const bool deflateCompression = false; // AIS is misconfigured (see hugin bug #1265480)
+#else
+    const bool deflateCompression = true;
+#endif   
+    SaveFile saveFile(m_savingMode, m_minLum, m_maxLum, deflateCompression);
     futureWatcher.setFuture( QtConcurrent::map(m_data->begin(), m_data->end(), saveFile) );
     futureWatcher.waitForFinished();
 
