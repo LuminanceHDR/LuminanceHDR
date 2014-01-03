@@ -55,14 +55,12 @@ void Align::align_with_ais(bool ais_crop_flag)
     if (!m_fromCommandLine) {
         m_ais->setWorkingDirectory(m_luminance_options.getTempDir());
     }
+#ifndef WIN32
     QStringList env = QProcess::systemEnvironment();
-#ifdef WIN32
-    QString separator(";");
-#else
     QString separator(":");
-#endif
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
     m_ais->setEnvironment(env);
+#endif
     connect(m_ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
     connect(m_ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
     connect(m_ais, SIGNAL(readyRead()), this, SLOT(readData()));
@@ -85,18 +83,17 @@ void Align::align_with_ais(bool ais_crop_flag)
         if (it->filename().isEmpty())
             continue;
         QFileInfo qfi(it->filename());
-        QString base = qfi.completeBaseName(); 
-        QString filename = base + ".tif";
-        QString tempdir = m_luminance_options.getTempDir();
-        QString completeFilename = tempdir + "/" + filename;
+        QString filename = qfi.completeBaseName() + ".tif";
+        QString completeFilename = m_luminance_options.getTempDir() + "/" + filename;
         ais_parameters << completeFilename; 
     }
     qDebug() << "ais_parameters " << ais_parameters;
 #ifdef Q_OS_MAC
     qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
     m_ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
-#elseif Q_OS_WIN
-    m_ais->start("hugin\\align_image_stack.exe", ais_parameters );
+#elif defined Q_OS_WIN
+	QFileInfo huginPath("hugin/align_image_stack.exe");
+    m_ais->start(huginPath.canonicalFilePath(), ais_parameters );
 #else
     m_ais->start("align_image_stack", ais_parameters );
 #endif
