@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="da_DK">
+<TS version="2.1" language="da">
 <context>
     <name>AboutLuminance</name>
     <message>
@@ -29,13 +29,8 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2012, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR billed-workflow-program&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2012, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A&amp;uthors</source>
@@ -52,44 +47,21 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main Developers Luminance HDR&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Romanian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Andrei Răcăşan&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Chinese translator&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;Lad mig venligst vide&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, hvis jeg har glemt at tilføje nogen til denne liste.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hovedudvikler QtPfsGui&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hovedudviklere Luminance HDR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Forbedringer, fejlrettelser&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algoritme&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russisk oversætter, anvendelighedsrettelser, brugermanual, .desktop-fil&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norsk oversætter&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Tyrkisk oversætter&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Fransk oversætter&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spansk oversætter&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Tysk oversætter&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Tjekkisk oversætter&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polsk oversætter&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Romænsk oversætter&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Andrei Răcăşan&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Kinesisk oversætter&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches og vedligeholdere&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Thanks To</source>
@@ -124,8 +96,8 @@ p, li { white-space: pre-wrap; }
         <translation>Ændringer</translation>
     </message>
     <message>
-        <source>http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</source>
-        <translation type="obsolete">http://qtpfsgui.git.sourceforge.net/git/gitweb.cgi?p=qtpfsgui/qtpfsgui;a=blob_plain;f=Changelog;hb=refs/heads/master</translation>
+        <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;License Agreement</source>
@@ -136,69 +108,12 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
-    </message>
-    <message>
-        <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR billed-workflow-program&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2012, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; {3C?} {4.0/?} {3.?} {40/?} {1&quot;?} {11p?} {400;?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {12p?} {600;?} {00007f?} {2006-2009,?} {0p?} {0p?} {0p?} {0p?} {0;?} {0p?} {2010-2013,?} {0000f?}</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main developer QtPfsGui&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main Developers Luminance HDR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Romanian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Andrei Răcăşan&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Chinese translator&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;   Lei Zhao&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -314,6 +229,50 @@ Se dokunmentationen for mere information.</translation>
         <translation>Fremgang</translation>
     </message>
     <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Annuller</translation>
+    </message>
+    <message>
+        <source>&amp;Start</source>
+        <translation>&amp;Start</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Luk</translation>
+    </message>
+    <message>
+        <source>Anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Artifact-free High Dynamic Range Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input/Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Folder where created HDRs are saved</source>
         <translation>Mappe, hvor oprettede HDR&apos;er gemmes</translation>
     </message>
@@ -332,18 +291,6 @@ Se dokunmentationen for mere information.</translation>
     <message>
         <source>Output folder:</source>
         <translation>Outputmappe:</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Annuller</translation>
-    </message>
-    <message>
-        <source>&amp;Start</source>
-        <translation>&amp;Start</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation>&amp;Luk</translation>
     </message>
     <message>
         <source>Custom config %1</source>
@@ -378,8 +325,8 @@ Fortsæt?</translation>
         <translation>Beregning startet...</translation>
     </message>
     <message>
-        <source>Creating HDR...</source>
-        <translation>Opretter HDR...</translation>
+        <source>Loading files...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Completed with errors</source>
@@ -391,11 +338,19 @@ Fortsæt?</translation>
     </message>
     <message>
         <source>Error: missing EXIF data</source>
-        <translation type="unfinished">Fejl: Manglende EXIF-data</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Aligning...</source>
         <translation>Justerer...</translation>
+    </message>
+    <message>
+        <source>Creating HDR...</source>
+        <translation>Opretter HDR...</translation>
+    </message>
+    <message>
+        <source>Doing auto anti-ghosting...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Written </source>
@@ -408,46 +363,6 @@ Fortsæt?</translation>
     <message>
         <source>Aborting...</source>
         <translation>Afbryder...</translation>
-    </message>
-    <message>
-        <source>O. Gallo and others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Artifact-free High Dynamic Range Imaging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input/Output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loading files...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doing auto anti-ghosting...</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -467,10 +382,6 @@ Fortsæt?</translation>
     <message>
         <source>Add Directory (Alt+D)</source>
         <translation>Tilføj mappe (Alt+D)</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Alt+D</source>
@@ -755,6 +666,10 @@ Fortsæt?</translation>
         <translation>Fejl: Kvalitet skal være i intervalet [0-100].</translation>
     </message>
     <message>
+        <source>Error: Threshold must be in the range [0-1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Error: Unknown option %1.</source>
         <translation>Fejl: Ukendt option %1.</translation>
     </message>
@@ -939,6 +854,10 @@ Fortsæt?</translation>
         <translation>-q --quality VÆRDI      Kvalitet af den gemte tone mappede fil (0-100).</translation>
     </message>
     <message>
+        <source>-b --autoag THRESHOLD   Enable auto anti-ghosting with given threshold.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>                        (No tonemapping is performed unless -o is specified).</source>
         <translation>                        (Ingen tone mapping udføres med mindre -o specificeres).</translation>
     </message>
@@ -946,14 +865,6 @@ Fortsæt?</translation>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
         <translation>Du skal enten indlæse en eksisterende HDR-fil (via -l option) eller specificere INPUTFILER for at oprette en ny HDR.</translation>
-    </message>
-    <message>
-        <source>Error: Threshold must be in the range [0-1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-b --autoag THRESHOLD   Enable auto anti-ghosting with given threshold.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -994,28 +905,12 @@ Fortsæt?</translation>
 <context>
     <name>EditingTools</name>
     <message>
-        <source>Pan the image to a region</source>
-        <translation type="obsolete">Panorér billedet to en region</translation>
-    </message>
-    <message>
         <source>Maskable</source>
         <translation>Maskérbart</translation>
     </message>
     <message>
         <source>Good image</source>
         <translation>Godt billede</translation>
-    </message>
-    <message>
-        <source>Ed&amp;itable</source>
-        <translation>Red&amp;igerbart</translation>
-    </message>
-    <message>
-        <source>R&amp;eference</source>
-        <translation>R&amp;eference</translation>
-    </message>
-    <message>
-        <source>Choose a directory and a prefix</source>
-        <translation>Vælg en mappe og et præfiks</translation>
     </message>
     <message>
         <source>Add good image</source>
@@ -1026,12 +921,24 @@ Fortsæt?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Ed&amp;itable</source>
+        <translation>Red&amp;igerbart</translation>
+    </message>
+    <message>
+        <source>R&amp;eference</source>
+        <translation>R&amp;eference</translation>
+    </message>
+    <message>
         <source>Select the previous image in both lists</source>
         <translation type="unfinished">Vælg det forrige billede i begge lister</translation>
     </message>
     <message>
         <source>Select the next image in both lists</source>
         <translation type="unfinished">Vælg det næste billede i begge lister</translation>
+    </message>
+    <message>
+        <source>Choose a directory and a prefix</source>
+        <translation>Vælg en mappe og et præfiks</translation>
     </message>
 </context>
 <context>
@@ -1053,28 +960,20 @@ Fortsæt?</translation>
         <translation>&amp;Tilpas til vindue</translation>
     </message>
     <message>
+        <source>Fill the window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill &amp;window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Original size</source>
         <translation>Original størrelse</translation>
     </message>
     <message>
         <source>Origina&amp;l Size</source>
         <translation>Origina&amp;l størrelse</translation>
-    </message>
-    <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Zoom ind</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">Zoom &amp;ind</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Zoom ud</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Zoom &amp;ud</translation>
     </message>
     <message>
         <source>&amp;Mode:</source>
@@ -1171,6 +1070,54 @@ p, li { white-space: pre-wrap; }
         <translation>Værktøjer</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti-ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Artifact-free HDR Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Patches:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recompute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
         <translation>Beskær billedstakken efter en markering er lavet med venstre musetast</translation>
     </message>
@@ -1187,8 +1134,8 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <source>&amp;Anti Ghosting</source>
-        <translation type="vanished">&amp;Anti-ghosting</translation>
+        <source>&amp;Anti-Ghosting</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Save Images</source>
@@ -1199,20 +1146,44 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+S</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Mask</source>
         <translation>Maske</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A&amp;dd</source>
         <translation>&amp;Tilføj</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Remove</source>
         <translation>&amp;Fjern</translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Size:</source>
         <translation>Størrelse:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation> px</translation>
     </message>
     <message>
         <source>&amp;Strength:</source>
@@ -1229,10 +1200,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Save mask</source>
         <translation>Gem maske</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Apply saved mask</source>
@@ -1305,10 +1272,6 @@ p, li { white-space: pre-wrap; }
         <translation>Indsæt en vandret forskydningsværdi for det valgte flytbare billede</translation>
     </message>
     <message>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
         <source>Insert a vertical shift value for the currently selected movable image</source>
         <translation>Indsæt en lodret forskydningsværdi for det valgte flytbare billede </translation>
     </message>
@@ -1352,182 +1315,9 @@ p, li { white-space: pre-wrap; }
         <source>&amp;Cancel</source>
         <translation>&amp;Annuller</translation>
     </message>
-    <message>
-        <source>Fill the window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fill &amp;window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>O. Gallo and others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Artifact-free HDR Imaging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total Patches:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recompute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti-ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Anti-Ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>FitsImporter</name>
-    <message>
-        <source>Select...</source>
-        <translation type="unfinished">Vælg...</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuller</translation>
-    </message>
-    <message>
-        <source>Load one FITS image...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alignment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Autoalign images</source>
-        <translation type="unfinished">&amp;Autopositionér billeder</translation>
-    </message>
-    <message>
-        <source>Hugin&apos;s align_image_stack</source>
-        <translation type="unfinished">Hugins align_image_stack</translation>
-    </message>
-    <message>
-        <source>MTB</source>
-        <translation type="unfinished">MTB</translation>
-    </message>
-    <message>
-        <source>Auto-crop</source>
-        <translation type="unfinished">Autobeskær</translation>
-    </message>
-    <message>
-        <source>Messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shows a larger preview of selected image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished">Preview
-</translation>
-    </message>
-    <message>
-        <source>Previews</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot load FITS image %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FITS images have different size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>align_image_stack exited with exit code %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>align_image_stack failed with error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>R</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>G</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>B</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 2 (Green)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 3 (Blue)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Import FITS files</source>
         <translation type="unfinished"></translation>
@@ -1543,6 +1333,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>H-alpha (optional)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished">Vælg...</translation>
     </message>
     <message>
         <source>Channel 1 (Red)</source>
@@ -1565,6 +1359,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1577,11 +1375,48 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+R</translation>
     </message>
     <message>
+        <source>Shows a larger preview of selected image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Preview
+</translation>
+    </message>
+    <message>
+        <source>Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-crop</source>
+        <translation type="unfinished">Autobeskær</translation>
+    </message>
+    <message>
+        <source>MTB</source>
+        <translation type="unfinished">MTB</translation>
+    </message>
+    <message>
+        <source>Hugin&apos;s align_image_stack</source>
+        <translation type="unfinished">Hugins align_image_stack</translation>
+    </message>
+    <message>
+        <source>&amp;Autoalign images</source>
+        <translation type="unfinished">&amp;Autopositionér billeder</translation>
+    </message>
+    <message>
         <source>The alignment of the input files is in progress. Please be patient!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Progress:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1600,6 +1435,50 @@ p, li { white-space: pre-wrap; }
         <source>Ha OIII Sii</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>G</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 3 (Blue)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 2 (Green)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load one FITS image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load FITS image %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FITS images have different size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>align_image_stack exited with exit code %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>align_image_stack failed with error</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericViewer</name>
@@ -1611,39 +1490,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation type="obsolete">Billedet %1 er et 8-bit-format (LDR), mens de forrige ikke er det.</translation>
-    </message>
-    <message>
-        <source>The image %1 has an invalid size.</source>
-        <translation type="obsolete">Billedet %1 har en ugyldig størrelse.</translation>
-    </message>
-    <message>
-        <source>The image %1 is an 16 bit format while the previous ones are not.</source>
-        <translation type="obsolete">Billedet %1 er et 16-bit-format, mens de forrige ikke er det.</translation>
-    </message>
-    <message>
         <source>The images have different size.</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HdrInputLoader</name>
-    <message>
-        <source>ERROR loading %1</source>
-        <translation type="obsolete">FEJL under indlæsning af %1</translation>
-    </message>
-    <message>
-        <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="obsolete">FEJL: Filen&lt;br&gt;%1&lt;br&gt; er ikke en 8-bit eller 16-bit tiff.</translation>
-    </message>
-    <message>
-        <source>ERROR: %1</source>
-        <translation type="obsolete">FEJL: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed Loading file: %1</source>
-        <translation type="obsolete">FEJL: Fejl under indlæsning af fil: %1</translation>
     </message>
 </context>
 <context>
@@ -1688,44 +1536,6 @@ p, li { white-space: pre-wrap; }
         <translation>HDR-oprettelsesguide</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool helps you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Constraints:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same dimension&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All images must have same color depth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR-oprettelsesguide&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dette værktøj hjælper dig med at sammensætte grupperede billeder, som er taget med forskellige eksponeringer, for oprettelse af et &lt;a href=&quot;http://en.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR-billede&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;De grupperede billeder skal være taget med det samme kamera under de samme forhold og helst med et stativ.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Denne guide vil hjælpe dig igennem alle skridtene: importering af billeder, positionering af dem, valg af en profil for oprettelse af et HDR.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Begrænsninger:&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Alle billeder skal have samme dimensioner&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Alle billeder skal have samme farvedybde&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>[1/2] Load Input Images</source>
         <translation>[1/2] Indlæs inputbilleder</translation>
     </message>
@@ -1736,10 +1546,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Add Images</source>
         <translation>Tilføj billeder</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Remove Selected Image</source>
@@ -1767,6 +1573,10 @@ p, li { white-space: pre-wrap; }
         <translation>Positionering</translation>
     </message>
     <message>
+        <source>MTB</source>
+        <translation>MTB</translation>
+    </message>
+    <message>
         <source>&amp;Autoalign images</source>
         <translation>&amp;Autopositionér billeder</translation>
     </message>
@@ -1775,12 +1585,40 @@ p, li { white-space: pre-wrap; }
         <translation>Hugins align_image_stack</translation>
     </message>
     <message>
-        <source>MTB</source>
-        <translation>MTB</translation>
-    </message>
-    <message>
         <source>Auto-crop</source>
         <translation>Autobeskær</translation>
+    </message>
+    <message>
+        <source>Anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable the auto anti-ghosting algorithm (by O. Gallo and others)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced Editing Tools</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1797,6 +1635,58 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>[2/2] Choose Settings for HDR Creation</source>
         <translation>[2/2] Vælg indstillinger for HDR-oprettelse</translation>
+    </message>
+    <message>
+        <source>Amount of iterations:</source>
+        <translation>Antal iterationer:</translation>
+    </message>
+    <message>
+        <source>Keep it small</source>
+        <translation>Hold det lavt</translation>
+    </message>
+    <message>
+        <source>Use this only if the default profiles above do not yield good results</source>
+        <translation>Brug kun dette, hvis standardprofilerne herover ikke giver gode resultater</translation>
+    </message>
+    <message>
+        <source>Use custom configuration</source>
+        <translation>Brugerdefinerert konfiguration</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Choose one of the predefined profiles or use  a  custom configuration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Vælg en af de prædefinerede profiler eller brug en brugerdefineret konfiguration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Response curve:</source>
+        <translation>Responskurve:</translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation>Lineær</translation>
+    </message>
+    <message>
+        <source>HDR creation model:</source>
+        <translation>HDR-oprettelsesmodel:</translation>
+    </message>
+    <message>
+        <source>Debevec</source>
+        <translation>Debevec</translation>
+    </message>
+    <message>
+        <source>Weighting function:</source>
+        <translation>Vægtningsfunktion:</translation>
+    </message>
+    <message>
+        <source>Triangular</source>
+        <translation>Triangulær</translation>
     </message>
     <message>
         <source>Choose one of the predefined profiles:</source>
@@ -1839,74 +1729,6 @@ p, li { white-space: pre-wrap; }
         <translation>Profil 6</translation>
     </message>
     <message>
-        <source>Weighting function:</source>
-        <translation>Vægtningsfunktion:</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation>Triangulær</translation>
-    </message>
-    <message>
-        <source>Response curve:</source>
-        <translation>Responskurve:</translation>
-    </message>
-    <message>
-        <source>Linear</source>
-        <translation>Lineær</translation>
-    </message>
-    <message>
-        <source>HDR creation model:</source>
-        <translation>HDR-oprettelsesmodel:</translation>
-    </message>
-    <message>
-        <source>Debevec</source>
-        <translation>Debevec</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting (beta!)</source>
-        <translation type="obsolete">Anti-ghosting (beta!)</translation>
-    </message>
-    <message>
-        <source>Gamma</source>
-        <translation>Gamma</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation>Log</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Kalibrering</translation>
-    </message>
-    <message>
-        <source>Amount of iterations:</source>
-        <translation>Antal iterationer:</translation>
-    </message>
-    <message>
-        <source>Keep it small</source>
-        <translation>Hold det lavt</translation>
-    </message>
-    <message>
-        <source>Use this only if the default profiles above do not yield good results</source>
-        <translation>Brug kun dette, hvis standardprofilerne herover ikke giver gode resultater</translation>
-    </message>
-    <message>
-        <source>Use custom configuration</source>
-        <translation>Brugerdefinerert konfiguration</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Choose one of the predefined profiles or use  a  custom configuration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Vælg en af de prædefinerede profiler eller brug en brugerdefineret konfiguration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>[2/2] Choose Custom Configuration</source>
         <translation>[2/2] Vælg brugerdefineret konfiguration</translation>
     </message>
@@ -1933,6 +1755,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Predefined response curves:</source>
         <translation>Prædefinerede responskurver:</translation>
+    </message>
+    <message>
+        <source>Gamma</source>
+        <translation>Gamma</translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation>Log</translation>
     </message>
     <message>
         <source>Load response function from file</source>
@@ -1999,10 +1829,6 @@ p, li { white-space: pre-wrap; }
         <translation>Eksponering</translation>
     </message>
     <message>
-        <source>Custom config %1</source>
-        <translation type="obsolete">Brugerdefineret konfiguration %1</translation>
-    </message>
-    <message>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>Alle formater (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
@@ -2031,29 +1857,28 @@ p, li { white-space: pre-wrap; }
         <translation>Vælg inputbillederne</translation>
     </message>
     <message>
+        <source>Unknown</source>
+        <translation>Ukendt</translation>
+    </message>
+    <message>
         <source>Loading...</source>
         <translation>Indlæser...</translation>
     </message>
     <message>
-        <source>Start loading a set of images with different exposure</source>
-        <translation>Start indlæsning af en mængde billeder med forskellig eksponering</translation>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Billeder idlæst.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.        &lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data:         &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;        &lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;        You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ADVARSEL:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;        Luminance HDR kunne ikke finde de relevante &lt;i&gt;EXIF&lt;/i&gt;-tags
-for de følgende billeder:
- &lt;ul&gt;        %1&lt;/ul&gt;        &lt;hr&gt;Du kan stadig fortsætte med at oprette et HDR. For at gøre dette, skal du &lt;b&gt;manualt&lt;/b&gt; indsætte EV (eksponeringsværdier) eller stop-forskelsværdier.        &lt;hr&gt;Hvis du vil have Luminance HDR til at gøre dette &lt;b&gt;automatically&lt;/b&gt;, skal du indlæse billeder, der har mindst det følgende EXIF-data:         &lt;ul&gt;&lt;li&gt;Lukkerhastighed (seconder)&lt;/li&gt;        &lt;li&gt;Blænde (f-tal)&lt;/li&gt;&lt;/ul&gt;        &lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Bearbejdning af billeder leder ofte til tab af EXIF-data.&lt;br&gt;        Du kan foretage en &lt;b&gt;en-til-en-kopiering af EXIF-data&lt;/b&gt; mellem to mængder af billeder via &lt;i&gt;&lt;b&gt;&quot;Værktøjer-&gt;Kopiér EXIF-data...&quot;&lt;/b&gt;&lt;/i&gt;-menupunktet.</translation>
+        <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>EXIF data not found</source>
         <translation>EXIF-data ikke fundet</translation>
+    </message>
+    <message>
+        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
+        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Billeder idlæst.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
@@ -2064,8 +1889,8 @@ for de følgende billeder:
         <translation>Indlæsningsfejl: </translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <translation>Ukendt</translation>
+        <source>Start loading a set of images with different exposure</source>
+        <translation>Start indlæsning af en mængde billeder med forskellig eksponering</translation>
     </message>
     <message>
         <source>Error...</source>
@@ -2104,18 +1929,6 @@ for de følgende billeder:
         <translation>Beregner...</translation>
     </message>
     <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Indlæs en kamera-responskurve-fil</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Kamera-responskurve (*.m);;Alle filer (*)</translation>
-    </message>
-    <message>
-        <source>Save a camera response curve file</source>
-        <translation type="obsolete">Gem en kamera-responskurve-fil</translation>
-    </message>
-    <message>
         <source>Weights: </source>
         <translation>Vægte: </translation>
     </message>
@@ -2142,46 +1955,6 @@ for de følgende billeder:
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Alle EV-værdierne er angivet.&lt;br&gt;Klik nu på næste-knappen.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable the auto anti-ghosting algorithm (by O. Gallo and others)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Advanced Editing Tools</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2354,18 +2127,6 @@ der er associeret med protokollen?</translation>
 <context>
     <name>IOWorker</name>
     <message>
-        <source>ERROR: The following file is not readable: %1</source>
-        <translation type="vanished">FEJL: Den følgende fil er ikke læsbar: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="vanished">FEJL: Fil %1 har en ikke understøttet endelse.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation type="vanished">FEJL: Fejl ved indlæsning af fil: %1</translation>
-    </message>
-    <message>
         <source>IOWorker: The following file is not readable: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2400,6 +2161,14 @@ der er associeret med protokollen?</translation>
         <translation>Gemt filkvalitet</translation>
     </message>
     <message>
+        <source>File size</source>
+        <translation>Filstørrelse</translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation>Kvalitet</translation>
+    </message>
+    <message>
         <source>Unknown</source>
         <translation>Ukendt</translation>
     </message>
@@ -2408,20 +2177,12 @@ der er associeret med protokollen?</translation>
         <translation>&amp;Beregn</translation>
     </message>
     <message>
-        <source>&amp;Save</source>
-        <translation>&amp;Gem</translation>
-    </message>
-    <message>
         <source>&amp;Cancel</source>
         <translation>&amp;Annuller</translation>
     </message>
     <message>
-        <source>File size</source>
-        <translation>Filstørrelse</translation>
-    </message>
-    <message>
-        <source>Quality</source>
-        <translation>Kvalitet</translation>
+        <source>&amp;Save</source>
+        <translation>&amp;Gem</translation>
     </message>
 </context>
 <context>
@@ -3035,6 +2796,30 @@ p, li { white-space: pre-wrap; }
         <translation>Realtids-previews</translation>
     </message>
     <message>
+        <source>Update</source>
+        <translation>Opdatér</translation>
+    </message>
+    <message>
+        <source>FITS Importer...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import four FITS files representing luminosity, red, green and blue channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White Balance</source>
+        <translation type="unfinished">Hvidbalance</translation>
+    </message>
+    <message>
+        <source>Fix color cast, can be slow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation>Klar. Åbn nu et eksisterende HDR-billede for at oprette et nyt!</translation>
     </message>
@@ -3067,24 +2852,16 @@ p, li { white-space: pre-wrap; }
         <translation>Beskåret billede</translation>
     </message>
     <message>
+        <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Unsaved changes...</source>
         <translation>Ikke-gemte ændringer...</translation>
     </message>
     <message>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation>Dette HDR-billede har ikke-gemte ændringer.&lt;br&gt;Vil du gemme det?</translation>
-    </message>
-    <message>
-        <source>Untitled</source>
-        <translation>Ikke-navngivet</translation>
-    </message>
-    <message>
-        <source>Untitled %1</source>
-        <translation>Ikke-navngivet %1</translation>
-    </message>
-    <message>
-        <source>Error: %1</source>
-        <translation>Fejl: %1</translation>
     </message>
     <message>
         <source>Fattal Warning</source>
@@ -3099,35 +2876,19 @@ Do you want to continue?</source>
 Vil du fortsætte?</translation>
     </message>
     <message>
-        <source>Update</source>
-        <translation>Opdatér</translation>
+        <source>Untitled</source>
+        <translation>Ikke-navngivet</translation>
     </message>
     <message>
-        <source>FITS Importer...</source>
-        <translation type="unfinished"></translation>
+        <source>Untitled %1</source>
+        <translation>Ikke-navngivet %1</translation>
     </message>
     <message>
-        <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="unfinished">Hvidbalance</translation>
-    </message>
-    <message>
-        <source>Fix color cast, can be slow</source>
-        <translation type="unfinished"></translation>
+        <source>Error: %1</source>
+        <translation>Fejl: %1</translation>
     </message>
     <message>
         <source>FITS Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import four FITS files representing luminosity, red, green and blue channels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3146,16 +2907,16 @@ Vil du fortsætte?</translation>
         <translation>HDR-indstillinger</translation>
     </message>
     <message>
-        <source>Interface</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Tone Mapping</source>
         <translation>Tone mapping</translation>
     </message>
     <message>
         <source>RAW Conversion</source>
         <translation>RAW-konvertering</translation>
+    </message>
+    <message>
+        <source>Interface</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Color Management</source>
@@ -3174,20 +2935,16 @@ Vil du fortsætte?</translation>
         <translation>px</translation>
     </message>
     <message>
+        <source>Always show Preview Panel</source>
+        <translation>Vis altid preview-panel</translation>
+    </message>
+    <message>
         <source>Saves the settings along the program files, to be portable</source>
         <translation>Gemmer indstillinger sammen med programfiler, for at være portabelt</translation>
     </message>
     <message>
         <source>Portable mode</source>
         <translation>Portabel tilstand</translation>
-    </message>
-    <message>
-        <source>Always show Preview Panel</source>
-        <translation>Vis altid preview-panel</translation>
-    </message>
-    <message>
-        <source>Always show Wizard first page</source>
-        <translation type="vanished">Vis altid guidens første side</translation>
     </message>
     <message>
         <source>HDR TIFF Default File Format</source>
@@ -3640,7 +3397,6 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blue multiplier&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the blue layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Sæt her forstørrelsesfaktoren for det røde lag</translatorcomment>
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3723,10 +3479,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation>Farveprofil (*.icc *.ICC *.icm *.ICM)</translation>
-    </message>
-    <message>
-        <source>Color profile (*.icc)</source>
-        <translation type="vanished">Farveprofil (*.icc)</translation>
     </message>
 </context>
 <context>
@@ -3855,82 +3607,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
         <translation>Luminance HDR kræver align_image_stack for at kunne køre med &quot;-v -a aligned_&quot; options. Kommandolinie-options er rettet til.</translation>
-    </message>
-    <message>
-        <source>Error Opening RAW File</source>
-        <translation type="obsolete">Fejl under indlæsning af RAW-fil</translation>
-    </message>
-    <message>
-        <source>Error Unpacking RAW File</source>
-        <translation type="obsolete">Fejl under udpakning af RAW-fil</translation>
-    </message>
-    <message>
-        <source>Error Processing RAW File</source>
-        <translation type="obsolete">Fejl under behandling af RAW-fil</translation>
-    </message>
-    <message>
-        <source>Memory Error in processing RAW File</source>
-        <translation type="obsolete">Hukommelsesfejl under behandling af RAW-fil</translation>
-    </message>
-    <message>
-        <source>Error Creating PFS Frame</source>
-        <translation type="obsolete">Fejl under oprettelse af PFS Frame</translation>
-    </message>
-    <message>
-        <source>Cannot convert %1 to a float</source>
-        <translation>Kan ikke konvertere %1 til en float</translation>
-    </message>
-    <message>
-        <source>Cannot convert %1 to an integer</source>
-        <translation>Kan ikke konvertere %1 til et heltal</translation>
-    </message>
-    <message>
-        <source>Input file %1</source>
-        <translation>Inputfil %1</translation>
-    </message>
-    <message>
-        <source>Running in HDR-creation mode.</source>
-        <translation>Kører i HDR-oprettelsestilstand.</translation>
-    </message>
-    <message>
-        <source>Running in Load-HDR mode.</source>
-        <translation>Kører i indlæs-HDR-tilstand.</translation>
-    </message>
-    <message>
-        <source>Temporary directory: %1</source>
-        <translation>Midlertidig mappe: %1</translation>
-    </message>
-    <message>
-        <source>Using %1 threads.</source>
-        <translation>Bruger %1 tråde.</translation>
-    </message>
-    <message>
-        <source>Loading file %1</source>
-        <translation>Indlæser til %1</translation>
-    </message>
-    <message>
-        <source>Successfully loaded file %1.</source>
-        <translation>Indlæste succesfult fil %1.</translation>
-    </message>
-    <message>
-        <source>All LDR formats</source>
-        <translation>Alle LDR-formater</translation>
-    </message>
-    <message>
-        <source>Save the LDR image as...</source>
-        <translation>Gem LDR-billedet som...</translation>
-    </message>
-    <message>
-        <source>All HDR formats </source>
-        <translation>Alle HDR-formater</translation>
-    </message>
-    <message>
-        <source>Save the HDR image as...</source>
-        <translation>Gem HDR-billedet som...</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation>Gem som...</translation>
     </message>
     <message>
         <source>PreGamma=%1</source>
@@ -4063,6 +3739,62 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Light Adaptation</source>
         <translation>Lysadaptering</translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to a float</source>
+        <translation>Kan ikke konvertere %1 til en float</translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to an integer</source>
+        <translation>Kan ikke konvertere %1 til et heltal</translation>
+    </message>
+    <message>
+        <source>Input file %1</source>
+        <translation>Inputfil %1</translation>
+    </message>
+    <message>
+        <source>Running in HDR-creation mode.</source>
+        <translation>Kører i HDR-oprettelsestilstand.</translation>
+    </message>
+    <message>
+        <source>Running in Load-HDR mode.</source>
+        <translation>Kører i indlæs-HDR-tilstand.</translation>
+    </message>
+    <message>
+        <source>Temporary directory: %1</source>
+        <translation>Midlertidig mappe: %1</translation>
+    </message>
+    <message>
+        <source>Using %1 threads.</source>
+        <translation>Bruger %1 tråde.</translation>
+    </message>
+    <message>
+        <source>Loading file %1</source>
+        <translation>Indlæser til %1</translation>
+    </message>
+    <message>
+        <source>Successfully loaded file %1.</source>
+        <translation>Indlæste succesfult fil %1.</translation>
+    </message>
+    <message>
+        <source>All LDR formats</source>
+        <translation>Alle LDR-formater</translation>
+    </message>
+    <message>
+        <source>Save the LDR image as...</source>
+        <translation>Gem LDR-billedet som...</translation>
+    </message>
+    <message>
+        <source>All HDR formats </source>
+        <translation>Alle HDR-formater</translation>
+    </message>
+    <message>
+        <source>Save the HDR image as...</source>
+        <translation>Gem HDR-billedet som...</translation>
+    </message>
+    <message>
+        <source>Save as...</source>
+        <translation>Gem som...</translation>
     </message>
 </context>
 <context>
@@ -4724,6 +4456,10 @@ Fejl: %1</translation>
         <translation>Sortér efter</translation>
     </message>
     <message>
+        <source>Comments:</source>
+        <translation>Kommentarer:</translation>
+    </message>
+    <message>
         <source>Comment</source>
         <translation>Kommentar</translation>
     </message>
@@ -4736,20 +4472,16 @@ Fejl: %1</translation>
         <translation>Mest brugbare operators</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation>Annuller</translation>
-    </message>
-    <message>
-        <source>Comments:</source>
-        <translation>Kommentarer:</translation>
-    </message>
-    <message>
         <source>Tonemap</source>
         <translation>Tone map</translation>
     </message>
     <message>
         <source>Load</source>
         <translation>Indlæs</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuller</translation>
     </message>
 </context>
 <context>
@@ -4874,12 +4606,12 @@ Fejl: %1</translation>
         <translation>En ny udgivelse er klar til download!</translation>
     </message>
     <message>
-        <source>Click to download, or select Help-&gt;Update!</source>
-        <translation>Klik for at downloade, eller vælg Hjælp-&gt;Opdatér!</translation>
-    </message>
-    <message>
         <source>Do you want to open the webpage for download now?</source>
         <translation>Vil du åbne websiden for download nu?</translation>
+    </message>
+    <message>
+        <source>Click to download, or select Help-&gt;Update!</source>
+        <translation>Klik for at downloade, eller vælg Hjælp-&gt;Opdatér!</translation>
     </message>
 </context>
 </TS>

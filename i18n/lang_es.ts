@@ -5,27 +5,27 @@
     <name>AboutLuminance</name>
     <message>
         <source>About Luminance</source>
-        <translation type="unfinished">Acerca de Luminance</translation>
+        <translation>Acerca de Luminance</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished">&amp;Acerca de</translation>
+        <translation>&amp;Acerca de</translation>
     </message>
     <message>
         <source>A&amp;uthors</source>
-        <translation type="unfinished">A&amp;utores</translation>
+        <translation>A&amp;utores</translation>
     </message>
     <message>
         <source>&amp;Thanks To</source>
-        <translation type="unfinished">&amp;Gracias a</translation>
+        <translation>&amp;Gracias a</translation>
     </message>
     <message>
         <source>&amp;License Agreement</source>
-        <translation type="unfinished">&amp;Licencia de conformidad</translation>
+        <translation>&amp;Licencia de conformidad</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -127,31 +127,31 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>Profile 1</source>
-        <translation type="unfinished">Perfil 1</translation>
+        <translation>Perfil 1</translation>
     </message>
     <message>
         <source>Profile 2</source>
-        <translation type="unfinished">Perfil 2</translation>
+        <translation>Perfil 2</translation>
     </message>
     <message>
         <source>Profile 3</source>
-        <translation type="unfinished">Perfil 3</translation>
+        <translation>Perfil 3</translation>
     </message>
     <message>
         <source>Profile 4</source>
-        <translation type="unfinished">Perfil 4</translation>
+        <translation>Perfil 4</translation>
     </message>
     <message>
         <source>Profile 5</source>
-        <translation type="unfinished">Perfil 5</translation>
+        <translation>Perfil 5</translation>
     </message>
     <message>
         <source>Profile 6</source>
-        <translation type="unfinished">Perfil 6</translation>
+        <translation>Perfil 6</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Alinear</translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <source>Auto align the bracketed pictures</source>
@@ -207,7 +207,7 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>Aligning...</source>
-        <translation type="unfinished">Alineando...</translation>
+        <translation>Alineando...</translation>
     </message>
     <message>
         <source>Creating HDR...</source>
@@ -239,7 +239,7 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>&amp;Start</source>
@@ -247,7 +247,7 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Cerrar</translation>
+        <translation>&amp;Cerrar</translation>
     </message>
     <message>
         <source>Aborting...</source>
@@ -263,7 +263,7 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished">Salida</translation>
+        <translation>Salida</translation>
     </message>
     <message>
         <source>Progress</source>
@@ -352,83 +352,83 @@ Continue?</source>
     <name>BatchTMDialog</name>
     <message>
         <source>Batch Tone Mapping</source>
-        <translation type="unfinished">Toneado en serie</translation>
+        <translation>Toneado en serie</translation>
     </message>
     <message>
         <source>List of HDRs that will be tone mapped</source>
-        <translation type="unfinished">Lista de HDR que serán toneados</translation>
+        <translation>Lista de HDR que serán toneados</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished">Salida</translation>
+        <translation>Salida</translation>
     </message>
     <message>
         <source>&amp;Show only:</source>
-        <translation type="unfinished">&amp;Mostrar solo:</translation>
+        <translation>&amp;Mostrar solo:</translation>
     </message>
     <message>
         <source>All messages</source>
-        <translation type="unfinished">Todos los mensajes</translation>
+        <translation>Todos los mensajes</translation>
     </message>
     <message>
         <source>Errors only</source>
-        <translation type="unfinished">Solo errores</translation>
+        <translation>Solo errores</translation>
     </message>
     <message>
         <source>Clear filter text</source>
-        <translation type="unfinished">Limpiar filtrado de texto</translation>
+        <translation>Limpiar filtrado de texto</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation type="unfinished">Seleccione un directorio</translation>
+        <translation>Seleccione un directorio</translation>
     </message>
     <message>
         <source>Processing...</source>
-        <translation type="unfinished">Procesando...</translation>
+        <translation>Procesando...</translation>
     </message>
     <message>
         <source>&amp;Done</source>
-        <translation type="unfinished">&amp;Hecho</translation>
+        <translation>&amp;Hecho</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
-        <translation type="unfinished">Lista de configuraciones de toneados que serán utilizados para tonear cada HDR</translation>
+        <translation>Lista de configuraciones de toneados que serán utilizados para tonear cada HDR</translation>
     </message>
     <message>
         <source>Specify output folder for the tone mapped files</source>
-        <translation type="unfinished">Indica la carpeta de destino para los archivos de toneado</translation>
+        <translation>Indica la carpeta de destino para los archivos de toneado</translation>
     </message>
     <message>
         <source>Batch operations report</source>
-        <translation type="unfinished">Informe de operaciones en serie</translation>
+        <translation>Informe de operaciones en serie</translation>
     </message>
     <message>
         <source>Filter messages based on severity</source>
-        <translation type="unfinished">Filtrar mensajes basados en su importancia</translation>
+        <translation>Filtrar mensajes basados en su importancia</translation>
     </message>
     <message>
         <source>Success messages</source>
-        <translation type="unfinished">Mensaje emitido</translation>
+        <translation>Mensaje emitido</translation>
     </message>
     <message>
         <source>Overall completion progress</source>
-        <translation type="unfinished">Progreso global de realización</translation>
+        <translation>Progreso global de realización</translation>
     </message>
     <message>
         <source>Start batch tone mapping</source>
-        <translation type="unfinished">Iniciar toneado en serie</translation>
+        <translation>Iniciar toneado en serie</translation>
     </message>
     <message>
         <source>Using %1 thread(s)</source>
-        <translation type="unfinished">Usando %1 hilo (thread)</translation>
+        <translation>Usando %1 hilo (thread)</translation>
     </message>
     <message>
         <source>All tasks completed.</source>
-        <translation type="unfinished">Todas las tareas finalizadas.</translation>
+        <translation>Todas las tareas finalizadas.</translation>
     </message>
     <message>
         <source>HDR Images to Convert</source>
@@ -499,10 +499,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Alt+D</source>
         <translation type="unfinished"></translation>
     </message>
@@ -560,7 +556,7 @@ Continue?</source>
     </message>
     <message>
         <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <source>TIFF (16 bits)</source>
@@ -568,19 +564,19 @@ Continue?</source>
     </message>
     <message>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
+        <translation>PPM</translation>
     </message>
     <message>
         <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
+        <translation>PBM</translation>
     </message>
     <message>
         <source>Luminance HDR tone mapping settings text file (*.txt)</source>
@@ -614,59 +610,59 @@ Continue?</source>
     <name>CommandLineInterfaceManager</name>
     <message>
         <source>Error: Alignment engine not recognized.</source>
-        <translation type="unfinished">Error: Motor de alineado no reconocido.</translation>
+        <translation>Error: Motor de alineado no reconocido.</translation>
     </message>
     <message>
         <source>Error: Wrong HDR creation format.</source>
-        <translation type="unfinished">Error: Fallo en la creación del formato HDR.</translation>
+        <translation>Error: Fallo en la creación del formato HDR.</translation>
     </message>
     <message>
         <source>Error: Unknown response curve specified.</source>
-        <translation type="unfinished">Error: Curva de respuesta desconocida.</translation>
+        <translation>Error: Curva de respuesta desconocida.</translation>
     </message>
     <message>
         <source>Error: Unknown HDR creation model specified.</source>
-        <translation type="unfinished">Error: Modelo de creación de HDR desconocido.</translation>
+        <translation>Error: Modelo de creación de HDR desconocido.</translation>
     </message>
     <message>
         <source>Error: Unknown HDR creation format specified.</source>
-        <translation type="unfinished">Error: Formato de creación HDR desconocido.</translation>
+        <translation>Error: Formato de creación HDR desconocido.</translation>
     </message>
     <message>
         <source>Error: Unknown tone mapping operator specified.</source>
-        <translation type="unfinished">Error: Especificado un operador de toneado desconocido.</translation>
+        <translation>Error: Especificado un operador de toneado desconocido.</translation>
     </message>
     <message>
         <source>Error: Wrong tone mapping option format.</source>
-        <translation type="unfinished">Error: Opción erronea de formato para toneado.</translation>
+        <translation>Error: Opción erronea de formato para toneado.</translation>
     </message>
     <message>
         <source>Error: Unknown tone mapping option specified.</source>
-        <translation type="unfinished">Error: Option desconocida de toneado..</translation>
+        <translation>Error: Option desconocida de toneado..</translation>
     </message>
     <message>
         <source>Error: Unknown option %1.</source>
-        <translation type="unfinished">Error: Opción %1 desconocida.</translation>
+        <translation>Error: Opción %1 desconocida.</translation>
     </message>
     <message>
         <source>Error: Missing argument for %1.</source>
-        <translation type="unfinished">Error: Argumento no encontrado para %1.</translation>
+        <translation>Error: Argumento no encontrado para %1.</translation>
     </message>
     <message>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
-        <translation type="unfinished">Error: El valor numérico indicado en EV es diferente al número de archivos de entrada.</translation>
+        <translation>Error: El valor numérico indicado en EV es diferente al número de archivos de entrada.</translation>
     </message>
     <message>
         <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
-        <translation type="unfinished">Error: Datos EXIF no encontrados en la imagen y valor EV no indicado en la linea de comandos. Rescatando.</translation>
+        <translation>Error: Datos EXIF no encontrados en la imagen y valor EV no indicado en la linea de comandos. Rescatando.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save to file: %1</source>
-        <translation type="unfinished">Error: No puedo guardar el archivo %1</translation>
+        <translation>Error: No puedo guardar el archivo %1</translation>
     </message>
     <message>
         <source>Error: Unknown weight function specified.</source>
-        <translation type="unfinished">Error: Indicada función de altura desconocida.</translation>
+        <translation>Error: Indicada función de altura desconocida.</translation>
     </message>
     <message>
         <source>Failed executing align_image_stack</source>
@@ -858,7 +854,7 @@ Continue?</source>
     <name>DnDOption</name>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>Drag and Drop</source>
@@ -893,7 +889,7 @@ Continue?</source>
     <name>EditingTools</name>
     <message>
         <source>Choose a directory and a prefix</source>
-        <translation type="unfinished">Escoja un directorio un un prefijo</translation>
+        <translation>Escoja un directorio un un prefijo</translation>
     </message>
     <message>
         <source>Maskable</source>
@@ -905,11 +901,11 @@ Continue?</source>
     </message>
     <message>
         <source>Ed&amp;itable</source>
-        <translation type="unfinished">E&amp;ditables</translation>
+        <translation>E&amp;ditables</translation>
     </message>
     <message>
         <source>R&amp;eference</source>
-        <translation type="unfinished">R&amp;eferencia</translation>
+        <translation>R&amp;eferencia</translation>
     </message>
     <message>
         <source>Add good image</source>
@@ -921,231 +917,211 @@ Continue?</source>
     </message>
     <message>
         <source>Select the previous image in both lists</source>
-        <translation type="unfinished">Seleccione la imagen previa en ambas listas</translation>
+        <translation>Seleccione la imagen previa en ambas listas</translation>
     </message>
     <message>
         <source>Select the next image in both lists</source>
-        <translation type="unfinished">Seleccione la siguiente imagen en ambas listas</translation>
+        <translation>Seleccione la siguiente imagen en ambas listas</translation>
     </message>
 </context>
 <context>
     <name>EditingToolsDialog</name>
     <message>
         <source>Editing Tools</source>
-        <translation type="unfinished">Herramientas de edición</translation>
+        <translation>Herramientas de edición</translation>
     </message>
     <message>
         <source>Visualization and Navigation</source>
-        <translation type="unfinished">Visualización y Navegación</translation>
+        <translation>Visualización y Navegación</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation type="unfinished">Ajustar a la ventana</translation>
+        <translation>Ajustar a la ventana</translation>
     </message>
     <message>
         <source>&amp;Fit to Window</source>
-        <translation type="unfinished">&amp;Ajusta a la ventana</translation>
+        <translation>&amp;Ajusta a la ventana</translation>
     </message>
     <message>
         <source>Original size</source>
-        <translation type="unfinished">Tamaño original</translation>
+        <translation>Tamaño original</translation>
     </message>
     <message>
         <source>Origina&amp;l Size</source>
-        <translation type="unfinished">Tamaño &amp;Original</translation>
-    </message>
-    <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Aumentar ampliacion</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">&amp;Aumentar ampliación</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Reducir ampliación</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">R&amp;educir ampliación</translation>
+        <translation>Tamaño &amp;Original</translation>
     </message>
     <message>
         <source>Pivot Only (P)</source>
-        <translation type="unfinished">Solo puntos de anclaje (P)</translation>
+        <translation>Solo puntos de anclaje (P)</translation>
     </message>
     <message>
         <source>Antighosting Mask</source>
-        <translation type="unfinished">Mascara Antighosting</translation>
+        <translation>Mascara Antighosting</translation>
     </message>
     <message>
         <source>Images List</source>
-        <translation type="unfinished">Lista de imágenes</translation>
+        <translation>Lista de imágenes</translation>
     </message>
     <message>
         <source>The image currently selected in this list can be translated up,down,left and right using the controls below.
 This image&apos;s histogram is diplayed in the widget above.</source>
-        <translation type="unfinished">La imagen actualmente seleccionada in esta lista puede ser desplazada arriba, abajo, izquierda y derecha usando los controles inferiores.
+        <translation>La imagen actualmente seleccionada in esta lista puede ser desplazada arriba, abajo, izquierda y derecha usando los controles inferiores.
 El histiograma de esta imagen es mostrado en el recuadro superior.</translation>
     </message>
     <message>
         <source>Select the previous image in both lists</source>
-        <translation type="unfinished">Seleccione la imagen previa en ambas listas</translation>
+        <translation>Seleccione la imagen previa en ambas listas</translation>
     </message>
     <message>
         <source>Use this button to move the selection to the previous image in both lists.</source>
-        <translation type="unfinished">Use este botón para moverse a la imagen anterior en ambas listas.</translation>
+        <translation>Use este botón para moverse a la imagen anterior en ambas listas.</translation>
     </message>
     <message>
         <source>Select the next image in both lists</source>
-        <translation type="unfinished">Seleccione la siguiente imagen en ambas listas</translation>
+        <translation>Seleccione la siguiente imagen en ambas listas</translation>
     </message>
     <message>
         <source>Use this button to move the selection to the next image in both lists.</source>
-        <translation type="unfinished">Use este botón para moverse en ambas listas a la siguiente imagen.</translation>
+        <translation>Use este botón para moverse en ambas listas a la siguiente imagen.</translation>
     </message>
     <message>
         <source>R&amp;eference</source>
-        <translation type="unfinished">R&amp;eferencia</translation>
+        <translation>R&amp;eferencia</translation>
     </message>
     <message>
         <source>The reference image is the one currently selected</source>
-        <translation type="unfinished">La imagen de referencia es la actualmente seleccionada</translation>
+        <translation>La imagen de referencia es la actualmente seleccionada</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished">Herramientas</translation>
+        <translation>Herramientas</translation>
     </message>
     <message>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
-        <translation type="unfinished">Recorte la lista de imágenes despues de seleccionar con el botón izquierdo del ratón</translation>
+        <translation>Recorte la lista de imágenes despues de seleccionar con el botón izquierdo del ratón</translation>
     </message>
     <message>
         <source>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</source>
-        <translation type="unfinished">Pulsando este botón usted dispone de la posiblidad de recortar todas las imágenes al tamaño que previamente ha seleccionado con el botón izquierdo del ratón (pulse y mantega presionado el botón izquierdo del ratón y moviendo el puntero seleccione el area a conservar, despues presione este botón).</translation>
+        <translation>Pulsando este botón usted dispone de la posiblidad de recortar todas las imágenes al tamaño que previamente ha seleccionado con el botón izquierdo del ratón (pulse y mantega presionado el botón izquierdo del ratón y moviendo el puntero seleccione el area a conservar, despues presione este botón).</translation>
     </message>
     <message>
         <source>&amp;Crop All Images</source>
-        <translation type="unfinished">&amp;Recortar todas las imágenes</translation>
+        <translation>&amp;Recortar todas las imágenes</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
-        <translation type="unfinished">Ctrl+X</translation>
-    </message>
-    <message>
-        <source>&amp;Anti Ghosting</source>
-        <translation type="obsolete">&amp;Anti Ghosting</translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <source>&amp;Save Images</source>
-        <translation type="unfinished">&amp;Guardar imágenes</translation>
+        <translation>&amp;Guardar imágenes</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Size:</source>
-        <translation type="unfinished">Tamaño:</translation>
+        <translation>Tamaño:</translation>
     </message>
     <message>
         <source>&amp;Strength:</source>
-        <translation type="unfinished">&amp;Fuerza:</translation>
+        <translation>&amp;Fuerza:</translation>
     </message>
     <message>
         <source>Reset the shift values for the currently selected movable image</source>
-        <translation type="unfinished">Restaura los valores modificados para la imagen seleccionada</translation>
+        <translation>Restaura los valores modificados para la imagen seleccionada</translation>
     </message>
     <message>
         <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Restaurar</translation>
+        <translation>&amp;Restaurar</translation>
     </message>
     <message>
         <source>Reset the shift values for all the images</source>
-        <translation type="unfinished">Restaura los valores modificados en todas las imágenes</translation>
+        <translation>Restaura los valores modificados en todas las imágenes</translation>
     </message>
     <message>
         <source>Reset &amp;All</source>
-        <translation type="unfinished">Restaurar &amp;todas</translation>
+        <translation>Restaurar &amp;todas</translation>
     </message>
     <message>
         <source>&amp;Horizontal:</source>
-        <translation type="unfinished">&amp;Horizontal:</translation>
+        <translation>&amp;Horizontal:</translation>
     </message>
     <message>
         <source>&amp;Vertical:</source>
-        <translation type="unfinished">&amp;Vertical:</translation>
+        <translation>&amp;Vertical:</translation>
     </message>
     <message>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
-        <translation type="unfinished">Inserta una desplazamiento horizontal para la actual imagen</translation>
+        <translation>Inserta una desplazamiento horizontal para la actual imagen</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Insert a vertical shift value for the currently selected movable image</source>
-        <translation type="unfinished">Inserta un desplazamiento vertical para la imagen actual</translation>
+        <translation>Inserta un desplazamiento vertical para la imagen actual</translation>
     </message>
     <message>
         <source>Move up of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">Eleva un (1) pixel la imagen actual</translation>
+        <translation>Eleva un (1) pixel la imagen actual</translation>
     </message>
     <message>
         <source>Move down of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">Desciendo un (1) pixel la imagen actual</translation>
+        <translation>Desciendo un (1) pixel la imagen actual</translation>
     </message>
     <message>
         <source>Move right of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">Desplaza un (1) pixel a la derecha la imagen actual</translation>
+        <translation>Desplaza un (1) pixel a la derecha la imagen actual</translation>
     </message>
     <message>
         <source>Move left of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">Desplaza un (1) pixel a la izquierda la imagen actual</translation>
+        <translation>Desplaza un (1) pixel a la izquierda la imagen actual</translation>
     </message>
     <message>
         <source>Get information about the graphical elements</source>
-        <translation type="unfinished">Obtiene información acerca de los elementos gráficos</translation>
+        <translation>Obtiene información acerca de los elementos gráficos</translation>
     </message>
     <message>
         <source>&amp;What&apos;s this?</source>
-        <translation type="unfinished">¿&amp;Que es esto?</translation>
+        <translation>¿&amp;Que es esto?</translation>
     </message>
     <message>
         <source>Shift+F1</source>
-        <translation type="unfinished">Shift+F1</translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Siguiente &gt;</translation>
+        <translation>&amp;Siguiente &gt;</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>Difference (E-P)</source>
-        <translation type="unfinished">Diferencia (E-P)</translation>
+        <translation>Diferencia (E-P)</translation>
     </message>
     <message>
         <source>Overlay (E+P)</source>
-        <translation type="unfinished">Sobreponer (E+P)</translation>
+        <translation>Sobreponer (E+P)</translation>
     </message>
     <message>
         <source>Editable Only (E)</source>
-        <translation type="unfinished">Solo editables (E)</translation>
+        <translation>Solo editables (E)</translation>
     </message>
     <message>
         <source>Ed&amp;itable</source>
-        <translation type="unfinished">E&amp;ditables</translation>
+        <translation>E&amp;ditables</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The currently selected image is the one that you can shift and paint an anti-ghosting mask on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;La imagen actualmente seleccionada es una de las que usted puede modificar y pintar una máscar de anti-ghosting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -1155,7 +1131,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The image currently selected in this list serves as a reference position for the editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;La imagen actualmente seleccionada en la lista es utilizada como referencia de posición en la imagen editable&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -1165,7 +1141,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Valores de desplazamiento para la imagen actualmente seleccionada&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -1175,14 +1151,14 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Here the user can view and set the shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aqui el usuario puede ver y ajustar los valores de desplazamiento de la imagen actualmente seleccionada&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Shift values for editable image</source>
-        <translation type="unfinished">Valores de desplazamiento para la imagen editable</translation>
+        <translation>Valores de desplazamiento para la imagen editable</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -1191,7 +1167,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This area shows the preview (using the preview mode on the left) between the editable and reference image.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the same image is selected in both the editable and reference list, this area will show the image itself.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Este area muestra una previsualización (utilizando el modo previsualizar de la izquierda) entre la imagen en edición y la imagen de referencia.&lt;/p&gt;
@@ -1236,10 +1212,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Save mask</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1339,7 +1311,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Alinear</translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <source>&amp;Autoalign images</source>
@@ -1463,7 +1435,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+R</translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <source>The alignment of the input files is in progress. Please be patient!</source>
@@ -1500,58 +1472,39 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation type="obsolete">La imagen %1 es formato de 8 bit (LDR) mientras que la anterior no lo es.</translation>
-    </message>
-    <message>
-        <source>The image %1 has an invalid size.</source>
-        <translation type="obsolete">La imagen %1 tiene un tamaño no válido.</translation>
-    </message>
-    <message>
         <source>The images have different size.</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HdrInputLoader</name>
-    <message>
-        <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="obsolete">ERROR: El archivo &lt;br&gt;%1&lt;br&gt;no es un tiff de 8 ó 16 bits.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed Loading file: %1</source>
-        <translation type="obsolete">ERROR: Fallo al cargar: %1</translation>
     </message>
 </context>
 <context>
     <name>HdrViewer</name>
     <message>
         <source>Linear</source>
-        <translation type="unfinished">Lineal</translation>
+        <translation>Lineal</translation>
     </message>
     <message>
         <source>Gamma 1.4</source>
-        <translation type="unfinished">Gamma 1.4</translation>
+        <translation>Gamma 1.4</translation>
     </message>
     <message>
         <source>Gamma 1.8</source>
-        <translation type="unfinished">Gamma 1.8</translation>
+        <translation>Gamma 1.8</translation>
     </message>
     <message>
         <source>Gamma 2.2</source>
-        <translation type="unfinished">Gamma 2.2</translation>
+        <translation>Gamma 2.2</translation>
     </message>
     <message>
         <source>Gamma 2.6</source>
-        <translation type="unfinished">Gamma 2.6</translation>
+        <translation>Gamma 2.6</translation>
     </message>
     <message>
         <source>Logarithmic</source>
-        <translation type="unfinished">Logaritmica</translation>
+        <translation>Logaritmica</translation>
     </message>
     <message>
         <source>Histogram:</source>
-        <translation type="unfinished">Histograma:</translation>
+        <translation>Histograma:</translation>
     </message>
     <message>
         <source>&amp;Mapping:</source>
@@ -1562,187 +1515,171 @@ p, li { white-space: pre-wrap; }
     <name>HdrWizard</name>
     <message>
         <source>[1/2] Load Input Images</source>
-        <translation type="unfinished">[1/2] Cargar imágenes</translation>
+        <translation>[1/2] Cargar imágenes</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Alinear</translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <source>Profile 1</source>
-        <translation type="unfinished">Perfil 1</translation>
+        <translation>Perfil 1</translation>
     </message>
     <message>
         <source>Profile 2</source>
-        <translation type="unfinished">Perfil 2</translation>
+        <translation>Perfil 2</translation>
     </message>
     <message>
         <source>Profile 3</source>
-        <translation type="unfinished">Perfil 3</translation>
+        <translation>Perfil 3</translation>
     </message>
     <message>
         <source>Profile 4</source>
-        <translation type="unfinished">Perfil 4</translation>
+        <translation>Perfil 4</translation>
     </message>
     <message>
         <source>Profile 5</source>
-        <translation type="unfinished">Perfil 5</translation>
+        <translation>Perfil 5</translation>
     </message>
     <message>
         <source>Profile 6</source>
-        <translation type="unfinished">Perfil 6</translation>
+        <translation>Perfil 6</translation>
     </message>
     <message>
         <source>Weighting function:</source>
-        <translation type="unfinished">Función de peso:</translation>
+        <translation>Función de peso:</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished">Triangular</translation>
+        <translation>Triangular</translation>
     </message>
     <message>
         <source>Response Curve:</source>
-        <translation type="unfinished">Curva de respuesta:</translation>
+        <translation>Curva de respuesta:</translation>
     </message>
     <message>
         <source>Save As...</source>
-        <translation type="unfinished">Guardar como...</translation>
+        <translation>Guardar como...</translation>
     </message>
     <message>
         <source>Linear</source>
-        <translation type="unfinished">Lineal</translation>
+        <translation>Lineal</translation>
     </message>
     <message>
         <source>Debevec</source>
-        <translation type="unfinished">Debevec</translation>
+        <translation>Debevec</translation>
     </message>
     <message>
         <source>Gamma</source>
-        <translation type="unfinished">Gamma</translation>
+        <translation>Gamma</translation>
     </message>
     <message>
         <source>Log</source>
-        <translation type="unfinished">Log</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Calibración</translation>
+        <translation>Log</translation>
     </message>
     <message>
         <source>[2/2] Choose Custom Configuration</source>
-        <translation type="unfinished">[2/2] Seleccionar configuración personalizada</translation>
+        <translation>[2/2] Seleccionar configuración personalizada</translation>
     </message>
     <message>
         <source>Weights:</source>
-        <translation type="unfinished">Peso:</translation>
+        <translation>Peso:</translation>
     </message>
     <message>
         <source>Gaussian</source>
-        <translation type="unfinished">Gaussian</translation>
+        <translation>Gaussian</translation>
     </message>
     <message>
         <source>Plateau</source>
-        <translation type="unfinished">Plateau</translation>
+        <translation>Plateau</translation>
     </message>
     <message>
         <source>Predefined response curves:</source>
-        <translation type="unfinished">Curva de respuesta predefinida:</translation>
+        <translation>Curva de respuesta predefinida:</translation>
     </message>
     <message>
         <source>Load response function from file</source>
-        <translation type="unfinished">Cargar función de respuesta desde archivo</translation>
+        <translation>Cargar función de respuesta desde archivo</translation>
     </message>
     <message>
         <source>Load...</source>
-        <translation type="unfinished">Cargar...</translation>
+        <translation>Cargar...</translation>
     </message>
     <message>
         <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="unfinished">Usar calibración para encontrar curva de respuesta (algoritmo robertson02)</translation>
+        <translation>Usar calibración para encontrar curva de respuesta (algoritmo robertson02)</translation>
     </message>
     <message>
         <source>Robertson</source>
-        <translation type="unfinished">Robertson</translation>
+        <translation>Robertson</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Siguiente &gt;</translation>
+        <translation>&amp;Siguiente &gt;</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>Image Filename</source>
-        <translation type="unfinished">Nombre del archivo de imagen</translation>
+        <translation>Nombre del archivo de imagen</translation>
     </message>
     <message>
         <source>Exposure</source>
-        <translation type="unfinished">Exposición</translation>
+        <translation>Exposición</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Imágenes cargadas.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Imágenes cargadas.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
         <source>EXIF data not found</source>
-        <translation type="unfinished">Datos EXIF no encontrados</translation>
+        <translation>Datos EXIF no encontrados</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Para continuar usted necesita introuducir manualmente los valores de exposición.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; valores son necesarios.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
+        <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Para continuar usted necesita introuducir manualmente los valores de exposición.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; valores son necesarios.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
         <source>Error...</source>
-        <translation type="unfinished">Error...</translation>
+        <translation>Error...</translation>
     </message>
     <message>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="unfinished">La aplicación externa &quot;&lt;em&gt;pila_alineación_imagen&lt;/em&gt;&quot; falló...</translation>
+        <translation>La aplicación externa &quot;&lt;em&gt;pila_alineación_imagen&lt;/em&gt;&quot; falló...</translation>
     </message>
     <message>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="unfinished">Ha ocurrido un error desconocido cuando se ejecutaba la aplicación &quot;&lt;em&gt;pila_alineación_imagen&lt;/em&gt;&quot;...</translation>
+        <translation>Ha ocurrido un error desconocido cuando se ejecutaba la aplicación &quot;&lt;em&gt;pila_alineación_imagen&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
         <source>&amp;Finish</source>
-        <translation type="unfinished">&amp;Finalizar</translation>
+        <translation>&amp;Finalizar</translation>
     </message>
     <message>
         <source>Aligning...</source>
-        <translation type="unfinished">Alineando...</translation>
+        <translation>Alineando...</translation>
     </message>
     <message>
         <source>Processing...</source>
-        <translation type="unfinished">Procesando...</translation>
-    </message>
-    <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Cargar archivo de respuesta de la cámara</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Curva de respuesta de la cámara (*.m);;Todos los archivos (*)</translation>
-    </message>
-    <message>
-        <source>Save a camera response curve file</source>
-        <translation type="obsolete">Guardar archivo de curva de respuesta de cámara</translation>
+        <translation>Procesando...</translation>
     </message>
     <message>
         <source> - Response curve: </source>
-        <translation type="unfinished"> - Curva de respuesta: </translation>
+        <translation> - Curva de respuesta: </translation>
     </message>
     <message>
         <source> - Model: </source>
-        <translation type="unfinished"> - Modelo: </translation>
+        <translation> - Modelo: </translation>
     </message>
     <message>
         <source>Logarithmic</source>
-        <translation type="unfinished">Logaritmica</translation>
+        <translation>Logaritmica</translation>
     </message>
     <message>
         <source>From Calibration</source>
-        <translation type="unfinished">Desde calibración</translation>
+        <translation>Desde calibración</translation>
     </message>
     <message>
         <source>HDR Creation Wizard</source>
@@ -1754,10 +1691,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Add Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1898,7 +1831,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select the input images</source>
-        <translation type="unfinished">Seleccionar las imágenes iniciales</translation>
+        <translation>Seleccionar las imágenes iniciales</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -1993,19 +1926,19 @@ p, li { white-space: pre-wrap; }
     <name>HelpBrowser</name>
     <message>
         <source>Luminance Help</source>
-        <translation type="unfinished">Documentación Luminance</translation>
+        <translation>Documentación Luminance</translation>
     </message>
     <message>
         <source>&amp;Exit</source>
-        <translation type="unfinished">&amp;Salir</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Archivo</translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Ver</translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <source>Luminance HDR Help</source>
@@ -2115,7 +2048,7 @@ associated with the protocol?</source>
     <name>HelpSideBar</name>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>Contents</source>
@@ -2157,18 +2090,6 @@ associated with the protocol?</source>
 <context>
     <name>IOWorker</name>
     <message>
-        <source>ERROR: The following file is not readable: %1</source>
-        <translation type="obsolete">ERROR: El siguiente archivo no es legible: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="obsolete">ERROR: El archivo %1 tiene una extensión no soportada.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation type="obsolete">ERROR: Fallo cargando el archivo: %1</translation>
-    </message>
-    <message>
         <source>IOWorker: The following file is not readable: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2196,7 +2117,7 @@ associated with the protocol?</source>
     <name>ImgQualityDialog</name>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>Save as</source>
@@ -2238,14 +2159,14 @@ associated with the protocol?</source>
     <name>LevelsDialog</name>
     <message>
         <source>Levels and Gamma</source>
-        <translation type="unfinished">Niveles y Gamma</translation>
+        <translation>Niveles y Gamma</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adjust Color Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ajustar niveles de color&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -2255,271 +2176,271 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Input Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nivel inicial&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Clip black</source>
-        <translation type="unfinished">Clip negro</translation>
+        <translation>Clip negro</translation>
     </message>
     <message>
         <source>Gamma</source>
-        <translation type="unfinished">Gamma</translation>
+        <translation>Gamma</translation>
     </message>
     <message>
         <source>Clip White</source>
-        <translation type="unfinished">Clip blanco</translation>
+        <translation>Clip blanco</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nivel de salida&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Restaurar</translation>
+        <translation>&amp;Restaurar</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Archivo</translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Ver</translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished">&amp;Herramientas</translation>
+        <translation>&amp;Herramientas</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
-        <translation type="unfinished">V&amp;entanas</translation>
+        <translation>V&amp;entanas</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">A&amp;yuda</translation>
+        <translation>A&amp;yuda</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
-        <translation type="unfinished">Ctrl+O</translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">Abandona el programa</translation>
+        <translation>Abandona el programa</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+Q</translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished">&gt;</translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <source>Low Dynamic Range</source>
-        <translation type="unfinished">Rango dinámico bajo</translation>
+        <translation>Rango dinámico bajo</translation>
     </message>
     <message>
         <source>L</source>
-        <translation type="unfinished">L</translation>
+        <translation>L</translation>
     </message>
     <message>
         <source>Fit to Dynamic Range</source>
-        <translation type="unfinished">Ajusta al rango dinámico</translation>
+        <translation>Ajusta al rango dinámico</translation>
     </message>
     <message>
         <source>\</source>
-        <translation type="unfinished">\</translation>
+        <translation>\</translation>
     </message>
     <message>
         <source>Shrink Dynamic Range</source>
-        <translation type="unfinished">Reducir rango dinámico</translation>
+        <translation>Reducir rango dinámico</translation>
     </message>
     <message>
         <source>[</source>
-        <translation type="unfinished">[</translation>
+        <translation>[</translation>
     </message>
     <message>
         <source>Extend Dynamic Range</source>
-        <translation type="unfinished">Extender rango dinámico</translation>
+        <translation>Extender rango dinámico</translation>
     </message>
     <message>
         <source>]</source>
-        <translation type="unfinished">]</translation>
+        <translation>]</translation>
     </message>
     <message>
         <source>Decrease Exposure</source>
-        <translation type="unfinished">Reducir exposición</translation>
+        <translation>Reducir exposición</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation>0</translation>
     </message>
     <message>
         <source>&amp;Increase Exposure</source>
-        <translation type="unfinished">&amp;Aumentar exposición</translation>
+        <translation>&amp;Aumentar exposición</translation>
     </message>
     <message>
         <source>9</source>
-        <translation type="unfinished">9</translation>
+        <translation>9</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">Acerca de...</translation>
+        <translation>Acerca de...</translation>
     </message>
     <message>
         <source>Ctrl+H</source>
-        <translation type="unfinished">Ctrl+H</translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <source>&amp;Normal Size</source>
-        <translation type="unfinished">&amp;Restaurar zoom</translation>
+        <translation>&amp;Restaurar zoom</translation>
     </message>
     <message>
         <source>O</source>
-        <translation type="unfinished">O</translation>
+        <translation>O</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">A&amp;umentar zoom</translation>
+        <translation>A&amp;umentar zoom</translation>
     </message>
     <message>
         <source>+</source>
-        <translation type="unfinished">+</translation>
+        <translation>+</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">R&amp;educir zoom</translation>
+        <translation>R&amp;educir zoom</translation>
     </message>
     <message>
         <source>-</source>
-        <translation type="unfinished">-</translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>W</source>
-        <translation type="unfinished">W</translation>
+        <translation>W</translation>
     </message>
     <message>
         <source>Luminance Options</source>
-        <translation type="unfinished">Opciones Luminance</translation>
+        <translation>Opciones Luminance</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+R</translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <source>Copy &amp;Exif Data...</source>
-        <translation type="unfinished">&amp;Copiar info EXIF...</translation>
+        <translation>&amp;Copiar info EXIF...</translation>
     </message>
     <message>
         <source>Copy Exif Data</source>
-        <translation type="unfinished">Copiar datos EXIF</translation>
+        <translation>Copiar datos EXIF</translation>
     </message>
     <message>
         <source>Ctrl+E</source>
-        <translation type="unfinished">Ctrl+E</translation>
+        <translation>Ctrl+E</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished">Ac&amp;erca de Qt</translation>
+        <translation>Ac&amp;erca de Qt</translation>
     </message>
     <message>
         <source>Ctrl+N</source>
-        <translation type="unfinished">Ctrl+N</translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Cancelando tarea...</translation>
+        <translation>Cancelando tarea...</translation>
     </message>
     <message>
         <source>Unsaved changes...</source>
-        <translation type="unfinished">Modificaciones no guardadas...</translation>
+        <translation>Modificaciones no guardadas...</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished">&amp;Preferencias...</translation>
+        <translation>&amp;Preferencias...</translation>
     </message>
     <message>
         <source>&amp;Icons Only</source>
-        <translation type="unfinished">Solo &amp;Iconos</translation>
+        <translation>Solo &amp;Iconos</translation>
     </message>
     <message>
         <source>&amp;Text Only</source>
-        <translation type="unfinished">Solo &amp;Texto</translation>
+        <translation>Solo &amp;Texto</translation>
     </message>
     <message>
         <source>Text &amp;Alongside Icons</source>
-        <translation type="unfinished">Texto &amp;Junto a los Iconos</translation>
+        <translation>Texto &amp;Junto a los Iconos</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished">&amp;Barra de Herramientas</translation>
+        <translation>&amp;Barra de Herramientas</translation>
     </message>
     <message>
         <source>&amp;Save as...</source>
-        <translation type="unfinished">&amp;Guardar como ...</translation>
+        <translation>&amp;Guardar como ...</translation>
     </message>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished">Guardar como...</translation>
+        <translation>Guardar como...</translation>
     </message>
     <message>
         <source>&amp;Batch Tone Mapping...</source>
-        <translation type="unfinished">&amp;Toneado en Serie...</translation>
+        <translation>&amp;Toneado en Serie...</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
-        <translation type="unfinished">Ctlr+D</translation>
+        <translation>Ctlr+D</translation>
     </message>
     <message>
         <source>Tune the histogram for the current LDR</source>
-        <translation type="unfinished">Tonear el histograma del actual LDR</translation>
+        <translation>Tonear el histograma del actual LDR</translation>
     </message>
     <message>
         <source>Ctrl+L</source>
-        <translation type="unfinished">Ctlr+L</translation>
+        <translation>Ctlr+L</translation>
     </message>
     <message>
         <source>Ctrl+B</source>
-        <translation type="unfinished">Ctrl+B</translation>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <source>&amp;What&apos;s This?</source>
-        <translation type="unfinished">&amp;Que es esto?</translation>
+        <translation>&amp;Que es esto?</translation>
     </message>
     <message>
         <source>Shift+F1</source>
-        <translation type="unfinished">Shift+F1</translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <source>Luminance HDR</source>
@@ -2936,19 +2857,19 @@ Do you want to continue?</source>
     <name>PreferencesDialog</name>
     <message>
         <source>Tone Mapping</source>
-        <translation type="unfinished">Tone Mapping</translation>
+        <translation>Tone Mapping</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation type="unfinished">Seleccione un directorio</translation>
+        <translation>Seleccione un directorio</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -3335,7 +3256,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Brillo</translation>
+        <translation>Brillo</translation>
     </message>
     <message>
         <source>Saturation</source>
@@ -3425,11 +3346,11 @@ p, li { white-space: pre-wrap; }
     <name>ProjectionsDialog</name>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Projective Transformation</source>
@@ -3500,22 +3421,22 @@ p, li { white-space: pre-wrap; }
     <name>QApplication</name>
     <message>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
-        <translation type="unfinished">ERROR: no puedo cargar archivo de configuración de toneado: </translation>
+        <translation>ERROR: no puedo cargar archivo de configuración de toneado: </translation>
     </message>
     <message>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
-        <translation type="unfinished">ERROR: Archivo demasiado antiguo, no puedo interpretar los datos de configuración  para tonear: </translation>
+        <translation>ERROR: Archivo demasiado antiguo, no puedo interpretar los datos de configuración  para tonear: </translation>
     </message>
     <message>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
-        <translation type="unfinished">ERROR: no se puede interpretar archivo de configuración de toneado: </translation>
+        <translation>ERROR: no se puede interpretar archivo de configuración de toneado: </translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished">Guardar como...</translation>
+        <translation>Guardar como...</translation>
     </message>
     <message>
         <source>All LDR formats</source>
@@ -3543,11 +3464,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cannot convert %1 to a float</source>
-        <translation type="unfinished">No puedo convertir %1 a flotante</translation>
+        <translation>No puedo convertir %1 a flotante</translation>
     </message>
     <message>
         <source>Cannot convert %1 to an integer</source>
-        <translation type="unfinished">No puedo convertir %1 a entero</translation>
+        <translation>No puedo convertir %1 a entero</translation>
     </message>
     <message>
         <source>Input file %1</source>
@@ -3603,7 +3524,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Equalización de Contraste</translation>
+        <translation>Equalización de Contraste</translation>
     </message>
     <message>
         <source>Contrast</source>
@@ -3627,7 +3548,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Saturación de color</translation>
+        <translation>Saturación de color</translation>
     </message>
     <message>
         <source>Contrast Enhancement</source>
@@ -3635,11 +3556,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Alpha</source>
-        <translation type="unfinished">Alpha</translation>
+        <translation>Alpha</translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
+        <translation>Beta</translation>
     </message>
     <message>
         <source>NoiseRedux</source>
@@ -3667,7 +3588,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
+        <translation>Bias</translation>
     </message>
     <message>
         <source>Spatial</source>
@@ -3675,7 +3596,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Rango</translation>
+        <translation>Rango</translation>
     </message>
     <message>
         <source>Base</source>
@@ -3683,7 +3604,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Multiplicador</translation>
+        <translation>Multiplicador</translation>
     </message>
     <message>
         <source>AutoLuminance</source>
@@ -3703,7 +3624,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Phi</source>
-        <translation type="unfinished">Phi</translation>
+        <translation>Phi</translation>
     </message>
     <message>
         <source>Scales:</source>
@@ -3719,66 +3640,66 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Brillo</translation>
+        <translation>Brillo</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Adaptación cromática</translation>
+        <translation>Adaptación cromática</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Adaptación lumínicia</translation>
+        <translation>Adaptación lumínicia</translation>
     </message>
 </context>
 <context>
     <name>ResizeDialog</name>
     <message>
         <source>Scale Image</source>
-        <translation type="unfinished">Reescalar imagen</translation>
+        <translation>Reescalar imagen</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Anchura:</translation>
+        <translation>Anchura:</translation>
     </message>
     <message>
         <source>Pixels</source>
-        <translation type="unfinished">Pixels</translation>
+        <translation>Pixels</translation>
     </message>
     <message>
         <source>Percent</source>
-        <translation type="unfinished">Porcentaje</translation>
+        <translation>Porcentaje</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Altura:</translation>
+        <translation>Altura:</translation>
     </message>
     <message>
         <source>Restore original size</source>
-        <translation type="unfinished">Restaurar dimensiones originales</translation>
+        <translation>Restaurar dimensiones originales</translation>
     </message>
     <message>
         <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Restaurar</translation>
+        <translation>&amp;Restaurar</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished">R&amp;eescalar</translation>
+        <translation>R&amp;eescalar</translation>
     </message>
     <message>
         <source>Hdr Image Size</source>
-        <translation type="unfinished">Dimensiones de imagen Hdr</translation>
+        <translation>Dimensiones de imagen Hdr</translation>
     </message>
     <message>
         <source>Switch between pixels or percentage</source>
-        <translation type="unfinished">Intercambiar entre porcentajes de pixels</translation>
+        <translation>Intercambiar entre porcentajes de pixels</translation>
     </message>
     <message>
         <source>Result size</source>
-        <translation type="unfinished">Tamaño resultante</translation>
+        <translation>Tamaño resultante</translation>
     </message>
 </context>
 <context>
@@ -3797,7 +3718,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Simple</source>
-        <translation type="unfinished">Simple</translation>
+        <translation>Simple</translation>
     </message>
     <message>
         <source>Equation 2</source>
@@ -3805,7 +3726,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Local Contrast Threshold</source>
-        <translation type="unfinished">Umbral de contraste local</translation>
+        <translation>Umbral de contraste local</translation>
     </message>
     <message>
         <source>Pre-gamma</source>
@@ -3813,35 +3734,35 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
+        <translation>Bias</translation>
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation type="unfinished">Spatial Kernel Sigma</translation>
+        <translation>Spatial Kernel Sigma</translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation type="unfinished">Range Kernel Sigma</translation>
+        <translation>Range Kernel Sigma</translation>
     </message>
     <message>
         <source>Base Contrast</source>
-        <translation type="unfinished">Contraste</translation>
+        <translation>Contraste</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation type="unfinished">Alpha</translation>
+        <translation>Alpha</translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
+        <translation>Beta</translation>
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Saturación de color</translation>
+        <translation>Saturación de color</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
-        <translation type="unfinished">Reducción de ruido</translation>
+        <translation>Reducción de ruido</translation>
     </message>
     <message>
         <source>Old Fattal</source>
@@ -3849,15 +3770,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Equalización de Contraste</translation>
+        <translation>Equalización de Contraste</translation>
     </message>
     <message>
         <source>Contrast Factor</source>
-        <translation type="unfinished">Facto de Constraste</translation>
+        <translation>Facto de Constraste</translation>
     </message>
     <message>
         <source>Saturation Factor</source>
-        <translation type="unfinished">Factor de Saturacion</translation>
+        <translation>Factor de Saturacion</translation>
     </message>
     <message>
         <source>Detail Factor</source>
@@ -3877,7 +3798,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cone and Rod based on Luminance</source>
-        <translation type="unfinished">Cono y barra basado en luminancia</translation>
+        <translation>Cono y barra basado en luminancia</translation>
     </message>
     <message>
         <source>Local Tonemapping</source>
@@ -3885,23 +3806,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cone Level</source>
-        <translation type="unfinished">Nivel de cono</translation>
+        <translation>Nivel de cono</translation>
     </message>
     <message>
         <source>Rod Level</source>
-        <translation type="unfinished">Nivel de cono</translation>
+        <translation>Nivel de cono</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Multiplicador</translation>
+        <translation>Multiplicador</translation>
     </message>
     <message>
         <source>Use Scales</source>
-        <translation type="unfinished">Usar escalas</translation>
+        <translation>Usar escalas</translation>
     </message>
     <message>
         <source>Key Value</source>
-        <translation type="unfinished">Valor clave</translation>
+        <translation>Valor clave</translation>
     </message>
     <message>
         <source>Phi Value</source>
@@ -3909,27 +3830,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Rango</translation>
+        <translation>Rango</translation>
     </message>
     <message>
         <source>Lower Scale</source>
-        <translation type="unfinished">Escala baja</translation>
+        <translation>Escala baja</translation>
     </message>
     <message>
         <source>Upper Scale</source>
-        <translation type="unfinished">Escala alta</translation>
+        <translation>Escala alta</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Brillo</translation>
+        <translation>Brillo</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Adaptación cromática</translation>
+        <translation>Adaptación cromática</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Adaptación lumínicia</translation>
+        <translation>Adaptación lumínicia</translation>
     </message>
 </context>
 <context>
@@ -3988,199 +3909,199 @@ p, li { white-space: pre-wrap; }
     <name>TonemappingPanel</name>
     <message>
         <source>Load a tonemapping settings text file...</source>
-        <translation type="unfinished">Cargar configuración de mapa de Tonos desde archivo...</translation>
+        <translation>Cargar configuración de mapa de Tonos desde archivo...</translation>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Cancelando...</translation>
+        <translation>Cancelando...</translation>
     </message>
     <message>
         <source>File is not readable (check existence, permissions,...)</source>
-        <translation type="unfinished">El archivo no es legible (compruebe su existencia, permisos,...)</translation>
+        <translation>El archivo no es legible (compruebe su existencia, permisos,...)</translation>
     </message>
     <message>
         <source>Save tonemapping settings text file to...</source>
-        <translation type="unfinished">Guardar configuración de toneado a un archivo...</translation>
+        <translation>Guardar configuración de toneado a un archivo...</translation>
     </message>
     <message>
         <source>File is not writable (check permissions, path...)</source>
-        <translation type="unfinished">El archivo no es escribible (compruebe sus permisos, ruta....)</translation>
+        <translation>El archivo no es escribible (compruebe sus permisos, ruta....)</translation>
     </message>
     <message>
         <source>File is not readable (check permissions, path...)</source>
-        <translation type="unfinished">El archivo no es legible (compruebe sus permisos, ruta...)</translation>
+        <translation>El archivo no es legible (compruebe sus permisos, ruta...)</translation>
     </message>
     <message>
         <source>Custom LDR size</source>
-        <translation type="unfinished">Personalizar tamaño LDR</translation>
+        <translation>Personalizar tamaño LDR</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation type="unfinished">Alpha</translation>
+        <translation>Alpha</translation>
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Saturación de color</translation>
+        <translation>Saturación de color</translation>
     </message>
     <message>
         <source>Simple</source>
-        <translation type="unfinished">Simple</translation>
+        <translation>Simple</translation>
     </message>
     <message>
         <source>Equation Number</source>
-        <translation type="unfinished">Número de ecuación</translation>
+        <translation>Número de ecuación</translation>
     </message>
     <message>
         <source>Eqn 2</source>
-        <translation type="unfinished">Eqz 2</translation>
+        <translation>Eqz 2</translation>
     </message>
     <message>
         <source>Eqn 4</source>
-        <translation type="unfinished">Eqz 4</translation>
+        <translation>Eqz 4</translation>
     </message>
     <message>
         <source>Local Contrast Threshold</source>
-        <translation type="unfinished">Umbral de contraste local</translation>
+        <translation>Umbral de contraste local</translation>
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation type="unfinished">Spatial Kernel Sigma</translation>
+        <translation>Spatial Kernel Sigma</translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation type="unfinished">Range Kernel Sigma</translation>
+        <translation>Range Kernel Sigma</translation>
     </message>
     <message>
         <source>Base Contrast</source>
-        <translation type="unfinished">Contraste</translation>
+        <translation>Contraste</translation>
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
+        <translation>Bias</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Multiplicador</translation>
+        <translation>Multiplicador</translation>
     </message>
     <message>
         <source>Local Tone Mapping</source>
-        <translation type="unfinished">Toneado local</translation>
+        <translation>Toneado local</translation>
     </message>
     <message>
         <source>Cone Level</source>
-        <translation type="unfinished">Nivel de cono</translation>
+        <translation>Nivel de cono</translation>
     </message>
     <message>
         <source>Rod Level</source>
-        <translation type="unfinished">Nivel de cono</translation>
+        <translation>Nivel de cono</translation>
     </message>
     <message>
         <source>Use Scales</source>
-        <translation type="unfinished">Usar escalas</translation>
+        <translation>Usar escalas</translation>
     </message>
     <message>
         <source>Key Value</source>
-        <translation type="unfinished">Valor clave</translation>
+        <translation>Valor clave</translation>
     </message>
     <message>
         <source>Phi</source>
-        <translation type="unfinished">Phi</translation>
+        <translation>Phi</translation>
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Rango</translation>
+        <translation>Rango</translation>
     </message>
     <message>
         <source>Lower Scale</source>
-        <translation type="unfinished">Escala baja</translation>
+        <translation>Escala baja</translation>
     </message>
     <message>
         <source>Upper Scale</source>
-        <translation type="unfinished">Escala alta</translation>
+        <translation>Escala alta</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Brillo</translation>
+        <translation>Brillo</translation>
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings</source>
-        <translation type="unfinished">Cargar un archivo de texto conteniendo configuración de pregamma y TMO</translation>
+        <translation>Cargar un archivo de texto conteniendo configuración de pregamma y TMO</translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
+        <translation>Beta</translation>
     </message>
     <message>
         <source>Here you can choose the size of the resulting LDR image.</source>
-        <translation type="unfinished">Aquí usted puede escoger el tamaño de la imagen LDR de salida.</translation>
+        <translation>Aquí usted puede escoger el tamaño de la imagen LDR de salida.</translation>
     </message>
     <message>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
-        <translation type="unfinished">Pulsando este botón usted dispone de la posibilidad de insertar un valor de &lt;i&gt;ancho&lt;/i&gt; para la imagen LDR de salida.&lt;br&gt;Despues de pulsar ENTER (o RETURN) se calculará automáticamente la altura y los nuevos valores serán añadidos a la lista.</translation>
+        <translation>Pulsando este botón usted dispone de la posibilidad de insertar un valor de &lt;i&gt;ancho&lt;/i&gt; para la imagen LDR de salida.&lt;br&gt;Despues de pulsar ENTER (o RETURN) se calculará automáticamente la altura y los nuevos valores serán añadidos a la lista.</translation>
     </message>
     <message>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
-        <translation type="unfinished">Aqui usted puede aplicar una correción de gamma al archivo HDR.&lt;br&gt;La correción de gamma será aplicada antes del toneado.</translation>
+        <translation>Aqui usted puede aplicar una correción de gamma al archivo HDR.&lt;br&gt;La correción de gamma será aplicada antes del toneado.</translation>
     </message>
     <message>
         <source>Restore pregamma&apos;s default value (1)</source>
-        <translation type="unfinished">Restaurar valores gamma por defecto (1)</translation>
+        <translation>Restaurar valores gamma por defecto (1)</translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Equalización de Contraste</translation>
+        <translation>Equalización de Contraste</translation>
     </message>
     <message>
         <source>Contrast Factor</source>
-        <translation type="unfinished">Facto de Constraste</translation>
+        <translation>Facto de Constraste</translation>
     </message>
     <message>
         <source>Saturation Factor</source>
-        <translation type="unfinished">Factor de Saturacion</translation>
+        <translation>Factor de Saturacion</translation>
     </message>
     <message>
         <source>Restore operator&apos;s default values</source>
-        <translation type="unfinished">Restaurar valores por defecto del operador</translation>
+        <translation>Restaurar valores por defecto del operador</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
-        <translation type="unfinished">Reducción de ruido</translation>
+        <translation>Reducción de ruido</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Adaptación cromática</translation>
+        <translation>Adaptación cromática</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Adaptación lumínicia</translation>
+        <translation>Adaptación lumínicia</translation>
     </message>
     <message>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
-        <translation type="unfinished">Aqui usted puede cargar y guardar archivos de configuración de toneado.&lt;br&gt;Usted puede aplicar los parámetros actualmente cargados en el archivo de configuración.</translation>
+        <translation>Aqui usted puede cargar y guardar archivos de configuración de toneado.&lt;br&gt;Usted puede aplicar los parámetros actualmente cargados en el archivo de configuración.</translation>
     </message>
     <message>
         <source>Save current parameters to a text file</source>
-        <translation type="unfinished">Guardar parámetros actuales a un archivo de texto</translation>
+        <translation>Guardar parámetros actuales a un archivo de texto</translation>
     </message>
     <message>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
-        <translation type="unfinished">Guardar parámetros actuales (pregamma y TMO) a un archivo de texto.</translation>
+        <translation>Guardar parámetros actuales (pregamma y TMO) a un archivo de texto.</translation>
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
-        <translation type="unfinished">Carga un archivo existente conteniendo configuración de pregamma y TMO.</translation>
+        <translation>Carga un archivo existente conteniendo configuración de pregamma y TMO.</translation>
     </message>
     <message>
         <source>Reinhard &apos;02</source>
-        <translation type="unfinished">Reinhard &apos;02</translation>
+        <translation>Reinhard &apos;02</translation>
     </message>
     <message>
         <source>Reinhard &apos;05</source>
-        <translation type="unfinished">Reinhard &apos;05</translation>
+        <translation>Reinhard &apos;05</translation>
     </message>
     <message>
         <source>Ctrl+T</source>
-        <translation type="unfinished">Ctrl+T</translation>
+        <translation>Ctrl+T</translation>
     </message>
     <message>
         <source>Tone mapping operators and their options</source>
@@ -4416,59 +4337,59 @@ Luminace Level</source>
     <name>TransplantExifDialog</name>
     <message>
         <source>Copy Exif data</source>
-        <translation type="unfinished">Copiar datos EXIF</translation>
+        <translation>Copiar datos EXIF</translation>
     </message>
     <message>
         <source>Move up selected file(s)</source>
-        <translation type="unfinished">Mover arriba el archivo(s) seleccionado(s)</translation>
+        <translation>Mover arriba el archivo(s) seleccionado(s)</translation>
     </message>
     <message>
         <source>Move down selected file(s)</source>
-        <translation type="unfinished">Mover abajo el archivo(s) seleccionado(s)</translation>
+        <translation>Mover abajo el archivo(s) seleccionado(s)</translation>
     </message>
     <message>
         <source>Remove selected file(s) from the list</source>
-        <translation type="unfinished">Borrar archivo(s) seleccionado(s) de la lista</translation>
+        <translation>Borrar archivo(s) seleccionado(s) de la lista</translation>
     </message>
     <message>
         <source>Append files to the list</source>
-        <translation type="unfinished">Añadir archivos a la lista</translation>
+        <translation>Añadir archivos a la lista</translation>
     </message>
     <message>
         <source>Select the input images</source>
-        <translation type="unfinished">Seleccionar las imágenes iniciales</translation>
+        <translation>Seleccionar las imágenes iniciales</translation>
     </message>
     <message>
         <source>&amp;Done</source>
-        <translation type="unfinished">&amp;Hecho</translation>
+        <translation>&amp;Hecho</translation>
     </message>
     <message>
         <source>Exif operations report</source>
-        <translation type="unfinished">Informe de operaciones EXIF</translation>
+        <translation>Informe de operaciones EXIF</translation>
     </message>
     <message>
         <source>&amp;Show only:</source>
-        <translation type="unfinished">&amp;Mostrar solo:</translation>
+        <translation>&amp;Mostrar solo:</translation>
     </message>
     <message>
         <source>Filter messages based on severity</source>
-        <translation type="unfinished">Filtrar mensajes según su gravedad</translation>
+        <translation>Filtrar mensajes según su gravedad</translation>
     </message>
     <message>
         <source>All messages</source>
-        <translation type="unfinished">Todos los mensajes</translation>
+        <translation>Todos los mensajes</translation>
     </message>
     <message>
         <source>Errors only</source>
-        <translation type="unfinished">Solo errores</translation>
+        <translation>Solo errores</translation>
     </message>
     <message>
         <source>Clear filter text</source>
-        <translation type="unfinished">Quitar filtro de texto</translation>
+        <translation>Quitar filtro de texto</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Cancelar</translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <source>&amp;Filter log messages:</source>
@@ -4496,7 +4417,7 @@ Luminace Level</source>
     </message>
     <message>
         <source>Log</source>
-        <translation type="unfinished">Log</translation>
+        <translation>Log</translation>
     </message>
 </context>
 <context>
@@ -4504,7 +4425,7 @@ Luminace Level</source>
     <message>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
-        <translation type="unfinished">%1 Licencia del documento no encontrada, puede encontrarla on-line: %2aqui%3</translation>
+        <translation>%1 Licencia del documento no encontrada, puede encontrarla on-line: %2aqui%3</translation>
     </message>
     <message>
         <source>Donation</source>

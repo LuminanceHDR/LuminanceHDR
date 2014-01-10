@@ -1130,9 +1130,6 @@ p, li { white-space: pre-wrap; }
                             <property name="toolTip">
                              <string>Save mask</string>
                             </property>
-                            <property name="text">
-                             <string>...</string>
-                            </property>
                             <property name="icon">
                              <iconset resource="../../icons.qrc">
                               <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
@@ -1152,9 +1149,6 @@ p, li { white-space: pre-wrap; }
                             </property>
                             <property name="toolTip">
                              <string>Apply saved mask</string>
-                            </property>
-                            <property name="text">
-                             <string>...</string>
                             </property>
                             <property name="icon">
                              <iconset resource="../../icons.qrc">

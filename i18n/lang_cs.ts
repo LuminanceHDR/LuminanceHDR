@@ -5,27 +5,27 @@
     <name>AboutLuminance</name>
     <message>
         <source>About Luminance</source>
-        <translation type="unfinished">O Luminance</translation>
+        <translation>O Luminance</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished">&amp;O</translation>
+        <translation>&amp;O</translation>
     </message>
     <message>
         <source>A&amp;uthors</source>
-        <translation type="unfinished">A&amp;utoři</translation>
+        <translation>A&amp;utoři</translation>
     </message>
     <message>
         <source>&amp;Thanks To</source>
-        <translation type="unfinished">&amp;Poděkování</translation>
+        <translation>&amp;Poděkování</translation>
     </message>
     <message>
         <source>&amp;License Agreement</source>
-        <translation type="unfinished">&amp;Licenční ujednání</translation>
+        <translation>&amp;Licenční ujednání</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -127,31 +127,31 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>Profile 1</source>
-        <translation type="unfinished">Profil 1</translation>
+        <translation>Profil 1</translation>
     </message>
     <message>
         <source>Profile 2</source>
-        <translation type="unfinished">Profil 2</translation>
+        <translation>Profil 2</translation>
     </message>
     <message>
         <source>Profile 3</source>
-        <translation type="unfinished">Profil 3</translation>
+        <translation>Profil 3</translation>
     </message>
     <message>
         <source>Profile 4</source>
-        <translation type="unfinished">Profil 4</translation>
+        <translation>Profil 4</translation>
     </message>
     <message>
         <source>Profile 5</source>
-        <translation type="unfinished">Profil 5</translation>
+        <translation>Profil 5</translation>
     </message>
     <message>
         <source>Profile 6</source>
-        <translation type="unfinished">Profil 6</translation>
+        <translation>Profil 6</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Zarovnání</translation>
+        <translation>Zarovnání</translation>
     </message>
     <message>
         <source>Auto align the bracketed pictures</source>
@@ -207,7 +207,7 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>Aligning...</source>
-        <translation type="unfinished">Zarovnávám...</translation>
+        <translation>Zarovnávám...</translation>
     </message>
     <message>
         <source>Creating HDR...</source>
@@ -239,7 +239,7 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>&amp;Start</source>
@@ -247,11 +247,11 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Zavřít</translation>
+        <translation>&amp;Zavřít</translation>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Přerušuji...</translation>
+        <translation>Přerušuji...</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -263,7 +263,7 @@ See documentation for more information.</source>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished">Výstup</translation>
+        <translation>Výstup</translation>
     </message>
     <message>
         <source>Progress</source>
@@ -352,83 +352,83 @@ Continue?</source>
     <name>BatchTMDialog</name>
     <message>
         <source>Batch Tone Mapping</source>
-        <translation type="unfinished">Hromadné přemapování (Batch Tone Mapping)</translation>
+        <translation>Hromadné přemapování (Batch Tone Mapping)</translation>
     </message>
     <message>
         <source>List of HDRs that will be tone mapped</source>
-        <translation type="unfinished">Seznam HDR, které budou přemapovány</translation>
+        <translation>Seznam HDR, které budou přemapovány</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
-        <translation type="unfinished">Seznam souborů nastavení pro použití k přemapování každého HDR</translation>
+        <translation>Seznam souborů nastavení pro použití k přemapování každého HDR</translation>
     </message>
     <message>
         <source>Specify output folder for the tone mapped files</source>
-        <translation type="unfinished">Vybrat výstupní adresář pro přemapované soubory</translation>
+        <translation>Vybrat výstupní adresář pro přemapované soubory</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished">Výstup</translation>
+        <translation>Výstup</translation>
     </message>
     <message>
         <source>Batch operations report</source>
-        <translation type="unfinished">Zpráva hromadného zpracování</translation>
+        <translation>Zpráva hromadného zpracování</translation>
     </message>
     <message>
         <source>&amp;Show only:</source>
-        <translation type="unfinished">&amp;Ukaž jen:</translation>
+        <translation>&amp;Ukaž jen:</translation>
     </message>
     <message>
         <source>Filter messages based on severity</source>
-        <translation type="unfinished">Filtrovat zprávy podle vážnosti</translation>
+        <translation>Filtrovat zprávy podle vážnosti</translation>
     </message>
     <message>
         <source>All messages</source>
-        <translation type="unfinished">Všechny zprávy</translation>
+        <translation>Všechny zprávy</translation>
     </message>
     <message>
         <source>Errors only</source>
-        <translation type="unfinished">Jen chyby</translation>
+        <translation>Jen chyby</translation>
     </message>
     <message>
         <source>Success messages</source>
-        <translation type="unfinished">Zprávy o úspěchu</translation>
+        <translation>Zprávy o úspěchu</translation>
     </message>
     <message>
         <source>Clear filter text</source>
-        <translation type="unfinished">Smazat text filtru</translation>
+        <translation>Smazat text filtru</translation>
     </message>
     <message>
         <source>Overall completion progress</source>
-        <translation type="unfinished">Celkové zpracování dokončeno</translation>
+        <translation>Celkové zpracování dokončeno</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>Start batch tone mapping</source>
-        <translation type="unfinished">Začít hromadné přemapování</translation>
+        <translation>Začít hromadné přemapování</translation>
     </message>
     <message>
         <source>Using %1 thread(s)</source>
-        <translation type="unfinished">Používám %1 vlákno(a)</translation>
+        <translation>Používám %1 vlákno(a)</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation type="unfinished">Vybrat adresář</translation>
+        <translation>Vybrat adresář</translation>
     </message>
     <message>
         <source>Processing...</source>
-        <translation type="unfinished">Zpracovávám...</translation>
+        <translation>Zpracovávám...</translation>
     </message>
     <message>
         <source>&amp;Done</source>
-        <translation type="unfinished">&amp;Hotovo</translation>
+        <translation>&amp;Hotovo</translation>
     </message>
     <message>
         <source>All tasks completed.</source>
-        <translation type="unfinished">Všechny úkoly hotovy.</translation>
+        <translation>Všechny úkoly hotovy.</translation>
     </message>
     <message>
         <source>HDR Images to Convert</source>
@@ -468,7 +468,7 @@ Continue?</source>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Přerušuji...</translation>
+        <translation>Přerušuji...</translation>
     </message>
     <message>
         <source>Tone Mapping Settings</source>
@@ -496,10 +496,6 @@ Continue?</source>
     </message>
     <message>
         <source>Add Directory (Alt+D)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -560,7 +556,7 @@ Continue?</source>
     </message>
     <message>
         <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <source>TIFF (16 bits)</source>
@@ -568,19 +564,19 @@ Continue?</source>
     </message>
     <message>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
+        <translation>PPM</translation>
     </message>
     <message>
         <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
+        <translation>PBM</translation>
     </message>
     <message>
         <source>Luminance HDR tone mapping settings text file (*.txt)</source>
@@ -614,59 +610,59 @@ Continue?</source>
     <name>CommandLineInterfaceManager</name>
     <message>
         <source>Error: Alignment engine not recognized.</source>
-        <translation type="unfinished">CHYBA: Nástroj zarovnání nerozpoznán.</translation>
+        <translation>CHYBA: Nástroj zarovnání nerozpoznán.</translation>
     </message>
     <message>
         <source>Error: Wrong HDR creation format.</source>
-        <translation type="unfinished">CHYBA: Špatný formát tvorby HDR.</translation>
+        <translation>CHYBA: Špatný formát tvorby HDR.</translation>
     </message>
     <message>
         <source>Error: Unknown response curve specified.</source>
-        <translation type="unfinished">CHYBA: Určena neznámá křivka odezvy.</translation>
+        <translation>CHYBA: Určena neznámá křivka odezvy.</translation>
     </message>
     <message>
         <source>Error: Unknown HDR creation model specified.</source>
-        <translation type="unfinished">CHYBA: Určen neznámý model tvorby HDR.</translation>
+        <translation>CHYBA: Určen neznámý model tvorby HDR.</translation>
     </message>
     <message>
         <source>Error: Unknown HDR creation format specified.</source>
-        <translation type="unfinished">CHYBA: Určen neznámý formát tvorby HDR.</translation>
+        <translation>CHYBA: Určen neznámý formát tvorby HDR.</translation>
     </message>
     <message>
         <source>Error: Unknown tone mapping operator specified.</source>
-        <translation type="unfinished">CHYBA: Určen neznámý operátor přemapování.</translation>
+        <translation>CHYBA: Určen neznámý operátor přemapování.</translation>
     </message>
     <message>
         <source>Error: Wrong tone mapping option format.</source>
-        <translation type="unfinished">CHYBA: Špatný formát volby přemapování.</translation>
+        <translation>CHYBA: Špatný formát volby přemapování.</translation>
     </message>
     <message>
         <source>Error: Unknown tone mapping option specified.</source>
-        <translation type="unfinished">CHYBA: Neznámý formát volby přemapování.</translation>
+        <translation>CHYBA: Neznámý formát volby přemapování.</translation>
     </message>
     <message>
         <source>Error: Unknown option %1.</source>
-        <translation type="unfinished">CHYBA: Neznámá volby %1.</translation>
+        <translation>CHYBA: Neznámá volby %1.</translation>
     </message>
     <message>
         <source>Error: Missing argument for %1.</source>
-        <translation type="unfinished">CHYBA: Chybí argument pro %1.</translation>
+        <translation>CHYBA: Chybí argument pro %1.</translation>
     </message>
     <message>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
-        <translation type="unfinished">CHYBA: Počet zadaných hodnot kroků EV se neshoduje s počtem vstupních souborů.</translation>
+        <translation>CHYBA: Počet zadaných hodnot kroků EV se neshoduje s počtem vstupních souborů.</translation>
     </message>
     <message>
         <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
-        <translation type="unfinished">Chyba: V obrázcích chybí exif data a ani v příkazové řádce nejsou určeny hodnoty EV.</translation>
+        <translation>Chyba: V obrázcích chybí exif data a ani v příkazové řádce nejsou určeny hodnoty EV.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save to file: %1</source>
-        <translation type="unfinished">CHYBA: Nemohu uložit do souboru: %1</translation>
+        <translation>CHYBA: Nemohu uložit do souboru: %1</translation>
     </message>
     <message>
         <source>Error: Unknown weight function specified.</source>
-        <translation type="unfinished">Chyba: Určena neznámá váhová funkce.</translation>
+        <translation>Chyba: Určena neznámá váhová funkce.</translation>
     </message>
     <message>
         <source>Failed executing align_image_stack</source>
@@ -858,7 +854,7 @@ Continue?</source>
     <name>DnDOption</name>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>Drag and Drop</source>
@@ -893,7 +889,7 @@ Continue?</source>
     <name>EditingTools</name>
     <message>
         <source>Choose a directory and a prefix</source>
-        <translation type="unfinished">Vyverte adresář a prefix</translation>
+        <translation>Vyverte adresář a prefix</translation>
     </message>
     <message>
         <source>Maskable</source>
@@ -905,11 +901,11 @@ Continue?</source>
     </message>
     <message>
         <source>Ed&amp;itable</source>
-        <translation type="unfinished">Edi&amp;tovatelný</translation>
+        <translation>Edi&amp;tovatelný</translation>
     </message>
     <message>
         <source>R&amp;eference</source>
-        <translation type="unfinished">R&amp;eferenční</translation>
+        <translation>R&amp;eferenční</translation>
     </message>
     <message>
         <source>Add good image</source>
@@ -921,231 +917,211 @@ Continue?</source>
     </message>
     <message>
         <source>Select the previous image in both lists</source>
-        <translation type="unfinished">Vyberte předchozí obrázek z obou seznamů</translation>
+        <translation>Vyberte předchozí obrázek z obou seznamů</translation>
     </message>
     <message>
         <source>Select the next image in both lists</source>
-        <translation type="unfinished">Vyberte následující obrázek z obou seznamech</translation>
+        <translation>Vyberte následující obrázek z obou seznamech</translation>
     </message>
 </context>
 <context>
     <name>EditingToolsDialog</name>
     <message>
         <source>Editing Tools</source>
-        <translation type="unfinished">Editační nástroje</translation>
+        <translation>Editační nástroje</translation>
     </message>
     <message>
         <source>Visualization and Navigation</source>
-        <translation type="unfinished">Vizualizace a navigace</translation>
+        <translation>Vizualizace a navigace</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation type="unfinished">Vyplnit okno</translation>
+        <translation>Vyplnit okno</translation>
     </message>
     <message>
         <source>&amp;Fit to Window</source>
-        <translation type="unfinished">&amp;Vyplnit okno</translation>
+        <translation>&amp;Vyplnit okno</translation>
     </message>
     <message>
         <source>Original size</source>
-        <translation type="unfinished">Původní velikost</translation>
+        <translation>Původní velikost</translation>
     </message>
     <message>
         <source>Origina&amp;l Size</source>
-        <translation type="unfinished">Původní ve&amp;likost</translation>
-    </message>
-    <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Přiblížit</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">Při&amp;blížit</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Oddálit</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Od&amp;dálit</translation>
+        <translation>Původní ve&amp;likost</translation>
     </message>
     <message>
         <source>Pivot Only (P)</source>
-        <translation type="unfinished">Pouze pivot (P)</translation>
+        <translation>Pouze pivot (P)</translation>
     </message>
     <message>
         <source>Antighosting Mask</source>
-        <translation type="unfinished">Maska potlačení duchů</translation>
+        <translation>Maska potlačení duchů</translation>
     </message>
     <message>
         <source>Images List</source>
-        <translation type="unfinished">Seznam obrázků</translation>
+        <translation>Seznam obrázků</translation>
     </message>
     <message>
         <source>The image currently selected in this list can be translated up,down,left and right using the controls below.
 This image&apos;s histogram is diplayed in the widget above.</source>
-        <translation type="unfinished">Pomocí ovladačů níže lze právě vybraným obrázkem ze seznamu pohybovat nahoru, dolů, vlevo i vpravo.
+        <translation>Pomocí ovladačů níže lze právě vybraným obrázkem ze seznamu pohybovat nahoru, dolů, vlevo i vpravo.
 Histogram tohoto obrázku je zobrazen výše.</translation>
     </message>
     <message>
         <source>Select the previous image in both lists</source>
-        <translation type="unfinished">Vyberte předchozí obrázek z obou seznamů</translation>
+        <translation>Vyberte předchozí obrázek z obou seznamů</translation>
     </message>
     <message>
         <source>Use this button to move the selection to the previous image in both lists.</source>
-        <translation type="unfinished">Použijte toto tlačítko pro posunutí výběru v obou seznamech na předchozí obrázek.</translation>
+        <translation>Použijte toto tlačítko pro posunutí výběru v obou seznamech na předchozí obrázek.</translation>
     </message>
     <message>
         <source>Select the next image in both lists</source>
-        <translation type="unfinished">Vyberte následující obrázek z obou seznamech</translation>
+        <translation>Vyberte následující obrázek z obou seznamech</translation>
     </message>
     <message>
         <source>Use this button to move the selection to the next image in both lists.</source>
-        <translation type="unfinished">Použijte toto tlačítko pro posunutí výběru v obou seznamech na následující obrázek.</translation>
+        <translation>Použijte toto tlačítko pro posunutí výběru v obou seznamech na následující obrázek.</translation>
     </message>
     <message>
         <source>R&amp;eference</source>
-        <translation type="unfinished">R&amp;eferenční</translation>
+        <translation>R&amp;eferenční</translation>
     </message>
     <message>
         <source>The reference image is the one currently selected</source>
-        <translation type="unfinished">Právě vybraný obrázek je referenční</translation>
+        <translation>Právě vybraný obrázek je referenční</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished">Nástroje</translation>
+        <translation>Nástroje</translation>
     </message>
     <message>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
-        <translation type="unfinished">Ořízni obrázky na velikost vybranou levým myšítkem</translation>
+        <translation>Ořízni obrázky na velikost vybranou levým myšítkem</translation>
     </message>
     <message>
         <source>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</source>
-        <translation type="unfinished">Kliknutí na toto tlačítko ořízne všechny obrázky na rozměr, který je vybrán pomocí levého tlačítka myše (kliknout a táhnout pro výběr požadovaného rozměru, pak kliknout na toto tlačítko).</translation>
+        <translation>Kliknutí na toto tlačítko ořízne všechny obrázky na rozměr, který je vybrán pomocí levého tlačítka myše (kliknout a táhnout pro výběr požadovaného rozměru, pak kliknout na toto tlačítko).</translation>
     </message>
     <message>
         <source>&amp;Crop All Images</source>
-        <translation type="unfinished">&amp;Ořízni všechny obrázky</translation>
+        <translation>&amp;Ořízni všechny obrázky</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
-        <translation type="unfinished">Ctrl+X</translation>
-    </message>
-    <message>
-        <source>&amp;Anti Ghosting</source>
-        <translation type="obsolete">Odstranění &amp;duchů</translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <source>&amp;Save Images</source>
-        <translation type="unfinished">&amp;Ulož obrázky</translation>
+        <translation>&amp;Ulož obrázky</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Size:</source>
-        <translation type="unfinished">Rozměr:</translation>
+        <translation>Rozměr:</translation>
     </message>
     <message>
         <source>&amp;Strength:</source>
-        <translation type="unfinished">&amp;Síla:</translation>
+        <translation>&amp;Síla:</translation>
     </message>
     <message>
         <source>Reset the shift values for the currently selected movable image</source>
-        <translation type="unfinished">Vynulovat hodnoty posunutí pro vybraný pohyblivý obrázek</translation>
+        <translation>Vynulovat hodnoty posunutí pro vybraný pohyblivý obrázek</translation>
     </message>
     <message>
         <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Vynulovat</translation>
+        <translation>&amp;Vynulovat</translation>
     </message>
     <message>
         <source>Reset the shift values for all the images</source>
-        <translation type="unfinished">Vynulovat hodnoty posunutí pro všechny obrázky</translation>
+        <translation>Vynulovat hodnoty posunutí pro všechny obrázky</translation>
     </message>
     <message>
         <source>Reset &amp;All</source>
-        <translation type="unfinished">Vynulovat vš&amp;e</translation>
+        <translation>Vynulovat vš&amp;e</translation>
     </message>
     <message>
         <source>&amp;Horizontal:</source>
-        <translation type="unfinished">&amp;Horizontální:</translation>
+        <translation>&amp;Horizontální:</translation>
     </message>
     <message>
         <source>&amp;Vertical:</source>
-        <translation type="unfinished">&amp;Vertikální:</translation>
+        <translation>&amp;Vertikální:</translation>
     </message>
     <message>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
-        <translation type="unfinished">Volžit hodnotu horizontálního posunutí pro vybraný pohyblivý obrázek</translation>
+        <translation>Volžit hodnotu horizontálního posunutí pro vybraný pohyblivý obrázek</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Insert a vertical shift value for the currently selected movable image</source>
-        <translation type="unfinished">Volžit hodnotu vertikálního posunutí pro vybraný pohyblivý obrázek</translation>
+        <translation>Volžit hodnotu vertikálního posunutí pro vybraný pohyblivý obrázek</translation>
     </message>
     <message>
         <source>Move up of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">Posunout vybraný pohyblivý obrázek o 1 pixel nahoru</translation>
+        <translation>Posunout vybraný pohyblivý obrázek o 1 pixel nahoru</translation>
     </message>
     <message>
         <source>Move down of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">Posunout vybraný pohyblivý obrázek o 1 pixel dolů</translation>
+        <translation>Posunout vybraný pohyblivý obrázek o 1 pixel dolů</translation>
     </message>
     <message>
         <source>Move right of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">Posunout vybraný pohyblivý obrázek o 1 pixel doprava</translation>
+        <translation>Posunout vybraný pohyblivý obrázek o 1 pixel doprava</translation>
     </message>
     <message>
         <source>Move left of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">Posunout vybraný pohyblivý obrázek o 1 pixel doleva</translation>
+        <translation>Posunout vybraný pohyblivý obrázek o 1 pixel doleva</translation>
     </message>
     <message>
         <source>Get information about the graphical elements</source>
-        <translation type="unfinished">Získat informace o grafických položkách</translation>
+        <translation>Získat informace o grafických položkách</translation>
     </message>
     <message>
         <source>&amp;What&apos;s this?</source>
-        <translation type="unfinished">&amp;Co je toto?</translation>
+        <translation>&amp;Co je toto?</translation>
     </message>
     <message>
         <source>Shift+F1</source>
-        <translation type="unfinished">Shift+F1</translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Vpřed &gt;</translation>
+        <translation>&amp;Vpřed &gt;</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>Difference (E-P)</source>
-        <translation type="unfinished">Rozdíl (E-P)</translation>
+        <translation>Rozdíl (E-P)</translation>
     </message>
     <message>
         <source>Overlay (E+P)</source>
-        <translation type="unfinished">Překrytí (E+P)</translation>
+        <translation>Překrytí (E+P)</translation>
     </message>
     <message>
         <source>Editable Only (E)</source>
-        <translation type="unfinished">Editovatelný (E)</translation>
+        <translation>Editovatelný (E)</translation>
     </message>
     <message>
         <source>Ed&amp;itable</source>
-        <translation type="unfinished">Edi&amp;tovatelný</translation>
+        <translation>Edi&amp;tovatelný</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The currently selected image is the one that you can shift and paint an anti-ghosting mask on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vybraný obrázek lze posunovat nebo na něho lze aplikovat masku proti duchům.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -1155,7 +1131,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The image currently selected in this list serves as a reference position for the editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Označený obrázek v tomto seznamu udává základní polohu pro editovatelné obrázky&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -1165,7 +1141,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hodnoty posunutí vybraného editovatelného obrázku&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -1175,14 +1151,14 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Here the user can view and set the shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zde můžete vidět i vložit hodnoty posunutí vybraného editovatelného obrázku&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Shift values for editable image</source>
-        <translation type="unfinished">Hodnoty posunutí editovatelného obrázku</translation>
+        <translation>Hodnoty posunutí editovatelného obrázku</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -1191,7 +1167,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This area shows the preview (using the preview mode on the left) between the editable and reference image.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the same image is selected in both the editable and reference list, this area will show the image itself.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zde je vidět náhled (za použití módu náhled vlevo) rozdílu mezi referenčním a editovatelným obrázkem.&lt;/p&gt;
@@ -1236,10 +1212,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Save mask</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1339,7 +1311,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Zarovnání</translation>
+        <translation>Zarovnání</translation>
     </message>
     <message>
         <source>&amp;Autoalign images</source>
@@ -1463,7 +1435,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+Z</translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <source>The alignment of the input files is in progress. Please be patient!</source>
@@ -1500,58 +1472,39 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation type="obsolete">Obrázek %1 je oproti předchozím pouze v 8bitovém formátu (LDR).</translation>
-    </message>
-    <message>
-        <source>The image %1 has an invalid size.</source>
-        <translation type="obsolete">Obrázek %1 má neplatné rozměry.</translation>
-    </message>
-    <message>
         <source>The images have different size.</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HdrInputLoader</name>
-    <message>
-        <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="obsolete">CHYBA: Soubor &lt;br&gt;%1&lt;br&gt; není 8 nebo 16 bitový TIFF.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed Loading file: %1</source>
-        <translation type="obsolete">CHYBA: Nepodařio se načíst soubor: %1</translation>
     </message>
 </context>
 <context>
     <name>HdrViewer</name>
     <message>
         <source>Linear</source>
-        <translation type="unfinished">Lineárně</translation>
+        <translation>Lineárně</translation>
     </message>
     <message>
         <source>Gamma 1.4</source>
-        <translation type="unfinished">Gamma 1.4</translation>
+        <translation>Gamma 1.4</translation>
     </message>
     <message>
         <source>Gamma 1.8</source>
-        <translation type="unfinished">Gamma 1.8</translation>
+        <translation>Gamma 1.8</translation>
     </message>
     <message>
         <source>Gamma 2.2</source>
-        <translation type="unfinished">Gamma 2.2</translation>
+        <translation>Gamma 2.2</translation>
     </message>
     <message>
         <source>Gamma 2.6</source>
-        <translation type="unfinished">Gamma 2.6</translation>
+        <translation>Gamma 2.6</translation>
     </message>
     <message>
         <source>Logarithmic</source>
-        <translation type="unfinished">Logaritmicky</translation>
+        <translation>Logaritmicky</translation>
     </message>
     <message>
         <source>Histogram:</source>
-        <translation type="unfinished">Histogram:</translation>
+        <translation>Histogram:</translation>
     </message>
     <message>
         <source>&amp;Mapping:</source>
@@ -1562,171 +1515,155 @@ p, li { white-space: pre-wrap; }
     <name>HdrWizard</name>
     <message>
         <source>[1/2] Load Input Images</source>
-        <translation type="unfinished">[1/2] Nahrát vstupní obrázky</translation>
+        <translation>[1/2] Nahrát vstupní obrázky</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Zarovnání</translation>
+        <translation>Zarovnání</translation>
     </message>
     <message>
         <source>Profile 1</source>
-        <translation type="unfinished">Profil 1</translation>
+        <translation>Profil 1</translation>
     </message>
     <message>
         <source>Profile 2</source>
-        <translation type="unfinished">Profil 2</translation>
+        <translation>Profil 2</translation>
     </message>
     <message>
         <source>Profile 3</source>
-        <translation type="unfinished">Profil 3</translation>
+        <translation>Profil 3</translation>
     </message>
     <message>
         <source>Profile 4</source>
-        <translation type="unfinished">Profil 4</translation>
+        <translation>Profil 4</translation>
     </message>
     <message>
         <source>Profile 5</source>
-        <translation type="unfinished">Profil 5</translation>
+        <translation>Profil 5</translation>
     </message>
     <message>
         <source>Profile 6</source>
-        <translation type="unfinished">Profil 6</translation>
+        <translation>Profil 6</translation>
     </message>
     <message>
         <source>Weighting function:</source>
-        <translation type="unfinished">Váhová funkce:</translation>
+        <translation>Váhová funkce:</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished">Trojúhelníková</translation>
+        <translation>Trojúhelníková</translation>
     </message>
     <message>
         <source>Response Curve:</source>
-        <translation type="unfinished">Křivka odezvy:</translation>
+        <translation>Křivka odezvy:</translation>
     </message>
     <message>
         <source>Save As...</source>
-        <translation type="unfinished">Uložit jako...</translation>
+        <translation>Uložit jako...</translation>
     </message>
     <message>
         <source>Gamma</source>
-        <translation type="unfinished">Gamma</translation>
+        <translation>Gamma</translation>
     </message>
     <message>
         <source>Log</source>
-        <translation type="unfinished">Log</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Kalibrace</translation>
+        <translation>Log</translation>
     </message>
     <message>
         <source>[2/2] Choose Custom Configuration</source>
-        <translation type="unfinished">[2/1] Vlastní nastavení</translation>
+        <translation>[2/1] Vlastní nastavení</translation>
     </message>
     <message>
         <source>Weights:</source>
-        <translation type="unfinished">Váha:</translation>
+        <translation>Váha:</translation>
     </message>
     <message>
         <source>Gaussian</source>
-        <translation type="unfinished">Gausovská</translation>
+        <translation>Gausovská</translation>
     </message>
     <message>
         <source>Plateau</source>
-        <translation type="unfinished">Rovina</translation>
+        <translation>Rovina</translation>
     </message>
     <message>
         <source>Predefined response curves:</source>
-        <translation type="unfinished">Předdefinované křivky odezvy:</translation>
+        <translation>Předdefinované křivky odezvy:</translation>
     </message>
     <message>
         <source>Load response function from file</source>
-        <translation type="unfinished">Načíst křivku odezvy ze souboru</translation>
+        <translation>Načíst křivku odezvy ze souboru</translation>
     </message>
     <message>
         <source>Load...</source>
-        <translation type="unfinished">Nahrát...</translation>
+        <translation>Nahrát...</translation>
     </message>
     <message>
         <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="unfinished">Použít kalibraci k nalezení křivky odezvy (algoritmus robertson02)</translation>
+        <translation>Použít kalibraci k nalezení křivky odezvy (algoritmus robertson02)</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Vpřed &gt;</translation>
+        <translation>&amp;Vpřed &gt;</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>Image Filename</source>
-        <translation type="unfinished">Jméno souboru</translation>
+        <translation>Jméno souboru</translation>
     </message>
     <message>
         <source>Exposure</source>
-        <translation type="unfinished">Expozice</translation>
+        <translation>Expozice</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Obrázky načteny.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Obrázky načteny.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
         <source>EXIF data not found</source>
-        <translation type="unfinished">EXIF data nenalezena</translation>
+        <translation>EXIF data nenalezena</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pro pokračování musíte manuálně vyplnit hodnoty expozice.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; hodnoty jsou stále požadovány.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
+        <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pro pokračování musíte manuálně vyplnit hodnoty expozice.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; hodnoty jsou stále požadovány.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
         <source>Error...</source>
-        <translation type="unfinished">Chyba...</translation>
+        <translation>Chyba...</translation>
     </message>
     <message>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="unfinished">Externí aplikace &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; havarovala...</translation>
+        <translation>Externí aplikace &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; havarovala...</translation>
     </message>
     <message>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="unfinished">Při spouštění aplikace&quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; se vyskytla neznámá chyba...</translation>
+        <translation>Při spouštění aplikace&quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; se vyskytla neznámá chyba...</translation>
     </message>
     <message>
         <source>&amp;Finish</source>
-        <translation type="unfinished">&amp;Proveď</translation>
+        <translation>&amp;Proveď</translation>
     </message>
     <message>
         <source>Aligning...</source>
-        <translation type="unfinished">Zarovnávám...</translation>
+        <translation>Zarovnávám...</translation>
     </message>
     <message>
         <source>Processing...</source>
-        <translation type="unfinished">Zpracovávám...</translation>
-    </message>
-    <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Nahrát soubor křivky odezvy fotoaparátu</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Křivka odezvy fotoaparátu (*.m);;Všechny soubory (*)</translation>
-    </message>
-    <message>
-        <source>Save a camera response curve file</source>
-        <translation type="obsolete">Ulož soubor křivky odezvy kamery</translation>
+        <translation>Zpracovávám...</translation>
     </message>
     <message>
         <source> - Response curve: </source>
-        <translation type="unfinished"> - Křivka odezvy: </translation>
+        <translation> - Křivka odezvy: </translation>
     </message>
     <message>
         <source> - Model: </source>
-        <translation type="unfinished">- Model:</translation>
+        <translation>- Model:</translation>
     </message>
     <message>
         <source>From Calibration</source>
-        <translation type="unfinished">Podle kalibrace</translation>
+        <translation>Podle kalibrace</translation>
     </message>
     <message>
         <source>HDR Creation Wizard</source>
@@ -1738,10 +1675,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Add Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1806,7 +1739,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Linear</source>
-        <translation type="unfinished">Lineárně</translation>
+        <translation>Lineárně</translation>
     </message>
     <message>
         <source>HDR creation model:</source>
@@ -1894,7 +1827,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select the input images</source>
-        <translation type="unfinished">Vyber vstupní obrázky</translation>
+        <translation>Vyber vstupní obrázky</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -1922,7 +1855,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logarithmic</source>
-        <translation type="unfinished">Logaritmicky</translation>
+        <translation>Logaritmicky</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
@@ -1993,19 +1926,19 @@ p, li { white-space: pre-wrap; }
     <name>HelpBrowser</name>
     <message>
         <source>Luminance Help</source>
-        <translation type="unfinished">Nápověda Luminance</translation>
+        <translation>Nápověda Luminance</translation>
     </message>
     <message>
         <source>&amp;Exit</source>
-        <translation type="unfinished">&amp;Konec</translation>
+        <translation>&amp;Konec</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Soubor</translation>
+        <translation>&amp;Soubor</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Pohled</translation>
+        <translation>&amp;Pohled</translation>
     </message>
     <message>
         <source>Luminance HDR Help</source>
@@ -2157,18 +2090,6 @@ associated with the protocol?</source>
 <context>
     <name>IOWorker</name>
     <message>
-        <source>ERROR: The following file is not readable: %1</source>
-        <translation type="obsolete">CHYBA: Následující soubor nelze přečíst: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="obsolete">CHYBA: Nepodporovaná přípona u souboru %1.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation type="obsolete">CHYBA: CHYBA: Nepodařio se načíst soubor: %1</translation>
-    </message>
-    <message>
         <source>IOWorker: The following file is not readable: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2196,7 +2117,7 @@ associated with the protocol?</source>
     <name>ImgQualityDialog</name>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>Save as</source>
@@ -2238,14 +2159,14 @@ associated with the protocol?</source>
     <name>LevelsDialog</name>
     <message>
         <source>Levels and Gamma</source>
-        <translation type="unfinished">Úrovně a gamma</translation>
+        <translation>Úrovně a gamma</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adjust Color Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nastavit úrovně barev&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -2255,199 +2176,199 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Input Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Vstupní úrovně&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Clip black</source>
-        <translation type="unfinished">Podpal (Clip black)</translation>
+        <translation>Podpal (Clip black)</translation>
     </message>
     <message>
         <source>Gamma</source>
-        <translation type="unfinished">Gamma</translation>
+        <translation>Gamma</translation>
     </message>
     <message>
         <source>Clip White</source>
-        <translation type="unfinished">Přepal (Clip White)</translation>
+        <translation>Přepal (Clip White)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Výstupní úrovně&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Zrušit</translation>
+        <translation>&amp;Zrušit</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Soubor</translation>
+        <translation>&amp;Soubor</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Pohled</translation>
+        <translation>&amp;Pohled</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished">Liš&amp;ty nástrojů</translation>
+        <translation>Liš&amp;ty nástrojů</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished">Nás&amp;troje</translation>
+        <translation>Nás&amp;troje</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
-        <translation type="unfinished">O&amp;kna</translation>
+        <translation>O&amp;kna</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">Nápově&amp;da</translation>
+        <translation>Nápově&amp;da</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+U</translation>
+        <translation>Ctrl+U</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">Konec</translation>
+        <translation>Konec</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+K</translation>
+        <translation>Ctrl+K</translation>
     </message>
     <message>
         <source>&amp;Save as...</source>
-        <translation type="unfinished">Uložit &amp;jako...</translation>
+        <translation>Uložit &amp;jako...</translation>
     </message>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished">Uložit jako...</translation>
+        <translation>Uložit jako...</translation>
     </message>
     <message>
         <source>Low Dynamic Range</source>
-        <translation type="unfinished">Nízký dynamický rozsah</translation>
+        <translation>Nízký dynamický rozsah</translation>
     </message>
     <message>
         <source>Fit to Dynamic Range</source>
-        <translation type="unfinished">Přizpůsobit dynamickému rozsahu</translation>
+        <translation>Přizpůsobit dynamickému rozsahu</translation>
     </message>
     <message>
         <source>Shrink Dynamic Range</source>
-        <translation type="unfinished">Snížit dynamický rozrah</translation>
+        <translation>Snížit dynamický rozrah</translation>
     </message>
     <message>
         <source>Extend Dynamic Range</source>
-        <translation type="unfinished">Rozšířit dynamický rozrah</translation>
+        <translation>Rozšířit dynamický rozrah</translation>
     </message>
     <message>
         <source>Decrease Exposure</source>
-        <translation type="unfinished">Snížit expozici</translation>
+        <translation>Snížit expozici</translation>
     </message>
     <message>
         <source>&amp;Increase Exposure</source>
-        <translation type="unfinished">Z&amp;výšit expozici</translation>
+        <translation>Z&amp;výšit expozici</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
-        <translation type="unfinished">Ctrl+D</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <source>Tune the histogram for the current LDR</source>
-        <translation type="unfinished">Doladit histogram aktuálního LDR</translation>
+        <translation>Doladit histogram aktuálního LDR</translation>
     </message>
     <message>
         <source>Ctrl+L</source>
-        <translation type="unfinished">Ctrl+L</translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">O...</translation>
+        <translation>O...</translation>
     </message>
     <message>
         <source>&amp;Normal Size</source>
-        <translation type="unfinished">&amp;Původní velikost</translation>
+        <translation>&amp;Původní velikost</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">Při&amp;blížit</translation>
+        <translation>Při&amp;blížit</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Od&amp;dálit</translation>
+        <translation>Od&amp;dálit</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished">&amp;Předvolby...</translation>
+        <translation>&amp;Předvolby...</translation>
     </message>
     <message>
         <source>Luminance Options</source>
-        <translation type="unfinished">Volby Luminance</translation>
+        <translation>Volby Luminance</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+Z</translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <source>Copy &amp;Exif Data...</source>
-        <translation type="unfinished">Kopírovat &amp;Exif Data...</translation>
+        <translation>Kopírovat &amp;Exif Data...</translation>
     </message>
     <message>
         <source>Copy Exif Data</source>
-        <translation type="unfinished">Kopírovat Exif Data</translation>
+        <translation>Kopírovat Exif Data</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished">&amp;O Qt</translation>
+        <translation>&amp;O Qt</translation>
     </message>
     <message>
         <source>&amp;Icons Only</source>
-        <translation type="unfinished">Jen &amp;ikony</translation>
+        <translation>Jen &amp;ikony</translation>
     </message>
     <message>
         <source>&amp;Text Only</source>
-        <translation type="unfinished">Jen &amp;text</translation>
+        <translation>Jen &amp;text</translation>
     </message>
     <message>
         <source>Text &amp;Alongside Icons</source>
-        <translation type="unfinished">Text &amp;vedle ikon</translation>
+        <translation>Text &amp;vedle ikon</translation>
     </message>
     <message>
         <source>&amp;Batch Tone Mapping...</source>
-        <translation type="unfinished">Hromadné přemapování (&amp;Batch Tone Mapping)...</translation>
+        <translation>Hromadné přemapování (&amp;Batch Tone Mapping)...</translation>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Přerušuji...</translation>
+        <translation>Přerušuji...</translation>
     </message>
     <message>
         <source>Unsaved changes...</source>
-        <translation type="unfinished">Neuložené změny...</translation>
+        <translation>Neuložené změny...</translation>
     </message>
     <message>
         <source>&amp;What&apos;s This?</source>
-        <translation type="unfinished">&amp;Co je toto?</translation>
+        <translation>&amp;Co je toto?</translation>
     </message>
     <message>
         <source>Shift+F1</source>
-        <translation type="unfinished">Shift+F1</translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <source>Luminance HDR</source>
@@ -2936,19 +2857,19 @@ Do you want to continue?</source>
     <name>PreferencesDialog</name>
     <message>
         <source>Tone Mapping</source>
-        <translation type="unfinished">Tone Mapping</translation>
+        <translation>Tone Mapping</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation type="unfinished">Vybrat adresář</translation>
+        <translation>Vybrat adresář</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -3335,7 +3256,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Jas&lt;br&gt;(Brightness)</translation>
+        <translation>Jas&lt;br&gt;(Brightness)</translation>
     </message>
     <message>
         <source>Saturation</source>
@@ -3425,11 +3346,11 @@ p, li { white-space: pre-wrap; }
     <name>ProjectionsDialog</name>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Projective Transformation</source>
@@ -3500,22 +3421,22 @@ p, li { white-space: pre-wrap; }
     <name>QApplication</name>
     <message>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
-        <translation type="unfinished">CHYBA: nemohu otevřít soubor nastavení přemapování:</translation>
+        <translation>CHYBA: nemohu otevřít soubor nastavení přemapování:</translation>
     </message>
     <message>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
-        <translation type="unfinished">CHYBA: Příliš starý soubor, nemohu použít soubor nastavení přemapování:</translation>
+        <translation>CHYBA: Příliš starý soubor, nemohu použít soubor nastavení přemapování:</translation>
     </message>
     <message>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
-        <translation type="unfinished">CHYBA: nemohu použít soubor nastavení přemapování:</translation>
+        <translation>CHYBA: nemohu použít soubor nastavení přemapování:</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished">Uložit jako...</translation>
+        <translation>Uložit jako...</translation>
     </message>
     <message>
         <source>All LDR formats</source>
@@ -3543,11 +3464,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cannot convert %1 to a float</source>
-        <translation type="unfinished">Nemohu konvertovat %1 do plovoucí rádové čárky</translation>
+        <translation>Nemohu konvertovat %1 do plovoucí rádové čárky</translation>
     </message>
     <message>
         <source>Cannot convert %1 to an integer</source>
-        <translation type="unfinished">Nemohu konvertovat %1 do celých čísel</translation>
+        <translation>Nemohu konvertovat %1 do celých čísel</translation>
     </message>
     <message>
         <source>Input file %1</source>
@@ -3603,7 +3524,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Varovnání kontrastu (Contrast Equalization)</translation>
+        <translation>Varovnání kontrastu (Contrast Equalization)</translation>
     </message>
     <message>
         <source>Contrast</source>
@@ -3627,7 +3548,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Saturace barev&lt;br&gt;(Color Saturation)</translation>
+        <translation>Saturace barev&lt;br&gt;(Color Saturation)</translation>
     </message>
     <message>
         <source>Contrast Enhancement</source>
@@ -3667,7 +3588,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Síla&lt;br&gt;(Bias)</translation>
+        <translation>Síla&lt;br&gt;(Bias)</translation>
     </message>
     <message>
         <source>Spatial</source>
@@ -3675,7 +3596,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Rozsah&lt;br&gt;(Range)</translation>
+        <translation>Rozsah&lt;br&gt;(Range)</translation>
     </message>
     <message>
         <source>Base</source>
@@ -3683,7 +3604,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Násobitel&lt;br&gt;(Multiplier)</translation>
+        <translation>Násobitel&lt;br&gt;(Multiplier)</translation>
     </message>
     <message>
         <source>AutoLuminance</source>
@@ -3719,66 +3640,66 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Jas&lt;br&gt;(Brightness)</translation>
+        <translation>Jas&lt;br&gt;(Brightness)</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
+        <translation>Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
+        <translation>Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
     </message>
 </context>
 <context>
     <name>ResizeDialog</name>
     <message>
         <source>Scale Image</source>
-        <translation type="unfinished">Změnit rozlišení obrázku</translation>
+        <translation>Změnit rozlišení obrázku</translation>
     </message>
     <message>
         <source>Hdr Image Size</source>
-        <translation type="unfinished">Rozlišení HDR obrázku</translation>
+        <translation>Rozlišení HDR obrázku</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Šířka:</translation>
+        <translation>Šířka:</translation>
     </message>
     <message>
         <source>Switch between pixels or percentage</source>
-        <translation type="unfinished">Vyberte pixely nebo procenta</translation>
+        <translation>Vyberte pixely nebo procenta</translation>
     </message>
     <message>
         <source>Pixels</source>
-        <translation type="unfinished">Pixely</translation>
+        <translation>Pixely</translation>
     </message>
     <message>
         <source>Percent</source>
-        <translation type="unfinished">Procenta</translation>
+        <translation>Procenta</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Výška:</translation>
+        <translation>Výška:</translation>
     </message>
     <message>
         <source>Result size</source>
-        <translation type="unfinished">Výsledné rozlišení</translation>
+        <translation>Výsledné rozlišení</translation>
     </message>
     <message>
         <source>Restore original size</source>
-        <translation type="unfinished">Obnovit původní velikost</translation>
+        <translation>Obnovit původní velikost</translation>
     </message>
     <message>
         <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Obnovit</translation>
+        <translation>&amp;Obnovit</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished">&amp;Změň</translation>
+        <translation>&amp;Změň</translation>
     </message>
 </context>
 <context>
@@ -3797,7 +3718,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Simple</source>
-        <translation type="unfinished">Jednoduchý</translation>
+        <translation>Jednoduchý</translation>
     </message>
     <message>
         <source>Equation 2</source>
@@ -3805,7 +3726,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Local Contrast Threshold</source>
-        <translation type="unfinished">Práh lokálního kontrastu&lt;br&gt;(Local Contrast Threshold)</translation>
+        <translation>Práh lokálního kontrastu&lt;br&gt;(Local Contrast Threshold)</translation>
     </message>
     <message>
         <source>Pre-gamma</source>
@@ -3813,19 +3734,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Síla&lt;br&gt;(Bias)</translation>
+        <translation>Síla&lt;br&gt;(Bias)</translation>
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation type="unfinished">Prostorové zrno&lt;br&gt;(Spatial Kernel Sigma)</translation>
+        <translation>Prostorové zrno&lt;br&gt;(Spatial Kernel Sigma)</translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation type="unfinished">Rádius&lt;br&gt;(Range Kernel Sigma)</translation>
+        <translation>Rádius&lt;br&gt;(Range Kernel Sigma)</translation>
     </message>
     <message>
         <source>Base Contrast</source>
-        <translation type="unfinished">Základní kontrast&lt;br&gt;(Base Contrast)</translation>
+        <translation>Základní kontrast&lt;br&gt;(Base Contrast)</translation>
     </message>
     <message>
         <source>Alpha</source>
@@ -3837,11 +3758,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Saturace barev&lt;br&gt;(Color Saturation)</translation>
+        <translation>Saturace barev&lt;br&gt;(Color Saturation)</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
-        <translation type="unfinished">Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
+        <translation>Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
     </message>
     <message>
         <source>Old Fattal</source>
@@ -3849,15 +3770,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Varovnání kontrastu (Contrast Equalization)</translation>
+        <translation>Varovnání kontrastu (Contrast Equalization)</translation>
     </message>
     <message>
         <source>Contrast Factor</source>
-        <translation type="unfinished">Koeficient kontrastu&lt;br&gt;(Contrast Factor)</translation>
+        <translation>Koeficient kontrastu&lt;br&gt;(Contrast Factor)</translation>
     </message>
     <message>
         <source>Saturation Factor</source>
-        <translation type="unfinished">Koeficient saturace&lt;br&gt;(Saturation Factor)</translation>
+        <translation>Koeficient saturace&lt;br&gt;(Saturation Factor)</translation>
     </message>
     <message>
         <source>Detail Factor</source>
@@ -3877,7 +3798,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cone and Rod based on Luminance</source>
-        <translation type="unfinished">Cone a Rod podle jasu (Cone and Rod based on Luminance)</translation>
+        <translation>Cone a Rod podle jasu (Cone and Rod based on Luminance)</translation>
     </message>
     <message>
         <source>Local Tonemapping</source>
@@ -3885,23 +3806,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cone Level</source>
-        <translation type="unfinished">Úroveň Cone&lt;br&gt;(Cone Level)</translation>
+        <translation>Úroveň Cone&lt;br&gt;(Cone Level)</translation>
     </message>
     <message>
         <source>Rod Level</source>
-        <translation type="unfinished">Úroveň Rod&lt;br&gt;(Rod Level)</translation>
+        <translation>Úroveň Rod&lt;br&gt;(Rod Level)</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Násobitel&lt;br&gt;(Multiplier)</translation>
+        <translation>Násobitel&lt;br&gt;(Multiplier)</translation>
     </message>
     <message>
         <source>Use Scales</source>
-        <translation type="unfinished">Použít stupnice (Use Scales)</translation>
+        <translation>Použít stupnice (Use Scales)</translation>
     </message>
     <message>
         <source>Key Value</source>
-        <translation type="unfinished">Klíčová hodnota&lt;br&gt;(Key Value)</translation>
+        <translation>Klíčová hodnota&lt;br&gt;(Key Value)</translation>
     </message>
     <message>
         <source>Phi Value</source>
@@ -3909,27 +3830,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Rozsah&lt;br&gt;(Range)</translation>
+        <translation>Rozsah&lt;br&gt;(Range)</translation>
     </message>
     <message>
         <source>Lower Scale</source>
-        <translation type="unfinished">Nižší stupnice&lt;br&gt;(Lower Scale)</translation>
+        <translation>Nižší stupnice&lt;br&gt;(Lower Scale)</translation>
     </message>
     <message>
         <source>Upper Scale</source>
-        <translation type="unfinished">Vyšší stupnice&lt;br&gt;(Upper Scale)</translation>
+        <translation>Vyšší stupnice&lt;br&gt;(Upper Scale)</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Jas&lt;br&gt;(Brightness)</translation>
+        <translation>Jas&lt;br&gt;(Brightness)</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
+        <translation>Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
+        <translation>Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
     </message>
 </context>
 <context>
@@ -3988,179 +3909,179 @@ p, li { white-space: pre-wrap; }
     <name>TonemappingPanel</name>
     <message>
         <source>Load a tonemapping settings text file...</source>
-        <translation type="unfinished">Nahrát soubor nastavení přemapování...</translation>
+        <translation>Nahrát soubor nastavení přemapování...</translation>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Přerušuji...</translation>
+        <translation>Přerušuji...</translation>
     </message>
     <message>
         <source>File is not readable (check existence, permissions,...)</source>
-        <translation type="unfinished">Soubor není čitelný (zkontrolujte zda existuje, práva,...)</translation>
+        <translation>Soubor není čitelný (zkontrolujte zda existuje, práva,...)</translation>
     </message>
     <message>
         <source>Save tonemapping settings text file to...</source>
-        <translation type="unfinished">Uložit soubor nastavení přemapování jako...</translation>
+        <translation>Uložit soubor nastavení přemapování jako...</translation>
     </message>
     <message>
         <source>File is not writable (check permissions, path...)</source>
-        <translation type="unfinished">Soubor nelze zapsat (zkontrolujte práva, cestu...)</translation>
+        <translation>Soubor nelze zapsat (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
         <source>File is not readable (check permissions, path...)</source>
-        <translation type="unfinished">Soubor není čitelný (zkontrolujte práva, cestu...)</translation>
+        <translation>Soubor není čitelný (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
         <source>Custom LDR size</source>
-        <translation type="unfinished">Volitelná velikost LDR</translation>
+        <translation>Volitelná velikost LDR</translation>
     </message>
     <message>
         <source>Here you can choose the size of the resulting LDR image.</source>
-        <translation type="unfinished">Zde můžete vybrat velikost výsledného LDR obrázku.</translation>
+        <translation>Zde můžete vybrat velikost výsledného LDR obrázku.</translation>
     </message>
     <message>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
-        <translation type="unfinished">Kliknutím na toto tlačítko můžete vložit novou hodnotu &lt;i&gt;šířky&lt;/i&gt; výsledného LDR obrázku. Enter dopočítá hodnotu výšky a uloží nový rozměr do seznamu.</translation>
+        <translation>Kliknutím na toto tlačítko můžete vložit novou hodnotu &lt;i&gt;šířky&lt;/i&gt; výsledného LDR obrázku. Enter dopočítá hodnotu výšky a uloží nový rozměr do seznamu.</translation>
     </message>
     <message>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
-        <translation type="unfinished">Zde můžete opravit hodnotu gamma pro HDR.&lt;br&gt;Korekce gamma bude použita před přemapováním HDR.</translation>
+        <translation>Zde můžete opravit hodnotu gamma pro HDR.&lt;br&gt;Korekce gamma bude použita před přemapováním HDR.</translation>
     </message>
     <message>
         <source>Restore pregamma&apos;s default value (1)</source>
-        <translation type="unfinished">Obnovit původní hodnotu pregamma (1)</translation>
+        <translation>Obnovit původní hodnotu pregamma (1)</translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Varovnání kontrastu (Contrast Equalization)</translation>
+        <translation>Varovnání kontrastu (Contrast Equalization)</translation>
     </message>
     <message>
         <source>Contrast Factor</source>
-        <translation type="unfinished">Koeficient kontrastu&lt;br&gt;(Contrast Factor)</translation>
+        <translation>Koeficient kontrastu&lt;br&gt;(Contrast Factor)</translation>
     </message>
     <message>
         <source>Saturation Factor</source>
-        <translation type="unfinished">Koeficient saturace&lt;br&gt;(Saturation Factor)</translation>
+        <translation>Koeficient saturace&lt;br&gt;(Saturation Factor)</translation>
     </message>
     <message>
         <source>Restore operator&apos;s default values</source>
-        <translation type="unfinished">Obnovit původní hodnoty operátoru</translation>
+        <translation>Obnovit původní hodnoty operátoru</translation>
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Saturace barev&lt;br&gt;(Color Saturation)</translation>
+        <translation>Saturace barev&lt;br&gt;(Color Saturation)</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
-        <translation type="unfinished">Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
+        <translation>Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Síla&lt;br&gt;(Bias)</translation>
+        <translation>Síla&lt;br&gt;(Bias)</translation>
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation type="unfinished">Prostorové zrno&lt;br&gt;(Spatial Kernel Sigma)</translation>
+        <translation>Prostorové zrno&lt;br&gt;(Spatial Kernel Sigma)</translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation type="unfinished">Rádius&lt;br&gt;(Range Kernel Sigma)</translation>
+        <translation>Rádius&lt;br&gt;(Range Kernel Sigma)</translation>
     </message>
     <message>
         <source>Base Contrast</source>
-        <translation type="unfinished">Základní kontrast&lt;br&gt;(Base Contrast)</translation>
+        <translation>Základní kontrast&lt;br&gt;(Base Contrast)</translation>
     </message>
     <message>
         <source>Use Scales</source>
-        <translation type="unfinished">Použít stupnice (Use Scales)</translation>
+        <translation>Použít stupnice (Use Scales)</translation>
     </message>
     <message>
         <source>Key Value</source>
-        <translation type="unfinished">Klíčová hodnota&lt;br&gt;(Key Value)</translation>
+        <translation>Klíčová hodnota&lt;br&gt;(Key Value)</translation>
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Rozsah&lt;br&gt;(Range)</translation>
+        <translation>Rozsah&lt;br&gt;(Range)</translation>
     </message>
     <message>
         <source>Lower Scale</source>
-        <translation type="unfinished">Nižší stupnice&lt;br&gt;(Lower Scale)</translation>
+        <translation>Nižší stupnice&lt;br&gt;(Lower Scale)</translation>
     </message>
     <message>
         <source>Upper Scale</source>
-        <translation type="unfinished">Vyšší stupnice&lt;br&gt;(Upper Scale)</translation>
+        <translation>Vyšší stupnice&lt;br&gt;(Upper Scale)</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Jas&lt;br&gt;(Brightness)</translation>
+        <translation>Jas&lt;br&gt;(Brightness)</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
+        <translation>Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
+        <translation>Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
     </message>
     <message>
         <source>Simple</source>
-        <translation type="unfinished">Jednoduchý</translation>
+        <translation>Jednoduchý</translation>
     </message>
     <message>
         <source>Equation Number</source>
-        <translation type="unfinished">Číslo rovnice (Equation Number)</translation>
+        <translation>Číslo rovnice (Equation Number)</translation>
     </message>
     <message>
         <source>Local Contrast Threshold</source>
-        <translation type="unfinished">Práh lokálního kontrastu&lt;br&gt;(Local Contrast Threshold)</translation>
+        <translation>Práh lokálního kontrastu&lt;br&gt;(Local Contrast Threshold)</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Násobitel&lt;br&gt;(Multiplier)</translation>
+        <translation>Násobitel&lt;br&gt;(Multiplier)</translation>
     </message>
     <message>
         <source>Local Tone Mapping</source>
-        <translation type="unfinished">Lokální přemapování (Local Tone Mapping)</translation>
+        <translation>Lokální přemapování (Local Tone Mapping)</translation>
     </message>
     <message>
         <source>Cone Level</source>
-        <translation type="unfinished">Úroveň Cone&lt;br&gt;(Cone Level)</translation>
+        <translation>Úroveň Cone&lt;br&gt;(Cone Level)</translation>
     </message>
     <message>
         <source>Rod Level</source>
-        <translation type="unfinished">Úroveň Rod&lt;br&gt;(Rod Level)</translation>
+        <translation>Úroveň Rod&lt;br&gt;(Rod Level)</translation>
     </message>
     <message>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
-        <translation type="unfinished">Zde můžete nahrát a uložit soubor nastavení přemapování.&lt;br&gt;Taky můžete použít obsah právě nahraného souboru nastavení.</translation>
+        <translation>Zde můžete nahrát a uložit soubor nastavení přemapování.&lt;br&gt;Taky můžete použít obsah právě nahraného souboru nastavení.</translation>
     </message>
     <message>
         <source>Save current parameters to a text file</source>
-        <translation type="unfinished">Uložit parametry do souboru</translation>
+        <translation>Uložit parametry do souboru</translation>
     </message>
     <message>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
-        <translation type="unfinished">Uložit parametry (pregamma a TMO) do souboru.</translation>
+        <translation>Uložit parametry (pregamma a TMO) do souboru.</translation>
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings</source>
-        <translation type="unfinished">Nahrát soubor s parametry pregamma a TMO</translation>
+        <translation>Nahrát soubor s parametry pregamma a TMO</translation>
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
-        <translation type="unfinished">Nahrát soubor s parametry pregamma a TMO.</translation>
+        <translation>Nahrát soubor s parametry pregamma a TMO.</translation>
     </message>
     <message>
         <source>Reinhard &apos;02</source>
-        <translation type="unfinished">Reinhard &apos;02</translation>
+        <translation>Reinhard &apos;02</translation>
     </message>
     <message>
         <source>Reinhard &apos;05</source>
-        <translation type="unfinished">Reinhard &apos;05</translation>
+        <translation>Reinhard &apos;05</translation>
     </message>
     <message>
         <source>Ctrl+T</source>
-        <translation type="unfinished">Ctrl+M</translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>Tone mapping operators and their options</source>
@@ -4416,59 +4337,59 @@ Luminace Level</source>
     <name>TransplantExifDialog</name>
     <message>
         <source>Copy Exif data</source>
-        <translation type="unfinished">Kopírovat Exif data</translation>
+        <translation>Kopírovat Exif data</translation>
     </message>
     <message>
         <source>Move up selected file(s)</source>
-        <translation type="unfinished">Vybrané soubory přesunout nahoru</translation>
+        <translation>Vybrané soubory přesunout nahoru</translation>
     </message>
     <message>
         <source>Move down selected file(s)</source>
-        <translation type="unfinished">Vybrané soubory přesunout dolů</translation>
+        <translation>Vybrané soubory přesunout dolů</translation>
     </message>
     <message>
         <source>Remove selected file(s) from the list</source>
-        <translation type="unfinished">Odstranit vybrané soubory ze seznamu</translation>
+        <translation>Odstranit vybrané soubory ze seznamu</translation>
     </message>
     <message>
         <source>Append files to the list</source>
-        <translation type="unfinished">Přidat soubory do seznamu</translation>
+        <translation>Přidat soubory do seznamu</translation>
     </message>
     <message>
         <source>Exif operations report</source>
-        <translation type="unfinished">Zpráva o Exif operaci</translation>
+        <translation>Zpráva o Exif operaci</translation>
     </message>
     <message>
         <source>&amp;Show only:</source>
-        <translation type="unfinished">&amp;Ukaž jen:</translation>
+        <translation>&amp;Ukaž jen:</translation>
     </message>
     <message>
         <source>Filter messages based on severity</source>
-        <translation type="unfinished">Filtrovat zprávy podle vážnosti</translation>
+        <translation>Filtrovat zprávy podle vážnosti</translation>
     </message>
     <message>
         <source>All messages</source>
-        <translation type="unfinished">Všechny zprávy</translation>
+        <translation>Všechny zprávy</translation>
     </message>
     <message>
         <source>Errors only</source>
-        <translation type="unfinished">Jen chyby</translation>
+        <translation>Jen chyby</translation>
     </message>
     <message>
         <source>Clear filter text</source>
-        <translation type="unfinished">Smazat text filtru</translation>
+        <translation>Smazat text filtru</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <source>Select the input images</source>
-        <translation type="unfinished">Vyber vstupní obrázky</translation>
+        <translation>Vyber vstupní obrázky</translation>
     </message>
     <message>
         <source>&amp;Done</source>
-        <translation type="unfinished">&amp;Hotovo</translation>
+        <translation>&amp;Hotovo</translation>
     </message>
     <message>
         <source>&amp;Filter log messages:</source>
@@ -4496,7 +4417,7 @@ Luminace Level</source>
     </message>
     <message>
         <source>Log</source>
-        <translation type="unfinished">Log</translation>
+        <translation>Log</translation>
     </message>
 </context>
 <context>
@@ -4504,7 +4425,7 @@ Luminace Level</source>
     <message>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
-        <translation type="unfinished">%1Dokument licence nenaezen, můžete jej najít: %2zde%3</translation>
+        <translation>%1Dokument licence nenaezen, můžete jej najít: %2zde%3</translation>
     </message>
     <message>
         <source>Donation</source>

@@ -160,9 +160,6 @@
                     <property name="toolTip">
                      <string>Add Images</string>
                     </property>
-                    <property name="text">
-                     <string>...</string>
-                    </property>
                     <property name="icon">
                      <iconset resource="../../icons.qrc">
                       <normaloff>:/new/prefix1/images/list-add.png</normaloff>:/new/prefix1/images/list-add.png</iconset>
@@ -183,9 +180,6 @@
                     <property name="toolTip">
                      <string>Remove Selected Image</string>
                     </property>
-                    <property name="text">
-                     <string>...</string>
-                    </property>
                     <property name="icon">
                      <iconset resource="../../icons.qrc">
                       <normaloff>:/new/prefix1/images/list-remove.png</normaloff>:/new/prefix1/images/list-remove.png</iconset>
@@ -205,9 +199,6 @@
                     </property>
                     <property name="toolTip">
                      <string>Clear List</string>
-                    </property>
-                    <property name="text">
-                     <string>...</string>
                     </property>
                     <property name="icon">
                      <iconset resource="../../icons.qrc">
@@ -739,6 +730,9 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="text">
                <string>Use custom configuration</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
               </property>
              </widget>
             </item>

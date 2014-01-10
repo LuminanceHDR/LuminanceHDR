@@ -4,10 +4,6 @@
 <context>
     <name>AboutLuminance</name>
     <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
-    </message>
-    <message>
         <source>About Luminance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24,46 +20,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A&amp;uthors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Thanks To</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;License Agreement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changelog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A&amp;uthors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -94,12 +60,46 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Thanks To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;License Agreement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
@@ -117,52 +117,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Predefined profile:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose one of the creation predefined profiles. 
-See documentation for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile 1</source>
-        <translation type="unfinished">Profil 1</translation>
-    </message>
-    <message>
-        <source>Profile 2</source>
-        <translation type="unfinished">Profil 2</translation>
-    </message>
-    <message>
-        <source>Profile 3</source>
-        <translation type="unfinished">Profil 3</translation>
-    </message>
-    <message>
-        <source>Profile 4</source>
-        <translation type="unfinished">Profil 4</translation>
-    </message>
-    <message>
-        <source>Profile 5</source>
-        <translation type="unfinished">Profil 5</translation>
-    </message>
-    <message>
-        <source>Profile 6</source>
-        <translation type="unfinished">Profil 6</translation>
-    </message>
-    <message>
-        <source>Alignment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto align the bracketed pictures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MTB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output format:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -186,43 +145,56 @@ See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Folder where bracketed pictures are located (in alphabetical order)</source>
+        <source>Choose one of the creation predefined profiles. 
+See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Folder where created HDRs are saved</source>
+        <source>Profile 1</source>
+        <translation>Profil 1</translation>
+    </message>
+    <message>
+        <source>Profile 2</source>
+        <translation>Profil 2</translation>
+    </message>
+    <message>
+        <source>Profile 3</source>
+        <translation>Profil 3</translation>
+    </message>
+    <message>
+        <source>Profile 4</source>
+        <translation>Profil 4</translation>
+    </message>
+    <message>
+        <source>Profile 5</source>
+        <translation>Profil 5</translation>
+    </message>
+    <message>
+        <source>Profile 6</source>
+        <translation>Profil 6</translation>
+    </message>
+    <message>
+        <source>Output format:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Started processing...</source>
+        <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Completed with errors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Completed without errors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Aligning...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating HDR...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Written </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error: </source>
+        <source>Auto align the bracketed pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Auto-align images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use MTB (Median Threshold Bitmap) engine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MTB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -234,35 +206,7 @@ See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use MTB (Median Threshold Bitmap) engine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
-    <message>
-        <source>&amp;Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Zamknij</translation>
-    </message>
-    <message>
-        <source>Aborting...</source>
-        <translation type="unfinished">Przerywam...</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total number of pictures must be a multiple of number of bracketed images.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output</source>
+        <source>Auto-crop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -270,41 +214,19 @@ See documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select...</source>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
+    </message>
+    <message>
+        <source>&amp;Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Input folder:</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Close</source>
+        <translation>&amp;Zamknij</translation>
     </message>
     <message>
-        <source>Output folder:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose a source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose a output directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The chosen output directory contains HDR files. Those files might be overwritten. 
-
-Continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto-crop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom config %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>O. Gallo and others</source>
+        <source>Anti-ghosting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -316,23 +238,11 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Input/Output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error: missing EXIF data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loading files...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -344,20 +254,102 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Input/Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder where created HDRs are saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder where bracketed pictures are located (in alphabetical order)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom config %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a source directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a output directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The chosen output directory contains HDR files. Those files might be overwritten. 
+
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total number of pictures must be a multiple of number of bracketed images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Started processing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Completed with errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Completed without errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: missing EXIF data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligning...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating HDR...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Doing auto anti-ghosting...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Written </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation>Przerywam...</translation>
     </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="unfinished">Wybierz katalog</translation>
-    </message>
     <message>
         <source>Batch Tone Mapping</source>
         <translation type="unfinished"></translation>
@@ -371,6 +363,66 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Add Directory (Alt+D)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+F)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Files (Alt+R)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tone Mapping Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Directory (Alt+I)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files (Alt+L)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+L</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add from Database (Alt+B)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Settings (Alt+M)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -380,6 +432,54 @@ Continue?</source>
     </message>
     <message>
         <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ouput Image Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> %</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Image Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JPEG</source>
+        <translation>JPEG</translation>
+    </message>
+    <message>
+        <source>TIFF (16 bits)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG</source>
+        <translation>PNG</translation>
+    </message>
+    <message>
+        <source>BMP</source>
+        <translation>BMP</translation>
+    </message>
+    <message>
+        <source>PPM</source>
+        <translation>PPM</translation>
+    </message>
+    <message>
+        <source>PBM</source>
+        <translation>PBM</translation>
+    </message>
+    <message>
+        <source>Output Folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selec&amp;t...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -423,6 +523,10 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
+    </message>
+    <message>
         <source>Start batch tone mapping</source>
         <translation type="unfinished"></translation>
     </message>
@@ -435,6 +539,10 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Choose a directory</source>
+        <translation>Wybierz katalog</translation>
+    </message>
+    <message>
         <source>All HDR images </source>
         <translation type="unfinished"></translation>
     </message>
@@ -444,6 +552,10 @@ Continue?</source>
     </message>
     <message>
         <source>Load tone mapping settings text files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance HDR tone mapping settings text file (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -468,123 +580,7 @@ Continue?</source>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Przerywam...</translation>
-    </message>
-    <message>
-        <source>Tone Mapping Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> %</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Image Quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ouput Image Width:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Folder:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Selec&amp;t...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Directory (Alt+D)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Files (Alt+F)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove Files (Alt+R)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+R</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Directory (Alt+I)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+I</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Files (Alt+L)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+L</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add from Database (Alt+B)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+B</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove Settings (Alt+M)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+M</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
-    </message>
-    <message>
-        <source>TIFF (16 bits)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
-    </message>
-    <message>
-        <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
-    </message>
-    <message>
-        <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
-    </message>
-    <message>
-        <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
-    </message>
-    <message>
-        <source>Luminance HDR tone mapping settings text file (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerywam...</translation>
     </message>
 </context>
 <context>
@@ -649,6 +645,14 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Error: Quality must be in the range [0-100].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: Threshold must be in the range [0-1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Error: Unknown option %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -661,7 +665,15 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Load file %1 failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EV values have been assigned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -669,7 +681,39 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Failed aligning images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating (in memory) the HDR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving to file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image %1 saved successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NOT Saving HDR image to file. %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemapping requested, saving to file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ERROR: Cannot save to file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed loading images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -681,6 +725,30 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>-h --help               Display this help.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-v --verbose            Print more messages during execution.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-d --savealigned prefix Save aligned images to files which names start with prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-c --config             HDR creation config. Possible values: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
         <translation type="unfinished"></translation>
     </message>
@@ -689,11 +757,35 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>-l --load HDR_FILE      Load an HDR instead of creating a new one. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-s --save HDR_FILE      Save to a HDR file format. (default: don&apos;t save) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-t --tmo                Tone mapping operator. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>(Default is mantiuk06)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-p --tmoptions          Tone mapping operator options. Legal values are: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -737,103 +829,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load file %1 failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EV values have been assigned.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating (in memory) the HDR.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving to file %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Image %1 saved successfully</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not save %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NOT Saving HDR image to file. %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tonemapping requested, saving to file %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed loading images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed aligning images.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error: Quality must be in the range [0-100].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-h --help               Display this help.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-v --verbose            Print more messages during execution.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-d --savealigned prefix Save aligned images to files which names start with prefix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-c --config             HDR creation config. Possible values: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-l --load HDR_FILE      Load an HDR instead of creating a new one. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-s --save HDR_FILE      Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-t --tmo                Tone mapping operator. Legal values are: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-p --tmoptions          Tone mapping operator options. Legal values are: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>-o --output LDR_FILE    File name you want to save your tone mapped LDR to.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -842,24 +837,21 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>-b --autoag THRESHOLD   Enable auto anti-ghosting with given threshold.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>                        (No tonemapping is performed unless -o is specified).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error: Threshold must be in the range [0-1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-b --autoag THRESHOLD   Enable auto anti-ghosting with given threshold.</source>
+        <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DnDOption</name>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
     <message>
         <source>Drag and Drop</source>
         <translation type="unfinished"></translation>
@@ -885,6 +877,10 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
+    </message>
+    <message>
         <source>Cancel the drag and drop process and return to the main window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -892,23 +888,11 @@ Continue?</source>
 <context>
     <name>EditingTools</name>
     <message>
-        <source>Choose a directory and a prefix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Maskable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Good image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ed&amp;itable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>R&amp;eference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -920,6 +904,14 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Ed&amp;itable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R&amp;eference</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Select the previous image in both lists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -927,41 +919,13 @@ Continue?</source>
         <source>Select the next image in both lists</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Choose a directory and a prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditingToolsDialog</name>
-    <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Powiększ</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">Pow&amp;iększ</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Oddal</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Po&amp;mniejsz</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Reset</translation>
-    </message>
-    <message>
-        <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Dalej</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
     <message>
         <source>Editing Tools</source>
         <translation type="unfinished"></translation>
@@ -979,11 +943,23 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Fill the window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill &amp;window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Original size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Origina&amp;l Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1004,6 +980,14 @@ Continue?</source>
     </message>
     <message>
         <source>Antighosting Mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lasso</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1062,6 +1046,54 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti-ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O. Gallo and others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Artifact-free HDR Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total Patches:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recompute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1078,7 +1110,47 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Anti-Ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Save Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A&amp;dd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1086,7 +1158,36 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source> px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Strength:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lasso - Draw a free hand selection area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brush - Paint the mask using the brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply saved mask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This area shows the preview (using the preview mode on the left) between the editable and reference image.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the same image is selected in both the editable and reference list, this area will show the image itself.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1112,6 +1213,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Reset</source>
+        <translation>&amp;Reset</translation>
+    </message>
+    <message>
         <source>Reset the shift values for all the images</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1129,10 +1234,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1156,6 +1257,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Histogram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Get information about the graphical elements</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1168,233 +1273,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This area shows the preview (using the preview mode on the left) between the editable and reference image.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the same image is selected in both the editable and reference list, this area will show the image itself.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Next &gt;</source>
+        <translation>&amp;Dalej</translation>
     </message>
     <message>
-        <source>Histogram</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Mode:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Brush</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lasso</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mask</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A&amp;dd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lasso - Draw a free hand selection area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Brush - Paint the mask using the brush</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save mask</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply saved mask</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fill the window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fill &amp;window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>O. Gallo and others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Artifact-free HDR Imaging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total Patches:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recompute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti-ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Anti-Ghosting</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
     </message>
 </context>
 <context>
     <name>FitsImporter</name>
-    <message>
-        <source>Select...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load one FITS image...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alignment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Autoalign images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hugin&apos;s align_image_stack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MTB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto-crop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shows a larger preview of selected image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Previews</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot load FITS image %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FITS images have different size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>align_image_stack exited with exit code %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>align_image_stack failed with error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>R</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>G</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>B</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 2 (Green)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 3 (Blue)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Import FITS files</source>
         <translation type="unfinished"></translation>
@@ -1409,6 +1297,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>H-alpha (optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1432,6 +1324,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1441,7 +1337,39 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctl+R</translation>
+        <translation>Ctl+R</translation>
+    </message>
+    <message>
+        <source>Shows a larger preview of selected image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MTB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hugin&apos;s align_image_stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Autoalign images</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The alignment of the input files is in progress. Please be patient!</source>
@@ -1449,6 +1377,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Progress:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1465,6 +1397,50 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ha OIII Sii</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 1 (Red)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>G</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 3 (Blue)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Channel 2 (Green)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load one FITS image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load FITS image %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FITS images have different size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>align_image_stack exited with exit code %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>align_image_stack failed with error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1485,175 +1461,47 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrViewer</name>
     <message>
-        <source>Linear</source>
-        <translation type="unfinished">Liniowe</translation>
-    </message>
-    <message>
-        <source>Gamma 1.4</source>
-        <translation type="unfinished">Gamma 1.4</translation>
-    </message>
-    <message>
-        <source>Gamma 1.8</source>
-        <translation type="unfinished">Gamma 1.8</translation>
-    </message>
-    <message>
-        <source>Gamma 2.2</source>
-        <translation type="unfinished">Gamma 2.2</translation>
-    </message>
-    <message>
-        <source>Gamma 2.6</source>
-        <translation type="unfinished">Gamma 2.6</translation>
-    </message>
-    <message>
-        <source>Logarithmic</source>
-        <translation type="unfinished">Logarytmiczne</translation>
+        <source>&amp;Mapping:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Histogram:</source>
-        <translation type="unfinished">Histogram:</translation>
+        <translation>Histogram:</translation>
     </message>
     <message>
-        <source>&amp;Mapping:</source>
-        <translation type="unfinished"></translation>
+        <source>Linear</source>
+        <translation>Liniowe</translation>
+    </message>
+    <message>
+        <source>Gamma 1.4</source>
+        <translation>Gamma 1.4</translation>
+    </message>
+    <message>
+        <source>Gamma 1.8</source>
+        <translation>Gamma 1.8</translation>
+    </message>
+    <message>
+        <source>Gamma 2.2</source>
+        <translation>Gamma 2.2</translation>
+    </message>
+    <message>
+        <source>Gamma 2.6</source>
+        <translation>Gamma 2.6</translation>
+    </message>
+    <message>
+        <source>Logarithmic</source>
+        <translation>Logarytmiczne</translation>
     </message>
 </context>
 <context>
     <name>HdrWizard</name>
     <message>
-        <source>[1/2] Load Input Images</source>
-        <translation type="unfinished">[1/2] Wczytywanie obrazów wejściowych</translation>
-    </message>
-    <message>
-        <source>Profile 1</source>
-        <translation type="unfinished">Profil 1</translation>
-    </message>
-    <message>
-        <source>Profile 2</source>
-        <translation type="unfinished">Profil 2</translation>
-    </message>
-    <message>
-        <source>Profile 3</source>
-        <translation type="unfinished">Profil 3</translation>
-    </message>
-    <message>
-        <source>Profile 4</source>
-        <translation type="unfinished">Profil 4</translation>
-    </message>
-    <message>
-        <source>Profile 5</source>
-        <translation type="unfinished">Profil 5</translation>
-    </message>
-    <message>
-        <source>Profile 6</source>
-        <translation type="unfinished">Profil 6</translation>
-    </message>
-    <message>
-        <source>Weighting function:</source>
-        <translation type="unfinished">funkcja wagowa:</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="unfinished">Trójkątna</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="unfinished">Krzywa odpowiedzi:</translation>
-    </message>
-    <message>
-        <source>Debevec</source>
-        <translation type="unfinished">Debevec</translation>
-    </message>
-    <message>
-        <source>Gamma</source>
-        <translation type="unfinished">Gamma</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="unfinished">Logarytmiczna</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Kalibracja</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="unfinished">[2/2] Wybierz własną konfigurację</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="unfinished">Wagi:</translation>
-    </message>
-    <message>
-        <source>Gaussian</source>
-        <translation type="unfinished">Gauss</translation>
-    </message>
-    <message>
-        <source>Plateau</source>
-        <translation type="unfinished">Plateau</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="unfinished">Predefiniowane krzywe odpowiedzi:</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="unfinished">Wczytaj...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="unfinished">Użyj kalibracji aby znaleźć krzywą odpowiedzi (algorytm robertson02)</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="unfinished">Robertson</translation>
-    </message>
-    <message>
-        <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Dalej</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
-    <message>
-        <source>Select the input images</source>
-        <translation type="unfinished">Wybierz obrazy wejściowe</translation>
-    </message>
-    <message>
-        <source>EXIF data not found</source>
-        <translation type="unfinished">Nie znaleziono danych EXIF</translation>
-    </message>
-    <message>
-        <source>Error...</source>
-        <translation type="unfinished">Błąd...</translation>
-    </message>
-    <message>
-        <source>&amp;Finish</source>
-        <translation type="unfinished">&amp;Zakończ</translation>
-    </message>
-    <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Wczytaj plik krzywej odpowiedzi aparatu</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Krzywa odpowiedzi aparatu (*.m);;Wszystkie pliki (*)</translation>
-    </message>
-    <message>
-        <source> - Response curve: </source>
-        <translation type="unfinished"> - Krzywa odpowiedzi: </translation>
-    </message>
-    <message>
-        <source> - Model: </source>
-        <translation type="unfinished"> - Model: </translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="unfinished">Z kalibracji</translation>
-    </message>
-    <message>
         <source>HDR Creation Wizard</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1/2] Load Input Images</source>
+        <translation>[1/2] Wczytywanie obrazów wejściowych</translation>
     </message>
     <message>
         <source>Currently Loaded &amp;Files</source>
@@ -1661,10 +1509,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Add Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1692,6 +1536,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>MTB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Autoalign images</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1700,7 +1548,39 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MTB</source>
+        <source>Auto-crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable the auto anti-ghosting algorithm (by O. Gallo and others)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto anti-ghosting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced Editing Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1713,30 +1593,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>[2/2] Choose Settings for HDR Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose one of the predefined profiles:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;The first predefined profile in the list usually leads to best results. Change it only if the resulting HDR image is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Response curve:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Linear</source>
-        <translation type="unfinished">Liniowe</translation>
-    </message>
-    <message>
-        <source>HDR creation model:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1764,12 +1620,112 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Response curve:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation>Liniowe</translation>
+    </message>
+    <message>
+        <source>HDR creation model:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debevec</source>
+        <translation>Debevec</translation>
+    </message>
+    <message>
+        <source>Weighting function:</source>
+        <translation>funkcja wagowa:</translation>
+    </message>
+    <message>
+        <source>Triangular</source>
+        <translation>Trójkątna</translation>
+    </message>
+    <message>
+        <source>Choose one of the predefined profiles:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;The first predefined profile in the list usually leads to best results. Change it only if the resulting HDR image is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile 1</source>
+        <translation>Profil 1</translation>
+    </message>
+    <message>
+        <source>Profile 2</source>
+        <translation>Profil 2</translation>
+    </message>
+    <message>
+        <source>Profile 3</source>
+        <translation>Profil 3</translation>
+    </message>
+    <message>
+        <source>Profile 4</source>
+        <translation>Profil 4</translation>
+    </message>
+    <message>
+        <source>Profile 5</source>
+        <translation>Profil 5</translation>
+    </message>
+    <message>
+        <source>Profile 6</source>
+        <translation>Profil 6</translation>
+    </message>
+    <message>
+        <source>[2/2] Choose Custom Configuration</source>
+        <translation>[2/2] Wybierz własną konfigurację</translation>
+    </message>
+    <message>
+        <source>Weights:</source>
+        <translation>Wagi:</translation>
+    </message>
+    <message>
         <source>Choose confidence function over all the possible pixel values:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Gaussian</source>
+        <translation>Gauss</translation>
+    </message>
+    <message>
+        <source>Plateau</source>
+        <translation>Plateau</translation>
+    </message>
+    <message>
+        <source>Response Curve:</source>
+        <translation>Krzywa odpowiedzi:</translation>
+    </message>
+    <message>
+        <source>Predefined response curves:</source>
+        <translation>Predefiniowane krzywe odpowiedzi:</translation>
+    </message>
+    <message>
+        <source>Gamma</source>
+        <translation>Gamma</translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation>Logarytmiczna</translation>
+    </message>
+    <message>
         <source>Load response function from file</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load...</source>
+        <translation>Wczytaj...</translation>
+    </message>
+    <message>
+        <source>Use calibration to find response curve (robertson02 algorithm)</source>
+        <translation>Użyj kalibracji aby znaleźć krzywą odpowiedzi (algorytm robertson02)</translation>
     </message>
     <message>
         <source>Save response function to file:</source>
@@ -1788,12 +1744,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Robertson</source>
+        <translation>Robertson</translation>
+    </message>
+    <message>
+        <source>Save Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Here you can customize the HDR creation process&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Next &gt;</source>
+        <translation>&amp;Dalej</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
     </message>
     <message>
         <source>Image Filename</source>
@@ -1828,12 +1800,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Select the input images</source>
+        <translation>Wybierz obrazy wejściowe</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start loading a set of images with different exposure</source>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EXIF data not found</source>
+        <translation>Nie znaleziono danych EXIF</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
@@ -1848,7 +1836,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown</source>
+        <source>Start loading a set of images with different exposure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error...</source>
+        <translation>Błąd...</translation>
+    </message>
+    <message>
+        <source>align_image_stack failed to align images.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1868,6 +1864,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Finish</source>
+        <translation>&amp;Zakończ</translation>
+    </message>
+    <message>
         <source>Aligning...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1876,99 +1876,51 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logarithmic</source>
-        <translation type="unfinished">Logarytmiczne</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Weights: </source>
-        <translation type="unfinished">Wagi: </translation>
+        <translation>Wagi: </translation>
     </message>
     <message>
-        <source>align_image_stack failed to align images.</source>
-        <translation type="unfinished"></translation>
+        <source> - Response curve: </source>
+        <translation> - Krzywa odpowiedzi: </translation>
     </message>
     <message>
-        <source>Auto-crop</source>
-        <translation type="unfinished"></translation>
+        <source> - Model: </source>
+        <translation> - Model: </translation>
     </message>
     <message>
-        <source>Save Settings</source>
-        <translation type="unfinished"></translation>
+        <source>Logarithmic</source>
+        <translation>Logarytmiczne</translation>
+    </message>
+    <message>
+        <source>From Calibration</source>
+        <translation>Z kalibracji</translation>
     </message>
     <message>
         <source>From File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable the auto anti-ghosting algorithm (by O. Gallo and others)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto anti-ghosting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Advanced Editing Tools</source>
+        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>HelpBrowser</name>
     <message>
-        <source>Luminance Help</source>
-        <translation type="unfinished">Pomoc Luminance</translation>
-    </message>
-    <message>
-        <source>&amp;Exit</source>
-        <translation type="unfinished">Wyjści&amp;e</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="unfinished">&amp;Plik</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="unfinished">&amp;Widok</translation>
-    </message>
-    <message>
         <source>Luminance HDR Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Luminance Help</source>
+        <translation>Pomoc Luminance</translation>
+    </message>
+    <message>
         <source>&amp;Print...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Exit</source>
+        <translation>Wyjści&amp;e</translation>
     </message>
     <message>
         <source>&amp;Find...</source>
@@ -2003,8 +1955,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;File</source>
+        <translation>&amp;Plik</translation>
+    </message>
+    <message>
         <source>&amp;Edit</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Widok</translation>
     </message>
     <message>
         <source>&amp;Bookmarks</source>
@@ -2069,10 +2029,6 @@ associated with the protocol?</source>
 <context>
     <name>HelpSideBar</name>
     <message>
-        <source>1</source>
-        <translation type="unfinished">1</translation>
-    </message>
-    <message>
         <source>Contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2091,6 +2047,10 @@ associated with the protocol?</source>
     <message>
         <source>&amp;Search</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation>1</translation>
     </message>
     <message>
         <source>Book&amp;marks</source>
@@ -2138,15 +2098,19 @@ associated with the protocol?</source>
 <context>
     <name>ImgQualityDialog</name>
     <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
-    <message>
         <source>Save as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Saved File Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2158,15 +2122,11 @@ associated with the protocol?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
+    </message>
+    <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quality</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2181,14 +2141,14 @@ associated with the protocol?</source>
     <name>LevelsDialog</name>
     <message>
         <source>Levels and Gamma</source>
-        <translation type="unfinished">Poziomy oraz gamma</translation>
+        <translation>Poziomy oraz gamma</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adjust Color Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dostosuj poziomy koloru&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -2198,247 +2158,83 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Input Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Poziomy wejściowe&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Clip black</source>
-        <translation type="unfinished">Przycięcie czerni</translation>
+        <translation>Przycięcie czerni</translation>
     </message>
     <message>
         <source>Gamma</source>
-        <translation type="unfinished">Gamma</translation>
+        <translation>Gamma</translation>
     </message>
     <message>
         <source>Clip White</source>
-        <translation type="unfinished">Przycięcie bieli</translation>
+        <translation>Przycięcie bieli</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Poziomy wyjściowe&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Reset</translation>
+        <translation>&amp;Reset</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
+        <translation>&amp;Anuluj</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation type="unfinished">&amp;Plik</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="unfinished">&amp;Widok</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="unfinished">&amp;Narzędzia</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation type="unfinished">&amp;Okna</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Pomoc</translation>
-    </message>
-    <message>
-        <source>Ctrl+N</source>
-        <translation type="unfinished">Ctrl+N</translation>
-    </message>
-    <message>
-        <source>Ctrl+O</source>
-        <translation type="unfinished">Ctrl+O</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="unfinished">Wyjście</translation>
-    </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+Q</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="unfinished">&gt;</translation>
-    </message>
-    <message>
-        <source>Low Dynamic Range</source>
-        <translation type="unfinished">Mała dynamika tonów</translation>
-    </message>
-    <message>
-        <source>L</source>
-        <translation type="unfinished">L</translation>
-    </message>
-    <message>
-        <source>Fit to Dynamic Range</source>
-        <translation type="unfinished">Dopasuj do dynamiki tonów</translation>
-    </message>
-    <message>
-        <source>\</source>
-        <translation type="unfinished">\</translation>
-    </message>
-    <message>
-        <source>Shrink Dynamic Range</source>
-        <translation type="unfinished">Zmniejsz dynamikę tonów</translation>
-    </message>
-    <message>
-        <source>[</source>
-        <translation type="unfinished">[</translation>
-    </message>
-    <message>
-        <source>Extend Dynamic Range</source>
-        <translation type="unfinished">Zwiększ dynamikę tonów</translation>
-    </message>
-    <message>
-        <source>]</source>
-        <translation type="unfinished">]</translation>
-    </message>
-    <message>
-        <source>Decrease Exposure</source>
-        <translation type="unfinished">Zmniejsz ekspozycję</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation type="unfinished">O</translation>
-    </message>
-    <message>
-        <source>&amp;Increase Exposure</source>
-        <translation type="unfinished">Zw&amp;iększ ekspozycję</translation>
-    </message>
-    <message>
-        <source>9</source>
-        <translation type="unfinished">9</translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="unfinished">O programie...</translation>
-    </message>
-    <message>
-        <source>Ctrl+H</source>
-        <translation type="unfinished">Ctrl+H</translation>
-    </message>
-    <message>
-        <source>&amp;Normal Size</source>
-        <translation type="unfinished">Rozmiar &amp;normalny</translation>
-    </message>
-    <message>
-        <source>O</source>
-        <translation type="unfinished">O</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="unfinished">Pow&amp;iększ</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="unfinished">+</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Po&amp;mniejsz</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="unfinished">-</translation>
-    </message>
-    <message>
-        <source>W</source>
-        <translation type="unfinished">W</translation>
-    </message>
-    <message>
-        <source>Luminance Options</source>
-        <translation type="unfinished">Opcje Luminance</translation>
-    </message>
-    <message>
-        <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="unfinished">Ctl+R</translation>
-    </message>
-    <message>
-        <source>Copy &amp;Exif Data...</source>
-        <translation type="unfinished">Kopiuj informacje &amp;Exif...</translation>
-    </message>
-    <message>
-        <source>Copy Exif Data</source>
-        <translation type="unfinished">Kopiuj informacje Exif</translation>
-    </message>
-    <message>
-        <source>Ctrl+E</source>
-        <translation type="unfinished">Ctrl+E</translation>
-    </message>
-    <message>
-        <source>&amp;About Qt</source>
-        <translation type="unfinished">&amp;O Qt</translation>
-    </message>
-    <message>
-        <source>Aborting...</source>
-        <translation type="unfinished">Przerywam...</translation>
-    </message>
-    <message>
-        <source>Unsaved changes...</source>
-        <translation type="unfinished">Niezachowane zmiany...</translation>
-    </message>
-    <message>
-        <source>&amp;Preferences...</source>
-        <translation type="unfinished">&amp;Preferencje...</translation>
-    </message>
-    <message>
-        <source>&amp;Icons Only</source>
-        <translation type="unfinished">Tylko &amp;ikony</translation>
-    </message>
-    <message>
-        <source>&amp;Text Only</source>
-        <translation type="unfinished">Tylko &amp;tekst</translation>
-    </message>
-    <message>
-        <source>Text &amp;Alongside Icons</source>
-        <translation type="unfinished">Tekst przed ikon&amp;ami</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="unfinished">&amp;Paski narzędziowe</translation>
-    </message>
-    <message>
-        <source>Tune the histogram for the current LDR</source>
-        <translation type="unfinished">Dostosuj historam do obecnego LDR</translation>
-    </message>
-    <message>
         <source>Luminance HDR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Tools</source>
+        <translation>&amp;Narzędzia</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>&amp;Pomoc</translation>
+    </message>
+    <message>
+        <source>&amp;Windows</source>
+        <translation>&amp;Okna</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Widok</translation>
+    </message>
+    <message>
         <source>HDR &amp;Histogram</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation>&amp;Paski narzędziowe</translation>
+    </message>
+    <message>
+        <source>Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Plik</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
@@ -2465,6 +2261,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
+    </message>
+    <message>
         <source>&amp;Open HDR image...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2475,6 +2275,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+O</source>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <source>&amp;Save as...</source>
@@ -2489,12 +2293,24 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Quit Luminance HDR</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation>Wyjście</translation>
+    </message>
+    <message>
+        <source>Ctrl+Q</source>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <source>Rotate c&amp;ounter-clockwise</source>
@@ -2509,6 +2325,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&lt;</source>
+        <translation>&lt;</translation>
+    </message>
+    <message>
         <source>Rotate c&amp;lockwise</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2521,12 +2341,68 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&gt;</source>
+        <translation>&gt;</translation>
+    </message>
+    <message>
+        <source>Low Dynamic Range</source>
+        <translation>Mała dynamika tonów</translation>
+    </message>
+    <message>
+        <source>L</source>
+        <translation>L</translation>
+    </message>
+    <message>
+        <source>Fit to Dynamic Range</source>
+        <translation>Dopasuj do dynamiki tonów</translation>
+    </message>
+    <message>
         <source>Fit to dynamic range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>\</source>
+        <translation>\</translation>
+    </message>
+    <message>
+        <source>Shrink Dynamic Range</source>
+        <translation>Zmniejsz dynamikę tonów</translation>
+    </message>
+    <message>
+        <source>[</source>
+        <translation>[</translation>
+    </message>
+    <message>
+        <source>Extend Dynamic Range</source>
+        <translation>Zwiększ dynamikę tonów</translation>
+    </message>
+    <message>
+        <source>]</source>
+        <translation>]</translation>
+    </message>
+    <message>
+        <source>Decrease Exposure</source>
+        <translation>Zmniejsz ekspozycję</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>O</translation>
+    </message>
+    <message>
+        <source>&amp;Increase Exposure</source>
+        <translation>Zw&amp;iększ ekspozycję</translation>
+    </message>
+    <message>
+        <source>9</source>
+        <translation>9</translation>
+    </message>
+    <message>
         <source>&amp;Contents...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation>O programie...</translation>
     </message>
     <message>
         <source>Open user manual for Luminance HDR</source>
@@ -2537,6 +2413,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Normal Size</source>
+        <translation>Rozmiar &amp;normalny</translation>
+    </message>
+    <message>
         <source>Normal size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2545,12 +2425,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>O</source>
+        <translation>O</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;In</source>
+        <translation>Pow&amp;iększ</translation>
+    </message>
+    <message>
         <source>Zoom in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>+</source>
+        <translation>+</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Out</source>
+        <translation>Po&amp;mniejsz</translation>
+    </message>
+    <message>
         <source>Zoom out</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-</source>
+        <translation>-</translation>
     </message>
     <message>
         <source>&amp;Fit in Window</source>
@@ -2565,8 +2465,24 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>W</source>
+        <translation>W</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences...</source>
+        <translation>&amp;Preferencje...</translation>
+    </message>
+    <message>
+        <source>Luminance Options</source>
+        <translation>Opcje Luminance</translation>
+    </message>
+    <message>
         <source>Set various options of Luminance</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+P</source>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <source>&amp;Resize...</source>
@@ -2581,8 +2497,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Ctrl+R</source>
+        <translation>Ctl+R</translation>
+    </message>
+    <message>
+        <source>Copy &amp;Exif Data...</source>
+        <translation>Kopiuj informacje &amp;Exif...</translation>
+    </message>
+    <message>
+        <source>Copy Exif Data</source>
+        <translation>Kopiuj informacje Exif</translation>
+    </message>
+    <message>
         <source>Copy Exif data between two sets of files</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+E</source>
+        <translation>Ctrl+E</translation>
+    </message>
+    <message>
+        <source>&amp;About Qt</source>
+        <translation>&amp;O Qt</translation>
     </message>
     <message>
         <source>Show information about Qt</source>
@@ -2595,6 +2531,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Text &amp;under Icons</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Icons Only</source>
+        <translation>Tylko &amp;ikony</translation>
+    </message>
+    <message>
+        <source>&amp;Text Only</source>
+        <translation>Tylko &amp;tekst</translation>
+    </message>
+    <message>
+        <source>Text &amp;Alongside Icons</source>
+        <translation>Tekst przed ikon&amp;ami</translation>
     </message>
     <message>
         <source>&amp;Batch Tone Mapping...</source>
@@ -2733,6 +2681,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Tune the histogram for the current LDR</source>
+        <translation>Dostosuj historam do obecnego LDR</translation>
+    </message>
+    <message>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2765,6 +2717,54 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Ctrl+H</source>
+        <translation>Ctrl+H</translation>
+    </message>
+    <message>
+        <source>Soft Proofing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gamut Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show on the right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show on the bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Realtime Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FITS Importer...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import four FITS files representing luminosity, red, green and blue channels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fix color cast, can be slow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2789,11 +2789,33 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Aborting...</source>
+        <translation>Przerywam...</translation>
+    </message>
+    <message>
         <source>Cropped Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved changes...</source>
+        <translation>Niezachowane zmiany...</translation>
+    </message>
+    <message>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fattal Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
+
+Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2809,104 +2831,14 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Soft Proofing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gamut Check</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preview Panel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show on the right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show on the bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Realtime Previews</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fattal Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
-
-Do you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FITS Importer...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>White Balance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fix color cast, can be slow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>FITS Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import four FITS files representing luminosity, red, green and blue channels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
     <message>
-        <source>Tone Mapping</source>
-        <translation type="unfinished">Mapowanie tonów</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="unfinished">Wybierz katalog</translation>
-    </message>
-    <message>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Interface</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HDR Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RAW Conversion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2914,7 +2846,51 @@ Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>HDR Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tone Mapping</source>
+        <translation>Mapowanie tonów</translation>
+    </message>
+    <message>
+        <source>RAW Conversion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color Management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default Previews Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Always show Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saves the settings along the program files, to be portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portable mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HDR TIFF Default File Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2942,42 +2918,27 @@ Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Temporary Working Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Amount of threads to use on multicore/SMP machines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interpolate RGB as four colors&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The default is to assume that all green pixels are the same. If even-row green pixels are more sensitive to ultraviolet light than odd-row this difference causes a mesh                             pattern in the output; using this option solves this problem with minimal loss of detail.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To resume, this option blurs the image a little, but it eliminates false 2x2 mesh patterns with VNG quality method or mazes with AHD quality method.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Batch Tonemapping Number of Threads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Interpolate RGB using 4 colours</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not stretch or rotate pixels&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For Fuji Super CCD cameras, show the image tilted 45 degrees. For cameras with non-square pixels, do not stretch the image to its correct aspect ratio. In any case,                                              this option guarantees that each output pixel corresponds to one RAW pixel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do not stretch or rotate pixels</source>
+        <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Quality:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Median:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3014,6 +2975,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Median:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3023,7 +2988,38 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not stretch or rotate pixels&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For Fuji Super CCD cameras, show the image tilted 45 degrees. For cameras with non-square pixels, do not stretch the image to its correct aspect ratio. In any case,                                              this option guarantees that each output pixel corresponds to one RAW pixel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not stretch or rotate pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interpolate RGB as four colors&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The default is to assume that all green pixels are the same. If even-row green pixels are more sensitive to ultraviolet light than odd-row this difference causes a mesh                             pattern in the output; using this option solves this problem with minimal loss of detail.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To resume, this option blurs the image a little, but it eliminates false 2x2 mesh patterns with VNG quality method or mazes with AHD quality method.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interpolate RGB using 4 colours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>White Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3056,6 +3052,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Temperature (Kelvin)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3065,7 +3065,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Set here the green component to set magenta color cast removal level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3098,6 +3106,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3113,6 +3125,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Auto Brightness</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation>Jasność</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3141,15 +3157,6 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific white point value to decode RAW pictures. If you set this option to off, the White Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point value&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific black point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -3159,8 +3166,25 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific white point value to decode RAW pictures. If you set this option to off, the White Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point value&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific white point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NR and CA Correction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3177,16 +3201,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Threshold:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Threshold&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the noise reduction threshold value to use.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3221,91 +3245,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default Previews Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HDR TIFF Default File Format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temporary Working Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Batch Tonemapping Number of Threads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature (Kelvin)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Highlights</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Brightness</source>
-        <translation type="unfinished">Jasność</translation>
-    </message>
-    <message>
-        <source>Saturation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NR and CA Correction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Red Component</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Blue Component</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camera profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>align_image_stack command line arguments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Color Management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3317,6 +3261,14 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camera profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Printer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3325,28 +3277,24 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open ICC Profile</source>
+        <source>align_image_stack command line arguments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Browse...</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
     </message>
     <message>
-        <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saves the settings along the program files, to be portable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portable mode</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Restart</source>
@@ -3354,6 +3302,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>For the settings to take effect, please restart the application!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a directory</source>
+        <translation>Wybierz katalog</translation>
+    </message>
+    <message>
+        <source>Open ICC Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3366,14 +3326,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>ProjectionsDialog</name>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
-    </message>
     <message>
         <source>Projective Transformation</source>
         <translation type="unfinished"></translation>
@@ -3438,6 +3390,14 @@ p, li { white-space: pre-wrap; }
         <source>Roll:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
 </context>
 <context>
     <name>QApplication</name>
@@ -3457,23 +3417,23 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <source>All LDR formats</source>
+        <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save the LDR image as...</source>
+        <source>I cannot open monitor profile. Please select a different one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save as...</source>
+        <source>I cannot open printer profile. Please select a different one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All HDR formats </source>
+        <source>Please select a printer profile .</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save the HDR image as...</source>
+        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3482,6 +3442,138 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PreGamma=%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance Level=Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation>Saturacja</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation>Alfa</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation>Beta</translation>
+    </message>
+    <message>
+        <source>NoiseRedux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FFTSolver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation>Bias</translation>
+    </message>
+    <message>
+        <source>Spatial</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation>Zakres</translation>
+    </message>
+    <message>
+        <source>Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation>Mnożnik</translation>
+    </message>
+    <message>
+        <source>AutoLuminance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rod</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phi</source>
+        <translation>Phi</translation>
+    </message>
+    <message>
+        <source>Scales:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation>Jasność</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3521,155 +3613,23 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
+        <source>All LDR formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I cannot open monitor profile. Please select a different one.</source>
+        <source>Save the LDR image as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I cannot open printer profile. Please select a different one.</source>
+        <source>All HDR formats </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please select a printer profile .</source>
+        <source>Save the HDR image as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PreGamma=%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contrast Equalization</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contrast</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saturation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Detail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Luminance Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Luminance Level=Auto</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Color Saturation</source>
-        <translation type="unfinished">Saturacja</translation>
-    </message>
-    <message>
-        <source>Contrast Enhancement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="unfinished">Alfa</translation>
-    </message>
-    <message>
-        <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
-    </message>
-    <message>
-        <source>NoiseRedux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FFTSolver</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>simple</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equation 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equation 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Local</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
-    </message>
-    <message>
-        <source>Spatial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Range</source>
-        <translation type="unfinished">Zakres</translation>
-    </message>
-    <message>
-        <source>Base</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Multiplier</source>
-        <translation type="unfinished">Mnożnik</translation>
-    </message>
-    <message>
-        <source>AutoLuminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rod</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phi</source>
-        <translation type="unfinished">Phi</translation>
-    </message>
-    <message>
-        <source>Scales:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lower</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Upper</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Brightness</source>
-        <translation type="unfinished">Jasność</translation>
-    </message>
-    <message>
-        <source>Chromatic Adaptation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Light Adaptation</source>
+        <source>Save as...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3677,51 +3637,51 @@ p, li { white-space: pre-wrap; }
     <name>ResizeDialog</name>
     <message>
         <source>Scale Image</source>
-        <translation type="unfinished">Skaluj obraz</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="unfinished">Szrokość:</translation>
-    </message>
-    <message>
-        <source>Pixels</source>
-        <translation type="unfinished">Pikseli</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="unfinished">Procent</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="unfinished">Wysokość:</translation>
-    </message>
-    <message>
-        <source>Restore original size</source>
-        <translation type="unfinished">Przywróć oryginalny rozmiar</translation>
-    </message>
-    <message>
-        <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Reset</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
-    </message>
-    <message>
-        <source>&amp;Scale</source>
-        <translation type="unfinished">&amp;Skaluj</translation>
+        <translation>Skaluj obraz</translation>
     </message>
     <message>
         <source>Hdr Image Size</source>
-        <translation type="unfinished">Rozmiar obrazu Hdr</translation>
+        <translation>Rozmiar obrazu Hdr</translation>
     </message>
     <message>
-        <source>Result size</source>
-        <translation type="unfinished">Rozmiar wynikowy</translation>
+        <source>Width:</source>
+        <translation>Szrokość:</translation>
     </message>
     <message>
         <source>Switch between pixels or percentage</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pixels</source>
+        <translation>Pikseli</translation>
+    </message>
+    <message>
+        <source>Percent</source>
+        <translation>Procent</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Wysokość:</translation>
+    </message>
+    <message>
+        <source>Result size</source>
+        <translation>Rozmiar wynikowy</translation>
+    </message>
+    <message>
+        <source>Restore original size</source>
+        <translation>Przywróć oryginalny rozmiar</translation>
+    </message>
+    <message>
+        <source>&amp;Reset</source>
+        <translation>&amp;Reset</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
+    </message>
+    <message>
+        <source>&amp;Scale</source>
+        <translation>&amp;Skaluj</translation>
     </message>
 </context>
 <context>
@@ -3740,7 +3700,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Simple</source>
-        <translation type="unfinished">Prosty</translation>
+        <translation>Prosty</translation>
     </message>
     <message>
         <source>Equation 2</source>
@@ -3748,39 +3708,35 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Local Contrast Threshold</source>
-        <translation type="unfinished">Próg lokalnego kontrastu</translation>
-    </message>
-    <message>
-        <source>Pre-gamma</source>
-        <translation type="unfinished"></translation>
+        <translation>Próg lokalnego kontrastu</translation>
     </message>
     <message>
         <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
+        <translation>Bias</translation>
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation type="unfinished">Suma  przestrzeni jądra</translation>
+        <translation>Suma  przestrzeni jądra</translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation type="unfinished">Suma zakresu jądra</translation>
+        <translation>Suma zakresu jądra</translation>
     </message>
     <message>
         <source>Base Contrast</source>
-        <translation type="unfinished">Kontrast bazowy</translation>
+        <translation>Kontrast bazowy</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation type="unfinished">Alfa</translation>
+        <translation>Alfa</translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
+        <translation>Beta</translation>
     </message>
     <message>
         <source>Color Saturation</source>
-        <translation type="unfinished">Saturacja</translation>
+        <translation>Saturacja</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
@@ -3820,7 +3776,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cone and Rod based on Luminance</source>
-        <translation type="unfinished">Cone and Rod based on Luminance</translation>
+        <translation>Cone and Rod based on Luminance</translation>
     </message>
     <message>
         <source>Local Tonemapping</source>
@@ -3828,23 +3784,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cone Level</source>
-        <translation type="unfinished">Cone Level</translation>
+        <translation>Cone Level</translation>
     </message>
     <message>
         <source>Rod Level</source>
-        <translation type="unfinished">Rod Level</translation>
+        <translation>Rod Level</translation>
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished">Mnożnik</translation>
+        <translation>Mnożnik</translation>
     </message>
     <message>
         <source>Use Scales</source>
-        <translation type="unfinished">Użyj skali</translation>
+        <translation>Użyj skali</translation>
     </message>
     <message>
         <source>Key Value</source>
-        <translation type="unfinished">Wartość kluczowa</translation>
+        <translation>Wartość kluczowa</translation>
     </message>
     <message>
         <source>Phi Value</source>
@@ -3852,19 +3808,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Range</source>
-        <translation type="unfinished">Zakres</translation>
+        <translation>Zakres</translation>
     </message>
     <message>
         <source>Lower Scale</source>
-        <translation type="unfinished">Skala niższa</translation>
+        <translation>Skala niższa</translation>
     </message>
     <message>
         <source>Upper Scale</source>
-        <translation type="unfinished">Skala wyższa</translation>
+        <translation>Skala wyższa</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Jasność</translation>
+        <translation>Jasność</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
@@ -3872,6 +3828,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Light Adaptation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pre-gamma</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3930,143 +3890,31 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TonemappingPanel</name>
     <message>
-        <source>Load a tonemapping settings text file...</source>
-        <translation type="unfinished">Wczytaj ustawienia mapowania tonów...</translation>
+        <source>Tone mapping operators and their options</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Aborting...</source>
-        <translation type="unfinished">Przerywam...</translation>
+        <source>Start tonemapping (CTRL+T)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File is not readable (check existence, permissions,...)</source>
-        <translation type="unfinished">Nie można odczytać pliku (spradź czy istnieje, uprawnienia,...)</translation>
+        <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save tonemapping settings text file to...</source>
-        <translation type="unfinished">Zapisz plik z ustawieniami mapowania tonów... </translation>
-    </message>
-    <message>
-        <source>File is not writable (check permissions, path...)</source>
-        <translation type="unfinished">Nie można zapisać pliku (sprawdź uprawnienia, ścieżkę,...)</translation>
-    </message>
-    <message>
-        <source>File is not readable (check permissions, path...)</source>
-        <translation type="unfinished">Nie można odczytać pliku (sprawdź czy istnieje, ścieżkę,...)</translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="unfinished">Alfa</translation>
-    </message>
-    <message>
-        <source>Color Saturation</source>
-        <translation type="unfinished">Saturacja</translation>
-    </message>
-    <message>
-        <source>Simple</source>
-        <translation type="unfinished">Prosty</translation>
-    </message>
-    <message>
-        <source>Equation Number</source>
-        <translation type="unfinished">Liczba równań</translation>
-    </message>
-    <message>
-        <source>Eqn 2</source>
-        <translation type="unfinished">2 Równania</translation>
-    </message>
-    <message>
-        <source>Eqn 4</source>
-        <translation type="unfinished">4 Równania</translation>
-    </message>
-    <message>
-        <source>Local Contrast Threshold</source>
-        <translation type="unfinished">Próg lokalnego kontrastu</translation>
-    </message>
-    <message>
-        <source>Spatial Kernel Sigma</source>
-        <translation type="unfinished">Suma  przestrzeni jądra</translation>
-    </message>
-    <message>
-        <source>Range Kernel Sigma</source>
-        <translation type="unfinished">Suma zakresu jądra</translation>
-    </message>
-    <message>
-        <source>Base Contrast</source>
-        <translation type="unfinished">Kontrast bazowy</translation>
-    </message>
-    <message>
-        <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
-    </message>
-    <message>
-        <source>Multiplier</source>
-        <translation type="unfinished">Mnożnik</translation>
-    </message>
-    <message>
-        <source>Local Tone Mapping</source>
-        <translation type="unfinished">Lokalne mapowanie tonów</translation>
-    </message>
-    <message>
-        <source>Cone Level</source>
-        <translation type="unfinished">Cone Level</translation>
-    </message>
-    <message>
-        <source>Rod Level</source>
-        <translation type="unfinished">Rod Level</translation>
-    </message>
-    <message>
-        <source>Use Scales</source>
-        <translation type="unfinished">Użyj skali</translation>
-    </message>
-    <message>
-        <source>Key Value</source>
-        <translation type="unfinished">Wartość kluczowa</translation>
-    </message>
-    <message>
-        <source>Phi</source>
-        <translation type="unfinished">Phi</translation>
-    </message>
-    <message>
-        <source>Range</source>
-        <translation type="unfinished">Zakres</translation>
-    </message>
-    <message>
-        <source>Lower Scale</source>
-        <translation type="unfinished">Skala niższa</translation>
-    </message>
-    <message>
-        <source>Upper Scale</source>
-        <translation type="unfinished">Skala wyższa</translation>
-    </message>
-    <message>
-        <source>Brightness</source>
-        <translation type="unfinished">Jasność</translation>
-    </message>
-    <message>
-        <source>Load an existing text file containing pregamma and TMO settings</source>
-        <translation type="unfinished">Wczytaj plik tekstowy zawierający ustawienia pregamma oraz TMO</translation>
-    </message>
-    <message>
-        <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
-    </message>
-    <message>
-        <source>Restore pregamma&apos;s default value (1)</source>
-        <translation type="unfinished">Przywróć wstępne domyślne wartości gamma (1)</translation>
-    </message>
-    <message>
-        <source>Reinhard &apos;02</source>
-        <translation type="unfinished">Reinhard &apos;02</translation>
-    </message>
-    <message>
-        <source>Reinhard &apos;05</source>
-        <translation type="unfinished">Reinhard &apos;05</translation>
+        <source>&amp;Tonemap</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ctrl+T</source>
-        <translation type="unfinished">Ctrl+T</translation>
+        <translation>Ctrl+T</translation>
     </message>
     <message>
-        <source>Tone mapping operators and their options</source>
+        <source>Update current LDR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4090,6 +3938,14 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Reinhard &apos;02</source>
+        <translation>Reinhard &apos;02</translation>
+    </message>
+    <message>
+        <source>Reinhard &apos;05</source>
+        <translation>Reinhard &apos;05</translation>
+    </message>
+    <message>
         <source>Ashikhmin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4098,7 +3954,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contrast Equalization</source>
+        <source>Operator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4111,6 +3967,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Detail Factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4134,7 +3994,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Color Saturation</source>
+        <translation>Saturacja</translation>
+    </message>
+    <message>
         <source>Contrast Enhancement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable
+Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4142,8 +4011,64 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Alpha</source>
+        <translation>Alfa</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation>Beta</translation>
+    </message>
+    <message>
         <source>Noise Reduction</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version 2.3.0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation>Bias</translation>
+    </message>
+    <message>
+        <source>Spatial Kernel Sigma</source>
+        <translation>Suma  przestrzeni jądra</translation>
+    </message>
+    <message>
+        <source>Range Kernel Sigma</source>
+        <translation>Suma zakresu jądra</translation>
+    </message>
+    <message>
+        <source>Base Contrast</source>
+        <translation>Kontrast bazowy</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation>Wartość kluczowa</translation>
+    </message>
+    <message>
+        <source>Phi</source>
+        <translation>Phi</translation>
+    </message>
+    <message>
+        <source>Use Scales</source>
+        <translation>Użyj skali</translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation>Zakres</translation>
+    </message>
+    <message>
+        <source>Lower Scale</source>
+        <translation>Skala niższa</translation>
+    </message>
+    <message>
+        <source>Upper Scale</source>
+        <translation>Skala wyższa</translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation>Jasność</translation>
     </message>
     <message>
         <source>Chromatic Adaptation</source>
@@ -4154,6 +4079,46 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Local Contrast Threshold</source>
+        <translation>Próg lokalnego kontrastu</translation>
+    </message>
+    <message>
+        <source>Simple</source>
+        <translation>Prosty</translation>
+    </message>
+    <message>
+        <source>Equation Number</source>
+        <translation>Liczba równań</translation>
+    </message>
+    <message>
+        <source>Eqn 2</source>
+        <translation>2 Równania</translation>
+    </message>
+    <message>
+        <source>Eqn 4</source>
+        <translation>4 Równania</translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation>Mnożnik</translation>
+    </message>
+    <message>
+        <source>Local Tone Mapping</source>
+        <translation>Lokalne mapowanie tonów</translation>
+    </message>
+    <message>
+        <source>Auto Cone/Rod</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cone Level</source>
+        <translation>Cone Level</translation>
+    </message>
+    <message>
+        <source>Rod Level</source>
+        <translation>Rod Level</translation>
+    </message>
+    <message>
         <source>Restore operator&apos;s default values</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4162,23 +4127,19 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load saved parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save current parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Previous applied settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Next applied settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4198,7 +4159,31 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Save to File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load an existing text file containing pregamma and TMO settings</source>
+        <translation>Wczytaj plik tekstowy zawierający ustawienia pregamma oraz TMO</translation>
+    </message>
+    <message>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Load from File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save current parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load saved parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4210,6 +4195,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Result Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gamma applied before tonemapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pre-gamma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore pregamma&apos;s default value (1)</source>
+        <translation>Przywróć wstępne domyślne wartości gamma (1)</translation>
+    </message>
+    <message>
         <source>Size of the resulting LDR image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4218,27 +4219,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Custom LDR size</source>
+        <source>Set Custom Output Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gamma applied before tonemapping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start tonemapping (CTRL+T)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Tonemap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4251,68 +4236,43 @@ Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Load a tonemapping settings text file...</source>
+        <translation>Wczytaj ustawienia mapowania tonów...</translation>
+    </message>
+    <message>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation>Przerywam...</translation>
+    </message>
+    <message>
+        <source>File is not readable (check existence, permissions,...)</source>
+        <translation>Nie można odczytać pliku (spradź czy istnieje, uprawnienia,...)</translation>
+    </message>
+    <message>
+        <source>Save tonemapping settings text file to...</source>
+        <translation>Zapisz plik z ustawieniami mapowania tonów... </translation>
+    </message>
+    <message>
+        <source>File is not writable (check permissions, path...)</source>
+        <translation>Nie można zapisać pliku (sprawdź uprawnienia, ścieżkę,...)</translation>
+    </message>
+    <message>
+        <source>File is not readable (check permissions, path...)</source>
+        <translation>Nie można odczytać pliku (sprawdź czy istnieje, ścieżkę,...)</translation>
     </message>
     <message>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Custom LDR size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Enter the width of the new size:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update current LDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tonemap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Operator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable
-Luminace Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto Cone/Rod</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Save to File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Load from File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Result Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pre-gamma</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Custom Output Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version 2.3.0</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4359,31 +4319,35 @@ Luminace Level</source>
     <name>TransplantExifDialog</name>
     <message>
         <source>Copy Exif data</source>
-        <translation type="unfinished">Kopiuj dane EXIF</translation>
+        <translation>Kopiuj dane EXIF</translation>
     </message>
     <message>
-        <source>Move up selected file(s)</source>
-        <translation type="unfinished">Przenieś wyżej zaznaczone pliki</translation>
-    </message>
-    <message>
-        <source>Move down selected file(s)</source>
-        <translation type="unfinished">Przenieś niżej zaznaczone pliki</translation>
-    </message>
-    <message>
-        <source>Remove selected file(s) from the list</source>
-        <translation type="unfinished">Usuń zaznaczone pliki  z listy</translation>
+        <source>From</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Append files to the list</source>
-        <translation type="unfinished">Dołącz pliki do listy</translation>
+        <translation>Dołącz pliki do listy</translation>
     </message>
     <message>
-        <source>Select the input images</source>
-        <translation type="unfinished">Wybierz obrazy wejściowe</translation>
+        <source>Remove selected file(s) from the list</source>
+        <translation>Usuń zaznaczone pliki  z listy</translation>
     </message>
     <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Anuluj</translation>
+        <source>Move up selected file(s)</source>
+        <translation>Przenieś wyżej zaznaczone pliki</translation>
+    </message>
+    <message>
+        <source>Move down selected file(s)</source>
+        <translation>Przenieś niżej zaznaczone pliki</translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation>Logarytmiczna</translation>
     </message>
     <message>
         <source>Exif operations report</source>
@@ -4418,6 +4382,10 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
+    </message>
+    <message>
         <source>&amp;Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4426,20 +4394,12 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Select the input images</source>
+        <translation>Wybierz obrazy wejściowe</translation>
+    </message>
+    <message>
         <source>&amp;Done</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>From</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="unfinished">Logarytmiczna</translation>
     </message>
 </context>
 <context>
@@ -4477,11 +4437,11 @@ Luminace Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Click to download, or select Help-&gt;Update!</source>
+        <source>Do you want to open the webpage for download now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to open the webpage for download now?</source>
+        <source>Click to download, or select Help-&gt;Update!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
