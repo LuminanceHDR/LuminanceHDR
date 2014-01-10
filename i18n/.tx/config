@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+minimum_perc = 1
+
+[luminance-hdr.default]
+type = QT
+file_filter = lang_<lang>.ts
+source_file = source.ts
+source_lang = en
