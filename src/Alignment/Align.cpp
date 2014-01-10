@@ -38,7 +38,8 @@ Align::Align(HdrCreationItemContainer* data, bool fromCommadLine, int savingMode
     m_fromCommandLine(fromCommadLine),
     m_savingMode(savingMode),
     m_minLum(minLum),
-    m_maxLum(maxLum)
+    m_maxLum(maxLum),
+    m_ais(0)
 {
 }
 

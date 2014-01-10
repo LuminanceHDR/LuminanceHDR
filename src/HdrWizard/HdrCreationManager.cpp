@@ -361,6 +361,7 @@ void HdrCreationManager::cropItems(const QRect& ca)
         if (newimage == NULL)
             exit(1); // TODO: exit gracefully
         m_data[idx].qimage()->swap(*newimage);
+        delete newimage;
         int x_ul, y_ur, x_bl, y_br;
         ca.getCoords(&x_ul, &y_ur, &x_bl, &y_br);
         Frame* cropped = cut(m_data[idx].frame().get(), static_cast<size_t>(x_ul), static_cast<size_t>(y_ur), 

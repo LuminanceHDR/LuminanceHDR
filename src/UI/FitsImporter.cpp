@@ -56,6 +56,8 @@ FitsImporter::~FitsImporter()
 
 FitsImporter::FitsImporter(QWidget *parent)
     : QWizard(parent)
+    , m_width(0)
+    , m_height(0)
     , m_align(NULL)
     , m_ui(new Ui::FitsImporter)
 {
@@ -506,6 +508,7 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     Frame *rotated = pfs::rotate(rotatedHalf, true);
     m_data[index].frame()->swap(*rotated);
     delete rotatedHalf;
+    delete rotated;
     RefreshPreview refresh;
     refresh(m_data[index]);
     m_previewFrame->getLabel(index)->setPixmap(QPixmap::fromImage(*(m_data[index].qimage())));
