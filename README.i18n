@@ -3,14 +3,14 @@ This is the README file for translations (i18n) for Luminance HDR
 
 Contents
 ---------
-1. Introdution
+1. Introduction
 2. Operations
 
 
 1. Introduction
 ---------------------------------------------------------------------
 Translations can be managed either using the classical Qt approach or
-the Transfex (www.transifex.com) online platform. 
+the Transifex (www.transifex.com) online platform. 
 
 The Qt approach is implemented using a CMake option (UPDATE_TRANSLATIONS). If this
 is set to true, then the translations in the i18n directory are updated (using Qt's lupdate).
