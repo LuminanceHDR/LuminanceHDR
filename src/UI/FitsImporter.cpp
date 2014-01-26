@@ -29,9 +29,12 @@
 #include <QtConcurrentMap>
 #include <QtConcurrentFilter>
 #include <QDebug>
+#include <QImage>
+#include <QPixmap>
 
 #include <valarray> 
 
+#include <boost/scoped_ptr.hpp>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 
@@ -503,16 +506,18 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     m_ui->pushButtonClockwise->setEnabled(false);
     int index = m_previewFrame->getSelectedLabel();
-    Frame *toRotate = (m_data[index].frame()).get();
-    Frame *rotatedHalf = pfs::rotate(toRotate, true);
-    Frame *rotated = pfs::rotate(rotatedHalf, true);
+
+    boost::scoped_ptr<Frame> rotatedHalf(pfs::rotate(m_data[index].frame().get(), true));
+    boost::scoped_ptr<Frame> rotated(pfs::rotate(rotatedHalf.get(), true));
     m_data[index].frame()->swap(*rotated);
-    delete rotatedHalf;
-    delete rotated;
+    rotatedHalf.reset();
+    rotated.reset();
+
     RefreshPreview refresh;
     refresh(m_data[index]);
     m_previewFrame->getLabel(index)->setPixmap(QPixmap::fromImage(*(m_data[index].qimage())));
-    if (m_ui->pushButtonPreview->isChecked()) {
+    if (m_ui->pushButtonPreview->isChecked())
+    {
         m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
     }
     Channel *C = m_data[index].frame()->getChannel("X");
