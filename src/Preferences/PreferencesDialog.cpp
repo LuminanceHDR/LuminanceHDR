@@ -164,11 +164,12 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromIso639ToGuiIndex["it"]= 7;
 	fromIso639ToGuiIndex["hu"]= 8;
 	fromIso639ToGuiIndex["pl"]= 9;
-	fromIso639ToGuiIndex["ru"]=10;
-	fromIso639ToGuiIndex["ro"]=11;
-	fromIso639ToGuiIndex["fi"]=12;
-	fromIso639ToGuiIndex["tr"]=13;
-	fromIso639ToGuiIndex["zh"]=14;
+	fromIso639ToGuiIndex["pt_BR"]= 10;
+	fromIso639ToGuiIndex["ru"]=11;
+	fromIso639ToGuiIndex["ro"]=12;
+	fromIso639ToGuiIndex["fi"]=13;
+	fromIso639ToGuiIndex["tr"]=14;
+	fromIso639ToGuiIndex["zh"]=15;
 
 	fromGuiIndexToIso639[ 0]="cs";
 	fromGuiIndexToIso639[ 1]="da";
@@ -180,11 +181,12 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromGuiIndexToIso639[ 7]="it";
 	fromGuiIndexToIso639[ 8]="hu";
 	fromGuiIndexToIso639[ 9]="pl";
-	fromGuiIndexToIso639[10]="ru";
-	fromGuiIndexToIso639[11]="ro";
-	fromGuiIndexToIso639[12]="fi";
-	fromGuiIndexToIso639[13]="tr";
-    fromGuiIndexToIso639[14]="zh";
+	fromGuiIndexToIso639[10]="pt_BR";
+	fromGuiIndexToIso639[11]="ru";
+	fromGuiIndexToIso639[12]="ro";
+	fromGuiIndexToIso639[13]="fi";
+	fromGuiIndexToIso639[14]="tr";
+    fromGuiIndexToIso639[15]="zh";
 
     negcolor = LuminanceOptions().getViewerNegColor();
     infnancolor = LuminanceOptions().getViewerNanInfColor();

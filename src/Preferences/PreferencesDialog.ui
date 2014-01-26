@@ -397,6 +397,16 @@
              </item>
              <item>
               <property name="text">
+               <string notr="true">Português (Brasil)</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/new/prefix1/images/flags/BRA0001.PNG</normalon>
+               </iconset>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string notr="true">Русский</string>
               </property>
               <property name="icon">
