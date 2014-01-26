@@ -47,7 +47,7 @@
 #include "OsIntegration/osintegration.h"
 
 BatchHDRDialog::BatchHDRDialog(QWidget *p):
-QDialog(p),
+    QDialog(p),
     m_Ui(new Ui::BatchHDRDialog),
     m_numProcessed(0),
     m_processed(0),

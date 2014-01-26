@@ -29,6 +29,8 @@
 #define BATCHTMJOB_H
 
 #include <QThread>
+#include <QString>
+#include <QList>
 
 // Forward declaration
 class TonemappingOptions;
@@ -37,7 +39,8 @@ class BatchTMJob : public QThread
 {
     Q_OBJECT
 public:
-    BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder, QString ldr_output_format);
+    BatchTMJob(int thread_id, const QString& filename, const QList<TonemappingOptions*>* tm_options,
+               const QString& output_folder, const QString& ldr_output_format);
     virtual ~BatchTMJob();
 signals:
     void done(int thread_id);

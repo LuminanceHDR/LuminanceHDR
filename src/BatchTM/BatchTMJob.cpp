@@ -41,7 +41,7 @@
 #include <QImage>
 #include <QScopedPointer>
 
-BatchTMJob::BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder, QString format):
+BatchTMJob::BatchTMJob(int thread_id, const QString &filename, const QList<TonemappingOptions*>* tm_options, const QString &output_folder, const QString &format):
         m_thread_id(thread_id),
         m_file_name(filename),
         m_tm_options(tm_options),
