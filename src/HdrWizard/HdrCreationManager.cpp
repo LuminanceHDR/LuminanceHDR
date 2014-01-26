@@ -33,6 +33,7 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QColor>
+#include <QScopedPointer>
 #include <QtConcurrentMap>
 #include <QtConcurrentFilter>
 
@@ -354,21 +355,28 @@ void HdrCreationManager::applyShiftsToItems(const QList<QPair<int,int> >& hvOffs
 
 void HdrCreationManager::cropItems(const QRect& ca)
 {
-    //crop all frames and images
+    // crop all frames and images
     int size = m_data.size();
-    for (int idx = 0; idx < size; idx++) {
-        QImage *newimage = new QImage(m_data[idx].qimage()->copy(ca));
+    for (int idx = 0; idx < size; idx++)
+    {
+        boost::scoped_ptr<QImage> newimage(new QImage(m_data[idx].qimage()->copy(ca)));
         if (newimage == NULL)
+        {
             exit(1); // TODO: exit gracefully
+        }
         m_data[idx].qimage()->swap(*newimage);
-        delete newimage;
+        newimage.reset();
+
         int x_ul, y_ur, x_bl, y_br;
         ca.getCoords(&x_ul, &y_ur, &x_bl, &y_br);
-        Frame* cropped = cut(m_data[idx].frame().get(), static_cast<size_t>(x_ul), static_cast<size_t>(y_ur), 
-                                                        static_cast<size_t>(x_bl), static_cast<size_t>(y_br));
-        FramePtr shared(cropped);
-        m_data[idx].frame().swap(shared);
-    
+
+        FramePtr cropped(
+                    cut(m_data[idx].frame().get(),
+                        static_cast<size_t>(x_ul), static_cast<size_t>(y_ur),
+                        static_cast<size_t>(x_bl), static_cast<size_t>(y_br))
+                    );
+        m_data[idx].frame().swap(cropped);
+        cropped.reset();
     }
 }
 
