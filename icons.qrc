@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/new/prefix1">
+    <file>images/flags/BRA0001.PNG</file>
     <file>images/vcs-update-required.png</file>
     <file>images/flags/DK.PNG</file>
     <file>images/button_add.png</file>
