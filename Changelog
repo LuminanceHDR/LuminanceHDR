@@ -1,3 +1,18 @@
+Changes .next
+* New Portuguese (Brazil) translation
+
+
+Changes 2.4.0
+NEW: Automatic anti-ghosting and improved manual anti-ghosting
+NEW: FITS Importer to merge and tonemap astronomic images
+NEW: Automatic white-balance for both HDRs and LDRs
+NEW: Windows: integration into the operating system (jumplist, progress bar)
+* HDR Creation with small UX improvements
+* switch to Qt5
+* refactored code base for a future libHDR library
+[Exif] Compute Average Luminance from Exposure Bias
+?? [Debevec] first working version of Debevec radiance map construction algorithm (to be refined)
+
 Changes 2.3.1
 * Automatically Update Checker
 * Update libraries (in particular, LibRAW)
