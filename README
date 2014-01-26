@@ -1,7 +1,7 @@
 This is the README file for Luminance HDR
 -------------------------------------------------------------------
 Copyright (C)  	2006-2010, Giuseppe Rota <grota@users.sourceforge.net>
-				2010-2011, Davide Anastasia <davideanastasia@users.sourceforge.net>
+				2010-2014, Davide Anastasia <davideanastasia@users.sourceforge.net>
 							Franco Comida <fcomida@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net
 Sourceforge:   http://sourceforge.net/projects/qtpfsgui
@@ -11,23 +11,22 @@ Contents
 1. What it is
 2. Dependencies
 3. Compiling the sources
-4. Workflow in the gui
 5. Contact and Links
 
 1. What it is
 ---------------------------------------------------------------------
-This is a graphical user interface (based on the Qt4 toolkit) that
-provides a workflow for HDR imaging.
+Luminance HDR is a graphical user interface (based on the Qt5 toolkit) that provides a
+workflow for HDR imaging.
 
 Supported HDR formats:
-* OpenEXR (extension: exr, linux and Mac OS X only)
+* OpenEXR (extension: exr)
 * Radiance RGBE (extension: hdr)
 * Tiff formats: 16bit, 32bit (float) and LogLuv (extension: tiff)
 * Raw image formats (extension: various)
 * PFS native format (extension: pfs)
 
 Supported LDR formats:
-* JPEG, PNG, PPM, PBM, TIFF
+* JPEG, PNG, PPM, PBM, TIFF, FITS
 
 Supported features:
 * Create an HDR file from a set of images (JPEG, TIFF 8bit and 16bit, RAW)
@@ -39,9 +38,11 @@ of the same scene taken at different exposure setting
 * Copy EXIF data between sets of images
 * Supports internationalization
 
-Raw image formats are supported -and treated as HDRs- thanks to LibRAW (http://www.libraw.org/).
+Raw image formats are supported - and treated as HDRs - thanks to LibRAW
+(http://www.libraw.org/).
 
-Make sure you read the "Dependencies" Section in the INSTALL file. If you intend to make a package for a GNU/Linux distribution, please refer to the same file for more information.
+Make sure you read the "Dependencies" Section in the INSTALL file. If you intend to make a
+package for a GNU/Linux distribution, please refer to the same file for more information.
 
 The code is in part based on the existing open source packages:
 - "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -57,67 +58,12 @@ Please, refer to the INSTALL file
 -------------------------------------------------------------------
 Please, refer to the INSTALL file
 
-4. Workflow in the gui
--------------------------------------------------------------------
-See also the online help:
-Help->Documentation...
-
-Here I'll only describe the basic workflow in Luminance.
-
-From the main window you can see the buttons that enable the user
-to work on HDR images:
-
-"New Hdr..." launches a wizard that asks you to select the set of images
-(of the same scene, but taken at different exposures) that are going
-to contribute to the final hdr (supported input: jpeg and raw).
-The wizard will also ask you which kind of configuration you want to use
-to create the hdr from the source images: usually the first choice leads
-to good results, so feel free to accept the default "Config 1" option
-by pressing next.
-Only if you feel that the results can be improved you can try one of
-the other predefined configurations.
-If you want to fiddle with settings you can check the "custom" option and
-another page of the wizard will show up with a complete set of configurations.
-It is worth mentioning that you should use the custom option as a
-last resort because the predefined configurations (which are a sub-set of the
-all possible configurations you can have in the custom configuration panel)
-are known to yield good results.
-The anti-ghosting feature is still beta (even buggy), and very cpu demanding.
-
-"Save Hdr as...", "Open Hdr..." and "Tonemap the Hdr...":
-Once the hdr is loaded into the main workspace you can choose to rotate it,
-resize it, save it (in one of the HDR supported formats) or to tonemap it.
-
-Through "Open Hdr..." you can also choose to open an existing HDR image 
-format and load it into the workspace. The user can now load also a raw image file.
-
-Clicking on the tonemap button will pop up a dialog that will enable you
-to tonemap your HDR image and save to one of the plain LDR formats,
-like PNG or JPEG.
-
-The tonemapping dialog consists in a series of tabs (and related settings).
-Each tab pertains to a different tonemapping operator (TMO).
-You can also choose a working size different from the original
-one (the TMO will be faster: this is useful for getting
-a quick peek at the results of the current settings).
-
-After you're satisfied with the results you can press the save
-button to save the results to one of the plain LDR formats,
-like PNG or JPEG.
-
-NOTE:
-The tonemapping step works like this (as a pipeline, some people would say):
-(pre)gamma -> tonemapping operator
-The tonemapping operator transforms an HDR into a LDR.
-The pregamma changes the gamma in the HDR before the tonemapping:
-depending on the chosen tonemapping operator it can yield
-unexpected effects like changing color saturation.
-
-5. Contact and Links
+4. Contact and Links
 -------------------------------------------------------------------
 All comments and suggestions concerning this package or implementation
-of particular algorithm are welcome. Please report bugs and
-comments to Davide Anastasia <davideanastasia@users.sourceforge.net>.
+of particular algorithm are welcome.
+
+For bugs, or feature request, please refer to the BUGS file
 
 See also:
 PFStools:
@@ -128,6 +74,3 @@ http://www.mpii.mpg.de/resources/tmo/
 
 PFScalibration:
 http://www.mpii.mpg.de/resources/hdr/calibration/pfs.html
-
-Dcraw: used for raw images support.
-http://cybercom.net/~dcoffin/dcraw/
