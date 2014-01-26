@@ -44,14 +44,11 @@ Align::Align(HdrCreationItemContainer* data, bool fromCommadLine, int savingMode
 }
 
 Align::~Align()
-{
-    if (m_ais)
-        delete m_ais;
-}
+{}
 
 void Align::align_with_ais(bool ais_crop_flag)
 {
-    m_ais = new QProcess(this);
+    m_ais.reset(new QProcess(this));
     if (m_ais == NULL) exit(1);       // TODO: exit gracefully
     if (!m_fromCommandLine) {
         m_ais->setWorkingDirectory(m_luminance_options.getTempDir());
@@ -62,9 +59,9 @@ void Align::align_with_ais(bool ais_crop_flag)
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
     m_ais->setEnvironment(env);
 #endif
-    connect(m_ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
-    connect(m_ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
-    connect(m_ais, SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(m_ais.data(), SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
+    connect(m_ais.data(), SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
+    connect(m_ais.data(), SIGNAL(readyRead()), this, SLOT(readData()));
     
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
 

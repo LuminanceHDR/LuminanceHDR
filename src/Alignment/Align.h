@@ -27,6 +27,7 @@
 #include <QProcess>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QScopedPointer>
 
 #include "Common/LuminanceOptions.h"
 #include "HdrWizard/HdrCreationItem.h"
@@ -61,7 +62,7 @@ protected:
     int m_savingMode;
     float m_minLum;
     float m_maxLum;
-    QProcess *m_ais;
+    QScopedPointer<QProcess> m_ais;
     LuminanceOptions m_luminance_options;
     QFutureWatcher<void> m_futureWatcher;
 };
