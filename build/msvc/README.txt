@@ -36,8 +36,12 @@ This build process requires:
              (Change lib64 to lib for the x32 build)
              
              > set path=%path%;C:\Data\Programs\ruby-1.9.3-p385-i386-mingw32\bin
-             > configure -release -mp -nomake tests -nomake examples -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-avx2
+             > configure -release -opengl desktop -no-compile-examples -mp -nomake tests -nomake examples -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-avx2
              > nmake
+             > cd qtwebkit
+             > nmake
+             > cd ..
+             > nmake install_subtargets
              > nmake -f Makefile confclean
              > del /S /Q *.obj
              This recompiles the whole Qt and takes from 30 minutes to several hours...

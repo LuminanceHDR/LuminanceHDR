@@ -2,11 +2,10 @@
 SETLOCAL
 
 REM  http://dev.exiv2.org/projects/exiv2/repository/
-SET EXIV2_COMMIT=3212
+SET EXIV2_COMMIT=3243
 
-REM  sourceforge.net/p/libjpeg-turbo/code/
+REM  http://sourceforge.net/p/libjpeg-turbo/code/
 SET LIBJPEG_COMMIT=1093
-
 
 rem  https://github.com/madler/zlib/commits
 SET ZLIB_COMMIT_LONG=50893291621658f355bc5b4d450a8d06a563053d
@@ -21,7 +20,7 @@ rem https://github.com/mm2/Little-CMS
 SET LCMS_COMMIT_LONG=579b3aad051b9fcf858ea308f9d8f6714f84c7a8
 
 rem https://github.com/LibRaw/LibRaw
-SET LIBRAW_COMMIT_LONG=8db38a63b69a1fedee1790cae8306828eda8795e
+SET LIBRAW_COMMIT_LONG=c730a9e4c517eb2947e47f6f9749a9da41d127d4
 SET LIBRAW_DEMOS2_COMMIT_LONG=ffea825e121e92aa780ae587b65f80fc5847637c
 SET LIBRAW_DEMOS3_COMMIT_LONG=f0895891fdaa775255af02275fce426a5bf5c9fc
 
@@ -178,7 +177,7 @@ IF NOT EXIST vcDlls\selected (
 
 IF NOT EXIST %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/hugin-%HUGIN_VER%-%RawPlatform%.zip qtpfsgui.sourceforge.net/win/hugin-%HUGIN_VER%-%RawPlatform%.zip
-	)
+)
 IF NOT EXIST hugin-%HUGIN_VER%-%RawPlatform% (
     %CYGWIN_DIR%\bin\unzip.exe -o -q -d hugin-%HUGIN_VER%-%RawPlatform% %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip
 )
@@ -244,9 +243,10 @@ IF NOT EXIST exiv2-%EXIV2_COMMIT% (
 
 IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
     %CYGWIN_DIR%\bin\svn.exe co -r %LIBJPEG_COMMIT% svn://svn.code.sf.net/p/libjpeg-turbo/code/trunk libjpeg-turbo-%LIBJPEG_COMMIT%
-    IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT%.build (
-        mkdir libjpeg-turbo-%LIBJPEG_COMMIT%.build
-    )
+)
+IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT%.build (
+    mkdir libjpeg-turbo-%LIBJPEG_COMMIT%.build
+
 	pushd libjpeg-turbo-%LIBJPEG_COMMIT%.build
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" -DWITH_JPEG8=TRUE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	IF errorlevel 1 goto error_end
@@ -437,41 +437,35 @@ IF NOT EXIST %TEMP_DIR%\OpenEXR-dk-%OPENEXR_COMMIT%.zip (
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT% (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe danielkaneider-openexr-* OpenEXR-dk-%OPENEXR_COMMIT%
-
-	pushd OpenEXR-dk-%OPENEXR_COMMIT%
-
-    IF NOT EXIST IlmBase.build (
-        mkdir IlmBase.build
-    )
-	pushd IlmBase.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=output -DZLIB_ROOT=..\..\zlib-%ZLIB_COMMIT%;..\..\zlib-%ZLIB_COMMIT%\%Configuration% -DBUILD_SHARED_LIBS=OFF ../IlmBase 
-	IF errorlevel 1 goto error_end
-	%VSCOMMAND% IlmBase.sln /build "%Configuration%|%Platform%"
-	IF errorlevel 1 goto error_end
-	%VSCOMMAND% IlmBase.sln /build "%Configuration%|%Platform%" /Project INSTALL
-	IF errorlevel 1 goto error_end
-	popd
-	
-    rem copy IlmBase\Half\halfExport.h IlmBase.build\output\include\OpenEXR
-    
-    IF NOT EXIST OpenEXR.build (
-        mkdir OpenEXR.build
-    )
-      
-	pushd OpenEXR.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ^
-        -DZLIB_ROOT=..\..\zlib-%ZLIB_COMMIT%;..\..\zlib-%ZLIB_COMMIT%\%Configuration% ^
-        -DILMBASE_PACKAGE_PREFIX=%CD%\OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build\output -DBUILD_SHARED_LIBS=OFF ^
-        -DCMAKE_INSTALL_PREFIX=output ^
-        ../OpenEXR
-	IF errorlevel 1 goto error_end
-	%VSCOMMAND% OpenEXR.sln /build "%Configuration%|%Platform%" /Project IlmImf
-	IF errorlevel 1 goto error_end
-    %VSCOMMAND% OpenEXR.sln /build "%Configuration%|%Platform%" /Project INSTALL
-	IF errorlevel 1 goto error_end
-	popd
 )
-    
+IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build (
+    mkdir OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build
+    pushd OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build
+
+    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=..\output -DZLIB_ROOT=..\..\zlib-%ZLIB_COMMIT%;..\..\zlib-%ZLIB_COMMIT%\%Configuration% -DBUILD_SHARED_LIBS=OFF ../IlmBase 
+    IF errorlevel 1 goto error_end
+    %VSCOMMAND% IlmBase.sln /build "%Configuration%|%Platform%"
+    IF errorlevel 1 goto error_end
+    %VSCOMMAND% IlmBase.sln /build "%Configuration%|%Platform%" /Project INSTALL
+    IF errorlevel 1 goto error_end
+    popd
+)
+IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build (
+    mkdir OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build
+    pushd OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build
+    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ^
+        -DZLIB_ROOT=..\..\zlib-%ZLIB_COMMIT%;..\..\zlib-%ZLIB_COMMIT%\%Configuration% ^
+        -DILMBASE_PACKAGE_PREFIX=%CD%\OpenEXR-dk-%OPENEXR_COMMIT%\output -DBUILD_SHARED_LIBS=OFF ^
+        -DCMAKE_INSTALL_PREFIX=..\output ^
+        ../OpenEXR
+    IF errorlevel 1 goto error_end
+    %VSCOMMAND% OpenEXR.sln /build "%Configuration%|%Platform%" /Project IlmImf
+    IF errorlevel 1 goto error_end
+    %VSCOMMAND% OpenEXR.sln /build "%Configuration%|%Platform%" /Project INSTALL
+    IF errorlevel 1 goto error_end
+    popd
+)
+
 IF %Platform% EQU Win32 (
 	IF NOT EXIST %TEMP_DIR%\fftw-3.3.3-dll32.zip (
 		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.3-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.3-dll32.zip
@@ -594,7 +588,7 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	mkdir bin
 	popd
 	
-	for %%v in ("libpng", "libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl", "CCfits") do (
+	for %%v in ("libpng", "libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "fftw3", "gsl", "CCfits") do (
 		mkdir LuminanceHdrStuff\DEPs\include\%%v
 		mkdir LuminanceHdrStuff\DEPs\lib\%%v
 		mkdir LuminanceHdrStuff\DEPs\bin\%%v
@@ -602,13 +596,6 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
 
-    
-    copy OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build\output\include\OpenEXR\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
-    copy OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build\output\lib\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
-    copy OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build\output\include\OpenEXR\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
-    copy OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build\output\lib\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
-    
-    
 	mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
 	copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
 	copy gsl-1.15\build.vc10\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\gsl
@@ -674,8 +661,8 @@ IF %OPTION_LUPDATE_NOOBSOLETE% EQU 1 (
 	set CMAKE_OPTIONS=%CMAKE_OPTIONS% -ULUPDATE_NOOBSOLETE
 )
 
-set L_CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-%ZLIB_COMMIT%;..\..\boost_1_%BOOST_MINOR%_0
-set L_CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-%ZLIB_COMMIT%\%Configuration%;..\..\boost_1_%BOOST_MINOR%_0\stage\lib
+set L_CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-%ZLIB_COMMIT%;..\..\boost_1_%BOOST_MINOR%_0;..\..\OpenEXR-dk-%OPENEXR_COMMIT%\output\include;
+set L_CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-%ZLIB_COMMIT%\%Configuration%;..\..\boost_1_%BOOST_MINOR%_0\stage\lib;..\..\OpenEXR-dk-%OPENEXR_COMMIT%\output\lib
 set L_CMAKE_PROGRAM_PATH=%CYGWIN_DIR%\bin
 set L_CMAKE_PREFIX_PATH=%QTDIR%
 set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include\exiv2 -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH% -DCMAKE_PREFIX_PATH=%L_CMAKE_PREFIX_PATH% -DPNG_NAMES=libpng16;libpng17
@@ -710,11 +697,6 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
         robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% exiv2.dll >nul
         robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% zlib.dll >nul
         robocopy exiv2 ..\..\qtpfsgui.build\%ConfigurationLuminance% expat.dll >nul
-        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% Half.dll >nul
-        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% Iex.dll >nul
-        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% IlmImf.dll >nul
-        robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% IlmThread.dll >nul
-        REM robocopy OpenEXR ..\..\qtpfsgui.build\%ConfigurationLuminance% zlib.dll >nul
         robocopy libraw ..\..\qtpfsgui.build\%ConfigurationLuminance% libraw.dll >nul
         robocopy fftw3 ..\..\qtpfsgui.build\%ConfigurationLuminance% libfftw3f-3.dll >nul
         robocopy libpng ..\..\qtpfsgui.build\%ConfigurationLuminance% libpng17.dll >nul
@@ -757,8 +739,6 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
         robocopy hugin-%HUGIN_VER%-%RawPlatform% LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\hugin /MIR >nul
 	)
 )
-
-
 
 goto end
 
