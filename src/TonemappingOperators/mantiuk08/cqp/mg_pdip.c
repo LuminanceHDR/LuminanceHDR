@@ -116,7 +116,7 @@ mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y
 		double *gap, double *residuals_norm, double *data_norm, double *infeasibility, double *infeasibility_min)
 {
     int status;
-	size_t i, j, debug=0;
+	size_t i, j = 0; //, debug=0;
 	
 	
 	mg_pdip_state *state = (mg_pdip_state *) vstate;        
@@ -179,21 +179,21 @@ mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y
 	state->delta_alpha = 0.1;
 	state->gamma = 0.1;
 
-	if(debug)
-	{
-		printf("\nStart points:\n");
-		print_vectors(x, y, z, state->s);
-		printf("\nDuality gap: %e\n",*gap);
-		
-		printf("\nKKT-matrix:\n");	
-		for(i=0; i<state->kkt_matrix->size1; i++)
-		{
-			for(j=0; j<state->kkt_matrix->size2; j++)
-				printf("%4.2f ",gsl_matrix_get(state->kkt_matrix,i,j));
-			printf("\n");
-		}
-		printf("\n");
-	}
+//	if(debug)
+//	{
+//		printf("\nStart points:\n");
+//		print_vectors(x, y, z, state->s);
+//		printf("\nDuality gap: %e\n",*gap);
+//		
+//		printf("\nKKT-matrix:\n");	
+//		for(i=0; i<state->kkt_matrix->size1; i++)
+//		{
+//			for(j=0; j<state->kkt_matrix->size2; j++)
+//				printf("%4.2f ",gsl_matrix_get(state->kkt_matrix,i,j));
+//			printf("\n");
+//		}
+//		printf("\n");
+//	}
 	
   return GSL_SUCCESS;
 }
@@ -203,7 +203,7 @@ static int
 mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y, gsl_vector *z,
                   double *gap, double *residuals_norm, double *infeasibility, double *infeasibility_min)
 {
-	size_t i, j, debug=0;
+	size_t i, j = 0; //, debug=0;
 	int status, signum;
 	double sigma, alpha, alpha_gondzio;
 	double tmp_v, tmp_vt, tmp_d;
@@ -302,23 +302,23 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 	alpha = step_length(state->s, z, delta_s, &delta_block.vector);
 
 	
-	if(debug)
-	{
-		printf("\n *** Predictor Step ***\n");
-		printf("\nthe right-hand side of the KKT-system:\n");
-		for(i=0; i<state->r->size; i++)
-			printf("r[%lu]=%f ",i,gsl_vector_get(state->r,i));
-		printf("\n");	
-		printf("\nsolution (delta_x,-delta_y,-delta_z):\n");
-		for(i=0; i<delta->size; i++)
-			printf("%6.3f ",gsl_vector_get(delta,i));
-		printf("\n");
-		printf("\ndelta_s\n");
-		for(i=0; i<delta_s->size; i++)
-			printf("%6.3f ",gsl_vector_get(delta_s,i));
-		printf("\n");
-		printf("the stepsize for the predictor step=%f\n",alpha);
-	}
+//	if(debug)
+//	{
+//		printf("\n *** Predictor Step ***\n");
+//		printf("\nthe right-hand side of the KKT-system:\n");
+//		for(i=0; i<state->r->size; i++)
+//			printf("r[%lu]=%f ",i,gsl_vector_get(state->r,i));
+//		printf("\n");	
+//		printf("\nsolution (delta_x,-delta_y,-delta_z):\n");
+//		for(i=0; i<delta->size; i++)
+//			printf("%6.3f ",gsl_vector_get(delta,i));
+//		printf("\n");
+//		printf("\ndelta_s\n");
+//		for(i=0; i<delta_s->size; i++)
+//			printf("%6.3f ",gsl_vector_get(delta_s,i));
+//		printf("\n");
+//		printf("the stepsize for the predictor step=%f\n",alpha);
+//	}
 		
 	
 	
@@ -333,8 +333,8 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 	sigma /= (cqp->C->size1*(*gap));
 	sigma = pow(sigma, state->tau);
 	
-	if(debug)
-		printf("the centering parameter sigma =%f\n",sigma);
+//	if(debug)
+//		printf("the centering parameter sigma =%f\n",sigma);
 	
 	
 	/************  Corrector Step ******************/
@@ -364,22 +364,22 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 	delta_block = gsl_vector_subvector(delta, cqp->Q->size1+cqp->A->size1, cqp->C->size1);
 	alpha = step_length(state->s, z, delta_s, &delta_block.vector);
 	
-	if(debug)
-	{
-		printf("\n *** Corrector Step ***\n");
-		printf("the right-hand side:\n");
-		for(i=0; i<state->r->size; i++)
-			printf("r[%lu]=%f ",i,gsl_vector_get(state->r,i));
-		printf("\n");
-		for(i=0; i<delta->size; i++)
-			printf("%6.3f ",gsl_vector_get(delta,i));
-		printf("\n");
-		printf("\ndelta_s\n");
-		for(i=0; i<delta_s->size; i++)
-			printf("%6.3f ",gsl_vector_get(delta_s,i));
-		printf("\n");
-		printf("the stepsize for the corrector step=%f\n",alpha);
-	}
+//	if(debug)
+//	{
+//		printf("\n *** Corrector Step ***\n");
+//		printf("the right-hand side:\n");
+//		for(i=0; i<state->r->size; i++)
+//			printf("r[%lu]=%f ",i,gsl_vector_get(state->r,i));
+//		printf("\n");
+//		for(i=0; i<delta->size; i++)
+//			printf("%6.3f ",gsl_vector_get(delta,i));
+//		printf("\n");
+//		printf("\ndelta_s\n");
+//		for(i=0; i<delta_s->size; i++)
+//			printf("%6.3f ",gsl_vector_get(delta_s,i));
+//		printf("\n");
+//		printf("the stepsize for the corrector step=%f\n",alpha);
+//	}
 	
 	
 	/* Gondzio's centrality correction steps */
@@ -460,13 +460,13 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 	*infeasibility_min = GSL_MIN_DBL(*infeasibility, *infeasibility_min);
 
 	
-	if(debug)
-	{
-		printf("current iteration points\n");
-		print_vectors(x, y, z, state->s);
-	
-		printf("\nduality gap: %e\n",*gap);
-	}
+//	if(debug)
+//	{
+//		printf("current iteration points\n");
+//		print_vectors(x, y, z, state->s);
+//	
+//		printf("\nduality gap: %e\n",*gap);
+//	}
 	
 	gsl_permutation_free(p);
 	gsl_vector_free(delta);
