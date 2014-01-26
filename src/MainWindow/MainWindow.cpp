@@ -1934,6 +1934,7 @@ void MainWindow::whiteBalanceDone()
     m_Ui->actionWhite_Balance->setEnabled(true);
     m_viewerToProcess->setEnabled(true);
     m_tabwidget->setTabEnabled(m_tabwidget->indexOf(m_viewerToProcess), true);
+    m_tabwidget->setCurrentWidget(m_viewerToProcess);
     m_processingAWB = false;
     m_viewerToProcess->updatePixmap();
     if (m_viewerToProcess->isHDR()) {
