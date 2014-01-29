@@ -537,16 +537,6 @@ void LuminanceOptions::setBatchHdrPathOutput(const QString& qstr)
     m_settingHolder->setValue(KEY_BATCH_HDR_PATH_OUTPUT, qstr);
 }
 
-bool LuminanceOptions::isSaveLogLuvTiff()
-{
-    return m_settingHolder->value(KEY_SAVE_LOGLUV, true).toBool();
-}
-
-void LuminanceOptions::setSaveLogLuvTiff(bool b)
-{
-    m_settingHolder->setValue(KEY_SAVE_LOGLUV, b);
-}
-
 QString LuminanceOptions::getBatchTmPathHdrInput()
 {
     return m_settingHolder->value(KEY_BATCH_TM_PATH_INPUT,

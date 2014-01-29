@@ -99,13 +99,9 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
 
     // add parameters for TiffWriter HDR
     pfs::Params writerParams(params);
-    if ( !writerParams.count("tiff_mode") ) {
-        LuminanceOptions lumOpts;
-        if ( lumOpts.isSaveLogLuvTiff() ) {
-            writerParams.set( "tiff_mode", 3 );
-        } else {
-            writerParams.set( "tiff_mode", 2 );
-        }
+    if (!writerParams.count("tiff_mode"))
+    {
+        writerParams.set("tiff_mode", 2);
     }
 
     try

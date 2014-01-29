@@ -30,7 +30,7 @@
 #define LUMINANCEORGANIZATION "Luminance"
 #define LUMINANCEAPPLICATION "Luminance"
 
-#define LUMINANCEVERSION "@LHDR_VERSION@" // "2.3.0"
+#define LUMINANCEVERSION "@LHDR_VERSION@"
 
 #define LUMINANCEVERSION_NUM @LHDR_VERSION_MAJOR@0@LHDR_VERSION_MINOR@0099  // <MAJOR:1+><MINOR:2><SERVICE:2><PRIVATE:2>
 #ifdef WIN32
@@ -49,8 +49,6 @@
 
 #define KEY_NANINFCOLOR "HDR_visualization/nan_inf_color"
 #define KEY_NEGCOLOR "HDR_visualization/neg_color"
-
-#define KEY_SAVE_LOGLUV "TIFF_Options/TiffSaveLogLuv"
 
 #define KEY_TMOWINDOW_PREVIEWS_WIDTH "TMOWindow_Options/TMOWindow_PreviewsWidth"
 #define KEY_TMOWINDOW_MAX "TMOWindow_Options/TMOWindow_Max"

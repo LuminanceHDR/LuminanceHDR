@@ -169,11 +169,6 @@ public Q_SLOTS:
     int     getNumThreads() { return getBatchTmNumThreads(); }
     void    setNumThreads(int i) { setBatchTmNumThreads(i); }
 
-    // TIFF mode
-    // if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
-    bool    isSaveLogLuvTiff();
-    void    setSaveLogLuvTiff(bool);
-
     // Default Paths
     // Path to save temporary cached files
     QString getTempDir();

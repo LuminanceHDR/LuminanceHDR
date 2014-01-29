@@ -260,7 +260,6 @@ void PreferencesDialog::on_okButton_clicked()
 
     // --- Other Parameters
     luminance_options.setAlignImageStackOptions( sanitizeAISparams( m_Ui->aisParamsLineEdit->text() ) );
-    luminance_options.setSaveLogLuvTiff( m_Ui->logLuvRadioButton->isChecked() );
 
     // --- RAW parameters
     luminance_options.setRawFourColorRGB( m_Ui->four_color_rgb_CB->isChecked() );
@@ -621,8 +620,6 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->numThreadspinBox->setValue( luminance_options.getBatchTmNumThreads() );
 
     m_Ui->aisParamsLineEdit->setText( luminance_options.getAlignImageStackOptions().join(" ") );
-    m_Ui->logLuvRadioButton->setChecked(luminance_options.isSaveLogLuvTiff());
-    m_Ui->floatTiffRadioButton->setChecked(!luminance_options.isSaveLogLuvTiff());
 
     change_color_of(*m_Ui->negativeColorButton, negcolor);
     change_color_of(*m_Ui->ifnanColorButton, infnancolor);
@@ -747,17 +744,17 @@ void PreferencesDialog::enterWhatsThis()
 	QWhatsThis::enterWhatsThisMode();
 }
 
-void PreferencesDialog::on_camera_toolButton_clicked()
+void PreferencesDialog::on_camera_pushButton_clicked()
 {
     openColorProfile(m_Ui->camera_lineEdit);
 }
 
-void PreferencesDialog::on_monitor_toolButton_clicked()
+void PreferencesDialog::on_monitor_pushButton_clicked()
 {
     openColorProfile(m_Ui->monitor_lineEdit);
 }
 
-void PreferencesDialog::on_printer_toolButton_clicked()
+void PreferencesDialog::on_printer_pushButton_clicked()
 {
     openColorProfile(m_Ui->printer_lineEdit);
 }
