@@ -116,19 +116,26 @@ QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget
                                         filetypes);
 }
 
-QString getHdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget* parent = 0)
+QString getHdrFileNameFromSaveDialog(QString suggestedFileName, QWidget* parent = 0)
 {
-    QString filetypes = QObject::tr("All HDR formats ");
-    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
-    filetypes += "OpenEXR (*.exr *.EXR);;" ;
-    filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
-    filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
-    filetypes += "PFS Stream (*.pfs *.PFS)";
+    static const QString filetypes =
+            "OpenEXR (*.exr *.EXR);;"
+            "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;"
+            "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;"
+            "PFS Stream (*.pfs *.PFS)";
 
-    return QFileDialog::getSaveFileName(parent,
-                                        QObject::tr("Save the HDR image as..."),
-                                        LuminanceOptions().getDefaultPathHdrOut() + "/" + suggested_file_name,
-                                        filetypes);
+    // get rid of the extension, if any
+    int pos = suggestedFileName.indexOf(".");
+    if (pos != -1)
+    {
+        suggestedFileName.truncate(pos);
+    }
+
+    return QFileDialog::getSaveFileName
+            (parent,
+             QObject::tr("Save the HDR image as..."),
+             LuminanceOptions().getDefaultPathHdrOut() + QDir::separator() + suggestedFileName,
+             filetypes);
 }
 
 void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
