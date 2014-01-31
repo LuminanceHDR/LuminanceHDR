@@ -40,7 +40,7 @@ TEST(TestVexDotProduct, SmallSize)
     std::generate(inputVector.begin(), inputVector.end(), &myRand);
 
     float avg = std::inner_product(inputVector.begin(), inputVector.end(),
-                                   inputVector.begin(), 0.0f);
+                                   inputVector.begin(), (double)0.0);
 
     float avgVex = dotProduct(inputVector.data(), inputVector.size());
 
@@ -53,7 +53,7 @@ TEST(TestVexDotProduct, MediumSize)
     std::generate(inputVector.begin(), inputVector.end(), &myRand);
 
     float avg = std::inner_product(inputVector.begin(), inputVector.end(),
-                                   inputVector.begin(), 0.0f);
+                                   inputVector.begin(), (double)0.0);
 
     float avgVex = dotProduct(inputVector.data(), inputVector.size());
 
@@ -66,7 +66,7 @@ TEST(TestVexDotProduct, BigSize)
     std::generate(inputVector.begin(), inputVector.end(), &myRand);
 
     float avg = std::inner_product(inputVector.begin(), inputVector.end(),
-                                   inputVector.begin(), 0.0f);
+                                   inputVector.begin(), (double)0.0);
 
     float avgVex = dotProduct(inputVector.data(), inputVector.size());
 
@@ -79,7 +79,7 @@ TEST(TestVexDotProduct, HugeSize)
     std::generate(inputVector.begin(), inputVector.end(), &myRand);
 
     float avg = std::inner_product(inputVector.begin(), inputVector.end(),
-                                   inputVector.begin(), 0.0f);
+                                   inputVector.begin(), (double)0.0);
 
     float avgVex = dotProduct(inputVector.data(), inputVector.size());
 

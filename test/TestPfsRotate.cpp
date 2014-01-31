@@ -24,11 +24,7 @@
 #if GTEST_HAS_COMBINE
 
 #include <algorithm>
-#ifdef __clang__
-#include <tr1/tuple>
-#else
 #include <tuple>
-#endif
 
 #include <Libpfs/array2d.h>
 #include <Libpfs/manip/rotate.h>
@@ -70,7 +66,7 @@ void rotate_cw(const InputType* input,
     }
 }
 
-class TestPfsRotate : public TestWithParam< ::std::tr1::tuple<size_t, size_t> >
+class TestPfsRotate : public TestWithParam< ::std::tuple<size_t, size_t> >
 {
 protected:
     size_t m_rows;
@@ -82,8 +78,8 @@ protected:
     
 public:
     TestPfsRotate()
-        : m_rows( ::std::tr1::get<0>( GetParam() ))
-        , m_cols( ::std::tr1::get<1>( GetParam() ))
+        : m_rows( ::std::get<0>( GetParam() ))
+        , m_cols( ::std::get<1>( GetParam() ))
         , inputVector(m_cols, m_rows)
         , referenceOutput(m_rows, m_cols)
         , computedOutput(m_rows, m_cols)

@@ -24,11 +24,7 @@
 #include <vector>
 #include <algorithm>
 #include <boost/bind.hpp>
-#ifdef __clang__
-#include <tr1/tuple>
-#else
 #include <tuple>
-#endif
 #include "arch/math.h"
 
 #if GTEST_HAS_COMBINE
@@ -50,12 +46,12 @@ using ::testing::TestWithParam;
 using ::testing::Values;
 using ::testing::Combine;
 
-class TestMantiuk06 : public TestWithParam< ::std::tr1::tuple<int, int> >
+class TestMantiuk06 : public TestWithParam< ::std::tuple<int, int> >
 {
 public:
     TestMantiuk06()
-        : m_rows( ::std::tr1::get<1>( GetParam() ))
-        , m_cols( ::std::tr1::get<0>( GetParam() ))
+        : m_rows( ::std::get<1>( GetParam() ))
+        , m_cols( ::std::get<0>( GetParam() ))
     {
         // std::cout << "(" << m_rows << "," << m_cols << ")" << std::endl;
     }

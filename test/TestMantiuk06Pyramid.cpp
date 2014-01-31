@@ -21,11 +21,7 @@
 
 #include <gtest/gtest.h>
 #include <algorithm>
-#ifdef __clang__
-#include <tr1/tuple>
-#else
 #include <tuple>
-#endif
 
 #include "TonemappingOperators/mantiuk06/pyramid.h"
 #include "mantiuk06/contrast_domain.h"
@@ -68,7 +64,7 @@ void compareVectors(const XYGradient* inXYGradient,
     }
 }
 
-class TestPyramidT : public TestWithParam< ::std::tr1::tuple<int, int> >
+class TestPyramidT : public TestWithParam< ::std::tuple<int, int> >
 {
 protected:
     size_t m_rows;
@@ -81,8 +77,8 @@ protected:
 
 public:
     TestPyramidT()
-        : m_rows( ::std::tr1::get<1>( GetParam() ))
-        , m_cols( ::std::tr1::get<0>( GetParam() ))
+        : m_rows( ::std::get<1>( GetParam() ))
+        , m_cols( ::std::get<0>( GetParam() ))
         , samples_(m_cols, m_rows)
         , newPyramid_(m_rows, m_cols)
         , oldPyramid_( test_mantiuk06::pyramid_allocate(m_cols, m_rows) )
@@ -238,7 +234,7 @@ INSTANTIATE_TEST_CASE_P(Mantiuk06,
                                 Values(521, 123))
                         );
 
-class TestDualPyramidT : public TestWithParam< ::std::tr1::tuple<int, int> >
+class TestDualPyramidT : public TestWithParam< ::std::tuple<int, int> >
 {
 protected:
     size_t m_rows;
@@ -252,8 +248,8 @@ protected:
 
 public:
     TestDualPyramidT()
-        : m_rows( ::std::tr1::get<1>( GetParam() ))
-        , m_cols( ::std::tr1::get<0>( GetParam() ))
+        : m_rows( ::std::get<1>( GetParam() ))
+        , m_cols( ::std::get<0>( GetParam() ))
         , samples_(m_cols, m_rows)
         , newPyramid1_(m_rows, m_cols)
         , newPyramid2_(m_rows, m_cols)
