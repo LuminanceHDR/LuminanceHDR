@@ -100,9 +100,9 @@ void LuminanceOptions::setPortableMode(bool isPortable)
 
 bool LuminanceOptions::checkForUpdate()
 {
-    QDate date = value("UpdateChecked", QDate(0, 1, 1)).toDate();
-    int diff = date.daysTo(QDate::currentDate());
-    return diff > 0;
+
+    QDate date = value("UpdateChecked", QDate(1, 1, 1)).toDate();
+    return date < QDate::currentDate();
 }
 
 void LuminanceOptions::setUpdateChecked()
