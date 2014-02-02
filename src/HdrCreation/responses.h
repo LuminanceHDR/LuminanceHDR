@@ -1,8 +1,7 @@
 /*
  * This file is a part of Luminance HDR package
  * ----------------------------------------------------------------------
- * Copyright (C) 2004 Grzegorz Krawczyk
- * Copyright (C) 2006-2007 Giuseppe Rota
+ * Copyright (C) 2013-2014 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,76 +20,95 @@
  */
 
 //! \brief Standard response functions
-//! \author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
-//! \author Giuseppe Rota <grota@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-//!  Rewrite for LibHDR
 
 #ifndef LIBHDR_FUSION_RESPONSES_H
 #define LIBHDR_FUSION_RESPONSES_H
 
 #include <string>
+#include <array>
 
 namespace libhdr {
 namespace fusion {
 
-enum ResponseFunction {
+enum ResponseFunction
+{
     RESPONSE_GAMMA,
     RESPONSE_LINEAR,
     RESPONSE_LOG10,
     RESPONSE_SRGB
 };
 
+enum ResponseChannel
+{
+    RESPONSE_CHANNEL_RED = 0,
+    RESPONSE_CHANNEL_GREEN = 1,
+    RESPONSE_CHANNEL_BLUE = 2
+};
+
 class IResponseFunction {
 public:
+    static const size_t NUM_BINS = 65536;
+    typedef std::array<float, NUM_BINS> ResponseContainer;
+
     static ResponseFunction fromString(const std::string& type);
 
     virtual ~IResponseFunction() {}
 
     //! \brief return the response of the value \c input. \c input is in the
     //! range [0, 1]
-    virtual float getResponse(float input) const = 0;
+    float getResponse(float input, ResponseChannel channel = RESPONSE_CHANNEL_RED) const;
 
     //! \return type of response function implemented
     virtual ResponseFunction getType() const = 0;
+
+protected:
+    std::array<ResponseContainer, 3> m_responses;
 };
 
 class ResponseGamma : public IResponseFunction
 {
 public:
-    float getResponse(float input) const;
+    ResponseGamma();
 
     ResponseFunction getType() const {
         return RESPONSE_GAMMA;
     }
+
+private:
+    void fillResponse(ResponseContainer& response);
 };
 
 class ResponseLinear : public IResponseFunction
 {
 public:
-    float getResponse(float input) const {
-        return input;
-    }
+    ResponseLinear();
 
     ResponseFunction getType() const {
         return RESPONSE_LINEAR;
     }
+
+private:
+    void fillResponse(ResponseContainer& response);
 };
 
 class ResponseLog10 : public IResponseFunction
 {
 public:
-    float getResponse(float input) const;
+    ResponseLog10();
 
     ResponseFunction getType() const {
         return RESPONSE_LOG10;
     }
+
+private:
+    void fillResponse(ResponseContainer& response);
 };
 
 class ResponseSRGB : public IResponseFunction
 {
 public:
-    float getResponse(float input) const;
+    // float getResponse(float input) const;
 
     ResponseFunction getType() const {
         return RESPONSE_SRGB;
@@ -103,33 +121,6 @@ public:
 // Old Stuff
 
 #include <cstdio>
-
-/**
- * @brief Create gamma response function
- *
- * @param I [out] camera response function (array size of M)
- * @param M number of camera output levels
- */
-void responseGamma( float* I, int M );
-
-
-/**
- * @brief Create linear response function
- *
- * @param I [out] camera response function (array size of M)
- * @param M number of camera output levels
- */
-void responseLinear( float* I, int M );
-
-
-/**
- * @brief Create logarithmic response function
- *
- * @param I [out] camera response function (array size of M)
- * @param M number of camera output levels
- */
-void responseLog10( float* I, int M );
-
 
 /**
  * @brief Save response curve to a MatLab file for further reuse
@@ -162,7 +153,6 @@ void weightsSave( FILE* file, const float* w, int M, const char* name);
  * @return false means file has different output levels or is wrong for some other reason
  */
 bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M);
-
 
 /**
  * @brief Load response curve (saved with responseSave();)

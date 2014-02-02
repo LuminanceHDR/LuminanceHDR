@@ -1,8 +1,7 @@
 /*
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2004 Grzegorz Krawczyk
- * Copyright (C) 2006-2007 Giuseppe Rota
+ * Copyright (C) 2013-2014 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +20,6 @@
  */
 
 //! \brief Standard response functions
-//! \author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
-//! \author Giuseppe Rota <grota@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 #include <string>
@@ -67,11 +64,49 @@ ResponseFunction fromString(const std::string& type)
     return RESPONSE_LINEAR;
 }
 
-
-float ResponseGamma::getResponse(float input) const
+float IResponseFunction::getResponse(float input, ResponseChannel channel) const
 {
-    return std::pow( 4.f * input, 1.7f ) + 1e-4;
+    assert(channel >= 0);
+    assert(channel <= 2);
+    assert(input >= 0.f);
+    assert(input <= 1.f);
+
+    return m_responses[channel][size_t(input*(NUM_BINS-1) + 0.49f)];
 }
+
+ResponseLinear::ResponseLinear()
+{
+    fillResponse(m_responses[RESPONSE_CHANNEL_RED]);
+    fillResponse(m_responses[RESPONSE_CHANNEL_GREEN]);
+    fillResponse(m_responses[RESPONSE_CHANNEL_BLUE]);
+}
+
+void ResponseLinear::fillResponse(ResponseContainer& response)
+{
+    // fill response function
+    size_t divider = (NUM_BINS - 1);
+    for (size_t i = 0; i < NUM_BINS; ++i)
+    {
+        response[i] = (float)i/divider;
+    }
+}
+
+ResponseGamma::ResponseGamma()
+{
+    fillResponse(m_responses[RESPONSE_CHANNEL_RED]);
+    fillResponse(m_responses[RESPONSE_CHANNEL_GREEN]);
+    fillResponse(m_responses[RESPONSE_CHANNEL_BLUE]);
+}
+
+void ResponseGamma::fillResponse(ResponseContainer& response)
+{
+    size_t divider = (NUM_BINS - 1);
+    for (size_t i = 0; i < NUM_BINS; ++i)
+    {
+        response[i] = std::pow(4.f * ((float)i/divider), 1.7f) + 1e-4;
+    }
+}
+
 
 // I use a namespace to avoid name collision
 namespace details_log10
@@ -82,16 +117,27 @@ const float s_norm              = 0.0625f;
 const float s_inverseMaxValue   = 1.f/1e8; // == 1.f/std::pow(10.0f, (1.f/norm - 8.f));
 }
 
-float ResponseLog10::getResponse(float input) const
+ResponseLog10::ResponseLog10()
 {
-    return details_log10::s_inverseMaxValue *   // normalization between [0, 1]
-            std::pow(10.0f, ((input/details_log10::s_norm) - 8.f) );
+    fillResponse(m_responses[RESPONSE_CHANNEL_RED]);
+    fillResponse(m_responses[RESPONSE_CHANNEL_GREEN]);
+    fillResponse(m_responses[RESPONSE_CHANNEL_BLUE]);
 }
 
-float ResponseSRGB::getResponse(float input) const
+void ResponseLog10::fillResponse(ResponseContainer& response)
 {
-    return pfs::colorspace::ConvertSRGB2RGB()(input);
+    size_t divider = (NUM_BINS - 1);
+    for (size_t i = 0; i < NUM_BINS; ++i)
+    {
+        response[i] = details_log10::s_inverseMaxValue *
+                      std::pow(10.0f, ((((float)i/divider)/details_log10::s_norm) - 8.f) );
+    }
 }
+
+//float ResponseSRGB::getResponse(float input) const
+//{
+//    return pfs::colorspace::ConvertSRGB2RGB()(input);
+//}
 
 }   // fusion
 }   // libhdr
@@ -111,35 +157,6 @@ void dump_gnuplot( const char* filename, const float* array, int M, int counter 
   char fn[2048];
   sprintf(fn, filename, counter);
   dump_gnuplot(fn, array, M);
-}
-
-void responseLinear( float* I, int M )
-{
-  for( int m=0 ; m<M ; m++ )
-    I[m] = m / float(M-1); // range is not important, values are normalized later
-}
-
-
-void responseGamma( float* I, int M )
-{
-  float norm = M / 4.0f;
-  
-  // response curve decided empirically
-  for( int m=0 ; m<M ; m++ )
-    I[m] = powf( m/norm, 1.7f ) + 1e-4;
-}
-
-
-void responseLog10( float* I, int M )
-{
-    const float mid = 0.5f * M;
-    const float norm = 0.0625f * M;
-    const float maxValue = powf(10.0f, float(M-1 - mid) / norm);
-
-    for( int m=0 ; m < M; ++m)
-    {
-        I[m] = powf(10.0f, float(m - mid) / norm) / maxValue;
-    }
 }
 
 void responseSave( FILE* file, const float* Ir, const float* Ig, const float* Ib, int M)

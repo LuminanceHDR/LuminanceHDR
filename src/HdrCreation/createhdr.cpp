@@ -200,34 +200,34 @@ pfs::Frame* createHDR(const float* arrayofexptime,
 
         if ( !load_ok )
         {
-            responseGamma(Ir.data(), M);
-            responseGamma(Ig.data(), M);
-            responseGamma(Ib.data(), M);
+//            responseGamma(Ir.data(), M);
+//            responseGamma(Ig.data(), M);
+//            responseGamma(Ib.data(), M);
         }
     } break;
     case LINEAR:
     {
-        responseLinear(Ir.data(), M);
-        responseLinear(Ig.data(), M);
-        responseLinear(Ib.data(), M);
+//        responseLinear(Ir.data(), M);
+//        responseLinear(Ig.data(), M);
+//        responseLinear(Ib.data(), M);
     } break;
     case GAMMA:
     {
-        responseGamma(Ir.data(), M);
-        responseGamma(Ig.data(), M);
-        responseGamma(Ib.data(), M);
+//        responseGamma(Ir.data(), M);
+//        responseGamma(Ig.data(), M);
+//        responseGamma(Ib.data(), M);
     } break;
     case LOG10:
     {
-        responseLog10(Ir.data(), M);
-        responseLog10(Ig.data(), M);
-        responseLog10(Ib.data(), M);
+//        responseLog10(Ir.data(), M);
+//        responseLog10(Ig.data(), M);
+//        responseLog10(Ib.data(), M);
     } break;
     case FROM_ROBERTSON:
     {
-        responseLinear(Ir.data(), M);
-        responseLinear(Ig.data(), M);
-        responseLinear(Ib.data(), M);
+//        responseLinear(Ir.data(), M);
+//        responseLinear(Ig.data(), M);
+//        responseLinear(Ib.data(), M);
         // call robertson02_getResponse method which computes both the Ir,Ig,Ib
         // and the output HDR (i.e. its channels Rj,Gj,Bj).
         if (ldrinput) {
