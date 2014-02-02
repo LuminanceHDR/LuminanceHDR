@@ -37,10 +37,12 @@
 #include "responses.h"
 #include <Libpfs/colorspace/rgb.h>
 #include <Libpfs/utils/string.h>
+#include <Libpfs/utils/resourcehandlerstdio.h>
 
 using namespace std;
 using namespace boost;
 using namespace boost::assign;
+using namespace pfs::utils;
 
 namespace libhdr {
 namespace fusion {
@@ -72,6 +74,16 @@ float IResponseFunction::getResponse(float input, ResponseChannel channel) const
     assert(input <= 1.f);
 
     return m_responses[channel][size_t(input*(NUM_BINS-1) + 0.49f)];
+}
+
+void IResponseFunction::writeToFile(const std::string& fileName) const
+{
+    ScopedStdIoFile outputFile(fopen(fileName.c_str(), "w"));
+    responseSave(outputFile.data(),
+                 m_responses[RESPONSE_CHANNEL_RED].data(),
+                 m_responses[RESPONSE_CHANNEL_GREEN].data(),
+                 m_responses[RESPONSE_CHANNEL_BLUE].data(),
+                 NUM_BINS);
 }
 
 ResponseLinear::ResponseLinear()
