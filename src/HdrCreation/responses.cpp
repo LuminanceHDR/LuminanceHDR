@@ -22,6 +22,8 @@
 //! \brief Standard response functions
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
+#include "responses.h"
+
 #include <string>
 #include <map>
 #include <iostream>
@@ -34,7 +36,6 @@
 
 #include <boost/assign.hpp>
 
-#include "responses.h"
 #include <Libpfs/colorspace/rgb.h>
 #include <Libpfs/utils/string.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>

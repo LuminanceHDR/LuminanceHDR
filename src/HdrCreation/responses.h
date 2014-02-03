@@ -48,7 +48,12 @@ enum ResponseChannel
 
 class IResponseFunction {
 public:
-    static const size_t NUM_BINS = 2048; // 65536;
+    static const size_t NUM_BINS = 2048;
+    static size_t getIdx(float sample)
+    {
+        return size_t(sample*(NUM_BINS - 1) + 0.45f);
+    }
+
     typedef std::array<float, NUM_BINS> ResponseContainer;
 
     static ResponseFunction fromString(const std::string& type);
@@ -63,6 +68,11 @@ public:
     virtual ResponseFunction getType() const = 0;
 
     void writeToFile(const std::string& fileName) const;
+
+    ResponseContainer& get(ResponseChannel channel)
+    { return m_responses[channel]; }
+    const ResponseContainer& get(ResponseChannel channel) const
+    { return m_responses[channel]; }
 
 protected:
     std::array<ResponseContainer, 3> m_responses;

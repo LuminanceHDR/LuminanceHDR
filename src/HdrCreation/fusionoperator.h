@@ -58,7 +58,8 @@ private:
 
 enum FusionOperator {
     DEBEVEC_NEW,
-    ROBERTSON02_NEW
+    ROBERTSON02_NEW,
+    ROBERTSON02_NEW_AUTO
 };
 
 class IFusionOperator;
@@ -85,13 +86,20 @@ public:
 
     pfs::Frame* computeFusion(const std::vector<FrameEnhanced>& frames) const;
 
+    void writeResponsesToFile(const std::string& fileName) const
+    {
+        m_response->writeToFile(fileName);
+    }
+
 protected:
     IFusionOperator();
-    inline float response( float in ) const { return m_response->getResponse(in); }
+
+    inline float response(float in, ResponseChannel channel = RESPONSE_CHANNEL_RED) const
+    { return m_response->getResponse(in, channel); }
 
     virtual void computeFusion(const std::vector<FrameEnhanced>& frames, pfs::Frame& outFrame) const = 0;
 
-    inline float weight( float in ) const { return m_weight->getWeight(in); }
+    inline float weight(float in) const { return m_weight->getWeight(in); }
     inline float minTrustedValue() const  { return m_weight->minTrustedValue(); }
     inline float maxTrustedValue() const  { return m_weight->maxTrustedValue(); }
 

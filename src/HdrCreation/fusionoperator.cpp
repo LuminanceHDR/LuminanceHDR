@@ -34,7 +34,7 @@ namespace libhdr {
 namespace fusion {
 
 IFusionOperator::IFusionOperator()
-    : m_response(new ResponseSRGB)
+    : m_response(new ResponseLinear)
     , m_weight(new WeightGaussian)
 {}
 
@@ -47,7 +47,11 @@ pfs::Frame* IFusionOperator::computeFusion(const std::vector<FrameEnhanced>& fra
 }
 
 FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
-    switch (type) {
+    switch (type)
+    {
+    case ROBERTSON02_NEW_AUTO:
+        return boost::make_shared<RobertsonOperatorAuto>();
+        break;
     case ROBERTSON02_NEW:
         return boost::make_shared<RobertsonOperator>();
         break;

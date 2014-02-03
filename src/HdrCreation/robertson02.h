@@ -54,27 +54,46 @@ public:
     {}
 
 private:
-    void computeFusion(const std::vector<FrameEnhanced> &frames, pfs::Frame& frame) const;
+    void computeFusion(const std::vector<FrameEnhanced>& frames, pfs::Frame& frame) const;
 
-    void computeChannel(const DataList& inputData, float* outputData,
-                        size_t width, size_t height,
-                        float minAllowedValue, float maxAllowedValue,
-                        const float* arrayofexptime) const;
+protected:
+    void applyResponse(ResponseChannel channel,
+                       const DataList& inputData, float* outputData,
+                       size_t width, size_t height,
+                       float minAllowedValue, float maxAllowedValue,
+                       const float* arrayofexptime) const;
+};
+
+class RobertsonOperatorAuto : public RobertsonOperator
+{
+public:
+    RobertsonOperatorAuto()
+        : RobertsonOperator()
+    {}
+
+private:
+    void computeFusion(const std::vector<FrameEnhanced>& frames, pfs::Frame& outFrame) const;
+
+    void computeResponse(ResponseChannel channel,
+                         const DataList& inputData, float* outputData,
+                         size_t width, size_t height,
+                         float minAllowedValue, float maxAllowedValue,
+                         const float* arrayofexptime) const;
 };
 
 }   // fusion
 }   // libhdr
 
-//*
-// * @brief Create HDR image by applying response curve to given images taken with different exposures
-// *
-// * @param xj [out] HDR image
-// * @param imgs reference to vector containing source exposures
-// * @param I camera response function (array size of M)
-// * @param w weighting function for camera output values (array size of M)
-// * @param M number of camera output levels
-// * @return number of saturated pixels in the HDR image (0: all OK)
 //
+//  @brief Create HDR image by applying response curve to given images taken with different exposures
+//
+//  @param xj [out] HDR image
+//  @param imgs reference to vector containing source exposures
+//  @param I camera response function (array size of M)
+//  @param w weighting function for camera output values (array size of M)
+//  @param M number of camera output levels
+//  @return number of saturated pixels in the HDR image (0: all OK)
+//! \note HDR version
 int robertson02_applyResponse(pfs::Array2Df& Rj,  pfs::Array2Df& Gj,  pfs::Array2Df& Bj,
                               const float* arrayofexptime,
                               const float* Ir, const float* Ig, const float* Ib,
@@ -88,14 +107,14 @@ int robertson02_applyResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2D
                               const QList<QImage*>& listldr);
 
 //*
-// * @brief Calculate camera response using Robertson02 algorithm
-// *
-// * @param xj [out]  estimated luminance values
-// * @param imgs reference to vector containing source exposures
-// * @param I [out] array to put response function
-// * @param w weights
-// * @param M max camera output (no of discrete steps)
-// * @return number of saturated pixels in the HDR image (0: all OK)
+//  @brief Calculate camera response using Robertson02 algorithm
+//
+//  @param xj [out]  estimated luminance values
+//  @param imgs reference to vector containing source exposures
+//  @param I [out] array to put response function
+//  @param w weights
+//  @param M max camera output (no of discrete steps)
+//  @return number of saturated pixels in the HDR image (0: all OK)
 //
 int robertson02_getResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
                             const float* arrayofexptime,

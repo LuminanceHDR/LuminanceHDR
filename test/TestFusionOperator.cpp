@@ -70,7 +70,10 @@ int main(int argc, char** argv)
         msec_timer t;
         t.start();
 
-        FusionOperatorPtr fusionOperator = IFusionOperator::build(DEBEVEC_NEW);
+        FusionOperatorPtr fusionOperator = IFusionOperator::build(ROBERTSON02_NEW_AUTO);
+
+        fusionOperator->writeResponsesToFile("responses_before.m");
+
         pfs::FramePtr newHdr(fusionOperator->computeFusion(images));
         if ( newHdr == NULL )
         {
@@ -108,6 +111,8 @@ int main(int argc, char** argv)
                       ("min_luminance", min)
                       ("max_luminance", max));
 
+
+    fusionOperator->writeResponsesToFile("responses_after.m");
         return 0;
     }
     catch (std::exception& ex)
