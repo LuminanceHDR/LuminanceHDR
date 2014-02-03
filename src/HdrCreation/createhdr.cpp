@@ -52,9 +52,10 @@ inline float min3( float a, float b, float c ) {
 }
 */
 
+/*
 pfs::Frame* createHDR(const float* arrayofexptime,
                       const config_triple* chosen_config,
-                      bool antighosting, int /*iterations*/,
+                      bool antighosting, int iterations,
                       const bool ldrinput, ...)
 {
     // only one of these two is used by casting extra parameters:
@@ -65,7 +66,7 @@ pfs::Frame* createHDR(const float* arrayofexptime,
     Array2DfList* listhdrG   = NULL;
     Array2DfList* listhdrB   = NULL;
     va_list arg_pointer;
-    va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
+    va_start(arg_pointer,ldrinput); // Initialize the argument list.
 
     int opt_bpp = 8;
     int width   = -1;
@@ -86,7 +87,7 @@ pfs::Frame* createHDR(const float* arrayofexptime,
         height   = listhdrR->at(0)->getRows();
         opt_bpp  = 16;
     }
-    va_end(arg_pointer); /* Clean up. */
+    va_end(arg_pointer); // Clean up.
 
     TWeight opt_weight = chosen_config->weights;
     TResponse opt_response = chosen_config->response_curve;
@@ -168,7 +169,7 @@ pfs::Frame* createHDR(const float* arrayofexptime,
     switch ( opt_weight )
     {
     case TRIANGULAR:
-        weights_triangle(w.data(), M/*, minResponse, maxResponse*/);
+        weights_triangle(w.data(), M); //, minResponse, maxResponse);
         break;
     case GAUSSIAN:
         weightsGauss(w.data(), M, minResponse, maxResponse);
@@ -297,3 +298,4 @@ pfs::Frame* createHDR(const float* arrayofexptime,
 
 	return frameout;
 }
+*/

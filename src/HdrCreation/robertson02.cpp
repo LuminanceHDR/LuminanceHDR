@@ -1,10 +1,7 @@
-/**
- * @brief Robertson02 algorithm for automatic self-calibration.
- *
+/*
  * This file is a part of Luminance HDR package
  * ----------------------------------------------------------------------
- * Copyright (C) 2004 Grzegorz Krawczyk
- * Copyright (C) 2006-2007 Giuseppe Rota
+ * Copyright (C) 2013-2014 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,13 +17,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- *
- * $Id: robertson02.cpp,v 1.7 2006/11/16 15:06:17 gkrawczyk Exp $
  */
 
+//! \brief Robertson02 algorithm for automatic self-calibration.
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \note heavily inspired by the implementation of the same algorithm
+//! in PFSTools (thanks to Grzegorz Krawczyk) and the original QTpfsgui (thanks
+//! to Giuseppe Rota)
+
+#include "robertson02.h"
 #include "arch/math.h"
 
 #include <cassert>
@@ -40,7 +39,6 @@
 #include <boost/numeric/conversion/bounds.hpp>
 
 #include <Libpfs/array2d.h>
-#include <HdrCreation/robertson02.h>
 
 #ifndef NDEBUG
 #define PRINT_DEBUG(str) std::cerr << "Robertson: " << str << std::endl
@@ -222,13 +220,10 @@ float normalizeI(IResponseFunction::ResponseContainer& I)
     return mid;
 }
 
-//typedef int (*PixelToChannelMapper)(QRgb);
-
-//static PixelToChannelMapper s_pixelToChannel[] = { &qRed, &qGreen, &qBlue };
-
+/*
 void pseudoSort(const float* arrayofexptime, int* i_lower, int* i_upper, int N)
 {
-    for ( int i = 0; i < N; ++i )
+    for (int i = 0; i < N; ++i)
     {
         i_lower[i] = i;
         i_upper[i] = i;
@@ -252,154 +247,9 @@ void pseudoSort(const float* arrayofexptime, int* i_lower, int* i_upper, int N)
         // if ( i_upper[i] == -1 ) i_upper[i] = i;
     }
 }
+*/
 
 }   // anonymous
-
-//struct Array2DListAdapter
-//{
-//    Array2DListAdapter(const Array2DfList& listhdr, int /*channelNum*/)
-//        : m_listhdr(listhdr)
-//    {}
-
-//    int numFrames() const {
-//        return m_listhdr.size();
-//    }
-
-//    int getSample(int frameIdx, int pixelIdx) const {
-//        return static_cast<int>( (*(m_listhdr[frameIdx]))(pixelIdx) );
-//    }
-
-//private:
-//    const Array2DfList& m_listhdr;
-//};
-
-//struct QImageQListAdapter
-//{
-//    QImageQListAdapter(const QList<QImage*>& listldr, int channelNum)
-//        : m_listldr(listldr)
-//        , m_ldrfp(s_pixelToChannel[channelNum])
-//    {}
-
-//    int numFrames() const {
-//        return m_listldr.size();
-//    }
-
-//    int getSample(int frameIdx, int pixelIdx) const {
-//        return m_ldrfp( reinterpret_cast<const QRgb*>(m_listldr.at(frameIdx)->bits())[pixelIdx] );
-//    }
-
-//private:
-//    const QList<QImage*>& m_listldr;
-//    PixelToChannelMapper m_ldrfp;
-//};
-
-//template <typename InputDataAdapter>
-//int robertson02ApplyResponseCore(pfs::Array2Df& xj, const float* arrayofexptime,
-//                                 const float* I, const float* w, int M,
-//                                 const InputDataAdapter& inputData)
-//{
-//    int N       = inputData.numFrames();
-//    int width   = xj.getCols();
-//    int height  = xj.getRows();
-
-//    // --- anti saturation: calculate trusted camera output range
-//    // number of saturated pixels
-//    int saturated_pixels = 0;
-
-//    int minM = 0;
-//    int maxM = M-1;
-//    computeTrustRange(w, M, minM, maxM);
-
-//    // --- anti-ghosting: for each image i, find images with
-//    // the immediately higher and lower exposure times
-//    std::vector<int> i_lower(N);
-//    std::vector<int> i_upper(N);
-//    pseudoSort(arrayofexptime, i_lower.data(), i_upper.data(), N);
-
-//    // all pixels
-//    for ( int j = 0; j < width*height; ++j )
-//    {
-//        // all exposures for each pixel
-//        float sum = 0.0f;
-//        float div = 0.0f;
-//        float maxti = -1e6f;
-//        float minti = +1e6f;
-
-//        // for all exposures
-//        for ( int i = 0; i < N; ++i )
-//        {
-//            int m = inputData.getSample(i, j);
-//            float ti = arrayofexptime[i];
-//            // --- anti saturation: observe minimum exposure time at which
-//            // saturated value is present, and maximum exp time at which
-//            // black value is present
-//            if ( m > maxM ) {
-//                minti = std::min(minti, ti);
-//            }
-//            if ( m < minM ) {
-//                maxti = std::max(maxti, ti);
-//            }
-
-//            // --- anti-ghosting: monotonous increase in time should result
-//            // in monotonous increase in intensity; make forward and
-//            // backward check, ignore value if condition not satisfied
-//            int m_lower = inputData.getSample(i_lower[i], j);
-//            int m_upper = inputData.getSample(i_upper[i], j);
-
-//            if ( N > 1) {
-//                if ( m_lower > m || m_upper < m ) {
-//                    continue;
-//                }
-//            }
-
-//            sum += w[m] * ti * I[m];
-//            div += w[m] * ti * ti;
-//        }
-
-//        // --- anti saturation: if a meaningful representation of pixel
-//        // was not found, replace it with information from observed data
-//        if ( div == 0.0f ) {
-//            saturated_pixels++;
-//        }
-//        if ( div == 0.0f && maxti > -1e6f ) {
-//            sum = I[minM];
-//            div = maxti;
-//        }
-//        if ( div == 0.0f && minti < +1e6f ) {
-//            sum = I[maxM];
-//            div = minti;
-//        }
-
-//        if ( div != 0.0f ) {
-//            xj(j) = sum/div;
-//        } else {
-//            xj(j) = 0.0f;
-//        }
-//    }
-
-//    return saturated_pixels;
-//}
-
-//inline
-//int robertson02_applyResponse(pfs::Array2Df& xj, const float* arrayofexptime,
-//                              const float* I, const float* w, int M, int channelRGB,
-//                              const Array2DfList& listhdr)
-//{
-//    return robertson02ApplyResponseCore(xj, arrayofexptime, I, w, M,
-//                                        Array2DListAdapter(listhdr, channelRGB));
-//}
-
-//inline
-//int robertson02_applyResponse(pfs::Array2Df& xj, const float* arrayofexptime,
-//                              const float* I, const float* w, int M, int channelRGB,
-//                              const QList<QImage*>& listldr)
-//{
-//    assert(channelRGB >= 0);
-//    assert(channelRGB <= 2);
-
-//    return robertson02ApplyResponseCore(xj, arrayofexptime, I, w, M,
-//                                        QImageQListAdapter(listldr, channelRGB));
-//}
 
 namespace libhdr {
 namespace fusion {
@@ -455,7 +305,7 @@ void RobertsonOperatorAuto::computeResponse(ResponseChannel channel,
                 }
 #ifndef NDEBUG
                 else
-                    PRINT_DEBUG("robertson02: m out of range: " << sample);
+                    PRINT_DEBUG("robertson02: sample out of range: " << sample);
 #endif
             }
         }
@@ -563,81 +413,3 @@ void RobertsonOperatorAuto::computeFusion(const std::vector<FrameEnhanced> &fram
 
 }   // namespace fusion
 }   // namespace libhdr
-
-inline
-int robertson02_getResponse(pfs::Array2Df& xj, const float* arrayofexptime,
-                            float* I, const float* w, int M, int channelRGB,
-                            const Array2DfList& listhdr)
-{
-//    return robertson02GetResponseCore(xj, arrayofexptime, I, w, M,
-//                                      Array2DListAdapter(listhdr, channelRGB));
-}
-
-inline
-int robertson02_getResponse(pfs::Array2Df& xj, const float* arrayofexptime,
-                            float* I, const float* w, int M, int channelRGB,
-                            const QList<QImage*>& listldr)
-{
-//    assert(channelRGB >= 0);
-//    assert(channelRGB <= 2);
-
-//    return robertson02GetResponseCore(xj, arrayofexptime, I, w, M,
-//                                      QImageQListAdapter(listldr, channelRGB));
-}
-
-int robertson02_applyResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
-                              const float* arrayofexptime,
-                              const float* Ir, const float* Ig, const float* Ib,
-                              const float* w, int M,
-                              const Array2DfList& listhdrR, const Array2DfList& listhdrG, const Array2DfList& listhdrB)
-{
-    int saturatedPixels = 0;
-//    saturatedPixels += robertson02_applyResponse(Rj, arrayofexptime, Ir, w, M, 0, listhdrR);
-//    saturatedPixels += robertson02_applyResponse(Gj, arrayofexptime, Ig, w, M, 1, listhdrG);
-//    saturatedPixels += robertson02_applyResponse(Bj, arrayofexptime, Ib, w, M, 2, listhdrB);
-
-    return saturatedPixels;
-}
-
-//! \note LDR version
-int robertson02_applyResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
-                              const float* arrayofexptime,
-                              const float* Ir, const float* Ig, const float* Ib,
-                              const float* w, int M,
-                              const QList<QImage*>& listldr)
-{
-    int saturatedPixels = 0;
-//    saturatedPixels += robertson02_applyResponse(Rj, arrayofexptime, Ir, w, M, 0, listldr);
-//    saturatedPixels += robertson02_applyResponse(Gj, arrayofexptime, Ig, w, M, 1, listldr);
-//    saturatedPixels += robertson02_applyResponse(Bj, arrayofexptime, Ib, w, M, 2, listldr);
-
-    return saturatedPixels;
-}
-
-int robertson02_getResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
-                            const float* arrayofexptime,
-                            float* Ir, float* Ig, float* Ib,
-                            const float* w, int M,
-                            const QList<QImage*>& listldr)
-{
-    int saturatedPixels = 0;
-//    saturatedPixels += robertson02_getResponse(Rj, arrayofexptime, Ir, w, M, 0, listldr);
-//    saturatedPixels += robertson02_getResponse(Gj, arrayofexptime, Ig, w, M, 1, listldr);
-//    saturatedPixels += robertson02_getResponse(Bj, arrayofexptime, Ib, w, M, 2, listldr);
-
-    return saturatedPixels;
-}
-
-int robertson02_getResponse(pfs::Array2Df& Rj, pfs::Array2Df& Gj, pfs::Array2Df& Bj,
-                            const float* arrayofexptime,
-                            float* Ir, float* Ig, float* Ib,
-                            const float* w, int M,
-                            const Array2DfList& listhdrR, const Array2DfList& listhdrG, const Array2DfList& listhdrB)
-{
-    int saturatedPixels = 0;
-//    saturatedPixels += robertson02_getResponse(Rj, arrayofexptime, Ir, w, M, 0, listhdrR);
-//    saturatedPixels += robertson02_getResponse(Gj, arrayofexptime, Ig, w, M, 1, listhdrG);
-//    saturatedPixels += robertson02_getResponse(Bj, arrayofexptime, Ib, w, M, 2, listhdrB);
-
-    return saturatedPixels;
-}
