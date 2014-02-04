@@ -32,6 +32,8 @@ libhdr::fusion::FrameEnhanced loadFile(const std::string& filename)
 
     float averageLuminace = ExifOperations::getAverageLuminance(filename);
 
+    std::cout << filename << " avg luminance = " << averageLuminace << std::endl;
+
     return libhdr::fusion::FrameEnhanced(image, averageLuminace);
 }
 

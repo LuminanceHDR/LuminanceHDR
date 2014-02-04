@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
@@ -18,15 +18,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
 #ifndef CREATEHDR_H
 #define CREATEHDR_H
 
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+
 #include <QString>
-#include <QList>
-#include <QImage>
 
 enum TWeight
 {
@@ -58,7 +57,5 @@ struct config_triple
     QString LoadCurveFromFilename;
     QString SaveCurveToFilename;
 };
-
-// pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
 
 #endif

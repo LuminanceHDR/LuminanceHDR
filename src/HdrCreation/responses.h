@@ -27,6 +27,7 @@
 
 #include <string>
 #include <array>
+#include <cstdio>
 
 namespace libhdr {
 namespace fusion {
@@ -48,15 +49,11 @@ enum ResponseChannel
 
 class IResponseFunction {
 public:
-    static const size_t NUM_BINS = 2048;
-    static size_t getIdx(float sample)
-    {
-        return size_t(sample*(NUM_BINS - 1) + 0.45f);
-    }
+    static const size_t NUM_BINS = (1 << 12);
+    static size_t getIdx(float sample);
+    static ResponseFunction fromString(const std::string& type);
 
     typedef std::array<float, NUM_BINS> ResponseContainer;
-
-    static ResponseFunction fromString(const std::string& type);
 
     virtual ~IResponseFunction() {}
 
@@ -69,14 +66,24 @@ public:
 
     void writeToFile(const std::string& fileName) const;
 
-    ResponseContainer& get(ResponseChannel channel)
-    { return m_responses[channel]; }
-    const ResponseContainer& get(ResponseChannel channel) const
-    { return m_responses[channel]; }
+    ResponseContainer& get(ResponseChannel channel);
+    const ResponseContainer& get(ResponseChannel channel) const;
 
 protected:
     std::array<ResponseContainer, 3> m_responses;
 };
+
+inline
+size_t IResponseFunction::getIdx(float sample)
+{ return size_t(sample*(NUM_BINS - 1) + 0.45f); }
+
+inline
+IResponseFunction::ResponseContainer& IResponseFunction::get(ResponseChannel channel)
+{ return m_responses[channel]; }
+
+inline
+const IResponseFunction::ResponseContainer& IResponseFunction::get(ResponseChannel channel) const
+{ return m_responses[channel]; }
 
 class ResponseGamma : public IResponseFunction
 {
@@ -130,50 +137,36 @@ public:
 }   // fusion
 }   // libhdr
 
-// Old Stuff
-
-#include <cstdio>
-
-/**
- * @brief Save response curve to a MatLab file for further reuse
- *
- * @param file file handle to save response curve
- * @param I camera response function (array size of M)
- * @param M number of camera output levels
- * @param name matrix name for use in Octave or Matlab
- */
+//! \brief Save response curve to a MatLab file for further reuse
+//!
+//! \param file file handle to save response curve
+//! \param I camera response function (array size of M)
+//! \param M number of camera output levels
+//! \param name matrix name for use in Octave or Matlab
 void responseSave( FILE* file, const float* Ir, const float* Ig, const float* Ib, int M);
 
-
-/**
- * @brief Save response curve to a MatLab file for further reuse
- *
- * @param file file handle to save response curve
- * @param w weights (array size of M)
- * @param M number of camera output levels
- * @param name matrix name for use in Octave or Matlab
- */
+//! \brief Save response curve to a MatLab file for further reuse
+//!
+//! \param file file handle to save response curve
+//! \param w weights (array size of M)
+//! \param M number of camera output levels
+//! \param name matrix name for use in Octave or Matlab
 void weightsSave( FILE* file, const float* w, int M, const char* name);
 
-
-/**
- * @brief Load response curve (saved with responseSave();)
- *
- * @param file file handle to save response curve
- * @param I [out] camera response function (array size of M)
- * @param M number of camera output levels
- * @return false means file has different output levels or is wrong for some other reason
- */
+//! \brief Load response curve (saved with responseSave();)
+//!
+//! \param file file handle to save response curve
+//! \param I [out] camera response function (array size of M)
+//! \param M number of camera output levels
+//! \return false means file has different output levels or is wrong for some other reason
 bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M);
 
-/**
- * @brief Load response curve (saved with responseSave();)
- *
- * @param file file handle to save response curve
- * @param w [out] weights (array size of M)
- * @param M number of camera output levels
- * @return false means file has different output levels or is wrong for some other reason
- */
+//! \brief Load response curve (saved with responseSave();)
+//!
+//! \param file file handle to save response curve
+//! \param w [out] weights (array size of M)
+//! \param M number of camera output levels
+//! \return false means file has different output levels or is wrong for some other reason
 bool weightsLoad( FILE* file, float* w, int M);
 
 #endif  // RESPONSES_H

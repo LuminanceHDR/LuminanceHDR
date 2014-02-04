@@ -28,8 +28,6 @@
 #include <QList>
 #include <QImage>
 
-#include "HdrCreation/createhdr_common.h"
-
 #include <Libpfs/array2d.h>
 #include <Libpfs/frame.h>
 #include <HdrCreation/fusionoperator.h>

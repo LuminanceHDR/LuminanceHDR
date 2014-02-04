@@ -44,7 +44,6 @@
 #include "Common/ProgressHelper.h"
 #include "arch/math.h"
 #include "HdrCreation/createhdr.h"
-#include "HdrCreation/createhdr_common.h"
 #include "HdrCreation/fusionoperator.h"
 #include "HdrCreationItem.h"
 
