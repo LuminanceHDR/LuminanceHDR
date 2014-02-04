@@ -49,13 +49,13 @@ pfs::Frame* IFusionOperator::computeFusion(const std::vector<FrameEnhanced>& fra
 FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
     switch (type)
     {
-    case ROBERTSON02_NEW_AUTO:
+    case ROBERTSON_AUTO:
         return boost::make_shared<RobertsonOperatorAuto>();
         break;
-    case ROBERTSON02_NEW:
+    case ROBERTSON:
         return boost::make_shared<RobertsonOperator>();
         break;
-    case DEBEVEC_NEW:
+    case DEBEVEC:
     default:
         return boost::make_shared<DebevecOperator>();
         break;

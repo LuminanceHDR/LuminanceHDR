@@ -73,19 +73,22 @@
 using namespace std;
 using namespace pfs;
 using namespace pfs::io;
+using namespace libhdr::fusion;
 
-const config_triple predef_confs[6]= {
-    {TRIANGULAR, LINEAR,DEBEVEC, "", ""},
-    {TRIANGULAR, GAMMA, DEBEVEC, "", ""},
-    {PLATEAU, LINEAR, DEBEVEC, "", ""},
-    {PLATEAU, GAMMA, DEBEVEC, "", ""},
-    {GAUSSIAN, LINEAR, DEBEVEC, "", ""},
-    {GAUSSIAN, GAMMA, DEBEVEC, "", ""},
+const FusionOperatorConfig predef_confs[6]= {
+    {WEIGHT_TRIANGULAR, RESPONSE_LINEAR, DEBEVEC, std::string(), std::string()},
+    {WEIGHT_TRIANGULAR, RESPONSE_GAMMA, DEBEVEC, std::string(), std::string()},
+    {WEIGHT_PLATEAU, RESPONSE_LINEAR, DEBEVEC, std::string(), std::string()},
+    {WEIGHT_PLATEAU, RESPONSE_GAMMA, DEBEVEC, std::string(), std::string()},
+    {WEIGHT_GAUSSIAN, RESPONSE_LINEAR, DEBEVEC, std::string(), std::string()},
+    {WEIGHT_GAUSSIAN, RESPONSE_GAMMA, DEBEVEC, std::string(), std::string()},
 };
 
 
 // --- NEW CODE ---
-namespace {
+namespace
+{
+
 QImage* shiftQImage(const QImage *in, int dx, int dy)
 {
     QImage *out = new QImage(in->size(),QImage::Format_ARGB32);
@@ -212,7 +215,7 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     connect(&m_futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
 }
 
-void HdrCreationManager::setConfig(const config_triple &c)
+void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
 {
     chosen_config = c;
 }

@@ -21,6 +21,9 @@
  * ----------------------------------------------------------------------
  */
 
+#include "HdrWizard.h"
+#include "ui_HdrWizard.h"
+
 #include <cmath>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -30,6 +33,7 @@
 #include <QStringList>
 #include <QFileDialog>
 #include <QDir>
+#include <QFile>
 #include <QUrl>
 #include <QMimeData>
 #include <QMessageBox>
@@ -48,9 +52,6 @@
 #include <QSqlError>
 // --- end SQL handling
 
-#include "HdrWizard.h"
-#include "ui_HdrWizard.h"
-
 #include "arch/math.h"
 #include "arch/freebsd/math.h"
 #include "Common/config.h"
@@ -59,11 +60,12 @@
 #include "HdrWizard/EditingTools.h"
 #include "HdrWizard/HdrCreationManager.h"
 
+using namespace libhdr::fusion;
 
-const TResponse responses_in_gui[4] = { GAMMA, LINEAR, LOG10, FROM_ROBERTSON };
-const TModel models_in_gui[2] = { DEBEVEC, ROBERTSON };
-const TWeight weights_in_gui[3] = { TRIANGULAR, GAUSSIAN, PLATEAU };
 
+const ResponseFunction responses_in_gui[4] = { RESPONSE_GAMMA, RESPONSE_LINEAR, RESPONSE_LOG10, RESPONSE_CUSTOM };
+const FusionOperator models_in_gui[2] = { DEBEVEC, ROBERTSON };
+const WeightFunction weights_in_gui[3] = { WEIGHT_TRIANGULAR, WEIGHT_GAUSSIAN, WEIGHT_PLATEAU };
 
 HdrWizard::HdrWizard(QWidget *p,
                      const QStringList &files,
@@ -706,7 +708,7 @@ void HdrWizard::predefRespCurveRadioButtonToggled(bool want_predef_resp_curve)
     else
     {
         // want to recover response curve via robertson02
-        m_hdrCreationManager->chosen_config.response_curve = FROM_ROBERTSON;
+        // TODO : m_hdrCreationManager->chosen_config.resresponse_curve = FROM_ROBERTSON;
         m_ui->NextFinishButton->setEnabled(true);
         saveRespCurveToFileCheckboxToggled(m_ui->saveRespCurveToFileCheckbox->isChecked());
     }
@@ -949,57 +951,28 @@ void HdrWizard::saveRespCurveFileButtonClicked()
     */
 }
 
-namespace {
-
-void updateHdrCreationManagerModel(HdrCreationManager& manager, TModel model)
+namespace
 {
-    qDebug() << "Change model to " << (int)model;
 
-    switch (model) {
-    case ROBERTSON: {
-        manager.setFusionOperator(libhdr::fusion::ROBERTSON02_NEW);
-    } break;
-    case DEBEVEC:
-    default: {
-        manager.setFusionOperator(libhdr::fusion::DEBEVEC_NEW);
-    } break;
-    }
+void updateHdrCreationManagerModel(HdrCreationManager& manager, FusionOperator fusionOperator)
+{
+    qDebug() << "Change model to " << (int)fusionOperator;
+
+    manager.setFusionOperator(fusionOperator);
 }
 
-void updateHdrCreationManagerResponse(HdrCreationManager& manager, TResponse response)
+void updateHdrCreationManagerResponse(HdrCreationManager& manager, ResponseFunction response)
 {
     qDebug() << "Change response to " << (int)response;
 
-    switch (response) {
-    case GAMMA: {
-        manager.setResponseFunction(libhdr::fusion::RESPONSE_GAMMA);
-    } break;
-    case LOG10: {
-        manager.setResponseFunction(libhdr::fusion::RESPONSE_LOG10);
-    } break;
-    case LINEAR:
-    default: {
-        manager.setResponseFunction(libhdr::fusion::RESPONSE_LINEAR);
-    } break;
-    }
+    manager.setResponseFunction(response);
 }
 
-void updateHdrCreationManagerWeight(HdrCreationManager& manager, TWeight weight)
+void updateHdrCreationManagerWeight(HdrCreationManager& manager, WeightFunction weight)
 {
     qDebug() << "Change weights to " << (int)weight;
 
-    switch (weight) {
-    case PLATEAU: {
-        manager.setWeightFunction(libhdr::fusion::WEIGHT_PLATEAU);
-    } break;
-    case GAUSSIAN: {
-        manager.setWeightFunction(libhdr::fusion::WEIGHT_GAUSSIAN);
-    } break;
-    case TRIANGULAR:
-    default: {
-        manager.setWeightFunction(libhdr::fusion::WEIGHT_TRIANGULAR);
-    } break;
-    }
+    manager.setWeightFunction(weight);
 }
 
 }
@@ -1021,38 +994,43 @@ void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui)
 
     // update HdrCreationManager (new code)
     updateHdrCreationManagerModel(*m_hdrCreationManager,
-                                  m_hdrCreationManager->chosen_config.model);
+                                  m_hdrCreationManager->chosen_config.fusionOperator);
     updateHdrCreationManagerResponse(*m_hdrCreationManager,
-                                     m_hdrCreationManager->chosen_config.response_curve);
+                                     m_hdrCreationManager->chosen_config.responseFunction);
     updateHdrCreationManagerWeight(*m_hdrCreationManager,
-                                   m_hdrCreationManager->chosen_config.weights);
+                                   m_hdrCreationManager->chosen_config.weightFunction);
 }
 
-void HdrWizard::triGaussPlateauComboBoxActivated(int from_gui) {
-    m_hdrCreationManager->chosen_config.weights = weights_in_gui[from_gui];
+void HdrWizard::triGaussPlateauComboBoxActivated(int from_gui)
+{
+    m_hdrCreationManager->chosen_config.weightFunction = weights_in_gui[from_gui];
 
     updateHdrCreationManagerWeight(*m_hdrCreationManager,
-                                   m_hdrCreationManager->chosen_config.weights);
+                                   m_hdrCreationManager->chosen_config.weightFunction);
 }
 
-void HdrWizard::gammaLinLogComboBoxActivated(int from_gui) {
-    m_hdrCreationManager->chosen_config.response_curve = responses_in_gui[from_gui];
+void HdrWizard::gammaLinLogComboBoxActivated(int from_gui)
+{
+    m_hdrCreationManager->chosen_config.responseFunction = responses_in_gui[from_gui];
 
     updateHdrCreationManagerResponse(*m_hdrCreationManager,
-                                     m_hdrCreationManager->chosen_config.response_curve);
+                                     m_hdrCreationManager->chosen_config.responseFunction);
 }
 
-void HdrWizard::modelComboBoxActivated(int from_gui) {
-    m_hdrCreationManager->chosen_config.model = models_in_gui[from_gui];
+void HdrWizard::modelComboBoxActivated(int from_gui)
+{
+    m_hdrCreationManager->chosen_config.fusionOperator = models_in_gui[from_gui];
 
     updateHdrCreationManagerModel(*m_hdrCreationManager,
-                                  m_hdrCreationManager->chosen_config.model);
+                                  m_hdrCreationManager->chosen_config.fusionOperator);
 }
 
-void HdrWizard::loadRespCurveFilename(const QString& filename_from_gui) {
-    if (!filename_from_gui.isEmpty()) {
-        m_hdrCreationManager->chosen_config.response_curve = FROM_FILE;
-        m_hdrCreationManager->chosen_config.LoadCurveFromFilename = strdup(QFile::encodeName(filename_from_gui).constData());
+void HdrWizard::loadRespCurveFilename(const QString& filename_from_gui)
+{
+    if (!filename_from_gui.isEmpty())
+    {
+        m_hdrCreationManager->chosen_config.responseFunction = RESPONSE_CUSTOM;
+        m_hdrCreationManager->chosen_config.inputResponseFunctionFilename = QFile::encodeName(filename_from_gui).constData();
     }
 }
 
@@ -1069,44 +1047,45 @@ QStringList HdrWizard::getInputFilesNames()
     // return m_inputFilesName;
 }
 
-QString HdrWizard::getQStringFromConfig( int type )
+QString HdrWizard::getQStringFromConfig(int type)
 {
     if (type == 1) {
         // return String for weights
-        switch (m_hdrCreationManager->chosen_config.weights) {
-        case TRIANGULAR:
+        switch (m_hdrCreationManager->chosen_config.weightFunction) {
+        case WEIGHT_TRIANGULAR:
             return tr("Triangular");
-        case PLATEAU:
+        case WEIGHT_PLATEAU:
             return tr("Plateau");
-        case GAUSSIAN:
+        case WEIGHT_GAUSSIAN:
             return tr("Gaussian");
         }
     } else if (type == 2) {
         // return String for response curve
-        switch (m_hdrCreationManager->chosen_config.response_curve) {
-        case LINEAR:
+        switch (m_hdrCreationManager->chosen_config.responseFunction) {
+        case RESPONSE_LINEAR:
             return tr("Linear");
-        case GAMMA:
+        case RESPONSE_GAMMA:
             return tr("Gamma");
-        case LOG10:
+        case RESPONSE_LOG10:
             return tr("Logarithmic");
-        case FROM_ROBERTSON:
-            return tr("From Calibration");
-        case FROM_FILE:
-            return tr("From File: ") + m_hdrCreationManager->chosen_config.LoadCurveFromFilename;
+        case RESPONSE_CUSTOM:
+         //   return tr("From Calibration");
+        //case FROM_FILE:
+            return tr("From File: ") +
+                    QString::fromStdString(m_hdrCreationManager->chosen_config.inputResponseFunctionFilename);
         }
     } else if (type == 3) {
         // return String for model
-        switch (m_hdrCreationManager->chosen_config.model) {
+        switch (m_hdrCreationManager->chosen_config.fusionOperator) {
         case DEBEVEC:
             return tr("Debevec");
         case ROBERTSON:
             return tr("Robertson");
         }
     } else {
-        return "";
+        return QString();
     }
-    return "";
+    return QString();
 }
 
 // triggered by user interaction

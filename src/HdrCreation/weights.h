@@ -27,10 +27,11 @@
 namespace libhdr {
 namespace fusion {
 
-enum WeightFunction {
-    WEIGHT_TRIANGULAR,
-    WEIGHT_GAUSSIAN,
-    WEIGHT_PLATEAU
+enum WeightFunction
+{
+    WEIGHT_TRIANGULAR = 0,
+    WEIGHT_GAUSSIAN = 1,
+    WEIGHT_PLATEAU = 2
 };
 
 class IWeightFunction {

@@ -50,7 +50,7 @@
 #include "AutoAntighosting.h"
 
 // Some other file expect this to be available
-extern const config_triple predef_confs[6];
+extern const FusionOperatorConfig predef_confs[6];
 
 class HdrCreationManager : public QObject
 {
@@ -100,7 +100,7 @@ public:
 
     const QString& outputResponseFile() const                       { return m_outputResponseCurveFile; }
 
-    void setConfig(const config_triple& cfg);
+    void setConfig(const FusionOperatorConfig& cfg);
 
 	pfs::Frame* createHdr(bool ag, int iterations);
 
@@ -116,7 +116,7 @@ public:
 
     // the configuration used to create the hdr
     // this is public so that the wizard (or the cli?) can modify it directly.
-	config_triple chosen_config;
+    FusionOperatorConfig chosen_config;
 
     void applyShiftsToItems(const QList<QPair<int,int> >&);
     void cropItems(const QRect& ca);

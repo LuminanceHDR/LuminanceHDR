@@ -34,10 +34,12 @@ namespace fusion {
 
 enum ResponseFunction
 {
-    RESPONSE_GAMMA,
-    RESPONSE_LINEAR,
-    RESPONSE_LOG10,
-    RESPONSE_SRGB
+    RESPONSE_LINEAR = 0,
+    RESPONSE_GAMMA = 1,
+    RESPONSE_LOG10 = 2,
+    RESPONSE_CUSTOM = 3,
+    // ... I might be adding something else here...
+    RESPONSE_SRGB = 10
 };
 
 enum ResponseChannel

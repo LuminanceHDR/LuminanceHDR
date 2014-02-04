@@ -2,6 +2,7 @@
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2014 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,38 +25,18 @@
 #define CREATEHDR_H
 
 //! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <QString>
+#include <string>
+#include <HdrCreation/fusionoperator.h>
 
-enum TWeight
+struct FusionOperatorConfig
 {
-    TRIANGULAR,
-    GAUSSIAN,
-    PLATEAU
-};
-
-enum TResponse
-{
-    FROM_FILE,
-    LINEAR,
-    GAMMA,
-    LOG10,
-    FROM_ROBERTSON
-};
-
-enum TModel
-{
-    ROBERTSON,
-    DEBEVEC
-};
-
-struct config_triple
-{
-    TWeight weights;
-    TResponse response_curve;
-    TModel model;
-    QString LoadCurveFromFilename;
-    QString SaveCurveToFilename;
+    libhdr::fusion::WeightFunction weightFunction;
+    libhdr::fusion::ResponseFunction responseFunction;
+    libhdr::fusion::FusionOperator fusionOperator;
+    std::string inputResponseFunctionFilename;
+    std::string outputResponseFunctionFilename;
 };
 
 #endif

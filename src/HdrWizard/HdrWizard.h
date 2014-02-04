@@ -61,7 +61,7 @@ private:
     pfs::Frame* m_pfsFrameHDR;
 
     // hdr creation parameters
-    QVector<config_triple> m_customConfig;
+    QVector<FusionOperatorConfig> m_customConfig;
     bool m_patches[agGridSize][agGridSize];
     bool m_doAutoAntighosting;
     bool m_doManualAntighosting;

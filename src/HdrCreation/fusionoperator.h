@@ -56,10 +56,11 @@ private:
     float m_averageLuminance;
 };
 
-enum FusionOperator {
-    DEBEVEC_NEW,
-    ROBERTSON02_NEW,
-    ROBERTSON02_NEW_AUTO
+enum FusionOperator
+{
+    DEBEVEC = 0,
+    ROBERTSON = 1,
+    ROBERTSON_AUTO = 2
 };
 
 class IFusionOperator;

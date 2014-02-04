@@ -72,7 +72,7 @@ int main(int argc, char** argv)
         msec_timer t;
         t.start();
 
-        FusionOperatorPtr fusionOperator = IFusionOperator::build(ROBERTSON02_NEW_AUTO);
+        FusionOperatorPtr fusionOperator = IFusionOperator::build(ROBERTSON_AUTO);
 
         fusionOperator->writeResponsesToFile("responses_before.m");
 
