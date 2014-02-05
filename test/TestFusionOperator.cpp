@@ -74,6 +74,7 @@ int main(int argc, char** argv)
 
         FusionOperatorPtr fusionOperator = IFusionOperator::build(ROBERTSON_AUTO);
 
+        fusionOperator->setResponseFunctionInputFile("responses_after.m");
         fusionOperator->writeResponsesToFile("responses_before.m");
 
         pfs::FramePtr newHdr(fusionOperator->computeFusion(images));

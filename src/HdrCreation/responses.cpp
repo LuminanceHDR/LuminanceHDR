@@ -152,6 +152,20 @@ void ResponseLog10::fillResponse(ResponseContainer& response)
 //    return pfs::colorspace::ConvertSRGB2RGB()(input);
 //}
 
+ResponseCustom::ResponseCustom(const std::string& fileName)
+    : IResponseFunction()
+{
+    ScopedStdIoFile inputFile(fopen(fileName.c_str(), "r"));
+    if (!responseLoad(inputFile.data(),
+                      m_responses[RESPONSE_CHANNEL_RED].data(),
+                      m_responses[RESPONSE_CHANNEL_GREEN].data(),
+                      m_responses[RESPONSE_CHANNEL_BLUE].data(),
+                      NUM_BINS))
+    {
+        throw std::runtime_error("Invalid response curve file");
+    }
+}
+
 }   // fusion
 }   // libhdr
 
@@ -217,7 +231,7 @@ bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M)
     while( fgets(line, 1024, file) )
         if( sscanf(line, "# rows: %d\n", &m) == 1 )
             break;
-    if( m!=M )
+    if ( m!=M )
     {
         std::cerr << "response: number of input levels is different,"
                   << " M=" << M << " m=" << m << std::endl;

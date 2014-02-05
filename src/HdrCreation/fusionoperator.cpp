@@ -82,6 +82,13 @@ bool IFusionOperator::setResponseFunction(ResponseFunction responseFunction)
     return true;
 }
 
+bool IFusionOperator::setResponseFunctionInputFile(const string &fileName)
+{
+    m_response.reset(new ResponseCustom(fileName));
+
+    true;
+}
+
 bool IFusionOperator::setWeightFunction(WeightFunction weightFunction)
 {
     switch (weightFunction) {

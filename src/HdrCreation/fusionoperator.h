@@ -80,6 +80,7 @@ public:
     // static FusionOperatorPtr build(const std::string& name);
 
     bool setResponseFunction(ResponseFunction responseFunction);
+    bool setResponseFunctionInputFile(const std::string& fileName);
     ResponseFunction getResponseFunction() const { return m_response->getType(); }
 
     bool setWeightFunction(WeightFunction weightFunction);

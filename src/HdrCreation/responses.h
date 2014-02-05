@@ -136,6 +136,17 @@ public:
     }
 };
 
+class ResponseCustom : public IResponseFunction
+{
+public:
+    // a custom response is read from file, hence it must take a filename as input
+    ResponseCustom(const std::string& fileName);
+
+    ResponseFunction getType() const {
+        return RESPONSE_CUSTOM;
+    }
+};
+
 }   // fusion
 }   // libhdr
 
