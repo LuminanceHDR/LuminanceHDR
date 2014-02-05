@@ -76,12 +76,12 @@ using namespace pfs::io;
 using namespace libhdr::fusion;
 
 const FusionOperatorConfig predef_confs[6]= {
-    {WEIGHT_TRIANGULAR, RESPONSE_LINEAR, DEBEVEC, std::string(), std::string()},
-    {WEIGHT_TRIANGULAR, RESPONSE_GAMMA, DEBEVEC, std::string(), std::string()},
-    {WEIGHT_PLATEAU, RESPONSE_LINEAR, DEBEVEC, std::string(), std::string()},
-    {WEIGHT_PLATEAU, RESPONSE_GAMMA, DEBEVEC, std::string(), std::string()},
-    {WEIGHT_GAUSSIAN, RESPONSE_LINEAR, DEBEVEC, std::string(), std::string()},
-    {WEIGHT_GAUSSIAN, RESPONSE_GAMMA, DEBEVEC, std::string(), std::string()},
+    {WEIGHT_TRIANGULAR, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
+    {WEIGHT_TRIANGULAR, RESPONSE_GAMMA, DEBEVEC, QString(), QString()},
+    {WEIGHT_PLATEAU, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
+    {WEIGHT_PLATEAU, RESPONSE_GAMMA, DEBEVEC, QString(), QString()},
+    {WEIGHT_GAUSSIAN, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
+    {WEIGHT_GAUSSIAN, RESPONSE_GAMMA, DEBEVEC, QString(), QString()},
 };
 
 
@@ -198,7 +198,7 @@ void HdrCreationManager::removeFile(int idx)
 
 using namespace libhdr::fusion;
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
-    : chosen_config( predef_confs[0] )
+    : fusionOperatorConfig( predef_confs[0] )
     , m_agMask( NULL )
     , m_align( NULL )
     , m_ais_crop_flag(false)
@@ -217,7 +217,7 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
 
 void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
 {
-    chosen_config = c;
+    fusionOperatorConfig = c;
 }
 
 const QVector<float> HdrCreationManager::getExpotimes() const
@@ -332,11 +332,12 @@ pfs::Frame* HdrCreationManager::createHdr(bool /*ag*/, int /*iterations*/)
                     );
     }
 
-    libhdr::fusion::FusionOperatorPtr fusionOperatorPtr = IFusionOperator::build(m_fusionOperator);
-    fusionOperatorPtr->setResponseFunction(m_responseFunction);
-    fusionOperatorPtr->setWeightFunction(m_weightFunction);
+    libhdr::fusion::FusionOperatorPtr fusionOperatorPtr =
+            IFusionOperator::build(fusionOperatorConfig.fusionOperator);
+    fusionOperatorPtr->setResponseFunction(fusionOperatorConfig.responseFunction);
+    fusionOperatorPtr->setWeightFunction(fusionOperatorConfig.weightFunction);
 
-    return fusionOperatorPtr->computeFusion( frames );
+    return fusionOperatorPtr->computeFusion(frames);
 }
 
 void HdrCreationManager::applyShiftsToItems(const QList<QPair<int,int> >& hvOffsets)

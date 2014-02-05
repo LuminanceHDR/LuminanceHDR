@@ -364,14 +364,17 @@ void BatchHDRDialog::create_hdr(int)
     m_Ui->progressBar_2->hide();
     m_Ui->textEdit->append(tr("Creating HDR..."));
     int idx = m_Ui->profileComboBox->currentIndex();
-    if (idx <= 5) {
-        m_hdrCreationManager->chosen_config = predef_confs[idx];
+    if (idx <= 5)
+    {
+        m_hdrCreationManager->fusionOperatorConfig = predef_confs[idx];
     }
-    else  {
-        m_hdrCreationManager->chosen_config = m_customConfig[idx - 6];
+    else
+    {
+        m_hdrCreationManager->fusionOperatorConfig = m_customConfig[idx - 6];
     }
 
-    if (m_Ui->autoAG_checkBox->isChecked()) {
+    if (m_Ui->autoAG_checkBox->isChecked())
+    {
         m_Ui->textEdit->append(tr("Doing auto anti-ghosting..."));
         QList<QPair<int, int> > HV_offsets;
         for (int i = 0; i < m_Ui->spinBox->value(); i++ ) {

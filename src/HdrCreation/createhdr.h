@@ -27,7 +27,7 @@
 //! \author Giuseppe Rota <grota@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <string>
+#include <QString>
 #include <HdrCreation/fusionoperator.h>
 
 struct FusionOperatorConfig
@@ -35,8 +35,8 @@ struct FusionOperatorConfig
     libhdr::fusion::WeightFunction weightFunction;
     libhdr::fusion::ResponseFunction responseFunction;
     libhdr::fusion::FusionOperator fusionOperator;
-    std::string inputResponseFunctionFilename;
-    std::string outputResponseFunctionFilename;
+    QString inputResponseFunctionFilename;
+    QString outputResponseFunctionFilename;
 };
 
 #endif

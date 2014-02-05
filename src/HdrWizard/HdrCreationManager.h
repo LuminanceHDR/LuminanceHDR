@@ -59,13 +59,6 @@ private:
     HdrCreationItemContainer m_data;
     HdrCreationItemContainer m_tmpdata;
 
-    libhdr::fusion::FusionOperator m_fusionOperator;
-    libhdr::fusion::WeightFunction m_weightFunction;
-    libhdr::fusion::ResponseFunction m_responseFunction;
-
-    QString m_inputResponseCurveFile;
-    QString m_outputResponseCurveFile;
-
 public:
     HdrCreationManager(bool fromCommandLine = false);
 	~HdrCreationManager();
@@ -91,14 +84,14 @@ public:
     const_iterator begin() const    { return m_data.begin(); }
     const_iterator end() const      { return m_data.end(); }
 
-    void setFusionOperator(libhdr::fusion::FusionOperator fo)       { m_fusionOperator = fo; }
-    void setWeightFunction(libhdr::fusion::WeightFunction wf)       { m_weightFunction = wf; }
-    void setResponseFunction(libhdr::fusion::ResponseFunction rf)   { m_responseFunction = rf; }
+    void setFusionOperator(libhdr::fusion::FusionOperator fo)       { fusionOperatorConfig.fusionOperator = fo; }
+    void setWeightFunction(libhdr::fusion::WeightFunction wf)       { fusionOperatorConfig.weightFunction = wf; }
+    void setResponseFunction(libhdr::fusion::ResponseFunction rf)   { fusionOperatorConfig.responseFunction = rf; }
 
-    void setInputResponseFile(const QString& filename)              { m_inputResponseCurveFile = filename; }
-    void setOutputResponseFile(const QString& filename)             { m_outputResponseCurveFile = filename; }
+    void setInputResponseFile(const QString& filename)              { fusionOperatorConfig.inputResponseFunctionFilename = filename; }
+    void setOutputResponseFile(const QString& filename)             { fusionOperatorConfig.outputResponseFunctionFilename = filename; }
 
-    const QString& outputResponseFile() const                       { return m_outputResponseCurveFile; }
+    const QString& outputResponseFile() const                       { return fusionOperatorConfig.outputResponseFunctionFilename; }
 
     void setConfig(const FusionOperatorConfig& cfg);
 
@@ -116,7 +109,7 @@ public:
 
     // the configuration used to create the hdr
     // this is public so that the wizard (or the cli?) can modify it directly.
-    FusionOperatorConfig chosen_config;
+    FusionOperatorConfig fusionOperatorConfig;
 
     void applyShiftsToItems(const QList<QPair<int,int> >&);
     void cropItems(const QRect& ca);
