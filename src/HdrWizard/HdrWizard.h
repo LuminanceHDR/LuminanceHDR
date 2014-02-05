@@ -49,12 +49,6 @@ private:
     QFutureWatcher<void> m_futureWatcher;
     QFuture<pfs::Frame*> m_future;
 
-//    QString loadcurvefilename;
-//    QString savecurvefilename;
-
-    //    QStringList m_inputFilesName;
-    //    QVector<float> m_inputExpoTimes;
-
     LuminanceOptions luminance_options;
 
     // the new hdr, returned by the HdrCreationManager class

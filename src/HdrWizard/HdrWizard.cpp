@@ -74,10 +74,6 @@ HdrWizard::HdrWizard(QWidget *p,
     : QDialog(p)
     , m_ui(new Ui::HdrWizard)
     , m_hdrCreationManager(new HdrCreationManager)
-//    , loadcurvefilename()
-//    , savecurvefilename()
-//    , m_inputFilesName(inputFilesName)
-//    , m_inputExpoTimes(inputExpoTimes)
     , m_doAutoAntighosting(false)
     , m_doManualAntighosting(false)
     , m_processing(false)
@@ -104,6 +100,8 @@ HdrWizard::HdrWizard(QWidget *p,
                                   Q_ARG(QStringList, files));
     }
 
+    // Same code as the one in BatchHDRDialog!!! TODO: put everything in the same
+    // place :(
     /*
     QSqlQueryModel model;
     model.setQuery("SELECT * FROM parameters"); 
@@ -113,7 +111,7 @@ HdrWizard::HdrWizard(QWidget *p,
         int response_ = model.record(i).value("response").toInt(); 
         int model_ = model.record(i).value("model").toInt(); 
         QString filename_ = model.record(i).value("filename").toString(); 
-        config_triple ct;
+        FusionOperatorConfig ct;
         switch (weight_) {
             case 0:
                 ct.weights = TRIANGULAR;
@@ -208,18 +206,17 @@ void HdrWizard::setupConnections()
     */
 
     connect(m_ui->gammaLinLogComboBox, SIGNAL(activated(int)), this, SLOT(gammaLinLogComboBoxActivated(int)));
-    /*
     connect(m_ui->loadRespCurveFromFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(loadRespCurveFromFileCheckboxToggled(bool)));
     connect(m_ui->loadRespCurveFileButton, SIGNAL(clicked()), this, SLOT(loadRespCurveFileButtonClicked()));
     connect(m_ui->saveRespCurveToFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(saveRespCurveToFileCheckboxToggled(bool)));
     connect(m_ui->saveRespCurveFileButton, SIGNAL(clicked()), this, SLOT(saveRespCurveFileButtonClicked()));
-    */
     connect(m_ui->modelComboBox, SIGNAL(activated(int)), this, SLOT(modelComboBoxActivated(int)));
-    /*
+
     connect(m_ui->RespCurveFileLoadedLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(loadRespCurveFilename(const QString&)));
+    /*
     connect(m_hdrCreationManager.data(), SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
     connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
-*/
+    */
 
     connect(m_hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)), this, SLOT(errorWhileLoading(QString)));
     //connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)), this, SLOT(updateGraphicalEVvalue(float,int)));
@@ -714,54 +711,62 @@ void HdrWizard::predefRespCurveRadioButtonToggled(bool want_predef_resp_curve)
     }
 }
 
-void HdrWizard::loadRespCurveFromFileCheckboxToggled( bool checkedfile )
+void HdrWizard::loadRespCurveFromFileCheckboxToggled(bool checkedfile)
 {
-    /*
     //if checkbox is checked AND we have a valid filename
-    if (checkedfile && loadcurvefilename != "") {
-    //update chosen config
-    m_hdrCreationManager->chosen_config.response_curve = FROM_FILE;
-    m_hdrCreationManager->chosen_config.LoadCurveFromFilename = strdup(QFile::encodeName(loadcurvefilename).constData());
-    //and ENABLE nextbutton
-    m_ui->NextFinishButton->setEnabled(true);
-    }
-    //if checkbox is checked AND no valid filename
-    else  if (checkedfile && loadcurvefilename == "") {
-    // DISABLE nextbutton until situation is fixed
-    m_ui->NextFinishButton->setEnabled(false);
-//  qDebug("Load checkbox is checked AND no valid filename");
-    }
-    //checkbox not checked
-    else {
-    // update chosen config
-    m_hdrCreationManager->chosen_config.response_curve = responses_in_gui[m_ui->gammaLinLogComboBox->currentIndex()];
-    m_hdrCreationManager->chosen_config.LoadCurveFromFilename = "";
-    //and ENABLE nextbutton
-    m_ui->NextFinishButton->setEnabled(true);
-    }
-    */
-}
+    if (checkedfile)
+    {
+        if (!m_ui->RespCurveFileLoadedLineEdit->text().isEmpty()) {
+            //update chosen config
+            m_hdrCreationManager->chosen_config.responseFunction = RESPONSE_CUSTOM;
+            m_hdrCreationManager->chosen_config.inputResponseFunctionFilename =
+                    QFile::encodeName(m_ui->RespCurveFileLoadedLineEdit->text()).constData();
 
-void HdrWizard::saveRespCurveToFileCheckboxToggled( bool checkedfile )
-{
-    /*
-    //if checkbox is checked AND we have a valid filename
-    if (checkedfile && savecurvefilename != "") {
-        m_hdrCreationManager->chosen_config.SaveCurveToFilename = strdup(QFile::encodeName(savecurvefilename).constData());
-        m_ui->NextFinishButton->setEnabled(true);
+            //and ENABLE nextbutton
+            m_ui->NextFinishButton->setEnabled(true);
+        }
+        else    // if checkbox is checked AND no valid filename
+        {
+            // DISABLE nextbutton until situation is fixed
+            m_ui->NextFinishButton->setEnabled(false);
+            qDebug("Load checkbox is checked AND no valid filename");
+        }
+
     }
-    //if checkbox is checked AND no valid filename
-    else  if (checkedfile && savecurvefilename == "") {
-        // DISABLE nextbutton until situation is fixed
-        m_ui->NextFinishButton->setEnabled(false);
-    }
-    //checkbox not checked
-    else {
-        m_hdrCreationManager->chosen_config.SaveCurveToFilename = "";
+    else    // checkbox not checked
+    {
+        // update chosen config
+        m_hdrCreationManager->chosen_config.responseFunction = responses_in_gui[m_ui->gammaLinLogComboBox->currentIndex()];
+        m_hdrCreationManager->chosen_config.inputResponseFunctionFilename.clear();
         //and ENABLE nextbutton
         m_ui->NextFinishButton->setEnabled(true);
     }
-    */
+}
+
+void HdrWizard::saveRespCurveToFileCheckboxToggled(bool checkedfile)
+{
+    // if checkbox is checked AND we have a valid filename
+    if (checkedfile)
+    {
+        if (!m_ui->CurveFileNameSaveLineEdit->text().isEmpty())
+        {
+            m_hdrCreationManager->chosen_config.outputResponseFunctionFilename =
+                    QFile::encodeName(m_ui->CurveFileNameSaveLineEdit->text()).constData();
+            m_ui->NextFinishButton->setEnabled(true);
+        }
+
+        else  // if checkbox is checked AND no valid filename
+        {
+            // DISABLE nextbutton until situation is fixed
+            m_ui->NextFinishButton->setEnabled(false);
+        }
+    }
+    else    // checkbox not checked
+    {
+        m_hdrCreationManager->chosen_config.outputResponseFunctionFilename.clear();
+        //and ENABLE nextbutton
+        m_ui->NextFinishButton->setEnabled(true);
+    }
 }
 
 void HdrWizard::NextFinishButtonClicked() {
@@ -923,32 +928,30 @@ void HdrWizard::antighostRespCurveComboboxActivated(int fromgui) {
 
 void HdrWizard::loadRespCurveFileButtonClicked()
 {
-    /*
-    loadcurvefilename = QFileDialog::getOpenFileName(
+    QString loadcurvefilename = QFileDialog::getOpenFileName(
             this,
             tr("Load a camera response curve file"),
             QDir::currentPath(),
             tr("Camera response curve (*.m);;All Files (*)") );
-    if (!loadcurvefilename.isEmpty())  {
+    if (!loadcurvefilename.isEmpty())
+    {
         m_ui->RespCurveFileLoadedLineEdit->setText(loadcurvefilename);
         loadRespCurveFromFileCheckboxToggled(m_ui->loadRespCurveFromFileCheckbox->isChecked());
     }
-    */
 }
 
 void HdrWizard::saveRespCurveFileButtonClicked()
 {
-    /*
-    savecurvefilename = QFileDialog::getSaveFileName(
+    QString savecurvefilename = QFileDialog::getSaveFileName(
             this,
             tr("Save a camera response curve file"),
             QDir::currentPath(),
-            tr("Camera response curve (*.m);;All Files (*)") );
-    if (!savecurvefilename.isEmpty())  {
+            tr("Camera response curve (*.m)") );
+    if (!savecurvefilename.isEmpty())
+    {
         m_ui->CurveFileNameSaveLineEdit->setText(savecurvefilename);
         saveRespCurveToFileCheckboxToggled(m_ui->saveRespCurveToFileCheckbox->isChecked());
     }
-    */
 }
 
 namespace
@@ -1068,6 +1071,8 @@ QString HdrWizard::getQStringFromConfig(int type)
             return tr("Gamma");
         case RESPONSE_LOG10:
             return tr("Logarithmic");
+        case RESPONSE_SRGB:
+            return tr("sRGB");
         case RESPONSE_CUSTOM:
          //   return tr("From Calibration");
         //case FROM_FILE:
@@ -1081,6 +1086,8 @@ QString HdrWizard::getQStringFromConfig(int type)
             return tr("Debevec");
         case ROBERTSON:
             return tr("Robertson");
+        case ROBERTSON_AUTO:
+            return tr("Robertson Response Calculation");
         }
     } else {
         return QString();
