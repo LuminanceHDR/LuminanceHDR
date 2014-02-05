@@ -78,6 +78,8 @@ int main()
                        "response_log10.dat", "response_log10.m");
     printResponseCurve(ResponseGamma(), &responseGamma,
                        "response_gamma.dat", "response_gamma.m");
+    printResponseCurve(ResponseSRGB(), &responseLinear,
+                       "response_srgb.dat", "response_srgb.m");
 
     return 0;
 }

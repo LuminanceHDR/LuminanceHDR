@@ -129,11 +129,14 @@ private:
 class ResponseSRGB : public IResponseFunction
 {
 public:
-    // float getResponse(float input) const;
+    ResponseSRGB();
 
     ResponseFunction getType() const {
         return RESPONSE_SRGB;
     }
+
+private:
+    void fillResponse(ResponseContainer& response);
 };
 
 class ResponseCustom : public IResponseFunction

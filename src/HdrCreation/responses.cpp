@@ -147,10 +147,23 @@ void ResponseLog10::fillResponse(ResponseContainer& response)
     }
 }
 
-//float ResponseSRGB::getResponse(float input) const
-//{
-//    return pfs::colorspace::ConvertSRGB2RGB()(input);
-//}
+ResponseSRGB::ResponseSRGB()
+{
+    fillResponse(m_responses[RESPONSE_CHANNEL_RED]);
+    fillResponse(m_responses[RESPONSE_CHANNEL_GREEN]);
+    fillResponse(m_responses[RESPONSE_CHANNEL_BLUE]);
+}
+
+void ResponseSRGB::fillResponse(ResponseContainer& response)
+{
+    size_t divider = (NUM_BINS - 1);
+    pfs::colorspace::ConvertSRGB2RGB converter;
+
+    for (size_t i = 0; i < NUM_BINS; ++i)
+    {
+        response[i] = converter((float)i/divider);
+    }
+}
 
 ResponseCustom::ResponseCustom(const std::string& fileName)
     : IResponseFunction()
