@@ -54,7 +54,7 @@ LuminanceOptions::~LuminanceOptions()
 void LuminanceOptions::conditionallyDoUpgrade()
 {
     LuminanceOptions options;
-    int currentVersion = options.value("LuminanceOptionsVersion", 0).toInt();
+    int currentVersion = options.value(KEY_OPTIONS_VERSION, 0).toInt();
 
     // check if update needed
     if (currentVersion < LUMINANCEVERSION_NUM)
@@ -67,8 +67,19 @@ void LuminanceOptions::conditionallyDoUpgrade()
 #endif
         }
 
-        options.setValue("LuminanceOptionsVersion", LUMINANCEVERSION_NUM);
+        options.setValue(KEY_WARNING_WOW64, 0); // remind the user again with a new version
+        options.setValue(KEY_OPTIONS_VERSION, LUMINANCEVERSION_NUM);
     }
+}
+
+bool LuminanceOptions::doShowWindowsOnWindows64Message()
+{
+    int currentTimes = value(KEY_WARNING_WOW64, 0).toInt() + 1;
+    bool result = currentTimes <= 3;
+    if (result)
+        setValue(KEY_WARNING_WOW64, currentTimes);
+
+    return result;
 }
 
 void LuminanceOptions::setPortableMode(bool isPortable)
@@ -100,14 +111,14 @@ void LuminanceOptions::setPortableMode(bool isPortable)
 
 bool LuminanceOptions::checkForUpdate()
 {
-    QDate date = value("UpdateChecked", QDate(0, 1, 1)).toDate();
-    int diff = date.daysTo(QDate::currentDate());
-    return diff > 0;
+
+    QDate date = value(KEY_UPDATE_CHECKED_ON, QDate(1, 1, 1)).toDate();
+    return date < QDate::currentDate();
 }
 
 void LuminanceOptions::setUpdateChecked()
 {
-    setValue("UpdateChecked", QDate::currentDate());
+    setValue(KEY_UPDATE_CHECKED_ON, QDate::currentDate());
 }
 
 void LuminanceOptions::initSettings()

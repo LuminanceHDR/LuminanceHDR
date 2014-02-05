@@ -48,6 +48,8 @@ public:
 
     static void conditionallyDoUpgrade();
 
+    bool doShowWindowsOnWindows64Message();
+
     static bool isCurrentPortableMode;
     QString getDatabaseFileName();
     void    setPortableMode(bool isPortable);
