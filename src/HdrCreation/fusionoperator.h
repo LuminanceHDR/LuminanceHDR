@@ -79,35 +79,24 @@ public:
     // //! values are "debevec" and "robertson02". Useful in a CLI interface
     // static FusionOperatorPtr build(const std::string& name);
 
-    bool setResponseFunction(ResponseCurveType responseCurve);
-    bool setResponseFunctionInputFile(const std::string& fileName);
-    ResponseCurveType getResponseFunction() const
-    { return m_response->getType(); }
-
     bool setWeightFunction(WeightFunction weightFunction);
     WeightFunction getWeightFunction() const
     { return m_weight->getType(); }
 
-    pfs::Frame* computeFusion(const std::vector<FrameEnhanced>& frames) const;
-
-    void writeResponsesToFile(const std::string& fileName) const
-    {
-        m_response->writeToFile(fileName);
-    }
+    pfs::Frame* computeFusion(ResponseCurve& response, const std::vector<FrameEnhanced>& frames) const;
 
 protected:
     IFusionOperator();
 
-    inline float response(float in, ResponseChannel channel = RESPONSE_CHANNEL_RED) const
-    { return m_response->getResponse(in, channel); }
-
-    virtual void computeFusion(const std::vector<FrameEnhanced>& frames, pfs::Frame& outFrame) const = 0;
+    virtual void computeFusion(
+            ResponseCurve& response,
+            const std::vector<FrameEnhanced>& frames,
+            pfs::Frame& outFrame) const = 0;
 
     inline float weight(float in) const { return m_weight->getWeight(in); }
     inline float minTrustedValue() const  { return m_weight->minTrustedValue(); }
     inline float maxTrustedValue() const  { return m_weight->maxTrustedValue(); }
 
-    boost::scoped_ptr<ResponseCurve> m_response;
     boost::scoped_ptr<IWeightFunction> m_weight;
 };
 

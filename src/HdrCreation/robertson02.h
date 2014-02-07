@@ -44,14 +44,18 @@ public:
     {}
 
 private:
-    void computeFusion(const std::vector<FrameEnhanced>& frames, pfs::Frame& frame) const;
+    void computeFusion(
+            ResponseCurve& response,
+            const std::vector<FrameEnhanced>& frames, pfs::Frame& frame) const;
 
 protected:
-    void applyResponse(ResponseChannel channel,
-                       const DataList& inputData, float* outputData,
-                       size_t width, size_t height,
-                       float minAllowedValue, float maxAllowedValue,
-                       const float* arrayofexptime) const;
+    void applyResponse(
+            ResponseCurve& response,
+            ResponseChannel channel,
+            const DataList& inputData, float* outputData,
+            size_t width, size_t height,
+            float minAllowedValue, float maxAllowedValue,
+            const float* arrayofexptime) const;
 };
 
 class RobertsonOperatorAuto : public RobertsonOperator
@@ -62,13 +66,17 @@ public:
     {}
 
 private:
-    void computeFusion(const std::vector<FrameEnhanced>& frames, pfs::Frame& outFrame) const;
+    void computeFusion(
+            ResponseCurve& response,
+            const std::vector<FrameEnhanced>& frames, pfs::Frame& outFrame) const;
 
-    void computeResponse(ResponseChannel channel,
-                         const DataList& inputData, float* outputData,
-                         size_t width, size_t height,
-                         float minAllowedValue, float maxAllowedValue,
-                         const float* arrayofexptime) const;
+    void computeResponse(
+            ResponseCurve& response,
+            ResponseChannel channel,
+            const DataList& inputData, float* outputData,
+            size_t width, size_t height,
+            float minAllowedValue, float maxAllowedValue,
+            const float* arrayofexptime) const;
 };
 
 }   // fusion

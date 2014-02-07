@@ -68,6 +68,9 @@ public:
     //! range [0, 1]
     float getResponse(float input, ResponseChannel channel = RESPONSE_CHANNEL_RED) const;
 
+    float operator()(float input, ResponseChannel channel = RESPONSE_CHANNEL_RED) const
+    { return getResponse(input, channel); }
+
     void writeToFile(const std::string& fileName) const;
     bool readFromFile(const std::string& fileName);
 

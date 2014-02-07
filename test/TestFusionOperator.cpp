@@ -72,16 +72,18 @@ int main(int argc, char** argv)
         msec_timer t;
         t.start();
 
+        ResponseCurve responseCurve(RESPONSE_SRGB);
+        // responseCurve.readFromFile("responses_before.m");
+
         FusionOperatorPtr fusionOperator = IFusionOperator::build(ROBERTSON_AUTO);
-
-        fusionOperator->setResponseFunctionInputFile("responses_after.m");
-        fusionOperator->writeResponsesToFile("responses_before.m");
-
-        pfs::FramePtr newHdr(fusionOperator->computeFusion(images));
+        pfs::FramePtr newHdr(fusionOperator->computeFusion(responseCurve, images));
         if ( newHdr == NULL )
         {
             return -1;
         }
+
+        responseCurve.writeToFile("responses_before.m");
+        responseCurve.writeToFile("responses_after.m");
 
         t.stop_and_update();
         std::cout << "Fusion elapsed time: " << t.get_time() << std::endl;
@@ -114,8 +116,6 @@ int main(int argc, char** argv)
                       ("min_luminance", min)
                       ("max_luminance", max));
 
-
-    fusionOperator->writeResponsesToFile("responses_after.m");
         return 0;
     }
     catch (std::exception& ex)

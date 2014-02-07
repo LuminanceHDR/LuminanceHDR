@@ -69,7 +69,8 @@ struct ColorData {
     float whiteValue_;
 };
 
-void DebevecOperator::computeFusion(const vector<FrameEnhanced> &frames,
+void DebevecOperator::computeFusion(ResponseCurve& response,
+                                    const vector<FrameEnhanced> &frames,
                                     pfs::Frame &frame) const
 {
     assert(frames.size());

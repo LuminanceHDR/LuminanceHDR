@@ -84,8 +84,6 @@ protected:
     void dropEvent(QDropEvent *);
 
 private:
-	QString getQStringFromConfig( int type );
-
     void updateTableGrid();
     void enableNextOrWarning(const QStringList& filesWithoutExif);
     void updateLabelMaybeNext(size_t numFilesWithoutExif);

@@ -34,15 +34,15 @@ namespace libhdr {
 namespace fusion {
 
 IFusionOperator::IFusionOperator()
-    : m_response(new ResponseCurve)
-    , m_weight(new WeightGaussian)
+    : m_weight(new WeightGaussian)
 {}
 
-// questa e' da sistemare...
-pfs::Frame* IFusionOperator::computeFusion(const std::vector<FrameEnhanced>& frames) const
+// TODO: fix this to return a shared_ptr
+pfs::Frame* IFusionOperator::computeFusion(
+        ResponseCurve& response, const std::vector<FrameEnhanced>& frames) const
 {
     pfs::Frame* frame = new pfs::Frame;
-    computeFusion(frames, *frame);
+    computeFusion(response, frames, *frame);
     return frame;
 }
 
@@ -62,17 +62,17 @@ FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
     }
 }
 
-bool IFusionOperator::setResponseFunction(ResponseCurveType responseCurve)
-{
-    m_response->setType(responseCurve);
-    return true;
-}
+//bool IFusionOperator::setResponseFunction(ResponseCurveType responseCurve)
+//{
+//    m_response->setType(responseCurve);
+//    return true;
+//}
 
-bool IFusionOperator::setResponseFunctionInputFile(const string &fileName)
-{
-    m_response->setType(RESPONSE_CUSTOM);
-    return m_response->readFromFile(fileName);
-}
+//bool IFusionOperator::setResponseFunctionInputFile(const string &fileName)
+//{
+//    m_response->setType(RESPONSE_CUSTOM);
+//    return m_response->readFromFile(fileName);
+//}
 
 bool IFusionOperator::setWeightFunction(WeightFunction weightFunction)
 {

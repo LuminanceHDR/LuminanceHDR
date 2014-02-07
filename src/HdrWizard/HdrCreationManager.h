@@ -38,15 +38,13 @@
 
 #include <Libpfs/frame.h>
 #include <HdrCreation/fusionoperator.h>
+#include <HdrCreation/createhdr.h>
 
 #include "Alignment/Align.h"
 #include "Common/LuminanceOptions.h"
 #include "Common/ProgressHelper.h"
 #include "arch/math.h"
-#include "HdrCreation/createhdr.h"
-#include "HdrCreation/fusionoperator.h"
 #include "HdrCreationItem.h"
-
 #include "AutoAntighosting.h"
 
 // Some other file expect this to be available
@@ -84,11 +82,14 @@ public:
     const_iterator begin() const    { return m_data.begin(); }
     const_iterator end() const      { return m_data.end(); }
 
+    const libhdr::fusion::ResponseCurve& getResponseCurve() const   { return *m_response; }
+    libhdr::fusion::ResponseCurve& getResponseCurve()               { return *m_response; }
+
     void setFusionOperator(libhdr::fusion::FusionOperator fo)       { fusionOperatorConfig.fusionOperator = fo; }
     void setWeightFunction(libhdr::fusion::WeightFunction wf)       { fusionOperatorConfig.weightFunction = wf; }
-    void setResponseCurve(libhdr::fusion::ResponseCurveType rc)     { fusionOperatorConfig.responseCurve = rc; }
+    // void setResponseCurve(libhdr::fusion::ResponseCurveType rc)     { fusionOperatorConfig.responseCurve = rc; }
 
-    void setResponseCurveInputFile(const QString& filename)         { fusionOperatorConfig.inputResponseCurveFilename = filename; }
+    // void setResponseCurveInputFile(const QString& filename)         { fusionOperatorConfig.inputResponseCurveFilename = filename; }
     void setResponseCurveOutputFile(const QString& filename)        { fusionOperatorConfig.outputResponseCurveFilename = filename; }
 
     const QString& responseCurveOutputFile() const                  { return fusionOperatorConfig.outputResponseCurveFilename; }
@@ -105,11 +106,7 @@ public:
     //const QList<QImage*>& getAntiGhostingMasksList() const  { return m_antiGhostingMasksList; }
     //void setAntiGhostingMasksList(QList<QImage*>& list)     { m_antiGhostingMasksList.swap(list); }
     void setAntiGhostingMask(QImage* mask) { m_agMask = new QImage(*mask); }
-    const QVector<float> getExpotimes() const;
-
-    // the configuration used to create the hdr
-    // this is public so that the wizard (or the cli?) can modify it directly.
-    FusionOperatorConfig fusionOperatorConfig;
+    QVector<float> getExpotimes() const;
 
     void applyShiftsToItems(const QList<QPair<int,int> >&);
     void cropItems(const QRect& ca);
@@ -151,6 +148,12 @@ signals:
 
 private:
     bool framesHaveSameSize();    
+
+    // the configuration used to create the hdr
+    // this is public so that the wizard (or the cli?) can modify it directly.
+    FusionOperatorConfig fusionOperatorConfig;
+
+    boost::scoped_ptr<libhdr::fusion::ResponseCurve> m_response;
 
     QFutureWatcher<void> m_futureWatcher;
 	//QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti-ghosting

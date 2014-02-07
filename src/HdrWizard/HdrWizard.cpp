@@ -719,9 +719,14 @@ void HdrWizard::loadRespCurveFromFileCheckboxToggled(bool checkedfile)
         if (!m_ui->RespCurveFileLoadedLineEdit->text().isEmpty())
         {
             // update chosen config
-            m_hdrCreationManager->fusionOperatorConfig.responseCurve = RESPONSE_CUSTOM;
-            m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename =
-                    m_ui->RespCurveFileLoadedLineEdit->text();
+            m_hdrCreationManager->getResponseCurve().readFromFile(
+                        QFile::encodeName(m_ui->RespCurveFileLoadedLineEdit->text()).constData()
+                        );
+            // TODO : set to custom!
+
+//                        fusionOperatorConfig.responseCurve = RESPONSE_CUSTOM;
+//            m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename =
+//                    ;
 
             // and ENABLE nextbutton
             m_ui->NextFinishButton->setEnabled(true);
@@ -736,9 +741,13 @@ void HdrWizard::loadRespCurveFromFileCheckboxToggled(bool checkedfile)
     }
     else
     {
+        // remove old filename
+        m_ui->RespCurveFileLoadedLineEdit->clear();
+
         // update chosen config
-        m_hdrCreationManager->fusionOperatorConfig.responseCurve = responses_in_gui[m_ui->gammaLinLogComboBox->currentIndex()];
-        m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename.clear();
+        m_hdrCreationManager->getResponseCurve().setType(
+                    responses_in_gui[m_ui->gammaLinLogComboBox->currentIndex()]);
+
         //and ENABLE nextbutton
         m_ui->NextFinishButton->setEnabled(true);
     }
@@ -751,11 +760,8 @@ void HdrWizard::saveRespCurveToFileCheckboxToggled(bool checkedfile)
         if (!m_ui->CurveFileNameSaveLineEdit->text().isEmpty())
         {
             // if checkbox is checked AND we have a valid filename
-            m_hdrCreationManager->fusionOperatorConfig.outputResponseCurveFilename =
-                    m_ui->CurveFileNameSaveLineEdit->text();
             m_ui->NextFinishButton->setEnabled(true);
         }
-
         else
         {
             // DISABLE nextbutton until situation is fixed
@@ -765,7 +771,8 @@ void HdrWizard::saveRespCurveToFileCheckboxToggled(bool checkedfile)
     else
     {
         // checkbox not checked
-        m_hdrCreationManager->fusionOperatorConfig.outputResponseCurveFilename.clear();
+        m_ui->CurveFileNameSaveLineEdit->clear();
+
         // and ENABLE nextbutton
         m_ui->NextFinishButton->setEnabled(true);
     }
@@ -958,6 +965,58 @@ void HdrWizard::saveRespCurveFileButtonClicked()
 
 namespace
 {
+static QString getQString(libhdr::fusion::WeightFunction wf)
+{
+    switch (wf)
+    {
+    case WEIGHT_TRIANGULAR:
+        return QObject::tr("Triangular");
+    case WEIGHT_PLATEAU:
+        return QObject::tr("Plateau");
+    case WEIGHT_GAUSSIAN:
+        return QObject::tr("Gaussian");
+    }
+
+    return QString();
+}
+
+static QString getQString(libhdr::fusion::ResponseCurveType rf)
+{
+    switch (rf)
+    {
+    case RESPONSE_LINEAR:
+        return QObject::tr("Linear");
+    case RESPONSE_GAMMA:
+        return QObject::tr("Gamma");
+    case RESPONSE_LOG10:
+        return QObject::tr("Logarithmic");
+    case RESPONSE_SRGB:
+        return QObject::tr("sRGB");
+    case RESPONSE_CUSTOM:
+        return QObject::tr("From Calibration/Input File");
+    //case FROM_FILE:
+    //    return tr("From File: ") + m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename;
+    }
+
+    return QString();
+}
+
+static QString getQString(libhdr::fusion::FusionOperator fo)
+
+{
+    switch (fo)
+    {
+    case DEBEVEC:
+        return QObject::tr("Debevec");
+    case ROBERTSON:
+        return QObject::tr("Robertson");
+    case ROBERTSON_AUTO:
+        return QObject::tr("Robertson Response Calculation");
+    }
+
+    return QString();
+}
+
 
 void updateHdrCreationManagerModel(HdrCreationManager& manager, FusionOperator fusionOperator)
 {
@@ -966,11 +1025,11 @@ void updateHdrCreationManagerModel(HdrCreationManager& manager, FusionOperator f
     manager.setFusionOperator(fusionOperator);
 }
 
-void updateHdrCreationManagerResponse(HdrCreationManager& manager, ResponseCurveType response)
+void updateHdrCreationManagerResponse(HdrCreationManager& manager, ResponseCurveType responseType)
 {
-    qDebug() << "Change response to " << (int)response;
+    qDebug() << "Change response to " << (int)responseType;
 
-    manager.setResponseCurve(response);
+    manager.getResponseCurve().setType(responseType);
 }
 
 void updateHdrCreationManagerWeight(HdrCreationManager& manager, WeightFunction weight)
@@ -984,117 +1043,61 @@ void updateHdrCreationManagerWeight(HdrCreationManager& manager, WeightFunction 
 
 void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui)
 {
+    const FusionOperatorConfig* cfg = NULL;
+
     if (index_from_gui <= 5)
     {
-        m_hdrCreationManager->fusionOperatorConfig = predef_confs[index_from_gui];
+        cfg = &predef_confs[index_from_gui];
     }
     else
     {
-        m_hdrCreationManager->fusionOperatorConfig = m_customConfig[index_from_gui - 6];
+        cfg = &m_customConfig[index_from_gui - 6];
     }
-    m_ui->lineEdit_showWeight->setText(getQStringFromConfig(1));
-    m_ui->lineEdit_show_resp->setText(getQStringFromConfig(2));
-    m_ui->lineEdit_showmodel->setText(getQStringFromConfig(3));
 
+    updateHdrCreationManagerModel(*m_hdrCreationManager, cfg->fusionOperator);
+    updateHdrCreationManagerResponse(*m_hdrCreationManager, cfg->responseCurve);
+    updateHdrCreationManagerWeight(*m_hdrCreationManager, cfg->weightFunction);
 
-    // update HdrCreationManager (new code)
-    updateHdrCreationManagerModel(*m_hdrCreationManager,
-                                  m_hdrCreationManager->fusionOperatorConfig.fusionOperator);
-    updateHdrCreationManagerResponse(*m_hdrCreationManager,
-                                     m_hdrCreationManager->fusionOperatorConfig.responseCurve);
-    updateHdrCreationManagerWeight(*m_hdrCreationManager,
-                                   m_hdrCreationManager->fusionOperatorConfig.weightFunction);
+    m_ui->lineEdit_showWeight->setText(getQString(cfg->weightFunction));
+    m_ui->lineEdit_show_resp->setText(getQString(cfg->responseCurve));
+    m_ui->lineEdit_showmodel->setText(getQString(cfg->fusionOperator));
 }
 
 void HdrWizard::triGaussPlateauComboBoxActivated(int from_gui)
 {
-    m_hdrCreationManager->fusionOperatorConfig.weightFunction = weights_in_gui[from_gui];
-
-    updateHdrCreationManagerWeight(*m_hdrCreationManager,
-                                   m_hdrCreationManager->fusionOperatorConfig.weightFunction);
+    updateHdrCreationManagerWeight(*m_hdrCreationManager, weights_in_gui[from_gui]);
 }
 
 void HdrWizard::gammaLinLogComboBoxActivated(int from_gui)
 {
-    m_hdrCreationManager->fusionOperatorConfig.responseCurve = responses_in_gui[from_gui];
-
-    updateHdrCreationManagerResponse(*m_hdrCreationManager,
-                                     m_hdrCreationManager->fusionOperatorConfig.responseCurve);
+    updateHdrCreationManagerResponse(*m_hdrCreationManager, responses_in_gui[from_gui]);
 }
 
 void HdrWizard::modelComboBoxActivated(int from_gui)
 {
-    m_hdrCreationManager->fusionOperatorConfig.fusionOperator = models_in_gui[from_gui];
-
-    updateHdrCreationManagerModel(*m_hdrCreationManager,
-                                  m_hdrCreationManager->fusionOperatorConfig.fusionOperator);
+    updateHdrCreationManagerModel(*m_hdrCreationManager, models_in_gui[from_gui]);
 }
 
 void HdrWizard::loadRespCurveFilename(const QString& filename_from_gui)
 {
     if (!filename_from_gui.isEmpty())
     {
-        m_hdrCreationManager->fusionOperatorConfig.responseCurve = RESPONSE_CUSTOM;
-        m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename =
-                filename_from_gui;
+        m_hdrCreationManager->getResponseCurve().readFromFile(
+                    QFile::encodeName(filename_from_gui).constData());
     }
 }
 
 QString HdrWizard::getCaptionTEXT()
 {
-    return QString(tr("Weights: ") + getQStringFromConfig(1) +
-                   tr(" - Response curve: ") + getQStringFromConfig(2) +
-                   tr(" - Model: ") + getQStringFromConfig(3));
+    return QString(tr("Weights: ") + getQString(WEIGHT_GAUSSIAN) +
+                   tr(" - Response curve: ") + getQString(m_hdrCreationManager->getResponseCurve().getType()) +
+                   tr(" - Model: ") + getQString(DEBEVEC));
 }
 
 QStringList HdrWizard::getInputFilesNames()
 {
     return QStringList();
     // return m_inputFilesName;
-}
-
-QString HdrWizard::getQStringFromConfig(int type)
-{
-    if (type == 1) {
-        // return String for weights
-        switch (m_hdrCreationManager->fusionOperatorConfig.weightFunction) {
-        case WEIGHT_TRIANGULAR:
-            return tr("Triangular");
-        case WEIGHT_PLATEAU:
-            return tr("Plateau");
-        case WEIGHT_GAUSSIAN:
-            return tr("Gaussian");
-        }
-    } else if (type == 2) {
-        // return String for response curve
-        switch (m_hdrCreationManager->fusionOperatorConfig.responseCurve) {
-        case RESPONSE_LINEAR:
-            return tr("Linear");
-        case RESPONSE_GAMMA:
-            return tr("Gamma");
-        case RESPONSE_LOG10:
-            return tr("Logarithmic");
-        case RESPONSE_SRGB:
-            return tr("sRGB");
-        case RESPONSE_CUSTOM:
-         //   return tr("From Calibration");
-        //case FROM_FILE:
-            return tr("From File: ") + m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename;
-        }
-    } else if (type == 3) {
-        // return String for model
-        switch (m_hdrCreationManager->fusionOperatorConfig.fusionOperator) {
-        case DEBEVEC:
-            return tr("Debevec");
-        case ROBERTSON:
-            return tr("Robertson");
-        case ROBERTSON_AUTO:
-            return tr("Robertson Response Calculation");
-        }
-    } else {
-        return QString();
-    }
-    return QString();
 }
 
 // triggered by user interaction

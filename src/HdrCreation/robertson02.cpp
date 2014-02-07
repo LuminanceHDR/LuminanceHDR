@@ -52,11 +52,13 @@ using namespace std;
 namespace libhdr {
 namespace fusion {
 
-void RobertsonOperator::applyResponse(ResponseChannel channel,
-                                      const DataList& inputData, float* outputData,
-                                      size_t width, size_t height,
-                                      float minAllowedValue, float maxAllowedValue,
-                                      const float* arrayofexptime) const
+void RobertsonOperator::applyResponse(
+        ResponseCurve& response,
+        ResponseChannel channel,
+        const DataList& inputData, float* outputData,
+        size_t width, size_t height,
+        float minAllowedValue, float maxAllowedValue,
+        const float* arrayofexptime) const
 {
     assert( inputData.size() );
 
@@ -129,7 +131,9 @@ void RobertsonOperator::applyResponse(ResponseChannel channel,
     PRINT_DEBUG("Saturated pixels: " << saturatedPixels);
 }
 
-void RobertsonOperator::computeFusion(const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
+void RobertsonOperator::computeFusion(
+        ResponseCurve& response,
+        const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
 {
     assert( frames.size() );
 
@@ -156,15 +160,15 @@ void RobertsonOperator::computeFusion(const std::vector<FrameEnhanced> &frames, 
                    std::back_inserter(averageLuminances),
                    boost::bind(&FrameEnhanced::averageLuminance, _1));
 
-    applyResponse(RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
+    applyResponse(response, RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());       // red
-    applyResponse(RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
+    applyResponse(response, RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());       // blue
-    applyResponse(RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
+    applyResponse(response, RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());       // green
@@ -254,11 +258,13 @@ void pseudoSort(const float* arrayofexptime, int* i_lower, int* i_upper, int N)
 namespace libhdr {
 namespace fusion {
 
-void RobertsonOperatorAuto::computeResponse(ResponseChannel channel,
-                                            const DataList& inputData, float* outputData,
-                                            size_t width, size_t height,
-                                            float minAllowedValue, float maxAllowedValue,
-                                            const float* arrayofexptime) const
+void RobertsonOperatorAuto::computeResponse(
+        ResponseCurve& response,
+        ResponseChannel channel,
+        const DataList& inputData, float* outputData,
+        size_t width, size_t height,
+        float minAllowedValue, float maxAllowedValue,
+        const float* arrayofexptime) const
 {
     typedef ResponseCurve::ResponseContainer ResponseContainer;
 
@@ -266,14 +272,14 @@ void RobertsonOperatorAuto::computeResponse(ResponseChannel channel,
 
     // 0 . initialization
     // a. normalize response
-    ResponseContainer& I = m_response->get(channel);
+    ResponseContainer& I = response.get(channel);
     normalizeI(I);
     // b. copy response
-    ResponseContainer Ip = m_response->get(channel);
+    ResponseContainer Ip = response.get(channel);
     // c. set previous delta
     double pdelta = 0.0;
 
-    applyResponse(channel, inputData, outputData, width, height,
+    applyResponse(response, channel, inputData, outputData, width, height,
                   minAllowedValue, maxAllowedValue, arrayofexptime);
 
     std::array<long, ResponseCurve::NUM_BINS> cardEm;
@@ -327,7 +333,7 @@ void RobertsonOperatorAuto::computeResponse(ResponseChannel channel,
         normalizeI(I);
 
         // 3. Apply new response
-        applyResponse(channel, inputData, outputData, width, height,
+        applyResponse(response, channel, inputData, outputData, width, height,
                       minAllowedValue, maxAllowedValue, arrayofexptime);
 
         // 4. Check stopping condition
@@ -365,7 +371,8 @@ void RobertsonOperatorAuto::computeResponse(ResponseChannel channel,
     }
 }
 
-void RobertsonOperatorAuto::computeFusion(const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
+void RobertsonOperatorAuto::computeFusion(
+        ResponseCurve& response, const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
 {
     assert( frames.size() );
 
@@ -393,17 +400,17 @@ void RobertsonOperatorAuto::computeFusion(const std::vector<FrameEnhanced> &fram
                    boost::bind(&FrameEnhanced::averageLuminance, _1));
 
     // red
-    computeResponse(RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
+    computeResponse(response, RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());
     // green
-    computeResponse(RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
+    computeResponse(response, RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());
     // blue
-    computeResponse(RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
+    computeResponse(response, RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());

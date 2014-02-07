@@ -364,14 +364,20 @@ void BatchHDRDialog::create_hdr(int)
     m_Ui->progressBar_2->hide();
     m_Ui->textEdit->append(tr("Creating HDR..."));
     int idx = m_Ui->profileComboBox->currentIndex();
+
+    const FusionOperatorConfig* cfg = NULL;
     if (idx <= 5)
     {
-        m_hdrCreationManager->fusionOperatorConfig = predef_confs[idx];
+        cfg = &predef_confs[idx];
     }
     else
     {
-        m_hdrCreationManager->fusionOperatorConfig = m_customConfig[idx - 6];
+        cfg = &m_customConfig[idx - 6];
     }
+
+    m_hdrCreationManager->setWeightFunction(cfg->weightFunction);
+    m_hdrCreationManager->setFusionOperator(cfg->fusionOperator);
+    m_hdrCreationManager->getResponseCurve().setType(cfg->responseCurve);
 
     if (m_Ui->autoAG_checkBox->isChecked())
     {

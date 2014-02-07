@@ -197,16 +197,22 @@ void HdrCreationManager::removeFile(int idx)
 }
 
 using namespace libhdr::fusion;
+
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
-    : fusionOperatorConfig( predef_confs[0] )
-    , m_agMask( NULL )
-    , m_align( NULL )
+    : fusionOperatorConfig(predef_confs[0])
+    , m_response(new ResponseCurve(predef_confs[0].responseCurve))
+    , m_agMask(NULL)
+    , m_align(NULL)
     , m_ais_crop_flag(false)
     , fromCommandLine( fromCommandLine )
 {
     for (int i = 0; i < agGridSize; i++)
+    {
         for (int j = 0; j < agGridSize; j++)
+        {
             m_patches[i][j] = false;
+        }
+    }
 
     connect(&m_futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
     connect(&m_futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
@@ -220,7 +226,7 @@ void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
     fusionOperatorConfig = c;
 }
 
-const QVector<float> HdrCreationManager::getExpotimes() const
+QVector<float> HdrCreationManager::getExpotimes() const
 {
     QVector<float> expotimes;
     for ( HdrCreationItemContainer::const_iterator it = m_data.begin(), 
@@ -334,28 +340,28 @@ pfs::Frame* HdrCreationManager::createHdr(bool /*ag*/, int /*iterations*/)
 
     libhdr::fusion::FusionOperatorPtr fusionOperatorPtr =
             IFusionOperator::build(fusionOperatorConfig.fusionOperator);
-    fusionOperatorPtr->setResponseFunction(fusionOperatorConfig.responseCurve);
+//    fusionOperatorPtr->setResponseFunction(fusionOperatorConfig.responseCurve);
     fusionOperatorPtr->setWeightFunction(fusionOperatorConfig.weightFunction);
-    try
-    {
-        if (!fusionOperatorConfig.inputResponseCurveFilename.isEmpty())
-        {
-            fusionOperatorPtr->setResponseFunctionInputFile(
-                        QFile::encodeName(fusionOperatorConfig.inputResponseCurveFilename).constData());
-        }
-    }
-    catch (const std::runtime_error& err)
-    {
-        qDebug() << QString::fromStdString(err.what());
-        fusionOperatorPtr->setResponseFunction(RESPONSE_GAMMA);
-    }
+//    try
+//    {
+//        if (!fusionOperatorConfig.inputResponseCurveFilename.isEmpty())
+//        {
+//            fusionOperatorPtr->setResponseFunctionInputFile(
+//                        QFile::encodeName(fusionOperatorConfig.inputResponseCurveFilename).constData());
+//        }
+//    }
+//    catch (const std::runtime_error& err)
+//    {
+//        qDebug() << QString::fromStdString(err.what());
+//        fusionOperatorPtr->setResponseFunction(RESPONSE_GAMMA);
+//    }
 
     pfs::Frame* outputFrame(
-                fusionOperatorPtr->computeFusion(frames));
+                fusionOperatorPtr->computeFusion(*m_response, frames));
 
     if (!fusionOperatorConfig.outputResponseCurveFilename.isEmpty())
     {
-        fusionOperatorPtr->writeResponsesToFile(
+        m_response->writeToFile(
                     QFile::encodeName(fusionOperatorConfig.outputResponseCurveFilename).constData());
     }
 
