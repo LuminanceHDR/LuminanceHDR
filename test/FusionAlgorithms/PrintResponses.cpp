@@ -15,7 +15,7 @@ static float getSample(int sample)
     return static_cast<float>(sample)/(SAMPLES - 1);
 }
 
-void printResponseCurve(const IResponseFunction& responseFunction1,
+void printResponseCurve(const ResponseCurve& responseFunction1,
                         void (*responseFunction2)(float*, int) ,
                         const std::string& fileNameGnuplot,
                         const std::string& fileNameMatlab)
@@ -72,13 +72,13 @@ void responseGamma( float* I, int M )
 
 int main()
 {
-    printResponseCurve(ResponseLinear(), &responseLinear,
+    printResponseCurve(ResponseCurve(RESPONSE_LINEAR), &responseLinear,
                        "response_linear.dat", "response_linear.m");
-    printResponseCurve(ResponseLog10(), &responseLog10,
+    printResponseCurve(ResponseCurve(RESPONSE_LOG10), &responseLog10,
                        "response_log10.dat", "response_log10.m");
-    printResponseCurve(ResponseGamma(), &responseGamma,
+    printResponseCurve(ResponseCurve(RESPONSE_GAMMA), &responseGamma,
                        "response_gamma.dat", "response_gamma.m");
-    printResponseCurve(ResponseSRGB(), &responseLinear,
+    printResponseCurve(ResponseCurve(RESPONSE_SRGB), &responseLinear,
                        "response_srgb.dat", "response_srgb.m");
 
     return 0;

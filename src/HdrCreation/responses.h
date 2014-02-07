@@ -32,7 +32,7 @@
 namespace libhdr {
 namespace fusion {
 
-enum ResponseFunction
+enum ResponseCurveType
 {
     RESPONSE_LINEAR = 0,
     RESPONSE_GAMMA = 1,
@@ -49,106 +49,114 @@ enum ResponseChannel
     RESPONSE_CHANNEL_BLUE = 2
 };
 
-class IResponseFunction {
+class ResponseCurve
+{
 public:
     static const size_t NUM_BINS = (1 << 12);
     static size_t getIdx(float sample);
-    static ResponseFunction fromString(const std::string& type);
+    static ResponseCurveType fromString(const std::string& type);
 
     typedef std::array<float, NUM_BINS> ResponseContainer;
 
-    virtual ~IResponseFunction() {}
+    ResponseCurve(ResponseCurveType type = RESPONSE_LINEAR);
+
+    void setType(ResponseCurveType type);
+    //! \return type of response function implemented
+    ResponseCurveType getType() const;
 
     //! \brief return the response of the value \c input. \c input is in the
     //! range [0, 1]
     float getResponse(float input, ResponseChannel channel = RESPONSE_CHANNEL_RED) const;
 
-    //! \return type of response function implemented
-    virtual ResponseFunction getType() const = 0;
-
     void writeToFile(const std::string& fileName) const;
+    bool readFromFile(const std::string& fileName);
 
     ResponseContainer& get(ResponseChannel channel);
     const ResponseContainer& get(ResponseChannel channel) const;
 
 protected:
+    ResponseCurveType m_type;
     std::array<ResponseContainer, 3> m_responses;
 };
 
 inline
-size_t IResponseFunction::getIdx(float sample)
+ResponseCurveType ResponseCurve::getType() const
+{ return m_type; }
+
+inline
+size_t ResponseCurve::getIdx(float sample)
 { return size_t(sample*(NUM_BINS - 1) + 0.45f); }
 
 inline
-IResponseFunction::ResponseContainer& IResponseFunction::get(ResponseChannel channel)
+ResponseCurve::ResponseContainer& ResponseCurve::get(ResponseChannel channel)
 { return m_responses[channel]; }
 
 inline
-const IResponseFunction::ResponseContainer& IResponseFunction::get(ResponseChannel channel) const
+const ResponseCurve::ResponseContainer& ResponseCurve::get(ResponseChannel channel) const
 { return m_responses[channel]; }
 
-class ResponseGamma : public IResponseFunction
-{
-public:
-    ResponseGamma();
+//class ResponseGamma : public IResponseFunction
+//{
+//public:
+//    ResponseGamma();
 
-    ResponseFunction getType() const {
-        return RESPONSE_GAMMA;
-    }
+//    ResponseFunction getType() const {
+//        return RESPONSE_GAMMA;
+//    }
 
-private:
-    void fillResponse(ResponseContainer& response);
-};
+//private:
+//    void fillResponse(ResponseContainer& response);
+//};
 
-class ResponseLinear : public IResponseFunction
-{
-public:
-    ResponseLinear();
+//class ResponseLinear : public IResponseFunction
+//{
+//public:
+//    ResponseLinear();
 
-    ResponseFunction getType() const {
-        return RESPONSE_LINEAR;
-    }
+//    ResponseFunction getType() const {
+//        return RESPONSE_LINEAR;
+//    }
 
-private:
-    void fillResponse(ResponseContainer& response);
-};
+//private:
+//    void fillResponse(ResponseContainer& response);
+//};
 
-class ResponseLog10 : public IResponseFunction
-{
-public:
-    ResponseLog10();
+//class ResponseLog10 : public IResponseFunction
+//{
+//public:
+//    ResponseLog10();
 
-    ResponseFunction getType() const {
-        return RESPONSE_LOG10;
-    }
+//    ResponseFunction getType() const {
+//        return RESPONSE_LOG10;
+//    }
 
-private:
-    void fillResponse(ResponseContainer& response);
-};
+//private:
+//    void fillResponse(ResponseContainer& response);
+//};
 
-class ResponseSRGB : public IResponseFunction
-{
-public:
-    ResponseSRGB();
+//class ResponseSRGB : public IResponseFunction
+//{
+//public:
+//    ResponseSRGB();
 
-    ResponseFunction getType() const {
-        return RESPONSE_SRGB;
-    }
+//    ResponseFunction getType() const {
+//        return RESPONSE_SRGB;
+//    }
 
-private:
-    void fillResponse(ResponseContainer& response);
-};
+//private:
+//    void fillResponse(ResponseContainer& response);
+//};
 
-class ResponseCustom : public IResponseFunction
-{
-public:
-    // a custom response is read from file, hence it must take a filename as input
-    ResponseCustom(const std::string& fileName);
+//class ResponseCustom : public IResponseFunction
+//{
+//public:
+//    // a custom response is read from file, hence it must take a filename as input
+//    ResponseCustom(const std::string& fileName);
 
-    ResponseFunction getType() const {
-        return RESPONSE_CUSTOM;
-    }
-};
+//    ResponseFunction getType() const {
+//        return RESPONSE_CUSTOM;
+//    }
+//};
 
 }   // fusion
 }   // libhdr
@@ -159,7 +167,7 @@ public:
 //! \param I camera response function (array size of M)
 //! \param M number of camera output levels
 //! \param name matrix name for use in Octave or Matlab
-void responseSave( FILE* file, const float* Ir, const float* Ig, const float* Ib, int M);
+void responseSave(FILE* file, const float* Ir, const float* Ig, const float* Ib, int M);
 
 //! \brief Save response curve to a MatLab file for further reuse
 //!
@@ -167,7 +175,7 @@ void responseSave( FILE* file, const float* Ir, const float* Ig, const float* Ib
 //! \param w weights (array size of M)
 //! \param M number of camera output levels
 //! \param name matrix name for use in Octave or Matlab
-void weightsSave( FILE* file, const float* w, int M, const char* name);
+void weightsSave(FILE* file, const float* w, int M, const char* name);
 
 //! \brief Load response curve (saved with responseSave();)
 //!
@@ -175,7 +183,7 @@ void weightsSave( FILE* file, const float* w, int M, const char* name);
 //! \param I [out] camera response function (array size of M)
 //! \param M number of camera output levels
 //! \return false means file has different output levels or is wrong for some other reason
-bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M);
+bool responseLoad(FILE* file, float* Ir, float* Ig, float* Ib, int M);
 
 //! \brief Load response curve (saved with responseSave();)
 //!
@@ -183,6 +191,6 @@ bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M);
 //! \param w [out] weights (array size of M)
 //! \param M number of camera output levels
 //! \return false means file has different output levels or is wrong for some other reason
-bool weightsLoad( FILE* file, float* w, int M);
+bool weightsLoad(FILE* file, float* w, int M);
 
 #endif  // RESPONSES_H

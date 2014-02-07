@@ -34,7 +34,7 @@ namespace libhdr {
 namespace fusion {
 
 IFusionOperator::IFusionOperator()
-    : m_response(new ResponseLinear)
+    : m_response(new ResponseCurve)
     , m_weight(new WeightGaussian)
 {}
 
@@ -62,31 +62,16 @@ FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
     }
 }
 
-bool IFusionOperator::setResponseFunction(ResponseFunction responseFunction)
+bool IFusionOperator::setResponseFunction(ResponseCurveType responseCurve)
 {
-    switch (responseFunction) {
-    case RESPONSE_GAMMA:
-        m_response.reset(new ResponseGamma);
-        break;
-    case RESPONSE_LINEAR:
-        m_response.reset(new ResponseLinear);
-        break;
-    case RESPONSE_LOG10:
-        m_response.reset(new ResponseLog10);
-        break;
-    case RESPONSE_SRGB:
-    default:
-        m_response.reset(new ResponseSRGB);
-        break;
-    }
+    m_response->setType(responseCurve);
     return true;
 }
 
 bool IFusionOperator::setResponseFunctionInputFile(const string &fileName)
 {
-    m_response.reset(new ResponseCustom(fileName));
-
-    true;
+    m_response->setType(RESPONSE_CUSTOM);
+    return m_response->readFromFile(fileName);
 }
 
 bool IFusionOperator::setWeightFunction(WeightFunction weightFunction)

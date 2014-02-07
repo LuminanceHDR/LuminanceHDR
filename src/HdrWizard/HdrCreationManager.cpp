@@ -334,10 +334,32 @@ pfs::Frame* HdrCreationManager::createHdr(bool /*ag*/, int /*iterations*/)
 
     libhdr::fusion::FusionOperatorPtr fusionOperatorPtr =
             IFusionOperator::build(fusionOperatorConfig.fusionOperator);
-    fusionOperatorPtr->setResponseFunction(fusionOperatorConfig.responseFunction);
+    fusionOperatorPtr->setResponseFunction(fusionOperatorConfig.responseCurve);
     fusionOperatorPtr->setWeightFunction(fusionOperatorConfig.weightFunction);
+    try
+    {
+        if (!fusionOperatorConfig.inputResponseCurveFilename.isEmpty())
+        {
+            fusionOperatorPtr->setResponseFunctionInputFile(
+                        QFile::encodeName(fusionOperatorConfig.inputResponseCurveFilename).constData());
+        }
+    }
+    catch (const std::runtime_error& err)
+    {
+        qDebug() << QString::fromStdString(err.what());
+        fusionOperatorPtr->setResponseFunction(RESPONSE_GAMMA);
+    }
 
-    return fusionOperatorPtr->computeFusion(frames);
+    pfs::Frame* outputFrame(
+                fusionOperatorPtr->computeFusion(frames));
+
+    if (!fusionOperatorConfig.outputResponseCurveFilename.isEmpty())
+    {
+        fusionOperatorPtr->writeResponsesToFile(
+                    QFile::encodeName(fusionOperatorConfig.outputResponseCurveFilename).constData());
+    }
+
+    return outputFrame;
 }
 
 void HdrCreationManager::applyShiftsToItems(const QList<QPair<int,int> >& hvOffsets)

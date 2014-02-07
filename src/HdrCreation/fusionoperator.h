@@ -79,12 +79,14 @@ public:
     // //! values are "debevec" and "robertson02". Useful in a CLI interface
     // static FusionOperatorPtr build(const std::string& name);
 
-    bool setResponseFunction(ResponseFunction responseFunction);
+    bool setResponseFunction(ResponseCurveType responseCurve);
     bool setResponseFunctionInputFile(const std::string& fileName);
-    ResponseFunction getResponseFunction() const { return m_response->getType(); }
+    ResponseCurveType getResponseFunction() const
+    { return m_response->getType(); }
 
     bool setWeightFunction(WeightFunction weightFunction);
-    WeightFunction getWeightFunction() const { return m_weight->getType(); }
+    WeightFunction getWeightFunction() const
+    { return m_weight->getType(); }
 
     pfs::Frame* computeFusion(const std::vector<FrameEnhanced>& frames) const;
 
@@ -105,7 +107,7 @@ protected:
     inline float minTrustedValue() const  { return m_weight->minTrustedValue(); }
     inline float maxTrustedValue() const  { return m_weight->maxTrustedValue(); }
 
-    boost::scoped_ptr<IResponseFunction> m_response;
+    boost::scoped_ptr<ResponseCurve> m_response;
     boost::scoped_ptr<IWeightFunction> m_weight;
 };
 

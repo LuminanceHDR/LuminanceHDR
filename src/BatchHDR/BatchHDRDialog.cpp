@@ -120,23 +120,23 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
         switch (response_)
         {
         case 0:
-            ct.responseFunction = RESPONSE_CUSTOM;
-            ct.inputResponseFunctionFilename = QFile::encodeName(filename_).constData();
-            ct.outputResponseFunctionFilename.clear();
+            ct.responseCurve = RESPONSE_CUSTOM;
+            ct.inputResponseCurveFilename = QFile::encodeName(filename_).constData();
+            ct.outputResponseCurveFilename.clear();
             break;
         case 2:
-            ct.responseFunction = RESPONSE_GAMMA;
+            ct.responseCurve = RESPONSE_GAMMA;
             break;
         case 3:
-            ct.responseFunction = RESPONSE_LOG10;
+            ct.responseCurve = RESPONSE_LOG10;
             break;
         case 4:
-            ct.responseFunction = RESPONSE_CUSTOM;
+            ct.responseCurve = RESPONSE_CUSTOM;
             ct.fusionOperator = ROBERTSON_AUTO;
             break;
         case 1:
         default:
-            ct.responseFunction = RESPONSE_LINEAR;
+            ct.responseCurve = RESPONSE_LINEAR;
             break;
         }
 

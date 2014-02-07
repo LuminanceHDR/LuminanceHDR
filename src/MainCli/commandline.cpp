@@ -169,7 +169,7 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     saveAlignedImagesPrefix("")
 {
     hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
-    hdrcreationconfig.responseFunction = RESPONSE_LINEAR;
+    hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
     hdrcreationconfig.fusionOperator = DEBEVEC;
 
     parseArgs();
@@ -245,13 +245,13 @@ void CommandLineInterfaceManager::parseArgs()
 
                 else if (keyandvalue.at(0) == "response_curve") {
                     if (keyandvalue.at(1) == "from_file")
-                        hdrcreationconfig.responseFunction = RESPONSE_CUSTOM;
+                        hdrcreationconfig.responseCurve = RESPONSE_CUSTOM;
                     else if (keyandvalue.at(1) == "linear")
-                        hdrcreationconfig.responseFunction = RESPONSE_LINEAR;
+                        hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
                     else if (keyandvalue.at(1) == "gamma")
-                        hdrcreationconfig.responseFunction = RESPONSE_GAMMA;
+                        hdrcreationconfig.responseCurve = RESPONSE_GAMMA;
                     else if (keyandvalue.at(1) == "log")
-                        hdrcreationconfig.responseFunction = RESPONSE_LOG10;
+                        hdrcreationconfig.responseCurve = RESPONSE_LOG10;
 //                    else if (keyandvalue.at(1) == "robertson")
 //                        hdrcreationconfig.response_curve=FROM_ROBERTSON;
                     else
@@ -268,8 +268,7 @@ void CommandLineInterfaceManager::parseArgs()
                 }
 
                 else if (keyandvalue.at(0) == "curve_filename")
-                    hdrcreationconfig.inputResponseFunctionFilename =
-                            QFile::encodeName(keyandvalue.at(1)).constData();
+                    hdrcreationconfig.inputResponseCurveFilename = keyandvalue.at(1);
                 else
                     printErrorAndExit(tr("Error: Unknown HDR creation format specified."));
 

@@ -185,7 +185,7 @@ const int MAXIT = 35; //500;
 // maximum accepted error
 const float MAX_DELTA = 1e-3f; //1e-5f;
 
-float normalizeI(IResponseFunction::ResponseContainer& I)
+float normalizeI(ResponseCurve::ResponseContainer& I)
 {
     size_t M = I.size();
     size_t Mmin = 0;
@@ -260,7 +260,7 @@ void RobertsonOperatorAuto::computeResponse(ResponseChannel channel,
                                             float minAllowedValue, float maxAllowedValue,
                                             const float* arrayofexptime) const
 {
-    typedef IResponseFunction::ResponseContainer ResponseContainer;
+    typedef ResponseCurve::ResponseContainer ResponseContainer;
 
     int N       = inputData.size();
 
@@ -276,7 +276,7 @@ void RobertsonOperatorAuto::computeResponse(ResponseChannel channel,
     applyResponse(channel, inputData, outputData, width, height,
                   minAllowedValue, maxAllowedValue, arrayofexptime);
 
-    std::array<long, IResponseFunction::NUM_BINS> cardEm;
+    std::array<long, ResponseCurve::NUM_BINS> cardEm;
     ResponseContainer sum;
 
     assert(sum.size() == cardEm.size());
@@ -297,8 +297,8 @@ void RobertsonOperatorAuto::computeResponse(ResponseChannel channel,
             // not to do the IFs inside them) but I don't know how to improve it
             for (int j = 0; j < width*height; ++j)
             {
-                size_t sample = IResponseFunction::getIdx(inputData[i][j]);
-                if ((sample < IResponseFunction::NUM_BINS) && (sample >= 0))
+                size_t sample = ResponseCurve::getIdx(inputData[i][j]);
+                if ((sample < ResponseCurve::NUM_BINS) && (sample >= 0))
                 {
                     sum[sample] += ti * outputData[j];
                     cardEm[sample]++;

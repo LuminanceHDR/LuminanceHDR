@@ -86,12 +86,12 @@ public:
 
     void setFusionOperator(libhdr::fusion::FusionOperator fo)       { fusionOperatorConfig.fusionOperator = fo; }
     void setWeightFunction(libhdr::fusion::WeightFunction wf)       { fusionOperatorConfig.weightFunction = wf; }
-    void setResponseFunction(libhdr::fusion::ResponseFunction rf)   { fusionOperatorConfig.responseFunction = rf; }
+    void setResponseCurve(libhdr::fusion::ResponseCurveType rc)     { fusionOperatorConfig.responseCurve = rc; }
 
-    void setInputResponseFile(const QString& filename)              { fusionOperatorConfig.inputResponseFunctionFilename = filename; }
-    void setOutputResponseFile(const QString& filename)             { fusionOperatorConfig.outputResponseFunctionFilename = filename; }
+    void setResponseCurveInputFile(const QString& filename)         { fusionOperatorConfig.inputResponseCurveFilename = filename; }
+    void setResponseCurveOutputFile(const QString& filename)        { fusionOperatorConfig.outputResponseCurveFilename = filename; }
 
-    const QString& outputResponseFile() const                       { return fusionOperatorConfig.outputResponseFunctionFilename; }
+    const QString& responseCurveOutputFile() const                  { return fusionOperatorConfig.outputResponseCurveFilename; }
 
     void setConfig(const FusionOperatorConfig& cfg);
 

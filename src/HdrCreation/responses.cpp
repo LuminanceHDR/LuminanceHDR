@@ -48,9 +48,9 @@ using namespace pfs::utils;
 namespace libhdr {
 namespace fusion {
 
-ResponseFunction fromString(const std::string& type)
+ResponseCurveType fromString(const std::string& type)
 {
-    typedef map<string, ResponseFunction, pfs::utils::StringUnsensitiveComp> Dict;
+    typedef map<string, ResponseCurveType, pfs::utils::StringUnsensitiveComp> Dict;
     static Dict v =
             map_list_of
             ("log10", RESPONSE_LOG10)
@@ -61,23 +61,30 @@ ResponseFunction fromString(const std::string& type)
             ;
 
     Dict::const_iterator it = v.find(type);
-    if ( it != v.end() ) {
+    if ( it != v.end() )
+    {
         return it->second;
     }
     return RESPONSE_LINEAR;
 }
 
-float IResponseFunction::getResponse(float input, ResponseChannel channel) const
+ResponseCurve::ResponseCurve(ResponseCurveType type)
+    : m_type(type)
+{
+    setType(type);
+}
+
+float ResponseCurve::getResponse(float input, ResponseChannel channel) const
 {
     assert(channel >= 0);
     assert(channel <= 2);
     assert(input >= 0.f);
     assert(input <= 1.f);
 
-    return m_responses[channel][size_t(input*(NUM_BINS-1) + 0.49f)];
+    return m_responses[channel][getIdx(input)];
 }
 
-void IResponseFunction::writeToFile(const std::string& fileName) const
+void ResponseCurve::writeToFile(const std::string& fileName) const
 {
     ScopedStdIoFile outputFile(fopen(fileName.c_str(), "w"));
     responseSave(outputFile.data(),
@@ -87,34 +94,36 @@ void IResponseFunction::writeToFile(const std::string& fileName) const
                  NUM_BINS);
 }
 
-ResponseLinear::ResponseLinear()
+bool ResponseCurve::readFromFile(const string &fileName)
 {
-    fillResponse(m_responses[RESPONSE_CHANNEL_RED]);
-    fillResponse(m_responses[RESPONSE_CHANNEL_GREEN]);
-    fillResponse(m_responses[RESPONSE_CHANNEL_BLUE]);
+    ScopedStdIoFile inputFile(fopen(fileName.c_str(), "r"));
+    if (!responseLoad(inputFile.data(),
+                      m_responses[RESPONSE_CHANNEL_RED].data(),
+                      m_responses[RESPONSE_CHANNEL_GREEN].data(),
+                      m_responses[RESPONSE_CHANNEL_BLUE].data(),
+                      NUM_BINS))
+    {
+        throw std::runtime_error("Invalid response curve file");
+    }
+
+    return true;
 }
 
-void ResponseLinear::fillResponse(ResponseContainer& response)
+static
+void fillResponseLinear(ResponseCurve::ResponseContainer& response)
 {
     // fill response function
-    size_t divider = (NUM_BINS - 1);
-    for (size_t i = 0; i < NUM_BINS; ++i)
+    size_t divider = (response.size() - 1);
+    for (size_t i = 0; i < response.size(); ++i)
     {
         response[i] = (float)i/divider;
     }
 }
 
-ResponseGamma::ResponseGamma()
+void fillResponseGamma(ResponseCurve::ResponseContainer& response)
 {
-    fillResponse(m_responses[RESPONSE_CHANNEL_RED]);
-    fillResponse(m_responses[RESPONSE_CHANNEL_GREEN]);
-    fillResponse(m_responses[RESPONSE_CHANNEL_BLUE]);
-}
-
-void ResponseGamma::fillResponse(ResponseContainer& response)
-{
-    size_t divider = (NUM_BINS - 1);
-    for (size_t i = 0; i < NUM_BINS; ++i)
+    size_t divider = (response.size() - 1);
+    for (size_t i = 0; i < response.size(); ++i)
     {
         response[i] = std::pow(4.f * ((float)i/divider), 1.7f) + 1e-4;
     }
@@ -130,53 +139,54 @@ const float s_norm              = 0.0625f;
 const float s_inverseMaxValue   = 1.f/1e8; // == 1.f/std::pow(10.0f, (1.f/norm - 8.f));
 }
 
-ResponseLog10::ResponseLog10()
+void fillResponseLog10(ResponseCurve::ResponseContainer& response)
 {
-    fillResponse(m_responses[RESPONSE_CHANNEL_RED]);
-    fillResponse(m_responses[RESPONSE_CHANNEL_GREEN]);
-    fillResponse(m_responses[RESPONSE_CHANNEL_BLUE]);
-}
-
-void ResponseLog10::fillResponse(ResponseContainer& response)
-{
-    size_t divider = (NUM_BINS - 1);
-    for (size_t i = 0; i < NUM_BINS; ++i)
+    size_t divider = (response.size() - 1);
+    for (size_t i = 0; i < response.size(); ++i)
     {
         response[i] = details_log10::s_inverseMaxValue *
                       std::pow(10.0f, ((((float)i/divider)/details_log10::s_norm) - 8.f) );
     }
 }
 
-ResponseSRGB::ResponseSRGB()
+void fillResponseSRGB(ResponseCurve::ResponseContainer& response)
 {
-    fillResponse(m_responses[RESPONSE_CHANNEL_RED]);
-    fillResponse(m_responses[RESPONSE_CHANNEL_GREEN]);
-    fillResponse(m_responses[RESPONSE_CHANNEL_BLUE]);
-}
-
-void ResponseSRGB::fillResponse(ResponseContainer& response)
-{
-    size_t divider = (NUM_BINS - 1);
+    size_t divider = (response.size() - 1);
     pfs::colorspace::ConvertSRGB2RGB converter;
 
-    for (size_t i = 0; i < NUM_BINS; ++i)
+    for (size_t i = 0; i < response.size(); ++i)
     {
         response[i] = converter((float)i/divider);
     }
 }
 
-ResponseCustom::ResponseCustom(const std::string& fileName)
-    : IResponseFunction()
+void ResponseCurve::setType(ResponseCurveType type)
 {
-    ScopedStdIoFile inputFile(fopen(fileName.c_str(), "r"));
-    if (!responseLoad(inputFile.data(),
-                      m_responses[RESPONSE_CHANNEL_RED].data(),
-                      m_responses[RESPONSE_CHANNEL_GREEN].data(),
-                      m_responses[RESPONSE_CHANNEL_BLUE].data(),
-                      NUM_BINS))
+    typedef void (*ResponseCurveCalculator)(ResponseContainer&);
+    typedef map<ResponseCurveType, ResponseCurveCalculator> ResponseCurveFunc;
+    static ResponseCurveFunc funcs =
+            map_list_of
+            (RESPONSE_LOG10, &fillResponseLog10)
+            (RESPONSE_LINEAR, &fillResponseLinear)
+            (RESPONSE_GAMMA, &fillResponseGamma)
+            (RESPONSE_SRGB, &fillResponseSRGB)
+            ;
+
+    ResponseCurveType type_ = RESPONSE_LINEAR;
+    ResponseCurveCalculator func_ = &fillResponseLinear;
+
+    ResponseCurveFunc::const_iterator it = funcs.find(type);
+    if (it != funcs.end())
     {
-        throw std::runtime_error("Invalid response curve file");
+        type_ = it->first;
+        func_ = it->second;
     }
+
+    m_type = type_;
+
+    func_(m_responses[RESPONSE_CHANNEL_RED]);
+    func_(m_responses[RESPONSE_CHANNEL_GREEN]);
+    func_(m_responses[RESPONSE_CHANNEL_BLUE]);
 }
 
 }   // fusion
