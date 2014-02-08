@@ -34,15 +34,13 @@ namespace libhdr {
 namespace fusion {
 
 IFusionOperator::IFusionOperator()
-    : m_weight(new WeightGaussian)
 {}
 
 // TODO: fix this to return a shared_ptr
-pfs::Frame* IFusionOperator::computeFusion(
-        ResponseCurve& response, const std::vector<FrameEnhanced>& frames) const
+pfs::Frame* IFusionOperator::computeFusion(ResponseCurve& response, const WeightFunction& weight, const std::vector<FrameEnhanced>& frames) const
 {
     pfs::Frame* frame = new pfs::Frame;
-    computeFusion(response, frames, *frame);
+    computeFusion(response, weight, frames, *frame);
     return frame;
 }
 
@@ -74,22 +72,22 @@ FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
 //    return m_response->readFromFile(fileName);
 //}
 
-bool IFusionOperator::setWeightFunction(WeightFunction weightFunction)
-{
-    switch (weightFunction) {
-    case WEIGHT_TRIANGULAR:
-        m_weight.reset(new WeightTriangular);
-        break;
-    case WEIGHT_PLATEAU:
-        m_weight.reset(new WeightPlateau);
-        break;
-    case WEIGHT_GAUSSIAN:
-    default:
-        m_weight.reset(new WeightGaussian);
-        break;
-    }
-    return true;
-}
+//bool IFusionOperator::setWeightFunction(WeightFunction weightFunction)
+//{
+//    switch (weightFunction) {
+//    case WEIGHT_TRIANGULAR:
+//        m_weight.reset(new WeightTriangular);
+//        break;
+//    case WEIGHT_PLATEAU:
+//        m_weight.reset(new WeightPlateau);
+//        break;
+//    case WEIGHT_GAUSSIAN:
+//    default:
+//        m_weight.reset(new WeightGaussian);
+//        break;
+//    }
+//    return true;
+//}
 
 void fillDataLists(const vector<FrameEnhanced> &frames,
                    DataList& redChannels, DataList& greenChannels, DataList& blueChannels)

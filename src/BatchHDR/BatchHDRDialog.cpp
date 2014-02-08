@@ -114,7 +114,7 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
         QString filename_ = model.record(i).value("filename").toString(); 
         FusionOperatorConfig ct;
 
-        ct.weightFunction = static_cast<WeightFunction>(weight_);
+        ct.weightFunction = static_cast<WeightFunctionType>(weight_);
         ct.fusionOperator = static_cast<FusionOperator>(model_);
 
         switch (response_)
@@ -375,8 +375,8 @@ void BatchHDRDialog::create_hdr(int)
         cfg = &m_customConfig[idx - 6];
     }
 
-    m_hdrCreationManager->setWeightFunction(cfg->weightFunction);
     m_hdrCreationManager->setFusionOperator(cfg->fusionOperator);
+    m_hdrCreationManager->getWeightFunction().setType(cfg->weightFunction);
     m_hdrCreationManager->getResponseCurve().setType(cfg->responseCurve);
 
     if (m_Ui->autoAG_checkBox->isChecked())
@@ -397,10 +397,8 @@ void BatchHDRDialog::create_hdr(int)
         
     }
     else {
-        m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr, 
-                                                   m_hdrCreationManager,
-                                                   false, 
-                                                   1));
+        m_future = QtConcurrent::run(
+                       boost::bind(&HdrCreationManager::createHdr, m_hdrCreationManager));
 
         m_futureWatcher.setFuture(m_future);
     }

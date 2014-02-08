@@ -199,8 +199,8 @@ void HdrCreationManager::removeFile(int idx)
 using namespace libhdr::fusion;
 
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
-    : fusionOperatorConfig(predef_confs[0])
-    , m_response(new ResponseCurve(predef_confs[0].responseCurve))
+    : m_response(new ResponseCurve(predef_confs[0].responseCurve))
+    , m_weight(new WeightFunction(predef_confs[0].weightFunction))
     , m_agMask(NULL)
     , m_align(NULL)
     , m_ais_crop_flag(false)
@@ -219,11 +219,13 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     connect(this, SIGNAL(progressCancel()), &m_futureWatcher, SLOT(cancel()), Qt::DirectConnection);
     connect(&m_futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
     connect(&m_futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
+
+    setConfig(predef_confs[0]);
 }
 
 void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
 {
-    fusionOperatorConfig = c;
+    // TODO fusionOperatorConfig = c;
 }
 
 QVector<float> HdrCreationManager::getExpotimes() const
@@ -308,17 +310,12 @@ pfs::Frame* HdrCreationManager::createHdr()
                     );
     }
 
-    libhdr::fusion::FusionOperatorPtr fusionOperatorPtr =
-            IFusionOperator::build(fusionOperatorConfig.fusionOperator);
-    fusionOperatorPtr->setWeightFunction(fusionOperatorConfig.weightFunction);
+    libhdr::fusion::FusionOperatorPtr fusionOperatorPtr = IFusionOperator::build(m_fusionOperator);
+    pfs::Frame* outputFrame(fusionOperatorPtr->computeFusion(*m_response, *m_weight, frames));
 
-    pfs::Frame* outputFrame(
-                fusionOperatorPtr->computeFusion(*m_response, frames));
-
-    if (!fusionOperatorConfig.outputResponseCurveFilename.isEmpty())
+    if (!m_responseCurveOutputFilename.isEmpty())
     {
-        m_response->writeToFile(
-                    QFile::encodeName(fusionOperatorConfig.outputResponseCurveFilename).constData());
+        m_response->writeToFile(QFile::encodeName(m_responseCurveOutputFilename).constData());
     }
 
     return outputFrame;
@@ -519,7 +516,7 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     m_data[h0].frame().get()->getXYZChannels(Good_Rc, Good_Gc, Good_Bc);
 
     const Channel *Rc, *Gc, *Bc;
-    Frame* ghosted = createHdr(false, 1);
+    Frame* ghosted = createHdr();
     ghosted->getXYZChannels(Rc, Gc, Bc);
     ph->setValue(20);
     if (ph->canceled()) return NULL;

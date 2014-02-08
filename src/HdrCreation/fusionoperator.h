@@ -79,25 +79,29 @@ public:
     // //! values are "debevec" and "robertson02". Useful in a CLI interface
     // static FusionOperatorPtr build(const std::string& name);
 
-    bool setWeightFunction(WeightFunction weightFunction);
-    WeightFunction getWeightFunction() const
-    { return m_weight->getType(); }
+//    bool setWeightFunction(WeightFunction weightFunction);
+//    WeightFunction getWeightFunction() const
+//    { return m_weight->getType(); }
 
-    pfs::Frame* computeFusion(ResponseCurve& response, const std::vector<FrameEnhanced>& frames) const;
+    pfs::Frame* computeFusion(
+            ResponseCurve& response,
+            const WeightFunction& weight,
+            const std::vector<FrameEnhanced>& frames) const;
 
 protected:
     IFusionOperator();
 
     virtual void computeFusion(
             ResponseCurve& response,
+            const WeightFunction& weight,
             const std::vector<FrameEnhanced>& frames,
             pfs::Frame& outFrame) const = 0;
 
-    inline float weight(float in) const { return m_weight->getWeight(in); }
-    inline float minTrustedValue() const  { return m_weight->minTrustedValue(); }
-    inline float maxTrustedValue() const  { return m_weight->maxTrustedValue(); }
+    // inline float weight(float in) const { return m_weight->getWeight(in); }
+    // inline float minTrustedValue() const  { return m_weight->minTrustedValue(); }
+    // inline float maxTrustedValue() const  { return m_weight->maxTrustedValue(); }
 
-    boost::scoped_ptr<IWeightFunction> m_weight;
+    // boost::scoped_ptr<IWeightFunction> m_weight;
 };
 
 typedef vector<float*> DataList;

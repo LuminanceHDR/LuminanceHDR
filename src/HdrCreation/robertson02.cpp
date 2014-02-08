@@ -54,6 +54,7 @@ namespace fusion {
 
 void RobertsonOperator::applyResponse(
         ResponseCurve& response,
+        const WeightFunction& weight,
         ResponseChannel channel,
         const DataList& inputData, float* outputData,
         size_t width, size_t height,
@@ -131,8 +132,7 @@ void RobertsonOperator::applyResponse(
     PRINT_DEBUG("Saturated pixels: " << saturatedPixels);
 }
 
-void RobertsonOperator::computeFusion(
-        ResponseCurve& response,
+void RobertsonOperator::computeFusion(ResponseCurve& response, const WeightFunction& weight,
         const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
 {
     assert( frames.size() );
@@ -152,23 +152,23 @@ void RobertsonOperator::computeFusion(
 
     fillDataLists(frames, redChannels, greenChannels, blueChannels);
 
-    float maxAllowedValue = maxTrustedValue();
-    float minAllowedValue = minTrustedValue();
+    float maxAllowedValue = weight.maxTrustedValue();
+    float minAllowedValue = weight.minTrustedValue();
 
     std::vector<float> averageLuminances;
     std::transform(frames.begin(), frames.end(),
                    std::back_inserter(averageLuminances),
                    boost::bind(&FrameEnhanced::averageLuminance, _1));
 
-    applyResponse(response, RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
+    applyResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());       // red
-    applyResponse(response, RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
+    applyResponse(response, weight, RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());       // blue
-    applyResponse(response, RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
+    applyResponse(response, weight, RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());       // green
@@ -260,6 +260,7 @@ namespace fusion {
 
 void RobertsonOperatorAuto::computeResponse(
         ResponseCurve& response,
+        const WeightFunction& weight,
         ResponseChannel channel,
         const DataList& inputData, float* outputData,
         size_t width, size_t height,
@@ -279,7 +280,7 @@ void RobertsonOperatorAuto::computeResponse(
     // c. set previous delta
     double pdelta = 0.0;
 
-    applyResponse(response, channel, inputData, outputData, width, height,
+    applyResponse(response, weight, channel, inputData, outputData, width, height,
                   minAllowedValue, maxAllowedValue, arrayofexptime);
 
     std::array<long, ResponseCurve::NUM_BINS> cardEm;
@@ -333,7 +334,7 @@ void RobertsonOperatorAuto::computeResponse(
         normalizeI(I);
 
         // 3. Apply new response
-        applyResponse(response, channel, inputData, outputData, width, height,
+        applyResponse(response, weight, channel, inputData, outputData, width, height,
                       minAllowedValue, maxAllowedValue, arrayofexptime);
 
         // 4. Check stopping condition
@@ -372,7 +373,9 @@ void RobertsonOperatorAuto::computeResponse(
 }
 
 void RobertsonOperatorAuto::computeFusion(
-        ResponseCurve& response, const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
+        ResponseCurve& response,
+        const WeightFunction& weight,
+        const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
 {
     assert( frames.size() );
 
@@ -393,8 +396,8 @@ void RobertsonOperatorAuto::computeFusion(
 
     fillDataLists(frames, redChannels, greenChannels, blueChannels);
 
-    float maxAllowedValue = maxTrustedValue();
-    float minAllowedValue = minTrustedValue();
+    float maxAllowedValue = weight.maxTrustedValue();
+    float minAllowedValue = weight.minTrustedValue();
 
     std::vector<float> averageLuminances;
     std::transform(frames.begin(), frames.end(),
@@ -402,20 +405,20 @@ void RobertsonOperatorAuto::computeFusion(
                    boost::bind(&FrameEnhanced::averageLuminance, _1));
 
     // red
-    computeResponse(response, RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
-                  tempFrame.getWidth(), tempFrame.getHeight(),
-                  minAllowedValue, maxAllowedValue,
-                  averageLuminances.data());
+    computeResponse(response, weight, RESPONSE_CHANNEL_RED, redChannels, outputRed->data(),
+                    tempFrame.getWidth(), tempFrame.getHeight(),
+                    minAllowedValue, maxAllowedValue,
+                    averageLuminances.data());
     // green
-    computeResponse(response, RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
-                  tempFrame.getWidth(), tempFrame.getHeight(),
-                  minAllowedValue, maxAllowedValue,
-                  averageLuminances.data());
+    computeResponse(response, weight, RESPONSE_CHANNEL_GREEN, greenChannels, outputGreen->data(),
+                    tempFrame.getWidth(), tempFrame.getHeight(),
+                    minAllowedValue, maxAllowedValue,
+                    averageLuminances.data());
     // blue
-    computeResponse(response, RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
-                  tempFrame.getWidth(), tempFrame.getHeight(),
-                  minAllowedValue, maxAllowedValue,
-                  averageLuminances.data());
+    computeResponse(response, weight, RESPONSE_CHANNEL_BLUE, blueChannels, outputBlue->data(),
+                    tempFrame.getWidth(), tempFrame.getHeight(),
+                    minAllowedValue, maxAllowedValue,
+                    averageLuminances.data());
 
     frame.swap( tempFrame );
 }

@@ -229,23 +229,6 @@ void responseSave( FILE* file, const float* Ir, const float* Ig, const float* Ib
     fprintf(file, "\n");
 }
 
-void weightsSave( FILE* file, const float* w, int M, const char* name)
-{
-    // weighting function matrix header
-    fprintf(file, "# Weighting function\n");
-    fprintf(file, "# data layout: weight | camera output\n");
-    fprintf(file, "# name: %s\n", name);
-    fprintf(file, "# type: matrix\n");
-    fprintf(file, "# rows: %d\n", M);
-    fprintf(file, "# columns: 2\n");
-
-    // save weights
-    for( int m=0 ; m<M ; m++ )
-        fprintf(file, " %15.9f %4d\n", w[m], m);
-
-    fprintf(file, "\n");
-}
-
 bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M)
 {
     char line[1024];
@@ -283,35 +266,6 @@ bool responseLoad( FILE* file, float* Ir, float* Ig, float* Ib, int M)
             Ib[m] = valB;
         }
     }
-
-    return true;
-}
-
-bool weightsLoad( FILE* file, float* w, int M)
-{
-    char line[1024];
-    int m=0,c=0;
-
-    // parse weighting function matrix header
-    while( fgets(line, 1024, file) )
-        if( sscanf(line, "# rows: %d\n", &m) == 1 )
-            break;
-    if( m!=M )
-    {
-        std::cerr << "response: number of input levels is different,"
-                  << " M=" << M << " m=" << m << std::endl;
-        return false;
-    }
-    while( fgets(line, 1024, file) )
-        if( sscanf(line, "# columns: %d\n", &c) == 1 )
-            break;
-    if( c!=2 )
-        return false;
-
-    // read response
-    for( int i=0 ; i<M ; i++ )
-        if( fscanf(file, " %f %d\n", &(w[i]), &m) !=2 )
-            return false;
 
     return true;
 }

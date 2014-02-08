@@ -568,7 +568,7 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
         HDR.reset( hdrCreationManager->doAntiGhosting(patches, h0, false, &ph) ); // false means auto anti-ghosting
     }
     else {
-        HDR.reset( hdrCreationManager->createHdr(false,1) );
+        HDR.reset( hdrCreationManager->createHdr() );
     }
     saveHDR();
 }

@@ -52,10 +52,10 @@ class ResponseCurve
 {
 public:
     static const size_t NUM_BINS = (1 << 12);
+    typedef std::array<float, NUM_BINS> ResponseContainer;
+
     static size_t getIdx(float sample);
     static ResponseCurveType fromString(const std::string& type);
-
-    typedef std::array<float, NUM_BINS> ResponseContainer;
 
     ResponseCurve(ResponseCurveType type = RESPONSE_LINEAR);
 
@@ -97,69 +97,6 @@ inline
 const ResponseCurve::ResponseContainer& ResponseCurve::get(ResponseChannel channel) const
 { return m_responses[channel]; }
 
-//class ResponseGamma : public IResponseFunction
-//{
-//public:
-//    ResponseGamma();
-
-//    ResponseFunction getType() const {
-//        return RESPONSE_GAMMA;
-//    }
-
-//private:
-//    void fillResponse(ResponseContainer& response);
-//};
-
-//class ResponseLinear : public IResponseFunction
-//{
-//public:
-//    ResponseLinear();
-
-//    ResponseFunction getType() const {
-//        return RESPONSE_LINEAR;
-//    }
-
-//private:
-//    void fillResponse(ResponseContainer& response);
-//};
-
-//class ResponseLog10 : public IResponseFunction
-//{
-//public:
-//    ResponseLog10();
-
-//    ResponseFunction getType() const {
-//        return RESPONSE_LOG10;
-//    }
-
-//private:
-//    void fillResponse(ResponseContainer& response);
-//};
-
-//class ResponseSRGB : public IResponseFunction
-//{
-//public:
-//    ResponseSRGB();
-
-//    ResponseFunction getType() const {
-//        return RESPONSE_SRGB;
-//    }
-
-//private:
-//    void fillResponse(ResponseContainer& response);
-//};
-
-//class ResponseCustom : public IResponseFunction
-//{
-//public:
-//    // a custom response is read from file, hence it must take a filename as input
-//    ResponseCustom(const std::string& fileName);
-
-//    ResponseFunction getType() const {
-//        return RESPONSE_CUSTOM;
-//    }
-//};
-
 }   // fusion
 }   // libhdr
 
@@ -171,14 +108,6 @@ const ResponseCurve::ResponseContainer& ResponseCurve::get(ResponseChannel chann
 //! \param name matrix name for use in Octave or Matlab
 void responseSave(FILE* file, const float* Ir, const float* Ig, const float* Ib, int M);
 
-//! \brief Save response curve to a MatLab file for further reuse
-//!
-//! \param file file handle to save response curve
-//! \param w weights (array size of M)
-//! \param M number of camera output levels
-//! \param name matrix name for use in Octave or Matlab
-void weightsSave(FILE* file, const float* w, int M, const char* name);
-
 //! \brief Load response curve (saved with responseSave();)
 //!
 //! \param file file handle to save response curve
@@ -186,13 +115,5 @@ void weightsSave(FILE* file, const float* w, int M, const char* name);
 //! \param M number of camera output levels
 //! \return false means file has different output levels or is wrong for some other reason
 bool responseLoad(FILE* file, float* Ir, float* Ig, float* Ib, int M);
-
-//! \brief Load response curve (saved with responseSave();)
-//!
-//! \param file file handle to save response curve
-//! \param w [out] weights (array size of M)
-//! \param M number of camera output levels
-//! \return false means file has different output levels or is wrong for some other reason
-bool weightsLoad(FILE* file, float* w, int M);
 
 #endif  // RESPONSES_H

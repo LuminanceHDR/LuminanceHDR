@@ -85,11 +85,14 @@ public:
     const libhdr::fusion::ResponseCurve& getResponseCurve() const   { return *m_response; }
     libhdr::fusion::ResponseCurve& getResponseCurve()               { return *m_response; }
 
-    void setFusionOperator(libhdr::fusion::FusionOperator fo)       { fusionOperatorConfig.fusionOperator = fo; }
-    void setWeightFunction(libhdr::fusion::WeightFunction wf)       { fusionOperatorConfig.weightFunction = wf; }
-    void setResponseCurveOutputFile(const QString& filename)        { fusionOperatorConfig.outputResponseCurveFilename = filename; }
+    const libhdr::fusion::WeightFunction& getWeightFunction() const { return *m_weight; }
+    libhdr::fusion::WeightFunction& getWeightFunction()             { return *m_weight; }
 
-    const QString& responseCurveOutputFile() const                  { return fusionOperatorConfig.outputResponseCurveFilename; }
+    void setFusionOperator(libhdr::fusion::FusionOperator fo)       { m_fusionOperator = fo; }
+    libhdr::fusion::FusionOperator getFusionOperator()              { return m_fusionOperator; }
+
+    void setResponseCurveOutputFile(const QString& filename)        { m_responseCurveOutputFilename = filename; }
+    const QString& responseCurveOutputFile() const                  { return m_responseCurveOutputFilename; }
 
     void setConfig(const FusionOperatorConfig& cfg);
 
@@ -146,11 +149,10 @@ signals:
 private:
     bool framesHaveSameSize();    
 
-    // the configuration used to create the hdr
-    // this is public so that the wizard (or the cli?) can modify it directly.
-    FusionOperatorConfig fusionOperatorConfig;
-
     boost::scoped_ptr<libhdr::fusion::ResponseCurve> m_response;
+    boost::scoped_ptr<libhdr::fusion::WeightFunction> m_weight;
+    libhdr::fusion::FusionOperator m_fusionOperator;
+    QString m_responseCurveOutputFilename;
 
     QFutureWatcher<void> m_futureWatcher;
 	//QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti-ghosting

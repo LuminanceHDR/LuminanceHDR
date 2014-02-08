@@ -79,7 +79,7 @@ static const FusionOperator models_in_gui[] =
     ROBERTSON_AUTO
 };
 
-static const WeightFunction weights_in_gui[] =
+static const WeightFunctionType weights_in_gui[] =
 {
     WEIGHT_TRIANGULAR,
     WEIGHT_GAUSSIAN,
@@ -749,8 +749,7 @@ void HdrWizard::NextFinishButtonClicked()
 void HdrWizard::createHdr()
 {
     m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr, 
-                                               m_hdrCreationManager.data(),
-                                               false, 0));
+                                               m_hdrCreationManager.data()));
 
     connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
     m_futureWatcher.setFuture(m_future);
@@ -857,12 +856,13 @@ void HdrWizard::saveRespCurveFileButtonClicked()
     if (!savecurvefilename.isEmpty())
     {
         m_ui->CurveFileNameSaveLineEdit->setText(savecurvefilename);
+        m_hdrCreationManager->setResponseCurveOutputFile(savecurvefilename);
     }
 }
 
 namespace
 {
-static QString getQString(libhdr::fusion::WeightFunction wf)
+static QString getQString(libhdr::fusion::WeightFunctionType wf)
 {
     switch (wf)
     {
@@ -934,11 +934,11 @@ void updateHdrCreationManagerResponse(HdrCreationManager& manager, ResponseCurve
     manager.getResponseCurve().setType(responseType);
 }
 
-void updateHdrCreationManagerWeight(HdrCreationManager& manager, WeightFunction weight)
+void updateHdrCreationManagerWeight(HdrCreationManager& manager, WeightFunctionType weight)
 {
     qDebug() << "Change weights to " << (int)weight;
 
-    manager.setWeightFunction(weight);
+    manager.getWeightFunction().setType(weight);
 }
 
 }
@@ -967,6 +967,7 @@ void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui)
     m_ui->responseCurveOutputFileLabel->setEnabled(false);
     m_ui->CurveFileNameSaveLineEdit->setEnabled(false);
     m_ui->CurveFileNameSaveLineEdit->clear();
+    m_hdrCreationManager->setResponseCurveOutputFile(QString());
     m_ui->saveRespCurveFileButton->setEnabled(false);
 }
 
@@ -1029,9 +1030,9 @@ void HdrWizard::modelComboBoxActivated(int from_gui)
 
 QString HdrWizard::getCaptionTEXT()
 {
-    return QString(tr("Weights: ") + getQString(WEIGHT_GAUSSIAN) +
+    return QString(tr("Weights: ") + getQString(m_hdrCreationManager->getWeightFunction().getType()) +
                    tr(" - Response curve: ") + getQString(m_hdrCreationManager->getResponseCurve().getType()) +
-                   tr(" - Model: ") + getQString(DEBEVEC));
+                   tr(" - Model: ") + getQString(m_hdrCreationManager->getFusionOperator()));
 }
 
 QStringList HdrWizard::getInputFilesNames()

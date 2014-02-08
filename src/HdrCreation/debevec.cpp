@@ -69,7 +69,7 @@ struct ColorData {
     float whiteValue_;
 };
 
-void DebevecOperator::computeFusion(ResponseCurve& response,
+void DebevecOperator::computeFusion(ResponseCurve& response, const WeightFunction& weight,
                                     const vector<FrameEnhanced> &frames,
                                     pfs::Frame &frame) const
 {
@@ -90,8 +90,8 @@ void DebevecOperator::computeFusion(ResponseCurve& response,
     fillDataLists(frames, redChannels, greenChannels, blueChannels);
 
     size_t saturatedPixels = 0;
-    float maxAllowedValue = maxTrustedValue();
-    float minAllowedValue = minTrustedValue();
+    float maxAllowedValue = weight.maxTrustedValue();
+    float minAllowedValue = weight.minTrustedValue();
 
 #pragma omp parallel for
     for (int idx = 0; idx < tempFrame.size(); ++idx)

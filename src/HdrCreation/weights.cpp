@@ -2,15 +2,36 @@
 
 #include "arch/math.h"
 #include <cmath>
+#include <map>
+#include <iostream>
+
+#include <boost/assign.hpp>
+
+using namespace boost;
+using namespace boost::assign;
 
 namespace libhdr {
 namespace fusion {
+
+WeightFunction::WeightFunction(WeightFunctionType type)
+    : m_type(type)
+{
+    setType(type);
+}
+
+float WeightFunction::getWeight(float input) const
+{
+    assert(input >= 0.f);
+    assert(input <= 1.f);
+
+    return m_weights[getIdx(input)];
+}
 
 namespace {
 static const float s_triangularThreshold = 0.03f;
 }
 
-float WeightTriangular::getWeight(float input) const
+static float getWeightTriangular(float input)
 {
     if ( (input < s_triangularThreshold) || (input > (1.f - s_triangularThreshold)) ) {
         return 0.f;
@@ -23,20 +44,24 @@ float WeightTriangular::getWeight(float input) const
     return input;
 }
 
-float WeightTriangular::minTrustedValue() const {
-    return s_triangularThreshold;
+static void fillWeightTriangular(WeightFunction::WeightContainer& weight)
+{
+    size_t divider = (weight.size() - 1);
+    for (size_t i = 0; i < weight.size(); ++i)
+    {
+        weight[i] = getWeightTriangular((float)i/divider);
+    }
 }
 
-float WeightTriangular::maxTrustedValue() const {
-    return 1.f - s_triangularThreshold;
-}
+static float minTrustedValueTriangular() { return s_triangularThreshold; }
+static float maxTrustedValueTriangular() { return 1.f - s_triangularThreshold; }
 
 namespace {
 static const float s_gaussianThreshold = 0.0354f;
 static const float s_mu = 0.5f;
 }
 
-float WeightGaussian::getWeight(float input) const
+static float getWeightGaussian(float input)
 {
     // ignore very low weights
     if ( (input < s_gaussianThreshold) || (input > (1.f - s_gaussianThreshold)) ) {
@@ -46,91 +71,134 @@ float WeightGaussian::getWeight(float input) const
     return (exp( -32*(input - s_mu)*(input - s_mu) ));
 }
 
-float WeightGaussian::minTrustedValue() const {
-    return s_gaussianThreshold;
+static void fillWeightGaussian(WeightFunction::WeightContainer& weight)
+{
+    size_t divider = (weight.size() - 1);
+    for (size_t i = 0; i < weight.size(); ++i)
+    {
+        weight[i] = getWeightGaussian((float)i/divider);
+    }
 }
 
-float WeightGaussian::maxTrustedValue() const {
-    return 1.f - s_gaussianThreshold;
-}
+static float minTrustedValueGaussian() { return s_gaussianThreshold; }
+static float maxTrustedValueGaussian() { return 1.f - s_gaussianThreshold; }
 
 namespace {
 static const float s_plateauThreshold = 0.005f;
 }
 
-float WeightPlateau::getWeight(float input) const
+static float getWeightPlateau(float input)
 {
-    if ( input < s_plateauThreshold || (input > (1.f - s_plateauThreshold)) ) {
+    if ((input < s_plateauThreshold) || (input > (1.f - s_plateauThreshold)))
+    {
         return 0.f;
     }
 
     return 1.0f - pow( (2.0f*input - 1.0f), 12.0f);
 }
 
-float WeightPlateau::minTrustedValue() const {
-    return s_plateauThreshold;
+static void fillWeightPlateau(WeightFunction::WeightContainer& weight)
+{
+    size_t divider = (weight.size() - 1);
+    for (size_t i = 0; i < weight.size(); ++i)
+    {
+        weight[i] = getWeightPlateau((float)i/divider);
+    }
 }
 
-float WeightPlateau::maxTrustedValue() const {
-    return 1.f - s_plateauThreshold;
+static float minTrustedValuePlateau()   { return s_plateauThreshold; }
+static float maxTrustedValuePlateau()   { return 1.f - s_plateauThreshold; }
+
+void WeightFunction::setType(WeightFunctionType type)
+{
+    typedef void (*WeightFunctionCalculator)(WeightContainer&);
+    typedef float (*WeightTrustedValue)();
+
+    struct WeightFunctionFiller
+    {
+        WeightFunctionFiller(WeightFunctionCalculator calculator,
+                             WeightTrustedValue minValue,
+                             WeightTrustedValue maxValue)
+            : fillData(calculator)
+            , minTrustValue(minValue)
+            , maxTrustValue(maxValue)
+        {}
+
+        WeightFunctionCalculator fillData;
+        WeightTrustedValue minTrustValue;
+        WeightTrustedValue maxTrustValue;
+    };
+
+    typedef std::map<WeightFunctionType, WeightFunctionFiller> WeightFunctionFunc;
+    static WeightFunctionFunc funcs =
+            map_list_of
+            (WEIGHT_TRIANGULAR, WeightFunctionFiller(&fillWeightTriangular, &minTrustedValueTriangular, &maxTrustedValueTriangular))
+            (WEIGHT_GAUSSIAN, WeightFunctionFiller(&fillWeightGaussian, &minTrustedValueGaussian, &maxTrustedValueGaussian))
+            (WEIGHT_PLATEAU, WeightFunctionFiller(&fillWeightPlateau, &minTrustedValuePlateau, &maxTrustedValuePlateau))
+            ;
+
+    WeightFunctionType type_ = WEIGHT_TRIANGULAR;
+    WeightFunctionFiller func_ = {&fillWeightTriangular, &minTrustedValueTriangular, &maxTrustedValueTriangular};
+
+    WeightFunctionFunc::const_iterator it = funcs.find(type);
+    if (it != funcs.end())
+    {
+        type_ = it->first;
+        func_ = it->second;
+    }
+
+    m_type = type_;
+    func_.fillData(m_weights);
+    m_minTrustedValue = func_.minTrustValue();
+    m_maxTrustedValue = func_.maxTrustValue();
 }
+
 
 }   // fusion
 }   // libhdr
 
-
-// OLD STUFF
-#define MIN_WEIGHT 1e-3
-
-void exposure_weights_icip06( float* w, int M, int Mmin, int Mmax )
+bool weightsLoad( FILE* file, float* w, int M)
 {
+    char line[1024];
+    int m=0,c=0;
+
+    // parse weighting function matrix header
+    while( fgets(line, 1024, file) )
+        if( sscanf(line, "# rows: %d\n", &m) == 1 )
+            break;
+    if( m!=M )
+    {
+        std::cerr << "response: number of input levels is different,"
+                  << " M=" << M << " m=" << m << std::endl;
+        return false;
+    }
+    while( fgets(line, 1024, file) )
+        if( sscanf(line, "# columns: %d\n", &c) == 1 )
+            break;
+    if( c!=2 )
+        return false;
+
+    // read response
+    for( int i=0 ; i<M ; i++ )
+        if( fscanf(file, " %f %d\n", &(w[i]), &m) !=2 )
+            return false;
+
+    return true;
+}
+
+void weightsSave( FILE* file, const float* w, int M, const char* name)
+{
+    // weighting function matrix header
+    fprintf(file, "# Weighting function\n");
+    fprintf(file, "# data layout: weight | camera output\n");
+    fprintf(file, "# name: %s\n", name);
+    fprintf(file, "# type: matrix\n");
+    fprintf(file, "# rows: %d\n", M);
+    fprintf(file, "# columns: 2\n");
+
+    // save weights
     for( int m=0 ; m<M ; m++ )
-        if( m<Mmin || m>Mmax )
-            w[m] = 0.0f;
-        else
-            w[m]=1.0f-pow( ( (2.0f*float(m-Mmin)/float(Mmax-Mmin)) - 1.0f), 12.0f);
-}
+        fprintf(file, " %15.9f %4d\n", w[m], m);
 
-void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma )
-{
-    float mid = Mmin + (Mmax-Mmin)/2.0f - 0.5f;
-    float mid2 = (mid-Mmin) * (mid-Mmin);
-    for( int m=0 ; m<M ; m++ ) {
-        if ( m<Mmin || m>Mmax ) {
-            w[m] = 0.0f;
-        } else {
-            // gkrawczyk: that's not really a gaussian, but equation is
-            // taken from Robertson02 paper.
-            float weight = exp( -sigma * (m-mid) * (m-mid) / mid2 );
-
-            if( weight < MIN_WEIGHT )           // ignore very low weights
-                w[m] = 0.0f;
-            else
-                w[m] = weight;
-        }
-    }
-}
-
-void weights_triangle( float* w, int M /*, int Mmin, int Mmax*/ )
-{
-    for(int i=0;i<int(float(M)/2.0f);i++) {
-        w[i]=i/ (float(M)/2.0f);
-        if (w[i]<0.06f)w[i]=0;
-    }
-    for(int i=int(float(M)/2.0f);i<M;i++) {
-        w[i]=(M-1-i)/(float(M)/2.0f);
-        if (w[i]<0.06f)w[i]=0;
-    }
-    //   for( int m=0 ; m<M ; m++ )
-    //     if( m<Mmin || m>Mmax )
-    //       w[m] = 0.0f;
-    //     else
-    //     {
-    // 	if ( m<int(Mmin+ (Mmax-Mmin)/2.0f +1) )
-    // 		w[m]=(m-Mmin)/float(Mmin+(Mmax-Mmin)/2.0f);
-    // 	else
-    // 		w[m]=( -m+Mmin+((Mmax-Mmin)) )/float(Mmin+(Mmax-Mmin)/2.0f);
-    //     }
-
-    // 	  if (w[i]<0.06f)w[i]=0;
+    fprintf(file, "\n");
 }

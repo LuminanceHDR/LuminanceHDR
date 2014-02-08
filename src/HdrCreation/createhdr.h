@@ -32,7 +32,7 @@
 
 struct FusionOperatorConfig
 {
-    libhdr::fusion::WeightFunction weightFunction;
+    libhdr::fusion::WeightFunctionType weightFunction;
     libhdr::fusion::ResponseCurveType responseCurve;
     libhdr::fusion::FusionOperator fusionOperator;
     QString inputResponseCurveFilename;

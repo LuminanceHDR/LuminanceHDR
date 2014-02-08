@@ -46,11 +46,13 @@ public:
 private:
     void computeFusion(
             ResponseCurve& response,
+            const WeightFunction& weight,
             const std::vector<FrameEnhanced>& frames, pfs::Frame& frame) const;
 
 protected:
     void applyResponse(
             ResponseCurve& response,
+            const WeightFunction& weight,
             ResponseChannel channel,
             const DataList& inputData, float* outputData,
             size_t width, size_t height,
@@ -68,10 +70,12 @@ public:
 private:
     void computeFusion(
             ResponseCurve& response,
+            const WeightFunction& weight,
             const std::vector<FrameEnhanced>& frames, pfs::Frame& outFrame) const;
 
     void computeResponse(
             ResponseCurve& response,
+            const WeightFunction& weight,
             ResponseChannel channel,
             const DataList& inputData, float* outputData,
             size_t width, size_t height,

@@ -42,7 +42,7 @@ public:
     {}
 
 private:
-    void computeFusion(ResponseCurve& response,
+    void computeFusion(ResponseCurve& response, const WeightFunction& weight,
                        const std::vector<FrameEnhanced> &frames,
                        pfs::Frame& frame) const;
 };

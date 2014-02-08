@@ -75,8 +75,10 @@ int main(int argc, char** argv)
         ResponseCurve responseCurve(RESPONSE_SRGB);
         // responseCurve.readFromFile("responses_before.m");
 
+        WeightFunction weightFunction(WEIGHT_GAUSSIAN);
+
         FusionOperatorPtr fusionOperator = IFusionOperator::build(ROBERTSON_AUTO);
-        pfs::FramePtr newHdr(fusionOperator->computeFusion(responseCurve, images));
+        pfs::FramePtr newHdr(fusionOperator->computeFusion(responseCurve, weightFunction, images));
         if ( newHdr == NULL )
         {
             return -1;
