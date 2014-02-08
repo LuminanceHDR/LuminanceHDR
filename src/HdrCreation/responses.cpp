@@ -106,6 +106,7 @@ bool ResponseCurve::readFromFile(const string &fileName)
         throw std::runtime_error("Invalid response curve file");
     }
 
+    m_type = RESPONSE_CUSTOM;
     return true;
 }
 

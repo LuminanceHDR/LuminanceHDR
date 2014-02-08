@@ -115,20 +115,20 @@ private slots:
     void finishedAligning(int);
     void alignSelectionClicked();
 
+    // HDR Creation Model Functions.....
 	void predefConfigsComboBoxActivated(int);
-	void antighostRespCurveComboboxActivated(int);
-	void customConfigCheckBoxToggled(bool);
-	void triGaussPlateauComboBoxActivated(int);
-	void predefRespCurveRadioButtonToggled(bool);
-	void gammaLinLogComboBoxActivated(int);
-	void loadRespCurveFromFileCheckboxToggled(bool);
-	void loadRespCurveFileButtonClicked();
-	void saveRespCurveToFileCheckboxToggled(bool);
+    void customConfigCheckBoxToggled(bool);
+
+    void weightingFunctionComboBoxActivated(int);
+    void responseCurveComboBoxActivated(int);
+    void modelComboBoxActivated(int);
+
+    bool loadRespCurve();
 	void saveRespCurveFileButtonClicked();
-	void modelComboBoxActivated(int);
-	void NextFinishButtonClicked();
+    // ...end!
+
+    void NextFinishButtonClicked();
 	void currentPageChangedInto(int);
-	void loadRespCurveFilename(const QString&);
 	void editingEVfinished();
 	void reject();
 	void ais_failed(QProcess::ProcessError);

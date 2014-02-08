@@ -29,7 +29,6 @@
 #include <boost/foreach.hpp>
 
 #include <QDebug>
-
 #include <QStringList>
 #include <QFileDialog>
 #include <QDir>
@@ -41,9 +40,11 @@
 #include <QProcess>
 #include <QRegExp>
 #include <QTextStream>
-#include <QProgressDialog>
+// #include <QProgressDialog>
 #include <QThread>
 #include <QtConcurrentRun>
+#include <QLabel>
+#include <QComboBox>
 
 // --- SQL handling
 #include <QSqlRecord>
@@ -62,10 +63,28 @@
 
 using namespace libhdr::fusion;
 
+static const ResponseCurveType responses_in_gui[] =
+{
+    RESPONSE_LINEAR,
+    RESPONSE_GAMMA,
+    RESPONSE_LOG10,
+    RESPONSE_SRGB,
+    RESPONSE_CUSTOM,
+};
 
-const ResponseCurveType responses_in_gui[4] = { RESPONSE_GAMMA, RESPONSE_LINEAR, RESPONSE_LOG10, RESPONSE_CUSTOM };
-const FusionOperator models_in_gui[2] = { DEBEVEC, ROBERTSON };
-const WeightFunction weights_in_gui[3] = { WEIGHT_TRIANGULAR, WEIGHT_GAUSSIAN, WEIGHT_PLATEAU };
+static const FusionOperator models_in_gui[] =
+{
+    DEBEVEC,
+    ROBERTSON,
+    ROBERTSON_AUTO
+};
+
+static const WeightFunction weights_in_gui[] =
+{
+    WEIGHT_TRIANGULAR,
+    WEIGHT_GAUSSIAN,
+    WEIGHT_PLATEAU
+};
 
 HdrWizard::HdrWizard(QWidget *p,
                      const QStringList &files,
@@ -194,30 +213,18 @@ void HdrWizard::setupConnections()
     /*
     connect(m_ui->ais_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
     connect(m_ui->mtb_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
-*/
-    connect(m_ui->predefConfigsComboBox, SIGNAL(activated(int)), this, SLOT(predefConfigsComboBoxActivated(int)));
-    /*
-    connect(m_ui->antighostRespCurveCombobox, SIGNAL(activated(int)), this, SLOT(antighostRespCurveComboboxActivated(int)));
     */
+    connect(m_ui->profileComboBox, SIGNAL(activated(int)), this, SLOT(predefConfigsComboBoxActivated(int)));
     connect(m_ui->customConfigCheckBox, SIGNAL(toggled(bool)), this, SLOT(customConfigCheckBoxToggled(bool)));
-    connect(m_ui->triGaussPlateauComboBox, SIGNAL(activated(int)), this, SLOT(triGaussPlateauComboBoxActivated(int)));
-    /*
-    connect(m_ui->predefRespCurveRadioButton, SIGNAL(toggled(bool)), this, SLOT(predefRespCurveRadioButtonToggled(bool)));
-    */
-
-    connect(m_ui->gammaLinLogComboBox, SIGNAL(activated(int)), this, SLOT(gammaLinLogComboBoxActivated(int)));
-    connect(m_ui->loadRespCurveFromFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(loadRespCurveFromFileCheckboxToggled(bool)));
-    connect(m_ui->loadRespCurveFileButton, SIGNAL(clicked()), this, SLOT(loadRespCurveFileButtonClicked()));
-    connect(m_ui->saveRespCurveToFileCheckbox, SIGNAL(toggled(bool)), this, SLOT(saveRespCurveToFileCheckboxToggled(bool)));
+    connect(m_ui->weightFunctionComboBox, SIGNAL(activated(int)), this, SLOT(weightingFunctionComboBoxActivated(int)));
+    connect(m_ui->responseCurveComboBox, SIGNAL(activated(int)), this, SLOT(responseCurveComboBoxActivated(int)));
     connect(m_ui->saveRespCurveFileButton, SIGNAL(clicked()), this, SLOT(saveRespCurveFileButtonClicked()));
     connect(m_ui->modelComboBox, SIGNAL(activated(int)), this, SLOT(modelComboBoxActivated(int)));
 
-    connect(m_ui->RespCurveFileLoadedLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(loadRespCurveFilename(const QString&)));
     /*
     connect(m_hdrCreationManager.data(), SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
     connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
     */
-
     connect(m_hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)), this, SLOT(errorWhileLoading(QString)));
     //connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)), this, SLOT(updateGraphicalEVvalue(float,int)));
     connect(m_hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(finishedAligning(int)));
@@ -643,147 +650,24 @@ void HdrWizard::ais_failed(QProcess::ProcessError e)
                                     "</b></h3></center>");
 }
 
-void HdrWizard::customConfigCheckBoxToggled(bool want_custom)
+void HdrWizard::customConfigCheckBoxToggled(bool wantCustom)
 {
-    if (!want_custom)
+    if (wantCustom == false)
     {
-        /*
-        if (!m_ui->antighostingCheckBox->isChecked())
-        {
-            m_ui->label_RespCurve_Antighost->setDisabled(true);
-            m_ui->antighostRespCurveCombobox->setDisabled(true);
-            m_ui->label_Iterations->setDisabled(true);
-            m_ui->spinBoxIterations->setDisabled(true);
-            //temporary disable anti-ghosting until it's fixed
-            m_ui->antighostingCheckBox->setDisabled(true);
-
-        }
-        else
-        {
-            m_ui->label_predef_configs->setDisabled(true);
-            m_ui->predefConfigsComboBox->setDisabled(true);
-            m_ui->label_weights->setDisabled(true);
-            m_ui->lineEdit_showWeight->setDisabled(true);
-            m_ui->label_resp->setDisabled(true);
-            m_ui->lineEdit_show_resp->setDisabled(true);
-            m_ui->label_model->setDisabled(true);
-            m_ui->lineEdit_showmodel->setDisabled(true);
-        }
-        */
-        m_ui->label_Iterations->setDisabled(true);
-        m_ui->spinBoxIterations->setDisabled(true);
-        m_ui->label_predef_configs->setDisabled(true);
-        m_ui->predefConfigsComboBox->setDisabled(true);
-        m_ui->label_weights->setDisabled(true);
-        m_ui->lineEdit_showWeight->setDisabled(true);
-        m_ui->label_resp->setDisabled(true);
-        m_ui->lineEdit_show_resp->setDisabled(true);
-        m_ui->label_model->setDisabled(true);
-        m_ui->lineEdit_showmodel->setDisabled(true);
-        predefConfigsComboBoxActivated(m_ui->predefConfigsComboBox->currentIndex());
-        m_ui->NextFinishButton->setText(tr("&Finish"));
-
-    }
-    else
-    {
-        m_ui->NextFinishButton->setText(tr("&Next >"));
+        predefConfigsComboBoxActivated(m_ui->profileComboBox->currentIndex());
     }
 }
 
-void HdrWizard::predefRespCurveRadioButtonToggled(bool want_predef_resp_curve)
+void HdrWizard::NextFinishButtonClicked()
 {
-    if (want_predef_resp_curve)
-    {
-        //ENABLE load_curve_button and lineedit when "load from file" is checked.
-        if (!m_ui->loadRespCurveFromFileCheckbox->isChecked())
-        {
-            m_ui->loadRespCurveFileButton->setEnabled(false);
-            m_ui->RespCurveFileLoadedLineEdit->setEnabled(false);
-        }
-        loadRespCurveFromFileCheckboxToggled(m_ui->loadRespCurveFromFileCheckbox->isChecked());
-    }
-    else
-    {
-        // want to recover response curve via robertson02
-        // TODO : m_hdrCreationManager->chosen_config.resresponse_curve = FROM_ROBERTSON;
-        m_ui->NextFinishButton->setEnabled(true);
-        saveRespCurveToFileCheckboxToggled(m_ui->saveRespCurveToFileCheckbox->isChecked());
-    }
-}
-
-void HdrWizard::loadRespCurveFromFileCheckboxToggled(bool checkedfile)
-{
-    //if checkbox is checked AND we have a valid filename
-    if (checkedfile)
-    {
-        if (!m_ui->RespCurveFileLoadedLineEdit->text().isEmpty())
-        {
-            // update chosen config
-            m_hdrCreationManager->getResponseCurve().readFromFile(
-                        QFile::encodeName(m_ui->RespCurveFileLoadedLineEdit->text()).constData()
-                        );
-            // TODO : set to custom!
-
-//                        fusionOperatorConfig.responseCurve = RESPONSE_CUSTOM;
-//            m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename =
-//                    ;
-
-            // and ENABLE nextbutton
-            m_ui->NextFinishButton->setEnabled(true);
-        }
-        else
-        {
-            // if checkbox is checked AND no valid filename
-            // DISABLE nextbutton until situation is fixed
-            m_ui->NextFinishButton->setEnabled(false);
-        }
-
-    }
-    else
-    {
-        // remove old filename
-        m_ui->RespCurveFileLoadedLineEdit->clear();
-
-        // update chosen config
-        m_hdrCreationManager->getResponseCurve().setType(
-                    responses_in_gui[m_ui->gammaLinLogComboBox->currentIndex()]);
-
-        //and ENABLE nextbutton
-        m_ui->NextFinishButton->setEnabled(true);
-    }
-}
-
-void HdrWizard::saveRespCurveToFileCheckboxToggled(bool checkedfile)
-{
-    if (checkedfile)
-    {
-        if (!m_ui->CurveFileNameSaveLineEdit->text().isEmpty())
-        {
-            // if checkbox is checked AND we have a valid filename
-            m_ui->NextFinishButton->setEnabled(true);
-        }
-        else
-        {
-            // DISABLE nextbutton until situation is fixed
-            m_ui->NextFinishButton->setEnabled(false);
-        }
-    }
-    else
-    {
-        // checkbox not checked
-        m_ui->CurveFileNameSaveLineEdit->clear();
-
-        // and ENABLE nextbutton
-        m_ui->NextFinishButton->setEnabled(true);
-    }
-}
-
-void HdrWizard::NextFinishButtonClicked() {
     int currentpage = m_ui->pagestack->currentIndex();
-    switch (currentpage) {
+    switch (currentpage)
+    {
     case 0:
+    {
         //now align, if requested
-        if (m_ui->alignCheckBox->isChecked()) {
+        if (m_ui->alignCheckBox->isChecked())
+        {
             QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
             m_ui->confirmloadlabel->setText("<center><h3><b>"+tr("Aligning...")+"</b></h3></center>");
             m_ui->loadImagesButton->setDisabled(true);
@@ -799,7 +683,8 @@ void HdrWizard::NextFinishButtonClicked() {
             m_ui->progressBar->setMaximum(0);
             m_ui->progressBar->setMinimum(0);
             m_ui->progressBar->show();
-            if (m_ui->ais_radioButton->isChecked()) {
+            if (m_ui->ais_radioButton->isChecked())
+            {
                 m_ui->progressBar->setRange(0,100);
                 m_ui->progressBar->setValue(0);
                 m_ui->textEdit->show();
@@ -807,28 +692,23 @@ void HdrWizard::NextFinishButtonClicked() {
                 m_hdrCreationManager->align_with_ais();
             }
             else
+            {
                 m_hdrCreationManager->align_with_mtb();
+            }
             return;
         }
         m_ui->pagestack->setCurrentIndex(1);
-        break;
+    } break;
     case 1:
-        if(!m_ui->customConfigCheckBox->isChecked()) {
-            currentpage = 3;
-        } else {
-            m_ui->pagestack->setCurrentIndex(2);
-            break;
-        }
-    case 2:
+    {
         m_processing = true;
-        m_ui->settings_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
-        m_ui->customize_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
         repaint();
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
         m_ui->NextFinishButton->setEnabled(false);
         m_ui->cancelButton->setEnabled(false);
 
-        if (m_ui->autoAG_checkBox->isChecked() && !m_ui->checkBoxEditingTools->isChecked()) {
+        if (m_ui->autoAG_checkBox->isChecked() && !m_ui->checkBoxEditingTools->isChecked())
+        {
             int num_images = m_hdrCreationManager->getData().size();
             QList< QPair<int,int> > HV_offsets;
             for (int i = 0; i < num_images; i++) {
@@ -836,28 +716,33 @@ void HdrWizard::NextFinishButtonClicked() {
             }
             float patchesPercent;
             m_agGoodImageIndex = m_hdrCreationManager->computePatches(m_ui->threshold_doubleSpinBox->value(), m_patches, patchesPercent, HV_offsets);
-            m_doAutoAntighosting = true; 
+            m_doAutoAntighosting = true;
         }
-        if (m_doAutoAntighosting) {
+        if (m_doAutoAntighosting)
+        {
             int h0;
             m_hdrCreationManager->getAgData(m_patches, h0);
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
-                                                       m_hdrCreationManager.data(),
-                                                       m_patches, h0, false, &m_ph)); // false means auto anti-ghosting
+                                                      m_hdrCreationManager.data(),
+                                                      m_patches, h0, false, &m_ph)); // false means auto anti-ghosting
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
             m_ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);
         }
-        else if (m_doManualAntighosting) {
+        else if (m_doManualAntighosting)
+        {
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
-                                                       m_hdrCreationManager.data(),
-                                                       m_patches, m_agGoodImageIndex, true, &m_ph)); // true means manual anti-ghosting
+                                                      m_hdrCreationManager.data(),
+                                                      m_patches, m_agGoodImageIndex, true, &m_ph)); // true means manual anti-ghosting
             connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
             m_ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);
         }
         else
+        {
             createHdr();
+        }
+    }
     }
 }
 
@@ -865,8 +750,7 @@ void HdrWizard::createHdr()
 {
     m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr, 
                                                m_hdrCreationManager.data(),
-                                               false, 
-                                               m_ui->spinBoxIterations->value()));
+                                               false, 0));
 
     connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
     m_futureWatcher.setFuture(m_future);
@@ -931,21 +815,35 @@ void HdrWizard::currentPageChangedInto(int newindex)
     }
 }
 
-void HdrWizard::antighostRespCurveComboboxActivated(int fromgui) {
-    gammaLinLogComboBoxActivated(fromgui);
-}
-
-void HdrWizard::loadRespCurveFileButtonClicked()
+bool HdrWizard::loadRespCurve()
 {
     QString loadcurvefilename = QFileDialog::getOpenFileName(
             this,
-            tr("Load a camera response curve file"),
+            tr("Load camera response curve file"),
             QDir::currentPath(),
             tr("Camera response curve (*.m);;All Files (*)") );
-    if (!loadcurvefilename.isEmpty())
+
+    if (loadcurvefilename.isEmpty())
     {
+        return false;
+    }
+
+    try
+    {
+        m_hdrCreationManager->getResponseCurve().readFromFile(
+                    QFile::encodeName(loadcurvefilename).constData());
+
+        Q_ASSERT(m_hdrCreationManager->getResponseCurve().getType() == RESPONSE_CUSTOM);
+
         m_ui->RespCurveFileLoadedLineEdit->setText(loadcurvefilename);
-        loadRespCurveFromFileCheckboxToggled(m_ui->loadRespCurveFromFileCheckbox->isChecked());
+        return true;
+    }
+    catch (const std::runtime_error& /*err*/)
+    {
+        QMessageBox::warning(this, tr("Invalid Response Curve File"),
+                             tr("Invalid Response Curve File: please try a different file"));
+
+        return false;
     }
 }
 
@@ -959,7 +857,6 @@ void HdrWizard::saveRespCurveFileButtonClicked()
     if (!savecurvefilename.isEmpty())
     {
         m_ui->CurveFileNameSaveLineEdit->setText(savecurvefilename);
-        saveRespCurveToFileCheckboxToggled(m_ui->saveRespCurveToFileCheckbox->isChecked());
     }
 }
 
@@ -1023,6 +920,11 @@ void updateHdrCreationManagerModel(HdrCreationManager& manager, FusionOperator f
     qDebug() << "Change model to " << (int)fusionOperator;
 
     manager.setFusionOperator(fusionOperator);
+
+    if (fusionOperator != ROBERTSON_AUTO)
+    {
+
+    }
 }
 
 void updateHdrCreationManagerResponse(HdrCreationManager& manager, ResponseCurveType responseType)
@@ -1058,32 +960,70 @@ void HdrWizard::predefConfigsComboBoxActivated(int index_from_gui)
     updateHdrCreationManagerResponse(*m_hdrCreationManager, cfg->responseCurve);
     updateHdrCreationManagerWeight(*m_hdrCreationManager, cfg->weightFunction);
 
-    m_ui->lineEdit_showWeight->setText(getQString(cfg->weightFunction));
-    m_ui->lineEdit_show_resp->setText(getQString(cfg->responseCurve));
-    m_ui->lineEdit_showmodel->setText(getQString(cfg->fusionOperator));
+    m_ui->modelComboBox->setCurrentIndex(cfg->fusionOperator);
+    m_ui->responseCurveComboBox->setCurrentIndex(cfg->responseCurve);
+    m_ui->weightFunctionComboBox->setCurrentIndex(cfg->weightFunction);
+
+    m_ui->responseCurveOutputFileLabel->setEnabled(false);
+    m_ui->CurveFileNameSaveLineEdit->setEnabled(false);
+    m_ui->CurveFileNameSaveLineEdit->clear();
+    m_ui->saveRespCurveFileButton->setEnabled(false);
 }
 
-void HdrWizard::triGaussPlateauComboBoxActivated(int from_gui)
+void HdrWizard::weightingFunctionComboBoxActivated(int from_gui)
 {
     updateHdrCreationManagerWeight(*m_hdrCreationManager, weights_in_gui[from_gui]);
 }
 
-void HdrWizard::gammaLinLogComboBoxActivated(int from_gui)
+void HdrWizard::responseCurveComboBoxActivated(int from_gui)
 {
-    updateHdrCreationManagerResponse(*m_hdrCreationManager, responses_in_gui[from_gui]);
+    ResponseCurveType rc = responses_in_gui[from_gui];
+
+    if (rc == RESPONSE_CUSTOM)
+    {
+        if (loadRespCurve())
+        {
+            m_ui->responseCurveInputFileLabel->setEnabled(true);
+            m_ui->RespCurveFileLoadedLineEdit->setEnabled(true);
+        }
+        else if (m_hdrCreationManager->getResponseCurve().getType() != RESPONSE_CUSTOM)
+        {
+            m_ui->responseCurveInputFileLabel->setEnabled(false);
+            m_ui->RespCurveFileLoadedLineEdit->setEnabled(false);
+
+            // I didn't load, so I select the previous value (which is stored
+            // in the current ResponseCurve object...
+            updateHdrCreationManagerResponse(*m_hdrCreationManager,
+                                             m_hdrCreationManager->getResponseCurve().getType());
+        }
+    }
+    else
+    {
+        m_ui->responseCurveInputFileLabel->setEnabled(false);
+        m_ui->RespCurveFileLoadedLineEdit->setEnabled(false);
+        m_ui->RespCurveFileLoadedLineEdit->clear();
+
+        updateHdrCreationManagerResponse(*m_hdrCreationManager, rc);
+    }
 }
 
 void HdrWizard::modelComboBoxActivated(int from_gui)
 {
-    updateHdrCreationManagerModel(*m_hdrCreationManager, models_in_gui[from_gui]);
-}
+    qDebug() << "void HdrWizard::modelComboBoxActivated(int from_gui)";
+    FusionOperator fo = models_in_gui[from_gui];
 
-void HdrWizard::loadRespCurveFilename(const QString& filename_from_gui)
-{
-    if (!filename_from_gui.isEmpty())
+    updateHdrCreationManagerModel(*m_hdrCreationManager, fo);
+    if (fo == ROBERTSON_AUTO)
     {
-        m_hdrCreationManager->getResponseCurve().readFromFile(
-                    QFile::encodeName(filename_from_gui).constData());
+        m_ui->responseCurveOutputFileLabel->setEnabled(true);
+        m_ui->CurveFileNameSaveLineEdit->setEnabled(true);
+        m_ui->saveRespCurveFileButton->setEnabled(true);
+    }
+    else
+    {
+        m_ui->responseCurveOutputFileLabel->setEnabled(false);
+        m_ui->CurveFileNameSaveLineEdit->setEnabled(false);
+        m_ui->saveRespCurveFileButton->setEnabled(false);
     }
 }
 

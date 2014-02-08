@@ -87,16 +87,13 @@ public:
 
     void setFusionOperator(libhdr::fusion::FusionOperator fo)       { fusionOperatorConfig.fusionOperator = fo; }
     void setWeightFunction(libhdr::fusion::WeightFunction wf)       { fusionOperatorConfig.weightFunction = wf; }
-    // void setResponseCurve(libhdr::fusion::ResponseCurveType rc)     { fusionOperatorConfig.responseCurve = rc; }
-
-    // void setResponseCurveInputFile(const QString& filename)         { fusionOperatorConfig.inputResponseCurveFilename = filename; }
     void setResponseCurveOutputFile(const QString& filename)        { fusionOperatorConfig.outputResponseCurveFilename = filename; }
 
     const QString& responseCurveOutputFile() const                  { return fusionOperatorConfig.outputResponseCurveFilename; }
 
     void setConfig(const FusionOperatorConfig& cfg);
 
-	pfs::Frame* createHdr(bool ag, int iterations);
+    pfs::Frame* createHdr();
 
     void set_ais_crop_flag(bool flag);
 	void align_with_ais();

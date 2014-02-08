@@ -75,7 +75,8 @@ using namespace pfs;
 using namespace pfs::io;
 using namespace libhdr::fusion;
 
-const FusionOperatorConfig predef_confs[6]= {
+const FusionOperatorConfig predef_confs[6] =
+{
     {WEIGHT_TRIANGULAR, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
     {WEIGHT_TRIANGULAR, RESPONSE_GAMMA, DEBEVEC, QString(), QString()},
     {WEIGHT_PLATEAU, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
@@ -83,7 +84,6 @@ const FusionOperatorConfig predef_confs[6]= {
     {WEIGHT_GAUSSIAN, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
     {WEIGHT_GAUSSIAN, RESPONSE_GAMMA, DEBEVEC, QString(), QString()},
 };
-
 
 // --- NEW CODE ---
 namespace
@@ -297,41 +297,11 @@ void HdrCreationManager::removeTempFiles()
     }
 }
 
-/*
-void HdrCreationManager::checkEVvalues()
+pfs::Frame* HdrCreationManager::createHdr()
 {
-    float max=-20, min=+20;
-    for (int i = 0; i < fileList.size(); i++) {
-        float ev_val = log2f(expotimes[i]);
-        if (ev_val > max)
-            max = ev_val;
-        if (ev_val < min)
-            min = ev_val;
-    }
-    //now if values are out of bounds, add an offset to them.
-    if (max > 10) {
-        for (int i = 0; i < fileList.size(); i++) {
-            float new_ev = log2f(expotimes[i]) - (max - 10);
-            expotimes[i] = exp2f(new_ev);
-            emit expotimeValueChanged(exp2f(new_ev), i);
-        }
-    } else if (min < -10) {
-        for (int i = 0; i < fileList.size(); i++) {
-            float new_ev = log2f(expotimes[i]) - (min + 10);
-            expotimes[i] = exp2f(new_ev);
-            emit expotimeValueChanged(exp2f(new_ev), i);
-        }
-    }
-    //qDebug("HCM::END checkEVvalues");
-}
-
-*/
-
-
-pfs::Frame* HdrCreationManager::createHdr(bool /*ag*/, int /*iterations*/)
-{
-    std::vector< FrameEnhanced > frames;
-    for ( size_t idx = 0; idx < m_data.size(); ++idx ) {
+    std::vector<FrameEnhanced> frames;
+    for (size_t idx = 0; idx < m_data.size(); ++idx)
+    {
         frames.push_back(
                     FrameEnhanced(m_data[idx].frame(),
                                   m_data[idx].getAverageLuminance())
@@ -340,21 +310,7 @@ pfs::Frame* HdrCreationManager::createHdr(bool /*ag*/, int /*iterations*/)
 
     libhdr::fusion::FusionOperatorPtr fusionOperatorPtr =
             IFusionOperator::build(fusionOperatorConfig.fusionOperator);
-//    fusionOperatorPtr->setResponseFunction(fusionOperatorConfig.responseCurve);
     fusionOperatorPtr->setWeightFunction(fusionOperatorConfig.weightFunction);
-//    try
-//    {
-//        if (!fusionOperatorConfig.inputResponseCurveFilename.isEmpty())
-//        {
-//            fusionOperatorPtr->setResponseFunctionInputFile(
-//                        QFile::encodeName(fusionOperatorConfig.inputResponseCurveFilename).constData());
-//        }
-//    }
-//    catch (const std::runtime_error& err)
-//    {
-//        qDebug() << QString::fromStdString(err.what());
-//        fusionOperatorPtr->setResponseFunction(RESPONSE_GAMMA);
-//    }
 
     pfs::Frame* outputFrame(
                 fusionOperatorPtr->computeFusion(*m_response, frames));

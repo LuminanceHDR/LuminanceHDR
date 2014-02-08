@@ -377,8 +377,10 @@ void RobertsonOperatorAuto::computeFusion(
     assert( frames.size() );
 
     size_t numExposures = frames.size();
-    Frame tempFrame (frames[0].frame()->getWidth(),
-            frames[0].frame()->getHeight());
+    Frame tempFrame(
+                frames[0].frame()->getWidth(),
+                frames[0].frame()->getHeight()
+            );
 
     Channel* outputRed;
     Channel* outputGreen;
