@@ -109,6 +109,14 @@ static void fillWeightPlateau(WeightFunction::WeightContainer& weight)
 static float minTrustedValuePlateau()   { return s_plateauThreshold; }
 static float maxTrustedValuePlateau()   { return 1.f - s_plateauThreshold; }
 
+static void fillWeightFlat(WeightFunction::WeightContainer& weight)
+{
+    std::fill(weight.begin(), weight.end(), 1.f);
+}
+
+static float minTrustedValueFlat()   { return 0.f - std::numeric_limits<float>::epsilon(); }
+static float maxTrustedValueFlat()   { return 1.f + std::numeric_limits<float>::epsilon(); }
+
 void WeightFunction::setType(WeightFunctionType type)
 {
     typedef void (*WeightFunctionCalculator)(WeightContainer&);
@@ -135,6 +143,7 @@ void WeightFunction::setType(WeightFunctionType type)
             (WEIGHT_TRIANGULAR, WeightFunctionFiller(&fillWeightTriangular, &minTrustedValueTriangular, &maxTrustedValueTriangular))
             (WEIGHT_GAUSSIAN, WeightFunctionFiller(&fillWeightGaussian, &minTrustedValueGaussian, &maxTrustedValueGaussian))
             (WEIGHT_PLATEAU, WeightFunctionFiller(&fillWeightPlateau, &minTrustedValuePlateau, &maxTrustedValuePlateau))
+            (WEIGHT_FLAT, WeightFunctionFiller(&fillWeightFlat, &minTrustedValueFlat, &maxTrustedValueFlat))
             ;
 
     WeightFunctionType type_ = WEIGHT_TRIANGULAR;

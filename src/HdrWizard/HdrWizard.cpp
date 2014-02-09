@@ -83,7 +83,8 @@ static const WeightFunctionType weights_in_gui[] =
 {
     WEIGHT_TRIANGULAR,
     WEIGHT_GAUSSIAN,
-    WEIGHT_PLATEAU
+    WEIGHT_PLATEAU,
+    WEIGHT_FLAT
 };
 
 HdrWizard::HdrWizard(QWidget *p,
@@ -872,6 +873,8 @@ static QString getQString(libhdr::fusion::WeightFunctionType wf)
         return QObject::tr("Plateau");
     case WEIGHT_GAUSSIAN:
         return QObject::tr("Gaussian");
+    case WEIGHT_FLAT:
+        return QObject::tr("Flat");
     }
 
     return QString();

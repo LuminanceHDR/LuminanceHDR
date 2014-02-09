@@ -206,6 +206,9 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     , m_ais_crop_flag(false)
     , fromCommandLine( fromCommandLine )
 {
+    // setConfig(predef_confs[0]);
+    setFusionOperator(predef_confs[0].fusionOperator);
+
     for (int i = 0; i < agGridSize; i++)
     {
         for (int j = 0; j < agGridSize; j++)
@@ -219,13 +222,21 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     connect(this, SIGNAL(progressCancel()), &m_futureWatcher, SLOT(cancel()), Qt::DirectConnection);
     connect(&m_futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
     connect(&m_futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
-
-    setConfig(predef_confs[0]);
 }
 
 void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
 {
-    // TODO fusionOperatorConfig = c;
+    if (!c.inputResponseCurveFilename.isEmpty())
+    {
+        m_response->readFromFile(
+                    QFile::encodeName(c.inputResponseCurveFilename).constData());
+    }
+    else
+    {
+        m_response->setType(c.responseCurve);
+    }
+    getWeightFunction().setType(c.weightFunction);
+    setFusionOperator(c.fusionOperator);
 }
 
 QVector<float> HdrCreationManager::getExpotimes() const

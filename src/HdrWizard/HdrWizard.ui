@@ -809,6 +809,11 @@ p, li { white-space: pre-wrap; }
                 <string>Plateau</string>
                </property>
               </item>
+              <item>
+               <property name="text">
+                <string>Flat</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item row="4" column="0">

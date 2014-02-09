@@ -75,9 +75,9 @@ int main(int argc, char** argv)
         ResponseCurve responseCurve(RESPONSE_SRGB);
         // responseCurve.readFromFile("responses_before.m");
 
-        WeightFunction weightFunction(WEIGHT_GAUSSIAN);
+        WeightFunction weightFunction(WEIGHT_FLAT);
 
-        FusionOperatorPtr fusionOperator = IFusionOperator::build(ROBERTSON_AUTO);
+        FusionOperatorPtr fusionOperator = IFusionOperator::build(ROBERTSON);
         pfs::FramePtr newHdr(fusionOperator->computeFusion(responseCurve, weightFunction, images));
         if ( newHdr == NULL )
         {
@@ -114,7 +114,7 @@ int main(int argc, char** argv)
 
         FrameWriterPtr writer = FrameWriterFactory::open(outputFile);
         writer->write(*newHdr,
-                      pfs::Params("mapping_method", MAP_GAMMA2_2)
+                      pfs::Params("mapping_method", MAP_GAMMA1_8)
                       ("min_luminance", min)
                       ("max_luminance", max));
 
