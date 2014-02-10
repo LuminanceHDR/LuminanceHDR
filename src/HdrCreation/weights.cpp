@@ -124,26 +124,22 @@ void WeightFunction::setType(WeightFunctionType type)
 
     struct WeightFunctionFiller
     {
-        WeightFunctionFiller(WeightFunctionCalculator calculator,
-                             WeightTrustedValue minValue,
-                             WeightTrustedValue maxValue)
-            : fillData(calculator)
-            , minTrustValue(minValue)
-            , maxTrustValue(maxValue)
-        {}
-
         WeightFunctionCalculator fillData;
         WeightTrustedValue minTrustValue;
         WeightTrustedValue maxTrustValue;
     };
 
     typedef std::map<WeightFunctionType, WeightFunctionFiller> WeightFunctionFunc;
+    WeightFunctionFiller fillter_t = {&fillWeightTriangular, &minTrustedValueTriangular, &maxTrustedValueTriangular};
+    WeightFunctionFiller fillter_g = {&fillWeightGaussian, &minTrustedValueGaussian, &maxTrustedValueGaussian};
+    WeightFunctionFiller fillter_p = {&fillWeightPlateau, &minTrustedValuePlateau, &maxTrustedValuePlateau};
+    WeightFunctionFiller fillter_f = {&fillWeightFlat, &minTrustedValueFlat, &maxTrustedValueFlat};
     static WeightFunctionFunc funcs =
             map_list_of
-            (WEIGHT_TRIANGULAR, WeightFunctionFiller(&fillWeightTriangular, &minTrustedValueTriangular, &maxTrustedValueTriangular))
-            (WEIGHT_GAUSSIAN, WeightFunctionFiller(&fillWeightGaussian, &minTrustedValueGaussian, &maxTrustedValueGaussian))
-            (WEIGHT_PLATEAU, WeightFunctionFiller(&fillWeightPlateau, &minTrustedValuePlateau, &maxTrustedValuePlateau))
-            (WEIGHT_FLAT, WeightFunctionFiller(&fillWeightFlat, &minTrustedValueFlat, &maxTrustedValueFlat))
+            (WEIGHT_TRIANGULAR, fillter_t)
+            (WEIGHT_GAUSSIAN, fillter_g)
+            (WEIGHT_PLATEAU, fillter_p)
+            (WEIGHT_FLAT, fillter_f)
             ;
 
     WeightFunctionType type_ = WEIGHT_TRIANGULAR;
