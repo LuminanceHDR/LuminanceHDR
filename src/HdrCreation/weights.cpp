@@ -7,11 +7,33 @@
 
 #include <boost/assign.hpp>
 
+#include <Libpfs/utils/string.h>
+
+using namespace std;
 using namespace boost;
 using namespace boost::assign;
 
 namespace libhdr {
 namespace fusion {
+
+WeightFunctionType WeightFunction::fromString(const std::string& type)
+{
+    typedef map<string, WeightFunctionType, pfs::utils::StringUnsensitiveComp> Dict;
+    static Dict v =
+            map_list_of
+            ("triangular", WEIGHT_TRIANGULAR)
+            ("gaussian", WEIGHT_GAUSSIAN)
+            ("plateau", WEIGHT_PLATEAU)
+            ("flat", WEIGHT_FLAT)
+            ;
+
+    Dict::const_iterator it = v.find(type);
+    if (it != v.end())
+    {
+        return it->second;
+    }
+    return WEIGHT_GAUSSIAN;
+}
 
 WeightFunction::WeightFunction(WeightFunctionType type)
     : m_type(type)
@@ -19,26 +41,11 @@ WeightFunction::WeightFunction(WeightFunctionType type)
     setType(type);
 }
 
-float WeightFunction::getWeight(float input) const
-{
-    assert(input >= 0.f);
-    assert(input <= 1.f);
-
-    return m_weights[getIdx(input)];
-}
-
-namespace {
-static const float s_triangularThreshold = 0.03f;
-}
-
 static float getWeightTriangular(float input)
 {
-    if ( (input < s_triangularThreshold) || (input > (1.f - s_triangularThreshold)) ) {
-        return 0.f;
-    }
-
-    input *= 2.f;
-    if ( input >= 1.f ) {
+    input = input*1.8f + 0.1f;
+    if ( input >= 1.f )
+    {
         input = 2.f - input;
     }
     return input;
@@ -53,22 +60,16 @@ static void fillWeightTriangular(WeightFunction::WeightContainer& weight)
     }
 }
 
-static float minTrustedValueTriangular() { return s_triangularThreshold; }
-static float maxTrustedValueTriangular() { return 1.f - s_triangularThreshold; }
+static float minTrustedValueTriangular() { return 0.f - std::numeric_limits<float>::epsilon(); }
+static float maxTrustedValueTriangular() { return 1.f + std::numeric_limits<float>::epsilon(); }
 
 namespace {
-static const float s_gaussianThreshold = 0.0354f;
 static const float s_mu = 0.5f;
 }
 
 static float getWeightGaussian(float input)
 {
-    // ignore very low weights
-    if ( (input < s_gaussianThreshold) || (input > (1.f - s_gaussianThreshold)) ) {
-        return 0.f;
-    }
-
-    return (exp( -32*(input - s_mu)*(input - s_mu) ));
+    return (exp( -16.f*(input - s_mu)*(input - s_mu) ));
 }
 
 static void fillWeightGaussian(WeightFunction::WeightContainer& weight)
@@ -80,8 +81,8 @@ static void fillWeightGaussian(WeightFunction::WeightContainer& weight)
     }
 }
 
-static float minTrustedValueGaussian() { return s_gaussianThreshold; }
-static float maxTrustedValueGaussian() { return 1.f - s_gaussianThreshold; }
+static float minTrustedValueGaussian() { return 0.f - std::numeric_limits<float>::epsilon(); }
+static float maxTrustedValueGaussian() { return 1.f + std::numeric_limits<float>::epsilon(); }
 
 namespace {
 static const float s_plateauThreshold = 0.005f;
@@ -89,12 +90,12 @@ static const float s_plateauThreshold = 0.005f;
 
 static float getWeightPlateau(float input)
 {
-    if ((input < s_plateauThreshold) || (input > (1.f - s_plateauThreshold)))
-    {
-        return 0.f;
-    }
+//    if ((input < s_plateauThreshold) || (input > (1.f - s_plateauThreshold)))
+//    {
+//        return 0.f;
+//    }
 
-    return 1.0f - pow( (2.0f*input - 1.0f), 12.0f);
+    return 1.f - pow( (2.0f*input - 1.0f), 12.0f);
 }
 
 static void fillWeightPlateau(WeightFunction::WeightContainer& weight)
@@ -106,8 +107,8 @@ static void fillWeightPlateau(WeightFunction::WeightContainer& weight)
     }
 }
 
-static float minTrustedValuePlateau()   { return s_plateauThreshold; }
-static float maxTrustedValuePlateau()   { return 1.f - s_plateauThreshold; }
+static float minTrustedValuePlateau()   { return 0.f - std::numeric_limits<float>::epsilon(); }
+static float maxTrustedValuePlateau()   { return 1.f + std::numeric_limits<float>::epsilon(); }
 
 static void fillWeightFlat(WeightFunction::WeightContainer& weight)
 {

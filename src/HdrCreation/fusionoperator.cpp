@@ -24,11 +24,17 @@
 #include "robertson02.h"
 
 #include <cassert>
+#include <map>
 #include <boost/make_shared.hpp>
+#include <boost/assign.hpp>
 
 #include <Libpfs/frame.h>
+#include <Libpfs/utils/string.h>
 
 using namespace pfs;
+using namespace std;
+using namespace boost;
+using namespace boost::assign;
 
 namespace libhdr {
 namespace fusion {
@@ -60,34 +66,23 @@ FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
     }
 }
 
-//bool IFusionOperator::setResponseFunction(ResponseCurveType responseCurve)
-//{
-//    m_response->setType(responseCurve);
-//    return true;
-//}
+FusionOperator IFusionOperator::fromString(const std::string& type)
+{
+    typedef map<string, FusionOperator, pfs::utils::StringUnsensitiveComp> Dict;
+    static Dict v =
+            map_list_of
+            ("debevec", DEBEVEC)
+            ("robertson", ROBERTSON)
+            ("robertson-auto", ROBERTSON_AUTO)
+            ;
 
-//bool IFusionOperator::setResponseFunctionInputFile(const string &fileName)
-//{
-//    m_response->setType(RESPONSE_CUSTOM);
-//    return m_response->readFromFile(fileName);
-//}
-
-//bool IFusionOperator::setWeightFunction(WeightFunction weightFunction)
-//{
-//    switch (weightFunction) {
-//    case WEIGHT_TRIANGULAR:
-//        m_weight.reset(new WeightTriangular);
-//        break;
-//    case WEIGHT_PLATEAU:
-//        m_weight.reset(new WeightPlateau);
-//        break;
-//    case WEIGHT_GAUSSIAN:
-//    default:
-//        m_weight.reset(new WeightGaussian);
-//        break;
-//    }
-//    return true;
-//}
+    Dict::const_iterator it = v.find(type);
+    if (it != v.end())
+    {
+        return it->second;
+    }
+    return DEBEVEC;
+}
 
 void fillDataLists(const vector<FrameEnhanced> &frames,
                    DataList& redChannels, DataList& greenChannels, DataList& blueChannels)

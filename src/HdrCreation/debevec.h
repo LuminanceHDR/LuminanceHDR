@@ -41,6 +41,11 @@ public:
         : IFusionOperator()
     {}
 
+    FusionOperator getType() const
+    {
+        return DEBEVEC;
+    }
+
 private:
     void computeFusion(ResponseCurve& response, const WeightFunction& weight,
                        const std::vector<FrameEnhanced> &frames,

@@ -43,6 +43,11 @@ public:
         : IFusionOperator()
     {}
 
+    FusionOperator getType() const
+    {
+        return ROBERTSON;
+    }
+
 private:
     void computeFusion(
             ResponseCurve& response,
@@ -66,6 +71,11 @@ public:
     RobertsonOperatorAuto()
         : RobertsonOperator()
     {}
+
+    FusionOperator getType() const
+    {
+        return ROBERTSON_AUTO;
+    }
 
 private:
     void computeFusion(

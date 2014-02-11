@@ -24,6 +24,7 @@
 
 #include <limits>
 #include <array>
+#include <cassert>
 
 namespace libhdr {
 namespace fusion {
@@ -41,6 +42,8 @@ class WeightFunction
 public:
     static const size_t NUM_BINS = (1 << 12);
     typedef std::array<float, NUM_BINS> WeightContainer;
+
+    static WeightFunctionType fromString(const std::string& type);
 
     static size_t getIdx(float sample);
 
@@ -66,6 +69,15 @@ private:
 inline
 size_t WeightFunction::getIdx(float sample)
 { return size_t(sample*(NUM_BINS - 1) + 0.45f); }
+
+inline
+float WeightFunction::getWeight(float input) const
+{
+    assert(input >= 0.f);
+    assert(input <= 1.f);
+
+    return m_weights[getIdx(input)];
+}
 
 }   // fusion
 }   // libhdr

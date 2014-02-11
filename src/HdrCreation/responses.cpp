@@ -48,7 +48,7 @@ using namespace pfs::utils;
 namespace libhdr {
 namespace fusion {
 
-ResponseCurveType fromString(const std::string& type)
+ResponseCurveType ResponseCurve::fromString(const std::string& type)
 {
     typedef map<string, ResponseCurveType, pfs::utils::StringUnsensitiveComp> Dict;
     static Dict v =
@@ -72,16 +72,6 @@ ResponseCurve::ResponseCurve(ResponseCurveType type)
     : m_type(type)
 {
     setType(type);
-}
-
-float ResponseCurve::getResponse(float input, ResponseChannel channel) const
-{
-    assert(channel >= 0);
-    assert(channel <= 2);
-    assert(input >= 0.f);
-    assert(input <= 1.f);
-
-    return m_responses[channel][getIdx(input)];
 }
 
 void ResponseCurve::writeToFile(const std::string& fileName) const

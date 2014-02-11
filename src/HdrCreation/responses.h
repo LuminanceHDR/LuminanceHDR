@@ -28,6 +28,7 @@
 #include <string>
 #include <array>
 #include <cstdio>
+#include <cassert>
 
 namespace libhdr {
 namespace fusion {
@@ -96,6 +97,17 @@ ResponseCurve::ResponseContainer& ResponseCurve::get(ResponseChannel channel)
 inline
 const ResponseCurve::ResponseContainer& ResponseCurve::get(ResponseChannel channel) const
 { return m_responses[channel]; }
+
+inline
+float ResponseCurve::getResponse(float input, ResponseChannel channel) const
+{
+    assert(channel >= 0);
+    assert(channel <= 2);
+    assert(input >= 0.f);
+    assert(input <= 1.f);
+
+    return m_responses[channel][getIdx(input)];
+}
 
 }   // fusion
 }   // libhdr

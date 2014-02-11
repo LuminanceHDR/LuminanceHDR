@@ -75,18 +75,17 @@ public:
     //! \brief create an instance of the IFusionOperator from a member of
     //! the \c FusionOperator enum
     static FusionOperatorPtr build(FusionOperator type);
-    // //! \brief create an instance of the \c IFusionOperator from a string. Valid
-    // //! values are "debevec" and "robertson02". Useful in a CLI interface
-    // static FusionOperatorPtr build(const std::string& name);
 
-//    bool setWeightFunction(WeightFunction weightFunction);
-//    WeightFunction getWeightFunction() const
-//    { return m_weight->getType(); }
+    //! \brief retrieve the right \c FusionOperator value for the input string.
+    //! Valid values are "debevec", "robertson" and "robertson-auto"
+    static FusionOperator fromString(const std::string& type);
 
     pfs::Frame* computeFusion(
             ResponseCurve& response,
             const WeightFunction& weight,
             const std::vector<FrameEnhanced>& frames) const;
+
+    virtual FusionOperator getType() const = 0;
 
 protected:
     IFusionOperator();
@@ -96,12 +95,6 @@ protected:
             const WeightFunction& weight,
             const std::vector<FrameEnhanced>& frames,
             pfs::Frame& outFrame) const = 0;
-
-    // inline float weight(float in) const { return m_weight->getWeight(in); }
-    // inline float minTrustedValue() const  { return m_weight->minTrustedValue(); }
-    // inline float maxTrustedValue() const  { return m_weight->maxTrustedValue(); }
-
-    // boost::scoped_ptr<IWeightFunction> m_weight;
 };
 
 typedef vector<float*> DataList;
