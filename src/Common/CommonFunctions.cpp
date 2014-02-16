@@ -56,20 +56,24 @@ using namespace std;
 using namespace pfs;
 using namespace pfs::io;
 
-ConvertToQRgb::ConvertToQRgb(float gamma) : gamma(1.0f/gamma)
+ConvertToQRgb::ConvertToQRgb(float gamma)
+    : gamma(1.0f/gamma)
 {
 }
 
-void ConvertToQRgb::operator()(float r, float g, float b, QRgb& rgb) const {
+void ConvertToQRgb::operator()(float r, float g, float b, QRgb& rgb) const
+{
     uint8_t r8u;
     uint8_t g8u;
     uint8_t b8u;
-    if (gamma == 1.0f) {
+    if (gamma == 1.0f)
+    {
         r8u = colorspace::convertSample<uint8_t>(r);
         g8u = colorspace::convertSample<uint8_t>(g);
         b8u = colorspace::convertSample<uint8_t>(b);
     }
-    else {
+    else
+    {
         r8u = colorspace::convertSample<uint8_t>(pow(r, gamma));
         g8u = colorspace::convertSample<uint8_t>(pow(g, gamma));
         b8u = colorspace::convertSample<uint8_t>(pow(b, gamma));
@@ -80,15 +84,20 @@ void ConvertToQRgb::operator()(float r, float g, float b, QRgb& rgb) const {
 
 void LoadFile::operator()(HdrCreationItem& currentItem)
 {
-    if (currentItem.filename().isEmpty()) {
+    if (currentItem.filename().isEmpty())
+    {
         return;
     }
+
     QFileInfo qfi(currentItem.alignedFilename());
     qDebug() << QString("Loading data for %1").arg(currentItem.alignedFilename());
 
     try
     {
+        QFileInfo qfi(currentItem.filename());
         QByteArray filePath = QFile::encodeName(qfi.filePath());
+
+        qDebug() << QString("Loading data for %1").arg(filePath.constData());
 
         FrameReaderPtr reader = FrameReaderFactory::open(filePath.constData());
         reader->read( *currentItem.frame(), getRawSettings() );
@@ -123,7 +132,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
                          qimageData, ConvertToQRgb());
 
-        currentItem.qimage()->swap( tempImage );
+        currentItem.qimage().swap( tempImage );
     }
     catch (std::runtime_error& err)
     {
@@ -208,7 +217,7 @@ void RefreshPreview::operator()(HdrCreationItem& currentItem)
             utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
                              qimageData, ConvertToQRgb());
 
-        currentItem.qimage()->swap( tempImage );
+        currentItem.qimage().swap( tempImage );
     }
     catch (std::runtime_error& err)
     {

@@ -29,10 +29,9 @@
 #include <QtConcurrentMap>
 #include <QtConcurrentFilter>
 #include <QDebug>
+#include <QRgb>
 #include <QImage>
 #include <QPixmap>
-
-#include <valarray> 
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/foreach.hpp>
@@ -42,11 +41,14 @@
 #include "ui_FitsImporter.h"
 
 #include "Common/CommonFunctions.h"
-#include "Libpfs/manip/rotate.h"
-#include <Libpfs/utils/transform.h>
 #include "HdrCreation/mtb_alignment.h"
 
+#include <Libpfs/manip/rotate.h>
+#include <Libpfs/utils/transform.h>
+#include <Libpfs/colorspace/convert.h>
+
 using namespace pfs;
+using namespace pfs::colorspace;
 
 static const int previewWidth = 300;
 static const int previewHeight = 200;
@@ -118,10 +120,10 @@ pfs::Frame* FitsImporter::getFrame()
 
 void FitsImporter::selectInputFile(QLineEdit* textField, QString* channel)
 {
-    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS);;";
+    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS)";
     *channel = QFileDialog::getOpenFileName(this, tr("Load one FITS image..."),
                                                       m_luminance_options.getDefaultPathHdrIn(),
-                                                      filetypes );
+                                                      filetypes);
     textField->setText(*channel);
     checkLoadButton();
 
@@ -179,21 +181,24 @@ void FitsImporter::on_pushButtonLoad_clicked()
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     m_ui->pushButtonLoad->setEnabled(false);
 
-    m_channels << m_redChannel
-               << m_greenChannel
-               << m_blueChannel
-               << m_luminosityChannel
-               << m_hChannel;
+    m_tmpdata.clear();
 
-    BOOST_FOREACH(const QString& i, m_channels) {
-        m_tmpdata.push_back( HdrCreationItem(i) );
-    }
+    m_tmpdata.push_back( HdrCreationItem(m_redChannel) );
+    m_tmpdata.push_back( HdrCreationItem(m_greenChannel) );
+    m_tmpdata.push_back( HdrCreationItem(m_blueChannel) );
+    m_tmpdata.push_back( HdrCreationItem(m_luminosityChannel) );
+    m_tmpdata.push_back( HdrCreationItem(m_hChannel) );
 
     // parallel load of the data...
-    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()), Qt::DirectConnection);
+    // connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()), Qt::DirectConnection);
 
     // Start the computation.
-    m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
+    // m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
+
+
+    std::for_each(m_tmpdata.begin(), m_tmpdata.end(), LoadFile());
+
+    loadFilesDone();
 }
 
 void FitsImporter::loadFilesDone()
@@ -201,24 +206,27 @@ void FitsImporter::loadFilesDone()
     qDebug() << "Data loaded ... move to internal structure!";
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
 
+    m_data.clear();
+
     int idx = 0;
-    BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata) {
-        if ( i.isValid() ) {
+    BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata)
+    {
+        if ( i.isValid() )
+        {
             qDebug() << QString("Insert data for %1").arg(i.filename());
             m_data.push_back(i);
-            m_previewFrame->getLabel(idx)->setPixmap(QPixmap::fromImage(*(i.qimage())));
+            m_previewFrame->getLabel(idx)->setPixmap(QPixmap::fromImage(i.qimage()));
             m_previewFrame->getLabel(idx)->setEnabled(true);
         }
-        else if (i.filename().isEmpty()) {
+        else if ( i.filename().isEmpty() )
+        {
             m_data.push_back(i);
-            idx++;
-            continue;
         }
-        else {
+        else
+        {
             QMessageBox::warning(0,"", tr("Cannot load FITS image %1").arg(i.filename()), QMessageBox::Ok, QMessageBox::NoButton);
             m_data.clear();
             m_tmpdata.clear();
-            m_channels.clear();
             m_contents.clear();
             m_qimages.clear();
             m_ui->pushButtonLoad->setEnabled(true);
@@ -238,7 +246,6 @@ void FitsImporter::loadFilesDone()
         QMessageBox::warning(0,"", tr("FITS images have different size"), QMessageBox::Ok, QMessageBox::NoButton);
         m_data.clear();
         m_tmpdata.clear();
-        m_channels.clear();
         m_contents.clear();
         m_qimages.clear();
         m_ui->pushButtonLoad->setEnabled(true);
@@ -274,21 +281,24 @@ void FitsImporter::buildPreview()
     float blueBlue = m_ui->dsbBlueBlue->value();
     float gamma = m_ui->vsGamma->value()/10000.0f;
 
-
     QImage tempImage(previewWidth,
                      previewHeight,
                      QImage::Format_ARGB32_Premultiplied);
     
-    if (m_luminosityChannel != "") {
+    ConvertToQRgb convertToQRgb(2.2f);
+    ConvertSample<float, uint8_t> toFloat;
+
+    if (!m_luminosityChannel.isEmpty())
+    {
         for (int j = 0; j < previewHeight; j++) 
         {
             for (int i = 0; i < previewWidth; i++) 
             {
-                float red = qRed(m_qimages[0].pixel(i, j))/255.0f;
-                float green = qRed(m_qimages[1].pixel(i, j))/255.0f;
-                float blue = qRed(m_qimages[2].pixel(i, j))/255.0f;
-                float luminance = qRed(m_qimages[3].pixel(i, j))/255.0f;
-                float h_alpha = qRed(m_qimages[4].pixel(i, j))/255.0f;
+                float red = toFloat(qRed(m_qimages[0].pixel(i, j)));
+                float green = toFloat(qRed(m_qimages[1].pixel(i, j)));
+                float blue = toFloat(qRed(m_qimages[2].pixel(i, j)));
+                float luminance = toFloat(qRed(m_qimages[3].pixel(i, j)));
+                float h_alpha = toFloat(qRed(m_qimages[4].pixel(i, j)));
                 float r = redRed * red + redGreen * green + redBlue * blue;
                 float g = greenRed * red + greenGreen * green + greenBlue * blue;
                 float b = blueRed * red + blueGreen * green + blueBlue * blue;
@@ -305,21 +315,21 @@ void FitsImporter::buildPreview()
                 if (redH > 1.0f)
                     redH = 1.0f;
                 QRgb rgb;
-                ConvertToQRgb convert(gamma);
-                convert(redH, g, b, rgb); 
+                convertToQRgb(redH, g, b, rgb);
                 tempImage.setPixel(i, j, rgb);
             }
         } 
     }
-    else {
+    else
+    {
         for (int j = 0; j < previewHeight; j++) 
         {
             for (int i = 0; i < previewWidth; i++) 
             {
-                float red = qRed(m_qimages[0].pixel(i, j))/255.0f;
-                float green = qRed(m_qimages[1].pixel(i, j))/255.0f;
-                float blue = qRed(m_qimages[2].pixel(i, j))/255.0f;
-                float h_alpha = qRed(m_qimages[4].pixel(i, j))/255.0f;
+                float red = toFloat(qRed(m_qimages[0].pixel(i, j)));
+                float green = toFloat(qRed(m_qimages[1].pixel(i, j)));
+                float blue = toFloat(qRed(m_qimages[2].pixel(i, j)));
+                float h_alpha = toFloat(qRed(m_qimages[4].pixel(i, j)));
                 float r = redRed * red + redGreen * green + redBlue * blue;
                 float g = greenRed * red + greenGreen * green + greenBlue * blue;
                 float b = blueRed * red + blueGreen * green + blueBlue * blue;
@@ -332,39 +342,43 @@ void FitsImporter::buildPreview()
                     b = 1.0f;
                 if (redH > 1.0f)
                     redH = 1.0f;
+
                 QRgb rgb;
-                ConvertToQRgb convert(gamma);
-                convert(redH, g, b, rgb); 
+                convertToQRgb(redH, g, b, rgb);
                 tempImage.setPixel(i, j, rgb);
             }
         } 
-    }    
+    }
     m_ui->previewLabel->setPixmap(QPixmap::fromImage(tempImage));
 }
 
 void FitsImporter::buildContents()
 {
-    HdrCreationItemContainer::iterator it;
-    it = std::find_if(m_data.begin(), m_data.end(), isValid);
+    HdrCreationItemContainer::iterator it =
+            std::find_if(m_data.begin(), m_data.end(), isValid);
+
     m_width = it->frame()->getWidth();
     m_height = it->frame()->getHeight();
 
-    for (size_t i = 0; i < m_data.size(); i++) {
+    for (size_t i = 0; i < m_data.size(); i++)
+    {
          m_contents.push_back(std::vector<float>(m_width*m_height));
     }
 
-    for (size_t i = 0; i < m_data.size(); i++) {
-        if (m_data[i].filename().isEmpty()) {
+    for (size_t i = 0; i < m_data.size(); i++)
+    {
+        if (m_data[i].filename().isEmpty())
+        {
             std::fill(m_contents[i].begin(), m_contents[i].end(), 0.0f);
             QImage tmpImage(previewWidth, previewHeight, QImage::Format_ARGB32_Premultiplied);
             tmpImage.fill(0);
             m_qimages.push_back(tmpImage);
         }
-        else {
+        else
+        {
             Channel *C = m_data[i].frame()->getChannel("X");
             std::copy(C->begin(), C->end(), m_contents[i].begin()); 
-            m_qimages.push_back(m_data[i].qimage()->scaled(previewWidth, previewHeight));
-            
+            m_qimages.push_back(m_data[i].qimage().scaled(previewWidth, previewHeight));
         }
     }
 }
@@ -385,7 +399,8 @@ void FitsImporter::buildFrame()
     Channel *Xc, *Yc, *Zc;
     m_frame->createXYZChannels(Xc, Yc, Zc);
 
-    if (m_luminosityChannel != "") {
+    if (!m_luminosityChannel.isEmpty())
+    {
         for (size_t i = 0; i < m_width*m_height; i++) 
         {
             float r = redRed * m_contents[0][i] + redGreen * m_contents[1][i] + redBlue * m_contents[2][i];
@@ -399,7 +414,8 @@ void FitsImporter::buildFrame()
             (*Zc)(i) = b;
         } 
     }
-    else {
+    else
+    {
         for (size_t i = 0; i < m_width*m_height; i++) 
         {
             float r = redRed * m_contents[0][i] + redGreen * m_contents[1][i] + redBlue * m_contents[2][i];
@@ -515,14 +531,14 @@ void FitsImporter::on_pushButtonClockwise_clicked()
 
     RefreshPreview refresh;
     refresh(m_data[index]);
-    m_previewFrame->getLabel(index)->setPixmap(QPixmap::fromImage(*(m_data[index].qimage())));
+    m_previewFrame->getLabel(index)->setPixmap(QPixmap::fromImage(m_data[index].qimage()));
     if (m_ui->pushButtonPreview->isChecked())
     {
         m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
     }
     Channel *C = m_data[index].frame()->getChannel("X");
     std::copy(C->begin(), C->end(), m_contents[index].begin()); 
-    QImage tmp = m_data[index].qimage()->scaled(previewWidth, previewHeight);
+    QImage tmp = m_data[index].qimage().scaled(previewWidth, previewHeight);
     m_qimages[index].swap(tmp);
     //buildPreview();
     m_ui->pushButtonClockwise->setEnabled(true);
@@ -708,7 +724,6 @@ void FitsImporter::on_pushButtonReset_clicked()
 {
     m_data.clear();
     m_tmpdata.clear();
-    m_channels.clear();
     m_contents.clear();
     m_qimages.clear();
     m_ui->lineEditRed->clear();

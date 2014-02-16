@@ -115,8 +115,8 @@ void shiftItem(HdrCreationItem& item, int dx, int dy)
     item.frame().swap(shiftedFrame);
     shiftedFrame.reset();       // release memory
 
-    QScopedPointer<QImage> img(shiftQImage(item.qimage(), dx, dy));
-    item.qimage()->swap( *img );
+    QScopedPointer<QImage> img(shiftQImage(&item.qimage(), dx, dy));
+    item.qimage().swap( *img );
     img.reset();    // release memory
 }
 }
@@ -354,12 +354,12 @@ void HdrCreationManager::cropItems(const QRect& ca)
     int size = m_data.size();
     for (int idx = 0; idx < size; idx++)
     {
-        boost::scoped_ptr<QImage> newimage(new QImage(m_data[idx].qimage()->copy(ca)));
+        boost::scoped_ptr<QImage> newimage(new QImage(m_data[idx].qimage().copy(ca)));
         if (newimage == NULL)
         {
             exit(1); // TODO: exit gracefully
         }
-        m_data[idx].qimage()->swap(*newimage);
+        m_data[idx].qimage().swap(*newimage);
         newimage.reset();
 
         int x_ul, y_ur, x_bl, y_br;

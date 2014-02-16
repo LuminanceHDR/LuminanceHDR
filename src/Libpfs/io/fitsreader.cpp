@@ -64,7 +64,8 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
 
     CCfits::PHDU& image = m_file->pHDU();
     image.readAllKeys();
-    //std::cout << *image << std::endl;
+
+    std::cout << "Read... ";
 
     if (!(image.axes() == 2 || image.axes() == 3))
     {
@@ -73,9 +74,9 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
         CCfits::ExtMap::const_iterator itEnd = extensions.end();
         for (; it != itEnd; it++)
         {
-            //std::cout << it->first << std::endl;
+            std::cout << it->first << std::endl;
             it->second->readAllKeys();
-            //std::cout << *it->second << std::endl;
+            std::cout << *it->second << std::endl;
             if (!(it->second->axes() == 2 || it->second->axes() == 3))
             {
                 continue;

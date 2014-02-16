@@ -113,7 +113,6 @@ protected:
 
     LuminanceOptions m_luminance_options;
 
-    QStringList m_channels;
     QString m_luminosityChannel;
     QString m_redChannel;
     QString m_greenChannel;

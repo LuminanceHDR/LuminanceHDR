@@ -440,7 +440,7 @@ void HdrWizard::inputHdrFileSelected(int currentRow)
         // load QImage...
         m_ui->previewLabel->setPixmap(
                     QPixmap::fromImage(
-                        m_hdrCreationManager->getFile(currentRow).qimage()->scaled(
+                        m_hdrCreationManager->getFile(currentRow).qimage().scaled(
                             m_ui->previewLabel->size(), Qt::KeepAspectRatio)
                         ));
 
@@ -1070,7 +1070,7 @@ void HdrWizard::resizeEvent( QResizeEvent * )
     {
         m_ui->previewLabel->setPixmap(
                     QPixmap::fromImage(
-                        m_hdrCreationManager->getFile(currentRow).qimage()->scaled(
+                        m_hdrCreationManager->getFile(currentRow).qimage().scaled(
                             m_ui->previewLabel->size(), Qt::KeepAspectRatio)
                         ));
     }
