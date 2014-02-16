@@ -57,8 +57,8 @@ public:
     void setEV(float ev)                { m_averageLuminance = std::pow(2.f, ev); }
     float getEV() const                 { return log2(m_averageLuminance); }
 
-    QImage* qimage()                    { return m_thumbnail.data(); }
-    const QImage* qimage() const        { return m_thumbnail.data(); }
+    QImage& qimage()                    { return *m_thumbnail; }
+    const QImage& qimage() const        { return *m_thumbnail; }
 
 private:
     QString                 m_filename;

@@ -83,12 +83,13 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
     if (currentItem.filename().isEmpty()) {
         return;
     }
-    QFileInfo qfi(currentItem.filename());
-    qDebug() << QString("Loading data for %1").arg(currentItem.filename());
 
     try
     {
+        QFileInfo qfi(currentItem.filename());
         QByteArray filePath = QFile::encodeName(qfi.filePath());
+
+        qDebug() << QString("Loading data for %1").arg(filePath.constData());
 
         FrameReaderPtr reader = FrameReaderFactory::open(filePath.constData());
         reader->read( *currentItem.frame(), getRawSettings() );
@@ -138,7 +139,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
                          qimageData, ConvertToQRgb());
 
-        currentItem.qimage()->swap( tempImage );
+        currentItem.qimage().swap( tempImage );
     }
     catch (std::runtime_error& err)
     {
@@ -223,7 +224,7 @@ void RefreshPreview::operator()(HdrCreationItem& currentItem)
             utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
                              qimageData, ConvertToQRgb());
 
-        currentItem.qimage()->swap( tempImage );
+        currentItem.qimage().swap( tempImage );
     }
     catch (std::runtime_error& err)
     {

@@ -32,44 +32,42 @@
 namespace pfs {
 namespace colorspace {
 
-template <typename TypeOut, typename TypeIn> struct ConvertSample;
+template <typename TypeOut, typename TypeIn>
+struct ConvertSample;
 
 template <typename Type>
-struct ConvertSample<Type, Type> {
-    Type operator()(Type vIn) { return vIn; }
-};
-
-/*
-template <>
-struct ConvertSample<float, float> {
-    float operator()(float vIn)
+struct ConvertSample<Type, Type>
+{
+    Type operator()(Type vIn)
     { return vIn; }
 };
-*/
 
 template <>
-struct ConvertSample<float, uint16_t> {
+struct ConvertSample<float, uint16_t>
+{
     float operator()(uint16_t vIn)
     { return ((float)vIn)/65535.f; }
 };
 
 template <>
-struct ConvertSample<float, uint8_t> {
+struct ConvertSample<float, uint8_t>
+{
     float operator()(uint8_t vIn)
     { return ((float)vIn)/255.f; }
 };
 
 template <>
-struct ConvertSample<uint8_t, float> {
+struct ConvertSample<uint8_t, float>
+{
     uint8_t operator()(float vIn)
     { return static_cast<uint8_t>(std::floor(vIn*255.f + 0.5f)); }
 };
 
 template <typename TypeOut, typename TypeIn>
-TypeOut convertSample(TypeIn vIn) {
+TypeOut convertSample(TypeIn vIn)
+{
     return ConvertSample<TypeOut, TypeIn>()(vIn);
 }
-
 
 }   // colorspace
 }   // pfs

@@ -61,7 +61,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
     HdrCreationItemContainer data = m_hcm->getData();
     for ( HdrCreationItemContainer::iterator it = data.begin(), 
           itEnd = data.end(); it != itEnd; ++it) {
-        m_originalImagesList.push_back(it->qimage());
+        m_originalImagesList.push_back(&it->qimage());
         m_fileList.push_back(it->filename());
     }
 
@@ -248,9 +248,10 @@ void EditingTools::cropStack()
     m_hcm->cropItems(ca);
     m_originalImagesList.clear();
     HdrCreationItemContainer data = m_hcm->getData();
-    for ( HdrCreationItemContainer::iterator it = data.begin(), 
-          itEnd = data.end(); it != itEnd; ++it) {
-        m_originalImagesList.push_back(it->qimage());
+    for (HdrCreationItemContainer::iterator it = data.begin(),
+         itEnd = data.end(); it != itEnd; ++it)
+    {
+        m_originalImagesList.push_back(&it->qimage());
     }
     int width = m_originalImagesList.at(0)->width();
     int height = m_originalImagesList.at(0)->height();
@@ -579,7 +580,7 @@ void EditingTools::restoreSaveImagesButtonState()
     HdrCreationItemContainer data = m_hcm->getData();
     for ( HdrCreationItemContainer::iterator it = data.begin(), 
           itEnd = data.end(); it != itEnd; ++it) {
-        m_originalImagesList.push_back(it->qimage());
+        m_originalImagesList.push_back(&it->qimage());
     }
     
     m_previewWidget->setMovable(m_originalImagesList[movableListWidget->currentRow()]);
