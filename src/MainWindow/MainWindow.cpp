@@ -80,8 +80,8 @@
 #include "UI/UMessageBox.h"
 #include "UI/GammaAndLevels.h"
 
-#ifdef HAVE_CCFITS
-    #include "UI/FitsImporter.h"
+#ifdef HAVE_CFITSIO
+#include "UI/FitsImporter.h"
 #endif
 
 #include "PreviewPanel/PreviewPanel.h"
@@ -429,7 +429,7 @@ void MainWindow::createMenus()
     initRecentFileActions();
     updateRecentFileActions();
     
-#ifndef HAVE_CCFITS
+#ifndef HAVE_CFITSIO
     m_Ui->actionFits_Importer->setVisible(false);
 #endif
 }
@@ -509,7 +509,7 @@ void MainWindow::on_fileOpenAction_triggered()
     filetypes += "OpenEXR (*.exr *.EXR);;" ;
     filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
     filetypes += "TIFF images (*.TIFF *.TIF *.tiff *.tif);;";
-#if HAVE_CCFITS
+#if HAVE_CFITSIO
     filetypes += "FITS (*.fit *.FIT *.fits *.FITS);;";
 #endif
     filetypes += "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw *.srw";
@@ -2016,7 +2016,7 @@ void MainWindow::showPreviewsOnTheBottom()
 
 void MainWindow::on_actionFits_Importer_triggered()
 {
-#ifdef HAVE_CCFITS
+#ifdef HAVE_CFITSIO
     FitsImporter importer;
 
     if (importer.exec() == QDialog::Accepted)
