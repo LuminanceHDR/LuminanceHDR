@@ -44,7 +44,7 @@ bool matchesLdrFilename(const QString& file)
 
 bool matchesHdrFilename(const QString& file)
 {
-#ifdef HAVE_CCFITS
+#ifdef HAVE_CFITSIO
 	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 #else
 	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
@@ -57,7 +57,7 @@ QStringList getAllHdrFileExtensions()
     QStringList listAll;
     QStringList list;
     list << ".exr" << ".hdr" << ".pic" << ".tiff" << ".tif";
-#if HAVE_CCFITS
+#if HAVE_CFITSIO
     list << ".fit" << ".fits";
 #endif
     list << ".pfs" << ".crw" << ".cr2" << ".nef" << ".dng" << ".mrw" << ".orf" << ".kdc" << ".dcr" << ".arw" << ".raf" << ".ptx" << ".pef" << ".x3f" << ".raw" << ".rw2" << ".sr2" << ".3fr" << ".mef" << ".mos" << ".erf" << ".nrw" << ".srw";

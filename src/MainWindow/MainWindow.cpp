@@ -80,8 +80,8 @@
 #include "UI/UMessageBox.h"
 #include "UI/GammaAndLevels.h"
 
-#ifdef HAVE_CCFITS
-    #include "UI/FitsImporter.h"
+#ifdef HAVE_CFITSIO
+#include "UI/FitsImporter.h"
 #endif
 
 #include "PreviewPanel/PreviewPanel.h"
@@ -415,7 +415,7 @@ void MainWindow::createMenus()
     initRecentFileActions();
     updateRecentFileActions();
     
-#ifndef HAVE_CCFITS
+#ifndef HAVE_CFITSIO
     m_Ui->actionFits_Importer->setVisible(false);
 #endif
 }
@@ -495,7 +495,7 @@ void MainWindow::on_fileOpenAction_triggered()
     filetypes += "OpenEXR (*.exr *.EXR);;" ;
     filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
     filetypes += "TIFF images (*.TIFF *.TIF *.tiff *.tif);;";
-#if HAVE_CCFITS
+#if HAVE_CFITSIO
     filetypes += "FITS (*.fit *.FIT *.fits *.FITS);;";
 #endif
     filetypes += "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw *.srw";
@@ -2028,35 +2028,13 @@ void MainWindow::showPreviewsOnTheBottom()
 
 void MainWindow::on_actionFits_Importer_triggered()
 {
-#ifdef HAVE_CCFITS
+#ifdef HAVE_CFITSIO
     FitsImporter importer;
 
-    if (importer.exec() == QDialog::Accepted) {
-//        QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
+    if (importer.exec() == QDialog::Accepted)
+    {
         pfs::Frame *frame = importer.getFrame();
-        emit load_success(frame, tr("FITS Image"), QStringList(), true); 
-        
-/*
-        try {
-            pfs::io::FitsReader3Ch reader(QFile::encodeName(luminosityChannel).constData(),
-                                          QFile::encodeName(redChannel).constData(), 
-                                          QFile::encodeName(greenChannel).constData(), 
-                                          QFile::encodeName(blueChannel).constData(),
-                                          QFile::encodeName(hChannel).constData());
-            reader.read(*frame);
-            emit load_success(frame, tr("FITS Image"), QStringList(), true); 
-        }
-        catch(pfs::Exception& e) {
-            QApplication::restoreOverrideCursor();
-            QMessageBox::warning(0,"", tr("Failed to load FITS images. %1").arg(e.what()), QMessageBox::Ok, QMessageBox::NoButton);
-        }
-        catch (...) {
-            QApplication::restoreOverrideCursor();
-            QMessageBox::warning(0,"", tr("Failed to load FITS images"), QMessageBox::Ok, QMessageBox::NoButton);
-        }  
-        QApplication::restoreOverrideCursor();
-*/     
+        emit load_success(frame, tr("FITS Image"), QStringList(), true);    
     }
 #endif
 }

@@ -31,35 +31,31 @@
 #include <Libpfs/params.h>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
-#include <Libpfs/utils/resourcehandlerstdio.h>
 
-// include windows.h to avoid TBYTE define clashes with fitsio.h
-#ifdef Q_OS_WIN
-#define _WINSOCKAPI_    // stops windows.h including winsock.h
-#include <windows.h>
-#endif
-
-#include <CCfits/CCfits>
 
 namespace pfs {
 class Frame;
 
 namespace io {
 
+class FitsReaderData;
+
 class FitsReader : public FrameReader
 {
 public:
     FitsReader(const std::string& filename);
 
+    ~FitsReader();
+
     bool isOpen() const
-    { return m_file.get(); }
+    { return m_data.get(); }
 
     void open();
     void close();
     void read(Frame &frame, const Params &);
 
 private:
-    boost::scoped_ptr<CCfits::FITS> m_file;
+    boost::scoped_ptr<FitsReaderData> m_data;
 };
 
 }   // io

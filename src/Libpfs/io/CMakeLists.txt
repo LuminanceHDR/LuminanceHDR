@@ -2,7 +2,7 @@ FILE(GLOB IO_H *.h)
 FILE(GLOB IO_HXX *.hxx)
 FILE(GLOB IO_CPP *.cpp)
 
-IF(NOT CCFITS_FOUND)
+IF(NOT CFITSIO_FOUND)
     FILE(GLOB to_remove fitsreader.*)
     LIST(REMOVE_ITEM IO_CPP ${to_remove})
     LIST(REMOVE_ITEM IO_H ${to_remove})
