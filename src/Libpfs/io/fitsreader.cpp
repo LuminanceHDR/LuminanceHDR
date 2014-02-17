@@ -21,9 +21,6 @@
 
 #include <Libpfs/io/fitsreader.h>
 
-#include <cmath>
-#include "arch/math.h"
-
 #ifndef NDEBUG
 #include <boost/algorithm/minmax_element.hpp>
 #endif
@@ -33,6 +30,9 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/normalizer.h>
+
+#include <cmath>
+#include "arch/math.h"
 
 // include windows.h to avoid TBYTE define clashes with fitsio.h
 #ifdef Q_OS_WIN
