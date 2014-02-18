@@ -31,9 +31,9 @@ struct Chain {
         : func1_(func1), func2_(func2)
     {}
 
-    template <typename Type>
-    void operator()(Type v1, Type v2, Type v3,
-                    Type& o1, Type& o2, Type& o3)
+    template <typename TypeIn, typename TypeOut>
+    void operator()(TypeIn v1, TypeIn v2, TypeIn v3,
+                    TypeOut& o1, TypeOut& o2, TypeOut& o3)
     {
         func1_(v1, v2, v3, v1, v2, v3);
         func2_(v1, v2, v3, o1, o2, o3);

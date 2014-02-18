@@ -46,22 +46,15 @@ protected:
     static float toGamma22(float sample);
     static float toGamma26(float sample);
     static float toLog(float sample);
+
+    typedef float (*MappingFunc)(float);
+
+    static const MappingFunc s_callbacks[];
 };
 
 template <typename TypeOut>
 class Remapper : public RemapperBase
 {
-private:
-    typedef float (*MappingFunc)(float);
-
-#ifdef LHDR_CXX11_ENABLED
-    static constexpr MappingFunc s_callbacks[] =
-    { &toLinear, &toGamma14, &toGamma18, &toGamma22, &toGamma26, &toLog };
-#else
-    static const MappingFunc s_callbacks[] =
-    { &toLinear, &toGamma14, &toGamma18, &toGamma22, &toGamma26, &toLog };
-#endif
-
 public:
     Remapper(RGBMappingType mappingMethod = MAP_LINEAR)
         : m_mappingMethod(mappingMethod)
@@ -81,8 +74,14 @@ public:
 
         using namespace pfs::colorspace;
 
-        return convertSample<TypeOut>(
-                    m_callback(sample));
+        return convertSample<TypeOut>(m_callback(sample));
+    }
+
+    void operator()(float i1, float i2, float i3, TypeOut& o1, TypeOut& o2, TypeOut& o3) const
+    {
+        o1 = (*this)(i1);
+        o2 = (*this)(i2);
+        o3 = (*this)(i3);
     }
 
 private:

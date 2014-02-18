@@ -24,10 +24,26 @@
 #include <QDebug>
 
 #include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/colorspace/copy.h>
+#include <Libpfs/utils/clamp.h>
+#include <Libpfs/utils/chain.h>
+
+using namespace pfs::colorspace;
+using namespace pfs::utils;
+
+typedef Chain<
+    Clamp<float>,
+    Remapper<uint16_t>
+> MyRemapperUint16;
+
+typedef Chain<
+    Clamp<float>,
+    Remapper<uint8_t>
+> MyRemapperUint8;
 
 TEST(FloatRgbConverter, Uint16_Test1)
 {
-    RGBRemapper d;
+    MyRemapperUint16 d(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
 
     float inRed = 1.0f;
     float inGreen = 0.0f;
@@ -37,17 +53,16 @@ TEST(FloatRgbConverter, Uint16_Test1)
     uint16_t outGreen;
     uint16_t outBlue;
 
-    d.toUint16(inRed, inGreen, inBlue,
-               outRed, outGreen, outBlue);
+    d(inRed, inGreen, inBlue, outRed, outGreen, outBlue);
 
-    EXPECT_EQ(static_cast<int>(outRed), 65535);
-    EXPECT_EQ(static_cast<int>(outGreen), 0);
-    EXPECT_EQ(static_cast<int>(outBlue), 0);
+    EXPECT_EQ(outRed, 65535u);
+    EXPECT_EQ(outGreen, 0u);
+    EXPECT_EQ(outBlue, 0u);
 }
 
 TEST(FloatRgbConverter, Uint16_Test2)
 {
-    RGBRemapper d;
+    MyRemapperUint16 d(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
 
     float inRed = 1.2f;
     float inGreen = 0.0f;
@@ -57,8 +72,7 @@ TEST(FloatRgbConverter, Uint16_Test2)
     uint16_t outGreen;
     uint16_t outBlue;
 
-    d.toUint16(inRed, inGreen, inBlue,
-               outRed, outGreen, outBlue);
+    d(inRed, inGreen, inBlue, outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 65535);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -67,7 +81,7 @@ TEST(FloatRgbConverter, Uint16_Test2)
 
 TEST(FloatRgbConverter, Uint16_Test3)
 {
-    RGBRemapper d;
+    MyRemapperUint16 d(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
 
     float inRed = 1.2f;
     float inGreen = -0.0f;
@@ -77,8 +91,7 @@ TEST(FloatRgbConverter, Uint16_Test3)
     uint16_t outGreen;
     uint16_t outBlue;
 
-    d.toUint16(inRed, inGreen, inBlue,
-               outRed, outGreen, outBlue);
+    d(inRed, inGreen, inBlue, outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 65535);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -121,7 +134,7 @@ TEST(FloatRgbConverter, Qrgb_Test2)
 
 TEST(FloatRgbConverter, Uint8_Test1)
 {
-    RGBRemapper d;
+    MyRemapperUint8 d(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
 
     float inRed = 1.0f;
     float inGreen = 0.0f;
@@ -131,8 +144,7 @@ TEST(FloatRgbConverter, Uint8_Test1)
     uint8_t outGreen;
     uint8_t outBlue;
 
-    d.toUint8(inRed, inGreen, inBlue,
-              outRed, outGreen, outBlue);
+    d(inRed, inGreen, inBlue, outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 255);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -141,7 +153,7 @@ TEST(FloatRgbConverter, Uint8_Test1)
 
 TEST(FloatRgbConverter, Uint8_Test2)
 {
-    RGBRemapper d;
+    MyRemapperUint8 d(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
 
     float inRed = 1.2f;
     float inGreen = 0.0f;
@@ -151,8 +163,7 @@ TEST(FloatRgbConverter, Uint8_Test2)
     uint8_t outGreen;
     uint8_t outBlue;
 
-    d.toUint8(inRed, inGreen, inBlue,
-              outRed, outGreen, outBlue);
+    d(inRed, inGreen, inBlue, outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 255);
     EXPECT_EQ(static_cast<int>(outGreen), 0);
@@ -161,7 +172,7 @@ TEST(FloatRgbConverter, Uint8_Test2)
 
 TEST(FloatRgbConverter, Uint8_Test3)
 {
-    RGBRemapper d;
+    MyRemapperUint8 d(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
 
     float inRed = 1.2f;
     float inGreen = -0.0f;
@@ -171,8 +182,7 @@ TEST(FloatRgbConverter, Uint8_Test3)
     uint8_t outGreen;
     uint8_t outBlue;
 
-    d.toUint8(inRed, inGreen, inBlue,
-              outRed, outGreen, outBlue);
+    d(inRed, inGreen, inBlue, outRed, outGreen, outBlue);
 
     EXPECT_EQ(static_cast<int>(outRed), 255);
     EXPECT_EQ(static_cast<int>(outGreen), 0);

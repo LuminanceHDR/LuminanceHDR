@@ -27,6 +27,7 @@ struct Normalizer
     Normalizer(float m, float M);
 
     float operator()(float i);
+
 private:
     float m;
     float M;

@@ -81,6 +81,16 @@ float RemapperBase::toGamma26(float sample)
 float RemapperBase::toLog(float sample)
 { return sample; }
 
+const RemapperBase::MappingFunc RemapperBase::s_callbacks[] =
+{
+    &toLinear,
+    &toGamma14,
+    &toGamma18,
+    &toGamma22,
+    &toGamma26,
+    &toLog
+};
+
 RGBRemapper::RGBRemapper(float minValue, float maxValue,
                          RGBMappingType mappingMethod)
         : m_MinValue(minValue)
