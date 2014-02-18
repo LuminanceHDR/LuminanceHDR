@@ -24,9 +24,23 @@
 
 struct Normalizer
 {
-    Normalizer(float m, float M);
+    Normalizer(float m, float M)
+        : m(m)
+        , M(M)
+    {}
 
-    float operator()(float i);
+    float operator()(float sample) const
+    {
+        return (sample - m)/(M-m);
+    }
+
+    void operator()(float i1, float i2, float i3,
+                    float& o1, float& o2, float& o3) const
+    {
+        o1 = (*this)(i1);
+        o2 = (*this)(i2);
+        o3 = (*this)(i3);
+    }
 
 private:
     float m;
