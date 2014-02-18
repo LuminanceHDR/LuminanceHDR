@@ -32,7 +32,63 @@
 #include <QRgb>
 
 #include <Libpfs/colorspace/rgbremapper_fwd.h>
+#include <Libpfs/colorspace/convert.h>
 #include <Libpfs/utils/transform.h>
+
+// takes as template parameter a TypeOut, so that integer optimization can be
+// performed if TypeOut is an uint8_t or uint16_t
+class RemapperBase
+{
+protected:
+    static float toLinear(float sample);
+    static float toGamma14(float sample);
+    static float toGamma18(float sample);
+    static float toGamma22(float sample);
+    static float toGamma26(float sample);
+    static float toLog(float sample);
+};
+
+template <typename TypeOut>
+class Remapper : public RemapperBase
+{
+private:
+    typedef float (*MappingFunc)(float);
+
+#ifdef LHDR_CXX11_ENABLED
+    static constexpr MappingFunc s_callbacks[] =
+    { &toLinear, &toGamma14, &toGamma18, &toGamma22, &toGamma26, &toLog };
+#else
+    static const MappingFunc s_callbacks[] =
+    { &toLinear, &toGamma14, &toGamma18, &toGamma22, &toGamma26, &toLog };
+#endif
+
+public:
+    Remapper(RGBMappingType mappingMethod = MAP_LINEAR)
+        : m_mappingMethod(mappingMethod)
+        , m_callback(s_callbacks[mappingMethod])
+    {
+        assert(mappingMethod >= 0);
+        assert(mappingMethod < 6);
+    }
+
+    RGBMappingType getMappingMethod() const
+    { return m_mappingMethod; }
+
+    TypeOut operator()(float sample) const
+    {
+        assert(sample >= 0.f);
+        assert(sample <= 1.f);
+
+        using namespace pfs::colorspace;
+
+        return convertSample<TypeOut>(
+                    m_callback(sample));
+    }
+
+private:
+    RGBMappingType m_mappingMethod;
+    MappingFunc m_callback;
+};
 
 class RGBRemapper
 {

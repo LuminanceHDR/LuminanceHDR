@@ -43,7 +43,7 @@
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/transform.h>
-#include <Libpfs/colorspace/rgbremapper_fwd.h>
+#include <Libpfs/colorspace/rgbremapper.h>
 
 using namespace std;
 using namespace pfs;
@@ -59,9 +59,7 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     stop_watch.start();
 #endif
 
-    //assert( in_frame != NULL );
-    if (in_frame == NULL)
-        throw std::runtime_error("Null pointer");
+    assert(in_frame == NULL);
 
     pfs::Channel *Xc, *Yc, *Zc;
     in_frame->getXYZChannels( Xc, Yc, Zc );

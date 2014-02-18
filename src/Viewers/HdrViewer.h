@@ -107,7 +107,7 @@ private:
     //! \brief Neg color
     int m_negColor;
 
-    QImage mapFrameToImage(pfs::Frame* in_frame);
+    QImage* mapFrameToImage(pfs::Frame* in_frame);
 };
 
 inline bool HdrViewer::isHDR()

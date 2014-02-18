@@ -36,7 +36,7 @@
 
 #include "Common/global.h"
 
-
+#include "Fileformat/pfsoutldrimage.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Viewers/LuminanceRangeWidget.h"
 
@@ -45,7 +45,6 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/utils/sse.h"
 #include "Libpfs/utils/msec_timer.h"
-#include "Libpfs/colorspace/rgbremapper.h"
 
 namespace // anonymous namespace
 {
@@ -81,7 +80,8 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns,
     m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
     m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
 
-    mPixmap->setPixmap(QPixmap::fromImage(mapFrameToImage(getFrame())));
+    QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
+    mPixmap->setPixmap(QPixmap::fromImage(*qImage));
 
     updateView();
     m_lumRange->blockSignals(false);
@@ -140,7 +140,8 @@ void HdrViewer::refreshPixmap()
 
     setCursor( Qt::WaitCursor );
 
-    mPixmap->setPixmap(QPixmap::fromImage(mapFrameToImage(getFrame())));
+    QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
+    mPixmap->setPixmap(QPixmap::fromImage(*qImage));
 
     unsetCursor();
 }
@@ -232,51 +233,7 @@ RGBMappingType HdrViewer::getLuminanceMappingMethod()
     return m_mappingMethod;
 }
 
-QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
+QImage* HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
 {
-#ifdef TIMER_PROFILING
-    msec_timer stop_watch;
-    stop_watch.start();
-#endif
-
-    // Channels X Y Z contain R G B data
-    pfs::Channel *ChR, *ChG, *ChB;
-    in_frame->getXYZChannels( ChR, ChG, ChB );
-    assert( ChR != NULL && ChG != NULL && ChB != NULL);
-
-    const float* R = ChR->data();
-    const float* G = ChG->data();
-    const float* B = ChB->data();
-
-    assert( R != NULL && G != NULL && B != NULL );
-
-    QImage return_qimage(in_frame->getWidth(), in_frame->getHeight(), QImage::Format_RGB32);
-    QRgb *pixels = reinterpret_cast<QRgb*>(return_qimage.bits());
-
-    RGBRemapper rgbRemapper(m_minValue, m_maxValue, m_mappingMethod);
-
-    int indexEnd = in_frame->getWidth()*in_frame->getHeight();
-#pragma omp parallel for
-    for ( int index = 0; index < indexEnd; ++index )
-    {
-        if ( !finite( R[index] ) || !finite( G[index] ) || !finite( B[index] ) )   // x is NaN or Inf
-        {
-            pixels[index] = m_nanInfColor;
-        }
-        else if ( R[index] < 0 || G[index]<0 || B[index]<0 )    // x is negative
-        {
-            pixels[index] = m_negColor;
-        }
-        else
-        {
-            rgbRemapper.toQRgb(R[index], G[index], B[index], pixels[index]);
-        }
-    }
-
-#ifdef TIMER_PROFILING
-    stop_watch.stop_and_update();
-    std::cout << "HdrViewer::mapFrameToImage() [NEW]= " << stop_watch.get_time() << " msec" << std::endl;
-#endif
-
-    return return_qimage;
+    return fromLDRPFStoQImage(in_frame, m_minValue, m_maxValue, m_mappingMethod);
 }

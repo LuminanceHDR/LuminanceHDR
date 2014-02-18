@@ -31,7 +31,7 @@
 #define FROMLDRPFSTOQIMAGE
 
 #include <QImage>
-#include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/colorspace/rgbremapper_fwd.h>
 
 // forward declaration
 namespace pfs {

@@ -34,6 +34,9 @@ enum RGBMappingType
     MAP_LOGARITHMIC = 5
 };
 
+template <typename TypeOut>
+class Remapper;
+
 class RGBRemapper;
 
 #endif // PFS_RGBREMAPPER_FWD_H

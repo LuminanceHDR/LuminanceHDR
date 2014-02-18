@@ -62,6 +62,25 @@ const float GAMMA_2_2 = 1.0f/2.2f;
 const float GAMMA_2_6 = 1.0f/2.6f;
 }
 
+float RemapperBase::toLinear(float sample)
+{ return sample; }
+
+float RemapperBase::toGamma14(float sample)
+{ return std::powf(sample, GAMMA_1_4); }
+
+float RemapperBase::toGamma18(float sample)
+{ return std::powf(sample, GAMMA_1_8); }
+
+float RemapperBase::toGamma22(float sample)
+{ return std::powf(sample, GAMMA_2_2); }
+
+float RemapperBase::toGamma26(float sample)
+{ return std::powf(sample, GAMMA_2_6); }
+
+// TODO
+float RemapperBase::toLog(float sample)
+{ return sample; }
+
 RGBRemapper::RGBRemapper(float minValue, float maxValue,
                          RGBMappingType mappingMethod)
         : m_MinValue(minValue)

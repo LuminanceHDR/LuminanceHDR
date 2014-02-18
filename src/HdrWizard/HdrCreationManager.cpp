@@ -61,7 +61,6 @@
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/manip/cut.h>
 #include <Libpfs/colorspace/convert.h>
-#include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/colorspace.h>
 
 #include "arch/math.h"
