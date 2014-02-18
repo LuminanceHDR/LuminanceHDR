@@ -213,7 +213,7 @@ public:
     virtual size_t getFileSize() const = 0;
 
     typedef pfs::utils::Chain<
-        Normalizer,
+        colorspace::Normalizer,
         Remapper<JSAMPLE>
     > JpegRemapper;
 
@@ -275,7 +275,7 @@ public:
             std::vector<JSAMPLE> scanLineOut(cinfo.image_width * cinfo.num_components);
             JSAMPROW scanLineOutArray[1] = { scanLineOut.data() };
 
-            JpegRemapper remapper(Normalizer(params.minLuminance_, params.maxLuminance_),
+            JpegRemapper remapper(colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
                                   Remapper<JSAMPLE>(params.luminanceMapping_));
             while ( cinfo.next_scanline < cinfo.image_height )
             {
