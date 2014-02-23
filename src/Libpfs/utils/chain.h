@@ -33,14 +33,14 @@ struct Chain {
 
     template <typename TypeIn, typename TypeOut>
     void operator()(TypeIn v1, TypeIn v2, TypeIn v3,
-                    TypeOut& o1, TypeOut& o2, TypeOut& o3)
+                    TypeOut& o1, TypeOut& o2, TypeOut& o3) const
     {
         func1_(v1, v2, v3, v1, v2, v3);
         func2_(v1, v2, v3, o1, o2, o3);
     }
 
     template <typename Type>
-    Type operator()(Type v1)
+    Type operator()(Type v1) const
     {
         return func2_(func1_(v1));
     }

@@ -49,6 +49,29 @@ using namespace std;
 using namespace pfs;
 using namespace boost::assign;
 
+using namespace pfs;
+
+
+QRgbRemapper::QRgbRemapper(int minLuminance, int maxLuminance, RGBMappingType mappingType)
+    : m_remapper(
+          colorspace::Normalizer(minLuminance, maxLuminance),
+          utils::Chain<
+          utils::Clamp<float>,
+          Remapper<float>
+          >(utils::Clamp<float>(0.f, 1.f), Remapper<float>(mappingType)))
+{}
+
+void QRgbRemapper::operator()(float r, float g, float b, QRgb& qrgb) const
+{
+    float r_ = m_remapper(r);
+    float g_ = m_remapper(g);
+    float b_ = m_remapper(b);
+
+    qrgb = qRgb(int(r_ * 255.f + .5f),
+                int(g_ * 255.f + .5f),
+                int(b_ * 255.f + .5f));
+}
+
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float min_luminance,
                            float max_luminance,
@@ -59,7 +82,7 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     stop_watch.start();
 #endif
 
-    assert(in_frame == NULL);
+    assert(in_frame != NULL);
 
     pfs::Channel *Xc, *Yc, *Zc;
     in_frame->getXYZChannels( Xc, Yc, Zc );
@@ -68,9 +91,10 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     QImage* temp_qimage = new QImage(in_frame->getWidth(), in_frame->getHeight(),
                                      QImage::Format_RGB32);
 
+    QRgbRemapper remapper(min_luminance, max_luminance, mapping_method);
     utils::transform(Xc->begin(), Xc->end(), Yc->begin(), Zc->begin(),
                      reinterpret_cast<QRgb*>(temp_qimage->bits()),
-                     RGBRemapper(min_luminance, max_luminance, mapping_method));
+                     remapper);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
