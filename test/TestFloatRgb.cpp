@@ -23,6 +23,8 @@
 #include <QRgb>
 #include <QDebug>
 
+#include "Fileformat/pfsoutldrimage.h"
+
 #include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/copy.h>
 #include <Libpfs/utils/clamp.h>
@@ -100,7 +102,7 @@ TEST(FloatRgbConverter, Uint16_Test3)
 
 TEST(FloatRgbConverter, Qrgb_Test1)
 {
-    RGBRemapper d;
+    QRgbRemapper d(.0f, 1.f, MAP_LINEAR);
 
     float inRed = 1.2f;
     float inGreen = -0.0f;
@@ -108,7 +110,7 @@ TEST(FloatRgbConverter, Qrgb_Test1)
 
     QRgb rgb;
 
-    d.toQRgb(inRed, inGreen, inBlue, rgb);
+    d(inRed, inGreen, inBlue, rgb);
 
     EXPECT_EQ(qRed(rgb), 255);
     EXPECT_EQ(qGreen(rgb), 0);
@@ -117,7 +119,7 @@ TEST(FloatRgbConverter, Qrgb_Test1)
 
 TEST(FloatRgbConverter, Qrgb_Test2)
 {
-    RGBRemapper d;
+    QRgbRemapper d(.0f, 1.f, MAP_LINEAR);
 
     float inRed = 1.2f;
     float inGreen = 0.5f;
@@ -125,7 +127,7 @@ TEST(FloatRgbConverter, Qrgb_Test2)
 
     QRgb rgb;
 
-    d.toQRgb(inRed, inGreen, inBlue, rgb);
+    d(inRed, inGreen, inBlue, rgb);
 
     EXPECT_EQ(qRed(rgb), 255);
     EXPECT_EQ(qGreen(rgb), 128);
