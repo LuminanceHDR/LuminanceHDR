@@ -29,7 +29,7 @@
 //! \since Luminance HDR 2.3.0-beta1
 
 #include <stdint.h>
-#include <QRgb>
+#include <array>
 
 #include <Libpfs/colorspace/rgbremapper_fwd.h>
 #include <Libpfs/colorspace/convert.h>
@@ -88,5 +88,37 @@ private:
     RGBMappingType m_mappingMethod;
     MappingFunc m_callback;
 };
+
+template <>
+class Remapper<uint8_t> : public RemapperBase
+{
+public:
+    Remapper(RGBMappingType mappingMethod = MAP_LINEAR);
+
+    RGBMappingType getMappingMethod() const
+    { return m_mappingMethod; }
+
+    uint8_t operator()(float sample) const
+    {
+        assert(sample >= 0.f);
+        assert(sample <= 1.f);
+
+        using namespace pfs::colorspace;
+
+        return m_lut[ convertSample<uint8_t>(sample) ];
+    }
+
+    void operator()(float i1, float i2, float i3, uint8_t& o1, uint8_t& o2, uint8_t& o3) const
+    {
+        o1 = (*this)(i1);
+        o2 = (*this)(i2);
+        o3 = (*this)(i3);
+    }
+
+private:
+    RGBMappingType m_mappingMethod;
+    std::array<uint8_t, 256> m_lut; // LUT of 256 bins...
+};
+
 
 #endif // PFS_RGBREMAPPER_H

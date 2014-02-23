@@ -57,19 +57,13 @@ QRgbRemapper::QRgbRemapper(int minLuminance, int maxLuminance, RGBMappingType ma
           colorspace::Normalizer(minLuminance, maxLuminance),
           utils::Chain<
           utils::Clamp<float>,
-          Remapper<float>
-          >(utils::Clamp<float>(0.f, 1.f), Remapper<float>(mappingType)))
+          Remapper<uint8_t>
+          >(utils::Clamp<float>(0.f, 1.f), Remapper<uint8_t>(mappingType)))
 {}
 
 void QRgbRemapper::operator()(float r, float g, float b, QRgb& qrgb) const
 {
-    float r_ = m_remapper(r);
-    float g_ = m_remapper(g);
-    float b_ = m_remapper(b);
-
-    qrgb = qRgb(int(r_ * 255.f + .5f),
-                int(g_ * 255.f + .5f),
-                int(b_ * 255.f + .5f));
+    qrgb = qRgb(m_remapper(r), m_remapper(g), m_remapper(b));
 }
 
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,

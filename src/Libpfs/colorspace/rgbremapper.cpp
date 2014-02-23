@@ -90,3 +90,17 @@ const RemapperBase::MappingFunc RemapperBase::s_callbacks[] =
     &toGamma26,
     &toLog
 };
+
+Remapper<uint8_t>::Remapper(RGBMappingType mappingMethod)
+    : m_mappingMethod(mappingMethod)
+{
+    assert(mappingMethod >= 0);
+    assert(mappingMethod < 6);
+
+    MappingFunc callback(s_callbacks[mappingMethod]);
+
+    for (int idx = 0; idx < 256; ++idx)
+    {
+        m_lut[idx] = 255.f * callback(float(idx)/255.f);
+    }
+}

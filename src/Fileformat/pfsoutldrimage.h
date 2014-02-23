@@ -54,7 +54,7 @@ private:
             pfs::colorspace::Normalizer,
             pfs::utils::Chain<
                 pfs::utils::Clamp<float>,
-                Remapper<float>
+                Remapper<uint8_t>
             >> QRgbRemapperCore;
 
     QRgbRemapperCore m_remapper;
