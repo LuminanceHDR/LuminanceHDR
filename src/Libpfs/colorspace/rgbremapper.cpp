@@ -34,28 +34,6 @@
 
 namespace
 {
-template<class O_>
-inline
-O_ scaleAndRound(float value, float MIN_, float MAX_)
-{
-    value *= MAX_;
-    value = std::min(value, MAX_);
-    value = std::max(value, MIN_);
-    value += 0.5f;
-
-    return static_cast<O_>(value);
-}
-
-const float& clamp(const float& value, const float& min_, const float& max_)
-{
-    if ( value > max_ ) return max_;
-    if ( value < min_ ) return min_;
-    return value;
-}
-
-// useful data structure to implement a triple of float as RGB pixel
-
-
 const float GAMMA_1_4 = 1.0f/1.4f;
 const float GAMMA_1_8 = 1.0f/1.8f;
 const float GAMMA_2_2 = 1.0f/2.2f;
@@ -66,20 +44,19 @@ float RemapperBase::toLinear(float sample)
 { return sample; }
 
 float RemapperBase::toGamma14(float sample)
-{ return std::powf(sample, GAMMA_1_4); }
+{ return std::pow(sample, GAMMA_1_4); }
 
 float RemapperBase::toGamma18(float sample)
-{ return std::powf(sample, GAMMA_1_8); }
+{ return std::pow(sample, GAMMA_1_8); }
 
 float RemapperBase::toGamma22(float sample)
-{ return std::powf(sample, GAMMA_2_2); }
+{ return std::pow(sample, GAMMA_2_2); }
 
 float RemapperBase::toGamma26(float sample)
-{ return std::powf(sample, GAMMA_2_6); }
+{ return std::pow(sample, GAMMA_2_6); }
 
-// TODO
 float RemapperBase::toLog(float sample)
-{ return sample; }
+{ return std::pow(sample, 1.f/GAMMA_2_2); }
 
 const RemapperBase::MappingFunc RemapperBase::s_callbacks[] =
 {
