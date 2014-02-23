@@ -100,7 +100,7 @@
 
 namespace
 {
-QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget* parent = 0)
+QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
 {
     QString filetypes = QObject::tr("All LDR formats");
     filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
@@ -110,32 +110,48 @@ QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget
     filetypes += "BMP (*.bmp *.BMP);;";
     filetypes += "TIFF (*.tif *.tiff *.TIF *.TIFF)";
 
-    return QFileDialog::getSaveFileName(parent,
+    QFileInfo qfi(suggestedFileName);
+    QString outputFilename = QFileDialog::getSaveFileName(parent,
                                         QObject::tr("Save the LDR image as..."),
-                                        LuminanceOptions().getDefaultPathLdrOut() + "/" + suggested_file_name,
+                                        LuminanceOptions().getDefaultPathLdrOut() + "/" + qfi.completeBaseName(),
                                         filetypes);
+
+    if ( !outputFilename.isEmpty() )
+    {
+		QFileInfo qfi(outputFilename);
+		QString format = qfi.suffix();
+
+		LuminanceOptions().setDefaultPathLdrOut( qfi.path() );
+    }
+    return outputFilename;
 }
 
-QString getHdrFileNameFromSaveDialog(QString suggestedFileName, QWidget* parent = 0)
+QString getHdrFileNameFromSaveDialog(QString& suggestedFileName, QWidget* parent = 0)
 {
+	qDebug() << "MainWindow::getHdrFileNameFromSaveDialog(" << suggestedFileName << ")";
     static const QString filetypes =
             "OpenEXR (*.exr *.EXR);;"
             "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;"
             "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;"
             "PFS Stream (*.pfs *.PFS)";
 
-    // get rid of the extension, if any
-    int pos = suggestedFileName.indexOf(".");
-    if (pos != -1)
-    {
-        suggestedFileName.truncate(pos);
-    }
+    QFileInfo qfi(suggestedFileName);
 
-    return QFileDialog::getSaveFileName
+    QString result =  QFileDialog::getSaveFileName
             (parent,
              QObject::tr("Save the HDR image as..."),
-             LuminanceOptions().getDefaultPathHdrOut() + QDir::separator() + suggestedFileName,
+             LuminanceOptions().getDefaultPathHdrOut() + "/" + qfi.completeBaseName(),
              filetypes);
+
+    if ( !result.isEmpty() )
+    {
+        QFileInfo qfi(result);
+        QString format = qfi.suffix();
+
+        // Update working folder
+        LuminanceOptions().setDefaultPathHdrOut( qfi.path() );
+    }
+    return result;
 }
 
 void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
@@ -576,9 +592,6 @@ void MainWindow::on_fileSaveAsAction_triggered()
         QFileInfo qfi(fname);
         QString format = qfi.suffix();
 
-        // Update working folder
-        luminance_options->setDefaultPathHdrOut( qfi.path() );
-
         pfs::Params p;
         if ( format == "tif" || format == "tiff" )
         {
@@ -608,10 +621,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         if ( outputFilename.isEmpty() ) return;
 
-        QFileInfo qfi(outputFilename);
-        QString format = qfi.suffix();
-
-        luminance_options->setDefaultPathLdrOut( qfi.path() );
+        QString format = QFileInfo(outputFilename).suffix();
 
         if ( format.isEmpty() ) {   // default as JPG
             format          =   "jpg";
@@ -1442,10 +1452,6 @@ bool MainWindow::maybeSave()
 
             if ( !fname.isEmpty() )
             {
-                // Update working folder
-                QFileInfo qfi(fname);
-                luminance_options->setDefaultPathHdrOut(qfi.path());
-
                 // TODO : can I launch a signal and wait that it gets executed fully?
                 return m_IOWorker->write_hdr_frame(
                             dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame),

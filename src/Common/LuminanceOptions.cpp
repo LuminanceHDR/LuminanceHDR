@@ -700,7 +700,7 @@ void LuminanceOptions::setDefaultPathLdrIn(const QString& path)
 QString LuminanceOptions::getDefaultPathLdrOut()
 {
     return m_settingHolder->value(KEY_RECENT_PATH_SAVE_LDR,
-                                  QDir::currentPath()).toString();
+    						getDefaultPathHdrOut()).toString();
 }
 
 void LuminanceOptions::setDefaultPathLdrOut(const QString& path)
