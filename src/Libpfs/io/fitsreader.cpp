@@ -31,9 +31,6 @@
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/normalizer.h>
 
-#include <cmath>
-#include "arch/math.h"
-
 // include windows.h to avoid TBYTE define clashes with fitsio.h
 #ifdef Q_OS_WIN
 #define _WINSOCKAPI_    // stops windows.h including winsock.h
@@ -182,96 +179,6 @@ void FitsReader::read(Frame &frame, const Params&)
 
     frame.swap(tempFrame);
 }
-
-/*
-void FitsReader::open()
-{
-    m_file.reset( new CCfits::FITS(filename(), CCfits::Read, true) );
-    if ( !m_file ) {
-        throw InvalidFile("Cannot open file " + filename());
-    }
-}
-
-void FitsReader::close()
-{
-    setWidth(0);
-    setHeight(0);
-    m_file.reset();
-}
-
-void FitsReader::read(Frame &frame, const Params &params)
-{
-    if ( !isOpen() ) open();
-
-    std::valarray<float>  contents;
-    int ax1, ax2;
-
-    CCfits::PHDU& image = m_file->pHDU();
-    image.readAllKeys();
-
-    std::cout << "Read... ";
-
-    if (!(image.axes() == 2 || image.axes() == 3))
-    {
-        const CCfits::ExtMap& extensions = m_file->extension();
-        CCfits::ExtMap::const_iterator it = extensions.begin();
-        CCfits::ExtMap::const_iterator itEnd = extensions.end();
-        for (; it != itEnd; it++)
-        {
-            std::cout << it->first << std::endl;
-            it->second->readAllKeys();
-            std::cout << *it->second << std::endl;
-            if (!(it->second->axes() == 2 || it->second->axes() == 3))
-            {
-                continue;
-            }
-            else
-            {
-                it->second->read(contents);
-                ax1 = it->second->axis(0);
-                ax2 = it->second->axis(1);
-                break;
-            }
-        }
-        if (it == itEnd)
-        {
-            throw InvalidFile("No image in file " + filename());
-        }
-    }
-    else
-    {
-        image.read(contents);
-        ax1 = image.axis(0);
-        ax2 = image.axis(1); 
-    }
-
-#ifndef NDEBUG
-    std::cout << "size (" << ax1 << ", " << ax2 << ")";
-    std::cout << "contents.size (pixels) = " << contents.size();
-#endif
-
-    Frame tempFrame(ax1, ax2);
-    Channel *Xc, *Yc, *Zc;
-    tempFrame.createXYZChannels(Xc, Yc, Zc);
-
-    float max = std::pow(2.0, std::floor(log2f(contents.max()) + 1)) - 1;
-
-    std::transform(&contents[0], &contents[0] + contents.size(),
-                   Xc->begin(), Normalizer(0.f, max));
-    std::copy(Xc->begin(), Xc->end(), Yc->begin());
-    std::copy(Xc->begin(), Xc->end(), Zc->begin());
-
-#ifndef NDEBUG
-    std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator> minmax =
-            boost::minmax_element(Xc->begin(), Xc->end());
-
-    std::cout << "FITS min luminance: " << *minmax.first << std::endl;
-    std::cout << "FITS max luminance: " << *minmax.second << std::endl;
-#endif
-
-    frame.swap(tempFrame);
-}
-*/
 
 }   // io
 }   // pfs
