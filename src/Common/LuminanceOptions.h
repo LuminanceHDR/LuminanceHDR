@@ -199,12 +199,6 @@ public Q_SLOTS:
     int     getMainWindowToolBarMode();
     void    setMainWindowToolBarMode(int);
 
-    // Viewer
-    unsigned int getViewerNanInfColor();
-    unsigned int getViewerNegColor();
-    void    setViewerNanInfColor(unsigned int);
-    void    setViewerNegColor(unsigned int);
-
     // Preview Panel
     bool    isPreviewPanelActive();
     void    setPreviewPanelActive(bool);

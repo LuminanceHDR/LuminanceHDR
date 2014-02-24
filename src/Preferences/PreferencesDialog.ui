@@ -22,46 +22,14 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout_16">
-     <item row="0" column="1">
-      <widget class="QToolButton" name="toolButtonInterface">
+     <item row="0" column="4">
+      <widget class="QToolButton" name="toolButtonCMS">
        <property name="text">
-        <string>Interface</string>
+        <string>Color Management</string>
        </property>
        <property name="icon">
         <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/preferences-desktop-theme.png</normaloff>:/new/prefix1/images/preferences-desktop-theme.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-       <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextUnderIcon</enum>
-       </property>
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="6">
-      <widget class="QToolButton" name="toolButtonExtTool">
-       <property name="text">
-        <string>External Tools</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/gear.png</normaloff>:/new/prefix1/images/gear.png</iconset>
+         <normaloff>:/new/prefix1/images/cms.png</normaloff>:/new/prefix1/images/cms.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -83,8 +51,8 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="7">
-      <spacer name="horizontalSpacer_17">
+     <item row="0" column="0">
+      <spacer name="horizontalSpacer_18">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -97,64 +65,6 @@
       </spacer>
      </item>
      <item row="0" column="3">
-      <widget class="QToolButton" name="toolButtonTM">
-       <property name="text">
-        <string>Tone Mapping</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-       <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextUnderIcon</enum>
-       </property>
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QToolButton" name="toolButtonHDR">
-       <property name="text">
-        <string>HDR Options</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/HDR_icon.png</normaloff>:/new/prefix1/images/HDR_icon.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>48</width>
-         <height>48</height>
-        </size>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-       <property name="toolButtonStyle">
-        <enum>Qt::ToolButtonTextUnderIcon</enum>
-       </property>
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
       <widget class="QToolButton" name="toolButtonRAW">
        <property name="text">
         <string>RAW Conversion</string>
@@ -186,8 +96,37 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <spacer name="horizontalSpacer_18">
+     <item row="0" column="2">
+      <widget class="QToolButton" name="toolButtonTM">
+       <property name="text">
+        <string>Tone Mapping</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../icons.qrc">
+         <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextUnderIcon</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <spacer name="horizontalSpacer_17">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -200,13 +139,13 @@
       </spacer>
      </item>
      <item row="0" column="5">
-      <widget class="QToolButton" name="toolButtonCMS">
+      <widget class="QToolButton" name="toolButtonExtTool">
        <property name="text">
-        <string>Color Management</string>
+        <string>External Tools</string>
        </property>
        <property name="icon">
         <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/cms.png</normaloff>:/new/prefix1/images/cms.png</iconset>
+         <normaloff>:/new/prefix1/images/gear.png</normaloff>:/new/prefix1/images/gear.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -215,6 +154,38 @@
         </size>
        </property>
        <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextUnderIcon</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QToolButton" name="toolButtonInterface">
+       <property name="text">
+        <string>Interface</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../icons.qrc">
+         <normaloff>:/new/prefix1/images/preferences-desktop-theme.png</normaloff>:/new/prefix1/images/preferences-desktop-theme.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
         <bool>true</bool>
        </property>
        <property name="autoExclusive">
@@ -495,71 +466,6 @@
             </property>
             <property name="text">
              <string>Portable mode</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="stackedPagesWidgetPage2_2">
-      <layout class="QGridLayout" name="gridLayout_13">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox">
-         <layout class="QFormLayout" name="formLayout_2">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-          </property>
-          <item row="0" column="0">
-           <widget class="QLabel" name="negativeColorsLabel">
-            <property name="text">
-             <string>Show negative numbers as:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="negativeColorButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="ifnanColorLabel">
-            <property name="text">
-             <string>Show nan and +/-Inf values as:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="ifnanColorButton">
-            <property name="text">
-             <string/>
             </property>
            </widget>
           </item>

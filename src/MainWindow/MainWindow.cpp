@@ -1080,9 +1080,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
         qDebug() << "Filename: " << new_fname;
 #endif
 
-        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving,
-                                          luminance_options->getViewerNegColor(),
-                                          luminance_options->getViewerNanInfColor());
+        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving);
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -1136,24 +1134,10 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
 
 void MainWindow::on_OptionsAction_triggered()
 {
-    unsigned int negcol = luminance_options->getViewerNegColor();
-    unsigned int naninfcol = luminance_options->getViewerNanInfColor();
     PreferencesDialog *opts = new PreferencesDialog(this);
     opts->setAttribute(Qt::WA_DeleteOnClose);
-    if ( opts->exec() == QDialog::Accepted )
+    if (opts->exec() == QDialog::Accepted)
     {
-        if (negcol != luminance_options->getViewerNegColor() || naninfcol != luminance_options->getViewerNanInfColor())
-        {
-            for (int idx = 0; idx < m_tabwidget->count(); idx++)
-            {
-                GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
-                HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(viewer);
-                if ( hdr_v != NULL )
-                {
-                    hdr_v->update_colors(luminance_options->getViewerNegColor(), luminance_options->getViewerNanInfColor());
-                }
-            }
-        }
         m_Ui->actionShowPreviewPanel->setChecked(luminance_options->isPreviewPanelActive());
     }
 }

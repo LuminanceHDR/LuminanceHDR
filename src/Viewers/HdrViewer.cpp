@@ -59,14 +59,11 @@ const pfs::Array2Df* getPrimaryChannel(const pfs::Frame& frame)
 
 } // end anonymous namespace
 
-HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns,
-                     unsigned int neg, unsigned int naninf)
+HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns)
     : GenericViewer(frame, parent, ns)
     , m_mappingMethod(MAP_GAMMA2_2)
     , m_minValue(0.f)
     , m_maxValue(1.f)
-    , m_nanInfColor(naninf)
-    , m_negColor(neg)
 {
     initUi();
 
@@ -127,17 +124,14 @@ void HdrViewer::retranslateUi()
     m_mappingMethodCB->clear();
     m_mappingMethodCB->addItems(methods);
     m_mappingMethodCB->setCurrentIndex( oldMappingMethodIndex >= 0 ? oldMappingMethodIndex : 3 );
-    connect( m_mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
+    connect(m_mappingMethodCB, SIGNAL(activated( int )), this, SLOT(setLumMappingMethod(int)));
+    connect(m_mappingMethodCB, SIGNAL(currentIndexChanged(int)), m_mappingMethodCB, SLOT(setFocus()));
 
 	GenericViewer::retranslateUi();
 }
 
 void HdrViewer::refreshPixmap()
 {
-#ifdef QT_DEBUG
-    qDebug() << "void HdrViewer::refreshPixmap()";
-#endif
-
     setCursor( Qt::WaitCursor );
 
     QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
@@ -190,14 +184,6 @@ void HdrViewer::setLumMappingMethod( int method )
 {
     m_mappingMethodCB->setCurrentIndex( method );
     m_mappingMethod = static_cast<RGBMappingType>(method);
-
-    refreshPixmap();
-}
-
-void HdrViewer::update_colors(int neg, int naninf)
-{
-    m_nanInfColor = naninf;
-    m_negColor = neg;
 
     refreshPixmap();
 }
