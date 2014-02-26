@@ -113,6 +113,9 @@
             <property name="toolTip">
              <string>Choose an HDR output file format</string>
             </property>
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
             <item>
              <property name="text">
               <string>hdr</string>
