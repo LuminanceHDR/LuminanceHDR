@@ -75,7 +75,7 @@ public:
             return;
         }
 
-        if ( !finite(value) )
+        if ( !boost::math::isfinite(value) )
         {
             m_numInf++;
             return;

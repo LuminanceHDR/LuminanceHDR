@@ -28,6 +28,8 @@
  * $Id: bilateral.cpp,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
 
+#include <boost/math/special_functions/fpclassify.hpp>
+
 #include "arch/math.h"
 
 #include "TonemappingOperators/pfstmo.h"
@@ -122,7 +124,7 @@ void bilateralFilter(const pfs::Array2Df *I, pfs::Array2Df *J,
             float k = 0;
             float I_s = (*X1)(x,y);	//!! previously 'I' not 'X1'
 
-            if( unlikely( !finite( I_s ) ) )
+            if( unlikely( !boost::math::isfinite( I_s ) ) )
                 I_s = 0.0f;
 
             for( int py = max( 0, y - sKernelSize_2), pymax = min( I->getRows(), y + sKernelSize_2);
@@ -132,14 +134,14 @@ void bilateralFilter(const pfs::Array2Df *I, pfs::Array2Df *J,
                     px < pxmax; px++ )
                 {
                     float I_p = (*X1)(px, py);	//!! previously 'I' not 'X1'
-                    if( unlikely( !finite( I_p ) ) )
+                    if( unlikely( !boost::math::isfinite( I_p ) ) )
                         I_p = 0.0f;
 
                     float mult = sKernel(px-x + sKernelSize_2, py-y + sKernelSize_2) *
                         gauss.getValue( I_p - I_s );
 
                     float Ixy = (*I)(px, py);
-                    if( unlikely( !finite( Ixy ) ) )
+                    if( unlikely( !boost::math::isfinite( Ixy ) ) )
                         Ixy = 0.0f;          
 
                     val += Ixy * mult;	//!! but here we want 'I'

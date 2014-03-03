@@ -27,6 +27,8 @@
 
 #include "HdrViewer.h"
 
+#include <boost/math/special_functions/fpclassify.hpp>
+
 #include <QFileInfo>
 #include <QDebug>
 
@@ -259,7 +261,7 @@ QImage HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
 #pragma omp parallel for
     for ( int index = 0; index < indexEnd; ++index )
     {
-        if ( !finite( R[index] ) || !finite( G[index] ) || !finite( B[index] ) )   // x is NaN or Inf
+        if ( !boost::math::isfinite( R[index] ) || !boost::math::isfinite( G[index] ) || !boost::math::isfinite( B[index] ) )   // x is NaN or Inf
         {
             pixels[index] = m_nanInfColor;
         }
