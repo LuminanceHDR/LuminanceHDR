@@ -62,7 +62,13 @@ struct ConvertSample<float, uint8_t> {
 template <>
 struct ConvertSample<uint8_t, float> {
     uint8_t operator()(float vIn)
-    { return static_cast<uint8_t>(std::floor(vIn*255.f + 0.5f)); }
+    { return static_cast<uint8_t>(vIn*255.f + 0.5f); }
+};
+
+template <>
+struct ConvertSample<uint16_t, float> {
+    uint16_t operator()(float vIn)
+    { return static_cast<uint16_t>(vIn*65535.f + 0.5f); }
 };
 
 template <typename TypeOut, typename TypeIn>

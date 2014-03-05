@@ -29,6 +29,7 @@
 #include <Libpfs/colorspace/normalizer.h>
 
 using namespace std;
+using namespace pfs::colorspace;
 
 namespace pfs {
 namespace io {

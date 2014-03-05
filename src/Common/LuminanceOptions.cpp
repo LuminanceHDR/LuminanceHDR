@@ -761,27 +761,6 @@ void LuminanceOptions::setMainWindowToolBarMode(int mode)
     m_settingHolder->setValue(KEY_TOOLBAR_MODE, mode);
 }
 
-// Viewer
-unsigned int LuminanceOptions::getViewerNanInfColor()
-{
-    return m_settingHolder->value(KEY_NANINFCOLOR,0xFF000000).toUInt();
-}
-
-void LuminanceOptions::setViewerNanInfColor(unsigned int color)
-{
-    m_settingHolder->setValue(KEY_NANINFCOLOR, color);
-}
-
-unsigned int LuminanceOptions::getViewerNegColor()
-{
-    return m_settingHolder->value(KEY_NEGCOLOR,0xFF000000).toUInt();
-}
-
-void LuminanceOptions::setViewerNegColor(unsigned int color)
-{
-    m_settingHolder->setValue(KEY_NEGCOLOR, color);
-}
-
 bool LuminanceOptions::isPreviewPanelActive()
 {
     return m_settingHolder->value(KEY_TMOWINDOW_SHOWPREVIEWPANEL, true).toBool();

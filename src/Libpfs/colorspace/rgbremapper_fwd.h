@@ -19,7 +19,7 @@
  * ----------------------------------------------------------------------
  */
 
-//! \brief Forward declaration for RGBRemapper
+//! \brief Forward declaration for Remapper
 
 #ifndef PFS_RGBREMAPPER_FWD_H
 #define PFS_RGBREMAPPER_FWD_H
@@ -34,6 +34,7 @@ enum RGBMappingType
     MAP_LOGARITHMIC = 5
 };
 
-class RGBRemapper;
+template <typename TypeOut>
+class Remapper;
 
 #endif // PFS_RGBREMAPPER_FWD_H

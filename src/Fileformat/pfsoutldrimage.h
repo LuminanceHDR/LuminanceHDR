@@ -31,12 +31,35 @@
 #define FROMLDRPFSTOQIMAGE
 
 #include <QImage>
+#include <QRgb>
+
+#include <Libpfs/utils/chain.h>
+#include <Libpfs/utils/clamp.h>
+#include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/colorspace/rgbremapper.h>
 
 // forward declaration
 namespace pfs {
 class Frame;
 }
+
+struct QRgbRemapper
+{
+    QRgbRemapper(int minLuminance, int maxLuminance, RGBMappingType mappingType);
+
+    void operator()(float r, float g, float b, QRgb& qrgb) const;
+
+private:
+    typedef pfs::utils::Chain<
+            pfs::colorspace::Normalizer,
+            pfs::utils::Chain<
+                pfs::utils::Clamp<float>,
+                Remapper<uint8_t>
+            >> QRgbRemapperCore;
+
+    QRgbRemapperCore m_remapper;
+};
+
 
 //! \brief Build from a pfs::Frame a QImage of the same size
 //! \param[in] in_frame is a pointer to pfs::Frame*

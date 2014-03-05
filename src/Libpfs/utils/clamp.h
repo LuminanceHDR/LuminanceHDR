@@ -40,6 +40,14 @@ struct Clamp
         return in;
     }
 
+    void operator()(Type i1, Type i2, Type i3,
+                    Type& o1, Type& o2, Type& o3) const
+    {
+        o1 = (*this)(i1);
+        o2 = (*this)(i2);
+        o3 = (*this)(i3);
+    }
+
 private:
     Type m_min;
     Type m_max;

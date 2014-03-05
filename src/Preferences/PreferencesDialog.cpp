@@ -79,14 +79,6 @@ inline int value2pos(double value, int minpos, int maxpos, double minv, double m
     return (int) ((maxpos - minpos)*y) + minpos;
 }
 
-void change_color_of(QPushButton& button, const QColor& newcolor)
-{
-    if (newcolor.isValid())
-    {
-        button.setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(newcolor.red()).arg(newcolor.green()).arg(newcolor.blue()));
-    }
-}
-
 QStringList sanitizeAISparams(const QString& input_parameter_string)
 {
     bool align_opt_was_ok=false;
@@ -188,44 +180,37 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromGuiIndexToIso639[14]="tr";
     fromGuiIndexToIso639[15]="zh";
 
-    negcolor = LuminanceOptions().getViewerNegColor();
-    infnancolor = LuminanceOptions().getViewerNanInfColor();
-
     from_options_to_gui(); //update the gui in order to show the options
     
     toolButtonMapper = new QSignalMapper(this);
     connect(toolButtonMapper, SIGNAL(mapped(int)), this, SLOT(toolButton_clicked(int)));
 
-    QObject* tabEntries[] = {m_Ui->toolButtonInterface, m_Ui->toolButtonHDR, m_Ui->toolButtonTM,
-    	m_Ui->toolButtonRAW, m_Ui->toolButtonCMS, m_Ui->toolButtonExtTool
+    QObject* tabEntries[] = {
+        m_Ui->toolButtonInterface,
+        m_Ui->toolButtonTM,
+        m_Ui->toolButtonRAW,
+        m_Ui->toolButtonCMS,
+        m_Ui->toolButtonExtTool
     };
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 5; i++)
+    {
     	toolButtonMapper->setMapping(tabEntries[i], i);
     	connect(tabEntries[i], SIGNAL(clicked()), toolButtonMapper, SLOT(map()));
     }
 }
 
-PreferencesDialog::~PreferencesDialog() {
+PreferencesDialog::~PreferencesDialog()
+{
 	delete toolButtonMapper;
 }
 
 void PreferencesDialog::changeEvent(QEvent *event)
 {
 	if (event->type() == QEvent::LanguageChange)
+    {
 		 m_Ui->retranslateUi(this);
+    }
 	QWidget::changeEvent(event);
-}
-
-void PreferencesDialog::on_negativeColorButton_clicked()
-{
-    negcolor = QColorDialog::getColor(negcolor, this);
-    change_color_of(*m_Ui->negativeColorButton, negcolor);
-}
-
-void PreferencesDialog::on_ifnanColorButton_clicked()
-{
-    infnancolor = QColorDialog::getColor(infnancolor, this);
-    change_color_of(*m_Ui->ifnanColorButton, infnancolor);
 }
 
 void PreferencesDialog::on_okButton_clicked()
@@ -239,10 +224,6 @@ void PreferencesDialog::on_okButton_clicked()
         luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
         TranslatorManager::setLanguage( luminance_options.getGuiLang() );
     }
-
-    // UI
-    luminance_options.setViewerNegColor( negcolor.rgba() );
-    luminance_options.setViewerNanInfColor( infnancolor.rgba() );
 
     luminance_options.setTempDir( m_Ui->lineEditTempPath->text() );
 
@@ -620,9 +601,6 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->numThreadspinBox->setValue( luminance_options.getBatchTmNumThreads() );
 
     m_Ui->aisParamsLineEdit->setText( luminance_options.getAlignImageStackOptions().join(" ") );
-
-    change_color_of(*m_Ui->negativeColorButton, negcolor);
-    change_color_of(*m_Ui->ifnanColorButton, infnancolor);
 
     m_Ui->previewsWidthSpinBox->setValue( luminance_options.getPreviewWidth() );
 

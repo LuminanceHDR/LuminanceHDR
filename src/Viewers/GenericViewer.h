@@ -26,6 +26,7 @@
 
 #include <QImage>
 #include <QWidget>
+#include <QString>
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
@@ -115,7 +116,7 @@ public Q_SLOTS:
     void setNeedsSaving(bool);
 
     //! \brief get filename if set, or an empty string
-    QString getFileName();
+    const QString& getFileName() const;
 
     //! \brief set filename (overwrite previous status)
     void setFileName(const QString&);
@@ -204,5 +205,29 @@ Q_SIGNALS:
     void selectionReady(bool isReady);
     void changed(GenericViewer *v);     // emitted when zoomed in/out, scrolled ....
 };
+
+inline
+bool GenericViewer::needsSaving(void)
+{
+    return mNeedsSaving;
+}
+
+inline
+void GenericViewer::setNeedsSaving(bool s)
+{
+    mNeedsSaving = s;
+}
+
+inline
+const QString& GenericViewer::getFileName() const
+{
+    return mFileName;
+}
+
+inline
+void GenericViewer::setFileName(const QString& fn)
+{
+    mFileName = fn;
+}
 
 #endif

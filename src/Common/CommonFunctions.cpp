@@ -45,7 +45,6 @@
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/manip/cut.h>
 #include <Libpfs/colorspace/convert.h>
-#include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/colorspace/normalizer.h>
 
@@ -213,7 +212,7 @@ void RefreshPreview::operator()(HdrCreationItem& currentItem)
         if (m != 0.0f || M != 1.0f) {
             Channel redNorm(currentItem.frame()->getWidth(),
                             currentItem.frame()->getHeight(), "X");
-            Normalizer normalize(m, M);
+            pfs::colorspace::Normalizer normalize(m, M);
             ConvertToQRgb convert(2.2f);
             std::transform(red->begin(), red->end(), redNorm.begin(), normalize);
             utils::transform(redNorm.begin(), redNorm.end(), redNorm.begin(), redNorm.begin(),

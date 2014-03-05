@@ -52,13 +52,10 @@ class HdrViewer : public GenericViewer
     Q_OBJECT
 
 public:
-    HdrViewer(pfs::Frame* frame, QWidget* parent = 0,
-              bool ns = false,
-              unsigned int negcol = 0, unsigned int naninfcol = 0);
+    HdrViewer(pfs::Frame* frame, QWidget* parent = 0, bool ns = false);
     virtual ~HdrViewer();
 
     LuminanceRangeWidget* lumRange();
-    void update_colors(int negcol, int naninfcol);
 
     QString getFileNamePostFix();
     QString getExifComment();
@@ -102,12 +99,7 @@ private:
     float m_minValue;
     float m_maxValue;
 
-    //! \brief NaN or Inf color
-    int m_nanInfColor;
-    //! \brief Neg color
-    int m_negColor;
-
-    QImage mapFrameToImage(pfs::Frame* in_frame);
+    QImage* mapFrameToImage(pfs::Frame* in_frame);
 };
 
 inline bool HdrViewer::isHDR()

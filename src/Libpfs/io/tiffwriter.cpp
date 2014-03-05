@@ -54,7 +54,9 @@
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/xyz.h>
+#include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/utils/chain.h>
+#include <Libpfs/utils/clamp.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/array2d.h>
 #include <Libpfs/fixedstrideiterator.h>
@@ -191,8 +193,18 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
     std::vector<uint8_t> stripBuffer( stripSize );
-    RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
-                                params.luminanceMapping_);
+    typedef utils::Chain<
+            colorspace::Normalizer,
+            utils::Chain<
+                utils::Clamp<float>,
+                Remapper<uint8_t>
+            >> TiffRemapper;
+    TiffRemapper remapper(
+                colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                utils::Chain<
+                    utils::Clamp<float>,
+                    Remapper<uint8_t>
+                >(utils::Clamp<float>(0.f, 1.f), Remapper<uint8_t>(params.luminanceMapping_)));
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
         utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
@@ -201,7 +213,7 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          FixedStrideIterator<uint8_t*, 3>(stripBuffer.data()),
                          FixedStrideIterator<uint8_t*, 3>(stripBuffer.data() + 1),
                          FixedStrideIterator<uint8_t*, 3>(stripBuffer.data() + 2),
-                         rgbRemapper);
+                         remapper);
 
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
@@ -227,7 +239,9 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     writeSRGBProfile(tif);
 
     if (params.deflateCompression_)
+    {
         TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
+    }
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
     TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(uint16_t));
@@ -243,9 +257,20 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
     std::vector<uint16_t> stripBuffer( width*3 );
-    RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
-                            params.luminanceMapping_);
 
+    typedef utils::Chain<
+            colorspace::Normalizer,
+            utils::Chain<
+                utils::Clamp<float>,
+                Remapper<uint16_t>
+            >> TiffRemapper;
+
+    TiffRemapper remapper(
+                colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                utils::Chain<
+                    utils::Clamp<float>,
+                    Remapper<uint16_t>
+                >(utils::Clamp<float>(0.f, 1.f), Remapper<uint16_t>(params.luminanceMapping_)));
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
         utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
@@ -254,7 +279,7 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          FixedStrideIterator<uint16_t*, 3>(stripBuffer.data()),
                          FixedStrideIterator<uint16_t*, 3>(stripBuffer.data() + 1),
                          FixedStrideIterator<uint16_t*, 3>(stripBuffer.data() + 2),
-                         rgbRemapper);
+                         remapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
             throw pfs::io::WriteException("TiffWriter: Error writing strip " +
@@ -297,9 +322,16 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 
     qDebug() << params.minLuminance_;
     qDebug() << params.maxLuminance_;
+
     std::vector<float> stripBuffer( width*3 );
-    RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
-                            MAP_LINEAR); // maybe I have to force to be linear?!
+    typedef utils::Chain<
+            colorspace::Normalizer,
+            utils::Clamp<float>
+            > TiffRemapper;
+    // Mapping is linear, so I avoid to call the Remapper class
+    TiffRemapper remapper(
+                colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                utils::Clamp<float>(0.f, 1.f));
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
         utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
@@ -308,7 +340,7 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          FixedStrideIterator<float*, 3>(stripBuffer.data()),
                          FixedStrideIterator<float*, 3>(stripBuffer.data() + 1),
                          FixedStrideIterator<float*, 3>(stripBuffer.data() + 2),
-                         rgbRemapper);
+                         remapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) == 0)
         {
             throw pfs::io::WriteException("TiffWriter: Error writing strip " +
@@ -352,12 +384,23 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
     std::vector<float> stripBuffer( width*3 );
-    // remap to [0, 1] + transform to colorspace XYZ
-    utils::Chain<RGBRemapper, colorspace::ConvertRGB2XYZ>
-            func(RGBRemapper(params.minLuminance_, params.maxLuminance_, MAP_LINEAR),
-                 colorspace::ConvertRGB2XYZ());
 
-     // maybe I have to force to be linear?!
+    // remap to [0, 1] + transform to colorspace XYZ
+    // no gamma curve applied
+    typedef utils::Chain<
+            colorspace::Normalizer,
+            utils::Chain<
+                utils::Clamp<float>,
+                colorspace::ConvertRGB2XYZ
+            >> TiffRemapper;
+
+    TiffRemapper remapper(
+                colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                utils::Chain<
+                    utils::Clamp<float>,
+                    colorspace::ConvertRGB2XYZ
+                >(utils::Clamp<float>(0.f, 1.f), colorspace::ConvertRGB2XYZ()));
+
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
         utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
@@ -366,7 +409,7 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
                          FixedStrideIterator<float*, 3>(stripBuffer.data()),
                          FixedStrideIterator<float*, 3>(stripBuffer.data() + 1),
                          FixedStrideIterator<float*, 3>(stripBuffer.data() + 2),
-                         func);
+                         remapper);
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {
             throw pfs::io::WriteException("TiffWriter: Error writing strip " +

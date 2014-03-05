@@ -29,87 +29,96 @@
 //! \since Luminance HDR 2.3.0-beta1
 
 #include <stdint.h>
-#include <QRgb>
+#include <array>
 
 #include <Libpfs/colorspace/rgbremapper_fwd.h>
+#include <Libpfs/colorspace/convert.h>
 #include <Libpfs/utils/transform.h>
 
-class RGBRemapper
+// takes as template parameter a TypeOut, so that integer optimization can be
+// performed if TypeOut is an uint8_t or uint16_t
+class RemapperBase
+{
+protected:
+    static float toLinear(float sample);
+    static float toGamma14(float sample);
+    static float toGamma18(float sample);
+    static float toGamma22(float sample);
+    static float toGamma26(float sample);
+    static float toLog(float sample);
+
+    typedef float (*MappingFunc)(float);
+
+    static const MappingFunc s_callbacks[];
+};
+
+template <typename TypeOut>
+class Remapper : public RemapperBase
 {
 public:
-    // ctor
-    RGBRemapper(float minValue = 0.0f, float maxValue = 1.0f,
-                RGBMappingType mappingMethod = MAP_LINEAR);
-
-    ~RGBRemapper();
-
-    // non-const functions
-    void setMinMax(float min, float max);
-    void setMappingMethod(RGBMappingType method);
-
-    // const functions
-    //float getMinLuminance() const;
-    //float getMaxLuminance() const;
-    RGBMappingType getMappingType() const { return m_MappingMethod; }
-
-    void toQRgb(float r, float g, float b, QRgb& qrgb) const;
-    void operator()(float r, float g, float b, QRgb& qrgb) const {
-        this->toQRgb(r,g,b,qrgb);
+    Remapper(RGBMappingType mappingMethod = MAP_LINEAR)
+        : m_mappingMethod(mappingMethod)
+        , m_callback(s_callbacks[mappingMethod])
+    {
+        assert(mappingMethod >= 0);
+        assert(mappingMethod < 6);
     }
 
-    void toUint8(float rI, float gI, float bI,
-                 uint8_t& rO, uint8_t& gO, uint8_t& bO) const;
-    void operator()(float rI, float gI, float bI,
-                    uint8_t& rO, uint8_t& gO, uint8_t& bO) const {
-        this->toUint8(rI, gI, bI, rO, gO, bO);
+    RGBMappingType getMappingMethod() const
+    { return m_mappingMethod; }
+
+    TypeOut operator()(float sample) const
+    {
+        assert(sample >= 0.f);
+        assert(sample <= 1.f);
+
+        using namespace pfs::colorspace;
+
+        return convertSample<TypeOut>(m_callback(sample));
     }
 
-    void toUint16(float r, float g, float b,
-                  uint16_t& red, uint16_t& green, uint16_t& blue) const;
-    void operator()(float rI, float gI, float bI,
-                    uint16_t& rO, uint16_t& gO, uint16_t& bO) const {
-        this->toUint16(rI, gI, bI, rO, gO, bO);
-    }
-
-    void toFloat(float rI, float gI, float bI,
-                 float& rO, float& gO, float& bO) const;
-    void operator()(float rI, float gI, float bI,
-                    float& rO, float& gO, float& bO) const {
-        this->toFloat(rI, gI, bI, rO, gO, bO);
+    void operator()(float i1, float i2, float i3, TypeOut& o1, TypeOut& o2, TypeOut& o3) const
+    {
+        o1 = (*this)(i1);
+        o2 = (*this)(i2);
+        o3 = (*this)(i3);
     }
 
 private:
-    struct RgbF3 {
-        RgbF3(float r, float g, float b)
-            : red(r) , green(g), blue(b)
-        {}
-
-        float red;
-        float green;
-        float blue;
-    };
-
-    // pointer to function
-    typedef RgbF3 (RGBRemapper::*MappingFunc)(float, float, float) const;
-
-    RGBMappingType m_MappingMethod;
-    MappingFunc m_MappingFunc;
-
-    float m_MinValue;
-    float m_MaxValue;
-    float m_Range;
-    float m_LogRange;
-
-    RgbF3 get(float r, float g, float b) const;
-
-    // private stuff!
-    RgbF3 buildRgb(float r, float g, float b) const;
-    RgbF3 mappingLinear(float r, float g, float b) const;
-    RgbF3 mappingGamma14(float r, float g, float b) const;
-    RgbF3 mappingGamma18(float r, float g, float b) const;
-    RgbF3 mappingGamma22(float r, float g, float b) const;
-    RgbF3 mappingGamma26(float r, float g, float b) const;
-    RgbF3 mappingLog(float r, float g, float b) const;
+    RGBMappingType m_mappingMethod;
+    MappingFunc m_callback;
 };
+
+template <>
+class Remapper<uint8_t> : public RemapperBase
+{
+public:
+    Remapper(RGBMappingType mappingMethod = MAP_LINEAR);
+
+    RGBMappingType getMappingMethod() const
+    { return m_mappingMethod; }
+
+    uint8_t operator()(float sample) const
+    {
+        assert(sample >= 0.f);
+        assert(sample <= 1.f);
+
+        using namespace pfs::colorspace;
+
+        return m_lut[ convertSample<uint8_t>(sample) ];
+    }
+
+    void operator()(float i1, float i2, float i3, uint8_t& o1, uint8_t& o2, uint8_t& o3) const
+    {
+        o1 = (*this)(i1);
+        o2 = (*this)(i2);
+        o3 = (*this)(i3);
+    }
+
+private:
+    RGBMappingType m_mappingMethod;
+    std::array<uint8_t, 256> m_lut; // LUT of 256 bins...
+};
+
 
 #endif // PFS_RGBREMAPPER_H

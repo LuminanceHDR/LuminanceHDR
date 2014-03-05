@@ -55,8 +55,6 @@ protected:
 	virtual void changeEvent(QEvent* event);
 
 private Q_SLOTS:
-	void on_negativeColorButton_clicked();
-	void on_ifnanColorButton_clicked();
 	void on_okButton_clicked();
 	void on_cancelButton_clicked();
 	void on_chooseCachePathButton_clicked();

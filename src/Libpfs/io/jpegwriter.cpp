@@ -35,9 +35,11 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/utils/transform.h>
+#include <Libpfs/utils/chain.h>
 #include <Libpfs/fixedstrideiterator.h>
 
 using namespace std;
@@ -210,6 +212,11 @@ public:
     virtual void close() = 0;
     virtual size_t getFileSize() const = 0;
 
+    typedef pfs::utils::Chain<
+        colorspace::Normalizer,
+        Remapper<JSAMPLE>
+    > JpegRemapper;
+
     bool write(const pfs::Frame &frame, const JpegWriterParams& params,
                const std::string& filename)
     {
@@ -268,9 +275,8 @@ public:
             std::vector<JSAMPLE> scanLineOut(cinfo.image_width * cinfo.num_components);
             JSAMPROW scanLineOutArray[1] = { scanLineOut.data() };
 
-            RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
-                                    params.luminanceMapping_);
-
+            JpegRemapper remapper(colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                                  Remapper<JSAMPLE>(params.luminanceMapping_));
             while ( cinfo.next_scanline < cinfo.image_height )
             {
                 // copy line from Frame into scanLineOut
@@ -281,7 +287,7 @@ public:
                                  FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data()),
                                  FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data() + 1),
                                  FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data() + 2),
-                                 rgbRemapper);
+                                 remapper);
                 jpeg_write_scanlines(&cinfo, scanLineOutArray, 1);
             }
         }
