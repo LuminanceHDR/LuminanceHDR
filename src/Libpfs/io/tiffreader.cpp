@@ -461,7 +461,10 @@ void TiffReader::open()
 
         // read extra samples (# of alpha channels)
         if (!TIFFGetField(m_data->handle(), TIFFTAG_EXTRASAMPLES, &extraSamplesPerPixel, &extraSamplesTypes)) {
-            extraSamplesPerPixel = 0;
+            if (m_data->samplesPerPixel_ == 4)
+            {
+                extraSamplesPerPixel = 1;
+            }
         }
         uint16 colorSamples = m_data->samplesPerPixel_ - extraSamplesPerPixel;
         m_data->hasAlpha_ = (extraSamplesPerPixel == 1);
