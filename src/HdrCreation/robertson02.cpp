@@ -37,6 +37,8 @@
 #include <boost/bind.hpp>
 #include <boost/limits.hpp>
 #include <boost/numeric/conversion/bounds.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
+
 
 #include <Libpfs/array2d.h>
 
@@ -360,7 +362,7 @@ void RobertsonOperatorAuto::computeResponse(
             std::cerr << " #" << cur_it << " delta=" << pdelta << " <- converged\n";
             break;
         }
-        else if ( isnan(delta) || (cur_it > MAXIT && pdelta < delta) )
+        else if ( boost::math::isnan(delta) || (cur_it > MAXIT && pdelta < delta) )
         {
 #ifndef NDEBUG
             std::cerr << "algorithm failed to converge, too noisy data in range\n";

@@ -23,6 +23,7 @@
 //! \date October 20th, 2012
 
 #include <boost/program_options.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
 
 #include <iostream>
 #include <cstddef>
@@ -68,13 +69,13 @@ public:
     {
         m_parsedSamples++;
 
-        if ( isnan(value) )
+        if ( boost::math::isnan(value) )
         {
             m_numNan++;
             return;
         }
 
-        if ( !finite(value) )
+        if ( !boost::math::isfinite(value) )
         {
             m_numInf++;
             return;
