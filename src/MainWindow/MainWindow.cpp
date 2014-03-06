@@ -111,22 +111,22 @@ QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* 
     filetypes += "TIFF (*.tif *.tiff *.TIF *.TIFF)";
 
     QFileInfo qfi(suggestedFileName);
-    QString outputFilename = QFileDialog::getSaveFileName(parent,
-                                        QObject::tr("Save the LDR image as..."),
-                                        LuminanceOptions().getDefaultPathLdrOut() + "/" + qfi.completeBaseName(),
-                                        filetypes);
+    QString outputFilename =
+            QFileDialog::getSaveFileName(parent,
+                                         QObject::tr("Save the LDR image as..."),
+                                         LuminanceOptions().getDefaultPathLdrOut() + QDir::separator() + qfi.completeBaseName(),
+                                         filetypes);
 
     if ( !outputFilename.isEmpty() )
     {
 		QFileInfo qfi(outputFilename);
-		QString format = qfi.suffix();
 
 		LuminanceOptions().setDefaultPathLdrOut( qfi.path() );
     }
     return outputFilename;
 }
 
-QString getHdrFileNameFromSaveDialog(QString& suggestedFileName, QWidget* parent = 0)
+QString getHdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
 {
 	qDebug() << "MainWindow::getHdrFileNameFromSaveDialog(" << suggestedFileName << ")";
     static const QString filetypes =
@@ -137,21 +137,19 @@ QString getHdrFileNameFromSaveDialog(QString& suggestedFileName, QWidget* parent
 
     QFileInfo qfi(suggestedFileName);
 
-    QString result =  QFileDialog::getSaveFileName
-            (parent,
-             QObject::tr("Save the HDR image as..."),
-             LuminanceOptions().getDefaultPathHdrOut() + "/" + qfi.completeBaseName(),
-             filetypes);
+    QString outputFilename =
+            QFileDialog::getSaveFileName(parent,
+                                         QObject::tr("Save the HDR image as..."),
+                                         LuminanceOptions().getDefaultPathHdrOut() + QDir::separator() + qfi.completeBaseName(),
+                                         filetypes);
 
-    if ( !result.isEmpty() )
+    if ( !outputFilename.isEmpty() )
     {
-        QFileInfo qfi(result);
-        QString format = qfi.suffix();
+        QFileInfo qfi(outputFilename);
 
-        // Update working folder
         LuminanceOptions().setDefaultPathHdrOut( qfi.path() );
     }
-    return result;
+    return outputFilename;
 }
 
 void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
@@ -2021,32 +2019,10 @@ void MainWindow::on_actionFits_Importer_triggered()
 #ifdef HAVE_CCFITS
     FitsImporter importer;
 
-    if (importer.exec() == QDialog::Accepted) {
-//        QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
+    if (importer.exec() == QDialog::Accepted)
+    {
         pfs::Frame *frame = importer.getFrame();
-        emit load_success(frame, tr("FITS Image"), QStringList(), true); 
-        
-/*
-        try {
-            pfs::io::FitsReader3Ch reader(QFile::encodeName(luminosityChannel).constData(),
-                                          QFile::encodeName(redChannel).constData(), 
-                                          QFile::encodeName(greenChannel).constData(), 
-                                          QFile::encodeName(blueChannel).constData(),
-                                          QFile::encodeName(hChannel).constData());
-            reader.read(*frame);
-            emit load_success(frame, tr("FITS Image"), QStringList(), true); 
-        }
-        catch(pfs::Exception& e) {
-            QApplication::restoreOverrideCursor();
-            QMessageBox::warning(0,"", tr("Failed to load FITS images. %1").arg(e.what()), QMessageBox::Ok, QMessageBox::NoButton);
-        }
-        catch (...) {
-            QApplication::restoreOverrideCursor();
-            QMessageBox::warning(0,"", tr("Failed to load FITS images"), QMessageBox::Ok, QMessageBox::NoButton);
-        }  
-        QApplication::restoreOverrideCursor();
-*/     
+        emit load_success(frame, tr("FITS Image"), QStringList(), true);
     }
 #endif
 }
