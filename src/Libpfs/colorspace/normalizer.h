@@ -24,6 +24,8 @@
 
 #include <cassert>
 
+#include <boost/math/special_functions/fpclassify.hpp>
+
 namespace pfs {
 namespace colorspace {
 
@@ -38,6 +40,8 @@ struct Normalizer
 
     float operator()(float sample) const
     {
+        assert(!boost::math::isnan(sample));
+
         return (sample - m_min)/m_range;
     }
 

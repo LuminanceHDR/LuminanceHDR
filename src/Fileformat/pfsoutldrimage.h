@@ -45,7 +45,7 @@ class Frame;
 
 struct QRgbRemapper
 {
-    QRgbRemapper(int minLuminance, int maxLuminance, RGBMappingType mappingType);
+    QRgbRemapper(float minLuminance, float maxLuminance, RGBMappingType mappingType);
 
     void operator()(float r, float g, float b, QRgb& qrgb) const;
 

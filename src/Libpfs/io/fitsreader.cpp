@@ -120,8 +120,8 @@ void FitsReader::read(Frame &frame, const Params &/*params*/)
     std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator> minmax =
             boost::minmax_element(Xc->begin(), Xc->end());
 
-    std::cout << "FITS min luminance: " << *minmax.first << " (" << contents.min() << ")";
-    std::cout << "FITS max luminance: " << *minmax.second << " (" << contents.max() << ")";
+    std::cout << "FITS min luminance: " << *minmax.first << std::endl;
+    std::cout << "FITS max luminance: " << *minmax.second << std::endl;
 #endif
 
     frame.swap(tempFrame);

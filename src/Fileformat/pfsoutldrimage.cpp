@@ -30,15 +30,16 @@
 //!  2) returns QImage* instead than a QImage
 //!  3) has OpenMP (multi thread) capability)
 
+#include "pfsoutldrimage.h"
+
 #include <QImage>
-#include <QSysInfo>
+#include <QDebug>
+
 #include <iostream>
 #include <assert.h>
 #include <stdexcept>
 
 #include <boost/assign/list_of.hpp>
-
-#include "pfsoutldrimage.h"
 
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
@@ -52,7 +53,7 @@ using namespace boost::assign;
 using namespace pfs;
 
 
-QRgbRemapper::QRgbRemapper(int minLuminance, int maxLuminance, RGBMappingType mappingType)
+QRgbRemapper::QRgbRemapper(float minLuminance, float maxLuminance, RGBMappingType mappingType)
     : m_remapper(
           colorspace::Normalizer(minLuminance, maxLuminance),
           utils::Chain<
@@ -75,6 +76,10 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     msec_timer stop_watch;
     stop_watch.start();
 #endif
+
+    qDebug() << "Min Luminance: " << min_luminance;
+    qDebug() << "Max Luminance: " << max_luminance;
+    qDebug() << "Mapping method: " << mapping_method;
 
     assert(in_frame != NULL);
 
