@@ -44,8 +44,17 @@ void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)
     s = vm;
     //if (s >= 0.0f)
     if (s > 0.0f)
-        s /= (l <= 0.5f) ? (v + m) : (2.0f - v - m);
-    else return;
+    {
+        float div = (l <= 0.5f) ? (v + m) : (2.0f - v - m);
+
+        assert(div != 0.f);
+
+        s /= div;
+    }
+    else
+    {
+        return;
+    }
     r2 = (v - r) / vm;
     g2 = (v - g) / vm;
     b2 = (v - b) / vm;

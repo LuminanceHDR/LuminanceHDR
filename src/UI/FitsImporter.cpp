@@ -32,6 +32,7 @@
 #include <QRgb>
 #include <QImage>
 #include <QPixmap>
+#include <QRgb>
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/foreach.hpp>
@@ -279,15 +280,16 @@ void FitsImporter::buildPreview()
     float blueRed = m_ui->dsbBlueRed->value();
     float blueGreen = m_ui->dsbBlueGreen->value();
     float blueBlue = m_ui->dsbBlueBlue->value();
-    float gamma = m_ui->vsGamma->value()/10000.0f;
+    float gamma = (m_ui->vsGamma->value()/10000.0f)*3.f;
 
-    QImage tempImage(previewWidth,
-                     previewHeight,
-                     QImage::Format_ARGB32_Premultiplied);
+    Q_ASSERT(gamma >= 0.f);
+    Q_ASSERT(gamma <= 3.f);
+    qDebug() << "Gamma " << gamma;
+
+    QImage tempImage(previewWidth, previewHeight, QImage::Format_ARGB32_Premultiplied);
     
-    ConvertToQRgb convertToQRgb(2.2f);
     ConvertSample<float, uint8_t> toFloat;
-
+    ConvertToQRgb convertToQRgb(1.f + gamma);
     if (!m_luminosityChannel.isEmpty())
     {
         for (int j = 0; j < previewHeight; j++) 
