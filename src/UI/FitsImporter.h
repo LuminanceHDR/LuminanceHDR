@@ -65,22 +65,11 @@ protected slots:
     void ais_failed_slot(QProcess::ProcessError);
     void readData(QByteArray);
     void previewLabelSelected(int index);
+
     void on_hsRedRed_valueChanged(int newValue);
     void on_dsbRedRed_valueChanged(double newValue);
-    void on_hsRedGreen_valueChanged(int newValue);
-    void on_dsbRedGreen_valueChanged(double newValue);
-    void on_hsRedBlue_valueChanged(int newValue);
-    void on_dsbRedBlue_valueChanged(double newValue);
-    void on_hsGreenRed_valueChanged(int newValue);
-    void on_dsbGreenRed_valueChanged(double newValue);
     void on_hsGreenGreen_valueChanged(int newValue);
     void on_dsbGreenGreen_valueChanged(double newValue);
-    void on_hsGreenBlue_valueChanged(int newValue);
-    void on_dsbGreenBlue_valueChanged(double newValue);
-    void on_hsBlueRed_valueChanged(int newValue);
-    void on_dsbBlueRed_valueChanged(double newValue);
-    void on_hsBlueGreen_valueChanged(int newValue);
-    void on_dsbBlueGreen_valueChanged(double newValue);
     void on_hsBlueBlue_valueChanged(int newValue);
     void on_dsbBlueBlue_valueChanged(double newValue);
     void on_vsGamma_valueChanged(int newValue);

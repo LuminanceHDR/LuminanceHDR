@@ -272,13 +272,7 @@ bool isValid(HdrCreationItem& item)
 void FitsImporter::buildPreview()
 {
     float redRed = m_ui->dsbRedRed->value();
-    float redGreen = m_ui->dsbRedGreen->value();
-    float redBlue = m_ui->dsbRedBlue->value();
-    float greenRed = m_ui->dsbGreenRed->value();
     float greenGreen = m_ui->dsbGreenGreen->value();
-    float greenBlue = m_ui->dsbGreenBlue->value();
-    float blueRed = m_ui->dsbBlueRed->value();
-    float blueGreen = m_ui->dsbBlueGreen->value();
     float blueBlue = m_ui->dsbBlueBlue->value();
     float gamma = (m_ui->vsGamma->value()/10000.0f)*3.f;
 
@@ -301,9 +295,9 @@ void FitsImporter::buildPreview()
                 float blue = toFloat(qRed(m_qimages[2].pixel(i, j)));
                 float luminance = toFloat(qRed(m_qimages[3].pixel(i, j)));
                 float h_alpha = toFloat(qRed(m_qimages[4].pixel(i, j)));
-                float r = redRed * red + redGreen * green + redBlue * blue;
-                float g = greenRed * red + greenGreen * green + greenBlue * blue;
-                float b = blueRed * red + blueGreen * green + blueBlue * blue;
+                float r = redRed * red /*+ redGreen * green + redBlue * blue*/;
+                float g = /*greenRed * red +*/ greenGreen * green /*+ greenBlue * blue*/;
+                float b = /*blueRed * red + blueGreen * green + */blueBlue * blue;
                 float h, s, l;
                 rgb2hsl(r, g, b, h, s, l);
                 hsl2rgb(h, s, luminance, r, g, b);
@@ -332,9 +326,9 @@ void FitsImporter::buildPreview()
                 float green = toFloat(qRed(m_qimages[1].pixel(i, j)));
                 float blue = toFloat(qRed(m_qimages[2].pixel(i, j)));
                 float h_alpha = toFloat(qRed(m_qimages[4].pixel(i, j)));
-                float r = redRed * red + redGreen * green + redBlue * blue;
-                float g = greenRed * red + greenGreen * green + greenBlue * blue;
-                float b = blueRed * red + blueGreen * green + blueBlue * blue;
+                float r = redRed * red /*+ redGreen * green + redBlue * blue*/;
+                float g = /*greenRed * red +*/ greenGreen * green /*+ greenBlue * blue*/;
+                float b = /*blueRed * red + blueGreen * green +*/ blueBlue * blue;
                 float redH = r + 0.2f * h_alpha;
                 if (r > 1.0f)
                     r = 1.0f;
@@ -388,13 +382,7 @@ void FitsImporter::buildContents()
 void FitsImporter::buildFrame()
 {
     float redRed = m_ui->dsbRedRed->value();
-    float redGreen = m_ui->dsbRedGreen->value();
-    float redBlue = m_ui->dsbRedBlue->value();
-    float greenRed = m_ui->dsbGreenRed->value();
     float greenGreen = m_ui->dsbGreenGreen->value();
-    float greenBlue = m_ui->dsbGreenBlue->value();
-    float blueRed = m_ui->dsbBlueRed->value();
-    float blueGreen = m_ui->dsbBlueGreen->value();
     float blueBlue = m_ui->dsbBlueBlue->value();
 
     m_frame = new Frame(m_width, m_height);
@@ -405,9 +393,9 @@ void FitsImporter::buildFrame()
     {
         for (size_t i = 0; i < m_width*m_height; i++) 
         {
-            float r = redRed * m_contents[0][i] + redGreen * m_contents[1][i] + redBlue * m_contents[2][i];
-            float g = greenRed * m_contents[0][i] + greenGreen * m_contents[1][i] + greenBlue * m_contents[2][i];
-            float b = blueRed * m_contents[0][i] + blueGreen * m_contents[1][i] + blueBlue * m_contents[2][i];
+            float r = redRed * m_contents[2][i];
+            float g = greenGreen * m_contents[1][i];
+            float b = blueBlue * m_contents[2][i];
             float h, s, l;
             rgb2hsl(r, g, b, h, s, l);
             hsl2rgb(h, s, m_contents[3][i], r, g, b);
@@ -420,9 +408,9 @@ void FitsImporter::buildFrame()
     {
         for (size_t i = 0; i < m_width*m_height; i++) 
         {
-            float r = redRed * m_contents[0][i] + redGreen * m_contents[1][i] + redBlue * m_contents[2][i];
-            float g = greenRed * m_contents[0][i] + greenGreen * m_contents[1][i] + greenBlue * m_contents[2][i];
-            float b = blueRed * m_contents[0][i] + blueGreen * m_contents[1][i] + blueBlue * m_contents[2][i];
+            float r = redRed * m_contents[0][i];
+            float g = greenGreen * m_contents[1][i];
+            float b = blueBlue * m_contents[2][i];
             (*Xc)(i) = r + m_contents[4][i];
             (*Yc)(i) = g;
             (*Zc)(i) = b;
@@ -581,57 +569,6 @@ void FitsImporter::on_dsbRedRed_valueChanged(double newValue)
     buildPreview();
 }
 
-void FitsImporter::on_hsRedGreen_valueChanged(int newValue)
-{
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbRedGreen->blockSignals(true);
-    m_ui->dsbRedGreen->setValue( value );
-    m_ui->dsbRedGreen->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_dsbRedGreen_valueChanged(double newValue)
-{
-    bool oldState = m_ui->hsRedGreen->blockSignals(true);
-    m_ui->hsRedGreen->setValue( (int)(newValue*10000) );
-    m_ui->hsRedGreen->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_hsRedBlue_valueChanged(int newValue)
-{
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbRedBlue->blockSignals(true);
-    m_ui->dsbRedBlue->setValue( value );
-    m_ui->dsbRedBlue->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_dsbRedBlue_valueChanged(double newValue)
-{
-    bool oldState = m_ui->hsRedBlue->blockSignals(true);
-    m_ui->hsRedBlue->setValue( (int)(newValue*10000) );
-    m_ui->hsRedBlue->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_hsGreenRed_valueChanged(int newValue)
-{
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbGreenRed->blockSignals(true);
-    m_ui->dsbGreenRed->setValue( value );
-    m_ui->dsbGreenRed->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_dsbGreenRed_valueChanged(double newValue)
-{
-    bool oldState = m_ui->hsGreenRed->blockSignals(true);
-    m_ui->hsGreenRed->setValue( (int)(newValue*10000) );
-    m_ui->hsGreenRed->blockSignals(oldState);
-    buildPreview();
-}
-
 void FitsImporter::on_hsGreenGreen_valueChanged(int newValue)
 {
     float value = ((float)newValue)/10000.f;
@@ -646,57 +583,6 @@ void FitsImporter::on_dsbGreenGreen_valueChanged(double newValue)
     bool oldState = m_ui->hsGreenGreen->blockSignals(true);
     m_ui->hsGreenGreen->setValue( (int)(newValue*10000) );
     m_ui->hsGreenGreen->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_hsGreenBlue_valueChanged(int newValue)
-{
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbGreenBlue->blockSignals(true);
-    m_ui->dsbGreenBlue->setValue( value );
-    m_ui->dsbGreenBlue->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_dsbGreenBlue_valueChanged(double newValue)
-{
-    bool oldState = m_ui->hsGreenBlue->blockSignals(true);
-    m_ui->hsGreenBlue->setValue( (int)(newValue*10000) );
-    m_ui->hsGreenBlue->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_hsBlueRed_valueChanged(int newValue)
-{
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbBlueRed->blockSignals(true);
-    m_ui->dsbBlueRed->setValue( value );
-    m_ui->dsbBlueRed->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_dsbBlueRed_valueChanged(double newValue)
-{
-    bool oldState = m_ui->hsBlueRed->blockSignals(true);
-    m_ui->hsBlueRed->setValue( (int)(newValue*10000) );
-    m_ui->hsBlueRed->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_hsBlueGreen_valueChanged(int newValue)
-{
-    float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbBlueGreen->blockSignals(true);
-    m_ui->dsbBlueGreen->setValue( value );
-    m_ui->dsbBlueGreen->blockSignals(oldState);
-    buildPreview();
-}
-
-void FitsImporter::on_dsbBlueGreen_valueChanged(double newValue)
-{
-    bool oldState = m_ui->hsBlueGreen->blockSignals(true);
-    m_ui->hsBlueGreen->setValue( (int)(newValue*10000) );
-    m_ui->hsBlueGreen->blockSignals(oldState);
     buildPreview();
 }
 
