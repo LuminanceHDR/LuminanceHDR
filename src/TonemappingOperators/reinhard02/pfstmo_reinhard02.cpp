@@ -86,7 +86,13 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
   {
     for( int y=0 ; y<h ; y++ )
     {
-      float scale = L(x,y) / (*Y)(x,y);
+        float yr = (*Y)(x,y);
+        float scale = 0.f;
+        if (yr != 0.f)
+        {
+            scale = L(x,y) / yr;
+        }
+
       (*Y)(x,y) *= scale;
       (*X)(x,y) *= scale;
       (*Z)(x,y) *= scale;
