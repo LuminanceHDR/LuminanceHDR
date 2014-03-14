@@ -49,6 +49,7 @@
 #include <stdint.h>
 
 #include <boost/lexical_cast.hpp>
+#include <boost/current_function.hpp>
 
 #include <Libpfs/io/ioexception.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
@@ -165,7 +166,7 @@ void writeSRGBProfile(TIFF* tif)
 bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 {
 #ifndef NDEBUG
-    cout << __func__ << endl;
+    cout << BOOST_CURRENT_FUNCTION << endl;
 #endif
 
     assert(tif != NULL);
@@ -228,7 +229,7 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 {
 #ifndef NDEBUG
-    cout << __func__ << endl;
+    cout << BOOST_CURRENT_FUNCTION << endl;
 #endif
     assert(tif != NULL);
 
@@ -295,7 +296,7 @@ bool writeUint16(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 {
 #ifndef NDEBUG
-    cout << __func__ << endl;
+    cout << BOOST_CURRENT_FUNCTION << endl;
 #endif
     assert(tif != NULL);
 
@@ -357,7 +358,7 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
 {
 #ifndef NDEBUG
-    cout << __func__ << endl;
+    cout << BOOST_CURRENT_FUNCTION << endl;
 #endif
     assert(tif != NULL);
 
