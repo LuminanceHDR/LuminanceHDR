@@ -29,6 +29,7 @@
  */
 
 #include <QApplication>
+#include <QMessageBox>
 #include <QString>
 #include <QLocale>
 #include <QDate>
@@ -65,6 +66,10 @@ void LuminanceOptions::conditionallyDoUpgrade()
 #ifdef DEMOSAICING_GPL3
             options.setRawUserQuality(10); // AMaZE
 #endif
+        }
+        if (currentVersion < 2040099)
+        {
+            options.setAlignImageStackOptions(sanitizeAISparams(options.getAlignImageStackOptions()));
         }
 
         options.setValue(KEY_WARNING_WOW64, 0); // remind the user again with a new version
@@ -735,9 +740,39 @@ QStringList LuminanceOptions::getAlignImageStackOptions()
                                   QStringList() << "-v" << "-a" << "aligned_").toStringList();
 }
 
-void LuminanceOptions::setAlignImageStackOptions(const QStringList& qstrlist)
+QStringList LuminanceOptions::sanitizeAISparams(QStringList temp_ais_options, bool verbose)
 {
-    m_settingHolder->setValue(KEY_EXTERNAL_AIS_OPTIONS, qstrlist);
+    bool align_opt_was_ok=true;
+
+    //check that we don't have '-a "aligned_"'
+    int idx_a = temp_ais_options.indexOf("-a");
+
+    if (idx_a != -1) {
+        if (idx_a != temp_ais_options.size()-1 && !temp_ais_options.at(idx_a+1).startsWith("-")) {
+            temp_ais_options.removeAt(idx_a + 1);
+        }
+        temp_ais_options.removeAt(idx_a);
+
+        align_opt_was_ok = false;
+    }
+
+    //check if we have '-v'
+    if (temp_ais_options.indexOf("-v") < 0) {
+        temp_ais_options.insert(0, "-v");
+        align_opt_was_ok = false;
+    }
+
+    if (verbose && !align_opt_was_ok) {
+        QMessageBox::information(0,
+            QObject::tr("Option -v -a..."),
+            QObject::tr("LuminanceHDR requires align_image_stack to be executed with the \"-v\" and without the \"-a\" options. Command line options have been corrected."));
+    }
+    return temp_ais_options;
+}
+
+void LuminanceOptions::setAlignImageStackOptions(const QStringList& qstrlist, bool verbose)
+{
+    m_settingHolder->setValue(KEY_EXTERNAL_AIS_OPTIONS, sanitizeAISparams(qstrlist, verbose));
 }
 
 bool LuminanceOptions::isShowFattalWarning()

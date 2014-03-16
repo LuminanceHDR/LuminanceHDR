@@ -57,7 +57,6 @@ protected slots:
 
 protected:
     HdrCreationItemContainer *m_data;
-    HdrCreationItemContainer m_tmpdata;
     bool m_fromCommandLine;
     int m_savingMode;
     float m_minLum;

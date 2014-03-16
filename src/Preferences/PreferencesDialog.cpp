@@ -79,51 +79,6 @@ inline int value2pos(double value, int minpos, int maxpos, double minv, double m
     return (int) ((maxpos - minpos)*y) + minpos;
 }
 
-QStringList sanitizeAISparams(const QString& input_parameter_string)
-{
-    bool align_opt_was_ok=false;
-    //check if we have '-a "aligned_"'
-    QStringList temp_ais_options = input_parameter_string.split(" ",QString::SkipEmptyParts);
-    int idx_a = temp_ais_options.indexOf("-a");
-    //if we don't have -a
-    if (idx_a == -1) {
-// 		qDebug("missing, adding");
-        temp_ais_options+="-a";
-        temp_ais_options+="aligned_";
-    }
-    //if we have -a at the very end (without the prefix)
-    else if (idx_a==temp_ais_options.size()-1) {
-        temp_ais_options+="aligned_";
-// 		qDebug("-a at end, adding aligned_");
-    }
-    //if we have -a in the middle without the prefix
-    else if ( (idx_a!=-1 && temp_ais_options.at(idx_a+1) != "aligned_") ) {
-// 		qDebug("-a in the middle without the prefix after");
-        if (!temp_ais_options.at(idx_a+1).startsWith("-")) {
-// 			qDebug("next is bad prefix, removing");
-            temp_ais_options.removeAt(idx_a+1);
-        }
-// 		qDebug("now adding");
-        temp_ais_options.insert(idx_a+1,"aligned_");
-    }
-    else
-        align_opt_was_ok=true;
-
-    //check if we have '-v'
-    if (temp_ais_options.indexOf("-v") < 0) {
-// 		qDebug("missing, adding");
-        temp_ais_options.insert(0, "-v");
-        align_opt_was_ok = false;
-    }
-
-    if (!align_opt_was_ok) {
-        QMessageBox::information(0,
-			QObject::tr("Option -v -a..."),
-			QObject::tr("LuminanceHDR requires align_image_stack to be executed with the \"-v -a aligned_\" options. Command line options have been corrected."));
-    }
-    return temp_ais_options;
-}
-
 }
 
 PreferencesDialog::PreferencesDialog(QWidget *p):
@@ -240,7 +195,9 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setBatchTmNumThreads( m_Ui->numThreadspinBox->value() );
 
     // --- Other Parameters
-    luminance_options.setAlignImageStackOptions( sanitizeAISparams( m_Ui->aisParamsLineEdit->text() ) );
+
+    QStringList ais_options = m_Ui->aisParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+    luminance_options.setAlignImageStackOptions(ais_options, true);
 
     // --- RAW parameters
     luminance_options.setRawFourColorRGB( m_Ui->four_color_rgb_CB->isChecked() );
