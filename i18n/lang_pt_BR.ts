@@ -549,7 +549,7 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="276"/>
-        <source>Ouput Image Width:</source>
+        <source>Output Image Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

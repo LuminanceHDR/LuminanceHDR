@@ -273,7 +273,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Ouput Image Width:</string>
+               <string>Output Image Width:</string>
               </property>
              </widget>
             </item>

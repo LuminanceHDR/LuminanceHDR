@@ -484,7 +484,7 @@ Fortfahren?</translation>
         <translation>Ausgabe</translation>
     </message>
     <message>
-        <source>Ouput Image Width:</source>
+        <source>Output Image Width:</source>
         <translation>Breite des Ausgabebildes:</translation>
     </message>
     <message>
