@@ -26,6 +26,7 @@
 #include <QDebug>
 
 #include <boost/bind.hpp>
+#include <boost/math/constants/constants.hpp>
 #include <cmath>
 
 #include "Common/CommonFunctions.h"
@@ -77,7 +78,7 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
         for (int j = 0; j < height; j++) {
             c[j] = 1.0f; 
         }
-        float b = 2.0f*(cos(M_PI*i/width) - 2.0f); 
+        float b = 2.0f*(cos(boost::math::double_constants::pi*i/width) - 2.0f);
         c[0] /= b;
         Ftr(i, 0) /= b;
         for (int j = 1; j < height - 1; j++ ) {
