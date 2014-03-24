@@ -190,7 +190,7 @@ public Q_SLOTS:
     // HdrWizard
     // commandline options for align_image_stack
     QStringList getAlignImageStackOptions();
-    void        setAlignImageStackOptions(const QStringList&);
+    void        setAlignImageStackOptions(const QStringList&, bool verbose=false);
 
     bool    isShowFattalWarning();
     void    setShowFattalWarning(bool b);
@@ -225,7 +225,9 @@ public Q_SLOTS:
 
 private:
     void initSettings();
-    QSettings* m_settingHolder;         
+    QSettings* m_settingHolder;
+
+    static QStringList sanitizeAISparams(QStringList temp_ais_options, bool verbose = false);
 };
 
 #endif

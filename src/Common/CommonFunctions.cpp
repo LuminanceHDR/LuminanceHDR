@@ -21,6 +21,7 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
+#include <QUuid>
 #include <QDebug>
 #include <QFileInfo>
 #include <QFile>
@@ -82,8 +83,8 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
     if (currentItem.filename().isEmpty()) {
         return;
     }
-    QFileInfo qfi(currentItem.filename());
-    qDebug() << QString("Loading data for %1").arg(currentItem.filename());
+    QFileInfo qfi(currentItem.alignedFilename());
+    qDebug() << QString("Loading data for %1").arg(currentItem.alignedFilename());
 
     try
     {
@@ -157,15 +158,15 @@ SaveFile::SaveFile(int mode, float minLum, float maxLum, bool deflateCompression
 
 void SaveFile::operator()(HdrCreationItem& currentItem)
 {
+    QUuid uuid = QUuid::createUuid();
     QString inputFilename = currentItem.filename();
-    QFileInfo qfi(inputFilename);
-    QString base = qfi.completeBaseName(); 
-    QString filename = base + ".tif";
-    QString tempdir = LuminanceOptions().getTempDir();
-    qDebug() << QString("Saving data for %1 on %2").arg(filename).arg(tempdir);
-        
 
-    QString completeFilename = tempdir + "/" + filename;
+    QString tempdir = LuminanceOptions().getTempDir();
+
+    QString outputFilename = tempdir + "/" + uuid.toString() + ".tif";
+    currentItem.setConvertedFilename(outputFilename);
+
+    qDebug() << QString("Saving data for %1 to %2 on %3").arg(inputFilename).arg(outputFilename).arg(tempdir);
 
     // save pfs::Frame as tiff 16bits or 32bits
     try
@@ -177,7 +178,7 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
         p.set("deflateCompression", m_deflateCompression); 
         
         FrameWriterPtr writer = FrameWriterFactory::open(
-                    QFile::encodeName(completeFilename).constData());
+                    QFile::encodeName(outputFilename).constData());
         writer->write( *currentItem.frame(), p );
 
     }
