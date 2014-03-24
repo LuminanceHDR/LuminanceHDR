@@ -19,12 +19,15 @@
  * ----------------------------------------------------------------------
  */
 
+#include <boost/math/constants/constants.hpp>
+
 #include <gtest/gtest.h>
 #include <stdlib.h>
 #include <vector>
 #include <algorithm>
 #include <boost/bind.hpp>
 #include <tuple>
+
 #include "arch/math.h"
 
 #if GTEST_HAS_COMBINE
@@ -168,11 +171,11 @@ TEST_P(TestMantiuk06, TransformToR)
 
     test_mantiuk06::transform_to_R(inputCols*inputRows,
                                    referenceOutput.data(),
-                                   M_PI);
+                                   boost::math::double_constants::pi);
 
     std::transform(testOutput.begin(), testOutput.end(),
                    testOutput.begin(),
-                   TransformToR(M_PI));
+                   TransformToR(boost::math::double_constants::pi));
 
     compareVectors(referenceOutput.data(), testOutput.data(),
                    testOutput.size());
@@ -196,11 +199,11 @@ TEST_P(TestMantiuk06, TransformToG)
 
     test_mantiuk06::transform_to_G(inputCols*inputRows,
                                    referenceOutput.data(),
-                                   M_PI);
+                                   boost::math::double_constants::pi);
 
     std::transform(testOutput.begin(), testOutput.end(),
                    testOutput.begin(),
-                   TransformToG(M_PI));
+                   TransformToG(boost::math::double_constants::pi));
 
     compareVectors(referenceOutput.data(), testOutput.data(),
                    testOutput.size());

@@ -32,6 +32,7 @@
 
 #include <Libpfs/utils/numeric.h>
 #include <boost/assign/std/vector.hpp> // for 'operator+=()'
+#include <boost/math/constants/constants.hpp>
 
 using namespace std;
 
@@ -69,7 +70,7 @@ template<typename T>
 T getConst();
 
 template<>
-float getConst<float>() { return static_cast<float>(M_PI); }
+float getConst<float>() { return static_cast<float>(boost::math::double_constants::pi); }
 
 template<>
 uint8_t getConst<uint8_t>() { return 3u; }
