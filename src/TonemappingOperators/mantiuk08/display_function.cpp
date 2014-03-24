@@ -29,6 +29,8 @@
  * $Id: display_function.cpp,v 1.3 2008/06/16 18:42:58 rafm Exp $
  */
 
+#include <boost/math/constants/constants.hpp>
+
 #include <math.h>
 #include <assert.h>
 #include <string.h>
@@ -53,7 +55,7 @@ void DisplayFunctionGGBA::init( float gamma, float L_max, float L_black, float E
   this->L_black = L_black;
   this->E_amb = E_amb;
   this->screen_refl = screen_refl;
-  this->L_offset = L_black + screen_refl/M_PI*E_amb;
+  this->L_offset = L_black + screen_refl/boost::math::double_constants::pi*E_amb;
 }
 
 DisplayFunctionGGBA::DisplayFunctionGGBA( const char *predefined )

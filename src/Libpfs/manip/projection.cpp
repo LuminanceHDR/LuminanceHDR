@@ -24,6 +24,8 @@
 
 #include "projection.h"
 
+#include <boost/math/constants/constants.hpp>
+
 #include <cmath>
 #include <cstring>
 // #include <stdio.h>
@@ -87,7 +89,7 @@ class Vector3D
   //TODO: optimize rotations by precomputing sines and cosines
   void rotateX(double angle)
   {
-    angle *= (M_PI / 180);
+    angle *= boost::math::double_constants::degree;
 
     double c = cos(angle);
     double s = sin(angle);
@@ -101,7 +103,7 @@ class Vector3D
 
   void rotateY(double angle)
   {
-    angle *= (M_PI / 180);
+    angle *= boost::math::double_constants::degree;
 
     double c = cos(angle);
     double s = sin(angle);
@@ -115,7 +117,7 @@ class Vector3D
 
   void rotateZ(double angle)
   {
-    angle *= (M_PI / 180);
+    angle *= boost::math::double_constants::degree;
 
     double c = cos(angle);
     double s = sin(angle);
@@ -322,7 +324,7 @@ Vector3D* AngularProjection::uvToDirection(double u, double v) {
     v *= totalAngle / 360;
 
     double phi = atan2( v, u );
-    double theta = M_PI * sqrt( u * u + v * v );
+    double theta = boost::math::double_constants::pi * sqrt( u * u + v * v );
 
     Vector3D *direction = new Vector3D(phi, theta);
 //     double t;
@@ -341,7 +343,7 @@ Point2D* AngularProjection::directionToUV(Vector3D *direction) {
     {
       double distance = sqrt(direction->x * direction->x + direction->y * direction->y);
 
-      double r = (1 / (2 * M_PI)) * acos(direction->z) / distance;
+      double r = (boost::math::double_constants::one_div_two_pi) * acos(direction->z) / distance;
 
       u = direction->x * r + 0.5;
       v = direction->y * r + 0.5;
@@ -389,7 +391,7 @@ bool CylindricalProjection::isValidPixel(double /*u*/, double /*v*/) {
 Vector3D* CylindricalProjection::uvToDirection(double u, double v) {
     u = 0.75 - u;
 
-    u *= M_PI * 2;
+    u *= boost::math::double_constants::two_pi;
 
     v = acos( 1 - 2 * v );
 
@@ -420,7 +422,7 @@ Point2D* CylindricalProjection::directionToUV(Vector3D *direction) {
         if(ratio > 1)
           ratio = 1;
 
-      double lon = acos(ratio) / (2 * M_PI);
+      double lon = acos(ratio) / (boost::math::double_constants::two_pi);
 
       if(cross->dot(direction) < 0)
         u = lon;
@@ -475,8 +477,8 @@ bool PolarProjection::isValidPixel(double /*u*/, double /*v*/) {
 Vector3D* PolarProjection::uvToDirection(double u, double v) {
     u = 0.75 - u;
 
-    u *= M_PI * 2;
-    v *= M_PI;
+    u *= boost::math::double_constants::two_pi;
+    v *= boost::math::double_constants::pi;
 
     Vector3D *direction = new Vector3D(u, v);
 
@@ -491,7 +493,7 @@ Point2D* PolarProjection::directionToUV(Vector3D *direction) {
     double u, v;
     double lat = acos(direction->dot(pole));
 
-    v = lat * M_1_PI;
+    v = lat * (1 / boost::math::double_constants::pi);
 
     if(v < EPSILON || fabs(1 - v) < EPSILON)
       u = 0;
@@ -505,7 +507,7 @@ Point2D* PolarProjection::directionToUV(Vector3D *direction) {
         if(ratio > 1)
           ratio = 1;
 
-      double lon = acos(ratio) / (2 * M_PI);
+      double lon = acos(ratio) / (boost::math::double_constants::two_pi);
 
       if(cross->dot(direction) < 0)
         u = lon;
