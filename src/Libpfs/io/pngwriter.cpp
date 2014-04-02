@@ -33,9 +33,11 @@
 
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/colorspace/normalizer.h>
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/utils/resourcehandlerstdio.h>
 #include <Libpfs/utils/transform.h>
+#include <Libpfs/utils/chain.h>
 #include <Libpfs/fixedstrideiterator.h>
 
 using namespace std;
@@ -142,6 +144,11 @@ public:
     size_t getFileSize()            { return m_filesize; }
     void setFileSize(size_t size)   { m_filesize = size; }
 
+    typedef pfs::utils::Chain<
+        colorspace::Normalizer,
+        Remapper<png_byte>
+    > PngRemapper;
+
     bool write(const pfs::Frame &frame, const PngWriterParams& params,
                const std::string& filename)
     {
@@ -195,16 +202,18 @@ public:
         frame.getXYZChannels(rChannel, gChannel, bChannel);
 
         std::vector<png_byte> scanLineOut( width * 3 );
-        RGBRemapper rgbRemapper(params.minLuminance_, params.maxLuminance_,
-                                params.luminanceMapping_);
+        PngRemapper remapper(colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                             Remapper<png_byte>(params.luminanceMapping_));
         for (png_uint_32 row = 0; row < height; ++row)
         {
-            utils::transform(rChannel->row_begin(row), rChannel->row_end(row),
-                             gChannel->row_begin(row), bChannel->row_begin(row),
+            utils::transform(rChannel->row_begin(row),
+                             rChannel->row_end(row),
+                             gChannel->row_begin(row),
+                             bChannel->row_begin(row),
                              FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 2),
                              FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 1),
                              FixedStrideIterator<png_byte*, 3>(scanLineOut.data()),
-                             rgbRemapper);
+                             remapper);
             png_write_row(png_ptr, scanLineOut.data());
         }
 

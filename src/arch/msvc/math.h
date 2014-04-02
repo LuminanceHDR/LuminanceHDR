@@ -25,20 +25,14 @@
 #ifndef MSVC_MATH_H
 #define MSVC_MATH_H
 
-#define _USE_MATH_DEFINES
+//#define _USE_MATH_DEFINES
 #include <math.h>   // re-include here
-#include <float.h>  // for _finite
+
+#include <boost/math/constants/constants.hpp>
 
 #define exp2f(x)        (powf(2.0f, x))
-#define log2(x)        (log(x)  / M_LN2)
-#define log2f(x)       (logf(x) / M_LN2)
-
-#define lround(d)       ((long)(d>0 ? d+0.5 : ceil(d-0.5)))
-#define round(d)       ((d>0) ? int(d+0.5) : int(d-0.5))
-#define finite(x)       (_finite(x))
-
-#define isnan(x) _isnan(x)
-#define isnanf(x) _isnanf(x)
+#define log2(x)        (log(x)  / boost::math::double_constants::ln_two)
+#define log2f(x)       (logf(x) / boost::math::double_constants::ln_two)
 
 #pragma warning (disable:4996)
 

@@ -34,23 +34,21 @@
 #include <cmath>
 #include <cassert>
 
+#include <boost/math/special_functions/fpclassify.hpp>
+
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "TonemappingOperators/pfstmo.h"
 
 namespace
 {
-
-inline
-float biasFunc(float b, float x)
+inline float biasFunc(float b, float x)
 {
-    return std::pow(x, b);		// pow(x, log(bias)/log(0.5)
+    return std::pow(x, b);		// pow(x, log(bias)/log(0.5))
 }
 
 const float LOG05 = -0.693147f; // log(0.5)
 }
-
-//-------------------------------------------
 
 void calculateLuminance(unsigned int width, unsigned int height,
                         const float* Y, float& avLum, float& maxLum)
@@ -60,12 +58,12 @@ void calculateLuminance(unsigned int width, unsigned int height,
 
     int size = width * height;
 
-    for( int i=0 ; i<size; i++ )
+    for (int i = 0; i < size; i++)
     {
         avLum += log( Y[i] + 1e-4 );
         maxLum = ( Y[i] > maxLum ) ? Y[i] : maxLum ;
     }
-    avLum =exp( avLum/ size);
+    avLum = exp( avLum/size );
 }
 
 
@@ -94,57 +92,9 @@ void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
             float Yw = Y(x,y) / avLum;
             float interpol = std::log (2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
             L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
+
+            assert(!boost::math::isnan(L(x,y)));
         }
     }
-
-#if 0
-  // 	Approximation of log(x+1)
-  // 		x(6+x)/(6+4x) good if x < 1
-  //     x*(6 + 0.7662x)/(5.9897 + 3.7658x) between 1 and 2
-  //     http://users.pandora.be/martin.brown/home/consult/logx.htm
-  int i,j;
-  for(int y=0; y<nrows; y+=3) 
-    for(int x=0; x<ncols; x+=3)
-    {
-      float average = 0.0f;
-      for (i=0; i<3; i++)
-	for (j=0; j<3; j++) 
-	  average += (*Y)(x+i,y+j) / avLum;
-      average = average / 9.0f - (*Y)(x,y);
-			
-      if (average>-1.0f && average<1.0f ) 
-      {
-	float interpol = log(2.0f + biasFunc(biasP, (*Y)(x+1,y+1)/maxLum) * 8.0f);
-	for (i=0; i<3; i++)
-	  for (j=0; j<3; j++) 
-	  {
-	    float Yw = (*Y)(x+i,y+j);
-	    if( Yw<1.0f ) 
-	    {
-	      float L = Yw*(6.0f+Yw) / (6.0f+4.0f*Yw);
-	      Yw = (L/interpol) / divider;
-	    }
-	    else if( Yw>=1.0f && Yw<2.0f ) 
-	    {
-	      float L = Yw*(6.0f+0.7662*Yw) / (5.9897f+3.7658f*Yw);
-	      Yw = (L/interpol) / divider;
-	    }
-	    else
-	      Yw = ( log(Yw+1.0f)/interpol ) / divider;
-	    (*L)(x+i,y+j) = Yw;
-	  }
-      }
-      else 
-      {
-	for (i=0; i<3; i++)
-	  for (j=0; j<3; j++) 
-	  {
-	    float Yw = (*Y)(x+i,y+j);
-	    float interpol = log(2.0f+biasFunc(biasP, Yw/maxLum)*8.0f);
-	    (*L)(x+i,y+j) = ( log(Yw+1.0f)/interpol ) / divider;
-	  }
-      }
-    }	
-#endif
 }
 

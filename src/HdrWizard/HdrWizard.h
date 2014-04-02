@@ -49,19 +49,13 @@ private:
     QFutureWatcher<void> m_futureWatcher;
     QFuture<pfs::Frame*> m_future;
 
-//    QString loadcurvefilename;
-//    QString savecurvefilename;
-
-    //    QStringList m_inputFilesName;
-    //    QVector<float> m_inputExpoTimes;
-
     LuminanceOptions luminance_options;
 
     // the new hdr, returned by the HdrCreationManager class
     pfs::Frame* m_pfsFrameHDR;
 
     // hdr creation parameters
-    QVector<config_triple> m_customConfig;
+    QVector<FusionOperatorConfig> m_customConfig;
     bool m_patches[agGridSize][agGridSize];
     bool m_doAutoAntighosting;
     bool m_doManualAntighosting;
@@ -90,8 +84,6 @@ protected:
     void dropEvent(QDropEvent *);
 
 private:
-	QString getQStringFromConfig( int type );
-
     void updateTableGrid();
     void enableNextOrWarning(const QStringList& filesWithoutExif);
     void updateLabelMaybeNext(size_t numFilesWithoutExif);
@@ -123,20 +115,20 @@ private slots:
     void finishedAligning(int);
     void alignSelectionClicked();
 
+    // HDR Creation Model Functions.....
 	void predefConfigsComboBoxActivated(int);
-	void antighostRespCurveComboboxActivated(int);
-	void customConfigCheckBoxToggled(bool);
-	void triGaussPlateauComboBoxActivated(int);
-	void predefRespCurveRadioButtonToggled(bool);
-	void gammaLinLogComboBoxActivated(int);
-	void loadRespCurveFromFileCheckboxToggled(bool);
-	void loadRespCurveFileButtonClicked();
-	void saveRespCurveToFileCheckboxToggled(bool);
+    void customConfigCheckBoxToggled(bool);
+
+    void weightingFunctionComboBoxActivated(int);
+    void responseCurveComboBoxActivated(int);
+    void modelComboBoxActivated(int);
+
+    bool loadRespCurve();
 	void saveRespCurveFileButtonClicked();
-	void modelComboBoxActivated(int);
-	void NextFinishButtonClicked();
+    // ...end!
+
+    void NextFinishButtonClicked();
 	void currentPageChangedInto(int);
-	void loadRespCurveFilename(const QString&);
 	void editingEVfinished();
 	void reject();
 	void ais_failed(QProcess::ProcessError);

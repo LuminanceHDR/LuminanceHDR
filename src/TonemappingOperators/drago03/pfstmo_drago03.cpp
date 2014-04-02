@@ -33,6 +33,8 @@
 #include <cmath>
 #include <iostream>
 
+#include <boost/math/special_functions/fpclassify.hpp>
+
 #include "Libpfs/frame.h"
 #include "Libpfs/progress.h"
 #include "Libpfs/exception.h"
@@ -72,7 +74,15 @@ void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress &ph)
     {
         for (int y=0 ; y<h ; y++)
         {
-            float scale = L(x,y) / Yr(x,y);
+            float yr = Yr(x,y);
+            float scale = 0.f;
+            if (yr != 0.f)
+            {
+                scale = L(x,y)/yr;
+            }
+
+            assert(!boost::math::isnan(scale));
+
             Yr(x,y) = Yr(x,y) * scale;
             Xr(x,y) = Xr(x,y) * scale;
             Zr(x,y) = Zr(x,y) * scale;

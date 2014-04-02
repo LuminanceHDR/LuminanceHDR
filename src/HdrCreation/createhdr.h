@@ -1,7 +1,8 @@
-/**
+/*
  * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2014 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,58 +19,24 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
 #ifndef CREATEHDR_H
 #define CREATEHDR_H
 
+//! \author Giuseppe Rota <grota@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+
 #include <QString>
-#include <QList>
-#include <QImage>
+#include <HdrCreation/fusionoperator.h>
 
-#include <stdarg.h>
-
-namespace pfs {
-    class Frame;
-}
-
-enum TWeight
+struct FusionOperatorConfig
 {
-    TRIANGULAR,
-    GAUSSIAN,
-    PLATEAU
+    libhdr::fusion::WeightFunctionType weightFunction;
+    libhdr::fusion::ResponseCurveType responseCurve;
+    libhdr::fusion::FusionOperator fusionOperator;
+    QString inputResponseCurveFilename;
+    QString outputResponseCurveFilename;
 };
-
-enum TResponse
-{
-    FROM_FILE,
-    LINEAR,
-    GAMMA,
-    LOG10,
-    FROM_ROBERTSON
-};
-
-enum TModel
-{
-    ROBERTSON,
-    DEBEVEC
-};
-
-struct config_triple
-{
-    TWeight weights;
-    TResponse response_curve;
-    TModel model;
-    QString LoadCurveFromFilename;
-    QString SaveCurveToFilename;
-};
-
-/**
- * @brief main hdr creation function.
- * @brief it can either create an hdr from a qt list of LDRs (QImage) or from a list of HDR data (raw formats, hdr tiffs).
- *
-**/
-pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
 
 #endif

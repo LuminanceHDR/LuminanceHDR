@@ -305,26 +305,6 @@ bool GenericViewer::hasSelection(void)
     return mPixmap->hasSelection();
 }
 
-bool GenericViewer::needsSaving(void)
-{
-    return mNeedsSaving;
-}
-
-void GenericViewer::setNeedsSaving(bool s)
-{
-    mNeedsSaving = s;
-}
-
-QString GenericViewer::getFileName()
-{
-    return mFileName;
-}
-
-void GenericViewer::setFileName(const QString& fn)
-{
-    mFileName = fn;
-}
-
 void GenericViewer::slotCornerButtonPressed()
 {
     mPanIconWidget = new PanIconWidget(this);

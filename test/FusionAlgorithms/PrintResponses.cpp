@@ -8,67 +8,78 @@
 using namespace std;
 using namespace libhdr::fusion;
 
-static const size_t SAMPLES = 256;
+static const size_t SAMPLES = 1024;
 
-void printLinear()
+static float getSample(int sample)
 {
-    ResponseLinear response;
-    vector<float> data(SAMPLES);
-
-    ofstream outputFile("response_linear.dat");
-    responseLinear(data.data(), SAMPLES);
-    for (size_t idx = 0; idx < SAMPLES; ++idx)
-    {
-        float w = response.getResponse((float)idx/(SAMPLES - 1));
-
-        outputFile << idx << " " << data[idx] << " "
-                   << w << " " << abs(data[idx] - w)
-                   << "\n";
-    }
-    outputFile.close();
+    return static_cast<float>(sample)/(SAMPLES - 1);
 }
 
-void printLog10()
+void printResponseCurve(const ResponseCurve& responseFunction1,
+                        void (*responseFunction2)(float*, int) ,
+                        const std::string& fileNameGnuplot,
+                        const std::string& fileNameMatlab)
 {
-    ResponseLog10 response;
     vector<float> data(SAMPLES);
 
-    ofstream outputFile("response_log10.dat");
-    responseLog10(data.data(), SAMPLES);
+    ofstream outputFile(fileNameGnuplot.c_str());
+    responseFunction2(data.data(), SAMPLES);
     for (size_t idx = 0; idx < SAMPLES; ++idx)
     {
-        float w = response.getResponse((float)idx/(SAMPLES-1));
+        float sample = getSample(idx);
+        float w = responseFunction1.getResponse(sample);
 
-        outputFile << idx << " " << data[idx] << " "
-                   << w << " " << abs(data[idx] - w)
+        outputFile << idx << " "
+                   << sample << " "
+                   << data[idx] << " "
+                   << w << " "
+                   << abs(data[idx] - w)
                    << "\n";
     }
     outputFile.close();
+
+    responseFunction1.writeToFile(fileNameMatlab);
 }
 
-void printGamma()
+void responseLinear( float* I, int M )
 {
-    ResponseGamma response;
-    vector<float> data(SAMPLES);
-
-    ofstream outputFile("response_gamma.dat");
-    responseGamma(data.data(), SAMPLES);
-    for (size_t idx = 0; idx < SAMPLES; ++idx)
+    for (int m=0 ; m<M ; m++)
     {
-        float w = response.getResponse((float)idx/(SAMPLES-1));
-
-        outputFile << idx << " " << data[idx] << " "
-                   << w << " " << abs(data[idx] - w)
-                   << "\n";
+        I[m] = m / float(M-1); // range is not important, values are normalized later
     }
-    outputFile.close();
+}
+
+void responseLog10( float* I, int M )
+{
+    const float mid = 0.5f * M;
+    const float norm = 0.0625f * M;
+    const float maxValue = powf(10.0f, float(M-1 - mid) / norm);
+
+    for (int m=0 ; m < M; ++m)
+    {
+        I[m] = powf(10.0f, float(m - mid) / norm) / maxValue;
+    }
+}
+
+void responseGamma( float* I, int M )
+{
+    float norm = M / 4.0f;
+
+    // response curve decided empirically
+    for( int m=0 ; m<M ; m++ )
+        I[m] = powf( m/norm, 1.7f ) + 1e-4;
 }
 
 int main()
 {
-    printLinear();
-    printLog10();
-    printGamma();
+    printResponseCurve(ResponseCurve(RESPONSE_LINEAR), &responseLinear,
+                       "response_linear.dat", "response_linear.m");
+    printResponseCurve(ResponseCurve(RESPONSE_LOG10), &responseLog10,
+                       "response_log10.dat", "response_log10.m");
+    printResponseCurve(ResponseCurve(RESPONSE_GAMMA), &responseGamma,
+                       "response_gamma.dat", "response_gamma.m");
+    printResponseCurve(ResponseCurve(RESPONSE_SRGB), &responseLinear,
+                       "response_srgb.dat", "response_srgb.m");
 
     return 0;
 }

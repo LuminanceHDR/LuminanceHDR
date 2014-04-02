@@ -47,6 +47,9 @@
 #include <io.h>
 #endif
 
+
+using namespace libhdr::fusion;
+
 namespace
 {
 void printErrorAndExit(const QString& error_str)
@@ -165,10 +168,9 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     doAutoAntighosting(false),
     saveAlignedImagesPrefix("")
 {
-    hdrcreationconfig.weights = TRIANGULAR;
-    hdrcreationconfig.response_curve = LINEAR;
-    hdrcreationconfig.model = DEBEVEC;
-    hdrcreationconfig.SaveCurveToFilename = QString();
+    hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
+    hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
+    hdrcreationconfig.fusionOperator = DEBEVEC;
 
     parseArgs();
 }
@@ -232,41 +234,41 @@ void CommandLineInterfaceManager::parseArgs()
                 }
                 if (keyandvalue.at(0)== "weight") {
                     if (keyandvalue.at(1)== "triangular")
-                        hdrcreationconfig.weights = TRIANGULAR;
+                        hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
                     else if (keyandvalue.at(1) == "gaussian")
-                        hdrcreationconfig.weights=GAUSSIAN;
+                        hdrcreationconfig.weightFunction = WEIGHT_GAUSSIAN;
                     else if (keyandvalue.at(1) == "plateau")
-                        hdrcreationconfig.weights=PLATEAU;
+                        hdrcreationconfig.weightFunction = WEIGHT_PLATEAU;
                     else
                         printErrorAndExit(tr("Error: Unknown weight function specified."));
                 }
 
                 else if (keyandvalue.at(0) == "response_curve") {
                     if (keyandvalue.at(1) == "from_file")
-                        hdrcreationconfig.response_curve = FROM_FILE;
+                        hdrcreationconfig.responseCurve = RESPONSE_CUSTOM;
                     else if (keyandvalue.at(1) == "linear")
-                        hdrcreationconfig.response_curve=LINEAR;
+                        hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
                     else if (keyandvalue.at(1) == "gamma")
-                        hdrcreationconfig.response_curve=GAMMA;
+                        hdrcreationconfig.responseCurve = RESPONSE_GAMMA;
                     else if (keyandvalue.at(1) == "log")
-                        hdrcreationconfig.response_curve=LOG10;
-                    else if (keyandvalue.at(1) == "robertson")
-                        hdrcreationconfig.response_curve=FROM_ROBERTSON;
+                        hdrcreationconfig.responseCurve = RESPONSE_LOG10;
+//                    else if (keyandvalue.at(1) == "robertson")
+//                        hdrcreationconfig.response_curve=FROM_ROBERTSON;
                     else
                         printErrorAndExit(tr("Error: Unknown response curve specified."));
                 }
 
                 else if (keyandvalue.at(0) == "model") {
                     if (keyandvalue.at(1) == "robertson")
-                        hdrcreationconfig.model=ROBERTSON;
+                        hdrcreationconfig.fusionOperator = ROBERTSON;
                     else if (keyandvalue.at(1) == "debevec")
-                        hdrcreationconfig.model = DEBEVEC;
+                        hdrcreationconfig.fusionOperator = DEBEVEC;
                     else
                         printErrorAndExit(tr("Error: Unknown HDR creation model specified."));
                 }
 
                 else if (keyandvalue.at(0) == "curve_filename")
-                    hdrcreationconfig.LoadCurveFromFilename=strdup(QFile::encodeName(keyandvalue.at(1)).constData());
+                    hdrcreationconfig.inputResponseCurveFilename = keyandvalue.at(1);
                 else
                     printErrorAndExit(tr("Error: Unknown HDR creation format specified."));
 
@@ -566,7 +568,7 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
         HDR.reset( hdrCreationManager->doAntiGhosting(patches, h0, false, &ph) ); // false means auto anti-ghosting
     }
     else {
-        HDR.reset( hdrCreationManager->createHdr(false,1) );
+        HDR.reset( hdrCreationManager->createHdr() );
     }
     saveHDR();
 }

@@ -3,7 +3,6 @@ SET(FILES_H )
 
 SET(FILES_HXX
 ${CMAKE_CURRENT_SOURCE_DIR}/createhdr.h
-${CMAKE_CURRENT_SOURCE_DIR}/createhdr_common.h
 ${CMAKE_CURRENT_SOURCE_DIR}/debevec.h
 ${CMAKE_CURRENT_SOURCE_DIR}/responses.h
 ${CMAKE_CURRENT_SOURCE_DIR}/robertson02.h
@@ -12,8 +11,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fusionoperator.h
 ${CMAKE_CURRENT_SOURCE_DIR}/weights.h
 )
 SET(FILES_CPP
-${CMAKE_CURRENT_SOURCE_DIR}/createhdr.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/createhdr_common.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/debevec.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/responses.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/robertson02.cpp

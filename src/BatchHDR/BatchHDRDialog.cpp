@@ -23,9 +23,13 @@
 *
 */
 
+#include "BatchHDR/BatchHDRDialog.h"
+#include "ui_BatchHDRDialog.h"
+
 #include <QDebug>
 #include <QFileDialog>
 #include <QDir>
+#include <QFile>
 #include <QMessageBox>
 #include <QRegExp>
 #include <QSqlRecord>
@@ -40,11 +44,11 @@
 #include <Libpfs/frame.h>
 
 #include "arch/math.h"
-#include "BatchHDR/BatchHDRDialog.h"
-#include "ui_BatchHDRDialog.h"
 #include "Libpfs/pfs.h"
 #include "Core/IOWorker.h"
 #include "OsIntegration/osintegration.h"
+
+using namespace libhdr::fusion;
 
 BatchHDRDialog::BatchHDRDialog(QWidget *p):
     QDialog(p),
@@ -101,51 +105,41 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
 
     QSqlQueryModel model;
     model.setQuery("SELECT * FROM parameters"); 
-    for (int i = 0; i < model.rowCount(); i++) {
+    for (int i = 0; i < model.rowCount(); i++)
+    {
         m_Ui->profileComboBox->addItem(tr("Custom config %1").arg(i+1));
         int weight_ = model.record(i).value("weight").toInt(); 
         int response_ = model.record(i).value("response").toInt(); 
         int model_ = model.record(i).value("model").toInt(); 
         QString filename_ = model.record(i).value("filename").toString(); 
-        config_triple ct;
-        switch (weight_) {
-            case 0:
-                ct.weights = TRIANGULAR;
-                break;
-            case 1:
-                ct.weights = GAUSSIAN;
-                break;
-            case 2:
-                ct.weights = PLATEAU;
-                break;
+        FusionOperatorConfig ct;
+
+        ct.weightFunction = static_cast<WeightFunctionType>(weight_);
+        ct.fusionOperator = static_cast<FusionOperator>(model_);
+
+        switch (response_)
+        {
+        case 0:
+            ct.responseCurve = RESPONSE_CUSTOM;
+            ct.inputResponseCurveFilename = QFile::encodeName(filename_).constData();
+            ct.outputResponseCurveFilename.clear();
+            break;
+        case 2:
+            ct.responseCurve = RESPONSE_GAMMA;
+            break;
+        case 3:
+            ct.responseCurve = RESPONSE_LOG10;
+            break;
+        case 4:
+            ct.responseCurve = RESPONSE_CUSTOM;
+            ct.fusionOperator = ROBERTSON_AUTO;
+            break;
+        case 1:
+        default:
+            ct.responseCurve = RESPONSE_LINEAR;
+            break;
         }
-        switch (response_) {
-            case 0:
-                ct.response_curve = FROM_FILE;
-                ct.LoadCurveFromFilename = filename_;
-                ct.SaveCurveToFilename = "";    
-                break;
-            case 1:
-                ct.response_curve = LINEAR;
-                break; 
-            case 2:
-                ct.response_curve = GAMMA;
-                break; 
-            case 3:
-                ct.response_curve = LOG10;
-                break; 
-            case 4:
-                ct.response_curve = FROM_ROBERTSON;
-                break; 
-        }
-        switch (model_) {
-            case 0:
-                ct.model = DEBEVEC;
-                break; 
-            case 1:
-                ct.model = ROBERTSON;
-                break; 
-        }
+
         m_customConfig.push_back(ct);   
     }
     check_start_button();
@@ -370,14 +364,23 @@ void BatchHDRDialog::create_hdr(int)
     m_Ui->progressBar_2->hide();
     m_Ui->textEdit->append(tr("Creating HDR..."));
     int idx = m_Ui->profileComboBox->currentIndex();
-    if (idx <= 5) {
-        m_hdrCreationManager->chosen_config = predef_confs[idx];
+
+    const FusionOperatorConfig* cfg = NULL;
+    if (idx <= 5)
+    {
+        cfg = &predef_confs[idx];
     }
-    else  {
-        m_hdrCreationManager->chosen_config = m_customConfig[idx - 6];
+    else
+    {
+        cfg = &m_customConfig[idx - 6];
     }
 
-    if (m_Ui->autoAG_checkBox->isChecked()) {
+    m_hdrCreationManager->setFusionOperator(cfg->fusionOperator);
+    m_hdrCreationManager->getWeightFunction().setType(cfg->weightFunction);
+    m_hdrCreationManager->getResponseCurve().setType(cfg->responseCurve);
+
+    if (m_Ui->autoAG_checkBox->isChecked())
+    {
         m_Ui->textEdit->append(tr("Doing auto anti-ghosting..."));
         QList<QPair<int, int> > HV_offsets;
         for (int i = 0; i < m_Ui->spinBox->value(); i++ ) {
@@ -394,10 +397,8 @@ void BatchHDRDialog::create_hdr(int)
         
     }
     else {
-        m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr, 
-                                                   m_hdrCreationManager,
-                                                   false, 
-                                                   1));
+        m_future = QtConcurrent::run(
+                       boost::bind(&HdrCreationManager::createHdr, m_hdrCreationManager));
 
         m_futureWatcher.setFuture(m_future);
     }

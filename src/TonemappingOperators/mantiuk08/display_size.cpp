@@ -30,6 +30,8 @@
  */
 
 
+#include <boost/math/constants/constants.hpp>
+
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -43,7 +45,7 @@ static void removeCommandLineArg( int &argc, char* argv[],
 
 DisplaySize::DisplaySize( int vres, float vd_screen_h, float vd_meters ) : view_d(vd_meters)
 {
-  ppd = vres * M_PI / (360* atan(0.5f/vd_screen_h));
+  ppd = vres * boost::math::double_constants::pi / (360* atan(0.5f/vd_screen_h));
 }
 
 DisplaySize::DisplaySize( float ppd, float vd_meters ) : view_d(vd_meters), ppd( ppd )

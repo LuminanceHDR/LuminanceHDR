@@ -38,20 +38,17 @@
 
 #include <Libpfs/frame.h>
 #include <HdrCreation/fusionoperator.h>
+#include <HdrCreation/createhdr.h>
 
 #include "Alignment/Align.h"
 #include "Common/LuminanceOptions.h"
 #include "Common/ProgressHelper.h"
 #include "arch/math.h"
-#include "HdrCreation/createhdr.h"
-#include "HdrCreation/createhdr_common.h"
-#include "HdrCreation/fusionoperator.h"
 #include "HdrCreationItem.h"
-
 #include "AutoAntighosting.h"
 
 // Some other file expect this to be available
-extern const config_triple predef_confs[6];
+extern const FusionOperatorConfig predef_confs[6];
 
 class HdrCreationManager : public QObject
 {
@@ -59,13 +56,6 @@ class HdrCreationManager : public QObject
 private:
     HdrCreationItemContainer m_data;
     HdrCreationItemContainer m_tmpdata;
-
-    libhdr::fusion::FusionOperator m_fusionOperator;
-    libhdr::fusion::WeightFunction m_weightFunction;
-    libhdr::fusion::ResponseFunction m_responseFunction;
-
-    QString m_inputResponseCurveFile;
-    QString m_outputResponseCurveFile;
 
 public:
     HdrCreationManager(bool fromCommandLine = false);
@@ -92,18 +82,21 @@ public:
     const_iterator begin() const    { return m_data.begin(); }
     const_iterator end() const      { return m_data.end(); }
 
+    const libhdr::fusion::ResponseCurve& getResponseCurve() const   { return *m_response; }
+    libhdr::fusion::ResponseCurve& getResponseCurve()               { return *m_response; }
+
+    const libhdr::fusion::WeightFunction& getWeightFunction() const { return *m_weight; }
+    libhdr::fusion::WeightFunction& getWeightFunction()             { return *m_weight; }
+
     void setFusionOperator(libhdr::fusion::FusionOperator fo)       { m_fusionOperator = fo; }
-    void setWeightFunction(libhdr::fusion::WeightFunction wf)       { m_weightFunction = wf; }
-    void setResponseFunction(libhdr::fusion::ResponseFunction rf)   { m_responseFunction = rf; }
+    libhdr::fusion::FusionOperator getFusionOperator()              { return m_fusionOperator; }
 
-    void setInputResponseFile(const QString& filename)              { m_inputResponseCurveFile = filename; }
-    void setOutputResponseFile(const QString& filename)             { m_outputResponseCurveFile = filename; }
+    void setResponseCurveOutputFile(const QString& filename)        { m_responseCurveOutputFilename = filename; }
+    const QString& responseCurveOutputFile() const                  { return m_responseCurveOutputFilename; }
 
-    const QString& outputResponseFile() const                       { return m_outputResponseCurveFile; }
+    void setConfig(const FusionOperatorConfig& cfg);
 
-    void setConfig(const config_triple& cfg);
-
-	pfs::Frame* createHdr(bool ag, int iterations);
+    pfs::Frame* createHdr();
 
     void set_ais_crop_flag(bool flag);
 	void align_with_ais();
@@ -113,11 +106,7 @@ public:
     //const QList<QImage*>& getAntiGhostingMasksList() const  { return m_antiGhostingMasksList; }
     //void setAntiGhostingMasksList(QList<QImage*>& list)     { m_antiGhostingMasksList.swap(list); }
     void setAntiGhostingMask(QImage* mask) { m_agMask = new QImage(*mask); }
-    const QVector<float> getExpotimes() const;
-
-    // the configuration used to create the hdr
-    // this is public so that the wizard (or the cli?) can modify it directly.
-	config_triple chosen_config;
+    QVector<float> getExpotimes() const;
 
     void applyShiftsToItems(const QList<QPair<int,int> >&);
     void cropItems(const QRect& ca);
@@ -159,6 +148,11 @@ signals:
 
 private:
     bool framesHaveSameSize();    
+
+    boost::scoped_ptr<libhdr::fusion::ResponseCurve> m_response;
+    boost::scoped_ptr<libhdr::fusion::WeightFunction> m_weight;
+    libhdr::fusion::FusionOperator m_fusionOperator;
+    QString m_responseCurveOutputFilename;
 
     QFutureWatcher<void> m_futureWatcher;
 	//QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti-ghosting

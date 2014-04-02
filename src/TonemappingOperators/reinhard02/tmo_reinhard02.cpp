@@ -16,6 +16,8 @@
  * $Id: tmo_reinhard02.cpp,v 1.3 2008/11/04 23:43:08 rafm Exp $
  */
 
+#include <boost/math/constants/constants.hpp>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "arch/math.h"
@@ -64,7 +66,7 @@ double Reinhard02::bessel (double x)
 
 void Reinhard02::compute_bessel ()
 {
-  m_bbeta = bessel (M_PI * m_alpha);
+  m_bbeta = bessel (boost::math::double_constants::pi * m_alpha);
 }
 
 /*
@@ -77,7 +79,7 @@ double Reinhard02::kaiserbessel (double x, double y, double M)
   double d = 1. - ((x*x + y*y) / (M * M));
   if (d <= 0.)
     return 0.;
-  return bessel (M_PI * m_alpha * sqrt (d)) / m_bbeta;
+  return bessel (boost::math::double_constants::pi * m_alpha * sqrt (d)) / m_bbeta;
 }
 
 /*

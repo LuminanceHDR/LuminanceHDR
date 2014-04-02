@@ -24,75 +24,64 @@
 #include "robertson02.h"
 
 #include <cassert>
+#include <map>
 #include <boost/make_shared.hpp>
+#include <boost/assign.hpp>
 
 #include <Libpfs/frame.h>
+#include <Libpfs/utils/string.h>
 
 using namespace pfs;
+using namespace std;
+using namespace boost;
+using namespace boost::assign;
 
 namespace libhdr {
 namespace fusion {
 
 IFusionOperator::IFusionOperator()
-    : m_response(new ResponseSRGB)
-    , m_weight(new WeightGaussian)
 {}
 
-// questa e' da sistemare...
-pfs::Frame* IFusionOperator::computeFusion(const std::vector<FrameEnhanced>& frames) const
+// TODO: fix this to return a shared_ptr
+pfs::Frame* IFusionOperator::computeFusion(ResponseCurve& response, const WeightFunction& weight, const std::vector<FrameEnhanced>& frames) const
 {
     pfs::Frame* frame = new pfs::Frame;
-    computeFusion(frames, *frame);
+    computeFusion(response, weight, frames, *frame);
     return frame;
 }
 
 FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
-    switch (type) {
-    case ROBERTSON02_NEW:
+    switch (type)
+    {
+    case ROBERTSON_AUTO:
+        return boost::make_shared<RobertsonOperatorAuto>();
+        break;
+    case ROBERTSON:
         return boost::make_shared<RobertsonOperator>();
         break;
-    case DEBEVEC_NEW:
+    case DEBEVEC:
     default:
         return boost::make_shared<DebevecOperator>();
         break;
     }
 }
 
-bool IFusionOperator::setResponseFunction(ResponseFunction responseFunction)
+FusionOperator IFusionOperator::fromString(const std::string& type)
 {
-    switch (responseFunction) {
-    case RESPONSE_GAMMA:
-        m_response.reset(new ResponseGamma);
-        break;
-    case RESPONSE_LINEAR:
-        m_response.reset(new ResponseLinear);
-        break;
-    case RESPONSE_LOG10:
-        m_response.reset(new ResponseLog10);
-        break;
-    case RESPONSE_SRGB:
-    default:
-        m_response.reset(new ResponseSRGB);
-        break;
-    }
-    return true;
-}
+    typedef map<string, FusionOperator, pfs::utils::StringUnsensitiveComp> Dict;
+    static Dict v =
+            map_list_of
+            ("debevec", DEBEVEC)
+            ("robertson", ROBERTSON)
+            ("robertson-auto", ROBERTSON_AUTO)
+            ;
 
-bool IFusionOperator::setWeightFunction(WeightFunction weightFunction)
-{
-    switch (weightFunction) {
-    case WEIGHT_TRIANGULAR:
-        m_weight.reset(new WeightTriangular);
-        break;
-    case WEIGHT_PLATEAU:
-        m_weight.reset(new WeightPlateau);
-        break;
-    case WEIGHT_GAUSSIAN:
-    default:
-        m_weight.reset(new WeightGaussian);
-        break;
+    Dict::const_iterator it = v.find(type);
+    if (it != v.end())
+    {
+        return it->second;
     }
-    return true;
+    return DEBEVEC;
 }
 
 void fillDataLists(const vector<FrameEnhanced> &frames,

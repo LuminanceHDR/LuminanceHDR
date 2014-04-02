@@ -60,7 +60,6 @@ struct Gamma
     }
 };
 
-
 }   // colorspace
 }   // pfs
 

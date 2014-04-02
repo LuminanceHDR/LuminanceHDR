@@ -32,6 +32,8 @@ libhdr::fusion::FrameEnhanced loadFile(const std::string& filename)
 
     float averageLuminace = ExifOperations::getAverageLuminance(filename);
 
+    std::cout << filename << " avg luminance = " << averageLuminace << std::endl;
+
     return libhdr::fusion::FrameEnhanced(image, averageLuminace);
 }
 
@@ -39,13 +41,18 @@ libhdr::fusion::FrameEnhanced loadFile(const std::string& filename)
 int main(int argc, char** argv)
 {
 #ifdef LHDR_CXX11_ENABLED
+    string          responseCurveStr;
+    string          weightFunctionStr;
+    string          fusionModelStr;
     string          outputFile;
     vector<string>  inputFiles;
 
     // program options
     po::options_description desc("Allowed options: ");
     desc.add_options()
-            ("response-type,r", po::value<std::string>(), "response type")
+            ("response-type,r", po::value<std::string>(&responseCurveStr)->default_value("srgb"), "response curve type")
+            ("weight-type,w", po::value<std::string>(&weightFunctionStr)->default_value("flat"), "weighting function type")
+            ("fusion-type,f", po::value<std::string>(&fusionModelStr)->default_value("debevec"), "fusion algorithm")
             ("output-file,o", po::value<std::string>(&outputFile)->required(), "output file")
             ("input-files,i", po::value< vector<string> >(&inputFiles)->required(), "input files (JPEG, TIFF or RAW)")
             ;
@@ -58,7 +65,7 @@ int main(int argc, char** argv)
         po::notify(vm);
 
         std::vector<libhdr::fusion::FrameEnhanced> images;
-        foreach(const string& filename, inputFiles)
+        foreach (const string& filename, inputFiles)
         {
             images.push_back(loadFile(filename));
         }
@@ -70,12 +77,26 @@ int main(int argc, char** argv)
         msec_timer t;
         t.start();
 
-        FusionOperatorPtr fusionOperator = IFusionOperator::build(DEBEVEC_NEW);
-        pfs::FramePtr newHdr(fusionOperator->computeFusion(images));
+        ResponseCurve responseCurve(ResponseCurve::fromString(responseCurveStr));
+        WeightFunction weightFunction(WeightFunction::fromString(weightFunctionStr));
+
+        // responseCurve.readFromFile("responses_before.m");
+
+        FusionOperatorPtr fusionOperator = IFusionOperator::build(IFusionOperator::fromString(fusionModelStr));
+
+        cout << responseCurveStr << " (" << responseCurve.getType() << ") / "
+             << weightFunctionStr << " (" << weightFunction.getType() << ") / "
+             << fusionModelStr << "(" << fusionOperator->getType() << ")"
+             << std::endl;
+
+        pfs::FramePtr newHdr(fusionOperator->computeFusion(responseCurve, weightFunction, images));
         if ( newHdr == NULL )
         {
             return -1;
         }
+
+        responseCurve.writeToFile("responses_before.m");
+        responseCurve.writeToFile("responses_after.m");
 
         t.stop_and_update();
         std::cout << "Fusion elapsed time: " << t.get_time() << std::endl;
@@ -104,7 +125,7 @@ int main(int argc, char** argv)
 
         FrameWriterPtr writer = FrameWriterFactory::open(outputFile);
         writer->write(*newHdr,
-                      pfs::Params("mapping_method", MAP_GAMMA2_2)
+                      pfs::Params("mapping_method", MAP_GAMMA2_6)
                       ("min_luminance", min)
                       ("max_luminance", max));
 

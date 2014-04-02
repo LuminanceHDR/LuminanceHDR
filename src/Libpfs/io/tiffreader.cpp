@@ -47,6 +47,7 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/current_function.hpp>
 
 using namespace pfs;
 using namespace pfs::utils;
@@ -325,7 +326,7 @@ private:
     void readRGB(Frame & frame, const TiffReaderParams& params)
     {
 #ifndef NDEBUG
-        std::cout << __func__ << typeid(InputDataType).name() << std::endl;
+        std::cout << BOOST_CURRENT_FUNCTION << typeid(InputDataType).name() << std::endl;
         assert(samplesPerPixel_ >= 3);
 #endif
 
@@ -347,7 +348,7 @@ private:
     void readLogLuv(Frame &frame, const TiffReaderParams& params)
     {
 #ifndef NDEBUG
-        std::cout << __func__ << std::endl;
+        std::cout << BOOST_CURRENT_FUNCTION << std::endl;
         assert(samplesPerPixel_ == 3);
 #endif
 
@@ -358,7 +359,7 @@ private:
     void readCMYK(Frame & frame, const TiffReaderParams& params)
     {
 #ifndef NDEBUG
-        std::cout << __func__ << typeid(InputDataType).name() << std::endl;
+        std::cout << BOOST_CURRENT_FUNCTION << typeid(InputDataType).name() << std::endl;
         assert(samplesPerPixel_ == 4);
 #endif
 
@@ -461,7 +462,10 @@ void TiffReader::open()
 
         // read extra samples (# of alpha channels)
         if (!TIFFGetField(m_data->handle(), TIFFTAG_EXTRASAMPLES, &extraSamplesPerPixel, &extraSamplesTypes)) {
-            extraSamplesPerPixel = 0;
+            if (m_data->samplesPerPixel_ == 4)
+            {
+                extraSamplesPerPixel = 1;
+            }
         }
         uint16 colorSamples = m_data->samplesPerPixel_ - extraSamplesPerPixel;
         m_data->hasAlpha_ = (extraSamplesPerPixel == 1);

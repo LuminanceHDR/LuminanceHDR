@@ -461,7 +461,7 @@ Fortsæt?</translation>
         <translation>Output</translation>
     </message>
     <message>
-        <source>Ouput Image Width:</source>
+        <source>Output Image Width:</source>
         <translation>Bredde på outputbillede:</translation>
     </message>
     <message>

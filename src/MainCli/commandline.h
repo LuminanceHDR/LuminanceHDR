@@ -74,7 +74,7 @@ private:
     void printHelp(char *progname);
     QScopedPointer<TonemappingOptions> tmopts;
     bool verbose;
-    config_triple hdrcreationconfig;
+    FusionOperatorConfig hdrcreationconfig;
     QString loadHdrFilename;
     QStringList inputFiles;
 	ez::ezETAProgressBar progressBar;

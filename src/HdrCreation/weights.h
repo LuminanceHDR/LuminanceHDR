@@ -23,97 +23,79 @@
 #define LIBHDR_FUSION_WEIGHTS_H
 
 #include <limits>
+#include <array>
+#include <cassert>
 
 namespace libhdr {
 namespace fusion {
 
-enum WeightFunction {
-    WEIGHT_TRIANGULAR,
-    WEIGHT_GAUSSIAN,
-    WEIGHT_PLATEAU
+enum WeightFunctionType
+{
+    WEIGHT_TRIANGULAR = 0,
+    WEIGHT_GAUSSIAN = 1,
+    WEIGHT_PLATEAU = 2,
+    WEIGHT_FLAT = 3
 };
 
-class IWeightFunction {
+class WeightFunction
+{
 public:
-    virtual ~IWeightFunction() {}
+    static const size_t NUM_BINS = (1 << 12);
+    typedef std::array<float, NUM_BINS> WeightContainer;
 
-    virtual float getWeight(float input) const = 0;
-    virtual WeightFunction getType() const = 0;
+    static WeightFunctionType fromString(const std::string& type);
 
-    virtual float minTrustedValue() const {
-        return std::numeric_limits<float>::epsilon();
-    }
+    static size_t getIdx(float sample);
 
-    virtual float maxTrustedValue() const {
-        return 1.f - std::numeric_limits<float>::epsilon();
-    }
-};
+    WeightFunction(WeightFunctionType type);
 
-class WeightTriangular : public IWeightFunction {
-public:
     float getWeight(float input) const;
-    WeightFunction getType() const {
-        return WEIGHT_TRIANGULAR;
-    }
+    float operator()(float input) const { return getWeight(input); }
 
-    float minTrustedValue() const;
-    float maxTrustedValue() const;
+    void setType(WeightFunctionType type);
+    WeightFunctionType getType() const  { return m_type; }
+
+    float minTrustedValue() const       { return m_minTrustedValue; }
+    float maxTrustedValue() const       { return m_maxTrustedValue; }
+
+private:
+    WeightFunctionType m_type;
+    WeightContainer m_weights;
+
+    float m_minTrustedValue;
+    float m_maxTrustedValue;
 };
 
-class WeightGaussian : public IWeightFunction {
-public:
-    float getWeight(float input) const;
-    WeightFunction getType() const {
-        return WEIGHT_GAUSSIAN;
-    }
+inline
+size_t WeightFunction::getIdx(float sample)
+{ return size_t(sample*(NUM_BINS - 1) + 0.45f); }
 
-    float minTrustedValue() const;
-    float maxTrustedValue() const;
-};
+inline
+float WeightFunction::getWeight(float input) const
+{
+    assert(input >= 0.f);
+    assert(input <= 1.f);
 
-class WeightPlateau : public IWeightFunction {
-public:
-    float getWeight(float input) const;
-    WeightFunction getType() const {
-        return WEIGHT_PLATEAU;
-    }
-
-    float minTrustedValue() const;
-    float maxTrustedValue() const;
-};
+    return m_weights[getIdx(input)];
+}
 
 }   // fusion
 }   // libhdr
 
-// OLD STUFF
-/**
- * @brief Weighting function with "flat" distribution (as in icip06)
- *
- * @param w [out] weights (array size of M)
- * @param M number of camera output levels
- */
-void exposure_weights_icip06( float* w, int M, int Mmin, int Mmax );
+//! \brief Load weighting function
+//!
+//! \param file file handle to save response curve
+//! \param w [out] weights (array size of M)
+//! \param M number of camera output levels
+//! \return false means file has different output levels or is wrong for some other reason
+bool weightsLoad(FILE* file, float* w, int M);
 
-/**
- * @brief Weighting function with triangle distribution (as in debevec)
- *
- * @param w [out] weights (array size of M)
- * @param M number of camera output levels
- */
-void weights_triangle( float* w, int M/*, int Mmin, int Mmax */);
-
-/**
- * @brief Weighting function with gaussian distribution
- *
- * @param w [out] weights (array size of M)
- * @param M number of camera output levels
- * @param Mmin minimum registered camera output level
- * @param Mmax maximum registered camera output level
- * @param sigma sigma value for gaussian
- */
-void weightsGauss(float* w, int M, int Mmin, int Mmax, float sigma  = 8.0f);
-
-
-
+//! \brief Save weighting function
+//!
+//! \param file file handle to save response curve
+//! \param w weights (array size of M)
+//! \param M number of camera output levels
+//! \param name matrix name for use in Octave or Matlab
+void weightsSave(FILE* file, const float* w, int M, const char* name);
 
 #endif // LIBHDR_FUSION_WEIGHTS_H

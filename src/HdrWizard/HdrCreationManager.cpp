@@ -61,7 +61,6 @@
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/manip/cut.h>
 #include <Libpfs/colorspace/convert.h>
-#include <Libpfs/colorspace/rgbremapper.h>
 #include <Libpfs/colorspace/colorspace.h>
 
 #include "arch/math.h"
@@ -73,19 +72,22 @@
 using namespace std;
 using namespace pfs;
 using namespace pfs::io;
+using namespace libhdr::fusion;
 
-const config_triple predef_confs[6]= {
-    {TRIANGULAR, LINEAR,DEBEVEC, "", ""},
-    {TRIANGULAR, GAMMA, DEBEVEC, "", ""},
-    {PLATEAU, LINEAR, DEBEVEC, "", ""},
-    {PLATEAU, GAMMA, DEBEVEC, "", ""},
-    {GAUSSIAN, LINEAR, DEBEVEC, "", ""},
-    {GAUSSIAN, GAMMA, DEBEVEC, "", ""},
+const FusionOperatorConfig predef_confs[6] =
+{
+    {WEIGHT_TRIANGULAR, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
+    {WEIGHT_TRIANGULAR, RESPONSE_GAMMA, DEBEVEC, QString(), QString()},
+    {WEIGHT_PLATEAU, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
+    {WEIGHT_PLATEAU, RESPONSE_GAMMA, DEBEVEC, QString(), QString()},
+    {WEIGHT_GAUSSIAN, RESPONSE_LINEAR, DEBEVEC, QString(), QString()},
+    {WEIGHT_GAUSSIAN, RESPONSE_GAMMA, DEBEVEC, QString(), QString()},
 };
 
-
 // --- NEW CODE ---
-namespace {
+namespace
+{
+
 QImage* shiftQImage(const QImage *in, int dx, int dy)
 {
     QImage *out = new QImage(in->size(),QImage::Format_ARGB32);
@@ -194,16 +196,25 @@ void HdrCreationManager::removeFile(int idx)
 }
 
 using namespace libhdr::fusion;
+
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
-    : chosen_config( predef_confs[0] )
-    , m_agMask( NULL )
-    , m_align( NULL )
+    : m_response(new ResponseCurve(predef_confs[0].responseCurve))
+    , m_weight(new WeightFunction(predef_confs[0].weightFunction))
+    , m_agMask(NULL)
+    , m_align(NULL)
     , m_ais_crop_flag(false)
     , fromCommandLine( fromCommandLine )
 {
+    // setConfig(predef_confs[0]);
+    setFusionOperator(predef_confs[0].fusionOperator);
+
     for (int i = 0; i < agGridSize; i++)
+    {
         for (int j = 0; j < agGridSize; j++)
+        {
             m_patches[i][j] = false;
+        }
+    }
 
     connect(&m_futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
     connect(&m_futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
@@ -212,12 +223,22 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     connect(&m_futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
 }
 
-void HdrCreationManager::setConfig(const config_triple &c)
+void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
 {
-    chosen_config = c;
+    if (!c.inputResponseCurveFilename.isEmpty())
+    {
+        m_response->readFromFile(
+                    QFile::encodeName(c.inputResponseCurveFilename).constData());
+    }
+    else
+    {
+        m_response->setType(c.responseCurve);
+    }
+    getWeightFunction().setType(c.weightFunction);
+    setFusionOperator(c.fusionOperator);
 }
 
-const QVector<float> HdrCreationManager::getExpotimes() const
+QVector<float> HdrCreationManager::getExpotimes() const
 {
     QVector<float> expotimes;
     for ( HdrCreationItemContainer::const_iterator it = m_data.begin(), 
@@ -288,41 +309,11 @@ void HdrCreationManager::removeTempFiles()
     }
 }
 
-/*
-void HdrCreationManager::checkEVvalues()
+pfs::Frame* HdrCreationManager::createHdr()
 {
-    float max=-20, min=+20;
-    for (int i = 0; i < fileList.size(); i++) {
-        float ev_val = log2f(expotimes[i]);
-        if (ev_val > max)
-            max = ev_val;
-        if (ev_val < min)
-            min = ev_val;
-    }
-    //now if values are out of bounds, add an offset to them.
-    if (max > 10) {
-        for (int i = 0; i < fileList.size(); i++) {
-            float new_ev = log2f(expotimes[i]) - (max - 10);
-            expotimes[i] = exp2f(new_ev);
-            emit expotimeValueChanged(exp2f(new_ev), i);
-        }
-    } else if (min < -10) {
-        for (int i = 0; i < fileList.size(); i++) {
-            float new_ev = log2f(expotimes[i]) - (min + 10);
-            expotimes[i] = exp2f(new_ev);
-            emit expotimeValueChanged(exp2f(new_ev), i);
-        }
-    }
-    //qDebug("HCM::END checkEVvalues");
-}
-
-*/
-
-
-pfs::Frame* HdrCreationManager::createHdr(bool /*ag*/, int /*iterations*/)
-{
-    std::vector< FrameEnhanced > frames;
-    for ( size_t idx = 0; idx < m_data.size(); ++idx ) {
+    std::vector<FrameEnhanced> frames;
+    for (size_t idx = 0; idx < m_data.size(); ++idx)
+    {
         frames.push_back(
                     FrameEnhanced(m_data[idx].frame(),
                                   m_data[idx].getAverageLuminance())
@@ -330,10 +321,14 @@ pfs::Frame* HdrCreationManager::createHdr(bool /*ag*/, int /*iterations*/)
     }
 
     libhdr::fusion::FusionOperatorPtr fusionOperatorPtr = IFusionOperator::build(m_fusionOperator);
-    fusionOperatorPtr->setResponseFunction(m_responseFunction);
-    fusionOperatorPtr->setWeightFunction(m_weightFunction);
+    pfs::Frame* outputFrame(fusionOperatorPtr->computeFusion(*m_response, *m_weight, frames));
 
-    return fusionOperatorPtr->computeFusion( frames );
+    if (!m_responseCurveOutputFilename.isEmpty())
+    {
+        m_response->writeToFile(QFile::encodeName(m_responseCurveOutputFilename).constData());
+    }
+
+    return outputFrame;
 }
 
 void HdrCreationManager::applyShiftsToItems(const QList<QPair<int,int> >& hvOffsets)
@@ -532,7 +527,7 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     m_data[h0].frame().get()->getXYZChannels(Good_Rc, Good_Gc, Good_Bc);
 
     const Channel *Rc, *Gc, *Bc;
-    Frame* ghosted = createHdr(false, 1);
+    Frame* ghosted = createHdr();
     ghosted->getXYZChannels(Rc, Gc, Bc);
     ph->setValue(20);
     if (ph->canceled()) return NULL;

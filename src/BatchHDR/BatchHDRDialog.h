@@ -94,7 +94,7 @@ protected:
 	bool m_loading_error;
 	bool m_abort;
 	bool m_processing;
-	QVector<config_triple> m_customConfig;
+    QVector<FusionOperatorConfig> m_customConfig;
     QFutureWatcher<void> m_futureWatcher;
     QFuture<pfs::Frame*> m_future;
     ProgressHelper m_ph;

@@ -38,9 +38,15 @@ class HdrCreationItem
 {
 public:
     HdrCreationItem(const QString& filename);
+    HdrCreationItem(const QString& filename, const QString& convertedFilename);
     ~HdrCreationItem();
 
     const QString& filename() const     { return m_filename; }
+    const QString& convertedFilename() const { return m_convertedFilename; }
+    void setConvertedFilename(QString& f )     { m_convertedFilename = f; }
+    const QString& alignedFilename() const { return m_alignedFilename; }
+    void setAlignedFilename(QString& f )     { m_alignedFilename = f; }
+
     const pfs::FramePtr& frame() const  { return m_frame; }
     pfs::FramePtr& frame()              { return m_frame; }
     bool isValid() const                { return m_frame->isValid(); }
@@ -62,6 +68,8 @@ public:
 
 private:
     QString                 m_filename;
+    QString                 m_convertedFilename;
+    QString                 m_alignedFilename;
     float                   m_averageLuminance;
     float                   m_exposureTime;
     pfs::FramePtr           m_frame;

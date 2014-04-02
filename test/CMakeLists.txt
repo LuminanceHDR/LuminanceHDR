@@ -141,7 +141,7 @@ TARGET_LINK_LIBRARIES(TestFrameArray2D pfs
 ADD_TEST(TestFrameArray2D TestFrameArray2D)
 
 ADD_EXECUTABLE(TestFloatRgb TestFloatRgb.cpp)
-TARGET_LINK_LIBRARIES(TestFloatRgb common pfs
+TARGET_LINK_LIBRARIES(TestFloatRgb common pfs fileformat
     ${GTEST_BOTH_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
     ${LIBS})

@@ -100,7 +100,7 @@
 
 namespace
 {
-QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget* parent = 0)
+QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
 {
     QString filetypes = QObject::tr("All LDR formats");
     filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
@@ -110,32 +110,46 @@ QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget
     filetypes += "BMP (*.bmp *.BMP);;";
     filetypes += "TIFF (*.tif *.tiff *.TIF *.TIFF)";
 
-    return QFileDialog::getSaveFileName(parent,
-                                        QObject::tr("Save the LDR image as..."),
-                                        LuminanceOptions().getDefaultPathLdrOut() + "/" + suggested_file_name,
-                                        filetypes);
+    QFileInfo qfi(suggestedFileName);
+    QString outputFilename =
+            QFileDialog::getSaveFileName(parent,
+                                         QObject::tr("Save the LDR image as..."),
+                                         LuminanceOptions().getDefaultPathLdrOut() + QDir::separator() + qfi.completeBaseName(),
+                                         filetypes);
+
+    if ( !outputFilename.isEmpty() )
+    {
+		QFileInfo qfi(outputFilename);
+
+		LuminanceOptions().setDefaultPathLdrOut( qfi.path() );
+    }
+    return outputFilename;
 }
 
-QString getHdrFileNameFromSaveDialog(QString suggestedFileName, QWidget* parent = 0)
+QString getHdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
 {
+	qDebug() << "MainWindow::getHdrFileNameFromSaveDialog(" << suggestedFileName << ")";
     static const QString filetypes =
             "OpenEXR (*.exr *.EXR);;"
             "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;"
             "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;"
             "PFS Stream (*.pfs *.PFS)";
 
-    // get rid of the extension, if any
-    int pos = suggestedFileName.indexOf(".");
-    if (pos != -1)
-    {
-        suggestedFileName.truncate(pos);
-    }
+    QFileInfo qfi(suggestedFileName);
 
-    return QFileDialog::getSaveFileName
-            (parent,
-             QObject::tr("Save the HDR image as..."),
-             LuminanceOptions().getDefaultPathHdrOut() + QDir::separator() + suggestedFileName,
-             filetypes);
+    QString outputFilename =
+            QFileDialog::getSaveFileName(parent,
+                                         QObject::tr("Save the HDR image as..."),
+                                         LuminanceOptions().getDefaultPathHdrOut() + QDir::separator() + qfi.completeBaseName(),
+                                         filetypes);
+
+    if ( !outputFilename.isEmpty() )
+    {
+        QFileInfo qfi(outputFilename);
+
+        LuminanceOptions().setDefaultPathHdrOut( qfi.path() );
+    }
+    return outputFilename;
 }
 
 void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
@@ -576,9 +590,6 @@ void MainWindow::on_fileSaveAsAction_triggered()
         QFileInfo qfi(fname);
         QString format = qfi.suffix();
 
-        // Update working folder
-        luminance_options->setDefaultPathHdrOut( qfi.path() );
-
         pfs::Params p;
         if ( format == "tif" || format == "tiff" )
         {
@@ -608,10 +619,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         if ( outputFilename.isEmpty() ) return;
 
-        QFileInfo qfi(outputFilename);
-        QString format = qfi.suffix();
-
-        luminance_options->setDefaultPathLdrOut( qfi.path() );
+        QString format = QFileInfo(outputFilename).suffix();
 
         if ( format.isEmpty() ) {   // default as JPG
             format          =   "jpg";
@@ -1080,9 +1088,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
         qDebug() << "Filename: " << new_fname;
 #endif
 
-        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving,
-                                          luminance_options->getViewerNegColor(),
-                                          luminance_options->getViewerNanInfColor());
+        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving);
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -1136,24 +1142,10 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
 
 void MainWindow::on_OptionsAction_triggered()
 {
-    unsigned int negcol = luminance_options->getViewerNegColor();
-    unsigned int naninfcol = luminance_options->getViewerNanInfColor();
     PreferencesDialog *opts = new PreferencesDialog(this);
     opts->setAttribute(Qt::WA_DeleteOnClose);
-    if ( opts->exec() == QDialog::Accepted )
+    if (opts->exec() == QDialog::Accepted)
     {
-        if (negcol != luminance_options->getViewerNegColor() || naninfcol != luminance_options->getViewerNanInfColor())
-        {
-            for (int idx = 0; idx < m_tabwidget->count(); idx++)
-            {
-                GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
-                HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(viewer);
-                if ( hdr_v != NULL )
-                {
-                    hdr_v->update_colors(luminance_options->getViewerNegColor(), luminance_options->getViewerNanInfColor());
-                }
-            }
-        }
         m_Ui->actionShowPreviewPanel->setChecked(luminance_options->isPreviewPanelActive());
     }
 }
@@ -1442,10 +1434,6 @@ bool MainWindow::maybeSave()
 
             if ( !fname.isEmpty() )
             {
-                // Update working folder
-                QFileInfo qfi(fname);
-                luminance_options->setDefaultPathHdrOut(qfi.path());
-
                 // TODO : can I launch a signal and wait that it gets executed fully?
                 return m_IOWorker->write_hdr_frame(
                             dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame),
@@ -2031,32 +2019,10 @@ void MainWindow::on_actionFits_Importer_triggered()
 #ifdef HAVE_CCFITS
     FitsImporter importer;
 
-    if (importer.exec() == QDialog::Accepted) {
-//        QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
+    if (importer.exec() == QDialog::Accepted)
+    {
         pfs::Frame *frame = importer.getFrame();
-        emit load_success(frame, tr("FITS Image"), QStringList(), true); 
-        
-/*
-        try {
-            pfs::io::FitsReader3Ch reader(QFile::encodeName(luminosityChannel).constData(),
-                                          QFile::encodeName(redChannel).constData(), 
-                                          QFile::encodeName(greenChannel).constData(), 
-                                          QFile::encodeName(blueChannel).constData(),
-                                          QFile::encodeName(hChannel).constData());
-            reader.read(*frame);
-            emit load_success(frame, tr("FITS Image"), QStringList(), true); 
-        }
-        catch(pfs::Exception& e) {
-            QApplication::restoreOverrideCursor();
-            QMessageBox::warning(0,"", tr("Failed to load FITS images. %1").arg(e.what()), QMessageBox::Ok, QMessageBox::NoButton);
-        }
-        catch (...) {
-            QApplication::restoreOverrideCursor();
-            QMessageBox::warning(0,"", tr("Failed to load FITS images"), QMessageBox::Ok, QMessageBox::NoButton);
-        }  
-        QApplication::restoreOverrideCursor();
-*/     
+        emit load_success(frame, tr("FITS Image"), QStringList(), true);
     }
 #endif
 }

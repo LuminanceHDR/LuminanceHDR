@@ -555,7 +555,7 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="276"/>
-        <source>Ouput Image Width:</source>
+        <source>Output Image Width:</source>
         <translation>输出图片宽度:</translation>
     </message>
     <message>

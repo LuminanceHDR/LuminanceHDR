@@ -66,6 +66,8 @@
 
 #include <iostream>
 
+#include <boost/math/constants/constants.hpp>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "arch/math.h"
@@ -169,7 +171,7 @@ std::vector<double> get_lambda(int n)
   std::vector<double> v(n);
   for (int i=0; i<n; i++)
   {
-    v[i]=-4.0*SQR(sin((double)i/(2*(n-1))*M_PI));
+    v[i]=-4.0*SQR(sin((double)i/(2*(n-1))*boost::math::double_constants::pi));
   }
 
   return v;

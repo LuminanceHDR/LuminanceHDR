@@ -546,7 +546,7 @@ Continue?</source>
         <translation></translation>
     </message>
     <message>
-        <source>Ouput Image Width:</source>
+        <source>Output Image Width:</source>
         <translation></translation>
     </message>
     <message>

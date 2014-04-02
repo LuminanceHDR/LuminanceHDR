@@ -30,24 +30,42 @@
 //!  2) returns QImage* instead than a QImage
 //!  3) has OpenMP (multi thread) capability)
 
+#include "pfsoutldrimage.h"
+
 #include <QImage>
-#include <QSysInfo>
+#include <QDebug>
+
 #include <iostream>
 #include <assert.h>
 #include <stdexcept>
 
 #include <boost/assign/list_of.hpp>
 
-#include "pfsoutldrimage.h"
-
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/transform.h>
-#include <Libpfs/colorspace/rgbremapper_fwd.h>
+#include <Libpfs/colorspace/rgbremapper.h>
 
 using namespace std;
 using namespace pfs;
 using namespace boost::assign;
+
+using namespace pfs;
+
+
+QRgbRemapper::QRgbRemapper(float minLuminance, float maxLuminance, RGBMappingType mappingType)
+    : m_remapper(
+          colorspace::Normalizer(minLuminance, maxLuminance),
+          utils::Chain<
+          utils::Clamp<float>,
+          Remapper<uint8_t>
+          >(utils::Clamp<float>(0.f, 1.f), Remapper<uint8_t>(mappingType)))
+{}
+
+void QRgbRemapper::operator()(float r, float g, float b, QRgb& qrgb) const
+{
+    qrgb = qRgb(m_remapper(r), m_remapper(g), m_remapper(b));
+}
 
 QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
                            float min_luminance,
@@ -59,9 +77,11 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     stop_watch.start();
 #endif
 
-    //assert( in_frame != NULL );
-    if (in_frame == NULL)
-        throw std::runtime_error("Null pointer");
+    qDebug() << "Min Luminance: " << min_luminance;
+    qDebug() << "Max Luminance: " << max_luminance;
+    qDebug() << "Mapping method: " << mapping_method;
+
+    assert(in_frame != NULL);
 
     pfs::Channel *Xc, *Yc, *Zc;
     in_frame->getXYZChannels( Xc, Yc, Zc );
@@ -70,9 +90,10 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame,
     QImage* temp_qimage = new QImage(in_frame->getWidth(), in_frame->getHeight(),
                                      QImage::Format_RGB32);
 
+    QRgbRemapper remapper(min_luminance, max_luminance, mapping_method);
     utils::transform(Xc->begin(), Xc->end(), Yc->begin(), Zc->begin(),
                      reinterpret_cast<QRgb*>(temp_qimage->bits()),
-                     RGBRemapper(min_luminance, max_luminance, mapping_method));
+                     remapper);
 
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
