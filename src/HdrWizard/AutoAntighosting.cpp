@@ -219,20 +219,58 @@ bool comparePatches(const HdrCreationItem& item1,
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
             if (x+dx < 0 || x+dx > width-1)
                 continue;
-            if (deltaEV < 0) {
-                logRed[count] = logf(R1(x, y)) - logf(R2(x+dx, y+dy)) - deltaEV;
-                logGreen[count] = logf(G1(x, y)) - logf(G2(x+dx, y+dy)) - deltaEV;
-                logBlue[count++] = logf(B1(x, y)) - logf(B2(x+dx, y+dy)) - deltaEV;
+            if (R1(x, y) >= 1.0f || R2(x+dx, y+dy) >= 1.0f) {
+                    logRed[count] = 0.0f;
+                    logGreen[count] = 0.0f;
+                    logBlue[count++] = 0.0f;
+                    continue;
+            }
+            if (G1(x, y) >= 1.0f || G2(x+dx, y+dy) >= 1.0f) {
+                    logRed[count] = 0.0f;
+                    logGreen[count] = 0.0f;
+                    logBlue[count++] = 0.0f;
+                    continue;
+            }
+            if (B1(x, y) >= 1.0f || B2(x+dx, y+dy) >= 1.0f) {
+                    logRed[count] = 0.0f;
+                    logGreen[count] = 0.0f;
+                    logBlue[count++] = 0.0f;
+                    continue;
+            }
+            if (R1(x, y) <= 0.0f || R2(x+dx, y+dy) <= 0.0f) {
+                    logRed[count] = 0.0f;
+                    logGreen[count] = 0.0f;
+                    logBlue[count++] = 0.0f;
+                    continue;
+            }
+            if (G1(x, y) <= 0.0f || G2(x+dx, y+dy) <= 0.0f) {
+                    logRed[count] = 0.0f;
+                    logGreen[count] = 0.0f;
+                    logBlue[count++] = 0.0f;
+                    continue;
+            }
+            if (B1(x, y) <= 0.0f || B2(x+dx, y+dy) <= 0.0f) {
+                    logRed[count] = 0.0f;
+                    logGreen[count] = 0.0f;
+                    logBlue[count++] = 0.0f;
+                    continue;
+            }
+
+            float logDeltaEV = log(std::abs(deltaEV));
+            if (deltaEV > 0) {
+                logRed[count] = log(R1(x, y)) - log(R2(x+dx, y+dy)) - logDeltaEV;
+                logGreen[count] = log(G1(x, y)) - log(G2(x+dx, y+dy)) - logDeltaEV;
+                logBlue[count++] = log(B1(x, y)) - log(B2(x+dx, y+dy)) - logDeltaEV;
             }
             else {
-                logRed[count] = logf(R2(x, y)) - logf(R1(x+dx, y+dy)) + deltaEV;
-                logGreen[count] = logf(G2(x, y)) - logf(G1(x+dx, y+dy)) + deltaEV;
-                logBlue[count++] = logf(B2(x, y)) - logf(B1(x+dx, y+dy)) + deltaEV;
+                logRed[count] = log(R2(x, y)) - log(R1(x+dx, y+dy)) - logDeltaEV;
+                logGreen[count] = log(G2(x, y)) - log(G1(x+dx, y+dy)) - logDeltaEV;
+                logBlue[count++] = log(B2(x, y)) - log(B1(x+dx, y+dy)) - logDeltaEV;
             }
         }
     }
   
-    float threshold1 = 0.7f * std::abs(deltaEV);
+    float threshold1 = 0.75f;
     count = 0;
     for (int h = 0; h < gridSize; h++) {
         if (std::abs(logRed[h]) > threshold1 && std::abs(logGreen[h]) > threshold1 && std::abs(logBlue[h]) > threshold1)
