@@ -1,6 +1,6 @@
 IF(UNIX)
 ADD_DEFINITIONS(-Wall -Wno-unknown-pragmas)
-ADD_DEFINITIONS(-ffast-math -msse2 -msse)
+ADD_DEFINITIONS(-ffast-math)
 
 IF(APPLE)
 # optimize for 64-bit core 2 architecture on Apple
