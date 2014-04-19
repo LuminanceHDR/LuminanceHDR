@@ -19,6 +19,9 @@
  * ----------------------------------------------------------------------
  */
 
+#ifndef EXIF_DATA_HPP
+#define EXIF_DATA_HPP
+
 #include <string>
 #include <stdexcept>
 #include <iosfwd>
@@ -93,6 +96,11 @@ public:
     //! Luminance HDR http://qtpfsgui.sourceforge.net/
     float average_scene_luminance() const;
 
+
+    //! \brief This function returns the image rotation to apply in degrees.
+    //! Possible values are 0, 90, 180, 270.
+    short orientation_degree() const;
+
     //! \brief reset Exif Data
     void reset();
 
@@ -107,9 +115,12 @@ private:
     float m_iso_speed;
     float m_f_number;
     float m_ev_compensation;
+    short m_orientation;
 };
 
 std::ostream& operator<<(std::ostream& out, const exif_data& exifdata);
 
 } // exif
 } // pfs
+
+#endif // EXIF_DATA_HPP

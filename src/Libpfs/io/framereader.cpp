@@ -21,6 +21,10 @@
 
 #include <Libpfs/io/framereader.h>
 
+#include <Libpfs/frame.h>
+#include <Libpfs/exif/exif_data.hpp>
+#include <Libpfs/manip/rotate.h>
+
 namespace pfs {
 namespace io {
 
@@ -32,6 +36,25 @@ FrameReader::FrameReader(const std::string& filename)
 
 FrameReader::~FrameReader()
 {}
+
+void FrameReader::read(pfs::Frame& frame, const pfs::Params& params)
+{
+    pfs::exif::exif_data exifData(m_filename);
+    int rotation = exifData.orientation_degree();
+
+    if (rotation == 270 || rotation == 90 || rotation == 180)
+    {
+        Frame *rotatedHalf = pfs::rotate(&frame, rotation != 270);
+        frame.swap(*rotatedHalf);
+        delete rotatedHalf;
+    }
+    if (rotation == 180)
+    {
+        Frame *rotatedHalf = pfs::rotate(&frame, true);
+        frame.swap(*rotatedHalf);
+        delete rotatedHalf;
+    }
+}
 
 }   // io
 }   // pfs

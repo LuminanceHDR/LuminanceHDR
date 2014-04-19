@@ -51,7 +51,7 @@ public:
     virtual void open() = 0;
     virtual bool isOpen() const = 0;
     virtual void close() = 0;
-    virtual void read(pfs::Frame& frame, const pfs::Params& params) = 0;
+    virtual void read(pfs::Frame& frame, const pfs::Params& params);
 
 protected:
     void setWidth(size_t width)     { m_width = width; }

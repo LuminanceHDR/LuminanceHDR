@@ -498,6 +498,7 @@ void TiffReader::read(Frame &frame, const Params &params)
     }
 
     m_data->read(frame, params);
+    FrameReader::read(frame, params);
 }
 
 }   // io

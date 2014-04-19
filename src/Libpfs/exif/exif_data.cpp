@@ -120,6 +120,39 @@ void exif_data::from_file(const std::string& filename)
         {
             m_ev_compensation = it->toFloat();
         }
+
+        // exif orientation --------
+        /*
+         *           http://jpegclub.org/exif_orientation.html
+         *
+         *
+         *       Value   0th Row     0th Column
+         *           1   top         left side
+         *           2   top         right side
+         *           3   bottom      right side
+         *           4   bottom      left side
+         *           5   left side   top
+         *           6   right side  top
+         *           7   right side  bottom
+         *           8   left side   bottom
+         *
+         */
+        if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Image.Orientation"))) != exifData.end())
+        {
+            long rotation = it->toLong();
+            switch(rotation)
+            {
+            case 3:
+                m_orientation = 180;
+                break;
+            case 6:
+                m_orientation = 90;
+                break;
+            case 8:
+                m_orientation = 270;
+                break;
+            }
+        }
     }
     catch (Exiv2::AnyError& e)
     {
@@ -201,6 +234,11 @@ float exif_data::average_scene_luminance() const
     return INVALID_VALUE;
 }
 
+short exif_data::orientation_degree() const
+{
+    return m_orientation;
+}
+
 void exif_data::reset()
 {
     // reset internal value
@@ -208,6 +246,7 @@ void exif_data::reset()
     m_iso_speed = DEFAULT_ISO;
     m_f_number = INVALID_VALUE;
     m_ev_compensation = DEFAULT_EVCOMP;
+    m_orientation = 0;
 }
 
 bool exif_data::is_valid() const
