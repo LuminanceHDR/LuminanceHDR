@@ -37,10 +37,20 @@ void clampToZero(Array2Df &R, Array2Df &G, Array2Df &B, float m);
 int findIndex(const float* data, int size);
 void hueSquaredMean(const HdrCreationItemContainer& data,
                     vector<float>& HE);
+void sdv(const HdrCreationItem& item1,
+         const HdrCreationItem& item2,
+         const float deltaEV,
+         const int dx, const int dy,
+         float &sR, float &sG, float &sB);
+
 bool comparePatches(const HdrCreationItem& item1,
-                    const HdrCreationItem& item2,
-                    int i, int j, int gridX, int gridY, float threshold, float deltaEV,
-                    int dx, int dy);
+                     const HdrCreationItem& item2,
+                     const int i, const int j, 
+                     const int gridX, const int gridY, 
+                     const float threshold, 
+                     const float sR, const float sG, const float sB,
+                     const float deltaEV,
+                     const int dx, const int dy);
 
 void computeIrradiance(Array2Df& irradiance, const Array2Df& in);
 void computeLogIrradiance(Array2Df &logIrradiance, const Array2Df& u);

@@ -1120,7 +1120,7 @@ void HdrWizard::writeAisData(QByteArray data)
     if (data.contains(": remapping")) {
         QRegExp exp("\\:\\s*(\\d+)\\s*");
         exp.indexIn(QString(data.data()));
-        emit setRange(0, 100);
+        emit setRange(0, 10);
         emit setValue(exp.cap(1).toInt());
     }
 }

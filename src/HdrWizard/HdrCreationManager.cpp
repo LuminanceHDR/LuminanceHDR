@@ -469,22 +469,19 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSiz
     for (int h = 0; h < size; h++) {
         if (h == m_agGoodImageIndex) 
             continue;
-        float deltaEV;
-        int dx, dy;
-        #pragma omp parallel for private (deltaEV, dx, dy) schedule(static)
+        float deltaEV = log2(m_data[m_agGoodImageIndex].getAverageLuminance()) - log2(m_data[h].getAverageLuminance());
+        int dx = HV_offset[m_agGoodImageIndex].first - HV_offset[h].first;
+        int dy = HV_offset[m_agGoodImageIndex].second - HV_offset[h].second;        
+        float sR, sG, sB;
+        sdv(m_data[m_agGoodImageIndex], m_data[h], deltaEV, dx, dy, sR, sG, sB); 
+        //#pragma omp parallel for schedule(static)
         for (int j = 0; j < agGridSize; j++) {
             for (int i = 0; i < agGridSize; i++) {
-                    //deltaEV = log(m_data[m_agGoodImageIndex].getExposureTime()) - log(m_data[h].getExposureTime());
-                    deltaEV = log2(m_data[m_agGoodImageIndex].getAverageLuminance()) - log2(m_data[h].getAverageLuminance());
-                    #pragma omp critical (get_dx)
-                    dx = HV_offset[m_agGoodImageIndex].first - HV_offset[h].first;
-                    #pragma omp critical (get_dy)
-                    dy = HV_offset[m_agGoodImageIndex].second - HV_offset[h].second;
-                    if (comparePatches(m_data[m_agGoodImageIndex],
-                                       m_data[h],
-                                       i, j, gridX, gridY, threshold, deltaEV, dx, dy)) {
-                        m_patches[i][j] = true;
-                    }
+                if (comparePatches(m_data[m_agGoodImageIndex],
+                                   m_data[h],
+                                   i, j, gridX, gridY, threshold, sR, sG, sB, deltaEV, dx, dy)) {
+                    m_patches[i][j] = true;
+                }
             }                      
         }
     }
