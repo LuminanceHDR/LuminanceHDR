@@ -37,10 +37,6 @@ void copyExifData(const std::string& from, const std::string& to,
 
 //!
 //!
-int obtain_rotation(const std::string& filename);
-
-//!
-//!
 // float obtain_avg_lum(const std::string& filename);
 
 // //! \brief retrieve exposure bias from \c filename

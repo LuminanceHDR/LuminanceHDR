@@ -36,7 +36,6 @@
 
 #include <Libpfs/channel.h>
 #include <Libpfs/tag.h>
-#include <Libpfs/exif/exif_data.hpp>
 
 namespace pfs
 {

@@ -316,6 +316,8 @@ void setParams(LibRaw& processor, const RAWReaderParams& params)
     // demosaicing parameters
     outParams.user_qual         = params.userQuality_;
     outParams.med_passes        = params.medPasses_;
+    outParams.user_flip         = 0; // exif orientation is done afterwards
+
 
     switch (params.wbMethod_) {
     case 1: // camera
@@ -502,6 +504,7 @@ void RAWReader::read(Frame &frame, const Params &params)
     LibRaw::dcraw_clear_mem(image);
     m_processor.recycle();
 
+    FrameReader::read(tempFrame, params);
     frame.swap( tempFrame );
 }
 

@@ -404,7 +404,7 @@ void read4Components(j_decompress_ptr cinfo, Frame& frame, const Converter& conv
     }
 }
 
-void JpegReader::read(Frame &frame, const Params &/*params*/)
+void JpegReader::read(Frame &frame, const Params &params)
 {
     try
     {
@@ -456,6 +456,7 @@ void JpegReader::read(Frame &frame, const Params &/*params*/)
         jpeg_finish_decompress(m_data->cinfo());
         jpeg_destroy_decompress(m_data->cinfo());
 
+        FrameReader::read(tempFrame, params);
         frame.swap( tempFrame );
     }
     catch (...)

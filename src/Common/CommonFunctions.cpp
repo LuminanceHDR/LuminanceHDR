@@ -93,21 +93,6 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         FrameReaderPtr reader = FrameReaderFactory::open(filePath.constData());
         reader->read( *currentItem.frame(), getRawSettings() );
 
-		int rotation = ExifOperations::obtain_rotation(filePath.constData());
-		
-        if (rotation == 270 || rotation == 90 || rotation == 180)
-        {
-            Frame *rotatedHalf = pfs::rotate(currentItem.frame().get(), rotation != 270);
-	        currentItem.frame()->swap(*rotatedHalf);
-	        delete rotatedHalf;
-        }
-        if (rotation == 180)
-        {
-            Frame *rotatedHalf = pfs::rotate(currentItem.frame().get(), true);
-	        currentItem.frame()->swap(*rotatedHalf);
-	        delete rotatedHalf;
-        }
-		
         // read Average Luminance
         currentItem.setAverageLuminance(ExifOperations::getAverageLuminance(filePath.constData()));
 
