@@ -252,16 +252,6 @@ void MainWindow::init()
         qRegisterMetaType<GenericViewer*>("GenericViewer*");
         qRegisterMetaType<QVector<float> >("QVector<float>");
         qRegisterMetaType<pfs::Params>("pfs::Params");
-
-        QDir dir(QDir::homePath());
-
-#ifdef WIN32
-        if (!dir.exists("LuminanceHDR"))
-            dir.mkdir("LuminanceHDR");
-#else
-        if (!dir.exists(".LuminanceHDR"))
-            dir.mkdir(".LuminanceHDR");
-#endif
     }
 
     createUI();
