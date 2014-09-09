@@ -164,7 +164,6 @@ protected Q_SLOTS:
     void setCurrentFile(const QString &fileName);
 
     void on_actionAbout_Luminance_triggered();
-    void showSplash();
 
     void updateActions(int w);
     void setActiveMainWindow(QWidget* w);
@@ -175,8 +174,6 @@ protected Q_SLOTS:
 
     void helpBrowserClosed();
     void on_actionDonate_triggered();
-    void splashShowDonationsPage();
-    void splashClose();
 
     void onUpdateAvailable();
     void on_actionUpdateAvailable_triggered();

@@ -44,7 +44,7 @@ public:
     ~LuminanceOptions();
 
     void setValue(const QString& key, const QVariant& value);
-    QVariant value(const QString & key, const QVariant& defaultValue = QVariant()) const;
+    QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const;
 
     static void conditionallyDoUpgrade();
 

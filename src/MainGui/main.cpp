@@ -34,6 +34,7 @@
 #include "Common/config.h"
 #include "Common/TranslatorManager.h"
 #include "MainWindow/MainWindow.h"
+#include "MainWindow/DonationDialog.h"
 
 namespace
 {
@@ -57,7 +58,7 @@ QStringList getCliFiles(const QStringList& arguments)
 }
 
 #ifdef WIN32
-void customMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void customMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
 	QString txt;
 	switch (type) {
@@ -126,8 +127,12 @@ int main( int argc, char ** argv )
     }
 
     LuminanceOptions::conditionallyDoUpgrade();
-    TranslatorManager::setLanguage( LuminanceOptions().getGuiLang() );
+    TranslatorManager::setLanguage(LuminanceOptions().getGuiLang());
 
+    DonationDialog::showDonationDialog();
+
+    // TODO: create update checker...
+    // TODO: pass update checker to MainWindow
     MainWindow* mainWindow = new MainWindow;
 
     mainWindow->show();

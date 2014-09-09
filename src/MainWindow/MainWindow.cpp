@@ -32,6 +32,8 @@
  *
  */
 
+#include "MainWindow/MainWindow.h"
+
 #ifdef QT_DEBUG
 #include <QDebug>
 #endif
@@ -51,12 +53,11 @@
 
 #include <boost/bind.hpp>
 
-#include "MainWindow/MainWindow.h"
+#include "ui_MainWindow.h"
+
 #include "MainWindow/DnDOption.h"
 #include "MainWindow/UpdateChecker.h"
-
-#include "ui_Splash.h"
-#include "ui_MainWindow.h"
+#include "MainWindow/DonationDialog.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/params.h"
@@ -269,10 +270,6 @@ void MainWindow::init()
     if ( sm_NumMainWindows == 1 ) {
         if (OsIntegration::getInstance().isRunningOnSameCpuPlatform()) 
         {
-			// SPLASH SCREEN    ---------------------------------------------------
-			showSplash();
-			// UMessageBox::donationSplashMB();
-			// END SPLASH SCREEN    -----------------------------------------------
 			sm_updateChecker.reset(new UpdateChecker(this));
 			connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), this, SLOT(onUpdateAvailable()));
 
@@ -469,7 +466,7 @@ void MainWindow::loadOptions()
 
 void MainWindow::on_actionDonate_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
+    DonationDialog::openDonationPage();
 }
 
 void MainWindow::on_fileNewAction_triggered()
@@ -1211,35 +1208,6 @@ void MainWindow::Text_Only()
 {
     m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
     luminance_options->setMainWindowToolBarMode(Qt::ToolButtonTextOnly);
-}
-
-void MainWindow::showSplash()
-{
-    if (luminance_options->value("ShowSplashScreen", true).toBool())
-    {
-        // TODO: change implementation with a static member of UMessageBox
-        splash = new QDialog(this);
-        splash->setAttribute(Qt::WA_DeleteOnClose);
-        Ui::SplashLuminance ui;
-        ui.setupUi(splash);
-        connect(ui.yesButton, SIGNAL(clicked()), this, SLOT(splashShowDonationsPage()));
-        connect(ui.noButton, SIGNAL(clicked()), this, SLOT(splashClose()));
-        connect(ui.askMeLaterButton, SIGNAL(clicked()), splash, SLOT(close()));
-
-        splash->show();
-    }
-}
-
-void MainWindow::splashShowDonationsPage()
-{
-	on_actionDonate_triggered();
-    splash->close();
-}
-
-void MainWindow::splashClose()
-{
-    luminance_options->setValue("ShowSplashScreen", false);
-    splash->close();
 }
 
 void MainWindow::onUpdateAvailable()
