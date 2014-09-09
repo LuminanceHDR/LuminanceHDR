@@ -35,11 +35,32 @@
 #include <QDate>
 #include <QFile>
 #include <QDebug>
+#include <QDir>
 
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
 
+#ifdef WIN32
+const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = "LuminanceHDR";
+#else
+const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = ".LuminanceHDR";
+#endif
+
 bool LuminanceOptions::isCurrentPortableMode = false;
+
+void LuminanceOptions::checkHomeFolder()
+{
+    if (isCurrentPortableMode)
+    {
+        return;
+    }
+
+    QDir dir(QDir::homePath());
+    if (!dir.exists(LUMINANCE_HDR_HOME_FOLDER))
+    {
+        dir.mkdir(LUMINANCE_HDR_HOME_FOLDER);
+    }
+}
 
 LuminanceOptions::LuminanceOptions():
     QObject()
@@ -155,12 +176,7 @@ QString LuminanceOptions::getDatabaseFileName()
     }
     else
     {
-        filename = QDir(QDir::homePath()).absolutePath();
-#ifdef WIN32
-        filename += "/LuminanceHDR";
-#else
-        filename += "/.LuminanceHDR";
-#endif
+        filename = QDir(QDir::homePath()).absolutePath() + "/" + LUMINANCE_HDR_HOME_FOLDER;
     }
     filename += "/saved_parameters.db";
 

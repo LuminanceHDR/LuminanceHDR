@@ -85,23 +85,6 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext& context, con
 }
 #endif
 
-void createHomeFolder()
-{
-    QDir dir(QDir::homePath());
-
-#ifdef WIN32
-    if (!dir.exists(".luminance-hdr"))
-    {
-        dir.mkdir(".luminance-hdr");
-    }
-#else
-    if (!dir.exists(".luminance-hdr"))
-    {
-        dir.mkdir(".luminance-hdr");
-    }
-#endif
-}
-
 int main( int argc, char ** argv )
 {
     Q_INIT_RESOURCE(icons);
@@ -114,10 +97,9 @@ int main( int argc, char ** argv )
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
-    createHomeFolder();
-
     LuminanceOptions::isCurrentPortableMode =
             QDir(QApplication::applicationDirPath()).exists("PortableMode.txt");
+    LuminanceOptions::checkHomeFolder();
 
     if (LuminanceOptions::isCurrentPortableMode)
     {

@@ -36,10 +36,14 @@
 #include <QStringList>
 #include <QDir>
 
-class LuminanceOptions: public QObject
+class LuminanceOptions : public QObject
 {
     Q_OBJECT
 public:
+    static const QString LUMINANCE_HDR_HOME_FOLDER;
+    static bool isCurrentPortableMode;
+    static void checkHomeFolder();
+
     explicit LuminanceOptions();
     ~LuminanceOptions();
 
@@ -50,7 +54,6 @@ public:
 
     bool doShowWindowsOnWindows64Message();
 
-    static bool isCurrentPortableMode;
     QString getDatabaseFileName();
     void    setPortableMode(bool isPortable);
     
