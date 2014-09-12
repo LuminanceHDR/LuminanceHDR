@@ -261,6 +261,7 @@ void HdrWizard::updateTableGrid()
     int currentRow = m_ui->tableWidget->currentRow();
 
     // empty grid...
+    m_ui->tableWidget->clear();
     m_ui->tableWidget->setRowCount(0);
 
     // insert the row at the bottom of the table widget

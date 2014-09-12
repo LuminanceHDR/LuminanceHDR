@@ -156,6 +156,8 @@ void HdrCreationManager::loadFilesDone()
             m_data.push_back(i);
         }
     }
+
+    m_tmpdata.clear();
     //qDebug() << QString("Read %1 out of %2").arg(m_tmpdata.size()).arg(filenames.size());
 
     if (!framesHaveSameSize()) {
