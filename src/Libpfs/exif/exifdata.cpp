@@ -19,7 +19,7 @@
  * ----------------------------------------------------------------------
  */
 
-#include "exif_data.hpp"
+#include "exifdata.hpp"
 
 #include <exiv2/exiv2.hpp>
 #include <cmath>
@@ -50,18 +50,17 @@ float log_base(float value, float base)
 
 }
 
-exif_data::exif_data()
+ExifData::ExifData()
 {
     reset();
 }
 
-exif_data::exif_data(const std::string& filename)
+ExifData::ExifData(const std::string& filename)
 {
-    reset();
-    from_file(filename);
+    fromFile(filename);
 }
 
-void exif_data::from_file(const std::string& filename)
+void ExifData::fromFile(const std::string& filename)
 {
     reset();
     try
@@ -77,7 +76,7 @@ void exif_data::from_file(const std::string& filename)
         ::Exiv2::ExifData::const_iterator it = exifData.end();
         if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureTime"))) != exifData.end())
         {
-            m_exposure_time = it->toFloat();
+            m_exposureTime = it->toFloat();
         }
         else if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue"))) != exifData.end())
         {
@@ -92,33 +91,33 @@ void exif_data::from_file(const std::string& filename)
             {
                 num = static_cast<long>(1.0f/tmp + 0.5f);
             }
-            m_exposure_time = static_cast<float>(num)/div;
+            m_exposureTime = static_cast<float>(num)/div;
         }
 
 
         if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"))) != exifData.end())
         {
-            m_f_number = it->toFloat();
+            m_FNumber = it->toFloat();
         }
         else if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"))) != exifData.end())
         {
-            m_f_number = static_cast<float>(expf(logf(2.0f) * it->toFloat() / 2.f));
+            m_FNumber = static_cast<float>(expf(logf(2.0f) * it->toFloat() / 2.f));
         }
         // some cameras/lens DO print the fnum but with value 0, and this is not allowed for ev computation purposes.
-        if (m_f_number == 0.0f)
+        if (m_FNumber == 0.0f)
         {
-            m_f_number = INVALID_VALUE;
+            m_FNumber = INVALID_VALUE;
         }
 
         //if iso is found use that value, otherwise assume a value of iso=100. (again, some cameras do not print iso in exif).
         if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"))) != exifData.end())
         {
-            m_iso_speed = it->toFloat();
+            m_isoSpeed = it->toFloat();
         }
 
         if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureBiasValue"))) != exifData.end())
         {
-            m_ev_compensation = it->toFloat();
+            m_EVCompensation = it->toFloat();
         }
 
         // exif orientation --------
@@ -140,7 +139,7 @@ void exif_data::from_file(const std::string& filename)
         if ((it = exifData.findKey(Exiv2::ExifKey("Exif.Image.Orientation"))) != exifData.end())
         {
             long rotation = it->toLong();
-            switch(rotation)
+            switch (rotation)
             {
             case 3:
                 m_orientation = 180;
@@ -160,107 +159,107 @@ void exif_data::from_file(const std::string& filename)
     }
 }
 
-const float& exif_data::exposure_time() const
+const float& ExifData::getExposureTime() const
 {
-    return m_exposure_time;
+    return m_exposureTime;
 }
-bool exif_data::is_exposure_time() const
+bool ExifData::hasExposureTime() const
 {
-    return (m_exposure_time != INVALID_VALUE);
+    return (m_exposureTime != INVALID_VALUE);
 }
-void exif_data::exposure_time(float et)
+void ExifData::setExposureTime(float et)
 {
-    m_exposure_time = et;
+    m_exposureTime = et;
 }
 
-const float& exif_data::iso_speed() const
+const float& ExifData::getIsoSpeed() const
 {
-    return m_iso_speed;
+    return m_isoSpeed;
 }
-bool exif_data::is_iso_speed() const
+bool ExifData::hasIsoSpeed() const
 {
     return true;
 }
-void exif_data::iso_speed(float iso)
+void ExifData::setIsoSpeed(float iso)
 {
-    m_iso_speed = iso;
+    m_isoSpeed = iso;
 }
 
-const float& exif_data::f_number() const
+const float& ExifData::getFNumber() const
 {
-    return m_f_number;
+    return m_FNumber;
 }
-bool exif_data::is_f_number() const
+bool ExifData::hasFNumber() const
 {
-    return (m_f_number != INVALID_VALUE);
+    return (m_FNumber != INVALID_VALUE);
 }
-void exif_data::f_number(float fnum)
+void ExifData::setFNumber(float fnum)
 {
-    m_f_number = fnum;
+    m_FNumber = fnum;
 }
 
-float exif_data::exposure_value() const
+float ExifData::getExposureValue() const
 {
-    if ( is_f_number() && is_exposure_time() )
+    if (hasFNumber() && hasExposureTime())
     {
-        return log_base((m_f_number*m_f_number)/m_exposure_time, 2.0f);
+        return log_base((m_FNumber*m_FNumber)/m_exposureTime, 2.0f);
     }
     return INVALID_EV_VALUE;
 }
-bool exif_data::is_exposure_value() const
+bool ExifData::hasExposureValue() const
 {
-    return (exposure_value() != INVALID_EV_VALUE);
+    return (getExposureValue() != INVALID_EV_VALUE);
 }
 
-const float& exif_data::exposure_value_compensation() const
+const float& ExifData::getExposureValueCompensation() const
 {
-    return m_ev_compensation;
+    return m_EVCompensation;
 }
-bool exif_data::is_exposure_value_compensation() const
+bool ExifData::hasExposureValueCompensation() const
 {
-    return (m_ev_compensation != 0.0f);
+    return (m_EVCompensation != 0.0f);
 }
-void exif_data::exposure_value_compensation(float evcomp)
+void ExifData::setExposureValueCompensation(float evcomp)
 {
-    m_ev_compensation = evcomp;
+    m_EVCompensation = evcomp;
 }
 
-float exif_data::average_scene_luminance() const
+float ExifData::getAverageSceneLuminance() const
 {
-    if ( is_iso_speed() && is_f_number() && is_exposure_time() )
+    if (hasIsoSpeed() && hasFNumber() && hasExposureTime())
     {
-        return ( (m_exposure_time * m_iso_speed) / (m_f_number*m_f_number*K) );
+        return ( (m_exposureTime * m_isoSpeed) / (m_FNumber*m_FNumber*K) );
     }
     return INVALID_VALUE;
 }
 
-short exif_data::orientation_degree() const
+short ExifData::getOrientationDegree() const
 {
     return m_orientation;
 }
 
-void exif_data::reset()
+void ExifData::reset()
 {
     // reset internal value
-    m_exposure_time = INVALID_VALUE;
-    m_iso_speed = DEFAULT_ISO;
-    m_f_number = INVALID_VALUE;
-    m_ev_compensation = DEFAULT_EVCOMP;
+    m_exposureTime = INVALID_VALUE;
+    m_isoSpeed = DEFAULT_ISO;
+    m_FNumber = INVALID_VALUE;
+    m_EVCompensation = DEFAULT_EVCOMP;
     m_orientation = 0;
 }
 
-bool exif_data::is_valid() const
+bool ExifData::isValid() const
 {
-    return ( is_iso_speed() && is_f_number() && is_exposure_time() );
+    return (hasIsoSpeed() && hasFNumber() && hasExposureTime());
 }
 
-std::ostream& operator<<(std::ostream& out, const exif_data& exif_data)
+std::ostream& operator<<(std::ostream& out, const ExifData& exifData)
 {
-    out << "Exposure time = " << exif_data.m_exposure_time << ", ";
-    out << "F value = " << exif_data.m_f_number << ", ";
-    out << "ISO = " << exif_data.m_iso_speed << ", ";
-    out << "Exposure value = " << exif_data.exposure_value() << " (" << exif_data.m_ev_compensation << "), ";
-    out << "Average Scene Luminance = " << exif_data.average_scene_luminance();
+    out << "Exposure time = " << exifData.m_exposureTime << ", ";
+    out << "F value = " << exifData.m_FNumber << ", ";
+    out << "ISO = " << exifData.m_isoSpeed << ", ";
+    out << "Exposure value = " << exifData.getExposureValue() << " (" << exifData.m_EVCompensation << "), ";
+    out << "Average Scene Luminance = " << exifData.getAverageSceneLuminance();
 
     return out;
 }

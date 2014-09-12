@@ -22,7 +22,7 @@
 #include <Libpfs/io/framereader.h>
 
 #include <Libpfs/frame.h>
-#include <Libpfs/exif/exif_data.hpp>
+#include <Libpfs/exif/exifdata.hpp>
 #include <Libpfs/manip/rotate.h>
 
 namespace pfs {
@@ -39,8 +39,8 @@ FrameReader::~FrameReader()
 
 void FrameReader::read(pfs::Frame& frame, const pfs::Params& params)
 {
-    pfs::exif::exif_data exifData(m_filename);
-    int rotation = exifData.orientation_degree();
+    pfs::exif::ExifData exifData(m_filename);
+    int rotation = exifData.getOrientationDegree();
 
     if (rotation == 270 || rotation == 90 || rotation == 180)
     {

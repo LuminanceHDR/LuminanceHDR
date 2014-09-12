@@ -35,38 +35,38 @@ namespace exif
 //! \class exif_data
 //! \brief Holds Exif Data
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-class exif_data
+class ExifData
 {
 public:
     //! \brief empty ctor
-    exif_data();
+    ExifData();
 
     //!
     //! \param[in] filename Name of source file
-    explicit exif_data(const std::string& filename);
+    explicit ExifData(const std::string& filename);
 
     //! \brief read exif data from file
     //! \param[in] filename Name of source file
-    void from_file(const std::string& filename);
+    void fromFile(const std::string& filename);
 
-    const float& exposure_time() const;
-    bool is_exposure_time() const;
-    void exposure_time(float et);
+    const float& getExposureTime() const;
+    bool hasExposureTime() const;
+    void setExposureTime(float et);
 
-    const float& iso_speed() const;
-    bool is_iso_speed() const;
-    void iso_speed(float iso);
+    const float& getIsoSpeed() const;
+    bool hasIsoSpeed() const;
+    void setIsoSpeed(float iso);
 
-    const float& f_number() const;
-    bool is_f_number() const;
-    void f_number(float fnum);
+    const float& getFNumber() const;
+    bool hasFNumber() const;
+    void setFNumber(float fnum);
 
-    float exposure_value() const;
-    bool is_exposure_value() const;
+    float getExposureValue() const;
+    bool hasExposureValue() const;
 
-    const float& exposure_value_compensation() const;
-    bool is_exposure_value_compensation() const;
-    void exposure_value_compensation(float evcomp);
+    const float& getExposureValueCompensation() const;
+    bool hasExposureValueCompensation() const;
+    void setExposureValueCompensation(float evcomp);
 
     //! \brief This function obtains the "average scene luminance" (cd/m^2) from
     //! an image file.
@@ -94,31 +94,31 @@ public:
     //! calculation, iso is not.
     //! \note This description is copied from the original source code in
     //! Luminance HDR http://qtpfsgui.sourceforge.net/
-    float average_scene_luminance() const;
+    float getAverageSceneLuminance() const;
 
 
     //! \brief This function returns the image rotation to apply in degrees.
     //! Possible values are 0, 90, 180, 270.
-    short orientation_degree() const;
+    short getOrientationDegree() const;
 
     //! \brief reset Exif Data
     void reset();
 
     //! \brief returns whether enough information are available to compute
     //! additional values
-    bool is_valid() const;
+    bool isValid() const;
 
     friend std::ostream& operator<<(std::ostream& out,
-                                    const exif_data& exifdata);
+                                    const ExifData& exifdata);
 private:
-    float m_exposure_time;
-    float m_iso_speed;
-    float m_f_number;
-    float m_ev_compensation;
+    float m_exposureTime;
+    float m_isoSpeed;
+    float m_FNumber;
+    float m_EVCompensation;
     short m_orientation;
 };
 
-std::ostream& operator<<(std::ostream& out, const exif_data& exifdata);
+std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
 
 } // exif
 } // pfs
