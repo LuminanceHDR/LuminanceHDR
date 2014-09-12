@@ -612,6 +612,7 @@ void HdrWizard::errorWhileLoading(const QString& error)
 
 void HdrWizard::finishedAligning(int exitcode)
 {
+    emit setValue(-1);
     QApplication::restoreOverrideCursor();
     if (exitcode != 0)
     {
@@ -626,6 +627,8 @@ void HdrWizard::finishedAligning(int exitcode)
 
 void HdrWizard::ais_failed(QProcess::ProcessError e)
 {
+    emit setValue(-1);
+
     switch (e) {
     case QProcess::FailedToStart:
         QMessageBox::warning(this, tr("Error..."), tr("Failed to start external application \"<em>align_image_stack</em>\".<br>Please read \"Help -> Contents... -> Setting up -> External Tools\" for more information."));
@@ -1120,7 +1123,7 @@ void HdrWizard::writeAisData(QByteArray data)
     if (data.contains(": remapping")) {
         QRegExp exp("\\:\\s*(\\d+)\\s*");
         exp.indexIn(QString(data.data()));
-        emit setRange(0, 10);
+        emit setRange(0, 100);
         emit setValue(exp.cap(1).toInt());
     }
 }
