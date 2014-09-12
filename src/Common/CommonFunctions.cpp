@@ -40,6 +40,7 @@
 #include <Libpfs/io/framereaderfactory.h>
 #include <Libpfs/io/framewriter.h>
 #include <Libpfs/io/framewriterfactory.h>
+#include <Libpfs/exif/exif_data.hpp>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/manip/shift.h>
 #include <Libpfs/manip/rotate.h>
@@ -48,6 +49,8 @@
 #include <Libpfs/colorspace/convert.h>
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/colorspace/normalizer.h>
+
+#include <boost/scoped_ptr.hpp>
 
 #include "Core/IOWorker.h"
 
@@ -103,7 +106,8 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         reader->read( *currentItem.frame(), getRawSettings() );
 
         // read Average Luminance
-        currentItem.setAverageLuminance(ExifOperations::getAverageLuminance(filePath.constData()));
+        pfs::exif::exif_data exifData(currentItem.filename().toStdString());
+        currentItem.setAverageLuminance(exifData.average_scene_luminance());
 
         // read Exposure Time
         currentItem.setExposureTime(ExifOperations::getExposureTime(filePath.constData()));
