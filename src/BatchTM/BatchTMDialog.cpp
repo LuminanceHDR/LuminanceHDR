@@ -544,11 +544,12 @@ void BatchTMDialog::closeEvent( QCloseEvent* ce )
 #ifdef QT_DEBUG
     qDebug() << "BatchTMDialog::closeEvent()";
 #endif
+    OsIntegration::getInstance().setProgress(-1);
+
     if ( m_is_batch_running )
         ce->ignore();
     else
         ce->accept();
-    OsIntegration::getInstance().setProgress(-1);
 }
 
 void BatchTMDialog::increment_progress_bar(int inc)
