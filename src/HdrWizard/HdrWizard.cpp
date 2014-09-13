@@ -87,6 +87,28 @@ static const WeightFunctionType weights_in_gui[] =
     WEIGHT_FLAT
 };
 
+namespace
+{
+
+static QString buildEVString(float newEV)
+{
+    QString EVdisplay;
+    QTextStream ts(&EVdisplay);
+    ts.setRealNumberPrecision(2);
+    ts << right << forcesign << fixed << newEV << " EV";
+
+    return EVdisplay;
+}
+
+static void updateTableItem(QTableWidgetItem* tableItem, float newEV)
+{
+    tableItem->setBackground(QBrush(Qt::white));
+    tableItem->setForeground(QBrush(Qt::black));
+    tableItem->setText(buildEVString(newEV));
+}
+
+}
+
 HdrWizard::HdrWizard(QWidget *p,
                      const QStringList &files,
                      const QStringList &/*inputFilesName*/,
@@ -279,11 +301,7 @@ void HdrWizard::updateTableGrid()
         m_ui->tableWidget->setItem(counter, 0, new QTableWidgetItem(QFileInfo(item.filename()).fileName()));
         if (item.hasEV())
         {
-            QString EVdisplay;
-            QTextStream ts(&EVdisplay);
-            ts.setRealNumberPrecision(2);
-            ts << right << forcesign << fixed << item.getEV() << " EV";
-            QTableWidgetItem *tableitem = new QTableWidgetItem(EVdisplay);
+            QTableWidgetItem *tableitem = new QTableWidgetItem(buildEVString(item.getEV()));
             tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             m_ui->tableWidget->setItem(counter, 1, tableitem);
         }
@@ -360,19 +378,13 @@ void HdrWizard::updateEVSlider(int newValue)
                 .arg(newEV).arg(currentRow);
 
     QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
-    if ( tableitem )
+    if (tableitem)
     {
-        QString EVdisplay;
-        QTextStream ts(&EVdisplay);
-        ts.setRealNumberPrecision(2);
-        ts << right << forcesign << fixed << newEV << " EV";
-        tableitem->setBackground(QBrush(Qt::white));
-        tableitem->setForeground(QBrush(Qt::black));
-        tableitem->setText(EVdisplay);
+        updateTableItem(tableitem, newEV);
     }
 
     m_hdrCreationManager->getFile(currentRow).setEV(newEV);
-    updateLabelMaybeNext( m_hdrCreationManager->numFilesWithoutExif() );
+    updateLabelMaybeNext(m_hdrCreationManager->numFilesWithoutExif());
 }
 
 void HdrWizard::updateEVSpinBox(double newEV)
@@ -389,17 +401,11 @@ void HdrWizard::updateEVSpinBox(double newEV)
     QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
     if ( tableitem )
     {
-        QString EVdisplay;
-        QTextStream ts(&EVdisplay);
-        ts.setRealNumberPrecision(2);
-        ts << right << forcesign << fixed << newEV << " EV";
-        tableitem->setBackground(QBrush(Qt::white));
-        tableitem->setForeground(QBrush(Qt::black));
-        tableitem->setText(EVdisplay);
+        updateTableItem(tableitem, newEV);
     }
 
     m_hdrCreationManager->getFile(currentRow).setEV(newEV);
-    updateLabelMaybeNext( m_hdrCreationManager->numFilesWithoutExif() );
+    updateLabelMaybeNext(m_hdrCreationManager->numFilesWithoutExif());
 }
 
 void HdrWizard::inputHdrFileSelected(int currentRow)

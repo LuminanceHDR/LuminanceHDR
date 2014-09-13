@@ -197,8 +197,6 @@ void HdrCreationManager::removeFile(int idx)
     m_data.erase(m_data.begin() + idx);
 }
 
-using namespace libhdr::fusion;
-
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     : m_response(new ResponseCurve(predef_confs[0].responseCurve))
     , m_weight(new WeightFunction(predef_confs[0].weightFunction))
