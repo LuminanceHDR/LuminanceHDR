@@ -128,14 +128,20 @@ bool checkFileName(const HdrCreationItem& item, const QString& str) {
   
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
-    BOOST_FOREACH(const QString& i, filenames) {
-        qDebug() << QString("Checking %1").arg(i);
+    BOOST_FOREACH(const QString& filename, filenames)
+    {
+        qDebug() << QString("HdrCreationManager::loadFiles(): Checking %1").arg(filename);
         HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
-                                                        boost::bind(&checkFileName, _1, i));
+                                                        boost::bind(&checkFileName, _1, filename));
         // has the file been inserted already?
-        if ( it == m_data.end() ) {
-            qDebug() << QString("Schedule loading for %1").arg(i);
-            m_tmpdata.push_back( HdrCreationItem(i) );
+        if (it == m_data.end())
+        {
+            qDebug() << QString("HdrCreationManager::loadFiles(): Schedule loading for %1").arg(filename);
+            m_tmpdata.push_back(HdrCreationItem(filename));
+        }
+        else
+        {
+            qDebug() << QString("HdrCreationManager::loadFiles(): %1 has already been loaded").arg(filename);
         }
     }
 
@@ -150,25 +156,71 @@ void HdrCreationManager::loadFilesDone()
 { 
     qDebug() << "HdrCreationManager::loadFilesDone(): Data loaded ... move to internal structure!";
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
-    BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata)
+    BOOST_FOREACH(const HdrCreationItem& hdrCreationItem, m_tmpdata)
     {
-        if (i.isValid()) {
-            qDebug() << QString("HdrCreationManager::loadFilesDone(): Insert data for %1").arg(i.filename());
-            m_data.push_back(i);
+        if (hdrCreationItem.isValid())
+        {
+            qDebug() << QString("HdrCreationManager::loadFilesDone(): Insert data for %1").arg(hdrCreationItem.filename());
+            m_data.push_back(hdrCreationItem);
         }
     }
-
     m_tmpdata.clear();
+
+    refreshEVOffset();
 
     if (!framesHaveSameSize())
     {
-        emit errorWhileLoading(tr("HdrCreationManager::loadFilesDone(): The images have different size."));
         m_data.clear();
+        emit errorWhileLoading(tr("HdrCreationManager::loadFilesDone(): The images have different size."));
     }
     else
     {
         emit finishedLoadingFiles();
     }
+}
+
+void HdrCreationManager::refreshEVOffset()
+{
+    // no data
+    if (m_data.size() <= 0)
+    {
+        m_evOffset = 0.f;
+        return;
+    }
+
+    std::vector<float> evs;
+    BOOST_FOREACH(const HdrCreationItem& hdrCreationItem, m_data)
+    {
+        if (hdrCreationItem.hasEV())
+        {
+            evs.push_back(hdrCreationItem.getEV());
+        }
+    }
+
+    // no image has EV
+    if (evs.size() <= 0)
+    {
+        m_evOffset = 0.f;
+        return;
+    }
+
+    // only one image available
+    if (evs.size() == 1)
+    {
+        m_evOffset = evs[0];
+        return;
+    }
+
+    // sort...
+    std::sort(evs.begin(), evs.end());
+    m_evOffset = evs[(evs.size() + 1)/2 - 1];
+
+    qDebug() << QString("HdrCreationManager::refreshEVOffset(): offset = %1").arg(m_evOffset);
+}
+
+float HdrCreationManager::getEVOffset() const
+{
+    return m_evOffset;
 }
 
 QStringList HdrCreationManager::getFilesWithoutExif() const
@@ -198,15 +250,18 @@ void HdrCreationManager::removeFile(int idx)
     Q_ASSERT(idx < (int)m_data.size());
 
     m_data.erase(m_data.begin() + idx);
+
+    refreshEVOffset();
 }
 
 HdrCreationManager::HdrCreationManager(bool fromCommandLine)
-    : m_response(new ResponseCurve(predef_confs[0].responseCurve))
+    : m_evOffset(0.f)
+    , m_response(new ResponseCurve(predef_confs[0].responseCurve))
     , m_weight(new WeightFunction(predef_confs[0].weightFunction))
     , m_agMask(NULL)
     , m_align(NULL)
     , m_ais_crop_flag(false)
-    , fromCommandLine( fromCommandLine )
+    , fromCommandLine(fromCommandLine)
 {
     // setConfig(predef_confs[0]);
     setFusionOperator(predef_confs[0].fusionOperator);
@@ -318,8 +373,10 @@ pfs::Frame* HdrCreationManager::createHdr()
     for (size_t idx = 0; idx < m_data.size(); ++idx)
     {
         frames.push_back(
-                    FrameEnhanced(m_data[idx].frame(),
-                                  m_data[idx].getAverageLuminance())
+                    FrameEnhanced(
+                        m_data[idx].frame(),
+                        std::pow(2.f, m_data[idx].getEV() - m_evOffset)
+                        )
                     );
     }
 

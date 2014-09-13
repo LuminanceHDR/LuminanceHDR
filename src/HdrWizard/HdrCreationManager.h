@@ -53,6 +53,7 @@ extern const FusionOperatorConfig predef_confs[6];
 class HdrCreationManager : public QObject
 {
     Q_OBJECT
+
 private:
     HdrCreationItemContainer m_data;
     HdrCreationItemContainer m_tmpdata;
@@ -119,6 +120,8 @@ public:
     void getAgData(bool patches[][agGridSize], int &h0);
     void setPatches(bool patches[][agGridSize]);
 
+    float getEVOffset() const;
+
     void reset();
 public slots:
     void removeTempFiles();
@@ -147,7 +150,10 @@ signals:
     void loadFilesAborted();
 
 private:
-    bool framesHaveSameSize();    
+    bool framesHaveSameSize();
+    void refreshEVOffset();
+
+    float m_evOffset;
 
     boost::scoped_ptr<libhdr::fusion::ResponseCurve> m_response;
     boost::scoped_ptr<libhdr::fusion::WeightFunction> m_weight;

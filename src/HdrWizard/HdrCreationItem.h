@@ -43,9 +43,9 @@ public:
 
     const QString& filename() const     { return m_filename; }
     const QString& convertedFilename() const { return m_convertedFilename; }
-    void setConvertedFilename(QString& f )     { m_convertedFilename = f; }
+    void setConvertedFilename(const QString& f) { m_convertedFilename = f; }
     const QString& alignedFilename() const { return m_alignedFilename; }
-    void setAlignedFilename(QString& f )     { m_alignedFilename = f; }
+    void setAlignedFilename(const QString& f) { m_alignedFilename = f; }
 
     const pfs::FramePtr& frame() const  { return m_frame; }
     pfs::FramePtr& frame()              { return m_frame; }

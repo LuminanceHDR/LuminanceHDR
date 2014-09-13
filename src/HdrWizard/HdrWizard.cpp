@@ -291,17 +291,20 @@ void HdrWizard::updateTableGrid()
     QStringList filesWithoutExif;
     BOOST_FOREACH(const HdrCreationItem& item, *m_hdrCreationManager)
     {
-        qDebug() << QString("HdrWizard::updateTableGrid(): Fill row %1: %2 %3 EV")
+        float normalizedEV = item.getEV() - m_hdrCreationManager->getEVOffset();
+
+        qDebug() << QString("HdrWizard::updateTableGrid(): Fill row %1: %2 %3 EV (%4 EV)")
                     .arg(counter)
                     .arg(item.filename())
-                    .arg(item.getEV());
+                    .arg(item.getEV())
+                    .arg(normalizedEV);
 
         // fill graphical list
         m_ui->tableWidget->insertRow(counter);
         m_ui->tableWidget->setItem(counter, 0, new QTableWidgetItem(QFileInfo(item.filename()).fileName()));
         if (item.hasEV())
         {
-            QTableWidgetItem *tableitem = new QTableWidgetItem(buildEVString(item.getEV()));
+            QTableWidgetItem *tableitem = new QTableWidgetItem(buildEVString(normalizedEV));
             tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             m_ui->tableWidget->setItem(counter, 1, tableitem);
         }
@@ -388,11 +391,13 @@ void HdrWizard::updateEVSlider(int newValue)
     int currentRow = m_ui->tableWidget->currentRow();
     float newEV = ((float)newValue)/100.f;
     bool oldState = m_ui->ImageEVdsb->blockSignals(true);
-    m_ui->ImageEVdsb->setValue( newEV );
+    m_ui->ImageEVdsb->setValue(newEV);
     m_ui->ImageEVdsb->blockSignals(oldState);
 
-    qDebug() << QString("HdrWizard::updateEVSlider(%1) for %2")
-                .arg(newEV).arg(currentRow);
+    qDebug() << QString("HdrWizard::updateEVSlider(): %1 EV (%2) for %3")
+                .arg(newEV)
+                .arg(newEV + m_hdrCreationManager->getEVOffset())
+                .arg(currentRow);
 
     QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
     if (tableitem)
@@ -400,7 +405,7 @@ void HdrWizard::updateEVSlider(int newValue)
         updateTableItem(tableitem, newEV);
     }
 
-    m_hdrCreationManager->getFile(currentRow).setEV(newEV);
+    m_hdrCreationManager->getFile(currentRow).setEV(newEV + m_hdrCreationManager->getEVOffset());
     updateLabelMaybeNext(m_hdrCreationManager->numFilesWithoutExif());
 }
 
@@ -412,8 +417,10 @@ void HdrWizard::updateEVSpinBox(double newEV)
     m_ui->EVSlider->setValue( (int)(newEV*100) );
     m_ui->EVSlider->blockSignals(oldState);
 
-    qDebug() << QString("HdrWizard::updateEVSpinBox(%1) for %2")
-                .arg(newEV).arg(currentRow);
+    qDebug() << QString("HdrWizard::updateEVSpinBox(): %1 EV (%2) for %3")
+                .arg(newEV)
+                .arg(newEV + m_hdrCreationManager->getEVOffset())
+                .arg(currentRow);
 
     QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
     if (tableitem)
@@ -421,7 +428,7 @@ void HdrWizard::updateEVSpinBox(double newEV)
         updateTableItem(tableitem, newEV);
     }
 
-    m_hdrCreationManager->getFile(currentRow).setEV(newEV);
+    m_hdrCreationManager->getFile(currentRow).setEV(newEV + m_hdrCreationManager->getEVOffset());
     updateLabelMaybeNext(m_hdrCreationManager->numFilesWithoutExif());
 }
 
@@ -451,13 +458,15 @@ void HdrWizard::inputHdrFileSelected(int currentRow)
         m_ui->EVgroupBox->setEnabled(true);
         if (m_hdrCreationManager->getFile(currentRow).hasEV())
         {
-            m_ui->ImageEVdsb->setValue( m_hdrCreationManager->getFile(currentRow).getEV() );
-            m_ui->EVSlider->setValue( (int)(m_hdrCreationManager->getFile(currentRow).getEV()*100.f + 0.5f) );
+            float normalizedEV = m_hdrCreationManager->getFile(currentRow).getEV() - m_hdrCreationManager->getEVOffset();
+
+            m_ui->ImageEVdsb->setValue(normalizedEV);
+            m_ui->EVSlider->setValue(static_cast<int>(normalizedEV*100.f + 0.5f));
         }
         else
         {
-            m_ui->ImageEVdsb->setValue( 0.0 );
-            m_ui->EVSlider->setValue( 0 );
+            m_ui->ImageEVdsb->setValue(0.0);
+            m_ui->EVSlider->setValue(0);
         }
         m_ui->ImageEVdsb->blockSignals(false);
         m_ui->EVSlider->blockSignals(false);
