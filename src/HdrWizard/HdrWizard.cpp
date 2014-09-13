@@ -278,7 +278,7 @@ void HdrWizard::loadImagesButtonClicked()
 
 void HdrWizard::updateTableGrid()
 {
-    qDebug() << "Fill grid with values in the m_data structure";
+    qDebug() << "HdrWizard::updateTableGrid(): Fill grid with values in the m_data structure";
 
     int currentRow = m_ui->tableWidget->currentRow();
 
@@ -291,7 +291,7 @@ void HdrWizard::updateTableGrid()
     QStringList filesWithoutExif;
     BOOST_FOREACH(const HdrCreationItem& item, *m_hdrCreationManager)
     {
-        qDebug() << QString("Fill row %1: %2 %3 EV")
+        qDebug() << QString("HdrWizard::updateTableGrid(): Fill row %1: %2 %3 EV")
                     .arg(counter)
                     .arg(item.filename())
                     .arg(item.getEV());
@@ -322,19 +322,36 @@ void HdrWizard::updateTableGrid()
         ++counter;
     }
 
-    if ( currentRow >= 0 && currentRow < (int)m_hdrCreationManager->availableInputFiles()) {
-        m_ui->tableWidget->selectRow(currentRow);
-    } else if (currentRow >= 0) {
-        m_ui->tableWidget->selectRow(0);
-    } else {
-        m_ui->tableWidget->selectRow(-1);
+    // highlight current row (possibly remain on the previously selected one!)
+    if (currentRow < 0)
+    {
+        if (m_hdrCreationManager->availableInputFiles() > 0)
+        {
+            currentRow = 0;
+        }
+        else
+        {
+            currentRow = -1;
+        }
     }
+    else
+    {
+        if (currentRow > (int)m_hdrCreationManager->availableInputFiles())
+        {
+            currentRow = 0;
+        }
+        // else, don't change the value!
+    }
+    m_ui->tableWidget->selectRow(currentRow);
 
-    if ( counter ) {
+    if (counter)
+    {
         m_ui->clearListButton->setEnabled(true);
 
         enableNextOrWarning(filesWithoutExif);
-    } else {
+    }
+    else
+    {
         m_ui->clearListButton->setEnabled(false);
         m_ui->removeImageButton->setEnabled(false);
         m_ui->NextFinishButton->setEnabled(false);
@@ -399,7 +416,7 @@ void HdrWizard::updateEVSpinBox(double newEV)
                 .arg(newEV).arg(currentRow);
 
     QTableWidgetItem *tableitem = m_ui->tableWidget->item(currentRow, 1);
-    if ( tableitem )
+    if (tableitem)
     {
         updateTableItem(tableitem, newEV);
     }
@@ -412,7 +429,8 @@ void HdrWizard::inputHdrFileSelected(int currentRow)
 {
     qDebug() << QString("HdrWizard::inputHdrFileSelected(%1)").arg(currentRow);
 
-    if ( currentRow < 0 || m_ui->tableWidget->rowCount() < 0 ) {
+    if ((currentRow < 0) || (m_ui->tableWidget->rowCount() < 0))
+    {
         // no selection...
         m_ui->EVgroupBox->setEnabled(false);
         m_ui->removeImageButton->setEnabled(false);
@@ -431,7 +449,7 @@ void HdrWizard::inputHdrFileSelected(int currentRow)
         m_ui->EVSlider->blockSignals(true);
 
         m_ui->EVgroupBox->setEnabled(true);
-        if ( m_hdrCreationManager->getFile(currentRow).hasEV() )
+        if (m_hdrCreationManager->getFile(currentRow).hasEV())
         {
             m_ui->ImageEVdsb->setValue( m_hdrCreationManager->getFile(currentRow).getEV() );
             m_ui->EVSlider->setValue( (int)(m_hdrCreationManager->getFile(currentRow).getEV()*100.f + 0.5f) );
@@ -527,15 +545,16 @@ void HdrWizard::loadInputFilesDone()
     m_ui->progressBar->hide();
     m_ui->loadImagesButton->setEnabled(true);
 
-    QApplication::restoreOverrideCursor();
     updateTableGrid();
-    inputHdrFileSelected(0);
-    m_ui->tableWidget->selectRow(0);
+
     m_ui->alignGroupBox->setEnabled(true);
     m_ui->agGroupBox->setEnabled(true);
-    if (m_ui->tableWidget->rowCount() > 1) {
+    if (m_ui->tableWidget->rowCount() > 1)
+    {
         m_ui->alignCheckBox->setEnabled(true);
     }
+
+    QApplication::restoreOverrideCursor();
 }
 
 // this function should be called if we have at least a file currently in
@@ -592,8 +611,6 @@ void HdrWizard::updateLabelMaybeNext(size_t numFilesWithoutExif)
 
 void HdrWizard::errorWhileLoading(const QString& error)
 {
-    // disconnect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
-
     m_ui->tableWidget->clear();
     m_ui->tableWidget->setRowCount(0);
     m_ui->tableWidget->setEnabled(true);
@@ -608,13 +625,12 @@ void HdrWizard::errorWhileLoading(const QString& error)
     QMessageBox::critical(this,tr("Loading Error: "), error);
     // DAVIDE _ HDR CREATION
     m_hdrCreationManager->clearFiles();
+
     QApplication::restoreOverrideCursor();
 
     m_ui->confirmloadlabel->setText("<center><h3><b>"+
                                     tr("Start loading a set of images with different exposure") +
                                     "</b></h3></center>");
-
-    // connect(m_ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 }
 
 void HdrWizard::finishedAligning(int exitcode)
