@@ -148,24 +148,27 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
 
 void HdrCreationManager::loadFilesDone()
 { 
-    qDebug() << "Data loaded ... move to internal structure!";
+    qDebug() << "HdrCreationManager::loadFilesDone(): Data loaded ... move to internal structure!";
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
-    BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata) {
-        if ( i.isValid() ) {
-            qDebug() << QString("Insert data for %1").arg(i.filename());
+    BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata)
+    {
+        if (i.isValid()) {
+            qDebug() << QString("HdrCreationManager::loadFilesDone(): Insert data for %1").arg(i.filename());
             m_data.push_back(i);
         }
     }
 
     m_tmpdata.clear();
-    //qDebug() << QString("Read %1 out of %2").arg(m_tmpdata.size()).arg(filenames.size());
 
-    if (!framesHaveSameSize()) {
-        emit errorWhileLoading(tr("The images have different size."));
+    if (!framesHaveSameSize())
+    {
+        emit errorWhileLoading(tr("HdrCreationManager::loadFilesDone(): The images have different size."));
         m_data.clear();
     }
     else
+    {
         emit finishedLoadingFiles();
+    }
 }
 
 QStringList HdrCreationManager::getFilesWithoutExif() const

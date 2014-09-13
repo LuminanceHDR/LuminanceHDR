@@ -93,14 +93,13 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
     }
 
     QFileInfo qfi(currentItem.alignedFilename());
-    qDebug() << QString("Loading data for %1").arg(currentItem.alignedFilename());
 
     try
     {
         QFileInfo qfi(currentItem.filename());
         QByteArray filePath = QFile::encodeName(qfi.filePath());
 
-        qDebug() << QString("Loading data for %1").arg(filePath.constData());
+        qDebug() << QString("LoadFile: Loading data for %1").arg(filePath.constData());
 
         FrameReaderPtr reader = FrameReaderFactory::open(filePath.constData());
         reader->read( *currentItem.frame(), getRawSettings() );
@@ -112,7 +111,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         // read Exposure Time
         currentItem.setExposureTime(ExifOperations::getExposureTime(filePath.constData()));
 
-        qDebug() << QString("HdrCreationItem: Average Luminance for %1 is %2")
+        qDebug() << QString("LoadFile: Average Luminance for %1 is %2")
                     .arg(currentItem.filename())
                     .arg(currentItem.getAverageLuminance());
 
@@ -140,7 +139,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
     }
     catch (std::runtime_error& err)
     {
-        qDebug() << QString("Cannot load %1: %2")
+        qDebug() << QString("LoadFile: Cannot load %1: %2")
                     .arg(currentItem.filename())
                     .arg(QString::fromStdString(err.what()));
     }
@@ -164,7 +163,7 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
     QString outputFilename = tempdir + "/" + uuid.toString() + ".tif";
     currentItem.setConvertedFilename(outputFilename);
 
-    qDebug() << QString("Saving data for %1 to %2 on %3").arg(inputFilename).arg(outputFilename).arg(tempdir);
+    qDebug() << QString("SaveFile: Saving data for %1 to %2 on %3").arg(inputFilename).arg(outputFilename).arg(tempdir);
 
     // save pfs::Frame as tiff 16bits or 32bits
     try
@@ -182,7 +181,7 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
     }
     catch (std::runtime_error& err)
     {
-        qDebug() << QString("Cannot save %1: %2")
+        qDebug() << QString("SaveFile: Cannot save %1: %2")
                     .arg(currentItem.filename())
                     .arg(QString::fromStdString(err.what()));
     }
@@ -190,7 +189,7 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
 
 void RefreshPreview::operator()(HdrCreationItem& currentItem)
 {
-    qDebug() << QString("Refresh preview for %1").arg(currentItem.filename());
+    qDebug() << QString("RefreshPreview: Refresh preview for %1").arg(currentItem.filename());
 
     try
     {
@@ -208,7 +207,8 @@ void RefreshPreview::operator()(HdrCreationItem& currentItem)
 
         float m = *std::min_element(red->begin(), red->end());
         float M = *std::max_element(red->begin(), red->end());
-        if (m != 0.0f || M != 1.0f) {
+        if (m != 0.0f || M != 1.0f)
+        {
             Channel redNorm(currentItem.frame()->getWidth(),
                             currentItem.frame()->getHeight(), "X");
             pfs::colorspace::Normalizer normalize(m, M);
@@ -218,14 +218,16 @@ void RefreshPreview::operator()(HdrCreationItem& currentItem)
                              qimageData, convert);
         }
         else
+        {
             utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
                              qimageData, ConvertToQRgb());
+        }
 
         currentItem.qimage().swap( tempImage );
     }
     catch (std::runtime_error& err)
     {
-        qDebug() << QString("Cannot load %1: %2")
+        qDebug() << QString("RefreshPreview: Cannot load %1: %2")
                     .arg(currentItem.filename())
                     .arg(QString::fromStdString(err.what()));
     }
