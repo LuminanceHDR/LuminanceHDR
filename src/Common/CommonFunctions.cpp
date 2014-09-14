@@ -96,7 +96,6 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
 
     try
     {
-        QFileInfo qfi(currentItem.filename());
         QByteArray filePath = QFile::encodeName(qfi.filePath());
 
         qDebug() << QString("LoadFile: Loading data for %1").arg(filePath.constData());
