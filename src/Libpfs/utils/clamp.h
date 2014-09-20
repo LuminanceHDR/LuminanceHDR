@@ -28,6 +28,11 @@ namespace utils {
 template <typename Type>
 struct Clamp
 {
+    Clamp()
+        : m_min(0.f)
+        , m_max(1.f)
+    {}
+
     Clamp(Type min, Type max)
         : m_min(min)
         , m_max(max)

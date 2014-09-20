@@ -214,7 +214,7 @@ void LdrViewer::updatePixmap()
     qDebug() << "void LdrViewer::updatePixmap()";
 #endif
 
-    QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(getFrame()) );
+    QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(getFrame()));
 
     doCMSTransform(*temp_qimage, false, false);
     mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));

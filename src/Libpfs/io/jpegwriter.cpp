@@ -40,6 +40,7 @@
 #include <Libpfs/utils/resourcehandlerlcms.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/utils/chain.h>
+#include <Libpfs/utils/clamp.h>
 #include <Libpfs/fixedstrideiterator.h>
 
 using namespace std;
@@ -214,7 +215,10 @@ public:
 
     typedef pfs::utils::Chain<
         colorspace::Normalizer,
-        Remapper<JSAMPLE>
+        pfs::utils::Chain<
+            utils::Clamp<float>,
+            Remapper<JSAMPLE>
+        >
     > JpegRemapper;
 
     bool write(const pfs::Frame &frame, const JpegWriterParams& params,
@@ -275,9 +279,13 @@ public:
             std::vector<JSAMPLE> scanLineOut(cinfo.image_width * cinfo.num_components);
             JSAMPROW scanLineOutArray[1] = { scanLineOut.data() };
 
-            JpegRemapper remapper(colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
-                                  Remapper<JSAMPLE>(params.luminanceMapping_));
-            while ( cinfo.next_scanline < cinfo.image_height )
+            JpegRemapper remapper(
+                        colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                        utils::Chain<
+                            utils::Clamp<float>,
+                            Remapper<JSAMPLE>
+                        >(utils::Clamp<float>(), Remapper<JSAMPLE>(params.luminanceMapping_)));
+            while (cinfo.next_scanline < cinfo.image_height)
             {
                 // copy line from Frame into scanLineOut
                 utils::transform(rChannel->row_begin(cinfo.next_scanline),

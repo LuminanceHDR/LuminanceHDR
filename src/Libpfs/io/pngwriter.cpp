@@ -38,6 +38,7 @@
 #include <Libpfs/utils/resourcehandlerstdio.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/utils/chain.h>
+#include <Libpfs/utils/clamp.h>
 #include <Libpfs/fixedstrideiterator.h>
 
 using namespace std;
@@ -146,7 +147,10 @@ public:
 
     typedef pfs::utils::Chain<
         colorspace::Normalizer,
-        Remapper<png_byte>
+        pfs::utils::Chain<
+            utils::Clamp<float>,
+            Remapper<png_byte>
+        >
     > PngRemapper;
 
     bool write(const pfs::Frame &frame, const PngWriterParams& params,
@@ -202,8 +206,12 @@ public:
         frame.getXYZChannels(rChannel, gChannel, bChannel);
 
         std::vector<png_byte> scanLineOut( width * 3 );
-        PngRemapper remapper(colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
-                             Remapper<png_byte>(params.luminanceMapping_));
+        PngRemapper remapper(
+                    colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                    utils::Chain<
+                        utils::Clamp<float>,
+                        Remapper<png_byte>
+                    >(utils::Clamp<float>(), Remapper<png_byte>(params.luminanceMapping_)));
         for (png_uint_32 row = 0; row < height; ++row)
         {
             utils::transform(rChannel->row_begin(row),
