@@ -194,27 +194,22 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
     std::vector<uint8_t> stripBuffer( stripSize );
-    typedef utils::Chain<
-            colorspace::Normalizer,
-            utils::Chain<
-                utils::Clamp<float>,
-                Remapper<uint8_t>
-            >> TiffRemapper;
-    TiffRemapper remapper(
-                colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
-                utils::Chain<
-                    utils::Clamp<float>,
-                    Remapper<uint8_t>
-                >(utils::Clamp<float>(0.f, 1.f), Remapper<uint8_t>(params.luminanceMapping_)));
     for (tstrip_t s = 0; s < stripsNum; s++)
     {
-        utils::transform(rChannel->row_begin(s), rChannel->row_end(s),
-                         gChannel->row_begin(s),
-                         bChannel->row_begin(s),
-                         FixedStrideIterator<uint8_t*, 3>(stripBuffer.data()),
-                         FixedStrideIterator<uint8_t*, 3>(stripBuffer.data() + 1),
-                         FixedStrideIterator<uint8_t*, 3>(stripBuffer.data() + 2),
-                         remapper);
+        utils::transform(
+                    rChannel->row_begin(s),
+                    rChannel->row_end(s),
+                    gChannel->row_begin(s),
+                    bChannel->row_begin(s),
+                    FixedStrideIterator<uint8_t*, 3>(stripBuffer.data()),
+                    FixedStrideIterator<uint8_t*, 3>(stripBuffer.data() + 1),
+                    FixedStrideIterator<uint8_t*, 3>(stripBuffer.data() + 2),
+                    utils::chain(
+                        colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                        utils::CLAMP_F32,
+                        Remapper<uint8_t>(params.luminanceMapping_)
+                        )
+                    );
 
         if (TIFFWriteEncodedStrip(tif, s, stripBuffer.data(), stripSize) != stripSize)
         {

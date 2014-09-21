@@ -55,11 +55,12 @@ using namespace pfs;
 
 QRgbRemapper::QRgbRemapper(float minLuminance, float maxLuminance, RGBMappingType mappingType)
     : m_remapper(
-          colorspace::Normalizer(minLuminance, maxLuminance),
-          utils::Chain<
-          utils::Clamp<float>,
-          Remapper<uint8_t>
-          >(utils::Clamp<float>(0.f, 1.f), Remapper<uint8_t>(mappingType)))
+          utils::chain(
+              colorspace::Normalizer(minLuminance, maxLuminance),
+              utils::CLAMP_F32,
+              Remapper<uint8_t>(mappingType)
+              )
+          )
 {}
 
 void QRgbRemapper::operator()(float r, float g, float b, QRgb& qrgb) const

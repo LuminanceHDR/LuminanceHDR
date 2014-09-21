@@ -145,14 +145,6 @@ public:
     size_t getFileSize()            { return m_filesize; }
     void setFileSize(size_t size)   { m_filesize = size; }
 
-    typedef pfs::utils::Chain<
-        colorspace::Normalizer,
-        pfs::utils::Chain<
-            utils::Clamp<float>,
-            Remapper<png_byte>
-        >
-    > PngRemapper;
-
     bool write(const pfs::Frame &frame, const PngWriterParams& params,
                const std::string& filename)
     {
@@ -206,22 +198,22 @@ public:
         frame.getXYZChannels(rChannel, gChannel, bChannel);
 
         std::vector<png_byte> scanLineOut( width * 3 );
-        PngRemapper remapper(
-                    colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
-                    utils::Chain<
-                        utils::Clamp<float>,
-                        Remapper<png_byte>
-                    >(utils::Clamp<float>(), Remapper<png_byte>(params.luminanceMapping_)));
         for (png_uint_32 row = 0; row < height; ++row)
         {
-            utils::transform(rChannel->row_begin(row),
-                             rChannel->row_end(row),
-                             gChannel->row_begin(row),
-                             bChannel->row_begin(row),
-                             FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 2),
-                             FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 1),
-                             FixedStrideIterator<png_byte*, 3>(scanLineOut.data()),
-                             remapper);
+            utils::transform(
+                        rChannel->row_begin(row),
+                        rChannel->row_end(row),
+                        gChannel->row_begin(row),
+                        bChannel->row_begin(row),
+                        FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 2),
+                        FixedStrideIterator<png_byte*, 3>(scanLineOut.data() + 1),
+                        FixedStrideIterator<png_byte*, 3>(scanLineOut.data()),
+                        utils::chain(
+                            colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                            utils::CLAMP_F32,
+                            Remapper<png_byte>(params.luminanceMapping_)
+                            )
+                        );
             png_write_row(png_ptr, scanLineOut.data());
         }
 

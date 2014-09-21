@@ -213,14 +213,6 @@ public:
     virtual void close() = 0;
     virtual size_t getFileSize() const = 0;
 
-    typedef pfs::utils::Chain<
-        colorspace::Normalizer,
-        pfs::utils::Chain<
-            utils::Clamp<float>,
-            Remapper<JSAMPLE>
-        >
-    > JpegRemapper;
-
     bool write(const pfs::Frame &frame, const JpegWriterParams& params,
                const std::string& filename)
     {
@@ -279,23 +271,23 @@ public:
             std::vector<JSAMPLE> scanLineOut(cinfo.image_width * cinfo.num_components);
             JSAMPROW scanLineOutArray[1] = { scanLineOut.data() };
 
-            JpegRemapper remapper(
-                        colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
-                        utils::Chain<
-                            utils::Clamp<float>,
-                            Remapper<JSAMPLE>
-                        >(utils::Clamp<float>(), Remapper<JSAMPLE>(params.luminanceMapping_)));
             while (cinfo.next_scanline < cinfo.image_height)
             {
                 // copy line from Frame into scanLineOut
-                utils::transform(rChannel->row_begin(cinfo.next_scanline),
-                                 rChannel->row_end(cinfo.next_scanline),
-                                 gChannel->row_begin(cinfo.next_scanline),
-                                 bChannel->row_begin(cinfo.next_scanline),
-                                 FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data()),
-                                 FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data() + 1),
-                                 FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data() + 2),
-                                 remapper);
+                utils::transform(
+                            rChannel->row_begin(cinfo.next_scanline),
+                            rChannel->row_end(cinfo.next_scanline),
+                            gChannel->row_begin(cinfo.next_scanline),
+                            bChannel->row_begin(cinfo.next_scanline),
+                            FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data()),
+                            FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data() + 1),
+                            FixedStrideIterator<JSAMPLE*, 3>(scanLineOut.data() + 2),
+                            utils::chain(
+                                colorspace::Normalizer(params.minLuminance_, params.maxLuminance_),
+                                utils::CLAMP_F32,
+                                Remapper<JSAMPLE>(params.luminanceMapping_)
+                                )
+                            );
                 jpeg_write_scanlines(&cinfo, scanLineOutArray, 1);
             }
         }

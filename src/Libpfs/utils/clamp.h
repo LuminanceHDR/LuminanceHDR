@@ -28,11 +28,6 @@ namespace utils {
 template <typename Type>
 struct Clamp
 {
-    Clamp()
-        : m_min(0.f)
-        , m_max(1.f)
-    {}
-
     Clamp(Type min, Type max)
         : m_min(min)
         , m_max(max)
@@ -57,6 +52,11 @@ private:
     Type m_min;
     Type m_max;
 };
+
+typedef Clamp<float> ClampF32;
+
+// default float clamp between 0 and 1.f (very common)
+static const ClampF32 CLAMP_F32(0.f, 1.f);
 
 }   // utils
 }   // pfs

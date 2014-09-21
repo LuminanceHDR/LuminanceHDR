@@ -45,7 +45,7 @@ typedef Chain<
 
 TEST(FloatRgbConverter, Uint16_Test1)
 {
-    MyRemapperUint16 d(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
+    MyRemapperUint16 d = chain(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
 
     float inRed = 1.0f;
     float inGreen = 0.0f;
@@ -64,7 +64,7 @@ TEST(FloatRgbConverter, Uint16_Test1)
 
 TEST(FloatRgbConverter, Uint16_Test2)
 {
-    MyRemapperUint16 d(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
+    MyRemapperUint16 d = chain(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
 
     float inRed = 1.2f;
     float inGreen = 0.0f;
@@ -83,7 +83,7 @@ TEST(FloatRgbConverter, Uint16_Test2)
 
 TEST(FloatRgbConverter, Uint16_Test3)
 {
-    MyRemapperUint16 d(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
+    MyRemapperUint16 d = chain(Clamp<float>(0.f, 1.f), Remapper<uint16_t>(MAP_LINEAR));
 
     float inRed = 1.2f;
     float inGreen = -0.0f;
@@ -136,7 +136,7 @@ TEST(FloatRgbConverter, Qrgb_Test2)
 
 TEST(FloatRgbConverter, Uint8_Test1)
 {
-    MyRemapperUint8 d(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
+    MyRemapperUint8 d = chain(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
 
     float inRed = 1.0f;
     float inGreen = 0.0f;
@@ -155,7 +155,7 @@ TEST(FloatRgbConverter, Uint8_Test1)
 
 TEST(FloatRgbConverter, Uint8_Test2)
 {
-    MyRemapperUint8 d(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
+    MyRemapperUint8 d = chain(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
 
     float inRed = 1.2f;
     float inGreen = 0.0f;
@@ -174,7 +174,7 @@ TEST(FloatRgbConverter, Uint8_Test2)
 
 TEST(FloatRgbConverter, Uint8_Test3)
 {
-    MyRemapperUint8 d(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
+    MyRemapperUint8 d = chain(Clamp<float>(0.f, 1.f), Remapper<uint8_t>(MAP_LINEAR));
 
     float inRed = 1.2f;
     float inGreen = -0.0f;

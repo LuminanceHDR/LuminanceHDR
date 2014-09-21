@@ -83,20 +83,20 @@ std::pair<float, float> getMinMax(const pfs::Array2Df& data)
 
 void balance(pfs::Array2Df& data, float nb_min, float nb_max)
 {
-    typedef utils::Clamp<float> Clampf;
-    typedef utils::Chain<
-            Clampf,
-            Normalizer
-            > Transform;
-
     std::pair<float, float> minmax = getMinMax(data);
     if (nb_min > 0.f || nb_max < 1.f)
     {
         minmax = quantiles(data, nb_min, nb_max, minmax.first, minmax.second);
     }
-    std::transform(data.begin(), data.end(), data.begin(),
-                   Transform(Clampf(minmax.first, minmax.second),
-                             Normalizer(minmax.first, minmax.second)));
+    std::transform(
+                data.begin(),
+                data.end(),
+                data.begin(),
+                utils::chain(
+                    utils::ClampF32(minmax.first, minmax.second),
+                    Normalizer(minmax.first, minmax.second)
+                    )
+                );
 }
 
 void checkParameterValidity(float& nb_min, float& nb_max)
