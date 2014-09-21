@@ -2,25 +2,30 @@
 SETLOCAL
 
 REM  http://dev.exiv2.org/projects/exiv2/repository/
-SET EXIV2_COMMIT=3243
+SET EXIV2_COMMIT=3364
 
 REM  http://sourceforge.net/p/libjpeg-turbo/code/
 SET LIBJPEG_COMMIT=1093
+rem error 1406
 
 rem  https://github.com/madler/zlib/commits
 SET ZLIB_COMMIT_LONG=50893291621658f355bc5b4d450a8d06a563053d
 
-rem  https://github.com/danielkaneider/openexr
-SET OPENEXR_COMMIT_LONG=032bc30184de4bdb43992f9e2adb7ca3e6b966f9
+rem  https://github.com/openexr/openexr
+SET OPENEXR_COMMIT_LONG=91015147e5a6a1914bcb16b12886aede9e1ed065
+SET OPENEXR_CMAKE_VERSION=2.2
 
 rem  http://www.boost.org/
 SET BOOST_MINOR=55
 
+REM ftp://ftp.fftw.org/pub/fftw/
+SET FFTW_VER=3.3.4
+
 rem https://github.com/mm2/Little-CMS
-SET LCMS_COMMIT_LONG=579b3aad051b9fcf858ea308f9d8f6714f84c7a8
+SET LCMS_COMMIT_LONG=d61231a1efb9eb926cbf0235afe03452302c6009
 
 rem https://github.com/LibRaw/LibRaw
-SET LIBRAW_COMMIT_LONG=c730a9e4c517eb2947e47f6f9749a9da41d127d4
+SET LIBRAW_COMMIT_LONG=32e21b28e24b6cecdae8813b5ef9c103b8a8ccf0
 SET LIBRAW_DEMOS2_COMMIT_LONG=ffea825e121e92aa780ae587b65f80fc5847637c
 SET LIBRAW_DEMOS3_COMMIT_LONG=f0895891fdaa775255af02275fce426a5bf5c9fc
 
@@ -29,6 +34,7 @@ SET PTHREADS_DIR=prebuilt-dll-2-9-1-release
 
 rem http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c
 SET CFITSIO_VER=3360
+rem broken 3370
 
 rem Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
 SET HUGIN_VER=201300
@@ -201,12 +207,13 @@ IF NOT EXIST zlib-%ZLIB_COMMIT% (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\lpng170b25.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng170b25.zip http://sourceforge.net/projects/libpng/files/libpng17/1.7.0beta25/lp170b25.zip/download
+IF NOT EXIST %TEMP_DIR%\lpng170b35.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng170b35.zip http://sourceforge.net/projects/libpng/files/libpng17/1.7.0beta35/lp170b35.zip/download
+    IF errorlevel 1	goto error_end
 )
-IF NOT EXIST lp170b25 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng170b25.zip
-	pushd lp170b25
+IF NOT EXIST lp170b35 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng170b35.zip
+	pushd lp170b35
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DZLIB_ROOT=..\zlib-%ZLIB_COMMIT%;..\zlib-%ZLIB_COMMIT%\%Configuration%
 	IF errorlevel 1	goto error_end
 	%VSCOMMAND% libpng.sln /build "%Configuration%|%Platform%" /Project png17
@@ -230,16 +237,17 @@ IF NOT EXIST expat-2.1.0 (
 )
 
 IF NOT EXIST exiv2-%EXIV2_COMMIT% (
-	%CYGWIN_DIR%\bin\svn.exe co -r %EXIV2_COMMIT% svn://dev.exiv2.org/svn/trunk exiv2-%EXIV2_COMMIT%
-    
+    %CYGWIN_DIR%\bin\svn.exe co -r %EXIV2_COMMIT% svn://dev.exiv2.org/svn/trunk exiv2-%EXIV2_COMMIT%
     pushd exiv2-%EXIV2_COMMIT%
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%"  -DZLIB_ROOT=..\zlib-%ZLIB_COMMIT%;..\zlib-%ZLIB_COMMIT%\Release
+    
 	IF errorlevel 1 goto error_end
 	%VSCOMMAND% exiv2.sln /build "%Configuration%|%Platform%" /Project exiv2
 	IF errorlevel 1 goto error_end
     copy bin\%Platform%\Dynamic\*.h include
 	popd  
 )
+
 
 IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
     %CYGWIN_DIR%\bin\svn.exe co -r %LIBJPEG_COMMIT% svn://svn.code.sf.net/p/libjpeg-turbo/code/trunk libjpeg-turbo-%LIBJPEG_COMMIT%
@@ -363,9 +371,11 @@ IF NOT EXIST %PTHREADS_CURRENT_DIR% (
 IF NOT EXIST %TEMP_DIR%\cfit%CFITSIO_VER%.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/cfit%CFITSIO_VER%.zip ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfit%CFITSIO_VER%.zip
 )
+
 IF NOT EXIST cfit%CFITSIO_VER% (
     %CYGWIN_DIR%\bin\unzip.exe -o -q -d cfit%CFITSIO_VER% %TEMP_DIR%/cfit%CFITSIO_VER%.zip
 )
+
 IF NOT EXIST cfit%CFITSIO_VER%.build (
     mkdir cfit%CFITSIO_VER%.build
     pushd cfit%CFITSIO_VER%.build
@@ -376,6 +386,8 @@ IF NOT EXIST cfit%CFITSIO_VER%.build (
     IF errorlevel 1 goto error_end   
     popd
 )
+
+
 pushd cfit%CFITSIO_VER%
 SET CFITSIO=%CD%
 popd
@@ -383,29 +395,29 @@ pushd cfit%CFITSIO_VER%.build\%Configuration%
 SET CFITSIO=%CFITSIO%;%CD%
 popd
 
-IF NOT EXIST %TEMP_DIR%\CCfits-2.4.tar (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits-2.4.tar.gz http://heasarc.gsfc.nasa.gov/docs/software/fitsio/CCfits/CCfits-2.4.tar.gz
-	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/CCfits-2.4.tar.gz
-    %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits2.4patch.zip http://qtpfsgui.sourceforge.net/win/CCfits2.4patch.zip
-)
-IF NOT EXIST CCfits2.4 (
-	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/CCfits-2.4.tar
-    ren CCfits CCfits2.4
-    %CYGWIN_DIR%\bin\unzip.exe -o -q -d CCfits2.4 %TEMP_DIR%/CCfits2.4patch.zip
-)
-IF NOT EXIST CCfits2.4.build (
-    mkdir CCfits2.4.build
-    
-    pushd CCfits2.4.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% -DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
-	IF errorlevel 1 goto error_end
-    %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target CCfits
-	IF errorlevel 1 goto error_end
-	popd
-)
-pushd CCfits2.4.build\%Configuration%
-SET CCFITS_ROOT_DIR=%CD%
-popd
+rem IF NOT EXIST %TEMP_DIR%\CCfits-2.4.tar (
+rem 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits-2.4.tar.gz http://heasarc.gsfc.nasa.gov/docs/software/fitsio/CCfits/CCfits-2.4.tar.gz
+rem 	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/CCfits-2.4.tar.gz
+rem     %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits2.4patch.zip http://qtpfsgui.sourceforge.net/win/CCfits2.4patch.zip
+rem )
+rem IF NOT EXIST CCfits2.4 (
+rem 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/CCfits-2.4.tar
+rem     ren CCfits CCfits2.4
+rem     %CYGWIN_DIR%\bin\unzip.exe -o -q -d CCfits2.4 %TEMP_DIR%/CCfits2.4patch.zip
+rem )
+rem IF NOT EXIST CCfits2.4.build (
+rem     mkdir CCfits2.4.build
+rem     
+rem     pushd CCfits2.4.build
+rem 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% -DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
+rem 	IF errorlevel 1 goto error_end
+rem     %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target CCfits
+rem 	IF errorlevel 1 goto error_end
+rem 	popd
+rem )
+rem pushd CCfits2.4.build\%Configuration%
+rem SET CCFITS_ROOT_DIR=%CD%
+rem popd
 
 IF NOT EXIST %TEMP_DIR%\gsl-1.15.tar (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gsl-1.15.tar.gz ftp://ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz
@@ -431,12 +443,12 @@ IF NOT EXIST gsl-1.15 (
 
 SET OPENEXR_COMMIT=%OPENEXR_COMMIT_LONG:~0,7%
 IF NOT EXIST %TEMP_DIR%\OpenEXR-dk-%OPENEXR_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip --no-check-certificate https://github.com/danielkaneider/openexr/zipball/%OPENEXR_COMMIT_LONG%
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip --no-check-certificate https://github.com/openexr/openexr/zipball/%OPENEXR_COMMIT_LONG%
 )
 
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT% (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe danielkaneider-openexr-* OpenEXR-dk-%OPENEXR_COMMIT%
+	%CYGWIN_DIR%\bin\mv.exe openexr-openexr-* OpenEXR-dk-%OPENEXR_COMMIT%
 )
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build (
     mkdir OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build
@@ -467,23 +479,23 @@ IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build (
 )
 
 IF %Platform% EQU Win32 (
-	IF NOT EXIST %TEMP_DIR%\fftw-3.3.3-dll32.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.3-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.3-dll32.zip
+	IF NOT EXIST %TEMP_DIR%\fftw-%FFTW_VER%-dll32.zip (
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-%FFTW_VER%-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-%FFTW_VER%-dll32.zip
 	)
 ) ELSE (
-	IF NOT EXIST %TEMP_DIR%\fftw-3.3.3-dll64.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3.3-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3.3-dll64.zip
+	IF NOT EXIST %TEMP_DIR%\fftw-%FFTW_VER%-dll64.zip (
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-%FFTW_VER%-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-%FFTW_VER%-dll64.zip
 	)
 )
 
-IF NOT EXIST fftw-3.3.3-dll (
+IF NOT EXIST fftw-%FFTW_VER%-dll (
 	IF %Platform% EQU Win32 (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3.3-dll %TEMP_DIR%/fftw-3.3.3-dll32.zip
+		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll32.zip
 	) ELSE (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3.3-dll %TEMP_DIR%/fftw-3.3.3-dll64.zip
+		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll64.zip
 	)
 
-	pushd fftw-3.3.3-dll
+	pushd fftw-%FFTW_VER%-dll
 	lib /def:libfftw3-3.def
 	lib /def:libfftw3f-3.def
 	lib /def:libfftw3l-3.def
@@ -499,26 +511,31 @@ REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tbb40_20120613oss_win.zip
 REM 	REM Everthing is already compiled, nothing to do!
 REM )
 
-REM GTest Patch for VS2012:
-REM in internal_utils.cmake ~60
-REM  if (MSVC_VERSION EQUAL 1700)
-REM  	set(cxx_base_flags "${cxx_base_flags} -D_VARIADIC_MAX=10")
-REM  endif ()
-REM
 REM IF NOT EXIST %TEMP_DIR%\gtest-1.6.0.zip (
-REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gtest-1.6.0.zip http://googletest.googlecode.com/files/gtest-1.6.0.zip
-REM )
-REM 
-REM IF NOT EXIST gtest-1.6.0 (
-REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/gtest-1.6.0.zip
-REM 	
-REM 	mkdir gtest-1.6.0.build
-REM 	pushd gtest-1.6.0.build
-REM 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\gtest-1.6.0 -DBUILD_SHARED_LIBS=1
+SET GTEST_DIR=gtest-r680
+IF NOT EXIST %GTEST_DIR% (
+	REM %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gtest-1.6.0.zip http://googletest.googlecode.com/files/gtest-1.6.0.zip
+    %CYGWIN_DIR%\bin\svn.exe co -r 680 http://googletest.googlecode.com/svn/trunk/ %GTEST_DIR%
+    
+    pushd %GTEST_DIR%
+   	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DBUILD_SHARED_LIBS=1
+	%VSCOMMAND% gtest.sln /build "%Configuration%|%Platform%"
+    REN Release lib
+    popd
+)
+SET GTEST_ROOT=%CD%\%GTEST_DIR%
+
+
+REM IF NOT EXIST %GTEST_DIR%.build (
+REM 	mkdir %GTEST_DIR%.build
+REM 	pushd %GTEST_DIR%.build
+REM 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\%GTEST_DIR% -DBUILD_SHARED_LIBS=1
 REM 	%VSCOMMAND% gtest.sln /build "%Configuration%|%Platform%"
 REM 	popd
 REM )
-
+REM IF NOT EXIST gtest-1.6.0 (
+REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/gtest-1.6.0.zip
+REM )
 
 IF NOT DEFINED L_BOOST_DIR (
 	set L_BOOST_DIR=.
@@ -543,15 +560,15 @@ IF NOT EXIST %L_BOOST_DIR%\boost_1_%BOOST_MINOR%_0 (
  	pushd %L_BOOST_DIR%\boost_1_%BOOST_MINOR%_0
  	IF %Platform% EQU Win32 (
  		IF %Configuration% EQU Release (
- 			b2.exe toolset=msvc variant=release
+ 			cmd.exe /C b2.exe toolset=msvc variant=release
  		) ELSE (
- 			b2.exe toolset=msvc variant=debug
+ 			cmd.exe /C b2.exe toolset=msvc variant=debug
  		)
  	) ELSE (
  		IF %Configuration% EQU Release (
- 			b2.exe toolset=msvc variant=release address-model=64
+ 			cmd.exe /C b2.exe toolset=msvc variant=release address-model=64
  		) ELSE (
- 			b2.exe toolset=msvc variant=debug address-model=64
+ 			cmd.exe /C b2.exe toolset=msvc variant=debug address-model=64
  		)
  	)
 	popd
@@ -603,9 +620,9 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 )
 
 
-robocopy fftw-3.3.3-dll LuminanceHdrStuff\DEPs\include\fftw3 *.h /MIR >nul
-robocopy fftw-3.3.3-dll LuminanceHdrStuff\DEPs\lib\fftw3 *.lib /MIR /NJS >nul
-robocopy fftw-3.3.3-dll LuminanceHdrStuff\DEPs\bin\fftw3 *.dll /MIR /NJS >nul
+robocopy fftw-%FFTW_VER%-dll LuminanceHdrStuff\DEPs\include\fftw3 *.h /MIR >nul
+robocopy fftw-%FFTW_VER%-dll LuminanceHdrStuff\DEPs\lib\fftw3 *.lib /MIR /NJS >nul
+robocopy fftw-%FFTW_VER%-dll LuminanceHdrStuff\DEPs\bin\fftw3 *.dll /MIR /NJS >nul
 
 
 robocopy tiff-4.0.3\libtiff LuminanceHdrStuff\DEPs\include\libtiff *.h /MIR >nul
@@ -618,9 +635,9 @@ robocopy exiv2-%EXIV2_COMMIT%\include LuminanceHdrStuff\DEPs\include\exiv2 *.h *
 robocopy exiv2-%EXIV2_COMMIT%\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\lib\exiv2 *.lib /MIR >nul
 robocopy exiv2-%EXIV2_COMMIT%\bin\%Platform%\Dynamic\%Configuration% LuminanceHdrStuff\DEPs\bin\exiv2 *.dll /MIR >nul
 
-robocopy lp170b25 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
-robocopy lp170b25\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
-robocopy lp170b25\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
+robocopy lp170b35 LuminanceHdrStuff\DEPs\include\libpng *.h /MIR >nul
+robocopy lp170b35\%Configuration% LuminanceHdrStuff\DEPs\lib\libpng *.lib /MIR >nul
+robocopy lp170b35\%Configuration% LuminanceHdrStuff\DEPs\bin\libpng *.dll /MIR >nul
 	
 
 robocopy LibRaw-%LIBRAW_COMMIT%\libraw LuminanceHdrStuff\DEPs\include\libraw\libraw /MIR >nul
@@ -661,15 +678,18 @@ IF %OPTION_LUPDATE_NOOBSOLETE% EQU 1 (
 	set CMAKE_OPTIONS=%CMAKE_OPTIONS% -ULUPDATE_NOOBSOLETE
 )
 
-set L_CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-%ZLIB_COMMIT%;..\..\boost_1_%BOOST_MINOR%_0;..\..\OpenEXR-dk-%OPENEXR_COMMIT%\output\include;
+set L_CMAKE_INCLUDE=..\DEPs\include\libtiff;..\DEPs\include\libpng;..\..\zlib-%ZLIB_COMMIT%;..\..\boost_1_%BOOST_MINOR%_0;..\..\OpenEXR-dk-%OPENEXR_COMMIT%\output\include
 set L_CMAKE_LIB=..\DEPs\lib\libtiff;..\DEPs\lib\libpng;..\..\zlib-%ZLIB_COMMIT%\%Configuration%;..\..\boost_1_%BOOST_MINOR%_0\stage\lib;..\..\OpenEXR-dk-%OPENEXR_COMMIT%\output\lib
 set L_CMAKE_PROGRAM_PATH=%CYGWIN_DIR%\bin
 set L_CMAKE_PREFIX_PATH=%QTDIR%
-set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include\exiv2 -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH% -DCMAKE_PREFIX_PATH=%L_CMAKE_PREFIX_PATH% -DPNG_NAMES=libpng16;libpng17
+set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DPC_EXIV2_INCLUDEDIR=..\DEPs\include\exiv2 -DPC_EXIV2_LIBDIR=..\DEPs\lib\exiv2 -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH% -DCMAKE_PREFIX_PATH=%L_CMAKE_PREFIX_PATH% -DPNG_NAMES=libpng16;libpng17 -DOPENEXR_VERSION=%OPENEXR_CMAKE_VERSION%
 
-IF EXIST ..\..\gtest-1.6.0 (
-	SET GTEST_ROOT=%CD%\..\..\gtest-1.6.0
-)
+REM IF EXIST ..\..\gtest-1.6.0 (
+REM 	SET GTEST_ROOT=%CD%\..\..\gtest-1.6.0
+REM )
+echo CMake command line options ------------------------------------
+echo %CMAKE_OPTIONS%
+echo ---------------------------------------------------------------
 
 %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
 IF errorlevel 1 goto error_end
@@ -678,7 +698,7 @@ popd
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\Luminance HDR.sln (
 	pushd LuminanceHdrStuff\qtpfsgui.build	
 	rem %VSCOMMAND% luminance-hdr.sln /Upgrade
-	%VSCOMMAND% "Luminance HDR.sln" /build "%ConfigurationLuminance%|%Platform%"
+	%VSCOMMAND% "Luminance HDR.sln" /build "%ConfigurationLuminance%|%Platform%" /Project luminance-hdr
 	IF errorlevel 1	goto error_end
 	popd
 )
