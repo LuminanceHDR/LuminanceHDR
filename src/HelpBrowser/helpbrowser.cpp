@@ -30,6 +30,7 @@ for which a new license (GPL+exception) is in place.
 #include "ui_HelpBrowser.h"
 #include "ui_HelpSideBar.h"
 
+#include <QDebug>
 #include <QAction>
 #include <QBuffer>
 #include <QDir>
@@ -45,8 +46,6 @@ for which a new license (GPL+exception) is in place.
 #include <QModelIndex>
 #include <QModelIndexList>
 #include <QPainter>
-#include <QPrinter>
-#include <QPrintDialog>
 #include <QProcess>
 #include <QPushButton>
 #include <QString>
@@ -56,7 +55,10 @@ for which a new license (GPL+exception) is in place.
 #include <QXmlDefaultHandler>
 #include <QDesktopServices>
 
-#include <QDebug>
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
+
+
 
 #include "Common/global.h"
 #include "HelpBrowser/schelptreemodel.h"

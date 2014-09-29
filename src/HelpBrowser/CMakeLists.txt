@@ -27,9 +27,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 QT5_WRAP_UI(FILES_UI_H ${FILES_UI})
 
-
 ADD_LIBRARY(helpbrowser ${FILES_H} ${FILES_CPP} ${FILES_MOC} ${FILES_UI_H} ${FILES_HXX})
-qt5_use_modules(helpbrowser Core Concurrent Gui Widgets Xml WebKit WebKitWidgets)
+qt5_use_modules(helpbrowser Core Concurrent Gui Widgets Xml WebKit WebKitWidgets PrintSupport)
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} ${FILES_UI} ${FILES_HXX} PARENT_SCOPE)
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} helpbrowser PARENT_SCOPE)
