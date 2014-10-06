@@ -93,14 +93,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BatchHDRDialog</name>
@@ -1481,8 +1473,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <source>The images have different size.</source>
-        <translation></translation>
+        <source>HdrCreationManager::loadFilesDone(): The images have different size.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1591,10 +1583,6 @@ p, li { white-space: pre-wrap; }
         <translation>[2/2]Alege setările pentru crearea HDR</translation>
     </message>
     <message>
-        <source>Choose one of the predefined profiles:</source>
-        <translation type="vanished">Alege unul din profilele predefinite:</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1631,24 +1619,12 @@ p, li { white-space: pre-wrap; }
         <translation>Profil 6</translation>
     </message>
     <message>
-        <source>Weighting function:</source>
-        <translation type="vanished">Funcție ponderare:</translation>
-    </message>
-    <message>
         <source>Triangular</source>
         <translation>Triunghiulară</translation>
     </message>
     <message>
-        <source>Response curve:</source>
-        <translation type="vanished">Curba de răspuns:</translation>
-    </message>
-    <message>
         <source>Linear</source>
         <translation>Liniară</translation>
-    </message>
-    <message>
-        <source>HDR creation model:</source>
-        <translation type="vanished">Moder creare HDR:</translation>
     </message>
     <message>
         <source>Debevec</source>
@@ -1663,32 +1639,8 @@ p, li { white-space: pre-wrap; }
         <translation>Log</translation>
     </message>
     <message>
-        <source>Amount of iterations:</source>
-        <translation type="vanished">Număr de iterații:</translation>
-    </message>
-    <message>
-        <source>Keep it small</source>
-        <translation type="vanished">Menține-l mic</translation>
-    </message>
-    <message>
         <source>Use this only if the default profiles above do not yield good results</source>
         <translation>Utilizează aceasta doar dacă profilele implicite de mai sus nu dau rezultate bune</translation>
-    </message>
-    <message>
-        <source>Use custom configuration</source>
-        <translation type="vanished">Utilizează configurație personalizată</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="vanished">[2/2] Alege configurație personalizată</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="vanished">Ponderi:</translation>
-    </message>
-    <message>
-        <source>Choose confidence function over all the possible pixel values:</source>
-        <translation type="vanished">Alege funcția de încredere pentru toate valorile de pixeli posibile:</translation>
     </message>
     <message>
         <source>Gaussian</source>
@@ -1699,44 +1651,8 @@ p, li { white-space: pre-wrap; }
         <translation>Platou</translation>
     </message>
     <message>
-        <source>Response Curve:</source>
-        <translation type="vanished">Curbă de răspuns:</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="vanished">Curbe de răspuns predefinite:</translation>
-    </message>
-    <message>
-        <source>Load response function from file</source>
-        <translation type="vanished">Încarcă funcția de răspuns din fișier</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="vanished">Încarcă...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="vanished">Utilizează calibrarea pentr a găsi curba de răspuns (algoritm robertson02)</translation>
-    </message>
-    <message>
-        <source>Save response function to file:</source>
-        <translation type="vanished">Salvează funcția de răspuns în fișier:</translation>
-    </message>
-    <message>
         <source>Save As...</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>HDR Creation Equation:</source>
-        <translation type="vanished">Ecuația creării HDR:</translation>
-    </message>
-    <message>
-        <source>Choose model:</source>
-        <translation type="vanished">Alege model:</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="vanished">Robertson</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
@@ -1839,10 +1755,6 @@ p, li { white-space: pre-wrap; }
         <translation>Aliniere...</translation>
     </message>
     <message>
-        <source>Processing...</source>
-        <translation type="vanished">Procesând...</translation>
-    </message>
-    <message>
         <source>Weights: </source>
         <translation>Ponderi: </translation>
     </message>
@@ -1853,10 +1765,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source> - Model: </source>
         <translation> - Model: </translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="vanished">Din calibrare</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
@@ -2931,10 +2839,6 @@ Do you want to continue?</source>
         <translation>Unelte externe</translation>
     </message>
     <message>
-        <source>HDR Options</source>
-        <translation type="vanished">Opțiuni HDR</translation>
-    </message>
-    <message>
         <source>Interface</source>
         <translation>Intefață</translation>
     </message>
@@ -2961,30 +2865,6 @@ Do you want to continue?</source>
     <message>
         <source>Always show Preview Panel</source>
         <translation>Arată Mereu Panoul De Previzualizare</translation>
-    </message>
-    <message>
-        <source>Good quality and smaller file size</source>
-        <translation type="vanished">Calitate bună și dimensiune de fișier mai mică</translation>
-    </message>
-    <message>
-        <source>LogLuv TIFF (float, 16bit per color channel)</source>
-        <translation type="vanished">TIFF LogLuv (virgulă mobilă, 16 biți pe canal de culoare)</translation>
-    </message>
-    <message>
-        <source>Better quality, larger file size, better compatibility with other applications</source>
-        <translation type="vanished">Calitate mai bună, dimensiune de fișier mai mare, mai bună compatibilitate cu alte aplicații</translation>
-    </message>
-    <message>
-        <source>Float TIFF (float, 32bit per color channel)</source>
-        <translation type="vanished">TIFF float (virgulă mobilă, 32 biți pe canal de culoare)</translation>
-    </message>
-    <message>
-        <source>Show negative numbers as:</source>
-        <translation type="vanished">Arată numerele negative ca:</translation>
-    </message>
-    <message>
-        <source>Show nan and +/-Inf values as:</source>
-        <translation type="vanished">Arată nan și +/- Inf ca:</translation>
     </message>
     <message>
         <source>Temporary Working Folder</source>
@@ -3506,20 +3386,12 @@ p, li { white-space: pre-wrap; }
         <translation>Salvează ca...</translation>
     </message>
     <message>
-        <source>All HDR formats </source>
-        <translation type="vanished">Toate formatele HDR</translation>
-    </message>
-    <message>
         <source>Save the HDR image as...</source>
         <translation>Salvează imaginea HDR ca...</translation>
     </message>
     <message>
         <source>Option -v -a...</source>
         <translation>Opţiune...</translation>
-    </message>
-    <message>
-        <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
-        <translation type="vanished">LuminanceHDR necesită align_image_stack pentru a fi executat  cu opţiuneal &quot;v -a aligned_&quot;. Opţiunile au fost corectate.</translation>
     </message>
     <message>
         <source>Cannot convert %1 to a float</source>
@@ -3973,37 +3845,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Enter a short comment for the saved parameters:</source>
         <translation>Introdu un scurt comentariu pentru parametrii salvaţi:</translation>
-    </message>
-</context>
-<context>
-    <name>SplashLuminance</name>
-    <message>
-        <source>Luminance HDR - Make a Donation</source>
-        <translation type="vanished">Luminance HDR - Donează</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; is open-source software and its development required hundreds of hours of work.&lt;br /&gt;&lt;br /&gt;If you like it, if you use it in your work and you would like to see it gradually improved,&lt;br /&gt;please support its authors by making a donation.&lt;br /&gt;&lt;br /&gt;Would you like to make a donation for Luminance HDR now?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; este software open source al cărui dezvoltare a necesitat sute de oră de muncă.&lt;br /&gt;&lt;br /&gt;Dacă îți place, dacă îl folosești în munca ta și îți place să fie treptat îmbunătățit, &lt;br&gt; te rog să ajuți autorii cu o donație.&lt;br /&gt;&lt;br /&gt;Vrei să faci o donație la Luminance HDR acum?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Yes, I&apos;d love to!</source>
-        <translation type="vanished">Da, aș vrea!</translation>
-    </message>
-    <message>
-        <source>Ask me again later</source>
-        <translation type="vanished">Întreabă-mă din nou mai târziu</translation>
-    </message>
-    <message>
-        <source>No, Stop bothering me!</source>
-        <translation type="vanished">Nu, nu mă mai deranja!</translation>
     </message>
 </context>
 <context>

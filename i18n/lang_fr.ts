@@ -81,42 +81,9 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="325"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/UI/about.ui" line="191"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;Remerciements</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;SVP &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;informez-moi&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, si j&apos;ai oublié quelqu&apos;un sur cette liste.&lt;/span&gt;&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Toute la communauté sur &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; et bien plus de Hugin&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Packageur Opensuse 10.2 et 10.3&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Packageur Fedora et signalisation de bogues&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Packageur openSUSE 10.2 &lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Ebuild Gentoo Linux&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Suggestions diverses&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Débogage et suggestions LDR pour le format Tiff&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Mais aussi&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/UI/about.ui" line="255"/>
@@ -559,10 +526,6 @@ Continuer?</translation>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="264"/>
         <source>Output</source>
         <translation>Sortie</translation>
-    </message>
-    <message>
-        <source>Ouput Image Width:</source>
-        <translation type="vanished">Largeur Image de Sortie:</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="276"/>
@@ -1833,22 +1796,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>RGB</source>
-        <translation type="vanished">RVB</translation>
-    </message>
-    <message>
-        <source>R</source>
-        <translation type="vanished">R</translation>
-    </message>
-    <message>
-        <source>G</source>
-        <translation type="vanished">V</translation>
-    </message>
-    <message>
-        <source>B</source>
-        <translation type="vanished">B</translation>
-    </message>
-    <message>
         <location filename="../src/UI/FitsImporter.cpp" line="125"/>
         <source>Load one FITS image...</source>
         <translation type="unfinished"></translation>
@@ -1885,9 +1832,9 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="162"/>
-        <source>The images have different size.</source>
-        <translation>Les images ont des tailles différentes.</translation>
+        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="174"/>
+        <source>HdrCreationManager::loadFilesDone(): The images have different size.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2124,37 +2071,9 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Amount of iterations:</source>
-        <translation type="vanished">Nombre d&apos;itérations:</translation>
-    </message>
-    <message>
-        <source>Keep it small</source>
-        <translation type="vanished">À maintenir petit</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="725"/>
         <source>Use this only if the default profiles above do not yield good results</source>
         <translation>À utiliser uniquement si les résultats par défaut sont insatisfaisants</translation>
-    </message>
-    <message>
-        <source>Use custom configuration</source>
-        <translation type="vanished">Utiliser une configuration maison</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Choose one of the predefined profiles or use  a  custom configuration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Choisir un des profils prédéfinis ou une configuation maison&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Response curve:</source>
-        <translation type="vanished">Courbe de réponse:</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="848"/>
@@ -2162,26 +2081,14 @@ p, li { white-space: pre-wrap; }
         <translation>Linéaire</translation>
     </message>
     <message>
-        <source>HDR creation model:</source>
-        <translation type="vanished">Modèle de création HDR:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="758"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
     <message>
-        <source>Weighting function:</source>
-        <translation type="vanished">Fonction de pondération :</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="799"/>
         <source>Triangular</source>
         <translation>Triangulaire</translation>
-    </message>
-    <message>
-        <source>Choose one of the predefined profiles:</source>
-        <translation type="vanished">Choisoir un des profils prédéfinis:</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="684"/>
@@ -2227,18 +2134,6 @@ p, li { white-space: pre-wrap; }
         <translation>Profil 6</translation>
     </message>
     <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="vanished">[2/2] Choisir la configuration maison</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="vanished">Poids :</translation>
-    </message>
-    <message>
-        <source>Choose confidence function over all the possible pixel values:</source>
-        <translation type="vanished">Choisir une function de confiance sur toutes les valeurs possibles des pixels:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="804"/>
         <source>Gaussian</source>
         <translation>Gaussien</translation>
@@ -2247,14 +2142,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/HdrWizard/HdrWizard.ui" line="809"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="vanished">Courbe de réponse:</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="vanished">Courbes de réponse prédéfinies :</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="853"/>
@@ -2267,54 +2154,14 @@ p, li { white-space: pre-wrap; }
         <translation>Log</translation>
     </message>
     <message>
-        <source>Load response function from file</source>
-        <translation type="vanished">Charger la function de réponse depuis un fichier</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="vanished">Charger...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="vanished">Utilisez le calibrage pour trouver la courbe de réponse (algorithme robertson02)</translation>
-    </message>
-    <message>
-        <source>Save response function to file:</source>
-        <translation type="vanished">Sauver la function de réponse dans un fichier:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="939"/>
         <source>Save As...</source>
         <translation>Enregistrer sous...</translation>
     </message>
     <message>
-        <source>HDR Creation Equation:</source>
-        <translation type="vanished">Équation pour la création HDR:</translation>
-    </message>
-    <message>
-        <source>Choose model:</source>
-        <translation type="vanished">Choisir un modèle:</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="vanished">Robertson</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="951"/>
         <source>Save Settings</source>
         <translation>Enregistrer les paramètres</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Here you can customize the HDR creation process&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Ici vous pouvez personnaliser le processus de création HDR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1012"/>
@@ -2327,199 +2174,187 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Annuler</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="106"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="128"/>
         <source>Image Filename</source>
         <translation>Nom du fichier Image</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="106"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="128"/>
         <source>Exposure</source>
         <translation>Exposition</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="245"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="267"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>Tous les formats(*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="246"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="268"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
         <translation>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="247"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="269"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="248"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="270"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation>Images TIFF (*.tiff *.tif *.TIFF *.TIF);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="249"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="271"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>Images RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="250"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="272"/>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="252"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="274"/>
         <source>Select the input images</source>
         <translation>Selectionnez les images d&apos;entrée</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="296"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="318"/>
         <source>Unknown</source>
         <translation>Inconnu</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="477"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="511"/>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="542"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="577"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="553"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="588"/>
         <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="564"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="599"/>
         <source>EXIF data not found</source>
         <translation>Données EXIF introuvables</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="574"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="609"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Chargées.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="579"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1061"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="614"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1093"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pour continuer, vous devez renseigner les valeurs d&apos;exposition.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; valeurs toujours requises.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="601"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
         <source>Loading Error: </source>
         <translation>Erreur de chargement: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="607"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="641"/>
         <source>Start loading a set of images with different exposure</source>
         <translation>Initier le chargement d&apos;un ensemble d&apos;images à différentes expositions</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="619"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="637"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="643"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="651"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="666"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="669"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="675"/>
         <source>Error...</source>
         <translation>Erreur...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="620"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="652"/>
         <source>align_image_stack failed to align images.</source>
         <translation>échec de l&apos;alignement par align_image_stack.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="666"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
         <translation>Le lancement de l&apos;application externe &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; a échoué.&lt;br&gt;Veuillez lire &quot;Aide -&gt; Contenu... -&gt; Outils Externes&quot; pour plus d&apos;informations.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="637"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="669"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>L&apos;application externe &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; est tombée en panne...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="643"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="675"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Une erreur iconnue est survenue pendant l&apos;exécution de &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="653"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="685"/>
         <source>Now click on next button</source>
         <translation>Appuyez sur Suivant</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="788"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="816"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="820"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="848"/>
         <source>&amp;Finish</source>
         <translation>&amp;Terminer</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="825"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="857"/>
         <source>Load camera response curve file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="827"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="859"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="846"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="878"/>
         <source>Invalid Response Curve File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="847"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="879"/>
         <source>Invalid Response Curve File: please try a different file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="857"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="889"/>
         <source>Save a camera response curve file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="859"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="891"/>
         <source>Camera response curve (*.m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="676"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="708"/>
         <source>Aligning...</source>
         <translation>Alignement en cours...</translation>
     </message>
     <message>
-        <source>Processing...</source>
-        <translation type="vanished">En cours...</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1039"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1071"/>
         <source>Weights: </source>
         <translation>Poids: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1040"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1072"/>
         <source> - Response curve: </source>
         <translation> - Courbe de réponse : </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1041"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1073"/>
         <source> - Model: </source>
         <translation> - Modèle : </translation>
     </message>
     <message>
-        <source>Logarithmic</source>
-        <translation type="vanished">Logarithmique</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="vanished">Depuis le calibrage</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1059"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1091"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Toutes les valeurs EV sont déterminées.&lt;br&gt;Appuyez sur Suivant.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -3739,10 +3574,6 @@ Do you want to continue?</source>
         <translation>Outils Externes</translation>
     </message>
     <message>
-        <source>HDR Options</source>
-        <translation type="vanished">Options HDR</translation>
-    </message>
-    <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="102"/>
         <source>Tone Mapping</source>
         <translation>Tone Mapping</translation>
@@ -3791,34 +3622,6 @@ Do you want to continue?</source>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="468"/>
         <source>Portable mode</source>
         <translation>Mode portable</translation>
-    </message>
-    <message>
-        <source>HDR TIFF Default File Format</source>
-        <translation type="vanished">HDR TIFF format de fichier par défaut</translation>
-    </message>
-    <message>
-        <source>Good quality and smaller file size</source>
-        <translation type="vanished">Bonne qualité et taille de fichier réduite</translation>
-    </message>
-    <message>
-        <source>LogLuv TIFF (float, 16bit per color channel)</source>
-        <translation type="vanished">LogLuv TIFF (float, 16bit par canal couleur)</translation>
-    </message>
-    <message>
-        <source>Better quality, larger file size, better compatibility with other applications</source>
-        <translation type="vanished">Meilleure qualité, plus grande taille de fichier, meilleure compatibilité avec les autres applications</translation>
-    </message>
-    <message>
-        <source>Float TIFF (float, 32bit per color channel)</source>
-        <translation type="vanished">TIFF avec virgules flottante (32bits par canal couleur)</translation>
-    </message>
-    <message>
-        <source>Show negative numbers as:</source>
-        <translation type="vanished">Afficher les valeurs négatives comme:</translation>
-    </message>
-    <message>
-        <source>Show nan and +/-Inf values as:</source>
-        <translation type="vanished">Afficher les valeur indéterminées (NAN ou infini) comme:</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="500"/>
@@ -4330,10 +4133,6 @@ p, li { white-space: pre-wrap; }
         <translation>Composante Bleue</translation>
     </message>
     <message>
-        <source>Monitor</source>
-        <translation type="vanished">Moniteur</translation>
-    </message>
-    <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2013"/>
         <source>Monitor Profile</source>
         <translation>Profil du moniteur</translation>
@@ -4349,10 +4148,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2055"/>
         <source>Camera profile</source>
         <translation>Profil d&apos;appareil</translation>
-    </message>
-    <message>
-        <source>Printer</source>
-        <translation type="vanished">Imprimante</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2107"/>
@@ -4580,10 +4375,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
-        <translation type="vanished">Luminance HDR a besoin de l&apos;appel de align_image_stack avec les arguments &quot;-v -a aligned_&quot;. Ces arguments ont été ajoutés.</translation>
-    </message>
-    <message>
         <location filename="../src/Core/TonemappingOptions.cpp" line="276"/>
         <source>PreGamma=%1</source>
         <translation type="unfinished"></translation>
@@ -4807,10 +4598,6 @@ p, li { white-space: pre-wrap; }
         <translation>Enregistrer l&apos;image LDR sous...</translation>
     </message>
     <message>
-        <source>All HDR formats </source>
-        <translation type="vanished">Tous les formats HDR </translation>
-    </message>
-    <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="143"/>
         <source>Save the HDR image as...</source>
         <translation>Enregistrer le HDR sous...</translation>
@@ -4821,62 +4608,62 @@ p, li { white-space: pre-wrap; }
         <translation>Enregistrer sous...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="874"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="906"/>
         <source>Triangular</source>
         <translation type="unfinished">Triangulaire</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="876"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="908"/>
         <source>Plateau</source>
         <translation type="unfinished">Plateau</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="878"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="910"/>
         <source>Gaussian</source>
         <translation type="unfinished">Gaussien</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="880"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="912"/>
         <source>Flat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="891"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="923"/>
         <source>Linear</source>
         <translation type="unfinished">Linéaire</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="893"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="925"/>
         <source>Gamma</source>
         <translation type="unfinished">Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="895"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="927"/>
         <source>Logarithmic</source>
         <translation type="unfinished">Logarithmique</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="897"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="929"/>
         <source>sRGB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="899"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="931"/>
         <source>From Calibration/Input File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="913"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="945"/>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="915"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="947"/>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="917"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="949"/>
         <source>Robertson Response Calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5145,37 +4932,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/TonemappingPanel/SavingParametersDialog.ui" line="43"/>
         <source>Enter a short comment for the saved parameters:</source>
         <translation>Entrer un commentaire court pour les paramètres sauvés:</translation>
-    </message>
-</context>
-<context>
-    <name>SplashLuminance</name>
-    <message>
-        <source>Luminance HDR - Make a Donation</source>
-        <translation type="vanished">Luminance HDR - Faire un don</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; is open-source software and its development required hundreds of hours of work.&lt;br /&gt;&lt;br /&gt;If you like it, if you use it in your work and you would like to see it gradually improved,&lt;br /&gt;please support its authors by making a donation.&lt;br /&gt;&lt;br /&gt;Would you like to make a donation for Luminance HDR now?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; est un logiciel open source dont le développement a nécessité des centaines d&apos;heures de travail.&lt;br /&gt;&lt;br /&gt;Si vous l&apos;appréciez, si vous l&apos;utilisez professionnellement et que vous souhaitez le voir amélioré graduellement,&lt;br /&gt;vous êtes priés de soutenir les auteurs par vos dons.&lt;br /&gt;&lt;br /&gt;Voulez-vous effectuer un don pour Luminance HDR maintenant?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Yes, I&apos;d love to!</source>
-        <translation type="vanished">Oui, avec plaisir!</translation>
-    </message>
-    <message>
-        <source>Ask me again later</source>
-        <translation type="vanished">Redemander plus tard</translation>
-    </message>
-    <message>
-        <source>No, Stop bothering me!</source>
-        <translation type="vanished">Non. Ne parlons plus de ça!</translation>
     </message>
 </context>
 <context>

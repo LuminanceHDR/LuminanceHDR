@@ -81,15 +81,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="325"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/UI/about.ui" line="191"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;Kiitokset</translation>
@@ -1841,8 +1832,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="162"/>
-        <source>The images have different size.</source>
+        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="174"/>
+        <source>HdrCreationManager::loadFilesDone(): The images have different size.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2080,37 +2071,9 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Amount of iterations:</source>
-        <translation type="vanished">Iterointien määrä:</translation>
-    </message>
-    <message>
-        <source>Keep it small</source>
-        <translation type="vanished">Pidä pienenä</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="725"/>
         <source>Use this only if the default profiles above do not yield good results</source>
         <translation>Käytä tätä ainoastaan kun oletusarvo yllä ei johda hyviin tuloksiin</translation>
-    </message>
-    <message>
-        <source>Use custom configuration</source>
-        <translation type="vanished">Käytä kustomoituja asetuksia</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Choose one of the predefined profiles or use  a  custom configuration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Vailtse yksi ennalta määritellyistä profiileista tai käytä kustomoituja asetuksia&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Response curve:</source>
-        <translation type="vanished">Vastekäyrä:</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="848"/>
@@ -2118,26 +2081,14 @@ p, li { white-space: pre-wrap; }
         <translation>Lineaarinen</translation>
     </message>
     <message>
-        <source>HDR creation model:</source>
-        <translation type="vanished">HDR-luomismalli:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="758"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
     <message>
-        <source>Weighting function:</source>
-        <translation type="vanished">Painofunktio:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="799"/>
         <source>Triangular</source>
         <translation>Triangulaarinen</translation>
-    </message>
-    <message>
-        <source>Choose one of the predefined profiles:</source>
-        <translation type="vanished">Valitse yksi ennalta määritellyistä profiileista:</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="684"/>
@@ -2183,18 +2134,6 @@ p, li { white-space: pre-wrap; }
         <translation>Profiili 6</translation>
     </message>
     <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="vanished">[2/2] Valitse kustomoidut asetukset</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="vanished">Painokertoimet:</translation>
-    </message>
-    <message>
-        <source>Choose confidence function over all the possible pixel values:</source>
-        <translation type="vanished">Valitse kondifenssifunktio kaikkien pikseliarvojen joukosta:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="804"/>
         <source>Gaussian</source>
         <translation>Gaussian</translation>
@@ -2203,14 +2142,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/HdrWizard/HdrWizard.ui" line="809"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="vanished">Vastekäyrä:</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="vanished">Ennalta määritetyt vastekäyrät:</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="853"/>
@@ -2223,54 +2154,14 @@ p, li { white-space: pre-wrap; }
         <translation>Loki</translation>
     </message>
     <message>
-        <source>Load response function from file</source>
-        <translation type="vanished">Lataa vastefunktio tiedostosta</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="vanished">Lataa...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="vanished">Käytä kalibrointia vastekäyrän löytämiseen (robertson02 algoritmi)</translation>
-    </message>
-    <message>
-        <source>Save response function to file:</source>
-        <translation type="vanished">Tallenna vastefunktio tiedostoon:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="939"/>
         <source>Save As...</source>
         <translation>Tallenna nimellä...</translation>
     </message>
     <message>
-        <source>HDR Creation Equation:</source>
-        <translation type="vanished">HDR:n luomisen yhtälö:</translation>
-    </message>
-    <message>
-        <source>Choose model:</source>
-        <translation type="vanished">Valitse malli:</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="vanished">Robertson</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="951"/>
         <source>Save Settings</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Here you can customize the HDR creation process&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Voit kustomoida tässä HDR:n luomisprosessin&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1012"/>
@@ -2283,199 +2174,187 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Peruuta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="106"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="128"/>
         <source>Image Filename</source>
         <translation>Kuvan tiedostonimi</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="106"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="128"/>
         <source>Exposure</source>
         <translation>Valotus</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="245"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="267"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="246"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="268"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="247"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="269"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="248"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="270"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="249"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="271"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="250"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="272"/>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="252"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="274"/>
         <source>Select the input images</source>
         <translation>Valitse kuvat</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="296"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="318"/>
         <source>Unknown</source>
         <translation>Tuntematon</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="477"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="511"/>
         <source>Loading...</source>
         <translation>Ladataan...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="542"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="577"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="553"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="588"/>
         <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="564"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="599"/>
         <source>EXIF data not found</source>
         <translation>EXIF-tietoja ei löytynyt</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="574"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="609"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Kuvat ladattu.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="579"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1061"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="614"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1093"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Jatkaaksesi sinun täytyy asetaa valotusarvot manuaalisesti&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; arvoa puuttuu.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="601"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
         <source>Loading Error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="607"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="641"/>
         <source>Start loading a set of images with different exposure</source>
         <translation>Aloita eri valotuksella olevien kuvien sarjan lataaminen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="619"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="637"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="643"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="651"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="666"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="669"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="675"/>
         <source>Error...</source>
         <translation>Virhe...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="620"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="652"/>
         <source>align_image_stack failed to align images.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="666"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="637"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="669"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>Ulkonen sovellusi &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; kaatui...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="643"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="675"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Tuntematon virhe suoritettaessa &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; -sovellusta...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="653"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="685"/>
         <source>Now click on next button</source>
         <translation>Klikkaa nyt seuraava-nappia</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="788"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="816"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="820"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="848"/>
         <source>&amp;Finish</source>
         <translation>&amp;Viimeistele</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="825"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="857"/>
         <source>Load camera response curve file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="827"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="859"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="846"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="878"/>
         <source>Invalid Response Curve File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="847"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="879"/>
         <source>Invalid Response Curve File: please try a different file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="857"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="889"/>
         <source>Save a camera response curve file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="859"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="891"/>
         <source>Camera response curve (*.m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="676"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="708"/>
         <source>Aligning...</source>
         <translation>Kohdistetaan...</translation>
     </message>
     <message>
-        <source>Processing...</source>
-        <translation type="vanished">Prosessoidaan...</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1039"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1071"/>
         <source>Weights: </source>
         <translation>Painoarvot: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1040"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1072"/>
         <source> - Response curve: </source>
         <translation>- Vastekäyrä:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1041"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1073"/>
         <source> - Model: </source>
         <translation> - Malli: </translation>
     </message>
     <message>
-        <source>Logarithmic</source>
-        <translation type="vanished">Logaritminen</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="vanished">Kalibroinnista</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1059"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1091"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Kaikki EV-arvot on asetettu.&lt;br&gt;Klikkaa seuraava-nappia.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -3695,10 +3574,6 @@ Do you want to continue?</source>
         <translation>Lisätyökalut</translation>
     </message>
     <message>
-        <source>HDR Options</source>
-        <translation type="vanished">HDR-asetukset</translation>
-    </message>
-    <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="102"/>
         <source>Tone Mapping</source>
         <translation>Tonemappaus</translation>
@@ -3747,30 +3622,6 @@ Do you want to continue?</source>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="468"/>
         <source>Portable mode</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Good quality and smaller file size</source>
-        <translation type="vanished">Hyvä laatu ja pienempi tiedostokoko</translation>
-    </message>
-    <message>
-        <source>LogLuv TIFF (float, 16bit per color channel)</source>
-        <translation type="vanished">LogLuv TIFF (float, 16 bittiä per värikanava)</translation>
-    </message>
-    <message>
-        <source>Better quality, larger file size, better compatibility with other applications</source>
-        <translation type="vanished">Parempi laatu, suurempi tiedostokoko, parempi yhteensopivuus muiden ohjelmien kanssa</translation>
-    </message>
-    <message>
-        <source>Float TIFF (float, 32bit per color channel)</source>
-        <translation type="vanished">Float TIFF (float, 32 bittiä per värikanava)</translation>
-    </message>
-    <message>
-        <source>Show negative numbers as:</source>
-        <translation type="vanished">Väri, jolla negatiiviset numerot näytetään:</translation>
-    </message>
-    <message>
-        <source>Show nan and +/-Inf values as:</source>
-        <translation type="vanished"> Nan- ja +/-Inf-arvojen väri:</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="500"/>
@@ -4747,10 +4598,6 @@ p, li { white-space: pre-wrap; }
         <translation>Tallenna LDR-kuva nimellä...</translation>
     </message>
     <message>
-        <source>All HDR formats </source>
-        <translation type="vanished">Kaikki HDR-formaatit</translation>
-    </message>
-    <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="143"/>
         <source>Save the HDR image as...</source>
         <translation>Tallenna HDR-kuva nimellä...</translation>
@@ -4761,62 +4608,62 @@ p, li { white-space: pre-wrap; }
         <translation>Tallenna nimellä...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="874"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="906"/>
         <source>Triangular</source>
         <translation type="unfinished">Triangulaarinen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="876"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="908"/>
         <source>Plateau</source>
         <translation type="unfinished">Plateau</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="878"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="910"/>
         <source>Gaussian</source>
         <translation type="unfinished">Gaussian</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="880"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="912"/>
         <source>Flat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="891"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="923"/>
         <source>Linear</source>
         <translation type="unfinished">Lineaarinen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="893"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="925"/>
         <source>Gamma</source>
         <translation type="unfinished">Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="895"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="927"/>
         <source>Logarithmic</source>
         <translation type="unfinished">Logaritminen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="897"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="929"/>
         <source>sRGB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="899"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="931"/>
         <source>From Calibration/Input File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="913"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="945"/>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="915"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="947"/>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="917"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="949"/>
         <source>Robertson Response Calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5085,37 +4932,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/TonemappingPanel/SavingParametersDialog.ui" line="43"/>
         <source>Enter a short comment for the saved parameters:</source>
         <translation>Kirjoita lyhyt kommentti tallennetuista parametreista:</translation>
-    </message>
-</context>
-<context>
-    <name>SplashLuminance</name>
-    <message>
-        <source>Luminance HDR - Make a Donation</source>
-        <translation type="vanished">Luminance HDr - Tee lahjoitus</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; is open-source software and its development required hundreds of hours of work.&lt;br /&gt;&lt;br /&gt;If you like it, if you use it in your work and you would like to see it gradually improved,&lt;br /&gt;please support its authors by making a donation.&lt;br /&gt;&lt;br /&gt;Would you like to make a donation for Luminance HDR now?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; on avoimen lähdekoodin ohjelma ja sen kehittäminen on vaatinut satoja tunteja työtä.&lt;br /&gt;&lt;br /&gt;Jos pidät siitä, käytät sitä työssäsi ja haluasit nähdä sen edelleen kehittyvän,&lt;br /&gt;ole hyvä ja tue sen tekijöitä tekemällä lahjoitus.&lt;br /&gt;&lt;br /&gt;Haluasitko tehdä lahjoituksen Luminance HDR:lle nyt?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Yes, I&apos;d love to!</source>
-        <translation type="vanished">Kyllä!</translation>
-    </message>
-    <message>
-        <source>Ask me again later</source>
-        <translation type="vanished">Kysy myöhemmin uudelleen</translation>
-    </message>
-    <message>
-        <source>No, Stop bothering me!</source>
-        <translation type="vanished">Ei, älä häiritse minua enää!</translation>
     </message>
 </context>
 <context>

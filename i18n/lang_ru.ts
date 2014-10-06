@@ -97,14 +97,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BatchHDRDialog</name>
@@ -1484,8 +1476,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <source>The images have different size.</source>
-        <translation></translation>
+        <source>HdrCreationManager::loadFilesDone(): The images have different size.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1550,10 +1542,6 @@ p, li { white-space: pre-wrap; }
         <translation>[2/2] Выберите параметры создаваемого HDR-снимка</translation>
     </message>
     <message>
-        <source>Choose one of the predefined profiles:</source>
-        <translation type="vanished">Выберите один из готовых профилей:</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1590,56 +1578,16 @@ p, li { white-space: pre-wrap; }
         <translation>Профиль 6</translation>
     </message>
     <message>
-        <source>Weighting function:</source>
-        <translation type="vanished">Функция взвешивания:</translation>
-    </message>
-    <message>
         <source>Triangular</source>
         <translation>Треугольная</translation>
-    </message>
-    <message>
-        <source>Response curve:</source>
-        <translation type="vanished">Кривая отклика:</translation>
-    </message>
-    <message>
-        <source>HDR creation model:</source>
-        <translation type="vanished">Модель создания HDR:</translation>
-    </message>
-    <message>
-        <source>Amount of iterations:</source>
-        <translation type="vanished">Число итераций:</translation>
-    </message>
-    <message>
-        <source>Keep it small</source>
-        <translation type="vanished">Чем меньше, тем лучше</translation>
     </message>
     <message>
         <source>Use this only if the default profiles above do not yield good results</source>
         <translation>Использовать только если готовые профили не дают достаточно высокого качества</translation>
     </message>
     <message>
-        <source>Use custom configuration</source>
-        <translation type="vanished">Указать параметры вручную</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="vanished">Кривая отклика:</translation>
-    </message>
-    <message>
-        <source>Save response function to file:</source>
-        <translation type="vanished">Сохранить функцию отклика в файл:</translation>
-    </message>
-    <message>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
-    </message>
-    <message>
-        <source>HDR Creation Equation:</source>
-        <translation type="vanished">Уравнение для создания HDR:</translation>
-    </message>
-    <message>
-        <source>Choose model:</source>
-        <translation type="vanished">Выберите модель:</translation>
     </message>
     <message>
         <source>Linear</source>
@@ -1658,40 +1606,12 @@ p, li { white-space: pre-wrap; }
         <translation>Логарифмическая</translation>
     </message>
     <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="vanished">[2/2] Укажите заказные параметры</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="vanished">Взвешивание:</translation>
-    </message>
-    <message>
         <source>Gaussian</source>
         <translation>Гауссова</translation>
     </message>
     <message>
         <source>Plateau</source>
         <translation>Плато</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="vanished">Готовые кривые отклика:</translation>
-    </message>
-    <message>
-        <source>Load response function from file</source>
-        <translation type="vanished">Загрузить файл функции отклика</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="vanished">Загрузить...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="vanished">Использовать калибровку для поиска кривой отклика (алгоритма robertson02)</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="vanished">Робертсон</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
@@ -1758,24 +1678,12 @@ p, li { white-space: pre-wrap; }
         <translation>Выполняется выравнивание...</translation>
     </message>
     <message>
-        <source>Processing...</source>
-        <translation type="vanished">Выполняется обработка...</translation>
-    </message>
-    <message>
         <source> - Response curve: </source>
         <translation> - Кривая отклика: </translation>
     </message>
     <message>
         <source> - Model: </source>
         <translation> - Модель: </translation>
-    </message>
-    <message>
-        <source>Logarithmic</source>
-        <translation type="vanished">Логарифмическая</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="vanished">Из результата калибровки</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
@@ -2942,36 +2850,8 @@ Do you want to continue?</source>
         <translation>Интерфейс</translation>
     </message>
     <message>
-        <source>HDR Options</source>
-        <translation type="vanished">Параметры HDR</translation>
-    </message>
-    <message>
-        <source>Good quality and smaller file size</source>
-        <translation type="vanished">Хорошее качество и меньший размер файла</translation>
-    </message>
-    <message>
-        <source>LogLuv TIFF (float, 16bit per color channel)</source>
-        <translation type="vanished">LogLuv TIFF (с плавающей точкой, 16 разрядов на цветовой канал)</translation>
-    </message>
-    <message>
-        <source>Better quality, larger file size, better compatibility with other applications</source>
-        <translation type="vanished">Лучше качество, больше размер файлов, более высокая совместимость с другими приложениями</translation>
-    </message>
-    <message>
-        <source>Float TIFF (float, 32bit per color channel)</source>
-        <translation type="vanished">Float TIFF (с плавающей точкой, 32 разряда на цветовой канал)</translation>
-    </message>
-    <message>
-        <source>Show negative numbers as:</source>
-        <translation type="vanished">Показывать отрицательные значения как:</translation>
-    </message>
-    <message>
         <source>Amount of threads to use on multicore/SMP machines</source>
         <translation>Количество используемых потоков для многопроцессорных компьютеров</translation>
-    </message>
-    <message>
-        <source>Show nan and +/-Inf values as:</source>
-        <translation type="vanished">Показывать значения nan и +/-Inf как:</translation>
     </message>
     <message>
         <source>Quality:</source>
@@ -3505,10 +3385,6 @@ p, li { white-space: pre-wrap; }
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <source>All HDR formats </source>
-        <translation type="vanished">Все форматы HDR </translation>
-    </message>
-    <message>
         <source>Save the HDR image as...</source>
         <translation>Сохранить HDR-снимок как...</translation>
     </message>
@@ -3969,37 +3845,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Enter a short comment for the saved parameters:</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>SplashLuminance</name>
-    <message>
-        <source>Luminance HDR - Make a Donation</source>
-        <translation type="vanished">Сделайте пожертвование</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; is open-source software and its development required hundreds of hours of work.&lt;br /&gt;&lt;br /&gt;If you like it, if you use it in your work and you would like to see it gradually improved,&lt;br /&gt;please support its authors by making a donation.&lt;br /&gt;&lt;br /&gt;Would you like to make a donation for Luminance HDR now?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; — свободная программа с открытым исходным кодом. На её разработку&lt;br&gt;уходят сотни часов времени. Если она вам нравится, если вы используете её в работе и&lt;br&gt;хотите, чтобы она улучшалась, поддержите её авторов пожертвованием.&lt;br /&gt;&lt;br /&gt;Вы хотите пожертвовать проекту деньги прямо сейчас?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Yes, I&apos;d love to!</source>
-        <translation type="vanished">Да, хочу!</translation>
-    </message>
-    <message>
-        <source>Ask me again later</source>
-        <translation type="vanished">Спросите меня попозже</translation>
-    </message>
-    <message>
-        <source>No, Stop bothering me!</source>
-        <translation type="vanished">Нет, хватить доставать меня!</translation>
     </message>
 </context>
 <context>

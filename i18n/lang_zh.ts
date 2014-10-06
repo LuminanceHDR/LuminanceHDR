@@ -75,15 +75,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="325"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/UI/about.ui" line="92"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -102,30 +93,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/UI/about.ui" line="191"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;感谢</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/UI/about.ui" line="255"/>
@@ -1854,8 +1821,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="162"/>
-        <source>The images have different size.</source>
+        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="174"/>
+        <source>HdrCreationManager::loadFilesDone(): The images have different size.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1998,10 +1965,6 @@ p, li { white-space: pre-wrap; }
         <translation>[2/2]选择HDR生成设置</translation>
     </message>
     <message>
-        <source>Choose one of the predefined profiles:</source>
-        <translation type="vanished">选择其中一个预定义配置:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="684"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -2045,17 +2008,9 @@ p, li { white-space: pre-wrap; }
         <translation>配置 6</translation>
     </message>
     <message>
-        <source>Weighting function:</source>
-        <translation type="vanished">加权函数:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="799"/>
         <source>Triangular</source>
         <translation>三角加权</translation>
-    </message>
-    <message>
-        <source>Response curve:</source>
-        <translation type="vanished">响应曲线:</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="486"/>
@@ -2158,10 +2113,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>HDR creation model:</source>
-        <translation type="vanished">HDR生成模型:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="758"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
@@ -2177,45 +2128,9 @@ p, li { white-space: pre-wrap; }
         <translation>对数</translation>
     </message>
     <message>
-        <source>Amount of iterations:</source>
-        <translation type="vanished">迭代数量:</translation>
-    </message>
-    <message>
-        <source>Keep it small</source>
-        <translation type="vanished">保持小量</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="725"/>
         <source>Use this only if the default profiles above do not yield good results</source>
         <translation>仅当以上默认设置给出效果不好时才使用此选项</translation>
-    </message>
-    <message>
-        <source>Use custom configuration</source>
-        <translation type="vanished">使用自定义配置</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Choose one of the predefined profiles or use  a  custom configuration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;选择一个预定义配置文件或者自定义配置&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="vanished">[2/2]选择自定义配置文件</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="vanished">权重:</translation>
-    </message>
-    <message>
-        <source>Choose confidence function over all the possible pixel values:</source>
-        <translation type="vanished">对所有可能的像素值选择置信函数:</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="804"/>
@@ -2228,62 +2143,14 @@ p, li { white-space: pre-wrap; }
         <translation>平台</translation>
     </message>
     <message>
-        <source>Response Curve:</source>
-        <translation type="vanished">响应曲线:</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="vanished">预定义响应曲线:</translation>
-    </message>
-    <message>
-        <source>Load response function from file</source>
-        <translation type="vanished">从文件中加载响应函数</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="vanished">加载...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="vanished">使用校准寻找响应曲线 (robertson02算法)</translation>
-    </message>
-    <message>
-        <source>Save response function to file:</source>
-        <translation type="vanished">保存响应函数到文件:</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="939"/>
         <source>Save As...</source>
         <translation>另存为...</translation>
     </message>
     <message>
-        <source>HDR Creation Equation:</source>
-        <translation type="vanished">HDR生成方程:</translation>
-    </message>
-    <message>
-        <source>Choose model:</source>
-        <translation type="vanished">选择模型:</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="vanished">Robertson</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="951"/>
         <source>Save Settings</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Here you can customize the HDR creation process&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;在这你可以自定义HDR生成过程&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.ui" line="1012"/>
@@ -2296,199 +2163,187 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;取消</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="106"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="128"/>
         <source>Image Filename</source>
         <translation>图片文件名</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="106"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="128"/>
         <source>Exposure</source>
         <translation>曝光</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="245"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="267"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>所有格式 (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="246"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="268"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
         <translation>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="247"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="269"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="248"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="270"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation>TIFF 图像 (*.tiff *.tif *.TIFF *.TIF);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="249"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="271"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>未处理图像 (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="250"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="272"/>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
         <translation>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="252"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="274"/>
         <source>Select the input images</source>
         <translation>选择输入图像</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="477"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="511"/>
         <source>Loading...</source>
         <translation>加载中...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="607"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="641"/>
         <source>Start loading a set of images with different exposure</source>
         <translation>开始加载一系列不同曝光度图像</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="825"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="857"/>
         <source>Load camera response curve file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="827"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="859"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="846"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="878"/>
         <source>Invalid Response Curve File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="847"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="879"/>
         <source>Invalid Response Curve File: please try a different file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="857"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="889"/>
         <source>Save a camera response curve file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="859"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="891"/>
         <source>Camera response curve (*.m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="574"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="609"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;图像加载完毕.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="564"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="599"/>
         <source>EXIF data not found</source>
         <translation>未找到EXIF数据</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="579"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1061"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="614"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1093"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;要继续你需要手动设置曝光值.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; 仍然需要数值.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="601"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
         <source>Loading Error: </source>
         <translation>载入错误:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="296"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="318"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="542"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="577"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="553"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="588"/>
         <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="619"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="637"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="643"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="651"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="666"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="669"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="675"/>
         <source>Error...</source>
         <translation>错误...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="620"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="652"/>
         <source>align_image_stack failed to align images.</source>
         <translation>对其图像堆栈对齐图像失败.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="666"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
         <translation>外部应用程序无法启动 &quot;&lt;em&gt;对其图像堆栈&lt;/em&gt;&quot;.&lt;br&gt;请阅读 &quot;帮助 -&gt; 目录... -&gt; 设置 -&gt;外部工具&quot; 查询更多信息.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="637"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="669"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>外部应用程序 &quot;&lt;em&gt;对其图像堆栈&lt;/em&gt;&quot; 崩溃...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="643"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="675"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>在执行 &quot;&lt;em&gt;对齐图像堆栈&lt;/em&gt;&quot; 应用程序时发生未知错误...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="653"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="685"/>
         <source>Now click on next button</source>
         <translation>现在点击下一步按钮</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="788"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="816"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="820"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="848"/>
         <source>&amp;Finish</source>
         <translation>&amp;完成</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="676"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="708"/>
         <source>Aligning...</source>
         <translation>对齐中...</translation>
     </message>
     <message>
-        <source>Processing...</source>
-        <translation type="vanished">处理中...</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1039"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1071"/>
         <source>Weights: </source>
         <translation>权重: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1040"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1072"/>
         <source> - Response curve: </source>
         <translation> -响应曲线: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1041"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1073"/>
         <source> - Model: </source>
         <translation> -模型: </translation>
     </message>
     <message>
-        <source>Logarithmic</source>
-        <translation type="vanished">对数</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="vanished">来自于校准</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1059"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1091"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;已设定所有EV值.&lt;br&gt;现在点击下一步按钮.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -3709,10 +3564,6 @@ Do you want to continue?</source>
         <translation>外部工具</translation>
     </message>
     <message>
-        <source>HDR Options</source>
-        <translation type="vanished">HDR选项</translation>
-    </message>
-    <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="173"/>
         <source>Interface</source>
         <translation>界面</translation>
@@ -3761,34 +3612,6 @@ Do you want to continue?</source>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="455"/>
         <source>Always show Preview Panel</source>
         <translation>总显示预览面板</translation>
-    </message>
-    <message>
-        <source>HDR TIFF Default File Format</source>
-        <translation type="vanished">HDR TIFF默认文件格式</translation>
-    </message>
-    <message>
-        <source>Good quality and smaller file size</source>
-        <translation type="vanished">高质量和更小的文件大小</translation>
-    </message>
-    <message>
-        <source>LogLuv TIFF (float, 16bit per color channel)</source>
-        <translation type="vanished">LogLuv TIFF(浮动, 每个颜色通道16比特)</translation>
-    </message>
-    <message>
-        <source>Better quality, larger file size, better compatibility with other applications</source>
-        <translation type="vanished">更好的质量，更大的文件，与其他应用程序更好的兼容性</translation>
-    </message>
-    <message>
-        <source>Float TIFF (float, 32bit per color channel)</source>
-        <translation type="vanished">浮动TIFF(浮动，每个色彩通道32比特)</translation>
-    </message>
-    <message>
-        <source>Show negative numbers as:</source>
-        <translation type="vanished">显示负数为:</translation>
-    </message>
-    <message>
-        <source>Show nan and +/-Inf values as:</source>
-        <translation type="vanished">显示非数值和+/-无穷值为:</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="500"/>
@@ -4300,10 +4123,6 @@ p, li { white-space: pre-wrap; }
         <translation>蓝色分量</translation>
     </message>
     <message>
-        <source>Monitor</source>
-        <translation type="vanished">监视器</translation>
-    </message>
-    <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2013"/>
         <source>Monitor Profile</source>
         <translation>监视器配置文件</translation>
@@ -4319,10 +4138,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2055"/>
         <source>Camera profile</source>
         <translation>摄像头配置文件</translation>
-    </message>
-    <message>
-        <source>Printer</source>
-        <translation type="vanished">打印机</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.ui" line="2107"/>
@@ -4567,10 +4382,6 @@ p, li { white-space: pre-wrap; }
         <translation>LDR图像另存为...</translation>
     </message>
     <message>
-        <source>All HDR formats </source>
-        <translation type="vanished">所有的HDR格式 </translation>
-    </message>
-    <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="143"/>
         <source>Save the HDR image as...</source>
         <translation>HDR图像另存为...</translation>
@@ -4589,10 +4400,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Common/LuminanceOptions.cpp" line="784"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v&quot; and without the &quot;-a&quot; options. Command line options have been corrected.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
-        <translation type="vanished">LuminanceHDR要求与&quot;-v -a aligned_&quot;选项一起执行图像对齐堆栈。命令行选项已更正.</translation>
     </message>
     <message>
         <location filename="../src/Viewers/LdrViewer.cpp" line="90"/>
@@ -4791,62 +4598,62 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="874"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="906"/>
         <source>Triangular</source>
         <translation type="unfinished">三角加权</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="876"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="908"/>
         <source>Plateau</source>
         <translation type="unfinished">平台</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="878"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="910"/>
         <source>Gaussian</source>
         <translation type="unfinished">高斯</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="880"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="912"/>
         <source>Flat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="891"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="923"/>
         <source>Linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="893"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="925"/>
         <source>Gamma</source>
         <translation type="unfinished">Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="895"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="927"/>
         <source>Logarithmic</source>
         <translation type="unfinished">对数</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="897"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="929"/>
         <source>sRGB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="899"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="931"/>
         <source>From Calibration/Input File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="913"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="945"/>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="915"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="947"/>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="917"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="949"/>
         <source>Robertson Response Calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5115,37 +4922,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/TonemappingPanel/SavingParametersDialog.ui" line="43"/>
         <source>Enter a short comment for the saved parameters:</source>
         <translation>给已保存的参数输入一个简短的批注:</translation>
-    </message>
-</context>
-<context>
-    <name>SplashLuminance</name>
-    <message>
-        <source>Luminance HDR - Make a Donation</source>
-        <translation type="vanished">Luminance HDR - 请捐款</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; is open-source software and its development required hundreds of hours of work.&lt;br /&gt;&lt;br /&gt;If you like it, if you use it in your work and you would like to see it gradually improved,&lt;br /&gt;please support its authors by making a donation.&lt;br /&gt;&lt;br /&gt;Would you like to make a donation for Luminance HDR now?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;是一个开源软件，它的开发过程包含了数百小时的工作.&lt;br /&gt;&lt;br /&gt;如果你喜欢他，如果你在工作工程中使用它，如果你想看到它逐渐地被改善,&lt;br /&gt;请通过捐款支持它的作者们.&lt;br /&gt;&lt;br /&gt;你现在想给Luminance HDR捐款吗?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Yes, I&apos;d love to!</source>
-        <translation type="vanished">是的，我想!</translation>
-    </message>
-    <message>
-        <source>Ask me again later</source>
-        <translation type="vanished">过后再询问我</translation>
-    </message>
-    <message>
-        <source>No, Stop bothering me!</source>
-        <translation type="vanished">不，请不要再问我这个问题!</translation>
     </message>
 </context>
 <context>

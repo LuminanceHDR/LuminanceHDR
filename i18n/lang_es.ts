@@ -93,14 +93,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BatchHDRDialog</name>
@@ -1475,7 +1467,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <source>The images have different size.</source>
+        <source>HdrCreationManager::loadFilesDone(): The images have different size.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1549,16 +1541,8 @@ p, li { white-space: pre-wrap; }
         <translation>Perfil 6</translation>
     </message>
     <message>
-        <source>Weighting function:</source>
-        <translation type="vanished">Función de peso:</translation>
-    </message>
-    <message>
         <source>Triangular</source>
         <translation>Triangular</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="vanished">Curva de respuesta:</translation>
     </message>
     <message>
         <source>Save As...</source>
@@ -1581,40 +1565,12 @@ p, li { white-space: pre-wrap; }
         <translation>Log</translation>
     </message>
     <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="vanished">[2/2] Seleccionar configuración personalizada</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="vanished">Peso:</translation>
-    </message>
-    <message>
         <source>Gaussian</source>
         <translation>Gaussian</translation>
     </message>
     <message>
         <source>Plateau</source>
         <translation>Plateau</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="vanished">Curva de respuesta predefinida:</translation>
-    </message>
-    <message>
-        <source>Load response function from file</source>
-        <translation type="vanished">Cargar función de respuesta desde archivo</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="vanished">Cargar...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="vanished">Usar calibración para encontrar curva de respuesta (algoritmo robertson02)</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="vanished">Robertson</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
@@ -1665,24 +1621,12 @@ p, li { white-space: pre-wrap; }
         <translation>Alineando...</translation>
     </message>
     <message>
-        <source>Processing...</source>
-        <translation type="vanished">Procesando...</translation>
-    </message>
-    <message>
         <source> - Response curve: </source>
         <translation> - Curva de respuesta: </translation>
     </message>
     <message>
         <source> - Model: </source>
         <translation> - Modelo: </translation>
-    </message>
-    <message>
-        <source>Logarithmic</source>
-        <translation type="vanished">Logaritmica</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="vanished">Desde calibración</translation>
     </message>
     <message>
         <source>HDR Creation Wizard</source>
