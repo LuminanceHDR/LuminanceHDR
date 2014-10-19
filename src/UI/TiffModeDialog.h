@@ -2,8 +2,12 @@
 #define TIFFMODEDIALOG_H
 
 #include <QDialog>
+#include <QScopedPointer>
 
-namespace Ui {
+#include "Common/LuminanceOptions.h"
+
+namespace Ui
+{
 class TiffModeDialog;
 }
 
@@ -19,7 +23,8 @@ public:
 
 private:
     bool m_hdrMode;
-    Ui::TiffModeDialog *m_ui;
+    QScopedPointer<Ui::TiffModeDialog> m_ui;
+    QScopedPointer<LuminanceOptions> m_options;
 };
 
 #endif // TIFFMODEDIALOG_H
