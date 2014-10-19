@@ -25,6 +25,9 @@
 #define IMAGEQUALITYDIALOG_H
 
 #include <QDialog>
+#include <QScopedPointer>
+
+#include "Common/LuminanceOptions.h"
 
 namespace Ui {
 class ImgQualityDialog;
@@ -34,7 +37,7 @@ namespace pfs {
 class Frame;
 }
 
-class ImageQualityDialog : public QDialog //, private Ui::ImgQualityDialog
+class ImageQualityDialog : public QDialog
 {
     Q_OBJECT
 
@@ -42,7 +45,7 @@ public:
     ImageQualityDialog(const pfs::Frame* frame, const QString& fmt, QWidget *parent = 0);
     ~ImageQualityDialog();
 
-    int getQuality(void);
+    int getQuality(void) const;
 
 protected slots:
     void on_getSizeButton_clicked();
@@ -53,6 +56,7 @@ protected:
     QString m_format;
 
     QScopedPointer<Ui::ImgQualityDialog> m_ui;
+    QScopedPointer<LuminanceOptions> m_options;
 };
 
 #endif // IMAGEQUALITYDIALOG_H

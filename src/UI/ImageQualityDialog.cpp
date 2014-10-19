@@ -21,19 +21,23 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
+#include "ImageQualityDialog.h"
+#include "ui_ImageQualityDialog.h"
+
 #include <QImage>
 #include <QString>
 #include <QByteArray>
 #include <QBuffer>
 #include <QDebug>
 
-#include "ImageQualityDialog.h"
-#include "ui_ImageQualityDialog.h"
-
 #include <Libpfs/io/jpegwriter.h>
 #include <Libpfs/io/pngwriter.h>
 
-ImageQualityDialog::~ImageQualityDialog() {}
+namespace
+{
+const static QString IMAGE_QUALITY_KEY = "imagequalitydialog.quality";
+const static int IMAGE_QUALITY_DEFAULT = 98;
+}
 
 ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
                                        const QString& fmt, QWidget *parent)
@@ -41,8 +45,10 @@ ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
     , m_frame(frame)
     , m_format(fmt)
     , m_ui(new Ui::ImgQualityDialog)
+    , m_options(new LuminanceOptions())
 {
     m_ui->setupUi(this);
+    m_ui->spinBox->setValue(m_options->value(IMAGE_QUALITY_KEY, IMAGE_QUALITY_DEFAULT).toInt());
 
     connect(m_ui->spinBox, SIGNAL(valueChanged(int)),
             this, SLOT(reset(int)));
@@ -53,7 +59,12 @@ ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
 #endif
 }
 
-int ImageQualityDialog::getQuality(void)
+ImageQualityDialog::~ImageQualityDialog()
+{
+    m_options->setValue(IMAGE_QUALITY_KEY, getQuality());
+}
+
+int ImageQualityDialog::getQuality(void) const
 {
     return m_ui->spinBox->value();
 }
