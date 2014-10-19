@@ -3,10 +3,10 @@
 
 namespace
 {
-const static QString TIFF_MODE_HDR_KEY = "tiffmodedialog.mode.hdr";
+const static QString TIFF_MODE_HDR_KEY = "tiffmodedialog/mode/hdr";
 const static int TIFF_MODE_HDR_VALUE = 0;
 
-const static QString TIFF_MODE_LDR_KEY = "tiffmodedialog.mode.ldr";
+const static QString TIFF_MODE_LDR_KEY = "tiffmodedialog/mode/ldr";
 const static int TIFF_MODE_LDR_VALUE = 0;
 }
 

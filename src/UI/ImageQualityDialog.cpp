@@ -35,7 +35,7 @@
 
 namespace
 {
-const static QString IMAGE_QUALITY_KEY = "imagequalitydialog.quality";
+const static QString IMAGE_QUALITY_KEY = "imagequalitydialog/quality";
 const static int IMAGE_QUALITY_DEFAULT = 98;
 }
 
