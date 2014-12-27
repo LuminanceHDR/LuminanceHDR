@@ -25,8 +25,6 @@
  *
  */
 
-#include "arch/getopt.h"
-
 #include <QTimer>
 #include <QDebug>
 #include <iostream>
@@ -54,19 +52,6 @@ using namespace libhdr::fusion;
 
 namespace
 {
-void printErrorAndExit(const QString& error_str)
-{
-	#if defined(_MSC_VER)
-		// if the filemode isn't restored afterwards, a normal std::cout segfaults
-		int oldMode = _setmode(_fileno(stderr), _O_U16TEXT);
-		std::wcerr << qPrintable(error_str) << std::endl;
-		if (oldMode >= 0)
-			_setmode(_fileno(stderr), oldMode);
-	#else
-		std::cerr << qPrintable(error_str) << std::endl;
-	#endif
-    exit(-1);
-}
 
 void printIfVerbose(const QString& str, bool verbose)
 {
@@ -82,6 +67,12 @@ void printIfVerbose(const QString& str, bool verbose)
     		std::cout << qPrintable(str) << std::endl;
 		#endif
     }
+}
+
+void printErrorAndExit(const QString& error_str)
+{
+    printIfVerbose(error_str, true);
+    exit(-1);
 }
 
 float toFloatWithErrMsg(const QString &str)
@@ -122,7 +113,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
 
     bool error = false;
 
-    po::options_description desc(tr("Usage: %1 [OPTIONS]... [INPUTFILES]... ").arg(argv[0]).toUtf8().constData());
+    po::options_description desc(tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(argv[0]).toUtf8().constData());
     desc.add_options()
         ("help,h", tr("Display this help.").toUtf8().constData())
         ("verbose,v", po::value<bool>(&verbose), tr("Print more messages during execution.").toUtf8().constData())
@@ -138,18 +129,18 @@ int CommandLineInterfaceManager::execCommandLineParams()
         ("output,o", po::value<std::string>(),       tr("LDR_FILE    File name you want to save your tone mapped LDR to.").toUtf8().constData())
             
         ("quality,q", po::value<int>(&quality),       tr("VALUE      Quality of the saved tone mapped file (0-100).").toUtf8().constData())
-        ("autoag,ag", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
+        ("autoag,t", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
     ;
 
-    po::options_description hdr_desc(tr("HDR creation parameters").toUtf8().constData());
+    po::options_description hdr_desc(tr("HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").toUtf8().constData());
     hdr_desc.add_options()
-        ("hdrWeight", po::value<std::string>(),       tr("weight = triangular|gaussian|plateau|flat").toUtf8().constData())
-        ("hdrResponseCurve", po::value<std::string>(),       tr("response curve = from_file|linear|gamma|log|srgb").toUtf8().constData())
-        ("hdrModel", po::value<std::string>(),       tr("model: robertson|robertsonauto|debevec").toUtf8().constData())
+        ("hdrWeight", po::value<std::string>(),       tr("weight = triangular|gaussian|plateau|flat (Default is triangular)").toUtf8().constData())
+        ("hdrResponseCurve", po::value<std::string>(),       tr("response curve = from_file|linear|gamma|log|srgb (Default is linear)").toUtf8().constData())
+        ("hdrModel", po::value<std::string>(),       tr("model: robertson|robertsonauto|debevec (Default is debevec)").toUtf8().constData())
         ("hdrCurveFilename", po::value<std::string>(),       tr("curve filename = your_file_here.m").toUtf8().constData())
     ;
 
-    po::options_description tmo_desc(tr("Tone mapping parameters").toUtf8().constData());
+    po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
     tmo_desc.add_options()
         ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
     ;
@@ -171,49 +162,49 @@ int CommandLineInterfaceManager::execCommandLineParams()
     ;
     po::options_description tmo_mantiuk08(tr(" Mantiuk 08").toUtf8().constData());
     tmo_mantiuk08.add_options()
-        ("tmoM08ColorSaturation", po::value<float>(&tmopts->operator_options.mantiuk08options.colorsaturation),  tr("").toUtf8().constData())
-        ("tmoM08ConstrastEnh", po::value<float>(&tmopts->operator_options.mantiuk08options.contrastenhancement),  tr("").toUtf8().constData())
-        ("tmoM08LuminanceLvl", po::value<float>(&tmopts->operator_options.mantiuk08options.luminancelevel),  tr("").toUtf8().constData())
-        ("tmoM08SetLuminance", po::value<bool>(&tmopts->operator_options.mantiuk08options.setluminance), tr("").toUtf8().constData())
+        ("tmoM08ColorSaturation", po::value<float>(&tmopts->operator_options.mantiuk08options.colorsaturation),  tr("color saturation FLOAT").toUtf8().constData())
+        ("tmoM08ConstrastEnh", po::value<float>(&tmopts->operator_options.mantiuk08options.contrastenhancement),  tr("contrast enhancement FLOAT").toUtf8().constData())
+        ("tmoM08LuminanceLvl", po::value<float>(&tmopts->operator_options.mantiuk08options.luminancelevel),  tr("luminance level FLOAT").toUtf8().constData())
+        ("tmoM08SetLuminance", po::value<bool>(&tmopts->operator_options.mantiuk08options.setluminance), tr("enable luminance level true|false").toUtf8().constData())
     ;
     po::options_description tmo_durand(tr(" Durand").toUtf8().constData());
     tmo_durand.add_options()
-        ("tmoDurSigmaS", po::value<float>(&tmopts->operator_options.durandoptions.spatial),  tr("").toUtf8().constData())
-        ("tmoDurSigmaR", po::value<float>(&tmopts->operator_options.durandoptions.range),  tr("").toUtf8().constData())
-        ("tmoDurBase", po::value<float>(&tmopts->operator_options.durandoptions.base),  tr("").toUtf8().constData())
+        ("tmoDurSigmaS", po::value<float>(&tmopts->operator_options.durandoptions.spatial),  tr("spatial kernel sigma FLOAT").toUtf8().constData())
+        ("tmoDurSigmaR", po::value<float>(&tmopts->operator_options.durandoptions.range),  tr("range kernel sigma FLOAT").toUtf8().constData())
+        ("tmoDurBase", po::value<float>(&tmopts->operator_options.durandoptions.base),  tr("base contrast FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_drago(tr(" Drago").toUtf8().constData());
     tmo_drago.add_options()
-        ("tmoDrgBias", po::value<float>(&tmopts->operator_options.dragooptions.bias),  tr("").toUtf8().constData())
+        ("tmoDrgBias", po::value<float>(&tmopts->operator_options.dragooptions.bias),  tr("bias FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_reinhard02(tr(" Reinhard 02").toUtf8().constData());
     tmo_reinhard02.add_options()
-        ("tmoR02Scales", po::value<bool>(&tmopts->operator_options.reinhard02options.scales), tr("").toUtf8().constData())
-        ("tmoR02Key", po::value<float>(&tmopts->operator_options.reinhard02options.key),  tr("").toUtf8().constData())
-        ("tmoR02Phi", po::value<float>(&tmopts->operator_options.reinhard02options.phi),  tr("").toUtf8().constData())
-        ("tmoR02Num", po::value<int>(&tmopts->operator_options.reinhard02options.range),  tr("").toUtf8().constData())
-        ("tmoR02Low", po::value<int>(&tmopts->operator_options.reinhard02options.lower),  tr("").toUtf8().constData())
-        ("tmoR02High", po::value<int>(&tmopts->operator_options.reinhard02options.upper),  tr("").toUtf8().constData())
+        ("tmoR02Key", po::value<float>(&tmopts->operator_options.reinhard02options.key),  tr("key value FLOAT").toUtf8().constData())
+        ("tmoR02Phi", po::value<float>(&tmopts->operator_options.reinhard02options.phi),  tr("phi FLOAT").toUtf8().constData())
+        ("tmoR02Scales", po::value<bool>(&tmopts->operator_options.reinhard02options.scales), tr("use scales true|false").toUtf8().constData())
+        ("tmoR02Num", po::value<int>(&tmopts->operator_options.reinhard02options.range),  tr("range FLOAT").toUtf8().constData())
+        ("tmoR02Low", po::value<int>(&tmopts->operator_options.reinhard02options.lower),  tr("lower scale FLOAT").toUtf8().constData())
+        ("tmoR02High", po::value<int>(&tmopts->operator_options.reinhard02options.upper),  tr("upper scale FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_reinhard05(tr(" Reinhard 05").toUtf8().constData());
     tmo_reinhard05.add_options()
-        ("tmoR05Brightness", po::value<float>(&tmopts->operator_options.reinhard05options.brightness),  tr("").toUtf8().constData())
-        ("tmoR05Chroma", po::value<float>(&tmopts->operator_options.reinhard05options.chromaticAdaptation),  tr("").toUtf8().constData())
-        ("tmoR05Lightness", po::value<float>(&tmopts->operator_options.reinhard05options.lightAdaptation),  tr("").toUtf8().constData())
+        ("tmoR05Brightness", po::value<float>(&tmopts->operator_options.reinhard05options.brightness),  tr("Brightness FLOAT").toUtf8().constData())
+        ("tmoR05Chroma", po::value<float>(&tmopts->operator_options.reinhard05options.chromaticAdaptation),  tr("Chroma adaption FLOAT").toUtf8().constData())
+        ("tmoR05Lightness", po::value<float>(&tmopts->operator_options.reinhard05options.lightAdaptation),  tr("Light adaption FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_ash(tr(" Ashikmin").toUtf8().constData());
     tmo_ash.add_options()
-        ("tmoAshLocal", po::value<float>(&tmopts->operator_options.ashikhminoptions.lct),  tr("").toUtf8().constData())
-        ("tmoAshEq2", po::value<bool>(&tmopts->operator_options.ashikhminoptions.eq2), tr("").toUtf8().constData())
-        ("tmoAshSimple", po::value<bool>(&tmopts->operator_options.ashikhminoptions.simple), tr("").toUtf8().constData())
+        ("tmoAshEq2", po::value<bool>(&tmopts->operator_options.ashikhminoptions.eq2), tr("Equation number 2 true|false").toUtf8().constData())
+        ("tmoAshSimple", po::value<bool>(&tmopts->operator_options.ashikhminoptions.simple), tr("Simple true|false").toUtf8().constData())
+        ("tmoAshLocal", po::value<float>(&tmopts->operator_options.ashikhminoptions.lct),  tr("Local threshold FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_patt(tr(" Pattanaik").toUtf8().constData());
     tmo_patt.add_options()
-        ("tmoPatLocal", po::value<bool>(&tmopts->operator_options.pattanaikoptions.local), tr("").toUtf8().constData())
-        ("tmoPatAutoLum", po::value<bool>(&tmopts->operator_options.pattanaikoptions.autolum), tr("").toUtf8().constData())
-        ("tmoPatCone", po::value<float>(&tmopts->operator_options.pattanaikoptions.cone),  tr("").toUtf8().constData())
-        ("tmoPatRod", po::value<float>(&tmopts->operator_options.pattanaikoptions.rod),  tr("").toUtf8().constData())
-        ("tmoPatMultiplier", po::value<float>(&tmopts->operator_options.pattanaikoptions.multiplier),  tr("").toUtf8().constData())
+        ("tmoPatMultiplier", po::value<float>(&tmopts->operator_options.pattanaikoptions.multiplier),  tr("multiplier FLOAT").toUtf8().constData())
+        ("tmoPatLocal", po::value<bool>(&tmopts->operator_options.pattanaikoptions.local), tr("Local tone mapping true|false").toUtf8().constData())
+        ("tmoPatAutoLum", po::value<bool>(&tmopts->operator_options.pattanaikoptions.autolum), tr("Auto luminance true|false").toUtf8().constData())
+        ("tmoPatCone", po::value<float>(&tmopts->operator_options.pattanaikoptions.cone),  tr("cone level FLOAT").toUtf8().constData())
+        ("tmoPatRod", po::value<float>(&tmopts->operator_options.pattanaikoptions.rod),  tr("rod level FLOAT").toUtf8().constData())
     ;
 
     tmo_desc.add(tmo_fattal);
@@ -367,6 +358,8 @@ int CommandLineInterfaceManager::execCommandLineParams()
     }
 
     if (inputFiles.empty()) {
+        //cmdvisible_options.print(
+        //printString(cmdvisible_options);
          cout << cmdvisible_options << "\n";
         return 1;
     }
@@ -396,7 +389,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
     }
     else
     {
-        printHelp(argv[0]);
+        printErrorAndExit(tr("Error: You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").arg(loadHdrFilename));
         exit(-1);
     }
 
@@ -582,24 +575,6 @@ void  CommandLineInterfaceManager::startTonemap()
 
 void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
 	printErrorAndExit( tr("Failed loading images"));
-}
-
-void CommandLineInterfaceManager::printHelp(char * progname)
-{
-    QString help=
-            "\t\t" + tr("(Default is weight=triangular:response_curve=linear:model=debevec) ") + "\n" +
-            "\t" + tr("-p --tmoptions          Tone mapping operator options. Legal values are: ") + "\n" +
-            "\t\t" + tr("colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)") + "\n" +
-            "\t\t" + tr("localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)") + "\n" +
-            "\t\t" + tr("sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)") + "\n" +
-            "\t\t" + tr("bias=VALUE (for drago)") + "\n" +
-            "\t\t" + tr("local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)") + "\n" +
-            "\t\t" + tr("scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)") + "\n" +
-            "\t\t" + tr("brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)") + "\n" +
-            "\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
-            "\t" + tr("                        (No tonemapping is performed unless -o is specified).") + "\n\n" +
-            tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
-    printErrorAndExit(help);
 }
 
 void CommandLineInterfaceManager::setProgressBar(int max)

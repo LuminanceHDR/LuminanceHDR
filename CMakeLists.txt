@@ -148,11 +148,6 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 SET(LUMINANCE_HDR_H )
 SET(LUMINANCE_HDR_SRC )
 
-IF(MSVC)
-    SET(LUMINANCE_HDR_H ${LUMINANCE_HDR_H} src/arch/msvc/getopt_win32.h)
-    SET(LUMINANCE_HDR_CPP ${LUMINANCE_HDR_CPP} src/arch/msvc/getopt_win32.c)
-ENDIF()
-
 SET(LUMINANCE_HDR_H ${LUMINANCE_HDR_H}
     src/arch/math.h
     src/arch/malloc.h
