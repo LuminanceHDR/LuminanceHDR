@@ -47,7 +47,7 @@ class CommandLineInterfaceManager : public QObject
     Q_OBJECT
 public:
     CommandLineInterfaceManager(const int argc, char **argv);
-    void execCommandLineParams();
+    int execCommandLineParams();
 
 private:
     const int argc;
@@ -83,7 +83,6 @@ private:
 	bool started;
 	int quality;
     float threshold;
-    bool doAutoAntighosting;
     QString saveAlignedImagesPrefix;
 
     void startTonemap();
@@ -93,7 +92,6 @@ private slots:
     void ais_failed(QProcess::ProcessError);
 	void errorWhileLoading(QString);
     void createHDR(int);
-    void parseArgs();
     void execCommandLineParamsSlot();
 	void setProgressBar(int);
 	void updateProgressBar(int);

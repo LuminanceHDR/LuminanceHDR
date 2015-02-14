@@ -25,8 +25,6 @@
  *
  */
 
-#include "arch/getopt.h"
-
 #include <QTimer>
 #include <QDebug>
 #include <iostream>
@@ -42,6 +40,8 @@
 
 #include "Libpfs/tm/TonemapOperator.h"
 
+#include <boost/program_options.hpp>
+
 #if defined(_MSC_VER)
 #include <fcntl.h>
 #include <io.h>
@@ -52,19 +52,6 @@ using namespace libhdr::fusion;
 
 namespace
 {
-void printErrorAndExit(const QString& error_str)
-{
-	#if defined(_MSC_VER)
-		// if the filemode isn't restored afterwards, a normal std::cout segfaults
-		int oldMode = _setmode(_fileno(stderr), _O_U16TEXT);
-		std::wcerr << qPrintable(error_str) << std::endl;
-		if (oldMode >= 0)
-			_setmode(_fileno(stderr), oldMode);
-	#else
-		std::cerr << qPrintable(error_str) << std::endl;
-	#endif
-    exit(-1);
-}
 
 void printIfVerbose(const QString& str, bool verbose)
 {
@@ -82,6 +69,12 @@ void printIfVerbose(const QString& str, bool verbose)
     }
 }
 
+void printErrorAndExit(const QString& error_str)
+{
+    printIfVerbose(error_str, true);
+    exit(-1);
+}
+
 float toFloatWithErrMsg(const QString &str)
 {
     bool ok;
@@ -93,68 +86,7 @@ float toFloatWithErrMsg(const QString &str)
     return ret;
 }
 
-int toIntWithErrMsg(const QString &str)
-{
-    bool ok;
-    int ret = str.toInt(&ok);
-    if (!ok)
-    {
-        printErrorAndExit(QObject::tr("Cannot convert %1 to an integer").arg(str));
-    }
-    return ret;
 }
-
-}
-
-//#define NONCLIOPTIONS 31
-
-static struct option cmdLineOptions[] = {
-    // Qt options
-    { "nograb", no_argument, NULL, 0 },
-    { "dograb", no_argument, NULL, 0 },
-    { "sync", no_argument, NULL, 0 },
-    { "style", required_argument, NULL, 0 },
-    { "stylesheet", required_argument, NULL, 0 },
-    { "session", required_argument, NULL, 0 },
-    { "widgetcount", no_argument, NULL, 0 },
-    { "reverse", no_argument, NULL, 0 },
-    { "graphicssystem", required_argument, NULL, 0 },
-    { "qmljsdebugger", required_argument, NULL, 0 },
-    { "display", required_argument, NULL, 0 },
-    { "geometry", required_argument, NULL, 0 },
-    { "fn", required_argument, NULL, 0 },
-    { "font", required_argument, NULL, 0 },
-    { "bg", required_argument, NULL, 0 },
-    { "background", required_argument, NULL, 0 },
-    { "fg", required_argument, NULL, 0 },
-    { "foreground", required_argument, NULL, 0 },
-    { "btn", required_argument, NULL, 0 },
-    { "button", required_argument, NULL, 0 },
-    { "name", required_argument, NULL, 0 },
-    { "title", required_argument, NULL, 0 },
-    { "visual", required_argument, NULL, 0 },
-    { "ncols", required_argument, NULL, 0 },
-    { "cmap", no_argument, NULL, 0 },
-    { "im", no_argument, NULL, 0 },
-    { "inputstyle", required_argument, NULL, 0 },
-    // Luminance HDR options
-    { "verbose", no_argument, NULL, 'v' },
-    { "help", no_argument, NULL, 'h' },
-    { "align", required_argument, NULL, 'a' },
-    { "ev", required_argument, NULL, 'e' },
-    { "config", required_argument, NULL, 'c' },
-    { "load", required_argument, NULL, 'l' },
-    { "gamma", required_argument, NULL, 'g' },
-    { "resize", required_argument, NULL, 'r' },
-    { "save", required_argument, NULL, 's' },
-    { "tmo", required_argument, NULL, 't' },
-    { "tmoptions", required_argument, NULL, 'p' },
-    { "output", required_argument, NULL, 'o' },
-    { "quality", required_argument, NULL, 'q' },
-    { "savealigned", required_argument, NULL, 'd' },
-    { "autoag", required_argument, NULL, 'b' },
-    { NULL, 0, NULL, 0 }
-};
 
 CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **argv):
     argc(argc),
@@ -164,286 +96,276 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     tmopts(TMOptionsOperations::getDefaultTMOptions()),
     verbose(false),
 	quality(100),
-    threshold(0.5f),
-    doAutoAntighosting(false),
+    threshold(-1.0f),
     saveAlignedImagesPrefix("")
 {
+
     hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
     hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
     hdrcreationconfig.fusionOperator = DEBEVEC;
-
-    parseArgs();
 }
 
-void CommandLineInterfaceManager::parseArgs()
+int CommandLineInterfaceManager::execCommandLineParams()
 {
-    int optionIndex = 0;
-    int c;
+    // Declare the supported options.
+    namespace po = boost::program_options;
+    po::variables_map vm;
 
-//    QString cliOptions;
-//    for (int i = NONCLIOPTIONS; cmdLineOptions[i].name != NULL; ++i) {
-//        cliOptions += cmdLineOptions[i].val;
-//    }
+    bool error = false;
 
-    while( (c = getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:u:q:d:b:", cmdLineOptions, &optionIndex)) != -1 )
+    po::options_description desc(tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(argv[0]).toUtf8().constData());
+    desc.add_options()
+        ("help,h", tr("Display this help.").toUtf8().constData())
+        ("verbose,v", po::value<bool>(&verbose), tr("Print more messages during execution.").toUtf8().constData())
+        ("align,a", po::value<std::string>(),    tr("[AIS|MTB]   Align Engine to use during HDR creation (default: no alignment).").toUtf8().constData())
+        ("ev,e", po::value<std::string>(),       tr("EV1,EV2,... Specify numerical EV values (as many as INPUTFILES).").toUtf8().constData())
+        ("savealigned,d", po::value<std::string>(),       tr("prefix Save aligned images to files which names start with prefix").toUtf8().constData())
+        //
+        ("load,l", po::value<std::string>(),       tr("HDR_FILE Load an HDR instead of creating a new one.").toUtf8().constData())
+        ("save,s", po::value<std::string>(),       tr("HDR_FILE Save to a HDR file format. (default: don't save)").toUtf8().constData())
+        ("gamma,g", po::value<float>(&tmopts->pregamma),       tr("VALUE        Gamma value to use during tone mapping. (default: 1) ").toUtf8().constData())
+        ("resize,r", po::value<int>(&tmopts->xsize),       tr("VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping)").toUtf8().constData())
+
+        ("output,o", po::value<std::string>(),       tr("LDR_FILE    File name you want to save your tone mapped LDR to.").toUtf8().constData())
+            
+        ("quality,q", po::value<int>(&quality),       tr("VALUE      Quality of the saved tone mapped file (0-100).").toUtf8().constData())
+        ("autoag,t", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
+    ;
+
+    po::options_description hdr_desc(tr("HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").toUtf8().constData());
+    hdr_desc.add_options()
+        ("hdrWeight", po::value<std::string>(),       tr("weight = triangular|gaussian|plateau|flat (Default is triangular)").toUtf8().constData())
+        ("hdrResponseCurve", po::value<std::string>(),       tr("response curve = from_file|linear|gamma|log|srgb (Default is linear)").toUtf8().constData())
+        ("hdrModel", po::value<std::string>(),       tr("model: robertson|robertsonauto|debevec (Default is debevec)").toUtf8().constData())
+        ("hdrCurveFilename", po::value<std::string>(),       tr("curve filename = your_file_here.m").toUtf8().constData())
+    ;
+
+    po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
+    tmo_desc.add_options()
+        ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
+    ;
+
+    po::options_description tmo_fattal(tr(" Fattal").toUtf8().constData());
+    tmo_fattal.add_options()
+		("tmoFatAlpha", po::value<float>(&tmopts->operator_options.fattaloptions.alpha),  tr("alpha FLOAT").toUtf8().constData())
+		("tmoFatBeta", po::value<float>(&tmopts->operator_options.fattaloptions.beta),  tr("beta FLOAT").toUtf8().constData())
+		("tmoFatColor", po::value<float>(&tmopts->operator_options.fattaloptions.color),  tr("color FLOAT").toUtf8().constData())
+		("tmoFatNoise", po::value<float>(&tmopts->operator_options.fattaloptions.noiseredux),  tr("noise FLOAT").toUtf8().constData())
+		("tmoFatNew", po::value<bool>(&tmopts->operator_options.fattaloptions.newfattal), tr("new true|false").toUtf8().constData())
+    ;
+    po::options_description tmo_mantiuk06(tr(" Mantiuk 06").toUtf8().constData());
+    tmo_mantiuk06.add_options()
+        ("tmoM06Contrast", po::value<float>(&tmopts->operator_options.mantiuk06options.contrastfactor),  tr("contrast FLOAT").toUtf8().constData())
+        ("tmoM06Saturation", po::value<float>(&tmopts->operator_options.mantiuk06options.saturationfactor),  tr("saturation FLOAT").toUtf8().constData())
+        ("tmoM06Detail", po::value<float>(&tmopts->operator_options.mantiuk06options.detailfactor),  tr("detail FLOAT").toUtf8().constData())
+        ("tmoM06Constrast", po::value<bool>(&tmopts->operator_options.mantiuk06options.contrastequalization), tr("equalization true|false").toUtf8().constData())
+    ;
+    po::options_description tmo_mantiuk08(tr(" Mantiuk 08").toUtf8().constData());
+    tmo_mantiuk08.add_options()
+        ("tmoM08ColorSaturation", po::value<float>(&tmopts->operator_options.mantiuk08options.colorsaturation),  tr("color saturation FLOAT").toUtf8().constData())
+        ("tmoM08ConstrastEnh", po::value<float>(&tmopts->operator_options.mantiuk08options.contrastenhancement),  tr("contrast enhancement FLOAT").toUtf8().constData())
+        ("tmoM08LuminanceLvl", po::value<float>(&tmopts->operator_options.mantiuk08options.luminancelevel),  tr("luminance level FLOAT").toUtf8().constData())
+        ("tmoM08SetLuminance", po::value<bool>(&tmopts->operator_options.mantiuk08options.setluminance), tr("enable luminance level true|false").toUtf8().constData())
+    ;
+    po::options_description tmo_durand(tr(" Durand").toUtf8().constData());
+    tmo_durand.add_options()
+        ("tmoDurSigmaS", po::value<float>(&tmopts->operator_options.durandoptions.spatial),  tr("spatial kernel sigma FLOAT").toUtf8().constData())
+        ("tmoDurSigmaR", po::value<float>(&tmopts->operator_options.durandoptions.range),  tr("range kernel sigma FLOAT").toUtf8().constData())
+        ("tmoDurBase", po::value<float>(&tmopts->operator_options.durandoptions.base),  tr("base contrast FLOAT").toUtf8().constData())
+    ;
+    po::options_description tmo_drago(tr(" Drago").toUtf8().constData());
+    tmo_drago.add_options()
+        ("tmoDrgBias", po::value<float>(&tmopts->operator_options.dragooptions.bias),  tr("bias FLOAT").toUtf8().constData())
+    ;
+    po::options_description tmo_reinhard02(tr(" Reinhard 02").toUtf8().constData());
+    tmo_reinhard02.add_options()
+        ("tmoR02Key", po::value<float>(&tmopts->operator_options.reinhard02options.key),  tr("key value FLOAT").toUtf8().constData())
+        ("tmoR02Phi", po::value<float>(&tmopts->operator_options.reinhard02options.phi),  tr("phi FLOAT").toUtf8().constData())
+        ("tmoR02Scales", po::value<bool>(&tmopts->operator_options.reinhard02options.scales), tr("use scales true|false").toUtf8().constData())
+        ("tmoR02Num", po::value<int>(&tmopts->operator_options.reinhard02options.range),  tr("range FLOAT").toUtf8().constData())
+        ("tmoR02Low", po::value<int>(&tmopts->operator_options.reinhard02options.lower),  tr("lower scale FLOAT").toUtf8().constData())
+        ("tmoR02High", po::value<int>(&tmopts->operator_options.reinhard02options.upper),  tr("upper scale FLOAT").toUtf8().constData())
+    ;
+    po::options_description tmo_reinhard05(tr(" Reinhard 05").toUtf8().constData());
+    tmo_reinhard05.add_options()
+        ("tmoR05Brightness", po::value<float>(&tmopts->operator_options.reinhard05options.brightness),  tr("Brightness FLOAT").toUtf8().constData())
+        ("tmoR05Chroma", po::value<float>(&tmopts->operator_options.reinhard05options.chromaticAdaptation),  tr("Chroma adaption FLOAT").toUtf8().constData())
+        ("tmoR05Lightness", po::value<float>(&tmopts->operator_options.reinhard05options.lightAdaptation),  tr("Light adaption FLOAT").toUtf8().constData())
+    ;
+    po::options_description tmo_ash(tr(" Ashikmin").toUtf8().constData());
+    tmo_ash.add_options()
+        ("tmoAshEq2", po::value<bool>(&tmopts->operator_options.ashikhminoptions.eq2), tr("Equation number 2 true|false").toUtf8().constData())
+        ("tmoAshSimple", po::value<bool>(&tmopts->operator_options.ashikhminoptions.simple), tr("Simple true|false").toUtf8().constData())
+        ("tmoAshLocal", po::value<float>(&tmopts->operator_options.ashikhminoptions.lct),  tr("Local threshold FLOAT").toUtf8().constData())
+    ;
+    po::options_description tmo_patt(tr(" Pattanaik").toUtf8().constData());
+    tmo_patt.add_options()
+        ("tmoPatMultiplier", po::value<float>(&tmopts->operator_options.pattanaikoptions.multiplier),  tr("multiplier FLOAT").toUtf8().constData())
+        ("tmoPatLocal", po::value<bool>(&tmopts->operator_options.pattanaikoptions.local), tr("Local tone mapping true|false").toUtf8().constData())
+        ("tmoPatAutoLum", po::value<bool>(&tmopts->operator_options.pattanaikoptions.autolum), tr("Auto luminance true|false").toUtf8().constData())
+        ("tmoPatCone", po::value<float>(&tmopts->operator_options.pattanaikoptions.cone),  tr("cone level FLOAT").toUtf8().constData())
+        ("tmoPatRod", po::value<float>(&tmopts->operator_options.pattanaikoptions.rod),  tr("rod level FLOAT").toUtf8().constData())
+    ;
+
+    tmo_desc.add(tmo_fattal);
+    tmo_desc.add(tmo_mantiuk06);
+    tmo_desc.add(tmo_mantiuk08);
+    tmo_desc.add(tmo_durand);
+    tmo_desc.add(tmo_drago);
+    tmo_desc.add(tmo_reinhard02);
+    tmo_desc.add(tmo_reinhard05);
+    tmo_desc.add(tmo_ash);
+    tmo_desc.add(tmo_patt);
+
+
+    po::options_description hidden("Hidden options");
+    hidden.add_options()
+        ("input-file", po::value< vector<string> >(), "input file")
+        ;    
+
+    po::positional_options_description p;
+    p.add("input-file", -1);
+
+    po::options_description cmdline_options;
+    cmdline_options.add(desc).add(hdr_desc).add(tmo_desc).add(hidden);
+
+    po::options_description cmdvisible_options;
+    cmdvisible_options.add(desc).add(hdr_desc).add(tmo_desc);
+
+    try 
     {
-        switch ( c )
-        {
-        case 'h':
-        {
-            printHelp(argv[0]);
-            exit(0);
+        po::store(po::command_line_parser(argc, argv).options(cmdline_options).positional(p).run(), vm);
+        po::notify(vm);    
+
+        if (vm.count("help")) {
+            cout << cmdvisible_options << "\n";
+            return 1;
         }
-            break;
-        case 'v':
-        {
-            verbose = true;
-        }
-            break;
-        case 'a':
-        {
-            if (strcmp(optarg,"AIS")==0)
-            {
+        if (vm.count("align")) {
+            const char* value = vm["align"].as<std::string>().c_str();
+            if (strcmp(value,"AIS")==0)
                 alignMode = AIS_ALIGN;
-            }
-            else if (strcmp(optarg,"MTB")==0)
-            {
+            else if (strcmp(value,"MTB")==0)
                 alignMode = MTB_ALIGN;
-            }
             else
                 printErrorAndExit(tr("Error: Alignment engine not recognized."));
-            }
-            break;
-        case 'e':
-        {
-            QStringList evstringlist=QString(optarg).split(",");
+        }
+        if (vm.count("ev")) {
+            QStringList evstringlist=QString::fromStdString(vm["ev"].as<std::string>()).split(",");
             for (int i=0; i<evstringlist.count(); i++)
                 ev.append(toFloatWithErrMsg(evstringlist.at(i)));
         }
-            break;
-        case 'c':
-        {
-            QStringList hdrCreationOptsList=QString(optarg).split(":");
-            for (int i=0; i<hdrCreationOptsList.size(); i++)
-            {
-                QStringList keyandvalue = hdrCreationOptsList[i].split("=");
-
-                if (keyandvalue.size()!=2)
-                {
-                    printErrorAndExit(tr("Error: Wrong HDR creation format."));
-                }
-                if (keyandvalue.at(0)== "weight") {
-                    if (keyandvalue.at(1)== "triangular")
-                        hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
-                    else if (keyandvalue.at(1) == "gaussian")
-                        hdrcreationconfig.weightFunction = WEIGHT_GAUSSIAN;
-                    else if (keyandvalue.at(1) == "plateau")
-                        hdrcreationconfig.weightFunction = WEIGHT_PLATEAU;
-                    else
-                        printErrorAndExit(tr("Error: Unknown weight function specified."));
-                }
-
-                else if (keyandvalue.at(0) == "response_curve") {
-                    if (keyandvalue.at(1) == "from_file")
-                        hdrcreationconfig.responseCurve = RESPONSE_CUSTOM;
-                    else if (keyandvalue.at(1) == "linear")
-                        hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
-                    else if (keyandvalue.at(1) == "gamma")
-                        hdrcreationconfig.responseCurve = RESPONSE_GAMMA;
-                    else if (keyandvalue.at(1) == "log")
-                        hdrcreationconfig.responseCurve = RESPONSE_LOG10;
-//                    else if (keyandvalue.at(1) == "robertson")
-//                        hdrcreationconfig.response_curve=FROM_ROBERTSON;
-                    else
-                        printErrorAndExit(tr("Error: Unknown response curve specified."));
-                }
-
-                else if (keyandvalue.at(0) == "model") {
-                    if (keyandvalue.at(1) == "robertson")
-                        hdrcreationconfig.fusionOperator = ROBERTSON;
-                    else if (keyandvalue.at(1) == "debevec")
-                        hdrcreationconfig.fusionOperator = DEBEVEC;
-                    else
-                        printErrorAndExit(tr("Error: Unknown HDR creation model specified."));
-                }
-
-                else if (keyandvalue.at(0) == "curve_filename")
-                    hdrcreationconfig.inputResponseCurveFilename = keyandvalue.at(1);
-                else
-                    printErrorAndExit(tr("Error: Unknown HDR creation format specified."));
-
-            } //end for loop over all "key=values"
-        }
-            break;
-        case 'l':
-            loadHdrFilename = QString(optarg);
-            //loadHdrFilename=QDir::currentPath () + QDir::separator () + QString(optarg);
-            break;
-        case 's':
-            saveHdrFilename = QString(optarg);
-            break;
-        case 'r':
-            tmopts->xsize = toIntWithErrMsg(optarg);
-            break;
-        case 'g':
-            tmopts->pregamma = toFloatWithErrMsg(optarg);
-            break;
-        case 't': {
-            QString tmoperator=QString(optarg);
-            if (tmoperator=="ashikhmin")
-                tmopts->tmoperator=ashikhmin;
-            else if (tmoperator=="drago")
-                tmopts->tmoperator=drago;
-            else if (tmoperator=="durand")
-                tmopts->tmoperator=durand;
-            else if (tmoperator=="fattal")
-                tmopts->tmoperator=fattal;
-            else if (tmoperator=="pattanaik")
-                tmopts->tmoperator=pattanaik;
-            else if (tmoperator=="reinhard02")
-                tmopts->tmoperator=reinhard02;
-            else if (tmoperator=="reinhard05")
-                tmopts->tmoperator=reinhard05;
-            else if (tmoperator=="mantiuk06")
-                tmopts->tmoperator=mantiuk06;
-            else if (tmoperator=="mantiuk08")
-                tmopts->tmoperator=mantiuk08;
+        if (vm.count("hdrWeight")) {
+            const char* value = vm["hdrWeight"].as<std::string>().c_str();
+            if (strcmp(value,"triangular")==0)
+            	hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
+            else if (strcmp(value,"gaussian")==0)
+            	hdrcreationconfig.weightFunction = WEIGHT_GAUSSIAN;
+            else if (strcmp(value,"plateau")==0)
+            	hdrcreationconfig.weightFunction = WEIGHT_PLATEAU;
+            else if (strcmp(value,"flat")==0)
+                hdrcreationconfig.weightFunction = WEIGHT_FLAT;
             else
-                printErrorAndExit(tr("Error: Unknown tone mapping operator specified."));
+                printErrorAndExit(tr("Error: Unknown weight function specified."));
         }
-            break;
-        case 'p': {
-            QStringList tmOptsList=QString(optarg).split(":");
-            for(int i=0; i<tmOptsList.size(); i++) {
-                QStringList keyandvalue = tmOptsList[i].split("=");
-
-                if (keyandvalue.size()!=2)
-                    printErrorAndExit(tr("Error: Wrong tone mapping option format."));
-
-                //fattal options
-                if (keyandvalue.at(0)== "alpha")
-                    tmopts->operator_options.fattaloptions.alpha=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "beta")
-                    tmopts->operator_options.fattaloptions.beta=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "color")
-                    tmopts->operator_options.fattaloptions.color=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "noise")
-                    tmopts->operator_options.fattaloptions.noiseredux=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "new")
-                    tmopts->operator_options.fattaloptions.newfattal=(keyandvalue.at(1)=="true");
-
-                //mantiuk06 options
-                else if (keyandvalue.at(0)== "contrast")
-                    tmopts->operator_options.mantiuk06options.contrastfactor=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "saturation")
-                    tmopts->operator_options.mantiuk06options.saturationfactor=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "detail")
-                    tmopts->operator_options.mantiuk06options.detailfactor=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "equalization")
-                    tmopts->operator_options.mantiuk06options.contrastequalization=(keyandvalue.at(1)=="true");
-
-                //mantiuk08 options
-                else if (keyandvalue.at(0)== "colorsaturation")
-                    tmopts->operator_options.mantiuk08options.colorsaturation=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "contrastenhancement")
-                    tmopts->operator_options.mantiuk08options.contrastenhancement=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "luminancelevel")
-                    tmopts->operator_options.mantiuk08options.luminancelevel=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "setluminance")
-                    tmopts->operator_options.mantiuk08options.setluminance=(keyandvalue.at(1)=="true");
-
-                //ashikhmin options
-                else if (keyandvalue.at(0)== "localcontrast")
-                    tmopts->operator_options.ashikhminoptions.lct=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "eq")
-                    tmopts->operator_options.ashikhminoptions.eq2=(keyandvalue.at(1)=="2");
-                else if (keyandvalue.at(0)== "simple")
-                    tmopts->operator_options.ashikhminoptions.simple=(keyandvalue.at(1)=="true");
-
-                //durand options
-                else if (keyandvalue.at(0)== "sigma_s")
-                    tmopts->operator_options.durandoptions.spatial=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "sigma_r")
-                    tmopts->operator_options.durandoptions.range=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "base")
-                    tmopts->operator_options.durandoptions.base=toFloatWithErrMsg(keyandvalue.at(1));
-
-                //drago options
-                else if (keyandvalue.at(0)== "bias")
-                    tmopts->operator_options.dragooptions.bias=toFloatWithErrMsg(keyandvalue.at(1));
-
-                //pattanaik options
-                else if (keyandvalue.at(0)== "local")
-                    tmopts->operator_options.pattanaikoptions.local=(keyandvalue.at(1)=="true");
-                else if (keyandvalue.at(0)== "autolum")
-                    tmopts->operator_options.pattanaikoptions.autolum=(keyandvalue.at(1)=="true");
-                else if (keyandvalue.at(0)== "cone")
-                    tmopts->operator_options.pattanaikoptions.cone=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "rod")
-                    tmopts->operator_options.pattanaikoptions.rod=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "multiplier")
-                    tmopts->operator_options.pattanaikoptions.multiplier=toFloatWithErrMsg(keyandvalue.at(1));
-
-                //reinhard02 options
-                else if (keyandvalue.at(0)== "scales")
-                    tmopts->operator_options.reinhard02options.scales=(keyandvalue.at(1)=="true");
-                else if (keyandvalue.at(0)== "key")
-                    tmopts->operator_options.reinhard02options.key=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "phi")
-                    tmopts->operator_options.reinhard02options.phi=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "num")
-                    tmopts->operator_options.reinhard02options.range=toIntWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "low")
-                    tmopts->operator_options.reinhard02options.lower=toIntWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "high")
-                    tmopts->operator_options.reinhard02options.upper=toIntWithErrMsg(keyandvalue.at(1));
-
-                //reinhard05 options
-                else if (keyandvalue.at(0)== "brightness")
-                    tmopts->operator_options.reinhard05options.brightness=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "chroma")
-                    tmopts->operator_options.reinhard05options.chromaticAdaptation=toFloatWithErrMsg(keyandvalue.at(1));
-                else if (keyandvalue.at(0)== "lightness")
-                    tmopts->operator_options.reinhard05options.lightAdaptation=toFloatWithErrMsg(keyandvalue.at(1));
-
-                else
-                    printErrorAndExit(tr("Error: Unknown tone mapping option specified."));
-            } //end for loop over all "key=values"
+        if (vm.count("hdrResponseCurve")) {
+            const char* value = vm["hdrResponseCurve"].as<std::string>().c_str();
+            if (strcmp(value,"from_file")==0)
+                hdrcreationconfig.responseCurve = RESPONSE_CUSTOM;
+            else if (strcmp(value,"linear")==0)
+                hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
+            else if (strcmp(value,"gamma")==0)
+                hdrcreationconfig.responseCurve = RESPONSE_GAMMA;
+            else if (strcmp(value,"log")==0)
+                hdrcreationconfig.responseCurve = RESPONSE_LOG10;
+            else if (strcmp(value,"srgb")==0)
+                hdrcreationconfig.responseCurve = RESPONSE_SRGB;
+            else
+                printErrorAndExit(tr("Error: Unknown response curve specified."));
         }
-            break;
-        case 'o':
-            saveLdrFilename=QString(optarg);
-            break;
-        case 'q':
-            quality = QString(optarg).toInt();
-			if (quality < 0 || quality > 100)
-            	printErrorAndExit(tr("Error: Quality must be in the range [0-100]."));
-            break;
-        case 'd':
-            saveAlignedImagesPrefix = QString(optarg);
-            break;
-        case 'b':
-            threshold = QString(optarg).toFloat();
-			if (threshold < 0.0f ||  threshold > 1.0f)
-            	printErrorAndExit(tr("Error: Threshold must be in the range [0-1]."));
-            doAutoAntighosting = true;
-            break;
-        case '?':
-            printErrorAndExit(tr("Error: Unknown option %1.").arg(optopt));
-        case ':':
-            printErrorAndExit(tr("Error: Missing argument for %1.").arg(optopt));
+        if (vm.count("hdrModel")) {
+            const char* value = vm["hdrModel"].as<std::string>().c_str();
+            if (strcmp(value,"robertson")==0)
+                hdrcreationconfig.fusionOperator = ROBERTSON;
+            else if (strcmp(value,"robertsonauto")==0)
+                hdrcreationconfig.fusionOperator = ROBERTSON_AUTO;
+            else if (strcmp(value,"debevec")==0)
+                hdrcreationconfig.fusionOperator = DEBEVEC;
+            else
+                printErrorAndExit(tr("Error: Unknown HDR creation model specified."));
         }
+        if (vm.count("hdrCurveFilename"))
+        	hdrcreationconfig.inputResponseCurveFilename = QString::fromStdString(vm["hdrCurveFilename"].as<std::string>());
+        
+        if (vm.count("tmo")) {
+            const char* value = vm["tmo"].as<std::string>().c_str();
+            if (strcmp(value,"ashikhmin")==0)
+            	tmopts->tmoperator=ashikhmin;
+            else if (strcmp(value,"drago")==0)
+            	tmopts->tmoperator=drago;
+            else if (strcmp(value,"durand")==0)
+            	tmopts->tmoperator=durand;
+            else if (strcmp(value,"fattal")==0)
+            	tmopts->tmoperator=fattal;
+            else if (strcmp(value,"pattanaik")==0)
+            	tmopts->tmoperator=pattanaik;
+            else if (strcmp(value,"reinhard02")==0)
+            	tmopts->tmoperator=reinhard02;
+            else if (strcmp(value,"reinhard05")==0)
+            	tmopts->tmoperator=reinhard05;
+            else if (strcmp(value,"mantiuk06")==0)
+            	tmopts->tmoperator=mantiuk06;
+            else if (strcmp(value,"mantiuk08")==0)
+            	tmopts->tmoperator=mantiuk08;
+            else
+            	printErrorAndExit(tr("Error: Unknown tone mapping operator specified."));
+        }
+
+        if (vm.count("load"))
+            loadHdrFilename = QString::fromStdString(vm["load"].as<std::string>());
+        if (vm.count("save"))
+            saveHdrFilename = QString::fromStdString(vm["save"].as<std::string>());
+        if (vm.count("output"))
+            saveLdrFilename = QString::fromStdString(vm["output"].as<std::string>());
+        if (vm.count("savealigned"))
+            saveAlignedImagesPrefix = QString::fromStdString(vm["savealigned"].as<std::string>());
+        if (quality < 0 || quality > 100)
+            printErrorAndExit(tr("Error: Quality must be in the range [0-100]."));
+        if (threshold > 1.0f)
+            printErrorAndExit(tr("Error: Threshold must be in the range [0-1]."));
+
     }
-    for (int index = optind; index < argc; index++)
+    catch(boost::program_options::required_option& e) 
+    { 
+      std::cerr << "ERROR: " << e.what() << std::endl << std::endl; 
+      return 1;
+    } 
+    catch(boost::program_options::error& e) 
+    { 
+      std::cerr << "ERROR: " << e.what() << std::endl << std::endl; 
+      return 1;
+    }
+
+    if (vm.count("input-file"))
     {
-        inputFiles << QString(argv[index]);
-        printIfVerbose( QObject::tr("Input file %1").arg(argv[index]) , verbose);
+        vector<string> options = vm["input-file"].as< vector<string> >();
+        for (int i = 0; i < options.size(); i++)
+        {
+            inputFiles << QString::fromStdString(options[i]);
+            printIfVerbose( QObject::tr("Input file %1").arg(QString::fromStdString(options[i])) , verbose);
+            cout << options[i] << "\n";
+        }
     }
-}
 
-void CommandLineInterfaceManager::execCommandLineParams()
-{
+    if (inputFiles.empty()) {
+        //cmdvisible_options.print(
+        //printString(cmdvisible_options);
+         cout << cmdvisible_options << "\n";
+        return 1;
+    }
+    
     QTimer::singleShot(0, this, SLOT(execCommandLineParamsSlot()));
+    return 0;
 }
 
 void CommandLineInterfaceManager::execCommandLineParamsSlot()
@@ -467,7 +389,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
     }
     else
     {
-        printHelp(argv[0]);
+        printErrorAndExit(tr("Error: You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").arg(loadHdrFilename));
         exit(-1);
     }
 
@@ -554,7 +476,7 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
     }
 
     hdrCreationManager->removeTempFiles();
-    if (doAutoAntighosting) {
+    if (threshold > 0) {
         QList<QPair<int, int> > dummyOffset;
         QStringList::ConstIterator it = inputFiles.begin();
         while( it != inputFiles.end() ) {
@@ -653,45 +575,6 @@ void  CommandLineInterfaceManager::startTonemap()
 
 void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
 	printErrorAndExit( tr("Failed loading images"));
-}
-
-void CommandLineInterfaceManager::printHelp(char * progname)
-{
-    QString help=
-            tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(progname) + "\n" +
-            "\t" + tr("Commandline interface to %1.").arg(progname) + "\n\n" +
-            "\t" + tr("-h --help               Display this help.") + "\n" +
-            "\t" + tr("-v --verbose            Print more messages during execution.") + "\n" +
-            "\t" + tr("-a --align AIS|MTB      Align Engine to use during HDR creation (default: no alignment).") + "\n" +
-            "\t" + tr("-d --savealigned prefix Save aligned images to files which names start with prefix") + "\n" +
-            "\t" + tr("-e --ev EV1,EV2,...     Specify numerical EV values (as many as INPUTFILES).") + "\n" +
-            "\t" + tr("-c --config             HDR creation config. Possible values: ") + "\n" +
-            "\t\t" + tr("weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m") + "\n" +
-            "\t\t" + tr("(Default is weight=triangular:response_curve=linear:model=debevec) ") + "\n" +
-            "\t" + tr("-l --load HDR_FILE      Load an HDR instead of creating a new one. ") + "\n" +
-            "\t" + tr("-s --save HDR_FILE      Save to a HDR file format. (default: don't save) ") + "\n" +
-            "\t" + tr("-g --gamma VALUE        Gamma value to use during tone mapping. (default: 1) ") + "\n" +
-            "\t" + tr("-r --resize VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping) ") + "\n" +
-            "\t" + tr("-t --tmo                Tone mapping operator. Legal values are: ") + "\n" +
-            "\t\t" + tr("ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08") + "\n" +
-            "\t\t" + tr("(Default is mantiuk06)") + "\n" +
-            "\t" + tr("-p --tmoptions          Tone mapping operator options. Legal values are: ") + "\n" +
-            "\t\t" + tr("alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)") + "\n" +
-            "\t\t" + tr("contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)") + "\n" +
-            "\t\t" + tr("colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)") + "\n" +
-            "\t\t" + tr("localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)") + "\n" +
-            "\t\t" + tr("sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)") + "\n" +
-            "\t\t" + tr("bias=VALUE (for drago)") + "\n" +
-            "\t\t" + tr("local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)") + "\n" +
-            "\t\t" + tr("scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)") + "\n" +
-            "\t\t" + tr("brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)") + "\n" +
-            "\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
-            "\t" + tr("-o --output LDR_FILE    File name you want to save your tone mapped LDR to.") + "\n" +
-            "\t" + tr("-q --quality VALUE      Quality of the saved tone mapped file (0-100).") + "\n" +
-            "\t" + tr("-b --autoag THRESHOLD   Enable auto anti-ghosting with given threshold.") + "\n" +
-            "\t" + tr("                        (No tonemapping is performed unless -o is specified).") + "\n\n" +
-            tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
-    printErrorAndExit(help);
 }
 
 void CommandLineInterfaceManager::setProgressBar(int max)

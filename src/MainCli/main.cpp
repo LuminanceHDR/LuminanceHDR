@@ -41,7 +41,9 @@ int main( int argc, char ** argv )
 
     CommandLineInterfaceManager cli( argc, argv );
 
-    cli.execCommandLineParams();
+    int result = cli.execCommandLineParams();
+    if (result != 0)
+        return result;
     application.connect(&cli, SIGNAL(finishedParsing()), &application, SLOT(quit()));
 
     return application.exec();

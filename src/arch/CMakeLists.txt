@@ -5,10 +5,6 @@
 #${CMAKE_CURRENT_SOURCE_DIR}/freebsd/math.h
 #${CMAKE_CURRENT_SOURCE_DIR}/string.h)
 
-#IF(MSVC)
-#SET(FILES_H ${FILES_H} src/arch/msvc/getopt_win32.h)
-#SET(FILES_CPP ${FILES_CPP} src/arch/msvc/getopt_win32.c)
-
 #ADD_LIBRARY(arch ${FILES_H} ${FILES_CPP})
 #SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} arch PARENT_SCOPE)
 #ENDIF()
