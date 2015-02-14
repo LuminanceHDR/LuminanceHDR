@@ -2,7 +2,7 @@ language: cpp
 compiler:
   - gcc
 script:
-  - cmake
+  - cmake .
   - make
 notifications:
   email: false
