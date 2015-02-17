@@ -268,7 +268,7 @@ ELSEIF(UNIX)
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
     INSTALL(FILES
     ${CMAKE_SOURCE_DIR}/AUTHORS
-    ${CMAKE_SOURCE_DIR}/README
+    ${CMAKE_SOURCE_DIR}/README.md
     ${CMAKE_SOURCE_DIR}/LICENSE
     ${CMAKE_SOURCE_DIR}/Changelog
     DESTINATION share/luminance-hdr) #info files
