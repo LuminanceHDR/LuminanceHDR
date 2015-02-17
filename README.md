@@ -1,8 +1,9 @@
-This is the README file for Luminance HDR
--------------------------------------------------------------------
+# Luminance HDR
+
 Copyright (C)  	2006-2010, Giuseppe Rota <grota@users.sourceforge.net>
 				2010-2014, Davide Anastasia <davideanastasia@users.sourceforge.net>
-							Franco Comida <fcomida@users.sourceforge.net>
+							Franco Comida <fcomida@users.sourceforge.net>, Daniel Kaneider <danielkaneider@users.sourceforge.net>
+
 Webpage:       http://qtpfsgui.sourceforge.net
 Sourceforge:   http://sourceforge.net/projects/qtpfsgui
 
@@ -11,7 +12,7 @@ Contents
 1. What it is
 2. Dependencies
 3. Compiling the sources
-5. Contact and Links
+4. Contact and Links
 
 1. What it is
 ---------------------------------------------------------------------
