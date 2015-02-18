@@ -400,7 +400,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
             LuminanceOptions luminance_options;
 
             printIfVerbose(QObject::tr("Temporary directory: %1").arg(luminance_options.getTempDir()), verbose);
-            printIfVerbose(QObject::tr("Using %1 threads.").arg(luminance_options.getNumThreads()), verbose);
+            printIfVerbose(QObject::tr("Using %n threads.", "", luminance_options.getNumThreads()), verbose);
         }
         hdrCreationManager.reset( new HdrCreationManager(true) );
         connect(hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(finishedLoadingInputFiles()));
