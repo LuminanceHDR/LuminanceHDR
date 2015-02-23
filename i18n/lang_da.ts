@@ -696,9 +696,16 @@ Fortsæt?</translation>
         <translation>&amp;Start</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="98"/>
         <source>Using %1 thread(s)</source>
-        <translation>Bruger %1 tråd(e)</translation>
+        <translation type="vanished">Bruger %1 tråd(e)</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="98"/>
+        <source>Using %n thread(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="118"/>
@@ -4893,10 +4900,17 @@ p, li { white-space: pre-wrap; }
         <source>Temporary directory: %1</source>
         <translation>Midlertidig mappe: %1</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../src/MainCli/commandline.cpp" line="403"/>
+        <source>Using %n threads.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
         <source>Using %1 threads.</source>
-        <translation>Bruger %1 tråde.</translation>
+        <translation type="vanished">Bruger %1 tråde.</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="417"/>

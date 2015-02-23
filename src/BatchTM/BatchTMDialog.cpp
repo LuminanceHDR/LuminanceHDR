@@ -95,7 +95,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     m_next_hdr_file = 0;
     m_is_batch_running  = false;
 
-    add_log_message(tr("Using %1 thread(s)").arg(m_max_num_threads));
+    add_log_message(tr("Using %n thread(s)", "", m_max_num_threads));
     //add_log_message(tr("Saving using file format: %1").arg(m_Ui->comboBoxFormat->currentText()));
 }
 

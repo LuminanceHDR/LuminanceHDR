@@ -660,9 +660,15 @@ Continue?</source>
         <translation>&amp;开始</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="98"/>
         <source>Using %1 thread(s)</source>
-        <translation>使用%1 线程</translation>
+        <translation type="vanished">使用%1 线程</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="98"/>
+        <source>Using %n thread(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="118"/>
@@ -4681,10 +4687,16 @@ p, li { white-space: pre-wrap; }
         <source>Temporary directory: %1</source>
         <translation>临时目录: %1</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../src/MainCli/commandline.cpp" line="403"/>
+        <source>Using %n threads.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
         <source>Using %1 threads.</source>
-        <translation>正在使用%1线程.</translation>
+        <translation type="vanished">正在使用%1线程.</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="417"/>

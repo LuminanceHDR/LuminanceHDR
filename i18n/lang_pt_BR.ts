@@ -696,9 +696,16 @@ Continuar?</translation>
         <translation>&amp;Começar  </translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="98"/>
         <source>Using %1 thread(s)</source>
-        <translation>Usando %1 tópico(s)</translation>
+        <translation type="vanished">Usando %1 tópico(s)</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="98"/>
+        <source>Using %n thread(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.cpp" line="118"/>
@@ -4737,10 +4744,17 @@ p, li { white-space: pre-wrap; }
         <source>Temporary directory: %1</source>
         <translation>Diretório temporário: %1</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../src/MainCli/commandline.cpp" line="403"/>
+        <source>Using %n threads.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
         <source>Using %1 threads.</source>
-        <translation>Usando %1 tópicos.</translation>
+        <translation type="vanished">Usando %1 tópicos.</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="417"/>
