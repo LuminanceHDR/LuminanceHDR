@@ -37,7 +37,7 @@ install(FILES ${CMAKE_SOURCE_DIR}/build/macosx/qt.conf
 # install README and other files
 install(FILES
         ${CMAKE_SOURCE_DIR}/AUTHORS
-        ${CMAKE_SOURCE_DIR}/README
+        ${CMAKE_SOURCE_DIR}/README.md
         ${CMAKE_SOURCE_DIR}/LICENSE
         ${CMAKE_SOURCE_DIR}/Changelog
 #        ${CMAKE_SOURCE_DIR}/BUGS
