@@ -94,8 +94,8 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     operationMode(UNKNOWN_MODE),
     alignMode(NO_ALIGN),
     tmopts(TMOptionsOperations::getDefaultTMOptions()),
+	tmofileparams(new pfs::Params()),
     verbose(false),
-	quality(100),
     threshold(-1.0f),
     saveAlignedImagesPrefix("")
 {
@@ -103,6 +103,8 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
     hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
     hdrcreationconfig.fusionOperator = DEBEVEC;
+
+	tmofileparams->set("quality", 100);
 }
 
 int CommandLineInterfaceManager::execCommandLineParams()
@@ -128,7 +130,6 @@ int CommandLineInterfaceManager::execCommandLineParams()
 
         ("output,o", po::value<std::string>(),       tr("LDR_FILE    File name you want to save your tone mapped LDR to.").toUtf8().constData())
             
-        ("quality,q", po::value<int>(&quality),       tr("VALUE      Quality of the saved tone mapped file (0-100).").toUtf8().constData())
         ("autoag,t", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
     ;
 
@@ -139,6 +140,13 @@ int CommandLineInterfaceManager::execCommandLineParams()
         ("hdrModel", po::value<std::string>(),       tr("model: robertson|robertsonauto|debevec (Default is debevec)").toUtf8().constData())
         ("hdrCurveFilename", po::value<std::string>(),       tr("curve filename = your_file_here.m").toUtf8().constData())
     ;
+
+	po::options_description ldr_desc(tr("LDR output parameters").toUtf8().constData());
+	ldr_desc.add_options()
+		("ldrQuality,q", po::value<int>(), tr("VALUE      Quality of the saved tone mapped file (1-100).").toUtf8().constData())
+		("ldrTiff", po::value<std::string>(), tr("Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)").toUtf8().constData())
+		("ldrTiffDeflate", po::value<bool>(), tr("Tiff deflate compression. true|false (Default is true)").toUtf8().constData())
+		;
 
     po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
     tmo_desc.add_options()
@@ -228,10 +236,10 @@ int CommandLineInterfaceManager::execCommandLineParams()
     p.add("input-file", -1);
 
     po::options_description cmdline_options;
-    cmdline_options.add(desc).add(hdr_desc).add(tmo_desc).add(hidden);
+	cmdline_options.add(desc).add(hdr_desc).add(ldr_desc).add(tmo_desc).add(hidden);
 
     po::options_description cmdvisible_options;
-    cmdvisible_options.add(desc).add(hdr_desc).add(tmo_desc);
+	cmdvisible_options.add(desc).add(hdr_desc).add(ldr_desc).add(tmo_desc);
 
     try 
     {
@@ -342,6 +350,28 @@ int CommandLineInterfaceManager::execCommandLineParams()
 			}
         }
 
+		if (vm.count("ldrQuality")) {
+			int quality = vm["ldrQuality"].as<int>();
+			if (quality < 1 || quality > 100)
+				printErrorAndExit(tr("Error: Quality must be in the range [1-100]."));
+			else
+				tmofileparams->set("quality", (size_t)quality);
+		}
+		if (vm.count("ldrTiff")) {
+			const char* value = vm["ldrTiff"].as<std::string>().c_str();
+			if (strcmp(value, "8b") == 0)
+				tmofileparams->set("tiff_mode", (int)0);
+			else if (strcmp(value, "16b") == 0)
+				tmofileparams->set("tiff_mode", (int)1);
+			else if (strcmp(value, "32b") == 0)
+				tmofileparams->set("tiff_mode", (int)2);
+			else if (strcmp(value, "logluv") == 0)
+				tmofileparams->set("tiff_mode", (int)3);
+			else
+				printErrorAndExit(tr("Error: Unknown tiff format."));
+		}
+		if (vm.count("ldrTiffDeflate"))
+			tmofileparams->set("deflateCompression", vm["ldrTiffDeflate"].as<bool>());
 
         if (vm.count("load"))
             loadHdrFilename = QString::fromStdString(vm["load"].as<std::string>());
@@ -351,8 +381,6 @@ int CommandLineInterfaceManager::execCommandLineParams()
             saveLdrFilename = QString::fromStdString(vm["output"].as<std::string>());
         if (vm.count("savealigned"))
             saveAlignedImagesPrefix = QString::fromStdString(vm["savealigned"].as<std::string>());
-        if (quality < 0 || quality > 100)
-            printErrorAndExit(tr("Error: Quality must be in the range [0-100]."));
         if (threshold > 1.0f)
             printErrorAndExit(tr("Error: Threshold must be in the range [0-1]."));
 
@@ -568,7 +596,7 @@ void  CommandLineInterfaceManager::startTonemap()
                                         inputfname,
                                         hdrCreationManager.data() ? hdrCreationManager->getExpotimes(): QVector<float>(),
                                         tmopts.data(),
-                                        pfs::Params("quality", (size_t)quality) ) )
+										*tmofileparams ) )
         {
             // File save successful
             printIfVerbose( tr("Image %1 saved successfully").arg(saveLdrFilename) , verbose);

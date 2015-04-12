@@ -36,11 +36,8 @@
 #include "Core/TonemappingOptions.h"
 #include "HdrWizard/HdrCreationManager.h"
 #include "Libpfs/frame.h"
+#include "Libpfs/params.h"
 #include "ezETAProgressBar.hpp"
-
-namespace pfs {
-    class Frame;
-}
 
 class CommandLineInterfaceManager : public QObject
 {
@@ -73,6 +70,7 @@ private:
     void saveHDR();
     void printHelp(char *progname);
     QScopedPointer<TonemappingOptions> tmopts;
+	QScopedPointer<pfs::Params> tmofileparams;
     bool verbose;
     FusionOperatorConfig hdrcreationconfig;
     QString loadHdrFilename;
@@ -81,7 +79,6 @@ private:
 	int oldValue;
 	int maximum;
 	bool started;
-	int quality;
     float threshold;
     QString saveAlignedImagesPrefix;
 

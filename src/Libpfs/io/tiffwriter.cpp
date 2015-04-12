@@ -301,7 +301,10 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     writeCommonHeader(tif, width, height);
     // writeSRGBProfile(tif);
 
-    TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
+    if (params.deflateCompression_)
+    {
+        TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
+    }
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_IEEEFP);
     TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(float));
