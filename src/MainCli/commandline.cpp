@@ -143,6 +143,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
     po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
     tmo_desc.add_options()
         ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
+        ("tmofile", po::value<std::string>(),   tr("SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings").toUtf8().constData())
     ;
 
     po::options_description tmo_fattal(tr(" Fattal").toUtf8().constData());
@@ -320,6 +321,27 @@ int CommandLineInterfaceManager::execCommandLineParams()
             else
             	printErrorAndExit(tr("Error: Unknown tone mapping operator specified."));
         }
+        if (vm.count("tmofile")) {
+        	QString settingFile = QString::fromStdString(vm["tmofile"].as<std::string>());
+			printIfVerbose(QObject::tr("Loading TMO settings from file: %1").arg(settingFile), verbose);
+			try
+			{
+				TonemappingOptions* options = TMOptionsOperations::parseFile(settingFile);
+				if (options != NULL)
+					tmopts.reset(options);
+				else
+					printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!"));
+			}
+			catch (QString error)
+			{
+				printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!: %1").arg(error));
+			}
+			catch (...)
+			{
+				printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!"));
+			}
+        }
+
 
         if (vm.count("load"))
             loadHdrFilename = QString::fromStdString(vm["load"].as<std::string>());
@@ -357,13 +379,6 @@ int CommandLineInterfaceManager::execCommandLineParams()
         }
     }
 
-    if (inputFiles.empty()) {
-        //cmdvisible_options.print(
-        //printString(cmdvisible_options);
-         cout << cmdvisible_options << "\n";
-        return 1;
-    }
-    
     QTimer::singleShot(0, this, SLOT(execCommandLineParamsSlot()));
     return 0;
 }

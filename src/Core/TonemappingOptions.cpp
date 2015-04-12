@@ -418,7 +418,7 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
               file.size()==0)
         {
                 throw (QApplication::tr("ERROR: cannot load Tone Mapping Setting file: ")+fname);
-                return NULL;
+                //return NULL;
         }
 
         TonemappingOptions *toreturn = new TonemappingOptions;
