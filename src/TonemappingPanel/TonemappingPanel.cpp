@@ -65,7 +65,7 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     currentTmoOperator = mantiuk06; // from Qt Designer
 
     // mantiuk06
-    contrastfactorGang = new Gang(m_Ui->contrastFactorSlider,m_Ui->contrastFactordsb,m_Ui->contrastEqualizCheckBox,NULL,NULL, NULL, 0.001f, 1.0f, MANTIUK06_CONTRAST_FACTOR);
+    contrastfactorGang = new Gang(m_Ui->contrastFactorSlider,m_Ui->contrastFactordsb,m_Ui->contrastEqualizCheckBox,NULL,NULL, NULL, 0.01f /*0.001f*/, 1.0f, MANTIUK06_CONTRAST_FACTOR);
 
     connect(contrastfactorGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
     connect(contrastfactorGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
