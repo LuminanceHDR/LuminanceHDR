@@ -272,8 +272,8 @@ const QString TonemappingOptions::getPostfix() {
     return postfix;
 }
 
-const QString TonemappingOptions::getCaption(bool pregamma, QString separator) {
-    QString caption=pregamma ? QString(QObject::tr("PreGamma=%1")).arg(pregamma) + separator : QString();
+const QString TonemappingOptions::getCaption(bool includePregamma, QString separator) {
+    QString caption=includePregamma ? QString(QObject::tr("PreGamma=%1")).arg(pregamma) + separator : QString();
     switch (tmoperator) {
     case mantiuk06: 
         {
