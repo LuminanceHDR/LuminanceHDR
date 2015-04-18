@@ -417,8 +417,33 @@ void BatchTMDialog::start_batch_thread()
             // at least one thread free!
             // start thread
             // I create the thread with NEW, but I let it die on its own, so don't need to store its pointer somewhere
+			QString fileExtension;
+			switch (m_Ui->comboBoxFormat->currentIndex())
+			{
+			case 0:
+				fileExtension = "jpg";
+				break;
+			case 2:
+				fileExtension = "png";
+				break;
+			case 3:
+				fileExtension = "bmp";
+				break;
+			case 4:
+				fileExtension = "ppm";
+				break;
+			case 5:
+				fileExtension = "pbm";
+				break;
+			default:
+			case 1:
+				fileExtension = "tif";
+				break;
+				break;
+			}
+
             BatchTMJob * job_thread = new BatchTMJob(t_id, HDRs_list.at(m_next_hdr_file), &m_tm_options_list, m_Ui->out_folder_widgets->text(),
-				m_Ui->comboBoxFormat->currentText());
+				fileExtension);
 
             // Thread deletes itself when it has done with its job
             connect(job_thread, SIGNAL(finished()),
@@ -556,7 +581,7 @@ void BatchTMDialog::increment_progress_bar(int inc)
 {
 	int progressValue = m_Ui->overallProgressBar->value()+inc;
     m_Ui->overallProgressBar->setValue(progressValue);
-    OsIntegration::getInstance().setProgress(progressValue, m_Ui->overallProgressBar->maximum() - m_Ui->overallProgressBar->minimum());
+    OsIntegration::getInstance().setProgress(progressValue - m_Ui->overallProgressBar->minimum(), m_Ui->overallProgressBar->maximum());
 }
 
 void BatchTMDialog::abort()
