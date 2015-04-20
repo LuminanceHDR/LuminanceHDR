@@ -174,7 +174,7 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
         p.set("deflateCompression", m_deflateCompression); 
         
         FrameWriterPtr writer = FrameWriterFactory::open(
-                    QFile::encodeName(outputFilename).constData());
+				QFile::encodeName(outputFilename).constData(), p);
         writer->write( *currentItem.frame(), p );
 
     }

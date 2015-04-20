@@ -69,7 +69,7 @@ int main(int argc, char** argv)
         t.reset();
         t.start();
 
-        FrameWriterPtr writer = FrameWriterFactory::open(output);
+        FrameWriterPtr writer = FrameWriterFactory::open(output, pfs::Params());
         float minValue = 0.f;
         float maxValue = 1.f;
         if (autoscale)

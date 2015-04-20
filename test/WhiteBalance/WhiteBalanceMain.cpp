@@ -73,7 +73,7 @@ int main( int argc, char ** argv )
 
     whiteBalance(frame, static_cast<WhiteBalanceType>(wbMode));
 
-    FrameWriterPtr writer = FrameWriterFactory::open(outputFile);
+	FrameWriterPtr writer = FrameWriterFactory::open(outputFile, pfs::Params());
     writer->write(frame, Params());
 
     return 0;

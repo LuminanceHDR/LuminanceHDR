@@ -123,7 +123,7 @@ int main(int argc, char** argv)
 
         cout << "Min/Max: " << min << ", " << max << std::endl;
 
-        FrameWriterPtr writer = FrameWriterFactory::open(outputFile);
+		FrameWriterPtr writer = FrameWriterFactory::open(outputFile, pfs::Params());
         writer->write(*newHdr,
                       pfs::Params("mapping_method", MAP_GAMMA2_6)
                       ("min_luminance", min)

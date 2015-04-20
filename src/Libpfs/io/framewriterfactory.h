@@ -39,7 +39,7 @@ public:
     typedef FrameWriterPtr (*FrameWriterCreator)(const std::string& filename);
     typedef std::map<std::string, FrameWriterCreator, utils::StringUnsensitiveComp> FrameWriterCreatorMap;
 
-    static FrameWriterPtr open(const std::string& filename);
+	static FrameWriterPtr open(const std::string& filename, const pfs::Params& params);
 
     static void registerFormat(const std::string& format, FrameWriterCreator creator);
     static size_t numRegisteredFormats();
