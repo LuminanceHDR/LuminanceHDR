@@ -41,12 +41,13 @@
 #include <QImage>
 #include <QScopedPointer>
 
-BatchTMJob::BatchTMJob(int thread_id, const QString &filename, const QList<TonemappingOptions*>* tm_options, const QString &output_folder, const QString &format):
+BatchTMJob::BatchTMJob(int thread_id, const QString &filename, const QList<TonemappingOptions*>* tm_options, const QString &output_folder, const QString &format, pfs::Params params):
         m_thread_id(thread_id),
         m_file_name(filename),
         m_tm_options(tm_options),
         m_output_folder(output_folder),
-		m_ldr_output_format(format)
+		m_ldr_output_format(format),
+		m_params(params)
 {
     //m_ldr_output_format = LuminanceOptions().getBatchTmLdrFormat();
 
@@ -107,7 +108,7 @@ void BatchTMJob::run()
             if ( io_worker.write_ldr_frame(temporary_frame.data(),
                                            output_file_name, QString(),
                                            QVector<float>(), opts,
-                                           pfs::Params("quality", (size_t)opts->quality)) )
+                                           m_params) )
             {
                 emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
             } else {

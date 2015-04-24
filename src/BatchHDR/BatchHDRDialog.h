@@ -33,6 +33,7 @@
 #include "Common/LuminanceOptions.h"
 #include "Common/ProgressHelper.h"
 #include "HdrWizard/HdrCreationManager.h"
+#include "LibpfsAdditions/formathelper.h"
 
 // Forward declaration
 class IOWorker;
@@ -99,5 +100,6 @@ protected:
     QFuture<pfs::Frame*> m_future;
     ProgressHelper m_ph;
     bool m_patches[agGridSize][agGridSize];
+    pfsadditions::FormatHelper m_formatHelper;
 };
 #endif

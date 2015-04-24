@@ -32,6 +32,8 @@
 #include <QString>
 #include <QList>
 
+#include <Libpfs/params.h>
+
 // Forward declaration
 class TonemappingOptions;
 
@@ -40,7 +42,7 @@ class BatchTMJob : public QThread
     Q_OBJECT
 public:
     BatchTMJob(int thread_id, const QString& filename, const QList<TonemappingOptions*>* tm_options,
-               const QString& output_folder, const QString& ldr_output_format);
+               const QString& output_folder, const QString& ldr_output_format, pfs::Params params);
     virtual ~BatchTMJob();
 signals:
     void done(int thread_id);
@@ -57,6 +59,7 @@ private:
     QString         m_output_folder;
     QString         m_output_file_name_base;
     QString         m_ldr_output_format;
+    pfs::Params		m_params;
 };
 
 #endif // BATCHTMJOB_H

@@ -1,4 +1,5 @@
 ADD_SUBDIRECTORY(Libpfs)
+ADD_SUBDIRECTORY(LibpfsAdditions)
 ADD_SUBDIRECTORY(TonemappingOperators)
 ADD_SUBDIRECTORY(HdrCreation)
 

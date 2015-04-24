@@ -96,6 +96,8 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
 
     connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
 
+    m_formatHelper.initConnection(m_Ui->formatComboBox, m_Ui->formatSettingsButton, true);
+
     m_tempDir = m_luminance_options.getTempDir();
     m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput("");
     m_batchHdrOutputDir = m_luminance_options.getBatchHdrPathOutput("");
@@ -416,7 +418,7 @@ void BatchHDRDialog::createHdrFinished()
     QString suffix = m_Ui->formatComboBox->currentText();
     int paddingLength = ceil(log10(m_total + 1.0f));
     QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
-    m_IO_Worker->write_hdr_frame(resultHDR.get(), outName);
+    m_IO_Worker->write_hdr_frame(resultHDR.get(), outName, m_formatHelper.getParams());
     resultHDR.reset();
     
     // DAVIDE _ HDR WIZARD
