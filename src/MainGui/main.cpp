@@ -29,6 +29,7 @@
 #include <QFile>
 #include <QString>
 #include <QStringList>
+#include <QStyleFactory>
 
 #include "Common/global.h"
 #include "Common/config.h"
@@ -110,6 +111,8 @@ int main( int argc, char ** argv )
 
     LuminanceOptions::conditionallyDoUpgrade();
     TranslatorManager::setLanguage(LuminanceOptions().getGuiLang());
+
+	QApplication::setStyle(QStyleFactory::create(LuminanceOptions().getGuiTheme()));
 
     DonationDialog::showDonationDialog();
 

@@ -183,6 +183,15 @@ QString LuminanceOptions::getDatabaseFileName()
     return filename;
 }
 
+QString LuminanceOptions::getGuiTheme()
+{
+    return m_settingHolder->value(KEY_GUI_THEME, "Fusion").toString();
+}
+
+void LuminanceOptions::setGuiTheme(const QString& s)
+{
+    m_settingHolder->setValue(KEY_GUI_THEME, s);
+}
 
 // write system default language the first time around (discard "_country")
 QString LuminanceOptions::getGuiLang()

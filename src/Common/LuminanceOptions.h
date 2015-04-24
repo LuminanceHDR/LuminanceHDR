@@ -149,6 +149,9 @@ public Q_SLOTS:
     void    setRawNoiseReductionThreshold(float);
     // ---
 
+    QString getGuiTheme();
+    void    setGuiTheme(const QString&);
+
     // Language
     // 2-chars ISO 639 language code for Luminance's user interface
     QString getGuiLang();
