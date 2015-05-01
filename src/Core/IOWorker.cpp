@@ -106,7 +106,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
 
     try
     {
-        FrameWriterPtr writer = FrameWriterFactory::open(encodedName.constData());
+        FrameWriterPtr writer = FrameWriterFactory::open(encodedName.constData(), writerParams);
         writer->write(*hdr_frame, writerParams);
     }
     catch (pfs::io::InvalidFile& exInvalid) {
@@ -181,7 +181,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
 
     try
     {
-        FrameWriterPtr writer = FrameWriterFactory::open(encodedName.constData());
+        FrameWriterPtr writer = FrameWriterFactory::open(encodedName.constData(), params);
         writer->write(*ldr_input, params);
     }
     catch (pfs::io::UnsupportedFormat& exUnsupported) {

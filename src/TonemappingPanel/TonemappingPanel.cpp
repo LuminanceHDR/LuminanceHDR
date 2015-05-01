@@ -230,8 +230,6 @@ void TonemappingPanel::createDatabase()
                                   QMessageBox::Ok,QMessageBox::NoButton);
 		return;
 	}
-	qDebug() << "Database opened";
-
 	QSqlQuery query;
 	// Mantiuk 06
 	bool res = query.exec(" CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean NOT NULL, contrastFactor real, saturationFactor real, detailFactor real, pregamma real, comment varchar(150));");

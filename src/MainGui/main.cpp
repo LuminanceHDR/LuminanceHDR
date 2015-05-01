@@ -111,6 +111,9 @@ int main( int argc, char ** argv )
     LuminanceOptions::conditionallyDoUpgrade();
     TranslatorManager::setLanguage(LuminanceOptions().getGuiLang());
 
+
+	LuminanceOptions().applyTheme(true);
+
     DonationDialog::showDonationDialog();
 
     // TODO: create update checker...

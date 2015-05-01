@@ -32,7 +32,16 @@
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
        <layout class="QHBoxLayout" name="_6">
-        <property name="margin">
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
          <number>2</number>
         </property>
         <item>
@@ -137,7 +146,16 @@
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
        <layout class="QHBoxLayout" name="_5">
-        <property name="margin">
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
          <number>2</number>
         </property>
         <item>
@@ -263,173 +281,93 @@
      <property name="title">
       <string>Output</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0,0,0">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Output Image Width:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Output Folder:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QPushButton" name="out_folder_Button">
+        <property name="text">
+         <string>Selec&amp;t...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../icons.qrc">
+          <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="4">
+       <widget class="QLineEdit" name="out_folder_widgets">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QSpinBox" name="spinBox_Width">
+        <property name="suffix">
+         <string> %</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="3">
+       <widget class="QSlider" name="horizontalSlider_Width">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>100</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksBelow</enum>
+        </property>
+        <property name="tickInterval">
+         <number>10</number>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Output Image Width:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSlider" name="horizontalSlider_Width">
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="value">
-               <number>100</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="tickPosition">
-               <enum>QSlider::TicksBelow</enum>
-              </property>
-              <property name="tickInterval">
-               <number>10</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox_Width">
-              <property name="suffix">
-               <string> %</string>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="value">
-               <number>100</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Output Image Quality</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSlider" name="horizontalSlider_Quality">
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="value">
-               <number>100</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="tickPosition">
-               <enum>QSlider::TicksBelow</enum>
-              </property>
-              <property name="tickInterval">
-               <number>10</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox_Quality">
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="value">
-               <number>100</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Output Format:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comboBoxFormat">
-            <item>
-             <property name="text">
-              <string>JPEG</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>TIFF (16 bits)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PNG</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>BMP</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PPM</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PBM</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Output Folder:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="out_folder_widgets">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="out_folder_Button">
-            <property name="text">
-             <string>Selec&amp;t...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Output Format:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBoxFormat"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QToolButton" name="formatSettingsButton">
+        <property name="text">
+         <string notr="true">...</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -440,7 +378,16 @@
       <string>Conversion Log</string>
      </property>
      <layout class="QVBoxLayout" name="_8">
-      <property name="margin">
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
        <number>2</number>
       </property>
       <item>
@@ -617,12 +564,6 @@
   <tabstop>remove_TMOpts_Button</tabstop>
   <tabstop>listWidget_HDRs</tabstop>
   <tabstop>listWidget_TMopts</tabstop>
-  <tabstop>horizontalSlider_Width</tabstop>
-  <tabstop>spinBox_Width</tabstop>
-  <tabstop>horizontalSlider_Quality</tabstop>
-  <tabstop>spinBox_Quality</tabstop>
-  <tabstop>out_folder_widgets</tabstop>
-  <tabstop>out_folder_Button</tabstop>
   <tabstop>filterComboBox</tabstop>
   <tabstop>filterLineEdit</tabstop>
   <tabstop>clearTextToolButton</tabstop>
@@ -634,38 +575,6 @@
   <include location="../../icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>horizontalSlider_Quality</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>spinBox_Quality</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>490</x>
-     <y>266</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>546</x>
-     <y>266</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_Quality</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>horizontalSlider_Quality</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>562</x>
-     <y>268</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>481</x>
-     <y>275</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>horizontalSlider_Width</sender>
    <signal>valueChanged(int)</signal>

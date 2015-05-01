@@ -40,20 +40,35 @@ const static int IMAGE_QUALITY_DEFAULT = 98;
 }
 
 ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
-                                       const QString& fmt, QWidget *parent)
-    : QDialog(parent)
-    , m_frame(frame)
-    , m_format(fmt)
-    , m_ui(new Ui::ImgQualityDialog)
-    , m_options(new LuminanceOptions())
+	const QString& fmt, QWidget *parent)
+	: QDialog(parent)
+	, m_frame(frame)
+	, m_format(fmt)
+	, m_ui(new Ui::ImgQualityDialog)
+	, m_options(new LuminanceOptions())
 {
-    m_ui->setupUi(this);
-    m_ui->spinBox->setValue(m_options->value(IMAGE_QUALITY_KEY, IMAGE_QUALITY_DEFAULT).toInt());
+	m_ui->setupUi(this);
+	if (frame)
+	{
+		m_ui->spinBox->setValue(m_options->value(IMAGE_QUALITY_KEY, IMAGE_QUALITY_DEFAULT).toInt());
+	}
+	else
+	{
+		m_ui->spinBox->setValue(100);
+	}
 
-    connect(m_ui->spinBox, SIGNAL(valueChanged(int)),
-            this, SLOT(reset(int)));
-    connect(m_ui->horizontalSlider, SIGNAL(valueChanged(int)),
-            this, SLOT(reset(int)));
+	if (frame)
+	{
+		connect(m_ui->spinBox, SIGNAL(valueChanged(int)),
+			this, SLOT(reset(int)));
+		connect(m_ui->horizontalSlider, SIGNAL(valueChanged(int)),
+			this, SLOT(reset(int)));
+	}
+	else
+	{
+		m_ui->fileSizePanel->setVisible(false);
+	}
+
 #ifdef Q_OS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
@@ -61,7 +76,10 @@ ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
 
 ImageQualityDialog::~ImageQualityDialog()
 {
-    m_options->setValue(IMAGE_QUALITY_KEY, getQuality());
+	if (m_frame)
+	{
+		m_options->setValue(IMAGE_QUALITY_KEY, getQuality());
+	}
 }
 
 int ImageQualityDialog::getQuality(void) const

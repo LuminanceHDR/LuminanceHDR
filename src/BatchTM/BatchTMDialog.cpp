@@ -78,7 +78,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     connect(m_Ui->filterLineEdit,         SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
     connect(m_Ui->filterComboBox,         SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
 
-    connect(m_Ui->spinBox_Quality,        SIGNAL(valueChanged(int)), this, SLOT(updateQuality(int)));
     connect(m_Ui->spinBox_Width,          SIGNAL(valueChanged(int)), this, SLOT(updateWidth(int)));
 
     full_Log_Model  = new QStringListModel();
@@ -87,6 +86,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     log_filter->setSourceModel(full_Log_Model);
     m_Ui->Log_Widget->setModel(log_filter);
     m_Ui->Log_Widget->setWordWrap(true);
+
+    m_formatHelper.initConnection(m_Ui->comboBoxFormat, m_Ui->formatSettingsButton, false);
 
     m_thread_slot.release(m_max_num_threads);
     m_available_threads = new bool[m_max_num_threads];
@@ -244,7 +245,6 @@ void BatchTMDialog::add_view_model_TM_OPTs(QStringList list)
 
         if (i_th_tm_opt != NULL)
         {
-			i_th_tm_opt->quality = m_Ui->spinBox_Quality->value();
 			i_th_tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 		
             //add to data structure
@@ -417,33 +417,10 @@ void BatchTMDialog::start_batch_thread()
             // at least one thread free!
             // start thread
             // I create the thread with NEW, but I let it die on its own, so don't need to store its pointer somewhere
-			QString fileExtension;
-			switch (m_Ui->comboBoxFormat->currentIndex())
-			{
-			case 0:
-				fileExtension = "jpg";
-				break;
-			case 2:
-				fileExtension = "png";
-				break;
-			case 3:
-				fileExtension = "bmp";
-				break;
-			case 4:
-				fileExtension = "ppm";
-				break;
-			case 5:
-				fileExtension = "pbm";
-				break;
-			default:
-			case 1:
-				fileExtension = "tif";
-				break;
-				break;
-			}
+			QString fileExtension = m_formatHelper.getFileExtension();
 
             BatchTMJob * job_thread = new BatchTMJob(t_id, HDRs_list.at(m_next_hdr_file), &m_tm_options_list, m_Ui->out_folder_widgets->text(),
-				fileExtension);
+				fileExtension, m_formatHelper.getParams());
 
             // Thread deletes itself when it has done with its job
             connect(job_thread, SIGNAL(finished()),
@@ -533,9 +510,8 @@ void BatchTMDialog::init_batch_tm_ui()
     m_Ui->from_Database_Button->setDisabled(true);
     m_Ui->horizontalSlider_Width->setDisabled(true);
     m_Ui->spinBox_Width->setDisabled(true);
-    m_Ui->horizontalSlider_Quality->setDisabled(true);
-    m_Ui->spinBox_Quality->setDisabled(true);
     m_Ui->comboBoxFormat->setDisabled(true);
+    m_Ui->formatSettingsButton->setDisabled(true);
 
     // mouse pointer to busy
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -595,14 +571,6 @@ void BatchTMDialog::abort()
 		this->reject();
 }
 
-void BatchTMDialog::updateQuality(int newQuality)
-{
-	TonemappingOptions *opt;
-	foreach (opt, m_tm_options_list) {
-		opt->quality = newQuality;
-	}
-}
-
 void BatchTMDialog::updateWidth(int newWidth_in_percent)
 {
 	TonemappingOptions *opt;
@@ -630,7 +598,6 @@ void BatchTMDialog::from_database()
 			TonemappingOptions *tm_opt = new TonemappingOptions;
 			if (tmOperator == "ashikhmin") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = ashikhmin;
 				tm_opt->tonemapSelection = false;
@@ -643,7 +610,6 @@ void BatchTMDialog::from_database()
 			}
 			else if (tmOperator == "drago") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = drago;
 				tm_opt->tonemapSelection = false;
@@ -654,7 +620,6 @@ void BatchTMDialog::from_database()
 			}					
 			else if (tmOperator == "durand") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = durand;
 				tm_opt->tonemapSelection = false;
@@ -667,7 +632,6 @@ void BatchTMDialog::from_database()
 			}
 			else if (tmOperator == "fattal") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = fattal;
 				tm_opt->tonemapSelection = false;
@@ -683,7 +647,6 @@ void BatchTMDialog::from_database()
 			}
 			else if (tmOperator == "mantiuk06") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = mantiuk06;
 				tm_opt->tonemapSelection = false;
@@ -697,7 +660,6 @@ void BatchTMDialog::from_database()
 			}
 			else if (tmOperator == "mantiuk08") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = mantiuk08;
 				tm_opt->tonemapSelection = false;
@@ -711,7 +673,6 @@ void BatchTMDialog::from_database()
 			}
 			else if (tmOperator == "pattanaik") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = pattanaik;
 				tm_opt->tonemapSelection = false;
@@ -726,7 +687,6 @@ void BatchTMDialog::from_database()
 			}
 			else if (tmOperator == "reinhard02") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = reinhard02;
 				tm_opt->tonemapSelection = false;
@@ -742,7 +702,6 @@ void BatchTMDialog::from_database()
 			}
 			else if (tmOperator == "reinhard05") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
-				tm_opt->quality = m_Ui->spinBox_Quality->value();
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = reinhard05;
 				tm_opt->tonemapSelection = false;

@@ -14,6 +14,9 @@
    <string>Batch HDR Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_9">
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+   </item>
    <item row="0" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,2,0">
      <item>
@@ -79,9 +82,6 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_4"/>
-   </item>
    <item row="2" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1">
      <item>
@@ -97,10 +97,36 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_7">
         <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_5">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetMinimumSize</enum>
-          </property>
+         <layout class="QGridLayout" name="gridLayout_5" columnstretch="0,1,0" columnminimumwidth="0,1,0">
+          <item row="2" column="0">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="formatComboBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Choose an HDR output file format</string>
+            </property>
+            <property name="currentIndex">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
@@ -108,37 +134,14 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="formatComboBox">
-            <property name="toolTip">
-             <string>Choose an HDR output file format</string>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Output format:</string>
             </property>
-            <property name="currentIndex">
-             <number>1</number>
-            </property>
-            <item>
-             <property name="text">
-              <string>hdr</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>exr</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PFS</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>tiff</string>
-             </property>
-            </item>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="1" column="1" colspan="2">
            <widget class="QComboBox" name="profileComboBox">
             <property name="toolTip">
              <string>Choose one of the creation predefined profiles. 
@@ -179,25 +182,12 @@ See documentation for more information.</string>
             </item>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
+          <item row="0" column="2">
+           <widget class="QToolButton" name="formatSettingsButton">
             <property name="text">
-             <string>Output format:</string>
+             <string notr="true">...</string>
             </property>
            </widget>
-          </item>
-          <item row="2" column="0">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -275,39 +265,6 @@ See documentation for more information.</string>
      </item>
     </layout>
    </item>
-   <item row="5" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Progress</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_6">
-      <item>
-       <widget class="QTextEdit" name="textEdit">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QProgressBar" name="progressBar_2">
-        <property name="value">
-         <number>0</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QProgressBar" name="progressBar">
-        <property name="value">
-         <number>0</number>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
    <item row="6" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
@@ -348,6 +305,111 @@ See documentation for more information.</string>
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Progress</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="QTextEdit" name="textEdit">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar_2">
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBoxIO">
+     <property name="title">
+      <string>Input/Output</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="outputLineEdit">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLineEdit" name="inputLineEdit">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QPushButton" name="selectOutputFolder">
+          <property name="toolTip">
+           <string>Folder where created HDRs are saved</string>
+          </property>
+          <property name="text">
+           <string>Select...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../icons.qrc">
+            <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="selectInputFolder">
+          <property name="toolTip">
+           <string>Folder where bracketed pictures are located (in alphabetical order)</string>
+          </property>
+          <property name="text">
+           <string>Select...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../icons.qrc">
+            <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Input folder:</string>
+          </property>
+          <property name="scaledContents">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Output folder:</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item row="3" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBoxAg">
@@ -455,78 +517,6 @@ See documentation for more information.</string>
           </property>
           <property name="text">
            <string>Auto anti-ghosting</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBoxIO">
-     <property name="title">
-      <string>Input/Output</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_8">
-      <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="outputLineEdit">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLineEdit" name="inputLineEdit">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QPushButton" name="selectOutputFolder">
-          <property name="toolTip">
-           <string>Folder where created HDRs are saved</string>
-          </property>
-          <property name="text">
-           <string>Select...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../icons.qrc">
-            <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QPushButton" name="selectInputFolder">
-          <property name="toolTip">
-           <string>Folder where bracketed pictures are located (in alphabetical order)</string>
-          </property>
-          <property name="text">
-           <string>Select...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../icons.qrc">
-            <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Input folder:</string>
-          </property>
-          <property name="scaledContents">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Output folder:</string>
           </property>
          </widget>
         </item>

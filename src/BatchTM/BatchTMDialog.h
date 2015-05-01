@@ -37,6 +37,8 @@
 #include <QSemaphore> 
 #include <QtGui/QCloseEvent> 
 
+#include "LibpfsAdditions/formathelper.h"
+
 #include "Common/LuminanceOptions.h"
 
 // Forward declaration
@@ -81,7 +83,6 @@ private slots:
 
     void from_database();
 
-    void updateQuality(int);
     void updateWidth(int);
 
 protected:
@@ -130,6 +131,8 @@ private:
     bool        	  m_abort;
     int             m_next_hdr_file;
   
+    pfsadditions::FormatHelper m_formatHelper;
+
     int   get_available_thread_id();
 
     void  init_batch_tm_ui();

@@ -29,6 +29,7 @@
 #include <QWhatsThis>
 #include <QMessageBox>
 #include <QDebug>
+#include <QStyleFactory>
 
 #include <iostream>
 #include <cmath>
@@ -135,6 +136,9 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 	fromGuiIndexToIso639[14]="tr";
     fromGuiIndexToIso639[15]="zh";
 
+
+	m_Ui->themeComboBox->addItems(QStyleFactory::keys());
+
     from_options_to_gui(); //update the gui in order to show the options
     
     toolButtonMapper = new QSignalMapper(this);
@@ -179,6 +183,15 @@ void PreferencesDialog::on_okButton_clicked()
         luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
         TranslatorManager::setLanguage( luminance_options.getGuiLang() );
     }
+
+	if (luminance_options.getGuiTheme() != m_Ui->themeComboBox->currentText() || luminance_options.isGuiDarkMode() != m_Ui->chkDarkMode->isChecked())
+	{
+		if (luminance_options.isGuiDarkMode() != m_Ui->chkDarkMode->isChecked() && !m_Ui->chkDarkMode->isChecked())
+			restartNeeded = true;
+		luminance_options.setGuiTheme(m_Ui->themeComboBox->currentText());
+		luminance_options.setGuiDarkMode(m_Ui->chkDarkMode->isChecked());
+		luminance_options.applyTheme(false);
+	}
 
     luminance_options.setTempDir( m_Ui->lineEditTempPath->text() );
 
@@ -550,6 +563,8 @@ void PreferencesDialog::from_options_to_gui()
         luminance_options.setGuiLang("en");
     }
     m_Ui->languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(luminance_options.getGuiLang()));
+	m_Ui->themeComboBox->setCurrentText(luminance_options.getGuiTheme());
+	m_Ui->chkDarkMode->setChecked(luminance_options.isGuiDarkMode());
 
     // Temp directory
     m_Ui->lineEditTempPath->setText(luminance_options.getTempDir());

@@ -214,7 +214,16 @@
      </property>
      <widget class="QWidget" name="stackedPagesWidgetPage1_2">
       <layout class="QGridLayout" name="gridLayout_12">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item row="0" column="0">
@@ -405,14 +414,14 @@
             </item>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="label_4">
             <property name="text">
              <string>Default Previews Width</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="4" column="1">
            <widget class="QSpinBox" name="previewsWidthSpinBox">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -440,7 +449,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="5" column="1">
            <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
             <property name="text">
              <string>Always show Preview Panel</string>
@@ -450,13 +459,34 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="6" column="1">
            <widget class="QCheckBox" name="chkPortableMode">
             <property name="toolTip">
              <string>Saves the settings along the program files, to be portable</string>
             </property>
             <property name="text">
              <string>Portable mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_21">
+            <item>
+             <widget class="QComboBox" name="themeComboBox"/>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="chkDarkMode">
+              <property name="text">
+               <string>Dark mode (beta)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Theme</string>
             </property>
            </widget>
           </item>
@@ -467,7 +497,16 @@
      </widget>
      <widget class="QWidget" name="stackedPagesWidgetPage3_2">
       <layout class="QGridLayout" name="gridLayout_14">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item row="0" column="0">
@@ -562,7 +601,16 @@
      </widget>
      <widget class="QWidget" name="stackedPagesWidgetPage4_2">
       <layout class="QGridLayout" name="gridLayout_6">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item row="1" column="0">
@@ -1953,7 +2001,16 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="stackedPagesWidgetPage6_2">
       <layout class="QGridLayout" name="gridLayout_5">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item row="0" column="0">
@@ -2099,7 +2156,16 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="stackedPagesWidgetPage5_2">
       <layout class="QGridLayout" name="gridLayout_15">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item row="0" column="0">
