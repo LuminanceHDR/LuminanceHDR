@@ -15,10 +15,10 @@ SET(APPS "\${CMAKE_INSTALL_PREFIX}/${LHDR_OSX_EXECUTABLE_NAME}.app")
 #--------------------------------------------------------------------------------
 # Install needed Qt plugins by copying directories from the qt installation
 # One can cull what gets copied by using 'REGEX "..." EXCLUDE'
-install(DIRECTORY "${QT_PLUGINS_DIR}/sqldrivers"
-        DESTINATION ${plugin_dest_dir} COMPONENT Runtime)
-install(FILES ${LIBS}
-        DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS)
+#install(DIRECTORY "${QT_PLUGINS_DIR}/sqldrivers"
+#        DESTINATION ${plugin_dest_dir} COMPONENT Runtime)
+#install(FILES ${LIBS}
+#        DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS)
 
 # install align_image_stack
 install(FILES ${CMAKE_SOURCE_DIR}/build/macosx/align_image_stack
@@ -48,13 +48,13 @@ install(FILES
 # directories to look for dependencies
 set(DIRS ${QT_LIBRARY_DIRS})
 
-INSTALL(CODE "
-    file(GLOB_RECURSE QTPLUGINS
-      \"\${CMAKE_INSTALL_PREFIX}/${plugin_dest_dir}/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
-    include(BundleUtilities)
-    fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
-    " COMPONENT Runtime)
+#INSTALL(CODE "
+#    file(GLOB_RECURSE QTPLUGINS
+#      \"\${CMAKE_INSTALL_PREFIX}/${plugin_dest_dir}/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
+#    include(BundleUtilities)
+#    fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
+#    " COMPONENT Runtime)
 
 # create drag and drop installer
-set(CPACK_BINARY_DRAGNDROP ON)
-include(CPack)
+#set(CPACK_BINARY_DRAGNDROP ON)
+#include(CPack)
