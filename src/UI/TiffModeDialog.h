@@ -37,7 +37,7 @@ class TiffModeDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit TiffModeDialog(bool hdrMode = false, QWidget *parent = 0);
+    explicit TiffModeDialog(bool hdrMode = false, int defaultValue = -1, QWidget *parent = 0);
     ~TiffModeDialog();
     
     int getTiffWriterMode();

@@ -42,7 +42,7 @@ class ImageQualityDialog : public QDialog
     Q_OBJECT
 
 public:
-    ImageQualityDialog(const pfs::Frame* frame, const QString& fmt, QWidget *parent = 0);
+    ImageQualityDialog(const pfs::Frame* frame, const QString& fmt, int defaultValue = -1, QWidget *parent = 0);
     ~ImageQualityDialog();
 
     int getQuality(void) const;

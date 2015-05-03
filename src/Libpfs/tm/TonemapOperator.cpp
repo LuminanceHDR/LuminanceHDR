@@ -125,16 +125,20 @@ struct TonemapOperatorFattal02
     {
         ph.setMaximum(100);
 
-        float ratio = opts->origxsize / opts->xsize;
         int detail_level = 0;
-        if ( ratio < 2 )
-            detail_level = 3;
-        else if ( ratio < 4 )
-            detail_level = 2;
-        else if ( ratio < 8 )
-            detail_level = 1;
+        if (opts->xsize > 0) {
+            float ratio = opts->origxsize / opts->xsize;
+            if ( ratio < 2 )
+                detail_level = 3;
+            else if ( ratio < 4 )
+                detail_level = 2;
+            else if ( ratio < 8 )
+                detail_level = 1;
+            else
+                detail_level = 0;
+        }
         else
-            detail_level = 0;
+            detail_level = 3;
 
     //    std::cout << "RATIO = " << ratio << ", ";
     //    std::cout << "DETAIL_LEVEL = " << detail_level << std::endl;

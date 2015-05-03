@@ -28,8 +28,13 @@
 #ifdef QT_DEBUG
 #include <QDebug>
 #endif
+#include <QVector>
+#include <QDir>
+
+#include "Core/IOWorker.h"
 
 #include "Libpfs/frame.h"
+#include "Libpfs/params.h"
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/resize.h"
@@ -90,6 +95,64 @@ pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, Tonemappi
 
     emit tonemapSuccess(working_frame, tm_options);
     return working_frame;
+}
+
+void TMWorker::computeTonemapAndExport(/* const */ pfs::Frame* in_frame, TonemappingOptions* tm_options, pfs::Params params, QString exportDir, QString hdrName, QString inputfname, QVector<float> inputExpoTimes)
+{
+    pfs::Frame* working_frame = preprocessFrame(in_frame, tm_options);
+    if (working_frame == NULL) return;
+    try {
+        tonemapFrame(working_frame, tm_options);
+    }
+    catch(...) {
+        emit tonemapFailed("Tonemap failed!");
+        delete working_frame;
+        return;
+    }
+
+    if ( m_Callback->canceled() )
+    {
+        m_Callback->cancel(false);      // double check this
+        delete working_frame;
+        return;
+    }
+
+    postprocessFrame(working_frame, tm_options);
+
+
+    QDir dir(exportDir);
+
+    const QString firstPart = hdrName + "_" + tm_options->getPostfix();
+    QString extension;
+    if (!params.get("fileextension", extension))
+        extension = "tiff";
+    extension = "." + extension;
+
+    QString outputFilename;
+
+    int idx = 1;
+    do
+    {
+        outputFilename = firstPart + (idx > 1 ? "-" + QString::number(idx) : QString()) + extension;
+        idx++;
+    } while(dir.exists(outputFilename));
+
+    IOWorker io_worker;
+
+    if ( io_worker.write_ldr_frame(working_frame,
+                                   dir.filePath(outputFilename), inputfname,
+                                   inputExpoTimes, tm_options,
+                                   params) )
+    {
+        //emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+    } else {
+        //emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+    }
+
+    delete tm_options;
+    //emit tonemapSuccess(working_frame, tm_options);
+    //return working_frame;
+    delete working_frame;
 }
 
 void TMWorker::tonemapFrame(pfs::Frame* working_frame, TonemappingOptions* tm_options)

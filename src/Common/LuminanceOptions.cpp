@@ -41,6 +41,8 @@
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
 
+#define KEY_EXPORT_FILE_PATH "Queue/FilePath"
+
 #ifdef WIN32
 const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = "LuminanceHDR";
 #else
@@ -807,7 +809,7 @@ settings->endGroup();
 QStringList LuminanceOptions::getAlignImageStackOptions()
 {
     return m_settingHolder->value(KEY_EXTERNAL_AIS_OPTIONS,
-                                  QStringList() << "-v" << "-a" << "aligned_").toStringList();
+                                  QStringList() << "-v" << "aligned_").toStringList();
 }
 
 QStringList LuminanceOptions::sanitizeAISparams(QStringList temp_ais_options, bool verbose)
@@ -936,3 +938,27 @@ void LuminanceOptions::setPreviewPanelMode(int mode)
 {
 	m_settingHolder->setValue(KEY_PREVIEW_PANEL_MODE, mode);
 }
+
+void LuminanceOptions::setExportDir(QString dir)
+{
+    m_settingHolder->setValue(KEY_EXPORT_FILE_PATH, dir);
+}
+
+QString LuminanceOptions::getExportDir()
+{
+    QString path = m_settingHolder->value(KEY_EXPORT_FILE_PATH).toString();
+    if (path.isEmpty())
+    {
+        path = QDir::homePath();
+    }
+    else
+    {
+        QDir dir(path);
+        if (!dir.exists())
+        {
+            path = QDir::homePath();
+        }
+    }
+    return path;
+}
+

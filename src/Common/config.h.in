@@ -106,6 +106,8 @@
 #define KEY_COLOR_MONITOR_PROFILE_FILENAME "Color_Management_Options/monitor_profile_filename"
 #define KEY_COLOR_PRINTER_PROFILE_FILENAME "Color_Management_Options/printer_profile_filename"
 
+#define KEY_FILEFORMAT_QUEUE "Queue"
+
 //--------------------PATHS & co. ----------------
 #define KEY_RECENT_FILES "Recent_files_list"
 

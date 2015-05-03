@@ -29,6 +29,8 @@
 #include <QLineEdit>
 #include <QSignalMapper>
 
+#include "LibpfsAdditions/formathelper.h"
+
 namespace Ui
 {
     class PreferencesDialog;
@@ -41,7 +43,7 @@ private:
     QScopedPointer<Ui::PreferencesDialog> m_Ui;
 
 public:
-	PreferencesDialog(QWidget *parent);
+    PreferencesDialog(QWidget *parent, int tab = 0);
 	~PreferencesDialog();
 private:
     void from_options_to_gui();
@@ -50,6 +52,8 @@ private:
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;
 	QSignalMapper* toolButtonMapper;
+    pfsadditions::FormatHelper m_formatHelper;
+
 
 protected:
 	virtual void changeEvent(QEvent* event);
@@ -95,6 +99,8 @@ private Q_SLOTS:
 	void on_red_toolButton_clicked();
 	void on_blue_toolButton_clicked();
 	void on_green_toolButton_clicked();
+
+    void on_exportFileButton_clicked();
 
     void on_camera_pushButton_clicked();
     void on_monitor_pushButton_clicked();

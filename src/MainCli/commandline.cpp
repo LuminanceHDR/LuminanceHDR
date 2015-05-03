@@ -113,8 +113,6 @@ int CommandLineInterfaceManager::execCommandLineParams()
     namespace po = boost::program_options;
     po::variables_map vm;
 
-    bool error = false;
-
     po::options_description desc(tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(argv[0]).toUtf8().constData());
     desc.add_options()
         ("help,h", tr("Display this help.").toUtf8().constData())
@@ -399,7 +397,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
     if (vm.count("input-file"))
     {
         vector<string> options = vm["input-file"].as< vector<string> >();
-        for (int i = 0; i < options.size(); i++)
+        for (int i = 0, size = options.size(); i < size; i++)
         {
             inputFiles << QString::fromStdString(options[i]);
             printIfVerbose( QObject::tr("Input file %1").arg(QString::fromStdString(options[i])) , verbose);

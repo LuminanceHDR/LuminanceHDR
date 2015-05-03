@@ -27,6 +27,10 @@
 #include "UI/TiffModeDialog.h"
 #include <UI/ImageQualityDialog.h>
 
+#define KEY_EXPORT_FORMAT "FileFormats/Format"
+#define KEY_EXPORT_TIFF_MODE "FileFormats/TiffMode"
+#define KEY_EXPORT_QUALITY "FileFormats/Quality"
+
 namespace pfsadditions
 {
 
@@ -34,12 +38,14 @@ FormatHelper::FormatHelper()
 	: QObject()
 	, m_comboBox(NULL)
 	, m_settingsButton(NULL)
+    , m_hdr(false)
 {}
 
 void FormatHelper::initConnection(QComboBox* comboBox, QAbstractButton* settingsButton, bool hdr)
 {
 	m_comboBox = comboBox;
 	m_settingsButton = settingsButton;
+    m_hdr = hdr;
 
 	if (hdr)
 	{
@@ -70,68 +76,80 @@ void FormatHelper::initConnection(QComboBox* comboBox, QAbstractButton* settings
 QString FormatHelper::getFileExtension()
 {
 	int format = m_comboBox->currentData().toInt();
-	switch (format)
-	{
-	case 0:
-		return ("hdr");
-	case 1:
-		return ("exr");
-	case 2:
-		return ("tiff");
-	case 3:
-		return ("pfs");
-	case 20:
-		return ("tiff");
-	case 21:
-		return ("jpg");
-	case 22:
-		return ("png");
-	case 23:
-		return ("bmp");
-	case 24:
-		return ("ppm");
-	case 25:
-		return ("pbm");
-	}
-	return "tiff";
+    return getFileExtensionForFormat(format);
+}
+
+QString FormatHelper::getFileExtensionForFormat(int format)
+{
+    switch (format)
+    {
+    case 0:
+        return ("hdr");
+    case 1:
+        return ("exr");
+    case 2:
+        return ("tiff");
+    case 3:
+        return ("pfs");
+    case 20:
+        return ("tiff");
+    case 21:
+        return ("jpg");
+    case 22:
+        return ("png");
+    case 23:
+        return ("bmp");
+    case 24:
+        return ("ppm");
+    case 25:
+        return ("pbm");
+    }
+    return "tiff";
 }
 
 void FormatHelper::setDefaultParams(int format)
 {
-	m_params = pfs::Params();
-	switch (format)
-	{
-	case 0:
-		m_params.set("format", std::string("hdr"));
-		break;
-	case 1:
-		m_params.set("format", std::string("exr"));
-		break;
-	case 2:
-		m_params.set("format", std::string("tiff"));
-		break;
-	case 3:
-		m_params.set("format", std::string("pfs"));
-		break;
-	case 20:
-		m_params.set("format", std::string("tiff"));
-		break;
-	case 21:
-		m_params.set("format", std::string("jpg"));
-		m_params.set("quality", 100);
-		break;
-	case 22:
-		m_params.set("format", std::string("png"));
-		m_params.set("quality", 100);
-		break;
-	case 23:
-	case 24:
-	case 25:
-		// default params
-		break;
-	default:
-		break;
-	}
+    m_params = getParamsForFormat(format);
+}
+
+pfs::Params FormatHelper::getParamsForFormat(int format)
+{
+    pfs::Params params;
+    switch (format)
+    {
+    case 0:
+        params.set("format", std::string("hdr"));
+        break;
+    case 1:
+        params.set("format", std::string("exr"));
+        break;
+    case 2:
+        params.set("format", std::string("tiff"));
+        break;
+    case 3:
+        params.set("format", std::string("pfs"));
+        break;
+    case 20:
+        params.set("format", std::string("tiff"));
+        break;
+    case 21:
+        params.set("format", std::string("jpg"));
+        params.set("quality", 100);
+        break;
+    case 22:
+        params.set("format", std::string("png"));
+        params.set("quality", 100);
+        break;
+    case 23:
+    case 24:
+    case 25:
+        // default params
+        break;
+    default:
+        break;
+    }
+    params.set("fileextension", getFileExtensionForFormat(format));
+    return params;
 }
 
 void FormatHelper::comboBoxIndexChanged(int idx)
@@ -149,7 +167,11 @@ void FormatHelper::buttonPressed()
 	case 2:
 	case 20:
 	{
-		TiffModeDialog t(format == 2, m_settingsButton);
+        int tiffMode;
+        if (!m_params.get("tiff_mode", tiffMode))
+            tiffMode = -1;
+
+        TiffModeDialog t(format == 2, tiffMode, m_settingsButton);
 		if (t.exec() == QDialog::Accepted)
 		{
 			m_params.set("tiff_mode", t.getTiffWriterMode());
@@ -159,8 +181,12 @@ void FormatHelper::buttonPressed()
 	case 21:
 	case 22:
 	{
+        size_t quality;
+        int qual = -1;
+        if (m_params.get("quality", quality))
+            qual = quality;
 
-		ImageQualityDialog d(NULL, format == 21 ? "png" : "jpg");
+        ImageQualityDialog d(NULL, format == 21 ? "png" : "jpg", qual, m_settingsButton);
 		if (d.exec() == QDialog::Accepted)
 		{
 			size_t quality = d.getQuality();
@@ -191,6 +217,47 @@ pfs::Params FormatHelper::getParams()
 	return m_params;
 }
 
+void FormatHelper::loadFromSettings(const LuminanceOptions& options, QString prefix)
+{
+
+    int format = options.value(prefix + "/" + KEY_EXPORT_FORMAT, m_hdr ? 0 : 20).toInt();
+    m_comboBox->setCurrentIndex(m_comboBox->findData(format));
+    m_params = FormatHelper::getParamsFromSettings(options, prefix, m_hdr);
+}
+
+void FormatHelper::writeSettings(LuminanceOptions& options, QString prefix)
+{
+    options.setValue(prefix + "/" + KEY_EXPORT_FORMAT, m_comboBox->currentData().toInt());
+    int tiffMode;
+    if (m_params.get("tiff_mode", tiffMode))
+    {
+        options.setValue(prefix + "/" + KEY_EXPORT_TIFF_MODE, tiffMode);
+    }
+    size_t quality;
+    if (m_params.get("quality", quality))
+    {
+        int qual = quality;
+        options.setValue(prefix + "/" + KEY_EXPORT_QUALITY, qual);
+    }
+
+}
+
+pfs::Params FormatHelper::getParamsFromSettings(const LuminanceOptions& options, QString prefix, bool hdr)
+{
+    int format = options.value(prefix + "/" + KEY_EXPORT_FORMAT, hdr ? 0 : 20).toInt();
+    pfs::Params params = FormatHelper::getParamsForFormat(format);
+
+    int tiffMode = options.value(prefix + "/" + KEY_EXPORT_TIFF_MODE, -1).toInt();
+    if (tiffMode >= 0)
+        params.set("tiff_mode", tiffMode);
+    int quality = options.value(prefix + "/" + KEY_EXPORT_QUALITY, -1).toInt();
+    if (quality >= 0)
+    {
+        size_t qual = quality;
+        params.set("quality", qual);
+    }
+    return params;
+}
 
 
 }

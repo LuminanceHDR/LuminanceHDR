@@ -29,6 +29,8 @@
 #include <QObject>
 #include <QString>
 
+#include "Libpfs/params.h"
+
 // Forward declaration
 namespace pfs {
     class Frame;
@@ -51,6 +53,8 @@ public Q_SLOTS:
     //!  and then returns it
     //!
     pfs::Frame* computeTonemap(/* const */pfs::Frame*, TonemappingOptions*);
+
+    void computeTonemapAndExport(/* const */pfs::Frame*, TonemappingOptions*, pfs::Params, QString exportDir, QString hdrName, QString inputfname, QVector<float> inputExpoTimes);
 
     //!
     //! This function tonemap the input frame

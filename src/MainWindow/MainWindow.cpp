@@ -98,6 +98,7 @@
 #include "TonemappingPanel/TMOProgressIndicator.h"
 #include "HdrWizard/AutoAntighosting.h"
 #include "HdrWizard/WhiteBalance.h"
+#include "LibpfsAdditions/formathelper.h"
 
 namespace
 {
@@ -253,6 +254,7 @@ void MainWindow::init()
         qRegisterMetaType<GenericViewer*>("GenericViewer*");
         qRegisterMetaType<QVector<float> >("QVector<float>");
         qRegisterMetaType<pfs::Params>("pfs::Params");
+        qRegisterMetaType<pfs::Params*>("pfs::Params*");
     }
 
     createUI();
@@ -333,6 +335,7 @@ void MainWindow::createCentralWidget()
     m_PreviewscrollArea->setWidget(m_PreviewPanel);
 
     m_centralwidget_splitter->addWidget(m_PreviewscrollArea);
+    m_centralwidget_splitter->setCollapsible(2, false);
 
     if (luminance_options->getPreviewPanelMode()) {
         showPreviewsOnTheBottom();
@@ -345,6 +348,7 @@ void MainWindow::createCentralWidget()
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateSoftProofing(int)));
     connect(m_tonemapPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+    connect(m_tonemapPanel, SIGNAL(startExport(TonemappingOptions*)), this, SLOT(exportImage(TonemappingOptions*)));
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_tonemapPanel, SLOT(updatedHDR(pfs::Frame*)));
     connect(this, SIGNAL(destroyed()), m_PreviewPanel, SLOT(deleteLater()));
 
@@ -580,7 +584,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
         pfs::Params p;
         if ( format == "tif" || format == "tiff" )
         {
-            TiffModeDialog t(true, this);
+            TiffModeDialog t(true, -1, this);
             if ( t.exec() == QDialog::Rejected ) return;
 
             p.set("tiff_mode", t.getTiffWriterMode());
@@ -616,7 +620,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
         pfs::Params p;
         if ( format == "png" || format == "jpg" )
         {
-            ImageQualityDialog savedFileQuality(l_v->getFrame(), format, this);
+            ImageQualityDialog savedFileQuality(l_v->getFrame(), format, -1, this);
             savedFileQuality.setWindowTitle( QObject::tr("Save as...") + format.toUpper() );
             if ( savedFileQuality.exec() == QDialog::Rejected ) return;
 
@@ -625,7 +629,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         if ( format == "tif" || format == "tiff" )
         {
-            TiffModeDialog t(false, this);
+            TiffModeDialog t(false, -1, this);
             if ( t.exec() == QDialog::Rejected ) return;
 
             p.set("tiff_mode", t.getTiffWriterMode());
@@ -1094,7 +1098,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
             // it doesn't exist on the file system, so I have just got back a
             // file from some creational operation (new hdr, crop...)
 
-            newhdr->setFileName(QString("untitled"));
+            newhdr->setFileName(QString(tr("Untitled")));
             m_tabwidget->addTab(newhdr, QString(new_fname).prepend("(*) "));
 
             setMainWindowModified(true);
@@ -1539,6 +1543,33 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     }
 }
 
+void MainWindow::exportImage(TonemappingOptions *opts)
+{
+    HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame);
+    if ( hdr_viewer )
+    {
+        Params params = pfsadditions::FormatHelper::getParamsFromSettings(*luminance_options, KEY_FILEFORMAT_QUEUE, false);
+        QString hdrName = QFileInfo(getCurrentHDRName()).baseName();
+
+        QString inputfname;
+        if ( ! m_inputFilesName.isEmpty() )
+            inputfname = m_inputFilesName.first();
+
+        QString exportDir = luminance_options->getExportDir();
+
+        QMetaObject::invokeMethod(m_TMWorker, "computeTonemapAndExport", Qt::DirectConnection,
+                                  Q_ARG(pfs::Frame*, hdr_viewer->getFrame()),
+                                  Q_ARG(TonemappingOptions*,opts),
+                                  Q_ARG(pfs::Params,params),
+                                  Q_ARG(QString, exportDir),
+                                  Q_ARG(QString, hdrName),
+                                  Q_ARG(QString, inputfname),
+                                  Q_ARG(QVector<float>, m_inputExpoTimes)
+                              );
+    }
+}
+
+
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
     GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
@@ -1736,7 +1767,7 @@ QString MainWindow::getCurrentHDRName()
     }
     else
     {
-        return QString("Untitled HDR");
+        return QString(tr("Untitled HDR"));
     }
 }
 

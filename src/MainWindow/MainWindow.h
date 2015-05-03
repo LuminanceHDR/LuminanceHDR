@@ -182,6 +182,7 @@ protected Q_SLOTS:
     void tonemapBegin();
     void tonemapEnd();
     void tonemapImage(TonemappingOptions *opts);
+    void exportImage(TonemappingOptions *opts);
     void addLdrFrame(pfs::Frame*, TonemappingOptions*);
     //void addLDRResult(QImage*, quint16*);
     void tonemapFailed(const QString&);

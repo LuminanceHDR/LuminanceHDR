@@ -96,7 +96,7 @@ protected:
     TonemappingOptions *toneMappingOptions;
 	QList<TonemappingOptions *> toneMappingOptionsToDelete;
     QVector<int> sizes;
-    void fillToneMappingOptions();
+    void fillToneMappingOptions(bool exportMode);
     void setupUndo();
     void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
     //QString recentPathLoadSaveTmoSettings;
@@ -122,6 +122,7 @@ protected Q_SLOTS:
     void on_redoButton_clicked();
     void on_savesettingsbutton_clicked();
     void on_loadsettingsbutton_clicked();
+    void on_queueButton_clicked();
     //APPLY tmo settings from text file
     void fromTxt2Gui();
     //user wants a custom size.
@@ -159,6 +160,7 @@ public Q_SLOTS:
 
 signals:
     void startTonemapping(TonemappingOptions*);
+    void startExport(TonemappingOptions*);
 
 private:
     void onUndoRedo(bool undo);

@@ -40,7 +40,7 @@ const static int IMAGE_QUALITY_DEFAULT = 98;
 }
 
 ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
-	const QString& fmt, QWidget *parent)
+    const QString& fmt, int defaultValue, QWidget *parent)
 	: QDialog(parent)
 	, m_frame(frame)
 	, m_format(fmt)
@@ -48,7 +48,11 @@ ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
 	, m_options(new LuminanceOptions())
 {
 	m_ui->setupUi(this);
-	if (frame)
+    if (defaultValue >= 0)
+    {
+        m_ui->spinBox->setValue(defaultValue);
+    }
+    else if (frame)
 	{
 		m_ui->spinBox->setValue(m_options->value(IMAGE_QUALITY_KEY, IMAGE_QUALITY_DEFAULT).toInt());
 	}

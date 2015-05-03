@@ -232,6 +232,11 @@ public Q_SLOTS:
     int     getPreviewPanelMode();
     void    setPreviewPanelMode(int);
 
+    // Queue
+    QString getExportDir();
+    void setExportDir(QString dir);
+
+
 private:
     void initSettings();
     QSettings* m_settingHolder;

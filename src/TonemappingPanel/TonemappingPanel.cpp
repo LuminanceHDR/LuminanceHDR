@@ -399,17 +399,25 @@ void TonemappingPanel::on_pregammadefault_clicked()
 
 void TonemappingPanel::on_applyButton_clicked()
 {
-    fillToneMappingOptions();
+    fillToneMappingOptions(false);
     setupUndo();
 
     emit startTonemapping(toneMappingOptions);
 }
 
-void TonemappingPanel::fillToneMappingOptions()
+void TonemappingPanel::on_queueButton_clicked()
+{
+    fillToneMappingOptions(true);
+    //setupUndo();
+
+    emit startExport(toneMappingOptions);
+}
+
+void TonemappingPanel::fillToneMappingOptions(bool exportMode)
 {
 	toneMappingOptions = new TonemappingOptions;
 	toneMappingOptionsToDelete.push_back(toneMappingOptions);
-    if (sizes.size())
+    if (!exportMode && sizes.size())
     {
         toneMappingOptions->origxsize = sizes[0];
         toneMappingOptions->xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
@@ -954,6 +962,7 @@ void TonemappingPanel::setEnabled(bool b)
 
     // Tonemap
     m_Ui->applyButton->setEnabled(b);
+    m_Ui->queueButton->setEnabled(b);
 
 	// DB
     m_Ui->loadButton->setEnabled(b);
@@ -1507,7 +1516,7 @@ void TonemappingPanel::updatePreviews(double v)
 {
     int index = m_Ui->stackedWidget_operators->currentIndex();
     TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
-    fillToneMappingOptions();
+    fillToneMappingOptions(false);
     QObject* eventSender(sender());
     // Mantiuk06
     if (eventSender == m_Ui->contrastFactordsb)
@@ -1584,7 +1593,7 @@ void TonemappingPanel::updatePreviewsCB(int state)
 {
     int index = m_Ui->stackedWidget_operators->currentIndex();
     TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
-    fillToneMappingOptions();
+    fillToneMappingOptions(false);
     QObject* eventSender(sender());
     // Mantiuk06
     if (eventSender == m_Ui->contrastEqualizCheckBox)
@@ -1618,7 +1627,7 @@ void TonemappingPanel::updatePreviewsRB(bool toggled)
 {
     int index = m_Ui->stackedWidget_operators->currentIndex();
     TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
-    fillToneMappingOptions();
+    fillToneMappingOptions(false);
 
     // Only one sender: Ashikhmin
     tmopts->operator_options.ashikhminoptions.eq2 = toggled;
@@ -1633,7 +1642,7 @@ void TonemappingPanel::updatePreviewsRB(bool toggled)
 void TonemappingPanel::setRealtimePreviews(bool toggled)
 {
     if (toggled) {
-        fillToneMappingOptions();
+        fillToneMappingOptions(false);
 
         connect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));

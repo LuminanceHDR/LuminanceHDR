@@ -40,6 +40,7 @@
 #include "Common/TranslatorManager.h"
 #include "Preferences/PreferencesDialog.h"
 
+
 // UI
 #include "ui_PreferencesDialog.h"
 
@@ -82,7 +83,7 @@ inline int value2pos(double value, int minpos, int maxpos, double minv, double m
 
 }
 
-PreferencesDialog::PreferencesDialog(QWidget *p):
+PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
     QDialog(p),
     m_Ui(new Ui::PreferencesDialog)
 {
@@ -139,6 +140,9 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 
 	m_Ui->themeComboBox->addItems(QStyleFactory::keys());
 
+    m_formatHelper.initConnection(m_Ui->exportFormatCombo, m_Ui->exportFormatToolbutton, false);
+
+
     from_options_to_gui(); //update the gui in order to show the options
     
     toolButtonMapper = new QSignalMapper(this);
@@ -146,6 +150,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 
     QObject* tabEntries[] = {
         m_Ui->toolButtonInterface,
+        m_Ui->toolButtonQueue,
         m_Ui->toolButtonTM,
         m_Ui->toolButtonRAW,
         m_Ui->toolButtonCMS,
@@ -156,6 +161,8 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
     	toolButtonMapper->setMapping(tabEntries[i], i);
     	connect(tabEntries[i], SIGNAL(clicked()), toolButtonMapper, SLOT(map()));
     }
+
+    toolButton_clicked(tab);
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -272,6 +279,9 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setValue(KEY_RED_TOOLBUTTON, m_Ui->red_toolButton->isEnabled());
     luminance_options.setValue(KEY_BLUE_TOOLBUTTON, m_Ui->blue_toolButton->isEnabled());
     luminance_options.setValue(KEY_GREEN_TOOLBUTTON, m_Ui->green_toolButton->isEnabled());
+
+    luminance_options.setExportDir(m_Ui->exportDirectoryEdit->text());
+    m_formatHelper.writeSettings(luminance_options, KEY_FILEFORMAT_QUEUE);
 
     if (restartNeeded)
     {
@@ -674,6 +684,9 @@ void PreferencesDialog::from_options_to_gui()
 	m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
 	m_Ui->monitor_lineEdit->setText( luminance_options.getMonitorProfileFileName() );
 	m_Ui->printer_lineEdit->setText( luminance_options.getPrinterProfileFileName() );
+
+    m_Ui->exportDirectoryEdit->setText( luminance_options.getExportDir() );
+    m_formatHelper.loadFromSettings(luminance_options, KEY_FILEFORMAT_QUEUE);
 }
 
 void PreferencesDialog::on_chooseCachePathButton_clicked()
@@ -717,4 +730,17 @@ void PreferencesDialog::openColorProfile(QLineEdit* lineEdit)
 	);
 	if (!fileName.isEmpty())
 		lineEdit->setText(fileName);
+}
+
+void PreferencesDialog::on_exportFileButton_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this,
+        tr("Choose a directory"),
+        QDir::homePath(),
+        QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks
+    );
+    if (!dir.isEmpty())
+    {
+        m_Ui->exportDirectoryEdit->setText(dir);
+    }
 }

@@ -30,6 +30,7 @@
 #include <QMetaObject>
 #include <QComboBox>
 #include <QAbstractButton>
+#include "Common/LuminanceOptions.h"
 
 #include <Libpfs/params.h>
 
@@ -50,9 +51,18 @@ namespace pfsadditions
 		pfs::Params getParams();
 		QString getFileExtension();
 
+        void loadFromSettings(const LuminanceOptions& options, QString prefix);
+        void writeSettings(LuminanceOptions& options, QString prefix);
+
+        static pfs::Params getParamsFromSettings(const LuminanceOptions& options, QString prefix, bool hdr);
+
 	protected:
 		void setDefaultParams(int format);
-		void updateButton(int format);
+
+        void updateButton(int format);
+
+        static pfs::Params getParamsForFormat(int format);
+        static QString getFileExtensionForFormat(int format);
 
 	protected slots:
 		void comboBoxIndexChanged(int idx);
@@ -63,6 +73,7 @@ namespace pfsadditions
 		QComboBox* m_comboBox;
 		QAbstractButton* m_settingsButton;
 		pfs::Params m_params;
+        bool m_hdr;
 	
 };
 
