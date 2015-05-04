@@ -416,7 +416,10 @@ void TonemappingPanel::on_queueButton_clicked()
 void TonemappingPanel::fillToneMappingOptions(bool exportMode)
 {
 	toneMappingOptions = new TonemappingOptions;
-	toneMappingOptionsToDelete.push_back(toneMappingOptions);
+    if (!exportMode)
+    {
+        toneMappingOptionsToDelete.push_back(toneMappingOptions);
+    }
     if (!exportMode && sizes.size())
     {
         toneMappingOptions->origxsize = sizes[0];
