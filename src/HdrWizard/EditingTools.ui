@@ -59,7 +59,16 @@
               <property name="spacing">
                <number>3</number>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>6</number>
+              </property>
+              <property name="topMargin">
+               <number>6</number>
+              </property>
+              <property name="rightMargin">
+               <number>6</number>
+              </property>
+              <property name="bottomMargin">
                <number>6</number>
               </property>
               <item>
@@ -67,7 +76,16 @@
                 <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
@@ -98,7 +116,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
+                    <normaloff>:/new/svgs/images/zoom-fit-best.svgz</normaloff>:/new/svgs/images/zoom-fit-best.svgz</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -132,7 +150,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
+                    <normaloff>:/new/svgs/images/page-zoom.svgz</normaloff>:/new/svgs/images/page-zoom.svgz</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -163,7 +181,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/viewmag1.png</normaloff>:/new/prefix1/images/viewmag1.png</iconset>
+                    <normaloff>:/new/svgs/images/zoom-original.svgz</normaloff>:/new/svgs/images/zoom-original.svgz</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -199,7 +217,16 @@
                 <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
@@ -310,7 +337,16 @@
               <property name="spacing">
                <number>1</number>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>3</number>
+              </property>
+              <property name="topMargin">
+               <number>3</number>
+              </property>
+              <property name="rightMargin">
+               <number>3</number>
+              </property>
+              <property name="bottomMargin">
                <number>3</number>
               </property>
               <item>
@@ -318,7 +354,16 @@
                 <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
@@ -367,7 +412,16 @@ This image's histogram is diplayed in the widget above.</string>
                 <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
@@ -443,7 +497,16 @@ This image's histogram is diplayed in the widget above.</string>
                 <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
@@ -686,7 +749,16 @@ p, li { white-space: pre-wrap; }
               <property name="spacing">
                <number>6</number>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -881,7 +953,16 @@ p, li { white-space: pre-wrap; }
                           <property name="spacing">
                            <number>6</number>
                           </property>
-                          <property name="margin">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
                            <number>0</number>
                           </property>
                           <item>
@@ -937,7 +1018,16 @@ p, li { white-space: pre-wrap; }
                         </item>
                         <item>
                          <layout class="QGridLayout">
-                          <property name="margin">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
                            <number>0</number>
                           </property>
                           <property name="spacing">
@@ -1264,7 +1354,16 @@ p, li { white-space: pre-wrap; }
               <property name="spacing">
                <number>9</number>
               </property>
-              <property name="margin">
+              <property name="leftMargin">
+               <number>5</number>
+              </property>
+              <property name="topMargin">
+               <number>5</number>
+              </property>
+              <property name="rightMargin">
+               <number>5</number>
+              </property>
+              <property name="bottomMargin">
                <number>5</number>
               </property>
               <item>
@@ -1272,7 +1371,16 @@ p, li { white-space: pre-wrap; }
                 <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
@@ -1312,7 +1420,16 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <layout class="QGridLayout">
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <property name="spacing">
@@ -1380,7 +1497,16 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <layout class="QGridLayout">
-                <property name="margin">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <property name="spacing">
@@ -1472,7 +1598,16 @@ p, li { white-space: pre-wrap; }
        <property name="spacing">
         <number>6</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>

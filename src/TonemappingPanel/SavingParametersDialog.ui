@@ -5,32 +5,6 @@
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>650</width>
-    <height>120</height>
-   </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>650</width>
-    <height>120</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>650</width>
-    <height>120</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Saving Parameters</string>
   </property>
@@ -45,7 +19,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="comment"/>
+      <widget class="QLineEdit" name="comment">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>3</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">

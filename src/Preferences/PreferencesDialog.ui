@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>933</width>
-    <height>641</height>
+    <width>751</width>
+    <height>539</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -116,7 +116,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/cms.png</normaloff>:/new/prefix1/images/cms.png</iconset>
+         <normaloff>:/new/svgs/images/application-vnd.iccprofile.svgz</normaloff>:/new/svgs/images/application-vnd.iccprofile.svgz</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -145,7 +145,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/gear.png</normaloff>:/new/prefix1/images/gear.png</iconset>
+         <normaloff>:/new/svgs/images/preferences-other.svgz</normaloff>:/new/svgs/images/preferences-other.svgz</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -174,7 +174,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/preferences-desktop-theme.png</normaloff>:/new/prefix1/images/preferences-desktop-theme.png</iconset>
+         <normaloff>:/new/svgs/images/preferences-desktop-theme.svgz</normaloff>:/new/svgs/images/preferences-desktop-theme.svgz</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -206,7 +206,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/running_process.png</normaloff>:/new/prefix1/images/running_process.png</iconset>
+         <normaloff>:/new/svgs/images/folder-image.svgz</normaloff>:/new/svgs/images/folder-image.svgz</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -242,7 +242,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="stackedPagesWidgetPage1_2">
       <layout class="QGridLayout" name="gridLayout_12">
@@ -528,7 +528,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="page">
-      <layout class="QGridLayout" name="gridLayout_7" columnstretch="0,0">
+      <layout class="QGridLayout" name="gridLayout_7" columnstretch="0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -546,7 +546,7 @@
          <property name="title">
           <string notr="true"/>
          </property>
-         <layout class="QGridLayout" name="gridLayout_8" columnstretch="0,0,0,1,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_8" columnstretch="0,0,0,1,0">
           <item row="1" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
@@ -577,17 +577,6 @@
             </property>
            </spacer>
           </item>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="exportFileButton">
-            <property name="text">
-             <string>&amp;Browse...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="exportFormatCombo"/>
           </item>
@@ -602,6 +591,20 @@
            <widget class="QLineEdit" name="exportDirectoryEdit">
             <property name="readOnly">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QToolButton" name="exportFileButton">
+            <property name="text">
+             <string>&amp;Browse...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
             </property>
            </widget>
           </item>
@@ -685,8 +688,15 @@
             </property>
            </spacer>
           </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QLineEdit" name="lineEditTempPath">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="3">
-           <widget class="QPushButton" name="chooseCachePathButton">
+           <widget class="QToolButton" name="chooseCachePathButton">
             <property name="text">
              <string>&amp;Browse...</string>
             </property>
@@ -694,12 +704,8 @@
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QLineEdit" name="lineEditTempPath">
-            <property name="readOnly">
-             <bool>true</bool>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
             </property>
            </widget>
           </item>
@@ -2124,139 +2130,140 @@ p, li { white-space: pre-wrap; }
        </property>
        <item row="0" column="0">
         <widget class="QGroupBox" name="iccGroupBox">
-         <layout class="QFormLayout" name="formLayout_6">
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_15">
-            <item>
-             <widget class="QLabel" name="label_12">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="../../icons.qrc">:/new/prefix1/images/video-television.png</pixmap>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_13">
-              <property name="text">
-               <string>Monitor Profile</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="3">
+           <widget class="QToolButton" name="monitor_toolButton">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QToolButton" name="printer_toolButton">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QToolButton" name="camera_toolButton">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="camera_lineEdit">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="printer_lineEdit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../../icons.qrc">:/new/prefix1/images/printer.png</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_21">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Camera profile</string>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_14">
-            <item>
-             <widget class="QLineEdit" name="monitor_lineEdit"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="monitor_pushButton">
-              <property name="text">
-               <string>Browse...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../icons.qrc">
-                <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Monitor Profile</string>
+            </property>
+           </widget>
           </item>
-          <item row="1" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_16">
-            <item>
-             <widget class="QLabel" name="label_17">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="../../icons.qrc">:/new/prefix1/images/camera-photo.png</pixmap>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_21">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Camera profile</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Printer profile</string>
+            </property>
+           </widget>
           </item>
-          <item row="1" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_17">
-            <item>
-             <widget class="QLineEdit" name="camera_lineEdit">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="camera_pushButton">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Browse...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../icons.qrc">
-                <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../../icons.qrc">:/new/prefix1/images/camera-photo.png</pixmap>
+            </property>
+           </widget>
           </item>
-          <item row="2" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_18">
-            <item>
-             <widget class="QLabel" name="label_15">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap resource="../../icons.qrc">:/new/prefix1/images/printer.png</pixmap>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_16">
-              <property name="text">
-               <string>Printer profile</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+          <item row="0" column="2">
+           <widget class="QLineEdit" name="monitor_lineEdit"/>
           </item>
-          <item row="2" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_19">
-            <item>
-             <widget class="QLineEdit" name="printer_lineEdit"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="printer_pushButton">
-              <property name="text">
-               <string>Browse...</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../../icons.qrc">
-                <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../../icons.qrc">:/new/prefix1/images/video-television.png</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>

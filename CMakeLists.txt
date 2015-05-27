@@ -27,6 +27,7 @@ find_package(Qt5WebKit REQUIRED)
 find_package(Qt5WebKitWidgets REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5Sql REQUIRED)
+find_package(Qt5Svg REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
@@ -278,7 +279,7 @@ ELSEIF(WIN32)
     ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
   
-    qt5_use_modules(luminance-hdr Core Gui Widgets WinExtras)
+    qt5_use_modules(luminance-hdr Core Gui Widgets WinExtras Svg)
     qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 
     # Link libraries

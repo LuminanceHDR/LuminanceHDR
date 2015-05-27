@@ -156,7 +156,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
         m_Ui->toolButtonCMS,
         m_Ui->toolButtonExtTool
     };
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 6; i++)
     {
     	toolButtonMapper->setMapping(tabEntries[i], i);
     	connect(tabEntries[i], SIGNAL(clicked()), toolButtonMapper, SLOT(map()));

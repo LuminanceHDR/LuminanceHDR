@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -435,7 +435,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/viewmag1.png</normaloff>:/new/prefix1/images/viewmag1.png</iconset>
+     <normaloff>:/new/svgs/images/zoom-original.svgz</normaloff>:/new/svgs/images/zoom-original.svgz</iconset>
    </property>
    <property name="text">
     <string>&amp;Normal Size</string>
@@ -462,7 +462,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/viewmag_inc.png</normaloff>:/new/prefix1/images/viewmag_inc.png</iconset>
+     <normaloff>:/new/svgs/images/zoom-in.svgz</normaloff>:/new/svgs/images/zoom-in.svgz</iconset>
    </property>
    <property name="text">
     <string>Zoom &amp;In</string>
@@ -486,7 +486,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/viewmag_dec.png</normaloff>:/new/prefix1/images/viewmag_dec.png</iconset>
+     <normaloff>:/new/svgs/images/zoom-out.svgz</normaloff>:/new/svgs/images/zoom-out.svgz</iconset>
    </property>
    <property name="text">
     <string>Zoom &amp;Out</string>
@@ -516,7 +516,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
+     <normaloff>:/new/svgs/images/zoom-fit-best.svgz</normaloff>:/new/svgs/images/zoom-fit-best.svgz</iconset>
    </property>
    <property name="text">
     <string>&amp;Fit in Window</string>
@@ -660,7 +660,7 @@
   </action>
   <action name="actionBatch_Tone_Mapping">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
+    <iconset>
      <normaloff>:/new/prefix1/images/running_process.png</normaloff>:/new/prefix1/images/running_process.png</iconset>
    </property>
    <property name="text">
@@ -927,7 +927,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
+     <normaloff>:/new/svgs/images/page-zoom.svgz</normaloff>:/new/svgs/images/page-zoom.svgz</iconset>
    </property>
    <property name="text">
     <string>Fill Window</string>
@@ -938,7 +938,7 @@
   </action>
   <action name="actionBatch_HDR">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
+    <iconset>
      <normaloff>:/new/prefix1/images/running_process.png</normaloff>:/new/prefix1/images/running_process.png</iconset>
    </property>
    <property name="text">

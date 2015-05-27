@@ -1,119 +1,123 @@
 <RCC>
-  <qresource prefix="/new/prefix1">
-    <file>images/flags/BRA0001.PNG</file>
-    <file>images/vcs-update-required.png</file>
-    <file>images/flags/DK.PNG</file>
-    <file>images/button_add.png</file>
-    <file>images/button_del.png</file>
-    <file>images/raw.png</file>
-    <file>images/add.png</file>
-    <file>images/appearance.png</file>
-    <file>images/apply.png</file>
-    <file>images/back.png</file>
-    <file>images/copyexif.png</file>
-    <file>images/cancel.png</file>
-    <file>images/crop.png</file>
-    <file>images/downarrow.png</file>
-    <file>images/draganddrop.png</file>
-    <file>images/exit.png</file>
-    <file>images/fileclose.png</file>
-    <file>images/fileopen.png</file>
-    <file>images/filesave.png</file>
-    <file>images/filesaveall.png</file>
-    <file>images/forward.png</file>
-    <file>images/ghost_32x32.png</file>
-    <file>images/help.png</file>
-    <file>images/histogram.png</file>
-    <file>images/home.png</file>
-    <file>images/language-selector.png</file>
-    <file>images/move.png</file>
-    <file>images/newfile.png</file>
-    <file>images/options.png</file>
-    <file>images/orange_apply.png</file>
-    <file>images/luminance-hdr.png</file>
-    <file>images/raw_import.png</file>
-    <file>images/remove.png</file>
-    <file>images/rotate_left.png</file>
-    <file>images/rotate_right.png</file>
-    <file>images/scale.png</file>
-    <file>images/tonemap.png</file>
-    <file>images/undo.png</file>
-    <file>images/uparrow.png</file>
-    <file>images/viewmag1.png</file>
-    <file>images/viewmag_dec.png</file>
-    <file>images/viewmag_inc.png</file>
-    <file>images/viewmagfit.png</file>
-    <file>images/whatsthis.png</file>
-    <file>images/games-config-background.png</file>
-    <file>images/lock-on.png</file>
-    <file>images/lock-off.png</file>
-    <file>images/edit-undo.png</file>
-    <file>images/edit-redo.png</file>
-    <file>images/system-run.png</file>
-    <file>images/zoom-in.png</file>
-    <file>images/zoom-original.png</file>
-    <file>images/zoom-out.png</file>
-    <file>images/gear.png</file>
-    <file>images/raw-icon.png</file>
-    <file>images/HDR_icon.png</file>
-    <file>images/preferences-desktop-theme.png</file>
-    <file>images/rawconverter.png</file>
-    <file>images/list-add.png</file>
-    <file>images/list-remove.png</file>
-    <file>images/edit-clear-list.png</file>
-    <file>images/cms.png</file>
-    <file>images/camera-photo.png</file>
-    <file>images/video-television.png</file>
-    <file>images/printer.png</file>
-    <file>images/gamut_48x48.png</file>
-    <file>images/document-print-preview.png</file>
-    <file>images/vcs_add.png</file>
-    <file>images/vcs_commit.png</file>
-    <file>images/vcs_update.png</file>
-    <file>images/gimp-lasso.png</file>
-    <file>images/brush_icon.png</file>
-    <file>images/running_process.png</file>
-    <file>images/preview_white_balance.png</file>
-    <file>images/applications-astronomy.png</file>
-    <file>images/perspective.png</file>
-    <file>images/tool_rect_selection.png</file>
-    <file>images/telescope.png</file>
-    <file>images/Galaxy-icon.png</file>
-    <file>images/flags/CHIN0001.PNG</file>
-    <file>images/flags/CZEC0001.PNG</file>
-    <file>images/flags/FINL0001.PNG</file>
-    <file>images/flags/FRAN0001.PNG</file>
-    <file>images/flags/GERM0001.PNG</file>
-    <file>images/flags/HUNG0001.PNG</file>
-    <file>images/flags/INDA0001.PNG</file>
-    <file>images/flags/INDN0001.PNG</file>
-    <file>images/flags/ITAL0001.PNG</file>
-    <file>images/flags/POLA0001.PNG</file>
-    <file>images/flags/RMNA0001.PNG</file>
-    <file>images/flags/RUSS0001.PNG</file>
-    <file>images/flags/SPAN0001.PNG</file>
-    <file>images/flags/TURK0001.PNG</file>
-    <file>images/flags/UNKG0001.PNG</file>
-    <file>images/flags/SVKA0001.PNG</file>
-  </qresource>
-  <qresource prefix="/help">
-    <file alias="document-print.png">icons/help/document-print.png</file>
-    <file alias="exit.png">icons/help/exit.png</file>
-    <file alias="go-bottom.png">icons/help/go-bottom.png</file>
-    <file alias="go-down.png">icons/help/go-down.png</file>
-    <file alias="go-first.png">icons/help/go-first.png</file>
-    <file alias="go-home.png">icons/help/go-home.png</file>
-    <file alias="go-last.png">icons/help/go-last.png</file>
-    <file alias="go-next.png">icons/help/go-next.png</file>
-    <file alias="go-previous.png">icons/help/go-previous.png</file>
-    <file alias="go-top.png">icons/help/go-top.png</file>
-    <file alias="go-up.png">icons/help/go-up.png</file>
-    <file alias="help-browser.png">icons/help/help-browser.png</file>
-  </qresource>
-  <qresource prefix="/splash">
-    <file>images/LuminanceImage.png</file>
-    <file>images/camera.png</file>
-    <file>images/camera_on_tripod.png</file>
-    <file>images/stack.png</file>
-  </qresource>
+    <qresource prefix="/new/prefix1">
+        <file>images/flags/BRA0001.PNG</file>
+        <file>images/vcs-update-required.png</file>
+        <file>images/flags/DK.PNG</file>
+        <file>images/button_add.png</file>
+        <file>images/button_del.png</file>
+        <file>images/raw.png</file>
+        <file>images/add.png</file>
+        <file>images/appearance.png</file>
+        <file>images/apply.png</file>
+        <file>images/back.png</file>
+        <file>images/copyexif.png</file>
+        <file>images/cancel.png</file>
+        <file>images/crop.png</file>
+        <file>images/downarrow.png</file>
+        <file>images/draganddrop.png</file>
+        <file>images/exit.png</file>
+        <file>images/fileclose.png</file>
+        <file>images/fileopen.png</file>
+        <file>images/filesave.png</file>
+        <file>images/filesaveall.png</file>
+        <file>images/forward.png</file>
+        <file>images/ghost_32x32.png</file>
+        <file>images/help.png</file>
+        <file>images/histogram.png</file>
+        <file>images/home.png</file>
+        <file>images/language-selector.png</file>
+        <file>images/move.png</file>
+        <file>images/newfile.png</file>
+        <file>images/options.png</file>
+        <file>images/orange_apply.png</file>
+        <file>images/luminance-hdr.png</file>
+        <file>images/raw_import.png</file>
+        <file>images/remove.png</file>
+        <file>images/rotate_left.png</file>
+        <file>images/rotate_right.png</file>
+        <file>images/scale.png</file>
+        <file>images/tonemap.png</file>
+        <file>images/undo.png</file>
+        <file>images/uparrow.png</file>
+        <file>images/whatsthis.png</file>
+        <file>images/games-config-background.png</file>
+        <file>images/lock-on.png</file>
+        <file>images/lock-off.png</file>
+        <file>images/edit-undo.png</file>
+        <file>images/edit-redo.png</file>
+        <file>images/system-run.png</file>
+        <file>images/zoom-in.png</file>
+        <file>images/zoom-original.png</file>
+        <file>images/zoom-out.png</file>
+        <file>images/raw-icon.png</file>
+        <file>images/HDR_icon.png</file>
+        <file>images/rawconverter.png</file>
+        <file>images/list-add.png</file>
+        <file>images/list-remove.png</file>
+        <file>images/edit-clear-list.png</file>
+        <file>images/cms.png</file>
+        <file>images/camera-photo.png</file>
+        <file>images/video-television.png</file>
+        <file>images/printer.png</file>
+        <file>images/gamut_48x48.png</file>
+        <file>images/document-print-preview.png</file>
+        <file>images/vcs_add.png</file>
+        <file>images/vcs_commit.png</file>
+        <file>images/vcs_update.png</file>
+        <file>images/gimp-lasso.png</file>
+        <file>images/brush_icon.png</file>
+        <file>images/preview_white_balance.png</file>
+        <file>images/applications-astronomy.png</file>
+        <file>images/perspective.png</file>
+        <file>images/tool_rect_selection.png</file>
+        <file>images/telescope.png</file>
+        <file>images/Galaxy-icon.png</file>
+        <file>images/flags/CHIN0001.PNG</file>
+        <file>images/flags/CZEC0001.PNG</file>
+        <file>images/flags/FINL0001.PNG</file>
+        <file>images/flags/FRAN0001.PNG</file>
+        <file>images/flags/GERM0001.PNG</file>
+        <file>images/flags/HUNG0001.PNG</file>
+        <file>images/flags/INDA0001.PNG</file>
+        <file>images/flags/INDN0001.PNG</file>
+        <file>images/flags/ITAL0001.PNG</file>
+        <file>images/flags/POLA0001.PNG</file>
+        <file>images/flags/RMNA0001.PNG</file>
+        <file>images/flags/RUSS0001.PNG</file>
+        <file>images/flags/SPAN0001.PNG</file>
+        <file>images/flags/TURK0001.PNG</file>
+        <file>images/flags/UNKG0001.PNG</file>
+        <file>images/flags/SVKA0001.PNG</file>
+    </qresource>
+    <qresource prefix="/help">
+        <file alias="document-print.png">icons/help/document-print.png</file>
+        <file alias="exit.png">icons/help/exit.png</file>
+        <file alias="go-bottom.png">icons/help/go-bottom.png</file>
+        <file alias="go-down.png">icons/help/go-down.png</file>
+        <file alias="go-first.png">icons/help/go-first.png</file>
+        <file alias="go-home.png">icons/help/go-home.png</file>
+        <file alias="go-last.png">icons/help/go-last.png</file>
+        <file alias="go-next.png">icons/help/go-next.png</file>
+        <file alias="go-previous.png">icons/help/go-previous.png</file>
+        <file alias="go-top.png">icons/help/go-top.png</file>
+        <file alias="go-up.png">icons/help/go-up.png</file>
+        <file alias="help-browser.png">icons/help/help-browser.png</file>
+    </qresource>
+    <qresource prefix="/splash">
+        <file>images/LuminanceImage.png</file>
+        <file>images/camera.png</file>
+        <file>images/camera_on_tripod.png</file>
+        <file>images/stack.png</file>
+    </qresource>
+    <qresource prefix="/new/svgs">
+        <file>images/folder-image.svgz</file>
+        <file>images/preferences-desktop-theme.svgz</file>
+        <file>images/application-vnd.iccprofile.svgz</file>
+        <file>images/preferences-other.svgz</file>
+        <file>images/page-zoom.svgz</file>
+        <file>images/zoom-fit-best.svgz</file>
+        <file>images/zoom-in.svgz</file>
+        <file>images/zoom-original.svgz</file>
+        <file>images/zoom-out.svgz</file>
+    </qresource>
 </RCC>

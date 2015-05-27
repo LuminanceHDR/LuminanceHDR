@@ -184,6 +184,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_firstWindow(0)
+	, m_exportQueueSize(0)
 {
     init();
 }
@@ -194,6 +195,7 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_firstWindow(0)
+	, m_exportQueueSize(0)
 {
     init();
 
@@ -221,6 +223,7 @@ MainWindow::~MainWindow()
         // wait for the working thread to finish
         m_IOThread->wait(500);
         m_TMThread->wait(500);
+		//m_QueueThread->wait(500);
 
         sm_updateChecker.reset();
     }
@@ -265,6 +268,7 @@ void MainWindow::init()
     createStatusBar();
     setupIO();
     setupTM();
+	setupQueue();
     createConnections();
 
     OsIntegration::getInstance().init(this);
@@ -1461,6 +1465,42 @@ void MainWindow::setupTM()
     m_TMThread->start();
 }
 
+void MainWindow::setupQueue()
+{
+	m_QueueProgressBar = new TMOProgressIndicator;
+	m_QueueProgressBar->hide();
+	statusBar()->addWidget(m_QueueProgressBar);
+
+	connect(this, SIGNAL(destroyed()), m_QueueProgressBar, SLOT(deleteLater()));
+
+	m_QueueWorker = new TMWorker;
+	m_QueueThread = new QThread;
+
+	m_QueueWorker->moveToThread(m_QueueThread);
+
+	// Memory Management
+	connect(this, SIGNAL(destroyed()), m_QueueWorker, SLOT(deleteLater()));
+	connect(m_QueueWorker, SIGNAL(destroyed()), m_QueueThread, SLOT(deleteLater()));
+
+	// get back result!
+	//connect(m_QueueWorker, SIGNAL(tonemapSuccess(pfs::Frame*, TonemappingOptions*)),
+	//	this, SLOT(addLdrFrame(pfs::Frame*, TonemappingOptions*)));
+	connect(m_QueueWorker, SIGNAL(tonemapFailed(QString)),
+		this, SLOT(tonemapFailed(QString)));
+
+	// progress bar handling
+	connect(m_QueueWorker, SIGNAL(tonemapBegin()), this, SLOT(exportBegin()));
+	connect(m_QueueWorker, SIGNAL(tonemapEnd()), this, SLOT(exportEnd()));
+
+	connect(m_QueueWorker, SIGNAL(tonemapSetValue(int)), m_QueueProgressBar, SLOT(setValue(int)));
+	connect(m_QueueWorker, SIGNAL(tonemapSetMaximum(int)), m_QueueProgressBar, SLOT(setMaximum(int)));
+	connect(m_QueueWorker, SIGNAL(tonemapSetMinimum(int)), m_QueueProgressBar, SLOT(setMinimum(int)));
+	connect(m_QueueProgressBar, SIGNAL(terminate()), m_QueueWorker, SIGNAL(tonemapRequestTermination()), Qt::DirectConnection);
+
+	// start thread waiting for signals (I/O requests)
+	m_QueueThread->start();
+}
+
 void MainWindow::tonemapBegin()
 {
     // statusBar()->addWidget(m_TMProgressBar);
@@ -1474,6 +1514,20 @@ void MainWindow::tonemapEnd()
     m_TMProgressBar->hide();
     m_TMProgressBar->reset();
 }
+
+void MainWindow::exportBegin()
+{
+	m_QueueProgressBar->setMaximum(0);
+	m_QueueProgressBar->show();
+}
+
+void MainWindow::exportEnd()
+{
+	m_tonemapPanel->setExportQueueSize(--m_exportQueueSize);
+	m_QueueProgressBar->hide();
+	m_QueueProgressBar->reset();
+}
+
 
 void MainWindow::tonemapImage(TonemappingOptions *opts)
 {
@@ -1557,7 +1611,9 @@ void MainWindow::exportImage(TonemappingOptions *opts)
 
         QString exportDir = luminance_options->getExportDir();
 
-        QMetaObject::invokeMethod(m_TMWorker, "computeTonemapAndExport", Qt::DirectConnection,
+		m_tonemapPanel->setExportQueueSize(++m_exportQueueSize);
+
+		QMetaObject::invokeMethod(m_QueueWorker, "computeTonemapAndExport", Qt::QueuedConnection,
                                   Q_ARG(pfs::Frame*, hdr_viewer->getFrame()),
                                   Q_ARG(TonemappingOptions*,opts),
                                   Q_ARG(pfs::Params,params),

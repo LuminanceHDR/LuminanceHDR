@@ -27,6 +27,7 @@
  */
 
 #include <QMessageBox>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QTextStream>
 #include <QDir>
@@ -52,6 +53,8 @@
 #include "TonemappingOperators/pfstmdefaultparams.h"
 #include "UI/Gang.h"
 #include "ui_TonemappingPanel.h"
+
+#include "contrib/qtwaitingspinner/QtWaitingSpinner.h"
 
 TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidget *parent):
     QWidget(parent),
@@ -159,8 +162,31 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     connect(m_Ui->loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
     connect(m_Ui->saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
 
+	m_spinner = new QtWaitingSpinner(this);
+
+	m_spinner->setRoundness(70.0);
+	m_spinner->setMinimumTrailOpacity(15.0);
+	m_spinner->setTrailFadePercentage(70.0);
+	m_spinner->setNumberOfLines(12);
+	m_spinner->setLineLength(5);
+	m_spinner->setLineWidth(2);
+	m_spinner->setInnerRadius(5);
+	m_spinner->setRevolutionsPerSecond(1);
+
+	m_spinner->start();
+
+	m_Ui->frameSpinner->addWidget(m_spinner);
+	m_spinner->setVisible(false);
+	
     createDatabase();
 }
+
+void TonemappingPanel::setExportQueueSize(int size)
+{
+	m_spinner->setVisible(size > 0);
+	m_Ui->lblQueueSize->setText(QString(tr("Queue size: %1")).arg(size));
+}
+
 
 TonemappingPanel::~TonemappingPanel()
 {
@@ -198,6 +224,7 @@ TonemappingPanel::~TonemappingPanel()
     delete chromaticGang;
     delete lightGang;
     delete pregammaGang;
+    delete m_spinner;
 
 	qDeleteAll(toneMappingOptionsToDelete);
 
@@ -625,6 +652,13 @@ void TonemappingPanel::onUndoRedo(bool undo)
     }
 }
 
+void TonemappingPanel::on_lblOpenQueue_linkActivated(const QString& link)
+{
+	LuminanceOptions options;
+	QDesktopServices::openUrl(QUrl::fromLocalFile(options.getExportDir()));
+}
+
+
 void TonemappingPanel::on_loadsettingsbutton_clicked()
 {
     LuminanceOptions lum_options;
@@ -966,6 +1000,7 @@ void TonemappingPanel::setEnabled(bool b)
     // Tonemap
     m_Ui->applyButton->setEnabled(b);
     m_Ui->queueButton->setEnabled(b);
+	m_Ui->lblOpenQueue->setVisible(b);
 
 	// DB
     m_Ui->loadButton->setEnabled(b);

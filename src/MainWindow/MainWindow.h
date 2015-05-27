@@ -187,6 +187,10 @@ protected Q_SLOTS:
     //void addLDRResult(QImage*, quint16*);
     void tonemapFailed(const QString&);
 
+	// Export queue
+	void exportBegin();
+	void exportEnd();
+
     // lock functionalities
     void on_actionLock_toggled(bool);
     void syncViewers(GenericViewer*);
@@ -264,7 +268,8 @@ protected:
     void createStatusBar();
     void setupIO();
     void setupTM();
-    void createConnections();
+	void setupQueue();
+	void createConnections();
 
     void updatePreviousNextActions();
 
@@ -293,6 +298,12 @@ private:
     TMWorker* m_TMWorker;
     TMOProgressIndicator* m_TMProgressBar;
 
+	// Export queue
+	QThread* m_QueueThread;
+	TMWorker* m_QueueWorker;
+	TMOProgressIndicator* m_QueueProgressBar;
+
+	int m_exportQueueSize;
 
     QFutureWatcher<void> m_futureWatcher;
     GenericViewer *m_viewerToProcess;

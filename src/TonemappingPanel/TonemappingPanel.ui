@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>674</height>
+    <height>792</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -16,24 +16,9 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>370</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>550</width>
-    <height>16777215</height>
-   </size>
-  </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
-  </property>
-  <property name="toolTip">
-   <string>Tone mapping operators and their options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_13">
    <property name="leftMargin">
@@ -98,6 +83,19 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="3" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -359,18 +357,6 @@
               </item>
               <item row="0" column="3">
                <widget class="QDoubleSpinBox" name="contrastFactordsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -396,18 +382,6 @@
               </item>
               <item row="1" column="3">
                <widget class="QDoubleSpinBox" name="saturationFactordsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -488,18 +462,6 @@
                <widget class="QDoubleSpinBox" name="detailFactordsb">
                 <property name="enabled">
                  <bool>true</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -746,18 +708,6 @@ Luminace Level</string>
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -784,18 +734,6 @@ Luminace Level</string>
               </item>
               <item row="2" column="2">
                <widget class="QDoubleSpinBox" name="contrastEnhancementDSB">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -825,18 +763,6 @@ Luminace Level</string>
               </item>
               <item row="1" column="2">
                <widget class="QDoubleSpinBox" name="colorSaturationDSB">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -949,18 +875,6 @@ Luminace Level</string>
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1024,18 +938,6 @@ Luminace Level</string>
               </item>
               <item row="1" column="2">
                <widget class="QDoubleSpinBox" name="betadsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1099,18 +1001,6 @@ Luminace Level</string>
               </item>
               <item row="2" column="2">
                <widget class="QDoubleSpinBox" name="saturation2dsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1171,18 +1061,6 @@ Luminace Level</string>
               </item>
               <item row="3" column="2">
                <widget class="QDoubleSpinBox" name="noisedsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1298,18 +1176,6 @@ Luminace Level</string>
               </item>
               <item row="0" column="2">
                <widget class="QDoubleSpinBox" name="biasdsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1421,18 +1287,6 @@ Luminace Level</string>
               </item>
               <item row="1" column="2">
                <widget class="QDoubleSpinBox" name="spatialdsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="frame">
                  <bool>true</bool>
                 </property>
@@ -1505,18 +1359,6 @@ Luminace Level</string>
               </item>
               <item row="2" column="2">
                <widget class="QDoubleSpinBox" name="rangedsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1602,18 +1444,6 @@ Luminace Level</string>
               </item>
               <item row="0" column="2">
                <widget class="QDoubleSpinBox" name="basedsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1700,18 +1530,6 @@ Luminace Level</string>
               </item>
               <item row="0" column="2">
                <widget class="QDoubleSpinBox" name="keydsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1775,18 +1593,6 @@ Luminace Level</string>
               </item>
               <item row="1" column="2">
                <widget class="QDoubleSpinBox" name="phidsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -1864,18 +1670,6 @@ Luminace Level</string>
                <widget class="QDoubleSpinBox" name="range2dsb">
                 <property name="enabled">
                  <bool>false</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -1980,18 +1774,6 @@ Luminace Level</string>
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -2069,18 +1851,6 @@ Luminace Level</string>
                <widget class="QDoubleSpinBox" name="upperdsb">
                 <property name="enabled">
                  <bool>false</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -2196,18 +1966,6 @@ Luminace Level</string>
               </item>
               <item row="0" column="2">
                <widget class="QDoubleSpinBox" name="brightnessdsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -2274,18 +2032,6 @@ Luminace Level</string>
               </item>
               <item row="1" column="2">
                <widget class="QDoubleSpinBox" name="chromaticAdaptdsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -2355,18 +2101,6 @@ Luminace Level</string>
               </item>
               <item row="2" column="2">
                <widget class="QDoubleSpinBox" name="lightAdaptdsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -2469,18 +2203,6 @@ Luminace Level</string>
               </item>
               <item row="2" column="2">
                <widget class="QDoubleSpinBox" name="contrastdsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="focusPolicy">
                  <enum>Qt::StrongFocus</enum>
                 </property>
@@ -2681,18 +2403,6 @@ Luminace Level</string>
               </item>
               <item row="0" column="2">
                <widget class="QDoubleSpinBox" name="multiplierdsb">
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -2827,18 +2537,6 @@ Luminace Level</string>
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -2917,18 +2615,6 @@ Luminace Level</string>
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>60</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>60</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
@@ -2981,7 +2667,7 @@ Luminace Level</string>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_undo">
           <item>
-           <widget class="QPushButton" name="defaultButton">
+           <widget class="QToolButton" name="defaultButton">
             <property name="toolTip">
              <string>Restore operator's default values</string>
             </property>
@@ -2992,11 +2678,8 @@ Luminace Level</string>
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
             </property>
-            <property name="iconSize">
-             <size>
-              <width>10</width>
-              <height>10</height>
-             </size>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
             </property>
            </widget>
           </item>
@@ -3014,7 +2697,7 @@ Luminace Level</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="undoButton">
+           <widget class="QToolButton" name="undoButton">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3028,16 +2711,13 @@ Luminace Level</string>
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
             </property>
-            <property name="iconSize">
-             <size>
-              <width>10</width>
-              <height>10</height>
-             </size>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="redoButton">
+           <widget class="QToolButton" name="redoButton">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -3054,11 +2734,8 @@ Luminace Level</string>
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/edit-redo.png</normaloff>:/new/prefix1/images/edit-redo.png</iconset>
             </property>
-            <property name="iconSize">
-             <size>
-              <width>10</width>
-              <height>10</height>
-             </size>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
             </property>
            </widget>
           </item>
@@ -3120,12 +2797,6 @@ Luminace Level</string>
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
             </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
            </widget>
           </item>
           <item row="0" column="1">
@@ -3149,12 +2820,6 @@ Luminace Level</string>
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
            </widget>
           </item>
           <item row="0" column="3">
@@ -3168,12 +2833,6 @@ Luminace Level</string>
             <property name="icon">
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/vcs_update.png</normaloff>:/new/prefix1/images/vcs_update.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
             </property>
            </widget>
           </item>
@@ -3201,12 +2860,6 @@ Luminace Level</string>
             <property name="icon">
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/vcs_commit.png</normaloff>:/new/prefix1/images/vcs_commit.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
             </property>
            </widget>
           </item>
@@ -3243,18 +2896,6 @@ Luminace Level</string>
          <layout class="QGridLayout" name="gridLayout_17">
           <item row="0" column="0">
            <widget class="QLabel" name="label">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
             <property name="text">
              <string>Result Si&amp;ze</string>
             </property>
@@ -3274,18 +2915,6 @@ Luminace Level</string>
           </item>
           <item row="1" column="2">
            <widget class="QDoubleSpinBox" name="pregammadsb">
-            <property name="minimumSize">
-             <size>
-              <width>60</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
             <property name="toolTip">
              <string>Gamma applied before tonemapping</string>
             </property>
@@ -3311,18 +2940,6 @@ Luminace Level</string>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="pregammaLabel">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
             <property name="toolTip">
              <string>Gamma applied before tonemapping</string>
             </property>
@@ -3469,28 +3086,12 @@ Luminace Level</string>
      </item>
     </layout>
    </item>
-   <item row="3" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>0</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="4" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Export queue</string>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_16">
+     <layout class="QGridLayout" name="gridLayout_25">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -3503,31 +3104,61 @@ Luminace Level</string>
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="queueButton">
+      <item row="0" column="1">
+       <widget class="QToolButton" name="queueButton">
         <property name="text">
          <string>Export to queue</string>
         </property>
+        <property name="icon">
+         <iconset resource="../../icons.qrc">
+          <normaloff>:/new/svgs/images/folder-image.svgz</normaloff>:/new/svgs/images/folder-image.svgz</iconset>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
+      <item row="0" column="7">
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="lblOpenQueue">
+        <property name="toolTip">
+         <string>Opens the current export direcotory. This can be changed in the preferences!</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::LinksAccessibleByMouse</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLabel" name="lblQueueSize">
+        <property name="text">
+         <string notr="true">  </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <layout class="QHBoxLayout" name="frameSpinner">
+        <property name="spacing">
+         <number>0</number>
+        </property>
        </layout>
       </item>
      </layout>

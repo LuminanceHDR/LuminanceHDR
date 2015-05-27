@@ -35,6 +35,7 @@
 #include "PreviewPanel/PreviewPanel.h"
 
 class Gang;
+class QtWaitingSpinner;
 
 namespace Ui
 {
@@ -123,6 +124,8 @@ protected Q_SLOTS:
     void on_savesettingsbutton_clicked();
     void on_loadsettingsbutton_clicked();
     void on_queueButton_clicked();
+	void on_lblOpenQueue_linkActivated(const QString& link);
+
     //APPLY tmo settings from text file
     void fromTxt2Gui();
     //user wants a custom size.
@@ -151,6 +154,7 @@ public:
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();
+	void setExportQueueSize(int);
 
 public Q_SLOTS:
     void setEnabled(bool);
@@ -164,6 +168,8 @@ signals:
 
 private:
     void onUndoRedo(bool undo);
+
+	QtWaitingSpinner* m_spinner;
 
 
 };
