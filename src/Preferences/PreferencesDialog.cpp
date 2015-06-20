@@ -89,6 +89,8 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
 {
     m_Ui->setupUi(this);
 
+    connect(m_Ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_themeChanged()));
+
 #ifdef DEMOSAICING_GPL2
 	qDebug() << "PreferencesDialog: Found demosaicing pack GPL2";
 	m_Ui->user_qual_comboBox->addItem("DCB");
@@ -137,11 +139,18 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
 	fromGuiIndexToIso639[14]="tr";
     fromGuiIndexToIso639[15]="zh";
 
-
-	m_Ui->themeComboBox->addItems(QStyleFactory::keys());
+    for (QString style : QStyleFactory::keys())
+    {
+#ifdef Q_OS_MAC
+        if (style == "Windows") {
+            continue;
+        }
+#endif
+        qDebug() << "Available theme: " << style;
+        m_Ui->themeComboBox->addItem(style);
+    }
 
     m_formatHelper.initConnection(m_Ui->exportFormatCombo, m_Ui->exportFormatToolbutton, false);
-
 
     from_options_to_gui(); //update the gui in order to show the options
     
@@ -194,7 +203,9 @@ void PreferencesDialog::on_okButton_clicked()
 	if (luminance_options.getGuiTheme() != m_Ui->themeComboBox->currentText() || luminance_options.isGuiDarkMode() != m_Ui->chkDarkMode->isChecked())
 	{
 		if (luminance_options.isGuiDarkMode() != m_Ui->chkDarkMode->isChecked() && !m_Ui->chkDarkMode->isChecked())
+        {
 			restartNeeded = true;
+        }
 		luminance_options.setGuiTheme(m_Ui->themeComboBox->currentText());
 		luminance_options.setGuiDarkMode(m_Ui->chkDarkMode->isChecked());
 		luminance_options.applyTheme(false);
@@ -742,5 +753,18 @@ void PreferencesDialog::on_exportFileButton_clicked()
     if (!dir.isEmpty())
     {
         m_Ui->exportDirectoryEdit->setText(dir);
+    }
+}
+
+void PreferencesDialog::on_themeChanged()
+{
+    if (m_Ui->themeComboBox->currentText() == "Macintosh")
+    {
+        m_Ui->chkDarkMode->setCheckState(Qt::Unchecked);
+        m_Ui->chkDarkMode->setDisabled(true);
+    }
+    else
+    {
+        m_Ui->chkDarkMode->setEnabled(true);
     }
 }

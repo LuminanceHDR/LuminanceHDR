@@ -183,8 +183,8 @@ QScopedPointer<UpdateChecker> MainWindow::sm_updateChecker;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
+    , m_exportQueueSize(0)
     , m_firstWindow(0)
-	, m_exportQueueSize(0)
 {
     init();
 }
@@ -194,8 +194,8 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
                        bool needSaving, QWidget *parent)
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
+    , m_exportQueueSize(0)
     , m_firstWindow(0)
-	, m_exportQueueSize(0)
 {
     init();
 
