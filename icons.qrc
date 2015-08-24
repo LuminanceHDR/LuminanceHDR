@@ -11,10 +11,8 @@
         <file>images/apply.png</file>
         <file>images/back.png</file>
         <file>images/copyexif.png</file>
-        <file>images/cancel.png</file>
         <file>images/crop.png</file>
         <file>images/downarrow.png</file>
-        <file>images/draganddrop.png</file>
         <file>images/exit.png</file>
         <file>images/fileclose.png</file>
         <file>images/fileopen.png</file>
@@ -23,11 +21,8 @@
         <file>images/forward.png</file>
         <file>images/ghost_32x32.png</file>
         <file>images/help.png</file>
-        <file>images/histogram.png</file>
         <file>images/home.png</file>
-        <file>images/language-selector.png</file>
         <file>images/move.png</file>
-        <file>images/newfile.png</file>
         <file>images/options.png</file>
         <file>images/orange_apply.png</file>
         <file>images/luminance-hdr.png</file>
@@ -50,7 +45,6 @@
         <file>images/zoom-original.png</file>
         <file>images/zoom-out.png</file>
         <file>images/raw-icon.png</file>
-        <file>images/HDR_icon.png</file>
         <file>images/rawconverter.png</file>
         <file>images/list-add.png</file>
         <file>images/list-remove.png</file>
@@ -66,7 +60,6 @@
         <file>images/vcs_update.png</file>
         <file>images/gimp-lasso.png</file>
         <file>images/brush_icon.png</file>
-        <file>images/preview_white_balance.png</file>
         <file>images/applications-astronomy.png</file>
         <file>images/perspective.png</file>
         <file>images/tool_rect_selection.png</file>
@@ -119,5 +112,12 @@
         <file>images/zoom-in.svgz</file>
         <file>images/zoom-original.svgz</file>
         <file>images/zoom-out.svgz</file>
+        <file>images/insert-image.svgz</file>
+        <file>images/folder-open.svgz</file>
+        <file>images/document-open.svgz</file>
+        <file>images/window-close.svg</file>
+		<file>images/view-object-histogram-linear.svgz</file>
+		<file>images/color-picker-white.svg</file>
+		<file>images/window-duplicate.svg</file>
     </qresource>
 </RCC>

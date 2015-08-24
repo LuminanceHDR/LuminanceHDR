@@ -1974,11 +1974,11 @@ void MainWindow::on_actionWhite_Balance_triggered()
 void MainWindow::whiteBalanceDone()
 {
     QApplication::restoreOverrideCursor();
-    m_Ui->actionWhite_Balance->setEnabled(true);
+	m_processingAWB = false;
+	m_Ui->actionWhite_Balance->setEnabled(true);
     m_viewerToProcess->setEnabled(true);
     m_tabwidget->setTabEnabled(m_tabwidget->indexOf(m_viewerToProcess), true);
     m_tabwidget->setCurrentWidget(m_viewerToProcess);
-    m_processingAWB = false;
     m_viewerToProcess->updatePixmap();
     if (m_viewerToProcess->isHDR()) {
         m_viewerToProcess->setNeedsSaving(true);

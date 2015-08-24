@@ -9,16 +9,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>414</width>
-    <height>244</height>
+    <width>484</width>
+    <height>307</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Drag and Drop</string>
+   <string>Choose action</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/draganddrop.png</normaloff>:/new/prefix1/images/draganddrop.png</iconset>
+    <normaloff>:/new/svgs/images/window-duplicate.svg</normaloff>:/new/svgs/images/window-duplicate.svg</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -52,7 +52,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../icons.qrc">
-       <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+       <normaloff>:/new/svgs/images/folder-open.svgz</normaloff>:/new/svgs/images/folder-open.svgz</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -72,7 +72,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../icons.qrc">
-       <normaloff>:/new/prefix1/images/newfile.png</normaloff>:/new/prefix1/images/newfile.png</iconset>
+       <normaloff>:/new/svgs/images/insert-image.svgz</normaloff>:/new/svgs/images/insert-image.svgz</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -92,7 +92,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../icons.qrc">
-       <normaloff>:/new/prefix1/images/cancel.png</normaloff>:/new/prefix1/images/cancel.png</iconset>
+       <normaloff>:/new/svgs/images/window-close.svg</normaloff>:/new/svgs/images/window-close.svg</iconset>
      </property>
      <property name="iconSize">
       <size>

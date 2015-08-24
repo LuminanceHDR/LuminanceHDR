@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1238</width>
+    <width>1651</width>
     <height>756</height>
    </rect>
   </property>
@@ -29,8 +29,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1238</width>
-     <height>21</height>
+     <width>1651</width>
+     <height>38</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -186,7 +186,7 @@
   <action name="fileNewAction">
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/newfile.png</normaloff>:/new/prefix1/images/newfile.png</iconset>
+     <normaloff>:/new/svgs/images/insert-image.svgz</normaloff>:/new/svgs/images/insert-image.svgz</iconset>
    </property>
    <property name="text">
     <string>&amp;New HDR image...</string>
@@ -871,7 +871,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/histogram.png</normaloff>:/new/prefix1/images/histogram.png</iconset>
+     <normaloff>:/new/svgs/images/view-object-histogram-linear.svgz</normaloff>:/new/svgs/images/view-object-histogram-linear.svgz</iconset>
    </property>
    <property name="text">
     <string>Adjust &amp;Levels</string>
@@ -1041,7 +1041,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/preview_white_balance.png</normaloff>:/new/prefix1/images/preview_white_balance.png</iconset>
+     <normaloff>:/new/svgs/images/color-picker-white.svg</normaloff>:/new/svgs/images/color-picker-white.svg</iconset>
    </property>
    <property name="text">
     <string>White Balance</string>
