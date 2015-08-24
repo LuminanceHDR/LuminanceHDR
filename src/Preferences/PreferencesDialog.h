@@ -38,7 +38,8 @@ namespace Ui
 
 class PreferencesDialog : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
+
 private:
     QScopedPointer<Ui::PreferencesDialog> m_Ui;
 
@@ -109,5 +110,7 @@ private Q_SLOTS:
 	void toolButton_clicked(int);
 
     void openColorProfile(QLineEdit* lineEdit);
+
+    void on_themeChanged();
 };
 #endif

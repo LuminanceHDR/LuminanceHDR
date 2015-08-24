@@ -49,6 +49,8 @@ const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = "LuminanceHDR";
 const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = ".LuminanceHDR";
 #endif
 
+const static QString MAC_THEME = "Macintosh";
+
 bool LuminanceOptions::isCurrentPortableMode = false;
 
 void LuminanceOptions::checkHomeFolder()
@@ -188,11 +190,20 @@ QString LuminanceOptions::getDatabaseFileName()
 
 QString LuminanceOptions::getGuiTheme()
 {
+#ifdef Q_OS_MAC
+    return m_settingHolder->value(KEY_GUI_THEME, MAC_THEME).toString();
+#else
     return m_settingHolder->value(KEY_GUI_THEME, "Fusion").toString();
+#endif
 }
 
 void LuminanceOptions::setGuiTheme(const QString& s)
 {
+    if (s == MAC_THEME)
+    {
+        setGuiDarkMode(false);
+    }
+
     m_settingHolder->setValue(KEY_GUI_THEME, s);
 }
 
@@ -206,10 +217,11 @@ void LuminanceOptions::setGuiDarkMode(bool b)
 	m_settingHolder->setValue(KEY_GUI_DARKMODE, b);
 }
 
-void LuminanceOptions::applyTheme(bool init)
+void LuminanceOptions::applyTheme(bool /*init*/)
 {
-	if (isGuiDarkMode())
-	{
+    QString theme = LuminanceOptions().getGuiTheme();
+    if (theme.compare("Macintosh") != 0 && isGuiDarkMode())
+    {
 		QPalette darkPalette;
 		//QPalette darkPalette = QApplication::palette();
 
