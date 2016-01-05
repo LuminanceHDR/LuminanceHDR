@@ -157,7 +157,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
     restoreGeometry(LuminanceOptions().value("HelpBrowserGeometry").toByteArray());
 	setupLocalUI();
 
-    m_Ui->textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
+    //m_Ui->textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
     connect(m_Ui->textBrowser, SIGNAL(linkClicked(const QUrl &)), this, SLOT(handleExternalLink(const QUrl &)));
     connect(m_Ui->textBrowser, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
     connect(m_Ui->textBrowser, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
@@ -365,7 +365,7 @@ void HelpBrowser::print()
 	printer.setFullPage(true);
 	QPrintDialog dialog(&printer, this);
 	if (dialog.exec())
-        m_Ui->textBrowser->print(&printer);
+        m_Ui->textBrowser->render(&printer);
 }
 
 void HelpBrowser::searchingButton_clicked()
@@ -712,19 +712,19 @@ void HelpBrowser::zoomIn_clicked() {
 	zoomFactor *= 1.2;
 	if (zoomFactor > 46)
 		zoomFactor = 46.005;
-    m_Ui->textBrowser->setTextSizeMultiplier(zoomFactor);
+    m_Ui->textBrowser->setZoomFactor(zoomFactor);
 }
 
 void HelpBrowser::zoomOriginal_clicked() {
 	zoomFactor = 1.0;
-    m_Ui->textBrowser->setTextSizeMultiplier(1.0);
+    m_Ui->textBrowser->setZoomFactor(1.0);
 }
 
 void HelpBrowser::zoomOut_clicked() {
 	zoomFactor /= 1.2;
 	if (zoomFactor < .02)
 		zoomFactor = .0217;
-    m_Ui->textBrowser->setTextSizeMultiplier(zoomFactor);
+    m_Ui->textBrowser->setZoomFactor(zoomFactor);
 }
 
 void HelpBrowser::handleExternalLink(const QUrl &url) {

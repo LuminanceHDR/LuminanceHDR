@@ -64,7 +64,7 @@ for which a new license (GPL+exception) is in place.
 // #include "urllauncher.h"
 
 ScTextBrowser::ScTextBrowser( QWidget * parent )
-	: QWebView(parent)
+	: QWebEngineView(parent)
 {
 }
 
