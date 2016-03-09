@@ -31,8 +31,6 @@
 //! \author Davide Anastasia <davideanastasia@sourceforge.net>
 //! Complete rewrite/refactoring
 
-#include <QDebug>
-
 #include <Libpfs/io/tiffwriter.h>
 #include <Libpfs/io/tiffcommon.h>
 
@@ -65,6 +63,12 @@
 using namespace std;
 using namespace boost;
 using namespace pfs;
+
+#ifndef NDEBUG
+#define PRINT_DEBUG(str) std::cerr << "TiffReader: " << str << std::endl
+#else
+#define PRINT_DEBUG(str)
+#endif
 
 namespace pfs {
 namespace io {
@@ -319,8 +323,8 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     const Channel* bChannel;
     frame.getXYZChannels(rChannel, gChannel, bChannel);
 
-    qDebug() << params.minLuminance_;
-    qDebug() << params.maxLuminance_;
+    PRINT_DEBUG(params.minLuminance_);
+    PRINT_DEBUG(params.maxLuminance_);
 
     std::vector<float> stripBuffer( width*3 );
     typedef utils::Chain<
