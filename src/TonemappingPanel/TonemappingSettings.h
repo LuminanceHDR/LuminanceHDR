@@ -67,7 +67,7 @@ protected Q_SLOTS:
 
 private:
 	void addPreview(PreviewLabel* previewLabel, const QSqlRecord& record);
-	void fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, float preGamma, TMOperator tOperator, const QSqlRecord& record);
+	void fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, TMOperator tOperator, const QSqlRecord& record);
 };
 
 #endif

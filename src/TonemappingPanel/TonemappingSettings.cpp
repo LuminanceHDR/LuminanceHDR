@@ -122,7 +122,7 @@ void TonemappingSettings::fillPreviews()
         eq2 = m_modelPreviews->record(selectedRow).value("eq2").toBool();
         lct = m_modelPreviews->record(selectedRow).value("lct").toFloat();
 
-		fillCommonValues(ashikhmin, origxsize, PREVIEW_WIDTH, pregamma, ashikhmin, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoAshikhmin, origxsize, PREVIEW_WIDTH, ashikhmin, m_modelPreviews->record(selectedRow));
 
 		tmoAshikhmin->operator_options.ashikhminoptions.simple = simple;
         tmoAshikhmin->operator_options.ashikhminoptions.eq2 = eq2;
@@ -140,7 +140,7 @@ void TonemappingSettings::fillPreviews()
         TonemappingOptions *tmoDrago = new TonemappingOptions;
 		bias = m_modelPreviews->record(selectedRow).value("bias").toFloat();
 
-		fillCommonValues(drago, origxsize, PREVIEW_WIDTH, pregamma, drago, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoDrago, origxsize, PREVIEW_WIDTH, drago, m_modelPreviews->record(selectedRow));
 
 		tmoDrago->operator_options.dragooptions.bias = bias;
 
@@ -160,7 +160,7 @@ void TonemappingSettings::fillPreviews()
 		range    = m_modelPreviews->record(selectedRow).value("range").toFloat();
 		base     = m_modelPreviews->record(selectedRow).value("base").toFloat();
 
-		fillCommonValues(durand, origxsize, PREVIEW_WIDTH, pregamma, durand, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoDurand, origxsize, PREVIEW_WIDTH, durand, m_modelPreviews->record(selectedRow));
 
 		tmoDurand->operator_options.durandoptions.spatial = spatial;
         tmoDurand->operator_options.durandoptions.range = range;
@@ -186,7 +186,7 @@ void TonemappingSettings::fillPreviews()
 		noiseReduction = m_modelPreviews->record(selectedRow).value("noiseReduction").toFloat();
 		fftsolver      = !m_modelPreviews->record(selectedRow).value("oldFattal").toBool();
 
-		fillCommonValues(fattal, origxsize, PREVIEW_WIDTH, pregamma, fattal, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoFattal, origxsize, PREVIEW_WIDTH, fattal, m_modelPreviews->record(selectedRow));
 
 		tmoFattal->operator_options.fattaloptions.alpha = alpha;
         tmoFattal->operator_options.fattaloptions.beta = beta;
@@ -212,7 +212,7 @@ void TonemappingSettings::fillPreviews()
 		saturationFactor     = m_modelPreviews->record(selectedRow).value("saturationFactor").toFloat();
 		detailFactor         = m_modelPreviews->record(selectedRow).value("detailFactor").toFloat();
 
-		fillCommonValues(mantiuk06, origxsize, PREVIEW_WIDTH, pregamma, mantiuk06, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoMantiuk06, origxsize, PREVIEW_WIDTH, mantiuk06, m_modelPreviews->record(selectedRow));
 
 		tmoMantiuk06->operator_options.mantiuk06options.contrastfactor = contrastFactor;
         tmoMantiuk06->operator_options.mantiuk06options.saturationfactor = saturationFactor;
@@ -237,7 +237,7 @@ void TonemappingSettings::fillPreviews()
 		luminanceLevel       = m_modelPreviews->record(selectedRow).value("luminanceLevel").toFloat();
 		manualLuminanceLevel = m_modelPreviews->record(selectedRow).value("manualLuminanceLevel").toBool();
 
-		fillCommonValues(mantiuk08, origxsize, PREVIEW_WIDTH, pregamma, mantiuk08, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoMantiuk08, origxsize, PREVIEW_WIDTH, mantiuk08, m_modelPreviews->record(selectedRow));
 
 		tmoMantiuk08->operator_options.mantiuk08options.colorsaturation = colorSaturation;
         tmoMantiuk08->operator_options.mantiuk08options.contrastenhancement = contrastEnhancement;
@@ -264,7 +264,7 @@ void TonemappingSettings::fillPreviews()
 		autolum    = m_modelPreviews->record(selectedRow).value("autolum").toBool();
 		local      = m_modelPreviews->record(selectedRow).value("local").toBool();
 
-		fillCommonValues(pattanaik, origxsize, PREVIEW_WIDTH, pregamma, pattanaik, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoPattanaik, origxsize, PREVIEW_WIDTH, pattanaik, m_modelPreviews->record(selectedRow));
 
         tmoPattanaik->operator_options.pattanaikoptions.autolum = autolum;
         tmoPattanaik->operator_options.pattanaikoptions.local = local;
@@ -294,7 +294,7 @@ void TonemappingSettings::fillPreviews()
 		lower    = m_modelPreviews->record(selectedRow).value("lower").toInt();
 		upper    = m_modelPreviews->record(selectedRow).value("upper").toInt();
 
-		fillCommonValues(reinhard02, origxsize, PREVIEW_WIDTH, pregamma, reinhard02, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoReinhard02, origxsize, PREVIEW_WIDTH, reinhard02, m_modelPreviews->record(selectedRow));
 
         tmoReinhard02->operator_options.reinhard02options.scales = scales;
         tmoReinhard02->operator_options.reinhard02options.key = key;
@@ -319,7 +319,7 @@ void TonemappingSettings::fillPreviews()
 		chromaticAdaptation = m_modelPreviews->record(selectedRow).value("chromaticAdaptation").toFloat();
 		lightAdaptation     = m_modelPreviews->record(selectedRow).value("lightAdaptation").toFloat();
 
-		fillCommonValues(tmoReinhard05, origxsize, PREVIEW_WIDTH, pregamma, reinhard05, m_modelPreviews->record(selectedRow));
+		fillCommonValues(tmoReinhard05, origxsize, PREVIEW_WIDTH, reinhard05, m_modelPreviews->record(selectedRow));
 
         tmoReinhard05->operator_options.reinhard05options.brightness = brightness;
         tmoReinhard05->operator_options.reinhard05options.chromaticAdaptation = chromaticAdaptation;
@@ -344,7 +344,7 @@ void TonemappingSettings::addPreview(PreviewLabel* previewLabel, const QSqlRecor
 	m_Ui->listWidget->addItem(comment);
 }
 
-void TonemappingSettings::fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, float preGamma, TMOperator tOperator, const QSqlRecord& record)
+void TonemappingSettings::fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, TMOperator tOperator, const QSqlRecord& record)
 {
 	float pregamma = record.value("pregamma").toFloat();
 
