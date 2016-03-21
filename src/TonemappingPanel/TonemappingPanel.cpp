@@ -1384,7 +1384,7 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization, float contr
 	query.prepare("INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, saturationFactor, detailFactor, pregamma, comment) "
 				"VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, :detailFactor, :pregamma, :comment)");
 	query.bindValue(":contrastEqualization", contrastEqualization);
-	query.bindValue(":contransFactor", contrastFactor);
+	query.bindValue(":contrastFactor", contrastFactor);
 	query.bindValue(":saturationFactor", saturationFactor);
 	query.bindValue(":detailFactor", detailFactor);
 	query.bindValue(":pregamma", pregamma);

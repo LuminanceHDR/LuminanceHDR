@@ -36,6 +36,8 @@ namespace Ui
     class TonemappingSettings;
 }
 
+enum TMOperator;   // #include "Core/TonemappingOptions.h"
+
 class TonemappingSettings: public QDialog
 {
     Q_OBJECT
@@ -62,6 +64,10 @@ protected Q_SLOTS:
     void sortPreviews(int);
     void tonemapPreview(TonemappingOptions *);
     void on_btnTonemap_clicked();
+
+private:
+	void addPreview(PreviewLabel* previewLabel, const QSqlRecord& record);
+	void fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, float preGamma, TMOperator tOperator, const QSqlRecord& record);
 };
 
 #endif

@@ -405,6 +405,12 @@ int CommandLineInterfaceManager::execCommandLineParams()
         }
     }
 
+	if (loadHdrFilename.isEmpty() && inputFiles.size() == 0)
+	{
+		cout << cmdvisible_options << "\n";
+		return 1;
+	}
+
     QTimer::singleShot(0, this, SLOT(execCommandLineParamsSlot()));
     return 0;
 }
@@ -430,7 +436,6 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
     }
     else
     {
-        printErrorAndExit(tr("Error: You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").arg(loadHdrFilename));
         exit(-1);
     }
 
