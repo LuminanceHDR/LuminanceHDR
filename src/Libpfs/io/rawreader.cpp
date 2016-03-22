@@ -27,11 +27,6 @@
 #include <limits>
 #include <sstream>
 
-#include <QString>
-#include <QFileInfo>
-#include <QDebug>
-#include <QFile>
-
 #include <boost/scoped_ptr.hpp>
 
 #include <Libpfs/frame.h>
@@ -42,6 +37,12 @@
 #include <Libpfs/colorspace/gamma.h>
 
 using namespace pfs;
+
+#ifndef NDEBUG
+#define PRINT_DEBUG(str) std::cerr << "TiffReader: " << str << std::endl
+#else
+#define PRINT_DEBUG(str)
+#endif
 
 namespace pfs {
 namespace io {
@@ -461,21 +462,21 @@ void RAWReader::read(Frame &frame, const Params &params)
     }
 
 #ifndef NDEBUG
-    qDebug() << "Width: " << S.width << " Height: " << S.height;
-    qDebug() << "iWidth: " << S.iwidth << " iHeight: " << S.iheight;
-    qDebug() << "Make: " << P1.make;
-    qDebug() << "Model: " << P1.model;
-    qDebug() << "ISO: " << P2.iso_speed;
-    qDebug() << "Shutter: " << P2.shutter;
-    qDebug() << "Aperture: " << P2.aperture;
-    qDebug() << "Focal Length: " << P2.focal_len;
+    PRINT_DEBUG("Width: " << S.width << " Height: " << S.height);
+    PRINT_DEBUG("iWidth: " << S.iwidth << " iHeight: " << S.iheight);
+    PRINT_DEBUG("Make: " << P1.make);
+    PRINT_DEBUG("Model: " << P1.model);
+    PRINT_DEBUG("ISO: " << P2.iso_speed);
+    PRINT_DEBUG("Shutter: " << P2.shutter);
+    PRINT_DEBUG("Aperture: " << P2.aperture);
+    PRINT_DEBUG("Focal Length: " << P2.focal_len);
 #endif
 
     libraw_processed_image_t *image = m_processor.dcraw_make_mem_image();
 
     if (!image) // ret != LIBRAW_SUCCESS ||
     {
-        qDebug() << "Memory Error in processing RAW File";
+        PRINT_DEBUG("Memory Error in processing RAW File");
         m_processor.recycle();
         throw pfs::io::ReadException("Memory Error in processing RAW File");
     }
@@ -498,8 +499,8 @@ void RAWReader::read(Frame &frame, const Params &params)
                      Xc->begin(), Yc->begin(), Zc->begin(),
                      colorspace::Gamma<pfs::colorspace::Gamma1_8>());
 
-    qDebug() << "Data size: " << image->data_size << " " << W*H*3*sizeof(uint16_t);
-    qDebug() << "W: " << W << " H: " << H;
+    PRINT_DEBUG("Data size: " << image->data_size << " " << W*H*3*sizeof(uint16_t));
+    PRINT_DEBUG("W: " << W << " H: " << H);
 
     LibRaw::dcraw_clear_mem(image);
     m_processor.recycle();

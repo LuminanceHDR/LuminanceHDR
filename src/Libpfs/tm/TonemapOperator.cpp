@@ -29,10 +29,9 @@
  *
  */
 
-#include <QMutex>
-
 #include <map>
 #include <boost/assign.hpp>
+#include <boost/thread/mutex.hpp>
 
 #include "TonemappingOperators/pfstmo.h"
 
@@ -88,10 +87,10 @@ public:
 private:
     // It may be removed, because the issue in the race condition of the
     // operator has been solved
-    static QMutex m_mutex;
+    static boost::mutex m_mutex;
 };
 
-QMutex TonemapOperatorMantiuk06::m_mutex;   // static member
+boost::mutex TonemapOperatorMantiuk06::m_mutex;   // static member
 
 struct TonemapOperatorMantiuk08
         : public TonemapOperatorRegister<mantiuk08, TonemapOperatorMantiuk08>
@@ -194,10 +193,10 @@ class TonemapOperatorDurand02
     }
 
 private:
-    static QMutex m_mutex;
+    static boost::mutex m_mutex;
 };
 
-QMutex TonemapOperatorDurand02::m_mutex;
+boost::mutex TonemapOperatorDurand02::m_mutex;
 
 
 struct TonemapOperatorReinhard02
@@ -235,10 +234,10 @@ struct TonemapOperatorReinhard02
     }
 
 private:
-    static QMutex m_mutex;
+    static boost::mutex m_mutex;
 };
 
-QMutex TonemapOperatorReinhard02::m_mutex;
+boost::mutex TonemapOperatorReinhard02::m_mutex;
 
 struct TonemapOperatorReinhard05
         : public TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05>
