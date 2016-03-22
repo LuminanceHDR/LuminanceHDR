@@ -90,7 +90,7 @@ ENDIF()
 IF(WIN32)
     SET(Boost_USE_STATIC_LIBS ON)
 ENDIF()
-FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options system)
+FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options thread chrono system date_time)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 FIND_PACKAGE(exiv2 REQUIRED)
