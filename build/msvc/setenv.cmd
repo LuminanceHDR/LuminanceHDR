@@ -2,11 +2,11 @@
 SET CYGWIN_DIR=C:\cygwin64
 SET TEMP_DIR=.downloaddir
 rem SET CMAKE_DIR=C:\Data\Programs\cmake-2.8.12.1-win32-x86
-SET CMAKE_DIR=C:\Data\Programs\cmake-3.2.2-win32-x86
+SET CMAKE_DIR=C:\Data\Programs\cmake-3.4.1-win32-x86
 
 SET VISUAL_STUDIO_VC_REDIST=C:\Program Files (x86)\%VS_PROG_FILES%\VC\redist\%RawPlatform%
 rem SET QTDIR=C:\Data\Develop\Qt\5.0.1-x64\qtbase
-SET QTDIR=C:\Data\Dev\Qt\5.5\msvc2013_64
+SET QTDIR=C:\Data\Dev\Qt5.6.0\5.6\msvc2015_64
 SET SVN_DIR=C:\Data\Programs\Apache-Subversion-1.8.13\bin
 
 REM Options:  -------------------------------------------
