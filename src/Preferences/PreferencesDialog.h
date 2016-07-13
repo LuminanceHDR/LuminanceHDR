@@ -103,9 +103,9 @@ private Q_SLOTS:
 
     void on_exportFileButton_clicked();
 
-    void on_camera_pushButton_clicked();
-    void on_monitor_pushButton_clicked();
-    void on_printer_pushButton_clicked();
+    void on_camera_toolButton_clicked();
+    void on_monitor_toolButton_clicked();
+    void on_printer_toolButton_clicked();
 
 	void toolButton_clicked(int);
 

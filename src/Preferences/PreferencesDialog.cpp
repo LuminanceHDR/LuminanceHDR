@@ -718,17 +718,17 @@ void PreferencesDialog::enterWhatsThis()
 	QWhatsThis::enterWhatsThisMode();
 }
 
-void PreferencesDialog::on_camera_pushButton_clicked()
+void PreferencesDialog::on_camera_toolButton_clicked()
 {
     openColorProfile(m_Ui->camera_lineEdit);
 }
 
-void PreferencesDialog::on_monitor_pushButton_clicked()
+void PreferencesDialog::on_monitor_toolButton_clicked()
 {
     openColorProfile(m_Ui->monitor_lineEdit);
 }
 
-void PreferencesDialog::on_printer_pushButton_clicked()
+void PreferencesDialog::on_printer_toolButton_clicked()
 {
     openColorProfile(m_Ui->printer_lineEdit);
 }

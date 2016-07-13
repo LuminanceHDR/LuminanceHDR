@@ -158,10 +158,11 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 	setupLocalUI();
 
     //m_Ui->textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
-    connect(m_Ui->textBrowser, SIGNAL(linkClicked(const QUrl &)), this, SLOT(handleExternalLink(const QUrl &)));
+    //connect(m_Ui->textBrowser, SIGNAL(linkClicked(const QUrl &)), this, SLOT(handleExternalLink(const QUrl &)));
     connect(m_Ui->textBrowser, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
     connect(m_Ui->textBrowser, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
-    connect(m_Ui->textBrowser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
+    //connect(m_Ui->textBrowser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
+    connect(m_Ui->textBrowser->page(), SIGNAL(linkHovered(const QString &)), this, SLOT(linkHovered(const QString &)));
 
 	language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
    	finalBaseDir = LuminancePaths::HelpDir();
@@ -758,6 +759,6 @@ void HelpBrowser::loadFinished(bool) {
 	statusBar()->showMessage("");
 }
 
-void HelpBrowser::linkHovered (const QString &link, const QString &, const QString &) {
-	statusBar()->showMessage(link);
+void HelpBrowser::linkHovered (const QString &url) {
+	statusBar()->showMessage(url);
 }

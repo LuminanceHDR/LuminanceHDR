@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>HelpSideBar</class>
- <widget class="QDockWidget" name="HelpSideBar" >
-  <property name="geometry" >
+ <widget class="QDockWidget" name="HelpSideBar">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,47 +10,47 @@
     <height>300</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>Contents</string>
+  <property name="windowTitle">
+   <string>&amp;Contents</string>
   </property>
-  <widget class="QWidget" name="dockWidgetContents" >
-   <layout class="QGridLayout" name="gridLayout" >
-    <item row="0" column="0" >
-     <widget class="QTabWidget" name="tabWidget" >
-      <property name="currentIndex" >
-       <number>0</number>
+  <widget class="QWidget" name="dockWidgetContents">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>2</number>
       </property>
-      <widget class="QWidget" name="tabContents" >
-       <attribute name="title" >
+      <widget class="QWidget" name="tabContents">
+       <attribute name="title">
         <string>&amp;Contents</string>
        </attribute>
-       <layout class="QVBoxLayout" >
+       <layout class="QVBoxLayout">
         <item>
-         <widget class="QTreeView" name="listView" >
-          <property name="verticalScrollBarPolicy" >
+         <widget class="QTreeView" name="listView">
+          <property name="verticalScrollBarPolicy">
            <enum>Qt::ScrollBarAsNeeded</enum>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tabSearching" >
-       <attribute name="title" >
+      <widget class="QWidget" name="tabSearching">
+       <attribute name="title">
         <string>Se&amp;arch</string>
        </attribute>
-       <layout class="QVBoxLayout" name="_2" >
+       <layout class="QVBoxLayout" name="_2">
         <item>
-         <layout class="QHBoxLayout" name="_3" >
+         <layout class="QHBoxLayout" name="_3">
           <item>
-           <widget class="QLineEdit" name="searchingEdit" >
-            <property name="toolTip" >
+           <widget class="QLineEdit" name="searchingEdit">
+            <property name="toolTip">
              <string>Searching is case insensitive</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="searchingButton" >
-            <property name="text" >
+           <widget class="QPushButton" name="searchingButton">
+            <property name="text">
              <string>&amp;Search</string>
             </property>
            </widget>
@@ -57,9 +58,9 @@
          </layout>
         </item>
         <item>
-         <widget class="QTreeWidget" name="searchingView" >
+         <widget class="QTreeWidget" name="searchingView">
           <column>
-           <property name="text" >
+           <property name="text">
             <string>1</string>
            </property>
           </column>
@@ -67,47 +68,47 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tabBookmarks" >
-       <attribute name="title" >
+      <widget class="QWidget" name="tabBookmarks">
+       <attribute name="title">
         <string>Book&amp;marks</string>
        </attribute>
-       <layout class="QVBoxLayout" name="_4" >
+       <layout class="QVBoxLayout" name="_4">
         <item>
-         <widget class="QTreeWidget" name="bookmarksView" >
+         <widget class="QTreeWidget" name="bookmarksView">
           <column>
-           <property name="text" >
+           <property name="text">
             <string>1</string>
            </property>
           </column>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="_5" >
+         <layout class="QHBoxLayout" name="_5">
           <item>
-           <widget class="QPushButton" name="bookmarkButton" >
-            <property name="text" >
+           <widget class="QPushButton" name="bookmarkButton">
+            <property name="text">
              <string>&amp;Add</string>
             </property>
-            <property name="icon" >
-             <iconset resource="../../icons.qrc" >
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="deleteBookmarkButton" >
-            <property name="text" >
+           <widget class="QPushButton" name="deleteBookmarkButton">
+            <property name="text">
              <string>&amp;Remove</string>
             </property>
-            <property name="icon" >
-             <iconset resource="../../icons.qrc" >
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="deleteAllBookmarkButton" >
-            <property name="text" >
+           <widget class="QPushButton" name="deleteAllBookmarkButton">
+            <property name="text">
              <string>R&amp;emove All</string>
             </property>
            </widget>
@@ -122,24 +123,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="../../icons.qrc" />
+  <include location="../../icons.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>selected(QString)</signal>
-   <receiver>HelpSideBar</receiver>
-   <slot>setWindowTitle(QString)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>52</x>
-     <y>41</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>75</x>
-     <y>8</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

@@ -37,7 +37,7 @@
 
 //----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
 // all is used by SavedParametersDialog to select comments from all operators
-enum TMOperator
+enum TMOperator : unsigned short
 {
     mantiuk06 = 0,
     mantiuk08 = 1,

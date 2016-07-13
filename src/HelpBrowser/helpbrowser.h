@@ -207,7 +207,7 @@ protected slots:
 	
 	/*! \brief Restore Default Cursor */
 	void loadFinished(bool);
-	void linkHovered (const QString &, const QString &, const QString & );
+	void linkHovered (const QString &);
 signals:
 	void closed();
 
