@@ -104,7 +104,7 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
     hdrcreationconfig.fusionOperator = DEBEVEC;
 
-	tmofileparams->set("quality", 100);
+	tmofileparams->set("quality", (size_t)100);
 }
 
 int CommandLineInterfaceManager::execCommandLineParams()
@@ -148,7 +148,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
 
     po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
     tmo_desc.add_options()
-        ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
+        ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
         ("tmofile", po::value<std::string>(),   tr("SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings").toUtf8().constData())
     ;
 
@@ -159,6 +159,11 @@ int CommandLineInterfaceManager::execCommandLineParams()
 		("tmoFatColor", po::value<float>(&tmopts->operator_options.fattaloptions.color),  tr("color FLOAT").toUtf8().constData())
 		("tmoFatNoise", po::value<float>(&tmopts->operator_options.fattaloptions.noiseredux),  tr("noise FLOAT").toUtf8().constData())
 		("tmoFatNew", po::value<bool>(&tmopts->operator_options.fattaloptions.newfattal), tr("new true|false").toUtf8().constData())
+    ;
+    po::options_description tmo_ferradans(tr(" Ferradans").toUtf8().constData());
+    tmo_ferradans.add_options()
+		("tmoFerRho", po::value<float>(&tmopts->operator_options.ferradansoptions.rho),  tr("rho FLOAT").toUtf8().constData())
+		("tmoFerInvAlpha", po::value<float>(&tmopts->operator_options.ferradansoptions.inv_alpha),  tr("inv_alpha FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_mantiuk06(tr(" Mantiuk 06").toUtf8().constData());
     tmo_mantiuk06.add_options()
@@ -215,6 +220,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
     ;
 
     tmo_desc.add(tmo_fattal);
+    tmo_desc.add(tmo_ferradans);
     tmo_desc.add(tmo_mantiuk06);
     tmo_desc.add(tmo_mantiuk08);
     tmo_desc.add(tmo_durand);
@@ -314,6 +320,8 @@ int CommandLineInterfaceManager::execCommandLineParams()
             	tmopts->tmoperator=durand;
             else if (strcmp(value,"fattal")==0)
             	tmopts->tmoperator=fattal;
+            else if (strcmp(value,"ferradans")==0)
+            	tmopts->tmoperator=ferradans;
             else if (strcmp(value,"pattanaik")==0)
             	tmopts->tmoperator=pattanaik;
             else if (strcmp(value,"reinhard02")==0)
