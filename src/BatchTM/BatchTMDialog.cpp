@@ -645,6 +645,17 @@ void BatchTMDialog::from_database()
 					tm_opt->pregamma = query.value(5).toFloat();
 				}
 			}
+			else if (tmOperator == "ferradans") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = ferradans;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.ferradansoptions.rho = query.value(0).toFloat();
+					tm_opt->operator_options.ferradansoptions.inv_alpha = query.value(1).toFloat();
+					tm_opt->pregamma = query.value(2).toFloat();
+				}
+			}
 			else if (tmOperator == "mantiuk06") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
 				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
