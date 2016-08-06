@@ -63,6 +63,9 @@ protected:
             *noiseGang,
             // *oldFattalGang,
             *fftSolverGang,
+            // ferrands11
+            *rhoGang,
+            *inv_alphaGang,
             // ashikhmin02
             *contrastGang,
             *simpleGang,
@@ -141,6 +144,7 @@ protected Q_SLOTS:
 	void execDragoQuery(float, QString);
 	void execDurandQuery(float, float, float, QString);
 	void execFattalQuery(float, float, float, float, bool, QString);
+	void execFerradansQuery(float, float, QString);
 	void execPattanaikQuery(bool, bool, float, float, float, QString);
 	void execReinhard02Query(bool, float, float, int, int, int, QString);
 	void execReinhard05Query(float, float, float, QString);

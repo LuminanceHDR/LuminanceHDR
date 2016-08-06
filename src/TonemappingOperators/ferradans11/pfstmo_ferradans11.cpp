@@ -1,0 +1,70 @@
+/**
+ * @file pfstmo_ferradans11.cpp
+ * @brief Tone map RGB channels using Ferradans11 model
+ *
+ * An Analysis of Visual Adaptation and Contrast Perception for Tone Mapping
+ * S. Ferradans, M. Bertalmio, E. Provenzi, V. Caselles
+ * In IEEE Trans. Pattern Analysis and Machine Intelligence 2011
+ *
+ * 
+ * This file is a part of LuminanceHDR package, based on pfstmo.
+ * ---------------------------------------------------------------------- 
+ * Copyright (C) 2013 Sira Ferradans
+ * 
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * ---------------------------------------------------------------------- 
+ * 
+ * @author Sira Ferradans,
+ *
+ */
+#include <sstream>
+
+#include "Imagen.h"
+#include "tmo_ferradans11.h"
+#include "Libpfs/frame.h"
+#include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/exception.h"
+#include "Libpfs/progress.h"
+
+void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, pfs::Progress &ph)
+{
+
+    //--- default tone mapping parameters;
+    //float rho = -2;
+    //float inv_alpha = 5;
+    
+#ifndef NDEBUG
+  std::stringstream ss;
+  ss << "pfstmo_ferradans11 (";
+  ss << "rho: " << opt_rho;
+  ss << ", inv_alpha: " << opt_inv_alpha << ")";
+  std::cout << ss.str() << std::endl;
+#endif
+
+    pfs::Channel *inX, *inY, *inZ;
+    frame.getXYZChannels( inX, inY, inZ );
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
+    //---
+
+    if( inY==NULL || inX==NULL || inZ==NULL)
+      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+        
+    // tone mapping
+      int w = frame.getWidth();
+      int h  = frame.getHeight();
+
+      tmo_ferradans11(w, h, inX->data(), inY->data(), inZ->data(), opt_rho, opt_inv_alpha, ph);
+}
+

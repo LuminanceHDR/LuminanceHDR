@@ -79,7 +79,7 @@ public:
  * must be freed by the calling application using the 'delete'
  * statement.
  */
-std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfs::Progress &ph );
+std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfs::Progress &ph );
 
 
 /**

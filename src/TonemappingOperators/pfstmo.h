@@ -52,6 +52,7 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
 void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress& ph);
 void pfstmo_durand02(pfs::Frame& frame, float sigma_s, float sigma_r, float baseContrast, pfs::Progress &ph);
 void pfstmo_fattal02(pfs::Frame& frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal, bool fftsolver, int detail_level, pfs::Progress &ph);
+void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, pfs::Progress &ph);
 void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, pfs::Progress &ph);
 void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, pfs::Progress &ph);
 void pfstmo_pattanaik00(pfs::Frame& frame, bool local, float multiplier, float Acone, float Arod, bool autolum, pfs::Progress &ph);

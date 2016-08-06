@@ -197,6 +197,25 @@ void TonemappingSettings::fillPreviews()
 		addPreview(new PreviewLabel(0, tmoFattal, index++), m_modelPreviews->record(selectedRow));
     }
 
+    sqlQuery = "SELECT *, 'ferradans' AS operator FROM ferradans";
+    m_modelPreviews->setQuery(sqlQuery);
+
+    float rho,
+           inv_alpha;
+    
+    for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
+        TonemappingOptions *tmoFerradans = new TonemappingOptions;
+		rho          = m_modelPreviews->record(selectedRow).value("rho").toFloat();
+		inv_alpha    = m_modelPreviews->record(selectedRow).value("inv_alpha").toFloat();
+
+		fillCommonValues(tmoFerradans, origxsize, PREVIEW_WIDTH, ferradans, m_modelPreviews->record(selectedRow));
+
+		tmoFerradans->operator_options.ferradansoptions.rho = rho;
+        tmoFerradans->operator_options.ferradansoptions.inv_alpha = inv_alpha;
+
+		addPreview(new PreviewLabel(0, tmoFerradans, index++), m_modelPreviews->record(selectedRow));
+    }
+
     sqlQuery = "SELECT *, 'mantiuk06' AS operator FROM mantiuk06";
     m_modelPreviews->setQuery(sqlQuery);
 

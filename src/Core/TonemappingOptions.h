@@ -42,12 +42,13 @@ enum TMOperator : unsigned short
     mantiuk06 = 0,
     mantiuk08 = 1,
     fattal = 2,
-    drago = 3,
-    durand = 4,
-    reinhard02 = 5,
-    reinhard05 = 6,
-    ashikhmin = 7,
-    pattanaik = 8
+    ferradans = 3,
+    drago = 4,
+    durand = 5,
+    reinhard02 = 6,
+    reinhard05 = 7,
+    ashikhmin = 8,
+    pattanaik = 9,
 };
 
 class TonemappingOptions
@@ -83,6 +84,10 @@ public:
             bool newfattal;
             bool fftsolver;
         } fattaloptions;
+        struct {
+            float rho;
+            float inv_alpha;
+        } ferradansoptions;
         struct {
             bool  autolum;
             bool  local;
