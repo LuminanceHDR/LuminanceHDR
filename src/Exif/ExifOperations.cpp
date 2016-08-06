@@ -354,9 +354,9 @@ float getExposureTime(const std::string& filename)
 
         Exiv2::ExifData::const_iterator iexpo = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureTime"));
         Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue"));
-        Exiv2::ExifData::const_iterator iiso  = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"));
-        Exiv2::ExifData::const_iterator ifnum = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"));
-        Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"));
+        //Exiv2::ExifData::const_iterator iiso  = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"));
+        //Exiv2::ExifData::const_iterator ifnum = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"));
+        //Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"));
 
         float expo  = -1;
 

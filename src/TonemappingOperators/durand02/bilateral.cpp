@@ -58,8 +58,8 @@ void gaussianKernel( pfs::Array2Df *kern, float sigma )
     float sigma2Sqr = 2.0f * sigma * sigma;
     int col_2 = kern->getCols() / 2;
     int row_2 = kern->getRows() / 2;
-    for( int y = 0; y < kern->getRows(); y++ ) {
-        for( int x = 0; x < kern->getCols(); x++ ) {
+    for(unsigned int y = 0; y < kern->getRows(); y++ ) {
+        for(unsigned int x = 0; x < kern->getCols(); x++ ) {
             float rx = (float)(x - col_2);
             float ry = (float)(y - row_2);
             float d2 = rx*rx + ry*ry;
@@ -114,11 +114,11 @@ void bilateralFilter(const pfs::Array2Df *I, pfs::Array2Df *J,
     gaussianKernel( &sKernel, sigma_s );
     GaussLookup gauss( sigma_r, 256 );
 
-    for( int y = 0; y < I->getRows(); y++ )
+    for(unsigned int y = 0; y < I->getRows(); y++ )
     {
         ph.setValue( y * 100 / I->getRows() );
 
-        for( int x = 0; x < I->getCols(); x++ )
+        for(unsigned int x = 0; x < I->getCols(); x++ )
         {
             float val = 0;
             float k = 0;
