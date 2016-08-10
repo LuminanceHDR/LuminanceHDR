@@ -30,28 +30,29 @@
  * 
  */
 
-#include <vector>
 #include <algorithm>
 
+#include <math.h>
 #include <fftw3.h>
 #include <assert.h>
-
-#include "Imagen.h"
 
 #include <cstring>
 #include <iostream>
 
 #include <stdlib.h>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/progress.h"
 #include "Libpfs/utils/msec_timer.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "tmo_ferradans11.h"
-
-
+#include <cmath>
+ 
 using namespace std;
-
+using namespace pfs;
 
 //for debugging purposes
 #if 0
@@ -80,7 +81,12 @@ static void dumpPFS( const char *fileName, const pfstmo::Array2D *data, const ch
 
 //--------------------------------------------------------------------
 
+namespace {
 
+static bool abs_compare(float a, float b)
+{
+    return fabs(a) < fabs(b);
+}
 /*Implementation, hardcoded of the R function */
 float apply_arctg_slope10(float Ip,float I,float I2,float I3,float I4,float I5,float I6,float I7)
 {
@@ -111,7 +117,7 @@ float apply_arctg_slope10(float Ip,float I,float I2,float I3,float I4,float I5,f
 #define ELEM_SWAP(a,b) { register float t=(a);(a)=(b);(b)=t; }
 //#define ELEM_SWAP(a,b) { register float t=a;a=b;b=t; }
 
-double quick_select(float arr[], int n)
+float quick_select(float arr[], int n)
 {
     int low, high ;
     int median;
@@ -163,76 +169,189 @@ double quick_select(float arr[], int n)
 
 #undef ELEM_SWAP
 
-void tmo_ferradans11(int col,int fil,float* imR, float* imG, float* imB, float rho, float invalpha, pfs::Progress &ph){
+float medval(float a[], int length)
+{
+    return accumulate(a, a+length, 0.f)/(float)length;
+}
+
+float MSE(float Im1[], float Im2[], int largo, float escala)
+{
+    float res=0.f;
+    float tmp;
+    float v=1.f/escala;
+    float v2=1.f;
+    int i;
+    #pragma omp for private(i)
+    for(i=0;i<largo;i++)
+    {
+        tmp=(Im1[i])*v-(Im2[i])*v2;
+        tmp=fabs(tmp);
+        res+=tmp;
+    }
+    return(res/largo);
+    
+}
+
+
+void producto(fftwf_complex* A, fftwf_complex* B,fftwf_complex* AB, int fil, int col)
+{
+  //  int length=fil*(col/2+1);
+    //fftw_complex* C= (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * length);
+    int length=fil*col;
+    
+    int i;
+    #pragma omp for private(i)
+    for (i = 0; i < length; i++)
+    {
+        AB[i][0] = (A[i][0] * B[i][0] - A[i][1] * B[i][1]);
+        AB[i][1] = (A[i][0] * B[i][1] + A[i][1] * B[i][0]);
+    }
+    
+    
+}
+
+void nucleo_gaussiano(float res[], int fil, int col, float sigma)
+{
+    float normaliza=1.0/(sqrt(2*M_PI)*sigma+1e-6);
+    int mitfil=fil/2;
+    int mitcol=col/2;
+    int i, j;
+    #pragma omp for private(i,j)
+    for(i=0;i<fil;i++)
+        for(j=0;j<col;j++)
+            res[i*col+j]=normaliza*exp( -((i-mitfil)*(i-mitfil)+(j-mitcol)*(j-mitcol) )/(2*sigma*sigma) );
+    
+}
+
+void escala(float a[], int largo, float maxv, float minv)
+{
+    float M=*max_element(a, a+largo);
+    float m=*min_element(a, a+largo);
+    
+    float R;
+    float s=(maxv-minv)/(M-m);
+    int i;
+    #pragma omp for private(i)
+    for(i=0;i<largo;i++)
+    {
+        R=a[i];
+        a[i]=minv+s*(R-m);
+    }
+}
+
+// Related to fft
+void fftshift(float a[], int fil, int col)
+{
+    float tmp;
+    
+    int i, j;
+    #pragma omp for private(i,j)
+    for( i=0;i<fil/2;i++)
+        for(j=0;j<col/2;j++)
+        {
+            tmp=a[i*col+j];
+            a[i*col+j]=a[(i+fil/2)*col+j+col/2];
+            a[(i+fil/2)*col+j+col/2]=tmp;
+            tmp=a[(i+fil/2)*col+j];
+            a[(i+fil/2)*col+j]=a[i*col+j+col/2];
+            a[i*col+j+col/2]=tmp;
+        }
+}
+
+}
+void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB, float rho, float invalpha, pfs::Progress &ph){
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
+  // activate parallel execution of fft routines
+  fftwf_init_threads();
+#ifdef _OPENMP
+  fftwf_plan_with_nthreads( omp_get_max_threads() );
+#else
+  fftwf_plan_with_nthreads( 2 );
+#endif
 
+    ph.setValue(0);
+
+    int fil=imR.getRows();
+    int col=imR.getCols();
     int length=fil*col;
     int colors=3;
     float dt=0.2;//1e-1;//
     float threshold_diff=dt/20.0;//1e-5;//
     
-    
-    Imagen RGBorig[3],*pIm;
-    
-    pIm = new Imagen(fil,col);
-    for (int c =0;c<3;c++){
-        RGBorig[c] = *pIm;
-        
-    }
-    
-    ph.setValue(2);
-    if (ph.canceled()) return;
 
-    for(int i=0;i<length;i++){
-        RGBorig[0].datos[i] = (double)max(imR[i],0);
-        RGBorig[1].datos[i] = (double)max(imG[i],0);
-        RGBorig[2].datos[i] = (double)max(imB[i],0);
-    }
+    float *RGBorig[3];
+    RGBorig[0] = new float[length];
+    RGBorig[1] = new float[length];
+    RGBorig[2] = new float[length];
     
-    delete(pIm);
+    int i;
+    #pragma omp for private(i)
+    for(i=0;i<length;i++){
+        RGBorig[0][i] = (float)max(imR(i), 0.f);
+        RGBorig[1][i] = (float)max(imG(i), 0.f);
+        RGBorig[2][i] = (float)max(imB(i), 0.f);
+    }
     
     ///////////////////////////////////////////
     
-    Imagen RGB[3];
+    ph.setValue(10);
+
+    float *RGB[3];
+    RGB[0] = new float[length];
+    RGB[1] = new float[length];
+    RGB[2] = new float[length];
     
     int iteration=0;
     float difference=1000.0;
     
     float med[3];
-    
-    Imagen aux;
+    float *aux = new float[length];
     float median,mu[3];
     
     for(int k=0;k<3;k++)
     {
-        RGBorig[k]+=1e-6;
-        aux=RGBorig[k];
-        median=quick_select(aux.datos,length);
-        mu[k]=pow(aux.medval(),0.5)*pow(median,0.5);
-        
-        RGB[k]=RGBorig[k] ;
-    }
-    
-    ph.setValue(5);
-    if (ph.canceled()) return;
+        int i;
+        #pragma omp for private(i)
+        for(i = 0; i < length; i++)
+              RGBorig[k][i] += 1e-6;
 
+        copy(RGBorig[k], RGBorig[k]+length, aux);
+        median=quick_select(aux, length);
+        float mdval = medval(aux, length);
+        mu[k]=pow(mdval,0.5)*pow(median,0.5);
+        copy(RGBorig[k], RGBorig[k]+length, RGB[k]);
+    }
+    delete[] aux;
+
+    ph.setValue(15);
+    if (ph.canceled()){
+        delete[] RGBorig[0];
+        delete[] RGBorig[1];
+        delete[] RGBorig[2];
+        delete[] RGB[0];
+        delete[] RGB[1];
+        delete[] RGB[2];
+        return;
+    }
+
+    ////
+    
     // SEMISATURATION CONSTANT SIGMA DEPENDS ON THE ILUMINATION
     // OF THE BACKGROUND. DATA IN TABLA1 FROM VALETON+VAN NORREN.
     // TAKE AS REFERENCE THE CHANNEL WITH MAXIMUM ILUMINATION.
+    //float muMax=max(max(mu[0],mu[1]),mu[2]);
     for(int k=0;k<3;k++)
     {
         //MOVE log(mu) EQUALLY FOR THE 3 COLOR CHANNELS: rho DOES NOT CHANGE
         //PARAMETER OF OUR ALGORITHM
-        float z= - 0.37*(log10(mu[k])+4-rho) + 1.9;
+        //float x=log10(muMax)-log10(mu[k]);
+        float z=- 0.37*(log10(mu[k])+4-rho) + 1.9;
         mu[k]*=pow(10,z);
     }
     
-    ph.setValue(10);
-    if (ph.canceled()) return;
-
     
     // VALETON + VAN NORREN:
     // range = 4 orders; r is half the range
@@ -253,127 +372,284 @@ void tmo_ferradans11(int col,int fil,float* imR, float* imG, float* imB, float r
             K_= 100.0/8.7;
         float Ir=pow(10,logs+r);
         float mKlogc=pow(Ir,n)/(pow(Ir,n)+pow(mu[k],n))-K_*log10(Ir+I0);
-    
+        
         //mix W-F and N-R
-        for(int d=0;d<length;d++)
+        int i;
+        #pragma omp for private(i)
+        for(i=0;i<length;i++)
       	{
-            float x=log10(RGBorig[k].datos[d]);
-            float In= pow(RGBorig[k].datos[d],n);
+            float x=log10(RGBorig[k][i]);
+            float In= pow(RGBorig[k][i],n);
             //float srn=pow(pow(10,logs+r),n);
             // before logs+r apply W-F, after N-R
             if(x<=logs+r)
-                RGB[k].datos[d]=K_*log10( RGBorig[k].datos[d] + I0)+mKlogc;
+               RGB[k][i]=K_*log10( RGBorig[k][i] + I0)+mKlogc;
             else
-                RGB[k].datos[d]= In/(In+sigma_n);
+               RGB[k][i]= In/(In+sigma_n);
             
       	}
         
-        float minmez=RGB[k].minval();
-        RGB[k]+= -minmez;
-        float escalamez=1.0/(RGB[k].maxval()+1e-12);
-        RGB[k]*=escalamez;
-        
-    }
-    
-    ph.setValue(15);
-    if (ph.canceled()) return;
+        float minmez=*min_element(RGB[k],RGB[k]+length);
+        #pragma omp for private(i)
+        for(i = 0; i < length; i++)
+              RGB[k][i] -= minmez;
 
-    for(int color=0;color<colors;color++)
-    {
-        RGBorig[color]=RGB[color];
-        med[color]=RGB[color].medval();
+        float escalamez=1.f/(*max_element(RGB[k],RGB[k]+length)+1e-12);
+        #pragma omp for private(i)
+        for(i = 0; i < length; i++)
+              RGB[k][i] *= escalamez;
     }
     
-    Imagen RGB0=RGB[0];
-    Imagen u=RGB[0];
-    Imagen u0=RGB[0];
-    Imagen u2=RGB[0];
-    Imagen u3=RGB[0];
-    Imagen u4=RGB[0];
-    Imagen u5=RGB[0];
-    Imagen u6=RGB[0];
-    Imagen u7=RGB[0];
-    Imagen I0= RGB0;
-    Imagen ut= RGB0;
+    ph.setValue(20);
+    if (ph.canceled()){
+        delete[] RGBorig[0];
+        delete[] RGBorig[1];
+        delete[] RGBorig[2];
+        delete[] RGB[0];
+        delete[] RGB[1];
+        delete[] RGB[2];
+        return;
+    }
+
+    int color;
+    #pragma omp for private(color)
+    for(color=0;color<colors;color++)
+    {
+        copy(RGB[color], RGB[color]+length, RGBorig[color]);
+        med[color]=medval(RGB[color], length);
+    }
     
-    
+    float *RGB0 = fftwf_alloc_real(length);
+    float *u0 = fftwf_alloc_real(length);
+    float *u2 = fftwf_alloc_real(length);
+    float *u3 = fftwf_alloc_real(length);
+    float *u4 = fftwf_alloc_real(length);
+    float *u5 = fftwf_alloc_real(length);
+    float *u6 = fftwf_alloc_real(length);
+    float *u7 = fftwf_alloc_real(length);
+
+    copy(RGB[0], RGB[0]+length, RGB0);
+    copy(RGB[0], RGB[0]+length, u0);
+    copy(RGB[0], RGB[0]+length, u2);
+    copy(RGB[0], RGB[0]+length, u3);
+    copy(RGB[0], RGB[0]+length, u4);
+    copy(RGB[0], RGB[0]+length, u5);
+    copy(RGB[0], RGB[0]+length, u6);
+    copy(RGB[0], RGB[0]+length, u7);
+
     fftwf_complex* U = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
-    fftwf_plan pU = fftwf_plan_dft_r2c_2d(fil, col, u0.datos, U,FFTW_ESTIMATE);
+    fftwf_plan pU = fftwf_plan_dft_r2c_2d(fil, col, u0, U,FFTW_ESTIMATE);
     fftwf_complex* U2 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
-    fftwf_plan pU2 = fftwf_plan_dft_r2c_2d(fil, col, u2.datos, U2,FFTW_ESTIMATE);
+    fftwf_plan pU2 = fftwf_plan_dft_r2c_2d(fil, col, u2, U2,FFTW_ESTIMATE);
     fftwf_complex* U3 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
-    fftwf_plan pU3 = fftwf_plan_dft_r2c_2d(fil, col, u3.datos, U3,FFTW_ESTIMATE);
+    fftwf_plan pU3 = fftwf_plan_dft_r2c_2d(fil, col, u3, U3,FFTW_ESTIMATE);
     fftwf_complex* U4 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
-    fftwf_plan pU4 = fftwf_plan_dft_r2c_2d(fil, col, u4.datos, U4,FFTW_ESTIMATE);
+    fftwf_plan pU4 = fftwf_plan_dft_r2c_2d(fil, col, u4, U4,FFTW_ESTIMATE);
     
     fftwf_complex* U5 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
-    fftwf_plan pU5 = fftwf_plan_dft_r2c_2d(fil, col, u5.datos, U5,FFTW_ESTIMATE);
+    fftwf_plan pU5 = fftwf_plan_dft_r2c_2d(fil, col, u5, U5,FFTW_ESTIMATE);
     fftwf_complex* U6 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
-    fftwf_plan pU6 = fftwf_plan_dft_r2c_2d(fil, col, u6.datos, U6,FFTW_ESTIMATE);
+    fftwf_plan pU6 = fftwf_plan_dft_r2c_2d(fil, col, u6, U6,FFTW_ESTIMATE);
     fftwf_complex* U7 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
-    fftwf_plan pU7 = fftwf_plan_dft_r2c_2d(fil, col, u7.datos, U7,FFTW_ESTIMATE);
+    fftwf_plan pU7 = fftwf_plan_dft_r2c_2d(fil, col, u7, U7,FFTW_ESTIMATE);
     
-    fftwf_complex* UG = new fftwf_complex[fil*col];
-    fftwf_complex* U2G= new fftwf_complex[fil*col];
-    fftwf_complex* U3G= new fftwf_complex[fil*col];
-    fftwf_complex* U4G= new fftwf_complex[fil*col];
-    fftwf_complex* U5G= new fftwf_complex[fil*col];
-    fftwf_complex* U6G= new fftwf_complex[fil*col];
-    fftwf_complex* U7G= new fftwf_complex[fil*col];
+    fftwf_complex* UG  = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
+    fftwf_complex* U2G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
+    fftwf_complex* U3G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
+    fftwf_complex* U4G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
+    fftwf_complex* U5G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
+    fftwf_complex* U6G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
+    fftwf_complex* U7G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
+
+    float *iu = fftwf_alloc_real(length);
+    fftwf_plan pinvU = fftwf_plan_dft_c2r_2d(fil, col, UG, iu, FFTW_ESTIMATE);
+
+    float *iu2 = fftwf_alloc_real(length);
+    fftwf_plan pinvU2 = fftwf_plan_dft_c2r_2d(fil, col, U2G, iu2, FFTW_ESTIMATE);
+
+    float *iu3 = fftwf_alloc_real(length);
+    fftwf_plan pinvU3 = fftwf_plan_dft_c2r_2d(fil, col, U3G, iu3, FFTW_ESTIMATE);
+
+    float *iu4 = fftwf_alloc_real(length);
+    fftwf_plan pinvU4 = fftwf_plan_dft_c2r_2d(fil, col, U4G, iu4, FFTW_ESTIMATE);
+
+    float *iu5 = fftwf_alloc_real(length);
+    fftwf_plan pinvU5 = fftwf_plan_dft_c2r_2d(fil, col, U5G, iu5, FFTW_ESTIMATE);
+
+    float *iu6 = fftwf_alloc_real(length);
+    fftwf_plan pinvU6 = fftwf_plan_dft_c2r_2d(fil, col, U6G, iu6, FFTW_ESTIMATE);
+
+    float *iu7 = fftwf_alloc_real(length);
+    fftwf_plan pinvU7 = fftwf_plan_dft_c2r_2d(fil, col, U7G, iu7, FFTW_ESTIMATE);
     
-    Imagen iu(fil,col,0);
-    fftwf_plan pinvU = fftwf_plan_dft_c2r_2d(fil, col, UG,iu.datos, FFTW_ESTIMATE);
-    Imagen  iu2(fil,col,0);
-    fftwf_plan pinvU2 = fftwf_plan_dft_c2r_2d(fil, col, U2G,iu2.datos, FFTW_ESTIMATE);
-    Imagen  iu3(fil,col,0);
-    fftwf_plan pinvU3 = fftwf_plan_dft_c2r_2d(fil, col, U3G,iu3.datos, FFTW_ESTIMATE);
-    Imagen  iu4(fil,col,0);
-    fftwf_plan pinvU4 = fftwf_plan_dft_c2r_2d(fil, col, U4G,iu4.datos, FFTW_ESTIMATE);
-    Imagen iu5(fil,col,0);
-    fftwf_plan pinvU5 = fftwf_plan_dft_c2r_2d(fil, col, U5G,iu5.datos, FFTW_ESTIMATE);
-    Imagen iu6(fil,col,0);
-    fftwf_plan pinvU6 = fftwf_plan_dft_c2r_2d(fil, col, U6G,iu6.datos, FFTW_ESTIMATE);
-    Imagen iu7(fil,col,0);
-    fftwf_plan pinvU7 = fftwf_plan_dft_c2r_2d(fil, col, U7G,iu7.datos, FFTW_ESTIMATE);
+    float alpha=min(col,fil)/invalpha;
+    float *g = fftwf_alloc_real(length);
+    nucleo_gaussiano(g, fil, col, alpha);
+    escala(g, length, 1.f, 0.f);
     
-    float alpha=min(fil,col)/invalpha;
-    Imagen g;
-    g=nucleo_gaussiano(fil,col,alpha);
-    g.escala(1.0,0.0);
+    fftshift(g, fil, col);
     
-    g.fftshift();
-    
-    float suma=0, norm=1.0/(fil*col);
-    for(int i=0;i<length;i++)
-        suma+=g.datos[i];
-    
-    g*=(1.0/suma); //now integral of the weight sums 1
-    
+    float suma=0.f, norm=1.f/length;
+    suma = accumulate(g, g+length, 0.f);
+
+    float w = (1.0f/suma);
+    #pragma omp for private(i)
+    for(i = 0; i < length; i++)
+        g[i] *= w;
+
     fftwf_complex* G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
-    fftwf_plan pG = fftwf_plan_dft_r2c_2d(fil, col, g.datos, G,FFTW_ESTIMATE);
+    fftwf_plan pG = fftwf_plan_dft_r2c_2d(fil, col, g, G, FFTW_ESTIMATE);
     fftwf_execute(pG);
+    fftwf_destroy_plan(pG);
+
+    fftwf_free(g);
+
+    ph.setValue(30);
+    if (ph.canceled()){
+        delete[] RGBorig[0];
+        delete[] RGBorig[1];
+        delete[] RGBorig[2];
+        delete[] RGB[0];
+        delete[] RGB[1];
+        delete[] RGB[2];
+        fftwf_destroy_plan(pU);
+        fftwf_destroy_plan(pU2);
+        fftwf_destroy_plan(pU3);
+        fftwf_destroy_plan(pU4);
+        fftwf_destroy_plan(pU5);
+        fftwf_destroy_plan(pU6);
+        fftwf_destroy_plan(pU7);
+
+        fftwf_destroy_plan(pinvU);
+        fftwf_destroy_plan(pinvU2);
+        fftwf_destroy_plan(pinvU3);
+        fftwf_destroy_plan(pinvU4);
+        fftwf_destroy_plan(pinvU5);
+        fftwf_destroy_plan(pinvU6);
+        fftwf_destroy_plan(pinvU7);
+
+        fftwf_free(RGB0);
+        fftwf_free(u0);
+        fftwf_free(u2);
+        fftwf_free(u3);
+        fftwf_free(u4);
+        fftwf_free(u5);
+        fftwf_free(u6);
+        fftwf_free(u7);
+
+        fftwf_free(iu);
+        fftwf_free(iu2);
+        fftwf_free(iu3);
+        fftwf_free(iu4);
+        fftwf_free(iu5);
+        fftwf_free(iu6);
+        fftwf_free(iu7);
+
+        fftwf_free(U);
+        fftwf_free(U2);
+        fftwf_free(U3);
+        fftwf_free(U4);
+        fftwf_free(U5);
+        fftwf_free(U6);
+        fftwf_free(U7);
     
-    ph.setValue(25);
-    if (ph.canceled()) return;
+        fftwf_free(UG);
+        fftwf_free(U2G);
+        fftwf_free(U3G);
+        fftwf_free(U4G);
+        fftwf_free(U5G);
+        fftwf_free(U6G);
+        fftwf_free(U7G);
+        return;
+    }
 
     while(difference>threshold_diff)
     {
+        if (ph.canceled()){
+            delete[] RGBorig[0];
+            delete[] RGBorig[1];
+            delete[] RGBorig[2];
+            delete[] RGB[0];
+            delete[] RGB[1];
+            delete[] RGB[2];
+            fftwf_destroy_plan(pU);
+            fftwf_destroy_plan(pU2);
+            fftwf_destroy_plan(pU3);
+            fftwf_destroy_plan(pU4);
+            fftwf_destroy_plan(pU5);
+            fftwf_destroy_plan(pU6);
+            fftwf_destroy_plan(pU7);
+
+            fftwf_destroy_plan(pinvU);
+            fftwf_destroy_plan(pinvU2);
+            fftwf_destroy_plan(pinvU3);
+            fftwf_destroy_plan(pinvU4);
+            fftwf_destroy_plan(pinvU5);
+            fftwf_destroy_plan(pinvU6);
+            fftwf_destroy_plan(pinvU7);
+
+            fftwf_free(RGB0);
+            fftwf_free(u0);
+            fftwf_free(u2);
+            fftwf_free(u3);
+            fftwf_free(u4);
+            fftwf_free(u5);
+            fftwf_free(u6);
+            fftwf_free(u7);
+
+            fftwf_free(iu);
+            fftwf_free(iu2);
+            fftwf_free(iu3);
+            fftwf_free(iu4);
+            fftwf_free(iu5);
+            fftwf_free(iu6);
+            fftwf_free(iu7);
+
+            fftwf_free(U);
+            fftwf_free(U2);
+            fftwf_free(U3);
+            fftwf_free(U4);
+            fftwf_free(U5);
+            fftwf_free(U6);
+            fftwf_free(U7);
+    
+            fftwf_free(UG);
+            fftwf_free(U2G);
+            fftwf_free(U3G);
+            fftwf_free(U4G);
+            fftwf_free(U5G);
+            fftwf_free(U6G);
+            fftwf_free(U7G);
+            return;
+        }
+
         iteration++;
         difference=0.0;
 
         for(int color=0;color<colors;color++)
         {
-            u0=RGB[color];
-            RGB0=RGB[color];
-            
-            u=u0;
-            u2=u; u2*=u;
-            u3=u2;u3*=u;
-            u4=u3;u4*=u;
-            u5=u4;u5*=u;
-            u6=u5;u6*=u;
-            u7=u6;u7*=u;
-            
+
+            copy(RGB[color], RGB[color]+length, u0);
+            copy(RGB[color], RGB[color]+length, RGB0);
+
+            copy(u0, u0+length, u2);
+            transform(u2, u2+length, u0, u2, multiplies<float>());
+
+            copy(u2, u2+length, u3);
+            transform(u3, u3+length, u0, u3, multiplies<float>());
+
+            copy(u3, u3+length, u4);
+            transform(u4, u4+length, u0, u4, multiplies<float>());
+
+            copy(u4, u4+length, u5);
+            transform(u5, u5+length, u0, u5, multiplies<float>());
+
+            copy(u5, u5+length, u6);
+            transform(u6, u6+length, u0, u6, multiplies<float>());
+
+            copy(u6, u6+length, u7);
+            transform(u7, u7+length, u0, u7, multiplies<float>());
+
             fftwf_execute(pU);
             fftwf_execute(pU2);
             fftwf_execute(pU3);
@@ -391,78 +667,147 @@ void tmo_ferradans11(int col,int fil,float* imR, float* imG, float* imB, float r
             producto(U7,G,U7G,fil,col);
             
             fftwf_execute(pinvU);
-            iu *= norm;
-            
-            fftwf_execute(pinvU2);
-            iu2 *= norm;
-            fftwf_execute(pinvU3);
-            iu3 *= norm;
-            fftwf_execute(pinvU4);
-            iu4 *= norm;
-            fftwf_execute(pinvU5);
-            iu5 *= norm;
-            fftwf_execute(pinvU6);
-            iu6 *= norm;
-            fftwf_execute(pinvU7);
-            iu7 *= norm;
+            int i;
+            #pragma omp for private(i)
+            for(i = 0; i < length; i++)
+                iu[i] *= norm;
 
-            for(int i=0;i<length;i++)
+            fftwf_execute(pinvU2);
+            #pragma omp for private(i)
+            for(i = 0; i < length; i++)
+                iu2[i] *= norm;
+
+            fftwf_execute(pinvU3);
+            #pragma omp for private(i)
+            for(i = 0; i < length; i++)
+                iu3[i] *= norm;
+
+            fftwf_execute(pinvU4);
+            #pragma omp for private(i)
+            for(i = 0; i < length; i++)
+                iu4[i] *= norm;
+
+            fftwf_execute(pinvU5);
+            #pragma omp for private(i)
+            for(i = 0; i < length; i++)
+                iu5[i] *= norm;
+
+            fftwf_execute(pinvU6);
+            #pragma omp for private(i)
+            for(i = 0; i < length; i++)
+                iu6[i] *= norm;
+
+            fftwf_execute(pinvU7);
+            #pragma omp for private(i)
+            for(i = 0; i < length; i++)
+                iu7[i] *= norm;
+
+            #pragma omp for private(i)
+            for(i=0;i<length;i++)
             {
                 // compute contrast component
-                 u0.datos[i]=apply_arctg_slope10(u0.datos[i],iu.datos[i],iu2.datos[i],iu3.datos[i],iu4.datos[i],iu5.datos[i],iu6.datos[i],iu7.datos[i]);
+                 u0[i]=apply_arctg_slope10(u0[i], iu[i], iu2[i], iu3[i], iu4[i], iu5[i], iu6[i], iu7[i]);
                 
                 //project onto the interval [-1,1]
-                 u0.datos[i] = max( min( u0.datos[i],1) , -1 );
+                 u0[i] = max( min( u0[i], 1.f) , -1.f );
             }
-            
             // normalizing R term to estandarize results
-            u0 *= (1.0/u0.maxabsval());
-            
-            double norm = (1.0 + dt*(1.0+255.0/253.0));// assuming alpha=255/253,beta=1 
-            for(int i=0;i<length;i++)
+            //
+            float mabsv = fabs(*max_element(u0, u0+length, abs_compare));
+            float multiplier = 1.f/mabsv;
+
+            #pragma omp for private(i)
+            for(i = 0; i < length; i++)
+                u0[i] *= multiplier;
+
+            float norm1 = (1.0 + dt*(1.0+255.0/253.0));// assuming alpha=255/253,beta=1 
+            #pragma omp for private(i)
+            for(i=0;i<length;i++)
             {
-                RGB[color].datos[i] = (RGB[color].datos[i] + dt*(RGBorig[color].datos[i] + 0.5*u0.datos[i]+255.0/253.0 *med[color])) / norm;
+                RGB[color][i] = (RGB[color][i] + dt*(RGBorig[color][i] + 0.5 * u0[i]+255.0/253.0 * med[color])) / norm1;
                 //project onto the interval [0,1]
-                RGB[color].datos[i] = max( min( RGB[color].datos[i],1) , 0 );
+                RGB[color][i] = max( min(RGB[color][i], 1.f) , 0.f );
             }
             
-            difference+=RGB0.MSE(RGB[color],1.0);
+            float mse = MSE(RGB0, RGB[color], length, 1.f);
+            difference += mse; 
             
         }
     }
-    delete[] U;
-    delete[] U2;
-    delete[] U3;
-    delete[] U4;
-    delete[] U5;
-    delete[] U6;
-    delete[] U7;
+    fftwf_destroy_plan(pU);
+    fftwf_destroy_plan(pU2);
+    fftwf_destroy_plan(pU3);
+    fftwf_destroy_plan(pU4);
+    fftwf_destroy_plan(pU5);
+    fftwf_destroy_plan(pU6);
+    fftwf_destroy_plan(pU7);
+
+    fftwf_destroy_plan(pinvU);
+    fftwf_destroy_plan(pinvU2);
+    fftwf_destroy_plan(pinvU3);
+    fftwf_destroy_plan(pinvU4);
+    fftwf_destroy_plan(pinvU5);
+    fftwf_destroy_plan(pinvU6);
+    fftwf_destroy_plan(pinvU7);
+
+    fftwf_free(RGB0);
+    fftwf_free(u0);
+    fftwf_free(u2);
+    fftwf_free(u3);
+    fftwf_free(u4);
+    fftwf_free(u5);
+    fftwf_free(u6);
+    fftwf_free(u7);
+
+    fftwf_free(iu);
+    fftwf_free(iu2);
+    fftwf_free(iu3);
+    fftwf_free(iu4);
+    fftwf_free(iu5);
+    fftwf_free(iu6);
+    fftwf_free(iu7);
+
+    fftwf_free(U);
+    fftwf_free(U2);
+    fftwf_free(U3);
+    fftwf_free(U4);
+    fftwf_free(U5);
+    fftwf_free(U6);
+    fftwf_free(U7);
     
-    delete[] UG;
-    delete[] U2G;
-    delete[] U3G;
-    delete[] U4G;
-    delete[] U5G;
-    delete[] U6G;
-    delete[] U7G;
+    fftwf_free(UG);
+    fftwf_free(U2G);
+    fftwf_free(U3G);
+    fftwf_free(U4G);
+    fftwf_free(U5G);
+    fftwf_free(U6G);
+    fftwf_free(U7G);
     
     ph.setValue(90);
-    if (ph.canceled()) return;
-
-    for(int c=0;c<3;c++)
-        RGB[c].escala(1,0);
+    int c;
+    #pragma omp for private(c)
+    for(c = 0; c < 3; c++)
+        escala(RGB[c], length, 1.f, 0.f);
     
     //range between (0,1)
-    for (int i =0;i<length;i++){
-        imR[i] = (float)RGB[0].datos[i];
-        imG[i] = (float)RGB[1].datos[i];
-        imB[i] = (float)RGB[2].datos[i];
+    #pragma omp for private(i)
+    for (i =0;i<length;i++){
+        imR(i) = RGB[0][i];
+        imG(i) = RGB[1][i];
+        imB(i) = RGB[2][i];
     }
  
-    delete[] G;
+    delete[] RGBorig[0];
+    delete[] RGBorig[1];
+    delete[] RGBorig[2];
+    delete[] RGB[0];
+    delete[] RGB[1];
+    delete[] RGB[2];
+    fftwf_free(G);
     ph.setValue(100);
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
-    std::cout << "tmo_ferradans11 = " << stop_watch.get_time() << " msec" << std::endl;
+    cout << "tmo_ferradans11 = " << stop_watch.get_time() << " msec" << endl;
 #endif
 }
+

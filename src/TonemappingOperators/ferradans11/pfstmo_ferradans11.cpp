@@ -46,11 +46,11 @@ void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, p
     //float inv_alpha = 5;
     
 #ifndef NDEBUG
-  std::stringstream ss;
-  ss << "pfstmo_ferradans11 (";
-  ss << "rho: " << opt_rho;
-  ss << ", inv_alpha: " << opt_inv_alpha << ")";
-  std::cout << ss.str() << std::endl;
+    std::stringstream ss;
+    ss << "pfstmo_ferradans11 (";
+    ss << "rho: " << opt_rho;
+    ss << ", inv_alpha: " << opt_inv_alpha << ")";
+    std::cout << ss.str() << std::endl;
 #endif
 
     pfs::Channel *inX, *inY, *inZ;
@@ -62,9 +62,9 @@ void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, p
       throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
         
     // tone mapping
-      int w = frame.getWidth();
-      int h  = frame.getHeight();
+    tmo_ferradans11(*inX, *inY, *inZ, opt_rho, opt_inv_alpha, ph);
 
-      tmo_ferradans11(w, h, inX->data(), inY->data(), inZ->data(), opt_rho, opt_inv_alpha, ph);
+    if ( !ph.canceled() )
+        ph.setValue(100);
 }
 

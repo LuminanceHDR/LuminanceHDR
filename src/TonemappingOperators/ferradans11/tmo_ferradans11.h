@@ -30,8 +30,8 @@
  * 
  */
 
-#ifndef TMO_FERRANDS11_H
-#define TMO_FERRANDS11_H
+#ifndef TMO_FERRADANS11_H
+#define TMO_FERRADANS11_H
 
 #include <cstddef>
 #include <Libpfs/array2d_fwd.h>
@@ -54,6 +54,6 @@ class Progress;
 //! \param rho parameter rho (refer to the paper)
 //! \param inv_alpha parameter inv_alpha (refer to the paper)
 //!
-void tmo_ferradans11(int col, int fil,float* imR, float* imG, float* imB, float rho, float invalpha, pfs::Progress &ph);
+void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB, float rho, float invalpha, pfs::Progress &ph);
 
 #endif
