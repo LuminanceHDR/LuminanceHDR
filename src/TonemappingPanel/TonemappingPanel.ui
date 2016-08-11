@@ -183,6 +183,11 @@
               <string>Pattanaik</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Mai</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="0" column="0">
@@ -2127,7 +2132,7 @@ Luminace Level</string>
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Eqn 2</string>
+                   <string>Eqn &amp;2</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -2143,7 +2148,7 @@ Luminace Level</string>
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Eqn 4</string>
+                   <string>Eqn &amp;4</string>
                   </property>
                  </widget>
                 </item>
@@ -2483,6 +2488,69 @@ Luminace Level</string>
                </spacer>
               </item>
              </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_mai">
+           <layout class="QGridLayout" name="gridLayout_27">
+            <item row="0" column="1">
+             <spacer name="verticalSpacer_14">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>79</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="0">
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>146</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>This operator has no options</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>146</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="2" column="1">
+             <spacer name="verticalSpacer_13">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>79</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>

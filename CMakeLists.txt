@@ -11,6 +11,17 @@ include(cmake/GlobalSettings.cmake)
 include(cmake/CompilerSettings.cmake)
 include(cmake/Internationalization.cmake)
 
+# ======== Has branch prediction =======
+include( CheckCXXSourceCompiles )
+
+check_cxx_source_compiles( "int main() { int x = 0; if( __builtin_expect((x),0) ) x = 1; return 0; }" HAS_BRANCH_PEDICTION )
+
+if( HAS_BRANCH_PREDICTION )
+  set( BRANCH_PREDICTION 1 )
+else( HAS_BRANCH_PREDICTION )
+  set( BRANCH_PREDICTION 0 )
+endif( HAS_BRANCH_PREDICTION )
+
 # find and setup Qt5 for this project
 
 # Tell CMake to run moc when necessary:

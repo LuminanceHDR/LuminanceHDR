@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1651</width>
-     <height>38</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -99,7 +99,7 @@
     </widget>
     <widget class="QMenu" name="menuPreview_Panel_2">
      <property name="title">
-      <string>Preview Panel</string>
+      <string>&amp;Preview Panel</string>
      </property>
      <addaction name="actionShow_on_the_right"/>
      <addaction name="actionShow_on_the_bottom"/>
@@ -315,7 +315,7 @@
      <normaloff>:/new/prefix1/images/rotate_right.png</normaloff>:/new/prefix1/images/rotate_right.png</iconset>
    </property>
    <property name="text">
-    <string>Rotate c&amp;lockwise</string>
+    <string>Rotat&amp;e clockwise</string>
    </property>
    <property name="iconText">
     <string>Rotate clockwise</string>
@@ -338,7 +338,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Low Dynamic Range</string>
+    <string>&amp;Low Dynamic Range</string>
    </property>
    <property name="shortcut">
     <string>L</string>
@@ -349,7 +349,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Fit to Dynamic Range</string>
+    <string>&amp;Fit to Dynamic Range</string>
    </property>
    <property name="toolTip">
     <string>Fit to dynamic range</string>
@@ -363,7 +363,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Shrink Dynamic Range</string>
+    <string>&amp;Shrink Dynamic Range</string>
    </property>
    <property name="shortcut">
     <string>[</string>
@@ -374,7 +374,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Extend Dynamic Range</string>
+    <string>&amp;Extend Dynamic Range</string>
    </property>
    <property name="shortcut">
     <string>]</string>
@@ -385,7 +385,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Decrease Exposure</string>
+    <string>&amp;Decrease Exposure</string>
    </property>
    <property name="shortcut">
     <string>0</string>
@@ -815,7 +815,7 @@
      <normalon>:/new/prefix1/images/lock-on.png</normalon>:/new/prefix1/images/lock-off.png</iconset>
    </property>
    <property name="text">
-    <string>Lock Viewers</string>
+    <string>&amp;Lock Viewers</string>
    </property>
    <property name="toolTip">
     <string>Synchronize viewers mode (fit, fill or 1:1).</string>
@@ -824,22 +824,22 @@
     <string>Lock the images for sync view</string>
    </property>
    <property name="shortcut">
-    <string>L</string>
+    <string>S</string>
    </property>
   </action>
   <action name="actionMinimize">
    <property name="text">
-    <string>Minimize</string>
+    <string>&amp;Minimize</string>
    </property>
   </action>
   <action name="actionMaximize">
    <property name="text">
-    <string>Maximize</string>
+    <string>Ma&amp;ximize</string>
    </property>
   </action>
   <action name="actionBring_All_to_Front">
    <property name="text">
-    <string>Bring All to Front</string>
+    <string>&amp;Bring All to Front</string>
    </property>
   </action>
   <action name="actionShowPreviewPanel">
@@ -853,7 +853,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Preview Panel</string>
+    <string>&amp;Show Preview Panel</string>
    </property>
    <property name="toolTip">
     <string>Show/Hide Preview Panel</string>
@@ -912,7 +912,7 @@
   </action>
   <action name="actionRemove_Tab">
    <property name="text">
-    <string>Remove Tab</string>
+    <string>&amp;Remove Tab</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
@@ -930,7 +930,7 @@
      <normaloff>:/new/svgs/images/page-zoom.svgz</normaloff>:/new/svgs/images/page-zoom.svgz</iconset>
    </property>
    <property name="text">
-    <string>Fill Window</string>
+    <string>Fill &amp;Window</string>
    </property>
    <property name="toolTip">
     <string>Fill window with the current viewer</string>
@@ -942,7 +942,7 @@
      <normaloff>:/new/prefix1/images/running_process.png</normaloff>:/new/prefix1/images/running_process.png</iconset>
    </property>
    <property name="text">
-    <string>Batch HDR...</string>
+    <string>Batch &amp;HDR...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
@@ -986,7 +986,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show on the right</string>
+    <string>&amp;Show on the right</string>
    </property>
   </action>
   <action name="actionShow_on_the_bottom">
@@ -994,7 +994,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show on the bottom</string>
+    <string>Show &amp;on the bottom</string>
    </property>
   </action>
   <action name="actionRealtimePreviews">
@@ -1005,7 +1005,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Realtime Previews</string>
+    <string>&amp;Realtime Previews</string>
    </property>
   </action>
   <action name="actionUpdateAvailable">
@@ -1014,7 +1014,7 @@
      <normaloff>:/new/prefix1/images/vcs-update-required.png</normaloff>:/new/prefix1/images/vcs-update-required.png</iconset>
    </property>
    <property name="text">
-    <string>Update</string>
+    <string>&amp;Update</string>
    </property>
    <property name="visible">
     <bool>false</bool>
@@ -1026,7 +1026,7 @@
      <normaloff>:/new/prefix1/images/applications-astronomy.png</normaloff>:/new/prefix1/images/applications-astronomy.png</iconset>
    </property>
    <property name="text">
-    <string>FITS Importer...</string>
+    <string>&amp;FITS Importer...</string>
    </property>
    <property name="toolTip">
     <string>Import four FITS files representing luminosity, red, green and blue channels</string>

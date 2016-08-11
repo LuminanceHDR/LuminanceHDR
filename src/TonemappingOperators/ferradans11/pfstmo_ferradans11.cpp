@@ -31,7 +31,6 @@
  */
 #include <sstream>
 
-#include "Imagen.h"
 #include "tmo_ferradans11.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"

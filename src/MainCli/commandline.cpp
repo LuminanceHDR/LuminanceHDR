@@ -148,7 +148,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
 
     po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
     tmo_desc.add_options()
-        ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
+        ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|mai|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
         ("tmofile", po::value<std::string>(),   tr("SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings").toUtf8().constData())
     ;
 
@@ -322,6 +322,8 @@ int CommandLineInterfaceManager::execCommandLineParams()
             	tmopts->tmoperator=fattal;
             else if (strcmp(value,"ferradans")==0)
             	tmopts->tmoperator=ferradans;
+            else if (strcmp(value,"mai")==0)
+            	tmopts->tmoperator=mai;
             else if (strcmp(value,"pattanaik")==0)
             	tmopts->tmoperator=pattanaik;
             else if (strcmp(value,"reinhard02")==0)

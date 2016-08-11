@@ -140,6 +140,8 @@ char TonemappingOptions::getRatingForOperator()
         return 'D';
     case ferradans:
         return 'J';
+    case mai:
+        return 'K';
     }
     return ' ';
 }
@@ -203,6 +205,11 @@ const QString TonemappingOptions::getPostfix() {
             float inv_alpha=operator_options.ferradansoptions.inv_alpha;
             postfix+=QString("rho_%1_").arg(rho);
             postfix+=QString("inv_alpha_%1_").arg(inv_alpha);
+        }
+        break;
+    case mai:
+        {
+            postfix+="mai_";
         }
         break;
     case ashikhmin: 
@@ -352,6 +359,11 @@ const QString TonemappingOptions::getCaption(bool includePregamma, QString separ
             caption+=QString(QObject::tr("InvAlpha") + "=%1").arg(inv_alpha) + separator;
             }
             break;
+    case mai:
+        {
+            caption+="Mai:" + separator;
+            }
+            break;
     case ashikhmin:
         {
             caption+="Ashikhmin:" + separator;
@@ -480,6 +492,8 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                                 toreturn->tmoperator=fattal;
                         } else if (value == "Ferradans11") {
                                 toreturn->tmoperator=ferradans;
+                        } else if (value == "Mai11") {
+                                toreturn->tmoperator=mai;
                         } else if (value == "Pattanaik00") {
                                 toreturn->tmoperator=pattanaik;
                         } else if (value == "Reinhard02") {
@@ -640,6 +654,10 @@ QString TMOptionsOperations::getExifComment() {
                 exif_comment+="Ferrands\nParameters:\n";
                 exif_comment+=QString("Rho: %1\n").arg(rho);
                 exif_comment+=QString("InvAlpha: %1\n").arg(inv_alpha);
+                }
+                break;
+        case mai: {
+                exif_comment+="Ferrands\n";
                 }
                 break;
         case ashikhmin: {

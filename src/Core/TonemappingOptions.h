@@ -49,6 +49,7 @@ enum TMOperator : unsigned short
     reinhard05 = 7,
     ashikhmin = 8,
     pattanaik = 9,
+    mai = 10,
 };
 
 class TonemappingOptions

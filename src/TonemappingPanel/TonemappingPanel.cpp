@@ -360,6 +360,8 @@ void TonemappingPanel::on_defaultButton_clicked()
         rhoGang->setDefault();
         inv_alphaGang->setDefault();
         break;
+    case mai: //no options
+        break;
     case mantiuk06:
         contrastfactorGang->setDefault();
         saturationfactorGang->setDefault();
@@ -421,6 +423,8 @@ void TonemappingPanel::updateUndoState()
         break;
     case ferradans:
         rhoGang->updateUndoState();
+        break;
+    case mai: //no options
         break;
     case mantiuk06:
         contrastfactorGang->updateUndoState();
@@ -510,6 +514,9 @@ void TonemappingPanel::fillToneMappingOptions(bool exportMode)
         toneMappingOptions->operator_options.ferradansoptions.rho=rhoGang->v();
         toneMappingOptions->operator_options.ferradansoptions.inv_alpha=inv_alphaGang->v();
         break;
+    case mai: 
+        toneMappingOptions->tmoperator = mai;
+        break;
     case mantiuk06:
         toneMappingOptions->tmoperator = mantiuk06;
         toneMappingOptions->operator_options.mantiuk06options.contrastfactor=contrastfactorGang->v();
@@ -578,6 +585,8 @@ void TonemappingPanel::setupUndo()
     case ferradans:
         rhoGang->setupUndo();
         inv_alphaGang->setupUndo();
+        break;
+    case mai: //no options
         break;
     case mantiuk06:
         contrastfactorGang->setupUndo();
@@ -652,6 +661,8 @@ void TonemappingPanel::onUndoRedo(bool undo)
     case ferradans:
         (rhoGang->*redoUndo)();
         (inv_alphaGang->*redoUndo)();
+        break;
+    case mai:
         break;
     case mantiuk06:
         (contrastfactorGang->*redoUndo)();
@@ -791,6 +802,10 @@ void TonemappingPanel::fromGui2Txt(QString destination)
         out << "RHO=" << rhoGang->v() << endl;
         out << "INV_ALPHA=" << inv_alphaGang->v() << endl;
     }
+    else if (current_page == m_Ui->page_mai)
+    {
+        out << "TMO=" << "Mai11" << endl;
+    }
     else if (current_page == m_Ui->page_ashikhmin)
     {
         out << "TMO=" << "Ashikhmin02" << endl;
@@ -908,6 +923,8 @@ void TonemappingPanel::fromTxt2Gui()
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_fattal);
             } else if (value == "Ferradans11") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ferradans);
+            } else if (value == "Mai11") {
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mai);
             } else if (value == "Pattanaik00") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_pattanaik);
             } else if (value == "Reinhard02") {
@@ -1167,6 +1184,8 @@ void TonemappingPanel::saveParameters()
 		        inv_alpha = inv_alphaGang->v();
 				execFerradansQuery(rho, inv_alpha, comment);
             break;
+		    case mai: //no options
+            break;
     		case mantiuk06:
 				contrastFactor = contrastfactorGang->v();
 				saturationFactor = saturationfactorGang->v();
@@ -1338,6 +1357,10 @@ void TonemappingPanel::loadParameters()
                 m_Ui->inv_alphadsb->setValue(inv_alpha);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
+			break;
+			case mai:
+                m_Ui->stackedWidget_operators->setCurrentIndex(mai);
+				pregamma = tmopts->pregamma;
 			break;
     		case mantiuk06:
                 m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk06);

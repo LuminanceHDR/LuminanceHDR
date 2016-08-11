@@ -200,6 +200,13 @@ PreviewPanel::PreviewPanel(QWidget *parent):
     m_ListPreviewLabel.push_back(labelPattanaik);
     connect(labelPattanaik, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
+    PreviewLabel * labelMai = new PreviewLabel(this, mai);
+    labelMai->setText("Mai");
+    labelMai->setToolTip("Mai");
+    labelMai->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelMai);
+    connect(labelMai, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+
     FlowLayout *flowLayout = new FlowLayout;
 
     flowLayout->addWidget(labelMantiuk06);
@@ -212,6 +219,7 @@ PreviewPanel::PreviewPanel(QWidget *parent):
     flowLayout->addWidget(labelReinhard05);
     flowLayout->addWidget(labelAshikhmin);
     flowLayout->addWidget(labelPattanaik);
+    flowLayout->addWidget(labelMai);
 
     setLayout(flowLayout);
 }

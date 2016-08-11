@@ -566,61 +566,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     while(difference>threshold_diff)
     {
         if (ph.canceled()){
-            delete[] RGBorig[0];
-            delete[] RGBorig[1];
-            delete[] RGBorig[2];
-            delete[] RGB[0];
-            delete[] RGB[1];
-            delete[] RGB[2];
-            fftwf_destroy_plan(pU);
-            fftwf_destroy_plan(pU2);
-            fftwf_destroy_plan(pU3);
-            fftwf_destroy_plan(pU4);
-            fftwf_destroy_plan(pU5);
-            fftwf_destroy_plan(pU6);
-            fftwf_destroy_plan(pU7);
-
-            fftwf_destroy_plan(pinvU);
-            fftwf_destroy_plan(pinvU2);
-            fftwf_destroy_plan(pinvU3);
-            fftwf_destroy_plan(pinvU4);
-            fftwf_destroy_plan(pinvU5);
-            fftwf_destroy_plan(pinvU6);
-            fftwf_destroy_plan(pinvU7);
-
-            fftwf_free(RGB0);
-            fftwf_free(u0);
-            fftwf_free(u2);
-            fftwf_free(u3);
-            fftwf_free(u4);
-            fftwf_free(u5);
-            fftwf_free(u6);
-            fftwf_free(u7);
-
-            fftwf_free(iu);
-            fftwf_free(iu2);
-            fftwf_free(iu3);
-            fftwf_free(iu4);
-            fftwf_free(iu5);
-            fftwf_free(iu6);
-            fftwf_free(iu7);
-
-            fftwf_free(U);
-            fftwf_free(U2);
-            fftwf_free(U3);
-            fftwf_free(U4);
-            fftwf_free(U5);
-            fftwf_free(U6);
-            fftwf_free(U7);
-    
-            fftwf_free(UG);
-            fftwf_free(U2G);
-            fftwf_free(U3G);
-            fftwf_free(U4G);
-            fftwf_free(U5G);
-            fftwf_free(U6G);
-            fftwf_free(U7G);
-            return;
+            break;
         }
 
         iteration++;
@@ -807,6 +753,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     ph.setValue(100);
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
+    cout << endl;
     cout << "tmo_ferradans11 = " << stop_watch.get_time() << " msec" << endl;
 #endif
 }
