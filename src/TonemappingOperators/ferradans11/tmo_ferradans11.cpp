@@ -562,7 +562,8 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         fftwf_free(U7G);
         return;
     }
-
+    float delta = 0.f, oldDifference = 0.f;
+    int steps;
     while(difference>threshold_diff)
     {
         if (ph.canceled()){
@@ -677,8 +678,12 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
             
             float mse = MSE(RGB0, RGB[color], length, 1.f);
             difference += mse; 
-            
         }
+        delta = fabs(oldDifference - difference);
+        steps = (difference - threshold_diff)/delta;
+        oldDifference = difference;
+        if (iteration > 1)
+            ph.setValue(30+69/(steps+1));
     }
     fftwf_destroy_plan(pU);
     fftwf_destroy_plan(pU2);
@@ -750,7 +755,6 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     delete[] RGB[1];
     delete[] RGB[2];
     fftwf_free(G);
-    ph.setValue(100);
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     cout << endl;
