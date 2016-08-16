@@ -1,0 +1,44 @@
+<html>
+    
+    <head>
+        
+        <title>@title@</title>
+
+<!-- HDRHTML BEG: Put this part in the "head" section -->
+		
+		<!--   required:  mootools v1.2.4. with (More) Slider and Asset extension   -->
+		<script type="text/javascript" src="hdrhtml_assets/mootools-1.2.4.js"></script>
+
+		<!--   optional:  include this script for iPad/iPhone compatibility  -->
+		<script type="text/javascript" src="hdrhtml_assets/hdr_viewer.js"></script> 		
+		
+		<!--   required:  CSS styling of the HDR-Viewer   -->
+  		<link rel="stylesheet" type="text/css" media="screen" href="hdrhtml_assets/hdr_viewer.css" />
+
+        <!--   required:  Javascript for HDR-Viewer   -->
+        <script type="text/javascript" src="hdrhtml_assets/mouse2touch.js"></script> 	
+        
+<!-- HDRHTML END -->                
+
+    </head>
+    
+    <body>
+
+<!-- HDRHTML BEG: Put this part at the beginning of the "body" section -->                
+        <script type="text/javascript">            
+            @hdr_img_def@
+            @cf_array_def@            
+
+            var hdrcount = 0;
+            var hdr_names = new Array();
+            var hdr_slider = new Array();
+            hdr_active_image = null;            
+            document.onkeydown = hdr_onkeydown; 
+        </script>
+<!-- HDRHTML END -->                
+
+@image_htmlcode@
+        
+        
+    </body>
+</html>

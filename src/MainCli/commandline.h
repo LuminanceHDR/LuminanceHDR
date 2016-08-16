@@ -80,6 +80,10 @@ private:
 	int maximum;
 	bool started;
     float threshold;
+    bool isHtml;
+    int htmlQuality;
+    std::string pageName;
+    std::string imagesDir;
     QString saveAlignedImagesPrefix;
 
     void startTonemap();
