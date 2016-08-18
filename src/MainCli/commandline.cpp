@@ -99,6 +99,7 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     verbose(false),
     threshold(-1.0f),
     isHtml(false),
+    isHtmlDone(false),
     htmlQuality(2),
     pageName(),
     imagesDir(),
@@ -280,6 +281,9 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         }
         if (vm.count("pageName")) {
             pageName = vm["pageName"].as<std::string>();
+        }
+        if (vm.count("imagesDir")) {
+            imagesDir = vm["imagesDir"].as<std::string>();
         }
         if (vm.count("align")) {
             const char* value = vm["align"].as<std::string>().c_str();
@@ -500,13 +504,6 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         if ( HDR != NULL )
         {
             printIfVerbose(QObject::tr("Successfully loaded file %1.").arg(loadHdrFilename), verbose);
-            if (isHtml) {
-                if (operationMode == LOAD_HDR_MODE) {
-                    if (pageName.empty())
-                        pageName = loadHdrFilename.toStdString();
-                }
-                generate_hdrhtml(HDR.data(), pageName.c_str(), NULL, NULL, NULL, htmlQuality, verbose);
-            }
             saveHDR();
         }
         else
@@ -602,7 +599,30 @@ void CommandLineInterfaceManager::saveHDR()
         printIfVerbose( tr("NOT Saving HDR image to file. %1").arg(saveHdrFilename) , verbose);
     }
 
+    if (isHtml && !isHtmlDone) {
+        generateHTML();
+    }
     startTonemap();
+}
+
+
+void  CommandLineInterfaceManager::generateHTML()
+{
+    if (operationMode == LOAD_HDR_MODE) {
+        if (pageName.empty())
+            pageName = loadHdrFilename.toStdString();
+    }
+    else {
+        if (pageName.empty())
+            pageName = inputFiles.at(0).toStdString();
+    }
+    if (!imagesDir.empty()) {
+        QFileInfo qfi = QFileInfo(QDir::currentPath() + "/" + QString::fromStdString(imagesDir));
+        if (!qfi.isDir())
+            printErrorAndExit( tr("ERROR: directory %1 must exist").arg(QString::fromStdString(imagesDir) ));
+    }
+    generate_hdrhtml(HDR.data(), pageName, "", imagesDir, "", "", htmlQuality, verbose);
+    isHtmlDone = true;
 }
 
 void  CommandLineInterfaceManager::startTonemap()
@@ -649,12 +669,17 @@ void  CommandLineInterfaceManager::startTonemap()
             // File save failed
             printErrorAndExit( tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename) );
         }
+        if (isHtml && !isHtmlDone) {
+            generateHTML();
+        }
         emit finishedParsing();
     }
     else
     {
         printIfVerbose("Tonemapping NOT requested.", verbose);
-
+        if (isHtml && !isHtmlDone) {
+            generateHTML();
+        }
         emit finishedParsing();
     }
 }

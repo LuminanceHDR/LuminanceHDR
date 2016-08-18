@@ -491,7 +491,12 @@ void create_from_template( const char *output_file_name, const char *template_fi
     error_message << "Cannot open '" << output_file_name << "' for writing";
     throw pfs::Exception( error_message.str().c_str() );
   }
-  create_from_template( outfs, template_file_name, pattern_list );
+  try {
+    create_from_template( outfs, template_file_name, pattern_list );
+  }
+  catch( pfs::Exception &e) {
+    throw e;
+  }
 }
 
 
@@ -624,7 +629,7 @@ public:
 
 void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   float *Y,
-  const char *base_name, int quality, bool verbose )
+  const char *base_name, const char *out_dir, int quality, bool verbose )
 {
 
   //THIS CAUSED ME A BIG HEADACHE!!!
@@ -641,9 +646,8 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   try {
     basis_table.read( lut_filename.str().c_str(), basis_no+1 );
   }
-  catch (pfs::Exception e) {
-      cout << e.what() << endl;
-      exit(1);
+  catch (pfs::Exception &e) {
+      throw e;
   }
   // Transform the first row (luminance factors) to the log domain
   for( int k = 0; k < basis_table.rows; k++ ) {
@@ -735,6 +739,8 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
 
     QImage hist_image(hist_buffer_c, hist_width, hist_height, QImage::Format_RGB888);
     ostringstream img_filename;
+    if( out_dir != NULL )
+      img_filename << out_dir << "/";
     if( image_dir != NULL )
       img_filename << image_dir << "/";
     img_filename << base_name << "_hist.png";
@@ -788,6 +794,8 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
       QImage imImage(imgBuffer_c, width, height, QImage::Format_RGB888);
 
       ostringstream img_filename;
+      if( out_dir != NULL )
+        img_filename << out_dir << "/";
       if( image_dir != NULL )
         img_filename << image_dir << "/";
       img_filename << base_name << '_' << k-1 << '_' << b+1 << ".jpg";
@@ -821,12 +829,14 @@ void print_cf_table( ostream &out, void *user_data, const char *parameter );
 void print_image_htmlcode( ostream &out, void *user_data, const char *parameter );
 
 void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_template,
-  const char *object_output, const char *html_output)
+  const char *out_dir, const char *object_output, const char *html_output)
 {
   if( image_list.empty() )
     return;
 
   ostringstream out_file_name;
+  if (out_dir != NULL)
+      out_file_name << out_dir << "/";
   if( page_name == NULL )
     out_file_name << image_list.front().base_name << ".html";
   else
@@ -848,7 +858,12 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
   };
 
   this->image_template = image_template;
-  create_from_template( out_file_name.str().c_str(), page_template, replace_list );
+  try {
+    create_from_template( out_file_name.str().c_str(), page_template, replace_list );
+  }
+  catch( pfs::Exception &e) {
+    throw e;
+  }
 
   if( object_output != NULL ) {
     ofstream oofs( object_output );
@@ -867,7 +882,12 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
       error_message << "Cannot open '" << html_output << "' for writing";
       throw pfs::Exception( error_message.str().c_str() );
     }
-    print_image_htmlcode( hofs, this, NULL );
+    try {
+      print_image_htmlcode( hofs, this, NULL );
+    }
+    catch( pfs::Exception &e) {
+        throw e;
+    }
   }
   
 }
@@ -923,8 +943,12 @@ void print_image_htmlcode( ostream &out, HDRHTMLSet *hdrhtml_set, const HDRHTMLI
       ReplacePattern()
     };
 
-    create_from_template( out, hdrhtml_set->image_template, replace_list );
- 
+    try {
+        create_from_template( out, hdrhtml_set->image_template, replace_list );
+    }
+    catch( pfs::Exception &e) {
+        throw e;
+    }
 }
 
 void print_image_htmlcode( ostream &out, void *user_data, const char *parameter )
@@ -940,15 +964,25 @@ void print_image_htmlcode( ostream &out, void *user_data, const char *parameter 
     }
     if( it == hdrhtml_set->image_list.end() )
       cerr << "Warning: image '" << parameter << "' not found\n";
-
-    print_image_htmlcode( out, hdrhtml_set, *it );
+    
+    try {
+      print_image_htmlcode( out, hdrhtml_set, *it );
+    }
+    catch( pfs::Exception &e) {
+        throw e;
+    }
     
   } else {
     
     list<HDRHTMLImage>::iterator it;
     for( it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); it++ ) {
-      
-      print_image_htmlcode( out, hdrhtml_set, *it );
+     
+      try { 
+        print_image_htmlcode( out, hdrhtml_set, *it );
+      }
+      catch( pfs::Exception &e) {
+        throw e;
+      }
     
     }
   }

@@ -30,7 +30,6 @@
 #include <QObject>
 #include <cstdlib>
 #include <iostream>
-#include <string>
 
 #include <stdio.h>
 #include "Libpfs/frame.h"
@@ -44,7 +43,7 @@ using namespace hdrhtml;
 using namespace std;
 
 void generate_hdrhtml(pfs::Frame *frame, 
-                     const char *page_name, const char *image_dir, const char *object_output, const char *html_output, 
+                     string page_name, string out_dir, string image_dir, string object_output, string html_output, 
                      int quality, bool verbose)
 {
     const char *page_template = PKG_DATADIR "/hdrhtml_default_templ/hdrhtml_page_templ.html";
@@ -52,8 +51,6 @@ void generate_hdrhtml(pfs::Frame *frame,
   
     if( quality < 1 || quality > 5 )
         throw pfs::Exception( "The quality must be between 1 (worst) and 5 (best)." );
-
-  
     //TODO
     if( frame == NULL ) {
         return; 
@@ -98,13 +95,32 @@ void generate_hdrhtml(pfs::Frame *frame,
     }        
       
     base_name = tmp_str;
-      
-    HDRHTMLSet image_set( NULL, image_dir );
+
+    HDRHTMLSet image_set( NULL, image_dir.empty() ? NULL : image_dir.c_str() );
     if (verbose)
         cout << QObject::tr("Adding image ").toStdString() << base_name << QObject::tr(" to the web page").toStdString() << endl;
 
-    image_set.add_image( frame->getWidth(), frame->getHeight(), R1, G1, B1, Y1, base_name.c_str(), quality, verbose );
-    image_set.generate_webpage( page_template, image_template, object_output, html_output );
+    try {
+        image_set.add_image( frame->getWidth(), frame->getHeight(), 
+                             R1, G1, B1, Y1, 
+                             base_name.c_str(), 
+                             out_dir.empty() ? NULL : out_dir.c_str(), 
+                             quality, verbose );
+    }
+    catch( pfs::Exception &e) {
+        throw e;
+    }
+
+    try {
+        image_set.generate_webpage( page_template, image_template, 
+                                    out_dir.empty() ? NULL : out_dir.c_str(), 
+                                    object_output.empty() ? NULL : object_output.c_str(), 
+                                    html_output.empty() ? NULL: html_output.c_str() );
+    }
+    catch( pfs::Exception &e) {
+        throw e;
+    }
+
     delete[] R1;
     delete[] G1;
     delete[] B1;

@@ -71,10 +71,10 @@ HDRHTMLSet( const char *page_name, const char *image_dir = NULL ) :
   
   void add_image( int width, int height, float *R, float *G, float *B,
     float *Y,
-    const char *base_name, int quality, bool verbose );
+    const char *base_name, const char *out_dir, int quality, bool verbose );
   
   void generate_webpage( const char *page_template, const char *image_template,
-    const char *object_output = NULL, const char *html_output = NULL);  
+    const char *out_dir, const char *object_output = NULL, const char *html_output = NULL);  
 };
 
 }

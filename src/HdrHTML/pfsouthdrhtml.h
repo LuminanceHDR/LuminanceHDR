@@ -28,8 +28,10 @@
 #ifndef PFSOUTHDRHTML_H
 #define PFSOUTHDRHTML_H
 
+#include <string>
+
 void generate_hdrhtml(pfs::Frame *frame, 
-        const char *page_name, const char *image_dir, const char *object_output, const char *html_output, 
+        std::string page_name, std::string out_dir, std::string image_dir, std::string object_output, std::string html_output, 
         int quality, bool verbose);
 
 #endif
