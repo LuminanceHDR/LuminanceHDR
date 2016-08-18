@@ -36,9 +36,6 @@
 #include "Libpfs/exception.h"
 #include "Libpfs/colorspace/colorspace.h"
 
-//TODO
-#define PKG_DATADIR "/usr/local/share/luminance-hdr/hdrhtml"
-
 using namespace hdrhtml;
 using namespace std;
 
@@ -46,14 +43,14 @@ void generate_hdrhtml(pfs::Frame *frame,
                      string page_name, string out_dir, string image_dir, string object_output, string html_output, 
                      int quality, bool verbose)
 {
-    const char *page_template = PKG_DATADIR "/hdrhtml_default_templ/hdrhtml_page_templ.html";
-    const char *image_template = PKG_DATADIR "/hdrhtml_default_templ/hdrhtml_image_templ.html";
+    const char *page_template = HDRHTMLDIR "/hdrhtml_default_templ/hdrhtml_page_templ.html";
+    const char *image_template = HDRHTMLDIR "/hdrhtml_default_templ/hdrhtml_image_templ.html";
   
     if( quality < 1 || quality > 5 )
-        throw pfs::Exception( "The quality must be between 1 (worst) and 5 (best)." );
-    //TODO
+        throw pfs::Exception( QObject::tr("The quality must be between 1 (worst) and 5 (best).").toStdString() );
+
     if( frame == NULL ) {
-        return; 
+        throw pfs::Exception( QObject::tr("NULL frame passed.").toStdString() );
     }
 
     pfs::Channel *R, *G, *B;

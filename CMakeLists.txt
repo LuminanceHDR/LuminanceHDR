@@ -269,6 +269,7 @@ ELSEIF(UNIX)
     ${CMAKE_SOURCE_DIR}/Changelog
     DESTINATION share/luminance-hdr) #info files
     INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
+    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml DESTINATION share/luminance-hdr) # hdrhtml directory
 # Microsoft Windows
 ELSEIF(WIN32)
     # icon files to copy in the bundle

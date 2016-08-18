@@ -1,5 +1,6 @@
 Changes .next
-* New Portuguese (Brazil) translation
+* New: Export to HTML (Create a webpage with embedded HDR viewer)
+* New: Portuguese (Brazil) translation
 
 Changes 2.4.0
 NEW: Automatic anti-ghosting and improved manual anti-ghosting

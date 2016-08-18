@@ -41,9 +41,6 @@
 #include <QImage>
 #include <QString>
 
-//TODO
-#define PKG_DATADIR "/usr/local/share/luminance-hdr/hdrhtml"
-
 using namespace std;
 
 namespace hdrhtml {
@@ -641,7 +638,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
       
   // Load LUT for the basis tone-curves
   ostringstream lut_filename;
-  lut_filename << PKG_DATADIR "/hdrhtml_t_b" << basis_no+1 << ".csv";
+  lut_filename << HDRHTMLDIR "/hdrhtml_t_b" << basis_no+1 << ".csv";
   CSVTable basis_table;
   try {
     basis_table.read( lut_filename.str().c_str(), basis_no+1 );
@@ -844,7 +841,7 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
 
   // Load the table of the opacity coeffcients
   ostringstream lut_filename;
-  lut_filename << PKG_DATADIR "/hdrhtml_c_b" << image_list.front().basis+1 << ".csv";
+  lut_filename << HDRHTMLDIR "/hdrhtml_c_b" << image_list.front().basis+1 << ".csv";
   CSVTable coeff_table;
   coeff_table.read( lut_filename.str().c_str(), image_list.front().basis+1 );
   

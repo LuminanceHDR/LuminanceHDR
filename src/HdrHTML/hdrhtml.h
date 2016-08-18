@@ -30,6 +30,7 @@
 
 #include <string>
 #include <list>
+#include "hdrhtml-path.hxx"
 
 namespace hdrhtml {
 
