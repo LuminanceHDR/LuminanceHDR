@@ -49,6 +49,7 @@
 #include "Libpfs/utils/msec_timer.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "tmo_ferradans11.h"
+#include <boost/math/constants/constants.hpp>
 #include <cmath>
  
 using namespace std;
@@ -212,7 +213,7 @@ void producto(fftwf_complex* A, fftwf_complex* B,fftwf_complex* AB, int fil, int
 
 void nucleo_gaussiano(float res[], int fil, int col, float sigma)
 {
-    float normaliza=1.0/(sqrt(2*M_PI)*sigma+1e-6);
+    float normaliza=1.0/(sqrt(2* boost::math::double_constants::pi)*sigma+1e-6);
     int mitfil=fil/2;
     int mitcol=col/2;
     int i, j;
@@ -366,7 +367,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         float I0=mu[k]/pow(10,1.2);
         float sigma_n=pow(mu[k],n);
         
-        // WYSZECKI-STILES, PÁG. 530: FECHNER FRACTION
+        // WYSZECKI-STILES, PÃ�G. 530: FECHNER FRACTION
         float K_=100.0/1.85;
         if(k==2)
             K_= 100.0/8.7;

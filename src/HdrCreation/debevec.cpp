@@ -94,7 +94,7 @@ void DebevecOperator::computeFusion(ResponseCurve& response, const WeightFunctio
     float minAllowedValue = weight.minTrustedValue();
 
 #pragma omp parallel for
-    for (unsigned int idx = 0; idx < tempFrame.size(); ++idx)
+    for (int idx = 0; idx < tempFrame.size(); ++idx)
     {
         // data...
         ColorData redData;
