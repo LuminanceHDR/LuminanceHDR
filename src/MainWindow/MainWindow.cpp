@@ -58,6 +58,7 @@
 #include "MainWindow/DnDOption.h"
 #include "MainWindow/UpdateChecker.h"
 #include "MainWindow/DonationDialog.h"
+#include "MainWindow/ExportToHtmlDialog.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/params.h"
@@ -100,6 +101,9 @@
 #include "HdrWizard/WhiteBalance.h"
 #include "LibpfsAdditions/formathelper.h"
 
+#include <iostream>
+using namespace std;
+
 namespace
 {
 QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
@@ -130,7 +134,9 @@ QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* 
 
 QString getHdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
 {
+#ifdef QT_DEBUG
 	qDebug() << "MainWindow::getHdrFileNameFromSaveDialog(" << suggestedFileName << ")";
+#endif
     static const QString filetypes =
             "OpenEXR (*.exr *.EXR);;"
             "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;"
@@ -715,7 +721,9 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
 
 void MainWindow::updateActions( int w )
 {
+#ifdef QT_DEBUG
     qDebug() << "MainWindow::updateActions(" << w << ")";
+#endif
 	bool hasImage = w >= 0;
 	GenericViewer* g_v = hasImage ? (GenericViewer*)m_tabwidget->widget(w) : 0;
 	bool isHdr = g_v ? g_v->isHDR() : false;
@@ -740,6 +748,7 @@ void MainWindow::updateActions( int w )
 
     m_Ui->actionResizeHDR->setEnabled(isHdr);
     m_Ui->action_Projective_Transformation->setEnabled(isHdr);
+    m_Ui->actionExportToHTML->setEnabled(isHdr);
     m_Ui->rotateccw->setEnabled(isHdr);
     m_Ui->rotatecw->setEnabled(isHdr);
 
@@ -821,6 +830,17 @@ void MainWindow::on_actionResizeHDR_triggered()
         QApplication::restoreOverrideCursor();
     }
     delete resizedialog;
+}
+
+void MainWindow::on_actionExportToHTML_triggered()
+{
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    ExportToHtmlDialog *exportDialog = new ExportToHtmlDialog(this, curr_g_v->getFrame());
+
+    exportDialog->exec();
+    delete exportDialog;
 }
 
 void MainWindow::on_action_Projective_Transformation_triggered()
@@ -1758,8 +1778,9 @@ void MainWindow::on_actionRemove_Tab_triggered()
 
 void MainWindow::removeTab(int t)
 {
+#ifdef QT_DEBUG
     qDebug() << "MainWindow::remove_image("<< t <<")";
-
+#endif
     if (t < 0) return;
 
     GenericViewer* w = (GenericViewer*)m_tabwidget->widget(t);
@@ -1768,7 +1789,9 @@ void MainWindow::removeTab(int t)
     {
     	bool doClose = false;
 
-        qDebug() << "Remove HDR from MainWindow";
+#ifdef QT_DEBUG
+    qDebug() << "Remove HDR from MainWindow";
+#endif
         if ( w->needsSaving() )
         {
             if ( maybeSave() )
@@ -1933,8 +1956,9 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
 
         if ( exit_status == 1 )
         {
+#ifdef QT_DEBUG
             qDebug() << "GammaAndLevels accepted!";
-
+#endif
             // pfs::Frame * frame = current->getFrame();
             pfs::gammaAndLevels(current->getFrame(),
                                 g_n_l->getBlackPointInput(),
@@ -1945,8 +1969,9 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
 
             // current->setFrame(frame);
         } else {
+#ifdef QT_DEBUG
             qDebug() << "GammaAndLevels refused!";
-
+#endif
             current->setQImage(g_n_l->getReferenceQImage());
         }
 
@@ -1994,13 +2019,17 @@ void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 	if ( current->isHDR() ) return;
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doProof) {
+#ifdef QT_DEBUG
 		qDebug() << "MainWindow:: do soft proofing";
+#endif
 		if (m_Ui->actionGamut_Check->isChecked())
 			m_Ui->actionGamut_Check->setChecked(false);
 		viewer->doSoftProofing(false);
 	}
 	else {
+#ifdef QT_DEBUG
 		qDebug() << "MainWindow:: undo soft proofing";
+#endif
 		viewer->undoSoftProofing();
 	}
 }
@@ -2012,13 +2041,17 @@ void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 	if ( current->isHDR() ) return;
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doGamut) {
+#ifdef QT_DEBUG
 		qDebug() << "MainWindow:: do gamut check";
+#endif
 		if (m_Ui->actionSoft_Proofing->isChecked())
 			m_Ui->actionSoft_Proofing->setChecked(false);
 		viewer->doSoftProofing(true);
 	}
 	else {
+#ifdef QT_DEBUG
 		qDebug() << "MainWindow:: undo gamut check";
+#endif
 		viewer->undoSoftProofing();
 	}
 }

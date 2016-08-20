@@ -44,6 +44,7 @@
     <addaction name="actionBatch_HDR"/>
     <addaction name="actionBatch_Tone_Mapping"/>
     <addaction name="actionFits_Importer"/>
+    <addaction name="actionExportToHTML"/>
     <addaction name="OptionsAction"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1048,6 +1049,14 @@
    </property>
    <property name="toolTip">
     <string>Fix color cast, can be slow</string>
+   </property>
+  </action>
+  <action name="actionExportToHTML">
+   <property name="text">
+    <string>Export to HTML</string>
+   </property>
+   <property name="toolTip">
+    <string>Export to web page with embedded HDR viewer</string>
    </property>
   </action>
  </widget>

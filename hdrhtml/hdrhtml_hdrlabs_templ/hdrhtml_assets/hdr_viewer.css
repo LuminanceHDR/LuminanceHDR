@@ -1,0 +1,95 @@
+/*     optional:  full page styling with dark background       */
+
+	body { background-color: #1A1C1F; font-family: sans-serif, Helvetica Narrow; color: CDCDCD; }
+	
+	a { color: #FF5020; text-decoration: none; }
+	a:hover { color: #FF5020; text-decoration: underline; }
+	
+/*     required:   HDR-Viewer styling, adjust as needed    */
+	
+	.hdr_viewer {
+			background-color: #000;
+			-moz-border-radius: 8px;
+			-webkit-border-radius: 8px;
+			padding: 4px 6px 4px 6px;
+			margin: 10px;
+			font-family: sans-serif;
+	}
+	
+	.hdr_viewport {
+		    position: relative; 
+		    margin: 3px 0px 3px 0px;
+	}
+	
+	.hdr_controller {
+			position: relative; 
+			height: 36px;
+			margin: 2px 0px 2px 0px; 
+			overflow: hidden; 
+	}
+	
+	.knob { position: absolute; 
+			height: 36px; 
+	    	opacity: 0.3;
+	    	filter: alpha(opacity = 30);
+	    	background: #FFFFFF center center url('slider-black.png') no-repeat;
+	    	cursor: pointer;
+	    	-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+	}
+	
+	div.knob:hover {
+	    	background-color: #FF5020;
+		    opacity: 0.7;
+		    filter: alpha(opacity = 70);
+	}
+	
+	.label {
+			color: white; 
+			font-family: Florence, cursive; 
+			width: 110px;
+			padding: 5px 10px 5px 10px;
+	}
+	
+	.labelnumber {
+			text-align: right;					
+			display: inline-block;
+			width: 50px;
+	}
+	
+	.hdr_help {
+			position: absolute; 
+			right: 6px; 
+			top: 8px;
+			opacity: 0.5;
+			filter: alpha(opacity = 50);
+			width: 22px;
+			height: 22px;
+			background: top left url('information.png') no-repeat;
+			cursor: pointer;
+	}
+	
+	div.hdr_help:hover {
+			background: top left url('information-red.png') no-repeat;
+			opacity: 1;
+	}
+	
+	.hdr_instructions {
+		    color: #FFF;
+		    background-color: #000;
+	}
+	
+	.spinner {
+		position: absolute;
+		opacity: 0.9;
+		filter: alpha(opacity=90);
+		z-index: 999;
+		background: #000;
+	}
+	
+	.spinner-img {
+		background: url('loading-spinner.gif') no-repeat;
+		width: 31px;
+		height: 31px;
+		margin: 0 auto;
+	}

@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2012 Davide Anastasia
+ * Copyright (C) 2014 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,34 +18,49 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * @author Franco Comida <francocomida@users.sourceforge.net>
  */
 
-#include <QCoreApplication>
+#ifndef EXPORTTOHTMLDIALOG_H
+#define EXPORTTOHTMLDIALOG_H
 
-#include "Common/config.h"
-#include "Common/TranslatorManager.h"
-#include "Common/LuminanceOptions.h"
+#include <QDialog>
+#include <QScopedPointer>
 
-#include "MainCli/commandline.h"
-
-
-int main( int argc, char ** argv )
+namespace Ui
 {
-    QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
-    QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
-    QCoreApplication application( argc, argv );
-    LuminanceOptions lumOpts;
-
-    TranslatorManager::setLanguage( lumOpts.getGuiLang(), false );
-
-    CommandLineInterfaceManager cli( argc, argv );
-
-    int result = cli.execCommandLineParams();
-    if (result != 0)
-        return result;
-    application.connect(&cli, SIGNAL(finishedParsing()), &application, SLOT(quit()));
-
-    return application.exec();
+    class ExportToHtmlDialog;
 }
 
+namespace pfs {
+    class Frame;            
+}
+
+class ExportToHtmlDialog : public QDialog
+{
+    Q_OBJECT
+public:
+    ExportToHtmlDialog(QWidget* parent, pfs::Frame *frame);
+
+private:
+    pfs::Frame *m_frame;
+    QString m_pageName;
+    QString m_outputFolder;
+    QString m_imagesFolder;
+
+    void check_enable_export();
+
+    QScopedPointer<Ui::ExportToHtmlDialog> m_Ui;
+
+private slots:
+    void onExportButtonClicked();
+    void onOutputFolderButtonClicked();
+    void onEditPageNameFinished();
+    void onEditOutputFolderFinished();
+    void onEditImagesFolderFinished();
+
+public:
+    ~ExportToHtmlDialog();
+};
+
+#endif // EXPORTTOHTMLDIALOG_H

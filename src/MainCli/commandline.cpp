@@ -47,6 +47,7 @@
 #include <io.h>
 #endif
 
+#include "HdrHTML/pfsouthdrhtml.h"
 
 using namespace libhdr::fusion;
 
@@ -97,6 +98,11 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
 	tmofileparams(new pfs::Params()),
     verbose(false),
     threshold(-1.0f),
+    isHtml(false),
+    isHtmlDone(false),
+    htmlQuality(2),
+    pageName(),
+    imagesDir(),
     saveAlignedImagesPrefix("")
 {
 
@@ -129,6 +135,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
         ("output,o", po::value<std::string>(),       tr("LDR_FILE    File name you want to save your tone mapped LDR to.").toUtf8().constData())
             
         ("autoag,t", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
+        ("createwebpage,w", tr("Enable generation of a webpage with embedded HDR viewer.").toUtf8().constData())
     ;
 
     po::options_description hdr_desc(tr("HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").toUtf8().constData());
@@ -144,6 +151,24 @@ int CommandLineInterfaceManager::execCommandLineParams()
 		("ldrQuality,q", po::value<int>(), tr("VALUE      Quality of the saved tone mapped file (1-100).").toUtf8().constData())
 		("ldrTiff", po::value<std::string>(), tr("Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)").toUtf8().constData())
 		("ldrTiffDeflate", po::value<bool>(), tr("Tiff deflate compression. true|false (Default is true)").toUtf8().constData())
+		;
+
+	po::options_description html_desc(tr("HTML output parameters").toUtf8().constData());
+	html_desc.add_options()
+		("htmlQuality,k", po::value<int>(), tr("VALUE      Quality of the interpolated exposures, from the worst (1) to the best\
+(5). Higher quality will introduce less distortions in the \
+brightest and the darkest tones, but will also generate more \
+images. More images means that there is more data that needs to be \
+transferred to the web-browser, making HDR viewer less responsive. \
+(Default is 2, which is sufficient for most applications)").toUtf8().constData())
+		("pageName", po::value<std::string>(), tr("Specifies the file name, of \
+the web page to be generated. If <page_name> is missing, the \
+file name of the first image with .html extension will be used. \
+(Default is first image name)").toUtf8().constData())
+		("imagesDir", po::value<std::string>(), tr("Specify where to store the resulting image files. Links to images in \
+HTML will be updated accordingly. This must be a relative path and the \
+directory must exist.  Useful to avoid clutter in the current directory. \
+(Default is current working directory)").toUtf8().constData())
 		;
 
     po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
@@ -240,10 +265,10 @@ int CommandLineInterfaceManager::execCommandLineParams()
     p.add("input-file", -1);
 
     po::options_description cmdline_options;
-	cmdline_options.add(desc).add(hdr_desc).add(ldr_desc).add(tmo_desc).add(hidden);
+	cmdline_options.add(desc).add(hdr_desc).add(ldr_desc).add(html_desc).add(tmo_desc).add(hidden);
 
     po::options_description cmdvisible_options;
-	cmdvisible_options.add(desc).add(hdr_desc).add(ldr_desc).add(tmo_desc);
+	cmdvisible_options.add(desc).add(hdr_desc).add(ldr_desc).add(html_desc).add(tmo_desc);
 
     try 
     {
@@ -253,6 +278,18 @@ int CommandLineInterfaceManager::execCommandLineParams()
         if (vm.count("help")) {
             cout << cmdvisible_options << "\n";
             return 1;
+        }
+        if (vm.count("createwebpage")) {
+            isHtml = true;
+        }
+        if (vm.count("htmlQuality")) {
+            htmlQuality = vm["htmlQuality"].as<int>();
+        }
+        if (vm.count("pageName")) {
+            pageName = vm["pageName"].as<std::string>();
+        }
+        if (vm.count("imagesDir")) {
+            imagesDir = vm["imagesDir"].as<std::string>();
         }
         if (vm.count("align")) {
             const char* value = vm["align"].as<std::string>().c_str();
@@ -572,7 +609,30 @@ void CommandLineInterfaceManager::saveHDR()
         printIfVerbose( tr("NOT Saving HDR image to file. %1").arg(saveHdrFilename) , verbose);
     }
 
+    if (isHtml && !isHtmlDone) {
+        generateHTML();
+    }
     startTonemap();
+}
+
+
+void  CommandLineInterfaceManager::generateHTML()
+{
+    if (operationMode == LOAD_HDR_MODE) {
+        if (pageName.empty())
+            pageName = loadHdrFilename.toStdString();
+    }
+    else {
+        if (pageName.empty())
+            pageName = inputFiles.at(0).toStdString();
+    }
+    if (!imagesDir.empty()) {
+        QFileInfo qfi = QFileInfo(QDir::currentPath() + "/" + QString::fromStdString(imagesDir));
+        if (!qfi.isDir())
+            printErrorAndExit( tr("ERROR: directory %1 must exist").arg(QString::fromStdString(imagesDir) ));
+    }
+    generate_hdrhtml(HDR.data(), pageName, "", imagesDir, "", "", htmlQuality, verbose);
+    isHtmlDone = true;
 }
 
 void  CommandLineInterfaceManager::startTonemap()
@@ -619,12 +679,17 @@ void  CommandLineInterfaceManager::startTonemap()
             // File save failed
             printErrorAndExit( tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename) );
         }
+        if (isHtml && !isHtmlDone) {
+            generateHTML();
+        }
         emit finishedParsing();
     }
     else
     {
         printIfVerbose("Tonemapping NOT requested.", verbose);
-
+        if (isHtml && !isHtmlDone) {
+            generateHTML();
+        }
         emit finishedParsing();
     }
 }

@@ -36,7 +36,7 @@ namespace Ui
     class TonemappingSettings;
 }
 
-enum TMOperator: unsigned short;   // #include "Core/TonemappingOptions.h"
+enum TMOperator : unsigned short; 
 
 class TonemappingSettings: public QDialog
 {
