@@ -33,7 +33,7 @@
 
 #include "tmo_ferradans11.h"
 #include "Libpfs/frame.h"
-#include "Libpfs/colorspace/colorspace.h"
+#include "Libpfs/manip/gamma.h"
 #include "Libpfs/exception.h"
 #include "Libpfs/progress.h"
 
@@ -52,16 +52,19 @@ void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, p
     std::cout << ss.str() << std::endl;
 #endif
 
-    pfs::Channel *inX, *inY, *inZ;
-    frame.getXYZChannels( inX, inY, inZ );
-    frame.getTags().setTag("LUMINANCE", "RELATIVE");
+    pfs::Channel *inR, *inG, *inB;
+    frame.getXYZChannels( inR, inG, inB );
     //---
 
-    if( inY==NULL || inX==NULL || inZ==NULL)
+    if( inR==NULL || inG==NULL || inB==NULL)
       throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
+    //TODO Check why gamma is 1/4 of gamma in pfstools
+    pfs::applyGamma(&frame, 0.25f);
         
     // tone mapping
-    tmo_ferradans11(*inX, *inY, *inZ, opt_rho, opt_inv_alpha, ph);
+    tmo_ferradans11(*inR, *inG, *inB, opt_rho, opt_inv_alpha, ph);
 
     if ( !ph.canceled() )
         ph.setValue(100);

@@ -294,7 +294,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         RGBorig[1][i] = (float)max(imG(i), 0.f);
         RGBorig[2][i] = (float)max(imB(i), 0.f);
     }
-    
+
     ///////////////////////////////////////////
     
     ph.setValue(10);
