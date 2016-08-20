@@ -150,6 +150,11 @@
             </item>
             <item>
              <property name="text">
+              <string>Ferradans</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>Drago</string>
              </property>
             </item>
@@ -176,6 +181,11 @@
             <item>
              <property name="text">
               <string>Pattanaik</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Mai</string>
              </property>
             </item>
            </widget>
@@ -965,6 +975,96 @@ Luminace Level</string>
                  <bool>true</bool>
                 </property>
                </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_ferradans">
+           <layout class="QGridLayout" name="gridLayout_26">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_16">
+              <item row="0" column="1">
+               <widget class="QSlider" name="rhoSlider">
+                <property name="minimum">
+                 <number>-100</number>
+                </property>
+                <property name="maximum">
+                 <number>0</number>
+                </property>
+                <property name="value">
+                 <number>-40</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>Inverse Alpha</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>Rho</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSlider" name="inv_alphaSlider">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QDoubleSpinBox" name="inv_alphadsb">
+                <property name="maximum">
+                 <double>10.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>5.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QDoubleSpinBox" name="rhodsb">
+                <property name="decimals">
+                 <number>2</number>
+                </property>
+                <property name="minimum">
+                 <double>-5.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>0.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>-2.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <spacer name="verticalSpacer_12">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>312</width>
+                  <height>13</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </item>
@@ -2032,7 +2132,7 @@ Luminace Level</string>
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Eqn 2</string>
+                   <string>Eqn &amp;2</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -2048,7 +2148,7 @@ Luminace Level</string>
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Eqn 4</string>
+                   <string>Eqn &amp;4</string>
                   </property>
                  </widget>
                 </item>
@@ -2388,6 +2488,69 @@ Luminace Level</string>
                </spacer>
               </item>
              </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_mai">
+           <layout class="QGridLayout" name="gridLayout_27">
+            <item row="0" column="1">
+             <spacer name="verticalSpacer_14">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>79</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="0">
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>146</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>This operator has no options</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>146</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="2" column="1">
+             <spacer name="verticalSpacer_13">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>79</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>

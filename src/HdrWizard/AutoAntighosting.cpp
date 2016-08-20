@@ -28,6 +28,10 @@
 #include <boost/bind.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <cmath>
+#include <stdlib.h>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 #include "Common/CommonFunctions.h"
 #include <Libpfs/frame.h>
@@ -56,6 +60,14 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
     msec_timer stop_watch;
     stop_watch.start();
 #endif
+  // activate parallel execution of fft routines
+  fftwf_init_threads();
+#ifdef _OPENMP
+  fftwf_plan_with_nthreads( omp_get_max_threads() );
+#else
+  fftwf_plan_with_nthreads( 2 );
+#endif
+
     const int width = U.getCols();
     const int height = U.getRows();
     assert((int)F.getCols()==width && (int)F.getRows()==height);

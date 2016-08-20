@@ -60,6 +60,10 @@ void TonemappingOptions::setDefaultTonemapParameters()
     operator_options.fattaloptions.newfattal = FATTAL02_NEWFATTAL;
     operator_options.fattaloptions.fftsolver = true;
 
+    // Ferradans
+    operator_options.ferradansoptions.rho = FERRADANS11_RHO;
+    operator_options.ferradansoptions.inv_alpha = FERRADANS11_INV_ALPHA;
+
     // Drago
     operator_options.dragooptions.bias = DRAGO03_BIAS;
 
@@ -134,6 +138,10 @@ char TonemappingOptions::getRatingForOperator()
         return 'E';
     case reinhard05:
         return 'D';
+    case ferradans:
+        return 'J';
+    case mai:
+        return 'K';
     }
     return ' ';
 }
@@ -188,6 +196,20 @@ const QString TonemappingOptions::getPostfix() {
             postfix+=QString("saturation_%1_").arg(saturation2);
             postfix+=QString("noiseredux_%1_").arg(noiseredux);
             postfix+=QString("fftsolver_%1").arg(fftsolver);
+        }
+        break;
+    case ferradans:
+        {
+            postfix+="ferradans_";
+            float rho=operator_options.ferradansoptions.rho;
+            float inv_alpha=operator_options.ferradansoptions.inv_alpha;
+            postfix+=QString("rho_%1_").arg(rho);
+            postfix+=QString("inv_alpha_%1_").arg(inv_alpha);
+        }
+        break;
+    case mai:
+        {
+            postfix+="mai_";
         }
         break;
     case ashikhmin: 
@@ -328,6 +350,20 @@ const QString TonemappingOptions::getCaption(bool includePregamma, QString separ
             caption+=QString(QObject::tr("FFTSolver") + "=%1").arg(fftsolver);
             }
             break;
+    case ferradans:
+        {
+            float rho=operator_options.ferradansoptions.rho;
+            float inv_alpha=operator_options.ferradansoptions.inv_alpha;
+            caption+="Ferrands:" + separator;
+            caption+=QString(QObject::tr("Rho") + "=%1").arg(rho) + separator;
+            caption+=QString(QObject::tr("InvAlpha") + "=%1").arg(inv_alpha) + separator;
+            }
+            break;
+    case mai:
+        {
+            caption+="Mai:" + separator;
+            }
+            break;
     case ashikhmin:
         {
             caption+="Ashikhmin:" + separator;
@@ -454,6 +490,10 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                                 toreturn->tmoperator=durand;
                         } else if (value == "Fattal02") {
                                 toreturn->tmoperator=fattal;
+                        } else if (value == "Ferradans11") {
+                                toreturn->tmoperator=ferradans;
+                        } else if (value == "Mai11") {
+                                toreturn->tmoperator=mai;
                         } else if (value == "Pattanaik00") {
                                 toreturn->tmoperator=pattanaik;
                         } else if (value == "Reinhard02") {
@@ -506,6 +546,10 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                 } else if (field=="OLDFATTAL") {
                         toreturn->operator_options.fattaloptions.newfattal= true; // This is the new version of fattal pre FFT (always yes)
                         toreturn->operator_options.fattaloptions.fftsolver= (value == "NO");
+                } else if (field=="RHO") {
+                        toreturn->operator_options.ferradansoptions.rho=value.toFloat();
+                } else if (field=="INV_ALPHA") {
+                        toreturn->operator_options.ferradansoptions.inv_alpha=value.toFloat();
                 } else if (field=="MULTIPLIER") {
                         toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
                 } else if (field=="LOCAL") {
@@ -602,6 +646,18 @@ QString TMOptionsOperations::getExifComment() {
                 exif_comment+=QString("Beta: %1\n").arg(beta);
                 exif_comment+=QString("Color Saturation: %1 \n").arg(saturation2);
                 exif_comment+=QString("Noise Reduction: %1 \n").arg(noiseredux);
+                }
+                break;
+        case ferradans: {
+                float rho=opts->operator_options.ferradansoptions.rho;
+                float inv_alpha=opts->operator_options.ferradansoptions.inv_alpha;
+                exif_comment+="Ferrands\nParameters:\n";
+                exif_comment+=QString("Rho: %1\n").arg(rho);
+                exif_comment+=QString("InvAlpha: %1\n").arg(inv_alpha);
+                }
+                break;
+        case mai: {
+                exif_comment+="Ferrands\n";
                 }
                 break;
         case ashikhmin: {

@@ -428,7 +428,7 @@ const double conditional_density::l_min = -8.f, conditional_density::l_max = 8.f
 double conditional_density::x_scale[X_COUNT] = { 0 };    // input log luminance scale
 
 
-std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfs::Progress &ph)
+std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfs::Progress &ph)
 {
   ph.setValue( 0 );
 
@@ -436,7 +436,7 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
   pfs::Array2Df buf_2(width, height);
   pfs::Array2Df temp(width, height);
   
-  std::auto_ptr<conditional_density> C(new conditional_density());
+  std::unique_ptr<conditional_density> C(new conditional_density());
 
   const float thr = 0.0043f; // Approx. discrimination threshold in log10
   const int pix_count = width*height;
@@ -541,7 +541,7 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
 //    }
 //    fclose( fh );  
 
-  return (std::auto_ptr<datmoConditionalDensity>)C;
+  return C; 
 }
   
 

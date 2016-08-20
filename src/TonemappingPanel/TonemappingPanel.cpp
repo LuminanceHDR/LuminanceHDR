@@ -96,6 +96,14 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     noiseGang = new Gang(m_Ui->noiseSlider, m_Ui->noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
     // oldFattalGang = new Gang(NULL,NULL, m_Ui->oldFattalCheckBox);
     fftSolverGang = new Gang(NULL, NULL,m_Ui->fftVersionCheckBox);
+    
+    // ferradans11
+    rhoGang = new Gang(m_Ui->rhoSlider, m_Ui->rhodsb, NULL,NULL,NULL,NULL, -5.f, 0.f, FERRADANS11_RHO);
+
+    connect(rhoGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(rhoGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+
+    inv_alphaGang = new Gang(m_Ui->inv_alphaSlider, m_Ui->inv_alphadsb, NULL,NULL,NULL,NULL, 0.1f, 10.f, FERRADANS11_INV_ALPHA);
 
     // ashikhmin02
     contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
@@ -207,6 +215,8 @@ TonemappingPanel::~TonemappingPanel()
     delete baseGang;
     delete alphaGang;
     delete betaGang;
+    delete rhoGang;
+    delete inv_alphaGang;
     delete saturation2Gang;
     delete noiseGang;
     delete multiplierGang;
@@ -282,6 +292,10 @@ void TonemappingPanel::createDatabase()
 	res = query.exec(" CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, colorSaturation real, noiseReduction real, oldFattal boolean NOT NULL, pregamma real, comment varchar(150));");
 	if (res == false)
 		qDebug() << query.lastError();
+	// Fattal
+	res = query.exec(" CREATE TABLE IF NOT EXISTS ferradans (rho real, inv_alpha real, pregamma real, comment varchar(150));");
+	if (res == false)
+		qDebug() << query.lastError();
 	// Pattanaik
 	res = query.exec(" CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean NOT NULL, local boolean NOT NULL, cone real, rod real, multiplier real, pregamma real, comment varchar(150));");
 	if (res == false)
@@ -342,6 +356,12 @@ void TonemappingPanel::on_defaultButton_clicked()
         fftSolverGang->setDefault();
         m_Ui->fftVersionCheckBox->setChecked(true);
         break;
+    case ferradans:
+        rhoGang->setDefault();
+        inv_alphaGang->setDefault();
+        break;
+    case mai: //no options
+        break;
     case mantiuk06:
         contrastfactorGang->setDefault();
         saturationfactorGang->setDefault();
@@ -400,6 +420,11 @@ void TonemappingPanel::updateUndoState()
         break;
     case fattal:
         alphaGang->updateUndoState();
+        break;
+    case ferradans:
+        rhoGang->updateUndoState();
+        break;
+    case mai: //no options
         break;
     case mantiuk06:
         contrastfactorGang->updateUndoState();
@@ -484,6 +509,14 @@ void TonemappingPanel::fillToneMappingOptions(bool exportMode)
 //        toneMappingOptions->operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
         toneMappingOptions->operator_options.fattaloptions.fftsolver=fftSolverGang->isCheckBox1Checked();
         break;
+    case ferradans:
+        toneMappingOptions->tmoperator = ferradans;
+        toneMappingOptions->operator_options.ferradansoptions.rho=rhoGang->v();
+        toneMappingOptions->operator_options.ferradansoptions.inv_alpha=inv_alphaGang->v();
+        break;
+    case mai: 
+        toneMappingOptions->tmoperator = mai;
+        break;
     case mantiuk06:
         toneMappingOptions->tmoperator = mantiuk06;
         toneMappingOptions->operator_options.mantiuk06options.contrastfactor=contrastfactorGang->v();
@@ -548,6 +581,12 @@ void TonemappingPanel::setupUndo()
         noiseGang->setupUndo();
 //        oldFattalGang->setupUndo();
         fftSolverGang->setupUndo();
+        break;
+    case ferradans:
+        rhoGang->setupUndo();
+        inv_alphaGang->setupUndo();
+        break;
+    case mai: //no options
         break;
     case mantiuk06:
         contrastfactorGang->setupUndo();
@@ -618,6 +657,12 @@ void TonemappingPanel::onUndoRedo(bool undo)
         (noiseGang->*redoUndo)();
 //      (oldFattalGang->*redoUndo)();
         (fftSolverGang->*redoUndo)();
+        break;
+    case ferradans:
+        (rhoGang->*redoUndo)();
+        (inv_alphaGang->*redoUndo)();
+        break;
+    case mai:
         break;
     case mantiuk06:
         (contrastfactorGang->*redoUndo)();
@@ -751,6 +796,16 @@ void TonemappingPanel::fromGui2Txt(QString destination)
         out << "NOISE=" << noiseGang->v() << endl;
         out << "OLDFATTAL=" << (m_Ui->fftVersionCheckBox->isChecked() ? "NO" : "YES") << endl;
     }
+    else if (current_page == m_Ui->page_ferradans)
+    {
+        out << "TMO=" << "Ferradans11" << endl;
+        out << "RHO=" << rhoGang->v() << endl;
+        out << "INV_ALPHA=" << inv_alphaGang->v() << endl;
+    }
+    else if (current_page == m_Ui->page_mai)
+    {
+        out << "TMO=" << "Mai11" << endl;
+    }
     else if (current_page == m_Ui->page_ashikhmin)
     {
         out << "TMO=" << "Ashikhmin02" << endl;
@@ -866,6 +921,10 @@ void TonemappingPanel::fromTxt2Gui()
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_durand);
             } else if (value == "Fattal02") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_fattal);
+            } else if (value == "Ferradans11") {
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ferradans);
+            } else if (value == "Mai11") {
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mai);
             } else if (value == "Pattanaik00") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_pattanaik);
             } else if (value == "Reinhard02") {
@@ -912,6 +971,10 @@ void TonemappingPanel::fromTxt2Gui()
             m_Ui->noiseSlider->setValue(noiseGang->v2p(value.toFloat()));
         } else if (field == "OLDFATTAL") {
             m_Ui->fftVersionCheckBox->setChecked(value != "YES");
+        } else if (field == "RHO") {
+            m_Ui->rhoSlider->setValue(rhoGang->v2p(value.toFloat()));
+        } else if (field == "INV_ALPHA") {
+            m_Ui->inv_alphaSlider->setValue(inv_alphaGang->v2p(value.toFloat()));
         } else if (field == "MULTIPLIER") {
             m_Ui->multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
         } else if (field == "LOCAL") {
@@ -1058,6 +1121,9 @@ void TonemappingPanel::saveParameters()
 				colorSat,
 				noiseReduction;
 		bool oldFattal;
+		// Ferradans
+		float rho,
+				inv_alpha;
 		// Mantiuk 06
 		float contrastFactor,
 				saturationFactor,
@@ -1113,6 +1179,13 @@ void TonemappingPanel::saveParameters()
                 oldFattal = !fftSolverGang->isCheckBox1Checked();
 				execFattalQuery(alpha, beta, colorSat, noiseReduction, oldFattal, comment);
 	        break;
+		    case ferradans:
+        		rho = rhoGang->v();
+		        inv_alpha = inv_alphaGang->v();
+				execFerradansQuery(rho, inv_alpha, comment);
+            break;
+		    case mai: //no options
+            break;
     		case mantiuk06:
 				contrastFactor = contrastfactorGang->v();
 				saturationFactor = saturationfactorGang->v();
@@ -1179,6 +1252,9 @@ void TonemappingPanel::loadParameters()
 				colorSat,
 				noiseReduction;
 		bool fftsolver;
+		// Ferradans
+		float rho,
+				inv_alpha;
 		// Mantiuk 06
 		bool contrastEqualization;
 		float contrastFactor;
@@ -1269,6 +1345,22 @@ void TonemappingPanel::loadParameters()
                 m_Ui->fftVersionCheckBox->setChecked(fftsolver);
                 m_Ui->pregammaSlider->setValue(pregamma);
                 m_Ui->pregammadsb->setValue(pregamma);
+			break;
+			case ferradans:
+                m_Ui->stackedWidget_operators->setCurrentIndex(ferradans);
+				rho = tmopts->operator_options.ferradansoptions.rho;
+				inv_alpha = tmopts->operator_options.ferradansoptions.inv_alpha;
+				pregamma = tmopts->pregamma;
+                m_Ui->rhoSlider->setValue(rho);
+                m_Ui->rhodsb->setValue(rho);
+                m_Ui->inv_alphaSlider->setValue(inv_alpha);
+                m_Ui->inv_alphadsb->setValue(inv_alpha);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
+			break;
+			case mai:
+                m_Ui->stackedWidget_operators->setCurrentIndex(mai);
+				pregamma = tmopts->pregamma;
 			break;
     		case mantiuk06:
                 m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk06);
@@ -1486,6 +1578,22 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta, float colorSatur
 		qDebug() << query.lastError();
 }
 
+void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha, QString comment)
+{
+	qDebug() << "TonemappingPanel::execFerradansQuery";
+	QSqlDatabase db = QSqlDatabase::database();
+	QSqlQuery query(db);
+    float pregamma = m_Ui->pregammadsb->value();
+	query.prepare("INSERT INTO ferradans (rho, inv_alpha, pregamma, comment) "
+				"VALUES (:rho, :inv_alpha, :pregamma, :comment)");
+	query.bindValue(":rho", rho);
+	query.bindValue(":inv_alpha", inv_alpha);
+	query.bindValue(":pregamma", pregamma);
+	query.bindValue(":comment", comment);
+	bool res = query.exec();
+	if (res == false)
+		qDebug() << query.lastError();
+}
 void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone, float rod, float multiplier, QString comment)
 {
 	qDebug() << "TonemappingPanel::execPattanaikQuery";
@@ -1579,6 +1687,11 @@ void TonemappingPanel::updatePreviews(double v)
         tmopts->operator_options.fattaloptions.color = v;
     else if(eventSender == m_Ui->noisedsb)
         tmopts->operator_options.fattaloptions.noiseredux = v;
+    // Ferradans
+    else if(eventSender == m_Ui->rhodsb)
+        tmopts->operator_options.ferradansoptions.rho = v;
+    else if(eventSender == m_Ui->inv_alphadsb)
+        tmopts->operator_options.ferradansoptions.inv_alpha = v;
     // Drago
     else if(eventSender == m_Ui->biasdsb)
         tmopts->operator_options.dragooptions.bias = v;
@@ -1695,7 +1808,8 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
         connect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
 
-        connect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        connect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
 
         connect(m_Ui->basedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->spatialdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
@@ -1748,6 +1862,9 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
         disconnect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         disconnect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         disconnect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+
+        disconnect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
+        disconnect(m_Ui->inv_alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
 
         disconnect(m_Ui->biasdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
 

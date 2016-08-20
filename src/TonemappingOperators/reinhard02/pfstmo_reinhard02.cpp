@@ -82,9 +82,9 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
   tmoperator.tmo_reinhard02();
   
   // TODO: this section can be rewritten using SSE Function
-  for( int x=0 ; x<w ; x++ )
+  for(unsigned int x=0 ; x<w ; x++ )
   {
-    for( int y=0 ; y<h ; y++ )
+    for(unsigned int y=0 ; y<h ; y++ )
     {
         float yr = (*Y)(x,y);
         float scale = 0.f;

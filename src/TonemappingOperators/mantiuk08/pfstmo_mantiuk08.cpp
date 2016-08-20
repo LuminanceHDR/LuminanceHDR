@@ -116,7 +116,7 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   
   datmoToneCurve tc;
   
-  std::auto_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->data(), ph);
+  std::unique_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->data(), ph);
   if( C.get() == NULL )
     throw pfs::Exception("failed to analyse the image");
   

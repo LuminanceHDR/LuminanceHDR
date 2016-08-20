@@ -45,6 +45,7 @@ SavedParametersDialog::SavedParametersDialog(QWidget *parent):
 	sqlQuery += "SELECT comment, 'drago' AS operator FROM drago UNION ";
 	sqlQuery += "SELECT comment, 'durand' AS operator FROM durand UNION ";
 	sqlQuery += "SELECT comment, 'fattal' AS operator FROM fattal UNION ";
+	sqlQuery += "SELECT comment, 'ferradans' AS operator FROM ferradans UNION ";
 	sqlQuery += "SELECT comment, 'mantiuk06' AS operator FROM mantiuk06 UNION ";
 	sqlQuery += "SELECT comment, 'mantiuk08' AS operator FROM mantiuk08 UNION ";
 	sqlQuery += "SELECT comment, 'pattanaik' AS operator FROM pattanaik UNION ";
@@ -100,6 +101,12 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
         model->setHeaderData(col++, Qt::Horizontal, tr("Color Saturation"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Noise Reduction"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Old Fattal"));
+        break;
+    case ferradans:
+        tableModel->setTable("ferradans");
+        tableModel->select();
+        model->setHeaderData(col++, Qt::Horizontal, tr("Rho"));
+        model->setHeaderData(col++, Qt::Horizontal, tr("InvAlpha"));
         break;
     case mantiuk06:
         tableModel->setTable("mantiuk06");

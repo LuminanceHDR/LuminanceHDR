@@ -1693,6 +1693,7 @@ void MainWindow::syncViewers(GenericViewer *sender)
     for (int idx = 0; idx < m_tabwidget->count(); idx++)
     {
         GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
+        if (viewer == NULL) return; //this happens when a tab is removed and sync viewers is active, fixes a crash
         if (sender != viewer)
         {
             viewer->blockSignals(true);

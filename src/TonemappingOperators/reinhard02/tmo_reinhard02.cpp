@@ -393,7 +393,7 @@ double Reinhard02::V1( int x, int y, int level )
 }
 
 /* PRE:  */
-double Reinhard02::pyramid_lookup( int x, int y, int level )
+double Reinhard02::pyramid_lookup( unsigned int x, unsigned int y, int level )
 {
   // int n, s;
   

@@ -151,6 +151,13 @@ PreviewPanel::PreviewPanel(QWidget *parent):
     m_ListPreviewLabel.push_back(labelFattal);
     connect(labelFattal, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
+    PreviewLabel * labelFerradans = new PreviewLabel(this, ferradans);
+    labelFerradans->setText("Ferradans");
+    labelFerradans->setToolTip("Ferradans");
+    labelFerradans->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelFerradans);
+    connect(labelFerradans, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+
     PreviewLabel * labelDrago = new PreviewLabel(this, drago);
     labelDrago->setText("Drago");
     labelDrago->setToolTip("Drago");
@@ -193,17 +200,26 @@ PreviewPanel::PreviewPanel(QWidget *parent):
     m_ListPreviewLabel.push_back(labelPattanaik);
     connect(labelPattanaik, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
+    PreviewLabel * labelMai = new PreviewLabel(this, mai);
+    labelMai->setText("Mai");
+    labelMai->setToolTip("Mai");
+    labelMai->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelMai);
+    connect(labelMai, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+
     FlowLayout *flowLayout = new FlowLayout;
 
     flowLayout->addWidget(labelMantiuk06);
     flowLayout->addWidget(labelMantiuk08);
     flowLayout->addWidget(labelFattal);
+    flowLayout->addWidget(labelFerradans);
     flowLayout->addWidget(labelDrago);
     flowLayout->addWidget(labelDurand);
     flowLayout->addWidget(labelReinhard02);
     flowLayout->addWidget(labelReinhard05);
     flowLayout->addWidget(labelAshikhmin);
     flowLayout->addWidget(labelPattanaik);
+    flowLayout->addWidget(labelMai);
 
     setLayout(flowLayout);
 }
