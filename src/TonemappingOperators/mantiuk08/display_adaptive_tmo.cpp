@@ -541,7 +541,7 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int 
 //    }
 //    fclose( fh );  
 
-  return C; 
+  return std::move(C); 
 }
   
 
