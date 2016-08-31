@@ -49,6 +49,7 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadapt
     //float chromaticadaptation = 0.5f;
     //float lightadaptation = 0.75f;
 
+#ifndef NDEBUG
     std::stringstream ss;
 
     ss << "pfstmo_reinhard05 (";
@@ -57,10 +58,10 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadapt
     ss << "light adaptation: " << lightadaptation << ") " << std::endl;
 
     std::cout << ss.str();
+#endif
 
     pfs::Channel *R, *G, *B;
     frame.getXYZChannels( R, G, B );
-    frame.getTags().setTag("LUMINANCE", "RELATIVE");
     //---
 
     if ( !R || !G || !B )
@@ -68,6 +69,7 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadapt
         throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
     }
 
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
     // tone mapping
     const unsigned int width = frame.getWidth();
     const unsigned int height = frame.getHeight();

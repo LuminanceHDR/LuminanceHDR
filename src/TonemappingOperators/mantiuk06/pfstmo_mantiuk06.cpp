@@ -87,8 +87,13 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
     pfs::Channel *inRed, *inGreen, *inBlue;
     frame.getXYZChannels(inRed, inGreen, inBlue);
 
-    int cols = frame.getWidth();
-    int rows = frame.getHeight();
+    if ( !inRed || !inGreen || !inBlue )
+    {
+        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    }
+    
+    const int cols = frame.getWidth();
+    const int rows = frame.getHeight();
     
     pfs::Array2Df inY( cols, rows );
     pfs::transformRGB2Y(inRed, inGreen, inBlue, &inY);

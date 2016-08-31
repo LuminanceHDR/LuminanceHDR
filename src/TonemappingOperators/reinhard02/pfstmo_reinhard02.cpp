@@ -65,13 +65,13 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
 #endif
   pfs::Channel *X, *Y, *Z;
   frame.getXYZChannels( X, Y, Z );
-  frame.getTags().setTag("LUMINANCE", "RELATIVE");
   //---
   
   if ( Y==NULL || X==NULL || Z==NULL ) {
      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
   
+  frame.getTags().setTag("LUMINANCE", "RELATIVE");
   // tone mapping
   size_t w = Y->getWidth();
   size_t h = Y->getHeight();

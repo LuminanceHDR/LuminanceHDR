@@ -82,7 +82,6 @@ void pfstmo_fattal02(pfs::Frame& frame,
   //Store RGB data temporarily in XYZ channels
   pfs::Channel *R, *G, *B;
   frame.getXYZChannels( R, G, B );
-  frame.getTags().setTag("LUMINANCE", "RELATIVE");
   //---
   
   if ( !R || !G || !B )
@@ -90,9 +89,10 @@ void pfstmo_fattal02(pfs::Frame& frame,
       throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
     
+  frame.getTags().setTag("LUMINANCE", "RELATIVE");
   // tone mapping
-  int w = frame.getWidth();
-  int h = frame.getHeight();
+  const int w = frame.getWidth();
+  const int h = frame.getHeight();
   
   pfs::Array2Df Yr(w,h);
   pfs::Array2Df L(w,h);

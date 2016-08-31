@@ -32,9 +32,6 @@
 #include <iostream>
 #include <cassert>
 
-#include <QFile>
-
-
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/progress.h"
@@ -76,6 +73,11 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
     assert( Xr != NULL );
     assert( Yr != NULL );
     assert( Zr != NULL );
+    if ( !Xr || !Yr || !Zr )
+    {
+        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    }
+    
 
     pfs::transformColorSpace( pfs::CS_RGB, Xr, Yr, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
     float maxLum, avLum, minLum;

@@ -63,11 +63,13 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   if ( saturation_factor < 0.0f || saturation_factor > 2.0f )
     throw pfs::Exception("incorrect saturation factor, accepted range is (0..2)");
   
+#ifndef NDEBUG
   std::cout << "pfstmo_mantiuk08 (";
   std::cout << "saturation factor: " << saturation_factor;
   std::cout << ", contrast enhancement factor: " << contrast_enhance_factor;
   std::cout << ", white_y: " << white_y;
   std::cout << ", setluminance: " << setluminance << ")" << std::endl;
+#endif
   
   DisplayFunction *df = NULL;
   DisplaySize *ds = NULL;
@@ -83,8 +85,14 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   
   pfs::Channel *inX, *inY, *inZ;
   frame.getXYZChannels(inX, inY, inZ);
-  int cols = frame.getWidth();
-  int rows = frame.getHeight();
+
+  if ( !inX || !inY || !inZ )
+  {
+      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+  }
+    
+  const int cols = frame.getWidth();
+  const int rows = frame.getHeight();
   
   pfs::Array2Df R( cols, rows );
   pfs::transformColorSpace(pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ);

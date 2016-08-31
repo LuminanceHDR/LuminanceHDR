@@ -71,18 +71,19 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
     //Arod  = -1.0f;
     float fps = 16.0f; //not used
 
+#ifndef NDEBUG
     std::cout << "pfstmo_pattanaik00 (";
     std::cout << "local: " << local << ", ";
     std::cout << "multiplier: " << multiplier << ", ";
     std::cout << "Acone: " << Acone << ", ";
     std::cout << "Arod: " << Arod << ", ";
     std::cout << "autolum: " << autolum << ")" << std::endl;
+#endif
 
     boost::scoped_ptr<VisualAdaptationModel> am(new VisualAdaptationModel());
 
     pfs::Channel *X, *Y, *Z;
     frame.getXYZChannels( X, Y, Z );
-    frame.getTags().setTag("LUMINANCE", "RELATIVE");
     //---
 
     if ( Y==NULL || X==NULL || Z==NULL)
@@ -90,6 +91,7 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
         throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
     }
 
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
     // adaptation model
     if ( multiplier != 1.0f ) {
         multiplyChannels(*X, *Y, *Z, multiplier );

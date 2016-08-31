@@ -42,19 +42,21 @@
 
 void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress &ph)
 {
+#ifndef NDEBUG
     std::cout << "pfstmo_drago03 (";
     std::cout << "bias: " << biasValue << ")" << std::endl;
+#endif
 
     pfs::Channel *X, *Y, *Z;
     frame.getXYZChannels( X, Y, Z );
 
-    frame.getTags().setTag("LUMINANCE", "RELATIVE");
-    //---
-
-    if ( Y == NULL )
+    if ( !X || !Y || !Z )
     {
         throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
     }
+    
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
+    //---
 
     pfs::Array2Df& Xr = *X;
     pfs::Array2Df& Yr = *Y;
