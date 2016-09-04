@@ -32,6 +32,8 @@
 #include "commandline.h"
 
 #include "Common/LuminanceOptions.h"
+#include "Common/CommonFunctions.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 #include "Exif/ExifOperations.h"
 
@@ -39,6 +41,7 @@
 #include "Core/TMWorker.h"
 
 #include "Libpfs/tm/TonemapOperator.h"
+#include "Libpfs/manip/gamma_levels.h"
 
 #include <boost/program_options.hpp>
 
@@ -98,6 +101,7 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
 	tmofileparams(new pfs::Params()),
     verbose(false),
     threshold(-1.0f),
+    isAutolevels(false),
     isHtml(false),
     isHtmlDone(false),
     htmlQuality(2),
@@ -135,6 +139,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
         ("output,o", po::value<std::string>(),       tr("LDR_FILE    File name you want to save your tone mapped LDR to.").toUtf8().constData())
             
         ("autoag,t", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
+        ("autolevels,b", tr("Apply autolevels correction after tonemapping.").toUtf8().constData())
         ("createwebpage,w", tr("Enable generation of a webpage with embedded HDR viewer.").toUtf8().constData())
     ;
 
@@ -278,6 +283,9 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         if (vm.count("help")) {
             cout << cmdvisible_options << "\n";
             return 1;
+        }
+        if (vm.count("autolevels")) {
+            isAutolevels = true;
         }
         if (vm.count("createwebpage")) {
             isHtml = true;
@@ -664,6 +672,14 @@ void  CommandLineInterfaceManager::startTonemap()
         else
             inputfname = inputFiles.first();
 
+        //Autolevels
+        if (isAutolevels)
+        {
+            float minL, maxL, gammaL;
+            QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(tm_frame.data()) );
+            computeAutolevels(temp_qimage.data(), minL, maxL, gammaL);
+            pfs::gammaAndLevels(tm_frame.data(), minL, maxL, 0.f, 1.f, gammaL);
+        }
         // Create an ad-hoc IOWorker to save the file
         if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename,
                                         inputfname,

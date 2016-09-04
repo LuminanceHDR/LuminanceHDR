@@ -24,8 +24,11 @@
 #ifndef COMMONFUNCTIONS_H
 #define COMMONFUNCTIONS_H
 
-#include "HdrWizard/HdrCreationItem.h"
+#include <QImage>
+#include <HdrWizard/HdrCreationItem.h>
 #include <Libpfs/utils/minmax.h>
+
+void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL);
 
 inline
 void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)

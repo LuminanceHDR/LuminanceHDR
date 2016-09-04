@@ -80,6 +80,7 @@ private:
 	int maximum;
 	bool started;
     float threshold;
+    bool isAutolevels;
     bool isHtml;
     bool isHtmlDone;
     int htmlQuality;

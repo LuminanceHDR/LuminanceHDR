@@ -98,9 +98,9 @@ void gammaAndLevels(pfs::Frame* inFrame,
 #endif
 
 #ifndef NDEBUG
-    std::cerr << "Black in =" << black_in << "black out =" << black_out
-              << "White in =" << white_in << "white out =" << white_out
-              << "Gamma =" << gamma
+    std::cerr << "Black in = " << black_in << ", Black out = " << black_out
+              << ", White in = " << white_in << ", White out = " << white_out
+              << ", Gamma = " << gamma
               << std::endl;
 #endif
 

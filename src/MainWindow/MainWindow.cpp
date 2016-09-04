@@ -65,10 +65,12 @@
 #include "Libpfs/manip/cut.h"
 #include "Libpfs/manip/rotate.h"
 #include "Libpfs/manip/gamma_levels.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 #include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/global.h"
+#include "Common/CommonFunctions.h"
 #include "OsIntegration/osintegration.h"
 #include "BatchHDR/BatchHDRDialog.h"
 #include "BatchTM/BatchTMDialog.h"
@@ -100,9 +102,6 @@
 #include "HdrWizard/AutoAntighosting.h"
 #include "HdrWizard/WhiteBalance.h"
 #include "LibpfsAdditions/formathelper.h"
-
-#include <iostream>
-using namespace std;
 
 namespace
 {
@@ -180,6 +179,8 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
         return g_v->getViewerMode();
     }
 }
+
+
 }
 
 // static members!
@@ -1648,6 +1649,13 @@ void MainWindow::exportImage(TonemappingOptions *opts)
 
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
+    if (m_tonemapPanel->autoLevels()) {
+        float minL, maxL, gammaL;
+        QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(frame) );
+        computeAutolevels(temp_qimage.data(), minL, maxL, gammaL);
+        pfs::gammaAndLevels(frame, minL, maxL, 0.f, 1.f, gammaL);
+    }
+
     GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
     if (m_tonemapPanel->replaceLdr() && n != NULL && !n->isHDR())
     {
@@ -1669,6 +1677,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
             m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
 
         n->setViewerMode( getCurrentViewerMode( *m_tabwidget ) );
+
     }
     m_tabwidget->setCurrentWidget(n);
 

@@ -59,6 +59,94 @@ using namespace std;
 using namespace pfs;
 using namespace pfs::io;
 
+void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
+{
+    const QRgb* src = reinterpret_cast<const QRgb*>(data->bits());
+    const int width = data->width();
+    const int height = data->height();
+    const int ELEMENTS = width * height;
+
+    //Convert to lightness
+    int *lightness = new int[ELEMENTS];
+
+    for (int i = 0;  i < ELEMENTS; i++)
+    {
+        lightness[i] = QColor::fromRgb(src[i]).toHsl().lightness();
+    }
+
+    //Build histogram
+    int hist[256];
+    for (int i = 0; i < 256; ++i) hist[i] = 0;
+
+    for (int i = 0; i < ELEMENTS; ++i)
+    {
+        hist[ lightness[i] ] += 1;
+    }
+
+    //Scaling factor: range [0..1]
+    const float factor = 1.f/255.f;
+
+    //Compute mean and threshold
+    const float meanL = accumulate(lightness, lightness + ELEMENTS, 0.f)/ELEMENTS;
+    const int threshold = ceil(meanL/10.f);
+
+    //Start from midrange
+    int xa = 120;
+    int xb = 132;
+
+    if (hist[0] >= threshold)
+        xa = 0;
+    if (hist[255] >= threshold)
+        xb = 255;
+
+    while (true)
+    {
+        int count = 0;
+        for (int i = xa; i <= xb; i++)
+        {
+            if (hist[i] >= threshold)
+                count += hist[i];
+        }
+
+        if ((float)count/(float)ELEMENTS > 0.9f)
+            break;
+        else {
+            if (hist[xa] > threshold)
+                xa--;
+            else if (hist[xa] == threshold)
+                continue;
+            else
+                xa++;
+            if (hist[xb] > threshold)
+                xb++;
+            else if (hist[xb] == threshold)
+                continue;
+            else
+                xb--;
+        }
+        if (xa < 0)
+            xa = 0;
+        if (xb > 255)
+            xb = 255;
+    }
+    minL = factor*xa;
+    maxL = factor*xb;
+    float midrange = minL + .5f*(maxL - minL);
+    if (abs(midrange-.5f) < 1e-3)
+        gammaL = 1.f;
+    else
+        gammaL = log10(midrange)/log10(factor*meanL);
+
+#ifndef NDEBUG
+    cout << "minL: " << minL << ", maxL: " << maxL << ", gammaL: " << gammaL << endl;
+    cout << "ithreshold: " << threshold << ", threshold: " << factor*threshold << endl;
+    cout << "midrange: " << midrange << endl;
+#endif
+
+    delete[] lightness;
+}
+
+
 ConvertToQRgb::ConvertToQRgb(float gamma)
     : gamma(1.0f/gamma)
 {

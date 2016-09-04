@@ -1073,6 +1073,7 @@ void TonemappingPanel::setEnabled(bool b)
     //m_Ui->qualitySB->setEnabled(b);
 
     m_Ui->replaceLdrCheckBox->setEnabled(b);
+    m_Ui->autoLevelsCheckBox->setEnabled(b);
 
 	// Labels
     m_Ui->lblOperators->setEnabled(b);
@@ -1656,6 +1657,11 @@ void TonemappingPanel::execReinhard05Query(float brightness, float chromaticAdap
 bool TonemappingPanel::replaceLdr()
 {
     return m_Ui->replaceLdrCheckBox->isChecked();
+}
+
+bool TonemappingPanel::autoLevels()
+{
+    return m_Ui->autoLevelsCheckBox->isChecked();
 }
 
 void TonemappingPanel::updatePreviews(double v)

@@ -158,6 +158,7 @@ public:
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();
+	bool autoLevels();
 	void setExportQueueSize(int);
 
 public Q_SLOTS:

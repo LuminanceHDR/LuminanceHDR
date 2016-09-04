@@ -82,6 +82,16 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QCheckBox" name="autoLevelsCheckBox">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Auto Levels</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="3" column="0">
