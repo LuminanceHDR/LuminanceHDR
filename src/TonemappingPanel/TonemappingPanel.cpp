@@ -170,6 +170,8 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     connect(m_Ui->loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
     connect(m_Ui->saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
 
+    connect(m_Ui->autoLevelsCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(autoLevels(bool)));
+
 	m_spinner = new QtWaitingSpinner(this);
 
 	m_spinner->setRoundness(70.0);
@@ -1659,7 +1661,7 @@ bool TonemappingPanel::replaceLdr()
     return m_Ui->replaceLdrCheckBox->isChecked();
 }
 
-bool TonemappingPanel::autoLevels()
+bool TonemappingPanel::getAutoLevels()
 {
     return m_Ui->autoLevelsCheckBox->isChecked();
 }

@@ -88,7 +88,17 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
 
     //Compute mean and threshold
     const float meanL = accumulate(lightness, lightness + ELEMENTS, 0.f)/ELEMENTS;
-    const int threshold = ceil(meanL/10.f);
+    //DIVISOR and hence threshold are hardcoded here
+    //Is there a better way of setting this? Changing threshold until CUMUL/ELEMENTES > 95% ????
+    const float DIVISOR = 10.f;
+    const int threshold = ceil(meanL/DIVISOR);
+
+    int CUMUL = 0;
+    for (int i = 0; i < 256; i++)
+    {
+        if (hist[i] >= threshold)
+            CUMUL += hist[i];
+    }
 
     //Start from midrange
     int xa = 120;
@@ -99,6 +109,7 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
     if (hist[255] >= threshold)
         xb = 255;
 
+    int oldcount = 0;
     while (true)
     {
         int count = 0;
@@ -107,23 +118,17 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
             if (hist[i] >= threshold)
                 count += hist[i];
         }
-
-        if ((float)count/(float)ELEMENTS > 0.9f)
+        if (count >= CUMUL)
             break;
-        else {
-            if (hist[xa] > threshold)
-                xa--;
-            else if (hist[xa] == threshold)
-                continue;
-            else
-                xa++;
-            if (hist[xb] > threshold)
-                xb++;
-            else if (hist[xb] == threshold)
-                continue;
-            else
-                xb--;
-        }
+        if ((hist[xa] >= threshold) || ((count - oldcount) == 0 ))
+            xa--;
+        else
+            xa++;
+        if ((hist[xb] >= threshold) || ((count - oldcount) == 0 ))
+            xb++;
+        else
+            xb--;
+        oldcount = count;
         if (xa < 0)
             xa = 0;
         if (xb > 255)
@@ -132,13 +137,14 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
     minL = factor*xa;
     maxL = factor*xb;
     float midrange = minL + .5f*(maxL - minL);
-    if (abs(midrange-.5f) < 1e-3)
+    if (abs(midrange-.5f) < 1e-4)
         gammaL = 1.f;
     else
         gammaL = log10(midrange)/log10(factor*meanL);
 
 #ifndef NDEBUG
-    cout << "minL: " << minL << ", maxL: " << maxL << ", gammaL: " << gammaL << endl;
+    cout << (float)100*CUMUL/ELEMENTS << "%" << endl;
+    cout << "minL: " << minL << ", maxL: " << maxL << ", gammaL: " << gammaL << ", meanL: " << meanL << endl;
     cout << "ithreshold: " << threshold << ", threshold: " << factor*threshold << endl;
     cout << "midrange: " << midrange << endl;
 #endif

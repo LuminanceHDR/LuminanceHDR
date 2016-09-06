@@ -50,6 +50,7 @@ public:
 
 public Q_SLOTS:
     void updatePreviews(pfs::Frame* frame, int index = -1);
+    void setAutolevels(bool);
 
 protected Q_SLOTS:
     void tonemapPreview(TonemappingOptions*);
@@ -59,6 +60,7 @@ Q_SIGNALS:
 
 private:
     int m_original_width_frame;
+    bool m_isAutolevels;
     QList<PreviewLabel*> m_ListPreviewLabel;
 };
 #endif

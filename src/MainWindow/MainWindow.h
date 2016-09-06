@@ -209,6 +209,8 @@ protected Q_SLOTS:
 
     void on_actionFits_Importer_triggered();
 
+    void updatePreviews(bool);
+
 Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);

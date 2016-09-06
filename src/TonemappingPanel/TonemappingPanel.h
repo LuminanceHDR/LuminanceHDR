@@ -158,7 +158,7 @@ public:
     ~TonemappingPanel();
     void setSizes(int, int);
 	bool replaceLdr();
-	bool autoLevels();
+	bool getAutoLevels();
 	void setExportQueueSize(int);
 
 public Q_SLOTS:
@@ -170,6 +170,7 @@ public Q_SLOTS:
 signals:
     void startTonemapping(TonemappingOptions*);
     void startExport(TonemappingOptions*);
+    void autoLevels(bool);
 
 private:
     void onUndoRedo(bool undo);
