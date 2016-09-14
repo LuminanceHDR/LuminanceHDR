@@ -309,7 +309,7 @@ void MainWindow::createUI()
     restoreState(luminance_options->value("MainWindowState").toByteArray());
     restoreGeometry(luminance_options->value("MainWindowGeometry").toByteArray());
 
-    if(m_Ui->isFullScreen()) m_Ui->actionShow_Full_Screen->setEnabled(true);
+    if(isFullScreen()) m_Ui->actionShow_Full_Screen->setEnabled(true);
 
     setAcceptDrops(true);
     setWindowModified(false);
