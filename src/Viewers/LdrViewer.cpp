@@ -163,17 +163,20 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 
     mPixmap->disableSelectionTool(); // disable by default crop functionalities
 
-    // I shouldn't call a virtual function straight from the constructor,
-    // but specifing correctly which version of this virtual function I want to call,
-    // I am safe
-    LdrViewer::setTonemappingOptions(opts);
+    if (frame) // In new fullscreen viewer we have a NULL frame at construction
+    {
+        // I shouldn't call a virtual function straight from the constructor,
+        // but specifing correctly which version of this virtual function I want to call,
+        // I am safe
+        LdrViewer::setTonemappingOptions(opts);
 
-    QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(getFrame()) );
-    doCMSTransform(*temp_qimage, false, false);
-    setQImage(*temp_qimage);
+        QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(getFrame()) );
+        doCMSTransform(*temp_qimage, false, false);
+        setQImage(*temp_qimage);
 
-    updateView();
-    retranslateUi();
+        updateView();
+        retranslateUi();
+    }
 }
 
 LdrViewer::~LdrViewer()

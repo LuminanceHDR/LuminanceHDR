@@ -44,7 +44,6 @@ for which a new license (GPL+exception) is in place.
 #ifndef SCTEXTBROWSER_H
 #define SCTEXTBROWSER_H
 
-// #include <QTextBrowser>
 #include <QUrl>
 #include  <QWebEngineView>
 

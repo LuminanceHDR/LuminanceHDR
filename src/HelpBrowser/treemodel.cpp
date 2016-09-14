@@ -1,4 +1,9 @@
-/****************************************************************************
+/**
+** This file is a part of Luminance HDR package.
+** ----------------------------------------------------------------------
+** Copyright (C) 2009-2016 Davide Anastasia, Franco Comida, Daniel Kaneider
+**
+*****************************************************************************
 **
 ** Copyright (C) 2005-2007 Trolltech ASA. All rights reserved.
 **

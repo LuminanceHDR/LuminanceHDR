@@ -67,21 +67,24 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns)
 {
     initUi();
 
-    // I prefer to do everything by hand, so the flow of the calls is clear
-    m_lumRange->blockSignals(true);
+    if (frame) // In new fullscreen viewer we have a NULL frame at construction
+    {
+        // I prefer to do everything by hand, so the flow of the calls is clear
+        m_lumRange->blockSignals(true);
 
-    m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
-    m_lumRange->fitToDynamicRange();
+        m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
+        m_lumRange->fitToDynamicRange();
 
-    m_mappingMethod = static_cast<RGBMappingType>( m_mappingMethodCB->currentIndex() );
-    m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
-    m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
+        m_mappingMethod = static_cast<RGBMappingType>( m_mappingMethodCB->currentIndex() );
+        m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
+        m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
 
-    QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
-    mPixmap->setPixmap(QPixmap::fromImage(*qImage));
+        QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
+        mPixmap->setPixmap(QPixmap::fromImage(*qImage));
 
-    updateView();
-    m_lumRange->blockSignals(false);
+        updateView();
+        m_lumRange->blockSignals(false);
+    }
 }
 
 void HdrViewer::initUi()

@@ -63,6 +63,7 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/params.h"
 #include "Libpfs/manip/cut.h"
+#include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/rotate.h"
 #include "Libpfs/manip/gamma_levels.h"
 #include "Fileformat/pfsoutldrimage.h"
@@ -191,6 +192,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
+    , m_fullScreenLdrViewer(new LdrViewer(NULL))
+    , m_fullScreenHdrViewer(new HdrViewer(NULL))
     , m_firstWindow(0)
 {
     init();
@@ -202,6 +205,8 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
+    , m_fullScreenLdrViewer(new LdrViewer(NULL))
+    , m_fullScreenHdrViewer(new HdrViewer(NULL))
     , m_firstWindow(0)
 {
     init();
@@ -237,6 +242,8 @@ MainWindow::~MainWindow()
 
     clearRecentFileActions();
     delete luminance_options;
+    delete m_fullScreenLdrViewer;
+    delete m_fullScreenHdrViewer;
 }
 
 void MainWindow::init()
@@ -302,6 +309,8 @@ void MainWindow::createUI()
     restoreState(luminance_options->value("MainWindowState").toByteArray());
     restoreGeometry(luminance_options->value("MainWindowGeometry").toByteArray());
 
+    if(m_Ui->isFullScreen()) m_Ui->actionShow_Full_Screen->setEnabled(true);
+
     setAcceptDrops(true);
     setWindowModified(false);
     setWindowTitle(QString("Luminance HDR " LUMINANCEVERSION)); // + "  " + g_GIT_SHA1);
@@ -360,7 +369,6 @@ void MainWindow::createCentralWidget()
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateSoftProofing(int)));
     connect(m_tonemapPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
     connect(m_tonemapPanel, SIGNAL(startExport(TonemappingOptions*)), this, SLOT(exportImage(TonemappingOptions*)));
-    //connect(m_tonemapPanel, SIGNAL(autoLevels(bool)), m_PreviewPanel, SLOT(setAutolevels(bool)));
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_tonemapPanel, SLOT(updatedHDR(pfs::Frame*)));
     connect(this, SIGNAL(destroyed()), m_PreviewPanel, SLOT(deleteLater()));
 
@@ -672,10 +680,12 @@ void MainWindow::save_hdr_success(GenericViewer* saved_hdr, const QString& fname
     m_tabwidget->setTabText(m_tabwidget->indexOf(saved_hdr), qfi.fileName());
 }
 
-void MainWindow::save_hdr_failed()
+void MainWindow::save_hdr_failed(const QString &fname)
 {
     // TODO give some kind of feedback to the user!
     // TODO pass the name of the file, so the user know which file didn't save correctly
+    // DONE!!! Once again, use unified style?
+    QMessageBox::warning(0,"", tr("Failed to save %1").arg(fname), QMessageBox::Ok, QMessageBox::NoButton);
 }
 
 void MainWindow::save_ldr_success(GenericViewer* saved_ldr, const QString& fname)
@@ -684,12 +694,12 @@ void MainWindow::save_ldr_success(GenericViewer* saved_ldr, const QString& fname
         m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), QFileInfo(fname).fileName());
 }
 
-void MainWindow::save_ldr_failed()
+void MainWindow::save_ldr_failed(const QString &fname)
 {
     // TODO give some kind of feedback to the user!
     // TODO pass the name of the file, so the user know which file didn't save correctly
-    QMessageBox::warning(0,"", tr("Failed to save"), QMessageBox::Ok, QMessageBox::NoButton);
-    //QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
+    // DONE!!! Once again, use unified style?
+    QMessageBox::warning(0,"", tr("Failed to save %1").arg(fname), QMessageBox::Ok, QMessageBox::NoButton);
 }
 
 void MainWindow::on_actionSave_Hdr_Preview_triggered()
@@ -736,6 +746,7 @@ void MainWindow::updateActions( int w )
     updateMagnificationButtons(g_v); // g_v ? g_v : 0
 
     m_Ui->fileSaveAsAction->setEnabled(hasImage);
+    m_Ui->actionRemove_Tab->setEnabled(hasImage);
     m_Ui->actionSave_Hdr_Preview->setEnabled(hasImage && isHdr);
     m_Ui->fileSaveAllAction->setEnabled(hasImage && curr_num_ldr_open >= 2);
 
@@ -764,6 +775,7 @@ void MainWindow::updateActions( int w )
     m_Ui->removeSelectionAction->setEnabled(hasCropping);
 
     m_Ui->actionLock->setEnabled(hasImage && curr_num_ldr_open >= 1);
+    m_Ui->actionShow_Image_Full_Screen->setEnabled(hasImage);
 }
 
 void MainWindow::on_rotateccw_triggered()
@@ -1040,11 +1052,11 @@ void MainWindow::setupIO()
     // Save HDR
     //connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_hdr_success(GenericViewer*, QString)), this, SLOT(save_hdr_success(GenericViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_hdr_failed()), this, SLOT(save_hdr_failed()));
+    connect(m_IOWorker, SIGNAL(write_hdr_failed(QString)), this, SLOT(save_hdr_failed(QString)));
     // Save LDR
     //connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
     connect(m_IOWorker, SIGNAL(write_ldr_success(GenericViewer*, QString)), this, SLOT(save_ldr_success(GenericViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_ldr_failed()), this, SLOT(save_ldr_failed()));
+    connect(m_IOWorker, SIGNAL(write_ldr_failed(QString)), this, SLOT(save_ldr_failed(QString)));
 
     // progress bar handling
     connect(m_IOWorker, SIGNAL(setValue(int)), m_ProgressBar, SLOT(setValue(int)));
@@ -2130,4 +2142,26 @@ void MainWindow::on_actionFits_Importer_triggered()
         emit load_success(frame, tr("FITS Image"), QStringList(), true);
     }
 #endif
+}
+
+void MainWindow::on_actionShow_Full_Screen_toggled(bool b)
+{
+    b ? this->showFullScreen() : this->showMaximized();
+}
+
+void MainWindow::on_actionShow_Image_Full_Screen_triggered()
+{
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    bool isHdr = g_v ? g_v->isHDR() : false;
+    pfs::Frame* frame = pfs::copy(g_v->getFrame()); //frame is assigned to one viewer that will take care of deleting it
+    if (isHdr)
+    {
+        m_fullScreenHdrViewer->setFrame(frame);
+        m_fullScreenHdrViewer->showFullScreen();
+    }
+    else
+    {
+        m_fullScreenLdrViewer->setFrame(frame);
+        m_fullScreenLdrViewer->showFullScreen();
+    }
 }

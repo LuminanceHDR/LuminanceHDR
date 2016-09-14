@@ -31,7 +31,6 @@
 #include <QDebug>
 #include <QDrag>
 #include <QMimeData>
-//#include <QtOpenGL/QGLWidget>
 
 #include "Viewers/GenericViewer.h"
 #include "Viewers/PanIconWidget.h"
@@ -59,14 +58,12 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     mToolBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     mToolBar->setFixedHeight(40);
     mToolBar->setAutoFillBackground( true );
-    //mToolBar->setBackgroundRole(QPalette::Dark);
 
     mVBL->addWidget(mToolBar);
 
     mScene = new QGraphicsScene(this);
     mScene->setBackgroundBrush(Qt::darkGray);
     mView = new IGraphicsView(mScene, this);
-    //mView->setViewport(new QGLWidget()); //OpenGL viewer
     mView->setCacheMode(QGraphicsView::CacheBackground);
     mView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
@@ -79,7 +76,7 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     connect(mView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
 
     mCornerButton = new QToolButton(this);
-    mCornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
+    mCornerButton->setIcon(QIcon::fromTheme("move", QIcon(":/new/prefix1/images/move.png")));
 
     mView->setCornerWidget(mCornerButton);
 
@@ -389,7 +386,7 @@ int GenericViewer::getHeight()
 
 void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)
 {
-    delete mFrame;
+    if (mFrame != NULL) delete mFrame;
     mFrame = new_frame;
 
     // call virtual protected function
@@ -418,4 +415,13 @@ void GenericViewer::startDragging()
 	drag->setPixmap(mPixmap->pixmap().scaledToHeight(mPixmap->pixmap().height()/10));
 
     /*Qt::DropAction dropAction =*/ drag->exec();
+}
+
+void GenericViewer::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_F10) {
+        if (mFrame != NULL) delete mFrame;
+        mFrame = NULL;
+        this->hide();
+    }
 }

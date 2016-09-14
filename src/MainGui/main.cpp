@@ -98,7 +98,7 @@ int main( int argc, char ** argv )
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
     LuminanceOptions::isCurrentPortableMode =
-            QDir(QApplication::applicationDirPath()).exists("PortableMode.txt");
+            QDir(QGuiApplication::applicationDirPath()).exists("PortableMode.txt");
     LuminanceOptions::checkHomeFolder();
 
     if (LuminanceOptions::isCurrentPortableMode)
@@ -110,7 +110,6 @@ int main( int argc, char ** argv )
 
     LuminanceOptions::conditionallyDoUpgrade();
     TranslatorManager::setLanguage(LuminanceOptions().getGuiLang());
-
 
 	LuminanceOptions().applyTheme(true);
 

@@ -62,6 +62,8 @@ namespace pfs {
 
 class IOWorker;             // #include "Core/IOWorker.h"
 class GenericViewer;
+class LdrViewer;
+class HdrViewer;
 class PreviewPanel;         // #include "PreviewPanel/PreviewPanel.h"
 class HelpBrowser;          // #include "HelpBrowser/helpbrowser.h"
 class TMOProgressIndicator; // #include "TonemappingPanel/TMOProgressIndicator.h"
@@ -87,9 +89,9 @@ public Q_SLOTS:
 
     // I/O
     void save_hdr_success(GenericViewer* saved_hdr, const QString& fname);
-    void save_hdr_failed();
+    void save_hdr_failed(const QString& fname);
     void save_ldr_success(GenericViewer* saved_ldr, const QString& fname);
-    void save_ldr_failed();
+    void save_ldr_failed(const QString& fname);
 
     void load_failed(const QString&);
     void load_success(pfs::Frame* new_hdr_frame, const QString& new_fname,
@@ -209,6 +211,9 @@ protected Q_SLOTS:
 
     void on_actionFits_Importer_triggered();
 
+    void on_actionShow_Full_Screen_toggled(bool);
+    void on_actionShow_Image_Full_Screen_triggered();
+
     void updatePreviews(bool);
 
 Q_SIGNALS:
@@ -311,6 +316,8 @@ private:
 
     QFutureWatcher<void> m_futureWatcher;
     GenericViewer *m_viewerToProcess;
+    LdrViewer *m_fullScreenLdrViewer;
+    HdrViewer *m_fullScreenHdrViewer;
     bool m_processingAWB;
     int m_firstWindow;
     

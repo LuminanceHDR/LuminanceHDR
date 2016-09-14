@@ -74,78 +74,111 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
         lightness[i] = QColor::fromRgb(src[i]).toHsl().lightness();
     }
 
+    const float meanL = accumulate(lightness, lightness + ELEMENTS, 0.f)/ELEMENTS;
     //Build histogram
-    int hist[256];
-    for (int i = 0; i < 256; ++i) hist[i] = 0;
+    float hist[256];
+    for (int i = 0; i < 256; ++i) hist[i] = 0.f;
 
     for (int i = 0; i < ELEMENTS; ++i)
     {
-        hist[ lightness[i] ] += 1;
+        hist[ lightness[i] ] += 1.f;
     }
+
+    //find max
+    float hist_max = hist[0];
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, hist[i]);
+
+    //normalize in the range [0...1]
+    for (int i = 0; i < 256; ++i) hist[i] /= hist_max;
 
     //Scaling factor: range [0..1]
     const float factor = 1.f/255.f;
 
-    //Compute mean and threshold
-    const float meanL = accumulate(lightness, lightness + ELEMENTS, 0.f)/ELEMENTS;
+    //Compute threshold
     //DIVISOR and hence threshold are hardcoded here
-    //Is there a better way of setting this? Changing threshold until CUMUL/ELEMENTES > 95% ????
-    const float DIVISOR = 10.f;
-    const int threshold = ceil(meanL/DIVISOR);
+    //Is there a better way of setting this? Changing threshold until CUMUL/TOTAL > 95% ????
+    const float TOTAL = accumulate(hist, hist + 256, 0.f);
+    const float DIVISOR = 1000.f;
+    const float threshold = TOTAL/DIVISOR;
 
-    int CUMUL = 0;
+    float CUMUL = 0;
     for (int i = 0; i < 256; i++)
     {
         if (hist[i] >= threshold)
             CUMUL += hist[i];
     }
 
-    //Start from midrange
-    int xa = 120;
-    int xb = 132;
+    //Start from max hist
+    bool isMaxRight = false;
+    int xa = distance(hist, max_element(hist, hist + 256));
+    if (xa == 255)
+    {
+        xa = 254;
+        isMaxRight = true;
+    }
 
-    if (hist[0] >= threshold)
-        xa = 0;
-    if (hist[255] >= threshold)
-        xb = 255;
+    int xb = xa + 1;
 
-    int oldcount = 0;
+    float count = 0.f;
+    float oldcount = 0.f;
     while (true)
     {
-        int count = 0;
+        count = 0.f;
         for (int i = xa; i <= xb; i++)
         {
-            if (hist[i] >= threshold)
-                count += hist[i];
+            count += hist[i];
         }
-        if (count >= CUMUL)
-            break;
-        if ((hist[xa] >= threshold) || ((count - oldcount) == 0 ))
+        if ((count - oldcount) >= 0.f)
             xa--;
+        if (isMaxRight)
+        {
+            if ((count >= CUMUL) && (fabs(count - oldcount)/oldcount < 1e-6))
+                break;
+        }
         else
-            xa++;
-        if ((hist[xb] >= threshold) || ((count - oldcount) == 0 ))
-            xb++;
-        else
-            xb--;
-        oldcount = count;
-        if (xa < 0)
+        {
+            if (fabs(count - oldcount)/oldcount < 1e-6)
+                break;
+        }
+        if (xa <= 0)
+        {
             xa = 0;
-        if (xb > 255)
+            break;
+        }
+        oldcount = count;
+    }
+    oldcount = 0.f;
+    while (!isMaxRight)
+    {
+        count = 0.f;
+        for (int i = xa; i <= xb; i++)
+        {
+            count += hist[i];
+        }
+        if ((count >= CUMUL) || (fabs(count - oldcount)/oldcount < 1e-6))
+            break;
+        if (count - oldcount > 0.f)
+            xb++;
+        if (xb >= 255)
+        {
             xb = 255;
+            break;
+        }
+        oldcount = count;
     }
     minL = factor*xa;
     maxL = factor*xb;
     float midrange = minL + .5f*(maxL - minL);
-    if (abs(midrange-.5f) < 1e-4)
+    if (fabs(midrange - .5f) < 1e-3)
         gammaL = 1.f;
     else
         gammaL = log10(midrange)/log10(factor*meanL);
-
+ 
 #ifndef NDEBUG
-    cout << (float)100*CUMUL/ELEMENTS << "%" << endl;
+    cout << "ELEMENTS: " << ELEMENTS << endl;
+    cout << "TOTAL: " << TOTAL << ", CUMUL: " << CUMUL << ", CUMUL/TOTAL: " << 100.f*CUMUL/TOTAL << endl;
     cout << "minL: " << minL << ", maxL: " << maxL << ", gammaL: " << gammaL << ", meanL: " << meanL << endl;
-    cout << "ithreshold: " << threshold << ", threshold: " << factor*threshold << endl;
+    cout << "threshold: " << threshold << endl;
     cout << "midrange: " << midrange << endl;
 #endif
 

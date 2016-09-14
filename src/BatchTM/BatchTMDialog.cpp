@@ -98,6 +98,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 
     add_log_message(tr("Using %n thread(s)", "", m_max_num_threads));
     //add_log_message(tr("Saving using file format: %1").arg(m_Ui->comboBoxFormat->currentText()));
+    m_Ui->overallProgressBar->hide();
 }
 
 BatchTMDialog::~BatchTMDialog()
@@ -494,6 +495,7 @@ void BatchTMDialog::init_batch_tm_ui()
     m_is_batch_running = true;
 
     // progress bar activated
+    m_Ui->overallProgressBar->show();
     m_Ui->overallProgressBar->setMaximum( m_Ui->listWidget_HDRs->count()*(m_Ui->listWidget_TMopts->count() + 1) );
     m_Ui->overallProgressBar->setValue(0);
 

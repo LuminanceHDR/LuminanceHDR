@@ -1,4 +1,9 @@
-/****************************************************************************
+/**
+** This file is a part of Luminance HDR package.
+** ----------------------------------------------------------------------
+** Copyright (C) 2009-2016 Davide Anastasia, Franco Comida, Daniel Kaneider
+**
+****************************************************************************
 **
 ** Copyright (C) 2005-2007 Trolltech ASA. All rights reserved.
 **
@@ -77,18 +82,18 @@ void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, 
 				QDomAttr fileAttr = e.attributeNode( "file" );
 				columnData.clear();
 				columnData << textAttr.value() <<  fileAttr.value();
-				if (position > indentations.last()) 
+				if (position > indentations.last())
 				{
 					// The last child of the current parent is now the new parent
 					// unless the current parent has no children.
-		
-					if (parents.last()->childCount() > 0) 
+
+					if (parents.last()->childCount() > 0)
 					{
 						parents << parents.last()->child(parents.last()->childCount()-1);
 						indentations << position;
 					}
 				}
-				else 
+				else
 				{
 					while (position < indentations.last() && parents.count() > 0) {
 						parents.pop_back();
@@ -118,18 +123,18 @@ void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, 
 							QDomAttr fileAttr = ec.attributeNode( "file" );
 							columnData.clear();
 							columnData << textAttr.value() <<  fileAttr.value();
-							if (position > indentations.last()) 
+							if (position > indentations.last())
 							{
 								// The last child of the current parent is now the new parent
 								// unless the current parent has no children.
-					
-								if (parents.last()->childCount() > 0) 
+
+                                if (parents.last()->childCount() > 0)
 								{
 									parents << parents.last()->child(parents.last()->childCount()-1);
 									indentations << position;
 								}
 							}
-							else 
+							else
 							{
 								while (position < indentations.last() && parents.count() > 0) {
 									parents.pop_back();
@@ -157,18 +162,18 @@ void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, 
 									QDomAttr fileAttr = ecc.attributeNode( "file" );
 									columnData.clear();
 									columnData << textAttr.value() <<  fileAttr.value();
-									if (position > indentations.last()) 
+									if (position > indentations.last())
 									{
 										// The last child of the current parent is now the new parent
 										// unless the current parent has no children.
-							
-										if (parents.last()->childCount() > 0) 
+
+										if (parents.last()->childCount() > 0)
 										{
 											parents << parents.last()->child(parents.last()->childCount()-1);
 											indentations << position;
 										}
 									}
-									else 
+									else
 									{
 										while (position < indentations.last() && parents.count() > 0) {
 											parents.pop_back();
@@ -197,7 +202,7 @@ void ScHelpTreeModel::addRow(const QString& s1, const QString& s2, int /*i*/)
 	QList<TreeItem*> parents;
 	QList<int> indentations;
 	parents << rootItem;
-	if (parents.last()->childCount() > 0) 
+	if (parents.last()->childCount() > 0)
 		parents << parents.last()->child(parents.last()->childCount()-1);
 	QList<QVariant> columnData;
 	columnData << s1 << s2;// << i;

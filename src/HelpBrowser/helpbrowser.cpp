@@ -1,10 +1,30 @@
-/*
-For general Scribus (>=1.3.2) copyright and licensing information please refer
-to the COPYING file provided with the program. Following this notice may exist
-a copyright and/or license notice that predates the release of Scribus 1.3.2
-for which a new license (GPL+exception) is in place.
-*/
-/***************************************************************************
+/**
+** This file is a part of Luminance HDR package.
+** ----------------------------------------------------------------------
+** Copyright (C) 2009-2016 Davide Anastasia, Franco Comida, Daniel Kaneider
+**
+**  This program is free software; you can redistribute it and/or modify
+**  it under the terms of the GNU General Public License as published by
+**  the Free Software Foundation; either version 2 of the License, or
+**  (at your option) any later version.
+**
+**  This program is distributed in the hope that it will be useful,
+**  but WITHOUT ANY WARRANTY; without even the implied warranty of
+**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**  GNU General Public License for more details.
+**
+**  You should have received a copy of the GNU General Public License
+**  along with this program; if not, write to the Free Software
+**  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+** ----------------------------------------------------------------------
+**
+** Copied from fontmatrix.
+**
+** Adapted to Luminance HDR
+**
+**
+**
+***************************************************************************
 *   Copyright (C) 2004 by Craig Bradney                                   *
 *   cbradney@zip.com.au                                                   *
 *   Copyright (C) 2005 by Petr Vanek                                      *
@@ -57,8 +77,7 @@ for which a new license (GPL+exception) is in place.
 
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintDialog>
-
-
+#include <QtPrintSupport/QPrintPreviewDialog>
 
 #include "Common/global.h"
 #include "HelpBrowser/schelptreemodel.h"
@@ -137,8 +156,6 @@ class BookmarkParser2 : public QXmlDefaultHandler
 		}
 };
 
-bool HelpBrowser::firstRun=true;
-
 HelpBrowser::HelpBrowser(QWidget* parent):
     QMainWindow( parent ),
     m_Ui(new Ui::HelpBrowser)
@@ -151,7 +168,6 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
     zoomFactor(1.0),
     m_Ui(new Ui::HelpBrowser)
 {
-    firstRun=true;
     m_Ui->setupUi(this);
 
     restoreGeometry(LuminanceOptions().value("HelpBrowserGeometry").toByteArray());
@@ -188,8 +204,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 
 HelpBrowser::~HelpBrowser()
 {
-	firstRun=true;
-        LuminanceOptions().setValue("HelpBrowserGeometry", saveGeometry());
+    LuminanceOptions().setValue("HelpBrowserGeometry", saveGeometry());
 }
 
 void HelpBrowser::closeEvent(QCloseEvent *)
@@ -247,50 +262,33 @@ void HelpBrowser::setupLocalUI()
 	helpSideBar = new HelpSideBar(tr("Help SideBar"), this);
 	helpSideBar->setFeatures(QDockWidget::AllDockWidgetFeatures);
 	addDockWidget(Qt::LeftDockWidgetArea, helpSideBar);
-// 	setWindowIcon(loadIcon("AppIcon.png"));
-	//Add Menus
-	fileMenu=menuBar()->addMenu("");
-	editMenu=menuBar()->addMenu("");
-	viewMenu=menuBar()->addMenu("");
-	bookMenu=menuBar()->addMenu("");
+
 	histMenu=new QMenu(this);
+	m_Ui->goBack->setMenu(histMenu);
 
-	//Add Menu items
-	filePrint=fileMenu->addAction(QIcon(":/help/document-print.png"), "", this, SLOT(print()), Qt::CTRL+Qt::Key_P);
-	fileMenu->addSeparator();
-	fileExit=fileMenu->addAction(QIcon(":/help/exit.png"), "", this, SLOT(close()));
-	editFind=editMenu->addAction(QIcon(":/help/find.png"), "", this, SLOT(find()), Qt::CTRL+Qt::Key_F);
-	editFindNext=editMenu->addAction( "", this, SLOT(findNext()), Qt::Key_F3);
-	editFindPrev=editMenu->addAction( "", this, SLOT(findPrevious()), Qt::SHIFT+Qt::Key_F3);
-	viewContents=viewMenu->addAction( "", this, SLOT(viewContents_clicked()), Qt::CTRL+Qt::Key_C);
-	viewSearch=viewMenu->addAction( "", this, SLOT(viewSearch_clicked()), Qt::CTRL+Qt::Key_S);
-	viewBookmarks=viewMenu->addAction( "", this, SLOT(viewBookmarks_clicked()), Qt::CTRL+Qt::Key_B);
-	bookAdd=bookMenu->addAction( "", this, SLOT(bookmarkButton_clicked()), Qt::CTRL+Qt::Key_D);
-	bookDel=bookMenu->addAction( "", this, SLOT(deleteBookmarkButton_clicked()));
-	bookDelAll=bookMenu->addAction( "", this, SLOT(deleteAllBookmarkButton_clicked()));
-
-	//Add Toolbar items
-    goHome=m_Ui->toolBar->addAction(QIcon(":/help/go-home.png"), "", m_Ui->textBrowser, SLOT(home()));
-    goBack=m_Ui->toolBar->addAction(QIcon(":/help/go-previous.png"), "", m_Ui->textBrowser, SLOT(back()));
-    goFwd=m_Ui->toolBar->addAction(QIcon(":/help/go-next.png"), "", m_Ui->textBrowser, SLOT(forward()));
-    zoomIn=m_Ui->toolBar->addAction(QIcon(":/new/prefix1/images/zoom-in.png"), "", this, SLOT(zoomIn_clicked()));
-    zoomOriginal=m_Ui->toolBar->addAction(QIcon(":/new/prefix1/images/zoom-original.png"), "", this, SLOT(zoomOriginal_clicked()));
-    zoomOut=m_Ui->toolBar->addAction(QIcon(":/new/prefix1/images/zoom-out.png"), "", this, SLOT(zoomOut_clicked()));
-	goBack->setMenu(histMenu);
-	
     helpSideBar->m_Ui->listView->header()->hide();
     helpSideBar->m_Ui->searchingView->header()->hide();
     helpSideBar->m_Ui->bookmarksView->header()->hide();
 
-	//splitter->setStretchFactor(splitter->indexOf(tabWidget), 0);
-	//splitter->setStretchFactor(splitter->indexOf(textBrowser), 1);
-	// reset previous size
-// 	prefs = PrefsManager::instance()->prefsFile->getPluginContext("helpbrowser");
-// 	int xsize = prefs->getUInt("xsize", 640);
-// 	int ysize = prefs->getUInt("ysize", 480);
-// 	resize(QSize(xsize, ysize).expandedTo(minimumSizeHint()) );
-
 	//basic ui
+	connect(m_Ui->filePrint, SIGNAL(triggered()), this, SLOT(print()));
+	connect(m_Ui->filePrintPreview, SIGNAL(triggered()), this, SLOT(printPreview()));
+	connect(m_Ui->fileExit, SIGNAL(triggered()), this, SLOT(close()));
+	connect(m_Ui->editFind, SIGNAL(triggered()), this, SLOT(find()));
+	connect(m_Ui->editFindNext, SIGNAL(triggered()), this, SLOT(findNext()));
+	connect(m_Ui->editFindPrev, SIGNAL(triggered()), this, SLOT(findPrevious()));
+	connect(m_Ui->viewContents, SIGNAL(triggered()), this, SLOT(viewContents_clicked()));
+	connect(m_Ui->viewSearch, SIGNAL(triggered()), this, SLOT(viewSearch_clicked()));
+	connect(m_Ui->viewBookmarks, SIGNAL(triggered()), this, SLOT(viewBookmarks_clicked()));
+	connect(m_Ui->bookAdd, SIGNAL(triggered()), this, SLOT(bookmarkButton_clicked()));
+	connect(m_Ui->bookDel, SIGNAL(triggered()), this, SLOT(deleteBookmarkButton_clicked()));
+	connect(m_Ui->bookDelAll, SIGNAL(triggered()), this, SLOT(deleteAllBookmarkButton_clicked()));
+	connect(m_Ui->goHome, SIGNAL(triggered()), m_Ui->textBrowser, SLOT(home()));
+	connect(m_Ui->goBack, SIGNAL(triggered()), m_Ui->textBrowser, SLOT(back()));
+	connect(m_Ui->goFwd, SIGNAL(triggered()), m_Ui->textBrowser, SLOT(forward()));
+	connect(m_Ui->zoomIn, SIGNAL(triggered()), this, SLOT(zoomIn_clicked()));
+	connect(m_Ui->zoomOriginal, SIGNAL(triggered()), this, SLOT(zoomOriginal_clicked()));
+	connect(m_Ui->zoomOut, SIGNAL(triggered()), this, SLOT(zoomOut_clicked()));
 	connect(histMenu, SIGNAL(triggered(QAction*)), this, SLOT(histChosen(QAction*)));
 	// searching
     connect(helpSideBar->m_Ui->searchingEdit, SIGNAL(returnPressed()), this, SLOT(searchingButton_clicked()));
@@ -325,39 +323,24 @@ void HelpBrowser::languageChange()
 {
 	setWindowTitle( tr( "LuminanceHDR Online Help" ) );
 	
-	fileMenu->setTitle(tr("&File"));
-	editMenu->setTitle(tr("&Edit"));
-	viewMenu->setTitle(tr("&View"));
-	bookMenu->setTitle(tr("&Bookmarks"));
+	m_Ui->fileMenu->setTitle(tr("&File"));
+	m_Ui->editMenu->setTitle(tr("&Edit"));
+	m_Ui->viewMenu->setTitle(tr("&View"));
+	m_Ui->bookMenu->setTitle(tr("&Bookmarks"));
 	
-	filePrint->setText(tr("&Print..."));
-	fileExit->setText(tr("&Quit"));
-	editFind->setText(tr("&Find..."));
-	editFindNext->setText(tr("Find &Next"));
-	editFindPrev->setText(tr("Find &Previous"));
-	viewContents->setText(tr("&Contents"));
-	viewSearch->setText(tr("&Search"));
-	viewBookmarks->setText(tr("&Bookmarks"));
-	bookAdd->setText(tr("&Add Bookmark"));
-	bookDel->setText(tr("&Delete"));
-	bookDelAll->setText(tr("D&elete All"));
+	m_Ui->filePrint->setText(tr("&Print..."));
+	m_Ui->fileExit->setText(tr("&Quit"));
+	m_Ui->editFind->setText(tr("&Find..."));
+	m_Ui->editFindNext->setText(tr("Find &Next"));
+	m_Ui->editFindPrev->setText(tr("Find &Previous"));
+	m_Ui->viewContents->setText(tr("&Contents"));
+	m_Ui->viewSearch->setText(tr("&Search"));
+	m_Ui->viewBookmarks->setText(tr("&Bookmarks"));
+	m_Ui->bookAdd->setText(tr("&Add Bookmark"));
+	m_Ui->bookDel->setText(tr("&Delete"));
+	m_Ui->bookDelAll->setText(tr("D&elete All"));
 
     m_Ui->retranslateUi(this);
-// 	if (!firstRun)
-// 	{
-// 		QString fname(QDir::cleanPath(textBrowser->source().toString()));
-// 		QFileInfo fi(fname);
-// 		QString filename(fi.fileName());
-// 		if (ScCore->getGuiLanguage().isEmpty())
-// 			language="en";
-// 		else
-// 			language=ScCore->getGuiLanguage();
-// 		loadMenu();
-// 		if (menuModel!=NULL)
-// 			loadHelp(finalBaseDir + "/" + filename);
-// 	}
-// 	else
-// 		firstRun=false;
 }
 
 void HelpBrowser::print()
@@ -369,12 +352,26 @@ void HelpBrowser::print()
         m_Ui->textBrowser->render(&printer);
 }
 
+void HelpBrowser::printPreview()
+{
+	QPrinter printer;
+	printer.setFullPage(true);
+	QPrintPreviewDialog dialog(&printer, this);
+    connect(&dialog, SIGNAL(paintRequested(QPrinter *)), this, SLOT(paintRequested(QPrinter *)));
+	dialog.exec();
+}
+
+void HelpBrowser::paintRequested(QPrinter *printer)
+{
+    m_Ui->textBrowser->render(printer);
+}
+
 void HelpBrowser::searchingButton_clicked()
 {
 	// root files
 	QApplication::changeOverrideCursor(QCursor(Qt::WaitCursor));
 	searchingInDirectory(finalBaseDir);
-	QApplication::changeOverrideCursor(Qt::ArrowCursor);
+	QApplication::restoreOverrideCursor();
 }
 
 void HelpBrowser::searchingInDirectory(const QString& aDir)
@@ -672,16 +669,16 @@ void HelpBrowser::displayNoHelp()
 
     m_Ui->textBrowser->setHtml(noHelpMsg);
 	
-	filePrint->setEnabled(false);
-	editFind->setEnabled(false);
-	editFindNext->setEnabled(false);
-	editFindPrev->setEnabled(false);
-	bookAdd->setEnabled(false);
-	bookDel->setEnabled(false);
-	bookDelAll->setEnabled(false);
-	goHome->setEnabled(false);
-	goBack->setEnabled(false);
-	goFwd->setEnabled(false);
+	m_Ui->filePrint->setEnabled(false);
+	m_Ui->editFind->setEnabled(false);
+	m_Ui->editFindNext->setEnabled(false);
+	m_Ui->editFindPrev->setEnabled(false);
+	m_Ui->bookAdd->setEnabled(false);
+	m_Ui->bookDel->setEnabled(false);
+	m_Ui->bookDelAll->setEnabled(false);
+	m_Ui->goHome->setEnabled(false);
+	m_Ui->goBack->setEnabled(false);
+	m_Ui->goFwd->setEnabled(false);
 	
 	histMenu->disconnect();
     helpSideBar->m_Ui->searchingEdit->disconnect();
@@ -729,12 +726,15 @@ void HelpBrowser::zoomOut_clicked() {
 }
 
 void HelpBrowser::handleExternalLink(const QUrl &url) {
+//TODO: Check whether handling these protocol internally has now been fixed in Windows
 	if ((url.scheme() == "http") || url.scheme() == "https") {
+/*
 #ifdef WIN32
 		QDesktopServices::openUrl(url);
 #else
+*/
         m_Ui->textBrowser->load(url);
-#endif
+//#endif
 	}
 	else {
 		QApplication::restoreOverrideCursor();

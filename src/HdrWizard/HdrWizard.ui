@@ -167,8 +167,7 @@
                      <string>Add Images</string>
                     </property>
                     <property name="icon">
-                     <iconset resource="../../icons.qrc">
-                      <normaloff>:/new/prefix1/images/list-add.png</normaloff>:/new/prefix1/images/list-add.png</iconset>
+                     <iconset theme="list-add"/>
                     </property>
                    </widget>
                   </item>
@@ -187,8 +186,7 @@
                      <string>Remove Selected Image</string>
                     </property>
                     <property name="icon">
-                     <iconset resource="../../icons.qrc">
-                      <normaloff>:/new/prefix1/images/list-remove.png</normaloff>:/new/prefix1/images/list-remove.png</iconset>
+                     <iconset theme="list-remove"/>
                     </property>
                    </widget>
                   </item>
@@ -207,8 +205,7 @@
                      <string>Clear List</string>
                     </property>
                     <property name="icon">
-                     <iconset resource="../../icons.qrc">
-                      <normaloff>:/new/prefix1/images/edit-clear-list.png</normaloff>:/new/prefix1/images/edit-clear-list.png</iconset>
+                     <iconset theme="edit-clear"/>
                     </property>
                    </widget>
                   </item>
@@ -424,7 +421,7 @@
                         <bool>false</bool>
                        </property>
                        <property name="text">
-                        <string>Hugin's align_&amp;image_stack</string>
+                        <string>&amp;Hugin's align_image_stack</string>
                        </property>
                        <property name="checked">
                         <bool>true</bool>

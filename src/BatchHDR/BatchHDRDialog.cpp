@@ -64,6 +64,7 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
     m_Ui->setupUi(this);
 
     m_Ui->closeButton->hide();
+    m_Ui->progressBar->hide();
     m_Ui->progressBar_2->hide();
 
     m_hdrCreationManager = new HdrCreationManager;
@@ -85,6 +86,7 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
     connect(m_hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
     connect(m_hdrCreationManager, SIGNAL(processed()), this, SLOT(processed()));
 
+    connect(m_hdrCreationManager, SIGNAL(progressStarted()), m_Ui->progressBar, SLOT(show()));
     connect(m_hdrCreationManager, SIGNAL(progressStarted()), m_Ui->progressBar_2, SLOT(show()));
     connect(m_hdrCreationManager, SIGNAL(progressFinished()), m_Ui->progressBar_2, SLOT(reset()));
     connect(m_hdrCreationManager, SIGNAL(progressFinished()), m_Ui->progressBar_2, SLOT(hide()));

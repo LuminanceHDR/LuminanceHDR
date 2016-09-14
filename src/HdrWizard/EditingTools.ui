@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1120</width>
-    <height>695</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -103,6 +103,18 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="fitButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>8</pointsize>
@@ -115,8 +127,8 @@
                    <string>&amp;Fit to Window</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/svgs/images/zoom-fit-best.svgz</normaloff>:/new/svgs/images/zoom-fit-best.svgz</iconset>
+                   <iconset theme="zoom-fit-best">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -137,6 +149,18 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="fillButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>8</pointsize>
@@ -149,8 +173,8 @@
                    <string>Fill &amp;window</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/svgs/images/page-zoom.svgz</normaloff>:/new/svgs/images/page-zoom.svgz</iconset>
+                   <iconset theme="zoom">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -168,6 +192,18 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="origSizeButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>8</pointsize>
@@ -180,8 +216,8 @@
                    <string>Origina&amp;l Size</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/svgs/images/zoom-original.svgz</normaloff>:/new/svgs/images/zoom-original.svgz</iconset>
+                   <iconset theme="zoom-original">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -452,8 +488,8 @@ This image's histogram is diplayed in the widget above.</string>
                    <string>Use this button to move the selection to the previous image in both lists.</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
+                   <iconset theme="arrow-up">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -472,8 +508,8 @@ This image's histogram is diplayed in the widget above.</string>
                    <string>Use this button to move the selection to the next image in both lists.</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../icons.qrc">
-                    <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
+                   <iconset theme="arrow-down">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -512,7 +548,7 @@ This image's histogram is diplayed in the widget above.</string>
                 <item>
                  <widget class="QLabel" name="label_reference_list">
                   <property name="text">
-                   <string>R&amp;eference</string>
+                   <string>Re&amp;ference</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -789,8 +825,8 @@ p, li { white-space: pre-wrap; }
                  <string>&amp;Crop All Images</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../icons.qrc">
-                  <normaloff>:/new/prefix1/images/crop.png</normaloff>:/new/prefix1/images/crop.png</iconset>
+                 <iconset theme="transform-crop-and-resize">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -855,8 +891,8 @@ p, li { white-space: pre-wrap; }
                  <string>&amp;Save Images</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../icons.qrc">
-                  <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
+                 <iconset theme="document-save">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -1122,7 +1158,7 @@ p, li { white-space: pre-wrap; }
                           <item row="1" column="0">
                            <widget class="QLabel" name="labelBrushStrength">
                             <property name="text">
-                             <string>&amp;Strength:</string>
+                             <string>S&amp;trength:</string>
                             </property>
                             <property name="buddy">
                              <cstring>agBrushStrengthQSlider</cstring>
@@ -1158,8 +1194,8 @@ p, li { white-space: pre-wrap; }
                              <string>Lasso</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="../../icons.qrc">
-                              <normaloff>:/new/prefix1/images/gimp-lasso.png</normaloff>:/new/prefix1/images/gimp-lasso.png</iconset>
+                             <iconset theme="edit-select-lasso">
+                              <normaloff>.</normaloff>.</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -1184,8 +1220,8 @@ p, li { white-space: pre-wrap; }
                              <string>Brush</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="../../icons.qrc">
-                              <normaloff>:/new/prefix1/images/brush_icon.png</normaloff>:/new/prefix1/images/brush_icon.png</iconset>
+                             <iconset theme="draw-brush">
+                              <normaloff>.</normaloff>.</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -1221,8 +1257,8 @@ p, li { white-space: pre-wrap; }
                              <string>Save mask</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="../../icons.qrc">
-                              <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
+                             <iconset theme="document-save">
+                              <normaloff>.</normaloff>.</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -1241,8 +1277,8 @@ p, li { white-space: pre-wrap; }
                              <string>Apply saved mask</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="../../icons.qrc">
-                              <normaloff>:/new/prefix1/images/apply.png</normaloff>:/new/prefix1/images/apply.png</iconset>
+                             <iconset theme="dialog-ok-apply">
+                              <normaloff>.</normaloff>.</iconset>
                             </property>
                             <property name="iconSize">
                              <size>
@@ -1438,7 +1474,7 @@ p, li { white-space: pre-wrap; }
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_3">
                   <property name="text">
-                   <string>&amp;Horizontal:</string>
+                   <string>Hori&amp;zontal:</string>
                   </property>
                   <property name="buddy">
                    <cstring>horizShiftSB</cstring>
@@ -1451,7 +1487,7 @@ p, li { white-space: pre-wrap; }
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="text">
-                   <string>&amp;Vertical:</string>
+                   <string>Verti&amp;cal:</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1517,6 +1553,10 @@ p, li { white-space: pre-wrap; }
                   <property name="toolTip">
                    <string>Move up of 1 pixel the currently selected movable image</string>
                   </property>
+                  <property name="icon">
+                   <iconset theme="arrow-up">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
                   <property name="autoRepeat">
                    <bool>true</bool>
                   </property>
@@ -1529,6 +1569,10 @@ p, li { white-space: pre-wrap; }
                  <widget class="QToolButton" name="downToolButton">
                   <property name="toolTip">
                    <string>Move down of 1 pixel the currently selected movable image</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="arrow-down">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                   <property name="autoRepeat">
                    <bool>true</bool>
@@ -1543,6 +1587,10 @@ p, li { white-space: pre-wrap; }
                   <property name="toolTip">
                    <string>Move right of 1 pixel the currently selected movable image</string>
                   </property>
+                  <property name="icon">
+                   <iconset theme="arrow-right">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
                   <property name="autoRepeat">
                    <bool>true</bool>
                   </property>
@@ -1555,6 +1603,10 @@ p, li { white-space: pre-wrap; }
                  <widget class="QToolButton" name="leftToolButton">
                   <property name="toolTip">
                    <string>Move left of 1 pixel the currently selected movable image</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="arrow-left">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                   <property name="autoRepeat">
                    <bool>true</bool>
@@ -1619,8 +1671,8 @@ p, li { white-space: pre-wrap; }
           <string>&amp;What's this?</string>
          </property>
          <property name="icon">
-          <iconset resource="../../icons.qrc">
-           <normaloff>:/new/prefix1/images/whatsthis.png</normaloff>:/new/prefix1/images/whatsthis.png</iconset>
+          <iconset theme="help-whatsthis">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="iconSize">
           <size>

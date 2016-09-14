@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>759</width>
-    <height>512</height>
+    <height>583</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,8 +55,7 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset resource="../../icons.qrc">
-        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+       <iconset theme="document-open"/>
       </property>
      </widget>
     </item>
@@ -80,8 +79,7 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset resource="../../icons.qrc">
-        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+       <iconset theme="document-open"/>
       </property>
      </widget>
     </item>
@@ -91,8 +89,7 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset resource="../../icons.qrc">
-        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+       <iconset theme="document-open"/>
       </property>
      </widget>
     </item>
@@ -116,8 +113,7 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset resource="../../icons.qrc">
-        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+       <iconset theme="document-open"/>
       </property>
      </widget>
     </item>
@@ -172,8 +168,7 @@
           <string>Rotate</string>
          </property>
          <property name="icon">
-          <iconset resource="../../icons.qrc">
-           <normaloff>:/new/prefix1/images/rotate_right.png</normaloff>:/new/prefix1/images/rotate_right.png</iconset>
+          <iconset theme="object-rotate-right"/>
          </property>
         </widget>
        </item>
@@ -209,8 +204,7 @@
           <string>Load Previews</string>
          </property>
          <property name="icon">
-          <iconset resource="../../icons.qrc">
-           <normaloff>:/new/prefix1/images/apply.png</normaloff>:/new/prefix1/images/apply.png</iconset>
+          <iconset theme="upload-media"/>
          </property>
          <property name="iconSize">
           <size>
@@ -238,8 +232,7 @@
           <string>Preview</string>
          </property>
          <property name="icon">
-          <iconset resource="../../icons.qrc">
-           <normaloff>:/new/prefix1/images/zoom-in.png</normaloff>:/new/prefix1/images/zoom-in.png</iconset>
+          <iconset theme="zoom-in"/>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -302,8 +295,7 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset resource="../../icons.qrc">
-        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+       <iconset theme="document-open"/>
       </property>
      </widget>
     </item>
@@ -349,7 +341,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>MTB</string>
+            <string>&amp;MTB</string>
            </property>
           </widget>
          </item>
@@ -359,7 +351,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Hugin's align_image_stack</string>
+            <string>Hugin's align_&amp;image_stack</string>
            </property>
            <property name="checked">
             <bool>true</bool>

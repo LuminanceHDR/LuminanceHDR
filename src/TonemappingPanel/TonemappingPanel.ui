@@ -90,6 +90,9 @@
        <property name="text">
         <string>Auto Levels</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -2590,8 +2593,8 @@ Luminace Level</string>
              <string>Restore</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
+             <iconset theme="edit-undo">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -2623,8 +2626,8 @@ Luminace Level</string>
              <string>Previous</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+             <iconset theme="go-previous">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -2646,8 +2649,8 @@ Luminace Level</string>
              <string>Next</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/edit-redo.png</normaloff>:/new/prefix1/images/edit-redo.png</iconset>
+             <iconset theme="go-next">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -2709,8 +2712,8 @@ Luminace Level</string>
              <string>&amp;Save to File</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
+             <iconset theme="document-save">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -2732,8 +2735,8 @@ Luminace Level</string>
              <string>&amp;Load from File</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -2746,8 +2749,8 @@ Luminace Level</string>
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/vcs_update.png</normaloff>:/new/prefix1/images/vcs_update.png</iconset>
+             <iconset theme="edit-download">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -2773,8 +2776,8 @@ Luminace Level</string>
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/vcs_commit.png</normaloff>:/new/prefix1/images/vcs_commit.png</iconset>
+             <iconset theme="cloud-upload">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -2842,8 +2845,11 @@ Luminace Level</string>
             <property name="decimals">
              <number>2</number>
             </property>
+            <property name="minimum">
+             <double>0.100000000000000</double>
+            </property>
             <property name="maximum">
-             <double>3.000000000000000</double>
+             <double>5.000000000000000</double>
             </property>
             <property name="singleStep">
              <double>0.100000000000000</double>
@@ -2914,8 +2920,8 @@ Luminace Level</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../icons.qrc">
-                <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
+               <iconset theme="edit-undo">
+                <normaloff>.</normaloff>.</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -2981,8 +2987,8 @@ Luminace Level</string>
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="icon">
-               <iconset resource="../../icons.qrc">
-                <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+               <iconset theme="list-add">
+                <normaloff>.</normaloff>.</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -3007,74 +3013,66 @@ Luminace Level</string>
       <string>Export</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_25">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
+      <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QToolButton" name="queueButton">
+          <property name="text">
+           <string>Fast export</string>
+          </property>
+          <property name="icon">
+           <iconset theme="folder-image">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblOpenQueue">
+          <property name="toolTip">
+           <string>Opens the current export direcotory. This can be changed in the preferences!</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="openExternalLinks">
+           <bool>false</bool>
+          </property>
+          <property name="textInteractionFlags">
+           <set>Qt::LinksAccessibleByMouse</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="frameSpinner">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
       <item row="0" column="1">
-       <widget class="QToolButton" name="queueButton">
-        <property name="text">
-         <string>Fast export</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../icons.qrc">
-          <normaloff>:/new/svgs/images/folder-image.svgz</normaloff>:/new/svgs/images/folder-image.svgz</iconset>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="7">
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="lblOpenQueue">
-        <property name="toolTip">
-         <string>Opens the current export direcotory. This can be changed in the preferences!</string>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="openExternalLinks">
-         <bool>false</bool>
-        </property>
-        <property name="textInteractionFlags">
-         <set>Qt::LinksAccessibleByMouse</set>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="5">
        <widget class="QLabel" name="lblQueueSize">
         <property name="text">
          <string notr="true"/>
         </property>
        </widget>
-      </item>
-      <item row="0" column="6">
-       <layout class="QHBoxLayout" name="frameSpinner">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-       </layout>
       </item>
      </layout>
     </widget>
