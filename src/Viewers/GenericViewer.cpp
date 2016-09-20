@@ -93,8 +93,10 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
 
 GenericViewer::~GenericViewer()
 {
-    delete mFrame;
-	delete mPixmap;
+    if (mFrame)
+        delete mFrame;
+    if (mPixmap)
+	    delete mPixmap;
 }
 
 void GenericViewer::retranslateUi()
@@ -376,12 +378,18 @@ void GenericViewer::setQImage(const QImage& qimage)
 
 int GenericViewer::getWidth()
 {
-    return mFrame->getWidth();
+    if (mFrame)
+        return mFrame->getWidth();
+    else
+        return 0;
 }
 
 int GenericViewer::getHeight()
 {
-    return mFrame->getHeight();
+    if (mFrame)
+        return mFrame->getHeight();
+    else
+        return 0;
 }
 
 void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)

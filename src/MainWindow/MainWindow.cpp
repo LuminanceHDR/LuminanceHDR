@@ -417,6 +417,21 @@ void MainWindow::createToolBar()
 
 void MainWindow::createMenus()
 {
+    //Set icons
+    m_Ui->fileSaveAllAction->setIcon(QIcon::fromTheme("document-save-all", QIcon(":/new/prefix1/images/filesaveall.png")));
+    m_Ui->fitToWindowAct->setIcon(QIcon::fromTheme("zoom", QIcon(":/new/svgs/images/zoom-fit-best.svgz")));
+    m_Ui->actionWhite_Balance->setIcon(QIcon::fromTheme("whitebalance", QIcon(":/new/svgs/images/color-picker-white.svg")));
+    m_Ui->actionWhat_s_This->setIcon(QIcon::fromTheme("help-whatsthis", QIcon(":/new/prefix1/images/whatsthis.png")));
+    m_Ui->actionDonate->setIcon(QIcon::fromTheme("help-donate", QIcon(":/new/prefix1/images/help-donate.png")));
+    m_Ui->actionMinimize->setIcon(QIcon::fromTheme("window-minimize-symbolic", QIcon(":/new/svgs/images/window-minimize.svg")));
+    m_Ui->actionMaximize->setIcon(QIcon::fromTheme("window-maximize-symbolic", QIcon(":/new/svgs/images/window-maximize.svg")));
+    m_Ui->actionRemove_Tab->setIcon(QIcon::fromTheme("tab-close", QIcon(":/new/prefix1/images/remove.png")));
+    m_Ui->Transplant_Exif_Data_action->setIcon(QIcon::fromTheme("selection-move-to-layer-below", QIcon(":/new/prefix1/images/copyexif.png")));
+    m_Ui->actionExportToHTML->setIcon(QIcon::fromTheme("globe", QIcon(":/new/prefix1/images/globe.png")));
+    m_Ui->cropToSelectionAction->setIcon(QIcon::fromTheme("transform-crop", QIcon(":/new/prefix1/images/crop.png")));
+    m_Ui->removeSelectionAction->setIcon(QIcon::fromTheme("edit-select-none", QIcon(":/new/prefix1/images/tool_rect_selection.png")));
+    m_Ui->actionSave_Hdr_Preview->setIcon(QIcon::fromTheme("document-save-as-template", QIcon(":/new/prefix1/images/preview-file.png")));
+
     // About(s)
     connect(m_Ui->actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
     connect(m_Ui->actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));

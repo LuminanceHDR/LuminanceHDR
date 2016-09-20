@@ -105,7 +105,14 @@ void FitsReader::open()
     setWidth(naxes[0]);
     setHeight(naxes[1]);
 
+    long datamax;
+    long bitpix;
+    fits_read_key_lng(m_data->m_ptr, "DATAMAX", &datamax, NULL, &m_data->m_status);
+    fits_read_key_lng(m_data->m_ptr, "BITPIX", &bitpix, NULL, &m_data->m_status);
+    std::cout << "datamax = " << datamax << std::endl;
+    std::cout << "bitpix = " << bitpix << std::endl;
     // read data range
+    /*
     if ( fits_read_key_lng(m_data->m_ptr, "DATAMAX", &m_data->m_datamax, NULL, &m_data->m_status) )
     {
         long bitpix;
@@ -119,9 +126,13 @@ void FitsReader::open()
             m_data->m_datamax = ((1 << bitpix) - 1);
         }
     }
-
+    */
+    if (datamax == 0)
+        m_data->m_datamax = abs(bitpix);
+    else
+        m_data->m_datamax = datamax;
     std::cout << "Size: w: " << width() << " height = " << height() << " "
-                 << " datamax = " << m_data->m_datamax << std::endl;
+                 << " datamax = " << m_data->m_datamax << " datamax = " << datamax << " status = " << m_data->m_status << std::endl;
 }
 
 

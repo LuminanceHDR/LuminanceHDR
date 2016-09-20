@@ -542,7 +542,7 @@
   </action>
   <action name="OptionsAction">
    <property name="icon">
-    <iconset theme="configure">
+    <iconset theme="preferences-system">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -828,8 +828,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="lock">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset theme="system-lock-screen"/>
    </property>
    <property name="text">
     <string>&amp;Lock Viewers</string>

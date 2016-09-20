@@ -63,7 +63,7 @@ using namespace boost::assign;
 //! sligthly modified
 //! \ref http://svn.ghostscript.com/ghostscript/trunk/gs/lcms2/utils/tificc/tificc.c
 static
-cmsHPROFILE GetTIFFProfile(TIFF* in)
+cmsHPROFILE GetTIFFProfile(TIFF* in, uint16 bps)
 {
     cmsHPROFILE hProfile;
     void* iccProfilePtr;
@@ -76,6 +76,8 @@ cmsHPROFILE GetTIFFProfile(TIFF* in)
 
         if (hProfile) return hProfile;
     }
+
+    PRINT_DEBUG("No color profile");
 
     // Try to see if "colorimetric" tiff.data()
     cmsCIExyYTRIPLE primaries;
@@ -93,6 +95,13 @@ cmsHPROFILE GetTIFFProfile(TIFF* in)
     primaries.Blue.x    = chr[4];
     primaries.Blue.y    = chr[5];
 
+    PRINT_DEBUG(primaries.Red.x);
+    PRINT_DEBUG(primaries.Red.y);
+    PRINT_DEBUG(primaries.Green.x);
+    PRINT_DEBUG(primaries.Green.y);
+    PRINT_DEBUG(primaries.Blue.x);
+    PRINT_DEBUG(primaries.Blue.y);
+
     primaries.Red.Y = primaries.Green.Y = primaries.Blue.Y = 1.0;
 
     cmsFloat32Number* wp;
@@ -104,16 +113,20 @@ cmsHPROFILE GetTIFFProfile(TIFF* in)
     whitePoint.y = wp[1];
     whitePoint.Y = 1.0;
 
+    PRINT_DEBUG(whitePoint.x);
+    PRINT_DEBUG(whitePoint.y);
+
     // Transferfunction is a bit harder....
-    cmsUInt16Number *gmr;
-    cmsUInt16Number *gmg;
-    cmsUInt16Number *gmb;
+    cmsUInt16Number gmr[1 << bps];
+    cmsUInt16Number gmg[1 << bps];
+    cmsUInt16Number gmb[1 << bps];
 
-    TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION, &gmr, &gmg, &gmb);
 
-    curve[0] = cmsBuildTabulatedToneCurve16(NULL, 256, gmr);
-    curve[1] = cmsBuildTabulatedToneCurve16(NULL, 256, gmg);
-    curve[2] = cmsBuildTabulatedToneCurve16(NULL, 256, gmb);
+    TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION, gmr, gmg, gmb);
+
+    curve[0] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmr);
+    curve[1] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmg);
+    curve[2] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmb);
 
     hProfile = cmsCreateRGBProfile (&whitePoint, &primaries, curve);
 
@@ -486,7 +499,7 @@ void TiffReader::open()
     // ...based on photometric type and bits per samples, will make ready the
     // right callback to read the data
     m_data->initReader();
-    m_data->hIn_.reset( GetTIFFProfile(m_data->handle()) );
+    m_data->hIn_.reset( GetTIFFProfile(m_data->handle(), m_data->bitsPerSample_) );
 }
 
 #define CALL_MEMBER_FN(object,ptrToMember)  ((object).*(ptrToMember))

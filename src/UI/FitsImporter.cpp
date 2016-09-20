@@ -44,6 +44,7 @@
 #include "Common/CommonFunctions.h"
 #include "HdrCreation/mtb_alignment.h"
 
+#include <UI/UMessageBox.h>
 #include <Libpfs/manip/rotate.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/colorspace/convert.h>
@@ -196,8 +197,14 @@ void FitsImporter::on_pushButtonLoad_clicked()
     // Start the computation.
     // m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
 
-
-    std::for_each(m_tmpdata.begin(), m_tmpdata.end(), LoadFile());
+    try 
+    {
+        std::for_each(m_tmpdata.begin(), m_tmpdata.end(), LoadFile());
+    }
+    catch (std::runtime_error& err)
+    {
+	    UMessageBox::warning("Fits Importer", err.what());
+    }
 
     loadFilesDone();
 }

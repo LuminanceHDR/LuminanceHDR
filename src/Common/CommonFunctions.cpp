@@ -268,6 +268,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         qDebug() << QString("LoadFile: Cannot load %1: %2")
                     .arg(currentItem.filename())
                     .arg(QString::fromStdString(err.what()));
+        throw err;
     }
 }
 
