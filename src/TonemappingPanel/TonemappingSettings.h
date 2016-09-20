@@ -28,6 +28,8 @@
 #include <QDialog>
 #include <QSqlTableModel>
 
+#include "Core/TonemappingOptions.h"
+
 #include "PreviewSettings/PreviewSettings.h"
 #include "Libpfs/frame.h"
 
@@ -35,8 +37,6 @@ namespace Ui
 {
     class TonemappingSettings;
 }
-
-enum TMOperator: unsigned short;   // #include "Core/TonemappingOptions.h"
 
 class TonemappingSettings: public QDialog
 {

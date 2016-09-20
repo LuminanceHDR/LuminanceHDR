@@ -53,7 +53,7 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
   //int low = 1;
   //int high = 43;
   //bool use_scales = false;
-  bool temporal_coherent = false;  
+  bool temporal_coherent = false;
 #ifndef NDEBUG
   std::cout << "pfstmo_reinhard02 (";
   std::cout << "key: " << key;
@@ -66,11 +66,11 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
   pfs::Channel *X, *Y, *Z;
   frame.getXYZChannels( X, Y, Z );
   //---
-  
+
   if ( Y==NULL || X==NULL || Z==NULL ) {
      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
-  
+
   frame.getTags().setTag("LUMINANCE", "RELATIVE");
   // tone mapping
   size_t w = Y->getWidth();
@@ -78,20 +78,19 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
   pfs::Array2Df L(w, h);
 
   Reinhard02 tmoperator( Y, &L, use_scales, key, phi, num, low, high, temporal_coherent, ph );
-  
+
   tmoperator.tmo_reinhard02();
-  
-  // TODO: this section can be rewritten using SSE Function
-  for( int x=0 ; x<w ; x++ )
+
+  for (size_t x = 0; x < w; x++)
   {
-    for( int y=0 ; y<h ; y++ )
+    for (size_t y = 0; y < h; y++)
     {
-        float yr = (*Y)(x,y);
-        float scale = 0.f;
-        if (yr != 0.f)
-        {
-            scale = L(x,y) / yr;
-        }
+      float yr = (*Y)(x,y);
+      float scale = 0.f;
+      if (yr != 0.f)
+      {
+         scale = L(x,y) / yr;
+      }
 
       (*Y)(x,y) *= scale;
       (*X)(x,y) *= scale;
