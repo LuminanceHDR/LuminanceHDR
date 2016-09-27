@@ -21,9 +21,7 @@
 
 #include <Libpfs/io/fitsreader.h>
 
-#ifndef NDEBUG
 #include <boost/algorithm/minmax_element.hpp>
-#endif
 
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
@@ -62,13 +60,10 @@ public:
         }
     }
 
-    float normalize(float input)
-    {
-        return (input/m_datamax);
-    }
-
+    short int m_format;
     int m_status;
-    long m_datamax;
+    float m_bscale;
+    float m_bzero;
 
     fitsfile* m_ptr;
 };
@@ -99,40 +94,69 @@ void FitsReader::open()
 
     if ( fits_read_keys_lng(m_data->m_ptr, "NAXIS", 1, 2, naxes, &nfound, &m_data->m_status) )
     {
+        fits_close_file(m_data->m_ptr, &m_data->m_status);
         throw InvalidHeader("Could not find the size of the data range");
     }
 
+    if (nfound == 0)
+    {
+        fits_close_file(m_data->m_ptr, &m_data->m_status);
+        throw InvalidHeader("No image data array present");
+    }
     setWidth(naxes[0]);
     setHeight(naxes[1]);
 
-    long datamax;
+    float bscale;
+    float bzero;
     long bitpix;
-    fits_read_key_lng(m_data->m_ptr, "DATAMAX", &datamax, NULL, &m_data->m_status);
-    fits_read_key_lng(m_data->m_ptr, "BITPIX", &bitpix, NULL, &m_data->m_status);
-    std::cout << "datamax = " << datamax << std::endl;
-    std::cout << "bitpix = " << bitpix << std::endl;
-    // read data range
-    /*
-    if ( fits_read_key_lng(m_data->m_ptr, "DATAMAX", &m_data->m_datamax, NULL, &m_data->m_status) )
+    int status = 0;
+    char error_string[FLEN_ERRMSG];
+
+    fits_read_key_flt(m_data->m_ptr, "BSCALE", &bscale, NULL, &status);
+    if (status)
     {
-        long bitpix;
-        // I couldn't read DATAMAX, so I read BITPIX?
-        if ( fits_read_key_lng(m_data->m_ptr, "BITPIX", &bitpix, NULL, &m_data->m_status) )
-        {
-            throw InvalidHeader("Could not read the bit width of the sample data");
-        }
-        else
-        {
-            m_data->m_datamax = ((1 << bitpix) - 1);
-        }
+        fits_get_errstatus(status, error_string);
+#ifndef NDEBUG
+        std::cout << "BSCALE: " << error_string << std::endl;
+#endif
+        bscale = 1.f;
+        status = 0;
     }
-    */
-    if (datamax == 0)
-        m_data->m_datamax = abs(bitpix);
-    else
-        m_data->m_datamax = datamax;
-    std::cout << "Size: w: " << width() << " height = " << height() << " "
-                 << " datamax = " << m_data->m_datamax << " datamax = " << datamax << " status = " << m_data->m_status << std::endl;
+
+    fits_read_key_flt(m_data->m_ptr, "BZERO", &bzero, NULL, &status);
+    if (status)
+    {
+        fits_get_errstatus(status, error_string);
+#ifndef NDEBUG
+        std::cout << "BZERO: " << error_string << std::endl;
+#endif
+        bzero = 0.f;
+        status = 0;
+    }
+
+    fits_read_key_lng(m_data->m_ptr, "BITPIX", &bitpix, NULL, &status);
+    if (status)
+    {
+        fits_get_errstatus(status, error_string);
+#ifndef NDEBUG
+        std::cout << "BITPIX: " << error_string << std::endl;
+#endif
+        fits_close_file(m_data->m_ptr, &status);
+        throw InvalidHeader(error_string);
+    }
+
+    m_data->m_bscale = bscale;
+    m_data->m_bzero = bzero;
+    m_data->m_format = bitpix;
+    m_data->m_status = status;
+
+#ifndef NDEBUG
+    std::cout << "Size: w: " << width() << " height = " << height()
+              << " bitpix = " << bitpix
+              << " bscale = " << bscale
+              << " bzero = " << bzero
+              << " status = " << m_data->m_status << std::endl;
+#endif
 }
 
 
@@ -153,7 +177,6 @@ void FitsReader::read(Frame &frame, const Params&)
 #endif
 
     long fpixel = 1;
-    float nullval = 0; /* don't check for null values in the image */
     long nbuffer = width();
     int anynull;
 
@@ -161,32 +184,152 @@ void FitsReader::read(Frame &frame, const Params&)
     Channel *Xc, *Yc, *Zc;
     tempFrame.createXYZChannels(Xc, Yc, Zc);
 
-    std::vector<float> buffer(width());
     Channel::iterator it = Xc->begin();
-    for (size_t i = 0; i < height(); ++i, fpixel += nbuffer)
+
+    float bscale = m_data->m_bscale;
+    float bzero  = m_data->m_bzero;
+
+    if (m_data->m_format == FLOAT_IMG)
     {
-        if (fits_read_img(m_data->m_ptr, TFLOAT, fpixel, nbuffer, &nullval,
-                          buffer.data(), &anynull, &m_data->m_status) )
+        std::vector<float> buffer(width());
+        float nullval = 0; // don't check for null values in the image
+        for (size_t i = 0; i < height(); ++i, fpixel += nbuffer)
         {
-            throw std::runtime_error("Cannot read strip " +
-                                     boost::lexical_cast<std::string>(i));
-        }
+            if (fits_read_img(m_data->m_ptr, TFLOAT, fpixel, nbuffer, &nullval,
+                              buffer.data(), &anynull, &m_data->m_status) )
+            {
+                char error_string[FLEN_ERRMSG];
+                fits_get_errstatus(m_data->m_status, error_string);
+                fits_close_file(m_data->m_ptr, &m_data->m_status);
+                throw std::runtime_error("FLOAT: Cannot read strip " +
+                                         boost::lexical_cast<std::string>(i) + ". " + error_string);
+            }
 
-        it = std::transform(buffer.begin(), buffer.end(), it,
-                            boost::bind(&FitsReaderData::normalize, m_data.get(), _1));
+            std::transform(buffer.begin(), buffer.end(), buffer.begin(),
+                    [bscale, bzero](float c) { return bscale * c + bzero; });
+            it = std::copy(buffer.begin(), buffer.end(), it);
+       }
     }
+    else if (m_data->m_format == DOUBLE_IMG)
+    {
+        std::vector<double> buffer(width());
+        double nullval = 0; // don't check for null values in the image
+        for (size_t i = 0; i < height(); ++i, fpixel += nbuffer)
+        {
+            if (fits_read_img(m_data->m_ptr, TDOUBLE, fpixel, nbuffer, &nullval,
+                              buffer.data(), &anynull, &m_data->m_status) )
+            {
+                char error_string[FLEN_ERRMSG];
+                fits_get_errstatus(m_data->m_status, error_string);
+                fits_close_file(m_data->m_ptr, &m_data->m_status);
+                throw std::runtime_error("DOUBLE: Cannot read strip " +
+                                         boost::lexical_cast<std::string>(i) + ". " + error_string);
+            }
 
-    // copy into other channels
-    std::copy(Xc->begin(), Xc->end(), Yc->begin());
-    std::copy(Xc->begin(), Xc->end(), Zc->begin());
+            std::transform(buffer.begin(), buffer.end(), buffer.begin(),
+                    [bscale, bzero](double c) { return bscale * c + bzero; });
+            it = std::copy(buffer.begin(), buffer.end(), it);
+        }
+    }
+    else if (m_data->m_format == BYTE_IMG)
+    {
+        std::vector<short> buffer(width());
+        std::vector<float> buffer_flt(width());
+        short nullval = 0; // don't check for null values in the image
+        for (size_t i = 0; i < height(); ++i, fpixel += nbuffer)
+        {
+            if (fits_read_img(m_data->m_ptr, TINT, fpixel, nbuffer, &nullval,
+                              buffer.data(), &anynull, &m_data->m_status) )
+            {
+                char error_string[FLEN_ERRMSG];
+                fits_get_errstatus(m_data->m_status, error_string);
+                fits_close_file(m_data->m_ptr, &m_data->m_status);
+                throw std::runtime_error("BYTE: Cannot read strip " +
+                                         boost::lexical_cast<std::string>(i) + ". " + error_string);
+            }
+
+            std::transform(buffer.begin(), buffer.end(), buffer_flt.begin(),
+                    [bscale, bzero](short c) { return bscale * c + bzero; });
+            it = std::copy(buffer_flt.begin(), buffer_flt.end(), it);
+        }
+    }
+    else if (m_data->m_format == SHORT_IMG)
+    {
+        std::vector<int> buffer(width());
+        std::vector<float> buffer_flt(width());
+        int nullval = 0; // don't check for null values in the image
+        for (size_t i = 0; i < height(); ++i, fpixel += nbuffer)
+        {
+            if (fits_read_img(m_data->m_ptr, TINT, fpixel, nbuffer, &nullval,
+                              buffer.data(), &anynull, &m_data->m_status) )
+            {
+                char error_string[FLEN_ERRMSG];
+                fits_get_errstatus(m_data->m_status, error_string);
+                fits_close_file(m_data->m_ptr, &m_data->m_status);
+                throw std::runtime_error("SHORT: Cannot read strip " +
+                                         boost::lexical_cast<std::string>(i) + ". " + error_string);
+            }
+
+            std::transform(buffer.begin(), buffer.end(), buffer_flt.begin(),
+                    [bscale, bzero](int c) { return bscale * c + bzero; });
+            it = std::copy(buffer_flt.begin(), buffer_flt.end(), it);
+        }
+    }
+    else if (m_data->m_format == LONG_IMG)
+    {
+        std::vector<long> buffer(width());
+        std::vector<float> buffer_flt(width());
+        long nullval = 0; // don't check for null values in the image
+        for (size_t i = 0; i < height(); ++i, fpixel += nbuffer)
+        {
+            if (fits_read_img(m_data->m_ptr, TLONG, fpixel, nbuffer, &nullval,
+                              buffer.data(), &anynull, &m_data->m_status) )
+            {
+                char error_string[FLEN_ERRMSG];
+                fits_get_errstatus(m_data->m_status, error_string);
+                fits_close_file(m_data->m_ptr, &m_data->m_status);
+                throw std::runtime_error("LONG: Cannot read strip " +
+                                         boost::lexical_cast<std::string>(i) + ". " + error_string);
+            }
+
+            std::transform(buffer.begin(), buffer.end(), buffer_flt.begin(),
+                    [bscale, bzero](long c) { return bscale * c + bzero; });
+            it = std::copy(buffer_flt.begin(), buffer_flt.end(), it);
+        }
+    }
+    else if (m_data->m_format == LONGLONG_IMG)
+    {
+        std::vector<long long> buffer(width());
+        std::vector<float> buffer_flt(width());
+        long long nullval = 0; // don't check for null values in the image
+        for (size_t i = 0; i < height(); ++i, fpixel += nbuffer)
+        {
+            if (fits_read_img(m_data->m_ptr, TLONGLONG, fpixel, nbuffer, &nullval,
+                              buffer.data(), &anynull, &m_data->m_status) )
+            {
+                char error_string[FLEN_ERRMSG];
+                fits_get_errstatus(m_data->m_status, error_string);
+                fits_close_file(m_data->m_ptr, &m_data->m_status);
+                throw std::runtime_error("LONG: Cannot read strip " +
+                                         boost::lexical_cast<std::string>(i) + ". " + error_string);
+            }
+
+            std::transform(buffer.begin(), buffer.end(), buffer_flt.begin(),
+                    [bscale, bzero](long long c) { return bscale * c + bzero; });
+            it = std::copy(buffer_flt.begin(), buffer_flt.end(), it);
+        }
+    }
 
 #ifndef NDEBUG
     std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator> minmax =
             boost::minmax_element(Xc->begin(), Xc->end());
-
-    std::cout << "FITS min luminance: " << *minmax.first;
-    std::cout << " FITS max luminance: " << *minmax.second;
+    std::cout << "FITS min luminance = " << *minmax.first << std::endl;
+    std::cout << "FITS max luminance = " << *minmax.second << std::endl;
 #endif
+
+    // copy into other channels
+    std::copy(Xc->begin(), Xc->end(), Yc->begin());
+    std::copy(Xc->begin(), Xc->end(), Zc->begin());
 
     frame.swap(tempFrame);
 }

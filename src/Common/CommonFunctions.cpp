@@ -51,6 +51,7 @@
 #include <Libpfs/colorspace/normalizer.h>
 
 #include <boost/scoped_ptr.hpp>
+#include <boost/algorithm/minmax_element.hpp>
 
 #include "Core/IOWorker.h"
 
@@ -196,6 +197,7 @@ void ConvertToQRgb::operator()(float r, float g, float b, QRgb& rgb) const
     uint8_t r8u;
     uint8_t g8u;
     uint8_t b8u;
+
     if (gamma == 1.0f)
     {
         r8u = colorspace::convertSample<uint8_t>(r);
@@ -258,8 +260,42 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
             throw std::runtime_error("Null frame");
         }
 
-        utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
-                         qimageData, ConvertToQRgb());
+        // If frame comes from HdrWizard it has already been normalized,
+        // if it comes from fitsreader it's not and all channels are equal so I calculate min and max of red channel only.
+        std::pair<pfs::Array2Df::const_iterator, pfs::Array2Df::const_iterator> minmaxRed =
+                boost::minmax_element(red->begin(), red->end());
+
+        float minRed   = *minmaxRed.first;
+        float maxRed   = *minmaxRed.second;
+
+        // Only useful for FitsImporter. Is there another way???
+        currentItem.setMin(minRed);
+        currentItem.setMax(maxRed);
+
+#ifndef NDEBUG
+        std::cout << "LoadFile:datamin = " << minRed << std::endl;
+        std::cout << "LoadFile:datamax = " << maxRed << std::endl;
+#endif
+
+        // Let's normalize thumbnails for FitsImporter. Again, all channels are equal
+        if ((fabs(minRed) > std::numeric_limits<float>::epsilon()) || (fabs(maxRed -1.f) > std::numeric_limits<float>::epsilon()))
+        {
+#ifndef NDEBUG
+            std::cout << "LoadFile: Normalizing data" << std::endl;
+#endif
+
+            Channel c(currentItem.frame()->getWidth(), currentItem.frame()->getHeight(), "X");
+            pfs::colorspace::Normalizer normalize(minRed, maxRed);
+
+            std::transform(red->begin(), red->end(), c.begin(), normalize);
+            utils::transform(c.begin(), c.end(), c.begin(), c.begin(),
+                             qimageData, ConvertToQRgb(2.2f));
+        }
+        else // OK, already in [0..1] range.
+        {
+            utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
+                             qimageData, ConvertToQRgb(2.2f));
+        }
 
         currentItem.qimage().swap( tempImage );
     }

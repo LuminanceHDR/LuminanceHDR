@@ -48,6 +48,7 @@
 #include <Libpfs/manip/rotate.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/colorspace/convert.h>
+#include <Libpfs/colorspace/normalizer.h>
 
 using namespace pfs;
 using namespace pfs::colorspace;
@@ -196,23 +197,24 @@ void FitsImporter::on_pushButtonLoad_clicked()
 
     // Start the computation.
     // m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
-
-    try 
-    {
+    QString error_string;
+    try {
         std::for_each(m_tmpdata.begin(), m_tmpdata.end(), LoadFile());
     }
-    catch (std::runtime_error& err)
+    catch (std::runtime_error &err)
     {
-	    UMessageBox::warning("Fits Importer", err.what());
+        QApplication::restoreOverrideCursor();
+        error_string = QString(err.what());
+        qDebug() << err.what();
     }
 
-    loadFilesDone();
+    loadFilesDone(error_string);
 }
 
-void FitsImporter::loadFilesDone()
+void FitsImporter::loadFilesDone(QString error_string)
 { 
     qDebug() << "Data loaded ... move to internal structure!";
-    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
+    //disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
 
     m_data.clear();
 
@@ -232,13 +234,13 @@ void FitsImporter::loadFilesDone()
         }
         else
         {
-            QMessageBox::warning(0,"", tr("Cannot load FITS image %1").arg(i.filename()), QMessageBox::Ok, QMessageBox::NoButton);
+            QMessageBox::warning(0,"", tr("Cannot load FITS image %1. \nERROR: %2").arg(i.filename()).arg(error_string), QMessageBox::Ok, QMessageBox::NoButton);
             m_data.clear();
             m_tmpdata.clear();
             m_contents.clear();
             m_qimages.clear();
             m_ui->pushButtonLoad->setEnabled(true);
-            QApplication::restoreOverrideCursor();
+            //QApplication::restoreOverrideCursor();
             return;
         }
         idx++;
@@ -368,6 +370,21 @@ void FitsImporter::buildContents()
          m_contents.push_back(std::vector<float>(m_width*m_height));
     }
 
+    float datamax = std::numeric_limits<float>::min();
+    float datamin = std::numeric_limits<float>::max();
+    for (size_t i = 0; i < m_data.size(); i++)
+    {
+        if (!m_data[i].filename().isEmpty())
+        {
+            datamin = std::min(datamin, m_data[i].getMin());
+            datamax = std::max(datamax, m_data[i].getMax());
+        }
+    }
+#ifndef NDEBUG
+        std::cout << "FitsImporter datamin = " << datamin << std::endl;
+        std::cout << "FitsImporter datamax = " << datamax << std::endl;
+#endif
+
     for (size_t i = 0; i < m_data.size(); i++)
     {
         if (m_data[i].filename().isEmpty())
@@ -380,6 +397,9 @@ void FitsImporter::buildContents()
         else
         {
             Channel *C = m_data[i].frame()->getChannel("X");
+            pfs::colorspace::Normalizer normalize(datamin, datamax);
+
+            std::transform(C->begin(), C->end(), C->begin(), normalize);
             std::copy(C->begin(), C->end(), m_contents[i].begin()); 
             m_qimages.push_back(m_data[i].qimage().scaled(previewWidth, previewHeight));
         }
@@ -400,7 +420,8 @@ void FitsImporter::buildFrame()
     {
         for (size_t i = 0; i < m_width*m_height; i++) 
         {
-            float r = redRed * m_contents[2][i];
+            //float r = redRed * m_contents[2][i];
+            float r = redRed * m_contents[0][i];
             float g = greenGreen * m_contents[1][i];
             float b = blueBlue * m_contents[2][i];
             float h, s, l;

@@ -60,7 +60,7 @@ protected slots:
     void on_pushButtonLoad_clicked();
     void on_pushButtonClockwise_clicked();
     void on_pushButtonPreview_clicked();
-    void loadFilesDone();
+    void loadFilesDone(QString);
     void ais_finished(int);
     void ais_failed_slot(QProcess::ProcessError);
     void readData(QByteArray);
@@ -113,7 +113,7 @@ protected:
     std::vector<std::vector<float> > m_contents;
     std::vector<QImage> m_qimages;
 
-    QFutureWatcher<void> m_futureWatcher;
+    //QFutureWatcher<void> m_futureWatcher;
 
     // alignment
 	Align *m_align;

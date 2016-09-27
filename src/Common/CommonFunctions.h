@@ -136,6 +136,9 @@ struct ConvertToQRgb {
 
 struct LoadFile {
     void operator()(HdrCreationItem& currentItem);
+    float normalize(float);
+    float m_datamax;
+    float m_datamin;
 };
 
 struct SaveFile {

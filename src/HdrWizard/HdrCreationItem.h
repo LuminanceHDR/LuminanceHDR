@@ -63,6 +63,11 @@ public:
     void setEV(float ev)                { m_averageLuminance = std::pow(2.f, ev); }
     float getEV() const                 { return log2(m_averageLuminance); }
 
+    void setMin(float m)                { m_datamin = m; }
+    void setMax (float M)                { m_datamax = M; }
+    float getMin() const                 { return m_datamin; }
+    float getMax() const                 { return m_datamax; }
+
     QImage& qimage()                    { return *m_thumbnail; }
     const QImage& qimage() const        { return *m_thumbnail; }
 
@@ -72,6 +77,8 @@ private:
     QString                 m_alignedFilename;
     float                   m_averageLuminance;
     float                   m_exposureTime;
+    float                   m_datamin;
+    float                   m_datamax;
     pfs::FramePtr           m_frame;
     QSharedPointer<QImage>  m_thumbnail;
 };
