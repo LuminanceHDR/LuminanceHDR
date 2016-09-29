@@ -1036,14 +1036,6 @@ void TonemappingPanel::fillCustomSizeComboBox()
 
 void TonemappingPanel::setEnabled(bool b)
 {
-    // Operator select
-    m_Ui->cmbOperators->setEnabled(b);
-    m_Ui->stackedWidget_operators->setEnabled(b);
-
-    // Load/Store/Reset
-    m_Ui->loadsettingsbutton->setEnabled(b);
-    m_Ui->savesettingsbutton->setEnabled(b);
-    m_Ui->defaultButton->setEnabled(b);
     if (b)
     {
     	updateUndoState();
@@ -1053,6 +1045,25 @@ void TonemappingPanel::setEnabled(bool b)
         m_Ui->undoButton->setEnabled(false);
         m_Ui->redoButton->setEnabled(false);
     }
+    m_Ui->tonemapGroupBox->setEnabled(b);
+    m_Ui->groupSaveLoadTMOsetting->setEnabled(b);
+    m_Ui->groupBoxExport->setEnabled(b);
+    m_Ui->pregammaGroup->setEnabled(b);
+
+    m_Ui->applyButton->setEnabled(b);
+    m_Ui->queueButton->setEnabled(b);
+	m_Ui->lblOpenQueue->setVisible(b);
+    m_Ui->replaceLdrCheckBox->setEnabled(b);
+    m_Ui->autoLevelsCheckBox->setEnabled(b);
+/*
+    // Operator select
+    m_Ui->cmbOperators->setEnabled(b);
+    m_Ui->stackedWidget_operators->setEnabled(b);
+
+    // Load/Store/Reset
+    m_Ui->loadsettingsbutton->setEnabled(b);
+    m_Ui->savesettingsbutton->setEnabled(b);
+    m_Ui->defaultButton->setEnabled(b);
     // Size
     m_Ui->sizeComboBox->setEnabled(b);
     m_Ui->addCustomSizeButton->setEnabled(b);
@@ -1083,6 +1094,7 @@ void TonemappingPanel::setEnabled(bool b)
     m_Ui->label->setEnabled(b);
     m_Ui->pregammaLabel->setEnabled(b);
     m_Ui->pregammaGroup->setEnabled(b);
+*/
 }
 
 void TonemappingPanel::updatedHDR(pfs::Frame* f)
