@@ -650,14 +650,21 @@ static int solve( gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d, gs
 
 // =============== HVS functions ==============
 
-static double contrast_transducer( double C, double sensitivity )
+static double contrast_transducer( double C, double sensitivity, datmoVisualModel visual_model )
 {  
-  const double W = pow( 10, fabs(C) ) - 1.;
+  if( visual_model & vm_contrast_masking )
+  {
+    const double W = pow( 10, fabs(C) ) - 1.;
 
-  const double Q = 3., A = 3.291, B = 3.433, E = 0.8, k=0.2599;
-  const double SC = sensitivity*W;
+    const double Q = 3., A = 3.291, B = 3.433, E = 0.8, k=0.2599;
+    const double SC = sensitivity*W;
 
-  return sign(C) * A*(pow(1.+pow(SC,Q),1./3.)-1.)/(k*pow(B+SC,E));
+    return sign(C) * A*(pow(1.+pow(SC,Q),1./3.)-1.)/(k*pow(B+SC,E));
+  }
+  else
+  {
+    return C * sensitivity;
+  }
 }
 
 /**
@@ -706,6 +713,16 @@ static double csf_daly( double rho, double theta, double l_adapt, double im_size
   return (S1 > S2 ? S2 : S1) * P;
 }  
 
+static double csf_datmo( double rho, double l_adapt, datmoVisualModel visual_model )
+{
+  if( !(visual_model & vm_luminance_masking ) )
+    l_adapt = 1000.;
+  if( !(visual_model & vm_csf ) )
+    rho = 4.;
+
+  return csf_daly( rho, 0, l_adapt, 1 );
+}
+
 static void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_count, int L, double Ld_min, double Ld_max )
 {
   double sum_d = 0;
@@ -751,7 +768,7 @@ static void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_coun
  * a pre-allocated array and has the same size as C->x_scale.
  */
 static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, DisplaySize */*ds*/,
-  float enh_factor, double *y, const float white_y, pfs::Progress &ph ) {
+  float enh_factor, double *y, const float white_y, datmoVisualModel visual_model, double scene_l_adapt, pfs::Progress &ph ) {
   
   conditional_density *C = (conditional_density*)C_pub;
   
@@ -762,7 +779,8 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
   for( int f = 0; f < C->f_count; f++ ) {
     csf_lut[f] = UniformArrayLUT( C->x_count, C->x_scale );
     for( int i=0; i < C->x_count; i++ )
-      csf_lut[f].y_i[i] = csf_daly( C->f_scale[f], 0, pow( 10., C->x_scale[i] ), 1 );
+      //csf_lut[f].y_i[i] = csf_daly( C->f_scale[f], 0, pow( 10., C->x_scale[i] ), 1 );
+      csf_lut[f].y_i[i] = csf_datmo( C->f_scale[f], pow( 10., C->x_scale[i] ), visual_model ); // In pfstmo 2.0.5
   }
   
   const int max_neigh = (C->g_count-1)/2;
@@ -852,7 +870,11 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
   
   k = 0;
   for( int f=0; f < C->f_count; f++ ) {
-    const double sensitivity = csf_daly( C->f_scale[f], 0., 1000., 1. );
+    //const double sensitivity = csf_daly( C->f_scale[f], 0., 1000., 1. );
+    double sensitivity = csf_daly( C->f_scale[f], 0., 1000., 1. ); // In pfstmo 2.0.5 sensitivity may be uninizialized
+    if( scene_l_adapt != -1 )
+      sensitivity = csf_datmo( C->f_scale[f], scene_l_adapt, visual_model );
+
     for( int i=0; i < C->x_count; i++ )
       for( int j = std::max(0,i-max_neigh); j < std::min(C->x_count-1,i+max_neigh); j++ ) {
         if( i == j || (*C)(i,j-i+max_neigh,f) == 0 )
@@ -868,8 +890,12 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
           gsl_matrix_set( A, k, skip_lut[l], 1 );
         }        
 
+        if( scene_l_adapt == -1 ) {
+          sensitivity = csf_lut[f].interp( C->x_scale[from] );
+        }
+
 //      B(k,1) = l_scale(max(i,j)) - l_scale(min(i,j));
-        gsl_vector_set( B, k, contrast_transducer( (C->x_scale[to] - C->x_scale[from])*enh_factor, sensitivity ) );        
+        gsl_vector_set( B, k, contrast_transducer( (C->x_scale[to] - C->x_scale[from])*enh_factor, sensitivity, visual_model ) );
 
 //      N(k,k) = jpf(j-i+max_neigh+1,i,band);
         gsl_vector_set( N, k, (*C)(i,j-i+max_neigh,f) );
@@ -881,7 +907,7 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
       }
   }
   
-  if( white_y > 0 ) {  
+  if( white_y > 0 ) {
     for( int l = white_i; l < C->x_count-1; l++ ) {          
       if( skip_lut[l] == -1 )
         continue;
@@ -909,8 +935,17 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
             continue;
           gsl_matrix_set( A, k, skip_lut[l], 1 );
         }        
-        const double sensitivity = csf_daly( C->f_scale[C->f_count-1], 0., 1000., 1. );
-        gsl_vector_set( B, k, contrast_transducer( (C->x_scale[to] - C->x_scale[from])*enh_factor, sensitivity ) );        
+        //const double sensitivity = csf_daly( C->f_scale[C->f_count-1], 0., 1000., 1. );
+        //gsl_vector_set( B, k, contrast_transducer( (C->x_scale[to] - C->x_scale[from])*enh_factor, sensitivity ) );
+        double sensitivity;
+        if( scene_l_adapt == -1 ) {
+          sensitivity = csf_lut[C->f_count-1].interp( C->x_scale[from] );
+        } else
+          sensitivity = csf_datmo( C->f_scale[C->f_count-1], scene_l_adapt, visual_model );
+
+        // const double sensitivity = csf_datmo( C->f_scale[C->f_count-1], scene_l_adapt, visual_model );
+        gsl_vector_set( B, k, contrast_transducer( (C->x_scale[to] - C->x_scale[from])*enh_factor, sensitivity, visual_model ) );
+
         gsl_vector_set( N, k, C->total * 0.1 ); // Strength of framework anchoring
         band[k] = C->f_count-1;
         back_x[k] = to;
@@ -931,7 +966,11 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 
   gsl_vector_set_all( x, d_dr/L );
   
-  for( int it = 0; it < 200; it++ ) {
+  int max_iter = 200;
+  if( !(visual_model & vm_contrast_masking) )
+          max_iter = 1;
+
+  for( int it = 0; it < max_iter; it++ ) {
 
 //    fprintf( stderr, "Iteration #%d\n", it );
 
@@ -946,7 +985,8 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
       double sensitivity = csf_lut[band[k]].interp( y[back_x[k]] );
       const double Ax_k = gsl_vector_get( Ax, k );
       const double denom = (fabs(Ax_k) < 0.0001 ? 1. : Ax_k );
-      gsl_vector_set( K, k, contrast_transducer( Ax_k, sensitivity ) / denom );
+      //gsl_vector_set( K, k, contrast_transducer( Ax_k, sensitivity ) / denom );
+      gsl_vector_set( K, k, contrast_transducer( Ax_k, sensitivity, visual_model ) / denom );
     }
 
     // AK = A*K;
@@ -964,6 +1004,14 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
     gsl_vector_memcpy( x_old, x );
     
     solve( H, f, Ale, ble, x );
+
+    /*
+    if (status == GSL_FAILURE)
+    {
+        std::cout << "GSL_FAILURE" << std::endl;
+        return PFSTMO_ERROR;
+    }
+    */
 
     // Check for convergence
     double min_delta = (C->x_scale[1]-C->x_scale[0])/10.; // minimum acceptable change
@@ -993,11 +1041,11 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 
 int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_dens,
   DisplayFunction *df, DisplaySize *ds, const float enh_factor, 
-  const float white_y, pfs::Progress &ph )
+  const float white_y, datmoVisualModel visual_model, double scene_l_adapt, pfs::Progress &ph )
 {
-  conditional_density *C = (conditional_density*)cond_dens;
-  tc->init( C->x_count, C->x_scale );
-  return optimize_tonecurve( cond_dens, df, ds, enh_factor, tc->y_i, white_y, ph );
+  conditional_density *c = (conditional_density*)cond_dens;
+  tc->init( c->x_count, c->x_scale );
+  return optimize_tonecurve( cond_dens, df, ds, enh_factor, tc->y_i, white_y, visual_model, scene_l_adapt, ph );
 }
 
 
@@ -1019,7 +1067,7 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
   // Create LUT: log10( lum factor ) -> saturation correction (for the tone-level)
   UniformArrayLUT cc_lut( tc->size, tc->x_i );  
   for( size_t i=0; i < tc->size-1; i++ ) {
-    const float contrast = (tc->y_i[i+1]-tc->y_i[i])/(tc->x_i[i+1]-tc->x_i[i]);
+    const float contrast = std::max( (tc->y_i[i+1]-tc->y_i[i])/(tc->x_i[i+1]-tc->x_i[i]), 0.d ); // In pfstmo 2.0.5
     const float k1 = 1.48f;
     const float k2 = 0.82f;
     cc_lut.y_i[i] = ( (1 + k1)*pow(contrast,k2) )/( 1 + k1*pow(contrast,k2) ) * saturation_factor;
@@ -1054,3 +1102,102 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
 
   return PFSTMO_OK;  
 }
+
+// Pre-computed IIR filters - for different frame rates
+double t_filter_a_25fps[] = { 1.000000000000000,  -2.748835809214676,   2.528231219142559,  -0.777638560238080 };
+double t_filter_b_25fps[] = { 0.000219606211225409,   0.000658818633676228,   0.000658818633676228,   0.000219606211225409 };
+
+double t_filter_a_30fps[] = { 1.000000000000000,  -2.790655305284069,   2.602653173508124,  -0.810960871907291 };
+double t_filter_b_30fps[] = { 0.000129624539595474,   0.000388873618786423,   0.000388873618786423,   0.000129624539595474 };
+
+double t_filter_a_60fps[] = { 1.000000000000000,  -2.895292177877897,   2.795994584283360,  -0.900566088981622 };
+double t_filter_b_60fps[] = { 0.0000170396779801130, 0.0000511190339403389,   0.0000511190339403389,   0.0000170396779801130 };
+
+
+datmoTCFilter::datmoTCFilter( float fps, float y_min, float y_max ) :
+  y_min( y_min ), y_max( y_max ), fps( fps )
+{
+  assert( fps == 25 || fps == 30 || fps == 60 );
+  if( fps == 60 ) {
+    t_filter_a = t_filter_a_60fps;
+    t_filter_b = t_filter_b_60fps;
+  } else if( fps == 30 ) {
+    t_filter_a = t_filter_a_30fps;
+    t_filter_b = t_filter_b_30fps;
+  } else {
+    t_filter_a = t_filter_a_25fps;
+    t_filter_b = t_filter_b_25fps;
+  }
+
+  pos = -1;
+  sz = 0;
+}
+
+datmoToneCurve *datmoTCFilter::getToneCurvePtr()
+{
+  pos++;
+  if( pos == DATMO_TF_TAPSIZE )
+    pos = 0;
+
+  sz++;
+  if( sz > DATMO_TF_TAPSIZE )
+    sz = DATMO_TF_TAPSIZE;
+
+  return ring_buffer_org + pos;
+}
+
+datmoToneCurve *datmoTCFilter::filterToneCurve()
+{
+  datmoToneCurve *tc_o = ring_buffer_org + pos;
+  datmoToneCurve *tc_f = ring_buffer_filt + pos;
+
+  tc_f->init( tc_o->size, tc_o->x_i );
+  if( tc_filt_clamp.x_i == NULL )
+    tc_filt_clamp.init( tc_o->size, tc_o->x_i );
+  for( size_t j=0; j < tc_f->size; j++ )
+    tc_f->y_i[j] = 0;
+
+  for( int tt=0; tt < DATMO_TF_TAPSIZE; tt++ ) {
+    datmoToneCurve *x = get_tc(ring_buffer_org,tt);
+    datmoToneCurve *y;
+    if( tt >= sz )
+      y = x;
+    else
+      y = get_tc(ring_buffer_filt,tt);
+
+    for( size_t j=0; j < tc_f->size; j++ ) {
+      tc_f->y_i[j] += t_filter_b[tt] * x->y_i[j];
+      if( tt > 0 )
+        tc_f->y_i[j] -= t_filter_a[tt] * y->y_i[j];
+    }
+  }
+
+  // Copy to dest array and clamp
+  // Note that the clamped values cannot be used for filtering as they
+  // would cause too much rippling for the IIR filter
+  for( size_t j=0; j < tc_f->size; j++ ) {
+    if( tc_f->y_i[j] < y_min ) {
+      tc_filt_clamp.y_i[j]  = y_min;
+    } else if( tc_f->y_i[j] > y_max ) {
+        tc_filt_clamp.y_i[j] = y_max;
+    } else
+      tc_filt_clamp.y_i[j] = tc_f->y_i[j];
+  }
+
+  return &tc_filt_clamp;
+}
+
+datmoToneCurve *datmoTCFilter::get_tc( datmoToneCurve *ring_buf, int time )
+{
+  if( time >= sz )
+    time = sz-1;
+
+  int p = pos - time;
+  if( p < 0 )
+    p = p + DATMO_TF_TAPSIZE;
+
+  return ring_buf + p;
+}
+
+
+

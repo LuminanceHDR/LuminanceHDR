@@ -93,10 +93,13 @@ public:
         // Tone Mapping
         //QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
         //tm_operator->tonemapFrame(temp_frame.data(), tm_options, fake_progress_helper);
-        try {
-            QScopedPointer<TMWorker> tmWorker(new TMWorker);
-            QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
+
+        //try { //Since nothing here actually throws this isn't useful, i need to check if returned frame != NULL
+        QScopedPointer<TMWorker> tmWorker(new TMWorker);
+        QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
         
+        if (!frame.isNull())
+        {
             // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
             //QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
             if (m_isAutolevels) {
@@ -115,13 +118,22 @@ public:
             QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
                                       Q_ARG(QSharedPointer<QImage>, qimage));
         }
+        else
+        {
+            QSharedPointer<QImage> qimage(new QImage(PREVIEW_WIDTH, PREVIEW_HEIGHT, QImage::Format_ARGB32_Premultiplied));
+            qimage->fill(QColor(255,0,0)); //TODO Tonemapping failed, let's show a RED preview...
+            QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
+                                      Q_ARG(QSharedPointer<QImage>, qimage));
+        }
+        /*
+        }
         catch (...) {
             qDebug() << "PreviewLabelUpdater: caught exception";
             QSharedPointer<QImage> qimage(new QImage);
             QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
                                       Q_ARG(QSharedPointer<QImage>, qimage));
         }
-
+        */
 #ifdef QT_DEBUG
         //qDebug() << QThread::currentThread() << "done!";
 #endif

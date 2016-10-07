@@ -135,10 +135,12 @@ struct ConvertToQRgb {
 };
 
 struct LoadFile {
+    LoadFile(bool fromFITS = false) { m_fromFITS = fromFITS; }
     void operator()(HdrCreationItem& currentItem);
     float normalize(float);
     float m_datamax;
     float m_datamin;
+    bool m_fromFITS;
 };
 
 struct SaveFile {

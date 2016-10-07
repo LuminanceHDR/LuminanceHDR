@@ -99,8 +99,9 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
     //DIVISOR and hence threshold are hardcoded here
     //Is there a better way of setting this? Changing threshold until CUMUL/TOTAL > 95% ????
     const float TOTAL = accumulate(hist, hist + 256, 0.f);
-    const float DIVISOR = 1000.f;
-    const float threshold = TOTAL/DIVISOR;
+    //const float DIVISOR = 100.f;
+    //const float threshold = .05f * TOTAL/DIVISOR;
+    const float threshold = .025f;
 
     float CUMUL = 0;
     for (int i = 0; i < 256; i++)
@@ -169,18 +170,21 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
     }
     minL = factor*xa;
     maxL = factor*xb;
+    /*
     float midrange = minL + .5f*(maxL - minL);
     if (fabs(midrange - .5f) < 1e-3)
         gammaL = 1.f;
     else
         gammaL = log10(midrange)/log10(factor*meanL);
+    */
+    gammaL = 1.f; //TODO Let's return gamma = 1
  
 #ifndef NDEBUG
     cout << "ELEMENTS: " << ELEMENTS << endl;
     cout << "TOTAL: " << TOTAL << ", CUMUL: " << CUMUL << ", CUMUL/TOTAL: " << 100.f*CUMUL/TOTAL << endl;
     cout << "minL: " << minL << ", maxL: " << maxL << ", gammaL: " << gammaL << ", meanL: " << meanL << endl;
     cout << "threshold: " << threshold << endl;
-    cout << "midrange: " << midrange << endl;
+    //cout << "midrange: " << midrange << endl;
 #endif
 
     delete[] lightness;
@@ -277,13 +281,14 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         std::cout << "LoadFile:datamax = " << maxRed << std::endl;
 #endif
 
-        // Let's normalize thumbnails for FitsImporter. Again, all channels are equal
-        if ((fabs(minRed) > std::numeric_limits<float>::epsilon()) || (fabs(maxRed -1.f) > std::numeric_limits<float>::epsilon()))
+        //if ((fabs(minRed) > std::numeric_limits<float>::epsilon()) || (fabs(maxRed - 1.f) > std::numeric_limits<float>::epsilon()))
+        if (m_fromFITS)
         {
 #ifndef NDEBUG
             std::cout << "LoadFile: Normalizing data" << std::endl;
 #endif
 
+            // Let's normalize thumbnails for FitsImporter. Again, all channels are equal
             Channel c(currentItem.frame()->getWidth(), currentItem.frame()->getHeight(), "X");
             pfs::colorspace::Normalizer normalize(minRed, maxRed);
 
@@ -294,7 +299,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         else // OK, already in [0..1] range.
         {
             utils::transform(red->begin(), red->end(), green->begin(), blue->begin(),
-                             qimageData, ConvertToQRgb(2.2f));
+                             qimageData, ConvertToQRgb());
         }
 
         currentItem.qimage().swap( tempImage );

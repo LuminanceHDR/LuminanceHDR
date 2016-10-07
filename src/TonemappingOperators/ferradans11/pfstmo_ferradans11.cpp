@@ -61,7 +61,7 @@ void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, p
     
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
     //TODO Check why gamma is 1/4 of gamma in pfstools
-    pfs::applyGamma(&frame, 0.25f);
+    //pfs::applyGamma(&frame, 0.25f);
         
     // tone mapping
     tmo_ferradans11(*inR, *inG, *inB, opt_rho, opt_inv_alpha, ph);

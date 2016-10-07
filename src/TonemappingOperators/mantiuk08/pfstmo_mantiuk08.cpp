@@ -41,9 +41,6 @@
 #include "Libpfs/colorspace/colorspace.h"
 #include "display_adaptive_tmo.h"
 
-// TODO: remove this rubbish!
-#define PROG_NAME "pfstmo_mantiuk08"
-
 using namespace std;
 
 void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, pfs::Progress &ph)
@@ -53,7 +50,10 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   //float saturation_factor = 1.f;
   //float white_y = -2.f;
   //int temporal_filter = 0;
-  
+  float fps = 25;
+  datmoVisualModel visual_model = vm_full;
+  double scene_l_adapt = 1000;
+
   if (!setluminance)
     white_y = -2.f;
   
@@ -92,13 +92,13 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   if( white_y == -2.f )
   {
     std::string white_y_str = frame.getTags().getTag( "WHITE_Y" );
-    if( white_y_str.empty() )
+    if( !white_y_str.empty() ) //TODO check this
     {
       white_y = strtod( white_y_str.c_str(), NULL );
       if( white_y == 0 )
       {
         white_y = -1;
-        fprintf( stderr, PROG_NAME ": warning - wrong WHITE_Y in the input image" );        
+        fprintf( stderr, "warning - wrong WHITE_Y in the input image" );
       }
     }
   }
@@ -111,29 +111,36 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   
   std::string lum_data = frame.getTags().getTag("LUMINANCE");
   if( !lum_data.empty() && lum_data != "DISPLAY" ) {
-    fprintf( stderr, PROG_NAME " warning: input image should be in linear (not gamma corrected) luminance factor units. Use '--linear' option with pfsin* commands.\n" );
+    fprintf( stderr, "warning: input image should be in linear (not gamma corrected) luminance factor units. Use '--linear' option with pfsin* commands.\n" );
   }
-  
-  datmoToneCurve tc;
   
   std::unique_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->data(), ph);
   if( C.get() == NULL )
     throw pfs::Exception("failed to analyse the image");
   
+  datmoTCFilter rc_filter( fps, log10(df->display(0)), log10(df->display(1)) );
+
+  //datmoToneCurve tc;
+  datmoToneCurve *tc = rc_filter.getToneCurvePtr();
+
   int res;
-  res = datmo_compute_tone_curve( &tc, C.get(), df, ds, contrast_enhance_factor, white_y, ph);
+  res = datmo_compute_tone_curve( tc, C.get(), df, ds, contrast_enhance_factor, white_y, visual_model, scene_l_adapt, ph);
   if( res != PFSTMO_OK )
-    throw pfs::Exception( "failed to compute the tone-curve" );    
-  
-  res = datmo_apply_tone_curve_cc( inX->data(), R.data(), inZ->data(), cols, rows, inX->data(), R.data(), inZ->data(), inY->data(), &tc, df, saturation_factor );
+    throw pfs::Exception( "failed to compute the tone-curve" );
+
+  datmoToneCurve *tc_filt = rc_filter.filterToneCurve();
+
+  res = datmo_apply_tone_curve_cc( inX->data(), R.data(), inZ->data(),
+          cols, rows, inX->data(), R.data(), inZ->data(), inY->data(), tc_filt, df, saturation_factor );
   if( res != PFSTMO_OK )
     throw pfs::Exception( "failed to tone-map the image" );
-  
+
   ph.setValue( 100 );
-  
+
   pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
   frame.getTags().setTag("LUMINANCE", "DISPLAY");
-  
+
   delete df;
   delete ds;
 }
+

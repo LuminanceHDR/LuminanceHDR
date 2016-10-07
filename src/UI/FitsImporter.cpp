@@ -199,7 +199,7 @@ void FitsImporter::on_pushButtonLoad_clicked()
     // m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
     QString error_string;
     try {
-        std::for_each(m_tmpdata.begin(), m_tmpdata.end(), LoadFile());
+        std::for_each(m_tmpdata.begin(), m_tmpdata.end(), LoadFile(true));
     }
     catch (std::runtime_error &err)
     {
