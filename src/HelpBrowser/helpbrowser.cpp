@@ -166,6 +166,7 @@ HelpBrowser::HelpBrowser(QWidget* parent):
 HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QString& guiLanguage, const QString& jumpToSection, const QString& jumpToFile):
     QMainWindow( parent ),
     zoomFactor(1.0),
+    m_textDocument(new QTextDocument),
     m_Ui(new Ui::HelpBrowser)
 {
     m_Ui->setupUi(this);
@@ -345,14 +346,32 @@ void HelpBrowser::languageChange()
 
 void HelpBrowser::print()
 {
+    m_Ui->textBrowser->page()->toHtml([this](const QString &result){
+            this->m_textDocument->setHtml(result);
+            this->printAvailable();
+            });
+}
+
+void HelpBrowser::printAvailable()
+{
 	QPrinter printer;
 	printer.setFullPage(true);
 	QPrintDialog dialog(&printer, this);
 	if (dialog.exec())
-        m_Ui->textBrowser->render(&printer);
+    {
+        m_textDocument->print(&printer);
+    }
 }
 
 void HelpBrowser::printPreview()
+{
+    m_Ui->textBrowser->page()->toHtml([this](const QString &result){
+            this->m_textDocument->setHtml(result);
+            this->printPreviewAvailable();
+            });
+}
+
+void HelpBrowser::printPreviewAvailable()
 {
 	QPrinter printer;
 	printer.setFullPage(true);
@@ -363,7 +382,7 @@ void HelpBrowser::printPreview()
 
 void HelpBrowser::paintRequested(QPrinter *printer)
 {
-    m_Ui->textBrowser->render(printer);
+    m_textDocument->print(printer);
 }
 
 void HelpBrowser::searchingButton_clicked()

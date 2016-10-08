@@ -64,6 +64,7 @@
 #include <QXmlInputSource>
 #include <QEvent>
 #include <QTreeWidgetItem>
+#include <QTextEdit>
 
 class ScHelpTreeModel;
 class QPrinter;
@@ -130,6 +131,9 @@ protected:
 	QMap<QString, QString> quickHelpIndex;
 	QMap<QString, QPair<QString, QString> > bookmarkIndex;
 
+    // I need to keep this around because page()->toHtml( <callback> ) is asynchronous
+    QSharedPointer<QTextDocument> m_textDocument;
+
 protected slots:
 	virtual void languageChange();
 	void histChosen(QAction* i);
@@ -165,13 +169,13 @@ protected slots:
 	\author Petr Vanek <petr@yarpen.cz> */
 	void findPrevious();
 
-	/*! \brief Print the documentation.
-	Based on the Qt example.
-	*/
+	/*! \brief Print the documentation.	*/
 	void print();
+	void printAvailable();
 
 	/*! \brief Preview the documentation before printing. */
 	void printPreview();
+	void printPreviewAvailable();
     void paintRequested(QPrinter *printer);
 
 	/*! \brief Add document into bookmarks. */
