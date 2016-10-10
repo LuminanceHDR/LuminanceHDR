@@ -65,6 +65,9 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
 {
     m_Ui->setupUi(this);
 
+    //
+    m_Ui->defaultButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/edit-undo.png")));
+
     currentTmoOperator = mantiuk06; // from Qt Designer
 
     // mantiuk06

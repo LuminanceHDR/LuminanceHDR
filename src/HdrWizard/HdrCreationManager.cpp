@@ -155,6 +155,14 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
 void HdrCreationManager::loadFilesDone()
 { 
     qDebug() << "HdrCreationManager::loadFilesDone(): Data loaded ... move to internal structure!";
+    if (m_futureWatcher.isCanceled() ) // LoadFile() threw an exception
+    {
+        emit errorWhileLoading(tr("HdrCreationManager::loadFilesDone(): Error loading a file."));
+        disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
+        m_tmpdata.clear();
+        return;
+    }
+
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
     BOOST_FOREACH(const HdrCreationItem& hdrCreationItem, m_tmpdata)
     {
