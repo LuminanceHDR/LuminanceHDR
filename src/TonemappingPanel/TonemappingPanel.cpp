@@ -66,7 +66,16 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     m_Ui->setupUi(this);
 
     //
-    m_Ui->defaultButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/edit-undo.png")));
+    m_Ui->defaultButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->undoButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/edit-undo.png")));
+    m_Ui->redoButton->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/new/prefix1/images/edit-redo.png")));
+    m_Ui->savesettingsbutton->setIcon(QIcon::fromTheme("document-save", QIcon(":/new/prefix1/images/filesave.png")));
+    m_Ui->loadsettingsbutton->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/prefix1/images/fileopen.png")));
+    m_Ui->saveButton->setIcon(QIcon::fromTheme("edit-download", QIcon(":/new/prefix1/images/vcs_update.png")));
+    m_Ui->loadButton->setIcon(QIcon::fromTheme("cloud-upload", QIcon(":/new/prefix1/images/vcs_commit.png")));
+    m_Ui->queueButton->setIcon(QIcon::fromTheme("folder-image", QIcon(":/new/svgs/images/folder-image.svgz")));
+    m_Ui->addCustomSizeButton->setIcon(QIcon::fromTheme("list-add", QIcon(":/new/prefix1/images/add.png")));
+    m_Ui->pregammadefault->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
 
     currentTmoOperator = mantiuk06; // from Qt Designer
 
