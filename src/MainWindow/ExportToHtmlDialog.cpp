@@ -122,7 +122,7 @@ void ExportToHtmlDialog::onEditOutputFolderFinished()
 {
     m_outputFolder = m_Ui->lineEditOutputFolder->text();
     QFileInfo qfi = QFileInfo(m_outputFolder);
-    if (!qfi.isDir())
+    if (!m_outputFolder.isEmpty() && !qfi.isDir())
         QMessageBox::critical(this, tr("Error: "), m_outputFolder + tr(" must be a directory.") ,
                               QMessageBox::Ok, QMessageBox::NoButton);
     else
