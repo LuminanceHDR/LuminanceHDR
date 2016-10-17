@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1120</width>
-    <height>699</height>
+    <height>729</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -173,8 +173,7 @@
                    <string>Fill &amp;window</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="zoom">
-                    <normaloff>.</normaloff>.</iconset>
+                   <iconset theme="zoom"/>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1553,9 +1552,8 @@ p, li { white-space: pre-wrap; }
                   <property name="toolTip">
                    <string>Move up of 1 pixel the currently selected movable image</string>
                   </property>
-                  <property name="icon">
-                   <iconset theme="arrow-up">
-                    <normaloff>.</normaloff>.</iconset>
+                  <property name="text">
+                   <string/>
                   </property>
                   <property name="autoRepeat">
                    <bool>true</bool>
@@ -1570,10 +1568,6 @@ p, li { white-space: pre-wrap; }
                   <property name="toolTip">
                    <string>Move down of 1 pixel the currently selected movable image</string>
                   </property>
-                  <property name="icon">
-                   <iconset theme="arrow-down">
-                    <normaloff>.</normaloff>.</iconset>
-                  </property>
                   <property name="autoRepeat">
                    <bool>true</bool>
                   </property>
@@ -1587,9 +1581,8 @@ p, li { white-space: pre-wrap; }
                   <property name="toolTip">
                    <string>Move right of 1 pixel the currently selected movable image</string>
                   </property>
-                  <property name="icon">
-                   <iconset theme="arrow-right">
-                    <normaloff>.</normaloff>.</iconset>
+                  <property name="text">
+                   <string>&gt;</string>
                   </property>
                   <property name="autoRepeat">
                    <bool>true</bool>
@@ -1604,9 +1597,8 @@ p, li { white-space: pre-wrap; }
                   <property name="toolTip">
                    <string>Move left of 1 pixel the currently selected movable image</string>
                   </property>
-                  <property name="icon">
-                   <iconset theme="arrow-left">
-                    <normaloff>.</normaloff>.</iconset>
+                  <property name="text">
+                   <string>&lt;</string>
                   </property>
                   <property name="autoRepeat">
                    <bool>true</bool>
@@ -1722,25 +1714,46 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <tabstops>
+  <tabstop>fitButton</tabstop>
+  <tabstop>fillButton</tabstop>
+  <tabstop>origSizeButton</tabstop>
+  <tabstop>blendModeCB</tabstop>
+  <tabstop>maskColorButton</tabstop>
+  <tabstop>lassoColorButton</tabstop>
+  <tabstop>movableListWidget</tabstop>
+  <tabstop>prevBothButton</tabstop>
+  <tabstop>nextBothButton</tabstop>
+  <tabstop>referenceListWidget</tabstop>
+  <tabstop>autoAG_checkBox</tabstop>
+  <tabstop>threshold_horizontalSlider</tabstop>
+  <tabstop>threshold_doubleSpinBox</tabstop>
+  <tabstop>recomputePatches_pushButton</tabstop>
+  <tabstop>totalPatches_lineEdit</tabstop>
+  <tabstop>addMaskRadioButton</tabstop>
+  <tabstop>removeMaskRadioButton</tabstop>
+  <tabstop>toolButtonPath</tabstop>
+  <tabstop>toolButtonPaint</tabstop>
+  <tabstop>agBrushSizeQSlider</tabstop>
+  <tabstop>agBrushSizeQSpinbox</tabstop>
+  <tabstop>agBrushStrengthQSlider</tabstop>
+  <tabstop>agBrushStrengthQSpinbox</tabstop>
+  <tabstop>toolButtonSaveMask</tabstop>
+  <tabstop>toolButtonApplyMask</tabstop>
+  <tabstop>cropButton</tabstop>
+  <tabstop>antighostToolButton</tabstop>
+  <tabstop>saveImagesButton</tabstop>
+  <tabstop>whatsThisButton</tabstop>
+  <tabstop>resetButton</tabstop>
+  <tabstop>resetAllButton</tabstop>
+  <tabstop>horizShiftSB</tabstop>
+  <tabstop>vertShiftSB</tabstop>
+  <tabstop>leftToolButton</tabstop>
   <tabstop>upToolButton</tabstop>
   <tabstop>rightToolButton</tabstop>
   <tabstop>downToolButton</tabstop>
-  <tabstop>leftToolButton</tabstop>
-  <tabstop>vertShiftSB</tabstop>
-  <tabstop>horizShiftSB</tabstop>
-  <tabstop>resetAllButton</tabstop>
-  <tabstop>resetButton</tabstop>
-  <tabstop>cropButton</tabstop>
-  <tabstop>nextBothButton</tabstop>
-  <tabstop>prevBothButton</tabstop>
-  <tabstop>referenceListWidget</tabstop>
-  <tabstop>movableListWidget</tabstop>
-  <tabstop>blendModeCB</tabstop>
-  <tabstop>fillButton</tabstop>
-  <tabstop>fitButton</tabstop>
-  <tabstop>whatsThisButton</tabstop>
   <tabstop>Next_Finishbutton</tabstop>
   <tabstop>cancelbutton</tabstop>
+  <tabstop>previewImageFrame</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
