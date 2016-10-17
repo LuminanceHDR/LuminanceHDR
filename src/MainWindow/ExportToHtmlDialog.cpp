@@ -46,6 +46,10 @@ ExportToHtmlDialog::ExportToHtmlDialog(QWidget* parent, pfs::Frame *frame)
 {
     m_Ui->setupUi(this);
 
+    // icons
+    m_Ui->OutputFolderButton->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
+    // end setting icons
+
     connect(m_Ui->ExportButton, SIGNAL(clicked()), this, SLOT(onExportButtonClicked()));
     connect(m_Ui->OutputFolderButton, SIGNAL(clicked()), this, SLOT(onOutputFolderButtonClicked()));
     connect(m_Ui->lineEditPageName, SIGNAL(editingFinished()), this, SLOT(onEditPageNameFinished()));

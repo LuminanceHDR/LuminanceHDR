@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1651</width>
-     <height>27</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -828,7 +828,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="system-lock-screen"/>
+    <iconset theme="system-lock-screen">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Lock Viewers</string>
@@ -988,7 +989,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/document-print-preview.png</normaloff>:/new/prefix1/images/document-print-preview.png</iconset>
+     <normaloff>:/new/prefix1/images/soft-proofing.png</normaloff>:/new/prefix1/images/soft-proofing.png</iconset>
    </property>
    <property name="text">
     <string>Soft Proofing</string>

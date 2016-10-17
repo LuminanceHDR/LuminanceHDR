@@ -417,7 +417,7 @@ void MainWindow::createToolBar()
 
 void MainWindow::createMenus()
 {
-    //Set icons
+    // icons
     m_Ui->fileNewAction->setIcon(QIcon::fromTheme("insert-image", QIcon(":/new/svgs/images/insert-image.svgz")));
     m_Ui->fileOpenAction->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
     m_Ui->fileSaveAsAction->setIcon(QIcon::fromTheme("document-save", QIcon(":/new/prefix1/images/filesave.png")));
@@ -432,7 +432,7 @@ void MainWindow::createMenus()
     m_Ui->OptionsAction->setIcon(QIcon::fromTheme("preferences-system", QIcon(":/new/prefix1/images/options.png")));
     //m_Ui->actionResize->setIcon(QIcon::fromTheme("", QIcon(":/new/prefix1/images/scale.png")));
     m_Ui->Transplant_Exif_Data_action->setIcon(QIcon::fromTheme("selection-move-to-layer-below", QIcon(":/new/prefix1/images/copyexif.png")));
-    m_Ui->actionBatch_Tone_Mapping->setIcon(QIcon::fromTheme("system-run", QIcon(":/new/prefix1/images/running_process.png"))); // TODO
+    m_Ui->actionBatch_Tone_Mapping->setIcon(QIcon::fromTheme("system-run", QIcon(":/new/prefix1/images/system-run.png"))); // TODO
     m_Ui->actionWhat_s_This->setIcon(QIcon::fromTheme("help-whatsthis", QIcon(":/new/prefix1/images/whatsthis.png")));
     m_Ui->actionAbout_Luminance->setIcon(QIcon::fromTheme("help-about", QIcon(":/new/prefix1/images/help-about.png")));
     m_Ui->actionSave_Hdr_Preview->setIcon(QIcon::fromTheme("document-save-as-template", QIcon(":/new/prefix1/images/preview-file.png")));
@@ -448,8 +448,9 @@ void MainWindow::createMenus()
     m_Ui->actionRemove_Tab->setIcon(QIcon::fromTheme("tab-close", QIcon(":/new/prefix1/images/remove.png")));
     m_Ui->actionExportToHTML->setIcon(QIcon::fromTheme("globe", QIcon(":/new/prefix1/images/globe.png")));
     m_Ui->removeSelectionAction->setIcon(QIcon::fromTheme("edit-select-none", QIcon(":/new/prefix1/images/tool_rect_selection.png")));
-    m_Ui->actionBatch_HDR->setIcon(QIcon::fromTheme("system-run", QIcon(":/new/prefix1/images/running_process.png"))); // TODO
+    m_Ui->actionBatch_HDR->setIcon(QIcon::fromTheme("system-run", QIcon(":/new/prefix1/images/system-run.png"))); // TODO
     m_Ui->actionUpdateAvailable->setIcon(QIcon::fromTheme("system-software-update", QIcon(":/new/prefix1/images/vcs-update-required.png")));
+    // end setting icons
 
     // About(s)
     connect(m_Ui->actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));

@@ -260,6 +260,19 @@ void HelpBrowser::closeEvent(QCloseEvent *)
 
 void HelpBrowser::setupLocalUI()
 {
+    //icons
+    m_Ui->filePrint->setIcon(QIcon::fromTheme("document-print", QIcon(":/help/document-print.png")));
+    m_Ui->filePrintPreview->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/help/document-print-preview.png")));
+    m_Ui->fileExit->setIcon(QIcon::fromTheme("application-exit", QIcon(":/help/exit.png")));
+    m_Ui->editFind->setIcon(QIcon::fromTheme("edit-find", QIcon(":/help/edit-find.png")));
+    m_Ui->goHome->setIcon(QIcon::fromTheme("go-home", QIcon(":/help/go-home.png")));
+    m_Ui->goBack->setIcon(QIcon::fromTheme("go-previous", QIcon(":/help/go-previous.png")));
+    m_Ui->goFwd->setIcon(QIcon::fromTheme("go-next", QIcon(":/help/go-next.png")));
+    m_Ui->zoomIn->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/new/prefix1/images/zoom-in.png")));
+    m_Ui->zoomOut->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/new/prefix1/images/zoom-out.png")));
+    m_Ui->zoomOriginal->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/new/prefix1/images/zoom-original.png")));
+    // end setting icons
+
 	helpSideBar = new HelpSideBar(tr("Help SideBar"), this);
 	helpSideBar->setFeatures(QDockWidget::AllDockWidgetFeatures);
 	addDockWidget(Qt::LeftDockWidgetArea, helpSideBar);

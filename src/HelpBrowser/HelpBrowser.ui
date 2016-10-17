@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>630</width>
-     <height>27</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -88,6 +88,9 @@
    <addaction name="zoomIn"/>
    <addaction name="zoomOut"/>
    <addaction name="zoomOriginal"/>
+   <addaction name="separator"/>
+   <addaction name="filePrint"/>
+   <addaction name="filePrintPreview"/>
   </widget>
   <action name="filePrint">
    <property name="icon">
@@ -244,10 +247,11 @@
   </action>
   <action name="filePrintPreview">
    <property name="icon">
-    <iconset theme="document-print-preview"/>
+    <iconset theme="document-print-preview">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Print Preview</string>
+    <string>P&amp;rint Preview</string>
    </property>
   </action>
  </widget>
