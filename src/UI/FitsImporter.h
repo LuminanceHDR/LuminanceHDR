@@ -118,7 +118,7 @@ protected:
     // alignment
 	Align *m_align;
 
-    QScopedPointer<Ui::FitsImporter> m_ui;
+    QScopedPointer<Ui::FitsImporter> m_Ui;
 
 private:
     void selectInputFile(QLineEdit* textField, QString* channel);

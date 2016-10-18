@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>759</width>
-    <height>583</height>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,8 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset theme="document-open"/>
+       <iconset theme="document-open">
+        <normaloff>.</normaloff>.</iconset>
       </property>
      </widget>
     </item>
@@ -79,7 +80,8 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset theme="document-open"/>
+       <iconset theme="document-open">
+        <normaloff>.</normaloff>.</iconset>
       </property>
      </widget>
     </item>
@@ -89,7 +91,8 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset theme="document-open"/>
+       <iconset theme="document-open">
+        <normaloff>.</normaloff>.</iconset>
       </property>
      </widget>
     </item>
@@ -113,7 +116,8 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset theme="document-open"/>
+       <iconset theme="document-open">
+        <normaloff>.</normaloff>.</iconset>
       </property>
      </widget>
     </item>
@@ -161,6 +165,12 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180Â°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -168,7 +178,8 @@
           <string>Rotate</string>
          </property>
          <property name="icon">
-          <iconset theme="object-rotate-right"/>
+          <iconset theme="object-rotate-right">
+           <normaloff>.</normaloff>.</iconset>
          </property>
         </widget>
        </item>
@@ -190,6 +201,12 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Reset</string>
          </property>
@@ -200,11 +217,18 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Load Previews</string>
          </property>
          <property name="icon">
-          <iconset theme="upload-media"/>
+          <iconset theme="upload-media">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -225,6 +249,12 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>Shows a larger preview of selected image</string>
          </property>
@@ -232,7 +262,7 @@
           <string>Preview</string>
          </property>
          <property name="icon">
-          <iconset theme="zoom-in"/>
+          <iconset theme="document-preview"/>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -295,7 +325,8 @@
        <string>Select...</string>
       </property>
       <property name="icon">
-       <iconset theme="document-open"/>
+       <iconset theme="document-open">
+        <normaloff>.</normaloff>.</iconset>
       </property>
      </widget>
     </item>
@@ -648,6 +679,34 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>lineEditRed</tabstop>
+  <tabstop>pushButtonRed</tabstop>
+  <tabstop>lineEditGreen</tabstop>
+  <tabstop>pushButtonGreen</tabstop>
+  <tabstop>lineEditBlue</tabstop>
+  <tabstop>pushButtonBlue</tabstop>
+  <tabstop>lineEditLuminosity</tabstop>
+  <tabstop>pushButtonLuminosity</tabstop>
+  <tabstop>lineEditH</tabstop>
+  <tabstop>pushButtonH</tabstop>
+  <tabstop>pushButtonLoad</tabstop>
+  <tabstop>pushButtonReset</tabstop>
+  <tabstop>pushButtonPreview</tabstop>
+  <tabstop>pushButtonClockwise</tabstop>
+  <tabstop>alignCheckBox</tabstop>
+  <tabstop>ais_radioButton</tabstop>
+  <tabstop>mtb_radioButton</tabstop>
+  <tabstop>autoCropCheckBox</tabstop>
+  <tabstop>textEdit</tabstop>
+  <tabstop>hsRedRed</tabstop>
+  <tabstop>dsbRedRed</tabstop>
+  <tabstop>hsGreenGreen</tabstop>
+  <tabstop>dsbGreenGreen</tabstop>
+  <tabstop>hsBlueBlue</tabstop>
+  <tabstop>dsbBlueBlue</tabstop>
+  <tabstop>vsGamma</tabstop>
+ </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
  </resources>

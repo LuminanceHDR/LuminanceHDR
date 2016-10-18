@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Export HDR to HTML</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../icons.qrc">
+    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -241,7 +245,8 @@
           <string>Select...</string>
          </property>
          <property name="icon">
-          <iconset theme="document-open"/>
+          <iconset theme="document-open">
+           <normaloff>.</normaloff>.</iconset>
          </property>
         </widget>
        </item>
@@ -314,7 +319,9 @@
   <tabstop>CancelButton</tabstop>
   <tabstop>ExportButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>checkBoxImagesFolder</sender>

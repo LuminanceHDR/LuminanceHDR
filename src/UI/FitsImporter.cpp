@@ -67,9 +67,20 @@ FitsImporter::FitsImporter(QWidget *parent)
     , m_width(0)
     , m_height(0)
     , m_align(NULL)
-    , m_ui(new Ui::FitsImporter)
+    , m_Ui(new Ui::FitsImporter)
 {
-    m_ui->setupUi(this);
+    m_Ui->setupUi(this);
+
+    // icons
+    m_Ui->pushButtonRed->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
+    m_Ui->pushButtonGreen->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
+    m_Ui->pushButtonBlue->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
+    m_Ui->pushButtonLuminosity->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
+    m_Ui->pushButtonH->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
+    m_Ui->pushButtonLoad->setIcon(QIcon::fromTheme("upload-media", QIcon(":/new/svgs/images/folder-image.svgz")));
+    m_Ui->pushButtonPreview->setIcon(QIcon::fromTheme("document-preview", QIcon(":/new/prefix1/images/preview-file.png")));
+    m_Ui->pushButtonClockwise->setIcon(QIcon::fromTheme("object-rotate-right", QIcon(":/new/prefix1/images/rotate_right.png")));
+    // end setting icons
 
 #ifdef WIN32
     setWizardStyle(WizardStyle::ModernStyle);
@@ -89,9 +100,9 @@ FitsImporter::FitsImporter(QWidget *parent)
     m_previewLabel->setFrameStyle(QFrame::Box);
     m_previewLabel->setLineWidth(3);
     m_previewLabel->hide();
-    m_ui->previewLabel->setPalette(*palette);
+    m_Ui->previewLabel->setPalette(*palette);
     m_previewFrame = new PreviewFrame;
-    m_ui->verticalLayoutPreviews->addWidget(m_previewFrame);
+    m_Ui->verticalLayoutPreviews->addWidget(m_previewFrame);
 
     for (int i = 0; i < 5; i++)
     {
@@ -101,18 +112,18 @@ FitsImporter::FitsImporter(QWidget *parent)
         connect(label, SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
     }
     m_previewFrame->show();
-    connect(this, SIGNAL(setValue(int)), m_ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
-    connect(this, SIGNAL(setRange(int,int)), m_ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
+    connect(this, SIGNAL(setValue(int)), m_Ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
+    connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
     
     // wizard stuff
     
-    m_ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
-    m_ui->wizardPageLoadFiles->registerExtField("lineEditRed*", m_ui->lineEditRed);
-    m_ui->wizardPageLoadFiles->registerExtField("lineEditGreen*", m_ui->lineEditGreen);
-    m_ui->wizardPageLoadFiles->registerExtField("lineEditBlue*", m_ui->lineEditBlue);
+    m_Ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
+    m_Ui->wizardPageLoadFiles->registerExtField("lineEditRed*", m_Ui->lineEditRed);
+    m_Ui->wizardPageLoadFiles->registerExtField("lineEditGreen*", m_Ui->lineEditGreen);
+    m_Ui->wizardPageLoadFiles->registerExtField("lineEditBlue*", m_Ui->lineEditBlue);
 
-    m_ui->wizardPagePreview->setCommitPage(true);
-    m_ui->wizardPageAlignment->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
+    m_Ui->wizardPagePreview->setCommitPage(true);
+    m_Ui->wizardPageAlignment->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
 }
 
 pfs::Frame* FitsImporter::getFrame()
@@ -145,32 +156,32 @@ void FitsImporter::selectInputFile(QLineEdit* textField, QString* channel)
 
 void FitsImporter::on_pushButtonLuminosity_clicked()
 {
-    selectInputFile(m_ui->lineEditLuminosity, &m_luminosityChannel);
+    selectInputFile(m_Ui->lineEditLuminosity, &m_luminosityChannel);
 }
 
 void FitsImporter::on_pushButtonRed_clicked()
 {
-    selectInputFile(m_ui->lineEditRed, &m_redChannel);
+    selectInputFile(m_Ui->lineEditRed, &m_redChannel);
 }
 
 void FitsImporter::on_pushButtonGreen_clicked()
 {
-    selectInputFile(m_ui->lineEditGreen, &m_greenChannel);
+    selectInputFile(m_Ui->lineEditGreen, &m_greenChannel);
 }
 
 void FitsImporter::on_pushButtonBlue_clicked()
 {
-    selectInputFile(m_ui->lineEditBlue, &m_blueChannel);
+    selectInputFile(m_Ui->lineEditBlue, &m_blueChannel);
 }
 
 void FitsImporter::on_pushButtonH_clicked()
 {
-    selectInputFile(m_ui->lineEditH, &m_hChannel);
+    selectInputFile(m_Ui->lineEditH, &m_hChannel);
 }
 
 void FitsImporter::checkLoadButton()
 {
-    m_ui->pushButtonLoad->setEnabled(!m_redChannel.isEmpty() ||
+    m_Ui->pushButtonLoad->setEnabled(!m_redChannel.isEmpty() ||
                                      !m_greenChannel.isEmpty() ||
                                      !m_blueChannel.isEmpty() ||
                                      !m_luminosityChannel.isEmpty() ||
@@ -179,10 +190,10 @@ void FitsImporter::checkLoadButton()
 
 void FitsImporter::on_pushButtonLoad_clicked()
 {
-    m_ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
+    m_Ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    m_ui->pushButtonLoad->setEnabled(false);
+    m_Ui->pushButtonLoad->setEnabled(false);
 
     m_tmpdata.clear();
 
@@ -239,7 +250,7 @@ void FitsImporter::loadFilesDone(QString error_string)
             m_tmpdata.clear();
             m_contents.clear();
             m_qimages.clear();
-            m_ui->pushButtonLoad->setEnabled(true);
+            m_Ui->pushButtonLoad->setEnabled(true);
             //QApplication::restoreOverrideCursor();
             return;
         }
@@ -258,19 +269,19 @@ void FitsImporter::loadFilesDone(QString error_string)
         m_tmpdata.clear();
         m_contents.clear();
         m_qimages.clear();
-        m_ui->pushButtonLoad->setEnabled(true);
-        m_ui->pushButtonPreview->setEnabled(true);
+        m_Ui->pushButtonLoad->setEnabled(true);
+        m_Ui->pushButtonPreview->setEnabled(true);
         QApplication::restoreOverrideCursor();
         return;
     }
-    m_ui->pushButtonReset->setEnabled(true);
-    m_ui->pushButtonClockwise->setEnabled(true);
-    m_ui->pushButtonPreview->setEnabled(true);
+    m_Ui->pushButtonReset->setEnabled(true);
+    m_Ui->pushButtonClockwise->setEnabled(true);
+    m_Ui->pushButtonPreview->setEnabled(true);
     m_tmpdata.clear();
     buildContents();
     //buildPreview();
     QApplication::restoreOverrideCursor();
-    m_ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::Undefined);
+    m_Ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::Undefined);
 }
 
 bool isValid(HdrCreationItem& item)
@@ -280,10 +291,10 @@ bool isValid(HdrCreationItem& item)
 
 void FitsImporter::buildPreview()
 {
-    float redRed = m_ui->dsbRedRed->value();
-    float greenGreen = m_ui->dsbGreenGreen->value();
-    float blueBlue = m_ui->dsbBlueBlue->value();
-    float gamma = (m_ui->vsGamma->value()/10000.0f)*3.f;
+    float redRed = m_Ui->dsbRedRed->value();
+    float greenGreen = m_Ui->dsbGreenGreen->value();
+    float blueBlue = m_Ui->dsbBlueBlue->value();
+    float gamma = (m_Ui->vsGamma->value()/10000.0f)*3.f;
 
     Q_ASSERT(gamma >= 0.f);
     Q_ASSERT(gamma <= 3.f);
@@ -354,7 +365,7 @@ void FitsImporter::buildPreview()
             }
         } 
     }
-    m_ui->previewLabel->setPixmap(QPixmap::fromImage(tempImage));
+    m_Ui->previewLabel->setPixmap(QPixmap::fromImage(tempImage));
 }
 
 void FitsImporter::buildContents()
@@ -408,9 +419,9 @@ void FitsImporter::buildContents()
 
 void FitsImporter::buildFrame()
 {
-    float redRed = m_ui->dsbRedRed->value();
-    float greenGreen = m_ui->dsbGreenGreen->value();
-    float blueBlue = m_ui->dsbBlueBlue->value();
+    float redRed = m_Ui->dsbRedRed->value();
+    float greenGreen = m_Ui->dsbGreenGreen->value();
+    float blueBlue = m_Ui->dsbBlueBlue->value();
 
     m_frame = new Frame(m_width, m_height);
     Channel *Xc, *Yc, *Zc;
@@ -454,7 +465,7 @@ void FitsImporter::align_with_ais()
     connect(m_align, SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
     connect(m_align, SIGNAL(dataReady(QByteArray)), this, SLOT(readData(QByteArray)));
   
-    m_align->align_with_ais(m_ui->autoCropCheckBox->isChecked());
+    m_align->align_with_ais(m_Ui->autoCropCheckBox->isChecked());
 }
 
 void FitsImporter::ais_finished(int exitcode)
@@ -471,7 +482,7 @@ void FitsImporter::ais_finished(int exitcode)
         buildContents();
         //buildFrame();
     }
-    m_ui->wizardPageAlignment->setCompleteStatus(ExtWizardPage::CompleteStatus::Undefined);
+    m_Ui->wizardPageAlignment->setCompleteStatus(ExtWizardPage::CompleteStatus::Undefined);
 }
 
 void FitsImporter::ais_failed_slot(QProcess::ProcessError error)
@@ -508,7 +519,7 @@ void FitsImporter::readData(QByteArray data)
     if (data.contains(QChar(0x01B).toLatin1()))
         data.replace(QChar(0x01B).toLatin1(), "");
 
-    m_ui->textEdit->append(data);
+    m_Ui->textEdit->append(data);
     if (data.contains(": remapping")) {
         QRegExp exp("\\:\\s*(\\d+)\\s*");
         exp.indexIn(QString(data.data()));
@@ -538,7 +549,7 @@ void FitsImporter::align_with_mtb()
 void FitsImporter::on_pushButtonClockwise_clicked()
 {
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    m_ui->pushButtonClockwise->setEnabled(false);
+    m_Ui->pushButtonClockwise->setEnabled(false);
     int index = m_previewFrame->getSelectedLabel();
 
     boost::scoped_ptr<Frame> rotatedHalf(pfs::rotate(m_data[index].frame().get(), true));
@@ -550,7 +561,7 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     RefreshPreview refresh;
     refresh(m_data[index]);
     m_previewFrame->getLabel(index)->setPixmap(QPixmap::fromImage(m_data[index].qimage()));
-    if (m_ui->pushButtonPreview->isChecked())
+    if (m_Ui->pushButtonPreview->isChecked())
     {
         m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
     }
@@ -559,13 +570,13 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     QImage tmp = m_data[index].qimage().scaled(previewWidth, previewHeight);
     m_qimages[index].swap(tmp);
     //buildPreview();
-    m_ui->pushButtonClockwise->setEnabled(true);
+    m_Ui->pushButtonClockwise->setEnabled(true);
     QApplication::restoreOverrideCursor();
 }
 
 void FitsImporter::on_pushButtonPreview_clicked()
 {
-    if (m_ui->pushButtonPreview->isChecked()) {
+    if (m_Ui->pushButtonPreview->isChecked()) {
         m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
         m_previewLabel->show();
     }
@@ -575,7 +586,7 @@ void FitsImporter::on_pushButtonPreview_clicked()
 
 void FitsImporter::previewLabelSelected(int index)
 {
-    if (m_ui->pushButtonPreview->isChecked()) {
+    if (m_Ui->pushButtonPreview->isChecked()) {
         m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
     }
 }
@@ -583,51 +594,51 @@ void FitsImporter::previewLabelSelected(int index)
 void FitsImporter::on_hsRedRed_valueChanged(int newValue)
 {
     float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbRedRed->blockSignals(true);
-    m_ui->dsbRedRed->setValue( value );
-    m_ui->dsbRedRed->blockSignals(oldState);
+    bool oldState = m_Ui->dsbRedRed->blockSignals(true);
+    m_Ui->dsbRedRed->setValue( value );
+    m_Ui->dsbRedRed->blockSignals(oldState);
     buildPreview();
 }
 
 void FitsImporter::on_dsbRedRed_valueChanged(double newValue)
 {
-    bool oldState = m_ui->hsRedRed->blockSignals(true);
-    m_ui->hsRedRed->setValue( (int)(newValue*10000) );
-    m_ui->hsRedRed->blockSignals(oldState);
+    bool oldState = m_Ui->hsRedRed->blockSignals(true);
+    m_Ui->hsRedRed->setValue( (int)(newValue*10000) );
+    m_Ui->hsRedRed->blockSignals(oldState);
     buildPreview();
 }
 
 void FitsImporter::on_hsGreenGreen_valueChanged(int newValue)
 {
     float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbGreenGreen->blockSignals(true);
-    m_ui->dsbGreenGreen->setValue( value );
-    m_ui->dsbGreenGreen->blockSignals(oldState);
+    bool oldState = m_Ui->dsbGreenGreen->blockSignals(true);
+    m_Ui->dsbGreenGreen->setValue( value );
+    m_Ui->dsbGreenGreen->blockSignals(oldState);
     buildPreview();
 }
 
 void FitsImporter::on_dsbGreenGreen_valueChanged(double newValue)
 {
-    bool oldState = m_ui->hsGreenGreen->blockSignals(true);
-    m_ui->hsGreenGreen->setValue( (int)(newValue*10000) );
-    m_ui->hsGreenGreen->blockSignals(oldState);
+    bool oldState = m_Ui->hsGreenGreen->blockSignals(true);
+    m_Ui->hsGreenGreen->setValue( (int)(newValue*10000) );
+    m_Ui->hsGreenGreen->blockSignals(oldState);
     buildPreview();
 }
 
 void FitsImporter::on_hsBlueBlue_valueChanged(int newValue)
 {
     float value = ((float)newValue)/10000.f;
-    bool oldState = m_ui->dsbBlueBlue->blockSignals(true);
-    m_ui->dsbBlueBlue->setValue( value );
-    m_ui->dsbBlueBlue->blockSignals(oldState);
+    bool oldState = m_Ui->dsbBlueBlue->blockSignals(true);
+    m_Ui->dsbBlueBlue->setValue( value );
+    m_Ui->dsbBlueBlue->blockSignals(oldState);
     buildPreview();
 }
 
 void FitsImporter::on_dsbBlueBlue_valueChanged(double newValue)
 {
-    bool oldState = m_ui->hsBlueBlue->blockSignals(true);
-    m_ui->hsBlueBlue->setValue( (int)(newValue*10000) );
-    m_ui->hsBlueBlue->blockSignals(oldState);
+    bool oldState = m_Ui->hsBlueBlue->blockSignals(true);
+    m_Ui->hsBlueBlue->setValue( (int)(newValue*10000) );
+    m_Ui->hsBlueBlue->blockSignals(oldState);
     buildPreview();
 }
 
@@ -642,12 +653,12 @@ void FitsImporter::on_pushButtonReset_clicked()
     m_tmpdata.clear();
     m_contents.clear();
     m_qimages.clear();
-    m_ui->lineEditRed->clear();
-    m_ui->lineEditGreen->clear();
-    m_ui->lineEditBlue->clear();
-    m_ui->lineEditLuminosity->clear();
-    m_ui->lineEditH->clear();
-    m_ui->previewLabel->clear();
+    m_Ui->lineEditRed->clear();
+    m_Ui->lineEditGreen->clear();
+    m_Ui->lineEditBlue->clear();
+    m_Ui->lineEditLuminosity->clear();
+    m_Ui->lineEditH->clear();
+    m_Ui->previewLabel->clear();
     m_previewFrame->getLabel(0)->clear();
     m_previewFrame->getLabel(1)->clear();
     m_previewFrame->getLabel(2)->clear();
@@ -658,8 +669,8 @@ void FitsImporter::on_pushButtonReset_clicked()
     m_previewFrame->getLabel(2)->setEnabled(false);
     m_previewFrame->getLabel(3)->setEnabled(false);
     m_previewFrame->getLabel(4)->setEnabled(false);
-    m_ui->pushButtonPreview->setEnabled(false);
-    m_ui->pushButtonClockwise->setEnabled(false);
+    m_Ui->pushButtonPreview->setEnabled(false);
+    m_Ui->pushButtonClockwise->setEnabled(false);
 }
 
 int FitsImporter::nextId() const
@@ -667,7 +678,7 @@ int FitsImporter::nextId() const
     int current = currentId();
     if (current == 21) // load files
     {
-        return  m_ui->alignCheckBox->isChecked()
+        return  m_Ui->alignCheckBox->isChecked()
             ? 22  // alignment progress
             : 99; // preview page
     }
@@ -685,7 +696,7 @@ void FitsImporter::initializePage(int id)
     int current = currentId();
     if (current == 22)  // alignment progress
     { 
-        if (m_ui->ais_radioButton->isChecked()) {
+        if (m_Ui->ais_radioButton->isChecked()) {
             align_with_ais();
         }
         else
