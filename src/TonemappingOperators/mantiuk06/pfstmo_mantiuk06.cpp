@@ -73,7 +73,7 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
     }
     else
     {
-        scaleFactor = -scaleFactor;
+        //scaleFactor = -scaleFactor; this was only executed in release mode!!!
         ss << "Mode: Contrast Equalization, ";
     }
 
@@ -83,6 +83,9 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
 
     std::cout << ss.str();
 #endif
+
+    if (cont_eq)
+        scaleFactor = -scaleFactor;
 
     pfs::Channel *inRed, *inGreen, *inBlue;
     frame.getXYZChannels(inRed, inGreen, inBlue);
