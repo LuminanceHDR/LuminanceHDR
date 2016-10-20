@@ -187,7 +187,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         ("tmoFatBeta", po::value<float>(&tmopts->operator_options.fattaloptions.beta),  tr("beta FLOAT").toUtf8().constData())
         ("tmoFatColor", po::value<float>(&tmopts->operator_options.fattaloptions.color),  tr("color FLOAT").toUtf8().constData())
         ("tmoFatNoise", po::value<float>(&tmopts->operator_options.fattaloptions.noiseredux),  tr("noise FLOAT").toUtf8().constData())
-        ("tmoFatNew", po::value<bool>(&tmopts->operator_options.fattaloptions.newfattal), tr("new true|false").toUtf8().constData())
+        ("tmoFatNew", po::value<bool>(&tmopts->operator_options.fattaloptions.fftsolver), tr("new true|false").toUtf8().constData())
     ;
     po::options_description tmo_ferradans(tr(" Ferradans").toUtf8().constData());
     tmo_ferradans.add_options()
