@@ -126,6 +126,7 @@ protected Q_SLOTS:
     void on_actionBatch_Tone_Mapping_triggered();
 
     void on_actionExportToHTML_triggered();
+    void on_actionSupported_Cameras_triggered();
 
     void on_Increase_exposure_triggered();
     void on_Decrease_exposure_triggered();

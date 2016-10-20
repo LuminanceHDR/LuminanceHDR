@@ -56,6 +56,7 @@
     <addaction name="actionWhat_s_This"/>
     <addaction name="separator"/>
     <addaction name="actionUpdateAvailable"/>
+    <addaction name="actionSupported_Cameras"/>
     <addaction name="actionDonate"/>
     <addaction name="actionAbout_Luminance"/>
     <addaction name="actionAbout_Qt"/>
@@ -1120,6 +1121,14 @@
    </property>
    <property name="shortcut">
     <string>F10</string>
+   </property>
+  </action>
+  <action name="actionSupported_Cameras">
+   <property name="text">
+    <string>&amp;Supported RAW Cameras</string>
+   </property>
+   <property name="toolTip">
+    <string>Lists all cameras supported by the program</string>
    </property>
   </action>
  </widget>

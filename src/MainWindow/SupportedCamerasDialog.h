@@ -21,46 +21,31 @@
  * @author Franco Comida <francocomida@users.sourceforge.net>
  */
 
-#ifndef EXPORTTOHTMLDIALOG_H
-#define EXPORTTOHTMLDIALOG_H
+#ifndef SUPPORTEDCAMERASDIALOG_H
+#define SUPPORTEDCAMERASDIALOG_H
 
 #include <QDialog>
+#include <QListWidgetItem>
 #include <QScopedPointer>
 
 namespace Ui
 {
-    class ExportToHtmlDialog;
+    class SupportedCamerasDialog;
 }
 
-namespace pfs {
-    class Frame;            
-}
-
-class ExportToHtmlDialog : public QDialog
+class SupportedCamerasDialog : public QDialog
 {
     Q_OBJECT
 public:
-    ExportToHtmlDialog(QWidget* parent, pfs::Frame *frame);
+    SupportedCamerasDialog(QWidget* parent);
+    ~SupportedCamerasDialog();
 
 private:
-    pfs::Frame *m_frame;
-    QString m_pageName;
-    QString m_outputFolder;
-    QString m_imagesFolder;
+    QList<QListWidgetItem *> m_items;
+    QScopedPointer<Ui::SupportedCamerasDialog> m_Ui;
 
-    void check_enable_export();
-
-    QScopedPointer<Ui::ExportToHtmlDialog> m_Ui;
-
-private slots:
-    void onExportButtonClicked();
-    void onOutputFolderButtonClicked();
-    void onEditPageNameFinished();
-    void onEditOutputFolderFinished();
-    void onEditImagesFolderFinished();
-
-public:
-    ~ExportToHtmlDialog();
+public slots:
+    void search(const QString &);
 };
 
-#endif // EXPORTTOHTMLDIALOG_H
+#endif // SUPPORTEDCAMERASDIALOG_H

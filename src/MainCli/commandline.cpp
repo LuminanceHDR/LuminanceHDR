@@ -127,6 +127,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
     desc.add_options()
         ("help,h", tr("Display this help.").toUtf8().constData())
         ("verbose,v", tr("Print more messages during execution.").toUtf8().constData())
+        ("cameras,c", tr("Print a list of all supported cameras.").toUtf8().constData())
         ("align,a", po::value<std::string>(),    tr("[AIS|MTB]   Align Engine to use during HDR creation (default: no alignment).").toUtf8().constData())
         ("ev,e", po::value<std::string>(),       tr("EV1,EV2,... Specify numerical EV values (as many as INPUTFILES).").toUtf8().constData())
         ("savealigned,d", po::value<std::string>(),       tr("prefix Save aligned images to files which names start with prefix").toUtf8().constData())
@@ -285,6 +286,14 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         }
         if (vm.count("verbose")) {
             verbose = true;
+        }
+        if (vm.count("cameras")) {
+            cout << "With LibRaw version " << LibRaw::version() << endl;
+            cout << LibRaw::cameraCount() << " models listed" << endl;
+            const char **list = LibRaw::cameraList();
+            while (*list)
+                cout << *list++ << endl;
+            return 1;
         }
         if (vm.count("autolevels")) {
             isAutolevels = true;

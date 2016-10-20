@@ -59,6 +59,7 @@
 #include "MainWindow/UpdateChecker.h"
 #include "MainWindow/DonationDialog.h"
 #include "MainWindow/ExportToHtmlDialog.h"
+#include "MainWindow/SupportedCamerasDialog.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/params.h"
@@ -890,6 +891,14 @@ void MainWindow::on_actionExportToHTML_triggered()
 
     exportDialog->exec();
     delete exportDialog;
+}
+
+void MainWindow::on_actionSupported_Cameras_triggered()
+{
+    SupportedCamerasDialog *supportedDialog = new SupportedCamerasDialog(this);
+
+    supportedDialog->exec();
+    delete supportedDialog;
 }
 
 void MainWindow::on_action_Projective_Transformation_triggered()
