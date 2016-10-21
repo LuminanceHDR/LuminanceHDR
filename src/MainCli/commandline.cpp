@@ -727,6 +727,7 @@ void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
 void CommandLineInterfaceManager::setProgressBar(int max)
 {
     maximum = max;
+    oldValue = 0;
     progressBar.reset();
     progressBar.n = max;
     std::cout << std::endl;
