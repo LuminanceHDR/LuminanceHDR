@@ -63,10 +63,10 @@ ENDIF()
 
 IF(WIN32)
     # Windows Section
-    
+
     # to not define min/max macros, which cause troubles with STL and boost
     ADD_DEFINITIONS(-DNOMINMAX)
-    
+
     SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
     SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
     SET(LCMS2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
@@ -78,16 +78,16 @@ IF(WIN32)
     IF(CMAKE_SIZEOF_VOID_P EQUAL 4)
         # SSE2 is on by default, on x64 platforms
     	ADD_DEFINITIONS(/arch:SSE2)
-    ENDIF() 
+    ENDIF()
 
     ADD_DEFINITIONS(-DUNICODE )
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_REENTRANT)
     SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
-	
+
     SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
     ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
     ADD_DEFINITIONS("-DDEMOSAICING_GPL3")
-	
+
     SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
     ADD_DEFINITIONS(-DCMS_DLL)
     ADD_DEFINITIONS(-DUSE_LCMS2)
@@ -176,12 +176,18 @@ ADD_SUBDIRECTORY(test)
 FILE(GLOB LUMINANCE_TS i18n/lang_*.ts)
 
 IF(UPDATE_TRANSLATIONS)
-	SET(LUMINANCE_TS ${LUMINANCE_TS} i18n/source.ts)
+    SET(LUMINANCE_TS ${LUMINANCE_TS} i18n/source.ts)
     IF(LUPDATE_NOOBSOLETE)
         QT5_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS} OPTIONS -noobsolete)
     ELSE()
         QT5_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS})
     ENDIF()
+    IF(UNIX)
+        IF(NOT APPLE) # Sadly on Linux Qt5 add global include paths in list of translation files, let's get rid of them
+            EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/linux/sanitize_translations.sh
+                WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+        ENDIF(NOT APPLE)
+    ENDIF(UNIX)
 ELSE(UPDATE_TRANSLATIONS)
     QT5_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
 ENDIF(UPDATE_TRANSLATIONS)
@@ -228,7 +234,7 @@ IF(APPLE)
     ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES}) # luminance-hdr
     set_property(TARGET ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTY OUTPUT_NAME ${LHDR_OSX_EXECUTABLE_NAME})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
-  
+
     SET_TARGET_PROPERTIES( ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTIES MACOSX_BUNDLE_INFO_PLIST
                            "${CMAKE_BINARY_DIR}/Info.plist" )
 
@@ -290,7 +296,7 @@ ELSEIF(WIN32)
     # Subsystem console:
     ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
-  
+
     qt5_use_modules(luminance-hdr Core Gui Widgets WinExtras Svg)
     qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 

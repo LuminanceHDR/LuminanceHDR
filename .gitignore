@@ -7,3 +7,6 @@ CMakeLists.txt.user.2.6pre1
 .idea
 .swo
 .swp
+*.kdev4
+tags
+Build
