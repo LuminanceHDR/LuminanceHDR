@@ -2809,17 +2809,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="203"/>
         <source>zoomIn</source>
-        <translation>zoom in</translation>
+        <translation>Zoom in</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="212"/>
         <source>zoomOut</source>
-        <translation>zoom out</translation>
+        <translation>Zoom out</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="221"/>
         <source>zoomOriginal</source>
-        <translation>dimensione originale</translation>
+        <translation>Dimensione originale</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="226"/>
@@ -3398,7 +3398,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Shrink Dynamic Range</source>
-        <translation type="vanished">Stringi</translation>
+        <translation type="vanished">Restringi</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="373"/>
@@ -3493,7 +3493,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="445"/>
         <source>&amp;Normal Size</source>
-        <translation>Dimensioni &amp;normali</translation>
+        <translation>Dimensione &amp;originale</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="448"/>
@@ -3505,7 +3505,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/MainWindow/MainWindow.ui" line="454"/>
         <location filename="../src/MainWindow/MainWindow.ui" line="457"/>
         <source>View HDR image at its normal size</source>
-        <translation>Visualizza l&apos;immagine HDR nelle sue dimensioni normali</translation>
+        <translation>Visualizza l&apos;immagine HDR nelle sue dimensioni originali</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="460"/>
@@ -3549,7 +3549,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="526"/>
         <source>&amp;Fit in Window</source>
-        <translation>&amp;Adatta</translation>
+        <translation>&amp;Adatta le dimensioni alla finestra</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="529"/>
