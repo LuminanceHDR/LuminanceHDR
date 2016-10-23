@@ -257,8 +257,9 @@ IF(APPLE)
     TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
 # Unix
 ELSEIF(UNIX)
-    FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm)
-    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
+    #FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) Qt5 translations now shipped by upstream
+    #SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES})
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
@@ -276,7 +277,7 @@ ELSEIF(UNIX)
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
     INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
     INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
-    INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+    #INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
 
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
