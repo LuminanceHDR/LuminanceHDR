@@ -226,3 +226,26 @@ QImage* HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
 {
     return fromLDRPFStoQImage(in_frame, m_minValue, m_maxValue, m_mappingMethod);
 }
+
+void HdrViewer::keyPressEvent(QKeyEvent *event)
+{
+    GenericViewer::keyPressEvent(event);
+    if (event->key() == Qt::Key_L) {
+        m_lumRange->lowDynamicRange();
+    }
+    else if (event->key() == Qt::Key_BracketLeft) {
+        m_lumRange->extendRange();
+    }
+    else if (event->key() == Qt::Key_BracketRight) {
+        m_lumRange->shrinkRange();
+    }
+    else if (event->key() == Qt::Key_Backslash) {
+        m_lumRange->fitToDynamicRange();
+    }
+    else if (event->key() == Qt::Key_0) {
+        m_lumRange->decreaseExposure();
+    }
+    else if (event->key() == Qt::Key_9) {
+        m_lumRange->increaseExposure();
+    }
+}

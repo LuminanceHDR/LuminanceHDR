@@ -432,4 +432,19 @@ void GenericViewer::keyPressEvent(QKeyEvent *event)
         mFrame = NULL;
         this->hide();
     }
+    else if (event->key() == Qt::Key_Plus) {
+        zoomIn();
+    }
+    else if (event->key() == Qt::Key_Minus) {
+        zoomOut();
+    }
+    else if (event->key() == Qt::Key_W) {
+        fitToWindow();
+    }
+    else if (event->key() == Qt::Key_F) {
+        fillToWindow();
+    }
+    else if (event->key() == Qt::Key_O) {
+        normalSize();
+    }
 }
