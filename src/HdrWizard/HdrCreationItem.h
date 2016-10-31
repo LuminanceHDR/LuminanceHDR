@@ -37,7 +37,7 @@
 class HdrCreationItem
 {
 public:
-    HdrCreationItem(const QString& filename);
+    explicit HdrCreationItem(const QString& filename);
     HdrCreationItem(const QString& filename, const QString& convertedFilename);
     ~HdrCreationItem();
 

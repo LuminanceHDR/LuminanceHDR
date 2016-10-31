@@ -45,7 +45,7 @@ class PngWriterImpl;
 class PngWriter : public FrameWriter
 {
 public:
-    PngWriter(const std::string& filename);
+    explicit PngWriter(const std::string& filename);
     PngWriter();
     ~PngWriter();
 

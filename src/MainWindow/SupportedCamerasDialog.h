@@ -37,7 +37,7 @@ class SupportedCamerasDialog : public QDialog
 {
     Q_OBJECT
 public:
-    SupportedCamerasDialog(QWidget* parent);
+    explicit SupportedCamerasDialog(QWidget* parent);
     ~SupportedCamerasDialog();
 
 private:

@@ -100,6 +100,9 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     tmopts(TMOptionsOperations::getDefaultTMOptions()),
     tmofileparams(new pfs::Params()),
     verbose(false),
+    oldValue(0),
+    maximum(100),
+    started(false),
     threshold(-1.0f),
     isAutolevels(false),
     isHtml(false),
@@ -403,7 +406,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
                 else
                     printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!"));
             }
-            catch (QString error)
+            catch (QString &error)
             {
                 printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!: %1").arg(error));
             }

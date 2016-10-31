@@ -60,7 +60,7 @@ void resetTonemappingOptions(TonemappingOptions* tm_options, const pfs::Frame* f
 class PreviewLabelUpdater
 {
 public:
-    PreviewLabelUpdater(QSharedPointer<pfs::Frame> reference_frame):
+    explicit PreviewLabelUpdater(QSharedPointer<pfs::Frame> reference_frame):
         m_isAutolevels(false),
         m_ReferenceFrame(reference_frame)
     {}

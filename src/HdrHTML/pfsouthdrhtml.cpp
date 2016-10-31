@@ -79,13 +79,13 @@ void generate_hdrhtml(pfs::Frame *frame,
     string tmp_str( page_name );
     
     // Remove extension
-    int dot_pos = tmp_str.find_last_of( '.' );
+    size_t dot_pos = tmp_str.find_last_of( '.' );
     if( (dot_pos != string::npos) & (dot_pos > 0) )
         tmp_str = tmp_str.substr( 0, dot_pos );
 
     // Substitute invalid characters
     while( true ) {
-        int invalid_pos = tmp_str.find_last_of( "-! #@()[]{}`." );
+        size_t invalid_pos = tmp_str.find_last_of( "-! #@()[]{}`." );
         if( invalid_pos == string::npos )
             break;
         tmp_str.replace( invalid_pos, 1, 1, '_' );
@@ -105,7 +105,7 @@ void generate_hdrhtml(pfs::Frame *frame,
                              quality, verbose );
     }
     catch( pfs::Exception &e) {
-        throw e;
+        throw;
     }
 
     try {
@@ -115,7 +115,7 @@ void generate_hdrhtml(pfs::Frame *frame,
                                     html_output.empty() ? NULL: html_output.c_str() );
     }
     catch( pfs::Exception &e) {
-        throw e;
+        throw;
     }
 
     delete[] R1;

@@ -230,22 +230,23 @@ void FitsImporter::loadFilesDone(QString error_string)
     m_data.clear();
 
     int idx = 0;
-    BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata)
+    //BOOST_FOREACH(const HdrCreationItem& i, m_tmpdata)
+    for (HdrCreationItemContainer::iterator i = m_tmpdata.begin(); i != m_tmpdata.end(); ++i)
     {
-        if ( i.isValid() )
+        if ( i->isValid() )
         {
-            qDebug() << QString("Insert data for %1").arg(i.filename());
-            m_data.push_back(i);
-            m_previewFrame->getLabel(idx)->setPixmap(QPixmap::fromImage(i.qimage()));
+            qDebug() << QString("Insert data for %1").arg(i->filename());
+            m_data.push_back(*i);
+            m_previewFrame->getLabel(idx)->setPixmap(QPixmap::fromImage(i->qimage()));
             m_previewFrame->getLabel(idx)->setEnabled(true);
         }
-        else if ( i.filename().isEmpty() )
+        else if ( i->filename().isEmpty() )
         {
-            m_data.push_back(i);
+            m_data.push_back(*i);
         }
         else
         {
-            QMessageBox::warning(0,"", tr("Cannot load FITS image %1. \nERROR: %2").arg(i.filename()).arg(error_string), QMessageBox::Ok, QMessageBox::NoButton);
+            QMessageBox::warning(0,"", tr("Cannot load FITS image %1. \nERROR: %2").arg(i->filename()).arg(error_string), QMessageBox::Ok, QMessageBox::NoButton);
             m_data.clear();
             m_tmpdata.clear();
             m_contents.clear();

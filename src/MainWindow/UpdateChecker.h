@@ -33,7 +33,7 @@ class UpdateChecker : public QObject
 {
     Q_OBJECT
 public:
-    UpdateChecker(QWidget *parent);
+    explicit UpdateChecker(QWidget *parent);
     virtual ~UpdateChecker();
 
 public slots:

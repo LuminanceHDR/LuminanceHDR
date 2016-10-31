@@ -130,12 +130,12 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
 
 struct ConvertToQRgb {
     float gamma;
-    ConvertToQRgb(float gamma = 1.0f);
+    explicit ConvertToQRgb(float gamma = 1.0f);
     void operator()(float r, float g, float b, QRgb& rgb) const; 
 };
 
 struct LoadFile {
-    LoadFile(bool fromFITS = false) { m_fromFITS = fromFITS; }
+    explicit LoadFile(bool fromFITS = false) : m_datamax(0.f), m_datamin(0.f) { m_fromFITS = fromFITS; }
     void operator()(HdrCreationItem& currentItem);
     float normalize(float);
     float m_datamax;

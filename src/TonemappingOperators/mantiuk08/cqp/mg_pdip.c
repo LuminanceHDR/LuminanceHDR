@@ -115,33 +115,44 @@ static int
 mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y, gsl_vector *z,
 		double *gap, double *residuals_norm, double *data_norm, double *infeasibility, double *infeasibility_min)
 {
-    int status;
+    int status = GSL_SUCCESS;
 	size_t i, j = 0; //, debug=0;
-	
 	
 	mg_pdip_state *state = (mg_pdip_state *) vstate;        
 
 	/* Initial points */
-        if( cqp->A->size1 != 0 )
-          status = pdip_initial_point_feasible_x(cqp->A, cqp->b, x);
-        else
-          gsl_vector_set_zero(x);
+    if( cqp->A->size1 != 0 )
+      status = pdip_initial_point_feasible_x(cqp->A, cqp->b, x);
+    else
+      gsl_vector_set_zero(x);
+
+    if (status != GSL_SUCCESS)
+        return status;
 
 	status = pdip_initial_point_feasible_s(cqp->C, cqp->d, x, state->s);
-        if( cqp->A->size1 != 0 )
-          status = pdip_initial_point_y(cqp->Q, cqp->q, cqp->A, x, y);
-	status = pdip_initial_point_z(z);
-	status = pdip_initial_point_strict_feasible(z, state->s);
+    if (status != GSL_SUCCESS)
+        return status;
 
+    if( cqp->A->size1 != 0 )
+        status = pdip_initial_point_y(cqp->Q, cqp->q, cqp->A, x, y);
+	status = pdip_initial_point_z(z);
+    if (status != GSL_SUCCESS)
+        return status;
+
+	status = pdip_initial_point_strict_feasible(z, state->s);
+    if (status != GSL_SUCCESS)
+        return status;
 
 	/* Dualtity gap */
 	status = gsl_blas_ddot(z, state->s, gap);
+    if (status != GSL_SUCCESS)
+        return status;
+
 	*gap /= (double) cqp->C->size1;
 
-
 	status = build_kkt_matrix(cqp, z, state->s, state->kkt_matrix);
-
-	
+    if (status != GSL_SUCCESS)
+        return status;
 
 	state->tau = 3.0;
 
@@ -149,15 +160,15 @@ mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y
 	/* data_norm = ||Q,A,C,q,b,d||_{infinity} */
 	*data_norm = gsl_matrix_max_norm(cqp->Q);
 
-        if( cqp->A->size1 != 0 )
-          *data_norm = GSL_MAX_DBL(*data_norm, gsl_matrix_max_norm(cqp->A));
+    if( cqp->A->size1 != 0 )
+        *data_norm = GSL_MAX_DBL(*data_norm, gsl_matrix_max_norm(cqp->A));
 	
 	*data_norm = GSL_MAX_DBL(*data_norm, gsl_matrix_max_norm(cqp->C));
 	
 	*data_norm = GSL_MAX_DBL(*data_norm, gsl_vector_max_norm(cqp->q));
 	
-        if( cqp->A->size1 != 0 )
-          *data_norm = GSL_MAX_DBL(*data_norm, gsl_vector_max_norm(cqp->b));
+    if( cqp->A->size1 != 0 )
+        *data_norm = GSL_MAX_DBL(*data_norm, gsl_vector_max_norm(cqp->b));
 	
 	*data_norm = GSL_MAX_DBL(*data_norm, gsl_vector_max_norm(cqp->d));
 
@@ -166,8 +177,6 @@ mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y
 	/* ||r||_{infinity}=||r_Q, r_A, r_C||_{infinity} */
 	status = compute_residuals(cqp, x, y, z, state->s, state->r);
 	*residuals_norm = gsl_vector_max_norm(state->r);
-	
-	
 	
 	*infeasibility = (*residuals_norm+compute_gap_infeasible_points(cqp, x, y, z))/(state->data_norm);
 	*infeasibility_min = *infeasibility;
@@ -195,7 +204,7 @@ mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y
 //		printf("\n");
 //	}
 	
-  return GSL_SUCCESS;
+    return GSL_SUCCESS;
 }
 
 

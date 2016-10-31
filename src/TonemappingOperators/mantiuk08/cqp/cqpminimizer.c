@@ -47,13 +47,15 @@ gsl_cqpminimizer_alloc (const gsl_cqpminimizer_type * T, const size_t n, const s
 
   minimizer->type = T;
   
-  if(n <= 0)
+  //if(n <= 0) // n is unsigned
+  if(n == 0)
   {
 	  free (minimizer);
 	  GSL_ERROR_VAL ("the problem dimension n must be greater than 0", GSL_ENOMEM, 0);  
   }
   
-  if(mi <= 0)
+  //if(mi <= 0) // mi is unsigned
+  if(mi == 0)
   {
 	  free (minimizer);
 	  GSL_ERROR_VAL ("the number of inequality constrains me must be greater or equal to 1", GSL_ENOMEM, 0);  

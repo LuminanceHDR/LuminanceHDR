@@ -79,7 +79,7 @@ namespace
 {
 struct FindChannel
 {
-    FindChannel(const string& nameChannel)
+    explicit FindChannel(const string& nameChannel)
         : nameChannel_(nameChannel)
     {}
 

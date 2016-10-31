@@ -59,7 +59,7 @@ private:
     HdrCreationItemContainer m_tmpdata;
 
 public:
-    HdrCreationManager(bool fromCommandLine = false);
+    explicit HdrCreationManager(bool fromCommandLine = false);
 	~HdrCreationManager();
 
     // ----- NEW FUNCTIONS ------

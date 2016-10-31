@@ -1,10 +1,10 @@
 /**
  * @brief Create a web page with an HDR viewer
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstools.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2009 Rafal Mantiuk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -18,8 +18,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
  * $Id: hdrhtml.cpp,v 1.8 2014/06/16 21:50:08 rafm Exp $
@@ -45,7 +45,7 @@ using namespace std;
 
 namespace hdrhtml {
 // ================================================
-//        Parameters controllig the web page 
+//        Parameters controllig the web page
 // ================================================
 
 const int f_step_res = 3; // How many steps per f-stop (do not change)
@@ -64,7 +64,7 @@ public:
   T *x;                         // Bin centers
   size_t *n;                       // No of items in a bin
   size_t bins;
-  
+
   Histogram() : x( NULL ), n( NULL )
   {
   }
@@ -81,19 +81,19 @@ public:
     bins = 0;
   }
 
-  void compute( const T *data, size_t d_size, int bins = 30, T min_val = 1, T max_val = -1, bool reject_outofrange = true ) 
+  void compute( const T *data, size_t d_size, int bins = 30, T min_val = 1, T max_val = -1, bool reject_outofrange = true )
   {
     assert( bins > 0 );
-    
+
     free();
     this->bins = bins;
-    
+
     if( min_val > max_val )             // missing min/max info
     {
       min_val = numeric_limits<T>::max();
       max_val = numeric_limits<T>::min();
 
-      for( int k=0; k < d_size; k++ ) {
+      for( size_t k=0; k < d_size; k++ ) {
         if( data[k] > max_val ) max_val = data[k];
         if( data[k] < min_val ) min_val = data[k];
       }
@@ -114,16 +114,16 @@ public:
     }
 
     if( reject_outofrange ) {
-      for( int k=0; k < d_size; k++ ) {      
+      for( size_t k=0; k < d_size; k++ ) {
         int ind = floor( (data[k]-min_val) / (max_val-min_val) * (float)bins );
         if( ind < 0 )
           continue;
         if( ind >= bins )
           continue;
         n[ind]++;
-      }    
+      }
     } else {
-      for( int k=0; k < d_size; k++ ) {      
+      for( size_t k=0; k < d_size; k++ ) {
         int ind = floor( (data[k]-min_val) / (max_val-min_val) * (float)bins );
         if( ind < 0 ) {
           n[0]++;
@@ -134,13 +134,13 @@ public:
           continue;
         }
         n[ind]++;
-      }    
+      }
     }
-    
-    
-    
+
+
+
   }
-  
+
 };
 
 // ================================================
@@ -150,16 +150,11 @@ public:
 /**
  * Lookup table on a uniform array & interpolation
  *
- * x_i must be at least two elements 
+ * x_i must be at least two elements
  * y_i must be initialized after creating an object
  */
 class UniformArrayLUT
 {
-  const float *x_i;
-  size_t lut_size;
-  float delta;
-
-  bool own_y_i;
 public:
   float *y_i;
 
@@ -174,7 +169,7 @@ public:
     }
   }
 
-  UniformArrayLUT() : x_i( 0 ), y_i(0), lut_size( 0 ), delta( 0. ) {}
+  UniformArrayLUT() : y_i(NULL), x_i( 0 ), lut_size( 0 ), delta( 0. ) {}
 
   UniformArrayLUT(const UniformArrayLUT& other) : x_i( other.x_i ), lut_size( other.lut_size ), delta( other.delta )
   {
@@ -185,12 +180,16 @@ public:
 
   UniformArrayLUT& operator = (const UniformArrayLUT& other)
   {
-    this->lut_size = other.lut_size;
-    this->delta = other.delta;
-    this->x_i = other.x_i;
-    this->y_i = new float[lut_size];
-    own_y_i = true;
-    memcpy(this->y_i, other.y_i, lut_size * sizeof(float));
+    if (this != &other)
+    {
+      this->lut_size = other.lut_size;
+      this->delta = other.delta;
+      this->x_i = other.x_i;
+      this->y_i = new float[lut_size];
+      own_y_i = true;
+      memcpy(this->y_i, other.y_i, lut_size * sizeof(float));
+    }
+    return *this;
   }
 
   ~UniformArrayLUT()
@@ -209,13 +208,19 @@ public:
       return y_i[0];
     if( (ind_hi >= lut_size) )
       return y_i[lut_size-1];
-    
+
     if( (ind_low == ind_hi) )
       return y_i[ind_low];      // No interpolation necessary
 
     return y_i[ind_low] + (y_i[ind_hi]-y_i[ind_low])*(ind_f-(float)ind_low); // Interpolation
   }
-  
+
+private:
+  const float *x_i;
+  size_t lut_size;
+  float delta;
+
+  bool own_y_i;
 };
 
 template<class T>
@@ -231,7 +236,7 @@ inline T clamp( T x, T min, T max )
 /**
  * Lookup table on an arbitrary array
  *
- * x_i must be at least two elements 
+ * x_i must be at least two elements
  * y_i must be initialized after creating an object
  */
 template<class Tx, class Ty>
@@ -247,7 +252,7 @@ public:
   ArrayLUT( size_t lut_size, const Tx *x_i, Ty *y_i = NULL ) : x_i( x_i ), lut_size( lut_size )
   {
     assert( lut_size > 0 );
-    
+
     if( y_i == NULL ) {
       this->y_i = new Ty[lut_size];
       own_y_i = true;
@@ -261,18 +266,22 @@ public:
 
   ArrayLUT(const ArrayLUT& other) : x_i( other.x_i ), lut_size( other.lut_size )
   {
-    this->y_i = new Ty[lut_size];
-    own_y_i = true;
-    memcpy(this->y_i, other.y_i, lut_size * sizeof(Ty));
+      this->y_i = new Ty[lut_size];
+      own_y_i = true;
+      memcpy(this->y_i, other.y_i, lut_size * sizeof(Ty));
   }
 
   ArrayLUT& operator = (const ArrayLUT& other)
   {
-    this->lut_size = other.lut_size;
-    this->x_i = other.x_i;
-    this->y_i = new Ty[lut_size];
-    own_y_i = true;
-    memcpy(this->y_i, other.y_i, lut_size * sizeof(Ty));
+    if (this != &other)
+    {
+      this->lut_size = other.lut_size;
+      this->x_i = other.x_i;
+      this->y_i = new Ty[lut_size];
+      own_y_i = true;
+      memcpy(this->y_i, other.y_i, lut_size * sizeof(Ty));
+    }
+    return *this;
   }
 
   ~ArrayLUT()
@@ -298,13 +307,13 @@ public:
       else
         l = m;
     }
-    
+
     float alpha = (x - x_i[l])/(x_i[r]-x_i[l]);
 
     return y_i[l] + (Ty)(alpha * (y_i[r]-y_i[l]));
   }
-  
-  
+
+
 };
 
 // ================================================
@@ -333,22 +342,22 @@ public:
   {
     hist.compute( data, d_size, bin_n, 1, -1, false );
     // Compute cummulative histogram
-    for( int k = 1; k < bin_n; k++ )
+    for( size_t k = 1; k < bin_n; k++ )
       hist.n[k] += hist.n[k-1];
 
 //    cerr << "d_size: " << d_size << "  hist.n: " << hist.n[bin_n-1] << "\n";
-    assert( hist.n[bin_n-1] == d_size );    
+    assert( hist.n[bin_n-1] == d_size );
   }
 
   T prctile( double p )
   {
     ArrayLUT<size_t,T> lut( hist.bins, hist.n, hist.x );
-    
+
     return lut.interp( (size_t)(p*(double)d_size/100.) );
   }
-  
-  
-  
+
+
+
 };
 
 
@@ -360,7 +369,7 @@ typedef void (*replace_callback)( ostream &out, void *user_data, const char *par
 
 class ReplacePattern
 {
-  
+
 public:
 
   const char* pattern;
@@ -388,16 +397,16 @@ public:
     num_str << replace_with_num;
     replace_with = num_str.str();
   }
-  
+
   ReplacePattern( const char* pattern, replace_callback callback, void *user_data = NULL ) :
     pattern( pattern ), callback( callback ), user_data( user_data )
   {
   }
-  
+
   ReplacePattern() : pattern( NULL ), callback( NULL )
   {
   }
-  
+
   virtual void write_replacement( ostream &out, const char *parameter = NULL )
   {
     if( callback != NULL )
@@ -405,7 +414,7 @@ public:
     else
       out << replace_with;
   }
-  
+
 
 };
 
@@ -418,7 +427,7 @@ void create_from_template( ostream &outfs, const char *template_file_name,
     error_message << "Cannot open '" << template_file_name << "' for reading";
     throw pfs::Exception( error_message.str().c_str() );
   }
-  
+
 
   const int MAX_LINE_LENGTH = 2048;
 //  int lines = 0;
@@ -433,30 +442,30 @@ void create_from_template( ostream &outfs, const char *template_file_name,
     int pos = 0;
 
     while( true ) {
-      int find_pos = line_str.find_first_of( '@', pos );
+      size_t find_pos = line_str.find_first_of( '@', pos );
       if( find_pos == string::npos ) {
         outfs << line_str.substr( pos, string::npos );
         break;
       }
 
       bool replaced = false;
-      int end_marker = line_str.find_first_of( "@[", find_pos+1 );
+      size_t end_marker = line_str.find_first_of( "@[", find_pos+1 );
       if( end_marker != string::npos ) {
-        
+
         for( int k = 0; pattern_list[k].pattern != NULL; k++ )
         {
           if( line_str.compare( find_pos+1, end_marker-find_pos-1, pattern_list[k].pattern ) == 0 ) {
             outfs << line_str.substr( pos, find_pos-pos );
 
             string parameter;
-            if( line_str[end_marker] == '[' ) {              
-              int param_endmarker = line_str.find_first_of( ']', end_marker+1 );
+            if( line_str[end_marker] == '[' ) {
+              size_t param_endmarker = line_str.find_first_of( ']', end_marker+1 );
               if( param_endmarker == string::npos )
                 throw pfs::Exception( "Non-closed bracker in the replacement keyword" );
               parameter = line_str.substr( end_marker+1, param_endmarker-end_marker-1 );
-              end_marker = param_endmarker+1;                
+              end_marker = param_endmarker+1;
             }
-          
+
             pattern_list[k].write_replacement( outfs, parameter.empty() ? NULL : parameter.c_str() );
             pos = end_marker + 1;
             replaced = true;
@@ -469,14 +478,14 @@ void create_from_template( ostream &outfs, const char *template_file_name,
         outfs << line_str.substr( pos, find_pos-pos+1 );
         pos = find_pos+1;
       }
-      
+
     }
-    
+
 
     outfs << "\n";
-      
+
   }
-  
+
 }
 
 void create_from_template( const char *output_file_name, const char *template_file_name,
@@ -492,7 +501,7 @@ void create_from_template( const char *output_file_name, const char *template_fi
     create_from_template( outfs, template_file_name, pattern_list );
   }
   catch( pfs::Exception &e) {
-    throw e;
+    throw;
   }
 }
 
@@ -514,9 +523,9 @@ public:
   CSVTable() : data( NULL )
   {
   }
-  
-  
-  ~CSVTable() 
+
+
+  ~CSVTable()
   {
     free();
   }
@@ -530,17 +539,17 @@ public:
       delete [] data[k];
 
     delete []data;
-    
+
     data = NULL;
   }
-  
-  
+
+
   void read( const char *file_name, int columns )
   {
     free();
-    
+
     this->columns = columns;
-    
+
     ifstream ifs( file_name );
 
     if( !ifs.is_open() ) {
@@ -550,13 +559,13 @@ public:
     }
 
     list<float> value_list;
-  
+
     const int MAX_LINE_LENGTH = 1024;
     int lines = 0;
     while( 1 ) {
       char line[MAX_LINE_LENGTH];
       ifs.getline( line, MAX_LINE_LENGTH );
-    
+
       if( !ifs.good() )
         break;
 
@@ -565,7 +574,7 @@ public:
       for( int k=0; k < columns; k++ ) {
         // Skip white spaces
         while( line_str[pos] == ' ' || line_str[pos] == '\t' ) pos++;
-        int new_pos = line_str.find_first_of( ',', pos );
+        size_t new_pos = line_str.find_first_of( ',', pos );
         size_t len;
         if( new_pos == string::npos ) {
           if( k != columns-1 ) {
@@ -576,7 +585,7 @@ public:
           len = string::npos;
         } else
           len = new_pos-pos;
-        
+
         float value;
         if( len == 0 ) {
           value = numeric_limits<float>::quiet_NaN();
@@ -589,14 +598,14 @@ public:
           if( str_beg == str_end ) {
             ostringstream error_message;
             error_message << "Error parsing line " << lines+1 << " of " << file_name << "\n";
-            throw pfs::Exception( error_message.str().c_str() );          
+            throw pfs::Exception( error_message.str().c_str() );
           }
         }
-        
-        
+
+
         value_list.push_back( value );
 
-        pos = new_pos+1;      
+        pos = new_pos+1;
       }
 
       lines++;
@@ -605,8 +614,8 @@ public:
     float **table = new float*[columns];
     for( int c=0; c < columns; c++ )
       table[c] = new float[lines];
-  
-    for( int l=0; l < lines; l++ ) 
+
+    for( int l=0; l < lines; l++ )
       for( int c=0; c < columns; c++ ) {
         table[c][l] = value_list.front();
         value_list.pop_front();
@@ -618,7 +627,7 @@ public:
 
 };
 
-  
+
 // ================================================
 //                 HDR HTML code
 // ================================================
@@ -635,7 +644,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
 
   const int pixels = width*height;
   const int basis_no = quality;
-      
+
   // Load LUT for the basis tone-curves
   ostringstream lut_filename;
   lut_filename << HDRHTMLDIR "/hdrhtml_t_b" << basis_no+1 << ".csv";
@@ -644,13 +653,13 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
     basis_table.read( lut_filename.str().c_str(), basis_no+1 );
   }
   catch (pfs::Exception &e) {
-      throw e;
+      throw;
   }
   // Transform the first row (luminance factors) to the log domain
   for( int k = 0; k < basis_table.rows; k++ ) {
     basis_table.data[0][k] = log2f( basis_table.data[0][k] );
   }
-  
+
 // Fix zero and negative values in the image, convert to log2 space, find min and max values
   float img_min = numeric_limits<float>::max();
   float img_max = numeric_limits<float>::min();
@@ -665,10 +674,10 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
         if( x[i] < min_val && x[i] > 0)
           min_val = x[i];
         if( x[i] > max_val )
-          max_val = x[i];        
+          max_val = x[i];
       }
       img_max = max( img_max, log2f(max_val) );
-      img_min = min( img_min, log2f(min_val) );      
+      img_min = min( img_min, log2f(min_val) );
 
       for( int i=0; i < pixels; i++ ) {
         if( x[i] < min_val )
@@ -682,7 +691,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   Percentiles<float> prc( Y, pixels );
   img_min = prc.prctile( 0.1 );
   img_max = prc.prctile( 99.9 );
-  
+
   img_min -= 4;  // give extra room for brightenning
   // how many 8-fstop segments we need to cover the DR
   int f8_stops = ceil((img_max-img_min)/8);
@@ -703,7 +712,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   float hist_fstops = hist_width / pix_per_fstop;
   float hist_start = (img_max-img_min-hist_fstops)/2;
   {
-    
+
     Histogram<float> hist;
     hist.compute( Y, pixels, hist_width, img_min+hist_start, img_min+hist_start+hist_fstops );
 
@@ -720,13 +729,13 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
         hist_buffer[(r*hist_width+k)*3+2] = 0;
       }
     }
-    
+
     unsigned char *hist_buffer_c = new unsigned char[hist_width*hist_height*3];
     for( int h = 0; h < hist_width*hist_height*3; h++ ) {
         float v = 255.f * (hist_buffer[h]/65535.f);
         hist_buffer_c[h] = (unsigned char)v;
     }
-      
+
 // tick_fstops = (floor(hist_l(end))-ceil(hist_l(1)));
 // ticks = round((ceil(hist_l(1))-hist_l(1))*pix_per_fstop) + (1:tick_fstops)*pix_per_fstop;
 // hist_img(1:5,ticks,1:2) = 0.5;
@@ -742,19 +751,19 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
       img_filename << image_dir << "/";
     img_filename << base_name << "_hist.png";
     if (verbose)
-        cout << QObject::tr("Writing: ").toStdString() << img_filename.str() << endl;        
+        cout << QObject::tr("Writing: ").toStdString() << img_filename.str() << endl;
     hist_image.save( QString::fromStdString(img_filename.str()));
 
     delete []hist_buffer;
   }
-  
+
   // generate basis images
 
   //unsigned short *imgBuffer =
-    //new unsigned short[pixels*3];  
+    //new unsigned short[pixels*3];
   float *imgBuffer =
-    new float[pixels*3];  
-  unsigned char *imgBuffer_c = 
+    new float[pixels*3];
+  unsigned char *imgBuffer_c =
     new unsigned char[pixels*3];
   for( int k=1; k <= f8_stops+1; k++ ) {
 
@@ -766,7 +775,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
     int max_basis = basis_no;
     if( k == f8_stops+1 )     // Do only one shared basis for the last 8-fstop segment
       max_basis = 1;
-   
+
     for( int b=0; b < max_basis; b++ ) {
       UniformArrayLUT basis_lut( basis_table.rows, basis_table.data[0], basis_table.data[b+1] );
 
@@ -780,9 +789,9 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
 
         for( int c=0; c < 3; c++ ) {
           float exposure_comp_v = rgb[c] + exp_multip;
-          float v = (basis_lut.interp(exposure_comp_v)*max_value);              
-          imgBuffer[i++] = v;              
-        }          
+          float v = (basis_lut.interp(exposure_comp_v)*max_value);
+          imgBuffer[i++] = v;
+        }
       }
       for( int pix = 0; pix < pixels*3; pix++ ) {
           float r = imgBuffer[pix];
@@ -805,7 +814,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   delete [] imgBuffer;
 
   HDRHTMLImage new_image( base_name, width, height );
-  
+
   new_image.hist_width = hist_width;
   new_image.f8_stops = f8_stops;
   new_image.f_step_res = f_step_res;
@@ -817,7 +826,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   new_image.best_exp = best_exp;
 
   image_list.push_back( new_image );
-  
+
   locale::global(locale(user_locale));
 }
 
@@ -844,7 +853,7 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
   lut_filename << HDRHTMLDIR "/hdrhtml_c_b" << image_list.front().basis+1 << ".csv";
   CSVTable coeff_table;
   coeff_table.read( lut_filename.str().c_str(), image_list.front().basis+1 );
-  
+
   ReplacePattern replace_list[] = {
     ReplacePattern( "cf_array_def", print_cf_table, &coeff_table ),
     ReplacePattern( "hdr_img_def", print_image_objects, this ),
@@ -859,7 +868,7 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
     create_from_template( out_file_name.str().c_str(), page_template, replace_list );
   }
   catch( pfs::Exception &e) {
-    throw e;
+    throw;
   }
 
   if( object_output != NULL ) {
@@ -883,18 +892,18 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
       print_image_htmlcode( hofs, this, NULL );
     }
     catch( pfs::Exception &e) {
-        throw e;
+        throw;
     }
   }
-  
+
 }
 
 void print_image_objects( ostream &out, void *user_data, const char *parameter )
 {
-  HDRHTMLSet *hdrhtml_set = (HDRHTMLSet*)user_data;
+  HDRHTMLSet *hdrhtml_set = static_cast<HDRHTMLSet*>(user_data);
 
   list<HDRHTMLImage>::iterator it;
-  for( it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); it++ ) {  
+  for( it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); ++it ) {
     string obj_name( "hdr_" );
     obj_name.append( it->base_name );
 
@@ -914,9 +923,9 @@ void print_image_objects( ostream &out, void *user_data, const char *parameter )
     out << obj_name << ".hist_start = " << it->hist_start << ";\n";
     out << obj_name << ".hist_width = " << it->hist_width << ";\n";
     out << obj_name << ".exposure = " << it->best_exp << ";\n";
-    out << obj_name << ".best_exp = " << it->best_exp << ";\n\n";    
+    out << obj_name << ".best_exp = " << it->best_exp << ";\n\n";
   }
-  
+
 }
 
 void print_image_htmlcode( ostream &out, HDRHTMLSet *hdrhtml_set, const HDRHTMLImage &it )
@@ -926,8 +935,8 @@ void print_image_htmlcode( ostream &out, HDRHTMLSet *hdrhtml_set, const HDRHTMLI
 
     ostringstream img_dir;
     if( hdrhtml_set->image_dir != NULL )
-      img_dir << hdrhtml_set->image_dir << "/";  
-    
+      img_dir << hdrhtml_set->image_dir << "/";
+
     ReplacePattern replace_list[] = {
       ReplacePattern( "hdr_img_width", it.width ),
       ReplacePattern( "hdr_img_height", it.height ),
@@ -935,7 +944,7 @@ void print_image_htmlcode( ostream &out, HDRHTMLSet *hdrhtml_set, const HDRHTMLI
       ReplacePattern( "hist_width", it.hist_width ),
       ReplacePattern( "base_name", it.base_name ),
       ReplacePattern( "help_mark_pos", it.hist_width-12 ),
-      ReplacePattern( "hdr_img_object", obj_name ),      
+      ReplacePattern( "hdr_img_object", obj_name ),
       ReplacePattern( "version", hdrhtml_version ),
       ReplacePattern()
     };
@@ -944,52 +953,52 @@ void print_image_htmlcode( ostream &out, HDRHTMLSet *hdrhtml_set, const HDRHTMLI
         create_from_template( out, hdrhtml_set->image_template, replace_list );
     }
     catch( pfs::Exception &e) {
-        throw e;
+        throw;
     }
 }
 
 void print_image_htmlcode( ostream &out, void *user_data, const char *parameter )
 {
-  HDRHTMLSet *hdrhtml_set = (HDRHTMLSet*)user_data;
+  HDRHTMLSet *hdrhtml_set = static_cast<HDRHTMLSet*>(user_data);
 
   if( parameter != NULL ) {
 
     list<HDRHTMLImage>::iterator it;
-    for( it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); it++ ) {
+    for( it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); ++it ) {
       if( it->base_name.compare( parameter ) == 0 )
         break;
     }
     if( it == hdrhtml_set->image_list.end() )
       cerr << "Warning: image '" << parameter << "' not found\n";
-    
+
     try {
       print_image_htmlcode( out, hdrhtml_set, *it );
     }
     catch( pfs::Exception &e) {
-        throw e;
+        throw;
     }
-    
+
   } else {
-    
+
     list<HDRHTMLImage>::iterator it;
-    for( it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); it++ ) {
-     
-      try { 
+    for( it = hdrhtml_set->image_list.begin(); it != hdrhtml_set->image_list.end(); ++it ) {
+
+      try {
         print_image_htmlcode( out, hdrhtml_set, *it );
       }
       catch( pfs::Exception &e) {
-        throw e;
+        throw;
       }
-    
+
     }
   }
-  
+
 }
 
 void print_cf_table( ostream &out, void *user_data, const char *parameter )
 {
-  CSVTable *cf = (CSVTable*)user_data;
-  
+  CSVTable *cf = static_cast<CSVTable*>(user_data);
+
   out << "var cf = new Array(\n";
   for( int b=0; b < cf->rows; b++ ) {
     out << "   new Array(";
@@ -1001,7 +1010,7 @@ void print_cf_table( ostream &out, void *user_data, const char *parameter )
     out << ')';
     if( b != cf->rows-1 )
       out << ',';
-    out << "\n";    
+    out << "\n";
   }
   out << ");\n";
 

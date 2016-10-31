@@ -45,7 +45,7 @@ class FitsImporter : public QWizard
     Q_OBJECT
 
 public:
-    FitsImporter(QWidget *parent = 0);
+    explicit FitsImporter(QWidget *parent = 0);
     ~FitsImporter();
 
     pfs::Frame *getFrame();

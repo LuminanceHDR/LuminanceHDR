@@ -48,7 +48,10 @@ class FitsReaderData
 {
 public:
     FitsReaderData()
-        : m_status(0)
+        : m_format(0)
+        , m_status(0)
+        , m_bscale(1.f)
+        , m_bzero(0.f)
         , m_ptr(NULL)
     {}
 

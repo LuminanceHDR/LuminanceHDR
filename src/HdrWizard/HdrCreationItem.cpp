@@ -35,6 +35,8 @@ HdrCreationItem::HdrCreationItem(const QString &filename)
     , m_alignedFilename(filename)
     , m_averageLuminance(-1.f)
     , m_exposureTime(-1.f)
+    , m_datamin(0.f)
+    , m_datamax(1.f)
     , m_frame(boost::make_shared<pfs::Frame>())
     , m_thumbnail(new QImage())
 {
@@ -47,6 +49,8 @@ HdrCreationItem::HdrCreationItem(const QString &filename, const QString& convert
     , m_alignedFilename(convertedFilename)
     , m_averageLuminance(-1.f)
     , m_exposureTime(-1.f)
+    , m_datamin(0.f)
+    , m_datamax(1.f)
     , m_frame(boost::make_shared<pfs::Frame>())
     , m_thumbnail(new QImage())
 {

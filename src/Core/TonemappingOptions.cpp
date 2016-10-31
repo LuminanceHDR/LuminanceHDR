@@ -463,6 +463,8 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
         QTextStream in(&file);
         QString field,value;
 
+        QString tmo; // Hack, same parameter "RANGE" in durand and reinhard02
+
         while (!in.atEnd()) {
                 QString line = in.readLine();
                 //skip comments
@@ -484,26 +486,37 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
 				} else if (field=="TMO") {
                         if (value=="Ashikhmin02") {
                                 toreturn->tmoperator=ashikhmin;
+                                tmo = "Ashikhmin02";
                         } else if (value == "Drago03") {
                                 toreturn->tmoperator=drago;
+                                tmo = "Drago03";
                         } else if (value == "Durand02") {
                                 toreturn->tmoperator=durand;
+                                tmo = "Durand02";
                         } else if (value == "Fattal02") {
                                 toreturn->tmoperator=fattal;
+                                tmo = "Fattal02";
                         } else if (value == "Ferradans11") {
                                 toreturn->tmoperator=ferradans;
+                                tmo = "Ferradans11";
                         } else if (value == "Mai11") {
                                 toreturn->tmoperator=mai;
+                                tmo = "Mai11";
                         } else if (value == "Pattanaik00") {
                                 toreturn->tmoperator=pattanaik;
+                                tmo = "Pattanaik00";
                         } else if (value == "Reinhard02") {
                                 toreturn->tmoperator=reinhard02;
+                                tmo = "Reinhard02";
                         } else if (value == "Reinhard05") {
                                 toreturn->tmoperator=reinhard05;
+                                tmo = "Reinhard05";
                         } else if (value == "Mantiuk06") {
                                 toreturn->tmoperator=mantiuk06;
+                                tmo = "Mantiuk06";
                         } else if (value == "Mantiuk08") {
                                 toreturn->tmoperator=mantiuk08;
+                                tmo = "Mantiuk08";
                         }
                 } else if (field=="CONTRASTFACTOR") {
                         toreturn->operator_options.mantiuk06options.contrastfactor=value.toFloat();
@@ -532,7 +545,10 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                 } else if (field=="SPATIAL") {
                         toreturn->operator_options.durandoptions.spatial=value.toFloat();
                 } else if (field=="RANGE") {
+                    if (tmo == "Durand02")
                         toreturn->operator_options.durandoptions.range=value.toFloat();
+                    else
+                        toreturn->operator_options.reinhard02options.range=value.toInt();
                 } else if (field=="BASE") {
                         toreturn->operator_options.durandoptions.base=value.toFloat();
                 } else if (field=="ALPHA") {
@@ -566,8 +582,6 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                         toreturn->operator_options.reinhard02options.phi=value.toFloat();
                 } else if (field=="SCALES") {
                         toreturn->operator_options.reinhard02options.scales= (value=="YES") ? true : false;
-                } else if (field=="RANGE") {
-                        toreturn->operator_options.reinhard02options.range=value.toInt();
                 } else if (field=="LOWER") {
                         toreturn->operator_options.reinhard02options.lower=value.toInt();
                 } else if (field=="UPPER") {

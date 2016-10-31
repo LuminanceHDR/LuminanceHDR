@@ -50,7 +50,12 @@ OsIntegration::OsIntegration()
 }
 
 OsIntegration::~OsIntegration()
-{ }
+{
+#ifdef Q_OS_WIN
+    if (QSysInfo::windowsVersion() >= QSysInfo::WV_WINDOWS7)
+        delete m_winProgressbar;
+#endif
+}
 
 OsIntegration& OsIntegration::getInstance()
 {

@@ -490,7 +490,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     
     fftshift(g, fil, col);
     
-    float suma=0.f, norm=1.f/length;
+    float suma, norm=1.f/length;
     suma = accumulate(g, g+length, 0.f);
 
     float w = (1.0f/suma);

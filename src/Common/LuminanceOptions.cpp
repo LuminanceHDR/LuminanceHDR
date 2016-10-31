@@ -688,7 +688,7 @@ namespace
 #ifdef QT_DEBUG
 struct PrintTempDir
 {
-    PrintTempDir(const QString& str):
+    explicit PrintTempDir(const QString& str):
         str_(str)
     {}
 

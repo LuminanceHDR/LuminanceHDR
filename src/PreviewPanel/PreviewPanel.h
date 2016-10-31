@@ -43,7 +43,7 @@ class PreviewPanel : public QWidget
     Q_OBJECT
 
 public:
-    PreviewPanel(QWidget *parent = 0);
+    explicit PreviewPanel(QWidget *parent = 0);
     ~PreviewPanel();
     QSize getLabelSize();
     PreviewLabel *getLabel(int);

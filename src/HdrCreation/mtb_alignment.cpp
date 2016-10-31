@@ -98,7 +98,7 @@ void setThreshold(const Array2D8u& in, const int threshold, const int noise,
         {
             *outp++ = *inp < threshold ? 0 : 1;
             *maskp++ = (*inp > (threshold-noise)) && (*inp < (threshold+noise)) ? 0 : 1;
-            inp++;
+            ++inp;
         }
     }
 }

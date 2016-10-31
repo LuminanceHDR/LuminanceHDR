@@ -52,7 +52,7 @@ static const int dragZoneMargin = 5; // How many pizels from the range window bo
 #define max(x,y) ( (x)>(y) ? (x) : (y) )
 
 LuminanceRangeWidget::LuminanceRangeWidget( QWidget *parent ):
-  QFrame( parent ), showVP( false ), histogram( NULL ), histogramImage( NULL )
+  QFrame( parent ), dragMode(DRAG_NO), showVP( false ), valuePointer(0.f), histogram( NULL ), histogramImage( NULL )
   
 {
   setFrameStyle( QFrame::Panel|QFrame::Sunken );

@@ -889,6 +889,8 @@ void TonemappingPanel::fromTxt2Gui()
         if (line.startsWith('#'))
             continue;
 
+        QString tmo; // Hack, same parameter "RANGE" in durand and reinhard02
+
         field=line.section('=',0,0); //get the field
         value=line.section('=',1,1); //get the value
         if (field == "TMOSETTINGSVERSION")
@@ -926,26 +928,37 @@ void TonemappingPanel::fromTxt2Gui()
         {
             if (value == "Ashikhmin02") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ashikhmin);
+                tmo = "Ashikhmin02";
             } else if (value == "Mantiuk06") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mantiuk06);
+                tmo = "Mantiuk06";
             } else if (value == "Mantiuk08") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mantiuk08);
+                tmo = "Mantiuk08";
             } else if (value == "Drago03") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_drago);
+                tmo = "Drago03";
             } else if (value == "Durand02") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_durand);
+                tmo = "Durand02";
             } else if (value == "Fattal02") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_fattal);
+                tmo = "Fattal02";
             } else if (value == "Ferradans11") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ferradans);
+                tmo = "Ferradans11";
             } else if (value == "Mai11") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mai);
+                tmo = "Mai11";
             } else if (value == "Pattanaik00") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_pattanaik);
+                tmo = "Pattanaik00";
             } else if (value == "Reinhard02") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_reinhard02);
+                tmo = "Reinhard02";
             } else if (value == "Reinhard05") {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_reinhard05);
+                tmo = "Reinhard05";
             }
         } else if (field == "CONTRASTFACTOR") {
             m_Ui->contrastFactorSlider->setValue(contrastfactorGang->v2p(value.toFloat()));
@@ -973,7 +986,10 @@ void TonemappingPanel::fromTxt2Gui()
         } else if (field == "SPATIAL") {
             m_Ui->spatialSlider->setValue(spatialGang->v2p(value.toFloat()));
         } else if (field == "RANGE") {
-            m_Ui->rangeSlider->setValue(rangeGang->v2p(value.toFloat()));
+            if (tmo == "Durand02")
+                m_Ui->rangeSlider->setValue(rangeGang->v2p(value.toFloat()));
+            else
+                m_Ui->range2Slider->setValue(range2Gang->v2p(value.toFloat()));
         } else if (field == "BASE") {
             m_Ui->baseSlider->setValue(baseGang->v2p(value.toFloat()));
         } else if (field == "ALPHA") {
@@ -1006,8 +1022,6 @@ void TonemappingPanel::fromTxt2Gui()
             m_Ui->phiSlider->setValue(phiGang->v2p(value.toFloat()));
         } else if (field == "SCALES") {
             (value == "YES") ? m_Ui->usescalescheckbox->setChecked(value == "YES") : m_Ui->usescalescheckbox->setChecked(value=="NO");
-        } else if (field == "RANGE") {
-            m_Ui->range2Slider->setValue(range2Gang->v2p(value.toFloat()));
         } else if (field == "LOWER") {
             m_Ui->lowerSlider->setValue(lowerGang->v2p(value.toFloat()));
         } else if (field == "UPPER") {

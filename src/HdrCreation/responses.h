@@ -58,7 +58,7 @@ public:
     static size_t getIdx(float sample);
     static ResponseCurveType fromString(const std::string& type);
 
-    ResponseCurve(ResponseCurveType type = RESPONSE_LINEAR);
+    explicit ResponseCurve(ResponseCurveType type = RESPONSE_LINEAR);
 
     void setType(ResponseCurveType type);
     //! \return type of response function implemented

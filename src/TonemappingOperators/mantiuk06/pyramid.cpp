@@ -606,14 +606,16 @@ float TransformToG::operator ()(float currR) const
         // RESP to W
         currR = lookup_table(LOOKUP_W_TO_R, R_table, W_table, -currR);
         // W to G
-        return -std::log(currR + 1.0f) * m_detailFactor;
+        //return -std::log(currR + 1.0f) * m_detailFactor;
+        return -std::log1p(currR) * m_detailFactor; // avoid loss of precision
     }
     else
     {
         // RESP to W
         currR = lookup_table(LOOKUP_W_TO_R, R_table, W_table, currR);
         // W to G
-        return std::log(currR + 1.0f) * m_detailFactor;
+        //return std::log(currR + 1.0f) * m_detailFactor;
+        return std::log1p(currR) * m_detailFactor; // avoid loss of precision
     }
 }
 

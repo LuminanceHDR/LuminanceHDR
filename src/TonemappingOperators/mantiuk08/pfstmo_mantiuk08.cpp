@@ -72,15 +72,17 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   DisplayFunction *df = NULL;
   DisplaySize *ds = NULL;
   
-  if( df == NULL )
+  if( df == NULL ) // As of now df is not selected by users but hardcoded here
     df = new DisplayFunctionGGBA( "lcd" );
   
-  if( ds == NULL )
+  if( ds == NULL ) // As of now ds is not selected by users but hardcoded here
     ds = new DisplaySize( 30.f, 0.5f ); 
   
+#ifndef NDEBUG
   df->print( stderr );
   ds->print( stderr );
-  
+#endif
+
   pfs::Channel *inX, *inY, *inZ;
   frame.getXYZChannels(inX, inY, inZ);
   int cols = frame.getWidth();
@@ -116,7 +118,11 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   
   std::unique_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->data(), ph);
   if( C.get() == NULL )
+  {
+    delete df;
+    delete ds;
     throw pfs::Exception("failed to analyse the image");
+  }
   
   datmoTCFilter rc_filter( fps, log10(df->display(0)), log10(df->display(1)) );
 
@@ -126,14 +132,22 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   int res;
   res = datmo_compute_tone_curve( tc, C.get(), df, ds, contrast_enhance_factor, white_y, visual_model, scene_l_adapt, ph);
   if( res != PFSTMO_OK )
+  {
+    delete df;
+    delete ds;
     throw pfs::Exception( "failed to compute the tone-curve" );
+  }
 
   datmoToneCurve *tc_filt = rc_filter.filterToneCurve();
 
   res = datmo_apply_tone_curve_cc( inX->data(), R.data(), inZ->data(),
           cols, rows, inX->data(), R.data(), inZ->data(), inY->data(), tc_filt, df, saturation_factor );
   if( res != PFSTMO_OK )
+  {
+    delete df;
+    delete ds;
     throw pfs::Exception( "failed to tone-map the image" );
+  }
 
   ph.setValue( 100 );
 
