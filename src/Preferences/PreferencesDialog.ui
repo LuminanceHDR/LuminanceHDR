@@ -19,11 +19,27 @@
   <property name="windowTitle">
    <string>Preferences</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../icons.qrc">
+    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout_16">
      <item row="0" column="3">
       <widget class="QToolButton" name="toolButtonTM">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Tone Mapping</string>
        </property>
@@ -79,6 +95,18 @@
      </item>
      <item row="0" column="4">
       <widget class="QToolButton" name="toolButtonRAW">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>RAW Conversion</string>
        </property>
@@ -111,12 +139,24 @@
      </item>
      <item row="0" column="5">
       <widget class="QToolButton" name="toolButtonCMS">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Color Management</string>
        </property>
        <property name="icon">
-        <iconset resource="../../icons.qrc">
-         <normaloff>:/new/svgs/images/application-vnd.iccprofile.svgz</normaloff>:/new/svgs/images/application-vnd.iccprofile.svgz</iconset>
+        <iconset theme="color-management">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -140,12 +180,24 @@
      </item>
      <item row="0" column="7">
       <widget class="QToolButton" name="toolButtonExtTool">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>External Tools</string>
        </property>
        <property name="icon">
-        <iconset resource="../../icons.qrc">
-         <normaloff>:/new/svgs/images/preferences-other.svgz</normaloff>:/new/svgs/images/preferences-other.svgz</iconset>
+        <iconset theme="preferences-other">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -169,12 +221,24 @@
      </item>
      <item row="0" column="1">
       <widget class="QToolButton" name="toolButtonInterface">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Interface</string>
        </property>
        <property name="icon">
-        <iconset resource="../../icons.qrc">
-         <normaloff>:/new/svgs/images/preferences-desktop-theme.svgz</normaloff>:/new/svgs/images/preferences-desktop-theme.svgz</iconset>
+        <iconset theme="preferences-system-windows">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -201,12 +265,24 @@
      </item>
      <item row="0" column="2">
       <widget class="QToolButton" name="toolButtonQueue">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Fast export</string>
        </property>
        <property name="icon">
-        <iconset resource="../../icons.qrc">
-         <normaloff>:/new/svgs/images/folder-image.svgz</normaloff>:/new/svgs/images/folder-image.svgz</iconset>
+        <iconset theme="folder-image">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -600,8 +676,8 @@
              <string>&amp;Browse...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -701,8 +777,8 @@
              <string>&amp;Browse...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -806,8 +882,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -895,8 +971,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1026,8 +1102,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1145,8 +1221,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1244,8 +1320,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1317,8 +1393,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1400,8 +1476,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1512,8 +1588,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1609,8 +1685,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1706,8 +1782,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1848,8 +1924,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -1976,8 +2052,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -2079,8 +2155,8 @@ p, li { white-space: pre-wrap; }
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../icons.qrc">
-                   <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                  <iconset theme="edit-undo">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -2137,8 +2213,8 @@ p, li { white-space: pre-wrap; }
              <string>Browse...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -2151,8 +2227,8 @@ p, li { white-space: pre-wrap; }
              <string>Browse...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -2168,8 +2244,8 @@ p, li { white-space: pre-wrap; }
              <string>Browse...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -2364,13 +2440,37 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <tabstops>
-  <tabstop>cancelButton</tabstop>
-  <tabstop>okButton</tabstop>
+  <tabstop>toolButtonInterface</tabstop>
+  <tabstop>toolButtonQueue</tabstop>
+  <tabstop>toolButtonTM</tabstop>
+  <tabstop>toolButtonRAW</tabstop>
+  <tabstop>toolButtonCMS</tabstop>
+  <tabstop>toolButtonExtTool</tabstop>
+  <tabstop>languageComboBox</tabstop>
+  <tabstop>themeComboBox</tabstop>
+  <tabstop>chkDarkMode</tabstop>
+  <tabstop>previewsWidthSpinBox</tabstop>
+  <tabstop>checkBoxTMOWindowsPreviewPanel</tabstop>
+  <tabstop>chkPortableMode</tabstop>
+  <tabstop>exportDirectoryEdit</tabstop>
+  <tabstop>exportFileButton</tabstop>
+  <tabstop>exportFormatCombo</tabstop>
+  <tabstop>exportFormatToolbutton</tabstop>
+  <tabstop>lineEditTempPath</tabstop>
+  <tabstop>chooseCachePathButton</tabstop>
+  <tabstop>numThreadspinBox</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>four_color_rgb_CB</tabstop>
+  <tabstop>do_not_use_fuji_rotate_CB</tabstop>
   <tabstop>user_qual_comboBox</tabstop>
   <tabstop>user_qual_toolButton</tabstop>
   <tabstop>med_passes_horizontalSlider</tabstop>
   <tabstop>med_passes_spinBox</tabstop>
   <tabstop>med_passes_toolButton</tabstop>
+  <tabstop>wb_method_comboBox</tabstop>
+  <tabstop>wb_method_toolButton</tabstop>
+  <tabstop>TK_horizontalSlider</tabstop>
+  <tabstop>TK_spinBox</tabstop>
   <tabstop>TK_toolButton</tabstop>
   <tabstop>green_horizontalSlider</tabstop>
   <tabstop>green_doubleSpinBox</tabstop>
@@ -2380,28 +2480,39 @@ p, li { white-space: pre-wrap; }
   <tabstop>level_horizontalSlider</tabstop>
   <tabstop>level_spinBox</tabstop>
   <tabstop>level_toolButton</tabstop>
+  <tabstop>false_colors_CB</tabstop>
+  <tabstop>auto_bright_CB</tabstop>
   <tabstop>brightness_horizontalSlider</tabstop>
   <tabstop>brightness_doubleSpinBox</tabstop>
   <tabstop>brightness_toolButton</tabstop>
+  <tabstop>use_black_CB</tabstop>
   <tabstop>user_black_horizontalSlider</tabstop>
   <tabstop>user_black_spinBox</tabstop>
   <tabstop>user_black_toolButton</tabstop>
   <tabstop>user_sat_horizontalSlider</tabstop>
   <tabstop>user_sat_spinBox</tabstop>
   <tabstop>user_sat_toolButton</tabstop>
-  <tabstop>threshold_horizontalSlider</tabstop>
-  <tabstop>threshold_spinBox</tabstop>
-  <tabstop>threshold_toolButton</tabstop>
+  <tabstop>monitor_lineEdit</tabstop>
+  <tabstop>monitor_toolButton</tabstop>
+  <tabstop>camera_lineEdit</tabstop>
+  <tabstop>camera_toolButton</tabstop>
+  <tabstop>printer_lineEdit</tabstop>
+  <tabstop>printer_toolButton</tabstop>
+  <tabstop>aisParamsLineEdit</tabstop>
   <tabstop>red_horizontalSlider</tabstop>
-  <tabstop>red_doubleSpinBox</tabstop>
-  <tabstop>red_toolButton</tabstop>
-  <tabstop>blue_horizontalSlider</tabstop>
   <tabstop>blue_doubleSpinBox</tabstop>
+  <tabstop>threshold_horizontalSlider</tabstop>
   <tabstop>blue_toolButton</tabstop>
-  <tabstop>TK_horizontalSlider</tabstop>
-  <tabstop>wb_method_toolButton</tabstop>
-  <tabstop>wb_method_comboBox</tabstop>
-  <tabstop>TK_spinBox</tabstop>
+  <tabstop>use_sat_CB</tabstop>
+  <tabstop>use_noise_CB</tabstop>
+  <tabstop>use_chroma_CB</tabstop>
+  <tabstop>red_toolButton</tabstop>
+  <tabstop>red_doubleSpinBox</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>threshold_spinBox</tabstop>
+  <tabstop>okButton</tabstop>
+  <tabstop>threshold_toolButton</tabstop>
+  <tabstop>blue_horizontalSlider</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>

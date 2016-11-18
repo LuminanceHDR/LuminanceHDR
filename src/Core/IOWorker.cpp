@@ -123,7 +123,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, const QString& filename,
     if ( status ) {
         emit write_hdr_success(hdr_frame, filename);
     } else {
-        emit write_hdr_failed();
+        emit write_hdr_failed(filename);
     }
     emit IO_finish();
     return status;
@@ -226,7 +226,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     }
     else
     {
-        emit write_ldr_failed();
+        emit write_ldr_failed(filename);
     }
 
     emit IO_finish();

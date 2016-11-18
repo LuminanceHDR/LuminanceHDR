@@ -43,13 +43,14 @@ class PreviewPanel : public QWidget
     Q_OBJECT
 
 public:
-    PreviewPanel(QWidget *parent = 0);
+    explicit PreviewPanel(QWidget *parent = 0);
     ~PreviewPanel();
     QSize getLabelSize();
     PreviewLabel *getLabel(int);
 
 public Q_SLOTS:
     void updatePreviews(pfs::Frame* frame, int index = -1);
+    void setAutolevels(bool);
 
 protected Q_SLOTS:
     void tonemapPreview(TonemappingOptions*);
@@ -59,6 +60,7 @@ Q_SIGNALS:
 
 private:
     int m_original_width_frame;
+    bool m_isAutolevels;
     QList<PreviewLabel*> m_ListPreviewLabel;
 };
 #endif

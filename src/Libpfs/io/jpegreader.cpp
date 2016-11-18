@@ -151,7 +151,8 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
         total_length += data_length[seq_no];
     }
 
-    if (total_length <= 0) {
+    //if (total_length <= 0) { // total_length is unsigned
+    if (total_length == 0) {
         PRINT_DEBUG("found only empty markers?");
         return false;		/* found only empty markers? */
     }
@@ -195,7 +196,7 @@ void my_error_handler(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
     throw pfs::io::ReadException( std::string(buffer) );
 }
-  
+
 static
 void my_output_message(j_common_ptr cinfo)
 {

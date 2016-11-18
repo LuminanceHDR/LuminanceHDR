@@ -30,6 +30,7 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/resize.h"
+#include "Libpfs/manip/gamma_levels.h"
 
 #include "Core/TMWorker.h"
 #include "Libpfs/tm/TonemapOperator.h"
@@ -38,6 +39,7 @@
 #include "PreviewPanel/PreviewLabel.h"
 
 #include "Common/LuminanceOptions.h"
+#include "Common/CommonFunctions.h"
 #include "UI/FlowLayout.h"
 
 namespace // anoymous namespace
@@ -58,10 +60,12 @@ void resetTonemappingOptions(TonemappingOptions* tm_options, const pfs::Frame* f
 class PreviewLabelUpdater
 {
 public:
-    PreviewLabelUpdater(QSharedPointer<pfs::Frame> reference_frame):
+    explicit PreviewLabelUpdater(QSharedPointer<pfs::Frame> reference_frame):
+        m_isAutolevels(false),
         m_ReferenceFrame(reference_frame)
     {}
 
+    void setAutolevels(bool al) { m_isAutolevels = al; }
     //! \brief QRunnable::run() definition
     //! \caption I use shared pointer in this function, so I don't have to worry about memory allocation
     //! in case something wrong happens, it shouldn't leak
@@ -89,12 +93,22 @@ public:
         // Tone Mapping
         //QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
         //tm_operator->tonemapFrame(temp_frame.data(), tm_options, fake_progress_helper);
-        try {
-            QScopedPointer<TMWorker> tmWorker(new TMWorker);
-            QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
+
+        //try { //Since nothing here actually throws this isn't useful, i need to check if returned frame != NULL
+        QScopedPointer<TMWorker> tmWorker(new TMWorker);
+        QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
         
+        if (!frame.isNull())
+        {
             // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
             //QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
+            if (m_isAutolevels) {
+                QSharedPointer<QImage> temp_qimage(fromLDRPFStoQImage(frame.data()));
+                float minL, maxL, gammaL;
+                computeAutolevels(temp_qimage.data(), minL, maxL, gammaL);
+                pfs::gammaAndLevels(frame.data(), minL, maxL, 0.f, 1.f, gammaL);
+            }
+
             QSharedPointer<QImage> qimage(fromLDRPFStoQImage(frame.data()));
 
             //! \note I cannot use these 2 functions, because setPixmap must run in the GUI thread
@@ -104,19 +118,29 @@ public:
             QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
                                       Q_ARG(QSharedPointer<QImage>, qimage));
         }
+        else
+        {
+            QSharedPointer<QImage> qimage(new QImage(PREVIEW_WIDTH, PREVIEW_HEIGHT, QImage::Format_ARGB32_Premultiplied));
+            qimage->fill(QColor(255,0,0)); //TODO Tonemapping failed, let's show a RED preview...
+            QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
+                                      Q_ARG(QSharedPointer<QImage>, qimage));
+        }
+        /*
+        }
         catch (...) {
             qDebug() << "PreviewLabelUpdater: caught exception";
             QSharedPointer<QImage> qimage(new QImage);
             QMetaObject::invokeMethod(to_update, "assignNewQImage", Qt::QueuedConnection,
                                       Q_ARG(QSharedPointer<QImage>, qimage));
         }
-
+        */
 #ifdef QT_DEBUG
         //qDebug() << QThread::currentThread() << "done!";
 #endif
     }
 
 private:
+    bool m_isAutolevels;
     QSharedPointer<pfs::Frame> m_ReferenceFrame;
 };
 
@@ -124,7 +148,8 @@ private:
 
 PreviewPanel::PreviewPanel(QWidget *parent):
     QWidget(parent),
-    m_original_width_frame(0)
+    m_original_width_frame(0),
+    m_isAutolevels(false)
 {
     //! \note I need to register the new object to pass this class as parameter inside invokeMethod()
     //! see run() inside PreviewLabelUpdater
@@ -150,6 +175,13 @@ PreviewPanel::PreviewPanel(QWidget *parent):
     labelFattal->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelFattal);
     connect(labelFattal, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+
+    PreviewLabel * labelFerradans = new PreviewLabel(this, ferradans);
+    labelFerradans->setText("Ferradans");
+    labelFerradans->setToolTip("Ferradans");
+    labelFerradans->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelFerradans);
+    connect(labelFerradans, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
     PreviewLabel * labelDrago = new PreviewLabel(this, drago);
     labelDrago->setText("Drago");
@@ -193,17 +225,26 @@ PreviewPanel::PreviewPanel(QWidget *parent):
     m_ListPreviewLabel.push_back(labelPattanaik);
     connect(labelPattanaik, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
+    PreviewLabel * labelMai = new PreviewLabel(this, mai);
+    labelMai->setText("Mai");
+    labelMai->setToolTip("Mai");
+    labelMai->setFrameStyle(QFrame::Box);
+    m_ListPreviewLabel.push_back(labelMai);
+    connect(labelMai, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+
     FlowLayout *flowLayout = new FlowLayout;
 
     flowLayout->addWidget(labelMantiuk06);
     flowLayout->addWidget(labelMantiuk08);
     flowLayout->addWidget(labelFattal);
+    flowLayout->addWidget(labelFerradans);
     flowLayout->addWidget(labelDrago);
     flowLayout->addWidget(labelDurand);
     flowLayout->addWidget(labelReinhard02);
     flowLayout->addWidget(labelReinhard05);
     flowLayout->addWidget(labelAshikhmin);
     flowLayout->addWidget(labelPattanaik);
+    flowLayout->addWidget(labelMai);
 
     setLayout(flowLayout);
 }
@@ -238,11 +279,13 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)
         foreach(PreviewLabel* current_label, m_ListPreviewLabel)
         {
             PreviewLabelUpdater updater(current_frame);
+            updater.setAutolevels(m_isAutolevels);
             updater(current_label);
         }
     }
     else {
         PreviewLabelUpdater updater(current_frame);
+        updater.setAutolevels(m_isAutolevels);
         updater(m_ListPreviewLabel.at(index));
     }
     // 2. (concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
@@ -269,4 +312,12 @@ QSize PreviewPanel::getLabelSize()
 PreviewLabel *PreviewPanel::getLabel(int index)
 {
     return m_ListPreviewLabel.at(index);
+}
+
+void PreviewPanel::setAutolevels(bool al)
+{
+#ifdef QT_DEBUG
+    std::cout << "void PreviewPanel::setAutolevels(" << al << ")" << std::endl;
+#endif
+    m_isAutolevels = al;
 }

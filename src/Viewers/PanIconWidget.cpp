@@ -34,7 +34,9 @@
 
 #include "PanIconWidget.h"
 
-PanIconWidget::PanIconWidget(QWidget *parent, Qt::WindowFlags flags) : QFrame(parent,flags)
+PanIconWidget::PanIconWidget(QWidget *parent, Qt::WindowFlags flags) :
+    QFrame(parent,flags), xpos(0), ypos(0), m_width(0), m_height(0),
+    m_orgWidth(0), m_orgHeight(0)
 {
 	this->setAttribute(Qt::WA_DeleteOnClose);
 // 	this->setFrameStyle(QFrame::Box|QFrame::Plain);

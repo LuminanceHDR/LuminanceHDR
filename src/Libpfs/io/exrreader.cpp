@@ -66,7 +66,7 @@ namespace io {
 
 class EXRReader::EXRReaderData {
 public:
-    EXRReaderData(const string& filename)
+    explicit EXRReaderData(const string& filename)
         : file_(filename.c_str())
         // , dw_(file_.header().displayWindow())
         , dtw_(file_.header().dataWindow())

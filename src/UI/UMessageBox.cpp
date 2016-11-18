@@ -120,6 +120,29 @@ void UMessageBox::about(QWidget* parent)
         ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
         ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
     }
+    bool changelog_file_not_found=true;
+    foreach (QString path,paths)
+    {
+        QString fname(path+QString("/Changelog"));
+        if (QFile::exists(fname))
+        {
+            QFile file(fname);
+            //try opening it
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+                break;
+            QTextStream ts(&file);
+            ui.ChangelogBox->setAcceptRichText(false);
+            ui.ChangelogBox->setPlainText(ts.readAll());
+            changelog_file_not_found=false;
+            break;
+        }
+    }
+    if (changelog_file_not_found)
+    {
+        ui.ChangelogBox->setOpenExternalLinks(true);
+        ui.ChangelogBox->setTextInteractionFlags(Qt::TextBrowserInteraction);
+        ui.ChangelogBox->setHtml(tr("%1 Changelog document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://qtpfsgui.sourceforge.net/updater/Changelog\">").arg("</a></html>"));
+    }
     about->show();
 }
 

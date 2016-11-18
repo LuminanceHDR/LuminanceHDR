@@ -80,8 +80,15 @@ private:
 	int maximum;
 	bool started;
     float threshold;
+    bool isAutolevels;
+    bool isHtml;
+    bool isHtmlDone;
+    int htmlQuality;
+    std::string pageName;
+    std::string imagesDir;
     QString saveAlignedImagesPrefix;
 
+    void generateHTML();
     void startTonemap();
 
 private slots:

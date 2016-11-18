@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabContents">
        <attribute name="title">
@@ -90,8 +90,7 @@
              <string>&amp;Add</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+             <iconset theme="list-add"/>
             </property>
            </widget>
           </item>
@@ -101,8 +100,7 @@
              <string>&amp;Remove</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
+             <iconset theme="list-remove"/>
             </property>
            </widget>
           </item>

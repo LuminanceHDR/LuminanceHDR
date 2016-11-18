@@ -43,7 +43,7 @@ class HdrWizard : public QDialog
     Q_OBJECT
 private:
     // members ... private functions are below
-    QScopedPointer<Ui::HdrWizard> m_ui;
+    QScopedPointer<Ui::HdrWizard> m_Ui;
     QScopedPointer<HdrCreationManager> m_hdrCreationManager;
 
     QFutureWatcher<void> m_futureWatcher;

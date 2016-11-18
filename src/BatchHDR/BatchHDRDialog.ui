@@ -7,11 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>571</width>
-    <height>702</height>
+    <height>712</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Batch HDR Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../icons.qrc">
+    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_9">
    <item row="1" column="0">
@@ -226,7 +230,7 @@ See documentation for more information.</string>
                <string>Use MTB (Median Threshold Bitmap) engine</string>
               </property>
               <property name="text">
-               <string>MTB</string>
+               <string>&amp;MTB</string>
               </property>
              </widget>
             </item>
@@ -239,7 +243,7 @@ See documentation for more information.</string>
                <string>Use Hugin's align_image_stack engine</string>
               </property>
               <property name="text">
-               <string>Hugin's align_image_stack</string>
+               <string>Hugin's align_&amp;image_stack</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -370,8 +374,8 @@ See documentation for more information.</string>
            <string>Select...</string>
           </property>
           <property name="icon">
-           <iconset resource="../../icons.qrc">
-            <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+           <iconset theme="document-open">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -384,8 +388,8 @@ See documentation for more information.</string>
            <string>Select...</string>
           </property>
           <property name="icon">
-           <iconset resource="../../icons.qrc">
-            <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+           <iconset theme="document-open">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>

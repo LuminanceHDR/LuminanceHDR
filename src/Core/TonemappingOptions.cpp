@@ -60,6 +60,10 @@ void TonemappingOptions::setDefaultTonemapParameters()
     operator_options.fattaloptions.newfattal = FATTAL02_NEWFATTAL;
     operator_options.fattaloptions.fftsolver = true;
 
+    // Ferradans
+    operator_options.ferradansoptions.rho = FERRADANS11_RHO;
+    operator_options.ferradansoptions.inv_alpha = FERRADANS11_INV_ALPHA;
+
     // Drago
     operator_options.dragooptions.bias = DRAGO03_BIAS;
 
@@ -134,6 +138,10 @@ char TonemappingOptions::getRatingForOperator()
         return 'E';
     case reinhard05:
         return 'D';
+    case ferradans:
+        return 'J';
+    case mai:
+        return 'K';
     }
     return ' ';
 }
@@ -188,6 +196,20 @@ const QString TonemappingOptions::getPostfix() {
             postfix+=QString("saturation_%1_").arg(saturation2);
             postfix+=QString("noiseredux_%1_").arg(noiseredux);
             postfix+=QString("fftsolver_%1").arg(fftsolver);
+        }
+        break;
+    case ferradans:
+        {
+            postfix+="ferradans_";
+            float rho=operator_options.ferradansoptions.rho;
+            float inv_alpha=operator_options.ferradansoptions.inv_alpha;
+            postfix+=QString("rho_%1_").arg(rho);
+            postfix+=QString("inv_alpha_%1_").arg(inv_alpha);
+        }
+        break;
+    case mai:
+        {
+            postfix+="mai_";
         }
         break;
     case ashikhmin: 
@@ -328,6 +350,20 @@ const QString TonemappingOptions::getCaption(bool includePregamma, QString separ
             caption+=QString(QObject::tr("FFTSolver") + "=%1").arg(fftsolver);
             }
             break;
+    case ferradans:
+        {
+            float rho=operator_options.ferradansoptions.rho;
+            float inv_alpha=operator_options.ferradansoptions.inv_alpha;
+            caption+="Ferrands:" + separator;
+            caption+=QString(QObject::tr("Rho") + "=%1").arg(rho) + separator;
+            caption+=QString(QObject::tr("InvAlpha") + "=%1").arg(inv_alpha) + separator;
+            }
+            break;
+    case mai:
+        {
+            caption+="Mai:" + separator;
+            }
+            break;
     case ashikhmin:
         {
             caption+="Ashikhmin:" + separator;
@@ -427,6 +463,8 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
         QTextStream in(&file);
         QString field,value;
 
+        QString tmo; // Hack, same parameter "RANGE" in durand and reinhard02
+
         while (!in.atEnd()) {
                 QString line = in.readLine();
                 //skip comments
@@ -448,22 +486,37 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
 				} else if (field=="TMO") {
                         if (value=="Ashikhmin02") {
                                 toreturn->tmoperator=ashikhmin;
+                                tmo = "Ashikhmin02";
                         } else if (value == "Drago03") {
                                 toreturn->tmoperator=drago;
+                                tmo = "Drago03";
                         } else if (value == "Durand02") {
                                 toreturn->tmoperator=durand;
+                                tmo = "Durand02";
                         } else if (value == "Fattal02") {
                                 toreturn->tmoperator=fattal;
+                                tmo = "Fattal02";
+                        } else if (value == "Ferradans11") {
+                                toreturn->tmoperator=ferradans;
+                                tmo = "Ferradans11";
+                        } else if (value == "Mai11") {
+                                toreturn->tmoperator=mai;
+                                tmo = "Mai11";
                         } else if (value == "Pattanaik00") {
                                 toreturn->tmoperator=pattanaik;
+                                tmo = "Pattanaik00";
                         } else if (value == "Reinhard02") {
                                 toreturn->tmoperator=reinhard02;
+                                tmo = "Reinhard02";
                         } else if (value == "Reinhard05") {
                                 toreturn->tmoperator=reinhard05;
+                                tmo = "Reinhard05";
                         } else if (value == "Mantiuk06") {
                                 toreturn->tmoperator=mantiuk06;
+                                tmo = "Mantiuk06";
                         } else if (value == "Mantiuk08") {
                                 toreturn->tmoperator=mantiuk08;
+                                tmo = "Mantiuk08";
                         }
                 } else if (field=="CONTRASTFACTOR") {
                         toreturn->operator_options.mantiuk06options.contrastfactor=value.toFloat();
@@ -492,7 +545,10 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                 } else if (field=="SPATIAL") {
                         toreturn->operator_options.durandoptions.spatial=value.toFloat();
                 } else if (field=="RANGE") {
+                    if (tmo == "Durand02")
                         toreturn->operator_options.durandoptions.range=value.toFloat();
+                    else
+                        toreturn->operator_options.reinhard02options.range=value.toInt();
                 } else if (field=="BASE") {
                         toreturn->operator_options.durandoptions.base=value.toFloat();
                 } else if (field=="ALPHA") {
@@ -506,6 +562,10 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                 } else if (field=="OLDFATTAL") {
                         toreturn->operator_options.fattaloptions.newfattal= true; // This is the new version of fattal pre FFT (always yes)
                         toreturn->operator_options.fattaloptions.fftsolver= (value == "NO");
+                } else if (field=="RHO") {
+                        toreturn->operator_options.ferradansoptions.rho=value.toFloat();
+                } else if (field=="INV_ALPHA") {
+                        toreturn->operator_options.ferradansoptions.inv_alpha=value.toFloat();
                 } else if (field=="MULTIPLIER") {
                         toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
                 } else if (field=="LOCAL") {
@@ -522,8 +582,6 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                         toreturn->operator_options.reinhard02options.phi=value.toFloat();
                 } else if (field=="SCALES") {
                         toreturn->operator_options.reinhard02options.scales= (value=="YES") ? true : false;
-                } else if (field=="RANGE") {
-                        toreturn->operator_options.reinhard02options.range=value.toInt();
                 } else if (field=="LOWER") {
                         toreturn->operator_options.reinhard02options.lower=value.toInt();
                 } else if (field=="UPPER") {
@@ -602,6 +660,18 @@ QString TMOptionsOperations::getExifComment() {
                 exif_comment+=QString("Beta: %1\n").arg(beta);
                 exif_comment+=QString("Color Saturation: %1 \n").arg(saturation2);
                 exif_comment+=QString("Noise Reduction: %1 \n").arg(noiseredux);
+                }
+                break;
+        case ferradans: {
+                float rho=opts->operator_options.ferradansoptions.rho;
+                float inv_alpha=opts->operator_options.ferradansoptions.inv_alpha;
+                exif_comment+="Ferrands\nParameters:\n";
+                exif_comment+=QString("Rho: %1\n").arg(rho);
+                exif_comment+=QString("InvAlpha: %1\n").arg(inv_alpha);
+                }
+                break;
+        case mai: {
+                exif_comment+="Ferrands\n";
                 }
                 break;
         case ashikhmin: {

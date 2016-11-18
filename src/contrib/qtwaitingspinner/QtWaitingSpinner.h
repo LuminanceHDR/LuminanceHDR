@@ -31,7 +31,7 @@ class QtWaitingSpinner : public QWidget {
 public:
   /*! Constructor for "standard" widget behaviour - use this
    * constructor if you wish to, e.g. embed your widget in another. */
-  QtWaitingSpinner(QWidget *parent = 0);
+  explicit QtWaitingSpinner(QWidget *parent = 0);
 
   /*! Constructor - use this constructor to automatically create a modal
    * ("blocking") spinner on top of the calling widget/window.  If a valid

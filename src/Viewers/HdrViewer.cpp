@@ -67,21 +67,24 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns)
 {
     initUi();
 
-    // I prefer to do everything by hand, so the flow of the calls is clear
-    m_lumRange->blockSignals(true);
+    if (frame) // In new fullscreen viewer we have a NULL frame at construction
+    {
+        // I prefer to do everything by hand, so the flow of the calls is clear
+        m_lumRange->blockSignals(true);
 
-    m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
-    m_lumRange->fitToDynamicRange();
+        m_lumRange->setHistogramImage(getPrimaryChannel(*getFrame()));
+        m_lumRange->fitToDynamicRange();
 
-    m_mappingMethod = static_cast<RGBMappingType>( m_mappingMethodCB->currentIndex() );
-    m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
-    m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
+        m_mappingMethod = static_cast<RGBMappingType>( m_mappingMethodCB->currentIndex() );
+        m_minValue = powf( 10.0f, m_lumRange->getRangeWindowMin() );
+        m_maxValue = powf( 10.0f, m_lumRange->getRangeWindowMax() );
 
-    QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
-    mPixmap->setPixmap(QPixmap::fromImage(*qImage));
+        QScopedPointer<QImage> qImage(mapFrameToImage(getFrame()));
+        mPixmap->setPixmap(QPixmap::fromImage(*qImage));
 
-    updateView();
-    m_lumRange->blockSignals(false);
+        updateView();
+        m_lumRange->blockSignals(false);
+    }
 }
 
 void HdrViewer::initUi()
@@ -222,4 +225,27 @@ RGBMappingType HdrViewer::getLuminanceMappingMethod()
 QImage* HdrViewer::mapFrameToImage(pfs::Frame* in_frame)
 {
     return fromLDRPFStoQImage(in_frame, m_minValue, m_maxValue, m_mappingMethod);
+}
+
+void HdrViewer::keyPressEvent(QKeyEvent *event)
+{
+    GenericViewer::keyPressEvent(event);
+    if (event->key() == Qt::Key_L) {
+        m_lumRange->lowDynamicRange();
+    }
+    else if (event->key() == Qt::Key_BracketLeft) {
+        m_lumRange->extendRange();
+    }
+    else if (event->key() == Qt::Key_BracketRight) {
+        m_lumRange->shrinkRange();
+    }
+    else if (event->key() == Qt::Key_Backslash) {
+        m_lumRange->fitToDynamicRange();
+    }
+    else if (event->key() == Qt::Key_0) {
+        m_lumRange->decreaseExposure();
+    }
+    else if (event->key() == Qt::Key_9) {
+        m_lumRange->increaseExposure();
+    }
 }

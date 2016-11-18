@@ -182,7 +182,7 @@ void ProjectionFactory::listProjectionNames(void) {
 	while(i != singleton.projections.end())
 	{
 	fprintf( stderr, "%s\n", (*i).first.c_str());
-	i++;
+	++i;
 	}
 }
 ///END PROJECTIONFACTORY
@@ -267,7 +267,7 @@ Projection* AngularProjection::create() {
     AngularProjection *p = new AngularProjection(false);
     p->totalAngle = 360;
 
-    return (Projection *)p;
+    return static_cast<Projection *>(p);
 }
 
 void AngularProjection::setOptions(char *opts) {

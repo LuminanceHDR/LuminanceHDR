@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1651</width>
-     <height>38</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -39,11 +39,13 @@
     </property>
     <addaction name="actionShowPreviewPanel"/>
     <addaction name="actionRealtimePreviews"/>
+    <addaction name="actionShow_Image_Full_Screen"/>
     <addaction name="separator"/>
     <addaction name="Transplant_Exif_Data_action"/>
     <addaction name="actionBatch_HDR"/>
     <addaction name="actionBatch_Tone_Mapping"/>
     <addaction name="actionFits_Importer"/>
+    <addaction name="actionExportToHTML"/>
     <addaction name="OptionsAction"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -54,6 +56,7 @@
     <addaction name="actionWhat_s_This"/>
     <addaction name="separator"/>
     <addaction name="actionUpdateAvailable"/>
+    <addaction name="actionSupported_Cameras"/>
     <addaction name="actionDonate"/>
     <addaction name="actionAbout_Luminance"/>
     <addaction name="actionAbout_Qt"/>
@@ -64,6 +67,7 @@
     </property>
     <addaction name="actionMinimize"/>
     <addaction name="actionMaximize"/>
+    <addaction name="actionShow_Full_Screen"/>
     <addaction name="separator"/>
     <addaction name="actionBring_All_to_Front"/>
     <addaction name="separator"/>
@@ -99,7 +103,7 @@
     </widget>
     <widget class="QMenu" name="menuPreview_Panel_2">
      <property name="title">
-      <string>Preview Panel</string>
+      <string>&amp;Preview Panel</string>
      </property>
      <addaction name="actionShow_on_the_right"/>
      <addaction name="actionShow_on_the_bottom"/>
@@ -185,8 +189,8 @@
   </widget>
   <action name="fileNewAction">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/svgs/images/insert-image.svgz</normaloff>:/new/svgs/images/insert-image.svgz</iconset>
+    <iconset theme="insert-image">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;New HDR image...</string>
@@ -209,8 +213,8 @@
   </action>
   <action name="fileOpenAction">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+    <iconset theme="document-open">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Open HDR image...</string>
@@ -236,8 +240,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
+    <iconset theme="document-save">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Save as...</string>
@@ -260,8 +264,8 @@
   </action>
   <action name="fileExitAction">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/exit.png</normaloff>:/new/prefix1/images/exit.png</iconset>
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Quit</string>
@@ -284,8 +288,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/rotate_left.png</normaloff>:/new/prefix1/images/rotate_left.png</iconset>
+    <iconset theme="object-rotate-left">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Rotate c&amp;ounter-clockwise</string>
@@ -311,11 +315,11 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/rotate_right.png</normaloff>:/new/prefix1/images/rotate_right.png</iconset>
+    <iconset theme="object-rotate-right">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Rotate c&amp;lockwise</string>
+    <string>Rotat&amp;e clockwise</string>
    </property>
    <property name="iconText">
     <string>Rotate clockwise</string>
@@ -338,7 +342,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Low Dynamic Range</string>
+    <string>&amp;Low Dynamic Range</string>
    </property>
    <property name="shortcut">
     <string>L</string>
@@ -349,7 +353,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Fit to Dynamic Range</string>
+    <string>&amp;Fit to Dynamic Range</string>
    </property>
    <property name="toolTip">
     <string>Fit to dynamic range</string>
@@ -363,7 +367,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Shrink Dynamic Range</string>
+    <string>&amp;Shrink Dynamic Range</string>
    </property>
    <property name="shortcut">
     <string>[</string>
@@ -374,7 +378,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Extend Dynamic Range</string>
+    <string>&amp;Extend Dynamic Range</string>
    </property>
    <property name="shortcut">
     <string>]</string>
@@ -385,7 +389,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Decrease Exposure</string>
+    <string>&amp;Decrease Exposure</string>
    </property>
    <property name="shortcut">
     <string>0</string>
@@ -404,8 +408,8 @@
   </action>
   <action name="documentationAction">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/help.png</normaloff>:/new/prefix1/images/help.png</iconset>
+    <iconset theme="help-contents">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Contents...</string>
@@ -434,8 +438,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/svgs/images/zoom-original.svgz</normaloff>:/new/svgs/images/zoom-original.svgz</iconset>
+    <iconset theme="zoom-original">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Normal Size</string>
@@ -461,8 +465,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/svgs/images/zoom-in.svgz</normaloff>:/new/svgs/images/zoom-in.svgz</iconset>
+    <iconset theme="zoom-in">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Zoom &amp;In</string>
@@ -485,8 +489,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/svgs/images/zoom-out.svgz</normaloff>:/new/svgs/images/zoom-out.svgz</iconset>
+    <iconset theme="zoom-out">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Zoom &amp;Out</string>
@@ -515,8 +519,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/svgs/images/zoom-fit-best.svgz</normaloff>:/new/svgs/images/zoom-fit-best.svgz</iconset>
+    <iconset theme="zoom">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Fit in Window</string>
@@ -539,8 +543,8 @@
   </action>
   <action name="OptionsAction">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/options.png</normaloff>:/new/prefix1/images/options.png</iconset>
+    <iconset theme="preferences-system">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Preferences...</string>
@@ -590,8 +594,8 @@
   </action>
   <action name="Transplant_Exif_Data_action">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/copyexif.png</normaloff>:/new/prefix1/images/copyexif.png</iconset>
+    <iconset theme="selection-move-to-layer-below">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Copy &amp;Exif Data...</string>
@@ -660,8 +664,8 @@
   </action>
   <action name="actionBatch_Tone_Mapping">
    <property name="icon">
-    <iconset>
-     <normaloff>:/new/prefix1/images/running_process.png</normaloff>:/new/prefix1/images/running_process.png</iconset>
+    <iconset theme="system-run">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Batch Tone Mapping...</string>
@@ -681,8 +685,8 @@
   </action>
   <action name="actionWhat_s_This">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/whatsthis.png</normaloff>:/new/prefix1/images/whatsthis.png</iconset>
+    <iconset theme="help-whatsthis">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;What's This?</string>
@@ -701,6 +705,10 @@
    </property>
   </action>
   <action name="actionAbout_Luminance">
+   <property name="icon">
+    <iconset theme="help-about">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>About &amp;Luminance HDR</string>
    </property>
@@ -717,6 +725,10 @@
   <action name="actionSave_Hdr_Preview">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="document-save-as-template">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save HDR image &amp;preview...</string>
@@ -753,9 +765,12 @@
    </property>
   </action>
   <action name="cropToSelectionAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/crop.png</normaloff>:/new/prefix1/images/crop.png</iconset>
+    <iconset theme="transform-crop">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Crop to Selection</string>
@@ -778,8 +793,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/tool_rect_selection.png</normaloff>:/new/prefix1/images/tool_rect_selection.png</iconset>
+    <iconset theme="edit-select-none">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Remove &amp;Selection</string>
@@ -795,6 +810,10 @@
    </property>
   </action>
   <action name="actionDonate">
+   <property name="icon">
+    <iconset theme="help-donate">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>Make a &amp;Donation</string>
    </property>
@@ -810,12 +829,11 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/lock-off.png</normaloff>
-     <normalon>:/new/prefix1/images/lock-on.png</normalon>:/new/prefix1/images/lock-off.png</iconset>
+    <iconset theme="system-lock-screen">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Lock Viewers</string>
+    <string>&amp;Lock Viewers</string>
    </property>
    <property name="toolTip">
     <string>Synchronize viewers mode (fit, fill or 1:1).</string>
@@ -824,22 +842,30 @@
     <string>Lock the images for sync view</string>
    </property>
    <property name="shortcut">
-    <string>L</string>
+    <string>S</string>
    </property>
   </action>
   <action name="actionMinimize">
+   <property name="icon">
+    <iconset theme="window-minimize-symbolic">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
-    <string>Minimize</string>
+    <string>&amp;Minimize</string>
    </property>
   </action>
   <action name="actionMaximize">
+   <property name="icon">
+    <iconset theme="window-maximize-symbolic">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
-    <string>Maximize</string>
+    <string>Ma&amp;ximize</string>
    </property>
   </action>
   <action name="actionBring_All_to_Front">
    <property name="text">
-    <string>Bring All to Front</string>
+    <string>&amp;Bring All to Front</string>
    </property>
   </action>
   <action name="actionShowPreviewPanel">
@@ -853,7 +879,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Preview Panel</string>
+    <string>&amp;Show Preview Panel</string>
    </property>
    <property name="toolTip">
     <string>Show/Hide Preview Panel</string>
@@ -897,8 +923,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/filesaveall.png</normaloff>:/new/prefix1/images/filesaveall.png</iconset>
+    <iconset theme="document-save-all">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save All</string>
@@ -911,8 +937,15 @@
    </property>
   </action>
   <action name="actionRemove_Tab">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="tab-close">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
-    <string>Remove Tab</string>
+    <string>&amp;Remove Tab</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
@@ -926,23 +959,26 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/svgs/images/page-zoom.svgz</normaloff>:/new/svgs/images/page-zoom.svgz</iconset>
+    <iconset theme="zoom-fit-best">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Fill Window</string>
+    <string>Fill &amp;Window</string>
    </property>
    <property name="toolTip">
     <string>Fill window with the current viewer</string>
    </property>
+   <property name="shortcut">
+    <string>F</string>
+   </property>
   </action>
   <action name="actionBatch_HDR">
    <property name="icon">
-    <iconset>
-     <normaloff>:/new/prefix1/images/running_process.png</normaloff>:/new/prefix1/images/running_process.png</iconset>
+    <iconset theme="system-run">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Batch HDR...</string>
+    <string>Batch &amp;HDR...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
@@ -957,7 +993,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/document-print-preview.png</normaloff>:/new/prefix1/images/document-print-preview.png</iconset>
+     <normaloff>:/new/prefix1/images/soft-proofing.png</normaloff>:/new/prefix1/images/soft-proofing.png</iconset>
    </property>
    <property name="text">
     <string>Soft Proofing</string>
@@ -986,7 +1022,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show on the right</string>
+    <string>&amp;Show on the right</string>
    </property>
   </action>
   <action name="actionShow_on_the_bottom">
@@ -994,7 +1030,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show on the bottom</string>
+    <string>Show &amp;on the bottom</string>
    </property>
   </action>
   <action name="actionRealtimePreviews">
@@ -1005,16 +1041,16 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Realtime Previews</string>
+    <string>&amp;Realtime Previews</string>
    </property>
   </action>
   <action name="actionUpdateAvailable">
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/vcs-update-required.png</normaloff>:/new/prefix1/images/vcs-update-required.png</iconset>
+    <iconset theme="system-software-update">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Update</string>
+    <string>&amp;Update</string>
    </property>
    <property name="visible">
     <bool>false</bool>
@@ -1026,7 +1062,7 @@
      <normaloff>:/new/prefix1/images/applications-astronomy.png</normaloff>:/new/prefix1/images/applications-astronomy.png</iconset>
    </property>
    <property name="text">
-    <string>FITS Importer...</string>
+    <string>&amp;FITS Importer...</string>
    </property>
    <property name="toolTip">
     <string>Import four FITS files representing luminosity, red, green and blue channels</string>
@@ -1040,14 +1076,62 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/svgs/images/color-picker-white.svg</normaloff>:/new/svgs/images/color-picker-white.svg</iconset>
+    <iconset theme="whitebalance">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>White Balance</string>
    </property>
    <property name="toolTip">
     <string>Fix color cast, can be slow</string>
+   </property>
+  </action>
+  <action name="actionExportToHTML">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="globe">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>E&amp;xport to HTML</string>
+   </property>
+   <property name="toolTip">
+    <string>Export to web page with embedded HDR viewer</string>
+   </property>
+  </action>
+  <action name="actionShow_Full_Screen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Show Full Screen</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
+   </property>
+  </action>
+  <action name="actionShow_Image_Full_Screen">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Show &amp;Image Full Screen</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
+   </property>
+  </action>
+  <action name="actionSupported_Cameras">
+   <property name="text">
+    <string>&amp;Supported RAW Cameras</string>
+   </property>
+   <property name="toolTip">
+    <string>Lists all cameras supported by the program</string>
    </property>
   </action>
  </widget>

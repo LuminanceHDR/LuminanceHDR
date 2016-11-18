@@ -36,6 +36,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QScopedPointer>
+#include <QKeyEvent>
 
 #include "GenericViewer.h"
 
@@ -84,6 +85,7 @@ protected:
     // Methods
 	virtual void retranslateUi();
     void setRangeWindow(float min, float max);
+    void keyPressEvent(QKeyEvent *event);
 
     // UI
     LuminanceRangeWidget* m_lumRange;

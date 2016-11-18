@@ -42,7 +42,7 @@ public:
 private:
     QScopedPointer<Ui::DonationDialog> m_ui;
 
-    DonationDialog(QWidget* parent = 0);
+    explicit DonationDialog(QWidget* parent = 0);
 
 private slots:
     void onYesButtonClicked();

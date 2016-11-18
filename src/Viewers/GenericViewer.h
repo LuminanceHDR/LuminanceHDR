@@ -188,6 +188,8 @@ protected:
 
     QString mFileName;
 
+    void keyPressEvent(QKeyEvent *event);
+
 private:
     //! \brief Zoom to the input factor
     //! \param[in] factor zoom factor to match
@@ -200,6 +202,8 @@ private:
 
     bool mNeedsSaving;
     pfs::Frame* mFrame;
+
+    QAction* m_actionClose;
 
 Q_SIGNALS:
     void selectionReady(bool isReady);

@@ -31,27 +31,17 @@ p, li { white-space: pre-wrap; }
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — Aplicación para la generación de imágenes HDR &lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans [1ASC]&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;(c) 2010-2016, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="111"/>
-        <source>A&amp;uthors</source>
-        <translation>A&amp;utores</translation>
-    </message>
-    <message>
-        <location filename="../src/UI/about.ui" line="157"/>
+        <location filename="../src/UI/about.ui" line="120"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans [1ASC]&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Main developer QtPfsGui&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
@@ -75,11 +65,35 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="237"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — Aplicación para la generación de imágenes HDR &lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010-2013, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/about.ui" line="111"/>
+        <source>A&amp;uthors</source>
+        <translation>A&amp;utores</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/about.ui" line="154"/>
+        <source>&amp;Thanks To</source>
+        <translation>&amp;Gracias a</translation>
+    </message>
+    <message>
+        <location filename="../src/UI/about.ui" line="163"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans [1ASC]&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
@@ -90,27 +104,21 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="191"/>
-        <source>&amp;Thanks To</source>
-        <translation>&amp;Gracias a</translation>
-    </message>
-    <message>
-        <location filename="../src/UI/about.ui" line="255"/>
+        <location filename="../src/UI/about.ui" line="181"/>
         <source>Changelog</source>
         <translation>Registro de cambios</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="262"/>
         <source>http://qtpfsgui.sourceforge.net/updater/Changelog</source>
-        <translation>http://qtpfsgui.sourceforge.net/updater/Changelog</translation>
+        <translation type="vanished">http://qtpfsgui.sourceforge.net/updater/Changelog</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="271"/>
+        <location filename="../src/UI/about.ui" line="191"/>
         <source>&amp;License Agreement</source>
         <translation>&amp;Licencia de conformidad</translation>
     </message>
     <message>
-        <location filename="../src/UI/about.ui" line="355"/>
+        <location filename="../src/UI/about.ui" line="238"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
@@ -123,224 +131,232 @@ p, li { white-space: pre-wrap; }
         <translation>HDR por lotes</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="25"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="29"/>
         <source>Number of bracketed images:</source>
         <translation>Número de imágenes horquilladas</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="45"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="70"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="49"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="74"/>
         <source>Select the number of bracketed pictures used to create the HDRs</source>
         <translation>Seleccione el número de imágenes horquilladas para crear los HDRs</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="96"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="100"/>
         <source>Output</source>
         <translation>Salida</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="133"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="137"/>
         <source>Predefined profile:</source>
         <translation>Perfil predefinido</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="123"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="127"/>
         <source>Choose an HDR output file format</source>
         <translation>Elija un formato de fichero HDR de salida</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="147"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="151"/>
         <source>Choose one of the creation predefined profiles. 
 See documentation for more information.</source>
         <translation>Elija uno de los perfiles predefinidos
 Consulte la documentación para más información</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="155"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="159"/>
         <source>Profile 1</source>
         <translation>Perfil 1</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="160"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="164"/>
         <source>Profile 2</source>
         <translation>Perfil 2</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="165"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="169"/>
         <source>Profile 3</source>
         <translation>Perfil 3</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="170"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="174"/>
         <source>Profile 4</source>
         <translation>Perfil 4</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="175"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="179"/>
         <source>Profile 5</source>
         <translation>Perfil 5</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="180"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="184"/>
         <source>Profile 6</source>
         <translation>Perfil 6</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="140"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="144"/>
         <source>Output format:</source>
         <translation>Formato de salida</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="202"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="206"/>
         <source>Alignment</source>
         <translation>Alinear</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="213"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="217"/>
         <source>Auto align the bracketed pictures</source>
         <translation>Auto-alinear las imagenes horquilladas</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="216"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="220"/>
         <source>Auto-align images</source>
         <translation>Auto-alinear las imágenes</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="226"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="230"/>
         <source>Use MTB (Median Threshold Bitmap) engine</source>
         <translation>Emplear el motor MTB (Bitmap de umbral medio)</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="229"/>
         <source>MTB</source>
-        <translation>MTB</translation>
+        <translation type="vanished">MTB</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="239"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="243"/>
         <source>Use Hugin&apos;s align_image_stack engine</source>
         <translation>Usar el motot de alineado de pilas de imágenes Hugin</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="242"/>
         <source>Hugin&apos;s align_image_stack</source>
-        <translation>Alineador de pilas de imágenes Hugin</translation>
+        <translation type="vanished">Alineador de pilas de imágenes Hugin</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="257"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="261"/>
         <source>Auto-crop</source>
         <translation>Auto-recortar</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="312"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="316"/>
         <source>Progress</source>
         <translation>Progreso</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="286"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="290"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="296"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="233"/>
+        <source>&amp;MTB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="246"/>
+        <source>Hugin&apos;s align_&amp;image_stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="300"/>
         <source>&amp;Start</source>
         <translation>&amp;Inicio</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="303"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="307"/>
         <source>&amp;Close</source>
         <translation>&amp;Cerrar</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="417"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="421"/>
         <source>Anti-ghosting</source>
         <translation>Eliminar imagenes fantasma</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="425"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="429"/>
         <source>Artifact-free High Dynamic Range Imaging</source>
         <translation>Alto Rango Dinámico libre de artefactos</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="437"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="441"/>
         <source>Threshold</source>
         <translation>Umbral</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="447"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="475"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="451"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="479"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Umbral usado por el algoritmo de reduccion de imágenes fantasma. Un umbral mas bajo implica un procesado más agresivo pero puede reducir el Rango Dinámico final  . Utilice el botón &amp;quot;Recalcular&amp;quot;para ver el resultado y ajustar el umbral &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="496"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="500"/>
         <source>O. Gallo and others</source>
         <translation>O. Gallo y otros</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="516"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="520"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activar el algoritmo de eliminación de imágenes fantasma&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="519"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="523"/>
         <source>Auto anti-ghosting</source>
         <translation>Auto-eliminar imágenes fantasma</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="345"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="349"/>
         <source>Input/Output</source>
         <translation>Entrada/Salida</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="367"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="371"/>
         <source>Folder where created HDRs are saved</source>
         <translation>Carpeta donde se guardan los HDRs creados</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="370"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="384"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="374"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="388"/>
         <source>Select...</source>
         <translation>Seleccione...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="381"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="385"/>
         <source>Folder where bracketed pictures are located (in alphabetical order)</source>
         <translation>Carpeta donde se localzan las imagenes horquilladas (en orden alfabético)</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="395"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="399"/>
         <source>Input folder:</source>
         <translation>Carpeta de entrada:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="405"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.ui" line="409"/>
         <source>Output folder:</source>
         <translation>Carpeta de salida:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="112"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="119"/>
         <source>Custom config %1</source>
         <translation>Configuración personalizada %1</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="170"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="177"/>
         <source>Choose a source directory</source>
         <translation>Elija un directorio de origen</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="199"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="206"/>
         <source>Choose a output directory</source>
         <translation>Elija un directorio de salida</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="232"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="251"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="257"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="239"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="258"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="264"/>
         <source>Warning</source>
         <translation>Precaución</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="232"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="239"/>
         <source>The chosen output directory contains HDR files. Those files might be overwritten. 
 
 Continue?</source>
@@ -348,63 +364,63 @@ Continue?</source>
 Continuamos?</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="251"/>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="257"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="258"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="264"/>
         <source>Total number of pictures must be a multiple of number of bracketed images.</source>
         <translation>El número total de imágenes debe ser un múltiplo del número de las imágenes horquilladas.</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="279"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="286"/>
         <source>Started processing...</source>
         <translation>Iniciando el procesado...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="299"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="306"/>
         <source>Loading files...</source>
         <translation>Cargando ficheros...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="323"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="330"/>
         <source>Completed with errors</source>
         <translation>Completado con errores</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="325"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="332"/>
         <source>Completed without errors</source>
         <translation>Completado sin errores</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="335"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="342"/>
         <source>Error: missing EXIF data</source>
         <translation>Error: se perderán los datos EXIF</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="346"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="353"/>
         <source>Aligning...</source>
         <translation>Alineando...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="367"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="374"/>
         <source>Creating HDR...</source>
         <translation>Creando HDR...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="386"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="393"/>
         <source>Doing auto anti-ghosting...</source>
         <translation>Realizando la eliminación automática de imágenes fantasma...</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="429"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="436"/>
         <source>Written </source>
         <translation>Escribiendo</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="436"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="443"/>
         <source>Error: </source>
         <translation>Error:</translation>
     </message>
     <message>
-        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="472"/>
+        <location filename="../src/BatchHDR/BatchHDRDialog.cpp" line="479"/>
         <source>Aborting...</source>
         <translation>Cancelando...</translation>
     </message>
@@ -507,9 +523,15 @@ Continuamos?</translation>
         <translation>Lista de opciones de ajuste tonal que serán utilizados para tonear cada HDR</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="279"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="302"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="316"/>
         <source>Specify output folder for the tone mapped files</source>
         <translation>Indica la carpeta de destino para los archivos de toneado</translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="445"/>
+        <source>S&amp;how only:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="282"/>
@@ -522,12 +544,18 @@ Continuamos?</translation>
         <translation>Anchura de la Imagen de Salida</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="320"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="326"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="345"/>
+        <source>Width of tonemapped image in percent of original image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="329"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="358"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="370"/>
         <source>Output Format:</source>
         <translation>Formato de Salida</translation>
     </message>
@@ -537,77 +565,86 @@ Continuamos?</translation>
         <translation>Carpeta de Salida</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="302"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="305"/>
         <source>Selec&amp;t...</source>
         <translation>Seleccionar</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="378"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="377"/>
+        <source>Image format of tonemapped images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="384"/>
+        <source>Image format options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="397"/>
         <source>Conversion Log</source>
         <translation>Log de la conversión</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="408"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="427"/>
         <source>Batch operations report</source>
         <translation>Informe de operaciones en serie</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="426"/>
         <source>&amp;Show only:</source>
-        <translation>&amp;Mostrar solo:</translation>
+        <translation type="vanished">&amp;Mostrar solo:</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="436"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="455"/>
         <source>Filter messages based on severity</source>
         <translation>Filtrar mensajes basados en su importancia</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="443"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="462"/>
         <source>All messages</source>
         <translation>Todos los mensajes</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="448"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="467"/>
         <source>Errors only</source>
         <translation>Solo errores</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="453"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="472"/>
         <source>Success messages</source>
         <translation>Mensaje emitido</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="461"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="480"/>
         <source>&amp;Filter log messages:</source>
         <translation>&amp;Filtrar mensajes de log</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="489"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="508"/>
         <source>Clear filter text</source>
         <translation>Limpiar filtrado de texto</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="505"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="524"/>
         <source>Overall completion progress</source>
         <translation>Progreso global de realización</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="530"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="549"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="543"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="562"/>
         <source>Start batch tone mapping</source>
         <translation>Iniciar toneado en serie</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.ui" line="546"/>
+        <location filename="../src/BatchTM/BatchTMDialog.ui" line="565"/>
         <source>&amp;Start</source>
         <translation>&amp;Inicio</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="99"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="111"/>
         <source>Using %n thread(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -615,59 +652,59 @@ Continuamos?</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="119"/>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="152"/>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="211"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="132"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="165"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="224"/>
         <source>Choose a directory</source>
         <translation>Seleccione un directorio</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="141"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="154"/>
         <source>All HDR images </source>
         <translation>Todas las imágenes HDR</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="144"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="157"/>
         <source>Select input images</source>
         <translation>Seleccionar imágenes de entrada</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="174"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="187"/>
         <source>Load tone mapping settings text files...</source>
         <translation>Cargar archivos de configuración de ajuste tonal en formato texto...</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="176"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="189"/>
         <source>Luminance HDR tone mapping settings text file (*.txt)</source>
         <translation>Archivos de configuración de ajuste tonal en formato texto para Luminance HDR (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="520"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="534"/>
         <source>Processing...</source>
         <translation>Procesando...</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="522"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="536"/>
         <source>Start processing...</source>
         <translation>Iniciando procesado...</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="531"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="545"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="533"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="547"/>
         <source>&amp;Done</source>
         <translation>&amp;Hecho</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="534"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="548"/>
         <source>All tasks completed.</source>
         <translation>Todas las tareas finalizadas.</translation>
     </message>
     <message>
-        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="567"/>
+        <location filename="../src/BatchTM/BatchTMDialog.cpp" line="581"/>
         <source>Aborting...</source>
         <translation>Cancelando...</translation>
     </message>
@@ -703,464 +740,518 @@ Continuamos?</translation>
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="116"/>
+        <location filename="../src/MainCli/commandline.cpp" line="126"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
         <translation>Uso: %1 [OPTIONS]... [INPUTFILES]...</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="118"/>
+        <location filename="../src/MainCli/commandline.cpp" line="128"/>
         <source>Display this help.</source>
         <translation>Mostrar esta ayuda.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="119"/>
+        <location filename="../src/MainCli/commandline.cpp" line="129"/>
         <source>Print more messages during execution.</source>
         <translation>Muestra mas mensajes durante la ejecución.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="120"/>
+        <location filename="../src/MainCli/commandline.cpp" line="130"/>
+        <source>Print a list of all supported cameras.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="131"/>
         <source>[AIS|MTB]   Align Engine to use during HDR creation (default: no alignment).</source>
         <translation>[AIS|MTB] Motor de alineación a utilizar durante la creación del HDR (Valor por defecto: No alineación)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="121"/>
+        <location filename="../src/MainCli/commandline.cpp" line="132"/>
         <source>EV1,EV2,... Specify numerical EV values (as many as INPUTFILES).</source>
         <translation>EV1,EV2,... Especifica valores numéricos de EV (tantos como INPUTFILES).</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="122"/>
+        <location filename="../src/MainCli/commandline.cpp" line="133"/>
         <source>prefix Save aligned images to files which names start with prefix</source>
         <translation>prefix Guarda las imágenes alineadas a ficheros con nombres que empiezan con prefijo</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="124"/>
+        <location filename="../src/MainCli/commandline.cpp" line="135"/>
         <source>HDR_FILE Load an HDR instead of creating a new one.</source>
         <translation>HDR_FILE Carga un HDR en lugar de crear uno nuevo.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="125"/>
+        <location filename="../src/MainCli/commandline.cpp" line="136"/>
         <source>HDR_FILE Save to a HDR file format. (default: don&apos;t save)</source>
         <translation>HDR_FILE Guarda un fichero en formato HDR. (Valor por defecto: No guardar)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="126"/>
+        <location filename="../src/MainCli/commandline.cpp" line="137"/>
         <source>VALUE        Gamma value to use during tone mapping. (default: 1) </source>
         <translation>VALUE Valor de Gamma a utilizar durante el ajuste tonal. (Valor por defecto: 1)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="127"/>
+        <location filename="../src/MainCli/commandline.cpp" line="138"/>
         <source>VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping)</source>
         <translation>VALUE Anchura a la que quieres generar el HDR (Se ajusta el tamaño antes del gamma y el ajuste tonal)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="129"/>
+        <location filename="../src/MainCli/commandline.cpp" line="140"/>
         <source>LDR_FILE    File name you want to save your tone mapped LDR to.</source>
         <translation>LDR_FILE Nombre del archivo de ajuste tonal LDR.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="131"/>
+        <location filename="../src/MainCli/commandline.cpp" line="141"/>
         <source>THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)</source>
         <translation>THRESHOLD Activar la eliminación de imágenes fantasma con un umbral dado.(0.0-1.0)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="134"/>
-        <source>HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR</source>
-        <translation>Parámetros de creación de HDR - Usted puede cargar un fichero HDR existente (opción -l) o especificar INPUTFILES para crear un nuevo HDR</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="136"/>
-        <source>weight = triangular|gaussian|plateau|flat (Default is triangular)</source>
-        <translation>peso = triangular|gaussian|plateau|flat (Valor por defecto: triangular)</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="137"/>
-        <source>response curve = from_file|linear|gamma|log|srgb (Default is linear)</source>
-        <translation>Curva de respuesta = desde_archivo|lineal|gamma|log|srgb (valor por defecto: lineal) </translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="138"/>
-        <source>model: robertson|robertsonauto|debevec (Default is debevec)</source>
-        <translation>modelo = robertson|robertsonauto|debevec (Valor por defecto: debevec)</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="139"/>
-        <source>curve filename = your_file_here.m</source>
-        <translation>fichero de curva = your_file_here.m</translation>
-    </message>
-    <message>
         <location filename="../src/MainCli/commandline.cpp" line="142"/>
-        <source>LDR output parameters</source>
+        <source>Apply autolevels correction after tonemapping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="144"/>
-        <source>VALUE      Quality of the saved tone mapped file (1-100).</source>
-        <translation type="unfinished">VALUE Calidad del archivo de ajuste tonal (0-100). {1-100)?}</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="145"/>
-        <source>Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)</source>
+        <location filename="../src/MainCli/commandline.cpp" line="143"/>
+        <source>Enable generation of a webpage with embedded HDR viewer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="146"/>
+        <source>HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR</source>
+        <translation>Parámetros de creación de HDR - Usted puede cargar un fichero HDR existente (opción -l) o especificar INPUTFILES para crear un nuevo HDR</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="148"/>
+        <source>weight = triangular|gaussian|plateau|flat (Default is triangular)</source>
+        <translation>peso = triangular|gaussian|plateau|flat (Valor por defecto: triangular)</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="149"/>
+        <source>response curve = from_file|linear|gamma|log|srgb (Default is linear)</source>
+        <translation>Curva de respuesta = desde_archivo|lineal|gamma|log|srgb (valor por defecto: lineal) </translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="150"/>
+        <source>model: robertson|robertsonauto|debevec (Default is debevec)</source>
+        <translation>modelo = robertson|robertsonauto|debevec (Valor por defecto: debevec)</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="151"/>
+        <source>curve filename = your_file_here.m</source>
+        <translation>fichero de curva = your_file_here.m</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="154"/>
+        <source>LDR output parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="156"/>
+        <source>VALUE      Quality of the saved tone mapped file (1-100).</source>
+        <translation type="unfinished">VALUE Calidad del archivo de ajuste tonal (0-100). {1-100)?}</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="157"/>
+        <source>Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="158"/>
         <source>Tiff deflate compression. true|false (Default is true)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="149"/>
+        <location filename="../src/MainCli/commandline.cpp" line="161"/>
+        <source>HTML output parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="163"/>
+        <source>VALUE      Quality of the interpolated exposures, from the worst (1) to the best(5). Higher quality will introduce less distortions in the brightest and the darkest tones, but will also generate more images. More images means that there is more data that needs to be transferred to the web-browser, making HDR viewer less responsive. (Default is 2, which is sufficient for most applications)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="169"/>
+        <source>Specifies the file name, of the web page to be generated. If &lt;page_name&gt; is missing, the file name of the first image with .html extension will be used. (Default is first image name)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="173"/>
+        <source>Specify where to store the resulting image files. Links to images in HTML will be updated accordingly. This must be a relative path and the directory must exist.  Useful to avoid clutter in the current directory. (Default is current working directory)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="179"/>
         <source>Tone mapping parameters  - no tonemapping is performed unless -o is specified</source>
         <translation>Parámetros de ajuste tonal - No se realizará un ajuste tonal si no se especifica un parámetro -o</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="151"/>
         <source>Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Default is mantiuk06)</source>
-        <translation>Operador de ajuste tonal. Los valores posibles son: [ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Valor por defecto: mantiuk06)</translation>
+        <translation type="vanished">Operador de ajuste tonal. Los valores posibles son: [ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Valor por defecto: mantiuk06)</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="152"/>
+        <location filename="../src/MainCli/commandline.cpp" line="181"/>
+        <source>Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|mai|mantiuk06|mantiuk08] (Default is mantiuk06)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="182"/>
         <source>SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="155"/>
+        <location filename="../src/MainCli/commandline.cpp" line="185"/>
         <source> Fattal</source>
         <translation> Fattal</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="157"/>
+        <location filename="../src/MainCli/commandline.cpp" line="187"/>
         <source>alpha FLOAT</source>
         <translation>alpha FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="158"/>
+        <location filename="../src/MainCli/commandline.cpp" line="188"/>
         <source>beta FLOAT</source>
         <translation>beta FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="159"/>
+        <location filename="../src/MainCli/commandline.cpp" line="189"/>
         <source>color FLOAT</source>
         <translation>color FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="160"/>
+        <location filename="../src/MainCli/commandline.cpp" line="190"/>
         <source>noise FLOAT</source>
         <translation>ruido FLOAT</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="161"/>
+        <location filename="../src/MainCli/commandline.cpp" line="191"/>
         <source>new true|false</source>
         <translation>nuevo verdadero|falso</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="163"/>
-        <source> Mantiuk 06</source>
-        <translation> Mantiuk 06</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="165"/>
-        <source>contrast FLOAT</source>
-        <translation>contraste FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="166"/>
-        <source>saturation FLOAT</source>
-        <translation>saturación FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="167"/>
-        <source>detail FLOAT</source>
-        <translation>detalle FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="168"/>
-        <source>equalization true|false</source>
-        <translation>equalización verdadero|falso</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="170"/>
-        <source> Mantiuk 08</source>
-        <translation> Mantiuk 08</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="172"/>
-        <source>color saturation FLOAT</source>
-        <translation>saturación de color FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="173"/>
-        <source>contrast enhancement FLOAT</source>
-        <translation>mejora del contraste FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="174"/>
-        <source>luminance level FLOAT</source>
-        <translation>Nivel de luminancia FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="175"/>
-        <source>enable luminance level true|false</source>
-        <translation>activar nivel de luminancia verdadero|falso</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="177"/>
-        <source> Durand</source>
-        <translation> Durand</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="179"/>
-        <source>spatial kernel sigma FLOAT</source>
-        <translation>spatial kernel sigma FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="180"/>
-        <source>range kernel sigma FLOAT</source>
-        <translation>range kernel sigma FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="181"/>
-        <source>base contrast FLOAT</source>
-        <translation>contraste de base FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="183"/>
-        <source> Drago</source>
-        <translation> Drago</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="185"/>
-        <source>bias FLOAT</source>
-        <translation>bias FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="187"/>
-        <source> Reinhard 02</source>
-        <translation> Reinhard 02</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="189"/>
-        <source>key value FLOAT</source>
-        <translation>Valor clave FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="190"/>
-        <source>phi FLOAT</source>
-        <translation>phi FLOAT</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="191"/>
-        <source>use scales true|false</source>
-        <translation>usar escalas verdadero|falso</translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="192"/>
-        <source>range FLOAT</source>
-        <translation>rango FLOAT</translation>
-    </message>
-    <message>
         <location filename="../src/MainCli/commandline.cpp" line="193"/>
-        <source>lower scale FLOAT</source>
+        <source> Ferradans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="194"/>
-        <source>upper scale FLOAT</source>
+        <location filename="../src/MainCli/commandline.cpp" line="195"/>
+        <source>rho FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="196"/>
+        <source>inv_alpha FLOAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="198"/>
+        <source> Mantiuk 06</source>
+        <translation> Mantiuk 06</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="200"/>
+        <source>contrast FLOAT</source>
+        <translation>contraste FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="201"/>
+        <source>saturation FLOAT</source>
+        <translation>saturación FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="202"/>
+        <source>detail FLOAT</source>
+        <translation>detalle FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="203"/>
+        <source>equalization true|false</source>
+        <translation>equalización verdadero|falso</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="205"/>
+        <source> Mantiuk 08</source>
+        <translation> Mantiuk 08</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="207"/>
+        <source>color saturation FLOAT</source>
+        <translation>saturación de color FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="208"/>
+        <source>contrast enhancement FLOAT</source>
+        <translation>mejora del contraste FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="209"/>
+        <source>luminance level FLOAT</source>
+        <translation>Nivel de luminancia FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="210"/>
+        <source>enable luminance level true|false</source>
+        <translation>activar nivel de luminancia verdadero|falso</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="212"/>
+        <source> Durand</source>
+        <translation> Durand</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="214"/>
+        <source>spatial kernel sigma FLOAT</source>
+        <translation>spatial kernel sigma FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="215"/>
+        <source>range kernel sigma FLOAT</source>
+        <translation>range kernel sigma FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="216"/>
+        <source>base contrast FLOAT</source>
+        <translation>contraste de base FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="218"/>
+        <source> Drago</source>
+        <translation> Drago</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="220"/>
+        <source>bias FLOAT</source>
+        <translation>bias FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="222"/>
+        <source> Reinhard 02</source>
+        <translation> Reinhard 02</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="224"/>
+        <source>key value FLOAT</source>
+        <translation>Valor clave FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="225"/>
+        <source>phi FLOAT</source>
+        <translation>phi FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="226"/>
+        <source>use scales true|false</source>
+        <translation>usar escalas verdadero|falso</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="227"/>
+        <source>range FLOAT</source>
+        <translation>rango FLOAT</translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="228"/>
+        <source>lower scale FLOAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="229"/>
+        <source>upper scale FLOAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="231"/>
         <source> Reinhard 05</source>
         <translation type="unfinished"> Reinhard 05</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="198"/>
+        <location filename="../src/MainCli/commandline.cpp" line="233"/>
         <source>Brightness FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="199"/>
+        <location filename="../src/MainCli/commandline.cpp" line="234"/>
         <source>Chroma adaption FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="200"/>
+        <location filename="../src/MainCli/commandline.cpp" line="235"/>
         <source>Light adaption FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="202"/>
+        <location filename="../src/MainCli/commandline.cpp" line="237"/>
         <source> Ashikmin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="204"/>
+        <location filename="../src/MainCli/commandline.cpp" line="239"/>
         <source>Equation number 2 true|false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="205"/>
+        <location filename="../src/MainCli/commandline.cpp" line="240"/>
         <source>Simple true|false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="206"/>
+        <location filename="../src/MainCli/commandline.cpp" line="241"/>
         <source>Local threshold FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="208"/>
+        <location filename="../src/MainCli/commandline.cpp" line="243"/>
         <source> Pattanaik</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="210"/>
+        <location filename="../src/MainCli/commandline.cpp" line="245"/>
         <source>multiplier FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="211"/>
+        <location filename="../src/MainCli/commandline.cpp" line="246"/>
         <source>Local tone mapping true|false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="212"/>
+        <location filename="../src/MainCli/commandline.cpp" line="247"/>
         <source>Auto luminance true|false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="213"/>
+        <location filename="../src/MainCli/commandline.cpp" line="248"/>
         <source>cone level FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="214"/>
+        <location filename="../src/MainCli/commandline.cpp" line="249"/>
         <source>rod level FLOAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="258"/>
+        <location filename="../src/MainCli/commandline.cpp" line="320"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>Error: Motor de alineado no reconocido.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="276"/>
+        <location filename="../src/MainCli/commandline.cpp" line="338"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Error: Indicada función de altura desconocida.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="291"/>
+        <location filename="../src/MainCli/commandline.cpp" line="353"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>Error: Curva de respuesta desconocida.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="302"/>
+        <location filename="../src/MainCli/commandline.cpp" line="364"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>Error: Modelo de creación de HDR desconocido.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="328"/>
+        <location filename="../src/MainCli/commandline.cpp" line="393"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>Error: Especificado un operador de toneado desconocido.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="339"/>
-        <location filename="../src/MainCli/commandline.cpp" line="347"/>
+        <location filename="../src/MainCli/commandline.cpp" line="404"/>
+        <location filename="../src/MainCli/commandline.cpp" line="412"/>
         <source>Error: The specified file with TMO settings could not be parsed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="343"/>
+        <location filename="../src/MainCli/commandline.cpp" line="408"/>
         <source>Error: The specified file with TMO settings could not be parsed!: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="354"/>
+        <location filename="../src/MainCli/commandline.cpp" line="419"/>
         <source>Error: Quality must be in the range [1-100].</source>
         <translation type="unfinished">Error: El parámetro Calidad debe estar en el rango [0-100]. {1-100]?}</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="369"/>
+        <location filename="../src/MainCli/commandline.cpp" line="434"/>
         <source>Error: Unknown tiff format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="383"/>
+        <location filename="../src/MainCli/commandline.cpp" line="448"/>
         <source>Error: Threshold must be in the range [0-1].</source>
         <translation>Error: El parámetro Umbral debe estar en el rango [0-1].</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="416"/>
+        <location filename="../src/MainCli/commandline.cpp" line="487"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>Error: El valor numérico indicado en EV es diferente al número de archivos de entrada.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="433"/>
-        <source>Error: You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/MainCli/commandline.cpp" line="469"/>
+        <location filename="../src/MainCli/commandline.cpp" line="539"/>
         <source>Load file %1 failed</source>
         <translation>Falló la carga del archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="479"/>
+        <location filename="../src/MainCli/commandline.cpp" line="549"/>
         <source>Error: Exif data missing in images and EV values not specified on the commandline, bailing out.</source>
         <translation>Error: Datos EXIF no encontrados en la imagen y valor EV no indicado en la linea de comandos. Rescatando.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="486"/>
+        <location filename="../src/MainCli/commandline.cpp" line="556"/>
         <source>EV values have been assigned.</source>
         <translation>Los valores de EV han sido asignados.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="505"/>
+        <location filename="../src/MainCli/commandline.cpp" line="575"/>
         <source>Failed executing align_image_stack</source>
         <translation>Fallo ejecutando la alineación de la pila de imágenes</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="511"/>
+        <location filename="../src/MainCli/commandline.cpp" line="581"/>
         <source>Failed aligning images.</source>
         <translation>Fallo al alinear las imágenes.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="513"/>
+        <location filename="../src/MainCli/commandline.cpp" line="583"/>
         <source>Creating (in memory) the HDR.</source>
         <translation>Creando (en memoria) el HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="543"/>
+        <location filename="../src/MainCli/commandline.cpp" line="613"/>
         <source>Saving to file %1.</source>
         <translation>Guardando al fichero %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="548"/>
-        <location filename="../src/MainCli/commandline.cpp" line="600"/>
+        <location filename="../src/MainCli/commandline.cpp" line="618"/>
+        <location filename="../src/MainCli/commandline.cpp" line="701"/>
         <source>Image %1 saved successfully</source>
         <translation>Imagen %1 guardada</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="552"/>
+        <location filename="../src/MainCli/commandline.cpp" line="622"/>
         <source>Could not save %1</source>
         <translation>No se pudo guardar %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="557"/>
+        <location filename="../src/MainCli/commandline.cpp" line="627"/>
         <source>NOT Saving HDR image to file. %1</source>
         <translation>NO guardada la imagen HDR al archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="567"/>
+        <location filename="../src/MainCli/commandline.cpp" line="650"/>
+        <source>ERROR: directory %1 must exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="660"/>
         <source>Tonemapping requested, saving to file %1.</source>
         <translation>Solicitado ajuste tonal, guardado al archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="605"/>
+        <location filename="../src/MainCli/commandline.cpp" line="706"/>
         <source>ERROR: Cannot save to file: %1</source>
         <translation>Error: No se puede guardar el archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="618"/>
+        <location filename="../src/MainCli/commandline.cpp" line="724"/>
         <source>Failed loading images</source>
         <translation>Fallo al cargar las imágenes</translation>
     </message>
@@ -1168,9 +1259,13 @@ Continuamos?</translation>
 <context>
     <name>DnDOption</name>
     <message>
-        <location filename="../src/MainWindow/DnDOption.ui" line="17"/>
         <source>Drag and Drop</source>
-        <translation>Arrastrar y soltar</translation>
+        <translation type="vanished">Arrastrar y soltar</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/DnDOption.ui" line="17"/>
+        <source>Choose action</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/MainWindow/DnDOption.ui" line="37"/>
@@ -1183,27 +1278,27 @@ Continuamos?</translation>
         <translation>&amp;Abrir</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DnDOption.ui" line="64"/>
+        <location filename="../src/MainWindow/DnDOption.ui" line="63"/>
         <source>Open an existing HDR image</source>
         <translation>Abrir una imagen HDR existente</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DnDOption.ui" line="71"/>
+        <location filename="../src/MainWindow/DnDOption.ui" line="70"/>
         <source>&amp;New</source>
         <translation>&amp;Nuevo</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DnDOption.ui" line="84"/>
+        <location filename="../src/MainWindow/DnDOption.ui" line="82"/>
         <source>Create a new HDR image from one or more images</source>
         <translation>Crear una nueva imagen HDR a partir de uno o mas archivos</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DnDOption.ui" line="91"/>
+        <location filename="../src/MainWindow/DnDOption.ui" line="89"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DnDOption.ui" line="104"/>
+        <location filename="../src/MainWindow/DnDOption.ui" line="101"/>
         <source>Cancel the drag and drop process and return to the main window</source>
         <translation>Cancelar el proceso de arrastrar y soltar y volver a la ventana principal</translation>
     </message>
@@ -1211,35 +1306,39 @@ Continuamos?</translation>
 <context>
     <name>DonationDialog</name>
     <message>
-        <location filename="../src/MainWindow/DonationDialog.ui" line="26"/>
+        <location filename="../src/MainWindow/DonationDialog.ui" line="20"/>
         <source>Luminance HDR - Make a Donation</source>
         <translation>Luminance HDR - Hacer una donación</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DonationDialog.ui" line="32"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; is open-source software and its development required hundreds of hours of work.&lt;br /&gt;&lt;br /&gt;If you like it, if you use it in your work and you would like to see it gradually improved,&lt;br /&gt;please support its authors by making a donation.&lt;br /&gt;&lt;br /&gt;Would you like to make a donation for Luminance HDR now?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; es un software de código abierto y su desarrollo requiere miles de horas de trabajo.&lt;br /&gt;&lt;br /&gt;Si te gusta, si lo usas en tu trabajo y si quieres ver como sigue mejorando,&lt;br /&gt;por favor ayuda a sus autores hacindo una donación.&lt;br /&gt;&lt;br /&gt;Querrias hacer una donación a Luminance HDR ahora?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DonationDialog.ui" line="45"/>
+        <location filename="../src/MainWindow/DonationDialog.ui" line="32"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Luminance HDR&lt;/span&gt; is open-source software and its development required hundreds of hours of work.&lt;/p&gt;&lt;p&gt;If you like it,  you are using it in your HDR workflow and you would like to see it gradually improved, please support its authors by making a donation.&lt;/p&gt;&lt;p&gt;Would you like to make a donation for Luminance HDR now?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/DonationDialog.ui" line="50"/>
         <source>Yes, I&apos;d love to!</source>
         <translation>Si, ¡Me gusta¡</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DonationDialog.ui" line="52"/>
+        <location filename="../src/MainWindow/DonationDialog.ui" line="57"/>
         <source>Ask me again later</source>
         <translation>Preguntamelo luego</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/DonationDialog.ui" line="65"/>
+        <location filename="../src/MainWindow/DonationDialog.ui" line="70"/>
         <source>No, Stop bothering me!</source>
         <translation>No, ¡No me molestes mas!</translation>
     </message>
@@ -1247,47 +1346,47 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>EditingTools</name>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="463"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="479"/>
         <source>Maskable</source>
         <translation>Enmascarable</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="464"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="480"/>
         <source>Good image</source>
         <translation>Buena imagen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="468"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="486"/>
         <source>Add good image</source>
         <translation>Añadir una buena imagen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="469"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="487"/>
         <source>Remove good image</source>
         <translation>Eliminar una buena imagen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="497"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="515"/>
         <source>Ed&amp;itable</source>
         <translation>E&amp;ditables</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="498"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="516"/>
         <source>R&amp;eference</source>
         <translation>R&amp;eferencia</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="501"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="521"/>
         <source>Select the previous image in both lists</source>
         <translation>Seleccione la imagen previa en ambas listas</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="502"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="522"/>
         <source>Select the next image in both lists</source>
         <translation>Seleccione la siguiente imagen en ambas listas</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="555"/>
+        <location filename="../src/HdrWizard/EditingTools.cpp" line="575"/>
         <source>Choose a directory and a prefix</source>
         <translation>Escoja un directorio un un prefijo</translation>
     </message>
@@ -1305,89 +1404,89 @@ p, li { white-space: pre-wrap; }
         <translation>Visualización y Navegación</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="94"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="124"/>
         <source>Fit to window</source>
         <translation>Ajustar a la ventana</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="97"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="127"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Ajusta a la ventana</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="128"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="170"/>
         <source>Fill the window</source>
         <translation>Llenar la ventana</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="131"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="173"/>
         <source>Fill &amp;window</source>
         <translation>Llenar &amp;ventana</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="159"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="212"/>
         <source>Original size</source>
         <translation>Tamaño original</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="162"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="215"/>
         <source>Origina&amp;l Size</source>
         <translation>Tamaño &amp;Original</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="221"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="283"/>
         <source>&amp;Mode:</source>
         <translation>&amp;Modo:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="232"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="294"/>
         <source>Difference (E-P)</source>
         <translation>Diferencia (E-P)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="237"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="299"/>
         <source>Overlay (E+P)</source>
         <translation>Sobreponer (E+P)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="242"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="304"/>
         <source>Editable Only (E)</source>
         <translation>Solo editables (E)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="247"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="309"/>
         <source>Pivot Only (P)</source>
         <translation>Solo puntos de anclaje (P)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="252"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="314"/>
         <source>Antighosting Mask</source>
         <translation>Mascara Antighosting</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="263"/>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1094"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="325"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1219"/>
         <source>Brush</source>
         <translation>Brocha</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="270"/>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1068"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="332"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1193"/>
         <source>Lasso</source>
         <translation>Lazo</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="307"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="369"/>
         <source>Images List</source>
         <translation>Lista de imágenes</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="327"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="407"/>
         <source>Ed&amp;itable</source>
         <translation>E&amp;ditables</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="352"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="432"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1398,44 +1497,48 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;La imagen actualmente seleccionada es una de las que usted puede modificar y pintar una máscar de anti-ghosting.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="358"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="438"/>
         <source>The image currently selected in this list can be translated up,down,left and right using the controls below.
 This image&apos;s histogram is diplayed in the widget above.</source>
         <translation>La imagen actualmente seleccionada in esta lista puede ser desplazada arriba, abajo, izquierda y derecha usando los controles inferiores.
 El histiograma de esta imagen es mostrado en el recuadro superior.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="395"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="484"/>
         <source>Select the previous image in both lists</source>
         <translation>Seleccione la imagen previa en ambas listas</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="398"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="487"/>
         <source>Use this button to move the selection to the previous image in both lists.</source>
         <translation>Use este botón para moverse a la imagen anterior en ambas listas.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="415"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="504"/>
         <source>Select the next image in both lists</source>
         <translation>Seleccione la siguiente imagen en ambas listas</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="418"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="507"/>
         <source>Use this button to move the selection to the next image in both lists.</source>
         <translation>Use este botón para moverse en ambas listas a la siguiente imagen.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="452"/>
         <source>R&amp;eference</source>
-        <translation>R&amp;eferencia</translation>
+        <translation type="vanished">R&amp;eferencia</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="477"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="550"/>
+        <source>Re&amp;ference</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="575"/>
         <source>The reference image is the one currently selected</source>
         <translation>La imagen de referencia es la actualmente seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="480"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="578"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1446,186 +1549,200 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;La imagen actualmente seleccionada en la lista es utilizada como referencia de posición en la imagen editable&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="503"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="601"/>
         <source>Tools</source>
         <translation>Herramientas</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="509"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="607"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can activate the auto anti-ghosting algorithm, set the threshold value and recompute patches&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aquí puede activar el algoritmo de auto-eliminación de imágenes fantasma, fijar el valor umbral y recalcular correcciones&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="523"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="621"/>
         <source>O. Gallo and others</source>
         <translation>O. Gallo y otros</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="530"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="628"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activar el algoritmo de eliminación de imágenes fantasma&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="533"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="631"/>
         <source>Auto anti-ghosting</source>
         <translation>Auto-eliminar imágenes fantasma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="544"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="642"/>
         <source>Artifact-free HDR Imaging</source>
         <translation>Generación de HDR sin artefactos.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="567"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="665"/>
         <source>Total Patches:</source>
         <translation>Grado de coincidencia</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="595"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="693"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the amount of patches in percentage computed by the auto anti-ghosting algorithm&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Muestra el grado de coincidencia en porcentaje calculado a partir del algoritmo de eliminación de imágenes fantasma&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="612"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="710"/>
         <source>Threshold</source>
         <translation>Umbral</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="622"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="720"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Valor umbral usado en el algoritmo de eliminación de imágenes fantasma. Un valor umbral mas bajo implica un procesado mas agresivo pero puede reducir el rango dinamico final. Utilice el botón &amp;quot;Recalcular&amp;quot; para ver la actual cobertura de ajustes y fijar el umbral de forma adecuada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="650"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="748"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Umbral usado por el algoritmo de reduccion de imágenes fantasma. Un umbral mas bajo implica un procesado más agresivo pero puede reducir el Rango Dinámico final  . Utilice el botón &amp;quot;Recalcular&amp;quot;para ver el grado de coincidencia y ajustar el umbral &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="672"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="770"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to recompute patches based on selected threshold&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Haga Click aquí para recalcular las superposiciones en función del umbral&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="675"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="773"/>
         <source>Recompute</source>
         <translation>Recalcular</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="711"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="818"/>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
         <translation>Recorte la lista de imágenes despues de seleccionar con el botón izquierdo del ratón</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="714"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="821"/>
         <source>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</source>
         <translation>Pulsando este botón usted dispone de la posiblidad de recortar todas las imágenes al tamaño que previamente ha seleccionado con el botón izquierdo del ratón (pulse y mantega presionado el botón izquierdo del ratón y moviendo el puntero seleccione el area a conservar, despues presione este botón).</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="717"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="824"/>
         <source>&amp;Crop All Images</source>
         <translation>&amp;Recortar todas las imágenes</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="730"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="837"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="750"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="857"/>
         <source>&amp;Anti-Ghosting</source>
         <translation>Eliminar imágenes f&amp;antasma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="783"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="890"/>
         <source>&amp;Save Images</source>
         <translation>&amp;Guardar imágenes</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="796"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="903"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="818"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="925"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can select the method used to draw a mask, brush size and mask strength, save and apply a saved mask&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aquí puede seleccionar el método usado para dibujar una máscara, el tamaño de brocha, la intensidad de la máscara y guardar y aplicar una máscara guardada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="847"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="954"/>
         <source>Mask</source>
         <translation>Máscara</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="903"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1019"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Añadir una máscara utilizando un lazo o brocha&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="906"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1022"/>
         <source>A&amp;dd</source>
         <translation>Aña&amp;dir</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="916"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1032"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eliminar una mascara utilizando un lazo o una brocha&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="919"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1035"/>
         <source>&amp;Remove</source>
         <translation>Elimina&amp;r</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="949"/>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1016"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1074"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1141"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size of the brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamaño de la brocha&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="971"/>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="994"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1096"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1119"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Strength of the mask (semi transparent)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Intensidad de la máscara (semi transparente)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="987"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1112"/>
         <source>Size:</source>
         <translation>Tamaño:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1019"/>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1353"/>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1369"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1144"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1505"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1521"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1035"/>
-        <source>&amp;Strength:</source>
-        <translation>&amp;Fuerza:</translation>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1160"/>
+        <source>S&amp;trength:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1065"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1476"/>
+        <source>Hori&amp;zontal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1489"/>
+        <source>Verti&amp;cal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Strength:</source>
+        <translation type="vanished">&amp;Fuerza:</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1190"/>
         <source>Lasso - Draw a free hand selection area</source>
         <translation>Lazo - Dibujar a mano un área de selección</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1091"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1216"/>
         <source>Brush - Paint the mask using the brush</source>
         <translation>Brocha - Dibujar la máscara utilizando la brocha</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1131"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1256"/>
         <source>Save mask</source>
         <translation>Guardar la máscara</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1151"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1276"/>
         <source>Apply saved mask</source>
         <translation>Aplicar la máscara guardada</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1217"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1342"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1640,7 +1757,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pulsando y manteniendo pulsado el botón izquierdo del ratón usted habilita el area de recorte.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1249"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1374"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1651,7 +1768,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Valores de desplazamiento para la imagen actualmente seleccionada&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1255"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1380"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1662,99 +1779,186 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aqui el usuario puede ver y ajustar los valores de desplazamiento de la imagen actualmente seleccionada&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1261"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1386"/>
         <source>Shift values for editable image</source>
         <translation>Valores de desplazamiento para la imagen editable</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1281"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1424"/>
         <source>Reset the shift values for the currently selected movable image</source>
         <translation>Restaura los valores modificados para la imagen seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1284"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1427"/>
         <source>&amp;Reset</source>
         <translation>&amp;Restaurar</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1291"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1434"/>
         <source>Reset the shift values for all the images</source>
         <translation>Restaura los valores modificados en todas las imágenes</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1294"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1437"/>
         <source>Reset &amp;All</source>
         <translation>Restaurar &amp;todas</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1324"/>
         <source>&amp;Horizontal:</source>
-        <translation>&amp;Horizontal:</translation>
+        <translation type="vanished">&amp;Horizontal:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1337"/>
         <source>&amp;Vertical:</source>
-        <translation>&amp;Vertical:</translation>
+        <translation type="vanished">&amp;Vertical:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1350"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1502"/>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
         <translation>Inserta una desplazamiento horizontal para la actual imagen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1366"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1518"/>
         <source>Insert a vertical shift value for the currently selected movable image</source>
         <translation>Inserta un desplazamiento vertical para la imagen actual</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1392"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1553"/>
         <source>Move up of 1 pixel the currently selected movable image</source>
         <translation>Eleva un (1) pixel la imagen actual</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1405"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1569"/>
         <source>Move down of 1 pixel the currently selected movable image</source>
         <translation>Desciendo un (1) pixel la imagen actual</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1418"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1582"/>
         <source>Move right of 1 pixel the currently selected movable image</source>
         <translation>Desplaza un (1) pixel a la derecha la imagen actual</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1431"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1585"/>
+        <source>&gt;</source>
+        <translation type="unfinished">&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1598"/>
         <source>Move left of 1 pixel the currently selected movable image</source>
         <translation>Desplaza un (1) pixel a la izquierda la imagen actual</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1455"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1601"/>
+        <source>&lt;</source>
+        <translation type="unfinished">&lt;</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1625"/>
         <source>Histogram</source>
         <translation>Histograma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1481"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1660"/>
         <source>Get information about the graphical elements</source>
         <translation>Obtiene información acerca de los elementos gráficos</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1484"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1663"/>
         <source>&amp;What&apos;s this?</source>
         <translation>¿&amp;Que es esto?</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1497"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1676"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1517"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1696"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Siguiente &gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.ui" line="1527"/>
+        <location filename="../src/HdrWizard/EditingTools.ui" line="1706"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>ExportToHtmlDialog</name>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="32"/>
+        <source>Export HDR to HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="51"/>
+        <source>Export to HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="69"/>
+        <source>Web page:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="91"/>
+        <source>Output folder:</source>
+        <translation type="unfinished">Carpeta de salida:</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="112"/>
+        <source>Open web browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="128"/>
+        <source>Size:</source>
+        <translation type="unfinished">Tamaño:</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="138"/>
+        <source>%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="160"/>
+        <source>Quality:</source>
+        <translation type="unfinished">Calidad:</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="229"/>
+        <source>Images folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="245"/>
+        <source>Select...</source>
+        <translation type="unfinished">Seleccione...</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="288"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.ui" line="298"/>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.cpp" line="62"/>
+        <source>Choose a directory</source>
+        <translation type="unfinished">Seleccione un directorio</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.cpp" line="96"/>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.cpp" line="126"/>
+        <source>Error: </source>
+        <translation type="unfinished">Error:</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/ExportToHtmlDialog.cpp" line="126"/>
+        <source> must be a directory.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1784,7 +1988,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/UI/FitsImporter.ui" line="80"/>
         <location filename="../src/UI/FitsImporter.ui" line="91"/>
         <location filename="../src/UI/FitsImporter.ui" line="116"/>
-        <location filename="../src/UI/FitsImporter.ui" line="302"/>
+        <location filename="../src/UI/FitsImporter.ui" line="325"/>
         <source>Select...</source>
         <translation>Seleccione...</translation>
     </message>
@@ -1809,130 +2013,143 @@ p, li { white-space: pre-wrap; }
         <translation>Canal 3 (Azul)</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="169"/>
+        <location filename="../src/UI/FitsImporter.ui" line="175"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotate selected image 180Â°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rotar la imagen seleccionada 180Â°&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="172"/>
+        <location filename="../src/UI/FitsImporter.ui" line="178"/>
         <source>Rotate</source>
         <translation>Rotar</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="199"/>
+        <location filename="../src/UI/FitsImporter.ui" line="211"/>
         <source>Reset</source>
         <translation>Inicializar</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="209"/>
+        <location filename="../src/UI/FitsImporter.ui" line="227"/>
         <source>Load Previews</source>
         <translation>Cargar previsualizaciones</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="222"/>
+        <location filename="../src/UI/FitsImporter.ui" line="240"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="235"/>
+        <location filename="../src/UI/FitsImporter.ui" line="259"/>
         <source>Shows a larger preview of selected image</source>
         <translation>Mostrar una previsualización mayor de la imagen seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="238"/>
-        <location filename="../src/UI/FitsImporter.ui" line="472"/>
-        <location filename="../src/UI/FitsImporter.ui" line="543"/>
+        <location filename="../src/UI/FitsImporter.ui" line="262"/>
+        <location filename="../src/UI/FitsImporter.ui" line="495"/>
+        <location filename="../src/UI/FitsImporter.ui" line="566"/>
         <source>Preview</source>
         <translation>Previsualizar</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="278"/>
+        <location filename="../src/UI/FitsImporter.ui" line="301"/>
         <source>Previews</source>
         <translation>Previsualizaciones</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="316"/>
-        <location filename="../src/UI/FitsImporter.ui" line="423"/>
+        <location filename="../src/UI/FitsImporter.ui" line="339"/>
+        <location filename="../src/UI/FitsImporter.ui" line="446"/>
         <source>Alignment</source>
         <translation>Alinear</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="342"/>
+        <location filename="../src/UI/FitsImporter.ui" line="365"/>
         <source>Auto-crop</source>
         <translation>Auto-recortar</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="352"/>
+        <location filename="../src/UI/FitsImporter.ui" line="375"/>
+        <source>&amp;MTB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.ui" line="385"/>
+        <source>Hugin&apos;s align_&amp;image_stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>MTB</source>
-        <translation>MTB</translation>
+        <translation type="vanished">MTB</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="362"/>
         <source>Hugin&apos;s align_image_stack</source>
-        <translation>Alineador de pilas de imágenes Hugin</translation>
+        <translation type="vanished">Alineador de pilas de imágenes Hugin</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="397"/>
+        <location filename="../src/UI/FitsImporter.ui" line="420"/>
         <source>&amp;Autoalign images</source>
         <translation>&amp;Auto-alinear imágenes</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="426"/>
+        <location filename="../src/UI/FitsImporter.ui" line="449"/>
         <source>The alignment of the input files is in progress. Please be patient!</source>
         <translation>La alineación de los ficheros de entrada está en progreso. Por favor, sea paciente.</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="442"/>
+        <location filename="../src/UI/FitsImporter.ui" line="465"/>
         <source>Progress:</source>
         <translation>Progreso:</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="455"/>
+        <location filename="../src/UI/FitsImporter.ui" line="478"/>
         <source>Messages</source>
         <translation>Mensajes</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="475"/>
+        <location filename="../src/UI/FitsImporter.ui" line="498"/>
         <source>Please fine-tune the color part of the channels.</source>
         <translation>Por favor, ajuste el color de los canales.</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="484"/>
+        <location filename="../src/UI/FitsImporter.ui" line="507"/>
         <source>Blue</source>
         <translation>Azul</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="520"/>
+        <location filename="../src/UI/FitsImporter.ui" line="543"/>
         <source>Green</source>
         <translation>Verde</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.ui" line="602"/>
+        <location filename="../src/UI/FitsImporter.ui" line="625"/>
         <source>Red</source>
         <translation>Rojo</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="125"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="138"/>
         <source>Load one FITS image...</source>
         <translation>Cargar una imagen FITS...</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="228"/>
         <source>Cannot load FITS image %1</source>
-        <translation>No se puede cargar la imagen FITS %1</translation>
+        <translation type="vanished">No se puede cargar la imagen FITS %1</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="247"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="248"/>
+        <source>Cannot load FITS image %1. 
+ERROR: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/FitsImporter.cpp" line="267"/>
         <source>FITS images have different size</source>
         <translation>Las imagenes FITS tienen diferentes tamaños</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="439"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="478"/>
         <source>align_image_stack exited with exit code %1</source>
         <translation>align_image_stack finalizado con codigo %1</translation>
     </message>
     <message>
-        <location filename="../src/UI/FitsImporter.cpp" line="454"/>
+        <location filename="../src/UI/FitsImporter.cpp" line="493"/>
         <source>align_image_stack failed with error</source>
         <translation>align_image_stack ha fallado con error</translation>
     </message>
@@ -1940,7 +2157,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GenericViewer</name>
     <message>
-        <location filename="../src/Viewers/GenericViewer.cpp" line="105"/>
+        <location filename="../src/Viewers/GenericViewer.cpp" line="104"/>
         <source>Pan the image to a region</source>
         <translation>Mover la imagen a una región</translation>
     </message>
@@ -1948,7 +2165,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrCreationManager</name>
     <message>
-        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="174"/>
+        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="160"/>
+        <source>HdrCreationManager::loadFilesDone(): Error loading a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrCreationManager.cpp" line="182"/>
         <source>HdrCreationManager::loadFilesDone(): The images have different size.</source>
         <translation>HdrCreationManager::loadFilesDone(): Las imágenes tienen diferente tamaño.</translation>
     </message>
@@ -1956,42 +2178,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrViewer</name>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="110"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="113"/>
         <source>&amp;Mapping:</source>
         <translation>&amp;Mapping:</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="111"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="114"/>
         <source>Histogram:</source>
         <translation>Histograma:</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="117"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="120"/>
         <source>Linear</source>
         <translation>Lineal</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="118"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="121"/>
         <source>Gamma 1.4</source>
         <translation>Gamma 1.4</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="119"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="122"/>
         <source>Gamma 1.8</source>
         <translation>Gamma 1.8</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="120"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="123"/>
         <source>Gamma 2.2</source>
         <translation>Gamma 2.2</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="121"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="124"/>
         <source>Gamma 2.6</source>
         <translation>Gamma 2.6</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="122"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="125"/>
         <source>Logarithmic</source>
         <translation>Logaritmica</translation>
     </message>
@@ -2009,107 +2231,119 @@ p, li { white-space: pre-wrap; }
         <translation>[1/2] Cargar imágenes</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="80"/>
         <source>Currently Loaded &amp;Files</source>
-        <translation>&amp;Ficheros actualmente cargados</translation>
+        <translation type="vanished">&amp;Ficheros actualmente cargados</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="176"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="167"/>
         <source>Add Images</source>
         <translation>Añadir imágenes</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="196"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="186"/>
         <source>Remove Selected Image</source>
         <translation>Eliminar imagen seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="216"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="205"/>
         <source>Clear List</source>
         <translation>Limpiar la lista</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="244"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="232"/>
         <source>Preview</source>
         <translation>Previsualizar</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="303"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="291"/>
         <source>Selected Image &amp;Exposure</source>
         <translation>&amp;Exposición de la imagen seleccionada</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="315"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="303"/>
         <source>EV:</source>
         <translation>EV:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="393"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="381"/>
         <source>Alignment</source>
         <translation>Alinear</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="410"/>
         <source>MTB</source>
-        <translation>MTB</translation>
+        <translation type="vanished">MTB</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="426"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="414"/>
         <source>&amp;Autoalign images</source>
         <translation>&amp;Auto-alinear imágenes</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="436"/>
         <source>Hugin&apos;s align_image_stack</source>
-        <translation>Alineador de pilas de imágenes Hugin</translation>
+        <translation type="vanished">Alineador de pilas de imágenes Hugin</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="455"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="398"/>
+        <source>&amp;MTB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="80"/>
+        <source>&amp;Currently Loaded Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="424"/>
+        <source>&amp;Hugin&apos;s align_image_stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="443"/>
         <source>Auto-crop</source>
         <translation>Auto-recortar</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="486"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="474"/>
         <source>Anti-ghosting</source>
         <translation>Eliminar imagenes fantasma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="497"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="485"/>
         <source>Threshold</source>
         <translation>Umbral</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="507"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="495"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Valor umbral usado en el algoritmo de eliminación de imágenes fantasma. Un valor umbral mas bajo implica un procesado mas agresivo pero puede reducir el rango dinamico final. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="535"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="523"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold used by auto anti-ghosting algorithm. A lower threshold means a more aggressive processing but that can lower the final dynamic range. Use the &amp;quot;Recompute&amp;quot; button to see the actual patches coverage and adjust the threshold accordingly&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Umbral usado por el algoritmo de reduccion de imágenes fantasma. Un umbral mas bajo implica un procesado más agresivo pero puede reducir el Rango Dinámico final  . Utilice el botón &amp;quot;Recalcular&amp;quot;para ver el resultado y ajustar el umbral &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="554"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="542"/>
         <source>Enable the auto anti-ghosting algorithm (by O. Gallo and others)</source>
         <translation>Activa el algoritmo de eliminación de imágenes fantasma (O. Gallo et al.)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="557"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="545"/>
         <source>Auto anti-ghosting</source>
         <translation>Auto-eliminar imágenes fantasma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="606"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="594"/>
         <source>Enable this option for manual alignment or manual Anti-Ghosting. It&apos;s intended for users which a strong knowledge of the different HDR creation steps!</source>
         <translation>Active esta opción para la alineación manual o la eliminación manual de imágenes fantasma. Solo se recomienda para usuarios con elevados conocimientos en los pasos de creación de imágenes HDR.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="609"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="597"/>
         <source>Advanced Editing Tools</source>
         <translation>Herramientas avancadas de edición</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="636"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="624"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2122,17 +2356,17 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Comience cargando un conjunto de imágenes con diferente exposición&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="656"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="644"/>
         <source>[2/2] Choose Settings for HDR Creation</source>
         <translation>[2/2] Seleccione los parámetros para la creación del HDR</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="665"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="653"/>
         <source>Profile</source>
         <translation>Perfil</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="684"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="672"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2145,332 +2379,332 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;El primer perfil predefinido en la lista generalmente producirá los mejores resultados. Cámbielo solo si las imágenes HDR resultantes no son suficientemente buenas.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="692"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="680"/>
         <source>Profile 1</source>
         <translation>Perfil 1</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="697"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="685"/>
         <source>Profile 2</source>
         <translation>Perfil 2</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="702"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="690"/>
         <source>Profile 3</source>
         <translation>Perfil 3</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="707"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="695"/>
         <source>Profile 4</source>
         <translation>Perfil 4</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="712"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="700"/>
         <source>Profile 5</source>
         <translation>Perfil 5</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="717"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="705"/>
         <source>Profile 6</source>
         <translation>Perfil 6</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="725"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="713"/>
         <source>Use this only if the default profiles above do not yield good results</source>
         <translation>Utilice este solo si los perfiles por defecto no proporcionan buenos resultados</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="728"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="716"/>
         <source>Use Custom Configuration</source>
         <translation> Seleccione una configuración personalizada</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="741"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="729"/>
         <source>HDR Creation Model</source>
         <translation>Modelo de creción de HDR </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="758"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="746"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="763"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="751"/>
         <source>Robertson (Simple)</source>
         <translation>Robertson (Simple)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="768"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="756"/>
         <source>Robertson (Response Recovery)</source>
         <translation>Robertson (Recuperación de respuesta)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="779"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="767"/>
         <source>Weighting Function</source>
         <translation>Función de ponderación</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="799"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="787"/>
         <source>Triangular</source>
         <translation>Triangular</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="804"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="792"/>
         <source>Gaussian</source>
         <translation>Gaussian</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="809"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="797"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="814"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="802"/>
         <source>Flat</source>
         <translation>Plano</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="825"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="813"/>
         <source>Response Curve</source>
         <translation>Curva de respuesta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="848"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="836"/>
         <source>Linear</source>
         <translation>Lineal</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="853"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="841"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="858"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="846"/>
         <source>Log</source>
         <translation>Log</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="863"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="851"/>
         <source>sRGB</source>
         <translation>sRGB</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="868"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="856"/>
         <source>Custom</source>
         <translation>Personalizado</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="879"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="867"/>
         <source>Response Curve Input File</source>
         <translation>Fichero de entrada de Curva de Respuesta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="908"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="896"/>
         <source>Response Curve Output File</source>
         <translation>Fichero de salida de Curva de Respuesta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="939"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="927"/>
         <source>Save As...</source>
         <translation>Guardar como...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="951"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="939"/>
         <source>Save Settings</source>
         <translation>Guardar ajustes</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1012"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1000"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Siguiente &gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.ui" line="1019"/>
+        <location filename="../src/HdrWizard/HdrWizard.ui" line="1007"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="128"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="136"/>
         <source>Image Filename</source>
         <translation>Nombre del archivo de imagen</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="128"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="136"/>
         <source>Exposure</source>
         <translation>Exposición</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="267"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="275"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>Todos los formatos (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="268"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="276"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
         <translation>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="269"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="277"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="270"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="278"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation>Imágenes TIFF (*.tiff *.tif *.TIFF *.TIF);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="271"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="279"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
         <translation>Imágenes RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="272"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="280"/>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
         <translation>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="274"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="282"/>
         <source>Select the input images</source>
         <translation>Seleccionar las imágenes iniciales</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="318"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="326"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="511"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="519"/>
         <source>Loading...</source>
         <translation>Cargando...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="577"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="585"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR was not able to find the relevant &lt;b&gt;EXIF&lt;/b&gt; tags for the following images:&lt;ul&gt;</source>
         <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt; Luminance HDR no consiguió encontrar las etiquetas &lt;b&gt;EXIF&lt;/b&gt; para las siguientes imágenes:&lt;ul&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="588"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="596"/>
         <source>&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least the following exif data: &lt;ul&gt;&lt;li&gt;Exposure Bias&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;b&gt;Tools-&gt;Copy Exif Data...&lt;/b&gt; menu item.</source>
         <translation>&lt;/ul&gt;&lt;hr&gt;Puede proceder a crear un HDR. Para ello debe insertar &lt;b&gt;manually&lt;/b&gt;el valor de exposición EV o los valores de paso.&lt;hr&gt;Si quiere que Luminance HDR lo haga &lt;b&gt;automaticamente&lt;/b&gt;, tiene que cargar imagenes que tengan al menos el siguiente dato EXIF: &lt;ul&gt;&lt;li&gt;Valor de exposición&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;Comentario:&lt;/b&gt;La perdida de datos EXIF se produce cuando se realiza un preproceso de las imagenes.&lt;br&gt;Puede realizar una copia de los dtos exif&lt;/b&gt; entre dos grupos de imagenes con &lt;b&gt;Herramientas-&gt;Copiar Datos Exif...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="599"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="607"/>
         <source>EXIF data not found</source>
         <translation>Datos EXIF no encontrados</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="609"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="617"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Imágenes cargadas.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="614"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1093"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="622"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1101"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Para continuar usted necesita introuducir manualmente los valores de exposición.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; valores son necesarios.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="634"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="642"/>
         <source>Loading Error: </source>
         <translation>Error en la carga:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="641"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="649"/>
         <source>Start loading a set of images with different exposure</source>
         <translation>Comience cargando un conjunto de imágenes con diferente exposición</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="651"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="666"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="669"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="675"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="659"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="674"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="677"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="683"/>
         <source>Error...</source>
         <translation>Error...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="652"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="660"/>
         <source>align_image_stack failed to align images.</source>
         <translation>align_image_stack falló al alinear las imágenes.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="666"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="674"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
         <translation>Falló al iniciar una aplicación externa &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Por favor, lea &quot;Ayuda -&gt; Contenidos.....-&gt; Ajustes -&gt; Herramientas externas&quot; para obtener mas información.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="669"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="677"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>La aplicación externa &quot;&lt;em&gt;pila_alineación_imagen&lt;/em&gt;&quot; falló...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="675"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="683"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Ha ocurrido un error desconocido cuando se ejecutaba la aplicación &quot;&lt;em&gt;pila_alineación_imagen&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="685"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="693"/>
         <source>Now click on next button</source>
         <translation>Ahora haga clic en el siguiente botón</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="708"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="716"/>
         <source>Aligning...</source>
         <translation>Alineando...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="820"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="848"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="828"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="856"/>
         <source>&amp;Finish</source>
         <translation>&amp;Finalizar</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="857"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="865"/>
         <source>Load camera response curve file</source>
         <translation>Cargar el fichero de la curva de respuesta de la cámara</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="859"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="867"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Curva de respuesta de la cámara (*.m);;Todos los ficheros (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="878"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="886"/>
         <source>Invalid Response Curve File</source>
         <translation>Fichero  Inválido de curva de respuesta de la cámara</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="879"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="887"/>
         <source>Invalid Response Curve File: please try a different file</source>
         <translation>Fichero  Inválido de curva de respuesta de la cámara: Por favor, pruebe con uno diferente</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="889"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="897"/>
         <source>Save a camera response curve file</source>
         <translation>Guardar un fichero de curva de respuesta de la camara</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="891"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="899"/>
         <source>Camera response curve (*.m)</source>
         <translation>Curva de respuesta de la cámara (*.m)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1071"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1079"/>
         <source>Weights: </source>
         <translation>Peso: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1072"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1080"/>
         <source> - Response curve: </source>
         <translation> - Curva de respuesta: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1073"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1081"/>
         <source> - Model: </source>
         <translation> - Modelo: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1091"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="1099"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Todos los valores de EV (Exposición) han sido establecidos.&lt;br&gt;Haga clic en el botón Siguiente.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -2478,153 +2712,263 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HelpBrowser</name>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="13"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="14"/>
         <source>Luminance HDR Help</source>
         <translation>Ayuda de Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="39"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="46"/>
+        <source>E&amp;dit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="54"/>
+        <source>V&amp;iew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="62"/>
+        <source>Boo&amp;kmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="76"/>
         <source>Luminance Help</source>
         <translation>Documentación Luminance</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="50"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="332"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="101"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="345"/>
         <source>&amp;Print...</source>
         <translation>im&amp;Primir</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="55"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="104"/>
+        <source>Ctrl+P</source>
+        <translation type="unfinished">Ctrl+P</translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="113"/>
         <source>&amp;Exit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="60"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="334"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="122"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="347"/>
         <source>&amp;Find...</source>
         <translation>&amp;Encontrar</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="65"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="125"/>
+        <source>Ctrl+F</source>
+        <translation type="unfinished">Ctrl+F</translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="130"/>
         <source>Find &amp;Next...</source>
         <translation>Encontrar &amp;Siguiente</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="70"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="133"/>
+        <source>F3</source>
+        <translation type="unfinished">F3</translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="138"/>
         <source>Find &amp;Previous...</source>
         <translation>Encontrar &amp;Previo</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="75"/>
-        <source>&amp;Add</source>
-        <translation>&amp;Añadir</translation>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="141"/>
+        <source>Shift+F3</source>
+        <translation type="unfinished">Shift+F3</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="80"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="341"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="153"/>
+        <source>Ctrl+D</source>
+        <translation type="unfinished">Ctlr+D</translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="162"/>
+        <source>&amp;Delete Bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="176"/>
+        <source>goHome</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="185"/>
+        <source>goBack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="194"/>
+        <source>goFwd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="203"/>
+        <source>zoomIn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="212"/>
+        <source>zoomOut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="221"/>
+        <source>zoomOriginal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="226"/>
+        <source>&amp;View Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="229"/>
+        <source>Ctrl+C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="234"/>
+        <source>View &amp;Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="237"/>
+        <source>Ctrl+S</source>
+        <translation type="unfinished">Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="242"/>
+        <source>View &amp;Bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="245"/>
+        <source>Ctrl+B</source>
+        <translation type="unfinished">Ctrl+B</translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="254"/>
+        <source>P&amp;rint Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add</source>
+        <translation type="vanished">&amp;Añadir</translation>
+    </message>
+    <message>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="354"/>
         <source>&amp;Delete</source>
         <translation>&amp;Borrar</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="85"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="342"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="167"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="355"/>
         <source>D&amp;elete All</source>
         <translation>Borrar &amp;Todo</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="246"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="276"/>
         <source>Help SideBar</source>
         <translation>Barra lateral de ayuda</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="325"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="338"/>
         <source>LuminanceHDR Online Help</source>
         <translation>LuminanceHDR Ayuda en línea</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="327"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="38"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="340"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="328"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="341"/>
         <source>&amp;Edit</source>
         <translation>&amp;Editar</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="329"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="342"/>
         <source>&amp;View</source>
         <translation>&amp;Ver</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="330"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="339"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="343"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="352"/>
         <source>&amp;Bookmarks</source>
         <translation>&amp;Marcadores</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="333"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="346"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quitar</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="335"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="348"/>
         <source>Find &amp;Next</source>
         <translation>Encontrar &amp;Siguiente</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="336"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="349"/>
         <source>Find &amp;Previous</source>
         <translation>Encontrar &amp;Previo</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="337"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="350"/>
         <source>&amp;Contents</source>
         <translation>&amp;Contenidos</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="338"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="351"/>
         <source>&amp;Search</source>
         <translation>&amp;Buscar</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="340"/>
+        <location filename="../src/HelpBrowser/HelpBrowser.ui" line="150"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="353"/>
         <source>&amp;Add Bookmark</source>
         <translation>&amp;Añadir marcador</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="420"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="450"/>
         <source>Find</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="420"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="450"/>
         <source>Search Term:</source>
         <translation>Palabra a buscar:</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="452"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="482"/>
         <source>New Bookmark</source>
         <translation>Nuevo marcador</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="452"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="482"/>
         <source>New Bookmark&apos;s Title:</source>
         <translation>Título del nuevo marcador:</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="670"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="700"/>
         <source>&lt;h2&gt;&lt;p&gt;Sorry, no manual is installed!&lt;/p&gt;&lt;p&gt;Please contact your package provider or LuminanceHDR team if you built the application yourself&lt;/p&gt;&lt;/h2&gt;</source>
         <comment>HTML message for no documentation available to show</comment>
         <translation>&lt;h2&gt;&lt;p&gt;Perdone, no se ha instalado el manua.&lt;/p&gt;&lt;p&gt;Por favor, contacte con el proveedor de su paquete o con el equipo de Luminance HDR si usted quiere montar la aplicación usted mismo&lt;/p&gt;&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="740"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="773"/>
         <source>LuminanceHDR - Help Browser</source>
         <translation>LuminanceHDR - Lector de la ayuda</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="741"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="774"/>
         <source>This protocol is not handled by the help browser.
 Do you want to open the link with the default application 
 associated with the protocol?</source>
@@ -2636,43 +2980,43 @@ asociada a este protocolo.</translation>
 <context>
     <name>HelpSideBar</name>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="13"/>
         <source>Contents</source>
-        <translation>Contenidos</translation>
+        <translation type="vanished">Contenidos</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="24"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="14"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="25"/>
         <source>&amp;Contents</source>
         <translation>&amp;Contenidos</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="38"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="39"/>
         <source>Se&amp;arch</source>
         <translation>Busc&amp;ar</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="46"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="47"/>
         <source>Searching is case insensitive</source>
         <translation>La busqueda no tiene en cuenta las mayúsculas</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="53"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="54"/>
         <source>&amp;Search</source>
         <translation>&amp;Buscar </translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="63"/>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="79"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="64"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="80"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="72"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="73"/>
         <source>Book&amp;marks</source>
         <translation>&amp;Marcadores</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="89"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="90"/>
         <source>&amp;Add</source>
         <translation>&amp;Añadir</translation>
     </message>
@@ -2682,7 +3026,7 @@ asociada a este protocolo.</translation>
         <translation>Elimina&amp;r</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="111"/>
+        <location filename="../src/HelpBrowser/HelpSideBar.ui" line="110"/>
         <source>R&amp;emove All</source>
         <translation>&amp;Borrar todo</translation>
     </message>
@@ -2764,8 +3108,8 @@ asociada a este protocolo.</translation>
 <context>
     <name>LdrViewer</name>
     <message>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="188"/>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="222"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="191"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="225"/>
         <source>LDR image [%1 x %2]</source>
         <translation>Imagen LDR [%1 x %2]</translation>
     </message>
@@ -2773,12 +3117,12 @@ asociada a este protocolo.</translation>
 <context>
     <name>LevelsDialog</name>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="16"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="17"/>
         <source>Levels and Gamma</source>
         <translation>Niveles y Gamma</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="55"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="75"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2789,7 +3133,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ajustar niveles de color&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="88"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="117"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2800,22 +3144,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nivel inicial&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="145"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="192"/>
         <source>Clip black</source>
         <translation>Clip negro</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="172"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="219"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="208"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="255"/>
         <source>Clip White</source>
         <translation>Clip blanco</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="237"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="293"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2826,17 +3170,17 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nivel de salida&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="337"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="420"/>
         <source>&amp;Reset</source>
         <translation>&amp;Restaurar</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="357"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="440"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/UI/GammaAndLevels.ui" line="364"/>
+        <location filename="../src/UI/GammaAndLevels.ui" line="447"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
@@ -2845,7 +3189,7 @@ p, li { white-space: pre-wrap; }
     <name>MainWindow</name>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1613"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1755"/>
         <source>Luminance HDR</source>
         <translation>Luminance HDR</translation>
     </message>
@@ -2855,802 +3199,925 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Herramientas</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="51"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="53"/>
         <source>&amp;Help</source>
         <translation>A&amp;yuda</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="63"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="66"/>
         <source>&amp;Windows</source>
         <translation>V&amp;entanas</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="74"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="78"/>
         <source>&amp;View</source>
         <translation>&amp;Ver</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="81"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="85"/>
         <source>HDR &amp;Histogram</source>
         <translation>&amp;Histograma del HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="92"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="96"/>
         <source>&amp;Toolbars</source>
         <translation>&amp;Barra de Herramientas</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="102"/>
         <source>Preview Panel</source>
-        <translation>Panel de previsualización</translation>
+        <translation type="vanished">Panel de previsualización</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="120"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="124"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="131"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="135"/>
         <source>&amp;Edit</source>
         <translation>&amp;Editar</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="157"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="161"/>
         <source>Main Toolbar</source>
         <translation>Barra de herramientas principal</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="192"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="196"/>
         <source>&amp;New HDR image...</source>
         <translation>&amp;Nueva imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="195"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="199"/>
         <source>New HDR image</source>
         <translation>Nueva imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="198"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="201"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="202"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="205"/>
         <source>Create a new HDR image from a set of LDR or Raw images</source>
         <translation>Crear una nueva imagen HDR a partir de un conjunto de LDR o imágenes RAW</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="204"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="208"/>
         <source>Create a new HDR image from a set of JPEG, Raw, or 8/16 bpc TIFF files</source>
         <translation>Crear una nueva imagen HDR a partir de un conjunto de ficheros JPEG, Raw, or 8/16 bpc TIFF</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="207"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="211"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="216"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="220"/>
         <source>&amp;Open HDR image...</source>
         <translation>&amp;Abrir imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="219"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="223"/>
         <source>Open HDR image</source>
         <translation>Abrir una imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="222"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="225"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="228"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="226"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="229"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="232"/>
         <source>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
         <translation>Cargar un ficherio de imagen HDR existente  (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="231"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="235"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="243"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="247"/>
         <source>&amp;Save as...</source>
         <translation>&amp;Guardar como ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="246"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="250"/>
         <source>Save as...</source>
         <translation>Guardar como...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="249"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="252"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="255"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="253"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="256"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="259"/>
         <source>Save image (HDR or LDR)</source>
         <translation>Guardar imagen (HDR o LDR)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="258"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="262"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="267"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="271"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quitar </translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="270"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="273"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="274"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="277"/>
         <source>Quit Luminance HDR</source>
         <translation>Salir de Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="276"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="280"/>
         <source>Exit</source>
         <translation>Abandona el programa</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="279"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="283"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="291"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="295"/>
         <source>Rotate c&amp;ounter-clockwise</source>
         <translation>Rotar a la izquierda</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="294"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="298"/>
         <source>Rotate counter-clockwise</source>
         <translation>Rotar a la izquierda</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="297"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="300"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="303"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="301"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="304"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="307"/>
         <source>Rotate counter-clockwise the HDR image</source>
         <translation>Rotar a la izquierda la imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="306"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="310"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="318"/>
         <source>Rotate c&amp;lockwise</source>
-        <translation>Rotar a la &amp;derecha</translation>
+        <translation type="vanished">Rotar a la &amp;derecha</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="321"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="325"/>
         <source>Rotate clockwise</source>
         <translation>Rotar a la derecha</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="324"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="327"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="330"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="328"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="331"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="334"/>
         <source>Rotate clockwise the HDR image</source>
         <translation>Rotar a la derecha la imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="333"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="337"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="341"/>
         <source>Low Dynamic Range</source>
-        <translation>Rango dinámico bajo</translation>
+        <translation type="vanished">Rango dinámico bajo</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="344"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="827"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="348"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="352"/>
         <source>Fit to Dynamic Range</source>
-        <translation>Ajusta al rango dinámico</translation>
+        <translation type="vanished">Ajusta al rango dinámico</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="355"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="359"/>
         <source>Fit to dynamic range</source>
         <translation>Ajusta al rango dinámico</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="358"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="362"/>
         <source>\</source>
         <translation>\</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="366"/>
         <source>Shrink Dynamic Range</source>
-        <translation>Reducir rango dinámico</translation>
+        <translation type="vanished">Reducir rango dinámico</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="369"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="373"/>
         <source>[</source>
         <translation>[</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="377"/>
         <source>Extend Dynamic Range</source>
-        <translation>Extender rango dinámico</translation>
+        <translation type="vanished">Extender rango dinámico</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="380"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="384"/>
         <source>]</source>
         <translation>]</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="388"/>
         <source>Decrease Exposure</source>
-        <translation>Reducir exposición</translation>
+        <translation type="vanished">Reducir exposición</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="391"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="106"/>
+        <source>&amp;Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="322"/>
+        <source>Rotat&amp;e clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="345"/>
+        <source>&amp;Low Dynamic Range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="356"/>
+        <source>&amp;Fit to Dynamic Range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="370"/>
+        <source>&amp;Shrink Dynamic Range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="381"/>
+        <source>&amp;Extend Dynamic Range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="392"/>
+        <source>&amp;Decrease Exposure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="395"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="399"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="403"/>
         <source>&amp;Increase Exposure</source>
         <translation>&amp;Aumentar exposición</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="402"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="406"/>
         <source>9</source>
         <translation>9</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="411"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="415"/>
         <source>&amp;Contents...</source>
         <translation>&amp;Contenidos...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="414"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="418"/>
         <source>About...</source>
         <translation>Acerca de...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="417"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="420"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="423"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="421"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="424"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="427"/>
         <source>Open user manual for Luminance HDR</source>
         <translation>Abrir el manual de usuario de Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="426"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="430"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="441"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="445"/>
         <source>&amp;Normal Size</source>
         <translation>&amp;Restaurar zoom</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="444"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="448"/>
         <source>Normal size</source>
         <translation>Tamaño normal</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="447"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="450"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="453"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="451"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="454"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="457"/>
         <source>View HDR image at its normal size</source>
         <translation>Ver la imagen HDR a su tamaño normal</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="456"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="460"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="468"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="472"/>
         <source>Zoom &amp;In</source>
         <translation>A&amp;umentar zoom</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="471"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="474"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="477"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="475"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="478"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="481"/>
         <source>Zoom in</source>
         <translation>Zum acercar</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="480"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="484"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="492"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="496"/>
         <source>Zoom &amp;Out</source>
         <translation>R&amp;educir zoom</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="495"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="498"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="501"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="499"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="502"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="505"/>
         <source>Zoom out</source>
         <translation>Zum alejar</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="504"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="508"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="522"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="526"/>
         <source>&amp;Fit in Window</source>
         <translation>&amp;Ajustar en la ventana</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="525"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="528"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="529"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="532"/>
         <source>Fit in Window</source>
         <translation>Ajustar a la ventana</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="531"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="534"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="535"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="538"/>
         <source>Make the HDR image fit its window</source>
         <translation>Ajustar la imagen HDR a la ventana</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="537"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="541"/>
         <source>W</source>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="546"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="550"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Preferencias...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="549"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="553"/>
         <source>Luminance Options</source>
         <translation>Opciones Luminance</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="552"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="555"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="558"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="556"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="559"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="562"/>
         <source>Set various options of Luminance</source>
         <translation>Ajustar varios parámetros de Luminance</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="561"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="565"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="573"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="577"/>
         <source>&amp;Resize...</source>
         <translation>Modifica&amp;R Tamaño...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="576"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="580"/>
         <source>Resize the HDR image</source>
         <translation>Modificar tamaño de la la imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="579"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="582"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="585"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="583"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="586"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="589"/>
         <source>Change size of the HDR image</source>
         <translation>Cambiar el tamaño de la imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="588"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="592"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="597"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="601"/>
         <source>Copy &amp;Exif Data...</source>
         <translation>&amp;Copiar info EXIF...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="600"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="604"/>
         <source>Copy Exif Data</source>
         <translation>Copiar datos EXIF</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="603"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="606"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="609"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="607"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="610"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="613"/>
         <source>Copy Exif data between two sets of files</source>
         <translation>Copiar datos EXIF entre dos grupos de imágenes</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="612"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="616"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="617"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="621"/>
         <source>&amp;About Qt</source>
         <translation>Ac&amp;erca de Qt</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="620"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="624"/>
         <source>Show information about Qt</source>
         <translation>Mostrar información sobre Qt</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="623"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="626"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="627"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="630"/>
         <source>Show information about Qt library that is used by Luminance</source>
         <translation>Mostrar información sobre la librería Qt que es utilizada por Luminance</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="634"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="638"/>
         <source>Text &amp;under Icons</source>
         <translation>Texto &amp;bajo los Iconos</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="642"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="646"/>
         <source>&amp;Icons Only</source>
         <translation>Solo &amp;Iconos</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="650"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="654"/>
         <source>&amp;Text Only</source>
         <translation>Solo &amp;Texto</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="658"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="662"/>
         <source>Text &amp;Alongside Icons</source>
         <translation>Texto &amp;Junto a los Iconos</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="667"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="671"/>
         <source>&amp;Batch Tone Mapping...</source>
         <translation>&amp;Toneado en Serie...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="670"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="674"/>
         <source>Convert multiple HDR images to LDR</source>
         <translation>Convertir múltiples imágenes HDR a LDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="673"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="676"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="677"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="680"/>
         <source>Convert multiple HDR images to LDR using existing settings files</source>
         <translation>Convertir múltiples imágenes HDR a LDR utilizando ficheros de ajustes existentes</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="679"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="683"/>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="688"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="692"/>
         <source>&amp;What&apos;s This?</source>
         <translation>&amp;Que es esto?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="691"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="694"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="695"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="698"/>
         <source>Get verbose information about user interface elements</source>
         <translation>Obtener información sobre los elementos del interfaz de usuario</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="700"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="704"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="705"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="713"/>
         <source>About &amp;Luminance HDR</source>
         <translation>Sobre &amp;Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="708"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="716"/>
         <source>Show information about Luminance HDR</source>
         <translation>Mostrar información sobre Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="711"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="714"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="719"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="722"/>
         <source>Show information about Luminance HDR, its authors and contributors</source>
         <translation>Mostrar información sobre Luminance HDR, sus autores y sus colaboradores</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="722"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="734"/>
         <source>Save HDR image &amp;preview...</source>
         <translation>Guardar&amp;previsualización de imagen HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="725"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="728"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="731"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="737"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="740"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="743"/>
         <source>Save the current HDR Preview to an LDR file</source>
         <translation>Guardar la previsualización actual del HDR a un fichero LDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="743"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="755"/>
         <source>&amp;Projective Transformation...</source>
         <translation>Transformación &amp;Proyectiva</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="746"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="749"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="752"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="758"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="761"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="764"/>
         <source>Apply projective transformation to the current HDR image</source>
         <translation>Aplicar una transfromación proyectiva a la imagen HDR actual</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="761"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="776"/>
         <source>&amp;Crop to Selection</source>
         <translation>Re&amp;cortar a la selección</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="764"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="779"/>
         <source>Crop to Selection</source>
         <translation>Recortar a la selección</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="767"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="770"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="782"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="785"/>
         <source>Crop the image to selection rectangle</source>
         <translation>Recortar la imagen al rectangulo de selección</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="773"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="788"/>
         <source>Click and drag inside image area to create a selection, then use this button to crop to a new HDR image</source>
         <translation>Haz clic y arrastraa sobre la imagen para crear una selección, entonces usa este botón para recortar una nueva imagen HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="785"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="800"/>
         <source>Remove &amp;Selection</source>
         <translation>Eliminar &amp;Selección</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="788"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="803"/>
         <source>Remove selection rectangle</source>
         <translation>Eliminar rectángulo de selección</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="791"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="794"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="806"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="809"/>
         <source>Remove selection rectangle from image area</source>
         <translation>Eliminar el rectángulo de selección del area de la imagen</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="799"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="818"/>
         <source>Make a &amp;Donation</source>
         <translation>Hacer una &amp;Donación</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="802"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="821"/>
         <source>Ctrl+D</source>
         <translation>Ctlr+D</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="818"/>
-        <source>Lock Viewers</source>
-        <translation>Bloquear visores</translation>
+        <location filename="../src/MainWindow/MainWindow.ui" line="836"/>
+        <source>&amp;Lock Viewers</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="821"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="845"/>
+        <source>S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="854"/>
+        <source>&amp;Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="863"/>
+        <source>Ma&amp;ximize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="868"/>
+        <source>&amp;Bring All to Front</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="882"/>
+        <source>&amp;Show Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="948"/>
+        <source>&amp;Remove Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="966"/>
+        <source>Fill &amp;Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="978"/>
+        <source>Batch &amp;HDR...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1022"/>
+        <source>&amp;Show on the right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1030"/>
+        <source>Show &amp;on the bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1041"/>
+        <source>&amp;Realtime Previews</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1050"/>
+        <source>&amp;Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1062"/>
+        <source>&amp;FITS Importer...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1095"/>
+        <source>E&amp;xport to HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1098"/>
+        <source>Export to web page with embedded HDR viewer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1106"/>
+        <source>&amp;Show Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1109"/>
+        <source>F11</source>
+        <translation type="unfinished">F11</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1120"/>
+        <source>Show &amp;Image Full Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1123"/>
+        <source>F10</source>
+        <translation type="unfinished">F10</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1128"/>
+        <source>&amp;Supported RAW Cameras</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1131"/>
+        <source>Lists all cameras supported by the program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock Viewers</source>
+        <translation type="vanished">Bloquear visores</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.ui" line="839"/>
         <source>Synchronize viewers mode (fit, fill or 1:1).</source>
         <translation>Modo de sincronización de visores (ajustar, llenar o 1:1)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="824"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="842"/>
         <source>Lock the images for sync view</source>
         <translation>Bloquear las imágenes para vistas sincronizadas</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="832"/>
         <source>Minimize</source>
-        <translation>Minimizar</translation>
+        <translation type="vanished">Minimizar</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="837"/>
         <source>Maximize</source>
-        <translation>Maximizar</translation>
+        <translation type="vanished">Maximizar</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="842"/>
         <source>Bring All to Front</source>
-        <translation>Traer todo al frente</translation>
+        <translation type="vanished">Traer todo al frente</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="856"/>
         <source>Show Preview Panel</source>
-        <translation>Mostrar panel de previsualización</translation>
+        <translation type="vanished">Mostrar panel de previsualización</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="859"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="885"/>
         <source>Show/Hide Preview Panel</source>
         <translation>Mostrar/ocultar panel de previsualización</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="862"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="888"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="877"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="903"/>
         <source>Adjust &amp;Levels</source>
         <translation>Ajustar nive&amp;Les</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="880"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="883"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="906"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="909"/>
         <source>Adjust Levels</source>
         <translation>Ajustar niveles</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="886"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="889"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="912"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="915"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>Tonear el histograma del actual LDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="892"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="918"/>
         <source>Ctrl+L</source>
         <translation>Ctlr+L</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="904"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="930"/>
         <source>Save All</source>
         <translation>Guardar todo</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="907"/>
-        <location filename="../src/MainWindow/MainWindow.ui" line="910"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="933"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="936"/>
         <source>Save All LDR files</source>
         <translation>Guardar todas las imágenes LDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="915"/>
         <source>Remove Tab</source>
-        <translation>Eliminar tabulador</translation>
+        <translation type="vanished">Eliminar tabulador</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="918"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="951"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="933"/>
         <source>Fill Window</source>
-        <translation>Llenar ventana</translation>
+        <translation type="vanished">Llenar ventana</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="936"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="969"/>
         <source>Fill window with the current viewer</source>
         <translation>Llenar ventana con el visor activo</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="945"/>
         <source>Batch HDR...</source>
-        <translation>HDR en modo Batch</translation>
+        <translation type="vanished">HDR en modo Batch</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="948"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="981"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="963"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="996"/>
         <source>Soft Proofing</source>
         <translation>Prueba inicial</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="978"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1011"/>
         <source>Gamut Check</source>
         <translation>Prueba de gama</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="989"/>
         <source>Show on the right</source>
-        <translation>Mostrar a la derecha</translation>
+        <translation type="vanished">Mostrar a la derecha</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="997"/>
         <source>Show on the bottom</source>
-        <translation>Mostrar abajo</translation>
+        <translation type="vanished">Mostrar abajo</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="1008"/>
         <source>Realtime Previews</source>
-        <translation>Previsualización en tiempo real</translation>
+        <translation type="vanished">Previsualización en tiempo real</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="1017"/>
         <source>Update</source>
-        <translation>Actualizar</translation>
+        <translation type="vanished">Actualizar</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="1029"/>
         <source>FITS Importer...</source>
-        <translation>Importador de FITS....</translation>
+        <translation type="vanished">Importador de FITS....</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="1032"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1065"/>
         <source>Import four FITS files representing luminosity, red, green and blue channels</source>
         <translation>Importar cuatro ficheros FITS para los canales de luminosidad, rojo, verde y azul</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="1035"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1068"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="1047"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1080"/>
         <source>White Balance</source>
         <translation>Balance de blancos</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.ui" line="1050"/>
+        <location filename="../src/MainWindow/MainWindow.ui" line="1083"/>
         <source>Fix color cast, can be slow</source>
         <translation>Ajustar la dominante de color puede ser lento</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="430"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="486"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation>¡Listo!. Ahora abra una imagen HDR existente o cree una nueva.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="492"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="548"/>
         <source>All HDR formats </source>
         <translation>Todos los formatos HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="511"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="567"/>
         <source>Load one or more HDR images...</source>
         <translation>Cargar una o mas imágenes HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="537"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="593"/>
         <source>Save files in</source>
         <translation>Guardar archivos en</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="679"/>
         <source>Failed to save</source>
-        <translation>Falló al guardar</translation>
+        <translation type="vanished">Falló al guardar</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1052"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1134"/>
         <source>Done!</source>
         <translation>Hecho!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1063"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1145"/>
         <source>Aborting...</source>
         <translation>Cancelando tarea...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1322"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1404"/>
         <source>Cropped Image</source>
         <translation>Imagen recortada</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1373"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1455"/>
         <source>It appears that you are running the 32-bit version &lt;strong&gt;Luminance HDR&lt;/strong&gt; on a 64-bit system. &lt;br&gt;Please download the &lt;strong&gt;64-bit&lt;/strong&gt; version from &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; to get the best Luminance HDR experience!</source>
         <translation>Parece que está ejecutando una versión de 32 bit  de &lt;strong&gt;Luminance HDR&lt;/strong&gt; en un sistema de 64 bit. &lt;br&gt;Por favor, descargue la versión de &lt;strong&gt;64 bit&lt;/strong&gt; de  &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt; para conseguir la mejor experiencia con Luminance HDR.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1387"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1469"/>
         <source>Unsaved changes...</source>
         <translation>Modificaciones no guardadas...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1388"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1470"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation>Esta imagen HDR tiene modificaciones sin guardar.&lt;br&gt; Quiere guardarlas?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1491"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1623"/>
         <source>Fattal Warning</source>
         <translation>Error fatal</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1492"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1624"/>
         <source>This tonemapping operator depends on the size of the input  image. Applying this operator on the full size image will most probably result in a different image. 
 
 Do you want to continue?</source>
@@ -3659,28 +4126,34 @@ Do you want to continue?</source>
 ¿Quiere continuar?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1101"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1591"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1183"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1732"/>
         <source>Untitled</source>
         <translation>Sin título</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1593"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="724"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="738"/>
+        <source>Failed to save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1734"/>
         <source>Untitled %1</source>
         <translation>Sin titulo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1614"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1756"/>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1770"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1932"/>
         <source>Untitled HDR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="2014"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="2186"/>
         <source>FITS Image</source>
         <translation>Imagen FITS</translation>
     </message>
@@ -3693,119 +4166,114 @@ Do you want to continue?</source>
         <translation>Preferencias</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="115"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="155"/>
         <source>Color Management</source>
         <translation>Gestión del color</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="83"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="111"/>
         <source>RAW Conversion</source>
         <translation>Conversión a RAW</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="28"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="44"/>
         <source>Tone Mapping</source>
         <translation>Tone Mapping</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="144"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="196"/>
         <source>External Tools</source>
         <translation>Herramientas externas</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="173"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="237"/>
         <source>Interface</source>
         <translation>Interface</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="205"/>
-        <source>Export queue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="270"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="346"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="452"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="528"/>
         <source>Default Previews Width</source>
         <translation>Anchura de la vista por defecto</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="471"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="547"/>
         <source>px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="487"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="563"/>
         <source>Always show Preview Panel</source>
         <translation>Ver siempre el panel de previsualización</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="497"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="573"/>
         <source>Saves the settings along the program files, to be portable</source>
         <translation>Guardar los ficheros de ajustes, para ser portable</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="500"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="576"/>
         <source>Portable mode</source>
         <translation>Modo portable</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="512"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="588"/>
         <source>Dark mode (beta)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="521"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="597"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="553"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="629"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="560"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="636"/>
         <source>Export directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="633"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="712"/>
         <source>Temporary Working Folder</source>
         <translation>Carpeta de trabajo temporal</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="583"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="691"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="676"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="777"/>
         <source>&amp;Browse...</source>
         <translation>&amp;Explorar</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="643"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="665"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="722"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="744"/>
         <source>Amount of threads to use on multicore/SMP machines</source>
         <translation>Número de hebras a utilizar en máquinas multiprocesador/SMP</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="646"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="725"/>
         <source>Batch Tonemapping Number of Threads</source>
         <translation>Número de hebras en el proceso en serie de ajuste tonal</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="732"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="814"/>
         <source>General</source>
         <translation>General</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="740"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="822"/>
         <source>Quality:</source>
         <translation>Calidad:</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="761"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="843"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3819,50 +4287,55 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="774"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="856"/>
         <source>Bilinear</source>
         <translation>Bilineal</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="779"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="861"/>
         <source>VNG</source>
         <translation>VNG</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="784"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="866"/>
         <source>PPG</source>
         <translation>PPG</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="789"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="871"/>
         <source>AHD</source>
         <translation>AHD</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="597"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="800"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="889"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1020"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1139"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1238"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1311"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1394"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1506"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1603"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1700"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1842"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1970"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2073"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="662"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="882"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="971"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1102"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1221"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1320"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1393"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1476"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1588"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1685"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1782"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1924"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2052"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2155"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="813"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="281"/>
+        <source>Fast export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="895"/>
         <source>Median:</source>
         <translation>Mediana:</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="871"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="953"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3872,7 +4345,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="902"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="984"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3882,12 +4355,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="910"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="992"/>
         <source>Do not stretch or rotate pixels</source>
         <translation>No deformar o rotar píxeles</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="917"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="999"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3898,22 +4371,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="926"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1008"/>
         <source>Interpolate RGB using 4 colours</source>
         <translation>Interpolar RGB usando 4 colores</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="936"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1018"/>
         <source>Color correction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="957"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1039"/>
         <source>White Balance</source>
         <translation>Balance de blancos</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="978"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1060"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3927,32 +4400,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="994"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1076"/>
         <source>Predefined D65</source>
         <translation>Predefinido D65</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="999"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1081"/>
         <source>Camera</source>
         <translation>Cámara</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1004"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1086"/>
         <source>Auto</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1009"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1091"/>
         <source>Manual</source>
         <translation>Manual</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1036"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1118"/>
         <source>Temperature (Kelvin)</source>
         <translation>Temperatura (Kelvin)</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1112"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1194"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3962,22 +4435,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1155"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1237"/>
         <source>Green</source>
         <translation>Verde</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1216"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1298"/>
         <source>Set here the green component to set magenta color cast removal level</source>
         <translation>Fije aquí la componente verde para reducir el nivel de dominante magenta</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1251"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1333"/>
         <source>Highlights</source>
         <translation>Destacados</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1272"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1354"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3991,32 +4464,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1285"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1367"/>
         <source>Solid White</source>
         <translation>Blanco sólido</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1290"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1372"/>
         <source>Do not transform</source>
         <translation>No transformar</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1295"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1377"/>
         <source>Blend</source>
         <translation>Mezclar</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1300"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1382"/>
         <source>Reconstruct</source>
         <translation>Reconstruir</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1324"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1406"/>
         <source>Level</source>
         <translation>Nivel</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1376"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1458"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4026,22 +4499,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1410"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1492"/>
         <source>Correct false colors in highlights</source>
         <translation>Corregir el falso color en destacados</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1417"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1499"/>
         <source>Auto Brightness</source>
         <translation>Auto Brillo</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1427"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1509"/>
         <source>Brightness</source>
         <translation>Brillo</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1482"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1564"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4051,7 +4524,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1519"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1601"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4061,12 +4534,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1527"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1609"/>
         <source>Black</source>
         <translation>Negro</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1585"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1667"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4076,7 +4549,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1616"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1698"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4086,7 +4559,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1676"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1758"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4096,17 +4569,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1624"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1706"/>
         <source>Saturation</source>
         <translation>Saturación</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1716"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1798"/>
         <source>NR and CA Correction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1737"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1819"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4116,12 +4589,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1745"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1827"/>
         <source>Enable noise reduction</source>
         <translation>Activar la reducción de ruido</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1815"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1897"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4131,12 +4604,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1858"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1940"/>
         <source>Threshold:</source>
         <translation>Umbral:</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1865"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1947"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4146,12 +4619,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1873"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="1955"/>
         <source>Enable Chromatic Aberration correction</source>
         <translation>Activar la corrección de aberración cromática</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="1940"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2022"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4161,7 +4634,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2043"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2125"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4171,44 +4644,44 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2089"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2171"/>
         <source>Red Component</source>
         <translation>Componente roja</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2099"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2181"/>
         <source>Blue Component</source>
         <translation>Componente azul</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2143"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2294"/>
         <source>Monitor Profile</source>
         <translation>Perfil del monitor</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2157"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2212"/>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2251"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2213"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2227"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2244"/>
         <source>Browse...</source>
         <translation>Explorar...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2185"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2287"/>
         <source>Camera profile</source>
         <translation>Perfil de cámara</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2237"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2301"/>
         <source>Printer profile</source>
         <translation>Perfil de impresora</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2286"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2369"/>
         <source>align_image_stack command line arguments</source>
         <translation>Argumentos del comando align_image_stack</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2311"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2394"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4217,38 +4690,38 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2344"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2427"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.ui" line="2351"/>
+        <location filename="../src/Preferences/PreferencesDialog.ui" line="2434"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="288"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="323"/>
         <source>Restart</source>
         <translation>Reiniciar</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="288"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="323"/>
         <source>For the settings to take effect, please restart the application!</source>
         <translation>¡Para que los ajusten tengán efecto, por favor reinicie la aplicación!</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="695"/>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="738"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="731"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="774"/>
         <source>Choose a directory</source>
         <translation>Seleccione un directorio</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="727"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="763"/>
         <source>Open ICC Profile</source>
         <translation>Abrir perfil ICC</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="729"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="765"/>
         <source>Color profile (*.icc *.ICC *.icm *.ICM)</source>
         <translation>Perfil de color (*.icc *.ICC *.icm *.ICM)</translation>
     </message>
@@ -4364,17 +4837,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="420"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="456"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation>ERROR: no puedo cargar archivo de configuración de toneado: </translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="441"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="477"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation>ERROR: Archivo demasiado antiguo, no puedo interpretar los datos de configuración  para tonear: </translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="541"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="585"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>ERROR: no se puede interpretar archivo de configuración de toneado: </translation>
     </message>
@@ -4410,275 +4883,285 @@ p, li { white-space: pre-wrap; }
         <translation>No se ha podido realizar la transformación de color. Por favor, seleccione un perfil de monitor diferente.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="906"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="914"/>
         <source>Triangular</source>
         <translation>Triangular</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="908"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="916"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="910"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="918"/>
         <source>Gaussian</source>
         <translation>Gaussian</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="912"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="920"/>
         <source>Flat</source>
         <translation>Plano</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="923"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="931"/>
         <source>Linear</source>
         <translation>Lineal</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="925"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="933"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="927"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="935"/>
         <source>Logarithmic</source>
         <translation>Logaritmica</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="929"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="937"/>
         <source>sRGB</source>
         <translation>sRGB</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="931"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="939"/>
         <source>From Calibration/Input File</source>
         <translation>Desde el fichero de calibración/entrada</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="945"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="953"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="947"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="955"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="949"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="957"/>
         <source>Robertson Response Calculation</source>
         <translation>Calculo de la respuesta Robertson</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="276"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="298"/>
         <source>PreGamma=%1</source>
         <translation>PreGamma=%1</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="287"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="309"/>
         <source>Contrast Equalization</source>
         <translation>Equalización de Contraste</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="289"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="311"/>
         <source>Contrast</source>
         <translation>Contraste</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="292"/>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="326"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="314"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="348"/>
         <source>Saturation</source>
         <translation>Saturación</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="294"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="316"/>
         <source>Detail</source>
         <translation>Detalle</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="305"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="327"/>
         <source>Luminance Level</source>
         <translation>Nivel de luminancia</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="307"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="329"/>
         <source>Luminance Level=Auto</source>
         <translation>Nivel de luminancia=Auto</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="310"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="332"/>
         <source>Color Saturation</source>
         <translation>Saturación de color</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="311"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="333"/>
         <source>Contrast Enhancement</source>
         <translation>Realce del contraste</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="324"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="346"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="325"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="347"/>
         <source>Beta</source>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="327"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="349"/>
         <source>NoiseRedux</source>
         <translation>Reducción de ruido</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="328"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="350"/>
         <source>FFTSolver</source>
         <translation>FFTSolver</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="335"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="358"/>
+        <source>Rho</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="359"/>
+        <source>InvAlpha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="371"/>
         <source>simple</source>
         <translation>simple</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="338"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="374"/>
         <source>Equation 2</source>
         <translation>Ecuación 2</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="340"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="376"/>
         <source>Equation 4</source>
         <translation>Ecuación 4</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="343"/>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="372"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="379"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="408"/>
         <source>Local</source>
         <translation>Local</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="350"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="386"/>
         <source>Bias</source>
         <translation>Bias</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="359"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="395"/>
         <source>Spatial</source>
         <translation>Espacial</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="360"/>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="393"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="396"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="429"/>
         <source>Range</source>
         <translation>Rango</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="361"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="397"/>
         <source>Base</source>
         <translation>Base</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="370"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="406"/>
         <source>Multiplier</source>
         <translation>Multiplicador</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="374"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="410"/>
         <source>AutoLuminance</source>
         <translation>AutoLuminacia</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="376"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="412"/>
         <source>Cone</source>
         <translation>Cono</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="377"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="413"/>
         <source>Rod</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="389"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="425"/>
         <source>Key</source>
         <translation>Llave</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="390"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="426"/>
         <source>Phi</source>
         <translation>Phi</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="392"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="428"/>
         <source>Scales:</source>
         <translation>Escalas:</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="394"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="430"/>
         <source>Lower</source>
         <translation>Más bajo</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="395"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="431"/>
         <source>Upper</source>
         <translation>Más alto</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="405"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="441"/>
         <source>Brightness</source>
         <translation>Brillo</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="406"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="442"/>
         <source>Chromatic Adaptation</source>
         <translation>Adaptación cromática</translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="407"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="443"/>
         <source>Light Adaptation</source>
         <translation>Adaptación lumínicia</translation>
     </message>
     <message>
-        <location filename="../src/Common/LuminanceOptions.cpp" line="839"/>
+        <location filename="../src/Common/LuminanceOptions.cpp" line="854"/>
         <source>Option -v -a...</source>
         <translation>Opción -v -a...</translation>
     </message>
     <message>
-        <location filename="../src/Common/LuminanceOptions.cpp" line="840"/>
+        <location filename="../src/Common/LuminanceOptions.cpp" line="855"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v&quot; and without the &quot;-a&quot; options. Command line options have been corrected.</source>
         <translation>LuminanceHDR requiere ejecutar una alineación de la pila de imágenes con el parámetro &quot;-v&quot; y sin el parámetro &quot;-a&quot;. Las opciones de la linea de comendos han sido corregidas.</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="84"/>
+        <location filename="../src/MainCli/commandline.cpp" line="88"/>
         <source>Cannot convert %1 to a float</source>
         <translation>No puedo convertir %1 a flotante</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="332"/>
+        <location filename="../src/MainCli/commandline.cpp" line="397"/>
         <source>Loading TMO settings from file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="403"/>
+        <location filename="../src/MainCli/commandline.cpp" line="468"/>
         <source>Input file %1</source>
         <translation>Fichero de entrada %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="423"/>
+        <location filename="../src/MainCli/commandline.cpp" line="494"/>
         <source>Running in HDR-creation mode.</source>
         <translation>Ejecutando en modo Creación de HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="429"/>
+        <location filename="../src/MainCli/commandline.cpp" line="500"/>
         <source>Running in Load-HDR mode.</source>
         <translation>Ejecutando en modo Cargar HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="443"/>
+        <location filename="../src/MainCli/commandline.cpp" line="513"/>
         <source>Temporary directory: %1</source>
         <translation>Directorio temporal: %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/MainCli/commandline.cpp" line="444"/>
+        <location filename="../src/MainCli/commandline.cpp" line="514"/>
         <source>Using %n threads.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -4686,95 +5169,121 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="458"/>
+        <location filename="../src/MainCli/commandline.cpp" line="528"/>
         <source>Loading file %1</source>
         <translation>Cargando el fichero %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="464"/>
+        <location filename="../src/MainCli/commandline.cpp" line="534"/>
         <source>Successfully loaded file %1.</source>
         <translation>Cargado el fichero %1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="107"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="112"/>
         <source>All LDR formats</source>
         <translation>Todos los formatos HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="118"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="123"/>
         <source>Save the LDR image as...</source>
         <translation>Guardar imagen LDR como...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="144"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="151"/>
         <source>Save the HDR image as...</source>
         <translation>Guardar imagen HDR como...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="624"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="680"/>
         <source>Save as...</source>
         <translation>Guardar como...</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="50"/>
+        <source>The quality must be between 1 (worst) and 5 (best).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="53"/>
+        <source>NULL frame passed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="98"/>
+        <source>Adding image </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="98"/>
+        <source> to the web page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrHTML/hdrhtml.cpp" line="745"/>
+        <location filename="../src/HdrHTML/hdrhtml.cpp" line="800"/>
+        <source>Writing: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ResizeDialog</name>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="13"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="20"/>
         <source>Scale Image</source>
         <translation>Reescalar imagen</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="31"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="33"/>
         <source>Hdr Image Size</source>
         <translation>Dimensiones de imagen Hdr</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="65"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="175"/>
         <source>Width:</source>
         <translation>Anchura:</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="98"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="73"/>
         <source>Switch between pixels or percentage</source>
         <translation>Intercambiar entre porcentajes de pixels</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="102"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="77"/>
         <source>Pixels</source>
         <translation>Pixels</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="107"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="82"/>
         <source>Percent</source>
         <translation>Porcentaje</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="147"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="153"/>
         <source>Height:</source>
         <translation>Altura:</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="180"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="106"/>
         <source>Result size</source>
         <translation>Tamaño resultante</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="193"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="50"/>
         <source>Restore original size</source>
         <translation>Restaurar dimensiones originales</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="196"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="53"/>
         <source>&amp;Reset</source>
         <translation>&amp;Restaurar</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="235"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="220"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/Resize/ResizeDialog.ui" line="242"/>
+        <location filename="../src/Resize/ResizeDialog.ui" line="227"/>
         <source>&amp;Scale</source>
         <translation>R&amp;eescalar</translation>
     </message>
@@ -4787,184 +5296,194 @@ p, li { white-space: pre-wrap; }
         <translation>Parámetros guardados</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="55"/>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="148"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="56"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="155"/>
         <source>Comment</source>
         <translation>Comentario</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="56"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="57"/>
         <source>TM Operator</source>
         <translation>Opreador TM</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="79"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="80"/>
         <source>Simple</source>
         <translation>Simple</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="80"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="81"/>
         <source>Equation 2</source>
         <translation>Ecuación 2 </translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="81"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="82"/>
         <source>Local Contrast Threshold</source>
         <translation>Umbral de contraste local</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="86"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="87"/>
         <source>Bias</source>
         <translation>Bias</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="91"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="92"/>
         <source>Spatial Kernel Sigma</source>
         <translation>Spatial Kernel Sigma</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="92"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="93"/>
         <source>Range Kernel Sigma</source>
         <translation>Range Kernel Sigma</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="93"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="94"/>
         <source>Base Contrast</source>
         <translation>Contraste</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="98"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="99"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="99"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="100"/>
         <source>Beta</source>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="100"/>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="115"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="101"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="122"/>
         <source>Color Saturation</source>
         <translation>Saturación de color</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="101"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="102"/>
         <source>Noise Reduction</source>
         <translation>Reducción de ruido</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="102"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="103"/>
         <source>Old Fattal</source>
         <translation>Old Fattal</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="107"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="108"/>
+        <source>Rho</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="109"/>
+        <source>InvAlpha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="114"/>
         <source>Contrast Equalization</source>
         <translation>Equalización de Contraste</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="108"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="115"/>
         <source>Contrast Factor</source>
         <translation>Facto de Constraste</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="109"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="116"/>
         <source>Saturation Factor</source>
         <translation>Factor de Saturacion</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="110"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="117"/>
         <source>Detail Factor</source>
         <translation>Factor de detalle</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="116"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="123"/>
         <source>Contrast Enhancement</source>
         <translation>Realce del contraste </translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="117"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="124"/>
         <source>Luminance Level</source>
         <translation>Nivel de luminancia</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="118"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="125"/>
         <source>Manual Luminance Level</source>
         <translation>Nivel manual de Luminancia</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="123"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="130"/>
         <source>Cone and Rod based on Luminance</source>
         <translation>Cono y barra basado en luminancia</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="124"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="131"/>
         <source>Local Tonemapping</source>
         <translation>Ajuste tonal local</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="125"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="132"/>
         <source>Cone Level</source>
         <translation>Nivel de cono</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="126"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="133"/>
         <source>Rod Level</source>
         <translation>Nivel de cono</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="127"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="134"/>
         <source>Multiplier</source>
         <translation>Multiplicador</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="132"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="139"/>
         <source>Use Scales</source>
         <translation>Usar escalas</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="133"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="140"/>
         <source>Key Value</source>
         <translation>Valor clave</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="134"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="141"/>
         <source>Phi Value</source>
         <translation>Valor Phi</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="135"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="142"/>
         <source>Range</source>
         <translation>Rango</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="136"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="143"/>
         <source>Lower Scale</source>
         <translation>Escala baja</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="137"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="144"/>
         <source>Upper Scale</source>
         <translation>Escala alta</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="142"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="149"/>
         <source>Brightness</source>
         <translation>Brillo</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="143"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="150"/>
         <source>Chromatic Adaptation</source>
         <translation>Adaptación cromática</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="144"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="151"/>
         <source>Light Adaptation</source>
         <translation>Adaptación lumínicia</translation>
     </message>
     <message>
-        <location filename="../src/Common/SavedParametersDialog.cpp" line="147"/>
+        <location filename="../src/Common/SavedParametersDialog.cpp" line="154"/>
         <source>Pre-gamma</source>
         <translation>Pre-gamma</translation>
     </message>
@@ -4972,14 +5491,52 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>SavingParameters</name>
     <message>
-        <location filename="../src/TonemappingPanel/SavingParametersDialog.ui" line="35"/>
+        <location filename="../src/TonemappingPanel/SavingParametersDialog.ui" line="9"/>
         <source>Saving Parameters</source>
         <translation>Guardando parámetros</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/SavingParametersDialog.ui" line="43"/>
+        <location filename="../src/TonemappingPanel/SavingParametersDialog.ui" line="17"/>
         <source>Enter a short comment for the saved parameters:</source>
         <translation>Introduzca un comentario a los parámetros guardados:</translation>
+    </message>
+</context>
+<context>
+    <name>SupportedCamerasDialog</name>
+    <message>
+        <location filename="../src/MainWindow/SupportedCamerasDialog.ui" line="14"/>
+        <source>List of supported cameras</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/SupportedCamerasDialog.ui" line="93"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/SupportedCamerasDialog.ui" line="107"/>
+        <source>&lt;b&gt;Luminance HDR&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/SupportedCamerasDialog.ui" line="137"/>
+        <source>With LibRaw version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/SupportedCamerasDialog.ui" line="148"/>
+        <source>models listed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/SupportedCamerasDialog.ui" line="163"/>
+        <source>search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/SupportedCamerasDialog.ui" line="188"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5001,498 +5558,555 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TonemappingPanel</name>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="36"/>
         <source>Tone mapping operators and their options</source>
-        <translation>Operadores de ajuste tonal y sus opciones</translation>
+        <translation type="vanished">Operadores de ajuste tonal y sus opciones</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="65"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3010"/>
         <source>Start tonemapping (CTRL+T)</source>
         <translation>Iniciar ajuste tonal (CTRL+T)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="68"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3013"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
         <translation>Utilizar los parámetros activos indicados arriba (pregamma y operador de ajuste tonal) para generar la imagen LDR</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="71"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3016"/>
         <source>&amp;Update preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="74"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3019"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="90"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3035"/>
         <source>Update current LDR</source>
         <translation>Actualizar LDR activo</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="113"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="51"/>
         <source>Tonemap</source>
         <translation>Ajuste tonal</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="140"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="78"/>
         <source>Mantiuk &apos;06</source>
         <translation>Mantiuk &apos;06</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="145"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="83"/>
         <source>Mantiuk &apos;08</source>
         <translation>Mantiuk &apos;08</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="150"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="88"/>
         <source>Fattal</source>
         <translation>Fattal</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="155"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="93"/>
+        <source>Ferradans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="98"/>
         <source>Drago</source>
         <translation>Drago</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="160"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="103"/>
         <source>Durand</source>
         <translation>Durand</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="165"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="108"/>
         <source>Reinhard &apos;02</source>
         <translation>Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="170"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="113"/>
         <source>Reinhard &apos;05</source>
         <translation>Reinhard &apos;05</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="175"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="118"/>
         <source>Ashikhmin</source>
         <translation>Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="180"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="123"/>
         <source>Pattanaik</source>
         <translation>Pattanaik</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="200"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="128"/>
+        <source>Mai</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="148"/>
         <source>Operator</source>
         <translation>Operador</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="281"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="217"/>
         <source>Contrast Factor</source>
         <translation>Facto de Constraste</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="309"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="233"/>
         <source>Saturation Factor</source>
         <translation>Factor de Saturacion</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="455"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="343"/>
         <source>Detail Factor</source>
         <translation>Factor de detalle</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="542"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="412"/>
         <source>Contrast Equalization</source>
         <translation>Equalización de Contraste</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="600"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="458"/>
         <source>Predefined Display</source>
         <translation>Visor predeterminado</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="620"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="478"/>
         <source>Lcd Office</source>
         <translation>Lcd Office</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="625"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="483"/>
         <source>Lcd</source>
         <translation>Lcd</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="630"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="488"/>
         <source>Lcd Bright</source>
         <translation>Brillo del Lcd</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="635"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="493"/>
         <source>CRT</source>
         <translation>CRT</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="655"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1077"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="501"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="803"/>
         <source>Color Saturation</source>
         <translation>Saturación de color</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="680"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="514"/>
         <source>Contrast Enhancement</source>
         <translation>Realce del contraste</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="711"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="533"/>
         <source>Enable
 Luminace Level</source>
         <translation>Activar
 Nivel de Luminancia</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="734"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="556"/>
         <source>Luminance Level</source>
         <translation>Nivel de luminancia</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="921"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="695"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1002"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="752"/>
         <source>Beta</source>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1149"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="851"/>
         <source>Noise Reduction</source>
         <translation>Reducción de ruido</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1228"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="912"/>
         <source>Version 2.3.0</source>
         <translation>Versión 2.3.0</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1276"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="946"/>
+        <source>Inverse Alpha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="953"/>
+        <source>Rho</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1038"/>
         <source>Bias</source>
         <translation>Bias</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1393"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1131"/>
         <source>Spatial Kernel Sigma</source>
         <translation>Spatial Kernel Sigma</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1477"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1191"/>
         <source>Range Kernel Sigma</source>
         <translation>Range Kernel Sigma</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1574"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1264"/>
         <source>Base Contrast</source>
         <translation>Contraste</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1672"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1338"/>
         <source>Key Value</source>
         <translation>Valor clave</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1747"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1389"/>
         <source>Phi</source>
         <translation>Phi</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1828"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1452"/>
         <source>Use Scales</source>
         <translation>Usar escalas</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1918"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1518"/>
         <source>Range</source>
         <translation>Rango</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1946"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1534"/>
         <source>Lower Scale</source>
         <translation>Escala baja</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2036"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1600"/>
         <source>Upper Scale</source>
         <translation>Escala alta</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2162"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1714"/>
         <source>Brightness</source>
         <translation>Brillo</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2246"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1786"/>
         <source>Chromatic Adaptation</source>
         <translation>Adaptación cromática</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2327"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1855"/>
         <source>Light Adaptation</source>
         <translation>Adaptación lumínicia</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2447"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="1963"/>
         <source>Local Contrast Threshold</source>
         <translation>Umbral de contraste local</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2531"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2035"/>
         <source>Simple</source>
         <translation>Simple</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2550"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2054"/>
         <source>Equation Number</source>
         <translation>Número de ecuación</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2571"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2075"/>
+        <source>Eqn &amp;2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2091"/>
+        <source>Eqn &amp;4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2708"/>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2719"/>
+        <source>Fast export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2733"/>
+        <source>Opens the current export direcotory. This can be changed in the preferences!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2736"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;Open&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Open&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3051"/>
+        <source>Auto Levels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Eqn 2</source>
-        <translation>Eqz 2</translation>
+        <translation type="vanished">Eqz 2</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2587"/>
         <source>Eqn 4</source>
-        <translation>Eqz 4</translation>
+        <translation type="vanished">Eqz 4</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2653"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2157"/>
         <source>Multiplier</source>
         <translation>Multiplicador</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2737"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2229"/>
         <source>Local Tone Mapping</source>
         <translation>Toneado local</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2762"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2254"/>
         <source>Auto Cone/Rod</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2815"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2307"/>
         <source>Cone Level</source>
         <translation>Nivel de cono</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2883"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2363"/>
         <source>Rod Level</source>
         <translation>Nivel de cono</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2986"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2465"/>
+        <source>This operator has no options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2504"/>
         <source>Restore operator&apos;s default values</source>
         <translation>Restaurar valores por defecto del operador</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2989"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2507"/>
         <source>Restore</source>
         <translation>Restaurar</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3022"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2537"/>
         <source>Previous applied settings</source>
         <translation>Ajustes aplicados previamente</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3025"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2540"/>
         <source>Previous</source>
         <translation>Previo</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3045"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2557"/>
         <source>Next applied settings</source>
         <translation>Ajustes aplicados a continuación</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3051"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2563"/>
         <source>Next</source>
         <translation>Siguiente</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3082"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2593"/>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
         <translation>Aqui usted puede cargar y guardar archivos de configuración de toneado.&lt;br&gt;Usted puede aplicar los parámetros actualmente cargados en el archivo de configuración.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3085"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2596"/>
         <source>Tone Mapping Settings</source>
         <translation>Opciones de Ajuste Tonal</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3111"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2622"/>
         <source>Save current parameters to a text file</source>
         <translation>Guardar parámetros actuales a un archivo de texto</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3114"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2625"/>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
         <translation>Guardar parámetros actuales (pregamma y TMO) a un archivo de texto.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3117"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2628"/>
         <source>&amp;Save to File</source>
         <translation>&amp;Guardar en archivo</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3140"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2645"/>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation>Cargar un archivo de texto conteniendo configuración de pregamma y TMO</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3143"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2648"/>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation>Carga un archivo existente conteniendo configuración de pregamma y TMO.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3146"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2651"/>
         <source>&amp;Load from File</source>
         <translation>&amp;Cargar desde archivo</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3163"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2662"/>
         <source>Save current parameters</source>
         <translation>Guardar parámetros activos</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3166"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3199"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2665"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2692"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3196"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2689"/>
         <source>Load saved parameters</source>
         <translation>Cargar parámetros guardados</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3224"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2786"/>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation>Aqui usted puede aplicar una correción de gamma al archivo HDR.&lt;br&gt;La correción de gamma será aplicada antes del toneado.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3227"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2789"/>
         <source>Process</source>
         <translation>Procesar</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3259"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2809"/>
         <source>Result Si&amp;ze</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3330"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2859"/>
         <source>Pre-&amp;gamma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3512"/>
-        <source>Export to queue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3290"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3327"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2828"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2856"/>
         <source>Gamma applied before tonemapping</source>
         <translation>Gamma aplicada antes del mapeo tonal</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3379"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2908"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation>Restaurar valores gamma por defecto (1)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3409"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2938"/>
         <source>Size of the resulting LDR image</source>
         <translation>Tamaño de la imagen LDR resultante</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3412"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2941"/>
         <source>Here you can choose the size of the resulting LDR image.</source>
         <translation>Aquí usted puede escoger el tamaño de la imagen LDR de salida.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3443"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2972"/>
         <source>Set Custom Output Size</source>
         <translation>Ajustar tamaño de salida personalizado</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="3446"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.ui" line="2975"/>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation>Pulsando este botón usted dispone de la posibilidad de insertar un valor de &lt;i&gt;ancho&lt;/i&gt; para la imagen LDR de salida.&lt;br&gt;Despues de pulsar ENTER (o RETURN) se calculará automáticamente la altura y los nuevos valores serán añadidos a la lista.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="227"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="210"/>
+        <source>Queue size: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="279"/>
         <source>TM Database Problem</source>
         <translation>Problema de base de datos TM</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="228"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="280"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
         <translation>La base de datos usada para grabar los parámetros TM no se puede abrir.
 Error: %1</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="633"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="727"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Cargar configuración de mapa de Tonos desde archivo...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="635"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="662"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="729"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="756"/>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
         <translation>Archivos de configuración de ajuste tonal en formato texto para Luminance HDR (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="641"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="683"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="774"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="794"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="735"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="777"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="878"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="898"/>
         <source>Aborting...</source>
         <translation>Cancelando...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="642"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="736"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>El archivo no es legible (compruebe su existencia, permisos,...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="660"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="754"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Guardar configuración de toneado a un archivo...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="683"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="777"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>El archivo no es escribible (compruebe sus permisos, ruta....)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="774"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="878"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>El archivo no es legible (compruebe sus permisos, ruta...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="794"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="898"/>
         <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation>Error: El formato del archivo de configuración de ajuste tonal ha cambiado. Este (viejo) fichero no puede ser utilizado con esta versión de LuminanceHDR. Crear uno nuevo.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="919"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1031"/>
         <source>Custom LDR size</source>
         <translation>Personalizar tamaño LDR</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="920"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="1032"/>
         <source>Enter the width of the new size:</source>
         <translation>Introduzca la anchura del nuevo tamaño:</translation>
     </message>
@@ -5553,108 +6167,112 @@ Error: %1</translation>
         <translation>Copiar datos EXIF</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="39"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="57"/>
         <source>From</source>
         <translation>Desde</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="76"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="196"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="112"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="246"/>
         <source>Append files to the list</source>
         <translation>Añadir archivos a la lista</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="93"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="213"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="128"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="262"/>
         <source>Remove selected file(s) from the list</source>
         <translation>Borrar archivo(s) seleccionado(s) de la lista</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="110"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="230"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="144"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="278"/>
         <source>Move up selected file(s)</source>
         <translation>Mover arriba el archivo(s) seleccionado(s)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="127"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="247"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="160"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="294"/>
         <source>Move down selected file(s)</source>
         <translation>Mover abajo el archivo(s) seleccionado(s)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="162"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="194"/>
         <source>To</source>
         <translation>Hasta</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="284"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="330"/>
         <source>Log</source>
         <translation>Log</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="308"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="363"/>
         <source>Exif operations report</source>
         <translation>Informe de operaciones EXIF</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="332"/>
-        <source>&amp;Show only:</source>
-        <translation>&amp;Mostrar solo:</translation>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="396"/>
+        <source>Show onl&amp;y:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="342"/>
+        <source>&amp;Show only:</source>
+        <translation type="vanished">&amp;Mostrar solo:</translation>
+    </message>
+    <message>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="406"/>
         <source>Filter messages based on severity</source>
         <translation>Filtrar mensajes según su gravedad</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="346"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="410"/>
         <source>All messages</source>
         <translation>Todos los mensajes</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="351"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="415"/>
         <source>Errors only</source>
         <translation>Solo errores</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="366"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="430"/>
         <source>&amp;Filter log messages:</source>
         <translation>&amp;Filtrar mensajes de log</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="382"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="446"/>
         <source>Clear filter text</source>
         <translation>Quitar filtro de texto</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="411"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="474"/>
         <source>Keep existing Exif tags in destination file</source>
         <translation>Mantener etiqetas EXIF en el fichero de destino</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="442"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="514"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="452"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.ui" line="524"/>
         <source>&amp;Start</source>
         <translation>&amp;Inicio</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="209"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="235"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="222"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="248"/>
         <source>All Supported formats</source>
         <translation>Todos los formatos soportados</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="212"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="241"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="225"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="254"/>
         <source>Select the input images</source>
         <translation>Seleccionar las imágenes iniciales</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="291"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="304"/>
         <source>&amp;Done</source>
         <translation>&amp;Hecho</translation>
     </message>
@@ -5668,27 +6286,33 @@ Error: %1</translation>
         <translation>%1 Licencia del documento no encontrada, puede encontrarla on-line: %2aqui%3</translation>
     </message>
     <message>
-        <location filename="../src/UI/UMessageBox.cpp" line="166"/>
+        <location filename="../src/UI/UMessageBox.cpp" line="144"/>
+        <source>%1 Changelog document not found, you can find it online: %2here%3</source>
+        <comment>%2 and %3 are html tags</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/UI/UMessageBox.cpp" line="189"/>
         <source>Donation</source>
         <translation>Donación</translation>
     </message>
     <message>
-        <location filename="../src/UI/UMessageBox.cpp" line="167"/>
+        <location filename="../src/UI/UMessageBox.cpp" line="190"/>
         <source>Would you like to donate?</source>
         <translation>¿Querrias hacer una donación?</translation>
     </message>
     <message>
-        <location filename="../src/UI/UMessageBox.cpp" line="170"/>
+        <location filename="../src/UI/UMessageBox.cpp" line="193"/>
         <source>Yes, I&apos;d love to!</source>
         <translation>Si, ¡Me gusta¡</translation>
     </message>
     <message>
-        <location filename="../src/UI/UMessageBox.cpp" line="171"/>
+        <location filename="../src/UI/UMessageBox.cpp" line="194"/>
         <source>Stop Bothering Me</source>
         <translation>Deje de molestarme</translation>
     </message>
     <message>
-        <location filename="../src/UI/UMessageBox.cpp" line="172"/>
+        <location filename="../src/UI/UMessageBox.cpp" line="195"/>
         <source>Remind me later</source>
         <translation>Recuérdemelo despés</translation>
     </message>

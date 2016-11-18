@@ -34,7 +34,7 @@
 class LuminanceRangeWidget : public QFrame {
   Q_OBJECT
 public:
-  LuminanceRangeWidget( QWidget *parent=0 );
+  explicit LuminanceRangeWidget( QWidget *parent=0 );
   ~LuminanceRangeWidget();
 
   QSize sizeHint () const;

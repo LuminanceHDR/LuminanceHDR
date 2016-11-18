@@ -1,0 +1,15 @@
+
+<!-- HDRHTML BEG: Put this part where the HDR HTML viewer should appear -->
+        <div id="@base_name@_dr_ctrl" style="position: relative; width: @hist_width@px; height: 36px; overflow: hidden; border: 2px solid black;" title="Drag dynamic range window to change exposure">
+                <img id="@base_name@_hist" style="position: absolute; left: 0px; top: 0px;" src="@img_dir@@base_name@_hist.png" onclick="dr_wind_clicked(event, @hdr_img_object@)"/>  
+                <div id="@base_name@_dr_wind" style="position: absolute; left: 100px; top: 0px; width: 40px; height: 36px; opacity: 0.7; background-color: blue;" onmousedown="dr_wind_mousedown(event, @hdr_img_object@)"></div>
+                <div id="@base_name@_exp_text" style="color: white; font-family: cursive; position: absolute; left: 10px; top: 2px;">1</div>            
+                <a style="color: yellow; position: absolute; left: @help_mark_pos@px; top: 6px;" href="#" title="Click to get help" onclick="hdr_show_help()">?</a>                                        
+        </div>            
+        <div style="position: relative; border: 2px solid black; background-color: black; color: white; width: @hdr_img_width@px; height: @hdr_img_height@px">    
+            <script type="text/javascript">
+                insert_hdr_image( @hdr_img_object@ );            
+                change_exp( @hdr_img_object@, 0 );
+            </script>
+        </div>
+<!-- HDRHTML END -->                

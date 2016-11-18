@@ -140,7 +140,7 @@ private:
 	void deallocate_memory();
 	void dynamic_range();
 	double V1(int, int, int);
-	double pyramid_lookup(int, int, int);
+	double pyramid_lookup(unsigned int, unsigned int, int);
 	void build_pyramid(double **, int, int);
 	void clean_pyramid();
 };

@@ -89,6 +89,30 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
 {
     m_Ui->setupUi(this);
 
+    //icons
+    m_Ui->toolButtonInterface->setIcon(QIcon::fromTheme("preferences-system-windows", QIcon(":/new/svgs/images/preferences-desktop-theme.svgz")));
+    m_Ui->toolButtonQueue->setIcon(QIcon::fromTheme("folder-image", QIcon(":/new/svgs/images/folder-image.svgz")));
+    m_Ui->toolButtonCMS->setIcon(QIcon::fromTheme("color-management", QIcon(":/new/svgs/images/color-management.svg")));
+    m_Ui->toolButtonExtTool->setIcon(QIcon::fromTheme("preferences-other", QIcon(":/new/svgs/images/preferences-other.svgz")));
+    m_Ui->exportFileButton->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/prefix1/images/fileopen.png")));
+    m_Ui->user_qual_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->med_passes_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->wb_method_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->TK_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->green_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->highlights_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->level_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->brightness_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->user_black_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->user_sat_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->threshold_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->red_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->blue_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->monitor_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->camera_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    m_Ui->printer_toolButton->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/new/prefix1/images/undo.png")));
+    // end setting icons
+
     connect(m_Ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_themeChanged()));
 
 #ifdef DEMOSAICING_GPL2
@@ -378,6 +402,7 @@ void PreferencesDialog::on_use_noise_CB_stateChanged(int)
 	m_Ui->threshold_label->setEnabled(checked);
 	m_Ui->threshold_horizontalSlider->setEnabled(checked);
 	m_Ui->threshold_spinBox->setEnabled(checked);
+	m_Ui->threshold_toolButton->setEnabled(checked);
 }
 
 void PreferencesDialog::on_use_chroma_CB_stateChanged(int)

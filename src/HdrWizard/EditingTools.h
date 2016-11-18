@@ -28,9 +28,9 @@
 #ifndef EDITINGTOOLS_H
 #define EDITINGTOOLS_H
 
+#include <QDialog>
 #include <QMap>
 
-#include "ui_EditingTools.h"
 #include "PreviewWidget.h"
 #include "Common/global.h"
 #include "HdrWizard/HdrCreationManager.h"
@@ -39,7 +39,11 @@
 class HistogramLDR;
 class PanIconWidget;
 
-class EditingTools : public QDialog, private Ui::EditingToolsDialog
+namespace Ui {
+class EditingToolsDialog;
+}
+
+class EditingTools : public QDialog
 {
 Q_OBJECT
 public:
@@ -52,6 +56,7 @@ protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 private:
+    QScopedPointer<Ui::EditingToolsDialog> m_Ui;
 	QList<QImage*> m_originalImagesList;
 	QList<QImage*> m_antiGhostingMasksList;
     QImage* m_antiGhostingMask;

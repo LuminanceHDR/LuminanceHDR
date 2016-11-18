@@ -1,205 +1,181 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>ResizeDialog</class>
- <widget class="QDialog" name="ResizeDialog" >
-  <property name="geometry" >
+ <widget class="QDialog" name="ResizeDialog">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>337</width>
-    <height>171</height>
+    <height>170</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
    <string>Scale Image</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../../icons.qrc" >:/new/prefix1/images/luminance-hdr.png</iconset>
+  <property name="windowIcon">
+   <iconset resource="../../icons.qrc">
+    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
-  <property name="modal" >
+  <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" >
-   <property name="margin" >
-    <number>9</number>
-   </property>
-   <property name="spacing" >
-    <number>6</number>
-   </property>
-   <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
       <string>Hdr Image Size</string>
      </property>
-     <layout class="QVBoxLayout" >
-      <property name="margin" >
-       <number>9</number>
-      </property>
-      <property name="spacing" >
-       <number>6</number>
-      </property>
-      <item>
-       <layout class="QHBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
-        <item>
-         <layout class="QHBoxLayout" >
-          <property name="margin" >
-           <number>0</number>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="3">
+         <widget class="QToolButton" name="restoredefault">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label" >
-            <property name="minimumSize" >
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text" >
-             <string>Width:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="widthSpinBox" >
-            <property name="minimumSize" >
-             <size>
-              <width>85</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize" >
-             <size>
-              <width>85</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QComboBox" name="px_or_percentage" >
-          <property name="sizePolicy" >
-           <sizepolicy>
-            <hsizetype>3</hsizetype>
-            <vsizetype>0</vsizetype>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="toolTip" >
+          <property name="toolTip">
+           <string>Restore original size</string>
+          </property>
+          <property name="text">
+           <string>&amp;Reset</string>
+          </property>
+          <property name="icon">
+           <iconset theme="edit-undo">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QComboBox" name="px_or_percentage">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
            <string>Switch between pixels or percentage</string>
           </property>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Pixels</string>
            </property>
           </item>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Percent</string>
            </property>
           </item>
          </widget>
         </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
-        <item>
-         <layout class="QHBoxLayout" >
-          <property name="margin" >
-           <number>0</number>
+        <item row="0" column="1">
+         <widget class="QDoubleSpinBox" name="widthSpinBox">
+          <property name="minimumSize">
+           <size>
+            <width>85</width>
+            <height>0</height>
+           </size>
           </property>
-          <property name="spacing" >
-           <number>6</number>
+          <property name="maximumSize">
+           <size>
+            <width>85</width>
+            <height>16777215</height>
+           </size>
           </property>
-          <item>
-           <widget class="QLabel" name="label_2" >
-            <property name="sizePolicy" >
-             <sizepolicy>
-              <hsizetype>0</hsizetype>
-              <vsizetype>5</vsizetype>
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize" >
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text" >
-             <string>Height:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDoubleSpinBox" name="heightSpinBox" >
-            <property name="sizePolicy" >
-             <sizepolicy>
-              <hsizetype>0</hsizetype>
-              <vsizetype>0</vsizetype>
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize" >
-             <size>
-              <width>85</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize" >
-             <size>
-              <width>85</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         </widget>
         </item>
-        <item>
-         <widget class="QLabel" name="sizepreview" >
-          <property name="toolTip" >
+        <item row="1" column="2">
+         <widget class="QLabel" name="sizepreview">
+          <property name="toolTip">
            <string>Result size</string>
           </property>
-          <property name="frameShape" >
+          <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="frameShadow" >
+          <property name="frameShadow">
            <enum>QFrame::Sunken</enum>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QToolButton" name="restoredefault" >
-          <property name="toolTip" >
-           <string>Restore original size</string>
+        <item row="1" column="1">
+         <widget class="QDoubleSpinBox" name="heightSpinBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="text" >
-           <string>&amp;Reset</string>
+          <property name="minimumSize">
+           <size>
+            <width>85</width>
+            <height>0</height>
+           </size>
           </property>
-          <property name="icon" >
-           <iconset resource="../../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+          <property name="maximumSize">
+           <size>
+            <width>85</width>
+            <height>16777215</height>
+           </size>
           </property>
-          <property name="toolButtonStyle" >
-           <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Height:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Width:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -208,20 +184,29 @@
      </layout>
     </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" >
-     <property name="margin" >
+   <item row="1" column="0">
+    <layout class="QHBoxLayout">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="leftMargin">
       <number>0</number>
      </property>
-     <property name="spacing" >
-      <number>6</number>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
      </property>
      <item>
       <spacer>
-       <property name="orientation" >
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>117</width>
          <height>31</height>
@@ -230,15 +215,15 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="cancelButton" >
-       <property name="text" >
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
         <string>&amp;Cancel</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="scaleButton" >
-       <property name="text" >
+      <widget class="QPushButton" name="scaleButton">
+       <property name="text">
         <string>&amp;Scale</string>
        </property>
       </widget>
@@ -247,8 +232,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>widthSpinBox</tabstop>
+  <tabstop>px_or_percentage</tabstop>
+  <tabstop>heightSpinBox</tabstop>
+  <tabstop>restoredefault</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>scaleButton</tabstop>
+ </tabstops>
  <resources>
-  <include location="../../icons.qrc" />
+  <include location="../../icons.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -257,11 +250,11 @@
    <receiver>ResizeDialog</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>264</x>
-     <y>112</y>
+    <hint type="sourcelabel">
+     <x>239</x>
+     <y>162</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>179</x>
      <y>148</y>
     </hint>

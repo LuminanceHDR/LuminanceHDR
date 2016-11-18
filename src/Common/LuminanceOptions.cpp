@@ -222,18 +222,21 @@ void LuminanceOptions::applyTheme(bool /*init*/)
     QString theme = LuminanceOptions().getGuiTheme();
     if (theme.compare("Macintosh") != 0 && isGuiDarkMode())
     {
-		QPalette darkPalette;
-		//QPalette darkPalette = QApplication::palette();
+		//QPalette darkPalette;
+		QPalette darkPalette = QApplication::palette();
 
 		darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
 		darkPalette.setColor(QPalette::WindowText, Qt::white);
+		darkPalette.setColor(QPalette::Disabled, QPalette::WindowText, Qt::lightGray);
 		darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
 		darkPalette.setColor(QPalette::AlternateBase, QColor(53, 53, 53));
 		darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
-		darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+		darkPalette.setColor(QPalette::ToolTipText, Qt::black);
 		darkPalette.setColor(QPalette::Text, Qt::white);
+		darkPalette.setColor(QPalette::Disabled, QPalette::Text, Qt::lightGray);
 		darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
 		darkPalette.setColor(QPalette::ButtonText, Qt::white);
+		darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::lightGray);
 		darkPalette.setColor(QPalette::BrightText, Qt::red);
 		darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
 
@@ -246,7 +249,7 @@ void LuminanceOptions::applyTheme(bool /*init*/)
 	}
 	else
 	{
-		QApplication::setPalette(QGuiApplication::palette());
+		QApplication::setPalette(QApplication::palette());
 	}
 
 	QApplication::setStyle(QStyleFactory::create(LuminanceOptions().getGuiTheme()));
@@ -685,7 +688,7 @@ namespace
 #ifdef QT_DEBUG
 struct PrintTempDir
 {
-    PrintTempDir(const QString& str):
+    explicit PrintTempDir(const QString& str):
         str_(str)
     {}
 
@@ -789,7 +792,7 @@ void LuminanceOptions::setDefaultPathLdrIn(const QString& path)
 QString LuminanceOptions::getDefaultPathLdrOut()
 {
     return m_settingHolder->value(KEY_RECENT_PATH_SAVE_LDR,
-    						getDefaultPathHdrOut()).toString();
+                                  getDefaultPathHdrOut()).toString();
 }
 
 void LuminanceOptions::setDefaultPathLdrOut(const QString& path)

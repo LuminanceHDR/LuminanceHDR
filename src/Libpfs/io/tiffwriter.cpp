@@ -315,7 +315,7 @@ bool writeFloat32(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
 
     tsize_t stripSize = TIFFStripSize(tif);
-    assert( sizeof(float)*width*3 == stripSize );
+    assert( (tsize_t)sizeof(float)*width*3 == stripSize );
     tstrip_t stripsNum = TIFFNumberOfStrips(tif);
 
     const Channel* rChannel;
@@ -378,7 +378,7 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     TIFFSetField(tif, TIFFTAG_STONITS, 1.);	/* not known */
 
     tsize_t stripSize = TIFFStripSize(tif);
-    assert( sizeof(float)*width*3 == stripSize );
+    assert( (tsize_t)sizeof(float)*width*3 == stripSize );
     tstrip_t stripsNum = TIFFNumberOfStrips(tif);
 
     const Channel* rChannel;

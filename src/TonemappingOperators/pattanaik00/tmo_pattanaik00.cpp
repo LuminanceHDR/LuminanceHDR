@@ -367,12 +367,12 @@ void VisualAdaptationModel::setAdaptation(const pfs::Array2Df& Y)
 
 float VisualAdaptationModel::calculateLogAvgLuminance(const pfs::Array2Df& Y)
 {
-  double avLum = 0.0f;
+  float avLum = 0.0f;
 
   int size = Y.getCols() * Y.getRows();
   for( int i=0 ; i<size; i++ )
   {
     avLum += std::log( Y(i) + 1e-4 );
   }
-  return static_cast<float>(std::exp(avLum/size ) - 1e-4);
+  return std::exp(avLum/size ) - 1e-4;
 }

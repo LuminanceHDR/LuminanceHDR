@@ -37,15 +37,15 @@ template <typename Type>
 void cut(const Array2D<Type> *from, Array2D<Type> *to,
          size_t x_ul, size_t y_ul, size_t x_br, size_t y_br)
 {
-    assert( x_ul >= 0 );        // must be obvious...
-    assert( y_ul >= 0 );        // must be obvious...
+    //assert( x_ul >= 0 );        // must be obvious... so obvious that x_ul is unsigned
+    //assert( y_ul >= 0 );        // must be obvious... so obvious that y_ul is unsigned
     assert( x_br <= from->getCols() );
     assert( y_br <= from->getRows() );
     assert( to->getRows() <= from->getRows() );
     assert( to->getRows() <= from->getRows() );
 
-    // if ( x_ul < 0 ) x_ul = 0;
-    // if ( y_ul < 0 ) y_ul = 0;
+    // if ( x_ul < 0 ) x_ul = 0; // unsigned
+    // if ( y_ul < 0 ) y_ul = 0; // unsigned
     if ( x_br > from->getCols() ) x_br = from->getCols();
     if ( y_br > from->getRows() ) y_br = from->getRows();
 

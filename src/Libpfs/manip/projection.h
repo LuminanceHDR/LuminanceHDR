@@ -67,7 +67,7 @@ typedef Projection*(*ProjectionCreator)(void);
 class ProjectionFactory
 {
     static ProjectionFactory singleton;
-    ProjectionFactory(bool );
+    explicit ProjectionFactory(bool );
   public:
     std::map < std::string, ProjectionCreator > projections;
     static void registerProjection(const char *name, ProjectionCreator ptr);
@@ -77,7 +77,7 @@ class ProjectionFactory
 
 class MirrorBallProjection : public Projection
 {
-  MirrorBallProjection(bool initialization);
+  explicit MirrorBallProjection(bool initialization);
   public:
   static MirrorBallProjection singleton;
   static Projection* create();
@@ -91,7 +91,7 @@ class MirrorBallProjection : public Projection
 class AngularProjection : public Projection
 {
   double totalAngle;
-  AngularProjection(bool initialization);
+  explicit AngularProjection(bool initialization);
   public:
   static AngularProjection singleton;
   static Projection* create();
@@ -110,7 +110,7 @@ class CylindricalProjection : public Projection
   Vector3D *pole;
   Vector3D *equator;
   Vector3D *cross;
-  CylindricalProjection(bool initialization);
+  explicit CylindricalProjection(bool initialization);
   public:
   static CylindricalProjection singleton;
   static Projection* create();
@@ -126,7 +126,7 @@ class PolarProjection : public Projection
   Vector3D *pole;
   Vector3D *equator;
   Vector3D *cross;
-  PolarProjection(bool initialization);
+  explicit PolarProjection(bool initialization);
   public:
   static PolarProjection singleton;
   static Projection* create();

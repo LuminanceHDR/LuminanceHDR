@@ -154,6 +154,31 @@ struct TonemapOperatorFattal02
     }
 };
 
+struct TonemapOperatorFerradans11
+        : public TonemapOperatorRegister<ferradans, TonemapOperatorFerradans11>
+{
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
+    {
+        ph.setMaximum(100);
+
+        pfstmo_ferradans11(workingframe,
+                        opts->operator_options.ferradansoptions.rho,
+                        opts->operator_options.ferradansoptions.inv_alpha,
+                        ph);
+    }
+};
+
+struct TonemapOperatorMai11
+        : public TonemapOperatorRegister<mai, TonemapOperatorMai11>
+{
+    void tonemapFrame(pfs::Frame& workingframe, TonemappingOptions* opts, pfs::Progress& ph)
+    {
+        ph.setMaximum(100);
+
+        pfstmo_mai11(workingframe, ph);
+    }
+};
+
 struct TonemapOperatorDrago03
         : public TonemapOperatorRegister<drago, TonemapOperatorDrago03>
 {
@@ -308,6 +333,8 @@ const TonemapOperatorCreatorMap& registry()
             (mantiuk06, TonemapOperatorRegister<mantiuk06, TonemapOperatorMantiuk06>::create)
             (mantiuk08, TonemapOperatorRegister<mantiuk08, TonemapOperatorMantiuk08>::create)
             (fattal, TonemapOperatorRegister<fattal, TonemapOperatorFattal02>::create)
+            (ferradans, TonemapOperatorRegister<ferradans, TonemapOperatorFerradans11>::create)
+            (mai, TonemapOperatorRegister<mai, TonemapOperatorMai11>::create)
             (drago, TonemapOperatorRegister<drago, TonemapOperatorDrago03>::create)
             (durand, TonemapOperatorRegister<durand, TonemapOperatorDurand02>::create)
             (reinhard02, TonemapOperatorRegister<reinhard02, TonemapOperatorReinhard02>::create)

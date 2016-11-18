@@ -59,6 +59,18 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 #endif
     m_Ui->setupUi(this);
 
+    //icons
+    m_Ui->add_dir_HDRs_Button->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/prefix1/images/fileopen.png")));
+    m_Ui->add_dir_TMopts_Button->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/prefix1/images/fileopen.png")));
+    m_Ui->add_HDRs_Button->setIcon(QIcon::fromTheme("list-add", QIcon(":/new/prefix1/images/list-add.png")));
+    m_Ui->add_TMopts_Button->setIcon(QIcon::fromTheme("list-add", QIcon(":/new/prefix1/images/list-add.png")));
+    m_Ui->remove_HDRs_Button->setIcon(QIcon::fromTheme("list-remove", QIcon(":/new/prefix1/images/list-remove.png")));
+    m_Ui->remove_TMOpts_Button->setIcon(QIcon::fromTheme("list-remove", QIcon(":/new/prefix1/images/list-remove.png")));
+    m_Ui->from_Database_Button->setIcon(QIcon::fromTheme("vcs-added", QIcon(":/new/prefix1/images/vcs_add.png")));
+    m_Ui->out_folder_Button->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/prefix1/images/fileopen.png")));
+    m_Ui->clearTextToolButton->setIcon(QIcon::fromTheme("edit-clear", QIcon(":/new/prefix1/images/remove.png")));
+    // end setting icons
+
     m_batchTmInputDir = m_luminance_options.getBatchTmPathHdrInput();
     m_batchTmTmoSettingsDir = m_luminance_options.getBatchTmPathTmoSettings();
     m_batchTmOutputDir = m_luminance_options.getBatchTmPathLdrOutput();
@@ -98,6 +110,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 
     add_log_message(tr("Using %n thread(s)", "", m_max_num_threads));
     //add_log_message(tr("Saving using file format: %1").arg(m_Ui->comboBoxFormat->currentText()));
+    m_Ui->overallProgressBar->hide();
 }
 
 BatchTMDialog::~BatchTMDialog()
@@ -494,6 +507,7 @@ void BatchTMDialog::init_batch_tm_ui()
     m_is_batch_running = true;
 
     // progress bar activated
+    m_Ui->overallProgressBar->show();
     m_Ui->overallProgressBar->setMaximum( m_Ui->listWidget_HDRs->count()*(m_Ui->listWidget_TMopts->count() + 1) );
     m_Ui->overallProgressBar->setValue(0);
 
@@ -643,6 +657,17 @@ void BatchTMDialog::from_database()
 					tm_opt->operator_options.fattaloptions.newfattal = !query.value(4).toBool();
 					tm_opt->operator_options.fattaloptions.fftsolver = !query.value(4).toBool();
 					tm_opt->pregamma = query.value(5).toFloat();
+				}
+			}
+			else if (tmOperator == "ferradans") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = ferradans;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.ferradansoptions.rho = query.value(0).toFloat();
+					tm_opt->operator_options.ferradansoptions.inv_alpha = query.value(1).toFloat();
+					tm_opt->pregamma = query.value(2).toFloat();
 				}
 			}
 			else if (tmOperator == "mantiuk06") {

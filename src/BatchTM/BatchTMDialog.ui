@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>682</width>
-    <height>566</height>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,8 +65,8 @@
              <string>Add Directory (Alt+D)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -85,8 +85,8 @@
              <string>Add Files (Alt+F)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+             <iconset theme="list-add">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -105,8 +105,8 @@
              <string>Remove Files (Alt+R)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
+             <iconset theme="list-remove">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -166,8 +166,8 @@
              <string>Add Directory (Alt+I)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <iconset theme="document-open">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -186,8 +186,8 @@
              <string>Add Files (Alt+L)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+             <iconset theme="list-add">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -206,8 +206,8 @@
              <string>Add from Database (Alt+B)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/vcs_add.png</normaloff>:/new/prefix1/images/vcs_add.png</iconset>
+             <iconset theme="vcs-added">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -226,8 +226,8 @@
              <string>Remove Settings (Alt+M)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
+             <iconset theme="list-remove">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -276,7 +276,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_4">
      <property name="toolTip">
-      <string>Specify output folder for the tone mapped files</string>
+      <string/>
      </property>
      <property name="title">
       <string>Output</string>
@@ -298,17 +298,23 @@
       </item>
       <item row="3" column="5">
        <widget class="QPushButton" name="out_folder_Button">
+        <property name="toolTip">
+         <string>Specify output folder for the tone mapped files</string>
+        </property>
         <property name="text">
          <string>Selec&amp;t...</string>
         </property>
         <property name="icon">
-         <iconset resource="../../icons.qrc">
-          <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+         <iconset theme="document-open">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
       <item row="3" column="1" colspan="4">
        <widget class="QLineEdit" name="out_folder_widgets">
+        <property name="toolTip">
+         <string>Specify output folder for the tone mapped files</string>
+        </property>
         <property name="readOnly">
          <bool>true</bool>
         </property>
@@ -316,6 +322,9 @@
       </item>
       <item row="1" column="4">
        <widget class="QSpinBox" name="spinBox_Width">
+        <property name="toolTip">
+         <string>Width of tonemapped image in percent of original image</string>
+        </property>
         <property name="suffix">
          <string> %</string>
         </property>
@@ -332,6 +341,9 @@
       </item>
       <item row="1" column="1" colspan="3">
        <widget class="QSlider" name="horizontalSlider_Width">
+        <property name="toolTip">
+         <string>Width of tonemapped image in percent of original image</string>
+        </property>
         <property name="minimum">
          <number>1</number>
         </property>
@@ -360,10 +372,17 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="comboBoxFormat"/>
+       <widget class="QComboBox" name="comboBoxFormat">
+        <property name="toolTip">
+         <string>Image format of tonemapped images</string>
+        </property>
+       </widget>
       </item>
       <item row="0" column="2">
        <widget class="QToolButton" name="formatSettingsButton">
+        <property name="toolTip">
+         <string>Image format options</string>
+        </property>
         <property name="text">
          <string notr="true">...</string>
         </property>
@@ -423,7 +442,7 @@
         <item>
          <widget class="QLabel" name="filterLabel1">
           <property name="text">
-           <string>&amp;Show only:</string>
+           <string>S&amp;how only:</string>
           </property>
           <property name="buddy">
            <cstring>filterComboBox</cstring>
@@ -489,8 +508,8 @@
            <string>Clear filter text</string>
           </property>
           <property name="icon">
-           <iconset resource="../../icons.qrc">
-            <normaloff>:/new/prefix1/images/fileclose.png</normaloff>:/new/prefix1/images/fileclose.png</iconset>
+           <iconset theme="edit-clear">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>

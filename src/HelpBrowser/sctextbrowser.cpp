@@ -54,14 +54,7 @@ for which a new license (GPL+exception) is in place.
 #include <QToolTip>
 #include <QUrl>
 
-//#if defined(_WIN32)
-//#include <windows.h>
-//#include <shellapi.h>
-//#endif
-
-// #include "prefsmanager.h"
 #include "sctextbrowser.h"
-// #include "urllauncher.h"
 
 ScTextBrowser::ScTextBrowser( QWidget * parent )
 	: QWebEngineView(parent)

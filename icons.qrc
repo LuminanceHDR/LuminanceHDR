@@ -18,9 +18,13 @@
         <file>images/fileopen.png</file>
         <file>images/filesave.png</file>
         <file>images/filesaveall.png</file>
+        <file>images/preview-file.png</file>
+        <file>images/globe.png</file>
         <file>images/forward.png</file>
         <file>images/ghost_32x32.png</file>
         <file>images/help.png</file>
+        <file>images/help-donate.png</file>
+        <file>images/help-about.png</file>
         <file>images/home.png</file>
         <file>images/move.png</file>
         <file>images/options.png</file>
@@ -50,11 +54,11 @@
         <file>images/list-remove.png</file>
         <file>images/edit-clear-list.png</file>
         <file>images/cms.png</file>
+        <file>images/soft-proofing.png</file>
         <file>images/camera-photo.png</file>
         <file>images/video-television.png</file>
         <file>images/printer.png</file>
         <file>images/gamut_48x48.png</file>
-        <file>images/document-print-preview.png</file>
         <file>images/vcs_add.png</file>
         <file>images/vcs_commit.png</file>
         <file>images/vcs_update.png</file>
@@ -84,7 +88,9 @@
     </qresource>
     <qresource prefix="/help">
         <file alias="document-print.png">icons/help/document-print.png</file>
+        <file alias="document-print-preview.png">icons/help/document-print-preview.png</file>
         <file alias="exit.png">icons/help/exit.png</file>
+        <file alias="edit-find.png">icons/help/edit-find.png</file>
         <file alias="go-bottom.png">icons/help/go-bottom.png</file>
         <file alias="go-down.png">icons/help/go-down.png</file>
         <file alias="go-first.png">icons/help/go-first.png</file>
@@ -116,8 +122,11 @@
         <file>images/folder-open.svgz</file>
         <file>images/document-open.svgz</file>
         <file>images/window-close.svg</file>
+        <file>images/window-minimize.svg</file>
+        <file>images/window-maximize.svg</file>
 		<file>images/view-object-histogram-linear.svgz</file>
 		<file>images/color-picker-white.svg</file>
 		<file>images/window-duplicate.svg</file>
+		<file>images/color-management.svg</file>
     </qresource>
 </RCC>

@@ -97,11 +97,11 @@ signals:
     void read_hdr_failed(const QString&);
     void read_hdr_success(pfs::Frame*, const QString&);
 
-    void write_hdr_failed();
+    void write_hdr_failed(const QString&);
     void write_hdr_success(pfs::Frame*, const QString&);
     void write_hdr_success(GenericViewer*, const QString&);
 
-    void write_ldr_failed();
+    void write_ldr_failed(const QString&);
     void write_ldr_success(pfs::Frame*, const QString&);
     void write_ldr_success(GenericViewer*, const QString&);
 

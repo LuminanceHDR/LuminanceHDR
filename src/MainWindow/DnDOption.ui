@@ -51,8 +51,7 @@
       <string>&amp;Open</string>
      </property>
      <property name="icon">
-      <iconset resource="../../icons.qrc">
-       <normaloff>:/new/svgs/images/folder-open.svgz</normaloff>:/new/svgs/images/folder-open.svgz</iconset>
+      <iconset theme="folder-open"/>
      </property>
      <property name="iconSize">
       <size>
@@ -71,8 +70,7 @@
       <string>&amp;New</string>
      </property>
      <property name="icon">
-      <iconset resource="../../icons.qrc">
-       <normaloff>:/new/svgs/images/insert-image.svgz</normaloff>:/new/svgs/images/insert-image.svgz</iconset>
+      <iconset theme="insert-image"/>
      </property>
      <property name="iconSize">
       <size>
@@ -91,8 +89,7 @@
       <string>&amp;Cancel</string>
      </property>
      <property name="icon">
-      <iconset resource="../../icons.qrc">
-       <normaloff>:/new/svgs/images/window-close.svg</normaloff>:/new/svgs/images/window-close.svg</iconset>
+      <iconset theme="window-close"/>
      </property>
      <property name="iconSize">
       <size>

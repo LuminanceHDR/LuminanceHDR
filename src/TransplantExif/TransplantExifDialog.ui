@@ -15,14 +15,23 @@
    <string>Copy Exif data</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
   </property>
   <layout class="QVBoxLayout">
    <property name="spacing">
     <number>5</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
     <number>5</number>
    </property>
    <item>
@@ -30,7 +39,16 @@
      <property name="spacing">
       <number>6</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -44,7 +62,16 @@
           <property name="spacing">
            <number>6</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -67,7 +94,16 @@
           <property name="spacing">
            <number>6</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -76,8 +112,7 @@
              <string>Append files to the list</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+             <iconset theme="list-add"/>
             </property>
             <property name="iconSize">
              <size>
@@ -93,8 +128,7 @@
              <string>Remove selected file(s) from the list</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
+             <iconset theme="list-remove"/>
             </property>
             <property name="iconSize">
              <size>
@@ -110,8 +144,7 @@
              <string>Move up selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
+             <iconset theme="go-up"/>
             </property>
             <property name="iconSize">
              <size>
@@ -127,8 +160,7 @@
              <string>Move down selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
+             <iconset theme="go-down"/>
             </property>
             <property name="iconSize">
              <size>
@@ -167,7 +199,16 @@
           <property name="spacing">
            <number>6</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -187,7 +228,16 @@
           <property name="spacing">
            <number>6</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -196,8 +246,7 @@
              <string>Append files to the list</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+             <iconset theme="list-add"/>
             </property>
             <property name="iconSize">
              <size>
@@ -213,8 +262,7 @@
              <string>Remove selected file(s) from the list</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
+             <iconset theme="list-remove"/>
             </property>
             <property name="iconSize">
              <size>
@@ -230,8 +278,7 @@
              <string>Move up selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
+             <iconset theme="go-up"/>
             </property>
             <property name="iconSize">
              <size>
@@ -247,8 +294,7 @@
              <string>Move down selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
+             <iconset theme="go-down"/>
             </property>
             <property name="iconSize">
              <size>
@@ -287,7 +333,16 @@
       <property name="spacing">
        <number>5</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
        <number>2</number>
       </property>
       <item>
@@ -323,13 +378,22 @@
         <property name="spacing">
          <number>6</number>
         </property>
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
          <widget class="QLabel" name="filterLabel1">
           <property name="text">
-           <string>&amp;Show only:</string>
+           <string>Show onl&amp;y:</string>
           </property>
           <property name="buddy">
            <cstring>filterComboBox</cstring>
@@ -382,8 +446,7 @@
            <string>Clear filter text</string>
           </property>
           <property name="icon">
-           <iconset resource="../../icons.qrc">
-            <normaloff>:/new/prefix1/images/fileclose.png</normaloff>:/new/prefix1/images/fileclose.png</iconset>
+           <iconset theme="edit-clear"/>
           </property>
          </widget>
         </item>
@@ -420,7 +483,16 @@
      <property name="spacing">
       <number>6</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>

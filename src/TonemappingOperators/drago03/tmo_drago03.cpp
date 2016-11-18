@@ -91,7 +91,8 @@ void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
         {
             float Yw = Y(x,y) / avLum;
             float interpol = std::log (2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
-            L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
+            //L(x,y) = ( std::log(Yw+1.0f)/interpol ) / divider;
+            L(x,y) = ( std::log1p(Yw)/interpol ) / divider; // avoid loss of precision
 
             assert(!boost::math::isnan(L(x,y)));
         }

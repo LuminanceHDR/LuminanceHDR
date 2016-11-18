@@ -36,7 +36,7 @@ class ProgressHelper
 {
     Q_OBJECT
 public:
-    ProgressHelper(QObject *p = 0);
+    explicit ProgressHelper(QObject *p = 0);
 
     void setValue(int value);
     void setRange(int minimum, int maximum);

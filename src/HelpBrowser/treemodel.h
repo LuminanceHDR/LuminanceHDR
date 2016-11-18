@@ -1,4 +1,9 @@
-/****************************************************************************
+/**
+** This file is a part of Luminance HDR package.
+** ----------------------------------------------------------------------
+** Copyright (C) 2009-2016 Davide Anastasia, Franco Comida, Daniel Kaneider
+**
+*****************************************************************************
 **
 ** Copyright (C) 2005-2007 Trolltech ASA. All rights reserved.
 **
@@ -36,7 +41,7 @@ class TreeModel : public QAbstractItemModel
 
 	public:
 		TreeModel ( const QString &data, QObject *parent = 0 );
-		TreeModel ( QObject * /*parent = 0*/ ) {}; //CB Added for ScHelpTreeModel
+		explicit TreeModel ( QObject * /*parent = 0*/ ) : rootItem(NULL) {}; //CB Added for ScHelpTreeModel
 		~TreeModel();
 
 		QVariant data ( const QModelIndex &index, int role ) const;

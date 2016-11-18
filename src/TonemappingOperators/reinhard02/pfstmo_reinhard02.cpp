@@ -81,6 +81,7 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
 
   tmoperator.tmo_reinhard02();
 
+  // TODO: this section can be rewritten using SSE Function
   for (size_t x = 0; x < w; x++)
   {
     for (size_t y = 0; y < h; y++)

@@ -304,10 +304,11 @@ void RobertsonOperatorAuto::computeResponse(
             float ti = arrayofexptime[i];
             // this is probably uglier than necessary, (I copy th FOR in order
             // not to do the IFs inside them) but I don't know how to improve it
-            for (int j = 0; j < width*height; ++j)
+            for (size_t j = 0; j < width*height; ++j)
             {
                 size_t sample = ResponseCurve::getIdx(inputData[i][j]);
-                if ((sample < ResponseCurve::NUM_BINS) && (sample >= 0))
+                //if ((sample < ResponseCurve::NUM_BINS) && (sample >= 0)) // sample is unsigned so always >= 0
+                if ((sample < ResponseCurve::NUM_BINS))
                 {
                     sum[sample] += ti * outputData[j];
                     cardEm[sample]++;
@@ -320,7 +321,7 @@ void RobertsonOperatorAuto::computeResponse(
         }
 
         float Iprevious = 0.f;
-        for (int m = 0; m < I.size(); ++m)
+        for (size_t m = 0; m < I.size(); ++m)
         {
             if (cardEm[m] != 0)
             {
@@ -342,7 +343,7 @@ void RobertsonOperatorAuto::computeResponse(
         // 4. Check stopping condition
         double delta = 0.0;
         int hits = 0;
-        for (int m = 0; m < I.size(); ++m)
+        for (size_t m = 0; m < I.size(); ++m)
         {
             if (I[m] != 0.0f)
             {

@@ -24,8 +24,8 @@
 #include <QCoreApplication>
 
 #include "Common/config.h"
-#include "Common/LuminanceOptions.h"
 #include "Common/TranslatorManager.h"
+#include "Common/LuminanceOptions.h"
 
 #include "MainCli/commandline.h"
 

@@ -86,8 +86,8 @@ float calc_LAL(GaussianPyramid *myPyramid, int x, int y, int s) {
 
   float newX = (float)x * ratio;
   float newY = (float)y * ratio;
-  int X_int = (int)newX;
-  int Y_int = (int)newY;
+  unsigned int X_int = (unsigned int)newX;
+  unsigned int Y_int = (unsigned int)newY;
 
   if(X_int >= myPyramid->p[s-1].GP->getCols()) X_int = myPyramid->p[s-1].GP->getCols()-1;
   if(Y_int >= myPyramid->p[s-1].GP->getRows()) Y_int = myPyramid->p[s-1].GP->getRows()-1;
@@ -143,7 +143,7 @@ inline float TM(float lum_val, float maxLum, float minLum) {
 void getMaxMin(pfs::Array2Df* lum_map, float& maxLum, float& minLum) {
   maxLum = minLum = 0.0;
 
-  for(int i=0; i<lum_map->getCols() * lum_map->getRows(); i++) {
+  for(unsigned int i=0; i<lum_map->getCols() * lum_map->getRows(); i++) {
     maxLum = ((*lum_map)(i) > maxLum) ? (*lum_map)(i) : maxLum;
     minLum = ((*lum_map)(i) < minLum) ? (*lum_map)(i) : minLum;
   }
@@ -165,8 +165,8 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
   assert(Y!=NULL);
   assert(L!=NULL);
 
-  int nrows = Y->getRows();			// image size
-  int ncols = Y->getCols();
+  unsigned int nrows = Y->getRows();			// image size
+  unsigned int ncols = Y->getCols();
   assert(nrows==L->getRows() && ncols==L->getCols() );
 
 //   int im_size = nrows * ncols;
@@ -175,8 +175,8 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
 
   // apply ToneMapping function only
   if(simple_flag) {
-    for(int y=0; y<nrows; y++)
-      for(int x=0; x<ncols; x++)
+    for(unsigned int y=0; y<nrows; y++)
+      for(unsigned int x=0; x<ncols; x++)
       {
 	(*L)(x,y) = TM((*Y)(x,y), maxLum, minLum);
         
@@ -194,11 +194,11 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
 
   // LAL calculation
   pfs::Array2Df* la = new pfs::Array2Df(ncols, nrows);
-  for(int y=0; y<nrows; y++) {
+  for(unsigned int y=0; y<nrows; y++) {
       ph.setValue(100*y/nrows);
       if (ph.canceled())
 		break;
-    for(int x=0; x<ncols; x++) {
+    for(unsigned int x=0; x<ncols; x++) {
       (*la)(x,y) = LAL(myPyramid, x, y, lc_value);
       if((*la)(x,y) == 0.0)
 	(*la)(x,y) = EPSILON;
@@ -208,19 +208,19 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
 
   // TM function
   pfs::Array2Df* tm = new pfs::Array2Df(ncols, nrows);
-  for(int y=0; y<nrows; y++) {
+  for(unsigned int y=0; y<nrows; y++) {
     ph.setValue(100*y/nrows);
     if (ph.canceled())
 		break;
-    for(int x=0; x<ncols; x++)
+    for(unsigned int x=0; x<ncols; x++)
       (*tm)(x,y) = TM((*la)(x,y), maxLum, minLum);
   }
   // final computation for each pixel
-  for(int y=0; y<nrows; y++) {
+  for(unsigned int y=0; y<nrows; y++) {
     ph.setValue(100*y/nrows);
     if (ph.canceled())
 		break;
-    for(int x=0; x<ncols; x++)
+    for(unsigned int x=0; x<ncols; x++)
     {
       switch (eq) {
       case 2:

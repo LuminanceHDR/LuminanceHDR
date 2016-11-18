@@ -1,5 +1,6 @@
 PROJECT("Luminance HDR") # luminance-hdr)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
+CMAKE_POLICY(SET CMP0043 OLD)
 
 # set include path for FindXXX.cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
@@ -9,6 +10,17 @@ include(cmake/Version.cmake)
 include(cmake/GlobalSettings.cmake)
 include(cmake/CompilerSettings.cmake)
 include(cmake/Internationalization.cmake)
+
+# ======== Has branch prediction =======
+include( CheckCXXSourceCompiles )
+
+check_cxx_source_compiles( "int main() { int x = 0; if( __builtin_expect((x),0) ) x = 1; return 0; }" HAS_BRANCH_PEDICTION )
+
+if( HAS_BRANCH_PREDICTION )
+  set( BRANCH_PREDICTION 1 )
+else( HAS_BRANCH_PREDICTION )
+  set( BRANCH_PREDICTION 0 )
+endif( HAS_BRANCH_PREDICTION )
 
 # find and setup Qt5 for this project
 
@@ -51,10 +63,10 @@ ENDIF()
 
 IF(WIN32)
     # Windows Section
-    
+
     # to not define min/max macros, which cause troubles with STL and boost
     ADD_DEFINITIONS(-DNOMINMAX)
-    
+
     SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
     SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
     SET(LCMS2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
@@ -66,16 +78,16 @@ IF(WIN32)
     IF(CMAKE_SIZEOF_VOID_P EQUAL 4)
         # SSE2 is on by default, on x64 platforms
     	ADD_DEFINITIONS(/arch:SSE2)
-    ENDIF() 
+    ENDIF()
 
     ADD_DEFINITIONS(-DUNICODE )
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_REENTRANT)
     SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
-	
+
     SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
     ADD_DEFINITIONS("-DDEMOSAICING_GPL2")
     ADD_DEFINITIONS("-DDEMOSAICING_GPL3")
-	
+
     SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
     ADD_DEFINITIONS(-DCMS_DLL)
     ADD_DEFINITIONS(-DUSE_LCMS2)
@@ -166,12 +178,18 @@ ENDIF(ENABLE_UNIT_TEST)
 FILE(GLOB LUMINANCE_TS i18n/lang_*.ts)
 
 IF(UPDATE_TRANSLATIONS)
-	SET(LUMINANCE_TS ${LUMINANCE_TS} i18n/source.ts)
+    SET(LUMINANCE_TS ${LUMINANCE_TS} i18n/source.ts)
     IF(LUPDATE_NOOBSOLETE)
         QT5_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS} OPTIONS -noobsolete)
     ELSE()
         QT5_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS})
     ENDIF()
+    IF(UNIX)
+        IF(NOT APPLE) # Sadly on Linux Qt5 add global include paths in list of translation files, let's get rid of them
+            EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/linux/sanitize_translations.sh
+                WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+        ENDIF(NOT APPLE)
+    ENDIF(UNIX)
 ELSE(UPDATE_TRANSLATIONS)
     QT5_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
 ENDIF(UPDATE_TRANSLATIONS)
@@ -218,7 +236,7 @@ IF(APPLE)
     ADD_EXECUTABLE(${LHDR_OSX_EXECUTABLE_TARGET} MACOSX_BUNDLE ${LUMINANCE_FILES}) # luminance-hdr
     set_property(TARGET ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTY OUTPUT_NAME ${LHDR_OSX_EXECUTABLE_NAME})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
-  
+
     SET_TARGET_PROPERTIES( ${LHDR_OSX_EXECUTABLE_TARGET} PROPERTIES MACOSX_BUNDLE_INFO_PLIST
                            "${CMAKE_BINARY_DIR}/Info.plist" )
 
@@ -241,8 +259,9 @@ IF(APPLE)
     TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
 # Unix
 ELSEIF(UNIX)
-    FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm)
-    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
+    #FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) Qt5 translations now shipped by upstream
+    #SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES})
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
@@ -260,10 +279,11 @@ ELSEIF(UNIX)
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
     INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
     INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
-    INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
+    #INSTALL(FILES ${LUMINANCE_QT_QM} DESTINATION share/luminance-hdr/i18n) # i18n
 
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
+    INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.appdata.xml DESTINATION share/appdata) #appstream 
     INSTALL(FILES
     ${CMAKE_SOURCE_DIR}/AUTHORS
     ${CMAKE_SOURCE_DIR}/README.md
@@ -271,6 +291,7 @@ ELSEIF(UNIX)
     ${CMAKE_SOURCE_DIR}/Changelog
     DESTINATION share/luminance-hdr) #info files
     INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
+    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml DESTINATION share/luminance-hdr) # hdrhtml directory
 # Microsoft Windows
 ELSEIF(WIN32)
     # icon files to copy in the bundle
@@ -279,7 +300,7 @@ ELSEIF(WIN32)
     # Subsystem console:
     ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
-  
+
     qt5_use_modules(luminance-hdr Core Gui Widgets WinExtras Svg)
     qt5_use_modules(luminance-hdr-cli Core Gui Widgets)
 

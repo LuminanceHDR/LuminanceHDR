@@ -45,6 +45,7 @@
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/utils/transform.h>
 #include <Libpfs/colorspace/rgbremapper.h>
+#include <Libpfs/exception.h>
 
 using namespace std;
 using namespace pfs;

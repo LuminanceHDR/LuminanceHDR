@@ -41,7 +41,7 @@ class PreviewSettings : public QWidget
     Q_OBJECT
 
 public:
-    PreviewSettings(QWidget *parent = 0);
+    explicit PreviewSettings(QWidget *parent = 0);
     ~PreviewSettings();
     void addPreviewLabel(PreviewLabel *label);
     PreviewLabel *getPreviewLabel(int index);

@@ -32,6 +32,8 @@
 #include "commandline.h"
 
 #include "Common/LuminanceOptions.h"
+#include "Common/CommonFunctions.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 #include "Exif/ExifOperations.h"
 
@@ -39,6 +41,7 @@
 #include "Core/TMWorker.h"
 
 #include "Libpfs/tm/TonemapOperator.h"
+#include "Libpfs/manip/gamma_levels.h"
 
 #include <boost/program_options.hpp>
 
@@ -47,6 +50,7 @@
 #include <io.h>
 #endif
 
+#include "HdrHTML/pfsouthdrhtml.h"
 
 using namespace libhdr::fusion;
 
@@ -57,15 +61,15 @@ void printIfVerbose(const QString& str, bool verbose)
 {
     if ( verbose )
     {
-		#if defined(_MSC_VER)
-    		// if the filemode isn't restored afterwards, a normal std::cout segfaults
-			int oldMode = _setmode(_fileno(stdout), _O_U16TEXT);
-			std::wcout << qPrintable(str) << std::endl;
-			if (oldMode >= 0)
-				_setmode(_fileno(stdout), oldMode);
-		#else
-    		std::cout << qPrintable(str) << std::endl;
-		#endif
+        #if defined(_MSC_VER)
+            // if the filemode isn't restored afterwards, a normal std::cout segfaults
+            int oldMode = _setmode(_fileno(stdout), _O_U16TEXT);
+            std::wcout << qPrintable(str) << std::endl;
+            if (oldMode >= 0)
+                _setmode(_fileno(stdout), oldMode);
+        #else
+            std::cout << qPrintable(str) << std::endl;
+        #endif
     }
 }
 
@@ -94,9 +98,18 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     operationMode(UNKNOWN_MODE),
     alignMode(NO_ALIGN),
     tmopts(TMOptionsOperations::getDefaultTMOptions()),
-	tmofileparams(new pfs::Params()),
+    tmofileparams(new pfs::Params()),
     verbose(false),
+    oldValue(0),
+    maximum(100),
+    started(false),
     threshold(-1.0f),
+    isAutolevels(false),
+    isHtml(false),
+    isHtmlDone(false),
+    htmlQuality(2),
+    pageName(),
+    imagesDir(),
     saveAlignedImagesPrefix("")
 {
 
@@ -104,7 +117,7 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     hdrcreationconfig.responseCurve = RESPONSE_LINEAR;
     hdrcreationconfig.fusionOperator = DEBEVEC;
 
-	tmofileparams->set("quality", 100);
+    tmofileparams->set("quality", (size_t)100);
 }
 
 int CommandLineInterfaceManager::execCommandLineParams()
@@ -116,7 +129,8 @@ int CommandLineInterfaceManager::execCommandLineParams()
     po::options_description desc(tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(argv[0]).toUtf8().constData());
     desc.add_options()
         ("help,h", tr("Display this help.").toUtf8().constData())
-        ("verbose,v", po::value<bool>(&verbose), tr("Print more messages during execution.").toUtf8().constData())
+        ("verbose,v", tr("Print more messages during execution.").toUtf8().constData())
+        ("cameras,c", tr("Print a list of all supported cameras.").toUtf8().constData())
         ("align,a", po::value<std::string>(),    tr("[AIS|MTB]   Align Engine to use during HDR creation (default: no alignment).").toUtf8().constData())
         ("ev,e", po::value<std::string>(),       tr("EV1,EV2,... Specify numerical EV values (as many as INPUTFILES).").toUtf8().constData())
         ("savealigned,d", po::value<std::string>(),       tr("prefix Save aligned images to files which names start with prefix").toUtf8().constData())
@@ -127,8 +141,9 @@ int CommandLineInterfaceManager::execCommandLineParams()
         ("resize,r", po::value<int>(&tmopts->xsize),       tr("VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping)").toUtf8().constData())
 
         ("output,o", po::value<std::string>(),       tr("LDR_FILE    File name you want to save your tone mapped LDR to.").toUtf8().constData())
-            
         ("autoag,t", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
+        ("autolevels,b", tr("Apply autolevels correction after tonemapping.").toUtf8().constData())
+        ("createwebpage,w", tr("Enable generation of a webpage with embedded HDR viewer.").toUtf8().constData())
     ;
 
     po::options_description hdr_desc(tr("HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").toUtf8().constData());
@@ -139,33 +154,56 @@ int CommandLineInterfaceManager::execCommandLineParams()
         ("hdrCurveFilename", po::value<std::string>(),       tr("curve filename = your_file_here.m").toUtf8().constData())
     ;
 
-	po::options_description ldr_desc(tr("LDR output parameters").toUtf8().constData());
-	ldr_desc.add_options()
-		("ldrQuality,q", po::value<int>(), tr("VALUE      Quality of the saved tone mapped file (1-100).").toUtf8().constData())
-		("ldrTiff", po::value<std::string>(), tr("Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)").toUtf8().constData())
-		("ldrTiffDeflate", po::value<bool>(), tr("Tiff deflate compression. true|false (Default is true)").toUtf8().constData())
-		;
+    po::options_description ldr_desc(tr("LDR output parameters").toUtf8().constData());
+    ldr_desc.add_options()
+        ("ldrQuality,q", po::value<int>(), tr("VALUE      Quality of the saved tone mapped file (1-100).").toUtf8().constData())
+        ("ldrTiff", po::value<std::string>(), tr("Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)").toUtf8().constData())
+        ("ldrTiffDeflate", po::value<bool>(), tr("Tiff deflate compression. true|false (Default is true)").toUtf8().constData())
+        ;
+
+    po::options_description html_desc(tr("HTML output parameters").toUtf8().constData());
+    html_desc.add_options()
+        ("htmlQuality,k", po::value<int>(), tr("VALUE      Quality of the interpolated exposures, from the worst (1) to the best\
+(5). Higher quality will introduce less distortions in the \
+brightest and the darkest tones, but will also generate more \
+images. More images means that there is more data that needs to be \
+transferred to the web-browser, making HDR viewer less responsive. \
+(Default is 2, which is sufficient for most applications)").toUtf8().constData())
+        ("pageName", po::value<std::string>(), tr("Specifies the file name, of \
+the web page to be generated. If <page_name> is missing, the \
+file name of the first image with .html extension will be used. \
+(Default is first image name)").toUtf8().constData())
+        ("imagesDir", po::value<std::string>(), tr("Specify where to store the resulting image files. Links to images in \
+HTML will be updated accordingly. This must be a relative path and the \
+directory must exist.  Useful to avoid clutter in the current directory. \
+(Default is current working directory)").toUtf8().constData())
+        ;
 
     po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
     tmo_desc.add_options()
-        ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
+        ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|mai|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
         ("tmofile", po::value<std::string>(),   tr("SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings").toUtf8().constData())
     ;
 
     po::options_description tmo_fattal(tr(" Fattal").toUtf8().constData());
     tmo_fattal.add_options()
-		("tmoFatAlpha", po::value<float>(&tmopts->operator_options.fattaloptions.alpha),  tr("alpha FLOAT").toUtf8().constData())
-		("tmoFatBeta", po::value<float>(&tmopts->operator_options.fattaloptions.beta),  tr("beta FLOAT").toUtf8().constData())
-		("tmoFatColor", po::value<float>(&tmopts->operator_options.fattaloptions.color),  tr("color FLOAT").toUtf8().constData())
-		("tmoFatNoise", po::value<float>(&tmopts->operator_options.fattaloptions.noiseredux),  tr("noise FLOAT").toUtf8().constData())
-		("tmoFatNew", po::value<bool>(&tmopts->operator_options.fattaloptions.newfattal), tr("new true|false").toUtf8().constData())
+        ("tmoFatAlpha", po::value<float>(&tmopts->operator_options.fattaloptions.alpha),  tr("alpha FLOAT").toUtf8().constData())
+        ("tmoFatBeta", po::value<float>(&tmopts->operator_options.fattaloptions.beta),  tr("beta FLOAT").toUtf8().constData())
+        ("tmoFatColor", po::value<float>(&tmopts->operator_options.fattaloptions.color),  tr("color FLOAT").toUtf8().constData())
+        ("tmoFatNoise", po::value<float>(&tmopts->operator_options.fattaloptions.noiseredux),  tr("noise FLOAT").toUtf8().constData())
+        ("tmoFatNew", po::value<bool>(&tmopts->operator_options.fattaloptions.fftsolver), tr("new true|false").toUtf8().constData())
+    ;
+    po::options_description tmo_ferradans(tr(" Ferradans").toUtf8().constData());
+    tmo_ferradans.add_options()
+        ("tmoFerRho", po::value<float>(&tmopts->operator_options.ferradansoptions.rho),  tr("rho FLOAT").toUtf8().constData())
+        ("tmoFerInvAlpha", po::value<float>(&tmopts->operator_options.ferradansoptions.inv_alpha),  tr("inv_alpha FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_mantiuk06(tr(" Mantiuk 06").toUtf8().constData());
     tmo_mantiuk06.add_options()
         ("tmoM06Contrast", po::value<float>(&tmopts->operator_options.mantiuk06options.contrastfactor),  tr("contrast FLOAT").toUtf8().constData())
         ("tmoM06Saturation", po::value<float>(&tmopts->operator_options.mantiuk06options.saturationfactor),  tr("saturation FLOAT").toUtf8().constData())
         ("tmoM06Detail", po::value<float>(&tmopts->operator_options.mantiuk06options.detailfactor),  tr("detail FLOAT").toUtf8().constData())
-        ("tmoM06Constrast", po::value<bool>(&tmopts->operator_options.mantiuk06options.contrastequalization), tr("equalization true|false").toUtf8().constData())
+        ("tmoM06ContrastEqual", po::value<bool>(&tmopts->operator_options.mantiuk06options.contrastequalization), tr("equalization true|false").toUtf8().constData())
     ;
     po::options_description tmo_mantiuk08(tr(" Mantiuk 08").toUtf8().constData());
     tmo_mantiuk08.add_options()
@@ -215,6 +253,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
     ;
 
     tmo_desc.add(tmo_fattal);
+    tmo_desc.add(tmo_ferradans);
     tmo_desc.add(tmo_mantiuk06);
     tmo_desc.add(tmo_mantiuk08);
     tmo_desc.add(tmo_durand);
@@ -228,25 +267,51 @@ int CommandLineInterfaceManager::execCommandLineParams()
     po::options_description hidden("Hidden options");
     hidden.add_options()
         ("input-file", po::value< vector<string> >(), "input file")
-        ;    
+        ;
 
     po::positional_options_description p;
     p.add("input-file", -1);
 
     po::options_description cmdline_options;
-	cmdline_options.add(desc).add(hdr_desc).add(ldr_desc).add(tmo_desc).add(hidden);
+    cmdline_options.add(desc).add(hdr_desc).add(ldr_desc).add(html_desc).add(tmo_desc).add(hidden);
 
     po::options_description cmdvisible_options;
-	cmdvisible_options.add(desc).add(hdr_desc).add(ldr_desc).add(tmo_desc);
+    cmdvisible_options.add(desc).add(hdr_desc).add(ldr_desc).add(html_desc).add(tmo_desc);
 
-    try 
+    try
     {
         po::store(po::command_line_parser(argc, argv).options(cmdline_options).positional(p).run(), vm);
-        po::notify(vm);    
+        po::notify(vm);
 
         if (vm.count("help")) {
             cout << cmdvisible_options << "\n";
             return 1;
+        }
+        if (vm.count("verbose")) {
+            verbose = true;
+        }
+        if (vm.count("cameras")) {
+            cout << "With LibRaw version " << LibRaw::version() << endl;
+            cout << LibRaw::cameraCount() << " models listed" << endl;
+            const char **list = LibRaw::cameraList();
+            while (*list)
+                cout << *list++ << endl;
+            return 1;
+        }
+        if (vm.count("autolevels")) {
+            isAutolevels = true;
+        }
+        if (vm.count("createwebpage")) {
+            isHtml = true;
+        }
+        if (vm.count("htmlQuality")) {
+            htmlQuality = vm["htmlQuality"].as<int>();
+        }
+        if (vm.count("pageName")) {
+            pageName = vm["pageName"].as<std::string>();
+        }
+        if (vm.count("imagesDir")) {
+            imagesDir = vm["imagesDir"].as<std::string>();
         }
         if (vm.count("align")) {
             const char* value = vm["align"].as<std::string>().c_str();
@@ -265,11 +330,11 @@ int CommandLineInterfaceManager::execCommandLineParams()
         if (vm.count("hdrWeight")) {
             const char* value = vm["hdrWeight"].as<std::string>().c_str();
             if (strcmp(value,"triangular")==0)
-            	hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
+                hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
             else if (strcmp(value,"gaussian")==0)
-            	hdrcreationconfig.weightFunction = WEIGHT_GAUSSIAN;
+                hdrcreationconfig.weightFunction = WEIGHT_GAUSSIAN;
             else if (strcmp(value,"plateau")==0)
-            	hdrcreationconfig.weightFunction = WEIGHT_PLATEAU;
+                hdrcreationconfig.weightFunction = WEIGHT_PLATEAU;
             else if (strcmp(value,"flat")==0)
                 hdrcreationconfig.weightFunction = WEIGHT_FLAT;
             else
@@ -302,74 +367,77 @@ int CommandLineInterfaceManager::execCommandLineParams()
                 printErrorAndExit(tr("Error: Unknown HDR creation model specified."));
         }
         if (vm.count("hdrCurveFilename"))
-        	hdrcreationconfig.inputResponseCurveFilename = QString::fromStdString(vm["hdrCurveFilename"].as<std::string>());
-        
+            hdrcreationconfig.inputResponseCurveFilename = QString::fromStdString(vm["hdrCurveFilename"].as<std::string>());
         if (vm.count("tmo")) {
             const char* value = vm["tmo"].as<std::string>().c_str();
             if (strcmp(value,"ashikhmin")==0)
-            	tmopts->tmoperator=ashikhmin;
+                tmopts->tmoperator=ashikhmin;
             else if (strcmp(value,"drago")==0)
-            	tmopts->tmoperator=drago;
+                tmopts->tmoperator=drago;
             else if (strcmp(value,"durand")==0)
-            	tmopts->tmoperator=durand;
+                tmopts->tmoperator=durand;
             else if (strcmp(value,"fattal")==0)
-            	tmopts->tmoperator=fattal;
+                tmopts->tmoperator=fattal;
+            else if (strcmp(value,"ferradans")==0)
+                tmopts->tmoperator=ferradans;
+            else if (strcmp(value,"mai")==0)
+                tmopts->tmoperator=mai;
             else if (strcmp(value,"pattanaik")==0)
-            	tmopts->tmoperator=pattanaik;
+                tmopts->tmoperator=pattanaik;
             else if (strcmp(value,"reinhard02")==0)
-            	tmopts->tmoperator=reinhard02;
+                tmopts->tmoperator=reinhard02;
             else if (strcmp(value,"reinhard05")==0)
-            	tmopts->tmoperator=reinhard05;
+                tmopts->tmoperator=reinhard05;
             else if (strcmp(value,"mantiuk06")==0)
-            	tmopts->tmoperator=mantiuk06;
+                tmopts->tmoperator=mantiuk06;
             else if (strcmp(value,"mantiuk08")==0)
-            	tmopts->tmoperator=mantiuk08;
+                tmopts->tmoperator=mantiuk08;
             else
-            	printErrorAndExit(tr("Error: Unknown tone mapping operator specified."));
+                printErrorAndExit(tr("Error: Unknown tone mapping operator specified."));
         }
         if (vm.count("tmofile")) {
-        	QString settingFile = QString::fromStdString(vm["tmofile"].as<std::string>());
-			printIfVerbose(QObject::tr("Loading TMO settings from file: %1").arg(settingFile), verbose);
-			try
-			{
-				TonemappingOptions* options = TMOptionsOperations::parseFile(settingFile);
-				if (options != NULL)
-					tmopts.reset(options);
-				else
-					printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!"));
-			}
-			catch (QString error)
-			{
-				printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!: %1").arg(error));
-			}
-			catch (...)
-			{
-				printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!"));
-			}
+            QString settingFile = QString::fromStdString(vm["tmofile"].as<std::string>());
+            printIfVerbose(QObject::tr("Loading TMO settings from file: %1").arg(settingFile), verbose);
+            try
+            {
+                TonemappingOptions* options = TMOptionsOperations::parseFile(settingFile);
+                if (options != NULL)
+                    tmopts.reset(options);
+                else
+                    printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!"));
+            }
+            catch (QString &error)
+            {
+                printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!: %1").arg(error));
+            }
+            catch (...)
+            {
+                printErrorAndExit(tr("Error: The specified file with TMO settings could not be parsed!"));
+            }
         }
 
-		if (vm.count("ldrQuality")) {
-			int quality = vm["ldrQuality"].as<int>();
-			if (quality < 1 || quality > 100)
-				printErrorAndExit(tr("Error: Quality must be in the range [1-100]."));
-			else
-				tmofileparams->set("quality", (size_t)quality);
-		}
-		if (vm.count("ldrTiff")) {
-			const char* value = vm["ldrTiff"].as<std::string>().c_str();
-			if (strcmp(value, "8b") == 0)
-				tmofileparams->set("tiff_mode", (int)0);
-			else if (strcmp(value, "16b") == 0)
-				tmofileparams->set("tiff_mode", (int)1);
-			else if (strcmp(value, "32b") == 0)
-				tmofileparams->set("tiff_mode", (int)2);
-			else if (strcmp(value, "logluv") == 0)
-				tmofileparams->set("tiff_mode", (int)3);
-			else
-				printErrorAndExit(tr("Error: Unknown tiff format."));
-		}
-		if (vm.count("ldrTiffDeflate"))
-			tmofileparams->set("deflateCompression", vm["ldrTiffDeflate"].as<bool>());
+        if (vm.count("ldrQuality")) {
+            int quality = vm["ldrQuality"].as<int>();
+            if (quality < 1 || quality > 100)
+                printErrorAndExit(tr("Error: Quality must be in the range [1-100]."));
+            else
+                tmofileparams->set("quality", (size_t)quality);
+        }
+        if (vm.count("ldrTiff")) {
+            const char* value = vm["ldrTiff"].as<std::string>().c_str();
+            if (strcmp(value, "8b") == 0)
+                tmofileparams->set("tiff_mode", (int)0);
+            else if (strcmp(value, "16b") == 0)
+                tmofileparams->set("tiff_mode", (int)1);
+            else if (strcmp(value, "32b") == 0)
+                tmofileparams->set("tiff_mode", (int)2);
+            else if (strcmp(value, "logluv") == 0)
+                tmofileparams->set("tiff_mode", (int)3);
+            else
+                printErrorAndExit(tr("Error: Unknown tiff format."));
+        }
+        if (vm.count("ldrTiffDeflate"))
+            tmofileparams->set("deflateCompression", vm["ldrTiffDeflate"].as<bool>());
 
         if (vm.count("load"))
             loadHdrFilename = QString::fromStdString(vm["load"].as<std::string>());
@@ -383,14 +451,14 @@ int CommandLineInterfaceManager::execCommandLineParams()
             printErrorAndExit(tr("Error: Threshold must be in the range [0-1]."));
 
     }
-    catch(boost::program_options::required_option& e) 
-    { 
-      std::cerr << "ERROR: " << e.what() << std::endl << std::endl; 
+    catch(boost::program_options::required_option& e)
+    {
+      std::cerr << "ERROR: " << e.what() << std::endl << std::endl;
       return 1;
-    } 
-    catch(boost::program_options::error& e) 
-    { 
-      std::cerr << "ERROR: " << e.what() << std::endl << std::endl; 
+    }
+    catch(boost::program_options::error& e)
+    {
+      std::cerr << "ERROR: " << e.what() << std::endl << std::endl;
       return 1;
     }
 
@@ -405,11 +473,11 @@ int CommandLineInterfaceManager::execCommandLineParams()
         }
     }
 
-	if (loadHdrFilename.isEmpty() && inputFiles.size() == 0)
-	{
-		cout << cmdvisible_options << "\n";
-		return 1;
-	}
+    if (loadHdrFilename.isEmpty() && inputFiles.size() == 0)
+    {
+        cout << cmdvisible_options << "\n";
+        return 1;
+    }
 
     QTimer::singleShot(0, this, SLOT(execCommandLineParamsSlot()));
     return 0;
@@ -452,9 +520,9 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         connect(hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(finishedLoadingInputFiles()));
         connect(hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(createHDR(int)));
         connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
-		connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
-		connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
-			
+        connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
+        connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
+
         hdrCreationManager->setConfig(hdrcreationconfig);
         hdrCreationManager->loadFiles(inputFiles);
     }
@@ -512,11 +580,11 @@ void CommandLineInterfaceManager::ais_failed(QProcess::ProcessError)
 
 void CommandLineInterfaceManager::createHDR(int errorcode)
 {
-	if (errorcode != 0)
-		printIfVerbose( tr("Failed aligning images.") , verbose);
+    if (errorcode != 0)
+        printIfVerbose( tr("Failed aligning images.") , verbose);
 
     printIfVerbose( tr("Creating (in memory) the HDR.") , verbose);
-    
+
     if (errorcode == 0 && alignMode != NO_ALIGN && saveAlignedImagesPrefix != "") {
         hdrCreationManager->saveImages(saveAlignedImagesPrefix);
     }
@@ -562,7 +630,30 @@ void CommandLineInterfaceManager::saveHDR()
         printIfVerbose( tr("NOT Saving HDR image to file. %1").arg(saveHdrFilename) , verbose);
     }
 
+    if (isHtml && !isHtmlDone) {
+        generateHTML();
+    }
     startTonemap();
+}
+
+
+void  CommandLineInterfaceManager::generateHTML()
+{
+    if (operationMode == LOAD_HDR_MODE) {
+        if (pageName.empty())
+            pageName = loadHdrFilename.toStdString();
+    }
+    else {
+        if (pageName.empty())
+            pageName = inputFiles.at(0).toStdString();
+    }
+    if (!imagesDir.empty()) {
+        QFileInfo qfi = QFileInfo(QDir::currentPath() + "/" + QString::fromStdString(imagesDir));
+        if (!qfi.isDir())
+            printErrorAndExit( tr("ERROR: directory %1 must exist").arg(QString::fromStdString(imagesDir) ));
+    }
+    generate_hdrhtml(HDR.data(), pageName, "", imagesDir, "", "", htmlQuality, verbose);
+    isHtmlDone = true;
 }
 
 void  CommandLineInterfaceManager::startTonemap()
@@ -581,8 +672,8 @@ void  CommandLineInterfaceManager::startTonemap()
 
         // Build TMWorker
         TMWorker tm_worker;
-		connect(&tm_worker, SIGNAL(tonemapSetMaximum(int)), this, SLOT(setProgressBar(int)));
-		connect(&tm_worker, SIGNAL(tonemapSetValue(int)), this, SLOT(updateProgressBar(int)));
+        connect(&tm_worker, SIGNAL(tonemapSetMaximum(int)), this, SLOT(setProgressBar(int)));
+        connect(&tm_worker, SIGNAL(tonemapSetValue(int)), this, SLOT(updateProgressBar(int)));
 
         // Build a new TM frame
         // The scoped pointer will free the memory automatically later on
@@ -594,12 +685,20 @@ void  CommandLineInterfaceManager::startTonemap()
         else
             inputfname = inputFiles.first();
 
+        //Autolevels
+        if (isAutolevels)
+        {
+            float minL, maxL, gammaL;
+            QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(tm_frame.data()) );
+            computeAutolevels(temp_qimage.data(), minL, maxL, gammaL);
+            pfs::gammaAndLevels(tm_frame.data(), minL, maxL, 0.f, 1.f, gammaL);
+        }
         // Create an ad-hoc IOWorker to save the file
         if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename,
                                         inputfname,
                                         hdrCreationManager.data() ? hdrCreationManager->getExpotimes(): QVector<float>(),
                                         tmopts.data(),
-										*tmofileparams ) )
+                                        *tmofileparams ) )
         {
             // File save successful
             printIfVerbose( tr("Image %1 saved successfully").arg(saveLdrFilename) , verbose);
@@ -609,56 +708,62 @@ void  CommandLineInterfaceManager::startTonemap()
             // File save failed
             printErrorAndExit( tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename) );
         }
+        if (isHtml && !isHtmlDone) {
+            generateHTML();
+        }
         emit finishedParsing();
     }
     else
     {
         printIfVerbose("Tonemapping NOT requested.", verbose);
-
+        if (isHtml && !isHtmlDone) {
+            generateHTML();
+        }
         emit finishedParsing();
     }
 }
 
 void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
-	printErrorAndExit( tr("Failed loading images"));
+    printErrorAndExit( tr("Failed loading images"));
 }
 
 void CommandLineInterfaceManager::setProgressBar(int max)
 {
-	maximum = max;
-	progressBar.reset();
-	progressBar.n = max;
-	std::cout << std::endl;
-	started = true;
+    maximum = max;
+    oldValue = 0;
+    progressBar.reset();
+    progressBar.n = max;
+    std::cout << std::endl;
+    started = true;
 }
 
 void CommandLineInterfaceManager::updateProgressBar(int value)
 {
-	if (verbose) {
-		if (value < 0) return;
-		if (value < oldValue) {
-			//progressBar.reset();
-			//progressBar.n = maximum;
-			//progressBar.start();
-			progressBar.cur = value;
-			progressBar.setPct( ((float)value)/maximum );
-		}
-		if (started) {
-			started = false;
-			progressBar.start();
-		}
-		for (int i = 0; i < value - oldValue; i++)
-			++progressBar;
-		oldValue = value;
-		//if (value == progressBar.n) {
-		//	std::cout << std::endl;
-		//}
-	}
+    if (verbose) {
+        if (value < 0) return;
+        if (value < oldValue) {
+            //progressBar.reset();
+            //progressBar.n = maximum;
+            //progressBar.start();
+            progressBar.cur = value;
+            progressBar.setPct( ((float)value)/maximum );
+        }
+        if (started) {
+            started = false;
+            progressBar.start();
+        }
+        for (int i = 0; i < value - oldValue; i++)
+            ++progressBar;
+        oldValue = value;
+        //if (value == progressBar.n) {
+        //  std::cout << std::endl;
+        //}
+    }
 }
 
 void CommandLineInterfaceManager::readData(QByteArray data)
 {
-	if (verbose)
-		std::cout << data.constData() << std::endl;
+    if (verbose)
+        std::cout << data.constData() << std::endl;
 }
 

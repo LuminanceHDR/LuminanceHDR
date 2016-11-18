@@ -37,7 +37,7 @@ private:
     void init();
 
 public:
-    IGraphicsView ( QWidget * parent = 0 );
+    explicit IGraphicsView ( QWidget * parent = 0 );
     IGraphicsView ( QGraphicsScene * scene, QWidget * parent = 0 );
     ~IGraphicsView();
 protected:

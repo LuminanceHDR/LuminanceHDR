@@ -58,16 +58,21 @@
 #include "MainWindow/DnDOption.h"
 #include "MainWindow/UpdateChecker.h"
 #include "MainWindow/DonationDialog.h"
+#include "MainWindow/ExportToHtmlDialog.h"
+#include "MainWindow/SupportedCamerasDialog.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/params.h"
 #include "Libpfs/manip/cut.h"
+#include "Libpfs/manip/copy.h"
 #include "Libpfs/manip/rotate.h"
 #include "Libpfs/manip/gamma_levels.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 #include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/global.h"
+#include "Common/CommonFunctions.h"
 #include "OsIntegration/osintegration.h"
 #include "BatchHDR/BatchHDRDialog.h"
 #include "BatchTM/BatchTMDialog.h"
@@ -130,7 +135,9 @@ QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* 
 
 QString getHdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
 {
+#ifdef QT_DEBUG
 	qDebug() << "MainWindow::getHdrFileNameFromSaveDialog(" << suggestedFileName << ")";
+#endif
     static const QString filetypes =
             "OpenEXR (*.exr *.EXR);;"
             "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;"
@@ -174,6 +181,8 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
         return g_v->getViewerMode();
     }
 }
+
+
 }
 
 // static members!
@@ -184,6 +193,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
+    , m_fullScreenLdrViewer(new LdrViewer(NULL))
+    , m_fullScreenHdrViewer(new HdrViewer(NULL))
     , m_firstWindow(0)
 {
     init();
@@ -195,6 +206,8 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
+    , m_fullScreenLdrViewer(new LdrViewer(NULL))
+    , m_fullScreenHdrViewer(new HdrViewer(NULL))
     , m_firstWindow(0)
 {
     init();
@@ -230,6 +243,8 @@ MainWindow::~MainWindow()
 
     clearRecentFileActions();
     delete luminance_options;
+    delete m_fullScreenLdrViewer;
+    delete m_fullScreenHdrViewer;
 }
 
 void MainWindow::init()
@@ -294,6 +309,8 @@ void MainWindow::createUI()
 
     restoreState(luminance_options->value("MainWindowState").toByteArray());
     restoreGeometry(luminance_options->value("MainWindowGeometry").toByteArray());
+
+    if(isFullScreen()) m_Ui->actionShow_Full_Screen->setChecked(true);
 
     setAcceptDrops(true);
     setWindowModified(false);
@@ -401,6 +418,41 @@ void MainWindow::createToolBar()
 
 void MainWindow::createMenus()
 {
+    // icons
+    m_Ui->fileNewAction->setIcon(QIcon::fromTheme("insert-image", QIcon(":/new/svgs/images/insert-image.svgz")));
+    m_Ui->fileOpenAction->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
+    m_Ui->fileSaveAsAction->setIcon(QIcon::fromTheme("document-save", QIcon(":/new/prefix1/images/filesave.png")));
+    m_Ui->fileExitAction->setIcon(QIcon::fromTheme("application-exit", QIcon(":/new/prefix1/images/exit.png")));
+    m_Ui->rotateccw->setIcon(QIcon::fromTheme("object-rotate-left", QIcon(":/new/prefix1/images/rotate_left.png")));
+    m_Ui->rotatecw->setIcon(QIcon::fromTheme("object-rotate-right", QIcon(":/new/prefix1/images/rotate_right.png")));
+    m_Ui->documentationAction->setIcon(QIcon::fromTheme("help-contents", QIcon(":/new/prefix1/images/help.png")));
+    m_Ui->normalSizeAct->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/new/svgs/images/zoom-original.svgz")));
+    m_Ui->zoomInAct->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/new/svgs/images/zoom-in.svgz")));
+    m_Ui->zoomOutAct->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/new/svgs/images/zoom-out.svgz")));
+    m_Ui->fitToWindowAct->setIcon(QIcon::fromTheme("zoom", QIcon(":/new/svgs/images/page-zoom.svgz")));
+    m_Ui->OptionsAction->setIcon(QIcon::fromTheme("preferences-system", QIcon(":/new/prefix1/images/options.png")));
+    //m_Ui->actionResize->setIcon(QIcon::fromTheme("", QIcon(":/new/prefix1/images/scale.png")));
+    m_Ui->Transplant_Exif_Data_action->setIcon(QIcon::fromTheme("selection-move-to-layer-below", QIcon(":/new/prefix1/images/copyexif.png")));
+    m_Ui->actionBatch_Tone_Mapping->setIcon(QIcon::fromTheme("system-run", QIcon(":/new/prefix1/images/system-run.png"))); // TODO
+    m_Ui->actionWhat_s_This->setIcon(QIcon::fromTheme("help-whatsthis", QIcon(":/new/prefix1/images/whatsthis.png")));
+    m_Ui->actionAbout_Luminance->setIcon(QIcon::fromTheme("help-about", QIcon(":/new/prefix1/images/help-about.png")));
+    m_Ui->actionSave_Hdr_Preview->setIcon(QIcon::fromTheme("document-save-as-template", QIcon(":/new/prefix1/images/preview-file.png")));
+    m_Ui->cropToSelectionAction->setIcon(QIcon::fromTheme("transform-crop", QIcon(":/new/prefix1/images/crop.png")));
+    m_Ui->removeSelectionAction->setIcon(QIcon::fromTheme("edit-select-none", QIcon(":/new/prefix1/images/tool_rect_selection.png")));
+    m_Ui->actionDonate->setIcon(QIcon::fromTheme("help-donate", QIcon(":/new/prefix1/images/help-donate.png")));
+    m_Ui->actionLock->setIcon(QIcon::fromTheme("system-lock-screen", QIcon(":/new/prefix1/images/lock-on.png")));
+    m_Ui->fileSaveAllAction->setIcon(QIcon::fromTheme("document-save-all", QIcon(":/new/prefix1/images/filesaveall.png")));
+    m_Ui->actionFill_to_Window->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/new/svgs/images/zoom-fit-best.svgz")));
+    m_Ui->actionWhite_Balance->setIcon(QIcon::fromTheme("whitebalance", QIcon(":/new/svgs/images/color-picker-white.svg")));
+    m_Ui->actionMinimize->setIcon(QIcon::fromTheme("window-minimize-symbolic", QIcon(":/new/svgs/images/window-minimize.svg")));
+    m_Ui->actionMaximize->setIcon(QIcon::fromTheme("window-maximize-symbolic", QIcon(":/new/svgs/images/window-maximize.svg")));
+    m_Ui->actionRemove_Tab->setIcon(QIcon::fromTheme("tab-close", QIcon(":/new/prefix1/images/remove.png")));
+    m_Ui->actionExportToHTML->setIcon(QIcon::fromTheme("globe", QIcon(":/new/prefix1/images/globe.png")));
+    m_Ui->removeSelectionAction->setIcon(QIcon::fromTheme("edit-select-none", QIcon(":/new/prefix1/images/tool_rect_selection.png")));
+    m_Ui->actionBatch_HDR->setIcon(QIcon::fromTheme("system-run", QIcon(":/new/prefix1/images/system-run.png"))); // TODO
+    m_Ui->actionUpdateAvailable->setIcon(QIcon::fromTheme("system-software-update", QIcon(":/new/prefix1/images/vcs-update-required.png")));
+    // end setting icons
+
     // About(s)
     connect(m_Ui->actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
     connect(m_Ui->actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
@@ -664,10 +716,12 @@ void MainWindow::save_hdr_success(GenericViewer* saved_hdr, const QString& fname
     m_tabwidget->setTabText(m_tabwidget->indexOf(saved_hdr), qfi.fileName());
 }
 
-void MainWindow::save_hdr_failed()
+void MainWindow::save_hdr_failed(const QString &fname)
 {
     // TODO give some kind of feedback to the user!
     // TODO pass the name of the file, so the user know which file didn't save correctly
+    // DONE!!! Once again, use unified style?
+    QMessageBox::warning(0,"", tr("Failed to save %1").arg(fname), QMessageBox::Ok, QMessageBox::NoButton);
 }
 
 void MainWindow::save_ldr_success(GenericViewer* saved_ldr, const QString& fname)
@@ -676,12 +730,12 @@ void MainWindow::save_ldr_success(GenericViewer* saved_ldr, const QString& fname
         m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), QFileInfo(fname).fileName());
 }
 
-void MainWindow::save_ldr_failed()
+void MainWindow::save_ldr_failed(const QString &fname)
 {
     // TODO give some kind of feedback to the user!
     // TODO pass the name of the file, so the user know which file didn't save correctly
-    QMessageBox::warning(0,"", tr("Failed to save"), QMessageBox::Ok, QMessageBox::NoButton);
-    //QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
+    // DONE!!! Once again, use unified style?
+    QMessageBox::warning(0,"", tr("Failed to save %1").arg(fname), QMessageBox::Ok, QMessageBox::NoButton);
 }
 
 void MainWindow::on_actionSave_Hdr_Preview_triggered()
@@ -715,7 +769,9 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
 
 void MainWindow::updateActions( int w )
 {
+#ifdef QT_DEBUG
     qDebug() << "MainWindow::updateActions(" << w << ")";
+#endif
 	bool hasImage = w >= 0;
 	GenericViewer* g_v = hasImage ? (GenericViewer*)m_tabwidget->widget(w) : 0;
 	bool isHdr = g_v ? g_v->isHDR() : false;
@@ -726,6 +782,7 @@ void MainWindow::updateActions( int w )
     updateMagnificationButtons(g_v); // g_v ? g_v : 0
 
     m_Ui->fileSaveAsAction->setEnabled(hasImage);
+    m_Ui->actionRemove_Tab->setEnabled(hasImage);
     m_Ui->actionSave_Hdr_Preview->setEnabled(hasImage && isHdr);
     m_Ui->fileSaveAllAction->setEnabled(hasImage && curr_num_ldr_open >= 2);
 
@@ -740,6 +797,7 @@ void MainWindow::updateActions( int w )
 
     m_Ui->actionResizeHDR->setEnabled(isHdr);
     m_Ui->action_Projective_Transformation->setEnabled(isHdr);
+    m_Ui->actionExportToHTML->setEnabled(isHdr);
     m_Ui->rotateccw->setEnabled(isHdr);
     m_Ui->rotatecw->setEnabled(isHdr);
 
@@ -753,6 +811,7 @@ void MainWindow::updateActions( int w )
     m_Ui->removeSelectionAction->setEnabled(hasCropping);
 
     m_Ui->actionLock->setEnabled(hasImage && curr_num_ldr_open >= 1);
+    m_Ui->actionShow_Image_Full_Screen->setEnabled(hasImage);
 }
 
 void MainWindow::on_rotateccw_triggered()
@@ -821,6 +880,25 @@ void MainWindow::on_actionResizeHDR_triggered()
         QApplication::restoreOverrideCursor();
     }
     delete resizedialog;
+}
+
+void MainWindow::on_actionExportToHTML_triggered()
+{
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    ExportToHtmlDialog *exportDialog = new ExportToHtmlDialog(this, curr_g_v->getFrame());
+
+    exportDialog->exec();
+    delete exportDialog;
+}
+
+void MainWindow::on_actionSupported_Cameras_triggered()
+{
+    SupportedCamerasDialog *supportedDialog = new SupportedCamerasDialog(this);
+
+    supportedDialog->exec();
+    delete supportedDialog;
 }
 
 void MainWindow::on_action_Projective_Transformation_triggered()
@@ -1018,11 +1096,11 @@ void MainWindow::setupIO()
     // Save HDR
     //connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_hdr_success(GenericViewer*, QString)), this, SLOT(save_hdr_success(GenericViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_hdr_failed()), this, SLOT(save_hdr_failed()));
+    connect(m_IOWorker, SIGNAL(write_hdr_failed(QString)), this, SLOT(save_hdr_failed(QString)));
     // Save LDR
     //connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
     connect(m_IOWorker, SIGNAL(write_ldr_success(GenericViewer*, QString)), this, SLOT(save_ldr_success(GenericViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_ldr_failed()), this, SLOT(save_ldr_failed()));
+    connect(m_IOWorker, SIGNAL(write_ldr_failed(QString)), this, SLOT(save_ldr_failed(QString)));
 
     // progress bar handling
     connect(m_IOWorker, SIGNAL(setValue(int)), m_ProgressBar, SLOT(setValue(int)));
@@ -1628,6 +1706,13 @@ void MainWindow::exportImage(TonemappingOptions *opts)
 
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
+    if (m_tonemapPanel->getAutoLevels()) {
+        float minL, maxL, gammaL;
+        QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(frame) );
+        computeAutolevels(temp_qimage.data(), minL, maxL, gammaL);
+        pfs::gammaAndLevels(frame, minL, maxL, 0.f, 1.f, gammaL);
+    }
+
     GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
     if (m_tonemapPanel->replaceLdr() && n != NULL && !n->isHDR())
     {
@@ -1649,6 +1734,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
             m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
 
         n->setViewerMode( getCurrentViewerMode( *m_tabwidget ) );
+
     }
     m_tabwidget->setCurrentWidget(n);
 
@@ -1693,6 +1779,7 @@ void MainWindow::syncViewers(GenericViewer *sender)
     for (int idx = 0; idx < m_tabwidget->count(); idx++)
     {
         GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
+        if (viewer == NULL) return; //this happens when a tab is removed and sync viewers is active, fixes a crash
         if (sender != viewer)
         {
             viewer->blockSignals(true);
@@ -1713,12 +1800,14 @@ void MainWindow::showPreviewPanel(bool b)
             m_PreviewscrollArea->show();
 
             // ask panel to refresh itself
+            m_PreviewPanel->setAutolevels(m_tonemapPanel->getAutoLevels());
             m_PreviewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
 
             // connect signals
             connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
             connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
             connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+            connect(m_tonemapPanel, SIGNAL(autoLevels(bool)), this, SLOT(updatePreviews(bool)));
         }
     }
     else
@@ -1729,6 +1818,20 @@ void MainWindow::showPreviewPanel(bool b)
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
         disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
         disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+        disconnect(m_tonemapPanel, SIGNAL(autoLevels(bool)), this, SLOT(updatePreviews(bool)));
+    }
+}
+
+void MainWindow::updatePreviews(bool b)
+{
+    if (m_Ui->actionShowPreviewPanel->isChecked())
+    {
+        if (tm_status.is_hdr_ready)
+        {
+            m_PreviewPanel->setAutolevels(b);
+            // ask panel to refresh itself
+            m_PreviewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
+        }
     }
 }
 
@@ -1757,8 +1860,9 @@ void MainWindow::on_actionRemove_Tab_triggered()
 
 void MainWindow::removeTab(int t)
 {
+#ifdef QT_DEBUG
     qDebug() << "MainWindow::remove_image("<< t <<")";
-
+#endif
     if (t < 0) return;
 
     GenericViewer* w = (GenericViewer*)m_tabwidget->widget(t);
@@ -1767,7 +1871,9 @@ void MainWindow::removeTab(int t)
     {
     	bool doClose = false;
 
-        qDebug() << "Remove HDR from MainWindow";
+#ifdef QT_DEBUG
+    qDebug() << "Remove HDR from MainWindow";
+#endif
         if ( w->needsSaving() )
         {
             if ( maybeSave() )
@@ -1932,8 +2038,9 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
 
         if ( exit_status == 1 )
         {
+#ifdef QT_DEBUG
             qDebug() << "GammaAndLevels accepted!";
-
+#endif
             // pfs::Frame * frame = current->getFrame();
             pfs::gammaAndLevels(current->getFrame(),
                                 g_n_l->getBlackPointInput(),
@@ -1944,8 +2051,9 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
 
             // current->setFrame(frame);
         } else {
+#ifdef QT_DEBUG
             qDebug() << "GammaAndLevels refused!";
-
+#endif
             current->setQImage(g_n_l->getReferenceQImage());
         }
 
@@ -1993,13 +2101,17 @@ void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 	if ( current->isHDR() ) return;
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doProof) {
+#ifdef QT_DEBUG
 		qDebug() << "MainWindow:: do soft proofing";
+#endif
 		if (m_Ui->actionGamut_Check->isChecked())
 			m_Ui->actionGamut_Check->setChecked(false);
 		viewer->doSoftProofing(false);
 	}
 	else {
+#ifdef QT_DEBUG
 		qDebug() << "MainWindow:: undo soft proofing";
+#endif
 		viewer->undoSoftProofing();
 	}
 }
@@ -2011,13 +2123,17 @@ void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 	if ( current->isHDR() ) return;
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doGamut) {
+#ifdef QT_DEBUG
 		qDebug() << "MainWindow:: do gamut check";
+#endif
 		if (m_Ui->actionSoft_Proofing->isChecked())
 			m_Ui->actionSoft_Proofing->setChecked(false);
 		viewer->doSoftProofing(true);
 	}
 	else {
+#ifdef QT_DEBUG
 		qDebug() << "MainWindow:: undo gamut check";
+#endif
 		viewer->undoSoftProofing();
 	}
 }
@@ -2070,4 +2186,26 @@ void MainWindow::on_actionFits_Importer_triggered()
         emit load_success(frame, tr("FITS Image"), QStringList(), true);
     }
 #endif
+}
+
+void MainWindow::on_actionShow_Full_Screen_toggled(bool b)
+{
+    b ? this->showFullScreen() : this->showMaximized();
+}
+
+void MainWindow::on_actionShow_Image_Full_Screen_triggered()
+{
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    bool isHdr = g_v ? g_v->isHDR() : false;
+    pfs::Frame* frame = pfs::copy(g_v->getFrame()); //frame is assigned to one viewer that will take care of deleting it
+    if (isHdr)
+    {
+        m_fullScreenHdrViewer->setFrame(frame);
+        m_fullScreenHdrViewer->showFullScreen();
+    }
+    else
+    {
+        m_fullScreenLdrViewer->setFrame(frame);
+        m_fullScreenLdrViewer->showFullScreen();
+    }
 }

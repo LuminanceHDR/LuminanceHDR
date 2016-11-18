@@ -40,11 +40,14 @@
 #include "Libpfs/exception.h"
 #include "tmo_drago03.h"
 
-void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress &ph)
+void pfstmo_drago03(pfs::Frame& frame, float opt_biasValue, pfs::Progress &ph)
 {
 #ifndef NDEBUG
-    std::cout << "pfstmo_drago03 (";
-    std::cout << "bias: " << biasValue << ")" << std::endl;
+  std::stringstream ss;
+  ss << "pfstmo_drago03 (";
+  ss << "bias: " << opt_biasValue;
+  ss << ")";
+  std::cout << ss.str() << std::endl;
 #endif
 
     pfs::Channel *X, *Y, *Z;
@@ -70,7 +73,7 @@ void pfstmo_drago03(pfs::Frame& frame, float biasValue, pfs::Progress &ph)
     calculateLuminance(w, h, Yr.data(), avLum, maxLum);
 
     pfs::Array2Df L(w, h);
-    tmo_drago03(Yr, L, maxLum, avLum, biasValue, ph);
+    tmo_drago03(Yr, L, maxLum, avLum, opt_biasValue, ph);
 
     for (int x=0 ; x<w ; x++)
     {
