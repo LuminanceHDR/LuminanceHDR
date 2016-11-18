@@ -64,9 +64,9 @@ public:
     float getEV() const                 { return log2(m_averageLuminance); }
 
     void setMin(float m)                { m_datamin = m; }
-    void setMax (float M)                { m_datamax = M; }
-    float getMin() const                 { return m_datamin; }
-    float getMax() const                 { return m_datamax; }
+    void setMax (float M)               { m_datamax = M; }
+    float getMin() const                { return m_datamin; }
+    float getMax() const                { return m_datamax; }
 
     QImage& qimage()                    { return *m_thumbnail; }
     const QImage& qimage() const        { return *m_thumbnail; }
