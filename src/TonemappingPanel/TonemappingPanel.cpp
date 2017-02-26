@@ -1777,13 +1777,30 @@ void TonemappingPanel::updatePreviews(double v)
         tmopts->operator_options.pattanaikoptions.cone = v;
     else if(eventSender == m_Ui->roddsb)
         tmopts->operator_options.pattanaikoptions.rod = v;
-    else if(eventSender == m_Ui->pregammadsb)
-        tmopts->pregamma = v;
+    //else if(eventSender == m_Ui->pregammadsb)
+    //    tmopts->pregamma = v;
 
     if (index >= 0)
     {
-        m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
-        m_previewPanel->updatePreviews(m_currentFrame, index);
+        if(eventSender == m_Ui->pregammadsb)
+        {
+            int maxIndex = m_Ui->stackedWidget_operators->count();
+            for (int i = 0; i < maxIndex; i++)
+            {
+                updateCurrentTmoOperator(i);
+                fillToneMappingOptions(false);
+                TonemappingOptions *tmopts = new TonemappingOptions(*toneMappingOptions); // make a copy
+                tmopts->pregamma = v;
+                m_previewPanel->getLabel(i)->setTonemappingOptions(tmopts);
+                m_previewPanel->updatePreviews(m_currentFrame, i);
+            }
+            updateCurrentTmoOperator(index);
+        }
+        else
+        {
+            m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
+            m_previewPanel->updatePreviews(m_currentFrame, index);
+        }
     }
 }
 
