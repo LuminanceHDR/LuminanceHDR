@@ -60,54 +60,41 @@ using namespace std;
 using namespace pfs;
 using namespace pfs::io;
 
-void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
+static void build_histogram(float *hist, int *src, const int ELEMENTS)
 {
-    const QRgb* src = reinterpret_cast<const QRgb*>(data->bits());
-    const int width = data->width();
-    const int height = data->height();
-    const int ELEMENTS = width * height;
-
-    //Convert to lightness
-    int *lightness = new int[ELEMENTS];
-
-    for (int i = 0;  i < ELEMENTS; i++)
-    {
-        lightness[i] = QColor::fromRgb(src[i]).toHsl().lightness();
-    }
-
-    const float meanL = accumulate(lightness, lightness + ELEMENTS, 0.f)/ELEMENTS;
-    //Build histogram
-    float hist[256];
-    for (int i = 0; i < 256; ++i) hist[i] = 0.f;
+    for (int i = 0; i < 256; ++i) *(hist + i) = 0.f;
 
     for (int i = 0; i < ELEMENTS; ++i)
     {
-        hist[ lightness[i] ] += 1.f;
+        *(hist + *(src + i)) += 1.f;
     }
 
     //find max
-    float hist_max = hist[0];
-    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, hist[i]);
+    float hist_max = *hist;
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, *(hist + i));
 
     //normalize in the range [0...1]
-    for (int i = 0; i < 256; ++i) hist[i] /= hist_max;
+    for (int i = 0; i < 256; ++i) *(hist + i) /= hist_max;
+}
 
-    //Scaling factor: range [0..1]
-    const float factor = 1.f/255.f;
-
+static void compute_histogram_minmax(float *hist, float &minHist, float &maxHist)
+{
     //Compute threshold
     //DIVISOR and hence threshold are hardcoded here
     //Is there a better way of setting this? Changing threshold until CUMUL/TOTAL > 95% ????
-    const float TOTAL = accumulate(hist, hist + 256, 0.f);
+    //const float TOTAL = accumulate(hist, hist + 256, 0.f);
     //const float DIVISOR = 100.f;
     //const float threshold = .05f * TOTAL/DIVISOR;
     const float threshold = .025f;
 
+    //Scaling factor: range [0..1]
+    const float factor = 1.f/255.f;
+
     float CUMUL = 0;
     for (int i = 0; i < 256; i++)
     {
-        if (hist[i] >= threshold)
-            CUMUL += hist[i];
+        if (*(hist +i) >= threshold)
+            CUMUL += *(hist + i);
     }
 
     //Start from max hist
@@ -128,7 +115,7 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
         count = 0.f;
         for (int i = xa; i <= xb; i++)
         {
-            count += hist[i];
+            count += *(hist + i);
         }
         if ((count - oldcount) >= 0.f)
             xa--;
@@ -155,7 +142,7 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
         count = 0.f;
         for (int i = xa; i <= xb; i++)
         {
-            count += hist[i];
+            count += *(hist + i);
         }
         if ((count >= CUMUL) || (fabs(count - oldcount)/oldcount < 1e-6))
             break;
@@ -168,28 +155,78 @@ void computeAutolevels(QImage* data, float &minL, float &maxL, float &gammaL)
         }
         oldcount = count;
     }
-    minL = factor*xa;
-    maxL = factor*xb;
+    minHist = factor*xa;
+    maxHist = factor*xb;
+}
+
+void computeAutolevels(QImage* data, float &minHist, float &maxHist, float &gamma)
+{
+    const QRgb* src = reinterpret_cast<const QRgb*>(data->bits());
+    const int width = data->width();
+    const int height = data->height();
+    const int ELEMENTS = width * height;
+
+    float minL, maxL;
+    float minR, maxR;
+    float minG, maxG;
+    float minB, maxB;
+
+    //Convert to lightness
+    int *lightness = new int[ELEMENTS];
+
+    for (int i = 0;  i < ELEMENTS; i++)
+    {
+        lightness[i] = QColor::fromRgb(src[i]).toHsl().lightness();
+    }
+    //Build histogram
+    float histL[256];
+    build_histogram(histL, lightness, ELEMENTS);
+    compute_histogram_minmax(histL, minL, maxL);
+
+    //get Red, Gree, Blue
+    int *red = new int[ELEMENTS];
+    int *green = new int[ELEMENTS];
+    int *blue = new int[ELEMENTS];
+
+    for (int i = 0;  i < ELEMENTS; i++)
+    {
+        red[i] = qRed(src[i]);
+        green[i] = qGreen(src[i]);
+        blue[i] = qBlue(src[i]);
+    }
+
+    //Build histogram
+    float histR[256];
+    build_histogram(histR, red, ELEMENTS);
+    compute_histogram_minmax(histR, minR, maxR);
+
+    //Build histogram
+    float histG[256];
+    build_histogram(histG, green, ELEMENTS);
+    compute_histogram_minmax(histG, minG, maxG);
+
+    //Build histogram
+    float histB[256];
+    build_histogram(histB, blue, ELEMENTS);
+    compute_histogram_minmax(histB, minB, maxB);
+
+    minHist = min(min(minL,minR), min(minG,minB));
+    maxHist = max(max(maxL,maxR), max(maxG,maxB));
     /*
+    const float meanL = accumulate(lightness, lightness + ELEMENTS, 0.f)/ELEMENTS;
     float midrange = minL + .5f*(maxL - minL);
     if (fabs(midrange - .5f) < 1e-3)
         gammaL = 1.f;
     else
         gammaL = log10(midrange)/log10(factor*meanL);
     */
-    gammaL = 1.f; //TODO Let's return gamma = 1
+    gamma = 1.f; //TODO Let's return gamma = 1
  
-#ifndef NDEBUG
-    cout << "ELEMENTS: " << ELEMENTS << endl;
-    cout << "TOTAL: " << TOTAL << ", CUMUL: " << CUMUL << ", CUMUL/TOTAL: " << 100.f*CUMUL/TOTAL << endl;
-    cout << "minL: " << minL << ", maxL: " << maxL << ", gammaL: " << gammaL << ", meanL: " << meanL << endl;
-    cout << "threshold: " << threshold << endl;
-    //cout << "midrange: " << midrange << endl;
-#endif
-
     delete[] lightness;
+    delete[] red;
+    delete[] green;
+    delete[] blue;
 }
-
 
 ConvertToQRgb::ConvertToQRgb(float gamma)
     : gamma(1.0f/gamma)

@@ -150,6 +150,8 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
         model->setHeaderData(col++, Qt::Horizontal, tr("Chromatic Adaptation"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Light Adaptation"));
         break;
+    default:
+        break;
     }
     model->setHeaderData(col++, Qt::Horizontal, tr("Pre-gamma"));
     model->setHeaderData(col++, Qt::Horizontal, tr("Comment"));

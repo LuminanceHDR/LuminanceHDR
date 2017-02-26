@@ -408,7 +408,7 @@ double Reinhard02::pyramid_lookup( unsigned int x, unsigned int y, int level )
   /* Compute the size of the slice */
   level--;
   // n = 1 << level;
-  int s = PyramidWidth0 >> level;
+  unsigned int s = PyramidWidth0 >> level;
   
   //x = x >> level;
   //y = y >> level;

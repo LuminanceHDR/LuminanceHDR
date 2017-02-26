@@ -551,7 +551,7 @@ static float snrm(unsigned long n, const float sx[])
     float ans = 0.0f;
 
 #pragma omp parallel for shared(sx) reduction(+:ans) if (n>OMP_THRESHOLD) schedule(static)
-    for (long i=0; i<n; i++)
+    for (unsigned long i=0; i<n; i++)
     {
 		ans += sx[i]*sx[i];
     }
@@ -564,7 +564,7 @@ static float snrm(unsigned long n, const float sx[])
  */
 static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err, int rows, int cols)
 {	
-    float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
+    float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0;//zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
 	p=new float[n+1];
@@ -585,13 +585,13 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		rr[j]=r[j];
     }
 	atimes(r,rr, rows, cols);       // minimum residual
-    znrm=1.0;
+    //znrm=1.0;
 	bnrm=snrm(n,b);
 	asolve(r,z, rows, cols);
 
 	while (*iter <= itmax) {
 		++(*iter);
-		zm1nrm=znrm;
+		//zm1nrm=znrm;
 		asolve(rr,zz, rows, cols);
 		bknum=0.0;
 #pragma omp parallel for shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
@@ -628,7 +628,7 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
         pfs::utils::vsubs(r, ak, z, r, n);
         pfs::utils::vsubs(rr, ak, zz, rr, n);
 		asolve(r,z, rows, cols);
-        znrm = 1.0f;
+        //znrm = 1.0f;
         *err = snrm(n,r)/bnrm;
 //		fprintf( stderr, "iter=%4d err=%12.6f\n",*iter,*err);
 	if (*err <= tol) break;

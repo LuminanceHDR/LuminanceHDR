@@ -35,8 +35,10 @@
 #include "gsl_cqp.h"
 #include "initial_point.h"
 
+/*
 static void
 print_vectors(const gsl_vector*,const gsl_vector*,const gsl_vector*,const gsl_vector*);
+*/
 
 static double
 compute_gap_infeasible_points(const gsl_cqp_data * cqp, const gsl_vector *x, const gsl_vector *y, const gsl_vector *z);
@@ -673,6 +675,7 @@ gsl_vector_max_norm(const gsl_vector *v)
 }
 
 
+/*
 static void
 print_vectors(const gsl_vector * x, const gsl_vector * y, const gsl_vector * z, const gsl_vector * s)
 {
@@ -701,7 +704,7 @@ print_vectors(const gsl_vector * x, const gsl_vector * y, const gsl_vector * z, 
 	printf("\n");	
 
 }
-
+*/
 
 
 static const gsl_cqpminimizer_type mg_pdip_type = {
