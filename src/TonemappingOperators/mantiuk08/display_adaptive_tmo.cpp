@@ -1067,7 +1067,8 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
   // Create LUT: log10( lum factor ) -> saturation correction (for the tone-level)
   UniformArrayLUT cc_lut( tc->size, tc->x_i );  
   for( size_t i=0; i < tc->size-1; i++ ) {
-    const float contrast = std::max( (tc->y_i[i+1]-tc->y_i[i])/(tc->x_i[i+1]-tc->x_i[i]), 0.d ); // In pfstmo 2.0.5
+    //const float contrast = std::max( (tc->y_i[i+1]-tc->y_i[i])/(tc->x_i[i+1]-tc->x_i[i]), 0.d ); // In pfstmo 2.0.5
+    const float contrast = std::max( (float)(tc->y_i[i+1]-tc->y_i[i])/(float)(tc->x_i[i+1]-tc->x_i[i]), 0.0f ); // In pfstmo 2.0.5
     const float k1 = 1.48f;
     const float k2 = 0.82f;
     cc_lut.y_i[i] = ( (1 + k1)*pow(contrast,k2) )/( 1 + k1*pow(contrast,k2) ) * saturation_factor;

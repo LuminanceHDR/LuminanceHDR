@@ -212,16 +212,12 @@ void computeAutolevels(QImage* data, float &minHist, float &maxHist, float &gamm
 
     minHist = min(min(minL,minR), min(minG,minB));
     maxHist = max(max(maxL,maxR), max(maxG,maxB));
-    /*
-    const float meanL = accumulate(lightness, lightness + ELEMENTS, 0.f)/ELEMENTS;
-    float midrange = minL + .5f*(maxL - minL);
-    if (fabs(midrange - .5f) < 1e-3)
-        gammaL = 1.f;
-    else
-        gammaL = log10(midrange)/log10(factor*meanL);
-    */
+
+    //const float meanL = accumulate(lightness, lightness + ELEMENTS, 0.f)/ELEMENTS;
+    //float midrange = minHist + .5f*(maxHist - minHist);
+    //gamma = log10(midrange*255.f)/log10(meanL);
     gamma = 1.f; //TODO Let's return gamma = 1
- 
+
     delete[] lightness;
     delete[] red;
     delete[] green;

@@ -117,16 +117,23 @@ cmsHPROFILE GetTIFFProfile(TIFF* in, uint16 bps)
     PRINT_DEBUG(whitePoint.y);
 
     // Transferfunction is a bit harder....
-    cmsUInt16Number gmr[1 << bps];
-    cmsUInt16Number gmg[1 << bps];
-    cmsUInt16Number gmb[1 << bps];
+    //cmsUInt16Number gmr[1 << bps];
+    //cmsUInt16Number gmg[1 << bps];
+    //cmsUInt16Number gmb[1 << bps];
 
+    std::vector<cmsUInt16Number> gmr(1 << bps);
+    std::vector<cmsUInt16Number> gmg(1 << bps);
+    std::vector<cmsUInt16Number> gmb(1 << bps);
 
-    TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION, gmr, gmg, gmb);
+    //TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION, gmr, gmg, gmb);
+    TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION, gmr.data(), gmg.data(), gmb.data());
 
-    curve[0] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmr);
-    curve[1] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmg);
-    curve[2] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmb);
+    //curve[0] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmr);
+    //curve[1] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmg);
+    //curve[2] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmb);
+    curve[0] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmr.data());
+    curve[1] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmg.data());
+    curve[2] = cmsBuildTabulatedToneCurve16(NULL, 1 << bps, gmb.data());
 
     hProfile = cmsCreateRGBProfile (&whitePoint, &primaries, curve);
 
