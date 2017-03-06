@@ -105,7 +105,7 @@ void DebevecOperator::computeFusion(ResponseCurve& response, const WeightFunctio
         float minAvgLum = boost::numeric::bounds<float>::highest();
 
         // for all exposures
-        for (size_t exp = 0; exp < numExposures; ++exp)
+        for (int exp = 0; exp < numExposures; ++exp)
         {
             // average luminance for this exposure
             float avgLum    = frames[exp].averageLuminance();
