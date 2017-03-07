@@ -38,6 +38,9 @@
 
 #include "Libpfs/exception.h"
 
+#ifdef WIN32
+#include <QCoreApplication>
+#endif
 #include <QImage>
 #include <QString>
 
@@ -647,7 +650,13 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
 
   // Load LUT for the basis tone-curves
   ostringstream lut_filename;
+#ifdef WIN32
+  QString h_t_b = HDRHTMLDIR;
+  h_t_b.append("/hdrhtml_t_b");
+  lut_filename << h_t_b.toStdString().c_str() << basis_no+1 << ".csv";
+#else
   lut_filename << HDRHTMLDIR "/hdrhtml_t_b" << basis_no+1 << ".csv";
+#endif
   CSVTable basis_table;
   try {
     basis_table.read( lut_filename.str().c_str(), basis_no+1 );
@@ -850,7 +859,13 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
 
   // Load the table of the opacity coeffcients
   ostringstream lut_filename;
+#ifdef WIN32
+  QString h_c_b = HDRHTMLDIR;
+  h_c_b.append("/hdrhtml_c_b");
+  lut_filename << h_c_b.toStdString().c_str() << image_list.front().basis+1 << ".csv";
+#else
   lut_filename << HDRHTMLDIR "/hdrhtml_c_b" << image_list.front().basis+1 << ".csv";
+#endif
   CSVTable coeff_table;
   coeff_table.read( lut_filename.str().c_str(), image_list.front().basis+1 );
 

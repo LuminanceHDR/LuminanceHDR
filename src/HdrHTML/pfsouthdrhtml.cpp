@@ -27,6 +27,9 @@
 
 #include "hdrhtml.h"
 
+#ifdef WIN32
+#include <QCoreApplication>
+#endif
 #include <QObject>
 #include <cstdlib>
 #include <iostream>
@@ -43,8 +46,17 @@ void generate_hdrhtml(pfs::Frame *frame,
                      string page_name, string out_dir, string image_dir, string object_output, string html_output, 
                      int quality, bool verbose)
 {
+#ifdef WIN32
+    QString p_t = HDRHTMLDIR;
+    p_t.append("/hdrhtml_default_templ/hdrhtml_page_templ.html");
+    QString i_t = HDRHTMLDIR;
+    i_t.append("/hdrhtml_default_templ/hdrhtml_image_templ.html");
+    const char *page_template = p_t.toStdString().c_str();
+    const char *image_template = i_t.toStdString().c_str();
+#else
     const char *page_template = HDRHTMLDIR "/hdrhtml_default_templ/hdrhtml_page_templ.html";
     const char *image_template = HDRHTMLDIR "/hdrhtml_default_templ/hdrhtml_image_templ.html";
+#endif
   
     if( quality < 1 || quality > 5 )
         throw pfs::Exception( QObject::tr("The quality must be between 1 (worst) and 5 (best).").toStdString() );
