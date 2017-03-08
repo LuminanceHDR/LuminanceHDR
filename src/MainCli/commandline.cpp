@@ -103,7 +103,7 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     oldValue(0),
     maximum(100),
     started(false),
-    threshold(-1.0f),
+    threshold(0.0f),
     isAutolevels(false),
     isHtml(false),
     isHtmlDone(false),
@@ -164,7 +164,7 @@ int CommandLineInterfaceManager::execCommandLineParams()
     po::options_description html_desc(tr("HTML output parameters").toUtf8().constData());
     html_desc.add_options()
         ("htmlQuality,k", po::value<int>(), tr("VALUE      Quality of the interpolated exposures, from the worst (1) to the best\
-(5). Higher quality will introduce less distortions in the \
+(4). Higher quality will introduce less distortions in the \
 brightest and the darkest tones, but will also generate more \
 images. More images means that there is more data that needs to be \
 transferred to the web-browser, making HDR viewer less responsive. \
@@ -306,6 +306,8 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         }
         if (vm.count("htmlQuality")) {
             htmlQuality = vm["htmlQuality"].as<int>();
+            if (htmlQuality < 1 || htmlQuality > 4)
+                printErrorAndExit(tr("Error: htmlQuality must be in the range [1..4]."));
         }
         if (vm.count("pageName")) {
             pageName = vm["pageName"].as<std::string>();
@@ -419,7 +421,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         if (vm.count("ldrQuality")) {
             int quality = vm["ldrQuality"].as<int>();
             if (quality < 1 || quality > 100)
-                printErrorAndExit(tr("Error: Quality must be in the range [1-100]."));
+                printErrorAndExit(tr("Error: Quality must be in the range [1..100]."));
             else
                 tmofileparams->set("quality", (size_t)quality);
         }
@@ -447,8 +449,8 @@ directory must exist.  Useful to avoid clutter in the current directory. \
             saveLdrFilename = QString::fromStdString(vm["output"].as<std::string>());
         if (vm.count("savealigned"))
             saveAlignedImagesPrefix = QString::fromStdString(vm["savealigned"].as<std::string>());
-        if (threshold > 1.0f)
-            printErrorAndExit(tr("Error: Threshold must be in the range [0-1]."));
+        if (threshold < 0.0f || threshold > 1.0f)
+            printErrorAndExit(tr("Error: Threshold must be in the range [0..1]."));
 
     }
     catch(boost::program_options::required_option& e)
@@ -715,7 +717,7 @@ void  CommandLineInterfaceManager::startTonemap()
     }
     else
     {
-        printIfVerbose("Tonemapping NOT requested.", verbose);
+        printIfVerbose( tr("Tonemapping NOT requested."), verbose);
         if (isHtml && !isHtmlDone) {
             generateHTML();
         }
