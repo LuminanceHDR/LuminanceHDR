@@ -124,7 +124,7 @@ void generate_hdrhtml(pfs::Frame *frame,
         image_set.generate_webpage( page_template, image_template, 
                                     out_dir.empty() ? NULL : out_dir.c_str(), 
                                     object_output.empty() ? NULL : object_output.c_str(), 
-                                    html_output.empty() ? NULL: html_output.c_str() );
+                                    html_output.empty() ? NULL: html_output.c_str(), verbose );
     }
     catch( pfs::Exception &e) {
         throw;

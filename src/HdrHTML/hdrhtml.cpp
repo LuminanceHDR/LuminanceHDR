@@ -844,7 +844,7 @@ void print_cf_table( ostream &out, void *user_data, const char *parameter );
 void print_image_htmlcode( ostream &out, void *user_data, const char *parameter );
 
 void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_template,
-  const char *out_dir, const char *object_output, const char *html_output)
+  const char *out_dir, const char *object_output, const char *html_output, bool verbose)
 {
   if( image_list.empty() )
     return;
@@ -895,6 +895,9 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
     }
     print_image_objects( oofs, this, NULL );
   }
+
+  if (verbose)
+    cout << QObject::tr("Writing: ").toStdString() << out_file_name.str().c_str() << endl;
 
   if( html_output != NULL ) {
     ofstream hofs( html_output );

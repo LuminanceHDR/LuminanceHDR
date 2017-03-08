@@ -77,7 +77,7 @@ HDRHTMLSet( const char *page_name, const char *image_dir = NULL ) :
     const char *base_name, const char *out_dir, int quality, bool verbose );
 
   void generate_webpage( const char *page_template, const char *image_template,
-    const char *out_dir, const char *object_output = NULL, const char *html_output = NULL);
+    const char *out_dir, const char *object_output = NULL, const char *html_output = NULL, bool verbose = false);
 };
 
 }
