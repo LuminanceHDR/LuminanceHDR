@@ -471,13 +471,13 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         {
             inputFiles << QString::fromStdString(options[i]);
             printIfVerbose( QObject::tr("Input file %1").arg(QString::fromStdString(options[i])) , verbose);
-            cout << options[i] << "\n";
+            //cout << options[i] << "\n";
         }
     }
 
     if (loadHdrFilename.isEmpty() && inputFiles.size() == 0)
     {
-        cout << cmdvisible_options << "\n";
+        cout << cmdvisible_options << endl;
         return 1;
     }
 
@@ -633,6 +633,7 @@ void CommandLineInterfaceManager::saveHDR()
     }
 
     if (isHtml && !isHtmlDone) {
+        printIfVerbose( tr("Exporting to HTML"), verbose);
         generateHTML();
     }
     startTonemap();
@@ -670,7 +671,13 @@ void  CommandLineInterfaceManager::startTonemap()
 #ifdef QT_DEBUG
         qDebug() << "XSIZE:" << tmopts->xsize;
 #endif
-        if (tmopts->xsize == -2) tmopts->xsize = HDR->getWidth();
+        if (tmopts->xsize == -2) 
+            tmopts->xsize = HDR->getWidth();
+        else 
+            printIfVerbose( tr("Resizing to width %1.").arg(tmopts->xsize) , verbose);
+
+        if(tmopts->pregamma != 1)
+            printIfVerbose( tr("Applying gamma %1.").arg(tmopts->pregamma) , verbose);
 
         // Build TMWorker
         TMWorker tm_worker;
@@ -703,12 +710,12 @@ void  CommandLineInterfaceManager::startTonemap()
                                         *tmofileparams ) )
         {
             // File save successful
-            printIfVerbose( tr("Image %1 saved successfully").arg(saveLdrFilename) , verbose);
+            printIfVerbose( tr("\nImage %1 successfully saved").arg(saveLdrFilename) , verbose);
         }
         else
         {
             // File save failed
-            printErrorAndExit( tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename) );
+            printErrorAndExit( tr("\nERROR: Cannot save to file: %1").arg(saveLdrFilename) );
         }
         if (isHtml && !isHtmlDone) {
             generateHTML();
