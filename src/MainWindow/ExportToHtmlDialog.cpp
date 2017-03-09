@@ -100,7 +100,7 @@ void ExportToHtmlDialog::onExportButtonClicked()
     if (!quit) { 
         QApplication::restoreOverrideCursor();
         if (m_Ui->checkBoxOpenOnBrowser->isChecked()) {
-            QString url = "file://" + m_outputFolder + "/" + m_pageName + ".html";
+            QString url = "file:///" + m_outputFolder + "/" + m_pageName + ".html";
             QDesktopServices::openUrl(QUrl(url));
         }
     }
