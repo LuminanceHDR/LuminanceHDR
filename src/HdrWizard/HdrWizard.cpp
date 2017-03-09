@@ -729,8 +729,8 @@ void HdrWizard::NextFinishButtonClicked()
             m_Ui->progressBar->show();
             if (m_Ui->ais_radioButton->isChecked())
             {
-                m_Ui->progressBar->setRange(0,100);
-                m_Ui->progressBar->setValue(0);
+                //m_Ui->progressBar->setRange(0,100);
+                //m_Ui->progressBar->setValue(0);
                 m_Ui->textEdit->show();
                 m_hdrCreationManager->set_ais_crop_flag(m_Ui->autoCropCheckBox->isChecked());
                 m_hdrCreationManager->align_with_ais();
