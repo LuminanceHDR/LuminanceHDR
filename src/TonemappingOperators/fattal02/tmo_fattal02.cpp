@@ -503,7 +503,9 @@ void tmo_fattal02(size_t width,
   {
       solve_pde_multigrid(&DivG, &U, ph);
   }
+#ifndef NDEBUG
   printf("\npde residual error: %f\n", residual_pde(&U, &DivG));
+#endif
   ph.setValue(90);
   if ( ph.canceled() )
   {
