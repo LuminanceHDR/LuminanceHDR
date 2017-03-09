@@ -1144,6 +1144,28 @@ Continuamos?</translation>
         <translation type="unfinished">Error: El parámetro Umbral debe estar en el rango [0-1]. {0..1]?}</translation>
     </message>
     <message>
+        <location filename="../src/MainCli/commandline.cpp" line="677"/>
+        <source>Resizing to width %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="680"/>
+        <source>Applying gamma %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="713"/>
+        <source>
+Image %1 successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="718"/>
+        <source>
+ERROR: Cannot save to file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/MainCli/commandline.cpp" line="325"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>Error: Motor de alineado no reconocido.</translation>
@@ -1234,7 +1256,6 @@ Continuamos?</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="623"/>
-        <location filename="../src/MainCli/commandline.cpp" line="706"/>
         <source>Image %1 saved successfully</source>
         <translation>Imagen %1 guardada</translation>
     </message>
@@ -1249,27 +1270,31 @@ Continuamos?</translation>
         <translation>NO guardada la imagen HDR al archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="655"/>
+        <location filename="../src/MainCli/commandline.cpp" line="636"/>
+        <source>Exporting to HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="656"/>
         <source>ERROR: directory %1 must exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="665"/>
+        <location filename="../src/MainCli/commandline.cpp" line="666"/>
         <source>Tonemapping requested, saving to file %1.</source>
         <translation>Solicitado ajuste tonal, guardado al archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="711"/>
         <source>ERROR: Cannot save to file: %1</source>
-        <translation>Error: No se puede guardar el archivo %1</translation>
+        <translation type="vanished">Error: No se puede guardar el archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="720"/>
+        <location filename="../src/MainCli/commandline.cpp" line="727"/>
         <source>Tonemapping NOT requested.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="729"/>
+        <location filename="../src/MainCli/commandline.cpp" line="736"/>
         <source>Failed loading images</source>
         <translation>Fallo al cargar las imágenes</translation>
     </message>
@@ -5222,22 +5247,22 @@ p, li { white-space: pre-wrap; }
         <translation>Guardar como...</translation>
     </message>
     <message>
-        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="62"/>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="70"/>
         <source>The quality must be between 1 (worst) and 5 (best).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="65"/>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="73"/>
         <source>NULL frame passed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="110"/>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="118"/>
         <source>Adding image </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="110"/>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="118"/>
         <source> to the web page</source>
         <translation type="unfinished"></translation>
     </message>

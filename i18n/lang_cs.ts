@@ -1124,6 +1124,28 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/MainCli/commandline.cpp" line="677"/>
+        <source>Resizing to width %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="680"/>
+        <source>Applying gamma %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="713"/>
+        <source>
+Image %1 successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="718"/>
+        <source>
+ERROR: Cannot save to file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/MainCli/commandline.cpp" line="409"/>
         <location filename="../src/MainCli/commandline.cpp" line="417"/>
         <source>Error: The specified file with TMO settings could not be parsed!</source>
@@ -1186,7 +1208,6 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="623"/>
-        <location filename="../src/MainCli/commandline.cpp" line="706"/>
         <source>Image %1 saved successfully</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1201,27 +1222,31 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="655"/>
+        <location filename="../src/MainCli/commandline.cpp" line="636"/>
+        <source>Exporting to HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="656"/>
         <source>ERROR: directory %1 must exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="665"/>
+        <location filename="../src/MainCli/commandline.cpp" line="666"/>
         <source>Tonemapping requested, saving to file %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="711"/>
         <source>ERROR: Cannot save to file: %1</source>
-        <translation>CHYBA: Nemohu uložit do souboru: %1</translation>
+        <translation type="vanished">CHYBA: Nemohu uložit do souboru: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="720"/>
+        <location filename="../src/MainCli/commandline.cpp" line="727"/>
         <source>Tonemapping NOT requested.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="729"/>
+        <location filename="../src/MainCli/commandline.cpp" line="736"/>
         <source>Failed loading images</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5056,22 +5081,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="62"/>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="70"/>
         <source>The quality must be between 1 (worst) and 5 (best).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="65"/>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="73"/>
         <source>NULL frame passed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="110"/>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="118"/>
         <source>Adding image </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="110"/>
+        <location filename="../src/HdrHTML/pfsouthdrhtml.cpp" line="118"/>
         <source> to the web page</source>
         <translation type="unfinished"></translation>
     </message>
