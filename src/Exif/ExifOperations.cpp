@@ -183,7 +183,7 @@ void copyExifData(const std::string& from, const std::string& to,
 
             // rotation support
             if (!keepRotation) {
-                destExifData["Exif.Image.Orientation"] = 0;
+                destExifData["Exif.Image.Orientation"] = 1;
             }
         }
         else if (destIsLDR)
@@ -218,7 +218,7 @@ void copyExifData(const std::string& from, const std::string& to,
 
             // rotation support
             if (!keepRotation) {
-                destExifData["Exif.Image.Orientation"] = 0;
+                destExifData["Exif.Image.Orientation"] = 1;
             }
 
             destinationImage->setExifData(destExifData);
