@@ -1122,23 +1122,29 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="677"/>
+        <location filename="../src/MainCli/commandline.cpp" line="566"/>
+        <location filename="../src/MainCli/commandline.cpp" line="571"/>
+        <source>Starting aligning...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainCli/commandline.cpp" line="679"/>
         <source>Resizing to width %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="680"/>
+        <location filename="../src/MainCli/commandline.cpp" line="682"/>
         <source>Applying gamma %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="713"/>
+        <location filename="../src/MainCli/commandline.cpp" line="715"/>
         <source>
 Image %1 successfully saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="718"/>
+        <location filename="../src/MainCli/commandline.cpp" line="720"/>
         <source>
 ERROR: Cannot save to file: %1</source>
         <translation type="unfinished"></translation>
@@ -1185,52 +1191,52 @@ ERROR: Cannot save to file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="580"/>
+        <location filename="../src/MainCli/commandline.cpp" line="582"/>
         <source>Failed executing align_image_stack</source>
         <translation>Nem sikerült elvégezni hugin align_image_stack-jét</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="586"/>
+        <location filename="../src/MainCli/commandline.cpp" line="588"/>
         <source>Failed aligning images.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="588"/>
+        <location filename="../src/MainCli/commandline.cpp" line="590"/>
         <source>Creating (in memory) the HDR.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="618"/>
+        <location filename="../src/MainCli/commandline.cpp" line="620"/>
         <source>Saving to file %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="623"/>
+        <location filename="../src/MainCli/commandline.cpp" line="625"/>
         <source>Image %1 saved successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="627"/>
+        <location filename="../src/MainCli/commandline.cpp" line="629"/>
         <source>Could not save %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="632"/>
+        <location filename="../src/MainCli/commandline.cpp" line="634"/>
         <source>NOT Saving HDR image to file. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="636"/>
+        <location filename="../src/MainCli/commandline.cpp" line="638"/>
         <source>Exporting to HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="656"/>
+        <location filename="../src/MainCli/commandline.cpp" line="658"/>
         <source>ERROR: directory %1 must exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="666"/>
+        <location filename="../src/MainCli/commandline.cpp" line="668"/>
         <source>Tonemapping requested, saving to file %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1239,12 +1245,12 @@ ERROR: Cannot save to file: %1</source>
         <translation type="vanished">HIBA: Nem lehet menteni: %1</translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="727"/>
+        <location filename="../src/MainCli/commandline.cpp" line="729"/>
         <source>Tonemapping NOT requested.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainCli/commandline.cpp" line="736"/>
+        <location filename="../src/MainCli/commandline.cpp" line="738"/>
         <source>Failed loading images</source>
         <translation type="unfinished"></translation>
     </message>
