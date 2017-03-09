@@ -442,7 +442,7 @@ void RAWReader::read(Frame &frame, const Params &params)
     RAWReaderParams p;
     p.parse(params);
 
-    std::cout << p << std::endl;
+    //std::cout << p << std::endl;
 
     setParams(m_processor, p);
     // m_processor.set_progress_handler(cb, callback_data);
