@@ -84,6 +84,9 @@ void Align::align_with_ais(bool ais_crop_flag)
     if (futureWatcher.isCanceled()) return;
 
     QString uuidStr = QUuid::createUuid().toString();
+    QString tempDir(m_luminance_options.getTempDir());
+    m_ais->setWorkingDirectory(tempDir);
+    //ais_parameters << "-a" << tempDir + "/" + uuidStr;
     ais_parameters << "-a" << uuidStr;
     int i = 0;
     BOOST_FOREACH(HdrCreationItem& it, *m_data) {
@@ -92,9 +95,11 @@ void Align::align_with_ais(bool ais_crop_flag)
 
         QFileInfo qfi(it.convertedFilename());
         QString filename = qfi.completeBaseName() + ".tif";
-        QString tempDir(m_luminance_options.getTempDir());
-        QString completeFilename = tempDir + "/" + filename;
-        ais_parameters << completeFilename;
+        //QString tempDir(m_luminance_options.getTempDir());
+        //QString completeFilename = tempDir + "/" + filename;
+        //QString completeFilename = filename;
+        //ais_parameters << completeFilename;
+        ais_parameters << filename;
 
         QString alignedFilename = tempDir + "/" + uuidStr + QString("%1").arg(i++,4,10,QChar('0'))+".tif";
         it.setAlignedFilename(alignedFilename);
