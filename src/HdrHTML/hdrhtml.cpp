@@ -652,7 +652,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   ostringstream lut_filename;
 #ifdef WIN32
   QString h_t_b = HDRHTMLDIR;
-  h_t_b.append("/hdrhtml_t_b");
+  h_t_b.append("\\hdrhtml_t_b");
   lut_filename << h_t_b.toStdString().c_str() << basis_no+1 << ".csv";
 #else
   lut_filename << HDRHTMLDIR "/hdrhtml_t_b" << basis_no+1 << ".csv";
@@ -861,7 +861,7 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
   ostringstream lut_filename;
 #ifdef WIN32
   QString h_c_b = HDRHTMLDIR;
-  h_c_b.append("/hdrhtml_c_b");
+  h_c_b.append("\\hdrhtml_c_b");
   lut_filename << h_c_b.toStdString().c_str() << image_list.front().basis+1 << ".csv";
 #else
   lut_filename << HDRHTMLDIR "/hdrhtml_c_b" << image_list.front().basis+1 << ".csv";
