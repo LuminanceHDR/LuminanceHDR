@@ -563,10 +563,12 @@ void CommandLineInterfaceManager::finishedLoadingInputFiles()
     //hdrCreationManager->checkEVvalues();
     if (alignMode == AIS_ALIGN)
     {
+        printIfVerbose( tr("Starting aligning...") , verbose);
         hdrCreationManager->align_with_ais();
     }
     else if (alignMode == MTB_ALIGN)
     {
+        printIfVerbose( tr("Starting aligning...") , verbose);
         hdrCreationManager->align_with_mtb();
     }
     else if (alignMode == NO_ALIGN)
