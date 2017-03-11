@@ -60,13 +60,13 @@ using namespace std;
 using namespace pfs;
 using namespace pfs::io;
 
-static void build_histogram(float *hist, int *src, const int ELEMENTS)
+static void build_histogram(float *hist, const vector<int> &src, const int ELEMENTS)
 {
     for (int i = 0; i < 256; ++i) *(hist + i) = 0.f;
 
     for (int i = 0; i < ELEMENTS; ++i)
     {
-        *(hist + *(src + i)) += 1.f;
+        *(hist + src[i]) += 1.f;
     }
 
     //find max
@@ -77,7 +77,7 @@ static void build_histogram(float *hist, int *src, const int ELEMENTS)
     for (int i = 0; i < 256; ++i) *(hist + i) /= hist_max;
 }
 
-static void compute_histogram_minmax(float *hist, float &minHist, float &maxHist)
+static void compute_histogram_minmax(const float *hist, float &minHist, float &maxHist)
 {
     //Compute threshold
     //DIVISOR and hence threshold are hardcoded here
@@ -172,7 +172,7 @@ void computeAutolevels(QImage* data, float &minHist, float &maxHist, float &gamm
     float minB, maxB;
 
     //Convert to lightness
-    int *lightness = new int[ELEMENTS];
+    vector<int> lightness(ELEMENTS);
 
     for (int i = 0;  i < ELEMENTS; i++)
     {
@@ -184,9 +184,9 @@ void computeAutolevels(QImage* data, float &minHist, float &maxHist, float &gamm
     compute_histogram_minmax(histL, minL, maxL);
 
     //get Red, Gree, Blue
-    int *red = new int[ELEMENTS];
-    int *green = new int[ELEMENTS];
-    int *blue = new int[ELEMENTS];
+    vector<int> red(ELEMENTS);
+    vector<int> green(ELEMENTS);
+    vector<int> blue(ELEMENTS);
 
     for (int i = 0;  i < ELEMENTS; i++)
     {
@@ -217,11 +217,6 @@ void computeAutolevels(QImage* data, float &minHist, float &maxHist, float &gamm
     //float midrange = minHist + .5f*(maxHist - minHist);
     //gamma = log10(midrange*255.f)/log10(meanL);
     gamma = 1.f; //TODO Let's return gamma = 1
-
-    delete[] lightness;
-    delete[] red;
-    delete[] green;
-    delete[] blue;
 }
 
 ConvertToQRgb::ConvertToQRgb(float gamma)
