@@ -1,7 +1,7 @@
 This is the INSTALL file for Luminance HDR
 -------------------------------------------------------------------
 Copyright (C)  	2006-2010, Giuseppe Rota <grota@users.sourceforge.net>
-				2010-2016, Davide Anastasia <davideanastasia@users.sourceforge.net>
+				2010-2017, Davide Anastasia <davideanastasia@users.sourceforge.net>
                            Franco Comida <fcomida@users.sourceforge.net>
 
 Webpage:       http://qtpfsgui.sourceforge.net
@@ -18,7 +18,7 @@ Contents
 4. Enabling Unit Test compilation
 5. Note for Packagers
 
-Last update: 2016.08.31
+Last update: 2017.03.11
 
 The build system is based on CMake (http://www.cmake.org/).
 The build description is contained in the CMakeLists.txt file.

@@ -1,8 +1,15 @@
-Changes .next
-NEW: Added new tonemapping operator ferradans11
-NEW: Added new tonemapping operator mai11
+Changes 2.5.0
+NEW: New tonemapping operator ferradans11
+NEW: New tonemapping operator mai11
 NEW: Export to HTML (Create a webpage with embedded HDR viewer)
+NEW: Optional automatic adjustment of LDRs levels
+NEW: New UI "Dark Theme"
+NEW: Switch UI Full Screen (F11), show LDRs and HDRs Full Screen (F10)
 NEW: Portuguese (Brazil) translation
+* Fix various crashes
+* greater EV values range in HdrWizard
+* better printing support and print preview in HelpBrowser
+* restore load/save curves in HdrWizard
 
 Changes 2.4.0
 NEW: Automatic anti-ghosting and improved manual anti-ghosting
