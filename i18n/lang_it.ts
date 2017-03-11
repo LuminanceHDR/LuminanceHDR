@@ -896,7 +896,7 @@ Continuare?</translation>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="166"/>
         <source>VALUE      Quality of the interpolated exposures, from the worst (1) to the best(4). Higher quality will introduce less distortions in the brightest and the darkest tones, but will also generate more images. More images means that there is more data that needs to be transferred to the web-browser, making HDR viewer less responsive. (Default is 2, which is sufficient for most applications)</source>
-        <translation type="unfinished">VALORE      Qualità delle eposizioni interpolate, dalla peggiore (1) alla migliore (5). Un valore più alto introduce meno distorsioni tra i toni più scuri e i più luminosi, ma genererà un numero maggiore di immagini. Più immagini significa maggior quantità di dati da trasferire al browser web rendendo il visore HDR meno responsivo. (di default è 2, valore sufficiente per molte applicazioni) {1)?} {4)?} {2,?}</translation>
+        <translation>VALORE      Qualità delle eposizioni interpolate, dalla peggiore (1) alla migliore (4). Un valore più alto introduce meno distorsioni tra i toni più scuri e i più luminosi, ma genererà un numero maggiore di immagini. Più immagini significa maggior quantità di dati da trasferire al browser web rendendo il visore HDR meno responsivo. (di default è 2, valore sufficiente per molte applicazioni)</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="172"/>
