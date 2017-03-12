@@ -64,7 +64,7 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
                         pfs::Progress &ph)
 {  
     //--- default tone mapping parameters;
-    bool timedependence = false;
+    const bool timedependence = false;
     //bool local = false;
     //float multiplier = 1.0f;
     //Acone = -1.0f;

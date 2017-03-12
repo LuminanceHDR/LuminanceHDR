@@ -74,7 +74,7 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
 
     Array2Df Ftr(width, height);
 
-    fftwf_plan p;
+    fftwf_plan p = NULL; // Let's see if this blocks compiler warnings
     #pragma omp parallel for private(p) schedule(static)
     for ( int j = 0; j < height; j++ ) {
         #pragma omp critical (make_plan)

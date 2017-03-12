@@ -164,7 +164,9 @@ void RLERead(FILE* file, Trgbe* scanline, int size)
                 if ( fread(scanline+peek, sizeof(*scanline), nonrun_len, file) == 0) {
                     throw pfs::io::ReadException("RGBE: Invalid data size");
                 }
-                peek += nonrun_len;
+                else {
+                    peek += nonrun_len;
+                }
             }
         }
     }

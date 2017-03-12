@@ -72,6 +72,6 @@ inline void PreviewLabel::setTonemappingOptions(TonemappingOptions *tmopts)
 {
     if (m_TMOptions)
         delete m_TMOptions;
-    m_TMOptions = tmopts;
+    m_TMOptions = new TonemappingOptions(*tmopts);
 }
 #endif

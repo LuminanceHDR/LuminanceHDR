@@ -498,6 +498,8 @@ bool FitsImporter::framesHaveSameSize()
 {
     HdrCreationItemContainer::iterator it;
     it = std::find_if(m_data.begin(), m_data.end(), isValid);
+    if (it == m_data.end())
+        return false;
     const size_t width = it->frame()->getWidth();
     const size_t height = it->frame()->getHeight();
     for ( HdrCreationItemContainer::const_iterator it = m_data.begin() + 1, 

@@ -222,15 +222,21 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
 		break;
     for(unsigned int x=0; x<ncols; x++)
     {
-      switch (eq) {
-      case 2:
-	(*L)(x,y) = (*Y)(x,y) * (*tm)(x,y) / (*la)(x,y);
-	break;
-      case 4:
-	(*L)(x,y) =  (*tm)(x,y) + C((*tm)(x,y))/C((*la)(x,y)) * ((*Y)(x,y)-(*la)(x,y));
-	break;
-      default:
-	return 0;
+      switch (eq) 
+      {
+        case 2:
+	        (*L)(x,y) = (*Y)(x,y) * (*tm)(x,y) / (*la)(x,y);
+	        break;
+        case 4:
+	        (*L)(x,y) =  (*tm)(x,y) + C((*tm)(x,y))/C((*la)(x,y)) * ((*Y)(x,y)-(*la)(x,y));
+	        break;
+        default:
+        {
+            // cleaning
+            delete(la);
+            delete(tm);
+	        return 0;
+        }
       }
 
       //!! FIX:

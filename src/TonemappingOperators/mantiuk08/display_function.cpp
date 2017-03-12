@@ -133,18 +133,32 @@ DisplayFunctionLUT::DisplayFunctionLUT( const char *file_name ) : pix_lut( NULL 
     if( sscanf( buf, "%f%*[ ,;]%f\n", &p_buf, &L_buf ) != 2 )
       continue;
     if( p_buf < 0 || p_buf > 1 )
-      throw pfs::Exception( "Improper LUT: pixel values must be from 0 to 1" );    
+    {
+      fclose( fh );
+      throw pfs::Exception( "Improper LUT: pixel values must be from 0 to 1" );
+    }
+
     if( L_buf <= 0 )
+    {
+      fclose( fh );
       throw pfs::Exception( "Improper LUT: luminance must be greater than 0" );    
+    }
     L_lut[i] = log10( L_buf );
     pix_lut[i] = p_buf;
     i++;
     if( i >= max_lut_size )
+    {
+      fclose( fh );
       throw pfs::Exception( "LUT too large (more than 4096 entries)" );    
+    }
   }
   lut_size = i;
   if( pix_lut[0] != 0 || pix_lut[lut_size-1]!= 1 )
+  {
+      fclose( fh );
       throw pfs::Exception( "The first and last LUT entries for pixel value should be 0 and 1" );    
+  }
+  fclose( fh );
 }
 
 DisplayFunctionLUT::~DisplayFunctionLUT()

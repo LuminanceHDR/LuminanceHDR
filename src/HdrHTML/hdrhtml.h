@@ -51,7 +51,7 @@ public:
 
   HDRHTMLImage( const char *base_name, int width, int height ) :
   base_name( base_name ), width( width ), height( height ),
-  f8_stops( 0 ), basis( 0 ), shared_basis( 0 ), hist_start( 0 ), hist_width( 0 ),
+  f8_stops( 0 ), f_step_res(0), basis( 0 ), shared_basis( 0 ), pix_per_fstop(0), hist_start( 0 ), hist_width( 0 ),
   exposure( 0 ), best_exp( 0 )
   {
   }
@@ -67,7 +67,7 @@ public:
   std::list<HDRHTMLImage> image_list;
 
 HDRHTMLSet( const char *page_name, const char *image_dir = NULL ) :
-  page_name( page_name ), image_dir( image_dir )
+  page_name( page_name ), image_dir( image_dir ), image_template( NULL )
   {
   }
 

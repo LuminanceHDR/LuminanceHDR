@@ -1802,6 +1802,7 @@ void TonemappingPanel::updatePreviews(double v)
             m_previewPanel->updatePreviews(m_currentFrame, index);
         }
     }
+    delete tmopts;
 }
 
 void TonemappingPanel::updatePreviewsCB(int state)
@@ -1836,6 +1837,7 @@ void TonemappingPanel::updatePreviewsCB(int state)
         m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
         m_previewPanel->updatePreviews(m_currentFrame, index);
     }
+    delete tmopts;
 }
 
 void TonemappingPanel::updatePreviewsRB(bool toggled)
@@ -1852,6 +1854,7 @@ void TonemappingPanel::updatePreviewsRB(bool toggled)
         m_previewPanel->getLabel(index)->setTonemappingOptions(tmopts);
         m_previewPanel->updatePreviews(m_currentFrame, index);
     }
+    delete tmopts;
 }
 
 void TonemappingPanel::setRealtimePreviews(bool toggled)

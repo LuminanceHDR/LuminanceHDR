@@ -2196,9 +2196,8 @@ void MainWindow::on_actionShow_Full_Screen_toggled(bool b)
 void MainWindow::on_actionShow_Image_Full_Screen_triggered()
 {
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-    bool isHdr = g_v ? g_v->isHDR() : false;
     pfs::Frame* frame = pfs::copy(g_v->getFrame()); //frame is assigned to one viewer that will take care of deleting it
-    if (isHdr)
+    if (g_v->isHDR())
     {
         m_fullScreenHdrViewer->setFrame(frame);
         m_fullScreenHdrViewer->showFullScreen();

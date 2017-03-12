@@ -126,7 +126,7 @@ struct TonemapOperatorFattal02
 
         int detail_level = 0;
         if (opts->xsize > 0) {
-            float ratio = opts->origxsize / opts->xsize;
+            float ratio = (float)opts->origxsize / (float)opts->xsize;
             if ( ratio < 2 )
                 detail_level = 3;
             else if ( ratio < 4 )

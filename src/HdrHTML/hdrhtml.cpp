@@ -27,6 +27,7 @@
 
 #include "hdrhtml.h"
 
+#include <vector>
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -64,11 +65,11 @@ template<class T>
 class Histogram
 {
 public:
-  T *x;                         // Bin centers
-  size_t *n;                       // No of items in a bin
+  vector<T> x;                         // Bin centers
+  vector<size_t> n;                    // No of items in a bin
   size_t bins;
 
-  Histogram() : x( NULL ), n( NULL )
+  Histogram() : bins( 0 )
   {
   }
 
@@ -79,8 +80,8 @@ public:
 
   void free()
   {
-    delete []x;
-    delete []n;
+    //delete []x;
+    //delete []n;
     bins = 0;
   }
 
@@ -102,8 +103,8 @@ public:
       }
     }
 
-    x = new T[bins];
-    n = new size_t[bins];
+    x.resize(bins);
+    n.resize(bins);
 
     T delta = (max_val-min_val) / (float)bins; // width of a single bin
 
@@ -161,7 +162,7 @@ class UniformArrayLUT
 public:
   float *y_i;
 
-  UniformArrayLUT( size_t lut_size, const float *x_i, float *y_i = NULL ) : x_i( x_i ), lut_size( lut_size ), delta( x_i[1]-x_i[0] )
+  UniformArrayLUT( size_t lut_size, const float *x_i, float *y_i = NULL ) : y_i(NULL), x_i( x_i ), lut_size( lut_size ), delta( x_i[1]-x_i[0] )
   {
     if( y_i == NULL ) {
       this->y_i = new float[lut_size];
@@ -174,7 +175,7 @@ public:
 
   UniformArrayLUT() : y_i(NULL), x_i( 0 ), lut_size( 0 ), delta( 0. ) {}
 
-  UniformArrayLUT(const UniformArrayLUT& other) : x_i( other.x_i ), lut_size( other.lut_size ), delta( other.delta )
+  UniformArrayLUT(const UniformArrayLUT& other) : y_i(NULL), x_i( other.x_i ), lut_size( other.lut_size ), delta( other.delta )
   {
     this->y_i = new float[lut_size];
     own_y_i = true;
@@ -245,19 +246,19 @@ inline T clamp( T x, T min, T max )
 template<class Tx, class Ty>
 class ArrayLUT
 {
-  const Tx *x_i;
+  const vector<Tx> x_i;
   size_t lut_size;
 
   bool own_y_i;
 public:
-  Ty *y_i;
+  vector<Ty> y_i;
 
-  ArrayLUT( size_t lut_size, const Tx *x_i, Ty *y_i = NULL ) : x_i( x_i ), lut_size( lut_size )
+  ArrayLUT( size_t lut_size, const vector<Tx> &x_i, vector<Ty> &y_i ) : x_i( x_i ), lut_size( lut_size )
   {
     assert( lut_size > 0 );
 
-    if( y_i == NULL ) {
-      this->y_i = new Ty[lut_size];
+    if( y_i.size() == 0 ) {
+      this->y_i.resize(lut_size);
       own_y_i = true;
     } else {
       this->y_i = y_i;
@@ -289,8 +290,8 @@ public:
 
   ~ArrayLUT()
   {
-    if( own_y_i )
-      delete []y_i;
+    //if( own_y_i )
+    //  delete []y_i;
   }
 
   Ty interp( Tx x )
@@ -311,7 +312,7 @@ public:
         l = m;
     }
 
-    float alpha = (x - x_i[l])/(x_i[r]-x_i[l]);
+    float alpha = (float)(x - x_i[l])/(float)(x_i[r]-x_i[l]);
 
     return y_i[l] + (Ty)(alpha * (y_i[r]-y_i[l]));
   }
@@ -381,12 +382,12 @@ public:
   void *user_data;
 
   ReplacePattern( const char* pattern, string replace_with ) :
-    pattern( pattern ), replace_with( replace_with ), callback( NULL )
+    pattern( pattern ), replace_with( replace_with ), callback( NULL ), user_data( NULL)
   {
   }
 
   ReplacePattern( const char* pattern, float replace_with_num ) :
-    pattern( pattern ), callback( NULL )
+    pattern( pattern ), callback( NULL ), user_data( NULL)
   {
     ostringstream num_str;
     num_str << replace_with_num;
@@ -394,7 +395,7 @@ public:
   }
 
   ReplacePattern( const char* pattern, int replace_with_num ) :
-    pattern( pattern ), callback( NULL )
+    pattern( pattern ), callback( NULL ), user_data( NULL)
   {
     ostringstream num_str;
     num_str << replace_with_num;
@@ -406,7 +407,7 @@ public:
   {
   }
 
-  ReplacePattern() : pattern( NULL ), callback( NULL )
+  ReplacePattern() : pattern( NULL ), callback( NULL ), user_data( NULL)
   {
   }
 
@@ -523,7 +524,7 @@ public:
   float **data;
   int columns, rows;
 
-  CSVTable() : data( NULL )
+  CSVTable() : data( NULL ), columns( 0), rows( 0 )
   {
   }
 
@@ -674,6 +675,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   float img_max = numeric_limits<float>::min();
   {
     float *arrays[] = { R, G, B, Y };
+
     int k;
 
     for( k = 0; k < 4; k++ ) {
@@ -718,7 +720,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
   const int hist_height = 36;
   int hist_width = width;
 //  float hist_img_sz = [36 size(img,2)];
-  float hist_fstops = hist_width / pix_per_fstop;
+  float hist_fstops = (float)hist_width / (float)pix_per_fstop;
   float hist_start = (img_max-img_min-hist_fstops)/2;
   {
 
@@ -770,10 +772,8 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
 
   //unsigned short *imgBuffer =
     //new unsigned short[pixels*3];
-  float *imgBuffer =
-    new float[pixels*3];
-  unsigned char *imgBuffer_c =
-    new unsigned char[pixels*3];
+  vector<float> imgBuffer(pixels*3);
+  vector<unsigned char> imgBuffer_c(pixels*3);
   for( int k=1; k <= f8_stops+1; k++ ) {
 
 
@@ -806,7 +806,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
           float r = imgBuffer[pix];
           imgBuffer_c[pix] = (unsigned char)r;
       }
-      QImage imImage(imgBuffer_c, width, height, QImage::Format_RGB888);
+      QImage imImage(imgBuffer_c.data(), width, height, QImage::Format_RGB888);
 
       ostringstream img_filename;
       if( out_dir != NULL )
@@ -820,7 +820,6 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
     }
 
   }
-  delete [] imgBuffer;
 
   HDRHTMLImage new_image( base_name, width, height );
 
@@ -987,8 +986,10 @@ void print_image_htmlcode( ostream &out, void *user_data, const char *parameter 
         break;
     }
     if( it == hdrhtml_set->image_list.end() )
+    {
       cerr << "Warning: image '" << parameter << "' not found\n";
-
+      throw;
+    }
     try {
       print_image_htmlcode( out, hdrhtml_set, *it );
     }

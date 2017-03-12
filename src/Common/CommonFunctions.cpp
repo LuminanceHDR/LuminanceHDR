@@ -27,6 +27,7 @@
 #include <QFile>
 #include <QRgb>
 #include <QByteArray>
+#include <valarray>
 
 #include "CommonFunctions.h"
 #include "LuminanceOptions.h"
@@ -60,24 +61,22 @@ using namespace std;
 using namespace pfs;
 using namespace pfs::io;
 
-static void build_histogram(float *hist, const vector<int> &src, const int ELEMENTS)
+static void build_histogram(valarray<float> &hist, const valarray<int> &src)
 {
-    for (int i = 0; i < 256; ++i) *(hist + i) = 0.f;
-
-    for (int i = 0; i < ELEMENTS; ++i)
+    const int size = src.size();
+    for (int i = 0; i < size; i++)
     {
-        *(hist + src[i]) += 1.f;
+        hist[src[i]] += 1.f;
     }
 
     //find max
-    float hist_max = *hist;
-    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, *(hist + i));
+    float hist_max = hist.max();
 
     //normalize in the range [0...1]
-    for (int i = 0; i < 256; ++i) *(hist + i) /= hist_max;
+    hist /= hist_max;
 }
 
-static void compute_histogram_minmax(const float *hist, float &minHist, float &maxHist)
+static void compute_histogram_minmax(const valarray<float> &hist, float &minHist, float &maxHist)
 {
     //Compute threshold
     //DIVISOR and hence threshold are hardcoded here
@@ -90,16 +89,28 @@ static void compute_histogram_minmax(const float *hist, float &minHist, float &m
     //Scaling factor: range [0..1]
     const float factor = 1.f/255.f;
 
+    const int hist_size = hist.size();
     float CUMUL = 0;
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < hist_size; i++)
     {
-        if (*(hist +i) >= threshold)
-            CUMUL += *(hist + i);
+        if (hist[i] >= threshold)
+            CUMUL += hist[i];
     }
 
     //Start from max hist
     bool isMaxRight = false;
-    int xa = distance(hist, max_element(hist, hist + 256));
+
+    float hist_max = 0.f;
+    int xa = 0;
+    for (int i = 0; i < (hist_size - 1); i++)
+    {
+        if ( hist[i] > hist_max )
+        {
+            hist_max = hist[i];
+            xa = i;
+        }
+    }
+
     if (xa == 255)
     {
         xa = 254;
@@ -115,7 +126,7 @@ static void compute_histogram_minmax(const float *hist, float &minHist, float &m
         count = 0.f;
         for (int i = xa; i <= xb; i++)
         {
-            count += *(hist + i);
+            count += hist[i];
         }
         if ((count - oldcount) >= 0.f)
             xa--;
@@ -142,7 +153,7 @@ static void compute_histogram_minmax(const float *hist, float &minHist, float &m
         count = 0.f;
         for (int i = xa; i <= xb; i++)
         {
-            count += *(hist + i);
+            count += hist[i];
         }
         if ((count >= CUMUL) || (fabs(count - oldcount)/oldcount < 1e-6))
             break;
@@ -159,8 +170,9 @@ static void compute_histogram_minmax(const float *hist, float &minHist, float &m
     maxHist = factor*xb;
 }
 
-void computeAutolevels(QImage* data, float &minHist, float &maxHist, float &gamma)
+void computeAutolevels(const QImage* data, float &minHist, float &maxHist, float &gamma)
 {
+    const int COLOR_DEPTH = 256;
     const QRgb* src = reinterpret_cast<const QRgb*>(data->bits());
     const int width = data->width();
     const int height = data->height();
@@ -172,21 +184,21 @@ void computeAutolevels(QImage* data, float &minHist, float &maxHist, float &gamm
     float minB, maxB;
 
     //Convert to lightness
-    vector<int> lightness(ELEMENTS);
+    valarray<int> lightness(ELEMENTS);
 
     for (int i = 0;  i < ELEMENTS; i++)
     {
         lightness[i] = QColor::fromRgb(src[i]).toHsl().lightness();
     }
     //Build histogram
-    float histL[256];
-    build_histogram(histL, lightness, ELEMENTS);
+    valarray<float> histL(0.f, COLOR_DEPTH);
+    build_histogram(histL, lightness);
     compute_histogram_minmax(histL, minL, maxL);
 
     //get Red, Gree, Blue
-    vector<int> red(ELEMENTS);
-    vector<int> green(ELEMENTS);
-    vector<int> blue(ELEMENTS);
+    valarray<int> red(ELEMENTS);
+    valarray<int> green(ELEMENTS);
+    valarray<int> blue(ELEMENTS);
 
     for (int i = 0;  i < ELEMENTS; i++)
     {
@@ -196,18 +208,18 @@ void computeAutolevels(QImage* data, float &minHist, float &maxHist, float &gamm
     }
 
     //Build histogram
-    float histR[256];
-    build_histogram(histR, red, ELEMENTS);
+    valarray<float> histR(0.f, COLOR_DEPTH);
+    build_histogram(histR, red);
     compute_histogram_minmax(histR, minR, maxR);
 
     //Build histogram
-    float histG[256];
-    build_histogram(histG, green, ELEMENTS);
+    valarray<float> histG(0.f, COLOR_DEPTH);
+    build_histogram(histG, green);
     compute_histogram_minmax(histG, minG, maxG);
 
     //Build histogram
-    float histB[256];
-    build_histogram(histB, blue, ELEMENTS);
+    valarray<float> histB(0.f, COLOR_DEPTH);
+    build_histogram(histB, blue);
     compute_histogram_minmax(histB, minB, maxB);
 
     minHist = min(min(minL,minR), min(minG,minB));

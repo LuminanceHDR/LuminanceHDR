@@ -591,7 +591,7 @@ static int solve( gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d, gs
 	
   status = gsl_cqpminimizer_set(s, &cqpd);
   
-  bool verbose = false;
+  const bool verbose = false;
 
   if( verbose ) fprintf( stderr, "== Itn ======= f ======== ||gap|| ==== ||residual||\n\n");
 	

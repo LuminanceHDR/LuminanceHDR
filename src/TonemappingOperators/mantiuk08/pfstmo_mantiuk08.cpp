@@ -90,6 +90,8 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
 
   if ( !inX || !inY || !inZ )
   {
+      if (df != NULL)
+          delete df;
       throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
     
@@ -113,6 +115,7 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
     }
   }
   
+/* no need for flushing stdout with this stuff
   fprintf( stderr, "Luminance factor of the reference white: " );
   if( white_y < 0 )
     fprintf( stderr, "not specified\n" );
@@ -123,7 +126,8 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   if( !lum_data.empty() && lum_data != "DISPLAY" ) {
     fprintf( stderr, "warning: input image should be in linear (not gamma corrected) luminance factor units. Use '--linear' option with pfsin* commands.\n" );
   }
-  
+*/
+
   std::unique_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->data(), ph);
   if( C.get() == NULL )
   {
