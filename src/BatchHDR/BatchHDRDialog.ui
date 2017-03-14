@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>571</width>
-    <height>712</height>
+    <height>697</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+    <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_9">
    <item row="1" column="0">
@@ -243,7 +243,7 @@ See documentation for more information.</string>
                <string>Use Hugin's align_image_stack engine</string>
               </property>
               <property name="text">
-               <string>Hugin's align_&amp;image_stack</string>
+               <string>&amp;Hugin's align_image_stack</string>
               </property>
               <property name="checked">
                <bool>true</bool>

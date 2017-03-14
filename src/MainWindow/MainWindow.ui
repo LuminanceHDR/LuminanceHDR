@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+    <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1651</width>
-     <height>30</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -571,7 +571,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/scale.png</normaloff>:/new/prefix1/images/scale.png</iconset>
+     <normaloff>:/program-icons/scale</normaloff>:/program-icons/scale</iconset>
    </property>
    <property name="text">
     <string>&amp;Resize...</string>
@@ -749,7 +749,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/perspective.png</normaloff>:/new/prefix1/images/perspective.png</iconset>
+     <normaloff>:/program-icons/perspective</normaloff>:/program-icons/perspective</iconset>
    </property>
    <property name="text">
     <string>&amp;Projective Transformation...</string>
@@ -897,7 +897,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/svgs/images/view-object-histogram-linear.svgz</normaloff>:/new/svgs/images/view-object-histogram-linear.svgz</iconset>
+     <normaloff>:/program-icons/adjust-levels</normaloff>:/program-icons/adjust-levels.svg</iconset>
    </property>
    <property name="text">
     <string>Adjust &amp;Levels</string>
@@ -993,7 +993,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/soft-proofing.png</normaloff>:/new/prefix1/images/soft-proofing.png</iconset>
+     <normaloff>:/program-icons/soft-proofing</normaloff>:/program-icons/soft-proofing</iconset>
    </property>
    <property name="text">
     <string>Soft Proofing</string>
@@ -1008,7 +1008,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/gamut_48x48.png</normaloff>:/new/prefix1/images/gamut_48x48.png</iconset>
+     <normaloff>:/program-icons/gamut</normaloff>:/program-icons/gamut</iconset>
    </property>
    <property name="text">
     <string>Gamut Check</string>
@@ -1059,7 +1059,7 @@
   <action name="actionFits_Importer">
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/applications-astronomy.png</normaloff>:/new/prefix1/images/applications-astronomy.png</iconset>
+     <normaloff>:/program-icons/applications-astronomy</normaloff>:/program-icons/applications-astronomy</iconset>
    </property>
    <property name="text">
     <string>&amp;FITS Importer...</string>
@@ -1127,6 +1127,10 @@
    </property>
   </action>
   <action name="actionSupported_Cameras">
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/program-icons/raw-icon</normaloff>:/program-icons/raw-icon</iconset>
+   </property>
    <property name="text">
     <string>&amp;Supported RAW Cameras</string>
    </property>

@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/svgs/images/view-object-histogram-linear.svgz</normaloff>:/new/svgs/images/view-object-histogram-linear.svgz</iconset>
+    <normaloff>:/program-icons/view-object-histogram-linear</normaloff>:/program-icons/view-object-histogram-linear</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>

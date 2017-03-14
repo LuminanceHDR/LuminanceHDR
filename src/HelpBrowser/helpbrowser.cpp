@@ -268,9 +268,9 @@ void HelpBrowser::setupLocalUI()
     m_Ui->goHome->setIcon(QIcon::fromTheme("go-home", QIcon(":/help/go-home.png")));
     m_Ui->goBack->setIcon(QIcon::fromTheme("go-previous", QIcon(":/help/go-previous.png")));
     m_Ui->goFwd->setIcon(QIcon::fromTheme("go-next", QIcon(":/help/go-next.png")));
-    m_Ui->zoomIn->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/new/prefix1/images/zoom-in.png")));
-    m_Ui->zoomOut->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/new/prefix1/images/zoom-out.png")));
-    m_Ui->zoomOriginal->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/new/prefix1/images/zoom-original.png")));
+    m_Ui->zoomIn->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/images/zoom-in.png")));
+    m_Ui->zoomOut->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/images/zoom-out.png")));
+    m_Ui->zoomOriginal->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/icons/images/zoom-original.png")));
     // end setting icons
 
 	helpSideBar = new HelpSideBar(tr("Help SideBar"), this);

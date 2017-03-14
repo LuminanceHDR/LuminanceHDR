@@ -10,11 +10,11 @@
     <x>0</x>
     <y>0</y>
     <width>1120</width>
-    <height>729</height>
+    <height>836</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -24,7 +24,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+    <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -173,7 +173,8 @@
                    <string>Fill &amp;window</string>
                   </property>
                   <property name="icon">
-                   <iconset theme="zoom"/>
+                   <iconset theme="zoom">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -324,12 +325,23 @@
                   <property name="text">
                    <string>Brush</string>
                   </property>
+                  <property name="icon">
+                   <iconset theme="draw-brush">
+                    <normaloff>.</normaloff>.</iconset>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextBesideIcon</enum>
+                  </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QPushButton" name="lassoColorButton">
                   <property name="text">
                    <string>Lasso</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="edit-select-lasso">
+                    <normaloff>.</normaloff>.</iconset>
                   </property>
                  </widget>
                 </item>
@@ -547,7 +559,7 @@ This image's histogram is diplayed in the widget above.</string>
                 <item>
                  <widget class="QLabel" name="label_reference_list">
                   <property name="text">
-                   <string>Re&amp;ference</string>
+                   <string>Referen&amp;ce</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -858,7 +870,7 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <property name="icon">
                  <iconset resource="../../icons.qrc">
-                  <normaloff>:/new/prefix1/images/ghost_32x32.png</normaloff>:/new/prefix1/images/ghost_32x32.png</iconset>
+                  <normaloff>:/program-icons/ghost</normaloff>:/program-icons/ghost</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -1019,7 +1031,7 @@ p, li { white-space: pre-wrap; }
                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a mask using lasso or brush&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                             </property>
                             <property name="text">
-                             <string>A&amp;dd</string>
+                             <string>&amp;Add</string>
                             </property>
                             <property name="checked">
                              <bool>true</bool>
@@ -1486,7 +1498,7 @@ p, li { white-space: pre-wrap; }
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="text">
-                   <string>Verti&amp;cal:</string>
+                   <string>Vertica&amp;l:</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1626,7 +1638,7 @@ p, li { white-space: pre-wrap; }
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
               <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout"/>
+               <layout class="QGridLayout" name="gridLayout_11"/>
               </item>
              </layout>
             </widget>

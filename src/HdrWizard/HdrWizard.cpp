@@ -122,13 +122,6 @@ HdrWizard::HdrWizard(QWidget *p,
 {
     m_Ui->setupUi(this);
 
-    // icons
-    m_Ui->loadImagesButton->setIcon(QIcon::fromTheme("list-add", QIcon(":/new/prefix1/images/list-add.png")));
-    m_Ui->removeImageButton->setIcon(QIcon::fromTheme("list-remove", QIcon(":/new/prefix1/images/list-remove.png")));
-    m_Ui->clearListButton->setIcon(QIcon::fromTheme("edit-clear", QIcon(":/new/prefix1/images/edit-clear-list.png")));
-    // end setting icons
-
-
     setAcceptDrops(true);
     setupConnections();
 

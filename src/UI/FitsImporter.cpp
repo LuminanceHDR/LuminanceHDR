@@ -71,17 +71,6 @@ FitsImporter::FitsImporter(QWidget *parent)
 {
     m_Ui->setupUi(this);
 
-    // icons
-    m_Ui->pushButtonRed->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
-    m_Ui->pushButtonGreen->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
-    m_Ui->pushButtonBlue->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
-    m_Ui->pushButtonLuminosity->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
-    m_Ui->pushButtonH->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/svgs/images/document-open.svgz")));
-    m_Ui->pushButtonLoad->setIcon(QIcon::fromTheme("upload-media", QIcon(":/new/svgs/images/folder-image.svgz")));
-    m_Ui->pushButtonPreview->setIcon(QIcon::fromTheme("document-preview", QIcon(":/new/prefix1/images/preview-file.png")));
-    m_Ui->pushButtonClockwise->setIcon(QIcon::fromTheme("object-rotate-right", QIcon(":/new/prefix1/images/rotate_right.png")));
-    // end setting icons
-
 #ifdef WIN32
     setWizardStyle(WizardStyle::ModernStyle);
 #endif
@@ -89,7 +78,7 @@ FitsImporter::FitsImporter(QWidget *parent)
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
 
-    setPixmap(WizardPixmap::LogoPixmap, QIcon(":/new/prefix1/images/Galaxy-icon.png").pixmap(48, 48));
+    setPixmap(WizardPixmap::LogoPixmap, QIcon(":/program-icons/Galaxy-icon.png").pixmap(48, 48));
 
     m_previewLabel = new QLabel(this);
     m_previewLabel->resize(600,400);
@@ -373,6 +362,9 @@ void FitsImporter::buildContents()
 {
     HdrCreationItemContainer::iterator it =
             std::find_if(m_data.begin(), m_data.end(), isValid);
+
+    if (it == m_data.end())
+        return;
 
     m_width = it->frame()->getWidth();
     m_height = it->frame()->getHeight();

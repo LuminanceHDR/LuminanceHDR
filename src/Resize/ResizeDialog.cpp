@@ -36,7 +36,7 @@ ResizeDialog::ResizeDialog(QWidget *parent, pfs::Frame *orig):
     m_Ui->setupUi(this);
 
     // icons
-    m_Ui->restoredefault->setIcon(QIcon::fromTheme("edit-clear", QIcon(":/new/prefix1/images/remove.png")));
+    m_Ui->restoredefault->setIcon(QIcon::fromTheme("edit-clear", QIcon(":/icons/images/remove.png")));
     // end setting icons
 
     orig_width = m_original->getWidth();

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+    <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_11">
    <item row="0" column="0">
@@ -167,7 +167,8 @@
                      <string>Add Images</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="list-add"/>
+                     <iconset theme="list-add">
+                      <normaloff>.</normaloff>.</iconset>
                     </property>
                    </widget>
                   </item>
@@ -186,7 +187,8 @@
                      <string>Remove Selected Image</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="list-remove"/>
+                     <iconset theme="list-remove">
+                      <normaloff>.</normaloff>.</iconset>
                     </property>
                    </widget>
                   </item>
@@ -205,7 +207,7 @@
                      <string>Clear List</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="edit-clear"/>
+                     <iconset theme="edit-clear-list"/>
                     </property>
                    </widget>
                   </item>
@@ -421,7 +423,7 @@
                         <bool>false</bool>
                        </property>
                        <property name="text">
-                        <string>&amp;Hugin's align_image_stack</string>
+                        <string>Hugin's align_&amp;image_stack</string>
                        </property>
                        <property name="checked">
                         <bool>true</bool>

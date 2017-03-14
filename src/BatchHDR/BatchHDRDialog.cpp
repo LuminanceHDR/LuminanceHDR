@@ -64,8 +64,8 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
     m_Ui->setupUi(this);
 
     // icons
-    m_Ui->selectInputFolder->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/prefix1/images/fileopen.png")));
-    m_Ui->selectOutputFolder->setIcon(QIcon::fromTheme("document-open", QIcon(":/new/prefix1/images/fileopen.png")));
+    m_Ui->selectInputFolder->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/images/fileopen.png")));
+    m_Ui->selectOutputFolder->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/images/fileopen.png")));
     // end setting icons
 
     m_Ui->closeButton->hide();

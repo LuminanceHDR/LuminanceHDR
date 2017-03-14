@@ -76,7 +76,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../icons.qrc">:/new/prefix1/images/luminance-hdr.png</pixmap>
+        <pixmap resource="../../icons.qrc">:/program-icons/luminance-hdr</pixmap>
        </property>
       </widget>
      </item>

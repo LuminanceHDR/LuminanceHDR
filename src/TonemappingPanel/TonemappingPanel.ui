@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+    <normaloff>:/icons/luminance-hdr.png</normaloff>:/icons/luminance-hdr.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_13">
    <item row="0" column="0">

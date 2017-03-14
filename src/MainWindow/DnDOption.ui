@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/svgs/images/window-duplicate.svg</normaloff>:/new/svgs/images/window-duplicate.svg</iconset>
+    <normaloff>:/icons/images/window-duplicate.svg</normaloff>:/icons/images/window-duplicate.svg</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>

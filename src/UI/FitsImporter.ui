@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>759</width>
-    <height>612</height>
+    <width>760</width>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Import FITS files</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/applications-astronomy.png</normaloff>:/new/prefix1/images/applications-astronomy.png</iconset>
+   <iconset>
+    <normaloff>:/icons/images/applications-astronomy.png</normaloff>:/icons/images/applications-astronomy.png</iconset>
   </property>
   <widget class="ExtWizardPage" name="wizardPageLoadFiles">
    <property name="title">
@@ -210,6 +210,10 @@
          <property name="text">
           <string>Reset</string>
          </property>
+         <property name="icon">
+          <iconset theme="chronometer-reset">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
         </widget>
        </item>
        <item row="0" column="1">
@@ -262,7 +266,8 @@
           <string>Preview</string>
          </property>
          <property name="icon">
-          <iconset theme="document-preview"/>
+          <iconset theme="document-preview">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>

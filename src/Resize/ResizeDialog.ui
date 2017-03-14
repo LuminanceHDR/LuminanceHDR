@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+    <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>

@@ -44,7 +44,7 @@ TMOProgressIndicator::TMOProgressIndicator(QWidget *parent):
 
     m_abortButton = new QPushButton(this);
     m_abortButton->resize(22,22);
-    m_abortButton->setIcon(QIcon(":/new/prefix1/images/remove.png"));
+    m_abortButton->setIcon(QIcon(":/program-icons/remove.png"));
     m_abortButton->setToolTip(QString(tr("Abort computation")));
   
     m_hbl->addWidget(m_progressBar);

@@ -299,7 +299,7 @@ ELSEIF(UNIX)
 # Microsoft Windows
 ELSEIF(WIN32)
     # icon files to copy in the bundle
-    SET(LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc")
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/program-icons/luminance_ico.rc")
 
     # Subsystem console:
     ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})

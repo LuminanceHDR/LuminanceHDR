@@ -8,15 +8,15 @@
     <x>0</x>
     <y>0</y>
     <width>708</width>
-    <height>483</height>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Copy Exif data</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+   <iconset>
+    <normaloff>:/icons/images/luminance-hdr.png</normaloff>:/icons/images/luminance-hdr.png</iconset>
   </property>
   <layout class="QVBoxLayout">
    <property name="spacing">
@@ -112,7 +112,8 @@
              <string>Append files to the list</string>
             </property>
             <property name="icon">
-             <iconset theme="list-add"/>
+             <iconset theme="list-add">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -128,7 +129,8 @@
              <string>Remove selected file(s) from the list</string>
             </property>
             <property name="icon">
-             <iconset theme="list-remove"/>
+             <iconset theme="list-remove">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -144,7 +146,7 @@
              <string>Move up selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset theme="go-up"/>
+             <iconset theme="arrow-up"/>
             </property>
             <property name="iconSize">
              <size>
@@ -160,7 +162,7 @@
              <string>Move down selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset theme="go-down"/>
+             <iconset theme="arrow-down"/>
             </property>
             <property name="iconSize">
              <size>
@@ -246,7 +248,8 @@
              <string>Append files to the list</string>
             </property>
             <property name="icon">
-             <iconset theme="list-add"/>
+             <iconset theme="list-add">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -262,7 +265,8 @@
              <string>Remove selected file(s) from the list</string>
             </property>
             <property name="icon">
-             <iconset theme="list-remove"/>
+             <iconset theme="list-remove">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -278,7 +282,7 @@
              <string>Move up selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset theme="go-up"/>
+             <iconset theme="arrow-up"/>
             </property>
             <property name="iconSize">
              <size>
@@ -294,7 +298,7 @@
              <string>Move down selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset theme="go-down"/>
+             <iconset theme="arrow-down"/>
             </property>
             <property name="iconSize">
              <size>
@@ -446,7 +450,8 @@
            <string>Clear filter text</string>
           </property>
           <property name="icon">
-           <iconset theme="edit-clear"/>
+           <iconset theme="edit-clear">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>

@@ -45,18 +45,6 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p):
 {
     m_Ui->setupUi(this);
 
-    // icons
-    m_Ui->addleft->setIcon(QIcon::fromTheme("list-add", QIcon(":/new/prefix1/images/list-add.png")));
-    m_Ui->addright->setIcon(QIcon::fromTheme("list-add", QIcon(":/new/prefix1/images/list-add.png")));
-    m_Ui->removeleft->setIcon(QIcon::fromTheme("list-remove", QIcon(":/new/prefix1/images/list-remove.png")));
-    m_Ui->removeright->setIcon(QIcon::fromTheme("list-remove", QIcon(":/new/prefix1/images/list-remove.png")));
-    m_Ui->moveup_left_button->setIcon(QIcon::fromTheme("go-up", QIcon(":/new/prefix1/images/uparrow.png")));
-    m_Ui->movedown_right_button->setIcon(QIcon::fromTheme("go-up", QIcon(":/new/prefix1/images/uparrow.png")));
-    m_Ui->movedown_left_button->setIcon(QIcon::fromTheme("go-down", QIcon(":/new/prefix1/images/downarrow.png")));
-    m_Ui->moveup_right_button->setIcon(QIcon::fromTheme("go-down", QIcon(":/new/prefix1/images/downarrow.png")));
-    m_Ui->clearTextToolButton->setIcon(QIcon::fromTheme("edit-clear", QIcon(":/new/prefix1/images/remove.png")));
-    // end setting icons
-
     m_Ui->Log_Widget->setWordWrap(true);
     connect(m_Ui->moveup_left_button,	SIGNAL(clicked()),this,SLOT(moveup_left()));
     connect(m_Ui->moveup_right_button,	SIGNAL(clicked()),this,SLOT(moveup_right()));

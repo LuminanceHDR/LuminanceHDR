@@ -57,7 +57,7 @@ QStringList getCliFiles(const QStringList& arguments)
 }
 }
 
-#ifdef WIN32
+#if defined(WIN32) || defined(__APPLE__)
 void customMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
 	QString txt;
@@ -92,10 +92,13 @@ int main( int argc, char ** argv )
 
 #ifdef WIN32
     // qInstallMessageHandler(customMessageHandler);
-#endif
 
     QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
     QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
+
+    QIcon::setThemeSearchPaths( QStringList() << QGuiApplication::applicationDirPath() + QString("/icons/luminance-hdr") );
+    QIcon::setThemeName("luminance-hdr");
+#endif
 
     LuminanceOptions::isCurrentPortableMode =
             QDir(QGuiApplication::applicationDirPath()).exists("PortableMode.txt");

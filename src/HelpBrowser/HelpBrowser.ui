@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+    <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>630</width>
-     <height>30</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">

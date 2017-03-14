@@ -56,20 +56,6 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
 {
     m_Ui->setupUi(this);
    
-    //icons
-    m_Ui->fitButton->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/new/svgs/images/zoom-fit-best.svgz")));
-    m_Ui->fillButton->setIcon(QIcon::fromTheme("zoom", QIcon(":/new/svgs/images/page-zoom.svgz")));
-    m_Ui->origSizeButton->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/new/svgs/images/zoom-original.svgz")));
-    m_Ui->prevBothButton->setIcon(QIcon::fromTheme("arrow-up", QIcon(":/new/prefix1/images/uparrow.png")));
-    m_Ui->nextBothButton->setIcon(QIcon::fromTheme("arrow-down", QIcon(":/new/prefix1/images/downarrow.png")));
-    m_Ui->toolButtonPath->setIcon(QIcon::fromTheme("edit-select-lasso", QIcon(":/new/prefix1/images/gimp-lasso.png")));
-    m_Ui->toolButtonPaint->setIcon(QIcon::fromTheme("draw-brush", QIcon(":/new/prefix1/images/brush_icon.png")));
-    m_Ui->toolButtonSaveMask->setIcon(QIcon::fromTheme("document-save", QIcon(":/new/prefix1/images/filesave.png")));
-    m_Ui->toolButtonApplyMask->setIcon(QIcon::fromTheme("dialog-ok-apply", QIcon(":/new/prefix1/images/apply.png")));
-    m_Ui->cropButton->setIcon(QIcon::fromTheme("transform-crop-and-resize", QIcon(":/new/prefix1/images/crop.png")));
-    m_Ui->saveImagesButton->setIcon(QIcon::fromTheme("document-save", QIcon(":/new/prefix1/images/filesave.png")));
-    // end setting icons
-
     for (int i = 0; i < agGridSize; i++)
         for (int j = 0; j < agGridSize; j++)
             m_patches[i][j] = false;
@@ -481,8 +467,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_Ui->saveImagesButton->setDisabled(true);
         //prevBothButton->setIcon(QIcon(":new/prefix1/images/forward.png"));
         //nextBothButton->setIcon(QIcon(":new/prefix1/images/back.png"));
-        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/new/prefix1/images/forward.png")));
-        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/new/prefix1/images/back.png")));
+        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/program-icons/go-next.png")));
+        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/program-icons/go-previous.png")));
         m_Ui->prevBothButton->setToolTip(tr("Add good image"));
         m_Ui->nextBothButton->setToolTip(tr("Remove good image"));
         m_Ui->nextBothButton->setDisabled(true);
@@ -516,8 +502,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_Ui->label_reference_list->setText(tr("R&eference"));
         //prevBothButton->setIcon(QIcon(":new/prefix1/images/uparrow.png"));
         //nextBothButton->setIcon(QIcon(":new/prefix1/images/downarrow.png"));
-        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("go-up", QIcon(":/new/prefix1/images/uparrow.png")));
-        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("go-down", QIcon(":/new/prefix1/images/downarrow.png")));
+        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("arrow-up", QIcon(":/program-icons/uparrow.png")));
+        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("arrow-down", QIcon(":/program-icons/downarrow.png")));
         m_Ui->prevBothButton->setToolTip(tr("Select the previous image in both lists"));
         m_Ui->nextBothButton->setToolTip(tr("Select the next image in both lists"));
         m_Ui->prevBothButton->setDisabled(false);

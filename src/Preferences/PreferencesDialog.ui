@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
+    <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -51,7 +51,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
+         <normaloff>:/program-icons/tonemap</normaloff>:/program-icons/tonemap</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -118,7 +118,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../icons.qrc">
-         <normaloff>:/new/prefix1/images/rawconverter.png</normaloff>:/new/prefix1/images/rawconverter.png</iconset>
+         <normaloff>:/program-icons/rawconverter</normaloff>:/program-icons/rawconverter</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -373,7 +373,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/CZEC0001.PNG</normalon>
+               <normalon>:/program-icons/CZEC0001</normalon>
               </iconset>
              </property>
             </item>
@@ -383,7 +383,7 @@
              </property>
              <property name="icon">
               <iconset resource="../../icons.qrc">
-               <normaloff>:/new/prefix1/images/flags/DK.PNG</normaloff>:/new/prefix1/images/flags/DK.PNG</iconset>
+               <normaloff>:/program-icons/DK</normaloff>:/program-icons/DK</iconset>
              </property>
             </item>
             <item>
@@ -392,7 +392,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/GERM0001.PNG</normalon>
+               <normalon>:/program-icons/GERM0001</normalon>
               </iconset>
              </property>
             </item>
@@ -402,7 +402,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/UNKG0001.PNG</normalon>
+               <normalon>:/program-icons/UNKG0001</normalon>
               </iconset>
              </property>
             </item>
@@ -412,7 +412,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/SPAN0001.PNG</normalon>
+               <normalon>:/program-icons/SPAN0001</normalon>
               </iconset>
              </property>
             </item>
@@ -422,7 +422,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/FRAN0001.PNG</normalon>
+               <normalon>:/program-icons/FRAN0001</normalon>
               </iconset>
              </property>
             </item>
@@ -432,7 +432,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/INDN0001.PNG</normalon>
+               <normalon>:/program-icons/INDN0001</normalon>
               </iconset>
              </property>
             </item>
@@ -442,7 +442,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/ITAL0001.PNG</normalon>
+               <normalon>:/program-icons/ITAL0001</normalon>
               </iconset>
              </property>
             </item>
@@ -452,7 +452,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/HUNG0001.PNG</normalon>
+               <normalon>:/program-icons/HUNG0001</normalon>
               </iconset>
              </property>
             </item>
@@ -462,7 +462,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/POLA0001.PNG</normalon>
+               <normalon>:/program-icons/POLA0001</normalon>
               </iconset>
              </property>
             </item>
@@ -472,7 +472,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/BRA0001.PNG</normalon>
+               <normalon>:/program-icons/BRA0001</normalon>
               </iconset>
              </property>
             </item>
@@ -482,7 +482,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/RUSS0001.PNG</normalon>
+               <normalon>:/program-icons/RUSS0001</normalon>
               </iconset>
              </property>
             </item>
@@ -492,7 +492,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/RMNA0001.PNG</normalon>
+               <normalon>:/program-icons/RMNA0001</normalon>
               </iconset>
              </property>
             </item>
@@ -502,7 +502,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/FINL0001.PNG</normalon>
+               <normalon>:/program-icons/FINL0001</normalon>
               </iconset>
              </property>
             </item>
@@ -512,7 +512,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/TURK0001.PNG</normalon>
+               <normalon>:/program-icons/TURK0001</normalon>
               </iconset>
              </property>
             </item>
@@ -522,7 +522,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normalon>:/new/prefix1/images/flags/CHIN0001.PNG</normalon>
+               <normalon>:/program-icons/CHIN0001</normalon>
               </iconset>
              </property>
             </item>
@@ -2280,7 +2280,7 @@ p, li { white-space: pre-wrap; }
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../icons.qrc">:/new/prefix1/images/printer.png</pixmap>
+             <pixmap resource="../../icons.qrc">:/program-icons/printer</pixmap>
             </property>
            </widget>
           </item>
@@ -2314,7 +2314,7 @@ p, li { white-space: pre-wrap; }
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../icons.qrc">:/new/prefix1/images/camera-photo.png</pixmap>
+             <pixmap resource="../../icons.qrc">:/program-icons/camera-photo</pixmap>
             </property>
            </widget>
           </item>
@@ -2327,7 +2327,7 @@ p, li { white-space: pre-wrap; }
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../icons.qrc">:/new/prefix1/images/video-television.png</pixmap>
+             <pixmap resource="../../icons.qrc">:/program-icons/video-television</pixmap>
             </property>
             <property name="scaledContents">
              <bool>false</bool>
