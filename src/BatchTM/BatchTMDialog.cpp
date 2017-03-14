@@ -59,18 +59,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 #endif
     m_Ui->setupUi(this);
 
-    //icons
-    m_Ui->add_dir_HDRs_Button->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/images/fileopen.png")));
-    m_Ui->add_dir_TMopts_Button->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/images/fileopen.png")));
-    m_Ui->add_HDRs_Button->setIcon(QIcon::fromTheme("list-add", QIcon(":/icons/images/list-add.png")));
-    m_Ui->add_TMopts_Button->setIcon(QIcon::fromTheme("list-add", QIcon(":/icons/images/list-add.png")));
-    m_Ui->remove_HDRs_Button->setIcon(QIcon::fromTheme("list-remove", QIcon(":/icons/images/list-remove.png")));
-    m_Ui->remove_TMOpts_Button->setIcon(QIcon::fromTheme("list-remove", QIcon(":/icons/images/list-remove.png")));
-    m_Ui->from_Database_Button->setIcon(QIcon::fromTheme("vcs-added", QIcon(":/icons/images/vcs_add.png")));
-    m_Ui->out_folder_Button->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/images/fileopen.png")));
-    m_Ui->clearTextToolButton->setIcon(QIcon::fromTheme("edit-clear", QIcon(":/icons/images/remove.png")));
-    // end setting icons
-
     m_batchTmInputDir = m_luminance_options.getBatchTmPathHdrInput();
     m_batchTmTmoSettingsDir = m_luminance_options.getBatchTmPathTmoSettings();
     m_batchTmOutputDir = m_luminance_options.getBatchTmPathLdrOutput();
