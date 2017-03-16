@@ -32,7 +32,7 @@
    </size>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../icons.qrc">
+   <iconset>
     <normaloff>:/icons/luminance-hdr.png</normaloff>:/icons/luminance-hdr.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_13">
@@ -2719,7 +2719,7 @@ Luminace Level</string>
              <string>Fast export</string>
             </property>
             <property name="icon">
-             <iconset theme="folder-image">
+             <iconset theme="folder-pictures">
               <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
