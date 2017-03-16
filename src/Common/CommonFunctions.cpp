@@ -27,6 +27,7 @@
 #include <QFile>
 #include <QRgb>
 #include <QByteArray>
+#include <QColor>
 #include <valarray>
 
 #include "CommonFunctions.h"
