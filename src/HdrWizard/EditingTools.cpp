@@ -56,6 +56,25 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
 {
     m_Ui->setupUi(this);
    
+    if ( !QIcon::hasThemeIcon("edit-select-lasso") )
+    {
+        m_Ui->lassoColorButton->setIcon(QIcon(":/program-icons/edit-select-lasso"));
+        m_Ui->toolButtonPath->setIcon(QIcon(":/program-icons/edit-select-lasso"));
+    }
+    if ( !QIcon::hasThemeIcon("draw-brush") )
+    {
+        m_Ui->maskColorButton->setIcon(QIcon(":/program-icons/draw-brush"));
+        m_Ui->toolButtonPaint->setIcon(QIcon(":/program-icons/draw-brush"));
+    }
+    if ( !QIcon::hasThemeIcon("zoom") )
+        m_Ui->fillButton->setIcon(QIcon(":/program-icons/zoom"));
+    if ( !QIcon::hasThemeIcon("help-whatsthis") )
+        m_Ui->whatsThisButton->setIcon(QIcon(":/program-icons/help-whatsthis"));
+    if ( !QIcon::hasThemeIcon("transform-crop-and-resize") )
+        m_Ui->cropButton->setIcon(QIcon(":/program-icons/transform-crop-and-resize"));
+    if ( !QIcon::hasThemeIcon("dialog-ok-apply") )
+        m_Ui->toolButtonApplyMask->setIcon(QIcon(":/program-icons/dialog-ok-apply"));
+
     for (int i = 0; i < agGridSize; i++)
         for (int j = 0; j < agGridSize; j++)
             m_patches[i][j] = false;
@@ -83,9 +102,10 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
 
     m_expotimes = m_hcm->getExpotimes();
 
-    m_Ui->toolOptionsFrame->setVisible(false);
+    //m_Ui->toolOptionsFrame->setVisible(false);
     m_Ui->maskColorButton->setVisible(false);
     m_Ui->lassoColorButton->setVisible(false);
+
     QColor maskcolor = QColor(m_luminanceOptions.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
     QColor lassocolor = QColor(m_luminanceOptions.value(KEY_MANUAL_AG_LASSO_COLOR,0x000000FF).toUInt());
     Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) m_luminanceOptions.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
@@ -127,7 +147,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
     m_Ui->toolButtonPaint->setToolButtonStyle(style);
     m_Ui->toolButtonPath->setToolButtonStyle(style);
 
-    m_Ui->drawingModeFrame->hide();
+    //m_Ui->drawingModeFrame->hide();
 
     QStringList::ConstIterator it = m_fileList.begin();
     while( it != m_fileList.end() ) {
@@ -173,7 +193,7 @@ void EditingTools::setupConnections() {
     connect(m_Ui->blendModeCB,SIGNAL(currentIndexChanged(int)),m_previewWidget,SLOT(requestedBlendMode(int)));
     connect(m_Ui->blendModeCB,SIGNAL(currentIndexChanged(int)),this,SLOT(blendModeCBIndexChanged(int)));
     //connect(antighostToolButton,SIGNAL(toggled(bool)),toolOptionsFrame,SLOT(setVisible(bool)));
-    connect(m_Ui->antighostToolButton,SIGNAL(toggled(bool)),m_Ui->drawingModeFrame,SLOT(setVisible(bool)));
+    //connect(m_Ui->antighostToolButton,SIGNAL(toggled(bool)),m_Ui->drawingModeFrame,SLOT(setVisible(bool)));
     connect(m_Ui->antighostToolButton,SIGNAL(toggled(bool)),m_previewWidget,SLOT(switchAntighostingMode(bool)));
     connect(m_Ui->antighostToolButton,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonToggled(bool)));
     connect(m_Ui->toolButtonPaint,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonPaintToggled(bool)));
@@ -455,6 +475,7 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
     m_previewWidget->update();
     toggled ? m_previewWidget->setSelectionTool(false) : m_previewWidget->setSelectionTool(true);
     if (toggled) {
+        m_Ui->stackedWidget->setCurrentIndex(1);
         m_antiGhosting = true;
         QImage* tmp = m_previewWidget->getMask();
         delete m_antiGhostingMasksList[m_currentAgMaskIndex];
@@ -495,6 +516,7 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         connect(m_Ui->movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
     }
     else {
+        m_Ui->stackedWidget->setCurrentIndex(0);
         m_antiGhosting = false;
         m_previewWidget->show();
         disconnect(m_Ui->movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
