@@ -65,6 +65,12 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
 {
     m_Ui->setupUi(this);
 
+
+    if ( !QIcon::hasThemeIcon("edit-download") )
+        m_Ui->saveButton->setIcon(QIcon(":/program-icons/edit-download"));
+    if ( !QIcon::hasThemeIcon("cloud-upload") )
+        m_Ui->loadButton->setIcon(QIcon(":/program-icons/cloud-upload"));
+
     currentTmoOperator = mantiuk06; // from Qt Designer
 
     // mantiuk06

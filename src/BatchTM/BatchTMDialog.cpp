@@ -59,6 +59,9 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 #endif
     m_Ui->setupUi(this);
 
+    if ( !QIcon::hasThemeIcon("vcs-added") )
+        m_Ui->from_Database_Button->setIcon(QIcon(":/program-icons/vcs-added"));
+
     m_batchTmInputDir = m_luminance_options.getBatchTmPathHdrInput();
     m_batchTmTmoSettingsDir = m_luminance_options.getBatchTmPathTmoSettings();
     m_batchTmOutputDir = m_luminance_options.getBatchTmPathLdrOutput();

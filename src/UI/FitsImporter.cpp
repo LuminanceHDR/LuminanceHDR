@@ -71,6 +71,13 @@ FitsImporter::FitsImporter(QWidget *parent)
 {
     m_Ui->setupUi(this);
 
+    if ( !QIcon::hasThemeIcon("upload-media") )
+        m_Ui->pushButtonLoad->setIcon(QIcon(":/program-icons/upload-media"));
+    if ( !QIcon::hasThemeIcon("chronometer-reset") )
+        m_Ui->pushButtonReset->setIcon(QIcon(":/program-icons/chronometer-reset"));
+    if ( !QIcon::hasThemeIcon("document-preview") )
+        m_Ui->pushButtonPreview->setIcon(QIcon(":/program-icons/document-preview"));
+
 #ifdef WIN32
     setWizardStyle(WizardStyle::ModernStyle);
 #endif

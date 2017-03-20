@@ -89,6 +89,12 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
 {
     m_Ui->setupUi(this);
 
+    if ( !QIcon::hasThemeIcon("color-management") )
+    {
+        m_Ui->toolButtonCMS->setIconSize(QSize(48,48));
+        m_Ui->toolButtonCMS->setIcon(QIcon(":/program-icons/color-management"));
+    }
+
     connect(m_Ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_themeChanged()));
 
 #ifdef DEMOSAICING_GPL2

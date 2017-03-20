@@ -45,6 +45,18 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p):
 {
     m_Ui->setupUi(this);
 
+    if ( !QIcon::hasThemeIcon("arrow-up") )
+    {
+        m_Ui->moveup_right_button->setIcon(QIcon(":/program-icons/arrow-up"));
+        m_Ui->moveup_left_button->setIcon(QIcon(":/program-icons/arrow-up"));
+    }
+    if ( !QIcon::hasThemeIcon("arrow-down") )
+    {
+        m_Ui->movedown_right_button->setIcon(QIcon(":/program-icons/arrow-down"));
+        m_Ui->movedown_left_button->setIcon(QIcon(":/program-icons/arrow-down"));
+    }
+
+
     m_Ui->Log_Widget->setWordWrap(true);
     connect(m_Ui->moveup_left_button,	SIGNAL(clicked()),this,SLOT(moveup_left()));
     connect(m_Ui->moveup_right_button,	SIGNAL(clicked()),this,SLOT(moveup_right()));

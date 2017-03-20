@@ -418,42 +418,29 @@ void MainWindow::createToolBar()
 
 void MainWindow::createMenus()
 {
-    /*
-    // icons
-    m_Ui->fileNewAction->setIcon(QIcon::fromTheme("insert-image", QIcon(":/icons/images/insert-image.svgz")));
-    m_Ui->fileOpenAction->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/images/document-open.svgz")));
-    m_Ui->fileSaveAsAction->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/images/filesave.png")));
-    m_Ui->fileExitAction->setIcon(QIcon::fromTheme("application-exit", QIcon(":/icons/images/exit.png")));
-    m_Ui->rotateccw->setIcon(QIcon::fromTheme("object-rotate-left", QIcon(":/icons/images/rotate_left.png")));
-    m_Ui->rotatecw->setIcon(QIcon::fromTheme("object-rotate-right", QIcon(":/icons/images/rotate_right.png")));
-    m_Ui->documentationAction->setIcon(QIcon::fromTheme("help-contents", QIcon(":/icons/images/help.png")));
-    m_Ui->normalSizeAct->setIcon(QIcon::fromTheme("zoom-original", QIcon(":/icons/images/zoom-original.svgz")));
-    m_Ui->zoomInAct->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/images/zoom-in.svgz")));
-    m_Ui->zoomOutAct->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/images/zoom-out.svgz")));
-    m_Ui->fitToWindowAct->setIcon(QIcon::fromTheme("zoom", QIcon(":/icons/images/page-zoom.svgz")));
-    m_Ui->OptionsAction->setIcon(QIcon::fromTheme("preferences-system", QIcon(":/icons/images/options.png")));
-    //m_Ui->actionResize->setIcon(QIcon::fromTheme("", QIcon(":/icons/images/scale.png")));
-    m_Ui->Transplant_Exif_Data_action->setIcon(QIcon::fromTheme("selection-move-to-layer-below", QIcon(":/icons/images/copyexif.png")));
-    m_Ui->actionBatch_Tone_Mapping->setIcon(QIcon::fromTheme("system-run", QIcon(":/icons/images/system-run.png"))); // TODO
-    m_Ui->actionWhat_s_This->setIcon(QIcon::fromTheme("help-whatsthis", QIcon(":/icons/images/whatsthis.png")));
-    m_Ui->actionAbout_Luminance->setIcon(QIcon::fromTheme("help-about", QIcon(":/icons/images/help-about.png")));
-    m_Ui->actionSave_Hdr_Preview->setIcon(QIcon::fromTheme("document-save-as-template", QIcon(":/icons/images/preview-file.png")));
-    m_Ui->cropToSelectionAction->setIcon(QIcon::fromTheme("transform-crop", QIcon(":/icons/images/crop.png")));
-    m_Ui->removeSelectionAction->setIcon(QIcon::fromTheme("edit-select-none", QIcon(":/icons/images/tool_rect_selection.png")));
-    m_Ui->actionDonate->setIcon(QIcon::fromTheme("help-donate", QIcon(":/icons/images/help-donate.png")));
-    m_Ui->actionLock->setIcon(QIcon::fromTheme("system-lock-screen", QIcon(":/icons/images/lock-on.png")));
-    m_Ui->fileSaveAllAction->setIcon(QIcon::fromTheme("document-save-all", QIcon(":/icons/images/filesaveall.png")));
-    m_Ui->actionFill_to_Window->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/images/zoom-fit-best.svgz")));
-    m_Ui->actionWhite_Balance->setIcon(QIcon::fromTheme("whitebalance", QIcon(":/icons/images/color-picker-white.svg")));
-    m_Ui->actionMinimize->setIcon(QIcon::fromTheme("window-minimize-symbolic", QIcon(":/icons/images/window-minimize.svg")));
-    m_Ui->actionMaximize->setIcon(QIcon::fromTheme("window-maximize-symbolic", QIcon(":/icons/images/window-maximize.svg")));
-    m_Ui->actionRemove_Tab->setIcon(QIcon::fromTheme("tab-close", QIcon(":/icons/images/remove.png")));
-    m_Ui->actionExportToHTML->setIcon(QIcon::fromTheme("globe", QIcon(":/icons/images/globe.png")));
-    m_Ui->removeSelectionAction->setIcon(QIcon::fromTheme("edit-select-none", QIcon(":/icons/images/tool_rect_selection.png")));
-    m_Ui->actionBatch_HDR->setIcon(QIcon::fromTheme("system-run", QIcon(":/icons/images/system-run.png"))); // TODO
-    m_Ui->actionUpdateAvailable->setIcon(QIcon::fromTheme("system-software-update", QIcon(":/icons/images/vcs-update-required.png")));
-    // end setting icons
-    */
+    // icons (missing icons in some icon-theme)
+    if ( !QIcon::hasThemeIcon("document-save-all") )
+        m_Ui->fileSaveAllAction->setIcon(QIcon(":/program-icons/document-save-all"));
+    if ( !QIcon::hasThemeIcon("zoom") )
+        m_Ui->fitToWindowAct->setIcon(QIcon(":/program-icons/zoom"));
+    if ( !QIcon::hasThemeIcon("whitebalance") )
+        m_Ui->actionWhite_Balance->setIcon(QIcon(":/program-icons/whitebalance"));
+    if ( !QIcon::hasThemeIcon("transform-crop") )
+        m_Ui->cropToSelectionAction->setIcon(QIcon(":/program-icons/transform-crop"));
+    if ( !QIcon::hasThemeIcon("edit-selection-none") )
+        m_Ui->removeSelectionAction->setIcon(QIcon(":/program-icons/edit-select-none"));
+    if ( !QIcon::hasThemeIcon("globe") )
+        m_Ui->actionExportToHTML->setIcon(QIcon(":/program-icons/globe"));
+    if ( !QIcon::hasThemeIcon("selection-move-to-layer-below") )
+        m_Ui->Transplant_Exif_Data_action->setIcon(QIcon(":/program-icons/selection-move-to-layer-below"));
+    if ( !QIcon::hasThemeIcon("tab-close") )
+        m_Ui->actionRemove_Tab->setIcon(QIcon(":/program-icons/tab-close"));
+    if ( !QIcon::hasThemeIcon("help-donate") )
+        m_Ui->actionDonate->setIcon(QIcon(":/program-icons/help-donate"));
+    if ( !QIcon::hasThemeIcon("document-save-as-template") )
+        m_Ui->actionSave_Hdr_Preview->setIcon(QIcon(":/program-icons/document-save-as-template"));
+    if ( !QIcon::hasThemeIcon("help-whatsthis") )
+        m_Ui->actionWhat_s_This->setIcon(QIcon(":/program-icons/help-whatsthis"));
 
     // About(s)
     connect(m_Ui->actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
