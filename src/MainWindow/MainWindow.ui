@@ -163,6 +163,12 @@
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>22</width>
+     <height>22</height>
+    </size>
+   </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
@@ -897,7 +903,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../icons.qrc">
-     <normaloff>:/program-icons/adjust-levels</normaloff>:/program-icons/adjust-levels.svg</iconset>
+     <normaloff>:/program-icons/adjust-levels</normaloff>:/program-icons/adjust-levels</iconset>
    </property>
    <property name="text">
     <string>Adjust &amp;Levels</string>

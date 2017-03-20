@@ -281,11 +281,6 @@
         </widget>
        </item>
       </layout>
-      <zorder>pushButtonReset</zorder>
-      <zorder>pushButtonClockwise</zorder>
-      <zorder>horizontalSpacer</zorder>
-      <zorder>pushButtonLoad</zorder>
-      <zorder>pushButtonPreview</zorder>
      </widget>
     </item>
     <item row="6" column="0" rowspan="3" colspan="3">
