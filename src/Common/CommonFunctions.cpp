@@ -79,28 +79,17 @@ static void build_histogram(valarray<float> &hist, const valarray<int> &src)
 
 static void compute_histogram_minmax(const valarray<float> &hist, float &minHist, float &maxHist)
 {
-    //Compute threshold
-    //DIVISOR and hence threshold are hardcoded here
-    //Is there a better way of setting this? Changing threshold until CUMUL/TOTAL > 95% ????
-    //const float TOTAL = accumulate(hist, hist + 256, 0.f);
-    //const float DIVISOR = 100.f;
-    //const float threshold = .05f * TOTAL/DIVISOR;
-    const float threshold = .025f;
-
     //Scaling factor: range [0..1]
-    const float factor = 1.f/255.f;
+    const float scalingFactor = 1.f/255.f;
 
     const int hist_size = hist.size();
     float CUMUL = 0;
     for (int i = 0; i < hist_size; i++)
     {
-        if (hist[i] >= threshold)
-            CUMUL += hist[i];
+        CUMUL += hist[i];
     }
 
     //Start from max hist
-    bool isMaxRight = false;
-
     float hist_max = 0.f;
     int xa = 0;
     for (int i = 0; i < (hist_size - 1); i++)
@@ -112,16 +101,16 @@ static void compute_histogram_minmax(const valarray<float> &hist, float &minHist
         }
     }
 
-    if (xa == 255)
+    if (xa >= 255 )
     {
         xa = 254;
-        isMaxRight = true;
     }
 
     int xb = xa + 1;
 
+    const float Threshold = .95f*CUMUL;
+
     float count = 0.f;
-    float oldcount = 0.f;
     while (true)
     {
         count = 0.f;
@@ -129,46 +118,41 @@ static void compute_histogram_minmax(const valarray<float> &hist, float &minHist
         {
             count += hist[i];
         }
-        if ((count - oldcount) >= 0.f)
-            xa--;
-        if (isMaxRight)
-        {
-            if ((count >= CUMUL) && (fabs(count - oldcount)/oldcount < 1e-6))
-                break;
-        }
-        else
-        {
-            if (fabs(count - oldcount)/oldcount < 1e-6)
-                break;
-        }
+
+        xa--;
+
+        if ( count >= Threshold)
+            break;
+
         if (xa <= 0)
         {
             xa = 0;
             break;
         }
-        oldcount = count;
     }
-    oldcount = 0.f;
-    while (!isMaxRight)
+
+    while (true)
     {
         count = 0.f;
+
         for (int i = xa; i <= xb; i++)
         {
             count += hist[i];
         }
-        if ((count >= CUMUL) || (fabs(count - oldcount)/oldcount < 1e-6))
+
+        if (count >= Threshold)
             break;
-        if (count - oldcount > 0.f)
-            xb++;
+
+        xb++;
+
         if (xb >= 255)
         {
             xb = 255;
             break;
         }
-        oldcount = count;
     }
-    minHist = factor*xa;
-    maxHist = factor*xb;
+    minHist = scalingFactor*xa;
+    maxHist = scalingFactor*xb;
 }
 
 void computeAutolevels(const QImage* data, float &minHist, float &maxHist, float &gamma)
