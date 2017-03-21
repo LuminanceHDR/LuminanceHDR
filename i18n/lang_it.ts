@@ -4186,7 +4186,7 @@ Vuoi continuare?</translation>
         <location filename="../src/MainWindow/MainWindow.cpp" line="1183"/>
         <location filename="../src/MainWindow/MainWindow.cpp" line="1732"/>
         <source>Untitled</source>
-        <translation>Nuovo</translation>
+        <translation>Senza nome 1</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="724"/>
