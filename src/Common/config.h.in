@@ -1,4 +1,4 @@
-﻿/**
+/**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
@@ -27,8 +27,8 @@
 #ifndef LUMINANCECONFIG_H
 #define LUMINANCECONFIG_H
 
-#define LUMINANCEORGANIZATION "Luminance"
-#define LUMINANCEAPPLICATION "Luminance"
+#define LUMINANCEORGANIZATION "@LHDR_VENDOR@"
+#define LUMINANCEAPPLICATION "@LHDR_NAME@"
 
 #define LUMINANCEVERSION "@LHDR_VERSION@"
 

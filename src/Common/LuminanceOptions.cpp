@@ -823,8 +823,10 @@ settings->endGroup();
 */
 QStringList LuminanceOptions::getAlignImageStackOptions()
 {
+    //return m_settingHolder->value(KEY_EXTERNAL_AIS_OPTIONS,
+    //                              QStringList() << "-v" << "aligned_").toStringList();
     return m_settingHolder->value(KEY_EXTERNAL_AIS_OPTIONS,
-                                  QStringList() << "-v" << "aligned_").toStringList();
+                                  QStringList() << "-v").toStringList();
 }
 
 QStringList LuminanceOptions::sanitizeAISparams(QStringList temp_ais_options, bool verbose)
