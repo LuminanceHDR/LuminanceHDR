@@ -155,8 +155,8 @@ private:
 
     float m_evOffset;
 
-    boost::scoped_ptr<libhdr::fusion::ResponseCurve> m_response;
-    boost::scoped_ptr<libhdr::fusion::WeightFunction> m_weight;
+    std::unique_ptr<libhdr::fusion::ResponseCurve> m_response;
+    std::unique_ptr<libhdr::fusion::WeightFunction> m_weight;
     libhdr::fusion::FusionOperator m_fusionOperator;
     QString m_responseCurveOutputFilename;
 
@@ -166,7 +166,7 @@ private:
     LuminanceOptions m_luminance_options;
 
     // alignment
-	Align* m_align;
+    std::unique_ptr<Align> m_align;
 
     bool m_ais_crop_flag;
 	bool fromCommandLine;

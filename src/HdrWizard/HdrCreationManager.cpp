@@ -41,9 +41,7 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
-#include <boost/make_shared.hpp>
 #include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 #include <boost/numeric/conversion/bounds.hpp>
 #include <boost/limits.hpp>
 
@@ -128,7 +126,7 @@ bool checkFileName(const HdrCreationItem& item, const QString& str) {
   
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
-    BOOST_FOREACH(const QString& filename, filenames)
+    for(const auto filename : filenames)
     {
         qDebug() << QString("HdrCreationManager::loadFiles(): Checking %1").arg(filename);
         HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
@@ -164,7 +162,7 @@ void HdrCreationManager::loadFilesDone()
     }
 
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
-    BOOST_FOREACH(const HdrCreationItem& hdrCreationItem, m_tmpdata)
+    for(const auto hdrCreationItem : m_tmpdata)
     {
         if (hdrCreationItem.isValid())
         {
@@ -197,7 +195,7 @@ void HdrCreationManager::refreshEVOffset()
     }
 
     std::vector<float> evs;
-    BOOST_FOREACH(const HdrCreationItem& hdrCreationItem, m_data)
+    for(const auto hdrCreationItem : m_data)
     {
         if (hdrCreationItem.hasEV())
         {
@@ -267,7 +265,7 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     , m_response(new ResponseCurve(predef_confs[0].responseCurve))
     , m_weight(new WeightFunction(predef_confs[0].weightFunction))
     , m_agMask(NULL)
-    , m_align(NULL)
+    , m_align()
     , m_ais_crop_flag(false)
     , fromCommandLine(fromCommandLine)
 {
@@ -353,11 +351,11 @@ void HdrCreationManager::set_ais_crop_flag(bool flag)
 
 void HdrCreationManager::align_with_ais()
 {
-    m_align = new Align(&m_data, fromCommandLine, 1); 
-    connect(m_align, SIGNAL(finishedAligning(int)), this, SIGNAL(finishedAligning(int)));
-    connect(m_align, SIGNAL(failedAligning(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
-    connect(m_align, SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
-    connect(m_align, SIGNAL(dataReady(QByteArray)), this, SIGNAL(aisDataReady(QByteArray)));
+    m_align.reset(new Align(m_data, fromCommandLine, 1));
+    connect(m_align.get(), SIGNAL(finishedAligning(int)), this, SIGNAL(finishedAligning(int)));
+    connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
+    connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
+    connect(m_align.get(), SIGNAL(dataReady(QByteArray)), this, SIGNAL(aisDataReady(QByteArray)));
   
     m_align->align_with_ais(m_ais_crop_flag);
 }
@@ -422,7 +420,7 @@ void HdrCreationManager::cropItems(const QRect& ca)
     int size = m_data.size();
     for (int idx = 0; idx < size; idx++)
     {
-        boost::scoped_ptr<QImage> newimage(new QImage(m_data[idx].qimage().copy(ca)));
+        std::unique_ptr<QImage> newimage(new QImage(m_data[idx].qimage().copy(ca)));
         if (newimage == NULL)
         {
             exit(1); // TODO: exit gracefully
@@ -445,10 +443,7 @@ void HdrCreationManager::cropItems(const QRect& ca)
 
 HdrCreationManager::~HdrCreationManager()
 {
-    if (m_align)
-    {
-        delete m_align;
-    }
+    this->reset();
     delete m_agMask;
 }
 
@@ -470,41 +465,6 @@ void HdrCreationManager::saveImages(const QString& prefix)
     }
     emit imagesSaved();
 }
-
-/*
-void HdrCreationManager::doAntiGhosting(int goodImageIndex)
-{
-    Channel *red_goodImage, *green_goodImage, *blue_goodImage;
-    m_data[goodImageIndex].frame()->getXYZChannels( red_goodImage, green_goodImage, blue_goodImage);
-    Array2Df& R_goodImage = *red_goodImage;
-    Array2Df& G_goodImage = *green_goodImage;
-    Array2Df& B_goodImage = *blue_goodImage;
-
-    int size = m_data.size();
-    for (int idx = 0; idx < size; idx++) {
-        if (idx == goodImageIndex) continue;
-        Channel *red, *green, *blue;
-        m_data[idx].frame()->getXYZChannels( red, green, blue);
-        Array2Df& R = *red;
-        Array2Df& G = *green;
-        Array2Df& B = *blue;
-        blend( R, G, B, 
-               R_goodImage, G_goodImage, B_goodImage,
-               *m_antiGhostingMasksList[idx],
-               *m_antiGhostingMasksList[goodImageIndex] );
-    }
-}
-void HdrCreationManager::cropAgMasks(const QRect& ca, QList<QImage*>& antiGhostingMasksList) {
-    int origlistsize = antiGhostingMasksList.size();
-    for (int image_idx = 0; image_idx < origlistsize; image_idx++) {
-        QImage *newimage = new QImage(antiGhostingMasksList.at(0)->copy(ca));
-        if (newimage == NULL)
-            exit(1); // TODO: exit gracefully
-        antiGhostingMasksList.append(newimage);
-        delete antiGhostingMasksList.takeAt(0);
-    }
-}
-*/
 
 int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSize], float &percent, QList <QPair<int, int> > HV_offset)
 {
@@ -588,339 +548,194 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     ph->setValue(0);
     emit progressStarted();
 
-    const Channel *Good_Rc, *Good_Gc, *Good_Bc;
-    m_data[h0].frame().get()->getXYZChannels(Good_Rc, Good_Gc, Good_Bc);
+    const Channel *Good_Xc, *Good_Yc, *Good_Zc;
+    m_data[h0].frame().get()->getXYZChannels(Good_Xc, Good_Yc, Good_Zc);
 
-    const Channel *Rc, *Gc, *Bc;
+    const Channel *Xc, *Yc, *Zc;
     Frame* ghosted = createHdr();
-    ghosted->getXYZChannels(Rc, Gc, Bc);
+    ghosted->getXYZChannels(Xc, Yc, Zc);
     ph->setValue(20);
     if (ph->canceled()) return NULL;
 
-    Array2Df* logIrradianceGood_R = new Array2Df(width, height);
-    computeLogIrradiance(*logIrradianceGood_R, *Good_Rc);
-    ph->setValue(22);
-    if (ph->canceled()) { 
-        delete logIrradianceGood_R;
-        return NULL;
-    }
-    Array2Df* logIrradianceGood_G = new Array2Df(width, height);
-    computeLogIrradiance(*logIrradianceGood_G, *Good_Gc);
-    ph->setValue(24);
-    if (ph->canceled()) { 
-        delete logIrradianceGood_G;
-        return NULL;
-    }
-    Array2Df* logIrradianceGood_B = new Array2Df(width, height);
-    computeLogIrradiance(*logIrradianceGood_B, *Good_Bc);
-    ph->setValue(26);
-    if (ph->canceled()) { 
-        delete logIrradianceGood_B;
-        return NULL;
-    }
-    Array2Df* logIrradiance_R = new Array2Df(width, height);
-    computeLogIrradiance(*logIrradiance_R, *Rc);
-    ph->setValue(28);
-    if (ph->canceled()) { 
-        delete logIrradiance_R;
-        return NULL;
-    }
-    Array2Df* logIrradiance_G = new Array2Df(width, height);
-    computeLogIrradiance(*logIrradiance_G, *Gc);
-    ph->setValue(30);
-    if (ph->canceled()) { 
-        delete logIrradiance_G;
-        return NULL;
-    }
-    Array2Df* logIrradiance_B = new Array2Df(width, height);
-    computeLogIrradiance(*logIrradiance_B, *Bc);
-    ph->setValue(32);
-    if (ph->canceled()) { 
-        delete logIrradiance_B;
-        return NULL;
-    }
+    Array2Df Good_Rc(*Good_Xc);
+    Array2Df Good_Gc(*Good_Yc);
+    Array2Df Good_Bc(*Good_Zc);
 
-    Array2Df* gradientXGood_R = new Array2Df(width, height);
-    Array2Df* gradientYGood_R = new Array2Df(width, height);
-    Array2Df* gradientX_R = new Array2Df(width, height);
-    Array2Df* gradientY_R = new Array2Df(width, height);
-    Array2Df* gradientXBlended_R = new Array2Df(width, height);
-    Array2Df* gradientYBlended_R = new Array2Df(width, height);
-    computeGradient(*gradientXGood_R, *gradientYGood_R, *logIrradianceGood_R);
-    delete logIrradianceGood_R;
-    ph->setValue(33);
-    if (ph->canceled()) { 
-        delete gradientXGood_R;
-        delete gradientYGood_R;
-        delete gradientX_R;
-        delete gradientY_R;
-        delete gradientXBlended_R;
-        delete gradientYBlended_R;
-        return NULL;
-    }
-    computeGradient(*gradientX_R, *gradientY_R, *logIrradiance_R);
-    ph->setValue(34);
-    if (ph->canceled()) { 
-        delete gradientXGood_R;
-        delete gradientYGood_R;
-        delete gradientX_R;
-        delete gradientY_R;
-        delete gradientXBlended_R;
-        delete gradientYBlended_R;
-        return NULL;
-    }
+    Array2Df Rc(*Xc);
+    Array2Df Gc(*Xc);
+    Array2Df Bc(*Xc);
+
+    delete ghosted;
+
+    this->reset();
+
+    //RED
+    Array2Df logIrradiance_R(width, height);
+    computeLogIrradiance(logIrradiance_R, Rc);
+    Rc.reset();
+
+    Array2Df gradientXGood_R(width, height);
+    Array2Df gradientYGood_R(width, height);
+    Array2Df logIrradianceGood_R(width, height);
+    computeLogIrradiance(logIrradianceGood_R, Good_Rc);
+    computeGradient(gradientXGood_R, gradientYGood_R, logIrradianceGood_R);
+    Good_Rc.reset();
+    logIrradianceGood_R.reset();
+
+    Array2Df gradientX_R(width, height);
+    Array2Df gradientY_R(width, height);
+    computeGradient(gradientX_R, gradientY_R, logIrradiance_R);
+
+    Array2Df gradientXBlended_R(width, height);
+    Array2Df gradientYBlended_R(width, height);
+
     if (manualAg)
-        blendGradients(*gradientXBlended_R, *gradientYBlended_R,
-                       *gradientX_R, *gradientY_R,
-                       *gradientXGood_R, *gradientYGood_R,
+        blendGradients(gradientXBlended_R, gradientYBlended_R,
+                       gradientX_R, gradientY_R,
+                       gradientXGood_R, gradientYGood_R,
                        *m_agMask);
     else
-        blendGradients(*gradientXBlended_R, *gradientYBlended_R,
-                       *gradientX_R, *gradientY_R,
-                       *gradientXGood_R, *gradientYGood_R,
+        blendGradients(gradientXBlended_R, gradientYBlended_R,
+                       gradientX_R, gradientY_R,
+                       gradientXGood_R, gradientYGood_R,
                        patches, gridX, gridY);
-    delete gradientX_R;
-    delete gradientY_R;
-    delete gradientXGood_R;
-    delete gradientYGood_R;
-    ph->setValue(35);
-    if (ph->canceled()) { 
-        delete gradientXBlended_R;
-        delete gradientYBlended_R;
-        return NULL;
-    }
+    gradientX_R.reset();
+    gradientY_R.reset();
+    gradientXGood_R.reset();
+    gradientYGood_R.reset();
 
-    Array2Df* gradientXGood_G = new Array2Df(width, height);
-    Array2Df* gradientYGood_G = new Array2Df(width, height);
-    Array2Df* gradientX_G = new Array2Df(width, height);
-    Array2Df* gradientY_G = new Array2Df(width, height);
-    Array2Df* gradientXBlended_G = new Array2Df(width, height);
-    Array2Df* gradientYBlended_G = new Array2Df(width, height);
-    computeGradient(*gradientXGood_G, *gradientYGood_G, *logIrradianceGood_G);
-    delete logIrradianceGood_G;
-    ph->setValue(36);
-    if (ph->canceled()) { 
-        delete gradientXGood_G;
-        delete gradientYGood_G;
-        delete gradientX_G;
-        delete gradientY_G;
-        delete gradientXBlended_G;
-        delete gradientYBlended_G;
-        return NULL;
-    }
-    computeGradient(*gradientX_G, *gradientY_G, *logIrradiance_G);
-    ph->setValue(37);
-    if (ph->canceled()) { 
-        delete gradientXGood_G;
-        delete gradientYGood_G;
-        delete gradientX_G;
-        delete gradientY_G;
-        delete gradientXBlended_G;
-        delete gradientYBlended_G;
-        return NULL;
-    }
+    Array2Df divergence_R(width, height);
+    computeDivergence(divergence_R, gradientXBlended_R, gradientYBlended_R);
+    gradientXBlended_R.reset();
+    gradientYBlended_R.reset();
+    //END RED
+
+    //GREEN
+    Array2Df logIrradiance_G(width, height);
+    computeLogIrradiance(logIrradiance_G, Gc);
+    Gc.reset();
+
+    Array2Df gradientXGood_G(width, height);
+    Array2Df gradientYGood_G(width, height);
+    Array2Df logIrradianceGood_G(width, height);
+    computeGradient(gradientXGood_G, gradientYGood_G, logIrradianceGood_G);
+
+    computeLogIrradiance(logIrradianceGood_G, Good_Gc);
+    Good_Gc.reset();
+    logIrradianceGood_G.reset();
+
+    Array2Df gradientX_G(width, height);
+    Array2Df gradientY_G(width, height);
+    computeGradient(gradientX_G, gradientY_G, logIrradiance_G);
+
+    Array2Df gradientXBlended_G(width, height);
+    Array2Df gradientYBlended_G(width, height);
+
     if (manualAg)
-        blendGradients(*gradientXBlended_G, *gradientYBlended_G,
-                       *gradientX_G, *gradientY_G,
-                       *gradientXGood_G, *gradientYGood_G,
+        blendGradients(gradientXBlended_G, gradientYBlended_G,
+                       gradientX_G, gradientY_G,
+                       gradientXGood_G, gradientYGood_G,
                        *m_agMask);
     else
-        blendGradients(*gradientXBlended_G, *gradientYBlended_G,
-                       *gradientX_G, *gradientY_G,
-                       *gradientXGood_G, *gradientYGood_G,
+        blendGradients(gradientXBlended_G, gradientYBlended_G,
+                       gradientX_G, gradientY_G,
+                       gradientXGood_G, gradientYGood_G,
                        patches, gridX, gridY);
-    delete gradientX_G;
-    delete gradientY_G;
-    delete gradientXGood_G;
-    delete gradientYGood_G;
-    ph->setValue(38);
-    if (ph->canceled()) { 
-        delete gradientXBlended_G;
-        delete gradientYBlended_G;
-        return NULL;
-    }
+    gradientX_G.reset();
+    gradientY_G.reset();
+    gradientXGood_G.reset();
+    gradientYGood_G.reset();
 
-    Array2Df* gradientXGood_B = new Array2Df(width, height);
-    Array2Df* gradientYGood_B = new Array2Df(width, height);
-    Array2Df* gradientX_B = new Array2Df(width, height);
-    Array2Df* gradientY_B = new Array2Df(width, height);
-    Array2Df* gradientXBlended_B = new Array2Df(width, height);
-    Array2Df* gradientYBlended_B = new Array2Df(width, height);
-    computeGradient(*gradientXGood_B, *gradientYGood_B, *logIrradianceGood_B);
-    delete logIrradianceGood_B;
-    ph->setValue(39);
-    if (ph->canceled()) { 
-        delete gradientXGood_B;
-        delete gradientYGood_B;
-        delete gradientX_B;
-        delete gradientY_B;
-        delete gradientXBlended_B;
-        delete gradientYBlended_B;
-        return NULL;
-    }
-    computeGradient(*gradientX_B, *gradientY_B, *logIrradiance_B);
-    ph->setValue(40);
-    if (ph->canceled()) { 
-        delete gradientXGood_B;
-        delete gradientYGood_B;
-        delete gradientX_B;
-        delete gradientY_B;
-        delete gradientXBlended_B;
-        delete gradientYBlended_B;
-        return NULL;
-    }
+    Array2Df divergence_G(width, height);
+    computeDivergence(divergence_G, gradientXBlended_G, gradientYBlended_G);
+    gradientXBlended_G.reset();
+    gradientYBlended_G.reset();
+    //END GREEN
+
+    //BLUE
+    Array2Df logIrradiance_B(width, height);
+    computeLogIrradiance(logIrradiance_B, Bc);
+    Bc.reset();
+
+    Array2Df gradientXGood_B(width, height);
+    Array2Df gradientYGood_B(width, height);
+    Array2Df logIrradianceGood_B(width, height);
+    computeLogIrradiance(logIrradianceGood_B, Good_Bc);
+    computeGradient(gradientXGood_B, gradientYGood_B, logIrradianceGood_B);
+    Good_Bc.reset();
+    logIrradianceGood_B.reset();
+
+    Array2Df gradientX_B(width, height);
+    Array2Df gradientY_B(width, height);
+    computeGradient(gradientX_B, gradientY_B, logIrradiance_B);
+
+    Array2Df gradientXBlended_B(width, height);
+    Array2Df gradientYBlended_B(width, height);
+
     if (manualAg)
-        blendGradients(*gradientXBlended_B, *gradientYBlended_B,
-                       *gradientX_B, *gradientY_B,
-                       *gradientXGood_B, *gradientYGood_B,
+        blendGradients(gradientXBlended_B, gradientYBlended_B,
+                       gradientX_B, gradientY_B,
+                       gradientXGood_B, gradientYGood_B,
                        *m_agMask);
     else
-        blendGradients(*gradientXBlended_B, *gradientYBlended_B,
-                       *gradientX_B, *gradientY_B,
-                       *gradientXGood_B, *gradientYGood_B,
+        blendGradients(gradientXBlended_B, gradientYBlended_B,
+                       gradientX_B, gradientY_B,
+                       gradientXGood_B, gradientYGood_B,
                        patches, gridX, gridY);
-    delete gradientX_B;
-    delete gradientY_B;
-    delete gradientXGood_B;
-    delete gradientYGood_B;
-    ph->setValue(41);
-    if (ph->canceled()) { 
-        delete gradientXBlended_B;
-        delete gradientYBlended_B;
-        return NULL;
-    }
+    gradientX_B.reset();
+    gradientY_B.reset();
+    gradientXGood_B.reset();
+    gradientYGood_B.reset();
 
-    Array2Df* divergence_R = new Array2Df(width, height);
-    computeDivergence(*divergence_R, *gradientXBlended_R, *gradientYBlended_R);
-    delete gradientXBlended_R;
-    delete gradientYBlended_R;
-    ph->setValue(42);
-    if (ph->canceled()) { 
-        delete divergence_R;
-        return NULL;
-    }
-    Array2Df* divergence_G = new Array2Df(width, height);
-    computeDivergence(*divergence_G, *gradientXBlended_G, *gradientYBlended_G);
-    delete gradientXBlended_G;
-    delete gradientYBlended_G;
-    ph->setValue(43);
-    if (ph->canceled()) { 
-        delete divergence_G;
-        return NULL;
-    }
-    Array2Df* divergence_B = new Array2Df(width, height);
-    computeDivergence(*divergence_B, *gradientXBlended_B, *gradientYBlended_B);
-    delete gradientXBlended_B;
-    delete gradientYBlended_B;
-    ph->setValue(44);
-    if (ph->canceled()) { 
-        delete divergence_B;
-        return NULL;
-    }
+    Array2Df divergence_B(width, height);
+    computeDivergence(divergence_B, gradientXBlended_B, gradientYBlended_B);
+    gradientXBlended_G.reset();
+    gradientYBlended_G.reset();
+    //END BLUE
 
     qDebug() << "solve_pde";
-    //solve_pde_dft(divergence_R, logIrradiance_R);
-    solve_pde_dct(*divergence_R, *logIrradiance_R);
-    //solve_pde_fft(divergence_R, logIrradiance_R, ph-> true);
-    //solve_pde_multigrid(divergence_R, logIrradiance_R, ph->;
-    //solve_poisson(divergence_R, logIrradiance_R, logIrradiance_R);
-    qDebug() << "residual: " << residual_pde(logIrradiance_R, divergence_R);
-    delete divergence_R;
+    solve_pde_dct(divergence_R, logIrradiance_R);
     ph->setValue(60);
     if (ph->canceled()) { 
-        delete logIrradiance_R;
         return NULL;
     }
 
     qDebug() << "solve_pde";
-    //solve_pde_dft(divergence_G, logIrradiance_G);
-    solve_pde_dct(*divergence_G, *logIrradiance_G);
-    //solve_pde_fft(divergence_G, logIrradiance_G, ph-> true);
-    //solve_pde_multigrid(divergence_G, logIrradiance_G, ph->;
-    //solve_poisson(divergence_G, logIrradiance_G, logIrradiance_G);
-    qDebug() << "residual: " << residual_pde(logIrradiance_G, divergence_G);
-    delete divergence_G;
+    solve_pde_dct(divergence_G, logIrradiance_G);
     ph->setValue(76);
     if (ph->canceled()) { 
-        delete logIrradiance_G;
         return NULL;
     }
 
     qDebug() << "solve_pde";
-    //solve_pde_dft(divergence_B, logIrradiance_B);
-    solve_pde_dct(*divergence_B, *logIrradiance_B);
-    //solve_pde_fft(divergence_B, logIrradiance_B, ph-> true);
-    //solve_pde_multigrid(divergence_B, logIrradiance_B, ph->;
-    //solve_poisson(divergence_B, logIrradiance_B, logIrradiance_B);
-    qDebug() << "residual: " << residual_pde(logIrradiance_B, divergence_B);
-    delete divergence_B;
+    solve_pde_dct(divergence_B, logIrradiance_B);
     ph->setValue(93);
     if (ph->canceled()) { 
-        delete logIrradiance_B;
         return NULL;
     }
 
-    Frame* deghosted = new Frame(width, height);
+    QScopedPointer<Frame> deghosted(new Frame(width, height));
     Channel *Urc, *Ugc, *Ubc;
     deghosted->createXYZChannels(Urc, Ugc, Ubc);
 
-    computeIrradiance(*Urc, *logIrradiance_R);
-    delete logIrradiance_R;
+    computeIrradiance(*Urc, logIrradiance_R);
+    logIrradiance_R.reset();
     ph->setValue(94);
     if (ph->canceled()) { 
-        delete deghosted;
         return NULL;
     }
-    computeIrradiance(*Ugc, *logIrradiance_G);
-    delete logIrradiance_G;
+    computeIrradiance(*Ugc, logIrradiance_G);
+    logIrradiance_G.reset();
     ph->setValue(95);
     if (ph->canceled()) { 
-        delete deghosted;
         return NULL;
     }
-    computeIrradiance(*Ubc, *logIrradiance_B);
-    delete logIrradiance_B;
+    computeIrradiance(*Ubc, logIrradiance_B);
+    logIrradiance_B.reset();
     ph->setValue(96);
     if (ph->canceled()) { 
-        delete deghosted;
         return NULL;
     }
-
-/*
-    int i, j;
-    for (i = 0; i < agGridSize; i++)
-        for (j = 0; j < agGridSize; j++)
-            if (patches[i][j] == false)
-                break;
-
-    int x = i*gridX;
-    int y = j*gridY;
-    float sf1 = (*Rc)(x, y) - (*Urc)(x, y);
-    float sf2 = (*Gc)(x, y) - (*Ugc)(x, y);
-    float sf3 = (*Bc)(x, y) - (*Ubc)(x, y);
-    float sf = (sf1+sf2+sf3) / 3.0f;
-
-    #pragma omp parallel for schedule(static)
-    for (int i = 0; i < width*height; i++)
-        (*Urc)(i) -= sf1;
-    #pragma omp parallel for schedule(static)
-    for (int i = 0; i < width*height; i++)
-        (*Ugc)(i) -= sf2;
-    #pragma omp parallel for schedule(static)
-    for (int i = 0; i < width*height; i++)
-        (*Ubc)(i) -= sf3;
-    colorBalance(*Urc, *Rc, i*gridX, j*gridY);
-    ph->setValue(97);
-    colorBalance(*Ugc, *Gc, i*gridX, j*gridY);
-    ph->setValue(98);
-    colorBalance(*Ubc, *Bc, i*gridX, j*gridY);
-*/
-    qDebug() << min(*Urc);
-    qDebug() << max(*Urc);
-    qDebug() << min(*Ugc);
-    qDebug() << max(*Ugc);
-    qDebug() << min(*Ubc);
-    qDebug() << max(*Ubc);
 
     float mr = min(*Urc);
     float mg = min(*Ugc);
@@ -930,26 +745,16 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
 
     clampToZero(*Urc, *Ugc, *Ubc, m);
 
-    qDebug() << min(*Urc);
-    qDebug() << max(*Urc);
-    qDebug() << min(*Ugc);
-    qDebug() << max(*Ugc);
-    qDebug() << min(*Ubc);
-    qDebug() << max(*Ubc);
-    
-    //colorbalance_rgb_f32(*Urc, *Ugc, *Ubc, width*height, 3, 97);
-    //robustAWB(Urc, Ugc, Ubc);
     shadesOfGrayAWB(*Urc, *Ugc, *Ubc);
 
     ph->setValue(100);
 
     emit progressFinished();
-    delete ghosted;
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "doAntiGhosting = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
-    return deghosted;
+    return deghosted.take();
 }
 
 void HdrCreationManager::getAgData(bool patches[][agGridSize], int &h0)
