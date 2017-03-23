@@ -24,6 +24,8 @@
 #ifndef GENERICVIEWER_H
 #define GENERICVIEWER_H
 
+#include <memory>
+
 #include <QImage>
 #include <QWidget>
 #include <QString>
@@ -201,7 +203,7 @@ private:
     float getScaleFactor();
 
     bool mNeedsSaving;
-    pfs::Frame* mFrame;
+    std::unique_ptr<pfs::Frame> mFrame;
 
     QAction* m_actionClose;
 

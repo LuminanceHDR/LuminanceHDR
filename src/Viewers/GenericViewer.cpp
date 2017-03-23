@@ -93,10 +93,12 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
 
 GenericViewer::~GenericViewer()
 {
+    /*
     if (mFrame)
         delete mFrame;
     if (mPixmap)
 	    delete mPixmap;
+    */
 }
 
 void GenericViewer::retranslateUi()
@@ -394,8 +396,7 @@ int GenericViewer::getHeight()
 
 void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)
 {
-    if (mFrame != NULL) delete mFrame;
-    mFrame = new_frame;
+    mFrame.reset(new_frame);
 
     // call virtual protected function
     updatePixmap();
@@ -411,7 +412,7 @@ void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)
 
 pfs::Frame* GenericViewer::getFrame() const
 {
-    return mFrame;
+    return mFrame.get();
 }
 
 void GenericViewer::startDragging()
@@ -428,8 +429,7 @@ void GenericViewer::startDragging()
 void GenericViewer::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_F10) {
-        if (mFrame != NULL) delete mFrame;
-        mFrame = NULL;
+        mFrame.reset();
         this->hide();
     }
     else if (event->key() == Qt::Key_Plus) {
