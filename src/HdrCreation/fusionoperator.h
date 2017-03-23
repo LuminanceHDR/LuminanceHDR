@@ -29,7 +29,6 @@
 //! merged image, ready for tonemap or other processing
 //! \note This the first header written specifically for LibHDR (milestone!)
 
-#include <boost/scoped_ptr.hpp>
 
 #include <Libpfs/frame.h>
 #include <HdrCreation/responses.h>
@@ -65,7 +64,7 @@ enum FusionOperator
 
 class IFusionOperator;
 
-typedef boost::shared_ptr<IFusionOperator> FusionOperatorPtr;
+typedef std::shared_ptr<IFusionOperator> FusionOperatorPtr;
 
 class IFusionOperator
 {

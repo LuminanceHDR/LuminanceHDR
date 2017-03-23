@@ -34,8 +34,6 @@
 #include <QPixmap>
 #include <QRgb>
 
-#include <boost/scoped_ptr.hpp>
-#include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 
 #include "FitsImporter.h"
@@ -58,15 +56,13 @@ static const int previewHeight = 200;
 
 FitsImporter::~FitsImporter() 
 {
-    if (m_align)
-        delete m_align;
 }
 
 FitsImporter::FitsImporter(QWidget *parent)
     : QWizard(parent)
     , m_width(0)
     , m_height(0)
-    , m_align(NULL)
+    , m_align()
     , m_Ui(new Ui::FitsImporter)
 {
     m_Ui->setupUi(this);
@@ -460,10 +456,10 @@ void FitsImporter::buildFrame()
 void FitsImporter::align_with_ais()
 {
     m_contents.clear();
-    m_align = new Align(&m_data, false, 2, 0.0f, 65535.0f); 
-    connect(m_align, SIGNAL(finishedAligning(int)), this, SLOT(ais_finished(int)));
-    connect(m_align, SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
-    connect(m_align, SIGNAL(dataReady(QByteArray)), this, SLOT(readData(QByteArray)));
+    m_align.reset(new Align(m_data, false, 2, 0.0f, 65535.0f));
+    connect(m_align.get(), SIGNAL(finishedAligning(int)), this, SLOT(ais_finished(int)));
+    connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
+    connect(m_align.get(), SIGNAL(dataReady(QByteArray)), this, SLOT(readData(QByteArray)));
   
     m_align->align_with_ais(m_Ui->autoCropCheckBox->isChecked());
 }
@@ -554,8 +550,8 @@ void FitsImporter::on_pushButtonClockwise_clicked()
     m_Ui->pushButtonClockwise->setEnabled(false);
     int index = m_previewFrame->getSelectedLabel();
 
-    boost::scoped_ptr<Frame> rotatedHalf(pfs::rotate(m_data[index].frame().get(), true));
-    boost::scoped_ptr<Frame> rotated(pfs::rotate(rotatedHalf.get(), true));
+    std::unique_ptr<Frame> rotatedHalf(pfs::rotate(m_data[index].frame().get(), true));
+    std::unique_ptr<Frame> rotated(pfs::rotate(rotatedHalf.get(), true));
     m_data[index].frame()->swap(*rotated);
     rotatedHalf.reset();
     rotated.reset();

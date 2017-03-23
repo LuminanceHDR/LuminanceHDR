@@ -20,7 +20,6 @@
  */
 
 #include <boost/assign.hpp>
-#include <boost/make_shared.hpp>
 #include <Libpfs/io/framewriterfactory.h>
 
 using namespace ::boost::assign;
@@ -90,7 +89,7 @@ namespace io {
 
 template <typename ConcreteClass>
 FrameWriterPtr creator(const std::string& filename) {
-    return FrameWriterPtr(boost::make_shared<ConcreteClass>(filename));
+    return FrameWriterPtr(std::make_shared<ConcreteClass>(filename));
 }
 
 FrameWriterFactory::FrameWriterCreatorMap FrameWriterFactory::sm_registry =

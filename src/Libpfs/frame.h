@@ -32,7 +32,7 @@
 
 #include <string>
 #include <vector>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 #include <Libpfs/channel.h>
 #include <Libpfs/tag.h>
@@ -142,7 +142,7 @@ private:
     Channel* m_Z;
 };
 
-typedef boost::shared_ptr< pfs::Frame > FramePtr;
+typedef std::shared_ptr< pfs::Frame > FramePtr;
 
 } // namespace pfs
 

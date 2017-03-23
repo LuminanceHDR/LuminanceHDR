@@ -20,7 +20,6 @@
  */
 
 #include <boost/assign.hpp>
-#include <boost/make_shared.hpp>
 #include <Libpfs/io/framereaderfactory.h>
 
 using namespace boost::assign;
@@ -82,7 +81,7 @@ namespace io {
 
 template <typename ConcreteClass>
 FrameReaderPtr creator(const std::string& filename) {
-    return FrameReaderPtr(boost::make_shared<ConcreteClass>(filename));
+    return FrameReaderPtr(std::make_shared<ConcreteClass>(filename));
 }
 
 FrameReaderFactory::FrameReaderCreatorMap FrameReaderFactory::sm_registry =

@@ -42,7 +42,6 @@
 #include <Libpfs/fixedstrideiterator.h>
 
 using namespace std;
-using namespace boost;
 using namespace pfs;
 
 namespace pfs {

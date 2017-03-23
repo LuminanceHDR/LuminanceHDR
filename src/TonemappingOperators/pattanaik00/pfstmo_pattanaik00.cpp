@@ -36,7 +36,6 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
-#include <boost/scoped_ptr.hpp>
 
 #include "Libpfs/frame.h"
 #include "Libpfs/colorspace/colorspace.h"
@@ -80,7 +79,7 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
     std::cout << "autolum: " << autolum << ")" << std::endl;
 #endif
 
-    boost::scoped_ptr<VisualAdaptationModel> am(new VisualAdaptationModel());
+    std::unique_ptr<VisualAdaptationModel> am(new VisualAdaptationModel());
 
     pfs::Channel *X, *Y, *Z;
     frame.getXYZChannels( X, Y, Z );

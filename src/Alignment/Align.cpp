@@ -28,14 +28,13 @@
 #include <QtConcurrentFilter>
 
 #include <boost/bind.hpp>
-#include <boost/foreach.hpp>
 
 #include "Align.h"
 #include "Common/CommonFunctions.h"
 #include "Exif/ExifOperations.h"
 
 
-Align::Align(HdrCreationItemContainer* data, bool fromCommadLine, int savingMode, float minLum, float maxLum) :
+Align::Align(HdrCreationItemContainer& data, bool fromCommadLine, int savingMode, float minLum, float maxLum) :
     m_data(data),
     m_fromCommandLine(fromCommadLine),
     m_savingMode(savingMode),
@@ -78,7 +77,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     const bool deflateCompression = true;
 #endif   
     SaveFile saveFile(m_savingMode, m_minLum, m_maxLum, deflateCompression);
-    futureWatcher.setFuture( QtConcurrent::map(m_data->begin(), m_data->end(), saveFile) );
+    futureWatcher.setFuture( QtConcurrent::map(m_data.begin(), m_data.end(), saveFile) );
     futureWatcher.waitForFinished();
 
     if (futureWatcher.isCanceled()) return;
@@ -89,7 +88,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     //ais_parameters << "-a" << tempDir + "/" + uuidStr;
     ais_parameters << "-a" << uuidStr;
     int i = 0;
-    BOOST_FOREACH(HdrCreationItem& it, *m_data) {
+    for(auto it : m_data) {
         if (it.convertedFilename().isEmpty())
             continue;
 
@@ -129,7 +128,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
     {
         // TODO: try-catch
         // DAVIDE _ HDR CREATION
-        BOOST_FOREACH(const HdrCreationItem& it, *m_data) {
+        for(const auto it : m_data) {
             QString inputFilename = it.alignedFilename();
             if (!inputFilename.isEmpty()) {
                 ExifOperations::copyExifData(it.filename().toStdString(), inputFilename.toStdString(), true, "", false, false);
@@ -139,7 +138,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
         // parallel load of the data...
         // Start the computation.
         connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()), Qt::DirectConnection);
-        m_futureWatcher.setFuture( QtConcurrent::map(m_data->begin(), m_data->end(), LoadFile()) );
+        m_futureWatcher.setFuture( QtConcurrent::map(m_data.begin(), m_data.end(), LoadFile()) );
     }
     else
     {
@@ -151,7 +150,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
 void Align::alignedFilesLoaded()
 {
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
-    BOOST_FOREACH(const HdrCreationItem& it, *m_data) {
+    for(const auto it :  m_data) {
         if (it.filename().isEmpty())
             continue;
         QFile::remove(QFile::encodeName(it.convertedFilename()).constData());
@@ -183,7 +182,7 @@ void Align::reset()
 
 void Align::removeTempFiles()
 {
-    BOOST_FOREACH(const HdrCreationItem& it, *m_data) {
+    for(const auto it : m_data) {
         if (!it.alignedFilename().isEmpty()) {
             QFile::remove(it.alignedFilename());
             qDebug() << "void HdrCreationManager::ais_finished: remove " << it.alignedFilename();

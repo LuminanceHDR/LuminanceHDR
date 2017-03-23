@@ -31,7 +31,7 @@
 #define PNGWRITER_H
 
 #include <string>
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 #include <Libpfs/params.h>
 #include <Libpfs/io/ioexception.h>
@@ -54,7 +54,7 @@ public:
     size_t getFileSize() const;
 	
 private:
-    boost::scoped_ptr<PngWriterImpl> m_impl;
+    std::unique_ptr<PngWriterImpl> m_impl;
 };
 
 }   // io

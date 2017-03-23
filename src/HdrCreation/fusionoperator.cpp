@@ -25,7 +25,6 @@
 
 #include <cassert>
 #include <map>
-#include <boost/make_shared.hpp>
 #include <boost/assign.hpp>
 
 #include <Libpfs/frame.h>
@@ -33,7 +32,6 @@
 
 using namespace pfs;
 using namespace std;
-using namespace boost;
 using namespace boost::assign;
 
 namespace libhdr {
@@ -54,14 +52,14 @@ FusionOperatorPtr IFusionOperator::build(FusionOperator type) {
     switch (type)
     {
     case ROBERTSON_AUTO:
-        return boost::make_shared<RobertsonOperatorAuto>();
+        return std::make_shared<RobertsonOperatorAuto>();
         break;
     case ROBERTSON:
-        return boost::make_shared<RobertsonOperator>();
+        return std::make_shared<RobertsonOperator>();
         break;
     case DEBEVEC:
     default:
-        return boost::make_shared<DebevecOperator>();
+        return std::make_shared<DebevecOperator>();
         break;
     }
 }

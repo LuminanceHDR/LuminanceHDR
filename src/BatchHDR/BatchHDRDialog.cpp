@@ -38,7 +38,7 @@
 #include <QSqlError>
 #include <QtConcurrentRun>
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 #include <boost/bind.hpp>
 
 #include <Libpfs/frame.h>
@@ -410,7 +410,7 @@ void BatchHDRDialog::create_hdr(int)
 
 void BatchHDRDialog::createHdrFinished()
 {
-    boost::scoped_ptr<pfs::Frame> resultHDR(m_future.result());
+    std::unique_ptr<pfs::Frame> resultHDR(m_future.result());
     if (resultHDR.get() == NULL) {
         qDebug() << "Aborted";
         QApplication::restoreOverrideCursor();

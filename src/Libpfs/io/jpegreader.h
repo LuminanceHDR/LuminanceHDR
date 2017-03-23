@@ -29,7 +29,6 @@
 #define PFS_IO_JPEGREADER_H
 
 #include <string>
-#include <boost/scoped_ptr.hpp>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
 
@@ -50,7 +49,7 @@ public:
 private:
     struct JpegReaderData;
 
-    boost::scoped_ptr<JpegReaderData> m_data;
+    std::unique_ptr<JpegReaderData> m_data;
 };
 
 }   // io

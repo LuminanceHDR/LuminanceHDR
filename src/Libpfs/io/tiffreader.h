@@ -25,7 +25,6 @@
 //! \brief TiffReader
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <boost/scoped_ptr.hpp>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
 
@@ -48,7 +47,7 @@ public:
     void read(Frame &frame, const Params &params);
 
 private:
-    boost::scoped_ptr<TiffReaderData> m_data;
+    std::unique_ptr<TiffReaderData> m_data;
 };
 
 }   // io

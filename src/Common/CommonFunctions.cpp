@@ -52,7 +52,6 @@
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/colorspace/normalizer.h>
 
-#include <boost/scoped_ptr.hpp>
 #include <boost/algorithm/minmax_element.hpp>
 
 #include "Core/IOWorker.h"

@@ -116,7 +116,7 @@ protected:
     //QFutureWatcher<void> m_futureWatcher;
 
     // alignment
-	Align *m_align;
+    std::unique_ptr<Align> m_align;
 
     QScopedPointer<Ui::FitsImporter> m_Ui;
 

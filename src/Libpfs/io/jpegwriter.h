@@ -31,7 +31,8 @@
 #define PFS_IO_JPEGWRITER_H
 
 #include <string>
-#include <boost/scoped_ptr.hpp>
+#include <memory>
+
 #include <Libpfs/params.h>
 #include <Libpfs/io/ioexception.h>
 #include <Libpfs/io/framewriter.h>
@@ -57,7 +58,7 @@ public:
     size_t getFileSize() const;
 
 private:
-    boost::scoped_ptr<JpegWriterImpl> m_impl;
+    std::unique_ptr<JpegWriterImpl> m_impl;
 };
 
 }   // io

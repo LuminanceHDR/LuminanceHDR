@@ -23,7 +23,6 @@
 #define PFS_IO_EXRREADER_H
 
 #include <Libpfs/io/framereader.h>
-#include <boost/scoped_ptr.hpp>
 
 namespace pfs {
 namespace io {
@@ -43,7 +42,7 @@ public:
 protected:
     class EXRReaderData;
 
-    boost::scoped_ptr<EXRReaderData> m_data;
+    std::unique_ptr<EXRReaderData> m_data;
 };
 
 }   // io

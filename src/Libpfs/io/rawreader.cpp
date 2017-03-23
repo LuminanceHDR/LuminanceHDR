@@ -27,8 +27,6 @@
 #include <limits>
 #include <sstream>
 
-#include <boost/scoped_ptr.hpp>
-
 #include <Libpfs/frame.h>
 #include <Libpfs/io/rawreader.h>
 #include <Libpfs/utils/transform.h>

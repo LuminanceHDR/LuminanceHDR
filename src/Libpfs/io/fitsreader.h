@@ -25,9 +25,9 @@
 #ifndef PFS_IO_FITSREADER_H
 #define PFS_IO_FITSREADER_H
 
-#include <boost/scoped_ptr.hpp>
-
 #include <string>
+#include <memory>
+
 #include <Libpfs/params.h>
 #include <Libpfs/io/framereader.h>
 #include <Libpfs/io/ioexception.h>
@@ -55,7 +55,7 @@ public:
     void read(Frame &frame, const Params &);
 
 private:
-    boost::scoped_ptr<FitsReaderData> m_data;
+    std::unique_ptr<FitsReaderData> m_data;
 };
 
 }   // io

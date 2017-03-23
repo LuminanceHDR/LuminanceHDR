@@ -45,7 +45,6 @@
 
 using namespace std;
 using namespace pfs;
-using namespace boost;
 
 namespace pfs {
 namespace io {

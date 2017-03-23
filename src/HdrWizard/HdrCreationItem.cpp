@@ -25,7 +25,6 @@
 #include <QString>
 #include <QImage>
 
-#include <boost/make_shared.hpp>
 #include <Libpfs/frame.h>
 #include "HdrCreationItem.h"
 
@@ -37,7 +36,7 @@ HdrCreationItem::HdrCreationItem(const QString &filename)
     , m_exposureTime(-1.f)
     , m_datamin(0.f)
     , m_datamax(1.f)
-    , m_frame(boost::make_shared<pfs::Frame>())
+    , m_frame(std::make_shared<pfs::Frame>())
     , m_thumbnail(new QImage())
 {
      // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
@@ -51,7 +50,7 @@ HdrCreationItem::HdrCreationItem(const QString &filename, const QString& convert
     , m_exposureTime(-1.f)
     , m_datamin(0.f)
     , m_datamax(1.f)
-    , m_frame(boost::make_shared<pfs::Frame>())
+    , m_frame(std::make_shared<pfs::Frame>())
     , m_thumbnail(new QImage())
 {
 }

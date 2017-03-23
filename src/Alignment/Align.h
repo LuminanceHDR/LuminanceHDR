@@ -37,7 +37,7 @@ class Align : public QObject
     Q_OBJECT
 
 public:
-    Align(HdrCreationItemContainer* data, bool fromCommandLine, int savingMode = 1, float minLum = 0.0f, float maxLum = 1.0f);
+    Align(HdrCreationItemContainer& data, bool fromCommandLine, int savingMode = 1, float minLum = 0.0f, float maxLum = 1.0f);
     ~Align();
 
     void align_with_ais(bool ais_crop_flag);
@@ -56,7 +56,7 @@ protected slots:
     void readData();
 
 protected:
-    HdrCreationItemContainer *m_data;
+    HdrCreationItemContainer m_data;
     bool m_fromCommandLine;
     int m_savingMode;
     float m_minLum;
