@@ -49,7 +49,12 @@ void op(const _Type* A, const _Type* B, _Type* C, size_t size, const _Op& currOp
 template <typename _Type>
 void vmul(const _Type* A, const _Type* B, _Type* C, size_t size)
 {
-    detail::op(A, B, C, size, std::multiplies<_Type>());
+    //detail::op(A, B, C, size, std::multiplies<_Type>());
+#pragma omp parallel for
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
+    {
+        (*C)(idx) = (*A)(idx) * (*B)(idx);
+    }
 }
 
 template <typename _Type>
@@ -61,7 +66,12 @@ void vdiv(const _Type* A, const _Type* B, _Type* C, size_t size)
 template <typename _Type>
 void vadd(const _Type* A, const _Type* B, _Type* C, size_t size)
 {
-    detail::op(A, B, C, size, std::plus<_Type>());
+    //detail::op(A, B, C, size, std::plus<_Type>());
+#pragma omp parallel for
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
+    {
+        (*C)(idx) = (*A)(idx) + (*B)(idx);
+    }
 }
 
 template <typename _Type>
@@ -90,6 +100,36 @@ void vsmul(const _Type* I, float c, _Type* O, size_t size)
     for (int idx = 0; idx < static_cast<int>(size); idx++)
     {
         O[idx] = c*I[idx];
+    }
+}
+
+template <typename _Type>
+void vsum_scalar(const _Type* I, float c, _Type* O, size_t size)
+{
+#pragma omp parallel for
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
+    {
+        (*O)(idx) = c+(*I)(idx);
+    }
+}
+
+template <typename _Type>
+void vmul_scalar(const _Type* I, float c, _Type* O, size_t size)
+{
+#pragma omp parallel for
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
+    {
+        (*O)(idx) = c*(*I)(idx);
+    }
+}
+
+template <typename _Type>
+void vdiv_scalar(const _Type* I, float c, _Type* O, size_t size)
+{
+#pragma omp parallel for
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
+    {
+        (*O)(idx) = c/(*I)(idx);
     }
 }
 

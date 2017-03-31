@@ -43,6 +43,7 @@ public:
     void open();
     bool isOpen() const;
     void close();
+    int  getBitDepth() const;
 
     void read(Frame &frame, const Params &params);
 

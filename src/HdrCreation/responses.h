@@ -27,6 +27,7 @@
 
 #include <string>
 #include <array>
+#include <vector>
 #include <cstdio>
 #include <cassert>
 
@@ -52,13 +53,15 @@ enum ResponseChannel
 class ResponseCurve
 {
 public:
-    static const size_t NUM_BINS = (1 << 12);
-    typedef std::array<float, NUM_BINS> ResponseContainer;
+    typedef std::vector<float> ResponseContainer;
 
-    static size_t getIdx(float sample);
+    size_t getIdx(float sample);
     static ResponseCurveType fromString(const std::string& type);
 
     explicit ResponseCurve(ResponseCurveType type = RESPONSE_LINEAR);
+
+    void setBPS(int bps) { m_num_bins = (1 << bps); setType(m_type); }
+    size_t getNum_Bins() { return m_num_bins; }
 
     void setType(ResponseCurveType type);
     //! \return type of response function implemented
@@ -66,9 +69,9 @@ public:
 
     //! \brief return the response of the value \c input. \c input is in the
     //! range [0, 1]
-    float getResponse(float input, ResponseChannel channel = RESPONSE_CHANNEL_RED) const;
+    float getResponse(float input, ResponseChannel channel = RESPONSE_CHANNEL_RED);
 
-    float operator()(float input, ResponseChannel channel = RESPONSE_CHANNEL_RED) const
+    float operator()(float input, ResponseChannel channel = RESPONSE_CHANNEL_RED)
     { return getResponse(input, channel); }
 
     void writeToFile(const std::string& fileName) const;
@@ -80,6 +83,7 @@ public:
 protected:
     ResponseCurveType m_type;
     std::array<ResponseContainer, 3> m_responses;
+    size_t m_num_bins;
 };
 
 inline
@@ -88,7 +92,7 @@ ResponseCurveType ResponseCurve::getType() const
 
 inline
 size_t ResponseCurve::getIdx(float sample)
-{ return size_t(sample*(NUM_BINS - 1) + 0.45f); }
+{ return size_t(sample*(m_num_bins - 1) + 0.45f); }
 
 inline
 ResponseCurve::ResponseContainer& ResponseCurve::get(ResponseChannel channel)
@@ -99,14 +103,15 @@ const ResponseCurve::ResponseContainer& ResponseCurve::get(ResponseChannel chann
 { return m_responses[channel]; }
 
 inline
-float ResponseCurve::getResponse(float input, ResponseChannel channel) const
+float ResponseCurve::getResponse(float input, ResponseChannel channel)
 {
     assert(channel >= 0);
     assert(channel <= 2);
     assert(input >= 0.f);
     assert(input <= 1.f);
 
-    return m_responses[channel][getIdx(input)];
+    size_t idx = getIdx(input);
+    return m_responses[channel][idx];
 }
 
 }   // fusion

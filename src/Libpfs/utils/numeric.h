@@ -100,6 +100,14 @@ void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size
 template <typename _Type>
 void vsmul(const _Type* I, float c, _Type* O, size_t size);
 
+template <typename _Type>
+void vsum_scalar(const _Type* I, float c, _Type* O, size_t size);
+
+template <typename _Type>
+void vmul_scalar(const _Type* I, float c, _Type* O, size_t size);
+
+template <typename _Type>
+void vdiv_scalar(const _Type* I, float c, _Type* O, size_t size);
 }   // utils
 }   // pfs
 

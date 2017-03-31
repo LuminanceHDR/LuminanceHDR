@@ -38,6 +38,7 @@ HdrCreationItem::HdrCreationItem(const QString &filename)
     , m_datamax(1.f)
     , m_frame(std::make_shared<pfs::Frame>())
     , m_thumbnail(new QImage())
+    , m_bitDepth(8)
 {
      // qDebug() << QString("Building HdrCreationItem for %1").arg(m_filename);
 }
@@ -52,6 +53,7 @@ HdrCreationItem::HdrCreationItem(const QString &filename, const QString& convert
     , m_datamax(1.f)
     , m_frame(std::make_shared<pfs::Frame>())
     , m_thumbnail(new QImage())
+    , m_bitDepth(8)
 {
 }
 

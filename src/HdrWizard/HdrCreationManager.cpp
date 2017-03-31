@@ -375,13 +375,17 @@ void HdrCreationManager::removeTempFiles()
 
 pfs::Frame* HdrCreationManager::createHdr()
 {
+    const int bps = m_data[0].getBitDepth();
+
     std::vector<FrameEnhanced> frames;
+
     for (size_t idx = 0; idx < m_data.size(); ++idx)
     {
         frames.push_back(
                     FrameEnhanced(
                         m_data[idx].frame(),
-                        std::pow(2.f, m_data[idx].getEV() - m_evOffset)
+                        std::pow(2.f, m_data[idx].getEV() - m_evOffset),
+                        bps
                         )
                     );
     }

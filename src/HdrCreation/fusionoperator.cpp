@@ -41,7 +41,7 @@ IFusionOperator::IFusionOperator()
 {}
 
 // TODO: fix this to return a shared_ptr
-pfs::Frame* IFusionOperator::computeFusion(ResponseCurve& response, const WeightFunction& weight, const std::vector<FrameEnhanced>& frames) const
+pfs::Frame* IFusionOperator::computeFusion(ResponseCurve& response, WeightFunction& weight, const std::vector<FrameEnhanced>& frames)
 {
     pfs::Frame* frame = new pfs::Frame;
     computeFusion(response, weight, frames, *frame);

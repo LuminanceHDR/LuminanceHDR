@@ -52,6 +52,7 @@ public:
     void close();
 
     void read(Frame &frame, const Params &params);
+    int  getBitDepth() const { return 14; }
 
 private:
     LibRaw m_processor;

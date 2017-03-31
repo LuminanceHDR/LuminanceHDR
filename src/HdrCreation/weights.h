@@ -23,7 +23,8 @@
 #define LIBHDR_FUSION_WEIGHTS_H
 
 #include <limits>
-#include <array>
+#include <vector>
+#include <string>
 #include <cassert>
 
 namespace libhdr {
@@ -40,17 +41,21 @@ enum WeightFunctionType
 class WeightFunction
 {
 public:
-    static const size_t NUM_BINS = (1 << 12);
-    typedef std::array<float, NUM_BINS> WeightContainer;
+    //static const size_t NUM_BINS = (1 << 8);
+    typedef std::vector<float> WeightContainer;
 
     static WeightFunctionType fromString(const std::string& type);
 
-    static size_t getIdx(float sample);
+    size_t getIdx(float sample);
+
+    void setBPS(int bps) { m_num_bins = (1 << bps); setType(m_type); }
+    size_t getNum_Bins() { return m_num_bins; }
 
     WeightFunction(WeightFunctionType type);
 
-    float getWeight(float input) const;
-    float operator()(float input) const { return getWeight(input); }
+    float getWeight(float input);
+    WeightContainer getWeights() const;
+    float operator()(float input) { return getWeight(input); }
 
     void setType(WeightFunctionType type);
     WeightFunctionType getType() const  { return m_type; }
@@ -64,19 +69,30 @@ private:
 
     float m_minTrustedValue;
     float m_maxTrustedValue;
+    size_t m_num_bins;
 };
 
 inline
 size_t WeightFunction::getIdx(float sample)
-{ return size_t(sample*(NUM_BINS - 1) + 0.45f); }
+{ return size_t(sample*(m_num_bins - 1) + 0.45f); }
 
 inline
-float WeightFunction::getWeight(float input) const
+float WeightFunction::getWeight(float input)
 {
     assert(input >= 0.f);
     assert(input <= 1.f);
 
-    return m_weights[getIdx(input)];
+    size_t idx = getIdx(input);
+    return m_weights[idx];
+}
+
+inline
+WeightFunction::WeightContainer WeightFunction::getWeights() const
+{
+    assert(input >= 0.f);
+    assert(input <= 1.f);
+
+    return m_weights;
 }
 
 }   // fusion

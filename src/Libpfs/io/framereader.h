@@ -53,6 +53,7 @@ public:
     virtual bool isOpen() const = 0;
     virtual void close() = 0;
     virtual void read(pfs::Frame& frame, const pfs::Params& params);
+    virtual int getBitDepth() const = 0;
 
 protected:
     void setWidth(size_t width)     { m_width = width; }

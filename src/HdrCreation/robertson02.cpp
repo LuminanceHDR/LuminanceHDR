@@ -56,12 +56,12 @@ namespace fusion {
 
 void RobertsonOperator::applyResponse(
         ResponseCurve& response,
-        const WeightFunction& weight,
+        WeightFunction& weight,
         ResponseChannel channel,
         const DataList& inputData, float* outputData,
         size_t width, size_t height,
         float minAllowedValue, float maxAllowedValue,
-        const float* arrayofexptime) const
+        const float* arrayofexptime)
 {
     assert( inputData.size() );
 
@@ -134,14 +134,19 @@ void RobertsonOperator::applyResponse(
     PRINT_DEBUG("Saturated pixels: " << saturatedPixels);
 }
 
-void RobertsonOperator::computeFusion(ResponseCurve& response, const WeightFunction& weight,
-        const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
+void RobertsonOperator::computeFusion(ResponseCurve& response, WeightFunction& weight,
+        const std::vector<FrameEnhanced> &frames, pfs::Frame &frame)
 {
     assert( frames.size() );
 
     size_t numExposures = frames.size();
     Frame tempFrame (frames[0].frame()->getWidth(),
             frames[0].frame()->getHeight());
+
+    const int bps = frames[0].getBPS();
+
+    response.setBPS(bps);
+    weight.setBPS(bps);
 
     Channel* outputRed;
     Channel* outputGreen;
@@ -174,6 +179,16 @@ void RobertsonOperator::computeFusion(ResponseCurve& response, const WeightFunct
                   tempFrame.getWidth(), tempFrame.getHeight(),
                   minAllowedValue, maxAllowedValue,
                   averageLuminances.data());       // green
+
+    float cmax[3];
+    cmax[0] = *max_element(outputRed->begin(), outputRed->end());
+    cmax[1] = *max_element(outputGreen->begin(), outputGreen->end());
+    cmax[2] = *max_element(outputBlue->begin(), outputBlue->end());
+    float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
+
+    replace_if(outputRed->begin(), outputRed->end(), [](float f){ return !isnormal(f); }, Max);
+    replace_if(outputGreen->begin(), outputGreen->end(), [](float f){ return !isnormal(f); }, Max);
+    replace_if(outputBlue->begin(), outputBlue->end(), [](float f){ return !isnormal(f); }, Max);
 
     frame.swap( tempFrame );
 }
@@ -262,12 +277,12 @@ namespace fusion {
 
 void RobertsonOperatorAuto::computeResponse(
         ResponseCurve& response,
-        const WeightFunction& weight,
+        WeightFunction& weight,
         ResponseChannel channel,
         const DataList& inputData, float* outputData,
         size_t width, size_t height,
         float minAllowedValue, float maxAllowedValue,
-        const float* arrayofexptime) const
+        const float* arrayofexptime)
 {
     typedef ResponseCurve::ResponseContainer ResponseContainer;
 
@@ -285,7 +300,7 @@ void RobertsonOperatorAuto::computeResponse(
     applyResponse(response, weight, channel, inputData, outputData, width, height,
                   minAllowedValue, maxAllowedValue, arrayofexptime);
 
-    std::array<long, ResponseCurve::NUM_BINS> cardEm;
+    std::vector<long> cardEm(response.getNum_Bins());
     ResponseContainer sum;
 
     assert(sum.size() == cardEm.size());
@@ -306,9 +321,9 @@ void RobertsonOperatorAuto::computeResponse(
             // not to do the IFs inside them) but I don't know how to improve it
             for (size_t j = 0; j < width*height; ++j)
             {
-                size_t sample = ResponseCurve::getIdx(inputData[i][j]);
+                size_t sample = response.getIdx(inputData[i][j]);
                 //if ((sample < ResponseCurve::NUM_BINS) && (sample >= 0)) // sample is unsigned so always >= 0
-                if ((sample < ResponseCurve::NUM_BINS))
+                if (sample < response.getNum_Bins())
                 {
                     sum[sample] += ti * outputData[j];
                     cardEm[sample]++;
@@ -377,8 +392,8 @@ void RobertsonOperatorAuto::computeResponse(
 
 void RobertsonOperatorAuto::computeFusion(
         ResponseCurve& response,
-        const WeightFunction& weight,
-        const std::vector<FrameEnhanced> &frames, pfs::Frame &frame) const
+        WeightFunction& weight,
+        const std::vector<FrameEnhanced> &frames, pfs::Frame &frame)
 {
     assert( frames.size() );
 
@@ -387,6 +402,11 @@ void RobertsonOperatorAuto::computeFusion(
                 frames[0].frame()->getWidth(),
                 frames[0].frame()->getHeight()
             );
+
+    const int bps = frames[0].getBPS();
+
+    response.setBPS(bps);
+    weight.setBPS(bps);
 
     Channel* outputRed;
     Channel* outputGreen;
@@ -422,6 +442,16 @@ void RobertsonOperatorAuto::computeFusion(
                     tempFrame.getWidth(), tempFrame.getHeight(),
                     minAllowedValue, maxAllowedValue,
                     averageLuminances.data());
+
+    float cmax[3];
+    cmax[0] = *max_element(outputRed->begin(), outputRed->end());
+    cmax[1] = *max_element(outputGreen->begin(), outputGreen->end());
+    cmax[2] = *max_element(outputBlue->begin(), outputBlue->end());
+    float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
+
+    replace_if(outputRed->begin(), outputRed->end(), [](float f){ return !isnormal(f); }, Max);
+    replace_if(outputGreen->begin(), outputGreen->end(), [](float f){ return !isnormal(f); }, Max);
+    replace_if(outputBlue->begin(), outputBlue->end(), [](float f){ return !isnormal(f); }, Max);
 
     frame.swap( tempFrame );
 }
