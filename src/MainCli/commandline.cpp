@@ -525,8 +525,19 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
         connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
 
-        hdrCreationManager->setConfig(hdrcreationconfig);
-        hdrCreationManager->loadFiles(inputFiles);
+        try
+        {
+            hdrCreationManager->setConfig(hdrcreationconfig);
+            hdrCreationManager->loadFiles(inputFiles);
+        }
+        catch(std::runtime_error &e)
+        {
+            printErrorAndExit(e.what());
+        }
+        catch(...)
+        {
+            printErrorAndExit("Catched unhandled exception");
+        }
     }
     else
     {

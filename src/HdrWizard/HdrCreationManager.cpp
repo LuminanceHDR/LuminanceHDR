@@ -161,6 +161,22 @@ void HdrCreationManager::loadFilesDone()
         return;
     }
 
+    if (isLoadResponseCurve())
+    {
+        try
+        {
+            const int bps = m_tmpdata[0].getBitDepth();
+            m_response->setBPS(bps);
+            m_weight->setBPS(bps);
+            m_response->readFromFile(
+                    QFile::encodeName(getResponseCurveInputFilename()).constData());
+            setLoadResponseCurve(false);
+        }
+        catch(std::runtime_error &e)
+        {
+            emit errorWhileLoading(QString(e.what()));
+        }
+    }
     disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
     for(const auto hdrCreationItem : m_tmpdata)
     {
@@ -264,10 +280,12 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
     : m_evOffset(0.f)
     , m_response(new ResponseCurve(predef_confs[0].responseCurve))
     , m_weight(new WeightFunction(predef_confs[0].weightFunction))
+    , m_responseCurveInputFilename()
     , m_agMask(NULL)
     , m_align()
     , m_ais_crop_flag(false)
     , fromCommandLine(fromCommandLine)
+    , m_isLoadResponseCurve(false)
 {
     // setConfig(predef_confs[0]);
     setFusionOperator(predef_confs[0].fusionOperator);
@@ -291,8 +309,8 @@ void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
 {
     if (!c.inputResponseCurveFilename.isEmpty())
     {
-        m_response->readFromFile(
-                    QFile::encodeName(c.inputResponseCurveFilename).constData());
+        setLoadResponseCurve(true);
+        setResponseCurveInputFilename(c.inputResponseCurveFilename);
     }
     else
     {

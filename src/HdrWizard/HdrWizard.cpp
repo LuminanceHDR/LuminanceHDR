@@ -866,6 +866,10 @@ bool HdrWizard::loadRespCurve()
 
     try
     {
+        HdrCreationItemContainer c =  m_hdrCreationManager->getData();
+        int bps = c[0].getBitDepth();
+        m_hdrCreationManager->getResponseCurve().setBPS(bps);
+        m_hdrCreationManager->getWeightFunction().setBPS(bps);
         m_hdrCreationManager->getResponseCurve().readFromFile(
                     QFile::encodeName(loadcurvefilename).constData());
 
@@ -1035,6 +1039,28 @@ void HdrWizard::responseCurveComboBoxActivated(int from_gui)
             // in the current ResponseCurve object...
             updateHdrCreationManagerResponse(*m_hdrCreationManager,
                                              m_hdrCreationManager->getResponseCurve().getType());
+            switch (m_hdrCreationManager->getResponseCurve().getType())
+            {
+                case RESPONSE_LINEAR:
+                    m_Ui->responseCurveComboBox->setCurrentIndex(0);
+                    break;
+                case RESPONSE_GAMMA:
+                    m_Ui->responseCurveComboBox->setCurrentIndex(1);
+                    break;
+                case RESPONSE_LOG10:
+                    m_Ui->responseCurveComboBox->setCurrentIndex(2);
+                    break;
+                case RESPONSE_SRGB:
+                    m_Ui->responseCurveComboBox->setCurrentIndex(3);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            updateHdrCreationManagerResponse(*m_hdrCreationManager,RESPONSE_LINEAR);
+            m_Ui->responseCurveComboBox->setCurrentIndex(0);
         }
     }
     else

@@ -302,6 +302,7 @@ void RobertsonOperatorAuto::computeResponse(
 
     std::vector<long> cardEm(response.getNum_Bins());
     ResponseContainer sum;
+    sum.resize(response.getNum_Bins());
 
     assert(sum.size() == cardEm.size());
     assert(sum.size() == Ip.size());
