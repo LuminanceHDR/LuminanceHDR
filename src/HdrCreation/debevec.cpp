@@ -187,7 +187,7 @@ void DebevecOperator::computeFusion(ResponseCurve& response_, WeightFunction& we
     float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
     #pragma omp parallel for
     for(int c = 0; c < channels; c++) {
-        replace_if(resultCh[c]->begin(), resultCh[c]->end(), [](float f){ return !isnormal(f); }, Max);
+        replace_if(resultCh[c]->begin(), resultCh[c]->end(), [](float f){ return !isfinite(f); }, Max);
     }
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
