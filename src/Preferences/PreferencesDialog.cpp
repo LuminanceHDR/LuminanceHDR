@@ -92,7 +92,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
     if ( !QIcon::hasThemeIcon("color-management") )
         m_Ui->toolButtonCMS->setIcon(QIcon(":/program-icons/color-management"));
     if ( !QIcon::hasThemeIcon("preferences-system-windows") )
-        m_Ui->toolButtonCMS->setIcon(QIcon(":/program-icons/preferences-system-windows"));
+        m_Ui->toolButtonInterface->setIcon(QIcon(":/program-icons/preferences-system-windows"));
 
     connect(m_Ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_themeChanged()));
 
