@@ -74,6 +74,10 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
         m_Ui->cropButton->setIcon(QIcon(":/program-icons/transform-crop-and-resize"));
     if ( !QIcon::hasThemeIcon("dialog-ok-apply") )
         m_Ui->toolButtonApplyMask->setIcon(QIcon(":/program-icons/dialog-ok-apply"));
+    if ( !QIcon::hasThemeIcon("arrow-up") )
+        m_Ui->prevBothButton->setIcon(QIcon(":/program-icons/uparrow"));
+    if ( !QIcon::hasThemeIcon("arrow-down") )
+        m_Ui->nextBothButton->setIcon(QIcon(":/program-icons/downarrow"));
 
     for (int i = 0; i < agGridSize; i++)
         for (int j = 0; j < agGridSize; j++)
@@ -488,8 +492,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_Ui->saveImagesButton->setDisabled(true);
         //prevBothButton->setIcon(QIcon(":new/prefix1/images/forward.png"));
         //nextBothButton->setIcon(QIcon(":new/prefix1/images/back.png"));
-        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/program-icons/go-next.png")));
-        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/program-icons/go-previous.png")));
+        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/program-icons/go-next")));
+        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/program-icons/go-previous")));
         m_Ui->prevBothButton->setToolTip(tr("Add good image"));
         m_Ui->nextBothButton->setToolTip(tr("Remove good image"));
         m_Ui->nextBothButton->setDisabled(true);
@@ -524,8 +528,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_Ui->label_reference_list->setText(tr("R&eference"));
         //prevBothButton->setIcon(QIcon(":new/prefix1/images/uparrow.png"));
         //nextBothButton->setIcon(QIcon(":new/prefix1/images/downarrow.png"));
-        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("arrow-up", QIcon(":/program-icons/uparrow.png")));
-        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("arrow-down", QIcon(":/program-icons/downarrow.png")));
+        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("arrow-up", QIcon(":/program-icons/uparrow")));
+        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("arrow-down", QIcon(":/program-icons/downarrow")));
         m_Ui->prevBothButton->setToolTip(tr("Select the previous image in both lists"));
         m_Ui->nextBothButton->setToolTip(tr("Select the next image in both lists"));
         m_Ui->prevBothButton->setDisabled(false);
