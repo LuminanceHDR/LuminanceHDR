@@ -45,6 +45,8 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p):
 {
     m_Ui->setupUi(this);
 
+    m_Ui->progressBar->hide();
+
     if ( !QIcon::hasThemeIcon("arrow-up") )
     {
         m_Ui->moveup_right_button->setIcon(QIcon(":/program-icons/arrow-up"));
@@ -279,6 +281,7 @@ void TransplantExifDialog::transplant_requested() {
 		return;
 	}
 
+    m_Ui->progressBar->show();
     m_Ui->progressBar->setMaximum(m_Ui->leftlist->count());
 	//initialize string iterators to the beginning of the lists.
 	QStringList::const_iterator i_source = from.constBegin();

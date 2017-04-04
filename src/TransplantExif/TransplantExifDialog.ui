@@ -146,7 +146,8 @@
              <string>Move up selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset theme="arrow-up"/>
+             <iconset theme="arrow-up">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -162,7 +163,8 @@
              <string>Move down selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset theme="arrow-down"/>
+             <iconset theme="arrow-down">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -282,7 +284,8 @@
              <string>Move up selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset theme="arrow-up"/>
+             <iconset theme="arrow-up">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -298,7 +301,8 @@
              <string>Move down selected file(s)</string>
             </property>
             <property name="icon">
-             <iconset theme="arrow-down"/>
+             <iconset theme="arrow-down">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -431,7 +435,7 @@
         <item>
          <widget class="QLabel" name="filterLabel2">
           <property name="text">
-           <string>&amp;Filter log messages:</string>
+           <string>Filter &amp;log messages:</string>
           </property>
           <property name="buddy">
            <cstring>filterLineEdit</cstring>
@@ -461,19 +465,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QProgressBar" name="progressBar">
-     <property name="value">
-      <number>0</number>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignHCenter</set>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QCheckBox" name="checkBox_dont_overwrite">
      <property name="text">
       <string>Keep existing Exif tags in destination file</string>
@@ -500,6 +491,19 @@
      <property name="bottomMargin">
       <number>0</number>
      </property>
+     <item>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignHCenter</set>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer>
        <property name="orientation">
