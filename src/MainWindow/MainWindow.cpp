@@ -1172,7 +1172,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
             newhdr->setFileName(QString(tr("Untitled")));
             m_tabwidget->addTab(newhdr, QString(new_fname).prepend("(*) "));
 
-            setMainWindowModified(true);
+            setWindowModified(true);
         }
         else
         {
@@ -1182,6 +1182,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
             m_tabwidget->addTab(newhdr, qfileinfo.fileName());
 
             setCurrentFile(new_fname);
+            setWindowModified(needSaving);
         }
 
         m_inputFilesName = inputFileNames;
