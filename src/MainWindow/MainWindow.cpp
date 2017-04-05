@@ -314,7 +314,7 @@ void MainWindow::createUI()
 
     setAcceptDrops(true);
     setWindowModified(false);
-    setWindowTitle(QString("Luminance HDR " LUMINANCEVERSION)); // + "  " + g_GIT_SHA1);
+    setWindowTitle(QString("Luminance HDR " LUMINANCEVERSION " [*]")); // + "  " + g_GIT_SHA1);
 }
 
 void MainWindow::createCentralWidget()
