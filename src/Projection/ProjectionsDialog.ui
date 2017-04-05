@@ -1,78 +1,115 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>ProjectionsDialog</class>
- <widget class="QDialog" name="ProjectionsDialog" >
-  <property name="geometry" >
+ <widget class="QDialog" name="ProjectionsDialog">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>521</width>
-    <height>323</height>
+    <height>377</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Projective Transformation</string>
   </property>
-  <layout class="QVBoxLayout" >
-   <property name="margin" >
-    <number>9</number>
-   </property>
-   <property name="spacing" >
+  <layout class="QVBoxLayout">
+   <property name="spacing">
     <number>6</number>
    </property>
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
+   <property name="rightMargin">
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
+    <number>9</number>
+   </property>
    <item>
-    <widget class="QGroupBox" name="projectionGroupBox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="projectionGroupBox">
+     <property name="title">
       <string>Projections</string>
      </property>
-     <layout class="QVBoxLayout" >
-      <property name="margin" >
-       <number>9</number>
-      </property>
-      <property name="spacing" >
+     <layout class="QVBoxLayout">
+      <property name="spacing">
        <number>6</number>
       </property>
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
+       <number>9</number>
+      </property>
       <item>
-       <layout class="QHBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
+       <layout class="QHBoxLayout">
+        <property name="spacing">
          <number>6</number>
         </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <layout class="QHBoxLayout" >
-          <property name="margin" >
-           <number>0</number>
-          </property>
-          <property name="spacing" >
+         <layout class="QHBoxLayout">
+          <property name="spacing">
            <number>6</number>
           </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
-           <widget class="QLabel" name="labelSrcProj" >
-            <property name="text" >
+           <widget class="QLabel" name="labelSrcProj">
+            <property name="text">
              <string>Source Projection:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="sourceProjection" >
+           <widget class="QComboBox" name="sourceProjection">
             <item>
-             <property name="text" >
+             <property name="text">
               <string>Polar</string>
              </property>
             </item>
             <item>
-             <property name="text" >
+             <property name="text">
               <string>Angular</string>
              </property>
             </item>
             <item>
-             <property name="text" >
+             <property name="text">
               <string>Cylindrical</string>
              </property>
             </item>
             <item>
-             <property name="text" >
+             <property name="text">
               <string>Mirror Ball</string>
              </property>
             </item>
@@ -81,39 +118,48 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" >
-          <property name="margin" >
-           <number>0</number>
-          </property>
-          <property name="spacing" >
+         <layout class="QHBoxLayout">
+          <property name="spacing">
            <number>6</number>
           </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
-           <widget class="QLabel" name="labelDestProj" >
-            <property name="text" >
+           <widget class="QLabel" name="labelDestProj">
+            <property name="text">
              <string>Destination Projection:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="destProjection" >
+           <widget class="QComboBox" name="destProjection">
             <item>
-             <property name="text" >
+             <property name="text">
               <string>Polar</string>
              </property>
             </item>
             <item>
-             <property name="text" >
+             <property name="text">
               <string>Angular</string>
              </property>
             </item>
             <item>
-             <property name="text" >
+             <property name="text">
               <string>Cylindrical</string>
              </property>
             </item>
             <item>
-             <property name="text" >
+             <property name="text">
               <string>Mirror Ball</string>
              </property>
             </item>
@@ -124,19 +170,28 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
-        <property name="margin" >
+       <layout class="QHBoxLayout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <property name="leftMargin">
          <number>0</number>
         </property>
-        <property name="spacing" >
-         <number>6</number>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
         </property>
         <item>
          <spacer>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" >
+          <property name="sizeHint" stdset="0">
            <size>
             <width>81</width>
             <height>26</height>
@@ -145,27 +200,27 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="labelAngles" >
-          <property name="enabled" >
+         <widget class="QLabel" name="labelAngles">
+          <property name="enabled">
            <bool>false</bool>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Angles:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="anglesSpinBox" >
-          <property name="enabled" >
+         <widget class="QSpinBox" name="anglesSpinBox">
+          <property name="enabled">
            <bool>false</bool>
           </property>
-          <property name="suffix" >
+          <property name="suffix">
            <string>°</string>
           </property>
-          <property name="maximum" >
+          <property name="maximum">
            <number>360</number>
           </property>
-          <property name="value" >
+          <property name="value">
            <number>360</number>
           </property>
          </widget>
@@ -173,36 +228,45 @@
        </layout>
       </item>
       <item>
-       <widget class="Line" name="line_2" >
-        <property name="orientation" >
+       <widget class="Line" name="line_2">
+        <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
+       <layout class="QHBoxLayout">
+        <property name="spacing">
          <number>6</number>
         </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QCheckBox" name="bilinearCheckBox" >
-          <property name="text" >
+         <widget class="QCheckBox" name="bilinearCheckBox">
+          <property name="text">
            <string>Bilinear Interpolation</string>
           </property>
-          <property name="checked" >
+          <property name="checked">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
          <spacer>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" >
+          <property name="sizeHint" stdset="0">
            <size>
             <width>101</width>
             <height>26</height>
@@ -211,19 +275,19 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="oversampleLabel" >
-          <property name="text" >
+         <widget class="QLabel" name="oversampleLabel">
+          <property name="text">
            <string>Oversample factor:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="oversampleSpinBox" >
-          <property name="maximum" >
-           <number>20</number>
-          </property>
-          <property name="minimum" >
+         <widget class="QSpinBox" name="oversampleSpinBox">
+          <property name="minimum">
            <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>20</number>
           </property>
          </widget>
         </item>
@@ -233,46 +297,73 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="rotationGroupBox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="rotationGroupBox">
+     <property name="title">
       <string>Rotation (degrees)</string>
      </property>
-     <layout class="QHBoxLayout" >
-      <property name="margin" >
-       <number>9</number>
-      </property>
-      <property name="spacing" >
+     <layout class="QHBoxLayout">
+      <property name="spacing">
        <number>6</number>
       </property>
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
+       <number>9</number>
+      </property>
       <item>
-       <layout class="QVBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
+       <layout class="QVBoxLayout">
+        <property name="spacing">
          <number>6</number>
         </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QLabel" name="XrotLabel" >
-          <property name="text" >
+         <widget class="QLabel" name="XrotLabel">
+          <property name="text">
            <string>Yaw:</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" >
-          <property name="margin" >
+         <layout class="QHBoxLayout">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
            <number>0</number>
           </property>
-          <property name="spacing" >
-           <number>6</number>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
           <item>
            <spacer>
-            <property name="orientation" >
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -281,24 +372,24 @@
            </spacer>
           </item>
           <item>
-           <widget class="QSpinBox" name="XrotSpinBox" >
-            <property name="suffix" >
+           <widget class="QSpinBox" name="XrotSpinBox">
+            <property name="suffix">
              <string>°</string>
             </property>
-            <property name="maximum" >
-             <number>360</number>
-            </property>
-            <property name="minimum" >
+            <property name="minimum">
              <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>360</number>
             </property>
            </widget>
           </item>
           <item>
            <spacer>
-            <property name="orientation" >
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -309,17 +400,17 @@
          </layout>
         </item>
         <item>
-         <widget class="QSlider" name="XSlider" >
-          <property name="maximum" >
+         <widget class="QSlider" name="XSlider">
+          <property name="maximum">
            <number>360</number>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>90</number>
           </property>
          </widget>
@@ -327,41 +418,59 @@
        </layout>
       </item>
       <item>
-       <widget class="Line" name="line_3" >
-        <property name="orientation" >
+       <widget class="Line" name="line_3">
+        <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
+       <layout class="QVBoxLayout">
+        <property name="spacing">
          <number>6</number>
         </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QLabel" name="YrotLabel" >
-          <property name="text" >
+         <widget class="QLabel" name="YrotLabel">
+          <property name="text">
            <string>Pitch:</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" >
-          <property name="margin" >
+         <layout class="QHBoxLayout">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
            <number>0</number>
           </property>
-          <property name="spacing" >
-           <number>6</number>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
           <item>
            <spacer>
-            <property name="orientation" >
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -370,24 +479,24 @@
            </spacer>
           </item>
           <item>
-           <widget class="QSpinBox" name="YrotSpinBox" >
-            <property name="suffix" >
+           <widget class="QSpinBox" name="YrotSpinBox">
+            <property name="suffix">
              <string>°</string>
             </property>
-            <property name="maximum" >
-             <number>360</number>
-            </property>
-            <property name="minimum" >
+            <property name="minimum">
              <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>360</number>
             </property>
            </widget>
           </item>
           <item>
            <spacer>
-            <property name="orientation" >
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -398,17 +507,17 @@
          </layout>
         </item>
         <item>
-         <widget class="QSlider" name="YSlider" >
-          <property name="maximum" >
+         <widget class="QSlider" name="YSlider">
+          <property name="maximum">
            <number>360</number>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>90</number>
           </property>
          </widget>
@@ -416,41 +525,59 @@
        </layout>
       </item>
       <item>
-       <widget class="Line" name="line_4" >
-        <property name="orientation" >
+       <widget class="Line" name="line_4">
+        <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
+       <layout class="QVBoxLayout">
+        <property name="spacing">
          <number>6</number>
         </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
-         <widget class="QLabel" name="ZrotLabel" >
-          <property name="text" >
+         <widget class="QLabel" name="ZrotLabel">
+          <property name="text">
            <string>Roll:</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" >
-          <property name="margin" >
+         <layout class="QHBoxLayout">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
            <number>0</number>
           </property>
-          <property name="spacing" >
-           <number>6</number>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
           <item>
            <spacer>
-            <property name="orientation" >
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -459,24 +586,24 @@
            </spacer>
           </item>
           <item>
-           <widget class="QSpinBox" name="ZrotSpinBox" >
-            <property name="suffix" >
+           <widget class="QSpinBox" name="ZrotSpinBox">
+            <property name="suffix">
              <string>°</string>
             </property>
-            <property name="maximum" >
-             <number>360</number>
-            </property>
-            <property name="minimum" >
+            <property name="minimum">
              <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>360</number>
             </property>
            </widget>
           </item>
           <item>
            <spacer>
-            <property name="orientation" >
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -487,17 +614,17 @@
          </layout>
         </item>
         <item>
-         <widget class="QSlider" name="ZSlider" >
-          <property name="maximum" >
+         <widget class="QSlider" name="ZSlider">
+          <property name="maximum">
            <number>360</number>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="tickPosition" >
+          <property name="tickPosition">
            <enum>QSlider::TicksBelow</enum>
           </property>
-          <property name="tickInterval" >
+          <property name="tickInterval">
            <number>90</number>
           </property>
          </widget>
@@ -508,26 +635,42 @@
     </widget>
    </item>
    <item>
-    <widget class="Line" name="line" >
-     <property name="orientation" >
+    <widget class="Line" name="line">
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
-     <property name="margin" >
-      <number>0</number>
-     </property>
-     <property name="spacing" >
+    <layout class="QHBoxLayout">
+     <property name="spacing">
       <number>6</number>
      </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer>
-       <property name="orientation" >
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
          <height>20</height>
@@ -536,15 +679,15 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="cancelButton" >
-       <property name="text" >
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
         <string>&amp;Cancel</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="okButton" >
-       <property name="text" >
+      <widget class="QPushButton" name="okButton">
+       <property name="text">
         <string>&amp;OK</string>
        </property>
       </widget>
@@ -561,11 +704,11 @@
    <receiver>XSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>122</x>
      <y>254</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>174</x>
      <y>286</y>
     </hint>
@@ -577,11 +720,11 @@
    <receiver>XrotSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>174</x>
      <y>286</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>122</x>
      <y>254</y>
     </hint>
@@ -593,11 +736,11 @@
    <receiver>YrotSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>337</x>
      <y>286</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>285</x>
      <y>254</y>
     </hint>
@@ -609,11 +752,11 @@
    <receiver>YSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>285</x>
      <y>254</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>337</x>
      <y>286</y>
     </hint>
@@ -625,11 +768,11 @@
    <receiver>ZSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>447</x>
      <y>254</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>499</x>
      <y>286</y>
     </hint>
@@ -641,11 +784,11 @@
    <receiver>ZrotSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>499</x>
      <y>286</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>447</x>
      <y>254</y>
     </hint>
@@ -657,11 +800,11 @@
    <receiver>ProjectionsDialog</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>429</x>
      <y>339</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>384</x>
      <y>294</y>
     </hint>

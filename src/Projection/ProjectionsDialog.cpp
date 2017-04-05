@@ -21,11 +21,29 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#include <QtConcurrentRun>
+#include <boost/bind.hpp>
+
 #include "ProjectionsDialog.h"
 #include "ui_ProjectionsDialog.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/projection.h"
+
+static void worker(pfs::Frame *original, pfs::Frame *transformed, int xSize, int ySize, TransformInfo *transforminfo)
+{
+    const pfs::ChannelContainer& channels = original->getChannels();
+
+    for (pfs::ChannelContainer::const_iterator it = channels.begin();
+         it != channels.end(); ++it)
+    {
+        pfs::Channel *newCh = transformed->createChannel( (*it)->getName() );
+
+        transformArray(*it, newCh, transforminfo);
+    }
+
+    pfs::copyTags( original, transformed );
+}
 
 ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
     QDialog(parent),
@@ -34,6 +52,8 @@ ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
     m_Ui(new Ui::ProjectionsDialog)
 {
     m_Ui->setupUi(this);
+
+    m_Ui->progressBar->hide();
 
 	projectionList.append(&(PolarProjection::singleton));
 	projectionList.append(&(AngularProjection::singleton));
@@ -52,6 +72,8 @@ ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
     connect(m_Ui->YrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(YRotChanged(int)));
     connect(m_Ui->ZrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(ZRotChanged(int)));
     connect(m_Ui->anglesSpinBox,SIGNAL(valueChanged(int)),this,SLOT(anglesAngularDestinationProj(int)));
+
+    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(projectionFinished()), Qt::DirectConnection);
 }
 
 ProjectionsDialog::~ProjectionsDialog() {
@@ -93,20 +115,27 @@ void ProjectionsDialog::okClicked()
 {
 	qDebug("Projective Transformation from %s to %s", transforminfo->srcProjection->getName(), transforminfo->dstProjection->getName());
 
+    m_Ui->progressBar->setMaximum(0);
+    m_Ui->progressBar->setMinimum(0);
+    m_Ui->progressBar->setValue(-1);
+    m_Ui->progressBar->show();
+    m_Ui->cancelButton->setDisabled(true);
+    m_Ui->okButton->setDisabled(true);
+
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
     int xSize = original->getWidth();
     int ySize = static_cast<int>(xSize / transforminfo->dstProjection->getSizeRatio());
     transformed = new pfs::Frame( xSize,ySize );
 
-    const pfs::ChannelContainer& channels = original->getChannels();
+    m_future = QtConcurrent::run(boost::bind(&worker, original, transformed, xSize, ySize, transforminfo));
 
-    for (pfs::ChannelContainer::const_iterator it = channels.begin();
-         it != channels.end(); ++it)
-    {
-        pfs::Channel *newCh = transformed->createChannel( (*it)->getName() );
+    m_futureWatcher.setFuture(m_future);
 
-        transformArray(*it, newCh, transforminfo);
-    }
+}
 
-	pfs::copyTags( original, transformed );
+void ProjectionsDialog::projectionFinished()
+{
+    QApplication::restoreOverrideCursor();
 	emit accept();
 }

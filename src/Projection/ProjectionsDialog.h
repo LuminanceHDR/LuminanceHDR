@@ -25,6 +25,8 @@
 #define PROJECTIVE_TRANSF_H
 
 #include <QDialog>
+#include <QFuture>
+#include <QFutureWatcher>
 
 namespace Ui {
     class ProjectionsDialog;
@@ -49,6 +51,8 @@ private:
 	pfs::Frame *original, *transformed;
 	QList <Projection*> projectionList;
     QScopedPointer<Ui::ProjectionsDialog> m_Ui;
+    QFutureWatcher<void> m_futureWatcher;
+    QFuture<void> m_future;
 private slots:
 	void okClicked();
 	void XRotChanged(int);
@@ -59,6 +63,7 @@ private slots:
 	void dstProjActivated(int);
 	void srcProjActivated(int);
 	void anglesAngularDestinationProj(int);
+    void projectionFinished();
 };
 
 inline pfs::Frame* ProjectionsDialog::getTranformedFrame()
