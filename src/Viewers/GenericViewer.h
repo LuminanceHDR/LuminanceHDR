@@ -210,6 +210,7 @@ private:
 Q_SIGNALS:
     void selectionReady(bool isReady);
     void changed(GenericViewer *v);     // emitted when zoomed in/out, scrolled ....
+    void reparent(GenericViewer *v);    // emitted when exit fullscreen
 };
 
 inline

@@ -429,8 +429,7 @@ void GenericViewer::startDragging()
 void GenericViewer::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_F10) {
-        mFrame.reset();
-        this->hide();
+        emit reparent(this);
     }
     else if (event->key() == Qt::Key_Plus) {
         zoomIn();

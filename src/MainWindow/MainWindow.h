@@ -217,6 +217,8 @@ protected Q_SLOTS:
 
     void updatePreviews(bool);
 
+    void reparentViewer(GenericViewer *g_v);
+
 Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);
@@ -226,6 +228,8 @@ protected:
     QSplitter *m_bottom_splitter;
 
     QTabWidget *m_tabwidget;
+    QString m_tabText;
+    int m_viewerIndex;
 
     QSignalMapper *windowMapper;
     LuminanceOptions *luminance_options;
@@ -317,8 +321,6 @@ private:
 
     QFutureWatcher<void> m_futureWatcher;
     GenericViewer *m_viewerToProcess;
-    LdrViewer *m_fullScreenLdrViewer;
-    HdrViewer *m_fullScreenHdrViewer;
     bool m_processingAWB;
     int m_firstWindow;
     

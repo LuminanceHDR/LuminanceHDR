@@ -193,8 +193,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
-    , m_fullScreenLdrViewer(new LdrViewer(NULL))
-    , m_fullScreenHdrViewer(new HdrViewer(NULL))
     , m_firstWindow(0)
 {
     init();
@@ -206,8 +204,6 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
-    , m_fullScreenLdrViewer(new LdrViewer(NULL))
-    , m_fullScreenHdrViewer(new HdrViewer(NULL))
     , m_firstWindow(0)
 {
     init();
@@ -243,8 +239,6 @@ MainWindow::~MainWindow()
 
     clearRecentFileActions();
     delete luminance_options;
-    delete m_fullScreenLdrViewer;
-    delete m_fullScreenHdrViewer;
 }
 
 void MainWindow::init()
@@ -1160,6 +1154,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
                 this, SLOT(syncViewers(GenericViewer*)));
         connect(newhdr, SIGNAL(changed(GenericViewer*)),
                 this, SLOT(updateMagnificationButtons(GenericViewer*)));
+        connect(newhdr, SIGNAL(reparent(GenericViewer*)),
+                this, SLOT(reparentViewer(GenericViewer*)));
 
         newhdr->setViewerMode( getCurrentViewerMode(*m_tabwidget) );
 
@@ -1717,6 +1713,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 
         connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
         connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
+        connect(n, SIGNAL(reparent(GenericViewer*)), this, SLOT(reparentViewer(GenericViewer*)));
 
         if (num_ldr_generated == 1)
             m_tabwidget->addTab(n, tr("Untitled"));
@@ -2185,16 +2182,16 @@ void MainWindow::on_actionShow_Full_Screen_toggled(bool b)
 
 void MainWindow::on_actionShow_Image_Full_Screen_triggered()
 {
+    m_viewerIndex = m_tabwidget->currentIndex();
+    m_tabText = m_tabwidget->tabText(m_viewerIndex);
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-    pfs::Frame* frame = pfs::copy(g_v->getFrame()); //frame is assigned to one viewer that will take care of deleting it
-    if (g_v->isHDR())
-    {
-        m_fullScreenHdrViewer->setFrame(frame);
-        m_fullScreenHdrViewer->showFullScreen();
-    }
-    else
-    {
-        m_fullScreenLdrViewer->setFrame(frame);
-        m_fullScreenLdrViewer->showFullScreen();
-    }
+    g_v->setParent(0);
+    g_v->showFullScreen();
+}
+
+void MainWindow::reparentViewer(GenericViewer *g_v)
+{
+    m_tabwidget->insertTab(m_viewerIndex, g_v, m_tabText);
+    m_tabwidget->setCurrentIndex(m_viewerIndex);
+    g_v->showNormal();
 }
