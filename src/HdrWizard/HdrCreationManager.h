@@ -74,6 +74,11 @@ public:
     QStringList getFilesWithoutExif() const;
     size_t numFilesWithoutExif() const;
 
+    void setLoadResponseCurve(bool b) { m_isLoadResponseCurve = b; }
+    bool isLoadResponseCurve() const { return m_isLoadResponseCurve; }
+    void setResponseCurveInputFilename(const QString &fn) { m_responseCurveInputFilename = fn; }
+    QString & getResponseCurveInputFilename() { return m_responseCurveInputFilename; }
+
     // iterators
     typedef HdrCreationItemContainer::iterator          iterator;
     typedef HdrCreationItemContainer::const_iterator    const_iterator;
@@ -158,6 +163,7 @@ private:
     std::unique_ptr<libhdr::fusion::ResponseCurve> m_response;
     std::unique_ptr<libhdr::fusion::WeightFunction> m_weight;
     libhdr::fusion::FusionOperator m_fusionOperator;
+    QString m_responseCurveInputFilename;
     QString m_responseCurveOutputFilename;
 
     QFutureWatcher<void> m_futureWatcher;
@@ -172,6 +178,7 @@ private:
 	bool fromCommandLine;
     int m_agGoodImageIndex;
     bool m_patches[agGridSize][agGridSize];
+    bool m_isLoadResponseCurve;
 
 private slots:
 	void ais_failed_slot(QProcess::ProcessError);

@@ -70,7 +70,11 @@ ResponseCurveType ResponseCurve::fromString(const std::string& type)
 
 ResponseCurve::ResponseCurve(ResponseCurveType type)
     : m_type(type)
+    , m_num_bins(1 << 8)
 {
+    m_responses[RESPONSE_CHANNEL_RED].resize(m_num_bins);
+    m_responses[RESPONSE_CHANNEL_GREEN].resize(m_num_bins);
+    m_responses[RESPONSE_CHANNEL_BLUE].resize(m_num_bins);
     setType(type);
 }
 
@@ -81,7 +85,7 @@ void ResponseCurve::writeToFile(const std::string& fileName) const
                  m_responses[RESPONSE_CHANNEL_RED].data(),
                  m_responses[RESPONSE_CHANNEL_GREEN].data(),
                  m_responses[RESPONSE_CHANNEL_BLUE].data(),
-                 NUM_BINS);
+                 m_num_bins);
 }
 
 bool ResponseCurve::readFromFile(const string &fileName)
@@ -91,7 +95,7 @@ bool ResponseCurve::readFromFile(const string &fileName)
                       m_responses[RESPONSE_CHANNEL_RED].data(),
                       m_responses[RESPONSE_CHANNEL_GREEN].data(),
                       m_responses[RESPONSE_CHANNEL_BLUE].data(),
-                      NUM_BINS))
+                      m_num_bins))
     {
         throw std::runtime_error("Invalid response curve file");
     }
@@ -100,15 +104,15 @@ bool ResponseCurve::readFromFile(const string &fileName)
     return true;
 }
 
-static
 void fillResponseLinear(ResponseCurve::ResponseContainer& response)
 {
     // fill response function
-    size_t divider = (response.size() - 1);
+    float factor = 1.f/(float)(response.size() - 1);
     for (size_t i = 0; i < response.size(); ++i)
     {
-        response[i] = (float)i/divider;
+        response[i] = (float)i*factor;
     }
+    response[0] = response[1];
 }
 
 void fillResponseGamma(ResponseCurve::ResponseContainer& response)
@@ -174,6 +178,10 @@ void ResponseCurve::setType(ResponseCurveType type)
     }
 
     m_type = type_;
+
+    m_responses[RESPONSE_CHANNEL_RED].resize(m_num_bins);
+    m_responses[RESPONSE_CHANNEL_GREEN].resize(m_num_bins);
+    m_responses[RESPONSE_CHANNEL_BLUE].resize(m_num_bins);
 
     func_(m_responses[RESPONSE_CHANNEL_RED]);
     func_(m_responses[RESPONSE_CHANNEL_GREEN]);

@@ -81,7 +81,7 @@ FitsImporter::FitsImporter(QWidget *parent)
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
 
-    setPixmap(WizardPixmap::LogoPixmap, QIcon(":/program-icons/Galaxy-icon.png").pixmap(48, 48));
+    setPixmap(WizardPixmap::LogoPixmap, QIcon(":/program-icons/Galaxy-icon").pixmap(48, 48));
 
     m_previewLabel = new QLabel(this);
     m_previewLabel->resize(600,400);

@@ -37,6 +37,7 @@ WeightFunctionType WeightFunction::fromString(const std::string& type)
 
 WeightFunction::WeightFunction(WeightFunctionType type)
     : m_type(type)
+    , m_num_bins(1 << 8)
 {
     setType(type);
 }
@@ -154,6 +155,7 @@ void WeightFunction::setType(WeightFunctionType type)
     }
 
     m_type = type_;
+    m_weights.resize(m_num_bins);
     func_.fillData(m_weights);
     m_minTrustedValue = func_.minTrustValue();
     m_maxTrustedValue = func_.maxTrustValue();

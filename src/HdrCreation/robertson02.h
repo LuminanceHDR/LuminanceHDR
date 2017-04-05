@@ -51,18 +51,18 @@ public:
 private:
     void computeFusion(
             ResponseCurve& response,
-            const WeightFunction& weight,
-            const std::vector<FrameEnhanced>& frames, pfs::Frame& frame) const;
+            WeightFunction& weight,
+            const std::vector<FrameEnhanced>& frames, pfs::Frame &frame);
 
 protected:
     void applyResponse(
             ResponseCurve& response,
-            const WeightFunction& weight,
+            WeightFunction& weight,
             ResponseChannel channel,
             const DataList& inputData, float* outputData,
             size_t width, size_t height,
             float minAllowedValue, float maxAllowedValue,
-            const float* arrayofexptime) const;
+            const float* arrayofexptime);
 };
 
 class RobertsonOperatorAuto : public RobertsonOperator
@@ -80,17 +80,17 @@ public:
 private:
     void computeFusion(
             ResponseCurve& response,
-            const WeightFunction& weight,
-            const std::vector<FrameEnhanced>& frames, pfs::Frame& outFrame) const;
+            WeightFunction& weight,
+            const std::vector<FrameEnhanced>& frames, pfs::Frame &outFrame);
 
     void computeResponse(
             ResponseCurve& response,
-            const WeightFunction& weight,
+            WeightFunction& weight,
             ResponseChannel channel,
             const DataList& inputData, float* outputData,
             size_t width, size_t height,
             float minAllowedValue, float maxAllowedValue,
-            const float* arrayofexptime) const;
+            const float* arrayofexptime);
 };
 
 }   // fusion

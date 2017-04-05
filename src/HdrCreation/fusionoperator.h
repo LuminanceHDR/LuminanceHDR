@@ -42,17 +42,20 @@ namespace fusion {
 class FrameEnhanced
 {
 public:
-    FrameEnhanced(const pfs::FramePtr& frame, float averageLuminance)
+    FrameEnhanced(const pfs::FramePtr& frame, float averageLuminance, int bps)
         : m_frame(frame)
         , m_averageLuminance(averageLuminance)
+        , m_bps(bps)
     {}
 
     const pfs::FramePtr& frame() const { return m_frame; }
     float averageLuminance() const { return m_averageLuminance; }
+    int   getBPS() const { return m_bps; }
 
 private:
     pfs::FramePtr m_frame;
     float m_averageLuminance;
+    int m_bps;
 };
 
 enum FusionOperator
@@ -81,8 +84,8 @@ public:
 
     pfs::Frame* computeFusion(
             ResponseCurve& response,
-            const WeightFunction& weight,
-            const std::vector<FrameEnhanced>& frames) const;
+            WeightFunction& weight,
+            const std::vector<FrameEnhanced>& frames);
 
     virtual FusionOperator getType() const = 0;
 
@@ -91,9 +94,9 @@ protected:
 
     virtual void computeFusion(
             ResponseCurve& response,
-            const WeightFunction& weight,
+            WeightFunction& weight,
             const std::vector<FrameEnhanced>& frames,
-            pfs::Frame& outFrame) const = 0;
+            pfs::Frame &outFrame) = 0;
 };
 
 typedef vector<float*> DataList;

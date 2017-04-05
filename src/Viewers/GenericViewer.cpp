@@ -76,7 +76,7 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     connect(mView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
 
     mCornerButton = new QToolButton(this);
-    mCornerButton->setIcon(QIcon::fromTheme("move", QIcon(":/icons/images/move.png")));
+    mCornerButton->setIcon(QIcon::fromTheme("move", QIcon(":/program-icons/move")));
 
     mView->setCornerWidget(mCornerButton);
 

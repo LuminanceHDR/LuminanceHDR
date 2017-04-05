@@ -3,6 +3,7 @@
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * Copyright (C) 2013 Davide Anastasia
+ * Copyright (C) 2017 Franco Comida
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +30,8 @@
 //! \author Giuseppe Rota <grota@users.sourceforge.net>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! Adaptation for Luminance HDR
+//! \author Franco Comida <fcomida@users.sourceforge.net>
+//! New Debevec implementation
 
 namespace libhdr {
 namespace fusion {
@@ -47,9 +50,9 @@ public:
     }
 
 private:
-    void computeFusion(ResponseCurve& response, const WeightFunction& weight,
+    void computeFusion(ResponseCurve& response, WeightFunction& weight,
                        const std::vector<FrameEnhanced> &frames,
-                       pfs::Frame& frame) const;
+                       pfs::Frame &frame);
 };
 
 }   // fusion

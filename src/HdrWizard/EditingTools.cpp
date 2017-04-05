@@ -490,8 +490,6 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_Ui->label_editable_list->setText(tr("Maskable"));
         m_Ui->label_reference_list->setText(tr("Good image"));
         m_Ui->saveImagesButton->setDisabled(true);
-        //prevBothButton->setIcon(QIcon(":new/prefix1/images/forward.png"));
-        //nextBothButton->setIcon(QIcon(":new/prefix1/images/back.png"));
         m_Ui->prevBothButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/program-icons/go-next")));
         m_Ui->nextBothButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/program-icons/go-previous")));
         m_Ui->prevBothButton->setToolTip(tr("Add good image"));
@@ -526,8 +524,6 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         disconnect(m_Ui->movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
         m_Ui->label_editable_list->setText(tr("Ed&itable"));
         m_Ui->label_reference_list->setText(tr("R&eference"));
-        //prevBothButton->setIcon(QIcon(":new/prefix1/images/uparrow.png"));
-        //nextBothButton->setIcon(QIcon(":new/prefix1/images/downarrow.png"));
         m_Ui->prevBothButton->setIcon(QIcon::fromTheme("arrow-up", QIcon(":/program-icons/uparrow")));
         m_Ui->nextBothButton->setIcon(QIcon::fromTheme("arrow-down", QIcon(":/program-icons/downarrow")));
         m_Ui->prevBothButton->setToolTip(tr("Select the previous image in both lists"));

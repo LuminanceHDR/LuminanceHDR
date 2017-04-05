@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="program-icons">
+        <file alias="move">program-icons/move.png</file>
         <file alias="applications-astronomy">program-icons/applications-astronomy.png</file>
         <file alias="gamut">program-icons/gamut.png</file>
         <file alias="ghost">program-icons/ghost.png</file>
