@@ -764,7 +764,8 @@ void CommandLineInterfaceManager::setProgressBar(int max)
     oldValue = 0;
     progressBar.reset();
     progressBar.n = max;
-    std::cout << std::endl;
+    if (verbose)
+        std::cout << std::endl;
     started = true;
 }
 
