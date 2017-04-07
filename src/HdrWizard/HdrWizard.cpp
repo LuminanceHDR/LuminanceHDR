@@ -597,7 +597,9 @@ void HdrWizard::enableNextOrWarning(const QStringList& filesWithoutExif)
         // "<ul><li>Shutter Speed (seconds)</li>"
         // "<li>Aperture (f-number)</li></ul>"
 
+        QApplication::restoreOverrideCursor();
         QMessageBox::warning(this, tr("EXIF data not found"), warningMessage);
+        QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     }
     updateLabelMaybeNext(filesWithoutExif.size());
 }
