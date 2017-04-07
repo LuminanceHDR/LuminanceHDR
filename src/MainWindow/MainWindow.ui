@@ -727,6 +727,9 @@
    <property name="whatsThis">
     <string>Show information about Luminance HDR, its authors and contributors</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
   </action>
   <action name="actionSave_Hdr_Preview">
    <property name="enabled">
@@ -769,6 +772,9 @@
    <property name="whatsThis">
     <string>Apply projective transformation to the current HDR image</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+J</string>
+   </property>
   </action>
   <action name="cropToSelectionAction">
    <property name="enabled">
@@ -793,6 +799,9 @@
    <property name="whatsThis">
     <string>Click and drag inside image area to create a selection, then use this button to crop to a new HDR image</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
   </action>
   <action name="removeSelectionAction">
    <property name="enabled">
@@ -813,6 +822,9 @@
    </property>
    <property name="whatsThis">
     <string>Remove selection rectangle from image area</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
    </property>
   </action>
   <action name="actionDonate">
@@ -1106,6 +1118,9 @@
    <property name="toolTip">
     <string>Export to web page with embedded HDR viewer</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
   </action>
   <action name="actionShow_Full_Screen">
    <property name="checkable">
@@ -1142,6 +1157,9 @@
    </property>
    <property name="toolTip">
     <string>Lists all cameras supported by the program</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
  </widget>
