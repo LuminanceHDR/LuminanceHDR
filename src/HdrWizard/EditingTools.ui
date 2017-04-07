@@ -1169,6 +1169,18 @@ p, li { white-space: pre-wrap; }
                            <layout class="QHBoxLayout" name="horizontalLayout_4">
                             <item>
                              <widget class="QToolButton" name="toolButtonPath">
+                              <property name="minimumSize">
+                               <size>
+                                <width>38</width>
+                                <height>38</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>38</width>
+                                <height>38</height>
+                               </size>
+                              </property>
                               <property name="toolTip">
                                <string>Lasso - Draw a free hand selection area</string>
                               </property>
@@ -1178,8 +1190,8 @@ p, li { white-space: pre-wrap; }
                               </property>
                               <property name="iconSize">
                                <size>
-                                <width>22</width>
-                                <height>22</height>
+                                <width>32</width>
+                                <height>32</height>
                                </size>
                               </property>
                               <property name="checkable">
@@ -1192,6 +1204,18 @@ p, li { white-space: pre-wrap; }
                             </item>
                             <item>
                              <widget class="QToolButton" name="toolButtonPaint">
+                              <property name="minimumSize">
+                               <size>
+                                <width>38</width>
+                                <height>38</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>38</width>
+                                <height>38</height>
+                               </size>
+                              </property>
                               <property name="toolTip">
                                <string>Brush - Paint the mask using the brush</string>
                               </property>
@@ -1201,8 +1225,8 @@ p, li { white-space: pre-wrap; }
                               </property>
                               <property name="iconSize">
                                <size>
-                                <width>22</width>
-                                <height>22</height>
+                                <width>32</width>
+                                <height>32</height>
                                </size>
                               </property>
                               <property name="checkable">
@@ -1229,6 +1253,18 @@ p, li { white-space: pre-wrap; }
                            <layout class="QHBoxLayout" name="horizontalLayout">
                             <item>
                              <widget class="QToolButton" name="toolButtonSaveMask">
+                              <property name="minimumSize">
+                               <size>
+                                <width>38</width>
+                                <height>38</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>38</width>
+                                <height>38</height>
+                               </size>
+                              </property>
                               <property name="toolTip">
                                <string>Save mask</string>
                               </property>
@@ -1238,8 +1274,8 @@ p, li { white-space: pre-wrap; }
                               </property>
                               <property name="iconSize">
                                <size>
-                                <width>22</width>
-                                <height>22</height>
+                                <width>32</width>
+                                <height>32</height>
                                </size>
                               </property>
                              </widget>
@@ -1248,6 +1284,18 @@ p, li { white-space: pre-wrap; }
                              <widget class="QToolButton" name="toolButtonApplyMask">
                               <property name="enabled">
                                <bool>false</bool>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>38</width>
+                                <height>38</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>38</width>
+                                <height>38</height>
+                               </size>
                               </property>
                               <property name="toolTip">
                                <string>Apply saved mask</string>
@@ -1258,8 +1306,8 @@ p, li { white-space: pre-wrap; }
                               </property>
                               <property name="iconSize">
                                <size>
-                                <width>22</width>
-                                <height>22</height>
+                                <width>32</width>
+                                <height>32</height>
                                </size>
                               </property>
                              </widget>
