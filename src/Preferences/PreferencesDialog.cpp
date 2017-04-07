@@ -576,7 +576,17 @@ void PreferencesDialog::on_green_toolButton_clicked()
 
 void PreferencesDialog::toolButton_clicked(int index)
 {
+    QObject* tabEntries[] = {
+        m_Ui->toolButtonInterface,
+        m_Ui->toolButtonQueue,
+        m_Ui->toolButtonTM,
+        m_Ui->toolButtonRAW,
+        m_Ui->toolButtonCMS,
+        m_Ui->toolButtonExtTool
+    };
     m_Ui->stackedPagesWidget->setCurrentIndex(index);
+    QToolButton *tb = dynamic_cast<QToolButton *>(tabEntries[index]);
+    tb->setFocus();
 }
 
 void PreferencesDialog::from_options_to_gui()
