@@ -431,6 +431,12 @@ p, li { white-space: pre-wrap; }
                </property>
                <item>
                 <widget class="QToolButton" name="fitButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>70</width>
@@ -439,7 +445,7 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>70</width>
+                   <width>16777215</width>
                    <height>16777215</height>
                   </size>
                  </property>
@@ -477,6 +483,12 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QToolButton" name="fillButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>70</width>
@@ -485,7 +497,7 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>70</width>
+                   <width>16777215</width>
                    <height>16777215</height>
                   </size>
                  </property>
@@ -520,6 +532,12 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QToolButton" name="origSizeButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>70</width>
@@ -528,7 +546,7 @@ p, li { white-space: pre-wrap; }
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>70</width>
+                   <width>16777215</width>
                    <height>16777215</height>
                   </size>
                  </property>
@@ -718,7 +736,7 @@ p, li { white-space: pre-wrap; }
              <item row="0" column="0">
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="page">
                 <layout class="QGridLayout" name="gridLayout_7">
@@ -1866,6 +1884,102 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>985</x>
      <y>553</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>label_2</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>279</x>
+     <y>515</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>totalPatches_lineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>473</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>342</x>
+     <y>531</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>label_5</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>476</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>80</x>
+     <y>576</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>threshold_horizontalSlider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>472</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>147</x>
+     <y>579</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>threshold_doubleSpinBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>223</x>
+     <y>470</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>235</x>
+     <y>567</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoAG_checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>recomputePatches_pushButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>252</x>
+     <y>475</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>306</x>
+     <y>572</y>
     </hint>
    </hints>
   </connection>
