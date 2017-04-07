@@ -243,12 +243,18 @@
        <property name="text">
         <string>&amp;Cancel</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="scaleButton">
        <property name="text">
         <string>&amp;Scale</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

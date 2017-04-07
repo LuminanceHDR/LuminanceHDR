@@ -683,12 +683,18 @@
        <property name="text">
         <string>&amp;Cancel</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="okButton">
        <property name="text">
         <string>&amp;OK</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -709,8 +715,8 @@
      <y>254</y>
     </hint>
     <hint type="destinationlabel">
-     <x>174</x>
-     <y>286</y>
+     <x>168</x>
+     <y>305</y>
     </hint>
    </hints>
   </connection>
@@ -721,8 +727,8 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>174</x>
-     <y>286</y>
+     <x>168</x>
+     <y>305</y>
     </hint>
     <hint type="destinationlabel">
      <x>122</x>
@@ -737,8 +743,8 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>337</x>
-     <y>286</y>
+     <x>334</x>
+     <y>305</y>
     </hint>
     <hint type="destinationlabel">
      <x>285</x>
@@ -757,8 +763,8 @@
      <y>254</y>
     </hint>
     <hint type="destinationlabel">
-     <x>337</x>
-     <y>286</y>
+     <x>334</x>
+     <y>305</y>
     </hint>
    </hints>
   </connection>
@@ -801,8 +807,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>429</x>
-     <y>339</y>
+     <x>420</x>
+     <y>366</y>
     </hint>
     <hint type="destinationlabel">
      <x>384</x>

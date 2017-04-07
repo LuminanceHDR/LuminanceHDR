@@ -196,6 +196,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>listWidget</tabstop>
+ </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
  </resources>

@@ -243,7 +243,7 @@ See documentation for more information.</string>
                <string>Use Hugin's align_image_stack engine</string>
               </property>
               <property name="text">
-               <string>&amp;Hugin's align_image_stack</string>
+               <string>Hugin's align_&amp;image_stack</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -289,6 +289,9 @@ See documentation for more information.</string>
        <property name="text">
         <string>&amp;Cancel</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -299,12 +302,18 @@ See documentation for more information.</string>
        <property name="text">
         <string>&amp;Start</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="closeButton">
        <property name="text">
         <string>&amp;Close</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -377,6 +386,9 @@ See documentation for more information.</string>
            <iconset theme="document-open">
             <normaloff>.</normaloff>.</iconset>
           </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item row="0" column="3">
@@ -390,6 +402,9 @@ See documentation for more information.</string>
           <property name="icon">
            <iconset theme="document-open">
             <normaloff>.</normaloff>.</iconset>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -535,10 +550,15 @@ See documentation for more information.</string>
   <tabstop>horizontalSlider</tabstop>
   <tabstop>spinBox</tabstop>
   <tabstop>formatComboBox</tabstop>
+  <tabstop>formatSettingsButton</tabstop>
   <tabstop>profileComboBox</tabstop>
   <tabstop>autoAlignCheckBox</tabstop>
   <tabstop>aisRadioButton</tabstop>
   <tabstop>MTBRadioButton</tabstop>
+  <tabstop>autoCropCheckBox</tabstop>
+  <tabstop>autoAG_checkBox</tabstop>
+  <tabstop>threshold_horizontalSlider</tabstop>
+  <tabstop>threshold_doubleSpinBox</tabstop>
   <tabstop>inputLineEdit</tabstop>
   <tabstop>selectInputFolder</tabstop>
   <tabstop>outputLineEdit</tabstop>

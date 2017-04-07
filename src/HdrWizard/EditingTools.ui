@@ -248,7 +248,7 @@ This image's histogram is diplayed in the widget above.</string>
                <item>
                 <widget class="QLabel" name="label_reference_list">
                  <property name="text">
-                  <string>Refere&amp;nce</string>
+                  <string>Referen&amp;ce</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -671,6 +671,9 @@ p, li { white-space: pre-wrap; }
                   <iconset theme="edit-select-lasso">
                    <normaloff>.</normaloff>.</iconset>
                  </property>
+                 <property name="autoDefault">
+                  <bool>false</bool>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -715,7 +718,7 @@ p, li { white-space: pre-wrap; }
              <item row="0" column="0">
               <widget class="QStackedWidget" name="stackedWidget">
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="page">
                 <layout class="QGridLayout" name="gridLayout_7">
@@ -888,6 +891,9 @@ p, li { white-space: pre-wrap; }
                           </property>
                           <property name="text">
                            <string>Recompute</string>
+                          </property>
+                          <property name="autoDefault">
+                           <bool>false</bool>
                           </property>
                          </widget>
                         </item>
@@ -1452,6 +1458,9 @@ p, li { white-space: pre-wrap; }
                 <property name="text">
                  <string>&amp;Reset</string>
                 </property>
+                <property name="autoDefault">
+                 <bool>false</bool>
+                </property>
                </widget>
               </item>
               <item>
@@ -1461,6 +1470,9 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <property name="text">
                  <string>Reset &amp;All</string>
+                </property>
+                <property name="autoDefault">
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -1709,8 +1721,11 @@ p, li { white-space: pre-wrap; }
        <property name="text">
         <string>&amp;Next &gt;</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
        <property name="default">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -1719,12 +1734,57 @@ p, li { white-space: pre-wrap; }
        <property name="text">
         <string>&amp;Cancel</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>movableListWidget</tabstop>
+  <tabstop>referenceListWidget</tabstop>
+  <tabstop>prevBothButton</tabstop>
+  <tabstop>nextBothButton</tabstop>
+  <tabstop>fitButton</tabstop>
+  <tabstop>fillButton</tabstop>
+  <tabstop>origSizeButton</tabstop>
+  <tabstop>blendModeCB</tabstop>
+  <tabstop>maskColorButton</tabstop>
+  <tabstop>lassoColorButton</tabstop>
+  <tabstop>autoAG_checkBox</tabstop>
+  <tabstop>totalPatches_lineEdit</tabstop>
+  <tabstop>threshold_horizontalSlider</tabstop>
+  <tabstop>threshold_doubleSpinBox</tabstop>
+  <tabstop>recomputePatches_pushButton</tabstop>
+  <tabstop>cropButton</tabstop>
+  <tabstop>antighostToolButton</tabstop>
+  <tabstop>saveImagesButton</tabstop>
+  <tabstop>resetButton</tabstop>
+  <tabstop>resetAllButton</tabstop>
+  <tabstop>horizShiftSB</tabstop>
+  <tabstop>vertShiftSB</tabstop>
+  <tabstop>upToolButton</tabstop>
+  <tabstop>leftToolButton</tabstop>
+  <tabstop>rightToolButton</tabstop>
+  <tabstop>downToolButton</tabstop>
+  <tabstop>Next_Finishbutton</tabstop>
+  <tabstop>cancelbutton</tabstop>
+  <tabstop>whatsThisButton</tabstop>
+  <tabstop>addMaskRadioButton</tabstop>
+  <tabstop>removeMaskRadioButton</tabstop>
+  <tabstop>agBrushSizeQSlider</tabstop>
+  <tabstop>agBrushSizeQSpinbox</tabstop>
+  <tabstop>agBrushStrengthQSlider</tabstop>
+  <tabstop>agBrushStrengthQSpinbox</tabstop>
+  <tabstop>toolButtonPath</tabstop>
+  <tabstop>toolButtonPaint</tabstop>
+  <tabstop>toolButtonSaveMask</tabstop>
+  <tabstop>toolButtonApplyMask</tabstop>
+  <tabstop>previewImageFrame</tabstop>
+ </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
  </resources>

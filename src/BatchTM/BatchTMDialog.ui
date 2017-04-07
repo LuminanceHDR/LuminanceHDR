@@ -308,6 +308,9 @@
          <iconset theme="document-open">
           <normaloff>.</normaloff>.</iconset>
         </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item row="3" column="1" colspan="4">
@@ -442,7 +445,7 @@
         <item>
          <widget class="QLabel" name="filterLabel1">
           <property name="text">
-           <string>S&amp;how only:</string>
+           <string>Show onl&amp;y:</string>
           </property>
           <property name="buddy">
            <cstring>filterComboBox</cstring>
@@ -477,7 +480,7 @@
         <item>
          <widget class="QLabel" name="filterLabel2">
           <property name="text">
-           <string>&amp;Filter log messages:</string>
+           <string>Filter &amp;log messages:</string>
           </property>
           <property name="buddy">
            <cstring>filterLineEdit</cstring>
@@ -564,8 +567,11 @@
        <property name="text">
         <string>&amp;Start</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
        <property name="default">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -574,6 +580,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>listWidget_HDRs</tabstop>
+  <tabstop>listWidget_TMopts</tabstop>
   <tabstop>add_dir_HDRs_Button</tabstop>
   <tabstop>add_HDRs_Button</tabstop>
   <tabstop>remove_HDRs_Button</tabstop>
@@ -581,12 +589,16 @@
   <tabstop>add_TMopts_Button</tabstop>
   <tabstop>from_Database_Button</tabstop>
   <tabstop>remove_TMOpts_Button</tabstop>
-  <tabstop>listWidget_HDRs</tabstop>
-  <tabstop>listWidget_TMopts</tabstop>
+  <tabstop>comboBoxFormat</tabstop>
+  <tabstop>formatSettingsButton</tabstop>
+  <tabstop>horizontalSlider_Width</tabstop>
+  <tabstop>spinBox_Width</tabstop>
+  <tabstop>out_folder_widgets</tabstop>
+  <tabstop>out_folder_Button</tabstop>
+  <tabstop>Log_Widget</tabstop>
   <tabstop>filterComboBox</tabstop>
   <tabstop>filterLineEdit</tabstop>
   <tabstop>clearTextToolButton</tabstop>
-  <tabstop>Log_Widget</tabstop>
   <tabstop>cancelbutton</tabstop>
   <tabstop>BatchGoButton</tabstop>
  </tabstops>

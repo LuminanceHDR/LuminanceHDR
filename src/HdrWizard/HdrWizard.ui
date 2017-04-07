@@ -207,7 +207,8 @@
                      <string>Clear List</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="edit-clear-list"/>
+                     <iconset theme="edit-clear-list">
+                      <normaloff>.</normaloff>.</iconset>
                     </property>
                    </widget>
                   </item>
@@ -928,6 +929,9 @@ p, li { white-space: pre-wrap; }
                 <property name="text">
                  <string>Save As...</string>
                 </property>
+                <property name="autoDefault">
+                 <bool>false</bool>
+                </property>
                </widget>
               </item>
              </layout>
@@ -939,6 +943,9 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="text">
                <string>Save Settings</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -1001,12 +1008,18 @@ p, li { white-space: pre-wrap; }
          <property name="text">
           <string>&amp;Next &gt;</string>
          </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="cancelButton">
          <property name="text">
           <string>&amp;Cancel</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1018,14 +1031,32 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="6"/>
  <tabstops>
-  <tabstop>NextFinishButton</tabstop>
-  <tabstop>cancelButton</tabstop>
+  <tabstop>tableWidget</tabstop>
   <tabstop>loadImagesButton</tabstop>
   <tabstop>removeImageButton</tabstop>
   <tabstop>clearListButton</tabstop>
-  <tabstop>tableWidget</tabstop>
+  <tabstop>EVSlider</tabstop>
+  <tabstop>ImageEVdsb</tabstop>
   <tabstop>alignCheckBox</tabstop>
+  <tabstop>ais_radioButton</tabstop>
+  <tabstop>mtb_radioButton</tabstop>
+  <tabstop>autoCropCheckBox</tabstop>
+  <tabstop>autoAG_checkBox</tabstop>
+  <tabstop>threshold_horizontalSlider</tabstop>
+  <tabstop>threshold_doubleSpinBox</tabstop>
+  <tabstop>checkBoxEditingTools</tabstop>
+  <tabstop>NextFinishButton</tabstop>
+  <tabstop>cancelButton</tabstop>
   <tabstop>profileComboBox</tabstop>
+  <tabstop>customConfigCheckBox</tabstop>
+  <tabstop>modelComboBox</tabstop>
+  <tabstop>weightFunctionComboBox</tabstop>
+  <tabstop>responseCurveComboBox</tabstop>
+  <tabstop>RespCurveFileLoadedLineEdit</tabstop>
+  <tabstop>CurveFileNameSaveLineEdit</tabstop>
+  <tabstop>saveRespCurveFileButton</tabstop>
+  <tabstop>pushButtonSaveSettings</tabstop>
+  <tabstop>textEdit</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>

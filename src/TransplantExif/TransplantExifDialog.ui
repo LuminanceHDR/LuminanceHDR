@@ -522,6 +522,9 @@
        <property name="text">
         <string>&amp;Cancel</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -532,6 +535,9 @@
        <property name="text">
         <string>&amp;Start</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -539,15 +545,20 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>movedown_left_button</tabstop>
   <tabstop>leftlist</tabstop>
+  <tabstop>rightlist</tabstop>
+  <tabstop>addleft</tabstop>
+  <tabstop>removeleft</tabstop>
+  <tabstop>moveup_left_button</tabstop>
+  <tabstop>movedown_left_button</tabstop>
+  <tabstop>addright</tabstop>
+  <tabstop>removeright</tabstop>
   <tabstop>moveup_right_button</tabstop>
   <tabstop>movedown_right_button</tabstop>
-  <tabstop>rightlist</tabstop>
+  <tabstop>Log_Widget</tabstop>
   <tabstop>filterComboBox</tabstop>
   <tabstop>filterLineEdit</tabstop>
   <tabstop>clearTextToolButton</tabstop>
-  <tabstop>Log_Widget</tabstop>
   <tabstop>checkBox_dont_overwrite</tabstop>
   <tabstop>cancelbutton</tabstop>
   <tabstop>TransplantButton</tabstop>
