@@ -64,7 +64,8 @@
 #include <QXmlInputSource>
 #include <QEvent>
 #include <QTreeWidgetItem>
-#include <QTextEdit>
+//#include <QTextEdit>
+#include <QTextBrowser>
 
 class ScHelpTreeModel;
 class QPrinter;
@@ -132,7 +133,8 @@ protected:
 	QMap<QString, QPair<QString, QString> > bookmarkIndex;
 
     // I need to keep this around because page()->toHtml( <callback> ) is asynchronous
-    QSharedPointer<QTextDocument> m_textDocument;
+    //QSharedPointer<QTextDocument> m_textDocument;
+    QSharedPointer<QTextBrowser> m_textBrowser;
 
 protected slots:
 	virtual void languageChange();

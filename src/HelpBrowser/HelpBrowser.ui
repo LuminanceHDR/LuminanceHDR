@@ -20,7 +20,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="ScTextBrowser" name="textBrowser" native="true"/>
+     <widget class="ScTextBrowser" name="htmlPage" native="true"/>
     </item>
    </layout>
   </widget>
