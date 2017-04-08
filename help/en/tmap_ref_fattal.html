@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Luminance HDR User Manual — Tonemapping operators reference — Fattal</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h2>Fattal</h2>
+
+The implementation of a tone mapping operator as described in:
+<P>
+Gradient Domain High Dynamic Range Compression
+R. Fattal, D. Lischinski, and M. Werman
+In ACM Transactions on Graphics (3), p. 249, 2002.
+<P>
+With respect to the original paper, this program provides additional parameter
+which limits the amplification of noise. The noise is often starkly amplified
+because of division by zero in one of the equations in the paper. Extension
+contributed by Przemyslaw Bazarnik.
+<P>
+At the core of the programme is a Poisson PDE which as suggested in
+the original paper is solved using a Full Multigrid
+Algorithm. However, this is an iterative solver which seems to lose
+accuracy when applied to higher resolution images resulting in halo
+effects and surreal looking images. For that reason a second solver
+has been implemented using the discrete cosine transform as the
+underlying method and is considerably more accurate mainly because it
+is a direct solver. This solver is the preferred method and is used by
+default. The old multigrid solver can be selected unchecking the <b>Version 2.3.0</b> checkbox.  
+<A NAME="lbAE">&nbsp;</A>
+
+<p>Please note that resulted LDR image always requires gamma correction which you can do using Levels tool.</p>
+
+<H3>OPTIONS</H3>
+
+<DL COMPACT>
+<DT><B>Alpha</B><DD>
+<P>
+Set alpha parameter. This parameter is depreciated as setting a value other
+than 1.0 has only the effect of a global gamma adjustment of the luminance
+channel. 
+See the paper for the definition of alpha. 
+<DT><B>Beta</B><DD>
+<P>
+Set beta parameter. It sets the strength of gradient (local contrast) modification. 
+Suggested range is 0.8 to 0.96, default is 0.9 (see paper for details). 
+Value of 1 does not change contrasts, values above 1 reverse the effect: 
+local contrast is stretched and details are attenuated.
+Values below 0.5 lead to very strong amplification of small contrast, so
+consider using <b>Noise Reduction</b> parameter to prevent noise.
+<DT><B>Color Saturation</B><DD>
+<P>
+Amount of color saturation. Suggested range is 0.4 to 0.8. Default
+value: 0.8.
+<DT><B>Noise Reduction</B><DD>
+<P>
+Amount of noise reduction.
+</body>
+</html>
+

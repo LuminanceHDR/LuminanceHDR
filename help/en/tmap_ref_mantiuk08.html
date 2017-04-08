@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Luminance HDR User Manual — Tonemapping operators reference — Mantiuk'08</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h2>Mantiuk'08</h2>
+
+<p>This operator
+applies the display adaptive tone mapping, which attempts to
+preserve contrast of an input (HDR) image as close as
+possible given the characteristic of an output display. Use
+this tone mapping operator if you want to preserve original
+image appearance, or slightly enhance contrast while maintaining 
+the natural look of images. The
+operator can also compensate for ambient light reflections
+on a screen, and for varying dynamic range and brightness of
+a display. The operator is suitable for video sequences as
+it prevents high-frequency changes in tone-curve between
+consecutive frames, which would result in flickering. Note
+that the temporal filtering is always active and there is no
+need to specify an argument to switch it on.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="0%"></td>
+<td width="0%">
+
+
+<p style="margin-top: 1em">More details can be found
+in:</p> </td>
+<td width="45%">
+</td></tr>
+</table>
+<p style="margin-left:11%;">Rafal Mantiuk, Scott Daly and
+Louis Kerofsky. <br>
+Display Adaptive Tone Mapping. <br>
+In: ACM Transactions on Graphics 27 (3), 2008. <br>
+http://www.mpi-inf.mpg.de/resources/hdr/datmo/</p>
+
+<p style="margin-left:0%; margin-top: 1em">If you find
+this TMO useful in your research project, please cite the
+paper above.</p>
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="0%"></td>
+<td width="0%">
+
+
+<p style="margin-top: 1em">This operator also employs color
+correction mechanism from:</p></td></tr>
+</table>
+<p style="margin-left:11%;">Radoslaw Mantiuk, Rafal
+Mantiuk, Anna Tomaszewska, Wolfgang Heidrich. <br>
+Color Correction for Tone Mapping. <br>
+In: Computer Graphics Forum (Proc. of
+EUROGRAPHICS&rsquo;09), 28(2), 2009. <br>
+http://zgk.wi.ps.pl/color_correction/</p>
+
+<p>The result of
+this TMO does not usually require gamma correction.</p>
+
+<h3>OPTIONS</h3>
+
+<DT><B>Color Saturation</B><DD>
+<p>
+Decrease or increase color saturation after tone mapping. Default
+value <B>1</B> attempts to preserve color appearance of the original
+image. Use values &gt;1 to increase and &lt;1 to decrease color saturation.
+<DT><B>Contrast Enhancement</B><DD>
+<p>
+By default this tone-mapper attempts to preserve contrast of an input
+image. This parameter controls whether the contrast of an
+input image should be enhanced before tone-mapping. For example
+<B>1.15</B> boosts contrast by 15%. Note that if a target display
+does not offer sufficient dynamic range, contrast may be enhanced only
+for selected tone-values (those that dominate in an image) or not
+enhanced at all.
+<DT><B>Luminance Level</B><DD>
+<p>
+Tells the
+tone-mapper what luminance level in the input image should be mapped
+to the maximum luminance of a display. Since HDR images contain only
+relative luminance information, tone-mapper does not know how bright
+should be the scene. This option is meant to fix this problem by
+providing tone-mapper with the information what luminance level in an
+input image should be perceived as a diffuse white surface. Default is
+<I>none</I>, which means that no such mapping will be enforced and
+tone-mapper is free to find an optimal brightness for a given
+image. This is a recommended setting for HDR images.
+
+</body>
+</html>
+

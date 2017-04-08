@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Luminance HDR User Manual — Tonemapping operators reference — Pattanaik</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h2>Pattanaik</h2>
+
+The implementation of a tone mapping operator as described in:
+<P>
+Time-Dependent Visual Adaptation for Realistic Image Display.
+S.N. Pattanaik, J. Tumblin, H. Yee, and D.P. Greenberg.
+In Proceedings of ACM SIGGRAPH 2000.
+<P>
+This operator requires properly calibrated image data (in cd/m2) and
+its results should be gamma corrected.
+<P>
+The local version of this operator is based on the following paper:
+<P>
+Adaptive Gain Control For High Dynamic Range Image Display.
+S.N. Pattanaik, H. Yee.
+In proceedings of SCCG 2002.
+<P>
+
+<H3>OPTIONS</H3>
+
+<DL COMPACT>
+<DT><B>Multiplier</B><DD>
+<P>
+Multiply input values by a multiplier value. 
+Useful if input data is not calibrated. Default value: 1.0
+<DT><B>Local Tone Mapping</B><DD>
+<P>
+Use local version of the tone mapping. Time-dependent effects are
+cancelled while using local version, global version is used by
+default.
+<DT><B>Cone Level</B><DD>
+<P>
+Set the adaptation level for cones. By default, the
+adaptation level is calculated as a logarithmic average of luminance
+in the input image.
+<DT><B>Rod Level</B><DD>
+<P>
+Set the adaptation level for rods. By default, the adaptation level is
+calculated as a logarithmic average of luminance in the input image.
+</body>
+</html>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Luminance HDR User Manual — Tonemapping operators reference — Reinhard'05</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h2>Reinhard'05</h2>
+
+The implementation of the Reinhard tone mapping operator as described in:
+<P>
+Dynamic Range Reduction Inspired by Photoreceptor Physiology.
+E. Reinhard and K. Devlin.
+In IEEE Transactions on Visualization and Computer Graphics, 2005.
+<P>
+
+<H3>OPTIONS</H3>
+
+<DL COMPACT>
+<DT><B>Brightness</B><DD>
+<P>
+Brightness correction, parameter 'f' in paper.
+Default value: -10.0
+<DT><B>Chromatic Adaptation</B><DD>
+<P>
+Amount of chromatic adaptation (von Kries model) (0..1), parameter 'c' in paper.
+Default value: 0.0
+<DT><B>Light Adaptation</B><DD>
+<P>
+Amount of light adaptation adaptation (0..1), parameter 'l' in paper.
+Default value: 1.0
+
+</body>
+</html>
+

@@ -42,7 +42,7 @@
 
 	<area text="Setting up" file="prefs.html">
 		<submenuitem text="Interface" file="prefs_ui.html" />
-		<submenuitem text="HDR" file="prefs_hdr.html" />
+		<submenuitem text="Fast Export" file="prefs_fast_export.html" />
 		<submenuitem text="Tone Mapping" file="prefs_tonemapping.html" />
 		<submenuitem text="Raw Conversion" file="prefs_rawconversion.html" />
 		<submenuitem text="Color Management" file="prefs_cms.html" />
@@ -51,14 +51,16 @@
 
 	<area text="Tone Mapping Operators" file="tmap_ref.html">
 		<submenuitem text="Mantiuk'06" file="tmap_ref_mantiuk06.html" />
-<!--		<submenuitem text="Mantiuk'08" file="tmap_ref_mantiuk08.html" />
-		<submenuitem text="Fattal" file="tmap_ref_fattal.html" /> -->
+		<submenuitem text="Mantiuk'08" file="tmap_ref_mantiuk08.html" />
+		<submenuitem text="Fattal" file="tmap_ref_fattal.html" />
+		<submenuitem text="Ferradans" file="tmap_ref_ferradans.html" />
 		<submenuitem text="Drago" file="tmap_ref_drago.html" />
 		<submenuitem text="Durand" file="tmap_ref_durand.html" />
-<!--		<submenuitem text="Reinhard'02" file="tmap_ref_reinhard02.html" />
+		<submenuitem text="Reinhard'02" file="tmap_ref_reinhard02.html" />
 		<submenuitem text="Reinhard'05" file="tmap_ref_reinhard05.html" />
 		<submenuitem text="Ashikhmin" file="tmap_ref_ashikhmin.html" />
-		<submenuitem text="Pattanaik" file="tmap_ref_pattanaik.html" /> -->
+		<submenuitem text="Pattanaik" file="tmap_ref_pattanaik.html" />
+		<submenuitem text="Mai" file="tmap_ref_mai.html" />
 	</area>
 
 <!-- Who will need FAQ with a well structured user manual? :)

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Luminance HDR User Manual — Tonemapping operators reference — Reinard'02</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h2>Reinhard'02</h2>
+
+The implementation of the Reinhard tone mapping operator as described in:
+<P>
+Photographic Tone Reproduction for Digital Images.
+E. Reinhard, M. Stark, P. Shirley, and J. Ferwerda.
+In ACM Transactions on Graphics, 2002.
+<P>
+According to the paper, results of this TMO require gamma correction.
+
+<H3>OPTIONS</H3>
+<DL COMPACT>
+<DT><B>Key Value</B><DD>
+<P>
+Set key value for the image (refer to paper for details).
+Default value: 0.18, accepted range &lt;0..1&gt;.
+<DT><B>Phi Value</B><DD>
+<P>
+Set phi value (refer to paper for details).
+Default value: 1.0, accepted range &gt;=0.0.
+<DT><B>Use Scales</B><DD>
+<P>
+Use scales to calculate local adaptation. That means: use local
+version of this operator. By default, global version is used.
+<DT><B>Range</B><DD>
+<P>
+Set range size (refer to paper for details).
+Default value: 8, accepted range &gt;1.
+<DT><B>Lower Scale</B><DD>
+<P>
+Set lower scale size (refer to paper for details).
+Default value: 1, accepted range &gt;=1.
+<DT><B>Upper Scale</B><DD>
+<P>
+Set upper scale size (refer to paper for details).
+Default value: 43, accepted range &gt;=1.
+
+</body>
+</html>
+

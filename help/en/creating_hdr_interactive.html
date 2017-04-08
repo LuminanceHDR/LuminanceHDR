@@ -11,36 +11,17 @@
 
 <p>You can access the wizard that will guide you through the process of creating a new HDR image via the <em>File&nbsp;&gt; New HDR image...</em> menu item.</p>
 
+<p><IMG src="images/hdrwizard.png"  width="600" /></p>
+
 <p>On the first page the wizard will ask you to select the set of images (of the same scene, but taken at different exposures) that are going to contribute to the final hdr (supported input: jpeg, raw and tiff -8 and 16 bit-).</p>
 
 <p>Even if Luminance HDR doesn't find the required Exif data (Shutter Speed &#038; Aperture) in your image set you can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for the images in your the set.</p>
 
-<p>The first page of the wizard enables the user to apply an automatic alignment step to the images in the set. It is possible to use one of two alignment options (or "engines"): align_image_stack and MTB.</p>
+<p>The first page of the wizard enables the user to apply an automatic alignment step to the images in the set. It is possible to use one of two alignment options (or "engines"): <b>align_image_stack</b> and <b>MTB</b>.</p>
 
 <p>The first option is usually a good choice (MTB works only on LDR images and has a simpler model that does not take into account rotation).</p>
 
-<p>If your image set consists of LDR images (JPEG, 8 bit TIFF, or RAW files converted to tiff without the -4 switch) the second step of the wizard will show you a window that can be used to perform some "pre merging" editing activities.</p>
-
-<p>The first feature will enable the user to add to each image in the set additional horizontal/vertical offsets.</p>
-
-<p>The user is able to shift each image in set by one pixel by first selecting an image in the left (editable) list and then clicking one of the arrow buttons in the bottom-left panel. The same effect can also be obtained by using one of the WSAD or IKJL key combinations. Pressing Shift will shift by ten pixels, pressing control will shift by 50 pixels and pressing both Shift and Control will shift by 100 pixels.</p>
-
-<p>By dragging a rectangle with the mouse, the user can also select a crop area for all the images in the set. Clicking the "Crop All Images" button will effectively crop the images in the set.</p>
-
-<p>This window contains also the interactive anti-ghosting feature.</p>
-
-<p>The user switches to anti-ghosting mode by pressing the "Anti-Ghosting" button. It is then possible to draw a mask over the regions of the images that contain moving objects.</p>
-
-<p>The user can select the size of the brush, its strength and whether the brush is adding or removing the mask.</p>
-
-<p>The same window contains a button that enables the user to save the set of images after all the cropping has taken place and with all the anti-ghosting masks and shifts applied. The images will be saved in TIFF format, and the mask is saved as a 0-valued alpha channel in the image set.</p>
-
-<p>The following page of the wizard will also ask you which kind of configuration you want to use to create the hdr from the source images: usually the first choice leads to good results, so feel free to accept the default "Config 1" option by pressing next.</p>
-
-<p>If you think that the results can be improved you can try one of the other predefined configurations.</p>
-
-<p>If you want to fiddle with settings you can check the "custom" option and another page of the wizard will show up with a complete set of configurations. It is worth mentioning that you should use the custom option as a last resort because the predefined configurations (which are a sub-set of the all possible configurations you can have in the custom configuration panel) are known to yield good results.</p>
-
+<p>If your image set consists of LDR images (JPEG, 8 bit TIFF, or RAW files) you can optionally open the <a href="editing_tools.html">Editing Tools Dialog</a> clicking on the <strong>Advanced Editing Tools</strong> check box and clicking <strong>Next</strong>. A dialog will then show up which can be used to perform some "pre merging" editing activities as well manual anti ghosting.</p>
 </body>
 </html>
 
