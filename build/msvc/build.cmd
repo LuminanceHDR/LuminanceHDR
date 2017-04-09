@@ -2,34 +2,33 @@
 SETLOCAL
 
 REM  http://dev.exiv2.org/projects/exiv2/repository/
-SET EXIV2_COMMIT=4227
+SET EXIV2_COMMIT=4753
 
-REM  http://sourceforge.net/p/libjpeg-turbo/code/
-SET LIBJPEG_COMMIT=1093
-rem error 1406
+REM  http://github.com/libjpeg-turbo/libjpeg-turbo
+SET LIBJPEG_COMMIT_LONG=da2a27ef056a0179cbd80f9146e58b89403d9933
 
 rem  https://github.com/madler/zlib/commits
-SET ZLIB_COMMIT_LONG=6cef1de7403b553ce8f7e790e38531da6529f34f
+SET ZLIB_COMMIT_LONG=cacf7f1d4e3d44d871b605da3b647f07d718623f
 
 rem  https://github.com/openexr/openexr
-SET OPENEXR_COMMIT_LONG=91015147e5a6a1914bcb16b12886aede9e1ed065
+SET OPENEXR_COMMIT_LONG=20d043d017d4b752356bb76946ffdffaa9c15c72
 SET OPENEXR_CMAKE_VERSION=2.2
 
 rem  http://www.boost.org/
-SET BOOST_MINOR=60
+SET BOOST_MINOR=63
 
 REM ftp://ftp.fftw.org/pub/fftw/
-SET FFTW_VER=3.3.4
+SET FFTW_VER=3.3.5
 
 rem https://github.com/mm2/Little-CMS
-SET LCMS_COMMIT_LONG=0a78f858849bcece6c277a91293090098e65abb5
+SET LCMS_COMMIT_LONG=f9d75ccef0b54c9f4167d95088d4727985133c52
 
 rem https://github.com/ampl/gsl
-SET GSL_COMMIT_LONG=9ab7c543fa9a2a04e8b0668f577ced888eb8e2e9
+SET GSL_COMMIT_LONG=48e0194da0d8921aff57c293b4f5083877d3f55b
 
 rem https://github.com/LibRaw/LibRaw
-SET LIBRAW_COMMIT_LONG=b41f39e6f3357050c9d80ded865bf200a9347644
-SET LIBRAW_DEMOS2_COMMIT_LONG=ffea825e121e92aa780ae587b65f80fc5847637c
+SET LIBRAW_COMMIT_LONG=d7c3d2cb460be10a3ea7b32e9443a83c243b2251
+SET LIBRAW_DEMOS2_COMMIT_LONG=194f592e205990ea8fce72b6c571c14350aca716
 SET LIBRAW_DEMOS3_COMMIT_LONG=f0895891fdaa775255af02275fce426a5bf5c9fc
 
 rem ftp://sourceware.org/pub/pthreads-win32/
@@ -42,6 +41,8 @@ rem broken 3370
 rem Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
 SET HUGIN_VER=201500
 
+http://download.osgeo.org/libtiff/
+SET TIFF_VER=4.0.7
 
 IF EXIST .settings\vsexpress.txt (
     SET VSCOMMAND=vcexpress
@@ -291,12 +292,22 @@ IF NOT EXIST exiv2-%EXIV2_COMMIT%.build (
 	popd	
 )
 
-IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
-    %CYGWIN_DIR%\bin\svn.exe co -r %LIBJPEG_COMMIT% svn://svn.code.sf.net/p/libjpeg-turbo/code/trunk libjpeg-turbo-%LIBJPEG_COMMIT%
-)
-IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT%.build (
-    mkdir libjpeg-turbo-%LIBJPEG_COMMIT%.build
 
+SET LIBJPEG_COMMIT=%LIBJPEG_COMMIT_LONG:~0,7%
+IF NOT EXIST %TEMP_DIR%\libjpeg-%LIBJPEG_COMMIT%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip https://github.com/libjpeg-turbo/libjpeg-turbo/archive/%LIBJPEG_COMMIT_LONG%.zip
+)
+
+IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip
+	%CYGWIN_DIR%\bin\mv.exe libjpeg-* libjpeg-turbo-%LIBJPEG_COMMIT%
+)
+
+
+IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT%.build (
+	mkdir libjpeg-turbo-%LIBJPEG_COMMIT%.build
+	
+	
 	pushd libjpeg-turbo-%LIBJPEG_COMMIT%.build
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" -DWITH_JPEG8=TRUE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	IF errorlevel 1 goto error_end
@@ -319,20 +330,20 @@ IF NOT EXIST lcms2-%LCMS_COMMIT% (
 	pushd lcms2-%LCMS_COMMIT%
 	REM %VSCOMMAND% Projects\%VS_LCMS%\lcms2.sln /Upgrade
 	rem devenv Projects\VC2013\lcms2.sln /build Release /project lcms2_DLL
-	%VSCOMMAND% Projects\%VS_LCMS%\lcms2.sln /rebuild "%Configuration%|%Platform%" /project lcms2_DLL
+	%VSCOMMAND% Projects\%VS_LCMS%\lcms2.sln /Rebuild "%Configuration%|%Platform%" /project lcms2_DLL
 	IF errorlevel 1	goto error_end
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\tiff-4.0.6.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.6.zip http://download.osgeo.org/libtiff/tiff-4.0.6.zip
+IF NOT EXIST %TEMP_DIR%\tiff-%TIFF_VER%.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-%TIFF_VER%.zip http://download.osgeo.org/libtiff/tiff-%TIFF_VER%.zip
 )
 
 
-IF NOT EXIST tiff-4.0.6 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-4.0.6.zip
+IF NOT EXIST tiff-%TIFF_VER% (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-%TIFF_VER%.zip
 
-	pushd tiff-4.0.6
+	pushd tiff-%TIFF_VER%
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% .
 	IF errorlevel 1 goto error_end
 	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
@@ -638,7 +649,7 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	mkdir bin
 	popd
 	
-	for %%v in ("libpng", "libjpeg", "lcms2", "libraw", "fftw3", "gsl", "CCfits") do (
+	for %%v in ("libpng", "lcms2", "libraw", "fftw3", "gsl", "CCfits") do (
 		mkdir LuminanceHdrStuff\DEPs\include\%%v
 		mkdir LuminanceHdrStuff\DEPs\lib\%%v
 		mkdir LuminanceHdrStuff\DEPs\bin\%%v
@@ -750,18 +761,22 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\i18n\ (
 			mkdir LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\i18n
 		)
-		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\help\ (
-			mkdir LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\help
-		)
-		
 		robocopy LuminanceHdrStuff\qtpfsgui.build LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\i18n lang_*.qm >nul
-		robocopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\help /MIR >nul
 
+		for %%v in ("help", "hdrhtml", "icons") do (
+			IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\%%v\ (
+				mkdir LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\%%v
+			)
+        )
+		robocopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\help /MIR >nul
+		robocopy LuminanceHdrStuff\qtpfsgui\hdrhtml LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\hdrhtml /MIR >nul
+		robocopy LuminanceHdrStuff\qtpfsgui\icons LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\icons /MIR >nul
+		
 
         REM ----- QT Stuff (Dlls, translations) --------------------------------------------
         pushd LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%
 
-        for %%v in ( "Qt5Concurrent.dll", "Qt5Core.dll", "Qt5Gui.dll", "Qt5Multimedia.dll", "Qt5MultimediaWidgets.dll", "Qt5Network.dll", "Qt5Positioning.dll", "Qt5WinExtras.dll", "Qt5OpenGL.dll", "Qt5PrintSupport.dll", "Qt5Qml.dll", "Qt5Quick.dll", "Qt5Sensors.dll", "Qt5Sql.dll", "Qt5V8.dll", "Qt5WebEngine.dll", "Qt5WebEngineCore.dll", "Qt5WebEngineWidgets.dll", "Qt5Svg.dll", "Qt5WebKitWidgets.dll", "Qt5Widgets.dll", "Qt5Xml.dll", "Qt5WebChannel.dll", "icudt53.dll", "icuin53.dll", "icuuc53.dll" ) do (
+        for %%v in ( "Qt5Concurrent.dll", "Qt5Core.dll", "Qt5Gui.dll", "Qt5Multimedia.dll", "Qt5MultimediaWidgets.dll", "Qt5Network.dll", "Qt5Positioning.dll", "Qt5WinExtras.dll", "Qt5OpenGL.dll", "Qt5PrintSupport.dll", "Qt5Qml.dll", "Qt5Quick.dll", "Qt5Sensors.dll", "Qt5Sql.dll", "Qt5V8.dll", "Qt5WebEngine.dll", "Qt5WebEngineCore.dll", "Qt5WebEngineWidgets.dll", "Qt5Svg.dll", "Qt5WebKitWidgets.dll", "Qt5Widgets.dll", "Qt5Xml.dll", "Qt5WebChannel.dll", "Qt5QuickWidgets.dll", "icudt53.dll", "icuin53.dll", "icuuc53.dll" ) do (
             robocopy %QTDIR%\bin . %%v >nul
         )
         for %%v in ("imageformats", "sqldrivers", "platforms") do (
@@ -770,6 +785,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
             )        
         )
         robocopy %QTDIR%\plugins\imageformats imageformats qjpeg.dll >nul
+		robocopy %QTDIR%\plugins\imageformats imageformats qsvg.dll >nul
         robocopy %QTDIR%\plugins\sqldrivers sqldrivers qsqlite.dll >nul
         robocopy %QTDIR%\plugins\platforms platforms qwindows.dll >nul
 		robocopy %QTDIR%\translations i18n qt_??.qm >nul

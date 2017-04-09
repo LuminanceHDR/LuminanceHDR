@@ -6,7 +6,7 @@ SET CMAKE_DIR=C:\Data\Programs\cmake-3.4.1-win32-x86
 
 SET VISUAL_STUDIO_VC_REDIST=C:\Program Files (x86)\%VS_PROG_FILES%\VC\redist\%RawPlatform%
 rem SET QTDIR=C:\Data\Develop\Qt\5.0.1-x64\qtbase
-SET QTDIR=C:\Data\Dev\Qt5.6.0\5.6\msvc2015_64
+SET QTDIR=C:\Data\Dev\Qt5.8.0\5.8\msvc2015_64
 SET SVN_DIR=C:\Data\Programs\Apache-Subversion-1.8.13\bin
 
 REM Options:  -------------------------------------------
@@ -14,7 +14,9 @@ REM Options:  -------------------------------------------
 REM enable another configuration (defaulting to Release, RelWithDebInfo)
 REM SET Configuration=Debug
 REM SET ConfigurationLuminance=Release
-SET LuminanceTarget=--target luminance-hdr
+
+SET LuminanceTarget=
+rem --target luminance-hdr
 
 REM updates/overwrites the original .ts files doing a Qt lupdate
 SET OPTION_LUMINANCE_UPDATE_TRANSLATIONS=0
