@@ -381,14 +381,8 @@ void HdrCreationManager::align_with_ais()
 void HdrCreationManager::ais_failed_slot(QProcess::ProcessError error)
 {
     qDebug() << "align_image_stack failed";
-}
+    m_align->removeTempFiles();
 
-void HdrCreationManager::removeTempFiles()
-{
-    if (m_align)
-    {
-        m_align->removeTempFiles();
-    }
 }
 
 pfs::Frame* HdrCreationManager::createHdr()
@@ -795,7 +789,6 @@ void HdrCreationManager::reset()
 {
     if (m_align != NULL) {
         m_align->reset();
-        m_align->removeTempFiles();
     }
 
     if (m_futureWatcher.isRunning())

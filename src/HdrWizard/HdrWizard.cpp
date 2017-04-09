@@ -255,7 +255,7 @@ void HdrWizard::setupConnections()
     connect(m_hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
     connect(m_hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
 
-    connect(this, SIGNAL(rejected()), m_hdrCreationManager.data(), SLOT(removeTempFiles()));
+    //connect(this, SIGNAL(rejected()), m_hdrCreationManager.data(), SLOT(removeTempFiles()));
     //connect(this, SIGNAL(rejected()), OsIntegration::getInstancePtr(), SLOT(setProgressValue(-1)), Qt::DirectConnection);
     connect(m_Ui->threshold_horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
     connect(m_Ui->threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateThresholdSpinBox(double)));
@@ -657,7 +657,6 @@ void HdrWizard::finishedAligning(int exitcode)
     m_Ui->NextFinishButton->setEnabled(true);
     m_Ui->pagestack->setCurrentIndex(1);
     m_Ui->progressBar->hide();
-    m_hdrCreationManager->removeTempFiles();
 }
 
 void HdrWizard::ais_failed(QProcess::ProcessError e)

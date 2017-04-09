@@ -613,7 +613,6 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
         hdrCreationManager->saveImages(saveAlignedImagesPrefix);
     }
 
-    hdrCreationManager->removeTempFiles();
     if (threshold > 0) {
         QList<QPair<int, int> > dummyOffset;
         QStringList::ConstIterator it = inputFiles.begin();

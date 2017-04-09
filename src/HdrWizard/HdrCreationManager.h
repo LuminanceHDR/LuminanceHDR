@@ -128,8 +128,6 @@ public:
     float getEVOffset() const;
 
     void reset();
-public slots:
-    void removeTempFiles();
 
 signals:
     // computation progress

@@ -88,7 +88,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     //ais_parameters << "-a" << tempDir + "/" + uuidStr;
     ais_parameters << "-a" << uuidStr;
     int i = 0;
-    for(auto it : m_data) {
+    for(auto &it : m_data) {
         if (it.convertedFilename().isEmpty())
             continue;
 
@@ -154,7 +154,9 @@ void Align::alignedFilesLoaded()
         if (it.filename().isEmpty())
             continue;
         QFile::remove(QFile::encodeName(it.convertedFilename()).constData());
+        QFile::remove(QFile::encodeName(it.alignedFilename()).constData());
         qDebug() << "void Align::ais_finished: remove " << it.convertedFilename();
+        qDebug() << "void Align::ais_finished: remove " << it.alignedFilename();
     }
 
     QFile::remove(m_luminance_options.getTempDir() + "/hugin_debug_optim_results.txt");
@@ -184,7 +186,7 @@ void Align::removeTempFiles()
 {
     for(const auto it : m_data) {
         if (!it.alignedFilename().isEmpty()) {
-            QFile::remove(it.alignedFilename());
+            QFile::remove(QFile::encodeName(it.alignedFilename()).constData());
             qDebug() << "void HdrCreationManager::ais_finished: remove " << it.alignedFilename();
         }
     }
