@@ -122,6 +122,9 @@ HdrWizard::HdrWizard(QWidget *p,
 {
     m_Ui->setupUi(this);
 
+    if ( !QIcon::hasThemeIcon("edit-clear-list") )
+        m_Ui->clearListButton->setIcon(QIcon(":/program-icons/edit-clear-list"));
+
     setAcceptDrops(true);
     setupConnections();
 
