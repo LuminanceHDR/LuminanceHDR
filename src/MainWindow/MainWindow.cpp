@@ -187,6 +187,8 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
 
 // static members!
 int MainWindow::sm_NumMainWindows = 0;
+int MainWindow::sm_counter = 0;
+QMap<int, MainWindow *> MainWindow::sm_mainWindowMap = QMap<int, MainWindow *>();
 QScopedPointer<UpdateChecker> MainWindow::sm_updateChecker;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -194,6 +196,7 @@ MainWindow::MainWindow(QWidget *parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
     , m_firstWindow(0)
+    , m_winId(0)
 {
     init();
 }
@@ -205,6 +208,7 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
     , m_firstWindow(0)
+    , m_winId(0)
 {
     init();
 
@@ -229,13 +233,30 @@ MainWindow::~MainWindow()
         luminance_options->setValue("MainWindowBottomSplitterState", m_bottom_splitter->saveState());
         luminance_options->setValue("MainWindowBottomSplitterGeometry", m_bottom_splitter->saveGeometry());
 
-        // wait for the working thread to finish
-        m_IOThread->wait(500);
-        m_TMThread->wait(500);
-		//m_QueueThread->wait(500);
 
         sm_updateChecker.reset();
     }
+    else
+    {
+        sm_mainWindowMap.take(m_winId);
+        int winId = sm_mainWindowMap.firstKey();
+        MainWindow *p = sm_mainWindowMap[winId];
+        disconnect(sm_updateChecker.data(), SIGNAL(updateAvailable()), p, SLOT(onUpdateAvailable()));
+        sm_updateChecker->setParent(p);
+        connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), p, SLOT(onUpdateAvailable()));
+    }
+
+    // Let's close all threads
+    m_IOThread->quit(); // should be idle, quit() ok
+    m_IOThread->wait();
+    if ( !m_TMProgressBar->isTerminated() ) // MainWindow closed while tonemapping is running
+    {
+        m_TMProgressBar->requestTermination();
+    }
+    m_TMThread->quit();
+    m_TMThread->wait();
+    m_QueueThread->quit(); // should be idle, quit() ok
+    m_QueueThread->wait();
 
     clearRecentFileActions();
     delete luminance_options;
@@ -246,6 +267,9 @@ void MainWindow::init()
     luminance_options = new LuminanceOptions();
 
     sm_NumMainWindows++;
+    sm_counter++;
+    m_winId = sm_counter;
+    sm_mainWindowMap.insert(m_winId, this);
     m_firstWindow = 0;
 
     helpBrowser = NULL;
@@ -1739,11 +1763,14 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 
 void MainWindow::tonemapFailed(const QString& error_msg)
 {
-    QMessageBox::critical(this, tr("Luminance HDR"),
-                          tr("Error: %1").arg(error_msg),
-                          QMessageBox::Ok, QMessageBox::NoButton);
-
+    if (error_msg != "Canceled")
+    {
+        QMessageBox::critical(this, tr("Luminance HDR"),
+                              tr("Error: %1").arg(error_msg),
+                              QMessageBox::Ok, QMessageBox::NoButton);
+    }
     m_tonemapPanel->setEnabled(true);
+    m_PreviewPanel->setEnabled(true);
     m_TMProgressBar->hide();
 }
 

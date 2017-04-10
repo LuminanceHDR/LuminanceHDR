@@ -86,6 +86,7 @@ pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, Tonemappi
 
     if ( m_Callback->canceled() )
     {
+        emit tonemapFailed("Canceled");
         m_Callback->cancel(false);      // double check this
         delete working_frame;
         return NULL;

@@ -40,6 +40,7 @@ public:
     ~TMOProgressIndicator();
     bool isTerminated();
     void reset();
+    void requestTermination() { emit terminate(); }
 
 public slots:
     void setValue(int);
