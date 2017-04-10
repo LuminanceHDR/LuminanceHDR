@@ -651,11 +651,17 @@ void HdrWizard::errorWhileLoading(const QString& error)
 void HdrWizard::finishedAligning(int exitcode)
 {
     emit setValue(-1);
+    m_Ui->progressBar->hide();
+    m_Ui->textEdit->hide();
     QApplication::restoreOverrideCursor();
     if (exitcode != 0)
     {
+        /*
         QMessageBox::warning(this, tr("Error..."),
                              tr("align_image_stack failed to align images."));
+        */
+        ais_failed(QProcess::UnknownError);
+        return;
     }
     m_Ui->NextFinishButton->setEnabled(true);
     m_Ui->pagestack->setCurrentIndex(1);
@@ -665,6 +671,9 @@ void HdrWizard::finishedAligning(int exitcode)
 void HdrWizard::ais_failed(QProcess::ProcessError e)
 {
     emit setValue(-1);
+    m_Ui->progressBar->hide();
+    m_Ui->textEdit->hide();
+    QApplication::restoreOverrideCursor();
 
     switch (e) {
     case QProcess::FailedToStart:
@@ -680,9 +689,14 @@ void HdrWizard::ais_failed(QProcess::ProcessError e)
         QMessageBox::warning(this, tr("Error..."), tr("An unknown error occurred while executing the \"<em>align_image_stack</em>\" application..."));
     break;
     }
-    m_Ui->progressBar->hide();
-    m_Ui->textEdit->hide();
-    QApplication::restoreOverrideCursor();
+    m_Ui->tableWidget->setEnabled(true);
+    m_Ui->previewLabel->setEnabled(true);
+    m_Ui->EVgroupBox->setEnabled(true);
+    m_Ui->agGroupBox->setEnabled(true);
+    m_Ui->loadImagesButton->setEnabled(true);
+    m_Ui->removeImageButton->setEnabled(true);
+    m_Ui->clearListButton->setEnabled(true);
+    m_Ui->NextFinishButton->setEnabled(true);
     m_Ui->alignGroupBox->setEnabled(true);
     m_Ui->alignCheckBox->setChecked(false);
     m_Ui->NextFinishButton->setEnabled(true);
