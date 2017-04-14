@@ -87,14 +87,18 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext& context, con
 
 int main( int argc, char ** argv )
 {
-    Q_INIT_RESOURCE(icons);
+	QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
+	QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
+
+	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+	Q_INIT_RESOURCE(icons);
     QApplication application( argc, argv );
 
-    QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
-    QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
 #if defined(WIN32) || defined(__APPLE__)
-    // qInstallMessageHandler(customMessageHandler);
+    //qInstallMessageHandler(customMessageHandler);
 
     QIcon::setThemeSearchPaths( QStringList() << QGuiApplication::applicationDirPath() + QString("/icons/luminance-hdr") );
     QIcon::setThemeName("luminance-hdr");
