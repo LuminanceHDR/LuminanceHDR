@@ -31,7 +31,7 @@
 
 TMOProgressIndicator::TMOProgressIndicator(QWidget *parent):
     QWidget(parent),
-    m_isTerminated(false)
+    m_isTerminated(true)
 {
     m_hbl = new QHBoxLayout(this);
 
@@ -88,6 +88,7 @@ void TMOProgressIndicator::setValue(int value)
 void TMOProgressIndicator::setMaximum(int max)
 {
     m_progressBar->setMaximum(max);
+    m_isTerminated = false;
 }
 
 void TMOProgressIndicator::setMinimum(int min)
@@ -99,5 +100,5 @@ void TMOProgressIndicator::reset()
 {
     m_progressBar->reset();
     //OsIntegration::getInstance().setProgress(-1);
-    m_isTerminated = false;
+    m_isTerminated = true;
 }

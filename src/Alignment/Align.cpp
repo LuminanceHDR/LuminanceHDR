@@ -122,6 +122,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
     {
         qDebug() << "ais failed";
         //emit ais_failed(QProcess::Crashed);
+        removeTempFiles();
         return;
     }
     if (exitcode == 0)
@@ -143,6 +144,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
     else
     {
         qDebug() << "align_image_stack exited with exit code " << exitcode;
+        removeTempFiles();
         emit finishedAligning(exitcode);
     }
 }
@@ -166,6 +168,7 @@ void Align::alignedFilesLoaded()
 void Align::ais_failed_slot(QProcess::ProcessError error)
 {
     qDebug() << "align_image_stack failed";
+    removeTempFiles();
     emit failedAligning(error);
 }
 
@@ -186,7 +189,9 @@ void Align::removeTempFiles()
 {
     for(const auto it : m_data) {
         if (!it.alignedFilename().isEmpty()) {
+            QFile::remove(QFile::encodeName(it.convertedFilename()).constData());
             QFile::remove(QFile::encodeName(it.alignedFilename()).constData());
+            qDebug() << "void HdrCreationManager::ais_finished: remove " << it.convertedFilename();
             qDebug() << "void HdrCreationManager::ais_finished: remove " << it.alignedFilename();
         }
     }

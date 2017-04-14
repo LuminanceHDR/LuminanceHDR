@@ -35,6 +35,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMap>
 #include <QString>
 #include <QStringList>
 #include <QSignalMapper>
@@ -323,9 +324,12 @@ private:
     GenericViewer *m_viewerToProcess;
     bool m_processingAWB;
     int m_firstWindow;
+    int m_winId; // unique MainWindow identifier
     
-    static int sm_NumMainWindows;
+    static int sm_NumMainWindows; //number of active MainWindows
+    static int sm_counter; // Always increases
     static QScopedPointer<UpdateChecker> sm_updateChecker;
+    static QMap<int, MainWindow *> sm_mainWindowMap; //maps m_winId with MainWindow "this" ponter
 };
 
 #endif // MAINWINDOW_H
