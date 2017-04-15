@@ -39,7 +39,7 @@ SET CFITSIO_VER=3360
 rem broken 3370
 
 rem Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
-SET HUGIN_VER=201500
+SET HUGIN_VER=201600
 
 http://download.osgeo.org/libtiff/
 SET TIFF_VER=4.0.7
