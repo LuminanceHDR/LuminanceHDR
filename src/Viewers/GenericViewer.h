@@ -154,6 +154,9 @@ public Q_SLOTS:
     //! \brief set new QImage
     void setQImage(const QImage& qimage);
 
+	//! \brief
+	void setDevicePixelRatio(const float s);
+
     //! this function returns an handle to the internal data type
     //! it would be better if the return pointer is const
     //! It requires to many changes at this stage and it does not worth the effort
@@ -207,6 +210,8 @@ private:
 
     QAction* m_actionClose;
 
+	float m_devicePixelRatio = 1.0;
+
 Q_SIGNALS:
     void selectionReady(bool isReady);
     void changed(GenericViewer *v);     // emitted when zoomed in/out, scrolled ....
@@ -237,4 +242,9 @@ void GenericViewer::setFileName(const QString& fn)
     mFileName = fn;
 }
 
+inline
+void GenericViewer::setDevicePixelRatio(const float s)
+{
+	m_devicePixelRatio = s;
+}
 #endif

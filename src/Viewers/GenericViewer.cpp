@@ -375,8 +375,12 @@ QImage GenericViewer::getQImage() const
 
 void GenericViewer::setQImage(const QImage& qimage)
 {
-    mPixmap->setPixmap(QPixmap::fromImage(qimage));
+	QPixmap pixmap = QPixmap::fromImage(qimage);
+	//pixmap.setDevicePixelRatio(m_devicePixelRatio);
+	pixmap.setDevicePixelRatio(m_devicePixelRatio);
+    mPixmap->setPixmap(pixmap);
 }
+
 
 int GenericViewer::getWidth()
 {

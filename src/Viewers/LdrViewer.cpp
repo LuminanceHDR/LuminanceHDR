@@ -154,12 +154,14 @@ bool doCMSTransform(QImage& qImage, bool doProof, bool doGamutCheck)
 }
 
 // This constructor is a bit of a mess!
-LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *parent, bool ns)
+LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *parent, bool ns, const float devicePixelRatio)
     : GenericViewer(frame, parent, ns)
     , informativeLabel(new QLabel(mToolBar))
     , mTonemappingOptions(opts)
 {
     mToolBar->addWidget(informativeLabel);
+
+    setDevicePixelRatio(devicePixelRatio);
 
     mPixmap->disableSelectionTool(); // disable by default crop functionalities
 

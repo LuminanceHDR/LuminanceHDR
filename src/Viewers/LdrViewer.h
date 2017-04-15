@@ -41,7 +41,7 @@ class LdrViewer: public GenericViewer
 {
     Q_OBJECT
 public:
-    LdrViewer(pfs::Frame* frame, TonemappingOptions* opts = 0, QWidget *parent = 0, bool ns = 0);
+    LdrViewer(pfs::Frame* frame, TonemappingOptions* opts = 0, QWidget *parent = 0, bool ns = 0, const float devicePixelRatio = 1.0);
     virtual ~LdrViewer();
     QString getFileNamePostFix();
     QString getExifComment();
