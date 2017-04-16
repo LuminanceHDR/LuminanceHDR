@@ -1,11 +1,16 @@
 Changes 2.5.0
 NEW: New tonemapping operator ferradans11
 NEW: New tonemapping operator mai11
+NEW: Better HiDPI support
+NEW: Better CLI interface, also for Windows
+NEW: "Fast Export", which renders current image in full size
 NEW: Export to HTML (Create a webpage with embedded HDR viewer)
 NEW: Optional automatic adjustment of LDRs levels
+NEW: List version of supported cameras for RAW files (and some libraw info)
 NEW: New UI "Dark Theme"
 NEW: Switch UI Full Screen (F11), show LDRs and HDRs Full Screen (F10)
 NEW: Portuguese (Brazil) translation
+* more robust hugin align
 * Fix various crashes
 * greater EV values range in HdrWizard
 * better printing support and print preview in HelpBrowser
