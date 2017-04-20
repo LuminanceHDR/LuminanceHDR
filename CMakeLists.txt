@@ -14,7 +14,7 @@ include(cmake/Internationalization.cmake)
 # ======== Has branch prediction =======
 include( CheckCXXSourceCompiles )
 
-check_cxx_source_compiles( "int main() { int x = 0; if( __builtin_expect((x),0) ) x = 1; return 0; }" HAS_BRANCH_PEDICTION )
+check_cxx_source_compiles( "int main() { int x = 0; if( __builtin_expect((x),0) ) x = 1; return 0; }" HAS_BRANCH_PREDICTION )
 
 if( HAS_BRANCH_PREDICTION )
   set( BRANCH_PREDICTION 1 )
