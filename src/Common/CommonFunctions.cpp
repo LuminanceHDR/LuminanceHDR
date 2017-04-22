@@ -107,7 +107,7 @@ static void compute_histogram_minmax(const valarray<float> &hist, float &minHist
 
     int xb = xa + 1;
 
-    const float Threshold = .95f*CUMUL;
+    const float Threshold = .995f*CUMUL;
 
     float count = 0.f;
     while (true)
