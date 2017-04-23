@@ -75,6 +75,16 @@ void vadd(const _Type* A, const _Type* B, _Type* C, size_t size)
 }
 
 template <typename _Type>
+void vsadd(const _Type* A, const float s, _Type* B, size_t size)
+{
+#pragma omp parallel for
+    for (int idx = 0; idx < static_cast<int>(size); idx++)
+    {
+        B[idx] = A[idx] + s;
+    }
+}
+
+template <typename _Type>
 void vadds(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size)
 {
     detail::op(A, B, C, size, numeric::vadds<_Type>(s));
@@ -94,7 +104,7 @@ void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size
 
 
 template <typename _Type>
-void vsmul(const _Type* I, float c, _Type* O, size_t size)
+void vsmul(const _Type* I, const float c, _Type* O, size_t size)
 {
 #pragma omp parallel for
     for (int idx = 0; idx < static_cast<int>(size); idx++)
@@ -104,7 +114,7 @@ void vsmul(const _Type* I, float c, _Type* O, size_t size)
 }
 
 template <typename _Type>
-void vsum_scalar(const _Type* I, float c, _Type* O, size_t size)
+void vsum_scalar(const _Type* I, const float c, _Type* O, size_t size)
 {
 #pragma omp parallel for
     for (int idx = 0; idx < static_cast<int>(size); idx++)
@@ -114,7 +124,7 @@ void vsum_scalar(const _Type* I, float c, _Type* O, size_t size)
 }
 
 template <typename _Type>
-void vmul_scalar(const _Type* I, float c, _Type* O, size_t size)
+void vmul_scalar(const _Type* I, const float c, _Type* O, size_t size)
 {
 #pragma omp parallel for
     for (int idx = 0; idx < static_cast<int>(size); idx++)
@@ -124,7 +134,7 @@ void vmul_scalar(const _Type* I, float c, _Type* O, size_t size)
 }
 
 template <typename _Type>
-void vdiv_scalar(const _Type* I, float c, _Type* O, size_t size)
+void vdiv_scalar(const _Type* I, const float c, _Type* O, size_t size)
 {
 #pragma omp parallel for
     for (int idx = 0; idx < static_cast<int>(size); idx++)

@@ -70,41 +70,46 @@ private:
 template <typename _Type>
 void vmul(const _Type* A, const _Type* B, _Type* C, size_t size);
 
-//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! \brief divides element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] / B[i]
 template <typename _Type>
 void vdiv(const _Type* A, const _Type* B, _Type* C, size_t size);
 
 
-//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! \brief sum element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] + B[i]
 template <typename _Type>
 void vadd(const _Type* A, const _Type* B, _Type* C, size_t size);
 
-//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! \brief sum  element-wise \c s to \c A and stores into \c B
+//! B[i] = A[i] + s
+template <typename _Type>
+void vsadd(const _Type* A, const float s, _Type* B, size_t size);
+
+//! \brief multiplies element-wise \c s and \c B, sum it to \c A and stores into \c C
 //! C[i] = A[i] + (s * B[i])
 template <typename _Type>
 void vadds(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size);
 
-//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! \brief subtract element-wise \c A and \c B and stores into \c C
 //! C[i] = A[i] - B[i]
 template <typename _Type>
 void vsub(const _Type* A, const _Type* B, _Type* C, size_t size);
 
-//! \brief multiplies element-wise \c A and \c B and stores into \c C
+//! \brief multiplies element-wise \c s and \c B, subtract it from \c A and stores into \c C
 //! C[i] = A[i] - (s * B[i])
 template <typename _Type>
 void vsubs(const _Type* A, const _Type& s, const _Type* B, _Type* C, size_t size);
 
 //! // O[i] = c * I[i]
 template <typename _Type>
-void vsmul(const _Type* I, float c, _Type* O, size_t size);
+void vsmul(const _Type* I, const float c, _Type* O, size_t size);
 
 template <typename _Type>
-void vsum_scalar(const _Type* I, float c, _Type* O, size_t size);
+void vsum_scalar(const _Type* I, const float c, _Type* O, size_t size);
 
 template <typename _Type>
-void vmul_scalar(const _Type* I, float c, _Type* O, size_t size);
+void vmul_scalar(const _Type* I, const float c, _Type* O, size_t size);
 
 template <typename _Type>
 void vdiv_scalar(const _Type* I, float c, _Type* O, size_t size);
