@@ -11,6 +11,10 @@ include(cmake/GlobalSettings.cmake)
 include(cmake/CompilerSettings.cmake)
 include(cmake/Internationalization.cmake)
 
+IF(TIMER_PROFILING)
+    ADD_DEFINITIONS(-DTIMER_PROFILING)
+ENDIF()
+
 # ======== Has branch prediction =======
 include( CheckCXXSourceCompiles )
 

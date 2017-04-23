@@ -15,9 +15,11 @@
 #include <Libpfs/utils/clamp.h>
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/colorspace/normalizer.h>
+#include "Libpfs/utils/msec_timer.h"
 
 using namespace pfs;
 using namespace pfs::colorspace;
+using namespace pfs::utils;
 
 void computeHistogram(const pfs::Array2Df& data, std::vector<size_t>& histogram,
                       float min, float max)

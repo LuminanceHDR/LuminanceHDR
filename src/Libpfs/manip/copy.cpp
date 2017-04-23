@@ -25,11 +25,13 @@
 #include "copy.h"
 
 #include "Libpfs/frame.h"
+#include "Libpfs/utils/msec_timer.h"
 
 #include <algorithm>
 
 namespace pfs
 {
+using namespace utils;
 
 pfs::Frame *copy(const pfs::Frame *inFrame)
 {
