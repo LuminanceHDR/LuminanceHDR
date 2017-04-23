@@ -161,10 +161,11 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
     throw pfs::Exception( "failed to tone-map the image" );
   }
 
-  ph.setValue( 100 );
-
   pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
   frame.getTags().setTag("LUMINANCE", "DISPLAY");
+
+  if ( !ph.canceled() )
+      ph.setValue(100);
 
   delete df;
   delete ds;

@@ -37,12 +37,8 @@
 
 #include "Libpfs/frame.h"
 #include "Libpfs/exception.h"
+#include "Libpfs/progress.h"
 #include "tmo_reinhard02.h"
-
-namespace pfs
-{
-class Progress;
-}
 
 void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low, int high, bool use_scales, pfs::Progress &ph )
 {
@@ -97,5 +93,9 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
       (*X)(x,y) *= scale;
       (*Z)(x,y) *= scale;
     }
+  }
+  if (!ph.canceled())
+  {
+      ph.setValue(100);
   }
 }

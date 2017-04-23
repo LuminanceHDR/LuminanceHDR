@@ -258,10 +258,6 @@ void lincg(PyramidT& pyramid, PyramidT& pC,
                       << std::endl;
         }
     }
-    else
-    {
-        ph.setValue( itmax );
-    }
 }
 
 void transformToLuminance(PyramidT& pp, Array2Df& Y,
