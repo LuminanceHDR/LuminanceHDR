@@ -219,6 +219,9 @@ protected Q_SLOTS:
     void updatePreviews(bool);
 
     void reparentViewer(GenericViewer *g_v);
+    void showNextViewer(GenericViewer *g_v);
+    void showPreviousViewer(GenericViewer *g_v);
+    void setSyncViewers(GenericViewer*);
 
 Q_SIGNALS:
     // update HDR

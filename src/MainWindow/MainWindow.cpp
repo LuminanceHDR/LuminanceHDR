@@ -1180,6 +1180,12 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
                 this, SLOT(updateMagnificationButtons(GenericViewer*)));
         connect(newhdr, SIGNAL(reparent(GenericViewer*)),
                 this, SLOT(reparentViewer(GenericViewer*)));
+        connect(newhdr, SIGNAL(goNext(GenericViewer*)),
+                this, SLOT(showNextViewer(GenericViewer*)));
+        connect(newhdr, SIGNAL(goPrevious(GenericViewer*)),
+                this, SLOT(showPreviousViewer(GenericViewer*)));
+        connect(newhdr, SIGNAL(syncViewers(GenericViewer*)),
+                this, SLOT(setSyncViewers(GenericViewer*)));
 
         newhdr->setViewerMode( getCurrentViewerMode(*m_tabwidget) );
 
@@ -1738,6 +1744,9 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
         connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
         connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
         connect(n, SIGNAL(reparent(GenericViewer*)), this, SLOT(reparentViewer(GenericViewer*)));
+        connect(n, SIGNAL(goNext(GenericViewer*)), this, SLOT(showNextViewer(GenericViewer*)));
+        connect(n, SIGNAL(goPrevious(GenericViewer*)), this, SLOT(showPreviousViewer(GenericViewer*)));
+        connect(n, SIGNAL(syncViewers(GenericViewer*)), this, SLOT(setSyncViewers(GenericViewer*)));
 
         if (num_ldr_generated == 1)
             m_tabwidget->addTab(n, tr("Untitled"));
@@ -2222,3 +2231,51 @@ void MainWindow::reparentViewer(GenericViewer *g_v)
     m_tabwidget->setCurrentIndex(m_viewerIndex);
     g_v->showNormal();
 }
+
+void MainWindow::showNextViewer(GenericViewer *g_v)
+{
+    int count = m_tabwidget->count();
+    if (count >= 1)
+    {
+        m_tabwidget->insertTab(m_viewerIndex, g_v, m_tabText);
+        m_tabwidget->setCurrentIndex(m_viewerIndex);
+        //g_v->showNormal();
+        int idx = m_tabwidget->currentIndex();
+        int next = (idx + 1) % (count + 1);
+        m_tabwidget->setCurrentIndex(next);
+        on_actionShow_Image_Full_Screen_triggered();
+    }
+}
+
+void MainWindow::showPreviousViewer(GenericViewer *g_v)
+{
+    int count = m_tabwidget->count();
+    if (count >= 1)
+    {
+        m_tabwidget->insertTab(m_viewerIndex, g_v, m_tabText);
+        m_tabwidget->setCurrentIndex(m_viewerIndex);
+        //g_v->showNormal();
+        int idx = m_tabwidget->currentIndex();
+        int previous;
+        if (idx == 0)
+        {
+            previous = count;
+        }
+        else
+        {
+            previous = (idx - 1) % (count + 1);
+        }
+        m_tabwidget->setCurrentIndex(previous);
+        on_actionShow_Image_Full_Screen_triggered();
+    }
+}
+
+void MainWindow::setSyncViewers(GenericViewer *g_v)
+{
+    m_Ui->actionLock->setChecked(!m_Ui->actionLock->isChecked());
+    if (m_Ui->actionLock->isChecked() && (m_tabwidget->count() - 1))
+    {
+        syncViewers(g_v);
+    }
+}
+

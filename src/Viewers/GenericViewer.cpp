@@ -432,8 +432,17 @@ void GenericViewer::startDragging()
 
 void GenericViewer::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_F10) {
+    if (event->key() == Qt::Key_F10 || event->key() == Qt::Key_Escape) {
         emit reparent(this);
+    }
+    else if (event->key() == Qt::Key_N) {
+        emit goNext(this);
+    }
+    else if (event->key() == Qt::Key_P) {
+        emit goPrevious(this);
+    }
+    else if (event->key() == Qt::Key_S) {
+        emit syncViewers(this);
     }
     else if (event->key() == Qt::Key_Plus) {
         zoomIn();
