@@ -65,5 +65,7 @@ void pfstmo_mai11(pfs::Frame& frame, pfs::Progress &ph)
         inX->data(), inY->data(), inZ->data(), inY->data(), ph);
         
     frame.getTags().setTag("LUMINANCE", "DISPLAY");
+    if ( !ph.canceled() )
+        ph.setValue(100);
 }
 

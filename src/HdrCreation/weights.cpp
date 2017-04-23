@@ -42,14 +42,11 @@ WeightFunction::WeightFunction(WeightFunctionType type)
     setType(type);
 }
 
-static float getWeightTriangular(float input)
+static float getWeightTriangular(float input, int size)
 {
-    input = input*1.8f + 0.1f;
-    if ( input >= 1.f )
-    {
-        input = 2.f - input;
-    }
-    return input;
+    int half =  size / 2;
+    float w = input < half ? input + 1.0f : size - input;
+    return w;
 }
 
 static void fillWeightTriangular(WeightFunction::WeightContainer& weight)
@@ -57,7 +54,7 @@ static void fillWeightTriangular(WeightFunction::WeightContainer& weight)
     size_t divider = (weight.size() - 1);
     for (size_t i = 0; i < weight.size(); ++i)
     {
-        weight[i] = getWeightTriangular((float)i/divider);
+        weight[i] = getWeightTriangular((float)i/divider, weight.size());
     }
 }
 
@@ -70,7 +67,7 @@ static const float s_mu = 0.5f;
 
 static float getWeightGaussian(float input)
 {
-    return (exp( -16.f*(input - s_mu)*(input - s_mu) ));
+    return (exp( -(input - s_mu)*(input - s_mu) ));
 }
 
 static void fillWeightGaussian(WeightFunction::WeightContainer& weight)

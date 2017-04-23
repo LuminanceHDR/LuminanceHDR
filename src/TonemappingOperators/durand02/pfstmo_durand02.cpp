@@ -38,12 +38,8 @@
 #include "Libpfs/colorspace/colorspace.h"
 #include "Libpfs/exception.h"
 #include "Libpfs/frame.h"
+#include "Libpfs/progress.h"
 #include "tmo_durand02.h"
-
-namespace pfs
-{
-class Progress;
-}
 
 namespace
 {
@@ -94,5 +90,8 @@ void pfstmo_durand02(pfs::Frame& frame,
   tmo_durand02(*X, *Y, *Z,
                sigma_s, sigma_r, baseContrast, downsample, !original_algorithm,
                ph);
+
+  if ( !ph.canceled() )
+      ph.setValue(100);
 }
 

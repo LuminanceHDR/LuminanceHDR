@@ -835,7 +835,7 @@ void HDRHTMLSet::add_image( int width, int height, float *R, float *G, float *B,
 
   image_list.push_back( new_image );
 
-  locale::global(locale(user_locale));
+  locale::global(locale(user_locale.c_str()));
 }
 
 void print_image_objects( ostream &out, void *user_data, const char *parameter );

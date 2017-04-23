@@ -28,6 +28,10 @@
  * $Id: pfstmo_mantiuk08.cpp,v 1.19 2013/12/28 14:00:54 rafm Exp $
  */
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 #include <math.h>
 #include <algorithm>
 #include <iostream>
@@ -183,6 +187,8 @@ void CompressionTMO::tonemap( const float *R_in, const float *G_in, float *B_in,
 #endif
     const size_t pix_count = width*height;
 
+    bool canceled = false;
+
     ph.setValue(0);
     // Compute log of Luminance
     float *logL = new float[pix_count];
@@ -202,21 +208,30 @@ void CompressionTMO::tonemap( const float *R_in, const float *G_in, float *B_in,
     double *s = new double[H.bin_count];
     {
         double d = 0;
+        #pragma omp parallel for reduction(+:d)
         for( int bb = 0; bb < H.bin_count; bb++ ) {
-            ph.setValue(35*bb/H.bin_count);
             if (ph.canceled())
-                goto end;
+            {
+                canceled = true;
+                bb = H.bin_count;
+            }
             d += pow( H.p[bb], 1./3. );
         }
+        if (canceled) goto end;
         d *= H.delta;
+        #pragma omp parallel for
         for( int bb = 0; bb < H.bin_count; bb++ ) {
-            ph.setValue(50*bb/H.bin_count);
             if (ph.canceled())
-                goto end;
+            {
+                canceled = true;
+                bb = H.bin_count;
+            }
             s[bb] = pow( H.p[bb], 1./3. )/d;
         }
+        if (canceled) goto end;
 
     }
+    ph.setValue(33);
 
 #if 0
     // TODO: Handling of degenerated cases, e.g. when an image contains uniform color
@@ -240,22 +255,30 @@ void CompressionTMO::tonemap( const float *R_in, const float *G_in, float *B_in,
 
     //Create a tone-curve
     lut.y_i[0] = 0;
+    //#pragma omp parallel for private (bb)
     for( int bb = 1; bb < H.bin_count; bb++ ) {
-        ph.setValue(60*bb/H.bin_count);
         if (ph.canceled())
-            goto end;
+        {
+            canceled = true;
+            bb = H.bin_count;
+        }
         lut.y_i[bb] = lut.y_i[bb-1] + s[bb] * H.delta;
     }
-
+    if (canceled) goto end;
+    ph.setValue(66);
     // Apply the tone-curve
+    #pragma omp parallel for
     for( unsigned int pp = 0; pp < pix_count; pp++ ) {
-        ph.setValue(100*pp/pix_count);
         if (ph.canceled())
-            goto end;
+        {
+            canceled = true;
+            pp = pix_count;
+        }
         R_out[pp] = lut.interp( safelog10f(R_in[pp]) );
         G_out[pp] = lut.interp( safelog10f(G_in[pp]) );
         B_out[pp] = lut.interp( safelog10f(B_in[pp]) );
     }
+    ph.setValue(99);
 end:
     delete [] s;
     delete [] logL;

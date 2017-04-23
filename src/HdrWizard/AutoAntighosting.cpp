@@ -38,11 +38,14 @@
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/utils/minmax.h>
+#include "Libpfs/utils/msec_timer.h"
 
 #include <fftw3.h>
 
 #include "AutoAntighosting.h"
 // --- LEGACY CODE ---
+
+using namespace pfs::utils;
 
 float max(const Array2Df& u)
 {

@@ -90,8 +90,10 @@ int main( int argc, char ** argv )
 	QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
 	QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
-	QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#ifdef WIN32 //TODO: there are problems with HiDPI on X11, let's enable this only on Windows by now
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
 
 	Q_INIT_RESOURCE(icons);
     QApplication application( argc, argv );

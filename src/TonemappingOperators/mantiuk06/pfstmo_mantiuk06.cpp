@@ -44,6 +44,7 @@
 
 #include "Libpfs/pfs.h"
 #include "Libpfs/frame.h"
+#include "Libpfs/progress.h"
 #include "Libpfs/colorspace/colorspace.h"
 
 
@@ -83,6 +84,7 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
 
     std::cout << ss.str();
 #endif
+    ph.setValue(0);
 
     if (cont_eq)
         scaleFactor = -scaleFactor;
@@ -106,4 +108,6 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
                           ph);
 
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
+    if ( !ph.canceled() )
+        ph.setValue(100);
 }

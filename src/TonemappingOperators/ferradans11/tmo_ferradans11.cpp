@@ -46,14 +46,17 @@
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/progress.h"
+#include <Libpfs/utils/numeric.h>
 #include "Libpfs/utils/msec_timer.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "tmo_ferradans11.h"
 #include <boost/math/constants/constants.hpp>
+
 #include <cmath>
  
 using namespace std;
 using namespace pfs;
+using namespace utils;
 
 //for debugging purposes
 #if 0
@@ -84,7 +87,7 @@ static void dumpPFS( const char *fileName, const pfstmo::Array2D *data, const ch
 
 namespace {
 
-static bool abs_compare(float a, float b)
+static inline bool abs_compare(float a, float b)
 {
     return fabs(a) < fabs(b);
 }
@@ -115,7 +118,8 @@ float apply_arctg_slope10(float Ip,float I,float I2,float I3,float I4,float I5,f
  */
 
 
-#define ELEM_SWAP(a,b) { register float t=(a);(a)=(b);(b)=t; }
+#define ELEM_SWAP(a,b) { float t=(a);(a)=(b);(b)=t; }
+//#define ELEM_SWAP(a,b) { register float t=(a);(a)=(b);(b)=t; }
 //#define ELEM_SWAP(a,b) { register float t=a;a=b;b=t; }
 
 float quick_select(float arr[], int n)
@@ -181,9 +185,8 @@ float MSE(float Im1[], float Im2[], int largo, float escala)
     float tmp;
     float v=1.f/escala;
     float v2=1.f;
-    int i;
-    #pragma omp for private(i)
-    for(i=0;i<largo;i++)
+    #pragma omp parallel for reduction(+:res)
+    for(int i=0;i<largo;i++)
     {
         tmp=(Im1[i])*v-(Im2[i])*v2;
         tmp=fabs(tmp);
@@ -200,9 +203,8 @@ void producto(fftwf_complex* A, fftwf_complex* B,fftwf_complex* AB, int fil, int
     //fftw_complex* C= (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * length);
     int length=fil*col;
     
-    int i;
-    #pragma omp for private(i)
-    for (i = 0; i < length; i++)
+    #pragma omp parallel for
+    for (int i = 0; i < length; i++)
     {
         AB[i][0] = (A[i][0] * B[i][0] - A[i][1] * B[i][1]);
         AB[i][1] = (A[i][0] * B[i][1] + A[i][1] * B[i][0]);
@@ -216,10 +218,9 @@ void nucleo_gaussiano(float res[], int fil, int col, float sigma)
     float normaliza=1.0/(sqrt(2* boost::math::double_constants::pi)*sigma+1e-6);
     int mitfil=fil/2;
     int mitcol=col/2;
-    int i, j;
-    #pragma omp for private(i,j)
-    for(i=0;i<fil;i++)
-        for(j=0;j<col;j++)
+    #pragma omp parallel for
+    for(int i=0;i<fil;i++)
+        for(int j=0;j<col;j++)
             res[i*col+j]=normaliza*exp( -((i-mitfil)*(i-mitfil)+(j-mitcol)*(j-mitcol) )/(2*sigma*sigma) );
     
 }
@@ -231,9 +232,8 @@ void escala(float a[], int largo, float maxv, float minv)
     
     float R;
     float s=(maxv-minv)/(M-m);
-    int i;
-    #pragma omp for private(i)
-    for(i=0;i<largo;i++)
+    #pragma omp parallel for private(R)
+    for(int i=0;i<largo;i++)
     {
         R=a[i];
         a[i]=minv+s*(R-m);
@@ -245,10 +245,9 @@ void fftshift(float a[], int fil, int col)
 {
     float tmp;
     
-    int i, j;
-    #pragma omp for private(i,j)
-    for( i=0;i<fil/2;i++)
-        for(j=0;j<col/2;j++)
+    #pragma omp parallel for private(tmp)
+    for(int i=0;i<fil/2;i++)
+        for(int j=0;j<col/2;j++)
         {
             tmp=a[i*col+j];
             a[i*col+j]=a[(i+fil/2)*col+j+col/2];
@@ -260,17 +259,18 @@ void fftshift(float a[], int fil, int col)
 }
 
 }
+
 void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB, float rho, float invalpha, pfs::Progress &ph){
 #ifdef TIMER_PROFILING
     msec_timer stop_watch;
     stop_watch.start();
 #endif
-  // activate parallel execution of fft routines
-  fftwf_init_threads();
+    // activate parallel execution of fft routines
+    fftwf_init_threads();
 #ifdef _OPENMP
-  fftwf_plan_with_nthreads( omp_get_max_threads() );
+    fftwf_plan_with_nthreads(omp_get_max_threads());
 #else
-  fftwf_plan_with_nthreads( 2 );
+    fftwf_plan_with_nthreads( 2 );
 #endif
 
     ph.setValue(0);
@@ -288,9 +288,8 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     RGBorig[1] = new float[length];
     RGBorig[2] = new float[length];
     
-    int i;
-    #pragma omp for private(i)
-    for(i=0;i<length;i++){
+    #pragma omp parallel for
+    for(int i=0;i<length;i++){
         RGBorig[0][i] = (float)max(imR(i), 0.f);
         RGBorig[1][i] = (float)max(imG(i), 0.f);
         RGBorig[2][i] = (float)max(imB(i), 0.f);
@@ -314,10 +313,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     
     for(int k=0;k<3;k++)
     {
-        int i;
-        #pragma omp for private(i)
-        for(i = 0; i < length; i++)
-              RGBorig[k][i] += 1e-6;
+        vsadd(RGBorig[k], 1e-6, RGBorig[k], length);
 
         copy(RGBorig[k], RGBorig[k]+length, aux);
         median=quick_select(aux, length);
@@ -344,6 +340,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     // OF THE BACKGROUND. DATA IN TABLA1 FROM VALETON+VAN NORREN.
     // TAKE AS REFERENCE THE CHANNEL WITH MAXIMUM ILUMINATION.
     //float muMax=max(max(mu[0],mu[1]),mu[2]);
+    #pragma omp parallel for
     for(int k=0;k<3;k++)
     {
         //MOVE log(mu) EQUALLY FOR THE 3 COLOR CHANNELS: rho DOES NOT CHANGE
@@ -375,9 +372,8 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         float mKlogc=pow(Ir,n)/(pow(Ir,n)+pow(mu[k],n))-K_*log10(Ir+I0);
         
         //mix W-F and N-R
-        int i;
-        #pragma omp for private(i)
-        for(i=0;i<length;i++)
+        #pragma omp parallel for
+        for(int i=0;i<length;i++)
       	{
             float x=log10(RGBorig[k][i]);
             float In= pow(RGBorig[k][i],n);
@@ -391,14 +387,10 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
       	}
         
         float minmez=*min_element(RGB[k],RGB[k]+length);
-        #pragma omp for private(i)
-        for(i = 0; i < length; i++)
-              RGB[k][i] -= minmez;
+        vsadd(RGB[k], -minmez, RGB[k], length);
 
         float escalamez=1.f/(*max_element(RGB[k],RGB[k]+length)+1e-12);
-        #pragma omp for private(i)
-        for(i = 0; i < length; i++)
-              RGB[k][i] *= escalamez;
+        vsmul(RGB[k], escalamez, RGB[k], length);
     }
     
     ph.setValue(20);
@@ -412,9 +404,8 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         return;
     }
 
-    int color;
-    #pragma omp for private(color)
-    for(color=0;color<colors;color++)
+    #pragma omp parallel for
+    for(int color=0;color<colors;color++)
     {
         copy(RGB[color], RGB[color]+length, RGBorig[color]);
         med[color]=medval(RGB[color], length);
@@ -494,9 +485,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     suma = accumulate(g, g+length, 0.f);
 
     float w = (1.0f/suma);
-    #pragma omp for private(i)
-    for(i = 0; i < length; i++)
-        g[i] *= w;
+    vsmul(g, w, g, length);
 
     fftwf_complex* G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pG = fftwf_plan_dft_r2c_2d(fil, col, g, G, FFTW_ESTIMATE);
@@ -615,43 +604,28 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
             producto(U7,G,U7G,fil,col);
             
             fftwf_execute(pinvU);
-            int i;
-            #pragma omp for private(i)
-            for(i = 0; i < length; i++)
-                iu[i] *= norm;
+            vsmul(iu, norm, iu, length);
 
             fftwf_execute(pinvU2);
-            #pragma omp for private(i)
-            for(i = 0; i < length; i++)
-                iu2[i] *= norm;
+            vsmul(iu2, norm, iu2, length);
 
             fftwf_execute(pinvU3);
-            #pragma omp for private(i)
-            for(i = 0; i < length; i++)
-                iu3[i] *= norm;
+            vsmul(iu3, norm, iu3, length);
 
             fftwf_execute(pinvU4);
-            #pragma omp for private(i)
-            for(i = 0; i < length; i++)
-                iu4[i] *= norm;
+            vsmul(iu4, norm, iu4, length);
 
             fftwf_execute(pinvU5);
-            #pragma omp for private(i)
-            for(i = 0; i < length; i++)
-                iu5[i] *= norm;
+            vsmul(iu5, norm, iu5, length);
 
             fftwf_execute(pinvU6);
-            #pragma omp for private(i)
-            for(i = 0; i < length; i++)
-                iu6[i] *= norm;
+            vsmul(iu6, norm, iu6, length);
 
             fftwf_execute(pinvU7);
-            #pragma omp for private(i)
-            for(i = 0; i < length; i++)
-                iu7[i] *= norm;
+            vsmul(iu7, norm, iu7, length);
 
-            #pragma omp for private(i)
-            for(i=0;i<length;i++)
+            #pragma omp parallel for
+            for(int i=0;i<length;i++)
             {
                 // compute contrast component
                  u0[i]=apply_arctg_slope10(u0[i], iu[i], iu2[i], iu3[i], iu4[i], iu5[i], iu6[i], iu7[i]);
@@ -664,13 +638,11 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
             float mabsv = fabs(*max_element(u0, u0+length, abs_compare));
             float multiplier = 1.f/mabsv;
 
-            #pragma omp for private(i)
-            for(i = 0; i < length; i++)
-                u0[i] *= multiplier;
+            vsmul(u0, multiplier, u0, length);
 
             float norm1 = (1.0 + dt*(1.0+255.0/253.0));// assuming alpha=255/253,beta=1 
-            #pragma omp for private(i)
-            for(i=0;i<length;i++)
+            #pragma omp parallel for
+            for(int i=0;i<length;i++)
             {
                 RGB[color][i] = (RGB[color][i] + dt*(RGBorig[color][i] + 0.5 * u0[i]+255.0/253.0 * med[color])) / norm1;
                 //project onto the interval [0,1]
@@ -736,18 +708,14 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     fftwf_free(U7G);
     
     ph.setValue(90);
-    int c;
-    #pragma omp for private(c)
-    for(c = 0; c < 3; c++)
+    #pragma omp parallel for
+    for(int c = 0; c < 3; c++)
         escala(RGB[c], length, 1.f, 0.f);
     
     //range between (0,1)
-    #pragma omp for private(i)
-    for (i =0;i<length;i++){
-        imR(i) = RGB[0][i];
-        imG(i) = RGB[1][i];
-        imB(i) = RGB[2][i];
-    }
+    copy(RGB[0], RGB[0] + length, imR.begin());
+    copy(RGB[1], RGB[1] + length, imG.begin());
+    copy(RGB[2], RGB[2] + length, imB.begin());
  
     delete[] RGBorig[0];
     delete[] RGBorig[1];

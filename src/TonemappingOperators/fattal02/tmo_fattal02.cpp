@@ -42,12 +42,15 @@
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/progress.h"
+#include "Libpfs/utils/msec_timer.h"
 #include "TonemappingOperators/pfstmo.h"
 
 #include "pde.h"
 #include "tmo_fattal02.h"
 
 using namespace std;
+using namespace pfs;
+using namespace utils;
 
 
 //!! TODO: for debugging purposes
@@ -340,6 +343,10 @@ void tmo_fattal02(size_t width,
                   int detail_level,
                   pfs::Progress &ph)
 {
+#ifdef TIMER_PROFILING
+    msec_timer stop_watch;
+    stop_watch.start();
+#endif
     static const float black_point = 0.1f;
     static const float white_point = 0.5f;
     static const float gamma = 1.0f; // 0.8f;
@@ -533,6 +540,11 @@ void tmo_fattal02(size_t width,
       }
       // note, we intentionally do not cut off values > 1.0
   }
+#ifdef TIMER_PROFILING
+    stop_watch.stop_and_update();
+    cout << endl;
+    cout << "tmo_fattal02 = " << stop_watch.get_time() << " msec" << endl;
+#endif
 
   ph.setValue(96);
 }

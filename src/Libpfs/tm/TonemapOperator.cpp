@@ -65,8 +65,6 @@ public:
     {
         ph.setMaximum(100);
 
-        // pfstmo_mantiuk06 not reentrant
-        m_mutex.lock();
         try
         {
             pfstmo_mantiuk06(workingFrame,
@@ -78,19 +76,11 @@ public:
         }
         catch (...)
         {
-            m_mutex.unlock();
             throw std::runtime_error("Tonemap Failed");
         }
-        m_mutex.unlock();
     }
 
-private:
-    // It may be removed, because the issue in the race condition of the
-    // operator has been solved
-    static boost::mutex m_mutex;
 };
-
-boost::mutex TonemapOperatorMantiuk06::m_mutex;   // static member
 
 struct TonemapOperatorMantiuk08
         : public TonemapOperatorRegister<mantiuk08, TonemapOperatorMantiuk08>
@@ -139,9 +129,6 @@ struct TonemapOperatorFattal02
         else
             detail_level = 3;
 
-    //    std::cout << "RATIO = " << ratio << ", ";
-    //    std::cout << "DETAIL_LEVEL = " << detail_level << std::endl;
-
         pfstmo_fattal02(workingframe,
                         opts->operator_options.fattaloptions.alpha,
                         opts->operator_options.fattaloptions.beta,
@@ -161,12 +148,19 @@ struct TonemapOperatorFerradans11
     {
         ph.setMaximum(100);
 
+        m_mutex.lock();
         pfstmo_ferradans11(workingframe,
                         opts->operator_options.ferradansoptions.rho,
                         opts->operator_options.ferradansoptions.inv_alpha,
                         ph);
+        m_mutex.unlock();
     }
+
+private:
+    static boost::mutex m_mutex;
 };
+
+boost::mutex TonemapOperatorFerradans11::m_mutex;
 
 struct TonemapOperatorMai11
         : public TonemapOperatorRegister<mai, TonemapOperatorMai11>
