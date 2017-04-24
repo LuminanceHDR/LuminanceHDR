@@ -93,12 +93,6 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
 
 GenericViewer::~GenericViewer()
 {
-    /*
-    if (mFrame)
-        delete mFrame;
-    if (mPixmap)
-	    delete mPixmap;
-    */
 }
 
 void GenericViewer::retranslateUi()
@@ -132,11 +126,7 @@ void GenericViewer::fitToWindow(bool /* checked */)
     // update only if the change is above the 0.05%
     if ( qAbs(sf - static_cast<qreal>(1.0)) > 0.05 )
     {
-#ifdef QT_DEBUG
-        //qDebug() << "void GenericViewer::fitToWindow().sf = " << sf;
-#endif
         mView->scale(sf,sf);
-
         emit changed(this);
     }
 }
@@ -165,11 +155,7 @@ void GenericViewer::fillToWindow()
     // update only if the change is above the 0.05%
     if ( qAbs(sf - static_cast<qreal>(1.0)) > 0.05 )
     {
-#ifdef QT_DEBUG
-        //qDebug() << "void GenericViewer::fillToWindow().sf = " << sf;
-#endif
         mView->scale(sf,sf);
-
         emit changed(this);
     }
 }
@@ -376,7 +362,6 @@ QImage GenericViewer::getQImage() const
 void GenericViewer::setQImage(const QImage& qimage)
 {
 	QPixmap pixmap = QPixmap::fromImage(qimage);
-	//pixmap.setDevicePixelRatio(m_devicePixelRatio);
 	pixmap.setDevicePixelRatio(m_devicePixelRatio);
     mPixmap->setPixmap(pixmap);
 }

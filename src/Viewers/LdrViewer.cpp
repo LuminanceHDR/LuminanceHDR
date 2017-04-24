@@ -159,26 +159,25 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
     , informativeLabel(new QLabel(mToolBar))
     , mTonemappingOptions(opts)
 {
+    informativeLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    informativeLabel->setMinimumSize(QSize(200,36));
     mToolBar->addWidget(informativeLabel);
 
     setDevicePixelRatio(devicePixelRatio);
 
     mPixmap->disableSelectionTool(); // disable by default crop functionalities
 
-    if (frame) // In new fullscreen viewer we have a NULL frame at construction
-    {
-        // I shouldn't call a virtual function straight from the constructor,
-        // but specifing correctly which version of this virtual function I want to call,
-        // I am safe
-        LdrViewer::setTonemappingOptions(opts);
+    // I shouldn't call a virtual function straight from the constructor,
+    // but specifing correctly which version of this virtual function I want to call,
+    // I am safe
+    LdrViewer::setTonemappingOptions(opts);
 
-        QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(getFrame()) );
-        doCMSTransform(*temp_qimage, false, false);
-        setQImage(*temp_qimage);
+    QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(getFrame()) );
+    doCMSTransform(*temp_qimage, false, false);
+    setQImage(*temp_qimage);
 
-        updateView();
-        retranslateUi();
-    }
+    updateView();
+    retranslateUi();
 }
 
 LdrViewer::~LdrViewer()
@@ -190,7 +189,8 @@ LdrViewer::~LdrViewer()
 
 void LdrViewer::retranslateUi()
 {
-    informativeLabel->setText( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()) );
+    parseOptions(mTonemappingOptions, caption);
+    informativeLabel->setText( tr("LDR image [%1 x %2]: %3").arg(getWidth()).arg(getHeight()).arg( caption ));
 
 	GenericViewer::retranslateUi();
 }
@@ -224,7 +224,8 @@ void LdrViewer::updatePixmap()
     doCMSTransform(*temp_qimage, false, false);
     mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
 
-    informativeLabel->setText( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()) );
+    parseOptions(mTonemappingOptions, caption);
+    informativeLabel->setText( tr("LDR image [%1 x %2]: %3").arg(getWidth()).arg(getHeight()).arg( caption ));
 }
 
 void LdrViewer::setTonemappingOptions(TonemappingOptions* tmopts)
@@ -234,6 +235,7 @@ void LdrViewer::setTonemappingOptions(TonemappingOptions* tmopts)
     parseOptions(tmopts, caption);
     setWindowTitle(caption);
     setToolTip(caption);
+    informativeLabel->setText( tr("LDR image [%1 x %2]: %3").arg(getWidth()).arg(getHeight()).arg( caption ));
 }
 
 TonemappingOptions* LdrViewer::getTonemappingOptions()
