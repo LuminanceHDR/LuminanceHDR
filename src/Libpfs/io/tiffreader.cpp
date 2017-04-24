@@ -521,6 +521,5 @@ void TiffReader::read(Frame &frame, const Params &params)
     FrameReader::read(frame, params);
 }
 
-int  TiffReader::getBitDepth() const { return (m_data->bitsPerSample_ <= 16) ? m_data->bitsPerSample_ : 20; }
 }   // io
 }   // pfs

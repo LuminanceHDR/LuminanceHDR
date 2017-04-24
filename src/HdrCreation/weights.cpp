@@ -37,16 +37,22 @@ WeightFunctionType WeightFunction::fromString(const std::string& type)
 
 WeightFunction::WeightFunction(WeightFunctionType type)
     : m_type(type)
-    , m_num_bins(1 << 8)
 {
     setType(type);
 }
 
-static float getWeightTriangular(float input, int size)
+namespace {
+static const float s_triangularThreshold = 2.0f / WeightFunction::NUM_BINS;
+}
+
+static float getWeightTriangular(float input)
 {
-    int half =  size / 2;
-    float w = input < half ? input + 1.0f : size - input;
-    return w;
+    // ignore very low weights
+    if ( (input < s_triangularThreshold) || (input > (1.f - s_triangularThreshold)) ) {
+        return 0.f;
+    }
+    float half = 0.5f;
+    return input < half ? 2*input : 2.0f*(1.0f-input);
 }
 
 static void fillWeightTriangular(WeightFunction::WeightContainer& weight)
@@ -54,7 +60,7 @@ static void fillWeightTriangular(WeightFunction::WeightContainer& weight)
     size_t divider = (weight.size() - 1);
     for (size_t i = 0; i < weight.size(); ++i)
     {
-        weight[i] = getWeightTriangular((float)i/divider, weight.size());
+        weight[i] = getWeightTriangular((float)i/divider);
     }
 }
 
@@ -62,12 +68,18 @@ static float minTrustedValueTriangular() { return 0.f - std::numeric_limits<floa
 static float maxTrustedValueTriangular() { return 1.f + std::numeric_limits<float>::epsilon(); }
 
 namespace {
+static const float s_gaussianThreshold = 2.0f/WeightFunction::NUM_BINS;
 static const float s_mu = 0.5f;
 }
 
 static float getWeightGaussian(float input)
 {
-    return (exp( -(input - s_mu)*(input - s_mu) ));
+    // ignore very low weights
+    if ( (input < s_gaussianThreshold) || (input > (1.f - s_gaussianThreshold)) ) {
+        return 0.f;
+    }
+
+    return (exp( -32.0f*(input - s_mu)*(input - s_mu) ));
 }
 
 static void fillWeightGaussian(WeightFunction::WeightContainer& weight)
@@ -83,15 +95,15 @@ static float minTrustedValueGaussian() { return 0.f - std::numeric_limits<float>
 static float maxTrustedValueGaussian() { return 1.f + std::numeric_limits<float>::epsilon(); }
 
 namespace {
-static const float s_plateauThreshold = 0.005f;
+static const float s_plateauThreshold = 0.00025f;
 }
 
 static float getWeightPlateau(float input)
 {
-//    if ((input < s_plateauThreshold) || (input > (1.f - s_plateauThreshold)))
-//    {
-//        return 0.f;
-//    }
+    if ((input < s_plateauThreshold) || (input > (1.f - s_plateauThreshold)))
+    {
+        return 0.f;
+    }
 
     return 1.f - pow( (2.0f*input - 1.0f), 12.0f);
 }
@@ -152,7 +164,6 @@ void WeightFunction::setType(WeightFunctionType type)
     }
 
     m_type = type_;
-    m_weights.resize(m_num_bins);
     func_.fillData(m_weights);
     m_minTrustedValue = func_.minTrustValue();
     m_maxTrustedValue = func_.maxTrustValue();

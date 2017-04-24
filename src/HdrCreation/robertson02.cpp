@@ -143,11 +143,6 @@ void RobertsonOperator::computeFusion(ResponseCurve& response, WeightFunction& w
     Frame tempFrame (frames[0].frame()->getWidth(),
             frames[0].frame()->getHeight());
 
-    const int bps = frames[0].getBPS();
-
-    response.setBPS(bps);
-    weight.setBPS(bps);
-
     Channel* outputRed;
     Channel* outputGreen;
     Channel* outputBlue;
@@ -300,9 +295,8 @@ void RobertsonOperatorAuto::computeResponse(
     applyResponse(response, weight, channel, inputData, outputData, width, height,
                   minAllowedValue, maxAllowedValue, arrayofexptime);
 
-    std::vector<long> cardEm(response.getNum_Bins());
+    std::vector<long> cardEm(ResponseCurve::NUM_BINS);
     ResponseContainer sum;
-    sum.resize(response.getNum_Bins());
 
     assert(sum.size() == cardEm.size());
     assert(sum.size() == Ip.size());
@@ -324,7 +318,7 @@ void RobertsonOperatorAuto::computeResponse(
             {
                 size_t sample = response.getIdx(inputData[i][j]);
                 //if ((sample < ResponseCurve::NUM_BINS) && (sample >= 0)) // sample is unsigned so always >= 0
-                if (sample < response.getNum_Bins())
+                if (sample < ResponseCurve::NUM_BINS)
                 {
                     sum[sample] += ti * outputData[j];
                     cardEm[sample]++;
@@ -403,11 +397,6 @@ void RobertsonOperatorAuto::computeFusion(
                 frames[0].frame()->getWidth(),
                 frames[0].frame()->getHeight()
             );
-
-    const int bps = frames[0].getBPS();
-
-    response.setBPS(bps);
-    weight.setBPS(bps);
 
     Channel* outputRed;
     Channel* outputGreen;

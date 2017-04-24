@@ -53,7 +53,6 @@ public:
     void open();
     void close();
     void read(Frame &frame, const Params &);
-    int  getBitDepth() const { return 20; }
 
 private:
     std::unique_ptr<FitsReaderData> m_data;

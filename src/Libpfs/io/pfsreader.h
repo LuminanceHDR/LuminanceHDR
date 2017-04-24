@@ -48,7 +48,6 @@ public:
     void open();
     void close();
     void read(pfs::Frame &frame, const pfs::Params &);
-    int  getBitDepth() const { return 20; }
 
 private:
     utils::ScopedStdIoFile m_file;

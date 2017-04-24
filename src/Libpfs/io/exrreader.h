@@ -38,7 +38,6 @@ public:
     void close();
     void open();
     void read(Frame &frame, const Params &params);
-    int  getBitDepth() const { return 20; }
 
 protected:
     class EXRReaderData;

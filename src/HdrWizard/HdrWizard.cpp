@@ -885,9 +885,6 @@ bool HdrWizard::loadRespCurve()
     try
     {
         HdrCreationItemContainer c =  m_hdrCreationManager->getData();
-        int bps = c[0].getBitDepth();
-        m_hdrCreationManager->getResponseCurve().setBPS(bps);
-        m_hdrCreationManager->getWeightFunction().setBPS(bps);
         m_hdrCreationManager->getResponseCurve().readFromFile(
                     QFile::encodeName(loadcurvefilename).constData());
 

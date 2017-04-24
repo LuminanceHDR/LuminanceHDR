@@ -165,9 +165,6 @@ void HdrCreationManager::loadFilesDone()
     {
         try
         {
-            const int bps = m_tmpdata[0].getBitDepth();
-            m_response->setBPS(bps);
-            m_weight->setBPS(bps);
             m_response->readFromFile(
                     QFile::encodeName(getResponseCurveInputFilename()).constData());
             setLoadResponseCurve(false);

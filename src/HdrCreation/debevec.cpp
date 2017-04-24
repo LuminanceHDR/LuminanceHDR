@@ -57,8 +57,8 @@ using namespace colorspace;
 namespace libhdr {
 namespace fusion {
 
-void DebevecOperator::computeFusion(ResponseCurve& response_, WeightFunction& weight_,
-                                    const vector<FrameEnhanced> &frames_enhanced,
+void DebevecOperator::computeFusion(ResponseCurve& response, WeightFunction& weight,
+                                    const vector<FrameEnhanced> &images,
                                     pfs::Frame &frame)
 {
 #ifdef TIMER_PROFILING
@@ -67,51 +67,18 @@ void DebevecOperator::computeFusion(ResponseCurve& response_, WeightFunction& we
 #endif
     assert(frames_enhanced.size());
 
-    std::vector<pfs::FramePtr> images;
     std::vector<float> times;
 
-    const int W = frames_enhanced[0].frame()->getWidth();
-    const int H = frames_enhanced[0].frame()->getHeight();
+    const int W = images[0].frame()->getWidth();
+    const int H = images[0].frame()->getHeight();
 
-    const int bps = frames_enhanced[0].getBPS();
-    const size_t num_bins = (1 << bps);
-
-    for (size_t idx = 0; idx < frames_enhanced.size(); ++idx)
+    for (size_t idx = 0; idx < images.size(); ++idx)
     {
-        images.push_back(frames_enhanced[idx].frame());
-        times.push_back(frames_enhanced[idx].averageLuminance());
+        times.push_back(images[idx].averageLuminance());
     }
-
-    array<vector<float>, 3> response = {vector<float>(num_bins), vector<float>(num_bins),vector<float>(num_bins)};
-
-    response_.setBPS(bps);
-    weight_.setBPS(bps);
-
-    libhdr::fusion::ResponseCurve::ResponseContainer R = response_.get(RESPONSE_CHANNEL_RED);
-    libhdr::fusion::ResponseCurve::ResponseContainer G = response_.get(RESPONSE_CHANNEL_GREEN);
-    libhdr::fusion::ResponseCurve::ResponseContainer B = response_.get(RESPONSE_CHANNEL_BLUE);
-
-    copy(R.begin(), R.end(), response[0].begin());
-    copy(G.begin(), G.end(), response[1].begin());
-    copy(B.begin(), B.end(), response[2].begin());
-
-    WeightFunction::WeightContainer tmp_weights = weight_.getWeights();
-    vector<float> weights(num_bins);
-    copy(tmp_weights.begin(), tmp_weights.end(), weights.begin());
-
-    //CV_Assert(images.size() == times.total());
-    //checkImageDimensions(images);
-    //CV_Assert(images[0].depth() == CV_8U);
 
     const int channels = 3;
     const size_t size = W*H;
-
-    array<vector<float>, 3> log_response = {vector<float>(num_bins), vector<float>(num_bins), vector<float>(num_bins)};
-    #pragma omp parallel for
-    for (int c = 0; c < channels; c++)
-        transform(response[c].begin(), response[c].end(), log_response[c].begin(), logf);
-    //CV_Assert(log_response.rows == LDR_SIZE && log_response.cols == 1 &&
-    //          log_response.channels() == channels);
 
     vector<float> exp_values(times);
     transform(exp_values.begin(), exp_values.end(), exp_values.begin(), logf);
@@ -131,7 +98,7 @@ void DebevecOperator::computeFusion(ResponseCurve& response_, WeightFunction& we
     #pragma omp parallel for
     for(int i = 0; i < length; i++) {
         Channel *Ch[channels];
-        images[i]->getXYZChannels(Ch[0], Ch[1], Ch[2]);
+        images[i].frame()->getXYZChannels(Ch[0], Ch[1], Ch[2]);
         Array2Df *imagesCh[channels] = {Ch[0], Ch[1], Ch[2]};
 
         float cmax[3];
@@ -153,14 +120,14 @@ void DebevecOperator::computeFusion(ResponseCurve& response_, WeightFunction& we
         Array2Df w(W, H);
         for(int c = 0; c < channels; c++) {
             for(size_t k = 0; k < size; k++) {
-                splitted[c](k) = weights.at((int)((*imagesCh[c])(k)*((float)(num_bins-1))));
+                splitted[c](k) = weight((*imagesCh[c])(k));
             }
             vadd(&w, &splitted[c], &w, size);
         }
         vmul_scalar(&w, 1.f/channels, &w, size);
         for(int c = 0; c < channels; c++) {
             for(size_t k = 0; k < size; k++) {
-                (response_img[c])(k) = log_response[c].at((int)((*imagesCh[c])(k)*((float)(num_bins-1))));
+                (response_img[c])(k) = logf( response((*imagesCh[c])(k)) );
             }
         }
         for(int c = 0; c < channels; c++) {

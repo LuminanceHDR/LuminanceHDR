@@ -70,11 +70,7 @@ ResponseCurveType ResponseCurve::fromString(const std::string& type)
 
 ResponseCurve::ResponseCurve(ResponseCurveType type)
     : m_type(type)
-    , m_num_bins(1 << 8)
 {
-    m_responses[RESPONSE_CHANNEL_RED].resize(m_num_bins);
-    m_responses[RESPONSE_CHANNEL_GREEN].resize(m_num_bins);
-    m_responses[RESPONSE_CHANNEL_BLUE].resize(m_num_bins);
     setType(type);
 }
 
@@ -85,7 +81,7 @@ void ResponseCurve::writeToFile(const std::string& fileName) const
                  m_responses[RESPONSE_CHANNEL_RED].data(),
                  m_responses[RESPONSE_CHANNEL_GREEN].data(),
                  m_responses[RESPONSE_CHANNEL_BLUE].data(),
-                 m_num_bins);
+                 NUM_BINS);
 }
 
 bool ResponseCurve::readFromFile(const string &fileName)
@@ -95,7 +91,7 @@ bool ResponseCurve::readFromFile(const string &fileName)
                       m_responses[RESPONSE_CHANNEL_RED].data(),
                       m_responses[RESPONSE_CHANNEL_GREEN].data(),
                       m_responses[RESPONSE_CHANNEL_BLUE].data(),
-                      m_num_bins))
+                      NUM_BINS))
     {
         throw std::runtime_error("Invalid response curve file");
     }
@@ -122,6 +118,7 @@ void fillResponseGamma(ResponseCurve::ResponseContainer& response)
     {
         response[i] = std::pow(4.f * ((float)i/divider), 1.7f) + 1e-4;
     }
+    response[0] = response[1];
 }
 
 
@@ -142,6 +139,7 @@ void fillResponseLog10(ResponseCurve::ResponseContainer& response)
         response[i] = details_log10::s_inverseMaxValue *
                       std::pow(10.0f, ((((float)i/divider)/details_log10::s_norm) - 8.f) );
     }
+    response[0] = response[1];
 }
 
 void fillResponseSRGB(ResponseCurve::ResponseContainer& response)
@@ -153,6 +151,7 @@ void fillResponseSRGB(ResponseCurve::ResponseContainer& response)
     {
         response[i] = converter((float)i/divider);
     }
+    response[0] = response[1];
 }
 
 void ResponseCurve::setType(ResponseCurveType type)
@@ -178,10 +177,6 @@ void ResponseCurve::setType(ResponseCurveType type)
     }
 
     m_type = type_;
-
-    m_responses[RESPONSE_CHANNEL_RED].resize(m_num_bins);
-    m_responses[RESPONSE_CHANNEL_GREEN].resize(m_num_bins);
-    m_responses[RESPONSE_CHANNEL_BLUE].resize(m_num_bins);
 
     func_(m_responses[RESPONSE_CHANNEL_RED]);
     func_(m_responses[RESPONSE_CHANNEL_GREEN]);

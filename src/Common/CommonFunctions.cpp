@@ -259,7 +259,6 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
 
         FrameReaderPtr reader = FrameReaderFactory::open(filePath.constData());
         reader->read( *currentItem.frame(), getRawSettings() );
-        currentItem.setBitDepth(reader->getBitDepth());
 
         // read Average Luminance
         pfs::exif::ExifData exifData(currentItem.filename().toStdString());
