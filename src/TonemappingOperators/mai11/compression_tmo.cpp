@@ -213,7 +213,9 @@ void CompressionTMO::tonemap( const float *R_in, const float *G_in, float *B_in,
             if (ph.canceled())
             {
                 canceled = true;
+#ifndef WIN32
                 bb = H.bin_count;
+#endif
             }
             d += pow( H.p[bb], 1./3. );
         }
@@ -224,7 +226,9 @@ void CompressionTMO::tonemap( const float *R_in, const float *G_in, float *B_in,
             if (ph.canceled())
             {
                 canceled = true;
+#ifndef WIN32
                 bb = H.bin_count;
+#endif
             }
             s[bb] = pow( H.p[bb], 1./3. )/d;
         }
@@ -268,11 +272,13 @@ void CompressionTMO::tonemap( const float *R_in, const float *G_in, float *B_in,
     ph.setValue(66);
     // Apply the tone-curve
     #pragma omp parallel for
-    for( unsigned int pp = 0; pp < pix_count; pp++ ) {
+    for( int pp = 0; pp < static_cast<int>(pix_count); pp++ ) {
         if (ph.canceled())
         {
             canceled = true;
+#ifndef WIN32
             pp = pix_count;
+#endif
         }
         R_out[pp] = lut.interp( safelog10f(R_in[pp]) );
         G_out[pp] = lut.interp( safelog10f(G_in[pp]) );
