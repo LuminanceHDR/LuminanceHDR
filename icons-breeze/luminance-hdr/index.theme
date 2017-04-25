@@ -1,0 +1,12 @@
+[Icon Theme]
+Name=luminance-hdr
+Comment=Luminance HDR Icon Theme
+
+# Directory list
+Directories=apps
+
+[apps]
+Size=32
+Context=Applications
+Type=Fixed
+
