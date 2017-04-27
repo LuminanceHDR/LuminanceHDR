@@ -7,41 +7,41 @@ SET EXIV2_COMMIT=4753
 REM  http://github.com/libjpeg-turbo/libjpeg-turbo
 SET LIBJPEG_COMMIT_LONG=da2a27ef056a0179cbd80f9146e58b89403d9933
 
-rem  https://github.com/madler/zlib/commits
+REM  https://github.com/madler/zlib/commits
 SET ZLIB_COMMIT_LONG=cacf7f1d4e3d44d871b605da3b647f07d718623f
 
-rem  https://github.com/openexr/openexr
+REM  https://github.com/openexr/openexr
 SET OPENEXR_COMMIT_LONG=20d043d017d4b752356bb76946ffdffaa9c15c72
 SET OPENEXR_CMAKE_VERSION=2.2
 
-rem  http://www.boost.org/
+REM  http://www.boost.org/
 SET BOOST_MINOR=63
 
 REM ftp://ftp.fftw.org/pub/fftw/
 SET FFTW_VER=3.3.5
 
-rem https://github.com/mm2/Little-CMS
+REM https://github.com/mm2/Little-CMS
 SET LCMS_COMMIT_LONG=f9d75ccef0b54c9f4167d95088d4727985133c52
 
-rem https://github.com/ampl/gsl
+REM https://github.com/ampl/gsl
 SET GSL_COMMIT_LONG=48e0194da0d8921aff57c293b4f5083877d3f55b
 
-rem https://github.com/LibRaw/LibRaw
+REM https://github.com/LibRaw/LibRaw
 SET LIBRAW_COMMIT_LONG=d7c3d2cb460be10a3ea7b32e9443a83c243b2251
 SET LIBRAW_DEMOS2_COMMIT_LONG=194f592e205990ea8fce72b6c571c14350aca716
 SET LIBRAW_DEMOS3_COMMIT_LONG=f0895891fdaa775255af02275fce426a5bf5c9fc
 
-rem ftp://sourceware.org/pub/pthreads-win32/
+REM ftp://sourceware.org/pub/pthreads-win32/
 SET PTHREADS_DIR=prebuilt-dll-2-9-1-release
 
-rem http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c
+REM http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c
 SET CFITSIO_VER=3360
-rem broken 3370
+REM broken 3370
 
-rem Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
+REM Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
 SET HUGIN_VER=201600
 
-http://download.osgeo.org/libtiff/
+REM http://download.osgeo.org/libtiff/
 SET TIFF_VER=4.0.7
 
 IF EXIST .settings\vsexpress.txt (
@@ -329,7 +329,7 @@ IF NOT EXIST lcms2-%LCMS_COMMIT% (
 	
 	pushd lcms2-%LCMS_COMMIT%
 	REM %VSCOMMAND% Projects\%VS_LCMS%\lcms2.sln /Upgrade
-	rem devenv Projects\VC2013\lcms2.sln /build Release /project lcms2_DLL
+	REM devenv Projects\VC2013\lcms2.sln /build Release /project lcms2_DLL
 	%VSCOMMAND% Projects\%VS_LCMS%\lcms2.sln /Rebuild "%Configuration%|%Platform%" /project lcms2_DLL
 	IF errorlevel 1	goto error_end
 	popd
@@ -384,7 +384,7 @@ IF NOT EXIST LibRaw-%LIBRAW_COMMIT% (
 	
 	pushd LibRaw-%LIBRAW_COMMIT%
 	
-    rem /openmp
+    REM /openmp
 	echo.COPT_OPT="/arch:SSE2"> qtpfsgui_commands.in
 	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%>> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
@@ -443,29 +443,29 @@ pushd cfit%CFITSIO_VER%.build\%Configuration%
 SET CFITSIO=%CFITSIO%;%CD%
 popd
 
-rem IF NOT EXIST %TEMP_DIR%\CCfits-2.4.tar (
-rem 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits-2.4.tar.gz http://heasarc.gsfc.nasa.gov/docs/software/fitsio/CCfits/CCfits-2.4.tar.gz
-rem 	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/CCfits-2.4.tar.gz
-rem     %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits2.4patch.zip http://qtpfsgui.sourceforge.net/win/CCfits2.4patch.zip
-rem )
-rem IF NOT EXIST CCfits2.4 (
-rem 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/CCfits-2.4.tar
-rem     ren CCfits CCfits2.4
-rem     %CYGWIN_DIR%\bin\unzip.exe -o -q -d CCfits2.4 %TEMP_DIR%/CCfits2.4patch.zip
-rem )
-rem IF NOT EXIST CCfits2.4.build (
-rem     mkdir CCfits2.4.build
-rem     
-rem     pushd CCfits2.4.build
-rem 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% -DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
-rem 	IF errorlevel 1 goto error_end
-rem     %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target CCfits
-rem 	IF errorlevel 1 goto error_end
-rem 	popd
-rem )
-rem pushd CCfits2.4.build\%Configuration%
-rem SET CCFITS_ROOT_DIR=%CD%
-rem popd
+REM IF NOT EXIST %TEMP_DIR%\CCfits-2.4.tar (
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits-2.4.tar.gz http://heasarc.gsfc.nasa.gov/docs/software/fitsio/CCfits/CCfits-2.4.tar.gz
+REM 	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/CCfits-2.4.tar.gz
+REM     %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits2.4patch.zip http://qtpfsgui.sourceforge.net/win/CCfits2.4patch.zip
+REM )
+REM IF NOT EXIST CCfits2.4 (
+REM 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/CCfits-2.4.tar
+REM     ren CCfits CCfits2.4
+REM     %CYGWIN_DIR%\bin\unzip.exe -o -q -d CCfits2.4 %TEMP_DIR%/CCfits2.4patch.zip
+REM )
+REM IF NOT EXIST CCfits2.4.build (
+REM     mkdir CCfits2.4.build
+REM     
+REM     pushd CCfits2.4.build
+REM 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% -DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
+REM 	IF errorlevel 1 goto error_end
+REM     %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target CCfits
+REM 	IF errorlevel 1 goto error_end
+REM 	popd
+REM )
+REM pushd CCfits2.4.build\%Configuration%
+REM SET CCFITS_ROOT_DIR=%CD%
+REM popd
 
 SET GSL_COMMIT=%GSL_COMMIT_LONG:~0,7%
 IF NOT EXIST %TEMP_DIR%\gsl-ampl-%GSL_COMMIT%.zip (
@@ -619,7 +619,7 @@ IF NOT EXIST %L_BOOST_DIR%\boost_1_%BOOST_MINOR%_0 (
 
 REM Set Boost-directory as ENV variable (needed for CMake)
 pushd %L_BOOST_DIR%\boost_1_%BOOST_MINOR%_0
-rem SET Boost_DIR=%CD%
+REM SET Boost_DIR=%CD%
 REM SET BOOST_ROOT=%CD%
 popd
 
@@ -657,10 +657,10 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
 
-	rem mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
-	rem copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
-	rem copy gsl-1.15\build.vc10\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\gsl
-	rem copy gsl-1.15\build.vc10\dll\*.dll LuminanceHdrStuff\DEPs\bin\gsl
+	REM mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
+	REM copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
+	REM copy gsl-1.15\build.vc10\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\gsl
+	REM copy gsl-1.15\build.vc10\dll\*.dll LuminanceHdrStuff\DEPs\bin\gsl
 )
 
 robocopy fftw-%FFTW_VER%-dll LuminanceHdrStuff\DEPs\include\fftw3 *.h /MIR >nul
@@ -674,7 +674,7 @@ robocopy LibRaw-%LIBRAW_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR
 	
 robocopy lcms2-%LCMS_COMMIT%\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
 robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
-rem robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
+REM robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
 
 REM robocopy tbb40_20120613oss\include LuminanceHdrStuff\DEPs\include\tbb /MIR >nul
 REM robocopy tbb40_20120613oss\lib\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\lib\tbb /MIR >nul
@@ -722,7 +722,7 @@ popd
 
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\Luminance HDR.sln (
 	pushd LuminanceHdrStuff\qtpfsgui.build	
-	rem %VSCOMMAND% luminance-hdr.sln /Upgrade
+	REM %VSCOMMAND% luminance-hdr.sln /Upgrade
 	%CMAKE_DIR%\bin\cmake.exe --build . --config %ConfigurationLuminance%  %LuminanceTarget%
 
 	IF errorlevel 1	goto error_end
