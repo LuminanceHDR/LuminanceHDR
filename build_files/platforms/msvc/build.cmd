@@ -38,53 +38,6 @@ IF EXIST ..\msvc (
 
 REM End SANITY CHECKS
 
-REM Start Lib Versions
-
-REM  http://dev.exiv2.org/projects/exiv2/repository/
-SET EXIV2_COMMIT=4753
-
-REM  http://github.com/libjpeg-turbo/libjpeg-turbo
-SET LIBJPEG_COMMIT_LONG=da2a27ef056a0179cbd80f9146e58b89403d9933
-
-REM  https://github.com/madler/zlib/commits
-SET ZLIB_COMMIT_LONG=cacf7f1d4e3d44d871b605da3b647f07d718623f
-
-REM  https://github.com/openexr/openexr
-SET OPENEXR_COMMIT_LONG=20d043d017d4b752356bb76946ffdffaa9c15c72
-SET OPENEXR_CMAKE_VERSION=2.2
-
-REM  http://www.boost.org/
-SET BOOST_MINOR=63
-
-REM ftp://ftp.fftw.org/pub/fftw/
-SET FFTW_VER=3.3.5
-
-REM https://github.com/mm2/Little-CMS
-SET LCMS_COMMIT_LONG=f9d75ccef0b54c9f4167d95088d4727985133c52
-
-REM https://github.com/ampl/gsl
-SET GSL_COMMIT_LONG=48e0194da0d8921aff57c293b4f5083877d3f55b
-
-REM https://github.com/LibRaw/LibRaw
-SET LIBRAW_COMMIT_LONG=d7c3d2cb460be10a3ea7b32e9443a83c243b2251
-SET LIBRAW_DEMOS2_COMMIT_LONG=194f592e205990ea8fce72b6c571c14350aca716
-SET LIBRAW_DEMOS3_COMMIT_LONG=f0895891fdaa775255af02275fce426a5bf5c9fc
-
-REM ftp://sourceware.org/pub/pthreads-win32/
-SET PTHREADS_DIR=prebuilt-dll-2-9-1-release
-
-REM http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c
-SET CFITSIO_VER=3360
-REM broken 3370
-
-REM Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
-SET HUGIN_VER=201600
-
-REM http://download.osgeo.org/libtiff/
-SET TIFF_VER=4.0.7
-
-REM End Lib Versions
-
 IF EXIST .settings\vsexpress.txt (
     SET VSCOMMAND=vcexpress
 ) ELSE IF EXIST .settings\devent.txt (
