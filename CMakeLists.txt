@@ -6,10 +6,10 @@ CMAKE_POLICY(SET CMP0043 OLD)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/build_files/Modules")
 
 # Global variables for CMake
-include(build_files/Version.cmake)
-include(build_files/GlobalSettings.cmake)
-include(build_files/CompilerSettings.cmake)
-include(build_files/Internationalization.cmake)
+include(build_files/Modules/Version.cmake)
+include(build_files/Modules/GlobalSettings.cmake)
+include(build_files/Modules/CompilerSettings.cmake)
+include(build_files/Modules/Internationalization.cmake)
 
 IF(TIMER_PROFILING)
     ADD_DEFINITIONS(-DTIMER_PROFILING)
