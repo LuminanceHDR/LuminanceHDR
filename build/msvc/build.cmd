@@ -163,7 +163,6 @@ IF %Platform% EQU x64 (
 
 call setenv.cmd
 
-IF NOT EXIST %CYGWIN_DIR%\bin\mv.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
@@ -172,7 +171,6 @@ GOTO cygwin_ok
 
 :cygwin_error
 echo ERROR: Cygwin with
-echo    mv
 echo    nasm
 echo    sed 
 echo    ssh
@@ -235,7 +233,7 @@ IF NOT EXIST %TEMP_DIR%\zlib-%ZLIB_COMMIT%.zip (
 
 IF NOT EXIST zlib-%ZLIB_COMMIT% (
 	cmake -E tar %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe zlib-* zlib-%ZLIB_COMMIT%
+	move zlib-* zlib-%ZLIB_COMMIT%
 )
 
 IF NOT EXIST zlib-%ZLIB_COMMIT%.build (
@@ -317,7 +315,7 @@ IF NOT EXIST %TEMP_DIR%\libjpeg-%LIBJPEG_COMMIT%.zip (
 
 IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
 	cmake -E tar %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe libjpeg-* libjpeg-turbo-%LIBJPEG_COMMIT%
+	move libjpeg-* libjpeg-turbo-%LIBJPEG_COMMIT%
 )
 
 
@@ -346,7 +344,7 @@ IF NOT EXIST %TEMP_DIR%\lcms2-%LCMS_COMMIT%.zip (
 
 IF NOT EXIST lcms2-%LCMS_COMMIT% (
 	cmake -E tar %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe Little-CMS-* lcms2-%LCMS_COMMIT%
+	move Little-CMS-* lcms2-%LCMS_COMMIT%
 	
 	pushd lcms2-%LCMS_COMMIT%
 	REM %VSCOMMAND% Projects\%VS_LCMS%\lcms2.sln /Upgrade
@@ -388,7 +386,7 @@ IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip (
 
 IF NOT EXIST LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT% (
 	cmake -E tar %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%* LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%
+	move LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%* LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%
 )
 
 IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip (
@@ -398,12 +396,12 @@ IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip (
 
 IF NOT EXIST LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT% (
 	cmake -E tar %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%* LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%
+	move LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%* LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%
 )
 
 IF NOT EXIST LibRaw-%LIBRAW_COMMIT% (
 	cmake -E tar %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-%LIBRAW_COMMIT%* LibRaw-%LIBRAW_COMMIT%
+	move LibRaw-%LIBRAW_COMMIT%* LibRaw-%LIBRAW_COMMIT%
 
 	
 	pushd LibRaw-%LIBRAW_COMMIT%
@@ -505,7 +503,7 @@ IF NOT EXIST %TEMP_DIR%\gsl-ampl-%GSL_COMMIT%.zip (
 
 IF NOT EXIST gsl-1.16 (
 	cmake -E tar %TEMP_DIR%/gsl-ampl-%GSL_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe gsl-* gsl-1.16
+	move gsl-* gsl-1.16
 )
 IF NOT EXIST gsl-1.16.build (
 	mkdir gsl-1.16.build
@@ -529,7 +527,7 @@ IF NOT EXIST %TEMP_DIR%\OpenEXR-dk-%OPENEXR_COMMIT%.zip (
 
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT% (
 	cmake -E tar %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe openexr-* OpenEXR-dk-%OPENEXR_COMMIT%
+	move openexr-* OpenEXR-dk-%OPENEXR_COMMIT%
 )
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build (
     mkdir OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build
