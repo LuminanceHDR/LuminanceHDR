@@ -161,7 +161,7 @@ IF %Platform% EQU x64 (
 	set VS_CMAKE=%VS_CMAKE% Win64
 )
 
-call setenv.cmd
+call %0/setenv.cmd
 
 IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
