@@ -14,13 +14,15 @@ where /Q svn
 IF %ERRORLEVEL% NEQ 0 (
 	echo Error: "svn" command not in the PATH.
 	echo You must have SVN installed and added to your PATH, aborting!
-	:error_end
+	goto error_end
+)
 
 where /Q git
 IF %ERRORLEVEL% NEQ 0 (
 	echo Error: "git" command not in the PATH.
 	echo You must have GIT installed and added to your PATH, aborting!
-	:error_end
+	goto error_end
+)
 
 REM End SANITY CHECKS
 
@@ -167,8 +169,6 @@ IF NOT EXIST %CYGWIN_DIR%\bin\mv.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\tar.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\unzip.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
 GOTO cygwin_ok
 
@@ -179,9 +179,7 @@ echo    gzip
 echo    mv
 echo    nasm
 echo    sed 
-echo    ssh 
-echo    tar 
-echo    unzip 
+echo    ssh
 echo    wget
 echo is required
 GOTO error_end
@@ -229,7 +227,7 @@ IF NOT EXIST %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/hugin-%HUGIN_VER%-%RawPlatform%.zip qtpfsgui.sourceforge.net/win/hugin-%HUGIN_VER%-%RawPlatform%.zip
 )
 IF NOT EXIST hugin-%HUGIN_VER%-%RawPlatform% (
-    %CYGWIN_DIR%\bin\unzip.exe -o -q -d hugin-%HUGIN_VER%-%RawPlatform% %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip
+    cmake -E tar hugin-%HUGIN_VER%-%RawPlatform% %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip
 )
 
 SET ZLIB_COMMIT=%ZLIB_COMMIT_LONG:~0,7%
@@ -238,7 +236,7 @@ IF NOT EXIST %TEMP_DIR%\zlib-%ZLIB_COMMIT%.zip (
 )
 
 IF NOT EXIST zlib-%ZLIB_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip
+	cmake -E tar %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe zlib-* zlib-%ZLIB_COMMIT%
 )
 
@@ -262,7 +260,7 @@ IF NOT EXIST %TEMP_DIR%\lpng170b75.zip (
     IF errorlevel 1	goto error_end
 )
 IF NOT EXIST lp170b75 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng170b75.zip
+	cmake -E tar %TEMP_DIR%/lpng170b75.zip
 	pushd lp170b75
 	cmake -G "%VS_CMAKE%" . -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR%
 	IF errorlevel 1	goto error_end
@@ -273,10 +271,10 @@ IF NOT EXIST lp170b75 (
 
 IF NOT EXIST %TEMP_DIR%\expat-2.1.0.tar (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/expat-2.1.0.tar.gz http://sourceforge.net/projects/expat/files/expat/2.1.0/expat-2.1.0.tar.gz/download
-	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/expat-2.1.0.tar.gz
+	cmake -E tar %TEMP_DIR%/expat-2.1.0.tar.gz
 )
 IF NOT EXIST expat-2.1.0 (
-	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/expat-2.1.0.tar
+	cmake -E tar %TEMP_DIR%/expat-2.1.0.tar
 )
 
 IF NOT EXIST expat-2.1.0.build (
@@ -316,7 +314,7 @@ IF NOT EXIST %TEMP_DIR%\libjpeg-%LIBJPEG_COMMIT%.zip (
 )
 
 IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip
+	cmake -E tar %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe libjpeg-* libjpeg-turbo-%LIBJPEG_COMMIT%
 )
 
@@ -341,7 +339,7 @@ IF NOT EXIST %TEMP_DIR%\lcms2-%LCMS_COMMIT%.zip (
 
 
 IF NOT EXIST lcms2-%LCMS_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip
+	cmake -E tar %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe Little-CMS-* lcms2-%LCMS_COMMIT%
 	
 	pushd lcms2-%LCMS_COMMIT%
@@ -358,7 +356,7 @@ IF NOT EXIST %TEMP_DIR%\tiff-%TIFF_VER%.zip (
 
 
 IF NOT EXIST tiff-%TIFF_VER% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-%TIFF_VER%.zip
+	cmake -E tar -q %TEMP_DIR%/tiff-%TIFF_VER%.zip
 
 	pushd tiff-%TIFF_VER%
 	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% .
@@ -381,7 +379,7 @@ IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip (
 )
 
 IF NOT EXIST LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip
+	cmake -E tar %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%* LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%
 )
 
@@ -390,12 +388,12 @@ IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip (
 )
 
 IF NOT EXIST LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip
+	cmake -E tar %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%* LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%
 )
 
 IF NOT EXIST LibRaw-%LIBRAW_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip
+	cmake -E tar %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe LibRaw-%LIBRAW_COMMIT%* LibRaw-%LIBRAW_COMMIT%
 
 	
@@ -438,7 +436,7 @@ IF NOT EXIST %TEMP_DIR%\cfit%CFITSIO_VER%.zip (
 )
 
 IF NOT EXIST cfit%CFITSIO_VER% (
-    %CYGWIN_DIR%\bin\unzip.exe -o -q -d cfit%CFITSIO_VER% %TEMP_DIR%/cfit%CFITSIO_VER%.zip
+    cmake -E tar cfit%CFITSIO_VER% %TEMP_DIR%/cfit%CFITSIO_VER%.zip
 )
 
 IF NOT EXIST cfit%CFITSIO_VER%.build (
@@ -466,9 +464,9 @@ REM 	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/CCfits-2.4.tar.gz
 REM     %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits2.4patch.zip http://qtpfsgui.sourceforge.net/win/CCfits2.4patch.zip
 REM )
 REM IF NOT EXIST CCfits2.4 (
-REM 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/CCfits-2.4.tar
+REM 	cmake -E tar %TEMP_DIR%/CCfits-2.4.tar
 REM     ren CCfits CCfits2.4
-REM     %CYGWIN_DIR%\bin\unzip.exe -o -q -d CCfits2.4 %TEMP_DIR%/CCfits2.4patch.zip
+REM     cmake -E tar CCfits2.4 %TEMP_DIR%/CCfits2.4patch.zip
 REM )
 REM IF NOT EXIST CCfits2.4.build (
 REM     mkdir CCfits2.4.build
@@ -490,7 +488,7 @@ IF NOT EXIST %TEMP_DIR%\gsl-ampl-%GSL_COMMIT%.zip (
 )
 
 IF NOT EXIST gsl-1.16 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/gsl-ampl-%GSL_COMMIT%.zip
+	cmake -E tar %TEMP_DIR%/gsl-ampl-%GSL_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe gsl-* gsl-1.16
 )
 IF NOT EXIST gsl-1.16.build (
@@ -513,7 +511,7 @@ IF NOT EXIST %TEMP_DIR%\OpenEXR-dk-%OPENEXR_COMMIT%.zip (
 )
 
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip
+	cmake -E tar %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip
 	%CYGWIN_DIR%\bin\mv.exe openexr-* OpenEXR-dk-%OPENEXR_COMMIT%
 )
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build (
@@ -551,9 +549,9 @@ IF %Platform% EQU Win32 (
 
 IF NOT EXIST fftw-%FFTW_VER%-dll (
 	IF %Platform% EQU Win32 (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll32.zip
+		cmake -E tar -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll32.zip
 	) ELSE (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll64.zip
+		cmake -E tar -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll64.zip
 	)
 
 	pushd fftw-%FFTW_VER%-dll
@@ -568,7 +566,7 @@ REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tbb40_20120613oss_win.zip "http://t
 REM )
 REM 
 REM IF NOT EXIST tbb40_20120613oss (
-REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tbb40_20120613oss_win.zip
+REM 	cmake -E tar %TEMP_DIR%/tbb40_20120613oss_win.zip
 REM 	REM Everthing is already compiled, nothing to do!
 REM )
 
@@ -594,7 +592,7 @@ REM 	%VSCOMMAND% gtest.sln /t:Build /projectconfig=%Configuration%;Platform=%Pla
 REM 	popd
 REM )
 REM IF NOT EXIST gtest-1.6.0 (
-REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/gtest-1.6.0.zip
+REM 	cmake -E tar %TEMP_DIR%/gtest-1.6.0.zip
 REM )
 
 IF NOT DEFINED L_BOOST_DIR (
@@ -609,7 +607,7 @@ IF NOT EXIST %L_BOOST_DIR%\boost_1_%BOOST_MINOR%_0 (
 	echo.Extracting boost. Be patient!
 
 	pushd %L_BOOST_DIR%
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/boost_1_%BOOST_MINOR%_0.zip
+	cmake -E tar %TEMP_DIR%/boost_1_%BOOST_MINOR%_0.zip
 	popd
 
  
