@@ -1,8 +1,6 @@
 @echo off
 SET CYGWIN_DIR=C:\cygwin64
 SET TEMP_DIR=.downloaddir
-rem SET CMAKE_DIR=C:\Data\Programs\cmake-2.8.12.1-win32-x86
-SET CMAKE_DIR=C:\Data\Programs\cmake-3.4.1-win32-x86
 
 SET VISUAL_STUDIO_VC_REDIST=C:\Program Files (x86)\%VS_PROG_FILES%\VC\redist\%RawPlatform%
 rem SET QTDIR=C:\Data\Develop\Qt\5.0.1-x64\qtbase

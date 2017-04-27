@@ -1,6 +1,15 @@
 @echo off
 SETLOCAL
 
+REM Checks
+
+where /Q cmake
+if %ERRORLEVEL% NEQ 0 (
+	echo Error: "CMake" command not in the PATH.
+	echo You must have CMake installed and added to your PATH, aborting!
+	goto EOF
+)
+
 REM  http://dev.exiv2.org/projects/exiv2/repository/
 SET EXIV2_COMMIT=4753
 
@@ -133,13 +142,6 @@ IF %Platform% EQU x64 (
 )
 
 call setenv.cmd
-
-IF NOT EXIST %CMAKE_DIR%\bin\cmake.exe (
-	echo.
-	echo.ERROR: CMake not found: %CMAKE_DIR%\bin\cmake.exe
-	echo.
-	goto error_end
-)
 
 IF NOT EXIST %CYGWIN_DIR%\bin\cp.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\git.exe GOTO cygwin_error
