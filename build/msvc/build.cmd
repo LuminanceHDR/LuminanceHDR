@@ -24,6 +24,18 @@ IF %ERRORLEVEL% NEQ 0 (
 	goto error_end
 )
 
+IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
+
+IF EXIST ..\msvc (
+	echo.
+	echo.ERROR: This file should NOT be executed within the LuminanceHDR source directory,
+	echo.       but in a new empty folder!
+	echo.
+	goto error_end
+)
+
 REM End SANITY CHECKS
 
 REM Start Lib Versions
@@ -101,14 +113,6 @@ IF EXIST .settings\vsexpress.txt (
     echo x>.settings\%VSCOMMAND%.txt
 )
 
-IF EXIST ..\msvc (
-	echo.
-	echo.ERROR: This file should NOT be executed within the LuminanceHDR source directory,
-	echo.       but in a new empty folder!
-	echo.
-	goto error_end
-)
-
 ml64.exe > NUL
 IF ERRORLEVEL 1 (
 	set Platform=Win32
@@ -162,21 +166,6 @@ IF %Platform% EQU x64 (
 )
 
 call %0/setenv.cmd
-
-IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
-GOTO cygwin_ok
-
-:cygwin_error
-echo ERROR: Cygwin with
-echo    nasm
-echo    ssh
-echo    wget
-echo is required
-GOTO error_end
-
-:cygwin_ok
 
 SET INSTALL_DIR=dist
 IF NOT EXIST %INSTALL_DIR% (
@@ -251,7 +240,7 @@ IF NOT EXIST zlib-%ZLIB_COMMIT%.build (
 
 IF NOT EXIST %TEMP_DIR%\lpng170b75.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng170b75.zip ^
-			http://sourceforge.net/projects/libpng/files/libpng17/1.7.0beta75/lp170b75.zip/download
+			https://sourceforge.net/projects/libpng/files/libpng17/1.7.0beta87/lp170b87.zip/download
 				IF errorlevel 1	goto error_end
 )
 IF NOT EXIST lp170b75 (
@@ -838,6 +827,13 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
 )
 
 goto end
+
+:cygwin_error
+echo ERROR: Cygwin with
+echo    nasm
+echo    ssh
+echo    wget
+echo is required
 
 :error_end
 pause
