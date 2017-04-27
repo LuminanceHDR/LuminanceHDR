@@ -98,7 +98,8 @@ IF DEFINED VS140COMNTOOLS (
 	set VS_SHORT=vc14
 	set VS_CMAKE=Visual Studio 14
 	set VS_PROG_FILES=Microsoft Visual Studio 14.0
-	set VS_LCMS=VC2013
+	set VS_LCMS=VC2015
+
 ) ELSE IF DEFINED VS120COMNTOOLS (
 	REM Visual Studio 2013
 	set VS_SHORT=vc12
