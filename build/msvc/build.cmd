@@ -24,6 +24,8 @@ IF %ERRORLEVEL% NEQ 0 (
 
 REM End SANITY CHECKS
 
+REM Start Lib Versions
+
 REM  http://dev.exiv2.org/projects/exiv2/repository/
 SET EXIV2_COMMIT=4753
 
@@ -66,6 +68,8 @@ SET HUGIN_VER=201600
 
 REM http://download.osgeo.org/libtiff/
 SET TIFF_VER=4.0.7
+
+REM End Lib Versions
 
 IF EXIST .settings\vsexpress.txt (
     SET VSCOMMAND=vcexpress
@@ -297,7 +301,7 @@ IF NOT EXIST exiv2-%EXIV2_COMMIT%.build (
 
     pushd exiv2-%EXIV2_COMMIT%
     SET EXIV2_CMAKE=
-	cmake -G "%VS_CMAKE%" -DCMAKE_PROGRAM_PATH=%SVN_DIR%  -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DEXIV2_ENABLE_BUILD_SAMPLES=OFF -DEXIV2_ENABLE_CURL=OFF -DEXIV2_ENABLE_SSH=OFF
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DEXIV2_ENABLE_BUILD_SAMPLES=OFF -DEXIV2_ENABLE_CURL=OFF -DEXIV2_ENABLE_SSH=OFF
     
 	IF errorlevel 1 goto error_end
 	cmake --build . --config %Configuration% --target install
