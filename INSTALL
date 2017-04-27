@@ -141,7 +141,7 @@ Currently, Luminance HDR can be compiled using Microsoft Visual Studio. It eithe
 using precompiled libraries (supplied at
 http://sourceforge.net/projects/qtpfsgui/files/DEPs/ for different versions of
 Visual Studio) or building every dependency and Luminance itself using a script file
-(build/msvc/getDependencies.cmd. More information can be found inside build/msvc/README.txt).
+(build_files/msvc/getDependencies.cmd. More information can be found inside build_files/msvc/README.txt).
 
 NOTE: depending on your compiler (MinGW GCC or MS Visual Studio), you must either download the
 proper version of Qt or build it yourself accordingly.

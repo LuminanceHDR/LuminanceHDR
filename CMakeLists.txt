@@ -194,7 +194,7 @@ IF(UPDATE_TRANSLATIONS)
     ENDIF()
     IF(UNIX)
         IF(NOT APPLE) # Sadly on Linux Qt5 add global include paths in list of translation files, let's get rid of them
-            EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/linux/sanitize_translations.sh
+            EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build_files/linux/sanitize_translations.sh
                 WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
         ENDIF(NOT APPLE)
     ENDIF(UNIX)
@@ -226,9 +226,9 @@ IF(APPLE)
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "${LHDR_DOMAIN_SECOND}.${LHDR_DOMAIN_FIRST}")
     set(MACOSX_BUNDLE_BUNDLE_NAME "${LHDR_NAME}")
 
-    configure_file( ${CMAKE_SOURCE_DIR}/build/macosx/Info.plist.in
+    configure_file( ${CMAKE_SOURCE_DIR}/build_files/macosx/Info.plist.in
                     ${CMAKE_BINARY_DIR}/Info.plist )
-    configure_file( ${CMAKE_SOURCE_DIR}/build/macosx/create-dmg.sh.in
+    configure_file( ${CMAKE_SOURCE_DIR}/build_files/macosx/create-dmg.sh.in
                     ${CMAKE_BINARY_DIR}/create-dmg.sh )
 
     FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) # ${QT_TRANSLATIONS_DIR}/qt_*.qm)
@@ -319,4 +319,4 @@ ELSEIF(WIN32)
 ENDIF()
 
 # Packaging must go at the bottom
-include(${CMAKE_SOURCE_DIR}/build/Packaging.cmake)
+include(${CMAKE_SOURCE_DIR}/build_files/Packaging.cmake)

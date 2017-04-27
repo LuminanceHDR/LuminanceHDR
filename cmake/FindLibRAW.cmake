@@ -23,11 +23,11 @@ IF(LIBRAW_FOUND)
   MESSAGE(STATUS "Found LibRAW (LIBRAW_LIBRARIES = ${LIBRAW_LIBRARIES})")
   IF(UNIX)
     IF(APPLE)
-      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/macosx/find_demosaicing_gpl2.sh
+      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build_files/macosx/find_demosaicing_gpl2.sh
                     ${LIBRAW_LIBRARY} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                     OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
     ELSE()
-      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/linux/find_demosaicing_gpl2.sh
+      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build_files/linux/find_demosaicing_gpl2.sh
                     ${LIBRAW_LIBRARY} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                     OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
     ENDIF()
@@ -39,11 +39,11 @@ IF(LIBRAW_FOUND)
     ENDIF(_output)
 
     IF(APPLE)
-      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/macosx/find_demosaicing_gpl3.sh
+      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build_files/macosx/find_demosaicing_gpl3.sh
                     ${LIBRAW_LIBRARY} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                     OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
     ELSE()
-      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build/linux//find_demosaicing_gpl3.sh
+      EXECUTE_PROCESS(COMMAND ${CMAKE_SOURCE_DIR}/build_files/linux//find_demosaicing_gpl3.sh
                     ${LIBRAW_LIBRARY} WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                     OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
     ENDIF()
