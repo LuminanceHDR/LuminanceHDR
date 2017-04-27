@@ -164,7 +164,6 @@ IF %Platform% EQU x64 (
 call %0/setenv.cmd
 
 IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
 GOTO cygwin_ok
@@ -172,7 +171,6 @@ GOTO cygwin_ok
 :cygwin_error
 echo ERROR: Cygwin with
 echo    nasm
-echo    sed 
 echo    ssh
 echo    wget
 echo is required
