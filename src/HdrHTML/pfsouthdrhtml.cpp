@@ -27,14 +27,14 @@
 
 #include "hdrhtml.h"
 
-#ifdef WIN32
+#if defined (WIN32) || defined (__APPLE__)
 #include <QCoreApplication>
 #endif
 #include <QObject>
 #include <cstdlib>
 #include <iostream>
 
-#include <stdio.h>
+#include "hdrhtml-path.hxx"
 #include "Libpfs/frame.h"
 #include "Libpfs/exception.h"
 #include "Libpfs/colorspace/colorspace.h"
@@ -46,7 +46,7 @@ void generate_hdrhtml(pfs::Frame *frame,
                      string page_name, string out_dir, string image_dir, string object_output, string html_output, 
                      int quality, bool verbose)
 {
-#ifdef WIN32
+#if defined (WIN32) || defined (__APPLE__)
     const int MAX_LINE_LENGTH = 2048;
     QString p_t = HDRHTMLDIR;
     p_t.append("/hdrhtml_default_templ/hdrhtml_page_templ.html");
