@@ -1,10 +1,10 @@
 @echo off
 SETLOCAL
 
-REM Checks
+REM SANITY CHECKS
 
 where /Q cmake
-if %ERRORLEVEL% NEQ 0 (
+IF %ERRORLEVEL% NEQ 0 (
 	echo Error: "cmake" command not in the PATH.
 	echo You must have CMake installed and added to your PATH, aborting!
 	goto error_end
@@ -15,6 +15,14 @@ IF %ERRORLEVEL% NEQ 0 (
 	echo Error: "svn" command not in the PATH.
 	echo You must have SVN installed and added to your PATH, aborting!
 	:error_end
+
+where /Q git
+IF %ERRORLEVEL% NEQ 0 (
+	echo Error: "git" command not in the PATH.
+	echo You must have GIT installed and added to your PATH, aborting!
+	:error_end
+
+REM End SANITY CHECKS
 
 REM  http://dev.exiv2.org/projects/exiv2/repository/
 SET EXIV2_COMMIT=4753
@@ -150,7 +158,6 @@ IF %Platform% EQU x64 (
 call setenv.cmd
 
 IF NOT EXIST %CYGWIN_DIR%\bin\cp.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\git.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\gzip.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\mv.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
@@ -164,7 +171,6 @@ GOTO cygwin_ok
 :cygwin_error
 echo ERROR: Cygwin with 
 echo    cp
-echo    git 
 echo    gzip 
 echo    mv
 echo    nasm
