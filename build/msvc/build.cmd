@@ -163,7 +163,6 @@ IF %Platform% EQU x64 (
 
 call setenv.cmd
 
-IF NOT EXIST %CYGWIN_DIR%\bin\cp.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\mv.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
@@ -172,8 +171,7 @@ IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
 GOTO cygwin_ok
 
 :cygwin_error
-echo ERROR: Cygwin with 
-echo    cp
+echo ERROR: Cygwin with
 echo    mv
 echo    nasm
 echo    sed 
@@ -217,8 +215,8 @@ IF NOT EXIST vcDlls (
 IF NOT EXIST vcDlls\selected (
 	mkdir vcDlls\selected
 
-	%CYGWIN_DIR%\bin\cp.exe vcDlls/**/vcomp* vcDlls/selected
-	%CYGWIN_DIR%\bin\cp.exe vcDlls/**/msv* vcDlls/selected
+	copy vcDlls\**\vcomp* vcDlls\selected
+	copy vcDlls\**\msv* vcDlls\selected
 )
 
 IF NOT EXIST %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip (
