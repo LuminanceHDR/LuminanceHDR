@@ -5,7 +5,6 @@ SET TEMP_DIR=.downloaddir
 SET VISUAL_STUDIO_VC_REDIST=C:\Program Files (x86)\%VS_PROG_FILES%\VC\redist\%RawPlatform%
 rem SET QTDIR=C:\Data\Develop\Qt\5.0.1-x64\qtbase
 SET QTDIR=C:\Data\Dev\Qt5.8.0\5.8\msvc2015_64
-SET SVN_DIR=C:\Data\Programs\Apache-Subversion-1.8.13\bin
 
 REM Options:  -------------------------------------------
 

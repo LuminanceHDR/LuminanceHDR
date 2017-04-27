@@ -5,10 +5,16 @@ REM Checks
 
 where /Q cmake
 if %ERRORLEVEL% NEQ 0 (
-	echo Error: "CMake" command not in the PATH.
+	echo Error: "cmake" command not in the PATH.
 	echo You must have CMake installed and added to your PATH, aborting!
-	goto EOF
+	goto error_end
 )
+
+where /Q svn
+IF %ERRORLEVEL% NEQ 0 (
+	echo Error: "svn" command not in the PATH.
+	echo You must have SVN installed and added to your PATH, aborting!
+	:error_end
 
 REM  http://dev.exiv2.org/projects/exiv2/repository/
 SET EXIV2_COMMIT=4753
@@ -150,7 +156,6 @@ IF NOT EXIST %CYGWIN_DIR%\bin\mv.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\svn.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\tar.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\unzip.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
@@ -165,7 +170,6 @@ echo    mv
 echo    nasm
 echo    sed 
 echo    ssh 
-echo    svn 
 echo    tar 
 echo    unzip 
 echo    wget
@@ -232,11 +236,11 @@ IF NOT EXIST zlib-%ZLIB_COMMIT%.build (
     mkdir zlib-%ZLIB_COMMIT%.build
     
     pushd zlib-%ZLIB_COMMIT%.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ..\zlib-%ZLIB_COMMIT%
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ..\zlib-%ZLIB_COMMIT%
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration%
+	cmake --build . --config %Configuration%
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
     
     popd
@@ -250,9 +254,9 @@ IF NOT EXIST %TEMP_DIR%\lpng170b75.zip (
 IF NOT EXIST lp170b75 (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng170b75.zip
 	pushd lp170b75
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR%
+	cmake -G "%VS_CMAKE%" . -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR%
 	IF errorlevel 1	goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1	goto error_end
 	popd
 )
@@ -269,17 +273,17 @@ IF NOT EXIST expat-2.1.0.build (
     mkdir expat-2.1.0.build
     
     pushd expat-2.1.0.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ..\expat-2.1.0
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ..\expat-2.1.0
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration%
+	cmake --build . --config %Configuration%
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
 	popd
 )
 
 IF NOT EXIST exiv2-%EXIV2_COMMIT% (
-    %CYGWIN_DIR%\bin\svn.exe co -r %EXIV2_COMMIT% svn://dev.exiv2.org/svn/trunk exiv2-%EXIV2_COMMIT%
+    svn co -r %EXIV2_COMMIT% svn://dev.exiv2.org/svn/trunk exiv2-%EXIV2_COMMIT%
 )
 
 IF NOT EXIST exiv2-%EXIV2_COMMIT%.build (
@@ -287,10 +291,10 @@ IF NOT EXIST exiv2-%EXIV2_COMMIT%.build (
 
     pushd exiv2-%EXIV2_COMMIT%
     SET EXIV2_CMAKE=
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_PROGRAM_PATH=%SVN_DIR%  -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DEXIV2_ENABLE_BUILD_SAMPLES=OFF -DEXIV2_ENABLE_CURL=OFF -DEXIV2_ENABLE_SSH=OFF
+	cmake -G "%VS_CMAKE%" -DCMAKE_PROGRAM_PATH=%SVN_DIR%  -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DEXIV2_ENABLE_BUILD_SAMPLES=OFF -DEXIV2_ENABLE_CURL=OFF -DEXIV2_ENABLE_SSH=OFF
     
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
 	popd	
 )
@@ -312,9 +316,9 @@ IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT%.build (
 	
 	
 	pushd libjpeg-turbo-%LIBJPEG_COMMIT%.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" -DWITH_JPEG8=TRUE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" -DWITH_JPEG8=TRUE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
     copy jconfig.h ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	popd
@@ -347,9 +351,9 @@ IF NOT EXIST tiff-%TIFF_VER% (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-%TIFF_VER%.zip
 
 	pushd tiff-%TIFF_VER%
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% .
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% .
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
 	popd
 )
@@ -431,9 +435,9 @@ IF NOT EXIST cfit%CFITSIO_VER%.build (
     mkdir cfit%CFITSIO_VER%.build
     pushd cfit%CFITSIO_VER%.build
     
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\cfit%CFITSIO_VER% -DUSE_PTHREADS=0 -DCMAKE_INCLUDE_PATH=..\%PTHREADS_CURRENT_DIR% -DCMAKE_LIBRARY_PATH=..\%PTHREADS_CURRENT_DIR%
+    cmake -G "%VS_CMAKE%" ..\cfit%CFITSIO_VER% -DUSE_PTHREADS=0 -DCMAKE_INCLUDE_PATH=..\%PTHREADS_CURRENT_DIR% -DCMAKE_LIBRARY_PATH=..\%PTHREADS_CURRENT_DIR%
 	IF errorlevel 1 goto error_end
-    %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target cfitsio
+    cmake --build . --config %Configuration% --target cfitsio
     IF errorlevel 1 goto error_end   
     popd
 )
@@ -460,9 +464,9 @@ REM IF NOT EXIST CCfits2.4.build (
 REM     mkdir CCfits2.4.build
 REM     
 REM     pushd CCfits2.4.build
-REM 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% -DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
+REM 	cmake -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% -DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
 REM 	IF errorlevel 1 goto error_end
-REM     %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target CCfits
+REM     cmake --build . --config %Configuration% --target CCfits
 REM 	IF errorlevel 1 goto error_end
 REM 	popd
 REM )
@@ -483,11 +487,11 @@ IF NOT EXIST gsl-1.16.build (
 	mkdir gsl-1.16.build
 	pushd gsl-1.16.build
 	
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=..\dist ..\gsl-1.16
+    cmake -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=..\dist ..\gsl-1.16
     IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration%
+	cmake --build . --config %Configuration%
     IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
     IF errorlevel 1 goto error_end
 	popd
 )
@@ -506,21 +510,21 @@ IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build (
     mkdir OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build
     pushd OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build
 
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=..\..\dist -DBUILD_SHARED_LIBS=OFF ../IlmBase 
+    cmake -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=..\..\dist -DBUILD_SHARED_LIBS=OFF ../IlmBase 
     IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
     IF errorlevel 1 goto error_end
     popd
 )
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build (
     mkdir OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build
     pushd OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ^
+    cmake -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ^
         -DILMBASE_PACKAGE_PREFIX=%CD%\dist -DBUILD_SHARED_LIBS=OFF ^
         -DCMAKE_INSTALL_PREFIX=..\..\dist ^
         ../OpenEXR
     IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
     IF errorlevel 1 goto error_end
     popd
 )
@@ -562,11 +566,11 @@ REM IF NOT EXIST %TEMP_DIR%\gtest-1.6.0.zip (
 SET GTEST_DIR=gtest-r680
 IF NOT EXIST %GTEST_DIR% (
 	REM %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gtest-1.6.0.zip http://googletest.googlecode.com/files/gtest-1.6.0.zip
-    %CYGWIN_DIR%\bin\svn.exe co -r 680 http://googletest.googlecode.com/svn/trunk/ %GTEST_DIR%
+    svn co -r 680 http://googletest.googlecode.com/svn/trunk/ %GTEST_DIR%
     
     pushd %GTEST_DIR%
-   	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DBUILD_SHARED_LIBS=1
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration%
+   	cmake -G "%VS_CMAKE%" . -DBUILD_SHARED_LIBS=1
+	cmake --build . --config %Configuration%
     REN Release lib
     popd
 )
@@ -575,7 +579,7 @@ SET GTEST_ROOT=%CD%\%GTEST_DIR%
 REM IF NOT EXIST %GTEST_DIR%.build (
 REM 	mkdir %GTEST_DIR%.build
 REM 	pushd %GTEST_DIR%.build
-REM 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\%GTEST_DIR% -DBUILD_SHARED_LIBS=1
+REM 	cmake -G "%VS_CMAKE%" ..\%GTEST_DIR% -DBUILD_SHARED_LIBS=1
 REM 	%VSCOMMAND% gtest.sln /t:Build /projectconfig=%Configuration%;Platform=%Platform%
 REM 	popd
 REM )
@@ -717,8 +721,8 @@ echo ---------------------------------------------------------------
 
 REM Eclipse CDT4 - NMake Makefiles
 
-%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
-REM %CMAKE_DIR%\bin\cmake.exe -G "Eclipse CDT4 - NMake Makefiles" ..\qtpfsgui %CMAKE_OPTIONS%
+cmake -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
+REM cmake -G "Eclipse CDT4 - NMake Makefiles" ..\qtpfsgui %CMAKE_OPTIONS%
 REM goto end
 IF errorlevel 1 goto error_end
 popd
@@ -726,7 +730,7 @@ popd
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\Luminance HDR.sln (
 	pushd LuminanceHdrStuff\qtpfsgui.build	
 	REM %VSCOMMAND% luminance-hdr.sln /Upgrade
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %ConfigurationLuminance%  %LuminanceTarget%
+	cmake --build . --config %ConfigurationLuminance%  %LuminanceTarget%
 
 	IF errorlevel 1	goto error_end
 	popd
