@@ -21,7 +21,7 @@ SET(APPS "\${CMAKE_INSTALL_PREFIX}/${LHDR_OSX_EXECUTABLE_NAME}.app")
 #        DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS)
 
 # install align_image_stack
-install(FILES ${CMAKE_SOURCE_DIR}/build/macosx/align_image_stack
+install(FILES ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/align_image_stack
         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/MacOS)
 
 # install help
@@ -31,7 +31,7 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/html
         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
 
 # install a qt.conf file
-install(FILES ${CMAKE_SOURCE_DIR}/build/macosx/qt.conf
+install(FILES ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/qt.conf
         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
 
 # install README and other files
