@@ -568,7 +568,7 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
 
     const Channel *Good_Rc, *Good_Gc, *Good_Bc;
     Channel *Ch_Good[3];
-    m_data[2].frame().get()->getXYZChannels(Ch_Good[0], Ch_Good[1], Ch_Good[2]);
+    m_data[h0].frame().get()->getXYZChannels(Ch_Good[0], Ch_Good[1], Ch_Good[2]);
 
     Good_Rc = Ch_Good[0];
     Good_Gc = Ch_Good[1];
