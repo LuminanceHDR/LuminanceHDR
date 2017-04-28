@@ -385,7 +385,7 @@ void normalizeLuminanceAndRGB(Array2Df& R, Array2Df& G, Array2Df& B,
     // std::cout << "clip_min = " << clip_min << std::endl;
     // std::cout << "Ymax = " << Ymax << std::endl;
 #pragma omp parallel for
-    for (int idx = 0; idx < Y.size(); idx++)
+    for (int idx = 0; idx < static_cast<int>(Y.size()); idx++)
     {
         if ( R(idx) < clip_min ) R(idx) = clip_min;
         if ( G(idx) < clip_min ) G(idx) = clip_min;

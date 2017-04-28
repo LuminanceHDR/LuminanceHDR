@@ -118,7 +118,7 @@ mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y
 		double *gap, double *residuals_norm, double *data_norm, double *infeasibility, double *infeasibility_min)
 {
     int status = GSL_SUCCESS;
-	size_t i, j = 0; //, debug=0;
+	//size_t i, j = 0; //, debug=0;
 	
 	mg_pdip_state *state = (mg_pdip_state *) vstate;        
 
@@ -129,32 +129,47 @@ mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y
       gsl_vector_set_zero(x);
 
     if (status != GSL_SUCCESS)
+    {
         return status;
+    }
 
 	status = pdip_initial_point_feasible_s(cqp->C, cqp->d, x, state->s);
     if (status != GSL_SUCCESS)
+    {
         return status;
+    }
 
     if( cqp->A->size1 != 0 )
+    {
         status = pdip_initial_point_y(cqp->Q, cqp->q, cqp->A, x, y);
+    }
+
 	status = pdip_initial_point_z(z);
     if (status != GSL_SUCCESS)
+    {
         return status;
+    }
 
 	status = pdip_initial_point_strict_feasible(z, state->s);
     if (status != GSL_SUCCESS)
+    {
         return status;
+    }
 
 	/* Dualtity gap */
 	status = gsl_blas_ddot(z, state->s, gap);
     if (status != GSL_SUCCESS)
+    {
         return status;
+    }
 
 	*gap /= (double) cqp->C->size1;
 
 	status = build_kkt_matrix(cqp, z, state->s, state->kkt_matrix);
     if (status != GSL_SUCCESS)
+    {
         return status;
+    }
 
 	state->tau = 3.0;
 
@@ -163,14 +178,18 @@ mg_pdip_set (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vector *y
 	*data_norm = gsl_matrix_max_norm(cqp->Q);
 
     if( cqp->A->size1 != 0 )
+    {
         *data_norm = GSL_MAX_DBL(*data_norm, gsl_matrix_max_norm(cqp->A));
+    }
 	
 	*data_norm = GSL_MAX_DBL(*data_norm, gsl_matrix_max_norm(cqp->C));
 	
 	*data_norm = GSL_MAX_DBL(*data_norm, gsl_vector_max_norm(cqp->q));
 	
     if( cqp->A->size1 != 0 )
+    {
         *data_norm = GSL_MAX_DBL(*data_norm, gsl_vector_max_norm(cqp->b));
+    }
 	
 	*data_norm = GSL_MAX_DBL(*data_norm, gsl_vector_max_norm(cqp->d));
 
@@ -215,7 +234,7 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
                   double *gap, double *residuals_norm, double *infeasibility, double *infeasibility_min)
 {
 	size_t i, j = 0; //, debug=0;
-	int status, signum;
+	int signum;
 	double sigma, alpha, alpha_gondzio;
 	double tmp_v, tmp_vt, tmp_d;
 	
@@ -291,14 +310,14 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 	/********* Predictor Step ******************/
 	/* in the predictor step: r_zs = ZSe */
 	r_block = gsl_vector_subvector(state->r, cqp->Q->size1+cqp->A->size1, cqp->C->size1);
-	status = gsl_blas_daxpy(1.0, state->s, &r_block.vector);
+	gsl_blas_daxpy(1.0, state->s, &r_block.vector);
 	gsl_blas_dscal(-1.0, state->r);
 	
 	/* solve the KKT-system: */
 	/* evaluate the LU-decomposition of the KKT-matrix*/
-	status = gsl_linalg_LU_decomp(state->kkt_matrix, p, &signum);
+	gsl_linalg_LU_decomp(state->kkt_matrix, p, &signum);
 	/* find the predictor step */
-	status = gsl_linalg_LU_solve(state->kkt_matrix, p, state->r, delta);
+	gsl_linalg_LU_solve(state->kkt_matrix, p, state->r, delta);
 	
 	for(i=0; i<delta_s->size; i++)
 	{
@@ -361,7 +380,7 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 	}
 	
 	/* find the corrector step */
-	status = gsl_linalg_LU_solve(state->kkt_matrix, p, state->r, delta);
+	gsl_linalg_LU_solve(state->kkt_matrix, p, state->r, delta);
 	
 	
 	for(i=0; i<delta_s->size; i++)
@@ -411,7 +430,7 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 			gsl_vector_set(&r_block.vector, j, gsl_vector_get(&r_block.vector,j)+(tmp_vt-tmp_v)/gsl_vector_get(z,j));
 		}
 		
-		status = gsl_linalg_LU_solve(state->kkt_matrix, p, state->r, delta_gondzio);
+		gsl_linalg_LU_solve(state->kkt_matrix, p, state->r, delta_gondzio);
 		for(j=0; j<delta_s->size; j++)
 		{
 			gsl_vector_set(delta_s_gondzio, j, (-gsl_vector_get(r_zs,j)+gsl_vector_get(delta_gondzio,cqp->Q->size2+cqp->A->size1+j)
@@ -426,8 +445,8 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 		{
 			i++;
 			alpha = alpha_gondzio;
-			status = gsl_blas_dcopy(delta_gondzio, delta);
-			status = gsl_blas_dcopy(delta_s_gondzio, delta_s);
+			gsl_blas_dcopy(delta_gondzio, delta);
+			gsl_blas_dcopy(delta_s_gondzio, delta_s);
 		}
 		else
 			break;
@@ -440,31 +459,31 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 	/* Update */
 	/* x^k = x^k + alpha*delta_x */
 	delta_block = gsl_vector_subvector(delta, 0, cqp->Q->size1);
-	status = gsl_blas_daxpy(alpha, &delta_block.vector, x);
+	gsl_blas_daxpy(alpha, &delta_block.vector, x);
 	
 	/* y^k = y^k - alpha*(-delta_y) */
         if( y != 0 ) {
           delta_block = gsl_vector_subvector(delta, cqp->Q->size1, cqp->A->size1);
-          status = gsl_blas_daxpy(-alpha, &delta_block.vector, y);
+          gsl_blas_daxpy(-alpha, &delta_block.vector, y);
         }
 	
 	/* z^k = z^k - alpha*(-delta_z) */
 	delta_block = gsl_vector_subvector(delta, cqp->Q->size1+cqp->A->size1, cqp->C->size1);
-	status = gsl_blas_daxpy(-alpha, &delta_block.vector, z);
+	gsl_blas_daxpy(-alpha, &delta_block.vector, z);
 	
 	/* s^k = s^k + alpha*(delta_s) */
-	status = gsl_blas_daxpy(alpha, delta_s, state->s);
+	gsl_blas_daxpy(alpha, delta_s, state->s);
 	
 	
 	/* duality gap */
-	status = gsl_blas_ddot(z, state->s, gap);
+	gsl_blas_ddot(z, state->s, gap);
 	*gap /= cqp->C->size1;
 		
 	/* data for the next iteration */
-	status = compute_residuals(cqp, x, y, z, state->s, state->r);
+	compute_residuals(cqp, x, y, z, state->s, state->r);
 	*residuals_norm = gsl_vector_max_norm(state->r);
 	
-	status = build_kkt_matrix(cqp, z, state->s, state->kkt_matrix);
+	build_kkt_matrix(cqp, z, state->s, state->kkt_matrix);
 
 	/* for the infeasibility test */
 	*infeasibility = (*residuals_norm+compute_gap_infeasible_points(cqp, x, y, z))/(state->data_norm);
@@ -517,32 +536,33 @@ compute_residuals(const gsl_cqp_data * cqp, const gsl_vector *x, const gsl_vecto
 									gsl_vector *r)
 {
 
-    int status;
 	gsl_vector_view r_block;
 	
 	/*gsl_cqp_geconstraints * constraints = (gsl_cqp_geconstraints *) cqp->constraints;*/
 	
 	/* r_Q=Qx+q-A^ty-C^tz */
 	r_block = gsl_vector_subvector(r, 0, cqp->Q->size1);
-	status = gsl_blas_dcopy(cqp->q, &r_block.vector);
-	status = gsl_blas_dsymv(CblasUpper, 1.0, cqp->Q, x, 1.0, &r_block.vector); 
-	/*status = gsl_blas_dgemv(CblasNoTrans, 1.0, cqp->Q, x, 1.0, r_Q);*/
-        if( cqp->A->size1 != 0 )
-          status = gsl_blas_dgemv(CblasTrans, -1.0, cqp->A, y, 1.0, &r_block.vector);
-	status = gsl_blas_dgemv(CblasTrans, -1.0, cqp->C, z, 1.0, &r_block.vector);
+	gsl_blas_dcopy(cqp->q, &r_block.vector);
+	gsl_blas_dsymv(CblasUpper, 1.0, cqp->Q, x, 1.0, &r_block.vector);
+	/*gsl_blas_dgemv(CblasNoTrans, 1.0, cqp->Q, x, 1.0, r_Q);*/
+    if( cqp->A->size1 != 0 )
+    {
+       gsl_blas_dgemv(CblasTrans, -1.0, cqp->A, y, 1.0, &r_block.vector);
+    }
+	gsl_blas_dgemv(CblasTrans, -1.0, cqp->C, z, 1.0, &r_block.vector);
 	
 	/* r_A=Ax-b */
-        if( cqp->A->size1 != 0 ) {
-          r_block = gsl_vector_subvector(r, cqp->Q->size1, cqp->A->size1);
-          status = gsl_blas_dcopy(cqp->b, &r_block.vector);
-          status = gsl_blas_dgemv(CblasNoTrans, 1.0, cqp->A, x, -1.0, &r_block.vector);
-        }
+    if( cqp->A->size1 != 0 ) {
+       r_block = gsl_vector_subvector(r, cqp->Q->size1, cqp->A->size1);
+       gsl_blas_dcopy(cqp->b, &r_block.vector);
+       gsl_blas_dgemv(CblasNoTrans, 1.0, cqp->A, x, -1.0, &r_block.vector);
+    }
 	
 	/* r_C=Cx-s-d */
 	r_block = gsl_vector_subvector(r, cqp->Q->size1+cqp->A->size1, cqp->C->size1);
-	status = gsl_blas_dcopy(s, &r_block.vector);	
-	status = gsl_blas_daxpy(1.0, cqp->d, &r_block.vector);
-	status = gsl_blas_dgemv(CblasNoTrans, 1.0, cqp->C, x, -1.0, &r_block.vector);
+	gsl_blas_dcopy(s, &r_block.vector);
+	gsl_blas_daxpy(1.0, cqp->d, &r_block.vector);
+	gsl_blas_dgemv(CblasNoTrans, 1.0, cqp->C, x, -1.0, &r_block.vector);
 
   return GSL_SUCCESS;
 }
@@ -551,8 +571,6 @@ static int
 build_kkt_matrix(const gsl_cqp_data * cqp,  const gsl_vector *z, const gsl_vector *s, gsl_matrix * kkt_matrix)
 {
 	size_t i;
-	
-    int status;
 	
 	gsl_matrix_view kkt_block;
 	
@@ -566,27 +584,27 @@ build_kkt_matrix(const gsl_cqp_data * cqp,  const gsl_vector *z, const gsl_vecto
   */
 	/* 1. Block */
 	kkt_block = gsl_matrix_submatrix(kkt_matrix, 0, 0, cqp->Q->size1, cqp->Q->size2);
-	status = gsl_matrix_memcpy(&kkt_block.matrix, cqp->Q);
+	gsl_matrix_memcpy(&kkt_block.matrix, cqp->Q);
 	
 	/* 2. Block */
         if( cqp->A->size1 != 0 ) {
           kkt_block = gsl_matrix_submatrix(kkt_matrix, 0, cqp->Q->size2, cqp->A->size2, cqp->A->size1);
-          status = gsl_matrix_transpose_memcpy(&kkt_block.matrix, cqp->A);
+          gsl_matrix_transpose_memcpy(&kkt_block.matrix, cqp->A);
         }
 	
 	/* 3. Block */
 	kkt_block = gsl_matrix_submatrix(kkt_matrix, 0, cqp->Q->size2+cqp->A->size1, cqp->C->size2, cqp->C->size1);
-	status = gsl_matrix_transpose_memcpy(&kkt_block.matrix, cqp->C);
+	gsl_matrix_transpose_memcpy(&kkt_block.matrix, cqp->C);
 
 	/* 4. Block */
         if( cqp->A->size1 != 0 ) {
           kkt_block = gsl_matrix_submatrix(kkt_matrix, cqp->Q->size1, 0, cqp->A->size1, cqp->A->size2);
-          status = gsl_matrix_memcpy(&kkt_block.matrix, cqp->A);
+          gsl_matrix_memcpy(&kkt_block.matrix, cqp->A);
         }
 	
 	/* 5. Block */
 	kkt_block = gsl_matrix_submatrix(kkt_matrix, cqp->Q->size1+cqp->A->size1, 0, cqp->C->size1, cqp->C->size2);
-	status = gsl_matrix_memcpy(&kkt_block.matrix, cqp->C);
+	gsl_matrix_memcpy(&kkt_block.matrix, cqp->C);
 	
 	/* Null Block */
 	kkt_block = gsl_matrix_submatrix(kkt_matrix, cqp->Q->size1, cqp->Q->size2, cqp->A->size1+cqp->C->size1, cqp->A->size1+cqp->C->size1);
@@ -627,20 +645,19 @@ static double
 compute_gap_infeasible_points(const gsl_cqp_data *cqp, const gsl_vector *x, const gsl_vector *y, const gsl_vector *z)
 {
 	double g, tmp_d;
-    int status;
 	
 	gsl_vector * tmp_v = gsl_vector_alloc(cqp->q->size);
 	
-	status = gsl_blas_dcopy(cqp->q, tmp_v);
-	status = gsl_blas_dsymv(CblasUpper, 1.0, cqp->Q, x, 1.0, tmp_v);
-	status = gsl_blas_ddot(x, tmp_v, &g);
+	gsl_blas_dcopy(cqp->q, tmp_v);
+	gsl_blas_dsymv(CblasUpper, 1.0, cqp->Q, x, 1.0, tmp_v);
+	gsl_blas_ddot(x, tmp_v, &g);
 
         if( cqp->A->size1 != 0 ) {
-          status = gsl_blas_ddot(cqp->b, y, &tmp_d);
+          gsl_blas_ddot(cqp->b, y, &tmp_d);
           g -= tmp_d;
         }
         
-	status = gsl_blas_ddot(cqp->d, z, &tmp_d);
+	gsl_blas_ddot(cqp->d, z, &tmp_d);
 	g -= tmp_d;
 
 	gsl_vector_free(tmp_v);
