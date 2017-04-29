@@ -42,6 +42,7 @@ IGraphicsView::IGraphicsView(QGraphicsScene * scene, QWidget * parent):
 void IGraphicsView::init()
 {
     //setDragMode(QGraphicsView::RubberBandDrag);
+    setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
 }
 
 IGraphicsView::~IGraphicsView()
