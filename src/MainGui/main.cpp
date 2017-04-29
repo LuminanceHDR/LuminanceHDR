@@ -99,10 +99,14 @@ int main( int argc, char ** argv )
     QApplication application( argc, argv );
 
 
-#if defined(WIN32) || defined(__APPLE__)
+#ifdef WIN32
     //qInstallMessageHandler(customMessageHandler);
 
     QIcon::setThemeSearchPaths( QStringList() << QGuiApplication::applicationDirPath() + QString("/icons/luminance-hdr") );
+    QIcon::setThemeName("luminance-hdr");
+#endif
+#ifdef __APPLE__
+    QIcon::setThemeSearchPaths( QStringList() << QCoreApplication::applicationDirPath() + QString("/../Resources/icons/luminance-hdr") );
     QIcon::setThemeName("luminance-hdr");
 #endif
 
