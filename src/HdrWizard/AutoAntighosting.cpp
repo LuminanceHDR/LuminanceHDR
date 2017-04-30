@@ -128,20 +128,6 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
 #endif
 }
 
-void clampToZero(Array2Df &R, Array2Df &G, Array2Df &B, float m)
-{
-  const int width = R.getCols();
-  const int height = R.getRows();
-  
-  #pragma omp parallel for
-  for ( int i = 0; i < width*height; i++ )
-  {
-    R(i) -= m;
-    G(i) -= m;
-    B(i) -= m;
-  }
-}
-
 int findIndex(const float* data, int size)
 {
     assert(size > 0);
@@ -365,43 +351,6 @@ bool comparePatches(const HdrCreationItem& item1,
         for (int x = i * gridX; x < (i+1) * gridX; x++) {
             if (x+dx < 0 || x+dx > width-1)
                 continue;
-            if (R1(x, y) >= 1.0f || R2(x+dx, y+dy) >= 1.0f) {
-                    logRed[count] = 0.0f;
-                    logGreen[count] = 0.0f;
-                    logBlue[count++] = 0.0f;
-                    continue;
-            }
-            if (G1(x, y) >= 1.0f || G2(x+dx, y+dy) >= 1.0f) {
-                    logRed[count] = 0.0f;
-                    logGreen[count] = 0.0f;
-                    logBlue[count++] = 0.0f;
-                    continue;
-            }
-            if (B1(x, y) >= 1.0f || B2(x+dx, y+dy) >= 1.0f) {
-                    logRed[count] = 0.0f;
-                    logGreen[count] = 0.0f;
-                    logBlue[count++] = 0.0f;
-                    continue;
-            }
-            if (R1(x, y) <= 0.0f || R2(x+dx, y+dy) <= 0.0f) {
-                    logRed[count] = 0.0f;
-                    logGreen[count] = 0.0f;
-                    logBlue[count++] = 0.0f;
-                    continue;
-            }
-            if (G1(x, y) <= 0.0f || G2(x+dx, y+dy) <= 0.0f) {
-                    logRed[count] = 0.0f;
-                    logGreen[count] = 0.0f;
-                    logBlue[count++] = 0.0f;
-                    continue;
-            }
-            if (B1(x, y) <= 0.0f || B2(x+dx, y+dy) <= 0.0f) {
-                    logRed[count] = 0.0f;
-                    logGreen[count] = 0.0f;
-                    logBlue[count++] = 0.0f;
-                    continue;
-            }
-
             if (deltaEV > 0) {
                 logRed[count] = log(R1(x, y)) - log(R2(x+dx, y+dy)) - logDeltaEV;
                 logGreen[count] = log(G1(x, y)) - log(G2(x+dx, y+dy)) - logDeltaEV;
@@ -560,23 +509,35 @@ void blendGradients(Array2Df &gradientXBlended, Array2Df &gradientYBlended,
 
     int x, y;
     #pragma omp parallel for private(x, y) schedule(static)
-    for (int j = 0; j < height; j++) {
+    for (int j = 0; j < height; j++)
+    {
         y = floor(static_cast<float>(j)/gridY);
-        for (int i = 0; i < width; i++) {
+        for (int i = 0; i < width; i++)
+        {
             x = floor(static_cast<float>(i)/gridX);
-            if (patches[x][y] == true) {
+            if (patches[x][y] == true)
+            {
                 gradientXBlended(i, j) = gradientXGood(i, j);
                 gradientYBlended(i, j) = gradientYGood(i, j);
-                if (i % gridX == 0) {
-                    gradientXBlended(i+1, j) = gradientXGood(i+1, j);
-                    gradientYBlended(i+1, j) = gradientYGood(i+1, j);
+                if (i % gridX == 0)
+                {
+                    if ((j-1) >= 0)
+                    {
+                        gradientXBlended(i, j) = 0.5f*(gradientXGood(i, j+1) + gradientX(i, j-1));
+                        gradientYBlended(i, j) = 0.5f*(gradientYGood(i, j+1) + gradientY(i, j-1));
+                    }
                 }
-                if (j % gridY == 0) {
-                    gradientXBlended(i, j+1) = gradientXGood(i, j+1);
-                    gradientYBlended(i, j+1) = gradientYGood(i, j+1);
+                if (j % gridY == 0)
+                {
+                    if ((i-1) >= 0)
+                    {
+                        gradientXBlended(i, j) = 0.5f*(gradientXGood(i+1, j) + gradientX(i-1, j));
+                        gradientYBlended(i, j) = 0.5f*(gradientYGood(i+1, j) + gradientY(i-1, j));
+                    }
                 }
             }
-            else {
+            else
+            {
                 gradientXBlended(i, j) = gradientX(i, j);
                 gradientYBlended(i, j) = gradientY(i, j);
             }
