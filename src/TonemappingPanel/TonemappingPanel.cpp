@@ -1972,4 +1972,16 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
         disconnect(m_Ui->eq2RadioButton, SIGNAL(toggled(bool)), this, SLOT(updatePreviewsRB(bool)));
     }
 }
+
+void TonemappingPanel::on_pattalocal_toggled(bool b)
+{
+    bool autoY = m_Ui->autoYcheckbox->isChecked();
+
+    m_Ui->label_cone->setDisabled(b || autoY);
+    m_Ui->coneSlider->setDisabled(b || autoY);
+    m_Ui->conedsb->setDisabled(b || autoY);
+    m_Ui->label_rod->setDisabled(b || autoY);
+    m_Ui->rodSlider->setDisabled(b || autoY);
+    m_Ui->roddsb->setDisabled(b || autoY);
+}
 // ------------------------- // END FILE

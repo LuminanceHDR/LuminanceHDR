@@ -551,7 +551,7 @@ static float snrm(unsigned long n, const float sx[])
     float ans = 0.0f;
 
 #pragma omp parallel for shared(sx) reduction(+:ans) if (n>OMP_THRESHOLD) schedule(static)
-    for (long i=0; i<n; i++)
+    for (long i=0; i<static_cast<long>(n); i++)
     {
 		ans += sx[i]*sx[i];
     }

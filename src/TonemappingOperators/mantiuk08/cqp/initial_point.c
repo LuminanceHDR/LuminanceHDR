@@ -34,7 +34,7 @@
 int
 pdip_initial_point_feasible_x(const gsl_matrix *A, const gsl_vector *b, gsl_vector *x)
 {	
-    int status, signum;
+    int signum;
 	
 	/* x = A^t*(AA^t)^{-1}*b */
 	
@@ -64,19 +64,19 @@ pdip_initial_point_feasible_x(const gsl_matrix *A, const gsl_vector *b, gsl_vect
 	}
 	
 	
-	/* status = gsl_blas_dsyrk(CblasUpper, CblasNoTrans, 1.0, cqp->A, 0.0, AA_t); */	
-	status = gsl_blas_dgemm(CblasNoTrans, CblasTrans, 1.0, A, A, 0.0, AA_t);
+	/* status = gsl_blas_dsyrk(CblasUpper, CblasNoTrans, 1.0, cqp->A, 0.0, AA_t); */
+	gsl_blas_dgemm(CblasNoTrans, CblasTrans, 1.0, A, A, 0.0, AA_t);
 	
 	
 	/* (AA^t)tmp=b */
-	status = gsl_linalg_LU_decomp(AA_t, p, &signum);
-	status = gsl_linalg_LU_solve(AA_t, p, b, tmp);
+	gsl_linalg_LU_decomp(AA_t, p, &signum);
+	gsl_linalg_LU_solve(AA_t, p, b, tmp);
 	
 	
 	/*
-	status = gsl_blas_dtrsv(CblasUpper, CblasNoTrans, CblasNonUnit, AA_t, tmp);  tmp=(AA^t)^{-1}tmp */	
+	gsl_blas_dtrsv(CblasUpper, CblasNoTrans, CblasNonUnit, AA_t, tmp);  tmp=(AA^t)^{-1}tmp */
 	
-	status = gsl_blas_dgemv(CblasTrans, 1.0, A, tmp, 0.0, x);
+	gsl_blas_dgemv(CblasTrans, 1.0, A, tmp, 0.0, x);
 	
 	gsl_matrix_free(AA_t);
 	gsl_vector_free(tmp);
@@ -89,13 +89,11 @@ pdip_initial_point_feasible_x(const gsl_matrix *A, const gsl_vector *b, gsl_vect
 int
 pdip_initial_point_feasible_s(const gsl_matrix * C, const gsl_vector *d, const gsl_vector *x, gsl_vector *s)
 {
-  int status;
-
   /* s=Cx-d */
 
-  status = gsl_blas_dcopy(d, s);
+  gsl_blas_dcopy(d, s);
 
-  status = gsl_blas_dgemv(CblasNoTrans, 1.0, C, x, -1.0, s);
+  gsl_blas_dgemv(CblasNoTrans, 1.0, C, x, -1.0, s);
 
   return GSL_SUCCESS;
 }
@@ -104,7 +102,7 @@ pdip_initial_point_feasible_s(const gsl_matrix * C, const gsl_vector *d, const g
 int
 pdip_initial_point_y(const gsl_matrix *Q, const gsl_vector *q, const gsl_matrix *A, const gsl_vector *x, gsl_vector *y)
 {
-  int status, signum;
+  int signum;
 
   /* y=(AA^t)^{-1}(A(Qx+q)) */
 
@@ -133,11 +131,11 @@ pdip_initial_point_y(const gsl_matrix *Q, const gsl_vector *q, const gsl_matrix 
 	  GSL_ERROR_VAL ("failed to initialize space for finding initial point", GSL_ENOMEM, 0);
 	}
 
-  status = gsl_blas_dcopy(q, tmp);
-  status = gsl_blas_dsymv(CblasUpper, 1.0, Q, x, 1.0, tmp);
-  status = gsl_blas_dgemv(CblasNoTrans, 1.0, A, tmp, 0.0, y);
+  gsl_blas_dcopy(q, tmp);
+  gsl_blas_dsymv(CblasUpper, 1.0, Q, x, 1.0, tmp);
+  gsl_blas_dgemv(CblasNoTrans, 1.0, A, tmp, 0.0, y);
 
-  /* status = gsl_blas_dsyrk(CblasUpper, CblasNoTrans, 1.0, cqp->A, 0.0, AA_t); */
+  /* gsl_blas_dsyrk(CblasUpper, CblasNoTrans, 1.0, cqp->A, 0.0, AA_t); */
 
   gsl_vector_free(tmp);
   tmp = gsl_vector_alloc(y->size);
@@ -148,15 +146,15 @@ pdip_initial_point_y(const gsl_matrix *Q, const gsl_vector *q, const gsl_matrix 
 	  GSL_ERROR_VAL ("failed to initialize space for finding initial point", GSL_ENOMEM, 0);	
   }
 
-  status = gsl_blas_dcopy(y, tmp);
+  gsl_blas_dcopy(y, tmp);
 
-  status = gsl_blas_dgemm(CblasNoTrans, CblasTrans, 1.0, A, A, 0.0, AA_t);
+  gsl_blas_dgemm(CblasNoTrans, CblasTrans, 1.0, A, A, 0.0, AA_t);
 
-  status = gsl_linalg_LU_decomp(AA_t, p, &signum);
-	status = gsl_linalg_LU_solve(AA_t, p, tmp, y);
+  gsl_linalg_LU_decomp(AA_t, p, &signum);
+	gsl_linalg_LU_solve(AA_t, p, tmp, y);
 
 
-  /* status = gsl_blas_dtrsv(CblasUpper, CblasNoTrans, CblasNonUnit, AA_t, y); */
+  /* gsl_blas_dtrsv(CblasUpper, CblasNoTrans, CblasNonUnit, AA_t, y); */
 
   gsl_matrix_free(AA_t);
   gsl_vector_free(tmp);
@@ -183,7 +181,7 @@ pdip_initial_point_strict_feasible(gsl_vector *x, gsl_vector *s)
 	
 	size_t i;
 	
-    int status;
+    //int status;
 	
 	delta_x = GSL_MAX_DBL(-1.5*gsl_vector_min(x),0.0);
 	delta_s = GSL_MAX_DBL(-1.5*gsl_vector_min(s),0.0);
@@ -191,10 +189,11 @@ pdip_initial_point_strict_feasible(gsl_vector *x, gsl_vector *s)
 	
 	if(delta_x < rg && delta_s < rg)
 	{
-		status = gsl_blas_ddot(x, s, &tmp);
+		//status = gsl_blas_ddot(x, s, &tmp);
+		gsl_blas_ddot(x, s, &tmp);
 		
 		if(tmp < rg) /* the initial point is optimal */
-		return GSL_SUCCESS;
+		    return GSL_SUCCESS;
 		
 	}
 		
@@ -212,8 +211,10 @@ pdip_initial_point_strict_feasible(gsl_vector *x, gsl_vector *s)
 	delta_x += 0.5*xs/sum_s;
 	delta_s += 0.5*xs/sum_x;
 	
-	status = gsl_vector_add_constant(x, delta_x);
-	status = gsl_vector_add_constant(s, delta_s);
+	//status = gsl_vector_add_constant(x, delta_x);
+	//status = gsl_vector_add_constant(s, delta_s);
+	gsl_vector_add_constant(x, delta_x);
+	gsl_vector_add_constant(s, delta_s);
 	
 	
 	return GSL_SUCCESS;

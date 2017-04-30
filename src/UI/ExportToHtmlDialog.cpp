@@ -78,7 +78,7 @@ void ExportToHtmlDialog::onExportButtonClicked()
         resized = pfs::copy(m_frame);
     }
     else {
-        int resized_width = size_percent * (int)((float)m_frame->getWidth() / 100.f);
+        int resized_width = (int)((float)(size_percent*m_frame->getWidth()) / 100.f);
         resized = pfs::resize(m_frame, resized_width);
     }
     try {
