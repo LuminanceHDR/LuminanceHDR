@@ -42,20 +42,17 @@ namespace fusion {
 class FrameEnhanced
 {
 public:
-    FrameEnhanced(const pfs::FramePtr& frame, float averageLuminance, int bps)
+    FrameEnhanced(const pfs::FramePtr& frame, float averageLuminance)
         : m_frame(frame)
         , m_averageLuminance(averageLuminance)
-        , m_bps(bps)
     {}
 
     const pfs::FramePtr& frame() const { return m_frame; }
     float averageLuminance() const { return m_averageLuminance; }
-    int   getBPS() const { return m_bps; }
 
 private:
     pfs::FramePtr m_frame;
     float m_averageLuminance;
-    int m_bps;
 };
 
 enum FusionOperator

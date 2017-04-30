@@ -70,8 +70,6 @@ public:
 
     QImage& qimage()                    { return *m_thumbnail; }
     const QImage& qimage() const        { return *m_thumbnail; }
-    void  setBitDepth(int bps)         { m_bitDepth = bps; }
-    int   getBitDepth()                { return m_bitDepth; }
 
 private:
     QString                 m_filename;
@@ -83,7 +81,6 @@ private:
     float                   m_datamax;
     pfs::FramePtr           m_frame;
     QSharedPointer<QImage>  m_thumbnail;
-    int                     m_bitDepth;
 };
 
 typedef std::vector< HdrCreationItem > HdrCreationItemContainer;
