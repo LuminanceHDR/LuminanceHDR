@@ -264,6 +264,9 @@
           <iconset theme="document-open">
            <normaloff>.</normaloff>.</iconset>
          </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -306,6 +309,9 @@
            <property name="text">
             <string>Cancel</string>
            </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -317,7 +323,11 @@
             <string>Export</string>
            </property>
            <property name="icon">
-            <iconset theme="document-export"/>
+            <iconset theme="document-export">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
            </property>
           </widget>
          </item>

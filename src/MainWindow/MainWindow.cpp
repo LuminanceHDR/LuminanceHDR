@@ -58,8 +58,6 @@
 #include "MainWindow/DnDOption.h"
 #include "MainWindow/UpdateChecker.h"
 #include "MainWindow/DonationDialog.h"
-#include "MainWindow/ExportToHtmlDialog.h"
-#include "MainWindow/SupportedCamerasDialog.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/params.h"
@@ -85,6 +83,8 @@
 #include "UI/TiffModeDialog.h"
 #include "UI/UMessageBox.h"
 #include "UI/GammaAndLevels.h"
+#include "UI/ExportToHtmlDialog.h"
+#include "UI/SupportedCamerasDialog.h"
 
 #ifdef HAVE_CFITSIO
 #include "UI/FitsImporter.h"
