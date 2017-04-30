@@ -230,19 +230,17 @@ gsl_cqpminimizer_f (gsl_cqpminimizer * minimizer)
 	/* f = 0.5*(x^t)Qx+(q^t)x */
 	double f; 
 	
-    int status;
-	
 	gsl_vector * tmp = gsl_vector_alloc(minimizer->x->size);
 	if(tmp == 0)
 	{
 		GSL_ERROR_VAL ("failed to initialize workspace", GSL_ENOMEM, 0);
 	}
 	
-	status = gsl_blas_dcopy(minimizer->cqp->q, tmp);
+	gsl_blas_dcopy(minimizer->cqp->q, tmp);
 	
-	status = gsl_blas_dsymv(CblasUpper, 0.5, minimizer->cqp->Q, minimizer->x, 1.0, tmp);
+	gsl_blas_dsymv(CblasUpper, 0.5, minimizer->cqp->Q, minimizer->x, 1.0, tmp);
 	
-	status = gsl_blas_ddot(minimizer->x, tmp, &f);
+	gsl_blas_ddot(minimizer->x, tmp, &f);
 	
 	gsl_vector_free(tmp);
 	

@@ -38,6 +38,7 @@ IGraphicsPixmapItem::IGraphicsPixmapItem(QGraphicsItem *parent):
     mDropShadow->setBlurRadius(10);
     mDropShadow->setOffset(0,0);
     //this->setGraphicsEffect(mDropShadow);
+    setTransformationMode(Qt::SmoothTransformation);
 }
 
 IGraphicsPixmapItem::~IGraphicsPixmapItem()

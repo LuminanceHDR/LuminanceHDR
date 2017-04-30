@@ -220,8 +220,8 @@ IF(APPLE)
     set(MACOSX_BUNDLE_LONG_VERSION_STRING "${LHDR_NAME} ${LHDR_VERSION}")
     set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${LHDR_VERSION}")
     set(MACOSX_BUNDLE_VERSION "${LHDR_VERSION}")
-    set(MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns")
-    set(MACOSX_BUNDLE_ICON "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    set(MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
+    set(MACOSX_BUNDLE_ICON "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
     set(MACOSX_BUNDLE_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources")
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "${LHDR_DOMAIN_SECOND}.${LHDR_DOMAIN_FIRST}")
     set(MACOSX_BUNDLE_BUNDLE_NAME "${LHDR_NAME}")
@@ -235,7 +235,7 @@ IF(APPLE)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
 
     # icon files to copy in the bundle
-    SET(OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    SET(OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
     # include the icns files in the target
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES})
 

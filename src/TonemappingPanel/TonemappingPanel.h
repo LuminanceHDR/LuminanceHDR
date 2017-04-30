@@ -153,6 +153,7 @@ protected Q_SLOTS:
     void updatePreviewsCB(int);
     void updatePreviewsRB(bool);
 
+    void on_pattalocal_toggled(bool);
 public:
     TonemappingPanel(int mainWinNumber, PreviewPanel *p = 0, QWidget *parent = 0);
     ~TonemappingPanel();

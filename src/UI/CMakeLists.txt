@@ -3,6 +3,8 @@ SET(FILES_UI
     ${CMAKE_CURRENT_SOURCE_DIR}/ImageQualityDialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/TiffModeDialog.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/about.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportToHtmlDialog.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/SupportedCamerasDialog.ui
 )
 SET(FILES_H
     ${CMAKE_CURRENT_SOURCE_DIR}/ExtWizardPage.h
@@ -14,6 +16,8 @@ SET(FILES_H
     ${CMAKE_CURRENT_SOURCE_DIR}/SimplePreviewLabel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/UMessageBox.h
     ${CMAKE_CURRENT_SOURCE_DIR}/FlowLayout.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportToHtmlDialog.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/SupportedCamerasDialog.h
 )
 SET(FILES_CPP
     ${CMAKE_CURRENT_SOURCE_DIR}/ExtWizardPage.cpp
@@ -25,6 +29,8 @@ SET(FILES_CPP
     ${CMAKE_CURRENT_SOURCE_DIR}/TiffModeDialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PreviewFrame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SimplePreviewLabel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ExportToHtmlDialog.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SupportedCamerasDialog.cpp
 )
 
 IF(CFITSIO_FOUND)

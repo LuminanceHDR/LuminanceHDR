@@ -27,7 +27,15 @@ install(FILES ${CMAKE_SOURCE_DIR}/build/macosx/align_image_stack
 # install help
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/help
         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/html
+#install(DIRECTORY ${CMAKE_SOURCE_DIR}/html
+#    DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
+
+#install icons theme
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/icons
+        DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
+
+#install HdrHTML stuff
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/hdrhtml
         DESTINATION ${LHDR_OSX_EXECUTABLE_NAME}.app/Contents/Resources)
 
 # install a qt.conf file

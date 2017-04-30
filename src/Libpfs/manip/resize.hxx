@@ -22,13 +22,188 @@
 #ifndef PFS_RESIZE_HXX
 #define PFS_RESIZE_HXX
 
+#include <boost/math/constants/constants.hpp>
 #include "resize.h"
 #include "copy.h"
+
+#define PI4_Af 0.78515625f
+#define PI4_Bf 0.00024127960205078125f
+#define PI4_Cf 6.3329935073852539062e-07f
+#define PI4_Df 4.9604681473525147339e-10f
 
 namespace pfs
 {
 namespace detail
 {
+
+//! \author Franco Comida <fcomida@users.sourceforge.net>
+//! \note Code derived from RawTherapee
+//! https://github.com/Beep6581/RawTherapee/blob/dev/rtengine/ipresize.cc
+  constexpr float RT_1_PI = 2.0f*(float)boost::math::double_constants::one_div_two_pi;
+
+  inline float xrintf(float x) { return x < 0 ? (int)(x - 0.5f) : (int)(x + 0.5f); }
+
+  inline float mlaf(float x, float y, float z) { return x * y + z; }
+
+  inline float xsinf(float d) {
+  int q;
+  float u, s;
+
+  q = (int)xrintf(d * RT_1_PI);
+
+  d = mlaf(q, -PI4_Af*4, d);
+  d = mlaf(q, -PI4_Bf*4, d);
+  d = mlaf(q, -PI4_Cf*4, d);
+  d = mlaf(q, -PI4_Df*4, d);
+
+  s = d * d;
+
+  if ((q & 1) != 0) d = -d;
+
+  u = 2.6083159809786593541503e-06f;
+  u = mlaf(u, s, -0.0001981069071916863322258f);
+  u = mlaf(u, s, 0.00833307858556509017944336f);
+  u = mlaf(u, s, -0.166666597127914428710938f);
+
+  u = mlaf(s, u * d, d);
+
+  return u;
+}
+
+static inline float Lanc (float x, float a)
+{
+    if (x * x < 1e-6f) {
+        return 1.0f;
+    } else if (x * x > a * a) {
+        return 0.0f;
+    } else {
+        x = static_cast<float> (boost::math::double_constants::pi) * x;
+        return a * xsinf (x) * xsinf (x / a) / (x * x);
+    }
+}
+
+template <typename Type>
+void Lanczos (const Type* src, Type* dst,
+                        int W, int H, int W2, int H2)
+
+{
+
+    const float scale = static_cast<float>(W2)/static_cast<float>(W);
+    const float delta = 1.0f / scale;
+    const float a = 3.0f;
+    const float sc = std::min (scale, 1.0f);
+    const int support = static_cast<int> (2.0f * a / sc) + 1;
+
+    const Type zero = static_cast<Type> (0);
+
+    #pragma omp parallel
+    {
+        // storage for precomputed parameters for horisontal interpolation
+        float * wwh = new float[support * W2];
+        int * jj0 = new int[W2];
+        int * jj1 = new int[W2];
+
+        // temporal storage for vertically-interpolated row of pixels
+        float * l = new float[W];
+
+        // Phase 1: precompute coefficients for horisontal interpolation
+
+        for (int j = 0; j < W2; j++) {
+
+            // x coord of the center of pixel on src image
+            float x0 = (static_cast<float> (j) + 0.5f) * delta - 0.5f;
+
+            // weights for interpolation in horisontal direction
+            float * w = wwh + j * support;
+
+            // sum of weights used for normalization
+            float ws =  0.0f;
+
+            jj0[j] = std::max (0, static_cast<int> (floorf (x0 - a / sc)) + 1);
+            jj1[j] = std::min (W, static_cast<int> (floorf (x0 + a / sc)) + 1);
+
+            // calculate weights
+            for (int jj = jj0[j]; jj < jj1[j]; jj++) {
+                int k = jj - jj0[j];
+                float z = sc * (x0 - static_cast<float> (jj));
+                w[k] = Lanc (z, a);
+                ws += w[k];
+            }
+
+            // normalize weights
+            for (int k = 0; k < support; k++) {
+                w[k] /= ws;
+            }
+        }
+
+        // Phase 2: do actual interpolation
+        #pragma omp for
+
+        for (int i = 0; i < H2; i++) {
+
+            // y coord of the center of pixel on src image
+            float y0 = (static_cast<float> (i) + 0.5f) * delta - 0.5f;
+
+            // weights for interpolation in y direction
+            float w[support];
+
+            // sum of weights used for normalization
+            float ws = 0.0f;
+
+            int ii0 = std::max (0, static_cast<int> (floorf (y0 - a / sc)) + 1);
+            int ii1 = std::min (H, static_cast<int> (floorf (y0 + a / sc)) + 1);
+
+            // calculate weights for vertical interpolation
+            for (int ii = ii0; ii < ii1; ii++) {
+                int k = ii - ii0;
+                float z = sc * (y0 - static_cast<float> (ii));
+                w[k] = Lanc (z, a);
+                ws += w[k];
+            }
+
+            // normalize weights
+            for (int k = 0; k < support; k++) {
+                w[k] /= ws;
+            }
+
+            // Do vertical interpolation. Store results.
+            for (int j = 0; j < W; j++) {
+
+                float o = 0.0f;
+
+                for (int ii = ii0; ii < ii1; ii++) {
+                    int k = ii - ii0;
+
+                    o += w[k] * static_cast<float>(src[ii*W + j]);
+                }
+
+                l[j] = o;
+            }
+
+            // Do horizontal interpolation
+            for (int j = 0; j < W2; j++) {
+
+                float * wh = wwh + support * j;
+
+                float o = 0.0f;
+
+                for (int jj = jj0[j]; jj < jj1[j]; jj++) {
+                    int k = jj - jj0[j];
+
+                    o += wh[k] * l[jj];
+                }
+
+                dst[i*W2 + j] = max(zero, min(static_cast<Type>(o), boost::numeric::bounds<Type>::highest()));
+            }
+        }
+
+        delete[] wwh;
+        delete[] jj0;
+        delete[] jj1;
+        delete[] l;
+    }
+}
+
 const size_t BLOCK_FACTOR = 96;
 
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
@@ -100,7 +275,7 @@ void resizeBilinearGray(const Type* pixels, Type* output,
 template <typename Type>
 void resample(const ::pfs::Array2D<Type> *in, ::pfs::Array2D<Type> *out)
 {
-    resizeBilinearGray(in->data(), out->data(),
+    Lanczos(in->data(), out->data(),
                        in->getCols(), in->getRows(),
                        out->getCols(), out->getRows());
 }
