@@ -1,48 +1,89 @@
 @echo off
 SETLOCAL
 
+REM SANITY CHECKS
+
+where /Q cmake
+IF %ERRORLEVEL% NEQ 0 (
+	echo Error: "cmake" command not in the PATH.
+	echo You must have CMake installed and added to your PATH, aborting!
+	goto error_end
+)
+
+where /Q svn
+IF %ERRORLEVEL% NEQ 0 (
+	echo Error: "svn" command not in the PATH.
+	echo You must have SVN installed and added to your PATH, aborting!
+	goto error_end
+)
+
+where /Q git
+IF %ERRORLEVEL% NEQ 0 (
+	echo Error: "git" command not in the PATH.
+	echo You must have GIT installed and added to your PATH, aborting!
+	goto error_end
+)
+
+IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
+
+IF EXIST ..\msvc (
+	echo.
+	echo.ERROR: This file should NOT be executed within the LuminanceHDR source directory,
+	echo.       but in a new empty folder!
+	echo.
+	goto error_end
+)
+
+REM End SANITY CHECKS
+
+REM Start Lib Versions
+
 REM  http://dev.exiv2.org/projects/exiv2/repository/
 SET EXIV2_COMMIT=4753
 
 REM  http://github.com/libjpeg-turbo/libjpeg-turbo
 SET LIBJPEG_COMMIT_LONG=da2a27ef056a0179cbd80f9146e58b89403d9933
 
-rem  https://github.com/madler/zlib/commits
+REM  https://github.com/madler/zlib/commits
 SET ZLIB_COMMIT_LONG=cacf7f1d4e3d44d871b605da3b647f07d718623f
 
-rem  https://github.com/openexr/openexr
+REM  https://github.com/openexr/openexr
 SET OPENEXR_COMMIT_LONG=20d043d017d4b752356bb76946ffdffaa9c15c72
 SET OPENEXR_CMAKE_VERSION=2.2
 
-rem  http://www.boost.org/
+REM  http://www.boost.org/
 SET BOOST_MINOR=63
 
 REM ftp://ftp.fftw.org/pub/fftw/
 SET FFTW_VER=3.3.5
 
-rem https://github.com/mm2/Little-CMS
+REM https://github.com/mm2/Little-CMS
 SET LCMS_COMMIT_LONG=f9d75ccef0b54c9f4167d95088d4727985133c52
 
-rem https://github.com/ampl/gsl
+REM https://github.com/ampl/gsl
 SET GSL_COMMIT_LONG=48e0194da0d8921aff57c293b4f5083877d3f55b
 
-rem https://github.com/LibRaw/LibRaw
+REM https://github.com/LibRaw/LibRaw
 SET LIBRAW_COMMIT_LONG=d7c3d2cb460be10a3ea7b32e9443a83c243b2251
 SET LIBRAW_DEMOS2_COMMIT_LONG=194f592e205990ea8fce72b6c571c14350aca716
 SET LIBRAW_DEMOS3_COMMIT_LONG=f0895891fdaa775255af02275fce426a5bf5c9fc
 
-rem ftp://sourceware.org/pub/pthreads-win32/
+REM ftp://sourceware.org/pub/pthreads-win32/
 SET PTHREADS_DIR=prebuilt-dll-2-9-1-release
 
-rem http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c
+REM http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c
 SET CFITSIO_VER=3360
-rem broken 3370
+REM broken 3370
 
-rem Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
+REM Internal version number for  http://qtpfsgui.sourceforge.net/win/hugin-*
 SET HUGIN_VER=201600
 
-http://download.osgeo.org/libtiff/
+REM http://download.osgeo.org/libtiff/
 SET TIFF_VER=4.0.7
+
+REM End Lib Versions
 
 IF EXIST .settings\vsexpress.txt (
     SET VSCOMMAND=vcexpress
@@ -72,14 +113,6 @@ IF EXIST .settings\vsexpress.txt (
     echo x>.settings\%VSCOMMAND%.txt
 )
 
-IF EXIST ..\msvc (
-	echo.
-	echo.ERROR: This file should NOT be executed within the LuminanceHDR source directory,
-	echo.       but in a new empty folder!
-	echo.
-	goto error_end
-)
-
 ml64.exe > NUL
 IF ERRORLEVEL 1 (
 	set Platform=Win32
@@ -98,7 +131,8 @@ IF DEFINED VS140COMNTOOLS (
 	set VS_SHORT=vc14
 	set VS_CMAKE=Visual Studio 14
 	set VS_PROG_FILES=Microsoft Visual Studio 14.0
-	set VS_LCMS=VC2013
+	set VS_LCMS=VC2015
+
 ) ELSE IF DEFINED VS120COMNTOOLS (
 	REM Visual Studio 2013
 	set VS_SHORT=vc12
@@ -131,45 +165,7 @@ IF %Platform% EQU x64 (
 	set VS_CMAKE=%VS_CMAKE% Win64
 )
 
-call setenv.cmd
-
-IF NOT EXIST %CMAKE_DIR%\bin\cmake.exe (
-	echo.
-	echo.ERROR: CMake not found: %CMAKE_DIR%\bin\cmake.exe
-	echo.
-	goto error_end
-)
-
-IF NOT EXIST %CYGWIN_DIR%\bin\cp.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\git.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\gzip.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\mv.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\nasm.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\svn.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\tar.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\unzip.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
-GOTO cygwin_ok
-
-:cygwin_error
-echo ERROR: Cygwin with 
-echo    cp
-echo    git 
-echo    gzip 
-echo    mv
-echo    nasm
-echo    sed 
-echo    ssh 
-echo    svn 
-echo    tar 
-echo    unzip 
-echo    wget
-echo is required
-GOTO error_end
-
-:cygwin_ok
+call %0/setenv.cmd
 
 SET INSTALL_DIR=dist
 IF NOT EXIST %INSTALL_DIR% (
@@ -204,36 +200,38 @@ IF NOT EXIST vcDlls (
 IF NOT EXIST vcDlls\selected (
 	mkdir vcDlls\selected
 
-	%CYGWIN_DIR%\bin\cp.exe vcDlls/**/vcomp* vcDlls/selected
-	%CYGWIN_DIR%\bin\cp.exe vcDlls/**/msv* vcDlls/selected
+	copy vcDlls\**\vcomp* vcDlls\selected
+	copy vcDlls\**\msv* vcDlls\selected
 )
 
 IF NOT EXIST %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/hugin-%HUGIN_VER%-%RawPlatform%.zip qtpfsgui.sourceforge.net/win/hugin-%HUGIN_VER%-%RawPlatform%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/hugin-%HUGIN_VER%-%RawPlatform%.zip ^
+			qtpfsgui.sourceforge.net/win/hugin-%HUGIN_VER%-%RawPlatform%.zip
 )
 IF NOT EXIST hugin-%HUGIN_VER%-%RawPlatform% (
-    %CYGWIN_DIR%\bin\unzip.exe -o -q -d hugin-%HUGIN_VER%-%RawPlatform% %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip
+    cmake -E tar hugin-%HUGIN_VER%-%RawPlatform% %TEMP_DIR%\hugin-%HUGIN_VER%-%RawPlatform%.zip
 )
 
 SET ZLIB_COMMIT=%ZLIB_COMMIT_LONG:~0,7%
 IF NOT EXIST %TEMP_DIR%\zlib-%ZLIB_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip https://github.com/madler/zlib/archive/%ZLIB_COMMIT_LONG%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip ^
+			https://github.com/madler/zlib/archive/%ZLIB_COMMIT_LONG%.zip
 )
 
 IF NOT EXIST zlib-%ZLIB_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe zlib-* zlib-%ZLIB_COMMIT%
+	cmake -E tar %TEMP_DIR%/zlib-%ZLIB_COMMIT%.zip
+	move zlib-* zlib-%ZLIB_COMMIT%
 )
 
 IF NOT EXIST zlib-%ZLIB_COMMIT%.build (
     mkdir zlib-%ZLIB_COMMIT%.build
     
     pushd zlib-%ZLIB_COMMIT%.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ..\zlib-%ZLIB_COMMIT%
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ..\zlib-%ZLIB_COMMIT%
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration%
+	cmake --build . --config %Configuration%
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
     
     popd
@@ -241,42 +239,44 @@ IF NOT EXIST zlib-%ZLIB_COMMIT%.build (
 
 
 IF NOT EXIST %TEMP_DIR%\lpng170b75.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng170b75.zip http://sourceforge.net/projects/libpng/files/libpng17/1.7.0beta75/lp170b75.zip/download
-    IF errorlevel 1	goto error_end
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lpng170b75.zip ^
+			https://sourceforge.net/projects/libpng/files/libpng17/1.7.0beta87/lp170b87.zip/download
+				IF errorlevel 1	goto error_end
 )
 IF NOT EXIST lp170b75 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lpng170b75.zip
+	cmake -E tar %TEMP_DIR%/lpng170b75.zip
 	pushd lp170b75
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR%
+	cmake -G "%VS_CMAKE%" . -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR%
 	IF errorlevel 1	goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1	goto error_end
 	popd
 )
 
 IF NOT EXIST %TEMP_DIR%\expat-2.1.0.tar (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/expat-2.1.0.tar.gz http://sourceforge.net/projects/expat/files/expat/2.1.0/expat-2.1.0.tar.gz/download
-	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/expat-2.1.0.tar.gz
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/expat-2.1.0.tar.gz ^
+			http://sourceforge.net/projects/expat/files/expat/2.1.0/expat-2.1.0.tar.gz/download
+	cmake -E tar %TEMP_DIR%/expat-2.1.0.tar.gz
 )
 IF NOT EXIST expat-2.1.0 (
-	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/expat-2.1.0.tar
+	cmake -E tar %TEMP_DIR%/expat-2.1.0.tar
 )
 
 IF NOT EXIST expat-2.1.0.build (
     mkdir expat-2.1.0.build
     
     pushd expat-2.1.0.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ..\expat-2.1.0
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ..\expat-2.1.0
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration%
+	cmake --build . --config %Configuration%
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
 	popd
 )
 
 IF NOT EXIST exiv2-%EXIV2_COMMIT% (
-    %CYGWIN_DIR%\bin\svn.exe co -r %EXIV2_COMMIT% svn://dev.exiv2.org/svn/trunk exiv2-%EXIV2_COMMIT%
+    svn co -r %EXIV2_COMMIT% svn://dev.exiv2.org/svn/trunk exiv2-%EXIV2_COMMIT%
 )
 
 IF NOT EXIST exiv2-%EXIV2_COMMIT%.build (
@@ -284,10 +284,11 @@ IF NOT EXIST exiv2-%EXIV2_COMMIT%.build (
 
     pushd exiv2-%EXIV2_COMMIT%
     SET EXIV2_CMAKE=
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_PROGRAM_PATH=%SVN_DIR%  -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DEXIV2_ENABLE_BUILD_SAMPLES=OFF -DEXIV2_ENABLE_CURL=OFF -DEXIV2_ENABLE_SSH=OFF
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ^
+			-DEXIV2_ENABLE_BUILD_SAMPLES=OFF -DEXIV2_ENABLE_CURL=OFF -DEXIV2_ENABLE_SSH=OFF
     
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
 	popd	
 )
@@ -295,12 +296,13 @@ IF NOT EXIST exiv2-%EXIV2_COMMIT%.build (
 
 SET LIBJPEG_COMMIT=%LIBJPEG_COMMIT_LONG:~0,7%
 IF NOT EXIST %TEMP_DIR%\libjpeg-%LIBJPEG_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip https://github.com/libjpeg-turbo/libjpeg-turbo/archive/%LIBJPEG_COMMIT_LONG%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip ^
+			https://github.com/libjpeg-turbo/libjpeg-turbo/archive/%LIBJPEG_COMMIT_LONG%.zip
 )
 
 IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe libjpeg-* libjpeg-turbo-%LIBJPEG_COMMIT%
+	cmake -E tar %TEMP_DIR%/libjpeg-%LIBJPEG_COMMIT%.zip
+	move libjpeg-* libjpeg-turbo-%LIBJPEG_COMMIT%
 )
 
 
@@ -309,9 +311,12 @@ IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT%.build (
 	
 	
 	pushd libjpeg-turbo-%LIBJPEG_COMMIT%.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% -DNASM="%CYGWIN_DIR%\bin\nasm.exe" -DWITH_JPEG8=TRUE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% ^
+			-DCMAKE_BUILD_TYPE=%Configuration% ^
+			-DNASM="%CYGWIN_DIR%\bin\nasm.exe" ^
+			-DWITH_JPEG8=TRUE ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
     copy jconfig.h ..\libjpeg-turbo-%LIBJPEG_COMMIT%
 	popd
@@ -319,17 +324,18 @@ IF NOT EXIST libjpeg-turbo-%LIBJPEG_COMMIT%.build (
 
 SET LCMS_COMMIT=%LCMS_COMMIT_LONG:~0,7%
 IF NOT EXIST %TEMP_DIR%\lcms2-%LCMS_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip https://github.com/mm2/Little-CMS/archive/%LCMS_COMMIT_LONG%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip ^
+			https://github.com/mm2/Little-CMS/archive/%LCMS_COMMIT_LONG%.zip
 )
 
 
 IF NOT EXIST lcms2-%LCMS_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe Little-CMS-* lcms2-%LCMS_COMMIT%
+	cmake -E tar %TEMP_DIR%/lcms2-%LCMS_COMMIT%.zip
+	move Little-CMS-* lcms2-%LCMS_COMMIT%
 	
 	pushd lcms2-%LCMS_COMMIT%
 	REM %VSCOMMAND% Projects\%VS_LCMS%\lcms2.sln /Upgrade
-	rem devenv Projects\VC2013\lcms2.sln /build Release /project lcms2_DLL
+	REM devenv Projects\VC2013\lcms2.sln /build Release /project lcms2_DLL
 	%VSCOMMAND% Projects\%VS_LCMS%\lcms2.sln /Rebuild "%Configuration%|%Platform%" /project lcms2_DLL
 	IF errorlevel 1	goto error_end
 	popd
@@ -341,12 +347,12 @@ IF NOT EXIST %TEMP_DIR%\tiff-%TIFF_VER%.zip (
 
 
 IF NOT EXIST tiff-%TIFF_VER% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-%TIFF_VER%.zip
+	cmake -E tar -q %TEMP_DIR%/tiff-%TIFF_VER%.zip
 
 	pushd tiff-%TIFF_VER%
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% .
+	cmake -G "%VS_CMAKE%" -DCMAKE_INSTALL_PREFIX=..\%INSTALL_DIR% -DCMAKE_BUILD_TYPE=%Configuration% .
 	IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
 	IF errorlevel 1 goto error_end
 	popd
 )
@@ -356,35 +362,38 @@ SET LIBRAW_DEMOS2_COMMIT=%LIBRAW_DEMOS2_COMMIT_LONG:~0,7%
 SET LIBRAW_DEMOS3_COMMIT=%LIBRAW_DEMOS3_COMMIT_LONG:~0,7%
 
 IF NOT EXIST %TEMP_DIR%\LibRaw-%LIBRAW_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip https://github.com/LibRaw/LibRaw/archive/%LIBRAW_COMMIT_LONG%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip ^
+			https://github.com/LibRaw/LibRaw/archive/%LIBRAW_COMMIT_LONG%.zip
 )
 
 IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip https://github.com/LibRaw/LibRaw-demosaic-pack-GPL2/archive/%LIBRAW_DEMOS2_COMMIT_LONG%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip ^
+			https://github.com/LibRaw/LibRaw-demosaic-pack-GPL2/archive/%LIBRAW_DEMOS2_COMMIT_LONG%.zip
 )
 
 IF NOT EXIST LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%* LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%
+	cmake -E tar %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%.zip
+	move LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%* LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%
 )
 
 IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip https://github.com/LibRaw/LibRaw-demosaic-pack-GPL3/archive/%LIBRAW_DEMOS3_COMMIT_LONG%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip ^
+			https://github.com/LibRaw/LibRaw-demosaic-pack-GPL3/archive/%LIBRAW_DEMOS3_COMMIT_LONG%.zip
 )
 
 IF NOT EXIST LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%* LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%
+	cmake -E tar %TEMP_DIR%/LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%.zip
+	move LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%* LibRaw-demosaic-pack-GPL3-%LIBRAW_DEMOS3_COMMIT%
 )
 
 IF NOT EXIST LibRaw-%LIBRAW_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe LibRaw-%LIBRAW_COMMIT%* LibRaw-%LIBRAW_COMMIT%
+	cmake -E tar %TEMP_DIR%/LibRaw-%LIBRAW_COMMIT%.zip
+	move LibRaw-%LIBRAW_COMMIT%* LibRaw-%LIBRAW_COMMIT%
 
 	
 	pushd LibRaw-%LIBRAW_COMMIT%
 	
-    rem /openmp
+    REM /openmp
 	echo.COPT_OPT="/arch:SSE2"> qtpfsgui_commands.in
 	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-%LIBRAW_DEMOS2_COMMIT%>> qtpfsgui_commands.in
 	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
@@ -417,20 +426,23 @@ IF NOT EXIST %PTHREADS_CURRENT_DIR% (
 )
 
 IF NOT EXIST %TEMP_DIR%\cfit%CFITSIO_VER%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/cfit%CFITSIO_VER%.zip ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfit%CFITSIO_VER%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/cfit%CFITSIO_VER%.zip ^
+			ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/cfit%CFITSIO_VER%.zip
 )
 
 IF NOT EXIST cfit%CFITSIO_VER% (
-    %CYGWIN_DIR%\bin\unzip.exe -o -q -d cfit%CFITSIO_VER% %TEMP_DIR%/cfit%CFITSIO_VER%.zip
+    cmake -E tar cfit%CFITSIO_VER% %TEMP_DIR%/cfit%CFITSIO_VER%.zip
 )
 
 IF NOT EXIST cfit%CFITSIO_VER%.build (
     mkdir cfit%CFITSIO_VER%.build
     pushd cfit%CFITSIO_VER%.build
     
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\cfit%CFITSIO_VER% -DUSE_PTHREADS=0 -DCMAKE_INCLUDE_PATH=..\%PTHREADS_CURRENT_DIR% -DCMAKE_LIBRARY_PATH=..\%PTHREADS_CURRENT_DIR%
+    cmake -G "%VS_CMAKE%" ..\cfit%CFITSIO_VER% -DUSE_PTHREADS=0 ^
+				-DCMAKE_INCLUDE_PATH=..\%PTHREADS_CURRENT_DIR% ^
+				-DCMAKE_LIBRARY_PATH=..\%PTHREADS_CURRENT_DIR%
 	IF errorlevel 1 goto error_end
-    %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target cfitsio
+    cmake --build . --config %Configuration% --target cfitsio
     IF errorlevel 1 goto error_end   
     popd
 )
@@ -443,48 +455,52 @@ pushd cfit%CFITSIO_VER%.build\%Configuration%
 SET CFITSIO=%CFITSIO%;%CD%
 popd
 
-rem IF NOT EXIST %TEMP_DIR%\CCfits-2.4.tar (
-rem 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits-2.4.tar.gz http://heasarc.gsfc.nasa.gov/docs/software/fitsio/CCfits/CCfits-2.4.tar.gz
-rem 	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/CCfits-2.4.tar.gz
-rem     %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits2.4patch.zip http://qtpfsgui.sourceforge.net/win/CCfits2.4patch.zip
-rem )
-rem IF NOT EXIST CCfits2.4 (
-rem 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/CCfits-2.4.tar
-rem     ren CCfits CCfits2.4
-rem     %CYGWIN_DIR%\bin\unzip.exe -o -q -d CCfits2.4 %TEMP_DIR%/CCfits2.4patch.zip
-rem )
-rem IF NOT EXIST CCfits2.4.build (
-rem     mkdir CCfits2.4.build
-rem     
-rem     pushd CCfits2.4.build
-rem 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% -DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
-rem 	IF errorlevel 1 goto error_end
-rem     %CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target CCfits
-rem 	IF errorlevel 1 goto error_end
-rem 	popd
-rem )
-rem pushd CCfits2.4.build\%Configuration%
-rem SET CCFITS_ROOT_DIR=%CD%
-rem popd
+REM IF NOT EXIST %TEMP_DIR%\CCfits-2.4.tar (
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits-2.4.tar.gz ^
+REM				http://heasarc.gsfc.nasa.gov/docs/software/fitsio/CCfits/CCfits-2.4.tar.gz
+REM 	%CYGWIN_DIR%\bin\cmake -E tar.exe -d %TEMP_DIR%/CCfits-2.4.tar.gz
+REM     %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/CCfits2.4patch.zip ^
+REM					http://qtpfsgui.sourceforge.net/win/CCfits2.4patch.zip
+REM )
+REM IF NOT EXIST CCfits2.4 (
+REM 	cmake -E tar %TEMP_DIR%/CCfits-2.4.tar
+REM     ren CCfits CCfits2.4
+REM     cmake -E tar CCfits2.4 %TEMP_DIR%/CCfits2.4patch.zip
+REM )
+REM IF NOT EXIST CCfits2.4.build (
+REM     mkdir CCfits2.4.build
+REM     
+REM     pushd CCfits2.4.build
+REM 	cmake -G "%VS_CMAKE%" ..\CCfits2.4 -DCMAKE_INCLUDE_PATH=..\cfit%CFITSIO_VER% ^
+REM				-DCMAKE_LIBRARY_PATH=..\cfit%CFITSIO_VER%.build\%Configuration%
+REM 	IF errorlevel 1 goto error_end
+REM     cmake --build . --config %Configuration% --target CCfits
+REM 	IF errorlevel 1 goto error_end
+REM 	popd
+REM )
+REM pushd CCfits2.4.build\%Configuration%
+REM SET CCFITS_ROOT_DIR=%CD%
+REM popd
 
 SET GSL_COMMIT=%GSL_COMMIT_LONG:~0,7%
 IF NOT EXIST %TEMP_DIR%\gsl-ampl-%GSL_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gsl-ampl-%GSL_COMMIT%.zip https://github.com/ampl/gsl/archive/%GSL_COMMIT_LONG%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gsl-ampl-%GSL_COMMIT%.zip ^
+			https://github.com/ampl/gsl/archive/%GSL_COMMIT_LONG%.zip
 )
 
 IF NOT EXIST gsl-1.16 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/gsl-ampl-%GSL_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe gsl-* gsl-1.16
+	cmake -E tar %TEMP_DIR%/gsl-ampl-%GSL_COMMIT%.zip
+	move gsl-* gsl-1.16
 )
 IF NOT EXIST gsl-1.16.build (
 	mkdir gsl-1.16.build
 	pushd gsl-1.16.build
 	
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=..\dist ..\gsl-1.16
+    cmake -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=..\dist ..\gsl-1.16
     IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration%
+	cmake --build . --config %Configuration%
     IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
     IF errorlevel 1 goto error_end
 	popd
 )
@@ -492,51 +508,55 @@ IF NOT EXIST gsl-1.16.build (
 
 SET OPENEXR_COMMIT=%OPENEXR_COMMIT_LONG:~0,7%
 IF NOT EXIST %TEMP_DIR%\OpenEXR-dk-%OPENEXR_COMMIT%.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip https://github.com/openexr/openexr/archive/%OPENEXR_COMMIT_LONG%.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip ^
+			https://github.com/openexr/openexr/archive/%OPENEXR_COMMIT_LONG%.zip
 )
 
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT% (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip
-	%CYGWIN_DIR%\bin\mv.exe openexr-* OpenEXR-dk-%OPENEXR_COMMIT%
+	cmake -E tar %TEMP_DIR%/OpenEXR-dk-%OPENEXR_COMMIT%.zip
+	move openexr-* OpenEXR-dk-%OPENEXR_COMMIT%
 )
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build (
     mkdir OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build
     pushd OpenEXR-dk-%OPENEXR_COMMIT%\IlmBase.build
 
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% -DCMAKE_INSTALL_PREFIX=..\..\dist -DBUILD_SHARED_LIBS=OFF ../IlmBase 
+    cmake -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ^
+		-DCMAKE_INSTALL_PREFIX=..\..\dist -DBUILD_SHARED_LIBS=OFF ../IlmBase
     IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
     IF errorlevel 1 goto error_end
     popd
 )
 IF NOT EXIST OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build (
     mkdir OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build
     pushd OpenEXR-dk-%OPENEXR_COMMIT%\OpenEXR.build
-    %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ^
+    cmake -G "%VS_CMAKE%" -DCMAKE_BUILD_TYPE=%Configuration% ^
         -DILMBASE_PACKAGE_PREFIX=%CD%\dist -DBUILD_SHARED_LIBS=OFF ^
         -DCMAKE_INSTALL_PREFIX=..\..\dist ^
         ../OpenEXR
     IF errorlevel 1 goto error_end
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration% --target install
+	cmake --build . --config %Configuration% --target install
     IF errorlevel 1 goto error_end
     popd
 )
 
 IF %Platform% EQU Win32 (
 	IF NOT EXIST %TEMP_DIR%\fftw-%FFTW_VER%-dll32.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-%FFTW_VER%-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-%FFTW_VER%-dll32.zip
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-%FFTW_VER%-dll32.zip ^
+				ftp://ftp.fftw.org/pub/fftw/fftw-%FFTW_VER%-dll32.zip
 	)
 ) ELSE (
 	IF NOT EXIST %TEMP_DIR%\fftw-%FFTW_VER%-dll64.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-%FFTW_VER%-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-%FFTW_VER%-dll64.zip
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-%FFTW_VER%-dll64.zip ^
+				ftp://ftp.fftw.org/pub/fftw/fftw-%FFTW_VER%-dll64.zip
 	)
 )
 
 IF NOT EXIST fftw-%FFTW_VER%-dll (
 	IF %Platform% EQU Win32 (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll32.zip
+		cmake -E tar -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll32.zip
 	) ELSE (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll64.zip
+		cmake -E tar -d fftw-%FFTW_VER%-dll %TEMP_DIR%/fftw-%FFTW_VER%-dll64.zip
 	)
 
 	pushd fftw-%FFTW_VER%-dll
@@ -547,11 +567,12 @@ IF NOT EXIST fftw-%FFTW_VER%-dll (
 )
 
 REM IF NOT EXIST %TEMP_DIR%\tbb40_20120613oss_win.zip (
-REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tbb40_20120613oss_win.zip "http://threadingbuildingblocks.org/uploads/77/187/4.0 update 5/tbb40_20120613oss_win.zip"
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tbb40_20120613oss_win.zip ^
+REM				"http://threadingbuildingblocks.org/uploads/77/187/4.0 update 5/tbb40_20120613oss_win.zip"
 REM )
 REM 
 REM IF NOT EXIST tbb40_20120613oss (
-REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tbb40_20120613oss_win.zip
+REM 	cmake -E tar %TEMP_DIR%/tbb40_20120613oss_win.zip
 REM 	REM Everthing is already compiled, nothing to do!
 REM )
 
@@ -559,11 +580,11 @@ REM IF NOT EXIST %TEMP_DIR%\gtest-1.6.0.zip (
 SET GTEST_DIR=gtest-r680
 IF NOT EXIST %GTEST_DIR% (
 	REM %CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/gtest-1.6.0.zip http://googletest.googlecode.com/files/gtest-1.6.0.zip
-    %CYGWIN_DIR%\bin\svn.exe co -r 680 http://googletest.googlecode.com/svn/trunk/ %GTEST_DIR%
+    svn co -r 680 http://googletest.googlecode.com/svn/trunk/ %GTEST_DIR%
     
     pushd %GTEST_DIR%
-   	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" . -DBUILD_SHARED_LIBS=1
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %Configuration%
+   	cmake -G "%VS_CMAKE%" . -DBUILD_SHARED_LIBS=1
+	cmake --build . --config %Configuration%
     REN Release lib
     popd
 )
@@ -572,12 +593,12 @@ SET GTEST_ROOT=%CD%\%GTEST_DIR%
 REM IF NOT EXIST %GTEST_DIR%.build (
 REM 	mkdir %GTEST_DIR%.build
 REM 	pushd %GTEST_DIR%.build
-REM 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\%GTEST_DIR% -DBUILD_SHARED_LIBS=1
+REM 	cmake -G "%VS_CMAKE%" ..\%GTEST_DIR% -DBUILD_SHARED_LIBS=1
 REM 	%VSCOMMAND% gtest.sln /t:Build /projectconfig=%Configuration%;Platform=%Platform%
 REM 	popd
 REM )
 REM IF NOT EXIST gtest-1.6.0 (
-REM 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/gtest-1.6.0.zip
+REM 	cmake -E tar %TEMP_DIR%/gtest-1.6.0.zip
 REM )
 
 IF NOT DEFINED L_BOOST_DIR (
@@ -585,14 +606,15 @@ IF NOT DEFINED L_BOOST_DIR (
 )
 
 IF NOT EXIST %TEMP_DIR%\boost_1_%BOOST_MINOR%_0.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/boost_1_%BOOST_MINOR%_0.zip http://sourceforge.net/projects/boost/files/boost/1.%BOOST_MINOR%.0/boost_1_%BOOST_MINOR%_0.zip/download
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/boost_1_%BOOST_MINOR%_0.zip ^
+			http://sourceforge.net/projects/boost/files/boost/1.%BOOST_MINOR%.0/boost_1_%BOOST_MINOR%_0.zip/download
 )
 
 IF NOT EXIST %L_BOOST_DIR%\boost_1_%BOOST_MINOR%_0 (
 	echo.Extracting boost. Be patient!
 
 	pushd %L_BOOST_DIR%
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/boost_1_%BOOST_MINOR%_0.zip
+	cmake -E tar %TEMP_DIR%/boost_1_%BOOST_MINOR%_0.zip
 	popd
 
  
@@ -619,7 +641,7 @@ IF NOT EXIST %L_BOOST_DIR%\boost_1_%BOOST_MINOR%_0 (
 
 REM Set Boost-directory as ENV variable (needed for CMake)
 pushd %L_BOOST_DIR%\boost_1_%BOOST_MINOR%_0
-rem SET Boost_DIR=%CD%
+REM SET Boost_DIR=%CD%
 REM SET BOOST_ROOT=%CD%
 popd
 
@@ -657,10 +679,10 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
 
-	rem mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
-	rem copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
-	rem copy gsl-1.15\build.vc10\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\gsl
-	rem copy gsl-1.15\build.vc10\dll\*.dll LuminanceHdrStuff\DEPs\bin\gsl
+	REM mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
+	REM copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
+	REM copy gsl-1.15\build.vc10\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\gsl
+	REM copy gsl-1.15\build.vc10\dll\*.dll LuminanceHdrStuff\DEPs\bin\gsl
 )
 
 robocopy fftw-%FFTW_VER%-dll LuminanceHdrStuff\DEPs\include\fftw3 *.h /MIR >nul
@@ -674,7 +696,7 @@ robocopy LibRaw-%LIBRAW_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\libraw *.dll /MIR
 	
 robocopy lcms2-%LCMS_COMMIT%\include LuminanceHdrStuff\DEPs\include\lcms2 *.h /MIR >nul
 robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\lib\lcms2 *.lib /MIR /NJS >nul
-rem robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
+REM robocopy lcms2-%LCMS_COMMIT%\bin LuminanceHdrStuff\DEPs\bin\lcms2 *.dll /MIR /NJS >nul
 
 REM robocopy tbb40_20120613oss\include LuminanceHdrStuff\DEPs\include\tbb /MIR >nul
 REM robocopy tbb40_20120613oss\lib\%CpuPlatform%\%VS_SHORT% LuminanceHdrStuff\DEPs\lib\tbb /MIR >nul
@@ -706,7 +728,10 @@ set L_CMAKE_INCLUDE=..\..\boost_1_%BOOST_MINOR%_0
 set L_CMAKE_LIB=..\..\boost_1_%BOOST_MINOR%_0\stage\lib
 set L_CMAKE_PROGRAM_PATH=%CYGWIN_DIR%\bin
 set L_CMAKE_PREFIX_PATH=%QTDIR%
-set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% -DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH% -DCMAKE_INSTALL_PREFIX=..\..\dist -DCMAKE_PREFIX_PATH=%L_CMAKE_PREFIX_PATH% -DPNG_NAMES=libpng16;libpng17 -DOPENEXR_VERSION=%OPENEXR_CMAKE_VERSION%
+set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DCMAKE_INCLUDE_PATH=%L_CMAKE_INCLUDE% ^
+		-DCMAKE_LIBRARY_PATH=%L_CMAKE_LIB% -DCMAKE_PROGRAM_PATH=%L_CMAKE_PROGRAM_PATH% ^
+		-DCMAKE_INSTALL_PREFIX=..\..\dist -DCMAKE_PREFIX_PATH=%L_CMAKE_PREFIX_PATH% ^
+		-DPNG_NAMES=libpng16;libpng17 -DOPENEXR_VERSION=%OPENEXR_CMAKE_VERSION%
 
 echo CMake command line options ------------------------------------
 echo %CMAKE_OPTIONS%
@@ -714,16 +739,16 @@ echo ---------------------------------------------------------------
 
 REM Eclipse CDT4 - NMake Makefiles
 
-%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
-REM %CMAKE_DIR%\bin\cmake.exe -G "Eclipse CDT4 - NMake Makefiles" ..\qtpfsgui %CMAKE_OPTIONS%
+cmake -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
+REM cmake -G "Eclipse CDT4 - NMake Makefiles" ..\qtpfsgui %CMAKE_OPTIONS%
 REM goto end
 IF errorlevel 1 goto error_end
 popd
 
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\Luminance HDR.sln (
 	pushd LuminanceHdrStuff\qtpfsgui.build	
-	rem %VSCOMMAND% luminance-hdr.sln /Upgrade
-	%CMAKE_DIR%\bin\cmake.exe --build . --config %ConfigurationLuminance%  %LuminanceTarget%
+	REM %VSCOMMAND% luminance-hdr.sln /Upgrade
+	cmake --build . --config %ConfigurationLuminance%  %LuminanceTarget%
 
 	IF errorlevel 1	goto error_end
 	popd
@@ -776,8 +801,13 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
         REM ----- QT Stuff (Dlls, translations) --------------------------------------------
         pushd LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%
 
-        for %%v in ( "Qt5Concurrent.dll", "Qt5Core.dll", "Qt5Gui.dll", "Qt5Multimedia.dll", "Qt5MultimediaWidgets.dll", "Qt5Network.dll", "Qt5Positioning.dll", "Qt5WinExtras.dll", "Qt5OpenGL.dll", "Qt5PrintSupport.dll", "Qt5Qml.dll", "Qt5Quick.dll", "Qt5Sensors.dll", "Qt5Sql.dll", "Qt5V8.dll", "Qt5WebEngine.dll", "Qt5WebEngineCore.dll", "Qt5WebEngineWidgets.dll", "Qt5Svg.dll", "Qt5WebKitWidgets.dll", "Qt5Widgets.dll", "Qt5Xml.dll", "Qt5WebChannel.dll", "Qt5QuickWidgets.dll", "icudt53.dll", "icuin53.dll", "icuuc53.dll" ) do (
-            robocopy %QTDIR%\bin . %%v >nul
+        for %%v in ( "Qt5Concurrent.dll", "Qt5Core.dll", "Qt5Gui.dll", "Qt5Multimedia.dll", ^
+						"Qt5MultimediaWidgets.dll", "Qt5Network.dll", "Qt5Positioning.dll", "Qt5WinExtras.dll", ^
+						"Qt5OpenGL.dll", "Qt5PrintSupport.dll", "Qt5Qml.dll", "Qt5Quick.dll", "Qt5Sensors.dll", ^
+						"Qt5Sql.dll", "Qt5V8.dll", "Qt5WebEngine.dll", "Qt5WebEngineCore.dll", "Qt5WebEngineWidgets.dll", ^
+						"Qt5Svg.dll", "Qt5WebKitWidgets.dll", "Qt5Widgets.dll", "Qt5Xml.dll", "Qt5WebChannel.dll", ^
+						"Qt5QuickWidgets.dll", "icudt53.dll", "icuin53.dll", "icuuc53.dll" ) do (
+								robocopy %QTDIR%\bin . %%v >nul
         )
         for %%v in ("imageformats", "sqldrivers", "platforms") do (
             IF NOT EXIST %%v (
@@ -797,6 +827,13 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%ConfigurationLuminance%\luminance-hdr
 )
 
 goto end
+
+:cygwin_error
+echo ERROR: Cygwin with
+echo    nasm
+echo    ssh
+echo    wget
+echo is required
 
 :error_end
 pause
