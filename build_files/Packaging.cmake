@@ -14,5 +14,5 @@ set(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_SOURCE_DIR}/README.md")
 
 if(APPLE)
-include(${CMAKE_SOURCE_DIR}/build/PackagingApple.cmake)
+include(${CMAKE_SOURCE_DIR}/build_files/PackagingApple.cmake)
 endif()
