@@ -238,9 +238,11 @@ void LuminanceOptions::applyTheme(bool /*init*/)
 		darkPalette.setColor(QPalette::ButtonText, Qt::white);
 		darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::lightGray);
 		darkPalette.setColor(QPalette::BrightText, Qt::red);
-		darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+		//darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+		darkPalette.setColor(QPalette::Link, QColor(0, 120, 220));
 
-		darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+		//darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+		darkPalette.setColor(QPalette::Highlight, QColor(0, 120, 220));
 		darkPalette.setColor(QPalette::HighlightedText, Qt::black);
 
 		QApplication::setPalette(darkPalette);
