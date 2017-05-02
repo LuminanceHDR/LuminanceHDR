@@ -65,7 +65,7 @@ void DebevecOperator::computeFusion(ResponseCurve& response, WeightFunction& wei
     msec_timer f_timer;
     f_timer.start();
 #endif
-    assert(frames_enhanced.size());
+    assert(frames_enhanced.size() != 0);
 
     std::vector<float> times;
 
