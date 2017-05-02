@@ -3,7 +3,7 @@
 Interface
 *********
 
-.. figure:: images/prefs-ui.png
+.. figure:: /images/prefs-ui.png
 
 Here you can choose the language for the user interface and the help system.
 If no help system for your native language is available, the English version will be displayed.

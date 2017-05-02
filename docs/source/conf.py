@@ -16,10 +16,10 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+
+import os
+import sys
+sys.path.insert(0, os.path.abspath('.'))
 
 import sphinx_rtd_theme
 
@@ -35,7 +35,7 @@ import sphinx_rtd_theme
 extensions = []
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+# templates_path = ['../resources/templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'LuminanceHDR'
-copyright = '2017, LuminanceHDR'
+copyright = '2008-2017, LuminanceHDR'
 author = 'LuminanceHDR'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -65,7 +65,7 @@ release = '2.5.0'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+# language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -96,8 +96,16 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['../resources/theme']
 
+# If true, links to the reST sources are added to the pages.
+html_show_sourcelink = True
+
+# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+html_show_sphinx = False
+
+# If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
+html_show_copyright = True
 
 # -- Options for HTMLHelp output ------------------------------------------
 

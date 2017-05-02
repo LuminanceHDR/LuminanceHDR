@@ -16,7 +16,6 @@ Welcome to LuminanceHDR's documentation!
    preferences/index.rst
    glossary/index.rst
    about/index.rst
-   contributing/index.rst
 
 Indices and tables
 ==================

@@ -3,7 +3,7 @@
 Tone Mapping
 ************
 
-.. figure:: images/prefs-tm.png
+.. figure:: /images/prefs-tm.png
 
 Temporary Working Folder
    Luminance HDR needs a directory to save temporary files to.

@@ -3,7 +3,7 @@
 HDR Options
 ***********
 
-.. figure:: images/prefs-hdr.png
+.. figure:: /images/prefs-hdr.png
 
 Here you can choose which TIFF-HDR format Luminance HDR will use to save an HDR image.
 

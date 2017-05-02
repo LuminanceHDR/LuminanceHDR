@@ -3,7 +3,7 @@
 External Tools
 **************
 
-.. figure:: images/prefs-ext.png
+.. figure:: /images/prefs-ext.png
 
 Alignment options
 =================

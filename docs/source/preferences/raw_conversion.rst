@@ -6,7 +6,7 @@ Raw Conversion
 General
 =======
 
-.. figure:: images/prefs-raw-general.png
+.. figure:: /images/prefs-raw-general.png
 
 Demosaicing
 -----------
@@ -50,7 +50,7 @@ Median Filter
 White Balance
 =============
 
-.. figure:: prefs-raw-color.png
+.. figure:: /images/prefs-raw-color.png
 
 In photography and image processing, color balance is the global adjustment of the intensities of the colors
 (typically red, green, and blue primary colors). An important goal of this adjustment is to render specific colors –-
@@ -99,7 +99,7 @@ White point value
 Corrections
 ===========
 
-.. figure:: prefs-raw-corrections.png
+.. figure:: /images/prefs-raw-corrections.png
 
 Noise reduction
    Images taken with both digital cameras and conventional film cameras will pick up noise from a variety of sources.

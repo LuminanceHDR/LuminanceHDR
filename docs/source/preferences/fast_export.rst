@@ -3,7 +3,7 @@
 Fast Export
 ***********
 
-.. figure:: images/prefs-fast-export.png
+.. figure:: /images/prefs-fast-export.png
 
 Export Directory
    The folder for the output of the *fast export* feature.

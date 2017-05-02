@@ -10,4 +10,4 @@ This is useful if you shoot mirrorball Hdrs and you want to unwrap them, for exa
 
 The Angular projection accepts an Angle parameter which defines how many degrees from the viewing direction the projection should cover.
 
-.. figure:: images/projectiveTransformationDialog.png
+.. figure:: /images/projectiveTransformationDialog.png

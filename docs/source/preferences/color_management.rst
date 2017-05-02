@@ -3,7 +3,7 @@
 Color Management
 ****************
 
-.. figure:: images/prefs-cms.png
+.. figure:: /images/prefs-cms.png
 
 Monitor Profile
    Select a color profile associated with your monitor from file.
