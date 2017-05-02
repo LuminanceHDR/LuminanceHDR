@@ -1,0 +1,8 @@
+
+######
+About
+######
+
+.. toctree::
+
+   news.rst
