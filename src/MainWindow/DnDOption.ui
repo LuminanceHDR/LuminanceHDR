@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../icons.qrc">
-    <normaloff>:/icons/images/window-duplicate.svg</normaloff>:/icons/images/window-duplicate.svg</iconset>
+    <normaloff>:/program-icons/luminance-hdr</normaloff>:/program-icons/luminance-hdr</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -51,7 +51,8 @@
       <string>&amp;Open</string>
      </property>
      <property name="icon">
-      <iconset theme="folder-open"/>
+      <iconset theme="folder-open">
+       <normaloff>.</normaloff>.</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -70,7 +71,8 @@
       <string>&amp;New</string>
      </property>
      <property name="icon">
-      <iconset theme="insert-image"/>
+      <iconset theme="insert-image">
+       <normaloff>.</normaloff>.</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -89,7 +91,8 @@
       <string>&amp;Cancel</string>
      </property>
      <property name="icon">
-      <iconset theme="window-close"/>
+      <iconset theme="window-close">
+       <normaloff>.</normaloff>.</iconset>
      </property>
      <property name="iconSize">
       <size>
