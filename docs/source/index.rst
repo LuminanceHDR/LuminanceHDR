@@ -12,6 +12,7 @@ Welcome to LuminanceHDR's documentation!
 
    introduction.rst
    getting_started/index.rst
+   editing/index.rst
    preferences/index.rst
    glossary/index.rst
    about/index.rst
