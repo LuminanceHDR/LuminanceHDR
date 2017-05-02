@@ -231,9 +231,6 @@ IF(APPLE)
     configure_file( ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/create-dmg.sh.in
                     ${CMAKE_BINARY_DIR}/create-dmg.sh )
 
-    FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) # ${QT_TRANSLATIONS_DIR}/qt_*.qm)
-    SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
-
     # icon files to copy in the bundle
     SET(OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
     # include the icns files in the target
@@ -267,8 +264,6 @@ IF(APPLE)
     TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI} ${LIBS})
 # Unix
 ELSEIF(UNIX)
-    #FILE(GLOB LUMINANCE_QT_QM i18n-qt/*.qm) Qt5 translations now shipped by upstream
-    #SET(LUMINANCE_FILES ${LUMINANCE_FILES} ${LUMINANCE_QT_QM})
     SET(LUMINANCE_FILES ${LUMINANCE_FILES})
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
