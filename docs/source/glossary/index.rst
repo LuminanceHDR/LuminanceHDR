@@ -3,6 +3,10 @@
 Glossary
 ********
 
+.. toctree::
+
+   reference/index.rst
+
 .. glossary::
    :sorted:
 
