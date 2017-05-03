@@ -7,6 +7,9 @@ Glossary
 
    reference/index.rst
 
+Terms
+=====
+
 .. glossary::
    :sorted:
 
