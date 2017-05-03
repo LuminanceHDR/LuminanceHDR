@@ -33,6 +33,7 @@ Contents
    :maxdepth: 2
    :caption: Contents:
 
+   creating_hdr/index.rst
    editing.rst
    tools.rst
    tone_mapping/index.rst
