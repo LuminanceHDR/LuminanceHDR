@@ -16,6 +16,15 @@ Its highlights are:
 - works on Linux, Windows and Mac OS X
 - free to distribute among family, friends and enemies
 
+Getting Started
+===============
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Gettign Started:
+
+   getting_started/index.rst
+
 
 Contents
 ========
@@ -24,8 +33,6 @@ Contents
    :maxdepth: 2
    :caption: Contents:
 
-   introduction.rst
-   getting_started/index.rst
    editing.rst
    tools.rst
    tone_mapping/index.rst
@@ -35,7 +42,7 @@ Contents
    about/index.rst
 
 
-Indices and tables
+Indices and Tables
 ==================
 
 - :ref:`genindex`
