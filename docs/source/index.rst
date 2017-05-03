@@ -16,18 +16,11 @@ Its highlights are:
 - works on Linux, Windows and Mac OS X
 - free to distribute among family, friends and enemies
 
-Getting Started
-===============
-
 .. toctree::
    :maxdepth: 2
    :caption: Gettign Started:
 
    getting_started/index.rst
-
-
-Contents
-========
 
 .. toctree::
    :maxdepth: 2
