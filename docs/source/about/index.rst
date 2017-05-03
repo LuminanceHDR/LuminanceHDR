@@ -7,4 +7,5 @@ About LuminanceHDR
    :maxdepth: 2
 
    news.rst
+   resources.rst
    contributing/index.rst
