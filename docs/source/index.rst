@@ -27,6 +27,7 @@ Contents
    introduction.rst
    getting_started/index.rst
    editing.rst
+   tools.rst
    tone_mapping/index.rst
    preferences/index.rst
    glossary/index.rst
