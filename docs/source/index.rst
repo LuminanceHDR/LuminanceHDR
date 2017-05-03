@@ -1,11 +1,24 @@
-.. LuminanceHDR documentation master file, created by
-   sphinx-quickstart on Wed Apr 26 23:15:09 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
 
 Welcome to LuminanceHDR's documentation!
 ========================================
+
+Luminance HDR is an open source workflow tool for HDR imaging.
+
+Its highlights are:
+
+- streamlined user interface in more than a dozen languages
+- support for all major HDR file formats
+- batch hdr creation
+- batch tonemapping
+- resize/crop/transform HDRs
+- color managed workflow
+- works on Linux, Windows and Mac OS X
+- free to distribute among family, friends and enemies
+
+
+Contents
+========
 
 .. toctree::
    :maxdepth: 2
@@ -22,5 +35,5 @@ Welcome to LuminanceHDR's documentation!
 Indices and tables
 ==================
 
-* :ref:`genindex`
-* :ref:`search`
+- :ref:`genindex`
+- :ref:`search`
