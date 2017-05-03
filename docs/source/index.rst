@@ -29,6 +29,7 @@ Contents
    editing.rst
    tools.rst
    tone_mapping/index.rst
+   color_management.rst
    preferences/index.rst
    glossary/index.rst
    about/index.rst
