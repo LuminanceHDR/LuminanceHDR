@@ -35,6 +35,7 @@ Contents
 
    creating_hdr/index.rst
    editing.rst
+   editing_tools.rst
    tools.rst
    tone_mapping/index.rst
    color_management.rst
