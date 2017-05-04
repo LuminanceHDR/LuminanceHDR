@@ -42,7 +42,7 @@ The image below shows and example of a mask covering just a part of the ghost.
 Example
 =======
 
-.. figure:: /editingtools-4.png
+.. figure:: images/editingtools-4.png
 
    Example of anti-ghosting mask
 
