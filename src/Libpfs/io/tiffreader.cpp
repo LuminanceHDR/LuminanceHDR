@@ -440,7 +440,7 @@ void TiffReader::open()
     }
 
     // compression type
-    if (!TIFFGetField(m_data->handle(), TIFFTAG_COMPRESSION, &m_data->compressionType_))	{
+    if (!TIFFGetField(m_data->handle(), TIFFTAG_COMPRESSION, &m_data->compressionType_))    {
         m_data->compressionType_ = COMPRESSION_NONE;
     }
     // photometric type

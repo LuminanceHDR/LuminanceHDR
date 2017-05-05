@@ -1,11 +1,11 @@
 /**
  * @brief Resize images in PFS stream
- * 
+ *
  * This file is a part of PFSTOOLS package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk,
  *  Alexander Efremov
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -19,7 +19,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Alexander Efremov, <aefremov@mpi-sb.mpg.de>
  *
@@ -38,7 +38,7 @@
 
 namespace pfs
 {
-  
+
 pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
 {
 #ifdef TIMER_PROFILING
@@ -48,7 +48,7 @@ pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
 
     pfs::Frame *resizedFrame = new pfs::Frame( frame->getHeight(),
                                                frame->getWidth() );
-    
+
     const ChannelContainer& channels = frame->getChannels();
 
     for ( ChannelContainer::const_iterator it = channels.begin();
@@ -59,14 +59,14 @@ pfs::Frame* rotate(const pfs::Frame* frame, bool clock_wise)
 
         rotate(*it, newCh, clock_wise);
     }
-    
+
     pfs::copyTags( frame, resizedFrame );
-    
+
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
     std::cout << "rotateFrame() = " << f_timer.get_time() << " msec" << std::endl;
-#endif 
-    
+#endif
+
     return resizedFrame;
 }
 

@@ -1,6 +1,6 @@
 /**
  * @file tmo_ferradans11.cpp
- * Implementation of the algorithm presented in : 
+ * Implementation of the algorithm presented in :
  *
  * An Analysis of Visual Adaptation and Contrast Perception for Tone Mapping
  * S. Ferradans, M. Bertalmio, E. Provenzi, V. Caselles
@@ -9,10 +9,10 @@
 *
  * @author Sira Ferradans Copyright (C) 2013
  *
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -26,8 +26,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  */
 
 #include <algorithm>
@@ -53,7 +53,7 @@
 #include <boost/math/constants/constants.hpp>
 
 #include <cmath>
- 
+
 using namespace std;
 using namespace pfs;
 using namespace utils;
@@ -74,10 +74,10 @@ static void dumpPFS( const char *fileName, const pfstmo::Array2D *data, const ch
 
    for( int y = 0; y < height; y++ )
      for( int x = 0; x < width; x++ ) {
-       float d = (*data)(x,y);       
+       float d = (*data)(x,y);
        fwrite( &d, sizeof( float ), 1, fh );
      }
-  
+
    fclose( fh );
 }
 #endif
@@ -103,7 +103,7 @@ float apply_arctg_slope10(float Ip,float I,float I2,float I3,float I4,float I5,f
     gr5=Ip*gr4-Ip*Ip*Ip*Ip*I-4*Ip*Ip*I3-I5+4*Ip*I4-2*Ip*Ip*(I3-2*Ip*I2);
     gr6=Ip*Ip*gr4-Ip*Ip*Ip*Ip*Ip*I-4*Ip*Ip*Ip*I3-Ip*I5+4*Ip*Ip*I4-2*Ip*Ip*Ip*(I3-2*Ip*I2)-(I*Ip*gr4-Ip*Ip*Ip*Ip*I2-4*Ip*Ip*I4-I6+4*Ip*I5-2*Ip*Ip*(I4-2*Ip*I3)    );
     gr7=Ip*Ip*(Ip*(  Ip*Ip*Ip*Ip+4*Ip*Ip*I2+I4-4*Ip*I3+2*Ip*Ip*(I2-2*Ip*I)     )-Ip*Ip*Ip*Ip*I-4*Ip*Ip*I3-I5+4*Ip*I4-2*Ip*Ip*(I3-2*Ip*I2))-2*Ip*(Ip*(Ip*Ip*Ip*Ip*I+4*Ip*Ip*I3+I5-4*Ip*I4+2*Ip*Ip*(I3-2*Ip*I2)) -Ip*Ip*Ip*Ip*I2-4*Ip*Ip*I4-I6+4*Ip*I5-2*Ip*Ip*(I4-2*Ip*I3))+Ip*(Ip*Ip*Ip*Ip*I2+4*Ip*Ip*I4+I6-4*Ip*I5+2*Ip*Ip*(I4-2*Ip*I3)) -Ip*Ip*Ip*Ip*I3-4*Ip*Ip*I5-I7+4*Ip*I6-2*Ip*Ip*(I5-2*Ip*I4);
-    
+
     // Hardcoded coefficients of the polynomial of degree 9 that allows to approximate the neighborhood averaging as a sum of convolutions
     return(( -7.7456e+00)*gr7+ (3.1255e-16)*gr6+(1.5836e+01)*gr5+(-1.8371e-15)*gr4+(-1.1013e+01)*gr3+(4.4531e-16)*gr2+(3.7891e+00)*gr1+ 1.2391e-15 ) ;
 }
@@ -127,43 +127,43 @@ float quick_select(float arr[], int n)
     int low, high ;
     int median;
     int middle, ll, hh;
-    
+
     low = 0 ; high = n-1 ; median = (low + high) / 2;
     for (;;) {
         if (high <= low) /* One element only */
             return arr[median] ;
-        
+
         if (high == low + 1) {  /* Two elements only */
             if (arr[low] > arr[high])
                 ELEM_SWAP(arr[low], arr[high]) ;
             return arr[median] ;
         }
-        
+
         /* Find median of low, middle and high items; swap into position low */
         middle = (low + high) / 2;
         if (arr[middle] > arr[high])    ELEM_SWAP(arr[middle], arr[high]) ;
         if (arr[low] > arr[high])       ELEM_SWAP(arr[low], arr[high]) ;
         if (arr[middle] > arr[low])     ELEM_SWAP(arr[middle], arr[low]) ;
-        
+
         /* Swap low item (now in position middle) into position (low+1) */
         ELEM_SWAP(arr[middle], arr[low+1]) ;
-        
+
         /* Nibble from each end towards middle, swapping items when stuck */
         ll = low + 1;
         hh = high;
         for (;;) {
             do ll++; while (arr[low] > arr[ll]) ;
             do hh--; while (arr[hh]  > arr[low]) ;
-            
+
             if (hh < ll)
                 break;
-            
+
             ELEM_SWAP(arr[ll], arr[hh]) ;
         }
-        
+
         /* Swap middle item (in position low) back into correct position */
         ELEM_SWAP(arr[low], arr[hh]) ;
-        
+
         /* Re-set active partition */
         if (hh <= median)
             low = ll;
@@ -193,7 +193,7 @@ float MSE(float Im1[], float Im2[], int largo, float escala)
         res+=tmp;
     }
     return(res/largo);
-    
+
 }
 
 
@@ -202,15 +202,15 @@ void producto(fftwf_complex* A, fftwf_complex* B,fftwf_complex* AB, int fil, int
   //  int length=fil*(col/2+1);
     //fftw_complex* C= (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * length);
     int length=fil*col;
-    
+
     #pragma omp parallel for
     for (int i = 0; i < length; i++)
     {
         AB[i][0] = (A[i][0] * B[i][0] - A[i][1] * B[i][1]);
         AB[i][1] = (A[i][0] * B[i][1] + A[i][1] * B[i][0]);
     }
-    
-    
+
+
 }
 
 void nucleo_gaussiano(float res[], int fil, int col, float sigma)
@@ -222,14 +222,14 @@ void nucleo_gaussiano(float res[], int fil, int col, float sigma)
     for(int i=0;i<fil;i++)
         for(int j=0;j<col;j++)
             res[i*col+j]=normaliza*exp( -((i-mitfil)*(i-mitfil)+(j-mitcol)*(j-mitcol) )/(2*sigma*sigma) );
-    
+
 }
 
 void escala(float a[], int largo, float maxv, float minv)
 {
     float M=*max_element(a, a+largo);
     float m=*min_element(a, a+largo);
-    
+
     float R;
     float s=(maxv-minv)/(M-m);
     #pragma omp parallel for private(R)
@@ -244,7 +244,7 @@ void escala(float a[], int largo, float maxv, float minv)
 void fftshift(float a[], int fil, int col)
 {
     float tmp;
-    
+
     #pragma omp parallel for private(tmp)
     for(int i=0;i<fil/2;i++)
         for(int j=0;j<col/2;j++)
@@ -281,13 +281,13 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     int colors=3;
     float dt=0.2;//1e-1;//
     float threshold_diff=dt/20.0;//1e-5;//
-    
+
 
     float *RGBorig[3];
     RGBorig[0] = new float[length];
     RGBorig[1] = new float[length];
     RGBorig[2] = new float[length];
-    
+
     #pragma omp parallel for
     for(int i=0;i<length;i++){
         RGBorig[0][i] = (float)max(imR(i), 0.f);
@@ -296,21 +296,21 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     }
 
     ///////////////////////////////////////////
-    
+
     ph.setValue(10);
 
     float *RGB[3];
     RGB[0] = new float[length];
     RGB[1] = new float[length];
     RGB[2] = new float[length];
-    
+
     int iteration=0;
     float difference=1000.0;
-    
+
     float med[3];
     float *aux = new float[length];
     float median,mu[3];
-    
+
     for(int k=0;k<3;k++)
     {
         vsadd(RGBorig[k], 1e-6, RGBorig[k], length);
@@ -335,7 +335,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     }
 
     ////
-    
+
     // SEMISATURATION CONSTANT SIGMA DEPENDS ON THE ILUMINATION
     // OF THE BACKGROUND. DATA IN TABLA1 FROM VALETON+VAN NORREN.
     // TAKE AS REFERENCE THE CHANNEL WITH MAXIMUM ILUMINATION.
@@ -349,11 +349,11 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         float z=- 0.37*(log10(mu[k])+4-rho) + 1.9;
         mu[k]*=pow(10,z);
     }
-    
-    
+
+
     // VALETON + VAN NORREN:
     // range = 4 orders; r is half the range
-    // n=0.74 : EXPONENT in NAKA-RUSHTON formula 
+    // n=0.74 : EXPONENT in NAKA-RUSHTON formula
     float r=2;
     float n=0.74;
 
@@ -363,18 +363,18 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         float logs=log10(mu[k]);
         float I0=mu[k]/pow(10,1.2);
         float sigma_n=pow(mu[k],n);
-        
+
         // WYSZECKI-STILES, PÃ�G. 530: FECHNER FRACTION
         float K_=100.0/1.85;
         if(k==2)
             K_= 100.0/8.7;
         float Ir=pow(10,logs+r);
         float mKlogc=pow(Ir,n)/(pow(Ir,n)+pow(mu[k],n))-K_*log10(Ir+I0);
-        
+
         //mix W-F and N-R
         #pragma omp parallel for
         for(int i=0;i<length;i++)
-      	{
+          {
             float x=log10(RGBorig[k][i]);
             float In= pow(RGBorig[k][i],n);
             //float srn=pow(pow(10,logs+r),n);
@@ -383,16 +383,16 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
                RGB[k][i]=K_*log10( RGBorig[k][i] + I0)+mKlogc;
             else
                RGB[k][i]= In/(In+sigma_n);
-            
-      	}
-        
+
+          }
+
         float minmez=*min_element(RGB[k],RGB[k]+length);
         vsadd(RGB[k], -minmez, RGB[k], length);
 
         float escalamez=1.f/(*max_element(RGB[k],RGB[k]+length)+1e-12);
         vsmul(RGB[k], escalamez, RGB[k], length);
     }
-    
+
     ph.setValue(20);
     if (ph.canceled()){
         delete[] RGBorig[0];
@@ -410,7 +410,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         copy(RGB[color], RGB[color]+length, RGBorig[color]);
         med[color]=medval(RGB[color], length);
     }
-    
+
     float *RGB0 = fftwf_alloc_real(length);
     float *u0 = fftwf_alloc_real(length);
     float *u2 = fftwf_alloc_real(length);
@@ -437,14 +437,14 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     fftwf_plan pU3 = fftwf_plan_dft_r2c_2d(fil, col, u3, U3,FFTW_ESTIMATE);
     fftwf_complex* U4 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pU4 = fftwf_plan_dft_r2c_2d(fil, col, u4, U4,FFTW_ESTIMATE);
-    
+
     fftwf_complex* U5 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pU5 = fftwf_plan_dft_r2c_2d(fil, col, u5, U5,FFTW_ESTIMATE);
     fftwf_complex* U6 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pU6 = fftwf_plan_dft_r2c_2d(fil, col, u6, U6,FFTW_ESTIMATE);
     fftwf_complex* U7 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pU7 = fftwf_plan_dft_r2c_2d(fil, col, u7, U7,FFTW_ESTIMATE);
-    
+
     fftwf_complex* UG  = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_complex* U2G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_complex* U3G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
@@ -473,14 +473,14 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
 
     float *iu7 = fftwf_alloc_real(length);
     fftwf_plan pinvU7 = fftwf_plan_dft_c2r_2d(fil, col, U7G, iu7, FFTW_ESTIMATE);
-    
+
     float alpha=min(col,fil)/invalpha;
     float *g = fftwf_alloc_real(length);
     nucleo_gaussiano(g, fil, col, alpha);
     escala(g, length, 1.f, 0.f);
-    
+
     fftshift(g, fil, col);
-    
+
     float suma, norm=1.f/length;
     suma = accumulate(g, g+length, 0.f);
 
@@ -542,7 +542,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         fftwf_free(U5);
         fftwf_free(U6);
         fftwf_free(U7);
-    
+
         fftwf_free(UG);
         fftwf_free(U2G);
         fftwf_free(U3G);
@@ -594,7 +594,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
             fftwf_execute(pU5);
             fftwf_execute(pU6);
             fftwf_execute(pU7);
-            
+
             producto(U,G,UG,fil,col);
             producto(U2,G,U2G,fil,col);
             producto(U3,G,U3G,fil,col);
@@ -602,7 +602,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
             producto(U5,G,U5G,fil,col);
             producto(U6,G,U6G,fil,col);
             producto(U7,G,U7G,fil,col);
-            
+
             fftwf_execute(pinvU);
             vsmul(iu, norm, iu, length);
 
@@ -629,7 +629,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
             {
                 // compute contrast component
                  u0[i]=apply_arctg_slope10(u0[i], iu[i], iu2[i], iu3[i], iu4[i], iu5[i], iu6[i], iu7[i]);
-                
+
                 //project onto the interval [-1,1]
                  u0[i] = max( min( u0[i], 1.f) , -1.f );
             }
@@ -640,7 +640,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
 
             vsmul(u0, multiplier, u0, length);
 
-            float norm1 = (1.0 + dt*(1.0+255.0/253.0));// assuming alpha=255/253,beta=1 
+            float norm1 = (1.0 + dt*(1.0+255.0/253.0));// assuming alpha=255/253,beta=1
             #pragma omp parallel for
             for(int i=0;i<length;i++)
             {
@@ -648,9 +648,9 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
                 //project onto the interval [0,1]
                 RGB[color][i] = max( min(RGB[color][i], 1.f) , 0.f );
             }
-            
+
             float mse = MSE(RGB0, RGB[color], length, 1.f);
-            difference += mse; 
+            difference += mse;
         }
         delta = fabs(oldDifference - difference);
         steps = (difference - threshold_diff)/delta;
@@ -698,7 +698,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     fftwf_free(U5);
     fftwf_free(U6);
     fftwf_free(U7);
-    
+
     fftwf_free(UG);
     fftwf_free(U2G);
     fftwf_free(U3G);
@@ -706,17 +706,17 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     fftwf_free(U5G);
     fftwf_free(U6G);
     fftwf_free(U7G);
-    
+
     ph.setValue(90);
     #pragma omp parallel for
     for(int c = 0; c < 3; c++)
         escala(RGB[c], length, 1.f, 0.f);
-    
+
     //range between (0,1)
     copy(RGB[0], RGB[0] + length, imR.begin());
     copy(RGB[1], RGB[1] + length, imG.begin());
     copy(RGB[2], RGB[2] + length, imB.begin());
- 
+
     delete[] RGBorig[0];
     delete[] RGBorig[1];
     delete[] RGBorig[2];

@@ -194,9 +194,9 @@ protected Q_SLOTS:
     //void addLDRResult(QImage*, quint16*);
     void tonemapFailed(const QString&);
 
-	// Export queue
-	void exportBegin();
-	void exportEnd();
+    // Export queue
+    void exportBegin();
+    void exportEnd();
 
     // lock functionalities
     void on_actionLock_toggled(bool);
@@ -208,9 +208,9 @@ protected Q_SLOTS:
     void removeTab(int);
     void on_actionRemove_Tab_triggered();
 
-	void on_actionSoft_Proofing_toggled(bool);
-	void on_actionGamut_Check_toggled(bool);
-	void updateSoftProofing(int);
+    void on_actionSoft_Proofing_toggled(bool);
+    void on_actionGamut_Check_toggled(bool);
+    void updateSoftProofing(int);
 
     void on_actionFits_Importer_triggered();
 
@@ -262,9 +262,9 @@ protected:
     virtual void dropEvent(QDropEvent *);
     virtual void changeEvent(QEvent* event);
     virtual void closeEvent(QCloseEvent *);
-	virtual bool event(QEvent * event);
+    virtual bool event(QEvent * event);
     //!
-	
+
     void dispatchrotate(bool clockwise);
 
     void updateRecentFileActions();
@@ -288,8 +288,8 @@ protected:
     void createStatusBar();
     void setupIO();
     void setupTM();
-	void setupQueue();
-	void createConnections();
+    void setupQueue();
+    void createConnections();
 
     void updatePreviousNextActions();
 
@@ -318,12 +318,12 @@ private:
     TMWorker* m_TMWorker;
     TMOProgressIndicator* m_TMProgressBar;
 
-	// Export queue
-	QThread* m_QueueThread;
-	TMWorker* m_QueueWorker;
-	TMOProgressIndicator* m_QueueProgressBar;
+    // Export queue
+    QThread* m_QueueThread;
+    TMWorker* m_QueueWorker;
+    TMOProgressIndicator* m_QueueProgressBar;
 
-	int m_exportQueueSize;
+    int m_exportQueueSize;
 
     //
     InterpolationMethod m_interpolationMethod;
@@ -333,7 +333,7 @@ private:
     bool m_processingAWB;
     int m_firstWindow;
     int m_winId; // unique MainWindow identifier
-    
+
     static int sm_NumMainWindows; //number of active MainWindows
     static int sm_counter; // Always increases
     static QScopedPointer<UpdateChecker> sm_updateChecker;

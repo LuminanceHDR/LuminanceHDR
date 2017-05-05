@@ -75,9 +75,9 @@ void IGraphicsPixmapItem::removeSelection()
 void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (!mIsSelectionEnabled && event->button() == Qt::LeftButton) {
-		emit startDragging();
-		return;
-	}
+        emit startDragging();
+        return;
+    }
 
     if (event->button() == Qt::LeftButton)
     {

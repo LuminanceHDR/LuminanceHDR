@@ -42,10 +42,10 @@ namespace
 static const int BORDER_SIZE = 30;
 }
 
-PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) : 
-    QWidget(parent), 
-    m_movableImage(m), 
-    m_pivotImage(p), 
+PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
+    QWidget(parent),
+    m_movableImage(m),
+    m_pivotImage(p),
     m_agMask(NULL),
     m_originalAgMask(NULL),
     m_patchesMask(NULL),
@@ -59,7 +59,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     m_old_mx(0),
     m_old_my(0),
     m_agcursorPixmap(NULL),
-    m_drawingMode(BRUSH) 
+    m_drawingMode(BRUSH)
 {
     setFocusPolicy(Qt::StrongFocus);
     //setMouseTracking(true);
@@ -77,7 +77,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     blendmode = &PreviewWidget::computeDiffRgba;
     m_mode = EditingMode;
     m_rect = m_movableImage->rect();
-    
+
     mVBL = new QVBoxLayout(this);
     mVBL->setSpacing(0);
     mVBL->setMargin(0);
@@ -119,7 +119,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     mAgPixmap->setZValue(1);
     mAgPixmap->setVisible(false);
     mScene->addItem(mPixmap);
-    
+
     mAgPixmap->setAcceptedMouseButtons(0);
 }
 
@@ -182,7 +182,7 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
             pivLine = (QRgb*)(m_pivotImage->scanLine(i - m_py));
         else
             pivLine = NULL;
-       
+
         //for all the columns that we have to paint
         for(int j = originx; j < originx + W; j++) {
             //if within bounds considering horizontal offset
@@ -209,7 +209,7 @@ void paste(QImage* mask, QImage pixmap, const int mx, const int my)
 {
     const int W = mask->width();
     const int H = mask->height();
-   
+
     for(int j = 0; j < H; j++) {
         for(int i = 0; i < W; i++) {
             if (((i+mx)>=0 && (i+mx) < W) && ((j+my) >=0 && (j+my<H)))
@@ -257,16 +257,16 @@ void PreviewWidget::renderAgMask()
 //void PreviewWidget::renderPatchesMask(bool patches[][agGridSize], const int gridX, const int gridY)
 void PreviewWidget::renderPatchesMask()
 {
-	QPainter painter(m_patchesMask);
-	painter.setPen(Qt::NoPen);
-	painter.setBrush(QColor::fromRgb(255,255,255,60));
+    QPainter painter(m_patchesMask);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QColor::fromRgb(255,255,255,60));
     painter.setCompositionMode(QPainter::CompositionMode_Clear);
     painter.drawRect(0, 0, m_gridX*agGridSize, m_gridY*agGridSize);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     for (int i = 0; i < agGridSize; i++) {
         for (int j = 0; j < agGridSize; j++) {
             if (m_patches[i][j] == true)
-    	        painter.drawRect(i*m_gridX, j*m_gridY, m_gridX, m_gridY);
+                painter.drawRect(i*m_gridX, j*m_gridY, m_gridX, m_gridY);
         }
     }
     painter.end();
@@ -294,7 +294,7 @@ void PreviewWidget::requestedBlendMode(int newindex) {
 }
 
 bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
-{   
+{
     //if (m_mode == EditingMode || m_mode == ViewPatches) return false;
     if (m_mode == EditingMode) return false;
     if (event->type() == QEvent::MouseButtonPress) {
@@ -362,7 +362,7 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
             }
         }
         else if (mouse->button() == Qt::MidButton) {
-            QApplication::restoreOverrideCursor();      
+            QApplication::restoreOverrideCursor();
         }
         paste(m_agMask, m_agMaskPixmap->toImage(), (m_mx-m_old_mx), (m_my-m_old_my));
         delete m_originalAgMask;
@@ -375,7 +375,7 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
         else if (m_mode == ViewPatches)
             QApplication::setOverrideCursor(Qt::PointingHandCursor);
         else {
-            if (m_drawingMode == BRUSH) {        
+            if (m_drawingMode == BRUSH) {
                 fillAntiGhostingCursorPixmap();
                 QApplication::setOverrideCursor(*m_agcursorPixmap);
             }
@@ -384,8 +384,8 @@ bool PreviewWidget::eventFilter(QObject* object, QEvent* event)
         }
     }
     else if (event->type() == QEvent::Leave)
-       QApplication::restoreOverrideCursor();      
-    
+       QApplication::restoreOverrideCursor();
+
     return false;
 }
 
@@ -416,7 +416,7 @@ void PreviewWidget::setMovable(QImage *m) {
 }
 
 void PreviewWidget::setMask(QImage *mask) {
-    if (m_agMaskPixmap) 
+    if (m_agMaskPixmap)
         delete m_agMaskPixmap;
     m_originalAgMask = new QImage(*mask);
     m_agMask = new QImage(*mask);
@@ -426,7 +426,7 @@ void PreviewWidget::setMask(QImage *mask) {
 }
 
 void PreviewWidget::setPatchesMask(QImage *mask) {
-    if (m_agMaskPixmap) 
+    if (m_agMaskPixmap)
         m_patchesMask = new QImage(*mask);
 }
 
@@ -723,7 +723,7 @@ void PreviewWidget::updatePreviewImage()
         if ((m_mx != m_old_mx) && (m_my != m_old_my)) {
             delete m_agMask;
             m_agMask = new QImage(*m_originalAgMask);
-            paste(m_agMask, m_agMaskPixmap->toImage(), -(m_mx-m_old_mx), -(m_my-m_old_my)); 
+            paste(m_agMask, m_agMaskPixmap->toImage(), -(m_mx-m_old_mx), -(m_my-m_old_my));
             delete m_agMaskPixmap;
             m_agMaskPixmap = new QPixmap(QPixmap::fromImage(*m_agMask));
             mAgPixmap->setPixmap(*m_agMaskPixmap);
@@ -838,7 +838,7 @@ QImage * PreviewWidget::getSavedAgMask()
     return m_savedMask;
 }
 
-void PreviewWidget::timerEvent(QTimerEvent *) 
+void PreviewWidget::timerEvent(QTimerEvent *)
 {
     (m_drawingMode == BRUSH) ? drawWithBrush() : drawPath();
 }
@@ -870,7 +870,7 @@ void PreviewWidget::drawPath()
 
     if (m_drawingPathEnded) {
         painter.setCompositionMode(QPainter::CompositionMode_Clear); // Nasty hack, QPen does not draw semi transparent
-        painter.drawPath(m_path); 
+        painter.drawPath(m_path);
         if (m_brushAddMode)
             painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
         painter.fillPath(m_path, m_requestedPixmapColor);

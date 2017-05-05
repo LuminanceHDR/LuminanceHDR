@@ -54,9 +54,9 @@ namespace io {
  * are my own and should be taken with a grain of salt.
  */
 static const double XYZ_to_RGB[3][3] = {
-    { 3.24071,	-0.969258,  0.0556352 },
-    {-1.53726,	1.87599,    -0.203996 },
-    {-0.498571,	0.0415557,  1.05707 } };
+    { 3.24071,    -0.969258,  0.0556352 },
+    {-1.53726,    1.87599,    -0.203996 },
+    {-0.498571,    0.0415557,  1.05707 } };
 
 static
 void temperatureToRGB(double T, double RGB[3])

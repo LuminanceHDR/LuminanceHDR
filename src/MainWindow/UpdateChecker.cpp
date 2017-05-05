@@ -43,9 +43,9 @@ UpdateChecker::UpdateChecker(QWidget *parent) //, QNetworkAccessManager* network
         connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
         connect(m_tray, SIGNAL(messageClicked()), this, SLOT(trayMessageClicked()));
         connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayMessageClicked()));
-    
-    	QNetworkRequest request = QNetworkRequest(QUrl(QString("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM)));
-    	request.setRawHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+
+        QNetworkRequest request = QNetworkRequest(QUrl(QString("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM)));
+        request.setRawHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
         m_networkManager->get(request);
     }
 }
@@ -68,7 +68,7 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
     {
         LuminanceOptions options;
         options.setUpdateChecked();
-        
+
         QDomDocument document;
         document.setContent(reply);
 
@@ -87,7 +87,7 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
             {
                 m_version = nodeVersion.toElement().text();
                 m_latestUrl = nodeUrl.toElement().text();
-                
+
                 if (m_version == LUMINANCEVERSION) return;
 
                 qDebug() << m_version;
@@ -125,7 +125,7 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
                     }
                 }
 #endif
-            }        
+            }
         }
     }
 }

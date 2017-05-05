@@ -128,7 +128,7 @@ void transform_ev2normal(pfs::Array2Df *A, pfs::Array2Df *T)
   fftwf_plan p;
   p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
-  fftwf_execute(p); 
+  fftwf_execute(p);
   fftwf_destroy_plan(p);
 }
 
@@ -144,7 +144,7 @@ void transform_normal2ev(pfs::Array2Df *A, pfs::Array2Df *T)
   fftwf_plan p;
   p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
-  fftwf_execute(p); 
+  fftwf_execute(p);
   fftwf_destroy_plan(p);
 
   // need to scale the output matrix to get the right transform
@@ -248,7 +248,7 @@ void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
     make_compatible_boundary(F);
   }
 
-  // transforms F into eigenvector space: Ftr = 
+  // transforms F into eigenvector space: Ftr =
   //DEBUG_STR << "solve_pde_fft: transform F to ev space (fft)" << std::endl;
   pfs::Array2Df* F_tr = new pfs::Array2Df(width,height);
   transform_normal2ev(F, F_tr);
@@ -260,7 +260,7 @@ void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
     delete F_tr;
     return;
   }
-  
+
   //DEBUG_STR << "solve_pde_fft: F_tr(0,0) = " << (*F_tr)(0,0);
   //DEBUG_STR << " (must be 0 for solution to exist)" << std::endl;
 

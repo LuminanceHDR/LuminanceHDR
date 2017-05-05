@@ -31,44 +31,44 @@ DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files, bool areAllHDRs,
     ui(new Ui::DnDOption)
 {
     ui->setupUi(this);
-	result = ACTION_INVALID;
+    result = ACTION_INVALID;
     ui->btnCreateNewHDR->setEnabled(areAllLDRs);
     ui->btnOpenHDR->setEnabled(areAllHDRs);
-	if (!(areAllHDRs || areAllLDRs))
-		QDialog::accept();
-	else
-		activateWindow();
+    if (!(areAllHDRs || areAllLDRs))
+        QDialog::accept();
+    else
+        activateWindow();
 }
 
 DnDOptionDialog::~DnDOptionDialog() {
 }
 
 void DnDOptionDialog::on_btnCancel_clicked() {
-	QDialog::accept();
+    QDialog::accept();
 }
 
 void DnDOptionDialog::on_btnCreateNewHDR_clicked() {
-	result = ACTION_NEW_HDR;
-	QDialog::accept();
+    result = ACTION_NEW_HDR;
+    QDialog::accept();
 }
 
 void DnDOptionDialog::on_btnOpenHDR_clicked() {
-	result = ACTION_OPEN_HDR;
-	QDialog::accept();
+    result = ACTION_OPEN_HDR;
+    QDialog::accept();
 }
 
 int DnDOptionDialog::showDndDialog(QWidget *parent, QStringList files) {
-	bool areAllHDRs = true;
-	bool areAllLDRs = true;
-	foreach (QString file, files) {
-		areAllHDRs = areAllHDRs && matchesHdrFilename(file);
-		areAllLDRs = areAllLDRs && matchesLdrFilename(file);
-	}
-	if (areAllHDRs && files.size() == 1)
-		return ACTION_OPEN_HDR; // just open the files without dialog
-	else {
-		DnDOptionDialog dndOption(parent, files, areAllHDRs, areAllLDRs);
-		dndOption.exec();
-		return dndOption.result;
-	}
+    bool areAllHDRs = true;
+    bool areAllLDRs = true;
+    foreach (QString file, files) {
+        areAllHDRs = areAllHDRs && matchesHdrFilename(file);
+        areAllLDRs = areAllLDRs && matchesLdrFilename(file);
+    }
+    if (areAllHDRs && files.size() == 1)
+        return ACTION_OPEN_HDR; // just open the files without dialog
+    else {
+        DnDOptionDialog dndOption(parent, files, areAllHDRs, areAllLDRs);
+        dndOption.exec();
+        return dndOption.result;
+    }
 }

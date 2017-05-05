@@ -2,11 +2,11 @@
  * @file bilateral.cpp
  * @brief Bilateral filtering
  *
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -20,8 +20,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
@@ -122,7 +122,7 @@ void bilateralFilter(const pfs::Array2Df *I, pfs::Array2Df *J,
         {
             float val = 0;
             float k = 0;
-            float I_s = (*X1)(x,y);	//!! previously 'I' not 'X1'
+            float I_s = (*X1)(x,y);    //!! previously 'I' not 'X1'
 
             if( unlikely( !boost::math::isfinite( I_s ) ) )
                 I_s = 0.0f;
@@ -133,7 +133,7 @@ void bilateralFilter(const pfs::Array2Df *I, pfs::Array2Df *J,
                 for( int px = max( 0, x - sKernelSize_2), pxmax = min( I->getCols(), x + sKernelSize_2);
                     px < pxmax; px++ )
                 {
-                    float I_p = (*X1)(px, py);	//!! previously 'I' not 'X1'
+                    float I_p = (*X1)(px, py);    //!! previously 'I' not 'X1'
                     if( unlikely( !boost::math::isfinite( I_p ) ) )
                         I_p = 0.0f;
 
@@ -142,9 +142,9 @@ void bilateralFilter(const pfs::Array2Df *I, pfs::Array2Df *J,
 
                     float Ixy = (*I)(px, py);
                     if( unlikely( !boost::math::isfinite( Ixy ) ) )
-                        Ixy = 0.0f;          
+                        Ixy = 0.0f;
 
-                    val += Ixy * mult;	//!! but here we want 'I'
+                    val += Ixy * mult;    //!! but here we want 'I'
                     k += mult;
                 }
             }

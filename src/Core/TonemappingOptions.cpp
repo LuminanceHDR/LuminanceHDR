@@ -149,7 +149,7 @@ char TonemappingOptions::getRatingForOperator()
 const QString TonemappingOptions::getPostfix() {
     QString postfix=QString("pregamma_%1_").arg(pregamma);
     switch (tmoperator) {
-    case mantiuk06: 
+    case mantiuk06:
         {
             postfix+="mantiuk06_";
             float contrastfactor=operator_options.mantiuk06options.contrastfactor;
@@ -190,7 +190,7 @@ const QString TonemappingOptions::getPostfix() {
             float beta=operator_options.fattaloptions.beta;
             float saturation2=operator_options.fattaloptions.color;
             float noiseredux=operator_options.fattaloptions.noiseredux;
-		    bool  fftsolver=operator_options.fattaloptions.fftsolver;
+            bool  fftsolver=operator_options.fattaloptions.fftsolver;
             postfix+=QString("alpha_%1_").arg(alpha);
             postfix+=QString("beta_%1_").arg(beta);
             postfix+=QString("saturation_%1_").arg(saturation2);
@@ -212,7 +212,7 @@ const QString TonemappingOptions::getPostfix() {
             postfix+="mai_";
         }
         break;
-    case ashikhmin: 
+    case ashikhmin:
         {
             postfix+="ashikhmin_";
             if (operator_options.ashikhminoptions.simple) {
@@ -279,7 +279,7 @@ const QString TonemappingOptions::getPostfix() {
             }
         }
         break;
-    case reinhard05: 
+    case reinhard05:
         {
             float brightness=operator_options.reinhard05options.brightness;
             float chromaticAdaptation= operator_options.reinhard05options.chromaticAdaptation;
@@ -297,7 +297,7 @@ const QString TonemappingOptions::getPostfix() {
 const QString TonemappingOptions::getCaption(bool includePregamma, QString separator) {
     QString caption=includePregamma ? QString(QObject::tr("PreGamma=%1")).arg(pregamma) + separator : QString();
     switch (tmoperator) {
-    case mantiuk06: 
+    case mantiuk06:
         {
             caption+="Mantiuk06:";
             caption += separator;
@@ -316,7 +316,7 @@ const QString TonemappingOptions::getCaption(bool includePregamma, QString separ
             caption+=QString(QObject::tr("Detail") + "=%1").arg(detailfactor);
             }
             break;
-    case mantiuk08: 
+    case mantiuk08:
         {
             caption+="Mantiuk08:" + separator;
             float colorsaturation=operator_options.mantiuk08options.colorsaturation;
@@ -477,13 +477,13 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                         if (value != TMOSETTINGSVERSION) {
                                 delete toreturn;
                                 throw (QApplication::tr("ERROR: File too old, cannot parse Tone Mapping Setting file: ")+fname);
-// 				return NULL;
+//                 return NULL;
                         }
                 } else if (field=="XSIZE") {
-						toreturn->xsize=value.toInt();
-				} else if (field=="QUALITY") {
-						toreturn->quality=value.toInt();
-				} else if (field=="TMO") {
+                        toreturn->xsize=value.toInt();
+                } else if (field=="QUALITY") {
+                        toreturn->quality=value.toInt();
+                } else if (field=="TMO") {
                         if (value=="Ashikhmin02") {
                                 toreturn->tmoperator=ashikhmin;
                                 tmo = "Ashikhmin02";
@@ -597,7 +597,7 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                 } else {
                         delete toreturn;
                         throw (QApplication::tr("ERROR: cannot parse Tone Mapping Setting file: ")+fname);
-// 			return NULL;
+//             return NULL;
                 }
         }
         return toreturn;

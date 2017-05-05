@@ -8,7 +8,7 @@
  * http://www.mpi-inf.mpg.de/resources/hdr/datmo/
  *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,8 +22,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  *
  * $Id: display_adaptive_tmo.h,v 1.12 2009/02/23 18:46:36 rafm Exp $
@@ -55,7 +55,7 @@ public:
 
   void init( size_t n_size, const double *n_x_i, double *n_y_i = NULL );
   void free();
-  
+
 };
 
 
@@ -160,7 +160,7 @@ int datmo_tonemap( float *R_out, float *G_out, float *B_out, int width, int heig
  * function. If interactive tuning of the TMO parameters is needed,
  * this function can be executed once per image and then
  * datmo_compute_tone_curve() can be executed as many times as needed.
- * 
+ *
  * @param width image width in pixels
  * @param height image height in pixels
  * @param L input luminance map (L=0.212656*R + 0.715158*G + 0.072186*B)
@@ -199,9 +199,9 @@ int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_
 
 /**
  * Deprectaied: use datmo_apply_tone_curve_cc()
- * 
+ *
  * Tone-map image using the tone-curve computed with datmo_compute_tone_curve().
- * 
+ *
  * @param R_out output red-channel (in pixel values). Can be the same
  * as R_in.
  * @param G_out output green-channel (in pixel values). Can be the same
@@ -233,7 +233,7 @@ int datmo_apply_tone_curve( float *R_out, float *G_out, float *B_out, int width,
  * Color Correction for Tone Mapping
  * Radosław Mantiuk, Rafał Mantiuk, Anna Tomaszewska, Wolfgang Heidrich.
  * In: Computer Graphics Forum (Proc. of EUROGRAPHICS'09), 28(2), 2009
- * 
+ *
  * @param R_out output red-channel (in pixel values). Can be the same
  * as R_in.
  * @param G_out output green-channel (in pixel values). Can be the same

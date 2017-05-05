@@ -55,6 +55,6 @@ public:
 protected:
     QSqlQueryModel* model;
     QScopedPointer<Ui::SavedParametersDialog> m_Ui;
-    
+
 };
 #endif

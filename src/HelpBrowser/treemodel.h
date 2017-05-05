@@ -37,27 +37,27 @@
 
 class TreeModel : public QAbstractItemModel
 {
-// 		Q_OBJECT
+//         Q_OBJECT
 
-	public:
-		TreeModel ( const QString &data, QObject *parent = 0 );
-		explicit TreeModel ( QObject * /*parent = 0*/ ) : rootItem(NULL) {}; //CB Added for ScHelpTreeModel
-		~TreeModel();
+    public:
+        TreeModel ( const QString &data, QObject *parent = 0 );
+        explicit TreeModel ( QObject * /*parent = 0*/ ) : rootItem(NULL) {}; //CB Added for ScHelpTreeModel
+        ~TreeModel();
 
-		QVariant data ( const QModelIndex &index, int role ) const;
-		Qt::ItemFlags flags ( const QModelIndex &index ) const;
-		QVariant headerData ( int section, Qt::Orientation orientation,
-		                      int role = Qt::DisplayRole ) const;
-		QModelIndex index ( int row, int column,
-		                    const QModelIndex &parent = QModelIndex() ) const;
-		QModelIndex parent ( const QModelIndex &index ) const;
-		int rowCount ( const QModelIndex &parent = QModelIndex() ) const;
-		int columnCount ( const QModelIndex &parent = QModelIndex() ) const;
+        QVariant data ( const QModelIndex &index, int role ) const;
+        Qt::ItemFlags flags ( const QModelIndex &index ) const;
+        QVariant headerData ( int section, Qt::Orientation orientation,
+                              int role = Qt::DisplayRole ) const;
+        QModelIndex index ( int row, int column,
+                            const QModelIndex &parent = QModelIndex() ) const;
+        QModelIndex parent ( const QModelIndex &index ) const;
+        int rowCount ( const QModelIndex &parent = QModelIndex() ) const;
+        int columnCount ( const QModelIndex &parent = QModelIndex() ) const;
 
-	protected:
-		void setupModelData ( const QStringList &lines, TreeItem *parent );
+    protected:
+        void setupModelData ( const QStringList &lines, TreeItem *parent );
 
-		TreeItem *rootItem;
+        TreeItem *rootItem;
 };
 
 #endif

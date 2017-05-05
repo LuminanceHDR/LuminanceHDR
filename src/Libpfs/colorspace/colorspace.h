@@ -2,10 +2,10 @@
  * @brief PFS library - color space transformations
  *
  * This file is a part of Luminance HDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2010-2013 Davide Anastasia
- * 
+ *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
@@ -19,8 +19,8 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net> (2010 10 13)

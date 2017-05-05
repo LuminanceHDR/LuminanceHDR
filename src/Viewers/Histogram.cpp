@@ -1,10 +1,10 @@
 /**
- * @brief 
- * 
+ * @brief
+ *
  * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
@@ -51,7 +51,7 @@ void Histogram::computeLog( const pfs::Array2Df *image )
   {
     min = 999999999.0f;
     max = -999999999.0f;
-    
+
     for( int i = 0; i < size; i += accuracy ) {
       float v = (*image)(i);
       if( v > max ) max = v;
@@ -65,7 +65,7 @@ void Histogram::computeLog( const pfs::Array2Df *image )
 void Histogram::computeLog( const pfs::Array2Df *image, float min, float max )
 {
   const int size = image->getRows()*image->getCols();
-  
+
   // Empty all bins
   for( int i = 0; i < bins; i++ )
     P[i] = 0;
@@ -86,7 +86,7 @@ void Histogram::computeLog( const pfs::Array2Df *image, float min, float max )
   // Normalize, to get probability
   for( int i = 0; i < bins; i++ )
     P[i] /= (float)(count/accuracy);
-  
+
 }
 
 float Histogram::getMaxP() const
@@ -95,7 +95,7 @@ float Histogram::getMaxP() const
   for( int i = 0; i < bins; i++ ) {
     if( P[i] > maxP ) {
       maxP = P[i];
-    }    
+    }
   }
   return maxP;
 }

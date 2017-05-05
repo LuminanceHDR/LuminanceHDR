@@ -41,7 +41,7 @@
 class UMessageBox : public QMessageBox
 {
     Q_OBJECT
- 
+
  public:
     explicit UMessageBox(QWidget *parent = 0);
 

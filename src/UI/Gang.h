@@ -1,8 +1,8 @@
 /**
  * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * based on previous GPL code from qpfstmo
  * Original Work
@@ -39,7 +39,7 @@ class TmoSettingsList;
 
 class Gang : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
     friend class TmoSettings;
 
@@ -55,58 +55,58 @@ public:
     bool isCheckBox2Checked() const;
     bool isRadioButton1Checked() const;
     bool isRadioButton2Checked() const;
-	float p2v(const int p) const;
-	int v2p(const float x) const;
-	void setDefault();
+    float p2v(const int p) const;
+    int v2p(const float x) const;
+    void setDefault();
     bool changed() const;
     QString flag(const QString& f) const;
     QString fname(const QString& f) const;
-	void setupUndo();
-	void undo();
-	void redo();
-	void updateUndoState();
+    void setupUndo();
+    void undo();
+    void redo();
+    void updateUndoState();
 
 protected slots:
-	void sliderMoved(int p);
-	void sliderValueChanged(int p);
-	void spinboxValueChanged(double);
-	void checkBox1Checked(bool);
-	void checkBox2Checked(bool);
-	void radioButton1Checked(bool);
-	void radioButton2Checked(bool);
+    void sliderMoved(int p);
+    void sliderValueChanged(int p);
+    void spinboxValueChanged(double);
+    void checkBox1Checked(bool);
+    void checkBox2Checked(bool);
+    void radioButton1Checked(bool);
+    void radioButton2Checked(bool);
 
 signals:
-	void finished();
-	void enableUndo(bool);
-	void enableRedo(bool);
+    void finished();
+    void enableUndo(bool);
+    void enableRedo(bool);
 
 private:
-	QSlider *s;
-	QDoubleSpinBox *dsb;
-	QCheckBox *cbx1;
-	QCheckBox *cbx2;
-	QRadioButton *rb1;
-	QRadioButton *rb2;
-	bool isCbx1Checked;
-	bool isCbx2Checked;
-	bool isRb1Checked;
-	bool isRb2Checked;
-	bool isCbx1Checked_default;
-	bool isCbx2Checked_default;
-	bool isRb1Checked_default;
-	bool isRb2Checked_default;
-	float minv;
-	float maxv;
-	float defaultv;
-	bool logscaling;
-	float value;
-	bool value_from_text;
-	bool value_from_slider;
-	bool graphics_only;
-	bool changed_;
-	bool undoState;
-	bool redoState;
-	TmoSettingsList *tmoSettingsList;
+    QSlider *s;
+    QDoubleSpinBox *dsb;
+    QCheckBox *cbx1;
+    QCheckBox *cbx2;
+    QRadioButton *rb1;
+    QRadioButton *rb2;
+    bool isCbx1Checked;
+    bool isCbx2Checked;
+    bool isRb1Checked;
+    bool isRb2Checked;
+    bool isCbx1Checked_default;
+    bool isCbx2Checked_default;
+    bool isRb1Checked_default;
+    bool isRb2Checked_default;
+    float minv;
+    float maxv;
+    float defaultv;
+    bool logscaling;
+    float value;
+    bool value_from_text;
+    bool value_from_slider;
+    bool graphics_only;
+    bool changed_;
+    bool undoState;
+    bool redoState;
+    TmoSettingsList *tmoSettingsList;
 };
 
 inline float Gang::v() const
@@ -134,27 +134,27 @@ inline bool Gang::changed() const
 //
 class TmoSettings {
 public:
-	TmoSettings(Gang *gangPtr, float, bool, bool, bool, bool);
-	void apply() const;
+    TmoSettings(Gang *gangPtr, float, bool, bool, bool, bool);
+    void apply() const;
 protected:
-	Gang *gangPtr;
-	bool isCbx1Checked;
-	bool isCbx2Checked;
-	bool isRb1Checked;
-	bool isRb2Checked;
-	float value;
+    Gang *gangPtr;
+    bool isCbx1Checked;
+    bool isCbx2Checked;
+    bool isRb1Checked;
+    bool isRb2Checked;
+    float value;
 };
 
 class TmoSettingsList : public QList<TmoSettings> {
 public:
-	TmoSettingsList();
-	~TmoSettingsList();
-	void previous();
-	void next();
-	int index();
-	void append(const TmoSettings &value);
+    TmoSettingsList();
+    ~TmoSettingsList();
+    void previous();
+    void next();
+    int index();
+    void append(const TmoSettings &value);
 private:
-	int m_index;
+    int m_index;
 };
 
 #endif

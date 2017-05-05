@@ -34,9 +34,9 @@
 LuminancePaths *LuminancePaths::instance = 0;
 LuminancePaths * LuminancePaths::getThis()
 {
-	if(!instance)
-		instance = new LuminancePaths;
-	return instance;
+    if(!instance)
+        instance = new LuminancePaths;
+    return instance;
 }
 
 namespace {
@@ -63,33 +63,33 @@ QString LuminancePaths::HelpDir()
     QString hf = LocalizedDirPath(HELPDIR + dirsep);
 #endif
 
-	getThis()->LuminancePathsDB["HelpDir"] = hf;
+    getThis()->LuminancePathsDB["HelpDir"] = hf;
 
     return hf;
 }
 
 QString LuminancePaths::LocalizedDirPath(const QString & base, const QString& fallback )
-{	
-	QString sep("_");
-	QStringList l_c(QLocale::system().name().split(sep));
-	QString langcode( l_c.first() );
-	QString countrycode(l_c.last());
+{
+    QString sep("_");
+    QStringList l_c(QLocale::system().name().split(sep));
+    QString langcode( l_c.first() );
+    QString countrycode(l_c.last());
 
-	QStringList names;
-	if((!langcode.isEmpty()) || (!countrycode.isEmpty()))
-	{
-		names << base + langcode + sep + countrycode ;
-		names << base + langcode  ;
-	}
-	names << base + fallback  ;
-	names << base  ;
-	
-	foreach(QString t, names)
-	{
-		QDir d(t);
-		if( d.exists() )
-			return d.absolutePath() + QString(QDir::separator()) ;
-	}
-	
-	return QString();
+    QStringList names;
+    if((!langcode.isEmpty()) || (!countrycode.isEmpty()))
+    {
+        names << base + langcode + sep + countrycode ;
+        names << base + langcode  ;
+    }
+    names << base + fallback  ;
+    names << base  ;
+
+    foreach(QString t, names)
+    {
+        QDir d(t);
+        if( d.exists() )
+            return d.absolutePath() + QString(QDir::separator()) ;
+    }
+
+    return QString();
 }

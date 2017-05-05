@@ -38,49 +38,49 @@
 
 TreeItem::TreeItem ( const QList<QVariant> &data, TreeItem *parent )
 {
-	parentItem = parent;
-	itemData = data;
+    parentItem = parent;
+    itemData = data;
 }
 
 TreeItem::~TreeItem()
 {
-	qDeleteAll ( childItems );
+    qDeleteAll ( childItems );
 }
 
 void TreeItem::appendChild ( TreeItem *item )
 {
-	childItems.append ( item );
+    childItems.append ( item );
 }
 
 TreeItem *TreeItem::child ( int row )
 {
-	return childItems.value ( row );
+    return childItems.value ( row );
 }
 
 int TreeItem::childCount() const
 {
-	return childItems.count();
+    return childItems.count();
 }
 
 int TreeItem::columnCount() const
 {
-	return itemData.count();
+    return itemData.count();
 }
 
 QVariant TreeItem::data ( int column ) const
 {
-	return itemData.value ( column );
+    return itemData.value ( column );
 }
 
 TreeItem *TreeItem::parent()
 {
-	return parentItem;
+    return parentItem;
 }
 
 int TreeItem::row() const
 {
-	if ( parentItem )
-		return parentItem->childItems.indexOf ( const_cast<TreeItem*> ( this ) );
+    if ( parentItem )
+        return parentItem->childItems.indexOf ( const_cast<TreeItem*> ( this ) );
 
-	return 0;
+    return 0;
 }

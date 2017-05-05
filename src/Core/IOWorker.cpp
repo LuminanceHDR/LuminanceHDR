@@ -174,7 +174,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
     if (tmopts != NULL) {
         operations.reset(new TMOptionsOperations(tmopts));
     }
-    
+
     QFileInfo qfi(filename);
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
@@ -268,13 +268,13 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
         hdrpfsframe.reset();
     }
     catch (std::runtime_error& err)
-	{
+    {
         emit read_hdr_failed(tr("IOWorker: caught exception reading %1: %2")
                              .arg(filename)
                              .arg(err.what()));
 
         hdrpfsframe.reset();
-	}
+    }
     catch (...)
     {
         emit read_hdr_failed(tr("IOWorker: failed loading file: %1")

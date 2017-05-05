@@ -33,7 +33,7 @@ namespace Ui
 }
 
 namespace pfs {
-    class Frame;            
+    class Frame;
 }
 
 class ExportToHtmlDialog : public QDialog

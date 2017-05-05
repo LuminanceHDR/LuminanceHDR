@@ -1,8 +1,8 @@
 /**
  * This file is a part of Luminance HDR package
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing
@@ -60,7 +60,7 @@ private:
 
 public:
     explicit HdrCreationManager(bool fromCommandLine = false);
-	~HdrCreationManager();
+    ~HdrCreationManager();
 
     // ----- NEW FUNCTIONS ------
     HdrCreationItem& getFile(size_t idx)                { return m_data[idx]; }
@@ -105,10 +105,10 @@ public:
     pfs::Frame* createHdr();
 
     void set_ais_crop_flag(bool flag);
-	void align_with_ais();
-	void align_with_mtb();
+    void align_with_ais();
+    void align_with_mtb();
 
-    const HdrCreationItemContainer& getData() const         { return m_data; } 
+    const HdrCreationItemContainer& getData() const         { return m_data; }
     //const QList<QImage*>& getAntiGhostingMasksList() const  { return m_antiGhostingMasksList; }
     //void setAntiGhostingMasksList(QList<QImage*>& list)     { m_antiGhostingMasksList.swap(list); }
     void setAntiGhostingMask(QImage* mask) { m_agMask = new QImage(*mask); }
@@ -119,9 +119,9 @@ public:
     void cropAgMasks(const QRect& ca);
 
     void saveImages(const QString& prefix);
-	//void doAntiGhosting(int);
+    //void doAntiGhosting(int);
     int computePatches(float threshold, bool patches[][agGridSize], float &percent, QList<QPair<int, int> > HV_offset);
-	pfs::Frame* doAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg, ProgressHelper *ph);
+    pfs::Frame* doAntiGhosting(bool patches[][agGridSize], int h0, bool manualAg, ProgressHelper *ph);
     void getAgData(bool patches[][agGridSize], int &h0);
     void setPatches(bool patches[][agGridSize]);
 
@@ -144,12 +144,12 @@ signals:
 
     void fileLoaded(int index, const QString& fname, float expotime);
 
-	void finishedAligning(int);
-	void expotimeValueChanged(float,int);
-	void ais_failed(QProcess::ProcessError);
+    void finishedAligning(int);
+    void expotimeValueChanged(float,int);
+    void ais_failed(QProcess::ProcessError);
     void aisDataReady(const QByteArray& data);
-	void processed();
-	void imagesSaved();
+    void processed();
+    void imagesSaved();
     void loadFilesAborted();
 
 private:
@@ -165,7 +165,7 @@ private:
     QString m_responseCurveOutputFilename;
 
     QFutureWatcher<void> m_futureWatcher;
-	//QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti-ghosting
+    //QList<QImage*> m_antiGhostingMasksList;  //QImages used for manual anti-ghosting
     QImage* m_agMask;
     LuminanceOptions m_luminance_options;
 
@@ -173,13 +173,13 @@ private:
     std::unique_ptr<Align> m_align;
 
     bool m_ais_crop_flag;
-	bool fromCommandLine;
+    bool fromCommandLine;
     int m_agGoodImageIndex;
     bool m_patches[agGridSize][agGridSize];
     bool m_isLoadResponseCurve;
 
 private slots:
-	void ais_failed_slot(QProcess::ProcessError);
+    void ais_failed_slot(QProcess::ProcessError);
     void loadFilesDone();
 };
 #endif

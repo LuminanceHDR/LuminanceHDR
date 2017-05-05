@@ -36,13 +36,13 @@
 
 class LuminancePaths
 {
-		QMap<QString,QString> LuminancePathsDB;
-		LuminancePaths() {}
-		static LuminancePaths *instance;
-		static LuminancePaths *getThis();
-		
-	public:
-		static QString HelpDir();
-		static QString LocalizedDirPath(const QString& base, const QString& fallback = QString("en"));
+        QMap<QString,QString> LuminancePathsDB;
+        LuminancePaths() {}
+        static LuminancePaths *instance;
+        static LuminancePaths *getThis();
+
+    public:
+        static QString HelpDir();
+        static QString LocalizedDirPath(const QString& base, const QString& fallback = QString("en"));
 };
 #endif

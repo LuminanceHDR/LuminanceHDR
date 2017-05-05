@@ -66,8 +66,8 @@ protected Q_SLOTS:
     void on_btnTonemap_clicked();
 
 private:
-	void addPreview(PreviewLabel* previewLabel, const QSqlRecord& record);
-	void fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, TMOperator tOperator, const QSqlRecord& record);
+    void addPreview(PreviewLabel* previewLabel, const QSqlRecord& record);
+    void fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, TMOperator tOperator, const QSqlRecord& record);
 };
 
 #endif

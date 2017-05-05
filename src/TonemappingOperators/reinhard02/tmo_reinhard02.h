@@ -31,12 +31,12 @@ class TemporalSmoothVariable
   {
     return 0.01 * luminance;
   }
-  
+
 public:
   TemporalSmoothVariable() : value( -1 )
   {
   }
-  
+
   void set( T new_value )
   {
     if( value == -1 )
@@ -49,11 +49,11 @@ public:
       value += delta;
     }
   }
-  
+
   T get() const
   {
     return value;
-  }  
+  }
 };
 
 //--- from defines.h
@@ -105,43 +105,43 @@ public:
     void tmo_reinhard02();
 
 private:
-	TemporalSmoothVariable<double> m_avg_luminance, m_max_luminance;
-	CVTS m_cvts;
-	COLOR   **m_image;
-	double m_sigma_0, m_sigma_1;
-	double **m_luminance;
+    TemporalSmoothVariable<double> m_avg_luminance, m_max_luminance;
+    CVTS m_cvts;
+    COLOR   **m_image;
+    double m_sigma_0, m_sigma_1;
+    double **m_luminance;
     unsigned int m_width, m_height;
     const pfs::Array2Df* m_Y;
     pfs::Array2Df* m_L;
-	bool m_use_scales;
-	bool m_use_border;
-	double m_key, m_phi, m_white;
-	int m_range, m_scale_low, m_scale_high;
-	bool  m_temporal_coherent;
-	const double m_alpha;	
-	double m_bbeta;
-	double m_threshold;
+    bool m_use_scales;
+    bool m_use_border;
+    double m_key, m_phi, m_white;
+    int m_range, m_scale_low, m_scale_high;
+    bool  m_temporal_coherent;
+    const double m_alpha;
+    double m_bbeta;
+    double m_threshold;
     pfs::Progress &m_ph;
 
-	double ***Pyramid;
-	int       PyramidHeight;
-	int       PyramidWidth0;
+    double ***Pyramid;
+    int       PyramidHeight;
+    int       PyramidWidth0;
 
-	double bessel(double);
-	void compute_bessel();
-	double kaiserbessel(double, double, double);
-	double get_maxvalue();
-	void tonemap_image();
-	void clamp_image();
-	double log_average();
-	void scale_to_midtone();
-	void copy_luminance();
-	void allocate_memory();
-	void deallocate_memory();
-	void dynamic_range();
-	double V1(int, int, int);
-	double pyramid_lookup(unsigned int, unsigned int, int);
-	void build_pyramid(double **, int, int);
-	void clean_pyramid();
+    double bessel(double);
+    void compute_bessel();
+    double kaiserbessel(double, double, double);
+    double get_maxvalue();
+    void tonemap_image();
+    void clamp_image();
+    double log_average();
+    void scale_to_midtone();
+    void copy_luminance();
+    void allocate_memory();
+    void deallocate_memory();
+    void dynamic_range();
+    double V1(int, int, int);
+    double pyramid_lookup(unsigned int, unsigned int, int);
+    void build_pyramid(double **, int, int);
+    void clean_pyramid();
 };
 #endif // TMO_REINHARD02_H

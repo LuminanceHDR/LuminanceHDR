@@ -46,7 +46,7 @@ TMOProgressIndicator::TMOProgressIndicator(QWidget *parent):
     m_abortButton->resize(22,22);
     m_abortButton->setIcon(QIcon::fromTheme("tab-close", QIcon(":/program-icons/tab-close")));
     m_abortButton->setToolTip(QString(tr("Abort computation")));
-  
+
     m_hbl->addWidget(m_progressBar);
     m_hbl->addWidget(m_abortButton);
 

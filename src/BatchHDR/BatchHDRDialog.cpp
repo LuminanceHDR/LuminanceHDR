@@ -108,14 +108,14 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
     m_Ui->outputLineEdit->setText(m_batchHdrOutputDir);
 
     QSqlQueryModel model;
-    model.setQuery("SELECT * FROM parameters"); 
+    model.setQuery("SELECT * FROM parameters");
     for (int i = 0; i < model.rowCount(); i++)
     {
         m_Ui->profileComboBox->addItem(tr("Custom config %1").arg(i+1));
-        int weight_ = model.record(i).value("weight").toInt(); 
-        int response_ = model.record(i).value("response").toInt(); 
-        int model_ = model.record(i).value("model").toInt(); 
-        QString filename_ = model.record(i).value("filename").toString(); 
+        int weight_ = model.record(i).value("weight").toInt();
+        int response_ = model.record(i).value("response").toInt();
+        int model_ = model.record(i).value("model").toInt();
+        QString filename_ = model.record(i).value("filename").toString();
         FusionOperatorConfig ct;
 
         ct.weightFunction = static_cast<WeightFunctionType>(weight_);
@@ -144,7 +144,7 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
             break;
         }
 
-        m_customConfig.push_back(ct);   
+        m_customConfig.push_back(ct);
     }
     check_start_button();
 }
@@ -312,7 +312,7 @@ void BatchHDRDialog::batch_hdr()
                             m_hdrCreationManager,
                             toProcess)
                 );
-    }   
+    }
     else
     {
         m_Ui->closeButton->show();
@@ -389,7 +389,7 @@ void BatchHDRDialog::create_hdr(int)
         QList<QPair<int, int> > HV_offsets;
         for (int i = 0; i < m_Ui->spinBox->value(); i++ ) {
             HV_offsets.append(qMakePair(0,0));
-        
+
         }
         float patchesPercent;
         int h0 = m_hdrCreationManager->computePatches(m_Ui->threshold_doubleSpinBox->value(), m_patches, patchesPercent, HV_offsets);
@@ -398,7 +398,7 @@ void BatchHDRDialog::create_hdr(int)
                                                    m_patches, h0, false, &m_ph)); // false means auto anti-ghosting
 
         m_futureWatcher.setFuture(m_future);
-        
+
     }
     else {
         m_future = QtConcurrent::run(
@@ -422,7 +422,7 @@ void BatchHDRDialog::createHdrFinished()
     QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
     m_IO_Worker->write_hdr_frame(resultHDR.get(), outName, m_formatHelper.getParams());
     resultHDR.reset();
-    
+
     // DAVIDE _ HDR WIZARD
     m_hdrCreationManager->reset();
     int progressValue = m_Ui->progressBar->value() + 1;

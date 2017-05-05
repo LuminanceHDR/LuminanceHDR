@@ -1,10 +1,10 @@
 /**
  * @brief Michael Ashikhmin tone mapping operator 2002
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Akiko Yoshida, <yoshida@mpi-sb.mpg.de>
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
@@ -44,7 +44,7 @@
 
 float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s)
 {
-  float ratio = myPyramid->p[s-1].lambda;  
+  float ratio = myPyramid->p[s-1].lambda;
 
   float newX = (float)x * ratio;
   float newY = (float)y * ratio;
@@ -82,7 +82,7 @@ float calc_LAL_interpolated(GaussianPyramid *myPyramid, int x, int y, int s)
 }
 
 float calc_LAL(GaussianPyramid *myPyramid, int x, int y, int s) {
-  float ratio = myPyramid->p[s-1].lambda;  
+  float ratio = myPyramid->p[s-1].lambda;
 
   float newX = (float)x * ratio;
   float newY = (float)y * ratio;
@@ -106,7 +106,7 @@ float LAL(GaussianPyramid *myPyramid, int x, int y, float LOCAL_CONTRAST) {
     //    g = calc_LAL(myPyramid, x, y, s);
     //     gg = calc_LAL(myPyramid, x, y, 2*s);
 
-    if(fabs((g-gg)/g) >= LOCAL_CONTRAST) 
+    if(fabs((g-gg)/g) >= LOCAL_CONTRAST)
       return g;
   }
   return g;
@@ -117,16 +117,16 @@ float LAL(GaussianPyramid *myPyramid, int x, int y, float LOCAL_CONTRAST) {
 float C(float lum_val) { // linearly approximated TVI function
   if(lum_val <= 1e-20)
     return 0.0;
-  
-  if(lum_val < 0.0034) 
+
+  if(lum_val < 0.0034)
     return lum_val/0.0014;
-  
-  if(lum_val < 1.0) 
+
+  if(lum_val < 1.0)
     return 2.4483 + log(lum_val/0.0034)/0.4027;
-  
-  if(lum_val < 7.2444) 
+
+  if(lum_val < 7.2444)
     return 16.5630 + (lum_val-1.0)/0.4027;
-  
+
   return 32.0693 + log(lum_val/7.2444)/0.0556;
 }
 
@@ -165,27 +165,27 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
   assert(Y!=NULL);
   assert(L!=NULL);
 
-  unsigned int nrows = Y->getRows();			// image size
+  unsigned int nrows = Y->getRows();            // image size
   unsigned int ncols = Y->getCols();
   assert(nrows==L->getRows() && ncols==L->getCols() );
 
 //   int im_size = nrows * ncols;
 
-  //  maxLum /= avLum;							// normalize maximum luminance by average luminance
+  //  maxLum /= avLum;                            // normalize maximum luminance by average luminance
 
   // apply ToneMapping function only
   if(simple_flag) {
     for(unsigned int y=0; y<nrows; y++)
       for(unsigned int x=0; x<ncols; x++)
       {
-	(*L)(x,y) = TM((*Y)(x,y), maxLum, minLum);
-        
+    (*L)(x,y) = TM((*Y)(x,y), maxLum, minLum);
+
         //!! FIX:
         // to keep output values in range 0.01 - 1
-	//        (*L)(x,y) /= 100.0f;
+    //        (*L)(x,y) /= 100.0f;
       }
     Normalize(L, nrows, ncols);
-    
+
     return 0;
   }
 
@@ -197,11 +197,11 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
   for(unsigned int y=0; y<nrows; y++) {
       ph.setValue(100*y/nrows);
       if (ph.canceled())
-		break;
+        break;
     for(unsigned int x=0; x<ncols; x++) {
       (*la)(x,y) = LAL(myPyramid, x, y, lc_value);
       if((*la)(x,y) == 0.0)
-	(*la)(x,y) = EPSILON;
+    (*la)(x,y) = EPSILON;
     }
   }
   delete(myPyramid);
@@ -211,7 +211,7 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
   for(unsigned int y=0; y<nrows; y++) {
     ph.setValue(100*y/nrows);
     if (ph.canceled())
-		break;
+        break;
     for(unsigned int x=0; x<ncols; x++)
       (*tm)(x,y) = TM((*la)(x,y), maxLum, minLum);
   }
@@ -219,23 +219,23 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
   for(unsigned int y=0; y<nrows; y++) {
     ph.setValue(100*y/nrows);
     if (ph.canceled())
-		break;
+        break;
     for(unsigned int x=0; x<ncols; x++)
     {
-      switch (eq) 
+      switch (eq)
       {
         case 2:
-	        (*L)(x,y) = (*Y)(x,y) * (*tm)(x,y) / (*la)(x,y);
-	        break;
+            (*L)(x,y) = (*Y)(x,y) * (*tm)(x,y) / (*la)(x,y);
+            break;
         case 4:
-	        (*L)(x,y) =  (*tm)(x,y) + C((*tm)(x,y))/C((*la)(x,y)) * ((*Y)(x,y)-(*la)(x,y));
-	        break;
+            (*L)(x,y) =  (*tm)(x,y) + C((*tm)(x,y))/C((*la)(x,y)) * ((*Y)(x,y)-(*la)(x,y));
+            break;
         default:
         {
             // cleaning
             delete(la);
             delete(tm);
-	        return 0;
+            return 0;
         }
       }
 
@@ -250,6 +250,6 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
   delete(la);
   delete(tm);
 
-  return 0;  
+  return 0;
 }
 

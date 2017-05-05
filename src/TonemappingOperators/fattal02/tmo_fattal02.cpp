@@ -7,11 +7,11 @@
  *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -25,8 +25,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * $Id: tmo_fattal02.cpp,v 1.3 2008/11/04 23:43:08 rafm Exp $
  */
 
@@ -70,7 +70,7 @@ using namespace utils;
 //     for( int x = 0; x < width; x++ ) {
 //       fwrite( &((*data)(x,y)), sizeof( float ), 1, fh );
 //     }
-  
+
 //   fclose( fh );
 // }
 
@@ -98,7 +98,7 @@ void downSample(const pfs::Array2Df& A, pfs::Array2Df& B)
         }
     }
 }
-	
+
 void gaussianBlur(const pfs::Array2Df& I, pfs::Array2Df& L)
 {
     const int width = I.getCols();
@@ -150,14 +150,14 @@ void createGaussianPyramids( pfs::Array2Df* H, pfs::Array2Df** pyramids, int nle
 
   pfs::Array2Df* L = new pfs::Array2Df(width,height);
   gaussianBlur( *pyramids[0], *L );
-	
+
   for ( int k=1 ; k<nlevels ; k++ )
   {
     width /= 2;
-    height /= 2;		
+    height /= 2;
     pyramids[k] = new pfs::Array2Df(width,height);
     downSample(*L, *pyramids[k]);
-    
+
     delete L;
     L = new pfs::Array2Df(width,height);
     gaussianBlur( *pyramids[k], *L );
@@ -188,13 +188,13 @@ float calculateGradients(pfs::Array2Df* H, pfs::Array2Df* G, int k)
       e = (x+1 == width ? x : x+1);
 
       gx = ((*H)(w,y)-(*H)(e,y)) / divider;
-        
+
       gy = ((*H)(x,s)-(*H)(x,n)) / divider;
       // note this implicitely assumes that H(-1)=H(0)
       // for the fft-pde slover this would need adjustment as H(-1)=H(1)
       // is assumed, which means gx=0.0, gy=0.0 at the boundaries
       // however, the impact is not visible so we ignore this here
-      
+
       (*G)(x,y) = sqrt(gx*gx+gy*gy);
       avgGrad += (*G)(x,y);
     }
@@ -237,7 +237,7 @@ void upSample(const pfs::Array2Df& A, pfs::Array2Df& B)
 //       (*B)(2*x+1,2*y) = (*A)(x,y);
 //       (*B)(2*x,2*y+1) = (*A)(x,y);
 //       (*B)(2*x+1,2*y+1) = (*A)(x,y);
-//     }	
+//     }
 }
 
 
@@ -366,7 +366,7 @@ void tmo_fattal02(size_t width,
   {
      MSIZE = 8;
   }
-	
+
   int size = width*height;
   // unsigned int x,y;
   // int i, k;
@@ -388,7 +388,7 @@ void tmo_fattal02(size_t width,
   ph.setValue(4);
 
   // create gaussian pyramids
-  int mins = (width<height) ? width : height;	// smaller dimension
+  int mins = (width<height) ? width : height;    // smaller dimension
   int nlevels = 0;
   while ( mins >= MSIZE )
   {
@@ -460,8 +460,8 @@ void tmo_fattal02(size_t width,
         s = (y+1 == height ? y : y+1);
         e = (x+1 == width ? x : x+1);
 
-        (*Gx)(x,y) = ((*H)(e,y)-(*H)(x,y)) * (*FI)(x,y);        
-        (*Gy)(x,y) = ((*H)(x,s)-(*H)(x,y)) * (*FI)(x,y);      
+        (*Gx)(x,y) = ((*H)(e,y)-(*H)(x,y)) * (*FI)(x,y);
+        (*Gy)(x,y) = ((*H)(x,s)-(*H)(x,y)) * (*FI)(x,y);
       }
   delete H;
   delete FI;
@@ -470,7 +470,7 @@ void tmo_fattal02(size_t width,
 
 //   dumpPFS( "Gx.pfs", Gx, "Y" );
 //   dumpPFS( "Gy.pfs", Gy, "Y" );
-  
+
   // calculate divergence
   pfs::Array2Df DivG(width, height);
   for ( size_t y = 0; y < height; ++y )
@@ -498,7 +498,7 @@ void tmo_fattal02(size_t width,
   }
 
 //  dumpPFS( "DivG.pfs", DivG, "Y" );
-  
+
   // solve pde and exponentiate (ie recover compressed image)
   {
   pfs::Array2Df U(width, height);
@@ -525,7 +525,7 @@ void tmo_fattal02(size_t width,
   }
   }
   ph.setValue(95);
-	
+
   // remove percentile of min and max values and renormalize
   float cut_min = 0.01f * black_point;
   float cut_max = 1.0f - 0.01f * white_point;

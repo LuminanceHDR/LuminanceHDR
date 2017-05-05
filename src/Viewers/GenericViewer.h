@@ -47,7 +47,7 @@ class IGraphicsView;        // #include "Viewers/IGraphicsView.h"
 class IGraphicsPixmapItem;  // #include "Viewers/IGraphicsPixmapItem.h"
 class TonemappingOptions;
 
-class GenericViewer : public QWidget 
+class GenericViewer : public QWidget
 {
     Q_OBJECT
 public:
@@ -154,8 +154,8 @@ public Q_SLOTS:
     //! \brief set new QImage
     void setQImage(const QImage& qimage);
 
-	//! \brief
-	void setDevicePixelRatio(const float s);
+    //! \brief
+    void setDevicePixelRatio(const float s);
 
     //! this function returns an handle to the internal data type
     //! it would be better if the return pointer is const
@@ -173,12 +173,12 @@ protected Q_SLOTS:
     /*virtual*/  void slotCornerButtonPressed();
     /*virtual*/  void scrollBarChanged(int /*value*/);
 
-	void startDragging();
+    void startDragging();
 
 protected:
 
-	virtual void retranslateUi();
-	virtual void changeEvent(QEvent* event);
+    virtual void retranslateUi();
+    virtual void changeEvent(QEvent* event);
 
     QToolBar* mToolBar;
     QToolButton* mCornerButton;
@@ -210,7 +210,7 @@ private:
 
     QAction* m_actionClose;
 
-	float m_devicePixelRatio = 1.0;
+    float m_devicePixelRatio = 1.0;
 
 Q_SIGNALS:
     void selectionReady(bool isReady);
@@ -248,6 +248,6 @@ void GenericViewer::setFileName(const QString& fn)
 inline
 void GenericViewer::setDevicePixelRatio(const float s)
 {
-	m_devicePixelRatio = s;
+    m_devicePixelRatio = s;
 }
 #endif

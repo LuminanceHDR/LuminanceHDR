@@ -134,7 +134,7 @@ HdrWizard::HdrWizard(QWidget *p,
     m_Ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     m_Ui->tableWidget->verticalHeader()->hide();
     // m_Ui->tableWidget->resizeColumnsToContents();
-    
+
     m_Ui->progressBar->hide();
     m_Ui->textEdit->hide();
 
@@ -150,13 +150,13 @@ HdrWizard::HdrWizard(QWidget *p,
     // place :(
     /*
     QSqlQueryModel model;
-    model.setQuery("SELECT * FROM parameters"); 
+    model.setQuery("SELECT * FROM parameters");
     for (int i = 0; i < model.rowCount(); i++) {
         m_Ui->predefConfigsComboBox->addItem(tr("Custom config %1").arg(i+1));
-        int weight_ = model.record(i).value("weight").toInt(); 
-        int response_ = model.record(i).value("response").toInt(); 
-        int model_ = model.record(i).value("model").toInt(); 
-        QString filename_ = model.record(i).value("filename").toString(); 
+        int weight_ = model.record(i).value("weight").toInt();
+        int response_ = model.record(i).value("response").toInt();
+        int model_ = model.record(i).value("model").toInt();
+        QString filename_ = model.record(i).value("filename").toString();
         FusionOperatorConfig ct;
         switch (weight_) {
             case 0:
@@ -173,30 +173,30 @@ HdrWizard::HdrWizard(QWidget *p,
             case 0:
                 ct.response_curve = FROM_FILE;
                 ct.LoadCurveFromFilename = filename_;
-                ct.SaveCurveToFilename = "";    
+                ct.SaveCurveToFilename = "";
                 break;
             case 1:
                 ct.response_curve = LINEAR;
-                break; 
+                break;
             case 2:
                 ct.response_curve = GAMMA;
-                break; 
+                break;
             case 3:
                 ct.response_curve = LOG10;
-                break; 
+                break;
             case 4:
                 ct.response_curve = FROM_ROBERTSON;
-                break; 
+                break;
         }
         switch (model_) {
             case 0:
                 ct.model = DEBEVEC;
-                break; 
+                break;
             case 1:
                 ct.model = ROBERTSON;
-                break; 
+                break;
         }
-        m_customConfig.push_back(ct);   
+        m_customConfig.push_back(ct);
     }
     */
 }
@@ -216,10 +216,10 @@ void HdrWizard::setupConnections()
     //connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_Ui->progressBar, SLOT(show()), Qt::DirectConnection);
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_Ui->progressBar, SLOT(reset()));
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_Ui->progressBar, SLOT(hide()), Qt::DirectConnection);
-    
+
     connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(setRange(int,int)), Qt::DirectConnection);
     connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), this, SIGNAL(setValue(int)), Qt::DirectConnection);
-    
+
     connect(this, SIGNAL(setValue(int)), m_Ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
     connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
 
@@ -803,7 +803,7 @@ void HdrWizard::NextFinishButtonClicked()
 
 void HdrWizard::createHdr()
 {
-    m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr, 
+    m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr,
                                                m_hdrCreationManager.data()));
 
     connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
@@ -844,7 +844,7 @@ void HdrWizard::currentPageChangedInto(int newindex)
             numldrs = m_hdrCreationManager->getLDRList().size();
         else
             numldrs = m_hdrCreationManager->getMDRList().size();
-      
+
         qDebug() << "numldrs = " << numldrs;
 */
         //if (m_hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE && numldrs >= 2) {

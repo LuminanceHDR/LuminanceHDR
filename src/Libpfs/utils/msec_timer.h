@@ -1,7 +1,7 @@
 /**
  * @brief Milliseconds Timer
  *
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * http://msdn.microsoft.com/en-us/library/ms644904%28v=VS.85%29.aspx
  *
@@ -50,7 +50,7 @@
 #include <mach/mach_time.h>
 #else
 //#include <ctime>
-#include <sys/time.h> 
+#include <sys/time.h>
 #endif
 
 class msec_timer {
@@ -70,7 +70,7 @@ private:
   timeval stop_t;
   double  wrk_time;
 #endif
-  
+
 public:
   msec_timer();
   ~msec_timer();
@@ -80,7 +80,7 @@ public:
   void stop_and_update();
   void reset();
   double get_time();
-  
+
   void get_timer_type();
 };
 

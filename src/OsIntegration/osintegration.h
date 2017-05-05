@@ -36,35 +36,35 @@
 class OsIntegration : public QObject
 {
     Q_OBJECT
-    
+
 public:
-	static OsIntegration& getInstance();
+    static OsIntegration& getInstance();
     static OsIntegration* getInstancePtr();
 
-	void init(QWidget* mainWindow);
-	void setProgress(int value, int max = 100);
+    void init(QWidget* mainWindow);
+    void setProgress(int value, int max = 100);
 
     ~OsIntegration();
-    
+
     bool isRunningOnSameCpuPlatform();
-    
+
     void addRecentFile(const QString& filename);
 
-public Q_SLOTS:	
-	void setProgressValue(int value);
-	void setProgressRange(int min, int max);
+public Q_SLOTS:
+    void setProgressValue(int value);
+    void setProgressRange(int min, int max);
 
 private:
-	OsIntegration();
-	OsIntegration(const OsIntegration&);
-	OsIntegration& operator=(const OsIntegration&);
+    OsIntegration();
+    OsIntegration(const OsIntegration&);
+    OsIntegration& operator=(const OsIntegration&);
 
-	static OsIntegration* instance;
-	int m_progressMin;
-	int m_progressMax;
+    static OsIntegration* instance;
+    int m_progressMin;
+    int m_progressMax;
 
 #ifdef Q_OS_WIN
-	EcWin7* m_winProgressbar;
+    EcWin7* m_winProgressbar;
 #endif
 
 };

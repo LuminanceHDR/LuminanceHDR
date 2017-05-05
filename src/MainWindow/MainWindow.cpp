@@ -126,9 +126,9 @@ QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* 
 
     if ( !outputFilename.isEmpty() )
     {
-		QFileInfo qfi(outputFilename);
+        QFileInfo qfi(outputFilename);
 
-		LuminanceOptions().setDefaultPathLdrOut( qfi.path() );
+        LuminanceOptions().setDefaultPathLdrOut( qfi.path() );
     }
     return outputFilename;
 }
@@ -136,7 +136,7 @@ QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* 
 QString getHdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
 {
 #ifdef QT_DEBUG
-	qDebug() << "MainWindow::getHdrFileNameFromSaveDialog(" << suggestedFileName << ")";
+    qDebug() << "MainWindow::getHdrFileNameFromSaveDialog(" << suggestedFileName << ")";
 #endif
     static const QString filetypes =
             "OpenEXR (*.exr *.EXR);;"
@@ -304,23 +304,23 @@ void MainWindow::init()
     createStatusBar();
     setupIO();
     setupTM();
-	setupQueue();
+    setupQueue();
     createConnections();
 
     OsIntegration::getInstance().init(this);
 
     if ( sm_NumMainWindows == 1 ) {
-        if (OsIntegration::getInstance().isRunningOnSameCpuPlatform()) 
+        if (OsIntegration::getInstance().isRunningOnSameCpuPlatform())
         {
-			sm_updateChecker.reset(new UpdateChecker(this));
-			connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), this, SLOT(onUpdateAvailable()));
+            sm_updateChecker.reset(new UpdateChecker(this));
+            connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), this, SLOT(onUpdateAvailable()));
 
             m_firstWindow = 2;
         }
-		else
+        else
             m_firstWindow = 1;
     }
-    
+
 }
 
 void MainWindow::createUI()
@@ -399,9 +399,9 @@ void MainWindow::createCentralWidget()
     m_bottom_splitter->restoreState(luminance_options->value("MainWindowBottomSplitterState").toByteArray());
     m_bottom_splitter->restoreGeometry(luminance_options->value("MainWindowBottomSplitterGeometry").toByteArray());
 
-	QPalette pal = m_tabwidget->palette();
-	pal.setColor(QPalette::Dark, Qt::darkGray);
-	m_tabwidget->setPalette(pal);
+    QPalette pal = m_tabwidget->palette();
+    pal.setColor(QPalette::Dark, Qt::darkGray);
+    m_tabwidget->setPalette(pal);
 
     m_tabwidget->setBackgroundRole(QPalette::Dark);
     m_tabwidget->setAutoFillBackground( true );
@@ -485,7 +485,7 @@ void MainWindow::createMenus()
     //recent files
     initRecentFileActions();
     updateRecentFileActions();
-    
+
 #ifndef HAVE_CFITSIO
     m_Ui->actionFits_Importer->setVisible(false);
 #endif
@@ -512,19 +512,19 @@ void MainWindow::loadOptions()
     case Qt::ToolButtonIconOnly:
         Icons_Only();
         m_Ui->actionIcons_Only->setChecked(true);
-	break;
+    break;
     case Qt::ToolButtonTextOnly:
         Text_Only();
         m_Ui->actionText_Only->setChecked(true);
-	break;
+    break;
     case Qt::ToolButtonTextBesideIcon:
         Text_Alongside_Icons();
         m_Ui->actionText_Alongside_Icons->setChecked(true);
-	break;
+    break;
     case Qt::ToolButtonTextUnderIcon:
         Text_Under_Icons();
         m_Ui->actionText_Under_Icons->setChecked(true);
-	break;
+    break;
     }
     m_Ui->actionShowPreviewPanel->setChecked(luminance_options->isPreviewPanelActive());
     m_Ui->actionRealtimePreviews->setChecked(luminance_options->isRealtimePreviewsActive());
@@ -541,7 +541,7 @@ void MainWindow::on_actionDonate_triggered()
 
 void MainWindow::on_fileNewAction_triggered()
 {
-	createNewHdr(QStringList()); // redirect on createNewHdr-method to avoid moc warning
+    createNewHdr(QStringList()); // redirect on createNewHdr-method to avoid moc warning
 }
 
 void MainWindow::createNewHdr(const QStringList& files)
@@ -782,12 +782,12 @@ void MainWindow::updateActions( int w )
 #ifdef QT_DEBUG
     qDebug() << "MainWindow::updateActions(" << w << ")";
 #endif
-	bool hasImage = w >= 0;
-	GenericViewer* g_v = hasImage ? (GenericViewer*)m_tabwidget->widget(w) : 0;
-	bool isHdr = g_v ? g_v->isHDR() : false;
-	bool isLdr = g_v ? !g_v->isHDR() : false;
-	LuminanceOptions luminance_opts;
-	bool hasPrinterProfile = !luminance_opts.getPrinterProfileFileName().isEmpty();
+    bool hasImage = w >= 0;
+    GenericViewer* g_v = hasImage ? (GenericViewer*)m_tabwidget->widget(w) : 0;
+    bool isHdr = g_v ? g_v->isHDR() : false;
+    bool isLdr = g_v ? !g_v->isHDR() : false;
+    LuminanceOptions luminance_opts;
+    bool hasPrinterProfile = !luminance_opts.getPrinterProfileFileName().isEmpty();
 
     updateMagnificationButtons(g_v); // g_v ? g_v : 0
 
@@ -1330,7 +1330,7 @@ void MainWindow::on_actionUpdateAvailable_triggered()
 
 void MainWindow::on_actionAbout_Luminance_triggered()
 {
-	UMessageBox::about();
+    UMessageBox::about();
 }
 
 /*
@@ -1446,9 +1446,9 @@ void MainWindow::disableCrop()
 
 void MainWindow::changeEvent(QEvent *event)
 {
-	if (event->type() == QEvent::LanguageChange)
-		 m_Ui->retranslateUi(this);
-	QWidget::changeEvent(event);
+    if (event->type() == QEvent::LanguageChange)
+         m_Ui->retranslateUi(this);
+    QWidget::changeEvent(event);
 }
 
 void MainWindow::closeEvent( QCloseEvent *event )
@@ -1465,16 +1465,16 @@ void MainWindow::closeEvent( QCloseEvent *event )
 
 bool MainWindow::event(QEvent* event)
 {
-	bool result = QMainWindow::event(event);
+    bool result = QMainWindow::event(event);
     if (event->type() == QEvent::WindowActivate && m_firstWindow == 1)
     {
         m_firstWindow = 2;
         if (luminance_options->doShowWindowsOnWindows64Message())
         {
-    		QMessageBox::warning(this, "Luminance HDR 32-bit on 64-bit", tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);        
+            QMessageBox::warning(this, "Luminance HDR 32-bit on 64-bit", tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);
         }
-	}
-	return result;
+    }
+    return result;
 }
 
 bool MainWindow::maybeSave()
@@ -1564,38 +1564,38 @@ void MainWindow::setupTM()
 
 void MainWindow::setupQueue()
 {
-	m_QueueProgressBar = new TMOProgressIndicator;
-	m_QueueProgressBar->hide();
-	statusBar()->addWidget(m_QueueProgressBar);
+    m_QueueProgressBar = new TMOProgressIndicator;
+    m_QueueProgressBar->hide();
+    statusBar()->addWidget(m_QueueProgressBar);
 
-	connect(this, SIGNAL(destroyed()), m_QueueProgressBar, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed()), m_QueueProgressBar, SLOT(deleteLater()));
 
-	m_QueueWorker = new TMWorker;
-	m_QueueThread = new QThread;
+    m_QueueWorker = new TMWorker;
+    m_QueueThread = new QThread;
 
-	m_QueueWorker->moveToThread(m_QueueThread);
+    m_QueueWorker->moveToThread(m_QueueThread);
 
-	// Memory Management
-	connect(this, SIGNAL(destroyed()), m_QueueWorker, SLOT(deleteLater()));
-	connect(m_QueueWorker, SIGNAL(destroyed()), m_QueueThread, SLOT(deleteLater()));
+    // Memory Management
+    connect(this, SIGNAL(destroyed()), m_QueueWorker, SLOT(deleteLater()));
+    connect(m_QueueWorker, SIGNAL(destroyed()), m_QueueThread, SLOT(deleteLater()));
 
-	// get back result!
-	//connect(m_QueueWorker, SIGNAL(tonemapSuccess(pfs::Frame*, TonemappingOptions*)),
-	//	this, SLOT(addLdrFrame(pfs::Frame*, TonemappingOptions*)));
-	connect(m_QueueWorker, SIGNAL(tonemapFailed(QString)),
-		this, SLOT(tonemapFailed(QString)));
+    // get back result!
+    //connect(m_QueueWorker, SIGNAL(tonemapSuccess(pfs::Frame*, TonemappingOptions*)),
+    //    this, SLOT(addLdrFrame(pfs::Frame*, TonemappingOptions*)));
+    connect(m_QueueWorker, SIGNAL(tonemapFailed(QString)),
+        this, SLOT(tonemapFailed(QString)));
 
-	// progress bar handling
-	connect(m_QueueWorker, SIGNAL(tonemapBegin()), this, SLOT(exportBegin()));
-	connect(m_QueueWorker, SIGNAL(tonemapEnd()), this, SLOT(exportEnd()));
+    // progress bar handling
+    connect(m_QueueWorker, SIGNAL(tonemapBegin()), this, SLOT(exportBegin()));
+    connect(m_QueueWorker, SIGNAL(tonemapEnd()), this, SLOT(exportEnd()));
 
-	connect(m_QueueWorker, SIGNAL(tonemapSetValue(int)), m_QueueProgressBar, SLOT(setValue(int)));
-	connect(m_QueueWorker, SIGNAL(tonemapSetMaximum(int)), m_QueueProgressBar, SLOT(setMaximum(int)));
-	connect(m_QueueWorker, SIGNAL(tonemapSetMinimum(int)), m_QueueProgressBar, SLOT(setMinimum(int)));
-	connect(m_QueueProgressBar, SIGNAL(terminate()), m_QueueWorker, SIGNAL(tonemapRequestTermination()), Qt::DirectConnection);
+    connect(m_QueueWorker, SIGNAL(tonemapSetValue(int)), m_QueueProgressBar, SLOT(setValue(int)));
+    connect(m_QueueWorker, SIGNAL(tonemapSetMaximum(int)), m_QueueProgressBar, SLOT(setMaximum(int)));
+    connect(m_QueueWorker, SIGNAL(tonemapSetMinimum(int)), m_QueueProgressBar, SLOT(setMinimum(int)));
+    connect(m_QueueProgressBar, SIGNAL(terminate()), m_QueueWorker, SIGNAL(tonemapRequestTermination()), Qt::DirectConnection);
 
-	// start thread waiting for signals (I/O requests)
-	m_QueueThread->start();
+    // start thread waiting for signals (I/O requests)
+    m_QueueThread->start();
 }
 
 void MainWindow::tonemapBegin()
@@ -1614,15 +1614,15 @@ void MainWindow::tonemapEnd()
 
 void MainWindow::exportBegin()
 {
-	m_QueueProgressBar->setMaximum(0);
-	m_QueueProgressBar->show();
+    m_QueueProgressBar->setMaximum(0);
+    m_QueueProgressBar->show();
 }
 
 void MainWindow::exportEnd()
 {
-	m_tonemapPanel->setExportQueueSize(--m_exportQueueSize);
-	m_QueueProgressBar->hide();
-	m_QueueProgressBar->reset();
+    m_tonemapPanel->setExportQueueSize(--m_exportQueueSize);
+    m_QueueProgressBar->hide();
+    m_QueueProgressBar->reset();
 }
 
 
@@ -1709,9 +1709,9 @@ void MainWindow::exportImage(TonemappingOptions *opts)
 
         QString exportDir = luminance_options->getExportDir();
 
-		m_tonemapPanel->setExportQueueSize(++m_exportQueueSize);
+        m_tonemapPanel->setExportQueueSize(++m_exportQueueSize);
 
-		QMetaObject::invokeMethod(m_QueueWorker, "computeTonemapAndExport", Qt::QueuedConnection,
+        QMetaObject::invokeMethod(m_QueueWorker, "computeTonemapAndExport", Qt::QueuedConnection,
                                   Q_ARG(pfs::Frame*, hdr_viewer->getFrame()),
                                   Q_ARG(TonemappingOptions*,opts),
                                   Q_ARG(pfs::Params,params),
@@ -1765,14 +1765,14 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 
     m_PreviewPanel->setEnabled(true);
 
-	if (m_Ui->actionSoft_Proofing->isChecked()) {
-		LdrViewer *viewer = static_cast<LdrViewer *>(n);
-		viewer->doSoftProofing(false);
-	}
-	else if (m_Ui->actionGamut_Check->isChecked()) {
-		LdrViewer *viewer = static_cast<LdrViewer *>(n);
-		viewer->doSoftProofing(true);
-	}
+    if (m_Ui->actionSoft_Proofing->isChecked()) {
+        LdrViewer *viewer = static_cast<LdrViewer *>(n);
+        viewer->doSoftProofing(false);
+    }
+    else if (m_Ui->actionGamut_Check->isChecked()) {
+        LdrViewer *viewer = static_cast<LdrViewer *>(n);
+        viewer->doSoftProofing(true);
+    }
 }
 
 void MainWindow::tonemapFailed(const QString& error_msg)
@@ -1865,10 +1865,10 @@ void MainWindow::updatePreviews(bool b)
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 {
-	bool hasImage = c_v != NULL;
-	bool isNormalSize = c_v && c_v->isNormalSize();
-	bool isFilledToWindow = c_v && c_v->isFilledToWindow();
-	bool isFittedToWindow = c_v && c_v->isFittedToWindow();
+    bool hasImage = c_v != NULL;
+    bool isNormalSize = c_v && c_v->isNormalSize();
+    bool isFilledToWindow = c_v && c_v->isFilledToWindow();
+    bool isFittedToWindow = c_v && c_v->isFittedToWindow();
 
     m_Ui->zoomInAct->setEnabled(hasImage && (isFilledToWindow || isFittedToWindow));
     m_Ui->zoomOutAct->setEnabled(hasImage && !isFittedToWindow);
@@ -1883,7 +1883,7 @@ void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 
 void MainWindow::on_actionRemove_Tab_triggered()
 {
-	removeTab(m_tabwidget->currentIndex());
+    removeTab(m_tabwidget->currentIndex());
 }
 
 void MainWindow::removeTab(int t)
@@ -1897,7 +1897,7 @@ void MainWindow::removeTab(int t)
     w->blockSignals(true);
     if (w->isHDR())
     {
-    	bool doClose = false;
+        bool doClose = false;
 
 #ifdef QT_DEBUG
     qDebug() << "Remove HDR from MainWindow";
@@ -1907,7 +1907,7 @@ void MainWindow::removeTab(int t)
             if ( maybeSave() )
             {
                 // if discard OR saved
-            	doClose = true;
+                doClose = true;
             }
             // if FALSE, it means that the user said "Cancel"
             // or the saving operation went wrong
@@ -1917,25 +1917,25 @@ void MainWindow::removeTab(int t)
             }
         }
         else
-        	doClose = true;
+            doClose = true;
 
         if (doClose) {
-			m_tabwidget->removeTab(t);
-			w->deleteLater();   // delete yourself whenever you want
+            m_tabwidget->removeTab(t);
+            w->deleteLater();   // delete yourself whenever you want
 
-			showPreviewPanel(false);
-			setWindowModified(false);
+            showPreviewPanel(false);
+            setWindowModified(false);
 
-			tm_status.is_hdr_ready = false;
-			tm_status.curr_tm_frame = NULL;
-			tm_status.curr_tm_options = NULL;
+            tm_status.is_hdr_ready = false;
+            tm_status.curr_tm_frame = NULL;
+            tm_status.curr_tm_options = NULL;
 
             m_tonemapPanel->setEnabled(false);
 
             m_inputFilesName.clear();
             m_inputExpoTimes.clear();
 
-			m_PreviewscrollArea->hide();
+            m_PreviewscrollArea->hide();
         }
     }
     else
@@ -2003,9 +2003,9 @@ void MainWindow::setCurrentFile(const QString &fileName)
         if (mainWin)
             mainWin->updateRecentFileActions();
     }
-    
+
     OsIntegration::getInstance().addRecentFile(fileName);
-    
+
 }
 
 void MainWindow::updateRecentFileActions()
@@ -2095,9 +2095,9 @@ void MainWindow::on_actionWhite_Balance_triggered()
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     m_Ui->actionWhite_Balance->setEnabled(false);
     m_processingAWB = true;
-	m_viewerToProcess = (GenericViewer*) m_tabwidget->currentWidget();
+    m_viewerToProcess = (GenericViewer*) m_tabwidget->currentWidget();
     m_tabwidget->setTabEnabled(m_tabwidget->currentIndex(), false);
-    
+
     Frame *frame = m_viewerToProcess->getFrame();
 
     m_futureWatcher.setFuture(
@@ -2110,8 +2110,8 @@ void MainWindow::on_actionWhite_Balance_triggered()
 void MainWindow::whiteBalanceDone()
 {
     QApplication::restoreOverrideCursor();
-	m_processingAWB = false;
-	m_Ui->actionWhite_Balance->setEnabled(true);
+    m_processingAWB = false;
+    m_Ui->actionWhite_Balance->setEnabled(true);
     m_viewerToProcess->setEnabled(true);
     m_tabwidget->setTabEnabled(m_tabwidget->indexOf(m_viewerToProcess), true);
     m_tabwidget->setCurrentWidget(m_viewerToProcess);
@@ -2124,52 +2124,52 @@ void MainWindow::whiteBalanceDone()
 
 void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 {
-	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
+    GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
     if ( current == NULL ) return;
-	if ( current->isHDR() ) return;
-	LdrViewer *viewer = (LdrViewer *) current;
-	if (doProof) {
+    if ( current->isHDR() ) return;
+    LdrViewer *viewer = (LdrViewer *) current;
+    if (doProof) {
 #ifdef QT_DEBUG
-		qDebug() << "MainWindow:: do soft proofing";
+        qDebug() << "MainWindow:: do soft proofing";
 #endif
-		if (m_Ui->actionGamut_Check->isChecked())
-			m_Ui->actionGamut_Check->setChecked(false);
-		viewer->doSoftProofing(false);
-	}
-	else {
+        if (m_Ui->actionGamut_Check->isChecked())
+            m_Ui->actionGamut_Check->setChecked(false);
+        viewer->doSoftProofing(false);
+    }
+    else {
 #ifdef QT_DEBUG
-		qDebug() << "MainWindow:: undo soft proofing";
+        qDebug() << "MainWindow:: undo soft proofing";
 #endif
-		viewer->undoSoftProofing();
-	}
+        viewer->undoSoftProofing();
+    }
 }
 
 void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 {
-	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
+    GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
     if ( current == NULL ) return;
-	if ( current->isHDR() ) return;
-	LdrViewer *viewer = (LdrViewer *) current;
-	if (doGamut) {
+    if ( current->isHDR() ) return;
+    LdrViewer *viewer = (LdrViewer *) current;
+    if (doGamut) {
 #ifdef QT_DEBUG
-		qDebug() << "MainWindow:: do gamut check";
+        qDebug() << "MainWindow:: do gamut check";
 #endif
-		if (m_Ui->actionSoft_Proofing->isChecked())
-			m_Ui->actionSoft_Proofing->setChecked(false);
-		viewer->doSoftProofing(true);
-	}
-	else {
+        if (m_Ui->actionSoft_Proofing->isChecked())
+            m_Ui->actionSoft_Proofing->setChecked(false);
+        viewer->doSoftProofing(true);
+    }
+    else {
 #ifdef QT_DEBUG
-		qDebug() << "MainWindow:: undo gamut check";
+        qDebug() << "MainWindow:: undo gamut check";
 #endif
-		viewer->undoSoftProofing();
-	}
+        viewer->undoSoftProofing();
+    }
 }
 
 void MainWindow::updateSoftProofing(int i)
 {
-	QWidget *wgt = m_tabwidget->widget(i);
-	GenericViewer *g_v = (GenericViewer *)wgt;
+    QWidget *wgt = m_tabwidget->widget(i);
+    GenericViewer *g_v = (GenericViewer *)wgt;
 
     if (g_v == NULL) return;
     if ( !g_v->isHDR() )

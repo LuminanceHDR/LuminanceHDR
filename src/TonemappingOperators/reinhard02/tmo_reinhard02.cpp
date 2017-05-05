@@ -3,7 +3,7 @@
  * @brief Tone map luminance channel using Reinhard02 model
  *
  * This file is a part of LuminanceHDR package.
- * Implementation courtesy of Erik Reinhard. 
+ * Implementation courtesy of Erik Reinhard.
  *
  * Original source code note:
  * Tonemap.c  University of Utah / Erik Reinhard / October 2001
@@ -119,17 +119,17 @@ void Reinhard02::tonemap_image ()
     {
       if (m_use_scales)
       {
-	prefscale = m_range - 1;
-	for (scale = 0; scale < m_range - 1; scale++)
-	  if ( scale >= PyramidHeight || fabs (ACTIVITY(x,y,scale)) > m_threshold)
-	  {
-	    prefscale = scale;
-	    break;
-	  }
-	m_image[y][x][0] /= 1. + V1(x,y,prefscale);
+    prefscale = m_range - 1;
+    for (scale = 0; scale < m_range - 1; scale++)
+      if ( scale >= PyramidHeight || fabs (ACTIVITY(x,y,scale)) > m_threshold)
+      {
+        prefscale = scale;
+        break;
+      }
+    m_image[y][x][0] /= 1. + V1(x,y,prefscale);
       }
       else
-	m_image[y][x][0] = m_image[y][x][0] * (1. + (m_image[y][x][0] / Lmax2)) / (1. + m_image[y][x][0]);
+    m_image[y][x][0] = m_image[y][x][0] * (1. + (m_image[y][x][0] / Lmax2)) / (1. + m_image[y][x][0]);
       // image[y][x][0] /= (1. + image[y][x][0]);
     }
 }
@@ -177,22 +177,22 @@ void Reinhard02::scale_to_midtone ()
     m_avg_luminance.set( log_average() );
     avg = m_avg_luminance.get();
   } else avg = log_average();
-  
+
   scale_factor = 1.0 / avg;
   for (y = 0; y < m_cvts.ymax; y++)
     for (x = 0; x < m_cvts.xmax; x++)
     {
       if (m_use_border)
       {
-	u              = (x > hw) ? m_cvts.xmax - x : x;
-	v              = (y > hh) ? m_cvts.ymax - y : y;
-	d              = (u < v) ? u : v;	
-	factor         = (d < border_size) ? (m_key - low_tone) * 
-	                  kaiserbessel (border_size - d, 0, border_size) + 
+    u              = (x > hw) ? m_cvts.xmax - x : x;
+    v              = (y > hh) ? m_cvts.ymax - y : y;
+    d              = (u < v) ? u : v;
+    factor         = (d < border_size) ? (m_key - low_tone) *
+                      kaiserbessel (border_size - d, 0, border_size) +
                           low_tone : m_key;
       }
       else
-	factor         = m_key;
+    factor         = m_key;
       m_image[y][x][0]  *= scale_factor * factor;
       m_luminance[y][x] *= scale_factor * factor;
     }
@@ -247,10 +247,10 @@ void Reinhard02::dynamic_range ()
     for (y = 0; y < m_cvts.ymax; y++)
     {
       if ((m_luminance[y][x] < minval) &&
-	  (m_luminance[y][x] > 0.0))
-	minval = m_luminance[y][x];
+      (m_luminance[y][x] > 0.0))
+    minval = m_luminance[y][x];
       if (m_luminance[y][x] > maxval)
-	maxval = m_luminance[y][x];
+    maxval = m_luminance[y][x];
     }
 }
 
@@ -307,7 +307,7 @@ void Reinhard02::tmo_reinhard02()
 
   m_ph.setValue( 10 );
   if (m_ph.canceled())
-	  goto end;
+      goto end;
 
   // reading image
   for( y=0 ; y<m_cvts.ymax ; y++ )
@@ -317,11 +317,11 @@ void Reinhard02::tmo_reinhard02()
   copy_luminance();
   m_ph.setValue( 20 );
   if (m_ph.canceled())
-	  goto end;
+      goto end;
   scale_to_midtone();
   m_ph.setValue( 30 );
   if (m_ph.canceled())
-	  goto end;
+      goto end;
 
   if( m_use_scales )
   {
@@ -329,13 +329,13 @@ void Reinhard02::tmo_reinhard02()
   }
   m_ph.setValue( 50 );
   if (m_ph.canceled())
-	  goto end;
+      goto end;
 
   tonemap_image();
 
   m_ph.setValue( 85 );
   if (m_ph.canceled())
-	  goto end;
+      goto end;
   // saving image
   for( y=0 ; y<m_cvts.ymax ; y++ )
     for( x=0 ; x<m_cvts.xmax ; x++ )
@@ -345,7 +345,7 @@ void Reinhard02::tmo_reinhard02()
 
   m_ph.setValue( 95 );
   if (m_ph.canceled())
-	  goto end;
+      goto end;
   deallocate_memory();
   if( m_use_scales ) {
       clean_pyramid();
@@ -353,9 +353,9 @@ void Reinhard02::tmo_reinhard02()
 
   if (!m_ph.canceled())
     m_ph.setValue( 100 );
-  
+
   end:
-	;
+    ;
 }
 
 double Reinhard02::V1( int x, int y, int level )
@@ -364,7 +364,7 @@ double Reinhard02::V1( int x, int y, int level )
   int x0, y0;
   int l, size;
   double s, t;
-  
+
   /* Level 0 is a special case, the value is just the image */
   if (level == 0)
       return(m_luminance[y][x]);
@@ -377,17 +377,17 @@ double Reinhard02::V1( int x, int y, int level )
 
   x0 = (x0 >= size ? size - 1 : x0);
   y0 = (y0 >= size ? size - 1 : y0);
-  
+
   s = (double)(x - x0*l)/(double)l;
   t = (double)(y - y0*l)/(double)l;
-  
+
   level--;
 
   //!! FIX: a quick fix for boundary conditions
   int x01,y01;
   x01 = (x0 == size-1 ? x0 : x0+1);
   y01 = (y0 == size-1 ? y0 : y0+1);
-  
+
   return((1-s)*(1-t)*Pyramid[level][y0][x0] + s*(1-t)*Pyramid[level][y0][x01]
           + (1-s)*t*Pyramid[level][y01][x0] + s*t*Pyramid[level][y01][x01]);
 }
@@ -396,7 +396,7 @@ double Reinhard02::V1( int x, int y, int level )
 double Reinhard02::pyramid_lookup( unsigned int x, unsigned int y, int level )
 {
   // int n, s;
-  
+
   /* Level 0 is a special case, the value is just the image */
   if (level == 0) {
     if ( (x < 0) || (y < 0) || (x >= m_width) || (y >= m_height) )
@@ -409,7 +409,7 @@ double Reinhard02::pyramid_lookup( unsigned int x, unsigned int y, int level )
   level--;
   // n = 1 << level;
   unsigned int s = PyramidWidth0 >> level;
-  
+
   //x = x >> level;
   //y = y >> level;
 
@@ -429,7 +429,7 @@ void Reinhard02::build_pyramid( double **/*luminance*/, int image_width, int ima
 //    int height, pyramid_height;
 
   double sum = 0;
-  
+
   double a = 0.4;
   double b = 0.25;
   double c = b - a/2;
@@ -441,7 +441,7 @@ void Reinhard02::build_pyramid( double **/*luminance*/, int image_width, int ima
   w[2] = a;
   w[3] = w[1];
   w[4] = w[0];
-  
+
   /* Build the pyramid slices.  The bottom of the pyramid is the luminace  */
   /* image, and is not in the Pyramid array.                               */
   /* For simplicity, the first level is padded to a square whose side is a */
@@ -456,7 +456,7 @@ void Reinhard02::build_pyramid( double **/*luminance*/, int image_width, int ima
   PyramidWidth0 = width;
 
 //  fprintf(stderr, "max_dim %d   height %d\n", max_dim, PyramidHeight);
-  
+
   /* Allocate the outer Pyramid array */
   Pyramid = (double***) calloc(PyramidHeight, sizeof(double**));
   if (!Pyramid) {
@@ -470,7 +470,7 @@ void Reinhard02::build_pyramid( double **/*luminance*/, int image_width, int ima
   while (width) {
 
 //    fprintf(stderr, "level %d, width = %d\n", k, width);
-    
+
     /* Allocate the slice */
     Pyramid[k] = (double**) calloc(width, sizeof(double*));
     if (!Pyramid[k]) {
@@ -495,7 +495,7 @@ void Reinhard02::build_pyramid( double **/*luminance*/, int image_width, int ima
             sum += w[i]*w[j]*pyramid_lookup(2*x + i - 2, 2*y + j - 2, k);
           }
         }
-        Pyramid[k][y][x] = sum; 
+        Pyramid[k][y][x] = sum;
       }
     }
 

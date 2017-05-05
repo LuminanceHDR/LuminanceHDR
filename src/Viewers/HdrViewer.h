@@ -83,7 +83,7 @@ protected Q_SLOTS:
 
 protected:
     // Methods
-	virtual void retranslateUi();
+    virtual void retranslateUi();
     void setRangeWindow(float min, float max);
     void keyPressEvent(QKeyEvent *event);
 

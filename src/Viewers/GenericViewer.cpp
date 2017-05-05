@@ -102,9 +102,9 @@ void GenericViewer::retranslateUi()
 
 void GenericViewer::changeEvent(QEvent *event)
 {
-	if (event->type() == QEvent::LanguageChange)
-		 retranslateUi();
-	QWidget::changeEvent(event);
+    if (event->type() == QEvent::LanguageChange)
+         retranslateUi();
+    QWidget::changeEvent(event);
 }
 
 void GenericViewer::fitToWindow(bool /* checked */)
@@ -361,8 +361,8 @@ QImage GenericViewer::getQImage() const
 
 void GenericViewer::setQImage(const QImage& qimage)
 {
-	QPixmap pixmap = QPixmap::fromImage(qimage);
-	pixmap.setDevicePixelRatio(m_devicePixelRatio);
+    QPixmap pixmap = QPixmap::fromImage(qimage);
+    pixmap.setDevicePixelRatio(m_devicePixelRatio);
     mPixmap->setPixmap(pixmap);
 }
 
@@ -393,7 +393,7 @@ void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)
     // update tonemappingoptions (if available)
     // in the current implementation, only LdrViewer redefines this function
     if (tmopts != NULL)
-	    setTonemappingOptions(tmopts);
+        setTonemappingOptions(tmopts);
 
     // reset boundaries
     updateView();
@@ -406,11 +406,11 @@ pfs::Frame* GenericViewer::getFrame() const
 
 void GenericViewer::startDragging()
 {
-	QDrag *drag = new QDrag(this);
-	QMimeData *mimeData = new QMimeData;
-	mimeData->setImageData(mPixmap->pixmap().toImage());
-	drag->setMimeData(mimeData);
-	drag->setPixmap(mPixmap->pixmap().scaledToHeight(mPixmap->pixmap().height()/10));
+    QDrag *drag = new QDrag(this);
+    QMimeData *mimeData = new QMimeData;
+    mimeData->setImageData(mPixmap->pixmap().toImage());
+    drag->setMimeData(mimeData);
+    drag->setPixmap(mPixmap->pixmap().scaledToHeight(mPixmap->pixmap().height()/10));
 
     /*Qt::DropAction dropAction =*/ drag->exec();
 }

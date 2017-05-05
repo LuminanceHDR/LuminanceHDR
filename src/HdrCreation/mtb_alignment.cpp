@@ -1,23 +1,23 @@
 /*
  * This file is a part of Luminance HDR package.
- * ---------------------------------------------------------------------- 
- *	Copyright (C) 2007 by Nicholas Phillips
+ * ----------------------------------------------------------------------
+ *    Copyright (C) 2007 by Nicholas Phillips
  *  Copyright (C) 2013 Davide Anastasia
  *
- *	This program is free software; you can redistribute it and/or modify
- *	it under the terms of the GNU General Public License as published by
- *	the Free Software Foundation; either version 2 of the License, or
- *	(at your option) any later version.
+ *    This program is free software; you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation; either version 2 of the License, or
+ *    (at your option) any later version.
  *
- *	This program is distributed in the hope that it will be useful,
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *	GNU General Public License for more details.
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
  *
- *	You should have received a copy of the GNU General Public License
- *	along with this program; if not, write to the Free Software
- *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ *    You should have received a copy of the GNU General Public License
+ *    along with this program; if not, write to the Free Software
+ *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * ----------------------------------------------------------------------
  *
  */
 
@@ -161,7 +161,7 @@ void getExpShift(const Array2D8u& img1, const int median1,
         }
     }
 
-    PRINT_DEBUG("getExpShift::Level " << shift_bits	<< " shift (" << shift_x << "," << shift_y << ")");
+    PRINT_DEBUG("getExpShift::Level " << shift_bits    << " shift (" << shift_x << "," << shift_y << ")");
 }
 
 int getLum(const Frame& in, Array2D8u& out, double quantile)
@@ -205,15 +205,15 @@ int getLum(const Frame& in, Array2D8u& out, double quantile)
 }
 
 void mtbalign(const pfs::Frame& image1, const pfs::Frame& image2,
-			  const double quantile, const int noise, const int shift_bits,
-			  int &shift_x, int &shift_y)
+              const double quantile, const int noise, const int shift_bits,
+              int &shift_x, int &shift_y)
 {
     Array2D8u img1lum;
     Array2D8u img2lum;
 
     int median1 = getLum(image1, img1lum, quantile);
     int median2 = getLum(image2, img2lum, quantile);
-	
+
     PRINT_DEBUG("align::medians, image 1: " << median1 << ", image 2: " << median2);
     getExpShift(img1lum, median1,
                 img2lum, median2,

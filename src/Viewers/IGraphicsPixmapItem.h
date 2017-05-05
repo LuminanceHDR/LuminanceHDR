@@ -51,7 +51,7 @@ public:
 
 Q_SIGNALS:
     void selectionReady(bool);
-	void startDragging();
+    void startDragging();
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *e);

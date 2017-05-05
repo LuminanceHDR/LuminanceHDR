@@ -38,18 +38,18 @@
 
 bool matchesLdrFilename(const QString& file)
 {
-	QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
-	return exp.exactMatch(file);
+    QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
+    return exp.exactMatch(file);
 }
 
 bool matchesHdrFilename(const QString& file)
 {
 #ifdef HAVE_CFITSIO
-	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
+    QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|fit|fits|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 #else
-	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
+    QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 #endif
-	return exp.exactMatch(file);
+    return exp.exactMatch(file);
 }
 
 QStringList getAllHdrFileExtensions()
@@ -72,7 +72,7 @@ QStringList getAllHdrFileExtensions()
 
 bool matchesValidHDRorLDRfilename(const QString& file)
 {
-	return matchesLdrFilename(file) || matchesHdrFilename(file);
+    return matchesLdrFilename(file) || matchesHdrFilename(file);
 }
 
 QStringList convertUrlListToFilenameList(const QList<QUrl>& urls)

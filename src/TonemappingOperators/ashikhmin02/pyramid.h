@@ -1,10 +1,10 @@
 /**
  * @brief Gaussian Pyramid for Michael Ashikhmin tone mapping operator
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Akiko Yoshida, <yoshida@mpi-sb.mpg.de>
  *
@@ -106,7 +106,7 @@ class GaussianPyramid
   double InterpolateLum(double newX, double newY, Pyramid *pl) {
     int X_int = (int)newX;
     int Y_int = (int)newY;
-    
+
     double dx, omdx, dy, omdy;
     dx = newX - (double)X_int;
     omdx = 1.0 - dx;
@@ -116,9 +116,9 @@ class GaussianPyramid
 
     if(X_int < pl->width-1 && Y_int < pl->height-1)
       lum = omdx * omdy * pl->getPixel(X_int, Y_int)
-	+ dx * omdy * pl->getPixel(X_int+1, Y_int)
-	+ omdx * dy * pl->getPixel(X_int, Y_int+1)
-	+ dx * dy * pl->getPixel(X_int+1, Y_int+1);
+    + dx * omdy * pl->getPixel(X_int+1, Y_int)
+    + omdx * dy * pl->getPixel(X_int, Y_int+1)
+    + dx * dy * pl->getPixel(X_int+1, Y_int+1);
     else if(X_int < pl->width-1 && Y_int >= pl->height) {
       Y_int = pl->height-1;
       lum = omdx * pl->getPixel(X_int, Y_int) + dx * pl->getPixel(X_int+1, Y_int);
@@ -146,19 +146,19 @@ class GaussianPyramid
       initializeNewLevel(i, new_w, new_h, new_kernel_size, lambda*p[bottom].lambda);
 
       for(int y=0; y<p[i].height; y++) {
-	for(int x=0; x<p[i].width; x++) {
-	  // top
-	  double newX = (int)((double)x * 1/2 / lambda);
-	  double newY = (int)((double)y * 1/2 / lambda);
-	  double top_lum = InterpolateLum(newX, newY, &p[top]);
+    for(int x=0; x<p[i].width; x++) {
+      // top
+      double newX = (int)((double)x * 1/2 / lambda);
+      double newY = (int)((double)y * 1/2 / lambda);
+      double top_lum = InterpolateLum(newX, newY, &p[top]);
 
-	  // bottom
-	  newX = (int)((double)x/lambda);
-	  newY = (int)((double)y/lambda);
-	  double bottom_lum = InterpolateLum(newX, newY, &p[bottom]);
+      // bottom
+      newX = (int)((double)x/lambda);
+      newY = (int)((double)y/lambda);
+      double bottom_lum = InterpolateLum(newX, newY, &p[bottom]);
 
-	  (*p[i].GP)(x,y) = (1.0-lambda)*top_lum + lambda*bottom_lum;
-	}
+      (*p[i].GP)(x,y) = (1.0-lambda)*top_lum + lambda*bottom_lum;
+    }
       }
     }
   }
@@ -168,8 +168,8 @@ class GaussianPyramid
     int bottom=0, top=bottom+1;
     while(bottom < PYRAMID-1) {
       while(p[top].flag == 0)
-	top++;
-    
+    top++;
+
       Interpolate(bottom, top);
 
       bottom = top;
@@ -195,28 +195,28 @@ class GaussianPyramid
     int X, Y;
     for(int y=0; y<h; y++) {
       for(int x=0; x<w; x++) {
-	double sum = 0.0;
-	for(int n=-2; n<3; n++) {
-	  for(int m=-2; m<3; m++) {
-	    if(2*x+m >= 0 && 2*x+m < p[current_index].width)
-	      X = 2*x+m;
-	    else if(2*x+m < 0)
-	      X = 0;
-	    else
-	      X = p[current_index].width-1;
-	      
-	    if(2*y+n >= 0 && 2*y+n < p[current_index].height)
-	      Y = 2*y+n;
-	    else if(2*y+n < 0)
-	      Y = 0;
-	    else
-	      Y = p[current_index].height-1;
+    double sum = 0.0;
+    for(int n=-2; n<3; n++) {
+      for(int m=-2; m<3; m++) {
+        if(2*x+m >= 0 && 2*x+m < p[current_index].width)
+          X = 2*x+m;
+        else if(2*x+m < 0)
+          X = 0;
+        else
+          X = p[current_index].width-1;
 
-	    sum += g_weights[m+2][n+2] * p[current_index].getPixel(X, Y);
-	  }
-	}
+        if(2*y+n >= 0 && 2*y+n < p[current_index].height)
+          Y = 2*y+n;
+        else if(2*y+n < 0)
+          Y = 0;
+        else
+          Y = p[current_index].height-1;
 
-	p[next_index].setPixel(x, y, sum);
+        sum += g_weights[m+2][n+2] * p[current_index].getPixel(X, Y);
+      }
+    }
+
+    p[next_index].setPixel(x, y, sum);
       }
     }
     return next_index;
@@ -240,9 +240,9 @@ class GaussianPyramid
 
   void constructPyramid(pfs::Array2Df* lum_map, int im_width, int im_height) {
     initializeNewLevel(0, im_width, im_height, 1, 1.0);
-    for(int y=0; y<im_height; y++) 
+    for(int y=0; y<im_height; y++)
       for(int x=0; x<im_width; x++)
-	p[0].setPixel(x, y, (*lum_map)(x,y));
+    p[0].setPixel(x, y, (*lum_map)(x,y));
 
     int current_index = 0;
     while(p[current_index].kernel_size < PYRAMID)

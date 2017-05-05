@@ -6,11 +6,11 @@
  * S.N. Pattanaik, J. Tumblin, H. Yee, and D.P. Greenberg
  * In Proceedings of ACM SIGGRAPH 2000
  *
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -24,8 +24,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
  * $Id: tmo_pattanaik00.cpp,v 1.3 2008/11/04 23:43:08 rafm Exp $
@@ -106,7 +106,7 @@ void calculateLocalAdaptation(const pfs::Array2Df& Y, int x, int y, float& Acone
 void tmo_pattanaik00(pfs::Array2Df& R, pfs::Array2Df& G, pfs::Array2Df& B,
                      const pfs::Array2Df& Y,
                      VisualAdaptationModel* am, bool local, pfs::Progress &ph)
-{  
+{
     ///--- initialization of parameters
     /// cones level of adaptation
     float Acone = am->getAcone();
@@ -267,10 +267,10 @@ float sigma_response_rod(float I)
 //  float j = 0.00001f / (5.0f*I + 0.00001f);
 //   float fls = 3800*pow(j,2.0f)*5*I+0.2*pow(1-pow(j,2.0f),4.0f)*pow(5*I,1.0f/6.0f);
 //   float sigma_rod = pow(2,1.0f/n) / fls * I;
-  
+
   float j = 1.0f / (5*1e4*I+1);
   float j2 = j*j;
-  
+
   float sigma_rod = (2.5874f*I)/(19000.0f*j2*I+0.2615f*pow(1.0f-j2,4)*pow(I,1.0f/6.0f));
   return sigma_rod;
 }
@@ -283,7 +283,7 @@ float sigma_response_cone(float I)
 //   float fl = 0.2f*5.0f*pow(k,4.0f)*I
 //     + 0.1f*pow(1.0f-pow(k,4.0f),2.0f)*pow(5*I,1.0f/3.0f);
 //   float sigma_cone = pow(2.0f,1.0f/n) / fl * (5.0f*I);
-  
+
   float k = 1.0f/(5.0f*I+1);
   float k4 = pow(k,4.0f);
   float sigma_cone = (12.9223f*I) / ( k4*I+0.171 * pow(1.0f-k4,2) * powf(I,1.0f/3.0f));

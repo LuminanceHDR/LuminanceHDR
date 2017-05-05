@@ -78,8 +78,8 @@ public:
     QStringList getInputFilesNames();
 
 protected:
-	void resizeEvent(QResizeEvent *);
-	void keyPressEvent(QKeyEvent *);
+    void resizeEvent(QResizeEvent *);
+    void keyPressEvent(QKeyEvent *);
     void dragEnterEvent(QDragEnterEvent *);
     void dropEvent(QDropEvent *);
 
@@ -116,7 +116,7 @@ private slots:
     void alignSelectionClicked();
 
     // HDR Creation Model Functions.....
-	void predefConfigsComboBoxActivated(int);
+    void predefConfigsComboBoxActivated(int);
     void customConfigCheckBoxToggled(bool);
 
     void weightingFunctionComboBoxActivated(int);
@@ -124,17 +124,17 @@ private slots:
     void modelComboBoxActivated(int);
 
     bool loadRespCurve();
-	void saveRespCurveFileButtonClicked();
+    void saveRespCurveFileButtonClicked();
     // ...end!
 
     void NextFinishButtonClicked();
-	void currentPageChangedInto(int);
-	void editingEVfinished();
-	void reject();
-	void ais_failed(QProcess::ProcessError);
-	void writeAisData(QByteArray data);
-	void setupConnections();
-	void on_pushButtonSaveSettings_clicked();
+    void currentPageChangedInto(int);
+    void editingEVfinished();
+    void reject();
+    void ais_failed(QProcess::ProcessError);
+    void writeAisData(QByteArray data);
+    void setupConnections();
+    void on_pushButtonSaveSettings_clicked();
     void updateProgressBar(int);
     void updateThresholdSlider(int);
     void updateThresholdSpinBox(double);

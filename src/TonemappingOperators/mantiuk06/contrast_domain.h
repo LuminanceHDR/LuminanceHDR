@@ -2,16 +2,16 @@
  * @brief Contrast mapping TMO
  *
  * From:
- * 
+ *
  * Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel.
  * A Perceptual Framework for Contrast Processing of High Dynamic Range Images
  * In: ACM Transactions on Applied Perception 3 (3), pp. 286-308, 2006
  * http://www.mpi-inf.mpg.de/~mantiuk/contrast_domain/
  *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2007 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -25,8 +25,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>

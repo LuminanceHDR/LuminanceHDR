@@ -35,47 +35,47 @@ namespace pfsadditions
 {
 
 FormatHelper::FormatHelper()
-	: QObject()
-	, m_comboBox(NULL)
-	, m_settingsButton(NULL)
+    : QObject()
+    , m_comboBox(NULL)
+    , m_settingsButton(NULL)
     , m_hdr(false)
 {}
 
 void FormatHelper::initConnection(QComboBox* comboBox, QAbstractButton* settingsButton, bool hdr)
 {
-	m_comboBox = comboBox;
-	m_settingsButton = settingsButton;
+    m_comboBox = comboBox;
+    m_settingsButton = settingsButton;
     m_hdr = hdr;
 
-	if (hdr)
-	{
-		// FrameWriterFactory::sm_registry
-		comboBox->addItem(QObject::tr("HDR"), QVariant(0));
-		comboBox->addItem(QObject::tr("EXR"), QVariant(1));
-		comboBox->addItem(QObject::tr("TIFF"), QVariant(2));
-		comboBox->addItem(QObject::tr("PFS"), QVariant(3));
-	}
-	else
-	{
-		comboBox->addItem(QObject::tr("TIFF"), QVariant(20));
-		comboBox->addItem(QObject::tr("JPEG"), QVariant(21));
-		comboBox->addItem(QObject::tr("PNG"), QVariant(22));
-		comboBox->addItem(QObject::tr("BMP"), QVariant(23));
-		comboBox->addItem(QObject::tr("PPM"), QVariant(24));
-		comboBox->addItem(QObject::tr("PBM"), QVariant(25));
-	}
+    if (hdr)
+    {
+        // FrameWriterFactory::sm_registry
+        comboBox->addItem(QObject::tr("HDR"), QVariant(0));
+        comboBox->addItem(QObject::tr("EXR"), QVariant(1));
+        comboBox->addItem(QObject::tr("TIFF"), QVariant(2));
+        comboBox->addItem(QObject::tr("PFS"), QVariant(3));
+    }
+    else
+    {
+        comboBox->addItem(QObject::tr("TIFF"), QVariant(20));
+        comboBox->addItem(QObject::tr("JPEG"), QVariant(21));
+        comboBox->addItem(QObject::tr("PNG"), QVariant(22));
+        comboBox->addItem(QObject::tr("BMP"), QVariant(23));
+        comboBox->addItem(QObject::tr("PPM"), QVariant(24));
+        comboBox->addItem(QObject::tr("PBM"), QVariant(25));
+    }
 
-	connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxIndexChanged(int)));
-	connect(settingsButton, SIGNAL(pressed()), this, SLOT(buttonPressed()));
+    connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxIndexChanged(int)));
+    connect(settingsButton, SIGNAL(pressed()), this, SLOT(buttonPressed()));
 
-	const int format = hdr ? 0 : 20;
-	setDefaultParams(format);
-	updateButton(format);
+    const int format = hdr ? 0 : 20;
+    setDefaultParams(format);
+    updateButton(format);
 }
 
 QString FormatHelper::getFileExtension()
 {
-	int format = m_comboBox->currentData().toInt();
+    int format = m_comboBox->currentData().toInt();
     return getFileExtensionForFormat(format);
 }
 
@@ -154,67 +154,67 @@ pfs::Params FormatHelper::getParamsForFormat(int format)
 
 void FormatHelper::comboBoxIndexChanged(int idx)
 {
-	int format = m_comboBox->currentData().toInt();
-	setDefaultParams(format);
-	updateButton(format);
+    int format = m_comboBox->currentData().toInt();
+    setDefaultParams(format);
+    updateButton(format);
 }
 
 void FormatHelper::buttonPressed()
 {
-	int format = m_comboBox->currentData().toInt();
-	switch (format)
-	{
-	case 2:
-	case 20:
-	{
+    int format = m_comboBox->currentData().toInt();
+    switch (format)
+    {
+    case 2:
+    case 20:
+    {
         int tiffMode;
         if (!m_params.get("tiff_mode", tiffMode))
             tiffMode = -1;
 
         TiffModeDialog t(format == 2, tiffMode, m_settingsButton);
-		if (t.exec() == QDialog::Accepted)
-		{
-			m_params.set("tiff_mode", t.getTiffWriterMode());
-		}
-	}
-		break;
-	case 21:
-	case 22:
-	{
+        if (t.exec() == QDialog::Accepted)
+        {
+            m_params.set("tiff_mode", t.getTiffWriterMode());
+        }
+    }
+        break;
+    case 21:
+    case 22:
+    {
         size_t quality;
         int qual = -1;
         if (m_params.get("quality", quality))
             qual = quality;
 
         ImageQualityDialog d(NULL, format == 21 ? "png" : "jpg", qual, m_settingsButton);
-		if (d.exec() == QDialog::Accepted)
-		{
-			size_t quality = d.getQuality();
-			m_params.set("quality", quality);
-		}
+        if (d.exec() == QDialog::Accepted)
+        {
+            size_t quality = d.getQuality();
+            m_params.set("quality", quality);
+        }
 
-	}
-		break;
-	case 3:
-		m_params.set("format", std::string("pfs"));
-		break;
-	default:
-		break;
-	}
+    }
+        break;
+    case 3:
+        m_params.set("format", std::string("pfs"));
+        break;
+    default:
+        break;
+    }
 }
 
 void FormatHelper::updateButton(int format)
 {
-	bool enabled = format == 2 // tiff
-			|| format == 20		// tiff-dr
-			|| format == 21		// jpg
-			|| format == 22;	// png
-	m_settingsButton->setEnabled(enabled);
+    bool enabled = format == 2 // tiff
+            || format == 20        // tiff-dr
+            || format == 21        // jpg
+            || format == 22;    // png
+    m_settingsButton->setEnabled(enabled);
 }
 
 pfs::Params FormatHelper::getParams()
 {
-	return m_params;
+    return m_params;
 }
 
 void FormatHelper::loadFromSettings(const LuminanceOptions& options, QString prefix)

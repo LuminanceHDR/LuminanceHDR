@@ -115,7 +115,7 @@ void PyramidT::computeSumOfDivergence(pfs::Array2Df& sumOfdivG)
     // zero dimension Array2D
     pfs::Array2Df tempSumOfdivG( downscaleBy2(sumOfdivG.getCols()),
                                  downscaleBy2(sumOfdivG.getRows()) );
-    
+
     if ( (numLevels() % 2) )
     {
         sumOfdivG.swap(tempSumOfdivG);
@@ -209,14 +209,14 @@ void PyramidT::transformToG(float detailFactor)
 {
     PyramidContainer::iterator itCurr = m_pyramid.begin();
     PyramidContainer::iterator itEnd = m_pyramid.end();
-    
+
     TransformObj<TransformToG> transformFunctor(detailFactor);
-    
+
     while ( itCurr != itEnd )
     {
         std::transform(itCurr->begin(), itCurr->end(), itCurr->begin(),
                        transformFunctor);
-        
+
         ++itCurr;
     }
 }
@@ -226,7 +226,7 @@ struct ScalePyramidS
     ScalePyramidS(float multiplier)
         : multiplier_(multiplier)
     {}
-    
+
     void operator()(PyramidS& multiply)
     {
         pfs::utils::vsmul(multiply.data(), multiplier_,
@@ -251,7 +251,7 @@ void PyramidT::multiply(const PyramidT &other)
     // check that the first level of the pyramid has the same size
     assert( this->getCols() == other.getCols() );
     assert( this->getRows() == other.getRows() );
-    
+
     PyramidContainer::const_iterator inCurr = other.m_pyramid.begin();
     PyramidContainer::const_iterator inEnd = other.m_pyramid.end();
     PyramidContainer::iterator outCurr = m_pyramid.begin();

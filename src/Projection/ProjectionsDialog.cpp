@@ -1,8 +1,8 @@
 /**
  * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -55,13 +55,13 @@ ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
 
     m_Ui->progressBar->hide();
 
-	projectionList.append(&(PolarProjection::singleton));
-	projectionList.append(&(AngularProjection::singleton));
-	projectionList.append(&(CylindricalProjection::singleton));
-	projectionList.append(&(MirrorBallProjection::singleton));
-	transforminfo = new TransformInfo();
-	transforminfo->srcProjection=projectionList.at(0);
-	transforminfo->dstProjection=projectionList.at(0);
+    projectionList.append(&(PolarProjection::singleton));
+    projectionList.append(&(AngularProjection::singleton));
+    projectionList.append(&(CylindricalProjection::singleton));
+    projectionList.append(&(MirrorBallProjection::singleton));
+    transforminfo = new TransformInfo();
+    transforminfo->srcProjection=projectionList.at(0);
+    transforminfo->dstProjection=projectionList.at(0);
 
     connect(m_Ui->okButton,SIGNAL(clicked()),this,SLOT(okClicked()));
     connect(m_Ui->sourceProjection,SIGNAL(activated(int)),this,SLOT(srcProjActivated(int)));
@@ -77,43 +77,43 @@ ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
 }
 
 ProjectionsDialog::~ProjectionsDialog() {
-	delete transforminfo;
+    delete transforminfo;
 }
 
 void ProjectionsDialog::XRotChanged(int v) {
-	transforminfo->xRotate=v;
+    transforminfo->xRotate=v;
 }
 void ProjectionsDialog::YRotChanged(int v) {
-	transforminfo->yRotate=v;
+    transforminfo->yRotate=v;
 }
 void ProjectionsDialog::ZRotChanged(int v) {
-	transforminfo->zRotate=v;
+    transforminfo->zRotate=v;
 }
 void ProjectionsDialog::oversampleChanged(int v) {
-	transforminfo->oversampleFactor=v;
+    transforminfo->oversampleFactor=v;
 }
 void ProjectionsDialog::bilinearToggled(bool v) {
-	transforminfo->interpolate=v;
+    transforminfo->interpolate=v;
 }
 void ProjectionsDialog::dstProjActivated(int gui_index) {
-	transforminfo->dstProjection=projectionList.at(gui_index);
-	bool transformIsAngular=transforminfo->dstProjection==&(AngularProjection::singleton);
+    transforminfo->dstProjection=projectionList.at(gui_index);
+    bool transformIsAngular=transforminfo->dstProjection==&(AngularProjection::singleton);
     m_Ui->labelAngles->setEnabled(transformIsAngular);
     m_Ui->anglesSpinBox->setEnabled(transformIsAngular);
-	if (transformIsAngular)
+    if (transformIsAngular)
         ((AngularProjection*)(transforminfo->dstProjection))->setAngle(m_Ui->anglesSpinBox->value());
 }
 void ProjectionsDialog::srcProjActivated(int gui_index) {
-	transforminfo->srcProjection=projectionList.at(gui_index);
+    transforminfo->srcProjection=projectionList.at(gui_index);
 }
 
 void ProjectionsDialog::anglesAngularDestinationProj(int v) {
-	((AngularProjection*)(transforminfo->dstProjection))->setAngle(v);
+    ((AngularProjection*)(transforminfo->dstProjection))->setAngle(v);
 }
 
 void ProjectionsDialog::okClicked()
 {
-	qDebug("Projective Transformation from %s to %s", transforminfo->srcProjection->getName(), transforminfo->dstProjection->getName());
+    qDebug("Projective Transformation from %s to %s", transforminfo->srcProjection->getName(), transforminfo->dstProjection->getName());
 
     m_Ui->progressBar->setMaximum(0);
     m_Ui->progressBar->setMinimum(0);
@@ -137,5 +137,5 @@ void ProjectionsDialog::okClicked()
 void ProjectionsDialog::projectionFinished()
 {
     QApplication::restoreOverrideCursor();
-	emit accept();
+    emit accept();
 }

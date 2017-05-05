@@ -8,7 +8,7 @@
  * http://www.mpi-inf.mpg.de/resources/hdr/datmo/
  *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,8 +22,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  *
  * $Id: display_adaptive_tmo.cpp,v 1.19 2009/02/23 18:46:36 rafm Exp $
@@ -110,7 +110,7 @@ class auto_cqpminimizer
 // =============== Tone-curve filtering ==============
 
 datmoToneCurve::datmoToneCurve() : own_y_i( false ), x_i( NULL ), y_i( NULL )
-{ 
+{
 }
 
 datmoToneCurve::~datmoToneCurve()
@@ -121,7 +121,7 @@ datmoToneCurve::~datmoToneCurve()
 void datmoToneCurve::init( size_t n_size, const double *n_x_i, double *n_y_i )
 {
   free();
-  
+
   size = n_size;
   x_i = n_x_i;
   if( n_y_i == NULL ) {
@@ -129,7 +129,7 @@ void datmoToneCurve::init( size_t n_size, const double *n_x_i, double *n_y_i )
     own_y_i = true;
   } else {
     y_i = n_y_i;
-    own_y_i = false;    
+    own_y_i = false;
   }
 }
 
@@ -180,19 +180,19 @@ static float min_positive( const float *x, size_t len )
   return min_val;
 }
 
-  
+
 static void mult_rows( const gsl_matrix *A, const gsl_vector *b, gsl_matrix *C )
 {
   assert( A->size1 == b->size );
   for( size_t j=0; j < A->size2; j++ )
-    for( size_t i=0; i < A->size1; i++ ) 
-      gsl_matrix_set( C, i, j, gsl_matrix_get(A,i,j)*gsl_vector_get(b,i) );        
+    for( size_t i=0; i < A->size1; i++ )
+      gsl_matrix_set( C, i, j, gsl_matrix_get(A,i,j)*gsl_vector_get(b,i) );
 }
 
 /**
  * Lookup table on a uniform array & interpolation
  *
- * x_i must be at least two elements 
+ * x_i must be at least two elements
  * y_i must be initialized after creating an object
  */
 class UniformArrayLUT
@@ -233,7 +233,7 @@ public:
     this->y_i = new double[lut_size];
     own_y_i = true;
     memcpy(this->y_i, other.y_i, lut_size * sizeof(double));
-    
+
     return *this;
   }
 
@@ -253,13 +253,13 @@ public:
       return y_i[0];
     if( unlikely(ind_hi >= lut_size) )
       return y_i[lut_size-1];
-    
+
     if( unlikely(ind_low == ind_hi) )
       return y_i[ind_low];      // No interpolation necessary
 
     return y_i[ind_low] + (y_i[ind_hi]-y_i[ind_low])*(ind_f-(double)ind_low); // Interpolation
   }
-  
+
 };
 
 #ifdef DEBUG
@@ -276,7 +276,7 @@ static void dumpPFS( const char *fileName, const int width, const int height, fl
     for( int x = 0; x < width; x++ ) {
       fwrite( &data[x+y*width], sizeof( float ), 1, fh );
     }
-  
+
   fclose( fh );
 }
 #endif
@@ -321,9 +321,9 @@ static void compute_gaussian_level( const int width, const int height,
         sum += in_raw[r*width+l] * kernel[j];
       }
       temp_raw[r*width+c] = sum;
-    }    
+    }
   }
-    
+
   // Filter columns
 #pragma omp parallel for default(none) shared(temp_raw, out_raw, kernel)
   for( int c=0; c < width; c++ ) {
@@ -338,21 +338,21 @@ static void compute_gaussian_level( const int width, const int height,
         sum += temp_raw[l*width+c] * kernel[j];
       }
       out_raw[r*width+c] = sum;
-    }    
-  }    
+    }
+  }
 }
 
 static inline float clamp_channel( const float v )
 {
-  return (v > MIN_PHVAL ? v : MIN_PHVAL);  
+  return (v > MIN_PHVAL ? v : MIN_PHVAL);
 }
-  
+
 /** Compute conditional probability density function
  */
 
 
 // round_int( (l_max-l_min)/delta ) + 1;
-#define X_COUNT (round_int((8.f+8.f)/0.1) + 1) 
+#define X_COUNT (round_int((8.f+8.f)/0.1) + 1)
 
 class conditional_density: public datmoConditionalDensity
 {
@@ -361,7 +361,7 @@ public:
   static double x_scale[X_COUNT];    // input log luminance scale
   double *g_scale;    // contrast scale
   double *f_scale;    // frequency scale
-  
+
   const double g_max;
 
   double total;
@@ -376,7 +376,7 @@ public:
 
     x_count = X_COUNT;
     g_count = round_int(g_max/delta)*2 + 1;
-    
+
     // Find freq. band < 3 cyc per deg
     int f;
     for( f=0; f<8; f++ ) {
@@ -400,11 +400,11 @@ public:
     for( int i=0; i<g_count; i++ )
       g_scale[i] = -g_max + delta*i;
 
-    for( int i=0; i<f_count; i++ ) 
+    for( int i=0; i<f_count; i++ )
       f_scale[i] = 0.5f*pix_per_deg/(float)(1<<i);
-    
-  }    
-  
+
+  }
+
   ~conditional_density()
   {
     delete []C;
@@ -417,7 +417,7 @@ public:
     assert( (x + g*x_count + f*x_count*g_count >= 0) && (x + g*x_count + f*x_count*g_count < x_count*g_count*f_count) );
     return C[x + g*x_count + f*x_count*g_count];
   }
-  
+
 };
 
 datmoConditionalDensity::~datmoConditionalDensity()
@@ -435,19 +435,19 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int 
   pfs::Array2Df buf_1(width, height);
   pfs::Array2Df buf_2(width, height);
   pfs::Array2Df temp(width, height);
-  
+
   std::unique_ptr<conditional_density> C(new conditional_density());
 
   const float thr = 0.0043f; // Approx. discrimination threshold in log10
   const int pix_count = width*height;
 
-    
+
   pfs::Array2Df* LP_low = &buf_1;
   pfs::Array2Df* LP_high = &buf_2;
   float* LP_high_raw = LP_high->data();
-  
+
   const float min_val = std::max( min_positive( L, pix_count ), MIN_PHVAL );
-  
+
   // Compute log10 of an image
 #pragma omp parallel for default(none) shared(LP_high_raw, L)
 #ifndef LUMINANCE_USE_SSE
@@ -460,21 +460,21 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int 
   for( int i=pix_count-3; i < pix_count; i++ )
     LP_high_raw[i] = safe_log10( L[i], min_val );
 #endif
-  
+
   bool warn_out_of_range = false;
   C->total = 0;
-  
+
   for( int f=0; f<C->f_count; f++ ) {
-      
+
     compute_gaussian_level( width, height, *LP_high, *LP_low, f, temp );
 
 // For debug purposes only
-#ifdef DEBUG	
+#ifdef DEBUG
     char fname[20];
     sprintf( fname, "l_%d.pfs", f+1 );
     dumpPFS( fname, width, height, LP_low, "Y" );
-#endif	
-    
+#endif
+
     const int gi_tp = C->g_count/2+1;
     const int gi_tn = C->g_count/2-1;
     const int gi_t = C->g_count/2;
@@ -491,17 +491,17 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int 
       int g_i = round_int( (g + C->g_max) / C->delta );
       if( unlikely(g_i < 0 || g_i >= C->g_count) )
         continue;
-        
+
       if( g > thr && g < C->delta/2 ) {
-        // above the threshold + 
+        // above the threshold +
         (*C)(x_i,gi_tp,f)++;
       } else if( g < -thr && g > -C->delta/2 ) {
         // above the threshold -
-        (*C)(x_i,gi_tn,f)++;          
-      } else (*C)(x_i,g_i,f)++;        
+        (*C)(x_i,gi_tn,f)++;
+      } else (*C)(x_i,g_i,f)++;
     }
 
-    for( int i = 0; i < C->x_count; i++ ) {      
+    for( int i = 0; i < C->x_count; i++ ) {
       // Special case: flat field and no gradients
       if( (*C)(i,gi_t,f) == 0 )
         continue;
@@ -526,7 +526,7 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int 
 
     ph.setValue( (f+1)*PROGRESS_CDF/C->f_count );
     if (ph.canceled())
-		break;
+        break;
   }
 
   if( warn_out_of_range )
@@ -539,17 +539,17 @@ std::unique_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int 
 //    for( int i=0; i<(C->x_count*C->g_count*C->f_count); i++ ) {
 //      fprintf( fh, "%g\n", C->C[i] );
 //    }
-//    fclose( fh );  
+//    fclose( fh );
 
-  return std::move(C); 
+  return std::move(C);
 }
-  
+
 
 
 // =============== Quadratic programming solver ==============
 
-const static gsl_matrix null_matrix = {0,0,0,0,0,0};          
-const static gsl_vector null_vector = {0,0,0,0,0};          
+const static gsl_matrix null_matrix = {0,0,0,0,0,0};
+const static gsl_vector null_vector = {0,0,0,0,0};
 
 /* objective function: 0.5*(x^t)Qx+(q^t)x */
 /* constraints: Cx>=d */
@@ -558,50 +558,50 @@ static int solve( gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d, gs
 {
 
   gsl_cqp_data cqpd;
-  
+
   cqpd.Q = Q;
   cqpd.q = q;
 
   // Do not use any equality constraints (Ax=b)
-          
+
   // Unfortunatelly GSL does not allow for 0-size vectors and matrices
   // As a work-around we create a phony gsl_matrix that has 0-size.
   // This matrix must not be passed to any gsl function!
-          
+
   cqpd.A = &null_matrix;
   cqpd.b = &null_vector;
-  
+
   cqpd.C = C;
   cqpd.d = d;
 
   size_t n = cqpd.Q->size1;
   size_t me = cqpd.b->size;
-  size_t mi = cqpd.d->size;  
-  
+  size_t mi = cqpd.d->size;
+
   const size_t max_iter = 100;
-	
+
   size_t iter=1;
-	
+
   int status;
-	
+
   const gsl_cqpminimizer_type * T;
-	
+
   T = gsl_cqpminimizer_mg_pdip;
   auto_cqpminimizer s(gsl_cqpminimizer_alloc(T, n, me, mi));
-	
+
   status = gsl_cqpminimizer_set(s, &cqpd);
-  
+
   const bool verbose = false;
 
   if( verbose ) fprintf( stderr, "== Itn ======= f ======== ||gap|| ==== ||residual||\n\n");
-	
+
   do
-  {		
+  {
     status = gsl_cqpminimizer_iterate(s);
     status = gsl_cqpminimizer_test_convergence(s, 1e-10, 1e-10);
-		  
+
     if( verbose ) fprintf( stderr, "%4lu   %14.8f  %13.6e  %13.6e\n", iter, gsl_cqpminimizer_f(s), gsl_cqpminimizer_gap(s), gsl_cqpminimizer_residuals_norm(s));
-		  
+
     if(status == GSL_SUCCESS)
     {
       size_t j;
@@ -611,23 +611,23 @@ static int solve( gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d, gs
           fprintf( stderr, "%9.6f ",gsl_vector_get(gsl_cqpminimizer_x(s), j));
         fprintf( stderr, "\n\n");
       }
-      
-      
+
+
 //       printf("\nLagrange-multipliers for Ax=b\n");
 //       for(j=0; j<gsl_cqpminimizer_lm_eq(s)->size; j++)
 //         printf("%9.6f ",gsl_vector_get(gsl_cqpminimizer_lm_eq(s), j));
 //       printf("\n\n");
-      
+
 //       printf("\nLagrange-multipliers for Cx>=d\n");
 //       for(j=0; j<gsl_cqpminimizer_lm_ineq(s)->size; j++)
 //         printf("%9.6f ",gsl_vector_get(gsl_cqpminimizer_lm_ineq(s), j));
 //       printf("\n\n");
-    }  
+    }
     else
     {
       iter++;
-    }  
-    
+    }
+
   }
   while(status == GSL_CONTINUE && iter<=max_iter);
 
@@ -638,11 +638,11 @@ static int solve( gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d, gs
     if( gsl_cqp_minimizer_test_infeasibility( s, 1e-10 ) != GSL_SUCCESS )
       valid_solution = false;
   }
-  
+
   if( valid_solution )
     gsl_vector_memcpy( x, gsl_cqpminimizer_x(s) );
 
-	
+
   return GSL_SUCCESS;
 }
 
@@ -651,7 +651,7 @@ static int solve( gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d, gs
 // =============== HVS functions ==============
 
 static double contrast_transducer( double C, double sensitivity, datmoVisualModel visual_model )
-{  
+{
   if( visual_model & vm_contrast_masking )
   {
     const double W = pow( 10, fabs(C) ) - 1.;
@@ -669,11 +669,11 @@ static double contrast_transducer( double C, double sensitivity, datmoVisualMode
 
 /**
  * Contrast Sensitivity Function from Daly's VDP paper
- * 
+ *
  * @param rho  spatial frequency in cycles per degree
  * @param theta  spatial angle in radians
  * @param l_adapt  luminance of adaptation
- * @param img_size  image size given in visual degrees^2 
+ * @param img_size  image size given in visual degrees^2
  * @param viewing_dist  viewing distance in meters (default = 0.5m)
  * @return sensitivity
  */
@@ -681,10 +681,10 @@ static double csf_daly( double rho, double theta, double l_adapt, double im_size
 {
   if( rho == 0 )
     return 0;                   // To avoid singularity
-  
+
   // Sensitivity calibration constant (from Daly's paper: 250)
   const double P = 250.f;
-  
+
   const double eps = 0.9;
   const double i_pow2 = im_size;
   const double l = l_adapt;
@@ -695,7 +695,7 @@ static double csf_daly( double rho, double theta, double l_adapt, double im_size
   const double e = 0.0;     // eccentricity in visual degrees
   const double r_e = 1.0 / (1.0 + 0.24 * e);
   const double r_a_r_e = r_a * r_e;
-  
+
   double S1, S2;
 
   double B1 = B*eps*rho;
@@ -705,13 +705,13 @@ static double csf_daly( double rho, double theta, double l_adapt, double im_size
   const double ob=0.78;
   const double r_theta = (1-ob)/2 * cosf(4.0 * theta) + (1+ob)/2;
   rho = rho / (r_a_r_e * r_theta);
-      
+
   B1 = B*eps*rho;
   S2 = powf(pow(3.23 * pow(rho*rho * i_pow2, -0.3), 5.0) + 1.0, -0.2)*
             A*eps*rho * exp(-B1) * sqrt(1 + 0.06*exp(B1));
-      
+
   return (S1 > S2 ? S2 : S1) * P;
-}  
+}
 
 static double csf_datmo( double rho, double l_adapt, datmoVisualModel visual_model )
 {
@@ -742,17 +742,17 @@ static void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_coun
       // Check how many nodes spans this d_i
       int j;
       for ( j = i+1; j < (x_count-1) && skip_lut[j] == -1; j++ ) {};
-      
+
       if( j == (x_count-1) ) { // The last node
         dy = 0;
         y[i] = cy;
         cy += gsl_vector_get( x, skip_lut[i] );
         continue;
-      } else 
+      } else
         dy = gsl_vector_get( x, skip_lut[i] ) / (double)(j-i);
     }
     y[i] = cy;
-    cy += dy;      
+    cy += dy;
   }
   y[x_count-1] = cy;
 
@@ -769,9 +769,9 @@ static void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_coun
  */
 static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, DisplaySize */*ds*/,
   float enh_factor, double *y, const float white_y, datmoVisualModel visual_model, double scene_l_adapt, pfs::Progress &ph ) {
-  
+
   conditional_density *C = (conditional_density*)C_pub;
-  
+
   double d_dr = log10( dm->display( 1.f )/dm->display( 0.f ) ); // display dynamic range
 
   // Create LUTs for CSF to speed up computations
@@ -782,9 +782,9 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
       //csf_lut[f].y_i[i] = csf_daly( C->f_scale[f], 0, pow( 10., C->x_scale[i] ), 1 );
       csf_lut[f].y_i[i] = csf_datmo( C->f_scale[f], pow( 10., C->x_scale[i] ), visual_model ); // In pfstmo 2.0.5
   }
-  
+
   const int max_neigh = (C->g_count-1)/2;
-  
+
   // count number of needed equations and remove not used variables
   // Create a structure of disconnected frameworks, which can be connected later
   int k = 0;
@@ -793,7 +793,7 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
   memset( &used_var[0], 0, sizeof( used_var[0] )*(C->x_count-1) );
 
   int minmax_i[2] = { C->x_count-1, 0 };
-  
+
   for( int f=0; f < C->f_count; f++ )
     for( int i=0; i < C->x_count; i++ )
       for( int j = std::max(0,i-max_neigh); j < std::min(C->x_count-1,i+max_neigh); j++ ) {
@@ -824,14 +824,14 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
     minmax_i[0] = std::min( minmax_i[0], white_i );
     minmax_i[1] = std::max( minmax_i[1], white_i );
   }
-  
+
   // Create skip lookup table (to remove selected columns that contain all zeros)
   int i = 0;
   int fwrk = 0;                 // Number if missing contrast ranges
   for( int l = 0; l < C->x_count-1; l++ ) {
     if( l < minmax_i[0] || l > minmax_i[1] ) {
       skip_lut[l] = -1;
-      continue;      
+      continue;
     }
     if( !used_var[l] ) {
       if( l>0 && !used_var[l-1] ) {
@@ -839,10 +839,10 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
         continue;
       }
       fwrk++;
-    } 
+    }
     skip_lut[l] = i++;
   }
-  
+
   const int M = k+fwrk; // number of equations
   const int L = i; // Number of non-zero d_i variables
 
@@ -851,7 +851,7 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 // sum of intervals must be equal displayable dynamic range
 
   // Ale = [eye(interval_count); -ones(1,interval_count)];
-  
+
   auto_matrix Ale(gsl_matrix_calloc(L+1, L));
   gsl_matrix_set_identity( Ale );
   gsl_matrix_view lower_row = gsl_matrix_submatrix( Ale, L, 0, 1, L );
@@ -859,15 +859,15 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 
   // ble = [zeros(interval_count,1); -d_dr];
   auto_vector ble(gsl_vector_calloc(L+1));
-  gsl_vector_set( ble, L, -d_dr );  
- 
+  gsl_vector_set( ble, L, -d_dr );
+
   auto_matrix A(gsl_matrix_calloc(M, L));
   auto_vector B(gsl_vector_alloc(M));
   auto_vector N(gsl_vector_alloc(M));
 
   std::vector<size_t> band(M);  // Frequency band (index)
-  std::vector<size_t> back_x(M); // Background luminance (index) 
-  
+  std::vector<size_t> back_x(M); // Background luminance (index)
+
   k = 0;
   for( int f=0; f < C->f_count; f++ ) {
     //const double sensitivity = csf_daly( C->f_scale[f], 0., 1000., 1. );
@@ -882,13 +882,13 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 
         const int from = std::min(i,j);
         const int to = std::max(i,j);
-        
+
 //      A(k,min(i,j):(max(i,j)-1)) = 1;
-        for( int l = from; l <= to-1; l++ ) {          
+        for( int l = from; l <= to-1; l++ ) {
           if( skip_lut[l] == -1 )
             continue;
           gsl_matrix_set( A, k, skip_lut[l], 1 );
-        }        
+        }
 
         if( scene_l_adapt == -1 ) {
           sensitivity = csf_lut[f].interp( C->x_scale[from] );
@@ -902,22 +902,22 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 
         band[k] = f;
         back_x[k] = i;
-        
+
         k++;
       }
   }
-  
+
   if( white_y > 0 ) {
-    for( int l = white_i; l < C->x_count-1; l++ ) {          
+    for( int l = white_i; l < C->x_count-1; l++ ) {
       if( skip_lut[l] == -1 )
         continue;
       gsl_matrix_set( A, k, skip_lut[l], 1 );
-    }        
-    gsl_vector_set( B, k, 0 );        
+    }
+    gsl_vector_set( B, k, 0 );
     gsl_vector_set( N, k, C->total * 0.1 ); // Strength of reference white anchoring
     band[k] = 0;
     back_x[k] = white_i;
-    k++;    
+    k++;
   }
 
   // Connect disconnected frameworks
@@ -930,11 +930,11 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
         while( !used_var[to] )
           to++;
         assert( k < M );
-        for( int l = from; l <= to-1; l++ ) {          
+        for( int l = from; l <= to-1; l++ ) {
           if( skip_lut[l] == -1 )
             continue;
           gsl_matrix_set( A, k, skip_lut[l], 1 );
-        }        
+        }
         //const double sensitivity = csf_daly( C->f_scale[C->f_count-1], 0., 1000., 1. );
         //gsl_vector_set( B, k, contrast_transducer( (C->x_scale[to] - C->x_scale[from])*enh_factor, sensitivity ) );
         double sensitivity;
@@ -951,21 +951,21 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
         back_x[k] = to;
         k++;
         i = to;
-      }  
+      }
     }
   }
 
   auto_matrix H(gsl_matrix_alloc(L, L));
   auto_vector f(gsl_vector_alloc(L));
   auto_matrix NA(gsl_matrix_alloc(M, L));
-  auto_matrix AK(gsl_matrix_alloc(M, L)); 
+  auto_matrix AK(gsl_matrix_alloc(M, L));
   auto_vector Ax(gsl_vector_alloc(M));
   auto_vector K(gsl_vector_alloc(M));
   auto_vector x(gsl_vector_alloc(L));
   auto_vector x_old(gsl_vector_alloc(L));
 
   gsl_vector_set_all( x, d_dr/L );
-  
+
   int max_iter = 200;
   if( !(visual_model & vm_contrast_masking) )
           max_iter = 1;
@@ -978,7 +978,7 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
     compute_y( y, x, &skip_lut[0], C->x_count, L, dm->display(0), dm->display(1) );
 
     // Ax = A*x
-    gsl_blas_dgemv( CblasNoTrans, 1, A, x, 0, Ax ); 
+    gsl_blas_dgemv( CblasNoTrans, 1, A, x, 0, Ax );
 
     // T(rng{band}) = cont_transd( Ax(rng{band}), band, DD(rng{band},:)*y' ) ./ Axd(rng{band});
     for( int k=0; k < M; k++ ){
@@ -990,19 +990,19 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
     }
 
     // AK = A*K;
-    mult_rows( A, K, AK );  
-        
+    mult_rows( A, K, AK );
+
     // NA = N*A;
-    mult_rows( AK, N, NA );  
-  
+    mult_rows( AK, N, NA );
+
     // H = AK'*NA;
     gsl_blas_dgemm( CblasTrans, CblasNoTrans, 1, AK, NA, 0, H );
-  
+
     // f = -B'*NA = - NA' * B;
     gsl_blas_dgemv( CblasTrans, -1, NA, B, 0, f );
 
     gsl_vector_memcpy( x_old, x );
-    
+
     solve( H, f, Ale, ble, x );
 
     /*
@@ -1024,12 +1024,12 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
       }
     }
     if( converged )
-      break;    
+      break;
   }
   ph.setValue( 95 );
   if (ph.canceled())
-	return PFSTMO_ABORTED; // PFSTMO_OK is right 
-  
+    return PFSTMO_ABORTED; // PFSTMO_OK is right
+
 //   for( int i=0; i < L; i++ )
 //     fprintf( stderr, "%9.6f ", gsl_vector_get( x, i ) );
 //   fprintf( stderr, "\n" );
@@ -1040,7 +1040,7 @@ static int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *
 }
 
 int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_dens,
-  DisplayFunction *df, DisplaySize *ds, const float enh_factor, 
+  DisplayFunction *df, DisplaySize *ds, const float enh_factor,
   const float white_y, datmoVisualModel visual_model, double scene_l_adapt, pfs::Progress &ph )
 {
   conditional_density *c = (conditional_density*)cond_dens;
@@ -1056,16 +1056,16 @@ int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_
 int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int width, int height,
   const float *R_in, const float *G_in, const float *B_in, const float *L_in, datmoToneCurve *tc,
   DisplayFunction *df, const float saturation_factor )
-{ 
+{
   // Create LUT: log10( lum factor ) -> pixel value
-  UniformArrayLUT tc_lut( tc->size, tc->x_i );  
+  UniformArrayLUT tc_lut( tc->size, tc->x_i );
   for( size_t i=0; i < tc->size; i++ ) {
     tc_lut.y_i[i] = (float)pow( 10, tc->y_i[i] );
 //    tc_lut.y_i[i] = df->inv_display( (float)pow( 10, tc->y_i[i] ) );
-  }  
+  }
 
   // Create LUT: log10( lum factor ) -> saturation correction (for the tone-level)
-  UniformArrayLUT cc_lut( tc->size, tc->x_i );  
+  UniformArrayLUT cc_lut( tc->size, tc->x_i );
   for( size_t i=0; i < tc->size-1; i++ ) {
     //const float contrast = std::max( (tc->y_i[i+1]-tc->y_i[i])/(tc->x_i[i+1]-tc->x_i[i]), 0.d ); // In pfstmo 2.0.5
     const float contrast = std::max( (float)(tc->y_i[i+1]-tc->y_i[i])/(float)(tc->x_i[i+1]-tc->x_i[i]), 0.0f ); // In pfstmo 2.0.5
@@ -1074,7 +1074,7 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
     cc_lut.y_i[i] = ( (1 + k1)*pow(contrast,k2) )/( 1 + k1*pow(contrast,k2) ) * saturation_factor;
   }
   cc_lut.y_i[tc->size-1] = 1;
-  
+
   const long pix_count = width*height;
 
 #pragma omp parallel for default(none) shared(R_in,G_in,B_in,L_in,R_out,G_out,B_out,tc_lut,cc_lut,df)
@@ -1101,7 +1101,7 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
 #endif
   }
 
-  return PFSTMO_OK;  
+  return PFSTMO_OK;
 }
 
 // Pre-computed IIR filters - for different frame rates

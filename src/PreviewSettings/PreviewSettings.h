@@ -49,7 +49,7 @@ public:
     int getSize() { return m_ListPreviewLabel.size(); }
     void clear();
 protected:
-	virtual void changeEvent(QEvent* event);
+    virtual void changeEvent(QEvent* event);
 
 public Q_SLOTS:
     void selectLabel(int index);

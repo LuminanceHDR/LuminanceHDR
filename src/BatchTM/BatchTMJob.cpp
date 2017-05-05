@@ -46,8 +46,8 @@ BatchTMJob::BatchTMJob(int thread_id, const QString &filename, const QList<Tonem
         m_file_name(filename),
         m_tm_options(tm_options),
         m_output_folder(output_folder),
-		m_ldr_output_format(format),
-		m_params(params)
+        m_ldr_output_format(format),
+        m_params(params)
 {
     //m_ldr_output_format = LuminanceOptions().getBatchTmLdrFormat();
 
@@ -82,7 +82,7 @@ void BatchTMJob::run()
             opts->tonemapSelection = false; // just to be sure!
             opts->origxsize = reference_frame->getWidth();
 
-			opts->xsize = (int) opts->origxsize * opts->xsize_percent / 100;
+            opts->xsize = (int) opts->origxsize * opts->xsize_percent / 100;
 
             QScopedPointer<pfs::Frame> temporary_frame;
             if ( opts->origxsize == opts->xsize )
@@ -94,10 +94,10 @@ void BatchTMJob::run()
                 temporary_frame.reset( pfs::resize(reference_frame.data(), opts->xsize, BilinearInterp) );
             }
 
-			if ( opts->pregamma != 1.0f )
-			{
+            if ( opts->pregamma != 1.0f )
+            {
                 pfs::applyGamma(temporary_frame.data(), opts->pregamma );
-			}
+            }
 
             QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(opts->tmoperator) );
 

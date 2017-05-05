@@ -1,8 +1,8 @@
 /**
  * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
@@ -46,23 +46,23 @@ signals:
 
 public slots:
 protected:
-	void paintEvent(QPaintEvent *);
-	void mousePressEvent(QMouseEvent *);
-	void mouseReleaseEvent(QMouseEvent *);
-	void mouseMoveEvent(QMouseEvent *);
+    void paintEvent(QPaintEvent *);
+    void mousePressEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
 private:
-	/** Recalculate the target selection position and emit 'selectionMoved'.*/
-	void regionSelectionMoved( );
-	//coordinates relative to this widget
-	int      xpos;
-	int      ypos;
-	bool     moveSelection;
-	QRect    regionSelection;  // Original size image selection.
-	QRect    m_localRegionSelection; // Thumbnail size selection.
-	int      m_width;
-	int      m_height;
-	int      m_orgWidth;
-	int      m_orgHeight;
-	QImage  *m_image;
+    /** Recalculate the target selection position and emit 'selectionMoved'.*/
+    void regionSelectionMoved( );
+    //coordinates relative to this widget
+    int      xpos;
+    int      ypos;
+    bool     moveSelection;
+    QRect    regionSelection;  // Original size image selection.
+    QRect    m_localRegionSelection; // Thumbnail size selection.
+    int      m_width;
+    int      m_height;
+    int      m_orgWidth;
+    int      m_orgHeight;
+    QImage  *m_image;
 };
 #endif

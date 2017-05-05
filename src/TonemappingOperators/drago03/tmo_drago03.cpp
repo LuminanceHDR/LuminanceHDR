@@ -1,14 +1,14 @@
 /**
  * @brief Frederic Drago logmapping operator
- * 
+ *
  * Adaptive logarithmic mapping for displaying high contrast
- * scenes. 
+ * scenes.
  * F. Drago, K. Myszkowski, T. Annen, and N. Chiba. In Eurographics 2003.
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,8 +22,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
  * $Id: tmo_drago03.cpp,v 1.4 2008/11/04 23:43:08 rafm Exp $
@@ -44,7 +44,7 @@ namespace
 {
 inline float biasFunc(float b, float x)
 {
-    return std::pow(x, b);		// pow(x, log(bias)/log(0.5))
+    return std::pow(x, b);        // pow(x, log(bias)/log(0.5))
 }
 
 const float LOG05 = -0.693147f; // log(0.5)
@@ -68,7 +68,7 @@ void calculateLuminance(unsigned int width, unsigned int height,
 
 
 void tmo_drago03(const pfs::Array2Df& Y, pfs::Array2Df& L,
-                 float maxLum, float avLum, float bias, 
+                 float maxLum, float avLum, float bias,
                  pfs::Progress &ph)
 {
     assert(Y.getRows() == L.getRows());

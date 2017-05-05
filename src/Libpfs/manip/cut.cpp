@@ -50,18 +50,18 @@ pfs::Frame *cut(const pfs::Frame *inFrame,
     msec_timer f_timer;
     f_timer.start();
 #endif
-    
+
     // ----  Boundary Check!
     // if (x_ul < 0) x_ul = 0;
     // if (y_ul < 0) y_ul = 0;
     if (x_br > inFrame->getWidth()) x_br = inFrame->getWidth();
     if (y_br > inFrame->getHeight()) y_br = inFrame->getHeight();
-    // ----- 
-    
+    // -----
+
     pfs::Frame *outFrame = new pfs::Frame((x_br-x_ul), (y_br-y_ul));
-    
+
     const ChannelContainer& channels = inFrame->getChannels();
-    
+
     for ( ChannelContainer::const_iterator it = channels.begin();
           it != channels.end();
           ++it)
@@ -73,17 +73,17 @@ pfs::Frame *cut(const pfs::Frame *inFrame,
         cut(inCh, outCh,
             x_ul, y_ul, x_br, y_br);
     }
-    
+
     pfs::copyTags(inFrame, outFrame);
-    
+
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
     std::cout << "pfscut(";
     std::cout << "[" << x_ul <<", " << y_ul <<"],";
     std::cout << "[" << x_br << ", " << y_br <<"]";
     std::cout << ") = " << f_timer.get_time() << " msec" << std::endl;
-#endif 
-    
+#endif
+
     return outFrame;
 }
 

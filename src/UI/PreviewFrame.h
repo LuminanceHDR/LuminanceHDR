@@ -40,7 +40,7 @@ public:
     void addLabel(SimplePreviewLabel* label);
     SimplePreviewLabel* getLabel(int index) { return m_labels[index]; }
     int getSelectedLabel() { return m_index; }
- 
+
 public slots:
     void selectLabel(int index);
 

@@ -1,8 +1,8 @@
 /**
  * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -39,34 +39,34 @@ class GrayBar : public QWidget
 {
 Q_OBJECT
 public:
-	GrayBar(QWidget *parent, bool two_handles=false);
-	QSize sizeHint () const;
-	QSize minimumSizeHint () const;
-	bool dont_emit;
+    GrayBar(QWidget *parent, bool two_handles=false);
+    QSize sizeHint () const;
+    QSize minimumSizeHint () const;
+    bool dont_emit;
 protected:
-	void paintEvent( QPaintEvent * );
-	void resizeEvent ( QResizeEvent * event );
-	void mouseMoveEvent ( QMouseEvent * event );
-	void mousePressEvent ( QMouseEvent * event );
-	void mouseReleaseEvent ( QMouseEvent * event );
+    void paintEvent( QPaintEvent * );
+    void resizeEvent ( QResizeEvent * event );
+    void mouseMoveEvent ( QMouseEvent * event );
+    void mousePressEvent ( QMouseEvent * event );
+    void mouseReleaseEvent ( QMouseEvent * event );
 private:
-	//graphical coordinate, 0-width(), NOT 0-255
-	int blackpos,gammapos,whitepos;
-	float blackgrayratio;
-	bool twohandles;
-	enum draggingT {DRAGNONE,DRAGBLACK,DRAGGRAY,DRAGWHITE} dragging;
-	draggingT findHandle(int x, int y);
+    //graphical coordinate, 0-width(), NOT 0-255
+    int blackpos,gammapos,whitepos;
+    float blackgrayratio;
+    bool twohandles;
+    enum draggingT {DRAGNONE,DRAGBLACK,DRAGGRAY,DRAGWHITE} dragging;
+    draggingT findHandle(int x, int y);
 public slots:
-	void resetvalues();
-	void changeBlack(int);
-	void changeGamma(double);
-	void changeWhite(int);
+    void resetvalues();
+    void changeBlack(int);
+    void changeGamma(double);
+    void changeWhite(int);
 signals:
-	void black_changed(int);
-	void gamma_changed(double);
-	void white_changed(int);
-	void default_gamma_black_white();
-	void default_black_white();
+    void black_changed(int);
+    void gamma_changed(double);
+    void white_changed(int);
+    void default_gamma_black_white();
+    void default_black_white();
 };
 
 class HistogramLDR : public QWidget
@@ -120,7 +120,7 @@ private:
     void refreshLUT();
 public:
         GammaAndLevels(QWidget *parent, const QImage& image);
-	~GammaAndLevels();
+    ~GammaAndLevels();
 
         QImage getReferenceQImage();
 
@@ -134,14 +134,14 @@ signals:
         void updateQImage(QImage image);
 
 private slots:
-	void resetValues();
-	void updateBlackIn(int);
-	void updateGamma(double);
-	void updateWhiteIn(int);
-	void updateBlackOut(int);
-	void updateWhiteOut(int);
-	void defaultGammaBlackWhiteIn();
-	void defaultBlackWhiteOut();
+    void resetValues();
+    void updateBlackIn(int);
+    void updateGamma(double);
+    void updateWhiteIn(int);
+    void updateBlackOut(int);
+    void updateWhiteOut(int);
+    void defaultGammaBlackWhiteIn();
+    void defaultBlackWhiteOut();
 };
 
 #endif

@@ -54,7 +54,7 @@ using namespace pfs::colorspace;
 static const int previewWidth = 300;
 static const int previewHeight = 200;
 
-FitsImporter::~FitsImporter() 
+FitsImporter::~FitsImporter()
 {
 }
 
@@ -86,7 +86,7 @@ FitsImporter::FitsImporter(QWidget *parent)
     m_previewLabel = new QLabel(this);
     m_previewLabel->resize(600,400);
     m_previewLabel->setScaledContents(true);
-    QPalette* palette = new QPalette(); 
+    QPalette* palette = new QPalette();
     palette->setColor(QPalette::Foreground,Qt::red);
     m_previewLabel->setPalette(*palette);
     m_previewLabel->setFrameStyle(QFrame::Box);
@@ -106,9 +106,9 @@ FitsImporter::FitsImporter(QWidget *parent)
     m_previewFrame->show();
     connect(this, SIGNAL(setValue(int)), m_Ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
     connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
-    
+
     // wizard stuff
-    
+
     m_Ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
     m_Ui->wizardPageLoadFiles->registerExtField("lineEditRed*", m_Ui->lineEditRed);
     m_Ui->wizardPageLoadFiles->registerExtField("lineEditGreen*", m_Ui->lineEditGreen);
@@ -215,7 +215,7 @@ void FitsImporter::on_pushButtonLoad_clicked()
 }
 
 void FitsImporter::loadFilesDone(QString error_string)
-{ 
+{
     qDebug() << "Data loaded ... move to internal structure!";
     //disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
 
@@ -294,14 +294,14 @@ void FitsImporter::buildPreview()
     qDebug() << "Gamma " << gamma;
 
     QImage tempImage(previewWidth, previewHeight, QImage::Format_ARGB32_Premultiplied);
-    
+
     ConvertSample<float, uint8_t> toFloat;
     ConvertToQRgb convertToQRgb(1.f + gamma);
     if (!m_luminosityChannel.isEmpty())
     {
-        for (int j = 0; j < previewHeight; j++) 
+        for (int j = 0; j < previewHeight; j++)
         {
-            for (int i = 0; i < previewWidth; i++) 
+            for (int i = 0; i < previewWidth; i++)
             {
                 float red = toFloat(qRed(m_qimages[0].pixel(i, j)));
                 float green = toFloat(qRed(m_qimages[1].pixel(i, j)));
@@ -327,13 +327,13 @@ void FitsImporter::buildPreview()
                 convertToQRgb(redH, g, b, rgb);
                 tempImage.setPixel(i, j, rgb);
             }
-        } 
+        }
     }
     else
     {
-        for (int j = 0; j < previewHeight; j++) 
+        for (int j = 0; j < previewHeight; j++)
         {
-            for (int i = 0; i < previewWidth; i++) 
+            for (int i = 0; i < previewWidth; i++)
             {
                 float red = toFloat(qRed(m_qimages[0].pixel(i, j)));
                 float green = toFloat(qRed(m_qimages[1].pixel(i, j)));
@@ -356,7 +356,7 @@ void FitsImporter::buildPreview()
                 convertToQRgb(redH, g, b, rgb);
                 tempImage.setPixel(i, j, rgb);
             }
-        } 
+        }
     }
     m_Ui->previewLabel->setPixmap(QPixmap::fromImage(tempImage));
 }
@@ -407,7 +407,7 @@ void FitsImporter::buildContents()
             pfs::colorspace::Normalizer normalize(datamin, datamax);
 
             std::transform(C->begin(), C->end(), C->begin(), normalize);
-            std::copy(C->begin(), C->end(), m_contents[i].begin()); 
+            std::copy(C->begin(), C->end(), m_contents[i].begin());
             m_qimages.push_back(m_data[i].qimage().scaled(previewWidth, previewHeight));
         }
     }
@@ -425,7 +425,7 @@ void FitsImporter::buildFrame()
 
     if (!m_luminosityChannel.isEmpty())
     {
-        for (size_t i = 0; i < m_width*m_height; i++) 
+        for (size_t i = 0; i < m_width*m_height; i++)
         {
             //float r = redRed * m_contents[2][i];
             float r = redRed * m_contents[0][i];
@@ -437,11 +437,11 @@ void FitsImporter::buildFrame()
             (*Xc)(i) = r + m_contents[4][i];
             (*Yc)(i) = g;
             (*Zc)(i) = b;
-        } 
+        }
     }
     else
     {
-        for (size_t i = 0; i < m_width*m_height; i++) 
+        for (size_t i = 0; i < m_width*m_height; i++)
         {
             float r = redRed * m_contents[0][i];
             float g = greenGreen * m_contents[1][i];
@@ -449,8 +449,8 @@ void FitsImporter::buildFrame()
             (*Xc)(i) = r + m_contents[4][i];
             (*Yc)(i) = g;
             (*Zc)(i) = b;
-        } 
-    }    
+        }
+    }
 }
 
 void FitsImporter::align_with_ais()
@@ -460,7 +460,7 @@ void FitsImporter::align_with_ais()
     connect(m_align.get(), SIGNAL(finishedAligning(int)), this, SLOT(ais_finished(int)));
     connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
     connect(m_align.get(), SIGNAL(dataReady(QByteArray)), this, SLOT(readData(QByteArray)));
-  
+
     m_align->align_with_ais(m_Ui->autoCropCheckBox->isChecked());
 }
 
@@ -497,12 +497,12 @@ bool FitsImporter::framesHaveSameSize()
         return false;
     const size_t width = it->frame()->getWidth();
     const size_t height = it->frame()->getHeight();
-    for ( HdrCreationItemContainer::const_iterator it = m_data.begin() + 1, 
+    for ( HdrCreationItemContainer::const_iterator it = m_data.begin() + 1,
           itEnd = m_data.end(); it != itEnd; ++it) {
         if (it->filename().isEmpty())
             continue;
         if (it->frame()->getWidth() != width || it->frame()->getHeight() != height)
-            return false; 
+            return false;
     }
     return true;
 }
@@ -564,7 +564,7 @@ void FitsImporter::on_pushButtonClockwise_clicked()
         m_previewLabel->setPixmap(*m_previewFrame->getLabel(m_previewFrame->getSelectedLabel())->pixmap());
     }
     Channel *C = m_data[index].frame()->getChannel("X");
-    std::copy(C->begin(), C->end(), m_contents[index].begin()); 
+    std::copy(C->begin(), C->end(), m_contents[index].begin());
     QImage tmp = m_data[index].qimage().scaled(previewWidth, previewHeight);
     m_qimages[index].swap(tmp);
     //buildPreview();
@@ -693,7 +693,7 @@ void FitsImporter::initializePage(int id)
 {
     int current = currentId();
     if (current == 22)  // alignment progress
-    { 
+    {
         if (m_Ui->ais_radioButton->isChecked()) {
             align_with_ais();
         }

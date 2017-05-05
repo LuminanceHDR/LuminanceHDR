@@ -70,15 +70,15 @@ private:
     void saveHDR();
     void printHelp(char *progname);
     QScopedPointer<TonemappingOptions> tmopts;
-	QScopedPointer<pfs::Params> tmofileparams;
+    QScopedPointer<pfs::Params> tmofileparams;
     bool verbose;
     FusionOperatorConfig hdrcreationconfig;
     QString loadHdrFilename;
     QStringList inputFiles;
-	ez::ezETAProgressBar progressBar;
-	int oldValue;
-	int maximum;
-	bool started;
+    ez::ezETAProgressBar progressBar;
+    int oldValue;
+    int maximum;
+    bool started;
     float threshold;
     bool isAutolevels;
     bool isHtml;
@@ -94,12 +94,12 @@ private:
 private slots:
     void finishedLoadingInputFiles();
     void ais_failed(QProcess::ProcessError);
-	void errorWhileLoading(QString);
+    void errorWhileLoading(QString);
     void createHDR(int);
     void execCommandLineParamsSlot();
-	void setProgressBar(int);
-	void updateProgressBar(int);
-	void readData(QByteArray);
+    void setProgressBar(int);
+    void updateProgressBar(int);
+    void readData(QByteArray);
 
 signals:
     void finishedParsing();

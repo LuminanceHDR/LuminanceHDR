@@ -49,28 +49,28 @@ Q_OBJECT
 private:
     QScopedPointer<Ui::BatchHDRDialog> m_Ui;
 public:
-	BatchHDRDialog(QWidget *parent = 0);
-	~BatchHDRDialog();
+    BatchHDRDialog(QWidget *parent = 0);
+    ~BatchHDRDialog();
 
 signals:
     void setValue(int);
 
 protected slots:
-	void num_bracketed_changed(int);
-	void on_selectInputFolder_clicked();
-	void on_selectOutputFolder_clicked();
-	void add_output_directory(QString dir = QString());
-	void on_startButton_clicked();
-	void batch_hdr();
-	void align();
-	void create_hdr(int);
-	void error_while_loading(QString);
-	void writeAisData(QByteArray);
-	void check_start_button();
-	void on_cancelButton_clicked();
+    void num_bracketed_changed(int);
+    void on_selectInputFolder_clicked();
+    void on_selectOutputFolder_clicked();
+    void add_output_directory(QString dir = QString());
+    void on_startButton_clicked();
+    void batch_hdr();
+    void align();
+    void create_hdr(int);
+    void error_while_loading(QString);
+    void writeAisData(QByteArray);
+    void check_start_button();
+    void on_cancelButton_clicked();
     void align_selection_clicked();
-	void processed();
-	void try_to_continue();
+    void processed();
+    void try_to_continue();
     void updateThresholdSlider(int);
     void updateThresholdSpinBox(double);
     void ais_failed(QProcess::ProcessError);
@@ -78,23 +78,23 @@ protected slots:
     void loadFilesAborted();
 
 protected:
-	LuminanceOptions m_luminance_options;
+    LuminanceOptions m_luminance_options;
 
-	//Application-wide settings, loaded via QSettings
-	QString m_batchHdrInputDir;
-	QString m_batchHdrOutputDir;
-	QString m_tempDir;
+    //Application-wide settings, loaded via QSettings
+    QString m_batchHdrInputDir;
+    QString m_batchHdrOutputDir;
+    QString m_tempDir;
 
-	QStringList m_bracketed;
-	IOWorker *m_IO_Worker;
-	HdrCreationManager *m_hdrCreationManager;
-	int m_numProcessed;
-	int m_processed;
-	int m_total;
-	bool m_errors;
-	bool m_loading_error;
-	bool m_abort;
-	bool m_processing;
+    QStringList m_bracketed;
+    IOWorker *m_IO_Worker;
+    HdrCreationManager *m_hdrCreationManager;
+    int m_numProcessed;
+    int m_processed;
+    int m_total;
+    bool m_errors;
+    bool m_loading_error;
+    bool m_abort;
+    bool m_processing;
     QVector<FusionOperatorConfig> m_customConfig;
     QFutureWatcher<void> m_futureWatcher;
     QFuture<pfs::Frame*> m_future;

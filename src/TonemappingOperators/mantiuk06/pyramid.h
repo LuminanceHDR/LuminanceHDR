@@ -62,13 +62,13 @@ public:
 
         return *this;
     }
-    
+
     inline
     XYGradient& operator*=(const XYGradient& multiplier)
     {
         m_Gx *= multiplier.m_Gx;
         m_Gy *= multiplier.m_Gy;
-        
+
         return *this;
     }
 

@@ -23,7 +23,7 @@
 //! \brief PFS library - PFS Channel
 //! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
- 
+
 #ifndef PFS_CHANNEL_H
 #define PFS_CHANNEL_H
 

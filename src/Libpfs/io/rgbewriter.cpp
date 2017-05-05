@@ -107,7 +107,7 @@ void rgb2rgbe( float r, float g, float b, Trgbe_pixel& rgbe)
     g /= WHITE_EFFICACY;
     b /= WHITE_EFFICACY;
 
-    double v = r;	// max rgb value
+    double v = r;    // max rgb value
     if ( v < g ) v = g;
     if ( v < b ) v = b;
 
@@ -115,7 +115,7 @@ void rgb2rgbe( float r, float g, float b, Trgbe_pixel& rgbe)
         rgbe.r = rgbe.g = rgbe.b = rgbe.e = 0;
     }
     else {
-        int e;	// exponent
+        int e;    // exponent
 
         v = frexp(v,&e) * 256.0/v;
         rgbe.r = Trgbe( v*r );
@@ -140,7 +140,7 @@ void writeRadiance(FILE *file,
     }
 
     // header information
-    fprintf(file, "#?RADIANCE\n");	// file format specifier
+    fprintf(file, "#?RADIANCE\n");    // file format specifier
     fprintf(file, "# PFStools writer to Radiance RGBE format\n");
 
     // if ( exposure_isset )

@@ -49,7 +49,7 @@ public:
     ~FitsImporter();
 
     pfs::Frame *getFrame();
-    
+
 protected slots:
     void on_pushButtonLuminosity_clicked();
     void on_pushButtonRed_clicked();
@@ -77,14 +77,14 @@ protected slots:
 
 signals:
     void setValue(int);
-    void setRange(int, int);    
+    void setRange(int, int);
 
 protected:
     virtual int nextId() const;
     virtual bool validateCurrentPage();
     virtual void initializePage(int id);
 
-    
+
     void checkLoadButton();
     bool framesHaveSameSize();
     void buildContents();
@@ -124,4 +124,4 @@ private:
     void selectInputFile(QLineEdit* textField, QString* channel);
 };
 
-#endif 
+#endif

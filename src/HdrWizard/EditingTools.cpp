@@ -55,7 +55,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
     m_patchesEdited(false)
 {
     m_Ui->setupUi(this);
-   
+
     if ( !QIcon::hasThemeIcon("edit-select-lasso") )
     {
         m_Ui->lassoColorButton->setIcon(QIcon(":/program-icons/edit-select-lasso"));
@@ -84,7 +84,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
             m_patches[i][j] = false;
 
     HdrCreationItemContainer data = m_hcm->getData();
-    for ( HdrCreationItemContainer::iterator it = data.begin(), 
+    for ( HdrCreationItemContainer::iterator it = data.begin(),
           itEnd = data.end(); it != itEnd; ++it) {
         m_originalImagesList.push_back(&it->qimage());
         m_fileList.push_back(it->filename());
@@ -96,7 +96,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
     m_gridY = height/agGridSize;
 
     int size = m_originalImagesList.size();
-    for ( int h = 0; h < size; h++) { 
+    for ( int h = 0; h < size; h++) {
         QImage *img = new QImage(width, height, QImage::Format_ARGB32);
         img->fill(qRgba(0,0,0,0));
         m_antiGhostingMasksList.append(img);
@@ -128,7 +128,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
     m_previewWidget->update();
     m_patchesMask = new QImage(width, height, QImage::Format_ARGB32);
     m_previewWidget->setPatchesMask(m_patchesMask);
-    
+
     qvl->addWidget(m_previewWidget);
     m_Ui->previewImageFrame->setLayout(qvl);
 
@@ -165,7 +165,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
 
     ((QGridLayout*)(m_Ui->groupBoxHistogram->layout()))->addWidget(m_histogram);
     m_previewWidget->setFocus();
-    
+
     m_Ui->autoAG_checkBox->setChecked(m_doAutoAntighosting);
 
     setupConnections();
@@ -192,7 +192,7 @@ void EditingTools::setupConnections() {
     connect(m_Ui->fillButton,SIGNAL(clicked()),this,SLOT(fillPreview()));
     connect(m_Ui->cropButton,SIGNAL(clicked()),this,SLOT(cropStack()));
     connect(m_previewWidget,SIGNAL(selectionReady(bool)),m_Ui->cropButton,SLOT(setEnabled(bool)));
-    connect(m_previewWidget,SIGNAL(patchesEdited()),this,SLOT(setPatchesEdited())); 
+    connect(m_previewWidget,SIGNAL(patchesEdited()),this,SLOT(setPatchesEdited()));
     connect(m_Ui->saveImagesButton,SIGNAL(clicked()),this,SLOT(saveImagesButtonClicked()));
     connect(m_Ui->blendModeCB,SIGNAL(currentIndexChanged(int)),m_previewWidget,SLOT(requestedBlendMode(int)));
     connect(m_Ui->blendModeCB,SIGNAL(currentIndexChanged(int)),this,SLOT(blendModeCBIndexChanged(int)));
@@ -283,7 +283,7 @@ void EditingTools::cropStack()
     int height = m_originalImagesList.at(0)->height();
     m_gridX = width/agGridSize;
     m_gridY = height/agGridSize;
-    
+
     m_previewWidget->removeSelection();
     m_previewWidget->setMovable(m_originalImagesList[m_Ui->movableListWidget->currentRow()]);
     m_previewWidget->setPivot(m_originalImagesList[m_Ui->referenceListWidget->currentRow()]);
@@ -318,10 +318,10 @@ void EditingTools::computeAgMask()
     for (int h = 0; h < size; h++) {
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
-                if (qAlpha(m_antiGhostingMasksList.at(h)->pixel(i,j)) != 0) 
+                if (qAlpha(m_antiGhostingMasksList.at(h)->pixel(i,j)) != 0)
                     m_antiGhostingMask->setPixel(i, j, m_antiGhostingMasksList.at(h)->pixel(i, j));
             }
-        }   
+        }
     }
 }
 
@@ -329,7 +329,7 @@ void EditingTools::nextClicked()
 {
     m_Ui->Next_Finishbutton->setEnabled(false);
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    
+
     if (!m_imagesSaved)
         m_hcm->applyShiftsToItems(m_HV_offsets);
     if (m_doAutoAntighosting) {
@@ -606,11 +606,11 @@ void EditingTools::restoreSaveImagesButtonState()
 
     m_originalImagesList.clear();
     HdrCreationItemContainer data = m_hcm->getData();
-    for ( HdrCreationItemContainer::iterator it = data.begin(), 
+    for ( HdrCreationItemContainer::iterator it = data.begin(),
           itEnd = data.end(); it != itEnd; ++it) {
         m_originalImagesList.push_back(&it->qimage());
     }
-    
+
     m_previewWidget->setMovable(m_originalImagesList[m_Ui->movableListWidget->currentRow()]);
     m_previewWidget->setPivot(m_originalImagesList[m_Ui->referenceListWidget->currentRow()]);
 }
@@ -672,7 +672,7 @@ void EditingTools::applySavedAgMask()
     QString filename = m_Ui->movableListWidget->currentItem()->text();
     int idx = m_filesMap[filename];
     delete m_antiGhostingMasksList[idx];
-    m_antiGhostingMasksList[idx] = new QImage(*m_previewWidget->getSavedAgMask());    
+    m_antiGhostingMasksList[idx] = new QImage(*m_previewWidget->getSavedAgMask());
     m_previewWidget->setMask(m_antiGhostingMasksList[idx]);
     m_previewWidget->updatePreviewImage();
 }

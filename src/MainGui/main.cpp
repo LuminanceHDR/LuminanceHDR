@@ -60,42 +60,42 @@ QStringList getCliFiles(const QStringList& arguments)
 #if defined(WIN32) || defined(__APPLE__)
 void customMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-	QString txt;
-	switch (type) {
-	case QtDebugMsg:
-		txt = QString("Debug: %1").arg(msg);
-		break;
-	case QtWarningMsg:
-		txt = QString("Warning: %1").arg(msg);
-	break;
-	case QtCriticalMsg:
-		txt = QString("Critical: %1").arg(msg);
-	break;
-	case QtFatalMsg:
-		txt = QString("Fatal: %1").arg(msg);
-		abort();
-	}
+    QString txt;
+    switch (type) {
+    case QtDebugMsg:
+        txt = QString("Debug: %1").arg(msg);
+        break;
+    case QtWarningMsg:
+        txt = QString("Warning: %1").arg(msg);
+    break;
+    case QtCriticalMsg:
+        txt = QString("Critical: %1").arg(msg);
+    break;
+    case QtFatalMsg:
+        txt = QString("Fatal: %1").arg(msg);
+        abort();
+    }
 
-	QFile outFile("debuglog.txt");
-	if (outFile.open(QIODevice::WriteOnly | QIODevice::Append))
-	{
+    QFile outFile("debuglog.txt");
+    if (outFile.open(QIODevice::WriteOnly | QIODevice::Append))
+    {
         QTextStream ts(&outFile);
         ts << txt << endl;
-	}
+    }
 }
 #endif
 
 int main( int argc, char ** argv )
 {
-	QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
-	QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
+    QCoreApplication::setApplicationName(LUMINANCEAPPLICATION);
+    QCoreApplication::setOrganizationName(LUMINANCEORGANIZATION);
 
 #ifdef WIN32 //TODO: there are problems with HiDPI on X11, let's enable this only on Windows by now
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-	Q_INIT_RESOURCE(icons);
+    Q_INIT_RESOURCE(icons);
     QApplication application( argc, argv );
 
 
@@ -124,7 +124,7 @@ int main( int argc, char ** argv )
     LuminanceOptions::conditionallyDoUpgrade();
     TranslatorManager::setLanguage(LuminanceOptions().getGuiLang());
 
-	LuminanceOptions().applyTheme(true);
+    LuminanceOptions().applyTheme(true);
 
     DonationDialog::showDonationDialog();
 

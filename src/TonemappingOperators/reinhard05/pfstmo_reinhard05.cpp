@@ -6,11 +6,11 @@
  * E. Reinhard and K. Devlin.
  * In IEEE Transactions on Visualization and Computer Graphics, 2005.
  *
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2007 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -24,8 +24,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
  * $Id: pfstmo_reinhard05.cpp,v 1.2 2008/09/04 12:46:49 julians37 Exp $
@@ -43,7 +43,7 @@
 #include "Libpfs/progress.h"
 
 void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadaptation, float lightadaptation, pfs::Progress &ph)
-{  
+{
     //--- default tone mapping parameters;
     //float brightness = 0.0f;
     //float chromaticadaptation = 0.5f;

@@ -59,20 +59,20 @@ OsIntegration::~OsIntegration()
 
 OsIntegration& OsIntegration::getInstance()
 {
-	if (!instance)
+    if (!instance)
     {
-		instance = new OsIntegration();
+        instance = new OsIntegration();
     }
-	return *instance;
+    return *instance;
 }
 
 OsIntegration* OsIntegration::getInstancePtr()
 {
     if (!instance)
     {
-		instance = new OsIntegration();
+        instance = new OsIntegration();
     }
-	return instance;
+    return instance;
 }
 
 void OsIntegration::init(QWidget* mainWindow)
@@ -90,7 +90,7 @@ void OsIntegration::setProgress(int value, int max)
 #ifdef Q_OS_WIN
     if (m_winProgressbar)
     {
-		m_winProgressbar->setProgressValue(value, max);
+        m_winProgressbar->setProgressValue(value, max);
     }
 #endif
 }
@@ -100,7 +100,7 @@ void OsIntegration::setProgressValue(int value)
 #ifdef Q_OS_WIN
     if (m_winProgressbar)
     {
-		m_winProgressbar->setProgressValue(value, m_progressMax - m_progressMin);
+        m_winProgressbar->setProgressValue(value, m_progressMax - m_progressMin);
     }
 #endif
 }
@@ -116,7 +116,7 @@ void OsIntegration::addRecentFile(const QString& filename)
 #ifdef Q_OS_WIN
     if (m_winProgressbar)
     {
-		m_winProgressbar->addRecentFile(filename);
+        m_winProgressbar->addRecentFile(filename);
     }
 #endif
 }

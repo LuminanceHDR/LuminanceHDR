@@ -692,9 +692,9 @@ void  CommandLineInterfaceManager::startTonemap()
 #ifdef QT_DEBUG
         qDebug() << "XSIZE:" << tmopts->xsize;
 #endif
-        if (tmopts->xsize == -2) 
+        if (tmopts->xsize == -2)
             tmopts->xsize = HDR->getWidth();
-        else 
+        else
             printIfVerbose( tr("Resizing to width %1.").arg(tmopts->xsize) , verbose);
 
         if(tmopts->pregamma != 1)

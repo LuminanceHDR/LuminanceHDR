@@ -33,7 +33,7 @@ class SavingParameters : public QDialog, private Ui::SavingParameters
 
 public:
     SavingParameters(QWidget *parent = 0);
-	QString getComment() { return comment->text(); }
+    QString getComment() { return comment->text(); }
 };
 
 #endif

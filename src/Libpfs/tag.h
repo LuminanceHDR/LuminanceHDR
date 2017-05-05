@@ -24,7 +24,7 @@
 //! \author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! Modified to use std::map instead than a list of strings
- 
+
 #ifndef PFS_TAG_H
 #define PFS_TAG_H
 

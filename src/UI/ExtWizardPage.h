@@ -13,7 +13,7 @@ public:
     enum CompleteStatus {Undefined, AlwaysTrue, AlwaysFalse};
 
     Q_OBJECT
-    
+
 public:
     ExtWizardPage(QWidget* parent = 0);
 

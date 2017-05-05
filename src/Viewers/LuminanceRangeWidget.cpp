@@ -1,11 +1,11 @@
 /**
- * @brief 
- * 
+ * @brief
+ *
  * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  *               2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -19,7 +19,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  * @author Giuseppe Rota <grota@users.sourceforge.net>
@@ -53,7 +53,7 @@ static const int dragZoneMargin = 5; // How many pizels from the range window bo
 
 LuminanceRangeWidget::LuminanceRangeWidget( QWidget *parent ):
   QFrame( parent ), dragMode(DRAG_NO), showVP( false ), valuePointer(0.f), histogram( NULL ), histogramImage( NULL )
-  
+
 {
   setFrameStyle( QFrame::Panel|QFrame::Sunken );
   setMouseTracking( true );
@@ -65,13 +65,13 @@ LuminanceRangeWidget::LuminanceRangeWidget( QWidget *parent ):
 
   mouseDragStart = -1;
   dragShift = 0;
-  
+
 }
 
 LuminanceRangeWidget::~LuminanceRangeWidget()
 {
   delete histogram;
-  
+
 }
 
 
@@ -112,7 +112,7 @@ void LuminanceRangeWidget::paintEvent( QPaintEvent */*pe */)
       histogram = new Histogram( fRect.width(), accuracy );
       histogram->computeLog( histogramImage, minValue, maxValue );
     }
-    
+
     float maxP = histogram->getMaxP();
     int i = 0;
     p.setPen( Qt::green );
@@ -177,7 +177,7 @@ float LuminanceRangeWidget::draggedMax()
 void LuminanceRangeWidget::mousePressEvent ( QMouseEvent * me )
 {
   if( dragMode == DRAG_NO ) return;
-  
+
   mouseDragStart = me->x();
   dragShift = 0;
   update();
@@ -204,14 +204,14 @@ void LuminanceRangeWidget::mouseMoveEvent( QMouseEvent *me )
 
     if( mouseDragStart != DRAGNOTSTARTED ) {
       QRect fRect = getPaintRect();
-      
+
       int windowCordShift = me->x() - mouseDragStart;
-      dragShift = (float)windowCordShift / (float)fRect.width() * (maxValue - minValue);    
+      dragShift = (float)windowCordShift / (float)fRect.width() * (maxValue - minValue);
       update();
     }
-    
+
   } else {
-    
+
     QRect fRect = rect();
     int winBegPos = getWindowX( windowMin );
     int winEndPos = getWindowX( windowMax );
@@ -232,7 +232,7 @@ void LuminanceRangeWidget::mouseMoveEvent( QMouseEvent *me )
   }
 
 }
-  
+
 void LuminanceRangeWidget::increaseExposure()
 {
   windowMin -= exposureStep;
@@ -291,7 +291,7 @@ void LuminanceRangeWidget::fitToDynamicRange()
     if( min <= 0.000001f ) min = 0.000001f; // If data contains negative values
 
     windowMin = log10( min );
-    windowMax = log10( max );    
+    windowMax = log10( max );
 
     if( windowMax - windowMin < 0.5 )  { // Window too small
       float m = (windowMin + windowMax)/2.f;
@@ -307,7 +307,7 @@ void LuminanceRangeWidget::lowDynamicRange()
 {
   windowMin = 1.0f;
   windowMax = 3.0f;
-  
+
   update();
   emit updateRangeWindow();
 }
@@ -317,7 +317,7 @@ QRect LuminanceRangeWidget::getPaintRect() const
   QRect fRect = frameRect();
   fRect.setLeft( fRect.left()+1 );
   fRect.setTop( fRect.top()+1 );
-  fRect.setBottom( fRect.bottom()-1 );  
+  fRect.setBottom( fRect.bottom()-1 );
   fRect.setRight( fRect.right()-1 );
   return fRect;
 }
@@ -332,11 +332,11 @@ void LuminanceRangeWidget::showValuePointer( float value )
 
   int newx = getWindowX( valuePointer );
   if( oldx == -1 ) oldx = newx;
-  
+
   QRect updateRect( min( oldx, newx ), fRect.top(),
     max( oldx, newx ) - min(oldx, newx )+1, fRect.height() );
-  
-  
+
+
   update( updateRect );
 }
 
@@ -353,7 +353,7 @@ void LuminanceRangeWidget::setRangeWindowMinMax( float min, float max )
 void LuminanceRangeWidget::hideValuePointer()
 {
   showVP = false;
-  update();  
+  update();
 }
 
 

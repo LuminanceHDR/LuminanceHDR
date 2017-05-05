@@ -113,13 +113,13 @@ void HdrViewer::retranslateUi()
     int oldMappingMethodIndex = m_mappingMethodCB->currentIndex();
 
     disconnect( m_mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
-	QStringList methods;
-	methods << tr("Linear")
-			<< tr("Gamma 1.4")
-			<< tr("Gamma 1.8")
-			<< tr("Gamma 2.2")
-			<< tr("Gamma 2.6")
-			<< tr("Logarithmic");
+    QStringList methods;
+    methods << tr("Linear")
+            << tr("Gamma 1.4")
+            << tr("Gamma 1.8")
+            << tr("Gamma 2.2")
+            << tr("Gamma 2.6")
+            << tr("Logarithmic");
 
     m_mappingMethodCB->clear();
     m_mappingMethodCB->addItems(methods);
@@ -127,7 +127,7 @@ void HdrViewer::retranslateUi()
     connect(m_mappingMethodCB, SIGNAL(activated( int )), this, SLOT(setLumMappingMethod(int)));
     connect(m_mappingMethodCB, SIGNAL(currentIndexChanged(int)), m_mappingMethodCB, SLOT(setFocus()));
 
-	GenericViewer::retranslateUi();
+    GenericViewer::retranslateUi();
 }
 
 void HdrViewer::refreshPixmap()

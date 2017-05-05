@@ -192,7 +192,7 @@ void LdrViewer::retranslateUi()
     parseOptions(mTonemappingOptions, caption);
     informativeLabel->setText( tr("LDR image [%1 x %2]: %3").arg(getWidth()).arg(getHeight()).arg( caption ));
 
-	GenericViewer::retranslateUi();
+    GenericViewer::retranslateUi();
 }
 
 QString LdrViewer::getFileNamePostFix()

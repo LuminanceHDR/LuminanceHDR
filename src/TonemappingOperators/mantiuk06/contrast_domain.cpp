@@ -1,9 +1,9 @@
 /*
  * This file is a part of Luminance HDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2007 Grzegorz Krawczyk
  * Copyright (C) 2010-2012 Davide Anastasia
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,8 +17,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  */
 
 //! \brief Contrast mapping TMO [Mantiuk06]
@@ -476,7 +476,7 @@ int tmo_mantiuk06_contmap(Array2Df& R, Array2Df& G, Array2Df& B,
     assert( R.getRows() == G.getRows() );
     assert( G.getRows() == B.getRows() );
     assert( B.getRows() == Y.getRows() );
-    
+
     const size_t r = R.getRows();
     const size_t c = R.getCols();
     // const size_t n = r*c;

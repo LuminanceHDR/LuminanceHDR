@@ -49,17 +49,17 @@ for which a new license (GPL+exception) is in place.
 
 class ScTextBrowser : public QWebEngineView
 {
-	Q_OBJECT
-	QUrl m_home;
-	public:
-		explicit ScTextBrowser( QWidget * parent = 0 );
-		void setHome(const QUrl& h){m_home = h;}
-		
-	signals:
-		void overLink(const QString &link);
-		
-	public slots:
-		void home();
+    Q_OBJECT
+    QUrl m_home;
+    public:
+        explicit ScTextBrowser( QWidget * parent = 0 );
+        void setHome(const QUrl& h){m_home = h;}
+
+    signals:
+        void overLink(const QString &link);
+
+    public slots:
+        void home();
 
 };
 

@@ -8,7 +8,7 @@
  * http://www.mpi-inf.mpg.de/resources/hdr/datmo/
  *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,8 +22,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  *
  * $Id: display_size.cpp,v 1.3 2008/06/16 18:42:58 rafm Exp $
@@ -59,7 +59,7 @@ void DisplaySize::print( FILE *fh )
   fprintf( fh, "   viewing distance = %g [meters]\n", (double)getViewD() );
 }
 
-  
+
 float DisplaySize::getPixPerDeg()
 {
   return ppd;
@@ -76,7 +76,7 @@ float DisplaySize::getViewD()
 DisplaySize *createDisplaySizeFromArgs( int &argc, char* argv[] )
 {
   DisplaySize *ds = 0;
-  
+
   for( int i=1 ; i<argc; i++ )
   {
     if( !strcmp( argv[i], "--display-size" ) || !strcmp( argv[i], "-s" )  ) {
@@ -97,14 +97,14 @@ DisplaySize *createDisplaySizeFromArgs( int &argc, char* argv[] )
             ppd = strtod( token+4, NULL );
           } else {
             throw pfs::Exception( "Bad display size specification" );
-          }            
+          }
           token = strtok( NULL, ":" );
         }
         if( ppd != -1 )
           ds = new DisplaySize( ppd, d );
         else
           ds = new DisplaySize( vres, vd, d );
-        
+
         removeCommandLineArg( argc, argv, i, 2 );
         break;
       }

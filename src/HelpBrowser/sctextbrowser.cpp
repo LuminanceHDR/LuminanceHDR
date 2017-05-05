@@ -1,13 +1,13 @@
 /**
  * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2001â€“2013 Franz Schmid and rest of the members of the
  *  Scribus Team.
  *  The "Scribus Team" is informally defined as the following people: Franz
  *  Schmid, Peter Linnell, Craig Bradney, Jean Ghali, Hermann Kraus, Riku
  *  Leino, Oleksandr M oskalenko, Christoph SchÃ¤fer, Petr VanÄ›k, Andreas
  *  Vox, and Jain Basil.
- *  
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -57,12 +57,12 @@ for which a new license (GPL+exception) is in place.
 #include "sctextbrowser.h"
 
 ScTextBrowser::ScTextBrowser( QWidget * parent )
-	: QWebEngineView(parent)
+    : QWebEngineView(parent)
 {
 }
 
 void ScTextBrowser::home()
 {
-	if(m_home.isValid())
-		load(m_home);
+    if(m_home.isValid())
+        load(m_home);
 }

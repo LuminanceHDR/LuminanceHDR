@@ -35,10 +35,10 @@ class HelpSideBar : public QDockWidget
 Q_OBJECT
 
 public:
-	HelpSideBar(const QString &title, QWidget *parent = 0, Qt::WindowFlags flags = 0);
-	~HelpSideBar();
+    HelpSideBar(const QString &title, QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    ~HelpSideBar();
 protected:
-	virtual void changeEvent(QEvent* event);
+    virtual void changeEvent(QEvent* event);
 
 public:
     QScopedPointer<Ui::HelpSideBar> m_Ui;

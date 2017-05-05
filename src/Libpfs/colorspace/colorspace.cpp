@@ -2,9 +2,9 @@
  * @brief PFS library - color space transformations
  *
  * This file is a part of Luminance HDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
- * 
+ *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
@@ -18,8 +18,8 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net> (2010 10 13)
@@ -180,7 +180,7 @@ void transformXYZ2Yuv( const Array2Df *inC1, const Array2Df *inC2, const Array2D
         v = 9.f*y / (-2.f*x + 12.f*y + 3.f);
         outY = Y;
     }
-    
+
 }
 
 void transformYuv2XYZ( const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
@@ -249,7 +249,7 @@ void transformXYZ2Yxy( const Array2Df *inC1, const Array2Df *inC2, const Array2D
         outY = Y;
     }
 }
-  
+
 typedef void (*CSTransformFunc)(const Array2Df *inC1, const Array2Df *inC2, const Array2Df *inC3,
                                 Array2Df *outC1, Array2Df *outC2, Array2Df *outC3 );
 typedef std::pair<ColorSpace, ColorSpace> CSTransformProfile;
@@ -263,13 +263,13 @@ void transformColorSpace(ColorSpace inCS, const Array2Df *inC1, const Array2Df *
             inC3->getCols() == outC1->getCols() &&
             outC1->getCols() == outC2->getCols() &&
             outC2->getCols() == outC3->getCols() );
-    
+
     assert( inC1->getRows() == inC2->getRows() &&
             inC2->getRows() == inC3->getRows() &&
             inC3->getRows() == outC1->getRows() &&
             outC1->getRows() == outC2->getRows() &&
             outC2->getRows() == outC3->getRows() );
-    
+
     // static dictionary... I already know in advance the subscription I want
     // to perform, hence this approach is far easier than try to create
     // automatic subscription to the factory

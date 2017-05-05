@@ -1,8 +1,8 @@
 /**
  * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -49,12 +49,12 @@ ResizeDialog::ResizeDialog(QWidget *parent, pfs::Frame *orig):
     m_Ui->heightSpinBox->setDecimals(0);
     m_Ui->heightSpinBox->setMaximum(2*orig_height);
     m_Ui->heightSpinBox->setMinimum(1);
-	//we are now in pixel mode, put directly original pixel values.
+    //we are now in pixel mode, put directly original pixel values.
     m_Ui->widthSpinBox->setValue(orig_width);
     m_Ui->heightSpinBox->setValue(orig_height);
 
     from_other_spinbox = false;
-	updatelabel();
+    updatelabel();
 
     connect(m_Ui->scaleButton,SIGNAL(clicked()),this,SLOT(scaledPressed()));
     connect(m_Ui->widthSpinBox,SIGNAL(editingFinished()),this,SLOT(update_heightSpinBox()));
@@ -70,22 +70,22 @@ ResizeDialog::~ResizeDialog() {
 }
 
 pfs::Frame* ResizeDialog::getResizedFrame() {
-	return m_resized;
+    return m_resized;
 }
 
 void ResizeDialog::scaledPressed() {
-	if (orig_width==resized_width) {
-		emit reject();
-		return;
-	}
+    if (orig_width==resized_width) {
+        emit reject();
+        return;
+    }
     m_resized = pfs::resize(m_original, resized_width, BilinearInterp);
-	accept();
+    accept();
 }
 
 void ResizeDialog::switch_px_percentage(int px_per) {
 
-	switch (px_per) {
-	case 0:
+    switch (px_per) {
+    case 0:
         m_Ui->widthSpinBox->setMaximum(2*orig_width);
         m_Ui->heightSpinBox->setMaximum(2*orig_height);
         from_other_spinbox = true;
@@ -98,8 +98,8 @@ void ResizeDialog::switch_px_percentage(int px_per) {
         m_Ui->heightSpinBox->setSuffix("");
         m_Ui->heightSpinBox->setDecimals(0);
         m_Ui->heightSpinBox->setMinimum(1);
-		break;
-	case 1:
+        break;
+    case 1:
         m_Ui->widthSpinBox->setDecimals(2);
         m_Ui->heightSpinBox->setDecimals(2);
         from_other_spinbox = true;
@@ -112,85 +112,85 @@ void ResizeDialog::switch_px_percentage(int px_per) {
         m_Ui->heightSpinBox->setSuffix("%");
         m_Ui->heightSpinBox->setMaximum(200);
         m_Ui->heightSpinBox->setMinimum(1);
-		break;
-	}
+        break;
+    }
     from_other_spinbox = false;
-	updatelabel();
+    updatelabel();
 }
 //get a proper resized_width from a resized_height
 int ResizeDialog::rw_from_rh() {
-	return (int)((float)orig_width*(float)resized_height/(float)orig_height);
+    return (int)((float)orig_width*(float)resized_height/(float)orig_height);
 }
 //get a proper resized_height from a resized_width
 int ResizeDialog::rh_from_rw() {
-	return (int)((float)orig_height*(float)resized_width/(float)orig_width);
+    return (int)((float)orig_height*(float)resized_width/(float)orig_width);
 }
 void ResizeDialog::update_heightSpinBox() {
-	if (from_other_spinbox) {
-		from_other_spinbox=false;
-		return;
-	}
+    if (from_other_spinbox) {
+        from_other_spinbox=false;
+        return;
+    }
     switch (m_Ui->px_or_percentage->currentIndex()) {
-	case 0:
+    case 0:
         resized_width=(int)m_Ui->widthSpinBox->value();
-		resized_height=rh_from_rw();
-		from_other_spinbox=true;
-		//update directly resized_height
+        resized_height=rh_from_rw();
+        from_other_spinbox=true;
+        //update directly resized_height
         m_Ui->heightSpinBox->setValue(resized_height);
-	break;
-	case 1:
+    break;
+    case 1:
         resized_width=(int)(orig_width*m_Ui->widthSpinBox->value()/100.0);
-		resized_height=rh_from_rw();
-		from_other_spinbox=true;
+        resized_height=rh_from_rw();
+        from_other_spinbox=true;
         m_Ui->heightSpinBox->setValue((double)resized_height/(double)orig_height*100.0);
-	break;
-	}
-	updatelabel();
+    break;
+    }
+    updatelabel();
 }
 void ResizeDialog::update_widthSpinBox() {
-	if (from_other_spinbox) {
-		from_other_spinbox=false;
-		return;
-	}
+    if (from_other_spinbox) {
+        from_other_spinbox=false;
+        return;
+    }
     switch (m_Ui->px_or_percentage->currentIndex()) {
-	case 0:
+    case 0:
         resized_height=(int)m_Ui->heightSpinBox->value();
-		resized_width=rw_from_rh();
-		from_other_spinbox=true;
-		//update directly resized_width
+        resized_width=rw_from_rh();
+        from_other_spinbox=true;
+        //update directly resized_width
         m_Ui->widthSpinBox->setValue(resized_width);
-		break;
-	case 1:
+        break;
+    case 1:
         resized_height=(int)(orig_height*m_Ui->heightSpinBox->value()/100.0);
-		resized_width=rw_from_rh();
-		from_other_spinbox=true;
+        resized_width=rw_from_rh();
+        from_other_spinbox=true;
         m_Ui->widthSpinBox->setValue((double)resized_width/(double)orig_width*100.0);
-		break;
-	}
-	updatelabel();
+        break;
+    }
+    updatelabel();
 }
 void ResizeDialog::updatelabel() {
     m_Ui->sizepreview->setText(QString("%1x%2").arg(resized_width).arg(resized_height));
 }
 
 void ResizeDialog::defaultpressed() {
-	resized_height=orig_height;
-	resized_width=orig_width;
+    resized_height=orig_height;
+    resized_width=orig_width;
     switch (m_Ui->px_or_percentage->currentIndex()) {
-	case 0:
-		from_other_spinbox=true;
+    case 0:
+        from_other_spinbox=true;
         m_Ui->widthSpinBox->setValue(resized_width);
-		from_other_spinbox=true;
+        from_other_spinbox=true;
         m_Ui->heightSpinBox->setValue(resized_height);
-		from_other_spinbox=false;
-		break;
-	case 1:
-		from_other_spinbox=true;
+        from_other_spinbox=false;
+        break;
+    case 1:
+        from_other_spinbox=true;
         m_Ui->widthSpinBox->setValue(100);
-		from_other_spinbox=true;
+        from_other_spinbox=true;
         m_Ui->heightSpinBox->setValue(100);
-		from_other_spinbox=false;
-		break;
-	}
-	updatelabel();
+        from_other_spinbox=false;
+        break;
+    }
+    updatelabel();
 }

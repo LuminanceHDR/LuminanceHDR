@@ -12,11 +12,11 @@
  * internal data, but no STL class can be found the header file
  * pfs.h. Such design should hopefully give less problems when
  * extending and updating the library.
- * 
+ *
  * This file is a part of PFSTOOLS package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
- * 
+ *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
@@ -30,8 +30,8 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
@@ -52,7 +52,7 @@
 //#define MAX_CHANNEL_COUNT 1024
 
 /**
- * All classes and function from PFS library reside in pfs namespace. 
+ * All classes and function from PFS library reside in pfs namespace.
  */
 namespace pfs
 {

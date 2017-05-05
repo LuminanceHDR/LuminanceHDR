@@ -33,17 +33,17 @@ using pfs::utils::getFormat;
 FrameWriterPtr FrameWriterFactory::open(const std::string& filename, const pfs::Params& params)
 {
     string ext = getFormat(filename);
-	std::string content;
-	if (params.get("format", content)) {
-		if (!content.empty())
-		{
-			FrameWriterCreatorMap::const_iterator it = sm_registry.find(content);
-			if (it != sm_registry.end())
-			{
-				return (it->second)(filename);
-			}
-		}
-	}
+    std::string content;
+    if (params.get("format", content)) {
+        if (!content.empty())
+        {
+            FrameWriterCreatorMap::const_iterator it = sm_registry.find(content);
+            if (it != sm_registry.end())
+            {
+                return (it->second)(filename);
+            }
+        }
+    }
     if ( !ext.empty() )
     {
         FrameWriterCreatorMap::const_iterator it = sm_registry.find(ext);

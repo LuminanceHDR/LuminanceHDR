@@ -49,9 +49,9 @@ using namespace pfs;
 //
 //
 
-#define ICC_MARKER  (JPEG_APP0 + 2)	/* JPEG marker code for ICC */
-#define ICC_OVERHEAD_LEN  14		/* size of non-profile data in APP2 */
-#define MAX_BYTES_IN_MARKER  65533	/* maximum data len of a JPEG marker */
+#define ICC_MARKER  (JPEG_APP0 + 2)    /* JPEG marker code for ICC */
+#define ICC_OVERHEAD_LEN  14        /* size of non-profile data in APP2 */
+#define MAX_BYTES_IN_MARKER  65533    /* maximum data len of a JPEG marker */
 #define MAX_DATA_BYTES_IN_MARKER  (MAX_BYTES_IN_MARKER - ICC_OVERHEAD_LEN)
 
 
@@ -96,11 +96,11 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
     JOCTET *icc_data;
     unsigned int total_length;
 #define MAX_SEQ_NO  255         /* sufficient since marker numbers are bytes */
-    char marker_present[MAX_SEQ_NO+1];	  /* 1 if marker found */
+    char marker_present[MAX_SEQ_NO+1];      /* 1 if marker found */
     unsigned int data_length[MAX_SEQ_NO+1]; /* size of profile data in marker */
     unsigned int data_offset[MAX_SEQ_NO+1]; /* offset for data in marker */
 
-    *icc_data_ptr = NULL;		/* avoid confusion if false return */
+    *icc_data_ptr = NULL;        /* avoid confusion if false return */
     *icc_data_len = 0;
 
     /* This first pass over the saved markers discovers whether there are
@@ -116,16 +116,16 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
                 num_markers = GETJOCTET(marker->data[13]);
             else if (num_markers != GETJOCTET(marker->data[13])) {
                 PRINT_DEBUG("inconsistent num_markers fields");
-                return false;		/* inconsistent num_markers fields */
+                return false;        /* inconsistent num_markers fields */
             }
             seq_no = GETJOCTET(marker->data[12]);
             if (seq_no <= 0 || seq_no > num_markers) {
                 PRINT_DEBUG("bogus sequence number");
-                return false;		/* bogus sequence number */
+                return false;        /* bogus sequence number */
             }
             if (marker_present[seq_no]) {
                 PRINT_DEBUG("duplicate sequence numbers");
-                return false;		/* duplicate sequence numbers */
+                return false;        /* duplicate sequence numbers */
             }
             marker_present[seq_no] = 1;
             data_length[seq_no] = marker->data_length - ICC_OVERHEAD_LEN;
@@ -145,7 +145,7 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
     for (seq_no = 1; seq_no <= num_markers; seq_no++) {
         if (marker_present[seq_no] == 0) {
             PRINT_DEBUG("missing sequence number");
-            return false;		/* missing sequence number */
+            return false;        /* missing sequence number */
         }
         data_offset[seq_no] = total_length;
         total_length += data_length[seq_no];
@@ -154,13 +154,13 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
     //if (total_length <= 0) { // total_length is unsigned
     if (total_length == 0) {
         PRINT_DEBUG("found only empty markers?");
-        return false;		/* found only empty markers? */
+        return false;        /* found only empty markers? */
     }
 
     /* Allocate space for assembled data */
     icc_data = (JOCTET *) malloc(total_length * sizeof(JOCTET));
     if (icc_data == NULL)
-        return false;		/* oops, out of memory */
+        return false;        /* oops, out of memory */
 
     /* and fill it in */
     for (marker = cinfo->marker_list; marker != NULL; marker = marker->next) {
@@ -192,7 +192,7 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
 static
 void my_error_handler(j_common_ptr cinfo)
 {
-	char buffer[JMSG_LENGTH_MAX];
+    char buffer[JMSG_LENGTH_MAX];
     (*cinfo->err->format_message)(cinfo, buffer);
     throw pfs::io::ReadException( std::string(buffer) );
 }
@@ -200,7 +200,7 @@ void my_error_handler(j_common_ptr cinfo)
 static
 void my_output_message(j_common_ptr cinfo)
 {
-	char buffer[JMSG_LENGTH_MAX];
+    char buffer[JMSG_LENGTH_MAX];
     (*cinfo->err->format_message)(cinfo, buffer);
     throw pfs::io::ReadException( std::string(buffer) );
 }

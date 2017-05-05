@@ -97,7 +97,7 @@ public:
         //try { //Since nothing here actually throws this isn't useful, i need to check if returned frame != NULL
         QScopedPointer<TMWorker> tmWorker(new TMWorker);
         QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options, BilinearInterp));
-        
+
         if (!frame.isNull())
         {
             // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel

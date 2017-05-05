@@ -60,11 +60,11 @@
 #define KEY_GREEN_TOOLBUTTON "preference_dialog/green_toolButton"
 
 #ifdef WIN32
-	#define ICC_PATH "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+    #define ICC_PATH "C:\\WINDOWS\\system32\\spool\\drivers\\color"
 #elif defined __APPLE__
-	#define ICC_PATH "/Library/ColorSync/Profiles/"
+    #define ICC_PATH "/Library/ColorSync/Profiles/"
 #else
-	#define ICC_PATH "/usr/share/color/icc"
+    #define ICC_PATH "/usr/share/color/icc"
 #endif
 
 namespace
@@ -97,51 +97,51 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
     connect(m_Ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_themeChanged()));
 
 #ifdef DEMOSAICING_GPL2
-	qDebug() << "PreferencesDialog: Found demosaicing pack GPL2";
-	m_Ui->user_qual_comboBox->addItem("DCB");
-	m_Ui->user_qual_comboBox->addItem("AHD v2");
-	m_Ui->user_qual_comboBox->addItem("AFD");
-	m_Ui->user_qual_comboBox->addItem("VCD");
-	m_Ui->user_qual_comboBox->addItem("VCD & AHD");
-	m_Ui->user_qual_comboBox->addItem("LMMSE");
+    qDebug() << "PreferencesDialog: Found demosaicing pack GPL2";
+    m_Ui->user_qual_comboBox->addItem("DCB");
+    m_Ui->user_qual_comboBox->addItem("AHD v2");
+    m_Ui->user_qual_comboBox->addItem("AFD");
+    m_Ui->user_qual_comboBox->addItem("VCD");
+    m_Ui->user_qual_comboBox->addItem("VCD & AHD");
+    m_Ui->user_qual_comboBox->addItem("LMMSE");
 #endif
 #ifdef DEMOSAICING_GPL3
-	qDebug() << "PreferencesDialog: Found AMaZE";
-	m_Ui->user_qual_comboBox->addItem("AMaZE");
+    qDebug() << "PreferencesDialog: Found AMaZE";
+    m_Ui->user_qual_comboBox->addItem("AMaZE");
 #endif
 
-	fromIso639ToGuiIndex["cs"]= 0;
+    fromIso639ToGuiIndex["cs"]= 0;
     fromIso639ToGuiIndex["da"]= 1;
-	fromIso639ToGuiIndex["de"]= 2;
-	fromIso639ToGuiIndex["en"]= 3;
-	fromIso639ToGuiIndex["es"]= 4;
-	fromIso639ToGuiIndex["fr"]= 5;
-	fromIso639ToGuiIndex["id"]= 6;
-	fromIso639ToGuiIndex["it"]= 7;
-	fromIso639ToGuiIndex["hu"]= 8;
-	fromIso639ToGuiIndex["pl"]= 9;
-	fromIso639ToGuiIndex["pt_BR"]= 10;
-	fromIso639ToGuiIndex["ru"]=11;
-	fromIso639ToGuiIndex["ro"]=12;
-	fromIso639ToGuiIndex["fi"]=13;
-	fromIso639ToGuiIndex["tr"]=14;
-	fromIso639ToGuiIndex["zh"]=15;
+    fromIso639ToGuiIndex["de"]= 2;
+    fromIso639ToGuiIndex["en"]= 3;
+    fromIso639ToGuiIndex["es"]= 4;
+    fromIso639ToGuiIndex["fr"]= 5;
+    fromIso639ToGuiIndex["id"]= 6;
+    fromIso639ToGuiIndex["it"]= 7;
+    fromIso639ToGuiIndex["hu"]= 8;
+    fromIso639ToGuiIndex["pl"]= 9;
+    fromIso639ToGuiIndex["pt_BR"]= 10;
+    fromIso639ToGuiIndex["ru"]=11;
+    fromIso639ToGuiIndex["ro"]=12;
+    fromIso639ToGuiIndex["fi"]=13;
+    fromIso639ToGuiIndex["tr"]=14;
+    fromIso639ToGuiIndex["zh"]=15;
 
-	fromGuiIndexToIso639[ 0]="cs";
-	fromGuiIndexToIso639[ 1]="da";
-	fromGuiIndexToIso639[ 2]="de";
-	fromGuiIndexToIso639[ 3]="en";
-	fromGuiIndexToIso639[ 4]="es";
-	fromGuiIndexToIso639[ 5]="fr";
-	fromGuiIndexToIso639[ 6]="id";
-	fromGuiIndexToIso639[ 7]="it";
-	fromGuiIndexToIso639[ 8]="hu";
-	fromGuiIndexToIso639[ 9]="pl";
-	fromGuiIndexToIso639[10]="pt_BR";
-	fromGuiIndexToIso639[11]="ru";
-	fromGuiIndexToIso639[12]="ro";
-	fromGuiIndexToIso639[13]="fi";
-	fromGuiIndexToIso639[14]="tr";
+    fromGuiIndexToIso639[ 0]="cs";
+    fromGuiIndexToIso639[ 1]="da";
+    fromGuiIndexToIso639[ 2]="de";
+    fromGuiIndexToIso639[ 3]="en";
+    fromGuiIndexToIso639[ 4]="es";
+    fromGuiIndexToIso639[ 5]="fr";
+    fromGuiIndexToIso639[ 6]="id";
+    fromGuiIndexToIso639[ 7]="it";
+    fromGuiIndexToIso639[ 8]="hu";
+    fromGuiIndexToIso639[ 9]="pl";
+    fromGuiIndexToIso639[10]="pt_BR";
+    fromGuiIndexToIso639[11]="ru";
+    fromGuiIndexToIso639[12]="ro";
+    fromGuiIndexToIso639[13]="fi";
+    fromGuiIndexToIso639[14]="tr";
     fromGuiIndexToIso639[15]="zh";
 
     for (QString style : QStyleFactory::keys())
@@ -158,7 +158,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
     m_formatHelper.initConnection(m_Ui->exportFormatCombo, m_Ui->exportFormatToolbutton, false);
 
     from_options_to_gui(); //update the gui in order to show the options
-    
+
     toolButtonMapper = new QSignalMapper(this);
     connect(toolButtonMapper, SIGNAL(mapped(int)), this, SLOT(toolButton_clicked(int)));
 
@@ -172,8 +172,8 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
     };
     for (int i = 0; i < 6; i++)
     {
-    	toolButtonMapper->setMapping(tabEntries[i], i);
-    	connect(tabEntries[i], SIGNAL(clicked()), toolButtonMapper, SLOT(map()));
+        toolButtonMapper->setMapping(tabEntries[i], i);
+        connect(tabEntries[i], SIGNAL(clicked()), toolButtonMapper, SLOT(map()));
     }
 
     toolButton_clicked(tab);
@@ -181,16 +181,16 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
 
 PreferencesDialog::~PreferencesDialog()
 {
-	delete toolButtonMapper;
+    delete toolButtonMapper;
 }
 
 void PreferencesDialog::changeEvent(QEvent *event)
 {
-	if (event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
-		 m_Ui->retranslateUi(this);
+         m_Ui->retranslateUi(this);
     }
-	QWidget::changeEvent(event);
+    QWidget::changeEvent(event);
 }
 
 void PreferencesDialog::on_okButton_clicked()
@@ -205,16 +205,16 @@ void PreferencesDialog::on_okButton_clicked()
         TranslatorManager::setLanguage( luminance_options.getGuiLang() );
     }
 
-	if (luminance_options.getGuiTheme() != m_Ui->themeComboBox->currentText() || luminance_options.isGuiDarkMode() != m_Ui->chkDarkMode->isChecked())
-	{
-		if (luminance_options.isGuiDarkMode() != m_Ui->chkDarkMode->isChecked() && !m_Ui->chkDarkMode->isChecked())
+    if (luminance_options.getGuiTheme() != m_Ui->themeComboBox->currentText() || luminance_options.isGuiDarkMode() != m_Ui->chkDarkMode->isChecked())
+    {
+        if (luminance_options.isGuiDarkMode() != m_Ui->chkDarkMode->isChecked() && !m_Ui->chkDarkMode->isChecked())
         {
-			restartNeeded = true;
+            restartNeeded = true;
         }
-		luminance_options.setGuiTheme(m_Ui->themeComboBox->currentText());
-		luminance_options.setGuiDarkMode(m_Ui->chkDarkMode->isChecked());
-		luminance_options.applyTheme(false);
-	}
+        luminance_options.setGuiTheme(m_Ui->themeComboBox->currentText());
+        luminance_options.setGuiDarkMode(m_Ui->chkDarkMode->isChecked());
+        luminance_options.applyTheme(false);
+    }
 
     luminance_options.setTempDir( m_Ui->lineEditTempPath->text() );
 
@@ -238,26 +238,26 @@ void PreferencesDialog::on_okButton_clicked()
     // --- RAW parameters
     luminance_options.setRawFourColorRGB( m_Ui->four_color_rgb_CB->isChecked() );
     luminance_options.setRawDoNotUseFujiRotate( m_Ui->do_not_use_fuji_rotate_CB->isChecked() );
-	QString user_qual = m_Ui->user_qual_comboBox->itemText( m_Ui->user_qual_comboBox->currentIndex() );
-	if (user_qual == "Bilinear" ||
-		user_qual == "VNG" ||
-		user_qual == "PPG" ||
-		user_qual == "AHD") 
-			luminance_options.setRawUserQuality( m_Ui->user_qual_comboBox->currentIndex() );
-	else if(user_qual == "DCB")
-			luminance_options.setRawUserQuality( 4 );
-	else if(user_qual == "AHD v2")
-			luminance_options.setRawUserQuality( 5 );
-	else if(user_qual == "AFD")
-			luminance_options.setRawUserQuality( 6 );
-	else if(user_qual == "VCD")
-			luminance_options.setRawUserQuality( 7 );
-	else if(user_qual == "VCD & AHD")
-			luminance_options.setRawUserQuality( 8 );
-	else if(user_qual == "LMMSE")
-			luminance_options.setRawUserQuality( 9 );
-	else if(user_qual == "AMaZE")
-			luminance_options.setRawUserQuality( 10 );
+    QString user_qual = m_Ui->user_qual_comboBox->itemText( m_Ui->user_qual_comboBox->currentIndex() );
+    if (user_qual == "Bilinear" ||
+        user_qual == "VNG" ||
+        user_qual == "PPG" ||
+        user_qual == "AHD")
+            luminance_options.setRawUserQuality( m_Ui->user_qual_comboBox->currentIndex() );
+    else if(user_qual == "DCB")
+            luminance_options.setRawUserQuality( 4 );
+    else if(user_qual == "AHD v2")
+            luminance_options.setRawUserQuality( 5 );
+    else if(user_qual == "AFD")
+            luminance_options.setRawUserQuality( 6 );
+    else if(user_qual == "VCD")
+            luminance_options.setRawUserQuality( 7 );
+    else if(user_qual == "VCD & AHD")
+            luminance_options.setRawUserQuality( 8 );
+    else if(user_qual == "LMMSE")
+            luminance_options.setRawUserQuality( 9 );
+    else if(user_qual == "AMaZE")
+            luminance_options.setRawUserQuality( 10 );
     luminance_options.setRawMedPasses( m_Ui->med_passes_spinBox->value() );
     luminance_options.setRawWhiteBalanceMethod( m_Ui->wb_method_comboBox->currentIndex() );
     luminance_options.setRawTemperatureKelvin( m_Ui->TK_spinBox->value() );
@@ -276,10 +276,10 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setRawAber0( m_Ui->red_doubleSpinBox->value() );
     luminance_options.setRawAber2( m_Ui->blue_doubleSpinBox->value() );
 
-	// --- Color Management
-	luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
-	luminance_options.setMonitorProfileFileName( m_Ui->monitor_lineEdit->text() );
-	luminance_options.setPrinterProfileFileName( m_Ui->printer_lineEdit->text() );
+    // --- Color Management
+    luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
+    luminance_options.setMonitorProfileFileName( m_Ui->monitor_lineEdit->text() );
+    luminance_options.setPrinterProfileFileName( m_Ui->printer_lineEdit->text() );
 
     // ---- temporary... this rubbish must go away!
     luminance_options.setValue(KEY_USER_QUAL_TOOLBUTTON, m_Ui->user_qual_toolButton->isEnabled());
@@ -308,12 +308,12 @@ void PreferencesDialog::on_okButton_clicked()
 
 void PreferencesDialog::on_cancelButton_clicked()
 {
-	reject();
+    reject();
 }
 
 void PreferencesDialog::on_user_qual_comboBox_currentIndexChanged(int value)
 {
-	m_Ui->user_qual_toolButton->setEnabled(value != 0);
+    m_Ui->user_qual_toolButton->setEnabled(value != 0);
 }
 
 void PreferencesDialog::on_med_passes_spinBox_valueChanged(int value)
@@ -323,7 +323,7 @@ void PreferencesDialog::on_med_passes_spinBox_valueChanged(int value)
 
 void PreferencesDialog::on_wb_method_comboBox_currentIndexChanged(int i)
 {
-	bool isManualWb = i == 3;
+    bool isManualWb = i == 3;
     m_Ui->TK_label->setEnabled(isManualWb);
     m_Ui->TK_horizontalSlider->setEnabled(isManualWb);
     m_Ui->TK_spinBox->setEnabled(isManualWb);
@@ -356,7 +356,7 @@ void PreferencesDialog::on_user_black_spinBox_valueChanged(int value)
 
 void PreferencesDialog::on_user_sat_spinBox_valueChanged(int value)
 {
-	m_Ui->user_sat_toolButton->setEnabled(value != 20000);
+    m_Ui->user_sat_toolButton->setEnabled(value != 20000);
 }
 
 void PreferencesDialog::on_threshold_spinBox_valueChanged(int value)
@@ -366,35 +366,35 @@ void PreferencesDialog::on_threshold_spinBox_valueChanged(int value)
 
 void PreferencesDialog::on_use_black_CB_stateChanged(int)
 {
-	bool checked = m_Ui->use_black_CB->isChecked();
+    bool checked = m_Ui->use_black_CB->isChecked();
     m_Ui->user_black_horizontalSlider->setEnabled(checked);
     m_Ui->user_black_spinBox->setEnabled(checked);
 }
 
 void PreferencesDialog::on_use_sat_CB_stateChanged(int) {
-	bool checked = m_Ui->use_sat_CB->isChecked();
-	m_Ui->user_sat_horizontalSlider->setEnabled(checked);
-	m_Ui->user_sat_spinBox->setEnabled(checked);
+    bool checked = m_Ui->use_sat_CB->isChecked();
+    m_Ui->user_sat_horizontalSlider->setEnabled(checked);
+    m_Ui->user_sat_spinBox->setEnabled(checked);
 }
 
 void PreferencesDialog::on_use_noise_CB_stateChanged(int)
 {
-	bool checked = m_Ui->use_noise_CB->isChecked();
-	m_Ui->threshold_label->setEnabled(checked);
-	m_Ui->threshold_horizontalSlider->setEnabled(checked);
-	m_Ui->threshold_spinBox->setEnabled(checked);
-	m_Ui->threshold_toolButton->setEnabled(checked);
+    bool checked = m_Ui->use_noise_CB->isChecked();
+    m_Ui->threshold_label->setEnabled(checked);
+    m_Ui->threshold_horizontalSlider->setEnabled(checked);
+    m_Ui->threshold_spinBox->setEnabled(checked);
+    m_Ui->threshold_toolButton->setEnabled(checked);
 }
 
 void PreferencesDialog::on_use_chroma_CB_stateChanged(int)
 {
-	bool checked = m_Ui->use_chroma_CB->isChecked();
-	m_Ui->red_label->setEnabled(checked);
-	m_Ui->red_horizontalSlider->setEnabled(checked);
-	m_Ui->red_doubleSpinBox->setEnabled(checked);
-	m_Ui->blue_label->setEnabled(checked);
-	m_Ui->blue_horizontalSlider->setEnabled(checked);
-	m_Ui->blue_doubleSpinBox->setEnabled(checked);
+    bool checked = m_Ui->use_chroma_CB->isChecked();
+    m_Ui->red_label->setEnabled(checked);
+    m_Ui->red_horizontalSlider->setEnabled(checked);
+    m_Ui->red_doubleSpinBox->setEnabled(checked);
+    m_Ui->blue_label->setEnabled(checked);
+    m_Ui->blue_horizontalSlider->setEnabled(checked);
+    m_Ui->blue_doubleSpinBox->setEnabled(checked);
 }
 
 void PreferencesDialog::on_brightness_horizontalSlider_valueChanged(int value)
@@ -405,7 +405,7 @@ void PreferencesDialog::on_brightness_horizontalSlider_valueChanged(int value)
 void PreferencesDialog::on_brightness_doubleSpinBox_valueChanged(double value)
 {
     m_Ui->brightness_horizontalSlider->setValue((int) (value*m_Ui->brightness_doubleSpinBox->maximum()));
-	m_Ui->brightness_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
+    m_Ui->brightness_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
 }
 
 void PreferencesDialog::on_red_horizontalSlider_valueChanged(int pos)
@@ -447,7 +447,7 @@ void PreferencesDialog::on_blue_doubleSpinBox_valueChanged(double value)
     double maxv = m_Ui->blue_doubleSpinBox->maximum();
 
     m_Ui->blue_horizontalSlider->setValue( value2pos(value, minpos, maxpos, minv, maxv) );
-	m_Ui->blue_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
+    m_Ui->blue_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
 }
 
 void PreferencesDialog::on_green_horizontalSlider_valueChanged( int pos)
@@ -468,12 +468,12 @@ void PreferencesDialog::on_green_doubleSpinBox_valueChanged( double value)
     double maxv = m_Ui->green_doubleSpinBox->maximum();
 
     m_Ui->blue_horizontalSlider->setValue( value2pos(value, minpos, maxpos, minv, maxv) );
-	m_Ui->green_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
+    m_Ui->green_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
 }
 
 void PreferencesDialog::on_user_qual_toolButton_clicked()
 {
-	m_Ui->user_qual_comboBox->setCurrentIndex(0);
+    m_Ui->user_qual_comboBox->setCurrentIndex(0);
 }
 
 void PreferencesDialog::on_med_passes_toolButton_clicked()
@@ -600,8 +600,8 @@ void PreferencesDialog::from_options_to_gui()
         luminance_options.setGuiLang("en");
     }
     m_Ui->languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(luminance_options.getGuiLang()));
-	m_Ui->themeComboBox->setCurrentText(luminance_options.getGuiTheme());
-	m_Ui->chkDarkMode->setChecked(luminance_options.isGuiDarkMode());
+    m_Ui->themeComboBox->setCurrentText(luminance_options.getGuiTheme());
+    m_Ui->chkDarkMode->setChecked(luminance_options.isGuiDarkMode());
 
     // Temp directory
     m_Ui->lineEditTempPath->setText(luminance_options.getTempDir());
@@ -628,23 +628,23 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->do_not_use_fuji_rotate_CB->setChecked(luminance_options.isRawDoNotUseFujiRotate());
 
 #ifdef DEMOSAICING_GPL2
-	bool GPL2 = true;
+    bool GPL2 = true;
 #else
-	bool GPL2 = false;
+    bool GPL2 = false;
 #endif
 #ifdef DEMOSAICING_GPL3
-	bool GPL3 = true;
+    bool GPL3 = true;
 #else
-	bool GPL3 = false;
+    bool GPL3 = false;
 #endif
 
-	int user_quality = luminance_options.getRawUserQuality();
-	if (user_quality < 4)	
-    	m_Ui->user_qual_comboBox->setCurrentIndex( user_quality );
-	else if ((GPL2 && GPL3) || (GPL2 && !GPL3)) // We have both demosaicing packs or only GPL2
-		m_Ui->user_qual_comboBox->setCurrentIndex( user_quality );
-	else // We have only GPL3
-		m_Ui->user_qual_comboBox->setCurrentIndex( 4 );
+    int user_quality = luminance_options.getRawUserQuality();
+    if (user_quality < 4)
+        m_Ui->user_qual_comboBox->setCurrentIndex( user_quality );
+    else if ((GPL2 && GPL3) || (GPL2 && !GPL3)) // We have both demosaicing packs or only GPL2
+        m_Ui->user_qual_comboBox->setCurrentIndex( user_quality );
+    else // We have only GPL3
+        m_Ui->user_qual_comboBox->setCurrentIndex( 4 );
 
     m_Ui->user_qual_comboBox->setCurrentIndex(luminance_options.getRawUserQuality());
     m_Ui->med_passes_horizontalSlider->setValue(luminance_options.getRawMedPasses());
@@ -707,10 +707,10 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->red_toolButton->setEnabled( luminance_options.value(KEY_RED_TOOLBUTTON).toBool());
     m_Ui->blue_toolButton->setEnabled( luminance_options.value(KEY_BLUE_TOOLBUTTON).toBool());
     m_Ui->green_toolButton->setEnabled( luminance_options.value(KEY_GREEN_TOOLBUTTON).toBool());
-	
-	m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
-	m_Ui->monitor_lineEdit->setText( luminance_options.getMonitorProfileFileName() );
-	m_Ui->printer_lineEdit->setText( luminance_options.getPrinterProfileFileName() );
+
+    m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
+    m_Ui->monitor_lineEdit->setText( luminance_options.getMonitorProfileFileName() );
+    m_Ui->printer_lineEdit->setText( luminance_options.getPrinterProfileFileName() );
 
     m_Ui->exportDirectoryEdit->setText( luminance_options.getExportDir() );
     m_formatHelper.loadFromSettings(luminance_options, KEY_FILEFORMAT_QUEUE);
@@ -719,10 +719,10 @@ void PreferencesDialog::from_options_to_gui()
 void PreferencesDialog::on_chooseCachePathButton_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this,
-		tr("Choose a directory"),
-		QDir::currentPath(),
-		QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks
-	);
+        tr("Choose a directory"),
+        QDir::currentPath(),
+        QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks
+    );
     if (!dir.isEmpty())
     {
         m_Ui->lineEditTempPath->setText(dir);
@@ -731,7 +731,7 @@ void PreferencesDialog::on_chooseCachePathButton_clicked()
 
 void PreferencesDialog::enterWhatsThis()
 {
-	QWhatsThis::enterWhatsThisMode();
+    QWhatsThis::enterWhatsThisMode();
 }
 
 void PreferencesDialog::on_camera_toolButton_clicked()
@@ -752,11 +752,11 @@ void PreferencesDialog::on_printer_toolButton_clicked()
 void PreferencesDialog::openColorProfile(QLineEdit* lineEdit)
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
-		ICC_PATH,
-		tr("Color profile (*.icc *.ICC *.icm *.ICM)")
-	);
-	if (!fileName.isEmpty())
-		lineEdit->setText(fileName);
+        ICC_PATH,
+        tr("Color profile (*.icc *.ICC *.icm *.ICM)")
+    );
+    if (!fileName.isEmpty())
+        lineEdit->setText(fileName);
 }
 
 void PreferencesDialog::on_exportFileButton_clicked()

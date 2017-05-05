@@ -98,7 +98,7 @@ protected:
 
     TMOperator currentTmoOperator;
     TonemappingOptions *toneMappingOptions;
-	QList<TonemappingOptions *> toneMappingOptionsToDelete;
+    QList<TonemappingOptions *> toneMappingOptionsToDelete;
     QVector<int> sizes;
     void fillToneMappingOptions(bool exportMode);
     void setupUndo();
@@ -118,7 +118,7 @@ protected:
     QScopedPointer<Ui::TonemappingPanel> m_Ui;
 
 protected Q_SLOTS:
-	virtual void changeEvent(QEvent* event);
+    virtual void changeEvent(QEvent* event);
     void on_pregammadefault_clicked();
     void on_defaultButton_clicked();
     void on_applyButton_clicked();
@@ -127,7 +127,7 @@ protected Q_SLOTS:
     void on_savesettingsbutton_clicked();
     void on_loadsettingsbutton_clicked();
     void on_queueButton_clicked();
-	void on_lblOpenQueue_linkActivated(const QString& link);
+    void on_lblOpenQueue_linkActivated(const QString& link);
 
     //APPLY tmo settings from text file
     void fromTxt2Gui();
@@ -136,19 +136,19 @@ protected Q_SLOTS:
     void fillCustomSizeComboBox();
     void updateCurrentTmoOperator(int);
     void updateUndoState();
-	void loadParameters();
-	void saveParameters();
-	void execMantiuk06Query(bool, float, float,	float, QString);
-	void execMantiuk08Query(float, float, float, bool, QString);
-	void execAshikhminQuery(bool, bool, float, QString);
-	void execDragoQuery(float, QString);
-	void execDurandQuery(float, float, float, QString);
-	void execFattalQuery(float, float, float, float, bool, QString);
-	void execFerradansQuery(float, float, QString);
-	void execPattanaikQuery(bool, bool, float, float, float, QString);
-	void execReinhard02Query(bool, float, float, int, int, int, QString);
-	void execReinhard05Query(float, float, float, QString);
-    
+    void loadParameters();
+    void saveParameters();
+    void execMantiuk06Query(bool, float, float,    float, QString);
+    void execMantiuk08Query(float, float, float, bool, QString);
+    void execAshikhminQuery(bool, bool, float, QString);
+    void execDragoQuery(float, QString);
+    void execDurandQuery(float, float, float, QString);
+    void execFattalQuery(float, float, float, float, bool, QString);
+    void execFerradansQuery(float, float, QString);
+    void execPattanaikQuery(bool, bool, float, float, float, QString);
+    void execReinhard02Query(bool, float, float, int, int, int, QString);
+    void execReinhard05Query(float, float, float, QString);
+
     void updatePreviews(double);
     void updatePreviewsCB(int);
     void updatePreviewsRB(bool);
@@ -158,9 +158,9 @@ public:
     TonemappingPanel(int mainWinNumber, PreviewPanel *p = 0, QWidget *parent = 0);
     ~TonemappingPanel();
     void setSizes(int, int);
-	bool replaceLdr();
-	bool getAutoLevels();
-	void setExportQueueSize(int);
+    bool replaceLdr();
+    bool getAutoLevels();
+    void setExportQueueSize(int);
 
 public Q_SLOTS:
     void setEnabled(bool);
@@ -176,7 +176,7 @@ signals:
 private:
     void onUndoRedo(bool undo);
 
-	QtWaitingSpinner* m_spinner;
+    QtWaitingSpinner* m_spinner;
 
 
 };

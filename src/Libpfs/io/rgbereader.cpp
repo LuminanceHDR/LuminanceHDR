@@ -39,7 +39,7 @@ namespace io {
 
 void rgbe2rgb(const Trgbe_pixel& rgbe, float exposure, float &r, float &g, float &b)
 {
-    if ( rgbe.e != 0 )		// a non-zero pixel
+    if ( rgbe.e != 0 )        // a non-zero pixel
     {
         int e = rgbe.e - int(128+8);
         double f = ldexp( 1.0, e ) * WHITE_EFFICACY / exposure;
@@ -198,8 +198,8 @@ void readRadiance(FILE *file, int width, int height, float exposure,
             size_t rez = fread(scanline.data()+4, sizeof(Trgbe), 4*width-4, file);
             if ( rez != (size_t)4*width-4 )
             {
-                // 	DEBUG_STR << "RGBE: scanline " << y
-                // 		  << "(" << (int)rez << "/" << width << ")" <<endl;
+                //     DEBUG_STR << "RGBE: scanline " << y
+                //           << "(" << (int)rez << "/" << width << ")" <<endl;
                 throw pfs::Exception( "RGBE: not enough data to read "
                                       "in the simple format." );
             }
@@ -266,9 +266,9 @@ void RGBEReader::open()
     Colorspace colorspace;
 
     readRadianceHeader(m_file.data(), width, height, exposure, colorspace);
-    
+
     m_colorspace = colorspace;
-    
+
     setWidth(width);
     setHeight(height);
     m_exposure = exposure;
@@ -296,7 +296,7 @@ void RGBEReader::read(Frame &frame, const Params &/*params*/)
 
     if (m_colorspace == XYZ)
         pfs::transformXYZ2RGB(X, Y, Z, X, Y, Z);
-    
+
     tempFrame.getTags().setTag("LUMINANCE", "RELATIVE");
     tempFrame.getTags().setTag("FILE_NAME", filename());
 

@@ -8,7 +8,7 @@
  * http://www.mpi-inf.mpg.de/resources/hdr/datmo/
  *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,8 +22,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  *
  * $Id: display_function.cpp,v 1.3 2008/06/16 18:42:58 rafm Exp $
@@ -43,7 +43,7 @@
 
 // ========== GGBA Display Function ==============
 
-DisplayFunctionGGBA::DisplayFunctionGGBA( float gamma, float L_max, float L_black, float E_amb, float screen_refl ) 
+DisplayFunctionGGBA::DisplayFunctionGGBA( float gamma, float L_max, float L_black, float E_amb, float screen_refl )
 {
   init( gamma, L_max, L_black, E_amb, screen_refl );
 }
@@ -141,7 +141,7 @@ DisplayFunctionLUT::DisplayFunctionLUT( const char *file_name ) : pix_lut( NULL 
     if( L_buf <= 0 )
     {
       fclose( fh );
-      throw pfs::Exception( "Improper LUT: luminance must be greater than 0" );    
+      throw pfs::Exception( "Improper LUT: luminance must be greater than 0" );
     }
     L_lut[i] = log10( L_buf );
     pix_lut[i] = p_buf;
@@ -149,14 +149,14 @@ DisplayFunctionLUT::DisplayFunctionLUT( const char *file_name ) : pix_lut( NULL 
     if( i >= max_lut_size )
     {
       fclose( fh );
-      throw pfs::Exception( "LUT too large (more than 4096 entries)" );    
+      throw pfs::Exception( "LUT too large (more than 4096 entries)" );
     }
   }
   lut_size = i;
   if( pix_lut[0] != 0 || pix_lut[lut_size-1]!= 1 )
   {
       fclose( fh );
-      throw pfs::Exception( "The first and last LUT entries for pixel value should be 0 and 1" );    
+      throw pfs::Exception( "The first and last LUT entries for pixel value should be 0 and 1" );
   }
   fclose( fh );
 }
@@ -173,7 +173,7 @@ inline float bin_search_interp( float x, const float *lut_x, const float *lut_y,
     return lut_y[0];
   if( x >= lut_x[lutSize-1] )
     return lut_y[lutSize-1];
-  
+
   size_t l = 0, r = lutSize;
   while( true ) {
     size_t m = (l+r)/2;
@@ -185,7 +185,7 @@ inline float bin_search_interp( float x, const float *lut_x, const float *lut_y,
   }
   return lut_y[l] + (lut_y[l+1]-lut_y[l])*(x-lut_x[l]);
 }
-  
+
 float DisplayFunctionLUT::inv_display( float L )
 {
   return bin_search_interp( log10( L ), L_lut, pix_lut, lut_size );
@@ -193,7 +193,7 @@ float DisplayFunctionLUT::inv_display( float L )
 
 float DisplayFunctionLUT::display( float pix )
 {
-  return pow( 10, bin_search_interp( pix, pix_lut, L_lut, lut_size ) );  
+  return pow( 10, bin_search_interp( pix, pix_lut, L_lut, lut_size ) );
 }
 
 void DisplayFunctionLUT::print( FILE *fh )
@@ -207,7 +207,7 @@ void DisplayFunctionLUT::print( FILE *fh )
 DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] )
 {
   DisplayFunction *df = 0;
-  
+
     for( int i=1 ; i<argc; i++ )
     {
       if( !strcmp( argv[i], "--display-function" ) || !strcmp( argv[i], "-d" )  ) {
@@ -239,12 +239,12 @@ DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] )
             E_amb = strtod( token+2, NULL );
           } else {
             throw pfs::Exception( "Bad display type specification" );
-          }            
+          }
           token = strtok( NULL, ":" );
         }
         if( GGBA_model )
           df = new DisplayFunctionGGBA( gamma, L_max, L_black, E_amb, k );
-        
+
         removeCommandLineArg( argc, argv, i, 2 );
         break;
       }

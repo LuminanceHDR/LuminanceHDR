@@ -66,4 +66,4 @@ protected:
     QFutureWatcher<void> m_futureWatcher;
 };
 
-#endif 
+#endif

@@ -24,8 +24,8 @@
 
 #include "SavingParametersDialog.h"
 
-SavingParameters::SavingParameters(QWidget *parent): 
-	QDialog(parent)
+SavingParameters::SavingParameters(QWidget *parent):
+    QDialog(parent)
 {
-	setupUi(this);
+    setupUi(this);
 }

@@ -57,17 +57,17 @@ namespace io {
 // (64K), we need provisions to split it into multiple markers.  The format
 // defined by the ICC specifies one or more APP2 markers containing the
 // following data:
-//	Identifying string	ASCII "ICC_PROFILE\0"  (12 bytes)
-//	Marker sequence number	1 for first APP2, 2 for next, etc (1 byte)
-//	Number of markers	Total number of APP2's used (1 byte)
-//      Profile data		(remainder of APP2 data)
+//    Identifying string    ASCII "ICC_PROFILE\0"  (12 bytes)
+//    Marker sequence number    1 for first APP2, 2 for next, etc (1 byte)
+//    Number of markers    Total number of APP2's used (1 byte)
+//      Profile data        (remainder of APP2 data)
 // Decoders should use the marker sequence numbers to reassemble the profile,
 // rather than assuming that the APP2 markers appear in the correct sequence.
 //
 
-#define ICC_MARKER  (JPEG_APP0 + 2)	/* JPEG marker code for ICC */
-#define ICC_OVERHEAD_LEN  14		/* size of non-profile data in APP2 */
-#define MAX_BYTES_IN_MARKER  65533	/* maximum data len of a JPEG marker */
+#define ICC_MARKER  (JPEG_APP0 + 2)    /* JPEG marker code for ICC */
+#define ICC_OVERHEAD_LEN  14        /* size of non-profile data in APP2 */
+#define MAX_BYTES_IN_MARKER  65533    /* maximum data len of a JPEG marker */
 #define MAX_DATA_BYTES_IN_MARKER  (MAX_BYTES_IN_MARKER - ICC_OVERHEAD_LEN)
 
 
@@ -81,9 +81,9 @@ static
 void write_icc_profile (j_compress_ptr cinfo, const JOCTET *icc_data_ptr,
                         unsigned int icc_data_len)
 {
-    unsigned int num_markers;	// total number of markers we'll write
+    unsigned int num_markers;    // total number of markers we'll write
     int cur_marker = 1;         // per spec, counting starts at 1
-    unsigned int length;		// number of bytes to write in this marker
+    unsigned int length;        // number of bytes to write in this marker
 
     // Calculate the number of markers we'll need, rounding up of course
     num_markers = icc_data_len / MAX_DATA_BYTES_IN_MARKER;

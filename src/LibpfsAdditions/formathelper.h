@@ -37,44 +37,44 @@
 namespace pfsadditions
 {
 
-	class FormatHelper : public QObject
-	{
-		Q_OBJECT
+    class FormatHelper : public QObject
+    {
+        Q_OBJECT
 
-	public:
-		FormatHelper();
+    public:
+        FormatHelper();
 
-		//! \brief virtual dtor, enable derivation
-		~FormatHelper() {}
+        //! \brief virtual dtor, enable derivation
+        ~FormatHelper() {}
 
-		void initConnection(QComboBox* comboBox, QAbstractButton* settingsButton, bool hdr);
-		pfs::Params getParams();
-		QString getFileExtension();
+        void initConnection(QComboBox* comboBox, QAbstractButton* settingsButton, bool hdr);
+        pfs::Params getParams();
+        QString getFileExtension();
 
         void loadFromSettings(const LuminanceOptions& options, QString prefix);
         void writeSettings(LuminanceOptions& options, QString prefix);
 
         static pfs::Params getParamsFromSettings(const LuminanceOptions& options, QString prefix, bool hdr);
 
-	protected:
-		void setDefaultParams(int format);
+    protected:
+        void setDefaultParams(int format);
 
         void updateButton(int format);
 
         static pfs::Params getParamsForFormat(int format);
         static QString getFileExtensionForFormat(int format);
 
-	protected slots:
-		void comboBoxIndexChanged(int idx);
-		void buttonPressed();
+    protected slots:
+        void comboBoxIndexChanged(int idx);
+        void buttonPressed();
 
-	private:
+    private:
 
-		QComboBox* m_comboBox;
-		QAbstractButton* m_settingsButton;
-		pfs::Params m_params;
+        QComboBox* m_comboBox;
+        QAbstractButton* m_settingsButton;
+        pfs::Params m_params;
         bool m_hdr;
-	
+
 };
 
 }

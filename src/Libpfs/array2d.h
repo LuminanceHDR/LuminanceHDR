@@ -37,7 +37,7 @@
 //! most likely, not compatible
 
 namespace pfs
-{ 
+{
 //!
 //! \brief Two dimensional array of data
 //!

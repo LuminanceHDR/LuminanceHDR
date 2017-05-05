@@ -4,7 +4,7 @@
  * Copyright (C) 2003-2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2006-2008 Giuseppe Rota
  * Copyright (C) 2012 Davide Anastasia
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  */
 
@@ -42,7 +42,7 @@ class Projection
   protected:
   const char *name;
   public:
-    
+
     virtual Vector3D *uvToDirection(double u, double v) = 0;
     virtual Point2D *directionToUV(Vector3D *direction) = 0;
     virtual bool isValidPixel(double u, double v) = 0;

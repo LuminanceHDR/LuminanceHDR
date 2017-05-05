@@ -1,8 +1,8 @@
 /**
  * This file is a part of Luminance HDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -37,7 +37,7 @@
 
 #include "AutoAntighosting.h" // Just for agGridSize !!!
 
-class IGraphicsView; 
+class IGraphicsView;
 class IGraphicsPixmapItem;
 class PanIconWidget;
 
@@ -58,7 +58,7 @@ public:
     QSize sizeHint () const {
         return m_previewImage->size();
     }
-    float getScaleFactor(); 
+    float getScaleFactor();
     QImage * getPreviewImage() {
         renderPreviewImage(blendmode);
         return m_previewImage;
@@ -77,7 +77,7 @@ public:
     bool isFilledToWindow();
     bool isNormalSize();
 
-    void setMask(QImage *mask); 
+    void setMask(QImage *mask);
     QImage* getMask(); // Conversion to QImage to QPixmap is made for speed optimization
                        // we need to return a QImage from the modified QPixmap
 
@@ -100,7 +100,7 @@ public slots:
     void zoomIn();
     void zoomOut();
 
-    void fitToWindow();  
+    void fitToWindow();
     void fillToWindow();
     void normalSize();
 
@@ -140,7 +140,7 @@ signals:
     void patchesEdited();
 
 protected:
-    bool eventFilter(QObject* object, QEvent* event); 
+    bool eventFilter(QObject* object, QEvent* event);
     virtual void timerEvent(QTimerEvent *event);
 
 private:
@@ -228,7 +228,7 @@ private:
     void fillAntiGhostingCursorPixmap();
     void drawWithBrush();
     void drawPath();
- 
+
     QPointF m_mousePos;
     QPointF m_firstPoint;
     QPointF m_lastPoint;

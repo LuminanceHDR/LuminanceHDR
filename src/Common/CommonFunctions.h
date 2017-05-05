@@ -131,7 +131,7 @@ void hsl2rgb(float h, float sl, float l, float& r, float& g, float& b)
 struct ConvertToQRgb {
     float gamma;
     explicit ConvertToQRgb(float gamma = 1.0f);
-    void operator()(float r, float g, float b, QRgb& rgb) const; 
+    void operator()(float r, float g, float b, QRgb& rgb) const;
 };
 
 struct LoadFile {

@@ -1,8 +1,8 @@
 /**
  * This file is a part of Luminance HDR package
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2013 Franco Comida
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * Manual and auto anti-ghosting functions
  * @author Franco Comida <fcomida@users.sourceforge.net>
@@ -82,16 +82,16 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
     for ( int j = 0; j < height; j++ ) {
         #pragma omp critical (make_plan)
         p = fftwf_plan_r2r_1d(width, F.data()+width*j, Ftr.data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
-        fftwf_execute(p); 
+        fftwf_execute(p);
     }
-    
-  #pragma omp parallel 
+
+  #pragma omp parallel
   {
     vector<float> c(height);
     #pragma omp for
     for ( int i = 0; i < width; i++ ) {
         for (int j = 0; j < height; j++) {
-            c[j] = 1.0f; 
+            c[j] = 1.0f;
         }
         float b = 2.0f*(cos(boost::math::double_constants::pi*i/width) - 2.0f);
         c[0] /= b;
@@ -99,7 +99,7 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
         for (int j = 1; j < height - 1; j++ ) {
             float m = (b - c[j-1]);
             c[j] /= m;
-            Ftr(i, j) = (Ftr(i, j) - Ftr(i, j-1))/m;   
+            Ftr(i, j) = (Ftr(i, j) - Ftr(i, j-1))/m;
         }
         Ftr(i, height - 1) = (Ftr(i, height - 1) - Ftr(i, height - 2))/(b - c[height - 2]);
         U(i, height - 1) = Ftr(i, height - 1);
@@ -114,8 +114,8 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
     for ( int j = 0; j < height; j++ ) {
         #pragma omp critical (make_plan)
         p = fftwf_plan_r2r_1d(width, U.data()+width*j, U.data()+width*j, FFTW_REDFT00, FFTW_ESTIMATE);
-        fftwf_execute(p); 
-        
+        fftwf_execute(p);
+
         for ( int i = 0; i < width; i++ ) {
             U(i, j) *= invDivisor;
         }
@@ -195,7 +195,7 @@ void hueSquaredMean(const HdrCreationItemContainer& data,
 
 void sdv(const HdrCreationItem& item1,
           const HdrCreationItem& item2,
-          const float deltaEV, 
+          const float deltaEV,
           const int dx, const int dy,
           float &sR, float &sG, float &sB)
 {
@@ -208,7 +208,7 @@ void sdv(const HdrCreationItem& item1,
     Array2Df& R2 = *X2;
     Array2Df& G2 = *Y2;
     Array2Df& B2 = *Z2;
-    
+
     const int W = item1.frame()->getWidth();
     const int H = item1.frame()->getHeight();
 
@@ -221,8 +221,8 @@ void sdv(const HdrCreationItem& item1,
     float logDeltaEV = log(std::abs(deltaEV));
 
     int count = 0;
-    float mR = 0.0f; 
-    float mG = 0.0f; 
+    float mR = 0.0f;
+    float mG = 0.0f;
     float mB = 0.0f;
     for (int y = 0; y < H; y++) {
         if (y+dy < 0 || y+dy > H-1)
@@ -318,11 +318,11 @@ void sdv(const HdrCreationItem& item1,
 
 bool comparePatches(const HdrCreationItem& item1,
                      const HdrCreationItem& item2,
-                     const int i, const int j, 
-                     const int gridX, const int gridY, 
-                     const float threshold, 
+                     const int i, const int j,
+                     const int gridX, const int gridY,
+                     const float threshold,
                      const float sR, const float sG, const float sB,
-                     const float deltaEV, 
+                     const float deltaEV,
                      const int dx, const int dy)
 {
     const int gridSize = gridX * gridY;
@@ -339,7 +339,7 @@ bool comparePatches(const HdrCreationItem& item1,
     Array2Df& R2 = *X2;
     Array2Df& G2 = *Y2;
     Array2Df& B2 = *Z2;
-    
+
     float logDeltaEV = log(std::abs(deltaEV));
 
     const int width = gridX*agGridSize;
@@ -363,7 +363,7 @@ bool comparePatches(const HdrCreationItem& item1,
             }
         }
     }
-  
+
     count = 0;
     for (int h = 0; h < gridSize; h++) {
         if (std::abs(logRed[h]) > 2.0f*sR || std::abs(logGreen[h]) > 2.0f*sG || std::abs(logBlue[h]) > 2.0f*sB)
@@ -402,7 +402,7 @@ void computeLogIrradiance(Array2Df &logIrradiance, const Array2Df &u)
 #endif
     const int width = u.getCols();
     const int height = u.getRows();
-    
+
     float ir, logIr;
     #pragma omp parallel for private (ir, logIr) schedule(static)
     for (int i = 0; i < width*height; i++) {
@@ -414,7 +414,7 @@ void computeLogIrradiance(Array2Df &logIrradiance, const Array2Df &u)
 
             logIrradiance(i) = logIr;
     }
- 
+
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "computeLogIrradiance = " << stop_watch.get_time() << " msec" << std::endl;
@@ -584,9 +584,9 @@ void colorBalance(pfs::Array2Df& U, const pfs::Array2Df& F, const int x, const i
 {
     const int width = U.getCols();
     const int height = U.getRows();
-    
+
     float sf = F(x, y) / U(x, y);
     #pragma omp parallel for schedule(static)
     for (int i = 0; i < width * height; i++)
         U(i) *= sf;
-} 
+}

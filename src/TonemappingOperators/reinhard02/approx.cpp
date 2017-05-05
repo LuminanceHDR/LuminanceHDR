@@ -21,7 +21,7 @@
 // interpolated version of approximation (always use this one!) (:krawczyk)
 #define INTERPOLATED
 
-extern double **luminance; 
+extern double **luminance;
 int      ImageWidth, ImageHeight;
 
 double ***Pyramid;
@@ -35,7 +35,7 @@ double pyramid_lookup( int x, int y, int level )
   /* PRE:  */
 {
   // int n, s;
-  
+
   /* Level 0 is a special case, the value is just the image */
   if (level == 0) {
     if ( (x < 0) || (y < 0) || (x >= ImageWidth) || (y >= ImageHeight) )
@@ -48,7 +48,7 @@ double pyramid_lookup( int x, int y, int level )
   level--;
   // n = 1 << level;
   int s = PyramidWidth0 >> level;
-  
+
   //x = x >> level;
   //y = y >> level;
 
@@ -68,7 +68,7 @@ void build_pyramid( double **/*luminance*/, int image_width, int image_height )
 //    int height, pyramid_height;
 
   double sum = 0;
-  
+
   double a = 0.4;
   double b = 0.25;
   double c = b - a/2;
@@ -80,7 +80,7 @@ void build_pyramid( double **/*luminance*/, int image_width, int image_height )
   w[2] = a;
   w[3] = w[1];
   w[4] = w[0];
-  
+
   /* Build the pyramid slices.  The bottom of the pyramid is the luminace  */
   /* image, and is not in the Pyramid array.                               */
   /* For simplicity, the first level is padded to a square whose side is a */
@@ -88,7 +88,7 @@ void build_pyramid( double **/*luminance*/, int image_width, int image_height )
 
   ImageWidth = image_width;
   ImageHeight = image_height;
-  
+
   /* Compute the size of the Pyramid array */
   max_dim = (ImageHeight > ImageWidth ? ImageHeight : ImageWidth);
   PyramidHeight = (int) floor(log(max_dim - 0.5)/log(2.0f)) + 1;
@@ -98,7 +98,7 @@ void build_pyramid( double **/*luminance*/, int image_width, int image_height )
   PyramidWidth0 = width;
 
 //  fprintf(stderr, "max_dim %d   height %d\n", max_dim, PyramidHeight);
-  
+
   /* Allocate the outer Pyramid array */
   Pyramid = (double***) calloc(PyramidHeight, sizeof(double**));
   if (!Pyramid) {
@@ -108,11 +108,11 @@ void build_pyramid( double **/*luminance*/, int image_width, int image_height )
 
   /* Allocate and assign the Pyramid slices */
   k = 0;
-  
+
   while (width) {
 
 //    fprintf(stderr, "level %d, width = %d\n", k, width);
-    
+
     /* Allocate the slice */
     Pyramid[k] = (double**) calloc(width, sizeof(double*));
     if (!Pyramid[k]) {
@@ -137,7 +137,7 @@ void build_pyramid( double **/*luminance*/, int image_width, int image_height )
             sum += w[i]*w[j]*pyramid_lookup(2*x + i - 2, 2*y + j - 2, k);
           }
         }
-        Pyramid[k][y][x] = sum; 
+        Pyramid[k][y][x] = sum;
       }
     }
 
@@ -173,7 +173,7 @@ double V1( int x, int y, int level )
       return(luminance[y][x]);
 
   /* Compute the size of the slice */
-  
+
   x = x >> level;
   y = y >> level;
 
@@ -186,7 +186,7 @@ double V1( int x, int y, int level )
   int x0, y0;
   int l, size;
   double s, t;
-  
+
   /* Level 0 is a special case, the value is just the image */
   if (level == 0)
       return(luminance[y][x]);
@@ -199,17 +199,17 @@ double V1( int x, int y, int level )
 
   x0 = (x0 >= size ? size - 1 : x0);
   y0 = (y0 >= size ? size - 1 : y0);
-  
+
   s = (double)(x - x0*l)/(double)l;
   t = (double)(y - y0*l)/(double)l;
-  
+
   level--;
 
   //!! FIX: a quick fix for boundary conditions
   int x01,y01;
   x01 = (x0 == size-1 ? x0 : x0+1);
   y01 = (y0 == size-1 ? y0 : y0+1);
-  
+
   return((1-s)*(1-t)*Pyramid[level][y0][x0] + s*(1-t)*Pyramid[level][y0][x01]
           + (1-s)*t*Pyramid[level][y01][x0] + s*t*Pyramid[level][y01][x01]);
 }

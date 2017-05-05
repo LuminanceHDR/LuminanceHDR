@@ -150,7 +150,7 @@ void writeSRGBProfile(TIFF* tif)
 {
     utils::ScopedCmsProfile hsRGB( cmsCreate_sRGBProfile() );
     cmsUInt32Number profileSize = 0;
-    cmsSaveProfileToMem(hsRGB.data(), NULL, &profileSize);	// get the size
+    cmsSaveProfileToMem(hsRGB.data(), NULL, &profileSize);    // get the size
 
     std::vector<char> embedBuffer(profileSize);
 
@@ -181,8 +181,8 @@ bool writeUint8(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     writeCommonHeader(tif, width, height);
     writeSRGBProfile(tif);
 
-	if (params.deflateCompression_)
-    	TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
+    if (params.deflateCompression_)
+        TIFFSetField(tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE);
     TIFFSetField(tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField(tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
     TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(uint8_t));
@@ -375,7 +375,7 @@ bool writeLogLuv(TIFF* tif, const Frame& frame, const TiffWriterParams& params)
     TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE, (uint16_t)8*(uint16_t)sizeof(float));
     TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, (uint16_t)3);
     TIFFSetField(tif, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
-    TIFFSetField(tif, TIFFTAG_STONITS, 1.);	/* not known */
+    TIFFSetField(tif, TIFFTAG_STONITS, 1.);    /* not known */
 
     tsize_t stripSize = TIFFStripSize(tif);
     assert( (tsize_t)sizeof(float)*width*3 == stripSize );

@@ -59,7 +59,7 @@ private:
     QString         m_output_folder;
     QString         m_output_file_name_base;
     QString         m_ldr_output_format;
-    pfs::Params		m_params;
+    pfs::Params        m_params;
 };
 
 #endif // BATCHTMJOB_H

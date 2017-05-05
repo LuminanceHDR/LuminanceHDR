@@ -139,7 +139,7 @@ void PreviewSettings::changeEvent(QEvent *event)
         //m_Ui->retranslateUi(this);
     }
 
-	QWidget::changeEvent(event);
+    QWidget::changeEvent(event);
 }
 
 void PreviewSettings::updatePreviews(pfs::Frame* frame)
@@ -191,7 +191,7 @@ void PreviewSettings::addPreviewLabel(PreviewLabel *label)
 {
     TonemappingOptions *opts = label->getTonemappingOptions();
     QString text = opts->getCaption(false, QString("\n"));
-    
+
     if (label->actions().isEmpty()) {
         QAction* pAction = new QAction(tr("Load settings"), label);
         label->addAction(pAction);
@@ -209,7 +209,7 @@ void PreviewSettings::selectLabel(int index) {
     for (int i = 0; i < m_flowLayout->getSize(); i++) {
         QWidget *w = m_flowLayout->itemAt(i)->widget();
         QLabel *l = static_cast<QLabel *>(w);
-        l->setLineWidth((i == index) ? 3 : 1); 
+        l->setLineWidth((i == index) ? 3 : 1);
     }
 }
 

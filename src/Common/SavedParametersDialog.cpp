@@ -42,15 +42,15 @@ SavedParametersDialog::SavedParametersDialog(QWidget *parent):
 
     QString sqlQuery;
     sqlQuery += "SELECT comment, 'ashikhmin' AS operator FROM ashikhmin UNION ";
-	sqlQuery += "SELECT comment, 'drago' AS operator FROM drago UNION ";
-	sqlQuery += "SELECT comment, 'durand' AS operator FROM durand UNION ";
-	sqlQuery += "SELECT comment, 'fattal' AS operator FROM fattal UNION ";
-	sqlQuery += "SELECT comment, 'ferradans' AS operator FROM ferradans UNION ";
-	sqlQuery += "SELECT comment, 'mantiuk06' AS operator FROM mantiuk06 UNION ";
-	sqlQuery += "SELECT comment, 'mantiuk08' AS operator FROM mantiuk08 UNION ";
-	sqlQuery += "SELECT comment, 'pattanaik' AS operator FROM pattanaik UNION ";
-	sqlQuery += "SELECT comment, 'reinhard02' AS operator FROM reinhard02 UNION ";
-	sqlQuery += "SELECT comment, 'reinhard05' AS operator FROM reinhard05";
+    sqlQuery += "SELECT comment, 'drago' AS operator FROM drago UNION ";
+    sqlQuery += "SELECT comment, 'durand' AS operator FROM durand UNION ";
+    sqlQuery += "SELECT comment, 'fattal' AS operator FROM fattal UNION ";
+    sqlQuery += "SELECT comment, 'ferradans' AS operator FROM ferradans UNION ";
+    sqlQuery += "SELECT comment, 'mantiuk06' AS operator FROM mantiuk06 UNION ";
+    sqlQuery += "SELECT comment, 'mantiuk08' AS operator FROM mantiuk08 UNION ";
+    sqlQuery += "SELECT comment, 'pattanaik' AS operator FROM pattanaik UNION ";
+    sqlQuery += "SELECT comment, 'reinhard02' AS operator FROM reinhard02 UNION ";
+    sqlQuery += "SELECT comment, 'reinhard05' AS operator FROM reinhard05";
     model->setQuery(sqlQuery);
 
     model->setHeaderData(0, Qt::Horizontal, tr("Comment"));

@@ -78,9 +78,9 @@ void PreviewLabel::setComment(QString comment)
 QString PreviewLabel::getComment()
 {
     return m_comment;
-} 
+}
 
-void PreviewLabel::setIndex(int index) 
+void PreviewLabel::setIndex(int index)
 {
     m_index = index;
 }

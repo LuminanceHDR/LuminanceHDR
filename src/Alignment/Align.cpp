@@ -63,7 +63,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     connect(m_ais.data(), SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
     connect(m_ais.data(), SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
     connect(m_ais.data(), SIGNAL(readyRead()), this, SLOT(readData()));
-    
+
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
 
     if (ais_crop_flag) { ais_parameters << "-C"; }
@@ -75,7 +75,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     const bool deflateCompression = false; // AIS is misconfigured (see hugin bug #1265480)
 #else
     const bool deflateCompression = true;
-#endif   
+#endif
     SaveFile saveFile(m_savingMode, m_minLum, m_maxLum, deflateCompression);
     futureWatcher.setFuture( QtConcurrent::map(m_data.begin(), m_data.end(), saveFile) );
     futureWatcher.waitForFinished();
@@ -108,7 +108,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     qDebug() << QCoreApplication::applicationDirPath()+"/align_image_stack";
     m_ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 #elif defined Q_OS_WIN
-	QFileInfo huginPath("hugin/align_image_stack.exe");
+    QFileInfo huginPath("hugin/align_image_stack.exe");
     m_ais->start(huginPath.canonicalFilePath(), ais_parameters );
 #else
     m_ais->start("align_image_stack", ais_parameters );

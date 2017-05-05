@@ -1,9 +1,9 @@
 /**
  * This file is a part of Luminance HDR package
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  * Copyright (C) 2010-2012 Franco Comida
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
@@ -126,7 +126,7 @@ static
 bool checkFileName(const HdrCreationItem& item, const QString& str) {
     return (item.filename().compare(str) == 0);
 }
-  
+
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
     for(const auto filename : filenames)
@@ -154,7 +154,7 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
 }
 
 void HdrCreationManager::loadFilesDone()
-{ 
+{
     qDebug() << "HdrCreationManager::loadFilesDone(): Data loaded ... move to internal structure!";
     if (m_futureWatcher.isCanceled() ) // LoadFile() threw an exception
     {
@@ -323,7 +323,7 @@ void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
 QVector<float> HdrCreationManager::getExpotimes() const
 {
     QVector<float> expotimes;
-    for ( HdrCreationItemContainer::const_iterator it = m_data.begin(), 
+    for ( HdrCreationItemContainer::const_iterator it = m_data.begin(),
           itEnd = m_data.end(); it != itEnd; ++it) {
         expotimes.push_back(it->getEV());
     }
@@ -334,10 +334,10 @@ bool HdrCreationManager::framesHaveSameSize()
 {
     size_t width = m_data[0].frame()->getWidth();
     size_t height = m_data[0].frame()->getHeight();
-    for ( HdrCreationItemContainer::const_iterator it = m_data.begin() + 1, 
+    for ( HdrCreationItemContainer::const_iterator it = m_data.begin() + 1,
           itEnd = m_data.end(); it != itEnd; ++it) {
         if (it->frame()->getWidth() != width || it->frame()->getHeight() != height)
-            return false; 
+            return false;
     }
     return true;
 }
@@ -374,7 +374,7 @@ void HdrCreationManager::align_with_ais()
     connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
     connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
     connect(m_align.get(), SIGNAL(dataReady(QByteArray)), this, SIGNAL(aisDataReady(QByteArray)));
-  
+
     m_align->align_with_ais(m_ais_crop_flag);
 }
 
@@ -463,7 +463,7 @@ HdrCreationManager::~HdrCreationManager()
 void HdrCreationManager::saveImages(const QString& prefix)
 {
     int idx = 0;
-    for ( HdrCreationItemContainer::const_iterator it = m_data.begin(), 
+    for ( HdrCreationItemContainer::const_iterator it = m_data.begin(),
           itEnd = m_data.end(); it != itEnd; ++it) {
 
         QString filename = prefix + QString("_%1").arg(idx) + ".tiff";
@@ -491,7 +491,7 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSiz
     const int height = m_data[0].frame()->getHeight();
     const int gridX = width / agGridSize;
     const int gridY = height / agGridSize;
-    const int size = m_data.size(); 
+    const int size = m_data.size();
     assert(size >= 2);
 
     vector<float> HE(size);
@@ -508,13 +508,13 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSiz
     }
 
     for (int h = 0; h < size; h++) {
-        if (h == m_agGoodImageIndex) 
+        if (h == m_agGoodImageIndex)
             continue;
         float deltaEV = log2(m_data[m_agGoodImageIndex].getAverageLuminance()) - log2(m_data[h].getAverageLuminance());
         int dx = HV_offset[m_agGoodImageIndex].first - HV_offset[h].first;
-        int dy = HV_offset[m_agGoodImageIndex].second - HV_offset[h].second;        
+        int dy = HV_offset[m_agGoodImageIndex].second - HV_offset[h].second;
         float sR, sG, sB;
-        sdv(m_data[m_agGoodImageIndex], m_data[h], deltaEV, dx, dy, sR, sG, sB); 
+        sdv(m_data[m_agGoodImageIndex], m_data[h], deltaEV, dx, dy, sR, sG, sB);
         //#pragma omp parallel for schedule(static)
         for (int j = 0; j < agGridSize; j++) {
             for (int i = 0; i < agGridSize; i++) {
@@ -523,7 +523,7 @@ int HdrCreationManager::computePatches(float threshold, bool patches[][agGridSiz
                                    i, j, gridX, gridY, threshold, sR, sG, sB, deltaEV, dx, dy)) {
                     m_patches[i][j] = true;
                 }
-            }                      
+            }
         }
     }
 

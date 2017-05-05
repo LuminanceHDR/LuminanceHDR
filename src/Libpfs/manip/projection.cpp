@@ -4,7 +4,7 @@
  * Copyright (C) 2003-2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2006-2008 Giuseppe Rota
  * Copyright (C) 2012 Davide Anastasia
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -18,7 +18,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  */
 
@@ -66,7 +66,7 @@ class Vector3D
 
     normalize();
   }
-  
+
   double magnitude(void)
   {
     return sqrt( x * x + y * y + z * z );
@@ -153,9 +153,9 @@ void ProjectionFactory::registerProjection(const char *name, ProjectionCreator p
 
 // TODO: check this function
 Projection *ProjectionFactory::getProjection(char *name) {
-	char *opts;
-	Projection *projection = NULL;
-      
+    char *opts;
+    Projection *projection = NULL;
+
       if( (opts = strchr(name, '/')) )
       {
         *opts++ = '\0';
@@ -172,18 +172,18 @@ Projection *ProjectionFactory::getProjection(char *name) {
           projection->setOptions(opts);
       }
 
-	  return projection;
+      return projection;
 }
 
 //FIXME: Lame. Should return an iterator over the names. No time for this now. :/
 void ProjectionFactory::listProjectionNames(void) {
-	map<string, ProjectionCreator>::iterator i = singleton.projections.begin();
+    map<string, ProjectionCreator>::iterator i = singleton.projections.begin();
 
-	while(i != singleton.projections.end())
-	{
-	fprintf( stderr, "%s\n", (*i).first.c_str());
-	++i;
-	}
+    while(i != singleton.projections.end())
+    {
+    fprintf( stderr, "%s\n", (*i).first.c_str());
+    ++i;
+    }
 }
 ///END PROJECTIONFACTORY
 
@@ -534,7 +534,7 @@ void transformArray( const pfs::Array2Df *in, pfs::Array2Df *out, TransformInfo 
   const double delta = 1. / transformInfo->oversampleFactor;
   const double offset = 0.5 / transformInfo->oversampleFactor;
   const double scaler = 1. / ( transformInfo->oversampleFactor * transformInfo->oversampleFactor );
-  
+
   const int outRows = out->getRows();
   const int outCols = out->getCols();
 

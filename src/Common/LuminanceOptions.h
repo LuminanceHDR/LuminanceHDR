@@ -1,9 +1,9 @@
 /**
  * This file is a part of Luminance HDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  * Copyright (C) 2011 Davide Anastasia
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
@@ -56,7 +56,7 @@ public:
 
     QString getDatabaseFileName();
     void    setPortableMode(bool isPortable);
-    
+
     bool checkForUpdate();
     void setUpdateChecked();
 
@@ -149,11 +149,11 @@ public Q_SLOTS:
     void    setRawNoiseReductionThreshold(float);
     // ---
 
-	QString getGuiTheme();
+    QString getGuiTheme();
     void    setGuiTheme(const QString&);
-	bool    isGuiDarkMode() const;
-	void    setGuiDarkMode(bool);
-	void	applyTheme(bool init);
+    bool    isGuiDarkMode() const;
+    void    setGuiDarkMode(bool);
+    void    applyTheme(bool init);
 
     // Language
     // 2-chars ISO 639 language code for Luminance's user interface
@@ -219,15 +219,15 @@ public Q_SLOTS:
     bool    isRealtimePreviewsActive();
     void    setRealtimePreviewsActive(bool);
 
-	// Color Management
-	QString getCameraProfileFileName();
-    void	setCameraProfileFileName(const QString&);
+    // Color Management
+    QString getCameraProfileFileName();
+    void    setCameraProfileFileName(const QString&);
 
-	QString getMonitorProfileFileName();
-    void	setMonitorProfileFileName(const QString&);
+    QString getMonitorProfileFileName();
+    void    setMonitorProfileFileName(const QString&);
 
-	QString getPrinterProfileFileName();
-    void	setPrinterProfileFileName(const QString&);
+    QString getPrinterProfileFileName();
+    void    setPrinterProfileFileName(const QString&);
 
     int     getPreviewPanelMode();
     void    setPreviewPanelMode(int);

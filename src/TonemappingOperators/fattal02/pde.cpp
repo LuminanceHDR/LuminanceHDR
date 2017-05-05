@@ -8,12 +8,12 @@
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
  * Some code from Numerical Recipes in C
- * 
- * 
+ *
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -27,8 +27,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * $Id: pde.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
@@ -101,7 +101,7 @@ inline float min( float a, float b )
 //     for( int x = 0; x < width; x++ ) {
 //       fwrite( &((*data)(x,y)), sizeof( float ), 1, fh );
 //     }
-  
+
 //   fclose( fh );
 // }
 
@@ -145,7 +145,7 @@ static void restrict( const pfs::Array2Df *in, pfs::Array2Df *out )
 // void restrict( pfs::Array2D *F, pfs::Array2D *T )
 // {
 // //   DEBUG_STR << "restrict" << endl;
-  
+
 //   int sxt = T->getCols();
 //   int syt = T->getRows();
 //   int sxf = F->getCols();
@@ -158,7 +158,7 @@ static void restrict( const pfs::Array2Df *in, pfs::Array2Df *out )
 //     {
 //       float sum=0.0; float norm=0.0f;
 //       for( int m=-1 ; m<=1 ; m++ )
-// 	for( int n=-1 ; n<=1 ; n++ )
+//     for( int n=-1 ; n<=1 ; n++ )
 //         {
 //           int xf = 2*x+m;
 //           int yf = 2*y+n;
@@ -194,22 +194,22 @@ static void prolongate( const pfs::Array2Df *in, pfs::Array2Df *out )
 
       float pixVal = 0;
       float weight = 0;
-      
+
       for( float ix = max( 0, ceilf( sx-filterSize ) ); ix <= min( floorf(sx+filterSize), inCols-1 ); ix++ )
         for( float iy = max( 0, ceilf( sy-filterSize ) ); iy <= min( floorf( sy+filterSize), inRows-1 ); iy++ ) {
           float fx = fabs( sx - ix );
           float fy = fabs( sy - iy );
 
           const float fval = (1-fx)*(1-fy);
-          
+
           pixVal += (*in)( (int)ix, (int)iy ) * fval;
           weight += fval;
         }
-      
+
       assert( weight != 0 );
       (*out)(x,y) = pixVal / weight;
 
-    } 
+    }
 }
 
 static void exact_sollution( pfs::Array2Df */*F*/, pfs::Array2Df *U )
@@ -227,11 +227,11 @@ static void exact_sollution( pfs::Array2Df */*F*/, pfs::Array2Df *U )
 
     /* also works well?? */
     return;
-  
+
 //   if( sx==3 && sy==3 )
 //   {
 //     (*U)(1,1) = -h2* (*F)(1,1) / 4.0f;
-    
+
 //     // boundary points
 //     for( x=0 ; x<sx ; x++ )
 //       (*U)(x,0) = (*U)(x,sy-1) = 0.0f;
@@ -241,7 +241,7 @@ static void exact_sollution( pfs::Array2Df */*F*/, pfs::Array2Df *U )
 //   else
 //   {
 //     U.fill(0.0f); return;   /* also works well?? */
-  
+
 //     // TODO: this produces incorrect results
 // //     solve_pde_sor(F,U);
 // //     for( y=0 ; y<sy ; y++ )
@@ -256,26 +256,26 @@ static void exact_sollution( pfs::Array2Df */*F*/, pfs::Array2Df *U )
 static void smooth( pfs::Array2Df *U, const pfs::Array2Df *F )
 {
 //   DEBUG_STR << "smooth" << endl;
-  
+
   int rows = U->getRows();
   int cols = U->getCols();
-  
+
   const int n = rows*cols;
 
   int iter;
   float err;
-        
+
   linbcg( n, F->data(), U->data(), BCG_TOL, BCG_STEPS, &iter, &err, rows, cols);
 
 //   fprintf( stderr, "." );
 
   // Gauss relaxation is too slow
-  
+
 //   int sx = F->getCols();
 //   int sy = F->getRows();
 //   int x,y,i;
-//   int shx;	shift x
-  
+//   int shx;    shift x
+
 //   float h = 1.0f/sqrt(sx*sy*1.0f);
 //   float h2 = h*h;
 
@@ -294,9 +294,9 @@ static void smooth( pfs::Array2Df *U, const pfs::Array2Df *F )
 //         n = (y == 0 ? 0 : y-1);
 //         s = (y+1 == sy ? y : y+1);
 //         e = (x+1 == sx ? x : x+1);
-        
-// 	(*U)(x,y) = .25 * ( (*U)(e,y) + (*U)(w,y) + (*U)(x,s) + (*U)(x,n)
-//           - h2 * (*F)(x,y) );        
+
+//     (*U)(x,y) = .25 * ( (*U)(e,y) + (*U)(w,y) + (*U)(x,s) + (*U)(x,n)
+//           - h2 * (*F)(x,y) );
 //       }
 //     }
 //   }
@@ -321,11 +321,11 @@ static void calculate_defect( pfs::Array2Df *D, const pfs::Array2Df *U, const pf
         n = (y == 0 ? 0 : y-1);
         s = (y+1 == sy ? y : y+1);
         e = (x+1 == sx ? x : x+1);
-      
+
         (*D)(x,y) = (*F)(x,y) -( (*U)(e,y) + (*U)(w,y) + (*U)(x,n) + (*U)(x,s)
           - 4.0 * (*U)(x,y) );
     }
-  
+
 }
 
 static void add_correction( pfs::Array2Df *U, const pfs::Array2Df *C )
@@ -343,14 +343,14 @@ void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
 {
   int xmax = F->getCols();
   int ymax = F->getRows();
-  
-  int i;	// index for simple loops
-  int k;	// index for iterating through levels
-  int k2;	// index for iterating through levels in V-cycles
+
+  int i;    // index for simple loops
+  int k;    // index for iterating through levels
+  int k2;    // index for iterating through levels in V-cycles
 
   // 1. restrict f to coarse-grid (by the way count the number of levels)
-  //	  k=0: fine-grid = f
-  //	  k=levels: coarsest-grid
+  //      k=0: fine-grid = f
+  //      k=levels: coarsest-grid
   int levels = 0;
   int mins = (xmax<ymax) ? xmax : ymax;
   while( mins>=MINS )
@@ -379,7 +379,7 @@ void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
     // calculate size of next level
     sx=sx/2+MODYF;
     sy=sy/2+MODYF;
-    
+
     RHS[k+1] = new pfs::Array2Df(sx,sy);
     IU[k+1] = new pfs::Array2Df(sx,sy);
     VF[k+1] = new pfs::Array2Df(sx,sy);
@@ -412,23 +412,23 @@ void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
         // 7. pre-smoothing of initial sollution using target function
         //    zero for initial guess at smoothing
         //    (except for level k when iu contains prolongated result)
-	if( k2!=k )
+    if( k2!=k )
         IU[k2]->reset();
 
 //        fprintf( stderr, "Level: %d --------\n", k2 );
-        
-	for( i=0 ; i<SMOOTH_IT ; i++ )
+
+    for( i=0 ; i<SMOOTH_IT ; i++ )
           smooth( IU[k2], VF[k2] );
 
         // 8. calculate defect at level
         //    d[k2] = Lh * ~u[k2] - f[k2]
         pfs::Array2Df* D = new pfs::Array2Df(IU[k2]->getCols(), IU[k2]->getRows());
-	calculate_defect( D, IU[k2], VF[k2] );
+    calculate_defect( D, IU[k2], VF[k2] );
 
         // 9. restrict deffect as target function for next coarser-grid
         //    def -> f[k2+1]
-	restrict( D, VF[k2+1] );
-	delete D;
+    restrict( D, VF[k2+1] );
+    delete D;
       }
 
       // 10. solve on coarsest-grid (target function is the deffect)
@@ -442,16 +442,16 @@ void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
         // 12. interpolate correction from last coarser-grid to finer-grid
         //     iu[k2+1] -> cor
         pfs::Array2Df* C = new pfs::Array2Df(IU[k2]->getCols(), IU[k2]->getRows());
-	prolongate( IU[k2+1], C );
+    prolongate( IU[k2+1], C );
 
         // 13. add interpolated correction to initial sollution at level k2
-	add_correction( IU[k2], C );
-	delete C;
+    add_correction( IU[k2], C );
+    delete C;
 
 //        fprintf( stderr, "Level: %d --------\n", k2 );
-        
+
         // 14. post-smoothing of current sollution using target function
-	for( i=0 ; i<SMOOTH_IT ; i++ )
+    for( i=0 ; i<SMOOTH_IT ; i++ )
           smooth( IU[k2], VF[k2] );
       }
 
@@ -470,7 +470,7 @@ void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
 //     dumpPFS( name, RHS[k], "Y" );
 //     sprintf( name, "v_%d.pfs", k );
 //     dumpPFS( name, VF[k], "Y" );
-//   }  
+//   }
 
   pfs::copy( IU[0], U );
 
@@ -486,7 +486,7 @@ void solve_pde_multigrid( pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph)
     //DEBUG_STR << std::endl;
   }
 
-  
+
   ph.setValue(90);
 
   delete VF[0];
@@ -522,7 +522,7 @@ static void atimes(const float x[], float res[], int rows, int cols)
     for( int c = 1; c < cols-1; c++ ) {
       res[idx(r,c)] = x[idx(r-1,c)] + x[idx(r+1,c)] +
         x[idx(r,c-1)] + x[idx(r,c+1)] - 4*x[idx(r,c)];
-    }        
+    }
 
   for( int r = 1; r < rows-1; r++ ) {
     res[idx(r,0)] = x[idx(r-1,0)] + x[idx(r+1,0)] +
@@ -530,7 +530,7 @@ static void atimes(const float x[], float res[], int rows, int cols)
     res[idx(r,cols-1)] = x[idx(r-1,cols-1)] + x[idx(r+1,cols-1)] +
         x[idx(r,cols-2)] - 3*x[idx(r,cols-1)];
   }
-  
+
   for( int c = 1; c < cols-1; c++ ) {
     res[idx(0,c)] = x[idx(1,c)] +
         x[idx(0,c-1)] + x[idx(0,c+1)] - 3*x[idx(0,c)];
@@ -541,7 +541,7 @@ static void atimes(const float x[], float res[], int rows, int cols)
   res[idx(rows-1,0)] = x[idx(rows-2,0)] + x[idx(rows-1,1)] - 2*x[idx(rows-1,0)];
   res[idx(0,cols-1)] = x[idx(1,cols-1)] + x[idx(0,cols-2)] - 2*x[idx(0,cols-1)];
   res[idx(rows-1,cols-1)] = x[idx(rows-2,cols-1)] + x[idx(rows-1,cols-2)]
-    - 2*x[idx(rows-1,cols-1)];  
+    - 2*x[idx(rows-1,cols-1)];
 }
 
 #undef idx
@@ -553,9 +553,9 @@ static float snrm(unsigned long n, const float sx[])
 #pragma omp parallel for shared(sx) reduction(+:ans) if (n>OMP_THRESHOLD) schedule(static)
     for (long i=0; i<static_cast<long>(n); i++)
     {
-		ans += sx[i]*sx[i];
+        ans += sx[i]*sx[i];
     }
-	return sqrt(ans);
+    return sqrt(ans);
 }
 
 /**
@@ -563,82 +563,82 @@ static float snrm(unsigned long n, const float sx[])
  * from Numerical Recipes in C
  */
 static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err, int rows, int cols)
-{	
+{
     float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0;//zm1nrm,znrm;
-	float *p,*pp,*r,*rr,*z,*zz;
+    float *p,*pp,*r,*rr,*z,*zz;
 
-	p=new float[n+1];
-	pp=new float[n+1];
-	r=new float[n+1];
-	rr=new float[n+1];
-	z=new float[n+1];
-	zz=new float[n+1];
+    p=new float[n+1];
+    pp=new float[n+1];
+    r=new float[n+1];
+    rr=new float[n+1];
+    z=new float[n+1];
+    zz=new float[n+1];
 
-	*iter=0;
-	atimes(x,r, rows, cols);
+    *iter=0;
+    atimes(x,r, rows, cols);
     for (unsigned long j=0;j<n;j++)
     {
-		r[j]=b[j]-r[j];
+        r[j]=b[j]-r[j];
     }
     for (unsigned long j=0;j<n;j++)
     {
-		rr[j]=r[j];
+        rr[j]=r[j];
     }
-	atimes(r,rr, rows, cols);       // minimum residual
+    atimes(r,rr, rows, cols);       // minimum residual
     //znrm=1.0;
-	bnrm=snrm(n,b);
-	asolve(r,z, rows, cols);
+    bnrm=snrm(n,b);
+    asolve(r,z, rows, cols);
 
-	while (*iter <= itmax) {
-		++(*iter);
-		//zm1nrm=znrm;
-		asolve(rr,zz, rows, cols);
-		bknum=0.0;
+    while (*iter <= itmax) {
+        ++(*iter);
+        //zm1nrm=znrm;
+        asolve(rr,zz, rows, cols);
+        bknum=0.0;
 #pragma omp parallel for shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
         for (long j=0;j<static_cast<long>(n);j++)
         {
             bknum += z[j]*rr[j];
         }
-		if (*iter == 1) {
+        if (*iter == 1) {
             for (long j=0;j<static_cast<long>(n);j++)
             {
-				p[j]=z[j];
+                p[j]=z[j];
             }
             for (long j=0;j<static_cast<long>(n);j++)
             {
-				pp[j]=zz[j];
+                pp[j]=zz[j];
             }
-		}
-		else {
-			bk=bknum/bkden;
+        }
+        else {
+            bk=bknum/bkden;
             pfs::utils::vadds(z, bk, p, p, n);
             pfs::utils::vadds(zz, bk, pp, pp, n);
-		}                
-		bkden=bknum;
-		atimes(p,z,rows,cols);
-		akden=0.0;
+        }
+        bkden=bknum;
+        atimes(p,z,rows,cols);
+        akden=0.0;
 #pragma omp parallel for shared(z, pp) reduction(+:akden) if (n>OMP_THRESHOLD) schedule(static)
         for (long j=0;j<static_cast<long>(n);j++)
         {
             akden += z[j]*pp[j];
         }
-		ak=bknum/akden;
-		atimes(pp,zz,rows,cols);
+        ak=bknum/akden;
+        atimes(pp,zz,rows,cols);
         pfs::utils::vadds(x, ak, p, x, n);
         pfs::utils::vsubs(r, ak, z, r, n);
         pfs::utils::vsubs(rr, ak, zz, rr, n);
-		asolve(r,z, rows, cols);
+        asolve(r,z, rows, cols);
         //znrm = 1.0f;
         *err = snrm(n,r)/bnrm;
-//		fprintf( stderr, "iter=%4d err=%12.6f\n",*iter,*err);
-	if (*err <= tol) break;
-	}
+//        fprintf( stderr, "iter=%4d err=%12.6f\n",*iter,*err);
+    if (*err <= tol) break;
+    }
 
-	delete [] p;
-	delete [] pp;
-	delete [] r;
-	delete [] rr;
-	delete [] z;
-	delete [] zz;
+    delete [] p;
+    delete [] pp;
+    delete [] r;
+    delete [] rr;
+    delete [] z;
+    delete [] zz;
 }
 //#undef EPS

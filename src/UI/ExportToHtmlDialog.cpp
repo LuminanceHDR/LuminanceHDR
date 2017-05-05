@@ -70,7 +70,7 @@ void ExportToHtmlDialog::onOutputFolderButtonClicked()
 void ExportToHtmlDialog::onExportButtonClicked()
 {
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    
+
     bool quit = false;
     pfs::Frame *resized;
     int size_percent = m_Ui->spinBoxSize->value();
@@ -82,8 +82,8 @@ void ExportToHtmlDialog::onExportButtonClicked()
         resized = pfs::resize(m_frame, resized_width, BilinearInterp);
     }
     try {
-        generate_hdrhtml(resized, 
-                         m_pageName.toStdString(), m_outputFolder.toStdString(), m_imagesFolder.toStdString(), 
+        generate_hdrhtml(resized,
+                         m_pageName.toStdString(), m_outputFolder.toStdString(), m_imagesFolder.toStdString(),
                          "", "", m_Ui->spinBoxQuality->value(), false);
     }
     catch( pfs::Exception &e) {
@@ -93,7 +93,7 @@ void ExportToHtmlDialog::onExportButtonClicked()
                               QMessageBox::Ok, QMessageBox::NoButton);
         quit = true;
     }
-    if (!quit) { 
+    if (!quit) {
         QApplication::restoreOverrideCursor();
         if (m_Ui->checkBoxOpenOnBrowser->isChecked()) {
             QString url = "file:///" + m_outputFolder + "/" + m_pageName + ".html";

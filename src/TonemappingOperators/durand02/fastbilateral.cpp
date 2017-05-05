@@ -2,11 +2,11 @@
  * @file fastbilateral.cpp
  * @brief Fast bilateral filtering
  *
- * 
+ *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -20,8 +20,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
  * $Id: fastbilateral.cpp,v 1.5 2008/09/09 18:10:49 rafm Exp $
@@ -56,7 +56,7 @@ class GaussianBlur
   fftwf_plan fplan_in;
 
   float sigma;
-  
+
 public:
   GaussianBlur( int nx, int ny, float sigma ) : sigma( sigma )
   {
@@ -68,7 +68,7 @@ public:
 //    if( source == NULL || freq == NULL )
     //TODO: throw exception
     fplan_fw = fftwf_plan_dft_r2c_2d(nx, ny, source, freq, FFTW_ESTIMATE);
-    fplan_in = fftwf_plan_dft_c2r_2d(nx, ny, freq, source, FFTW_ESTIMATE);    
+    fplan_in = fftwf_plan_dft_c2r_2d(nx, ny, freq, source, FFTW_ESTIMATE);
   }
 
 
@@ -82,7 +82,7 @@ public:
 
     int ox = nx;
     int oy = ny/2 + 1;            // saves half of the data
-    
+
     for( y=0 ; y<ny ; y++ )
       for( x=0 ; x<nx ; x++ )
         source[x*ny+y] = I(x,y);
@@ -97,29 +97,29 @@ public:
       {
         float d2 = x*x + y*y;
         float kernel = exp( -d2 / sig2 );
-        
+
         freq[x*oy+y][0] *= kernel;
         freq[x*oy+y][1] *= kernel;
         freq[(ox-x-1)*oy+y][0] *= kernel;
         freq[(ox-x-1)*oy+y][1] *= kernel;
       }
-    
+
     fftwf_execute(fplan_in);
 
     for( x=0 ; x<nx ; x++ )
       for( y=0 ; y<ny ; y++ )
         J(x,y) = source[x*ny+y] / nsize;
   }
-  
+
   ~GaussianBlur()
   {
-    fftwf_free(source); 
+    fftwf_free(source);
     fftwf_free(freq);
     fftwf_destroy_plan(fplan_fw);
     fftwf_destroy_plan(fplan_in);
   }
-  
-  
+
+
 };
 
 
@@ -141,7 +141,7 @@ void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
   float dy = (float)in->getRows() / (float)out->getRows();
 
   float pad;
-  
+
   float filterSamplingX = max( modff( dx, &pad ), 0.01f );
   float filterSamplingY = max( modff( dy, &pad ), 0.01f );
 
@@ -160,25 +160,25 @@ void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
 
       float pixVal = 0;
       float weight = 0;
-      
+
       for( float ix = max( 0, ceilf( sx-filterSize ) ); ix <= min( floorf(sx+filterSize), inCols-1 ); ix++ )
         for( float iy = max( 0, ceilf( sy-filterSize ) ); iy <= min( floorf( sy+filterSize), inRows-1 ); iy++ ) {
           float fx = fabs( sx - ix );
           float fy = fabs( sy - iy );
 
           const float fval = (1.0f-fx)*(1.0f-fy);
-          
+
           pixVal += (*in)( (int)ix, (int)iy ) * fval;
           weight += fval;
         }
 
       if( weight == 0 ) {
         fprintf( stderr, "%g %g %g %g\n", sx, sy, dx, dy );
-      }    
+      }
 //      assert( weight != 0 );
       (*out)(x,y) = pixVal / weight;
 
-    } 
+    }
 }
 
 void downsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
@@ -193,10 +193,10 @@ void downsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
   const float dy = (float)in->getRows() / (float)out->getRows();
 
   const float filterSize = 0.5;
-  
+
   float sx, sy;
   int x, y;
-  
+
   for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
     for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
 
@@ -206,24 +206,24 @@ void downsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
         for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
           pixVal += (*in)( (int)ix, (int)iy );
           w += 1;
-        }     
-      (*out)(x,y) = pixVal/w;      
+        }
+      (*out)(x,y) = pixVal/w;
     }
 }
 
 #endif
 
-/* 
+/*
 Pseudocode from the paper:
 
 PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
   J=0 // set the output to zero
-  for j=0..NB SEGMENTS 
+  for j=0..NB SEGMENTS
     ij= minI+j.*(max(I)-min(I))/NB SEGMENTS
     Gj=gr (I - ij ) // evaluate gr at each pixel
     Kj=Gj x fs // normalization factor
     Hj=Gj .* I // compute H for each pixel
-    Hj=Hj x fs 
+    Hj=Hj x fs
     Jj=Hj ./ Kj // normalize
     J=J+Jj .*  InterpolationWeight(I, ij )
 */
@@ -250,16 +250,16 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
   pfs::Array2Df* JJ;
 //  if( downsample != 1 )
 //    JJ = new pfs::Array2D(w,h);
-  
+
 //  w /= downsample;
 //  h /= downsample;
-  
+
   int sizeZ = w*h;
 //  pfs::Array2D* Iz = new pfs::Array2D(w,h);
 //  downsampleArray(I,Iz);
   const pfs::Array2Df* Iz = &I;
 //  sigma_s /= downsample;
-  
+
   pfs::Array2Df* jJ = new pfs::Array2Df(w,h);
   pfs::Array2Df* jG = new pfs::Array2Df(w,h);
   pfs::Array2Df* jK = new pfs::Array2Df(w,h);
@@ -275,10 +275,10 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
   {
     ph.setValue( j * 100 / NB_SEGMENTS );
     if (ph.canceled())
-		break;
+        break;
 
     float jI = minI + j*stepI;        // current intensity value
-    
+
     for (int i=0 ; i<sizeZ ; i++)
     {
       float dI = (*Iz)(i)-jI;
@@ -288,7 +288,7 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
 
     gaussian_blur.blur( *jG, *jK );
     gaussian_blur.blur( *jH, *jH );
-    
+
 //    convolveArray(jG, sigma_s, jK);
 //    convolveArray(jH, sigma_s, jH);
 
@@ -296,8 +296,8 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
       if( likely((*jK)(i)!=0.0f) )
         (*jJ)(i) = (*jH)(i) / (*jK)(i);
       else
-        (*jJ)(i) = 0.0f;        
-      
+        (*jJ)(i) = 0.0f;
+
     //  if( downsample == 1 )
       JJ = jJ;                  // No upsampling is necessary
 //    else
@@ -308,11 +308,11 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
       for (int i=0 ; i<size ; i++ )
       {
         if( likely( I(i) > jI + stepI ) )
-          continue;             // wi = 0;        
+          continue;             // wi = 0;
         if( likely( I(i) > jI ) ) {
           float wi = (stepI - (I(i)-jI)) / stepI;
           J(i) += (*JJ)(i)*wi;
-        } else          
+        } else
           J(i) += (*JJ)(i);
       }
     } else if( j == NB_SEGMENTS-1 ) {
@@ -320,11 +320,11 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
       for (int i=0 ; i<size ; i++ )
       {
         if( likely( I(i) < jI - stepI ) )
-          continue;             // wi = 0;        
+          continue;             // wi = 0;
         if( likely( I(i) < jI ) ) {
           float wi = (stepI - (jI-I(i))) / stepI;
           J(i) += (*JJ)(i)*wi;
-        } else          
+        } else
           J(i) += (*JJ)(i);
       }
     } else {
@@ -336,7 +336,7 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
       }
     }
   }
-  
+
 //  delete Iz;
 //  if( downsample != 1 )
 //    delete JJ;

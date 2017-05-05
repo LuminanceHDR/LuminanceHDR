@@ -36,7 +36,7 @@ HelpSideBar::~HelpSideBar()
 
 void HelpSideBar::changeEvent(QEvent *event)
 {
-	if (event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
         m_Ui->retranslateUi(this);
-	QWidget::changeEvent(event);
+    QWidget::changeEvent(event);
 }

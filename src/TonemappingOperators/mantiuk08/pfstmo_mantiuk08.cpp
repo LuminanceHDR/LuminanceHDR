@@ -8,7 +8,7 @@
  * http://www.mpi-inf.mpg.de/resources/hdr/datmo/
  *
  * This file is a part of LuminanceHDR package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,8 +22,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  *
  * $Id: pfstmo_mantiuk08.cpp,v 1.12 2009/02/23 18:46:36 rafm Exp $
@@ -56,13 +56,13 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
 
   if (!setluminance)
     white_y = -2.f;
-  
+
   if ( contrast_enhance_factor <= 0.0f )
     throw pfs::Exception("incorrect contrast enhancement factor, accepted value is any positive number");
-  
+
   if ( saturation_factor < 0.0f || saturation_factor > 2.0f )
     throw pfs::Exception("incorrect saturation factor, accepted range is (0..2)");
-  
+
 #ifndef NDEBUG
   std::cout << "pfstmo_mantiuk08 (";
   std::cout << "saturation factor: " << saturation_factor;
@@ -70,16 +70,16 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
   std::cout << ", white_y: " << white_y;
   std::cout << ", setluminance: " << setluminance << ")" << std::endl;
 #endif
-  
+
   DisplayFunction *df = NULL;
   DisplaySize *ds = NULL;
-  
+
   if( df == NULL ) // As of now df is not selected by users but hardcoded here
     df = new DisplayFunctionGGBA( "lcd" );
-  
+
   if( ds == NULL ) // As of now ds is not selected by users but hardcoded here
-    ds = new DisplaySize( 30.f, 0.5f ); 
-  
+    ds = new DisplaySize( 30.f, 0.5f );
+
 #ifndef NDEBUG
   df->print( stderr );
   ds->print( stderr );
@@ -94,13 +94,13 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
           delete df;
       throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
-    
+
   const int cols = frame.getWidth();
   const int rows = frame.getHeight();
-  
+
   pfs::Array2Df R( cols, rows );
   pfs::transformColorSpace(pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ);
-  
+
   if( white_y == -2.f )
   {
     std::string white_y_str = frame.getTags().getTag( "WHITE_Y" );
@@ -114,14 +114,14 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
       }
     }
   }
-  
+
 /* no need for flushing stdout with this stuff
   fprintf( stderr, "Luminance factor of the reference white: " );
   if( white_y < 0 )
     fprintf( stderr, "not specified\n" );
   else
     fprintf( stderr, "%g\n", white_y );
-  
+
   std::string lum_data = frame.getTags().getTag("LUMINANCE");
   if( !lum_data.empty() && lum_data != "DISPLAY" ) {
     fprintf( stderr, "warning: input image should be in linear (not gamma corrected) luminance factor units. Use '--linear' option with pfsin* commands.\n" );
@@ -135,7 +135,7 @@ void pfstmo_mantiuk08(pfs::Frame& frame, float saturation_factor, float contrast
     delete ds;
     throw pfs::Exception("failed to analyse the image");
   }
-  
+
   datmoTCFilter rc_filter( fps, log10(df->display(0)), log10(df->display(1)) );
 
   //datmoToneCurve tc;
