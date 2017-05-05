@@ -104,7 +104,7 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     fftSolverGang = new Gang(NULL, NULL,m_Ui->fftVersionCheckBox);
     
     // ferradans11
-    rhoGang = new Gang(m_Ui->rhoSlider, m_Ui->rhodsb, NULL,NULL,NULL,NULL, -5.f, 0.f, FERRADANS11_RHO);
+    rhoGang = new Gang(m_Ui->rhoSlider, m_Ui->rhodsb, NULL,NULL,NULL,NULL, -10.f, 10.f, FERRADANS11_RHO);
 
     connect(rhoGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
     connect(rhoGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
