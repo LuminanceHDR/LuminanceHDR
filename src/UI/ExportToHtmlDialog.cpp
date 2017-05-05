@@ -79,7 +79,7 @@ void ExportToHtmlDialog::onExportButtonClicked()
     }
     else {
         int resized_width = (int)((float)(size_percent*m_frame->getWidth()) / 100.f);
-        resized = pfs::resize(m_frame, resized_width);
+        resized = pfs::resize(m_frame, resized_width, BilinearInterp);
     }
     try {
         generate_hdrhtml(resized, 

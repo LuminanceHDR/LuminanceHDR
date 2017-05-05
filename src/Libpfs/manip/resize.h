@@ -28,6 +28,7 @@
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 //#include "Libpfs/array2d_fwd.h"
+#include "Common/global.h"
 #include "Libpfs/array2d.h"
 
 namespace pfs
@@ -35,14 +36,14 @@ namespace pfs
 // forward declaration
 class Frame;
 
-Frame* resize(Frame* frame, int xSize);
+Frame* resize(Frame* frame, int xSize, InterpolationMethod m);
 
 template <typename Type>
-void resize(const Array2D<Type> *from, Array2D<Type> *to);
+void resize(const Array2D<Type> *from, Array2D<Type> *to, InterpolationMethod m);
 
 template <typename Type>
-void resize(const Array2D<Type>& from, Array2D<Type>& to) {
-    resize(&from, &to);
+void resize(const Array2D<Type>& from, Array2D<Type>& to, InterpolationMethod m) {
+    resize(&from, &to, m);
 }
 
 }

@@ -91,7 +91,7 @@ void BatchTMJob::run()
             }
             else
             {
-                temporary_frame.reset( pfs::resize(reference_frame.data(), opts->xsize) );
+                temporary_frame.reset( pfs::resize(reference_frame.data(), opts->xsize, BilinearInterp) );
             }
 
 			if ( opts->pregamma != 1.0f )

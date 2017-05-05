@@ -96,7 +96,7 @@ public:
 
         //try { //Since nothing here actually throws this isn't useful, i need to check if returned frame != NULL
         QScopedPointer<TMWorker> tmWorker(new TMWorker);
-        QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options));
+        QSharedPointer<pfs::Frame> frame (tmWorker->computeTonemap(temp_frame.data(), tm_options, BilinearInterp));
         
         if (!frame.isNull())
         {
@@ -272,7 +272,7 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)
         resized_width = PREVIEW_HEIGHT*ratio;
     }
     // 1. make a resized copy
-    QSharedPointer<pfs::Frame> current_frame( pfs::resize(frame, resized_width));
+    QSharedPointer<pfs::Frame> current_frame( pfs::resize(frame, resized_width, BilinearInterp));
 
     // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
     if (index == -1) {

@@ -1,9 +1,9 @@
 /*
  * This file is a part of Luminance HDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2012 Davide Anastasia
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  */
 
 //! \brief Resize images in PFS stream
@@ -41,7 +41,7 @@ namespace pfs
 {
 
 
-Frame* resize(Frame* frame, int xSize)
+Frame* resize(Frame* frame, int xSize, InterpolationMethod m)
 {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
@@ -60,14 +60,14 @@ Frame* resize(Frame* frame, int xSize)
     {
         pfs::Channel* newCh = resizedFrame->createChannel( (*it)->getName() );
 
-        resize(*it, newCh);
+        resize(*it, newCh, m);
     }
     pfs::copyTags( frame, resizedFrame );
 
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
     std::cout << "resizeFrame() = " << f_timer.get_time() << " msec" << std::endl;
-#endif 
+#endif
 
     return resizedFrame;
 }

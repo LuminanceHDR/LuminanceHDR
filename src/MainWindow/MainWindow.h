@@ -48,6 +48,7 @@
 #include <QScopedPointer>
 #include <QFutureWatcher>
 
+#include "Common/global.h"
 #include "Common/LuminanceOptions.h"
 
 #define MAX_RECENT_FILES (5)
@@ -215,6 +216,7 @@ protected Q_SLOTS:
 
     void on_actionShow_Full_Screen_toggled(bool);
     void on_actionShow_Image_Full_Screen_triggered();
+    void on_actionSelect_Interpolation_Method_toggled(bool);
 
     void updatePreviews(bool);
 
@@ -322,6 +324,9 @@ private:
 	TMOProgressIndicator* m_QueueProgressBar;
 
 	int m_exportQueueSize;
+
+    //
+    InterpolationMethod m_interpolationMethod;
 
     QFutureWatcher<void> m_futureWatcher;
     GenericViewer *m_viewerToProcess;

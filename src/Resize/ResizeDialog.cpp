@@ -78,7 +78,7 @@ void ResizeDialog::scaledPressed() {
 		emit reject();
 		return;
 	}
-    m_resized = pfs::resize(m_original, resized_width);
+    m_resized = pfs::resize(m_original, resized_width, BilinearInterp);
 	accept();
 }
 

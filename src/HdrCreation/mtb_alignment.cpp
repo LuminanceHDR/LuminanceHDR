@@ -31,6 +31,7 @@
 #include <cmath>
 #include <iostream>
 
+#include <Common/global.h>
 #include <Libpfs/array2d.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/transform.h>
@@ -119,8 +120,8 @@ void getExpShift(const Array2D8u& img1, const int median1,
         Array2D8u img1small(img1.getCols()/2, img1.getRows()/2);
         Array2D8u img2small(img2.getCols()/2, img2.getRows()/2);
 
-        pfs::resize(img1, img1small);
-        pfs::resize(img2, img2small);
+        pfs::resize(img1, img1small, BilinearInterp);
+        pfs::resize(img2, img2small, BilinearInterp);
 
         getExpShift(img1small, median1, img2small, median2,
                     noise, shift_bits-1, curr_x, curr_y);

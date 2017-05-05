@@ -40,6 +40,7 @@
     <addaction name="actionShowPreviewPanel"/>
     <addaction name="actionRealtimePreviews"/>
     <addaction name="actionShow_Image_Full_Screen"/>
+    <addaction name="actionSelect_Interpolation_Method"/>
     <addaction name="separator"/>
     <addaction name="Transplant_Exif_Data_action"/>
     <addaction name="actionBatch_HDR"/>
@@ -1160,6 +1161,23 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="actionSelect_Interpolation_Method">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Lanczos/Bilinear interpolation</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Switch between Lanczos and Bilinear interpolation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K</string>
    </property>
   </action>
  </widget>

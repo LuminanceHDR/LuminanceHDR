@@ -29,6 +29,7 @@
 #include <QObject>
 #include <QString>
 
+#include "Common/global.h"
 #include "Libpfs/params.h"
 
 // Forward declaration
@@ -52,9 +53,9 @@ public Q_SLOTS:
     //!  This function creates a copy of the input frame, tonemap the copy
     //!  and then returns it
     //!
-    pfs::Frame* computeTonemap(/* const */pfs::Frame*, TonemappingOptions*);
+    pfs::Frame* computeTonemap(/* const */pfs::Frame*, TonemappingOptions*, InterpolationMethod m);
 
-    void computeTonemapAndExport(/* const */pfs::Frame*, TonemappingOptions*, pfs::Params, QString exportDir, QString hdrName, QString inputfname, QVector<float> inputExpoTimes);
+    void computeTonemapAndExport(/* const */pfs::Frame*, TonemappingOptions*, pfs::Params, QString exportDir, QString hdrName, QString inputfname, QVector<float> inputExpoTimes, InterpolationMethod m);
 
     //!
     //! This function tonemap the input frame
@@ -62,7 +63,7 @@ public Q_SLOTS:
     void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 
 private:
-    pfs::Frame* preprocessFrame(pfs::Frame*, TonemappingOptions*);
+    pfs::Frame* preprocessFrame(pfs::Frame*, TonemappingOptions*, InterpolationMethod m);
     void postprocessFrame(pfs::Frame*, TonemappingOptions*);
 
 Q_SIGNALS:

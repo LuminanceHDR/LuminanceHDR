@@ -273,17 +273,27 @@ void resizeBilinearGray(const Type* pixels, Type* output,
 }
 
 template <typename Type>
-void resample(const ::pfs::Array2D<Type> *in, ::pfs::Array2D<Type> *out)
+void resample(const ::pfs::Array2D<Type> *in, ::pfs::Array2D<Type> *out, InterpolationMethod m)
 {
-    Lanczos(in->data(), out->data(),
+    switch ( m )
+    {
+        case LanczosInterp:
+            Lanczos(in->data(), out->data(),
                        in->getCols(), in->getRows(),
                        out->getCols(), out->getRows());
+            break;
+        case BilinearInterp:
+                resizeBilinearGray(in->data(), out->data(),
+                       in->getCols(), in->getRows(),
+                       out->getCols(), out->getRows());
+            break;
+    }
 }
 
 } // anonymous
 
 template <typename Type>
-void resize(const Array2D<Type> *in, Array2D<Type> *out )
+void resize(const Array2D<Type> *in, Array2D<Type> *out, InterpolationMethod m)
 {
     if ( in->getCols() == out->getCols() && in->getRows() == out->getRows() )
     {
@@ -291,7 +301,7 @@ void resize(const Array2D<Type> *in, Array2D<Type> *out )
     }
     else
     {
-        detail::resample(in, out);
+        detail::resample(in, out, m);
     }
 }
 

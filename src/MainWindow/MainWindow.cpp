@@ -195,6 +195,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
+    , m_interpolationMethod(BilinearInterp)
     , m_firstWindow(0)
     , m_winId(0)
 {
@@ -207,6 +208,7 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, const QString& new_file,
     : QMainWindow(parent)
     , m_Ui(new Ui::MainWindow)
     , m_exportQueueSize(0)
+    , m_interpolationMethod(BilinearInterp)
     , m_firstWindow(0)
     , m_winId(0)
 {
@@ -291,6 +293,7 @@ void MainWindow::init()
         qRegisterMetaType<QVector<float> >("QVector<float>");
         qRegisterMetaType<pfs::Params>("pfs::Params");
         qRegisterMetaType<pfs::Params*>("pfs::Params*");
+        qRegisterMetaType<InterpolationMethod>("InterpolationMethod");
     }
 
     createUI();
@@ -1687,7 +1690,8 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 #endif
         //CALL m_TMWorker->getTonemappedFrame(hdr_viewer->getHDRPfsFrame(), opts);
         QMetaObject::invokeMethod(m_TMWorker, "computeTonemap", Qt::QueuedConnection,
-                                  Q_ARG(pfs::Frame*, hdr_viewer->getFrame()), Q_ARG(TonemappingOptions*,opts));
+                                  Q_ARG(pfs::Frame*, hdr_viewer->getFrame()), Q_ARG(TonemappingOptions*,opts),
+                                  Q_ARG(InterpolationMethod, m_interpolationMethod));
     }
 }
 
@@ -1714,7 +1718,8 @@ void MainWindow::exportImage(TonemappingOptions *opts)
                                   Q_ARG(QString, exportDir),
                                   Q_ARG(QString, hdrName),
                                   Q_ARG(QString, inputfname),
-                                  Q_ARG(QVector<float>, m_inputExpoTimes)
+                                  Q_ARG(QVector<float>, m_inputExpoTimes),
+                                  Q_ARG(InterpolationMethod, m_interpolationMethod)
                               );
     }
 }
@@ -2279,3 +2284,7 @@ void MainWindow::setSyncViewers(GenericViewer *g_v)
     }
 }
 
+void MainWindow::on_actionSelect_Interpolation_Method_toggled(bool b)
+{
+    m_interpolationMethod = b ? LanczosInterp: BilinearInterp;
+}

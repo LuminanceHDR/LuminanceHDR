@@ -158,7 +158,7 @@ void PreviewSettings::updatePreviews(pfs::Frame* frame)
         resized_width = PREVIEW_HEIGHT*ratio;
     }
     // 1. make a resized copy
-    QSharedPointer<pfs::Frame> current_frame( pfs::resize(frame, resized_width) );
+    QSharedPointer<pfs::Frame> current_frame( pfs::resize(frame, resized_width, BilinearInterp) );
 
     // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
     foreach (PreviewLabel* current_label, m_ListPreviewLabel)

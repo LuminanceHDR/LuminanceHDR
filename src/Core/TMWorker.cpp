@@ -67,13 +67,13 @@ TMWorker::~TMWorker()
 #endif
 }
 
-pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, TonemappingOptions* tm_options)
+pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, TonemappingOptions* tm_options, InterpolationMethod m)
 {
 #ifdef QT_DEBUG
     qDebug() << "TMWorker::getTonemappedFrame()";
 #endif
 
-    pfs::Frame* working_frame = preprocessFrame(in_frame, tm_options);
+    pfs::Frame* working_frame = preprocessFrame(in_frame, tm_options, m);
     if (working_frame == NULL) return NULL;
     try {
         tonemapFrame(working_frame, tm_options);
@@ -98,9 +98,9 @@ pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, Tonemappi
     return working_frame;
 }
 
-void TMWorker::computeTonemapAndExport(/* const */ pfs::Frame* in_frame, TonemappingOptions* tm_options, pfs::Params params, QString exportDir, QString hdrName, QString inputfname, QVector<float> inputExpoTimes)
+void TMWorker::computeTonemapAndExport(/* const */ pfs::Frame* in_frame, TonemappingOptions* tm_options, pfs::Params params, QString exportDir, QString hdrName, QString inputfname, QVector<float> inputExpoTimes, InterpolationMethod m)
 {
-    pfs::Frame* working_frame = preprocessFrame(in_frame, tm_options);
+    pfs::Frame* working_frame = preprocessFrame(in_frame, tm_options, m);
     if (working_frame == NULL) return;
     try {
         tonemapFrame(working_frame, tm_options);
@@ -171,7 +171,7 @@ void TMWorker::tonemapFrame(pfs::Frame* working_frame, TonemappingOptions* tm_op
     delete tmEngine;
 }
 
-pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOptions* tm_options)
+pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOptions* tm_options, InterpolationMethod m)
 {
     pfs::Frame* working_frame = NULL;
 
@@ -189,7 +189,7 @@ pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOption
     else if ( tm_options->xsize != tm_options->origxsize )
     {
         // workingframe = "resize"
-        working_frame = pfs::resize(input_frame, tm_options->xsize);
+        working_frame = pfs::resize(input_frame, tm_options->xsize, m);
     }
     else
     {

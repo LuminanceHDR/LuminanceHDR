@@ -29,10 +29,10 @@
 #define GLOBAL_H
 
 #include <QString>
-#include <QWidget>
-#include <QImage>
 #include <QStringList>
 #include <QUrl>
+
+enum InterpolationMethod {LanczosInterp, BilinearInterp};
 
 bool matchesLdrFilename(const QString& file);
 bool matchesHdrFilename(const QString& file);
