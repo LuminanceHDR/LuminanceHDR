@@ -1,3 +1,10 @@
+Changes 2.5.1
+* many fixes in HDR creation
+* optional Lanczos interpolation
+* antialiased display of images
+* navigation of images in fullscreen
+* minor cosmetic fixes to the UI
+
 Changes 2.5.0
 NEW: New tonemapping operator ferradans11
 NEW: New tonemapping operator mai11
