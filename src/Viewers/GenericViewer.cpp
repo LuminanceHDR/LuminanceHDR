@@ -417,7 +417,7 @@ void GenericViewer::startDragging()
 
 void GenericViewer::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_F10 || event->key() == Qt::Key_Escape) {
+    if (event->key() == Qt::Key_F10) {
         emit reparent(this);
     }
     else if (event->key() == Qt::Key_N) {
