@@ -22,6 +22,7 @@
 #ifndef PFS_RESIZE_HXX
 #define PFS_RESIZE_HXX
 
+#include <vector>
 #include <boost/math/constants/constants.hpp>
 #include "resize.h"
 #include "copy.h"
@@ -145,7 +146,7 @@ void Lanczos (const Type* src, Type* dst,
             float y0 = (static_cast<float> (i) + 0.5f) * delta - 0.5f;
 
             // weights for interpolation in y direction
-            float w[support];
+            vector<float> w(support);
 
             // sum of weights used for normalization
             float ws = 0.0f;
