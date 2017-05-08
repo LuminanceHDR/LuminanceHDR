@@ -39,7 +39,7 @@ namespace detail
 //! \author Franco Comida <fcomida@users.sourceforge.net>
 //! \note Code derived from RawTherapee
 //! https://github.com/Beep6581/RawTherapee/blob/dev/rtengine/ipresize.cc
-  constexpr float RT_1_PI = 2.0f*(float)boost::math::double_constants::one_div_two_pi;
+  const float RT_1_PI = 2.0f*(float)boost::math::double_constants::one_div_two_pi;
 
   inline float xrintf(float x) { return x < 0 ? (int)(x - 0.5f) : (int)(x + 0.5f); }
 
