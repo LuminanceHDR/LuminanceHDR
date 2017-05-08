@@ -22,7 +22,6 @@
 #ifndef PFS_RESIZE_HXX
 #define PFS_RESIZE_HXX
 
-#include <vector>
 #include <boost/math/constants/constants.hpp>
 #include "resize.h"
 #include "copy.h"
@@ -138,15 +137,13 @@ void Lanczos (const Type* src, Type* dst,
         }
 
         // Phase 2: do actual interpolation
+        // weights for interpolation in y direction
+        float *w = new float[support];
         #pragma omp for
-
         for (int i = 0; i < H2; i++) {
 
             // y coord of the center of pixel on src image
             float y0 = (static_cast<float> (i) + 0.5f) * delta - 0.5f;
-
-            // weights for interpolation in y direction
-            vector<float> w(support);
 
             // sum of weights used for normalization
             float ws = 0.0f;
@@ -198,6 +195,7 @@ void Lanczos (const Type* src, Type* dst,
             }
         }
 
+        delete[] w;
         delete[] wwh;
         delete[] jj0;
         delete[] jj1;
