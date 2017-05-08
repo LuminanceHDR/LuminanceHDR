@@ -234,7 +234,7 @@ void LdrViewer::setTonemappingOptions(TonemappingOptions* tmopts)
 
     parseOptions(tmopts, caption);
     setWindowTitle(caption);
-    setToolTip(caption);
+    //setToolTip(caption);
     informativeLabel->setText( tr("LDR image [%1 x %2]: %3").arg(getWidth()).arg(getHeight()).arg( caption ));
 }
 
