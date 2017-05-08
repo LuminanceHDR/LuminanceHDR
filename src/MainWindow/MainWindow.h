@@ -225,6 +225,11 @@ protected Q_SLOTS:
     void showPreviousViewer(GenericViewer *g_v);
     void setSyncViewers(GenericViewer*);
 
+    // Online Docs, Website, GitHub
+    void on_actionOnline_Documentation_triggered();
+    void on_actionDevelopers_Website_triggered();
+    void on_actionLuminance_HDR_Website_triggered();
+
 Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);

@@ -2298,3 +2298,18 @@ void MainWindow::on_actionSelect_Interpolation_Method_toggled(bool b)
 {
     m_interpolationMethod = b ? LanczosInterp: BilinearInterp;
 }
+
+void MainWindow::on_actionOnline_Documentation_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://luminancehdr.readthedocs.io/en/latest/"));
+}
+
+void MainWindow::on_actionDevelopers_Website_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/LuminanceHDR/"));
+}
+
+void MainWindow::on_actionLuminance_HDR_Website_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://qtpfsgui.sourceforge.net/"));
+}

@@ -53,6 +53,14 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <widget class="QMenu" name="menuLuminance_HDR_Online">
+     <property name="title">
+      <string>Luminance HDR Online</string>
+     </property>
+     <addaction name="actionOnline_Documentation"/>
+     <addaction name="actionDevelopers_Website"/>
+     <addaction name="actionLuminance_HDR_Website"/>
+    </widget>
     <addaction name="documentationAction"/>
     <addaction name="actionWhat_s_This"/>
     <addaction name="separator"/>
@@ -61,6 +69,7 @@
     <addaction name="actionDonate"/>
     <addaction name="actionAbout_Luminance"/>
     <addaction name="actionAbout_Qt"/>
+    <addaction name="menuLuminance_HDR_Online"/>
    </widget>
    <widget class="QMenu" name="menuWindows">
     <property name="title">
@@ -1178,6 +1187,36 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+K</string>
+   </property>
+  </action>
+  <action name="actionOnline_Documentation">
+   <property name="text">
+    <string>Online Documentation</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Online Documentation Web Site with the System Browser</string>
+   </property>
+  </action>
+  <action name="actionDevelopers_Website">
+   <property name="text">
+    <string>Developers Website</string>
+   </property>
+   <property name="iconText">
+    <string>Developers Web Site</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Developers Web Site with the System Browser</string>
+   </property>
+  </action>
+  <action name="actionLuminance_HDR_Website">
+   <property name="text">
+    <string>Luminance HDR Website</string>
+   </property>
+   <property name="iconText">
+    <string>Luminance HDR Web Site</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Main Web Site with the System Browser</string>
    </property>
   </action>
  </widget>
