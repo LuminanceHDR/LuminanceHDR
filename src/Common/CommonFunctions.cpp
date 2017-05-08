@@ -82,16 +82,12 @@ static void compute_histogram_minmax(const valarray<float> &hist, float &minHist
     const float scalingFactor = 1.f/255.f;
 
     const int hist_size = hist.size();
-    float CUMUL = 0;
-    for (int i = 0; i < hist_size; i++)
-    {
-        CUMUL += hist[i];
-    }
+    float CUMUL = hist.sum();
 
     //Start from max hist
     float hist_max = 0.f;
     int xa = 0;
-    for (int i = 0; i < (hist_size - 1); i++)
+    for (int i = 0; i < hist_size; i++)
     {
         if ( hist[i] > hist_max )
         {
@@ -100,54 +96,45 @@ static void compute_histogram_minmax(const valarray<float> &hist, float &minHist
         }
     }
 
-    if (xa >= 255 )
+    if (xa >= hist_size - 1)
     {
-        xa = 254;
+        xa = hist_size - 2;
     }
 
     int xb = xa + 1;
 
-    const float Threshold = .995f*CUMUL;
+    const float Threshold = .98f*CUMUL;
 
     float count = 0.f;
+    bool decrease_xa = true;
+    bool increase_xb = true;
     while (true)
     {
-        count = 0.f;
-        for (int i = xa; i <= xb; i++)
-        {
-            count += hist[i];
-        }
-
-        xa--;
-
+        count = hist[slice(xa, xb-xa+1, 1)].sum();
         if ( count >= Threshold)
             break;
+
+        if (decrease_xa)
+            xa--;
 
         if (xa <= 0)
         {
             xa = 0;
-            break;
+            decrease_xa = false;
         }
-    }
 
-    while (true)
-    {
-        count = 0.f;
-
-        for (int i = xa; i <= xb; i++)
-        {
-            count += hist[i];
-        }
+        count = hist[slice(xa, xb-xa+1, 1)].sum();
 
         if (count >= Threshold)
             break;
 
-        xb++;
+        if (increase_xb)
+            xb++;
 
-        if (xb >= 255)
+        if (xb >= hist_size - 1)
         {
-            xb = 255;
-            break;
+            xb = hist_size - 1;
+            increase_xb = false;
         }
     }
     minHist = scalingFactor*xa;
