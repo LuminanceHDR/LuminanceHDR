@@ -28,7 +28,7 @@
 #include <HdrWizard/HdrCreationItem.h>
 #include <Libpfs/utils/minmax.h>
 
-void computeAutolevels(const QImage* data, float &minL, float &maxL, float &gammaL);
+void computeAutolevels(const QImage* data, const float threshold, float &minL, float &maxL, float &gammaL);
 
 inline
 void rgb2hsl(float r, float g, float b, float& h, float& s, float& l)

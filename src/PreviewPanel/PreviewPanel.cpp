@@ -61,11 +61,12 @@ class PreviewLabelUpdater
 {
 public:
     explicit PreviewLabelUpdater(QSharedPointer<pfs::Frame> reference_frame):
-        m_isAutolevels(false),
+        m_doAutolevels(false),
+        m_autolevelThreshold(0.985f),
         m_ReferenceFrame(reference_frame)
     {}
 
-    void setAutolevels(bool al) { m_isAutolevels = al; }
+    void setAutolevels(bool al, float th) { m_doAutolevels = al; m_autolevelThreshold = th; }
     //! \brief QRunnable::run() definition
     //! \caption I use shared pointer in this function, so I don't have to worry about memory allocation
     //! in case something wrong happens, it shouldn't leak
@@ -102,10 +103,10 @@ public:
         {
             // Create QImage from pfs::Frame into QSharedPointer, and I give it to the preview panel
             //QSharedPointer<QImage> qimage(fromLDRPFStoQImage(temp_frame.data()));
-            if (m_isAutolevels) {
+            if (m_doAutolevels) {
                 QSharedPointer<QImage> temp_qimage(fromLDRPFStoQImage(frame.data()));
                 float minL, maxL, gammaL;
-                computeAutolevels(temp_qimage.data(), minL, maxL, gammaL);
+                computeAutolevels(temp_qimage.data(), m_autolevelThreshold, minL, maxL, gammaL);
                 pfs::gammaAndLevels(frame.data(), minL, maxL, 0.f, 1.f, gammaL);
             }
 
@@ -140,7 +141,8 @@ public:
     }
 
 private:
-    bool m_isAutolevels;
+    bool m_doAutolevels;
+    float m_autolevelThreshold;
     QSharedPointer<pfs::Frame> m_ReferenceFrame;
 };
 
@@ -149,7 +151,7 @@ private:
 PreviewPanel::PreviewPanel(QWidget *parent):
     QWidget(parent),
     m_original_width_frame(0),
-    m_isAutolevels(false)
+    m_doAutolevels(false)
 {
     //! \note I need to register the new object to pass this class as parameter inside invokeMethod()
     //! see run() inside PreviewLabelUpdater
@@ -279,13 +281,13 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame, int index)
         foreach(PreviewLabel* current_label, m_ListPreviewLabel)
         {
             PreviewLabelUpdater updater(current_frame);
-            updater.setAutolevels(m_isAutolevels);
+            updater.setAutolevels(m_doAutolevels, m_autolevelThreshold);
             updater(current_label);
         }
     }
     else {
         PreviewLabelUpdater updater(current_frame);
-        updater.setAutolevels(m_isAutolevels);
+        updater.setAutolevels(m_doAutolevels, m_autolevelThreshold);
         updater(m_ListPreviewLabel.at(index));
     }
     // 2. (concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
@@ -314,10 +316,11 @@ PreviewLabel *PreviewPanel::getLabel(int index)
     return m_ListPreviewLabel.at(index);
 }
 
-void PreviewPanel::setAutolevels(bool al)
+void PreviewPanel::setAutolevels(bool al, float th)
 {
 #ifdef QT_DEBUG
     std::cout << "void PreviewPanel::setAutolevels(" << al << ")" << std::endl;
 #endif
-    m_isAutolevels = al;
+    m_doAutolevels = al;
+    m_autolevelThreshold = th;
 }

@@ -218,7 +218,7 @@ protected Q_SLOTS:
     void on_actionShow_Image_Full_Screen_triggered();
     void on_actionSelect_Interpolation_Method_toggled(bool);
 
-    void updatePreviews(bool);
+    void updatePreviews(bool, float);
 
     void reparentViewer(GenericViewer *g_v);
     void showNextViewer(GenericViewer *g_v);
@@ -301,9 +301,10 @@ protected:
     QScrollArea *m_PreviewscrollArea;
     PreviewPanel *m_PreviewPanel;
 
+
 private:
     // UI declaration
-    Ui::MainWindow* m_Ui;
+    QScopedPointer<Ui::MainWindow> m_Ui;
 
     // Tone Mapping Panel
     TonemappingPanel *m_tonemapPanel;

@@ -33,6 +33,7 @@
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/frame.h"
 #include "PreviewPanel/PreviewPanel.h"
+#include "ThresholdDialog.h"
 
 class Gang;
 class QtWaitingSpinner;
@@ -115,6 +116,8 @@ protected:
     int m_mainWinNumber;
 
     pfs::Frame *m_currentFrame;
+    float m_autolevelThreshold;
+    QScopedPointer<ThresholdDialog> m_thd;
     QScopedPointer<Ui::TonemappingPanel> m_Ui;
 
 protected Q_SLOTS:
@@ -154,12 +157,14 @@ protected Q_SLOTS:
     void updatePreviewsRB(bool);
 
     void on_pattalocal_toggled(bool);
+    void on_toolButtonThreshold_clicked();
 public:
     TonemappingPanel(int mainWinNumber, PreviewPanel *p = 0, QWidget *parent = 0);
     ~TonemappingPanel();
     void setSizes(int, int);
     bool replaceLdr();
-    bool getAutoLevels();
+    bool doAutoLevels();
+    float getAutoLevelsThreshold();
     void setExportQueueSize(int);
 
 public Q_SLOTS:
@@ -167,11 +172,12 @@ public Q_SLOTS:
     void updatedHDR(pfs::Frame*);
     void updateTonemappingParams(TonemappingOptions *opts);
     void setRealtimePreviews(bool);
+    void autoLevels(bool b);
 
 signals:
     void startTonemapping(TonemappingOptions*);
     void startExport(TonemappingOptions*);
-    void autoLevels(bool);
+    void autoLevels(bool, float);
 
 private:
     void onUndoRedo(bool undo);

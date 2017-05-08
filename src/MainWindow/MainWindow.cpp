@@ -262,6 +262,15 @@ MainWindow::~MainWindow()
 
     clearRecentFileActions();
     delete luminance_options;
+    delete m_IOWorker;
+    delete m_IOThread;
+    delete m_TMWorker;
+    delete m_TMThread;
+    delete m_ProgressBar;
+    delete m_TMProgressBar;
+    delete m_QueueThread;
+    delete m_QueueWorker;
+    delete m_QueueProgressBar;
 }
 
 void MainWindow::init()
@@ -1727,10 +1736,11 @@ void MainWindow::exportImage(TonemappingOptions *opts)
 
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
-    if (m_tonemapPanel->getAutoLevels()) {
-        float minL, maxL, gammaL;
+    if (m_tonemapPanel->doAutoLevels()) {
+        float threshold, minL, maxL, gammaL;
+        threshold = m_tonemapPanel->getAutoLevelsThreshold();
         QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(frame) );
-        computeAutolevels(temp_qimage.data(), minL, maxL, gammaL);
+        computeAutolevels(temp_qimage.data(), threshold, minL, maxL, gammaL);
         pfs::gammaAndLevels(frame, minL, maxL, 0.f, 1.f, gammaL);
     }
 
@@ -1828,14 +1838,14 @@ void MainWindow::showPreviewPanel(bool b)
             m_PreviewscrollArea->show();
 
             // ask panel to refresh itself
-            m_PreviewPanel->setAutolevels(m_tonemapPanel->getAutoLevels());
+            m_PreviewPanel->setAutolevels(m_tonemapPanel->doAutoLevels(), m_tonemapPanel->getAutoLevelsThreshold());
             m_PreviewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
 
             // connect signals
             connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
             connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
             connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
-            connect(m_tonemapPanel, SIGNAL(autoLevels(bool)), this, SLOT(updatePreviews(bool)));
+            connect(m_tonemapPanel, SIGNAL(autoLevels(bool, float)), this, SLOT(updatePreviews(bool, float)));
         }
     }
     else
@@ -1846,17 +1856,17 @@ void MainWindow::showPreviewPanel(bool b)
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
         disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
         disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
-        disconnect(m_tonemapPanel, SIGNAL(autoLevels(bool)), this, SLOT(updatePreviews(bool)));
+        disconnect(m_tonemapPanel, SIGNAL(autoLevels(bool, float)), this, SLOT(updatePreviews(bool, float)));
     }
 }
 
-void MainWindow::updatePreviews(bool b)
+void MainWindow::updatePreviews(bool b, float th)
 {
     if (m_Ui->actionShowPreviewPanel->isChecked())
     {
         if (tm_status.is_hdr_ready)
         {
-            m_PreviewPanel->setAutolevels(b);
+            m_PreviewPanel->setAutolevels(b, th);
             // ask panel to refresh itself
             m_PreviewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
         }

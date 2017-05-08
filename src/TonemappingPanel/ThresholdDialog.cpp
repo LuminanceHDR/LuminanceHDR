@@ -19,49 +19,44 @@
  * ----------------------------------------------------------------------
  *
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
-#ifndef PREVIEWPANEL_IMPL_H
-#define PREVIEWPANEL_IMPL_H
+#include "ThresholdDialog.h"
+#include "ui_ThresholdDialog.h"
 
-#include <QWidget>
-
-// forward declaration
-namespace pfs {
-    class Frame;            // #include "Libpfs/frame.h"
-}
-
-namespace Ui {
-    class PreviewPanel;
-}
-
-class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
-class PreviewLabel;         // #include "PreviewPanel/PreviewLabel.h"
-
-class PreviewPanel : public QWidget
+ThresholdDialog::ThresholdDialog(QWidget *parent):
+    QDialog(parent),
+    m_Ui(new Ui::ThresholdDialog)
 {
-    Q_OBJECT
+    m_Ui->setupUi(this);
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+}
 
-public:
-    explicit PreviewPanel(QWidget *parent = 0);
-    ~PreviewPanel();
-    QSize getLabelSize();
-    PreviewLabel *getLabel(int);
+ThresholdDialog::~ThresholdDialog()
+{
+}
 
-public Q_SLOTS:
-    void updatePreviews(pfs::Frame* frame, int index = -1);
-    void setAutolevels(bool, float);
+float ThresholdDialog::threshold() const
+{
+    return m_Ui->thresholdDoubleSpinBox->value();
+}
 
-protected Q_SLOTS:
-    void tonemapPreview(TonemappingOptions*);
+void ThresholdDialog::on_thresholdDoubleSpinBox_valueChanged(double value)
+{
+    int maxv = m_Ui->thresholdHorizontalSlider->maximum();
+    m_Ui->thresholdHorizontalSlider->setValue((int)(value*(maxv+1)));
+}
 
-Q_SIGNALS:
-    void startTonemapping(TonemappingOptions*);
+void ThresholdDialog::on_thresholdHorizontalSlider_valueChanged(int pos)
+{
+    int maxv = m_Ui->thresholdHorizontalSlider->maximum();
+    m_Ui->thresholdDoubleSpinBox->setValue( (double)pos/(maxv+1) );
+}
 
-private:
-    int m_original_width_frame;
-    bool m_doAutolevels;
-    float m_autolevelThreshold;
-    QList<PreviewLabel*> m_ListPreviewLabel;
-};
-#endif
+void ThresholdDialog::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Return) {
+        emit accept();
+    }
+}

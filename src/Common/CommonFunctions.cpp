@@ -76,7 +76,7 @@ static void build_histogram(valarray<float> &hist, const valarray<int> &src)
     hist /= hist_max;
 }
 
-static void compute_histogram_minmax(const valarray<float> &hist, float &minHist, float &maxHist)
+static void compute_histogram_minmax(const valarray<float> &hist, const float threshold, float &minHist, float &maxHist)
 {
     //Scaling factor: range [0..1]
     const float scalingFactor = 1.f/255.f;
@@ -103,7 +103,7 @@ static void compute_histogram_minmax(const valarray<float> &hist, float &minHist
 
     int xb = xa + 1;
 
-    const float Threshold = .98f*CUMUL;
+    const float Threshold = threshold*CUMUL;
 
     float count = 0.f;
     bool decrease_xa = true;
@@ -141,7 +141,7 @@ static void compute_histogram_minmax(const valarray<float> &hist, float &minHist
     maxHist = scalingFactor*xb;
 }
 
-void computeAutolevels(const QImage* data, float &minHist, float &maxHist, float &gamma)
+void computeAutolevels(const QImage* data, const float threshold, float &minHist, float &maxHist, float &gamma)
 {
     const int COLOR_DEPTH = 256;
     const QRgb* src = reinterpret_cast<const QRgb*>(data->bits());
@@ -164,7 +164,7 @@ void computeAutolevels(const QImage* data, float &minHist, float &maxHist, float
     //Build histogram
     valarray<float> histL(0.f, COLOR_DEPTH);
     build_histogram(histL, lightness);
-    compute_histogram_minmax(histL, minL, maxL);
+    compute_histogram_minmax(histL, threshold, minL, maxL);
 
     //get Red, Gree, Blue
     valarray<int> red(ELEMENTS);
@@ -181,17 +181,17 @@ void computeAutolevels(const QImage* data, float &minHist, float &maxHist, float
     //Build histogram
     valarray<float> histR(0.f, COLOR_DEPTH);
     build_histogram(histR, red);
-    compute_histogram_minmax(histR, minR, maxR);
+    compute_histogram_minmax(histR, threshold, minR, maxR);
 
     //Build histogram
     valarray<float> histG(0.f, COLOR_DEPTH);
     build_histogram(histG, green);
-    compute_histogram_minmax(histG, minG, maxG);
+    compute_histogram_minmax(histG, threshold, minG, maxG);
 
     //Build histogram
     valarray<float> histB(0.f, COLOR_DEPTH);
     build_histogram(histB, blue);
-    compute_histogram_minmax(histB, minB, maxB);
+    compute_histogram_minmax(histB, threshold, minB, maxB);
 
     minHist = min(min(minL,minR), min(minG,minB));
     maxHist = max(max(maxL,maxR), max(maxG,maxB));

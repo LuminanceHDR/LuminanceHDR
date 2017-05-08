@@ -61,6 +61,8 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     adding_custom_size(false),
     m_previewPanel(panel),
     m_mainWinNumber(mainWinNumber),
+    m_autolevelThreshold(0.985f),
+    m_thd(new ThresholdDialog),
     m_Ui(new Ui::TonemappingPanel)
 {
     m_Ui->setupUi(this);
@@ -176,7 +178,7 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     connect(m_Ui->loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
     connect(m_Ui->saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
 
-    connect(m_Ui->autoLevelsCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(autoLevels(bool)));
+    connect(m_Ui->autoLevelsCheckBox, SIGNAL(toggled(bool)), this, SLOT(autoLevels(bool)));
 
     m_spinner = new QtWaitingSpinner(this);
 
@@ -1075,6 +1077,7 @@ void TonemappingPanel::setEnabled(bool b)
     m_Ui->lblOpenQueue->setVisible(b);
     m_Ui->replaceLdrCheckBox->setEnabled(b);
     m_Ui->autoLevelsCheckBox->setEnabled(b);
+    m_Ui->toolButtonThreshold->setEnabled(b);
 /*
     // Operator select
     m_Ui->cmbOperators->setEnabled(b);
@@ -1693,9 +1696,14 @@ bool TonemappingPanel::replaceLdr()
     return m_Ui->replaceLdrCheckBox->isChecked();
 }
 
-bool TonemappingPanel::getAutoLevels()
+bool TonemappingPanel::doAutoLevels()
 {
     return m_Ui->autoLevelsCheckBox->isChecked();
+}
+
+float TonemappingPanel::getAutoLevelsThreshold()
+{
+    return m_autolevelThreshold;
 }
 
 void TonemappingPanel::updatePreviews(double v)
@@ -1983,5 +1991,19 @@ void TonemappingPanel::on_pattalocal_toggled(bool b)
     m_Ui->label_rod->setDisabled(b || autoY);
     m_Ui->rodSlider->setDisabled(b || autoY);
     m_Ui->roddsb->setDisabled(b || autoY);
+}
+
+void TonemappingPanel::autoLevels(bool b)
+{
+    emit autoLevels(b, m_autolevelThreshold);
+}
+
+void TonemappingPanel::on_toolButtonThreshold_clicked()
+{
+    QPoint pos = mapToGlobal(m_Ui->toolButtonThreshold->pos());
+    m_thd->move(pos.x() - 40, pos.y() - 20);
+    m_thd->exec();
+    m_autolevelThreshold = m_thd->threshold();
+    emit autoLevels(doAutoLevels(), m_autolevelThreshold);
 }
 // ------------------------- // END FILE

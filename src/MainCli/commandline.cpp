@@ -720,7 +720,7 @@ void  CommandLineInterfaceManager::startTonemap()
         {
             float minL, maxL, gammaL;
             QScopedPointer<QImage> temp_qimage( fromLDRPFStoQImage(tm_frame.data()) );
-            computeAutolevels(temp_qimage.data(), minL, maxL, gammaL);
+            computeAutolevels(temp_qimage.data(), 0.985f, minL, maxL, gammaL);
             pfs::gammaAndLevels(tm_frame.data(), minL, maxL, 0.f, 1.f, gammaL);
         }
         // Create an ad-hoc IOWorker to save the file

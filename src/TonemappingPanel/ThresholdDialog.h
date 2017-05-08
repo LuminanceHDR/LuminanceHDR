@@ -19,49 +19,36 @@
  * ----------------------------------------------------------------------
  *
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
-#ifndef PREVIEWPANEL_IMPL_H
-#define PREVIEWPANEL_IMPL_H
+#ifndef THRESHOLDDIALOG_H
+#define THRESHOLDDIALOG_H
 
-#include <QWidget>
+#include <QDialog>
+#include <QKeyEvent>
 
-// forward declaration
-namespace pfs {
-    class Frame;            // #include "Libpfs/frame.h"
+namespace Ui
+{
+    class ThresholdDialog;
 }
 
-namespace Ui {
-    class PreviewPanel;
-}
-
-class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
-class PreviewLabel;         // #include "PreviewPanel/PreviewLabel.h"
-
-class PreviewPanel : public QWidget
+class ThresholdDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit PreviewPanel(QWidget *parent = 0);
-    ~PreviewPanel();
-    QSize getLabelSize();
-    PreviewLabel *getLabel(int);
+    ThresholdDialog(QWidget *parent = 0);
+    ~ThresholdDialog();
+    float threshold() const;
 
-public Q_SLOTS:
-    void updatePreviews(pfs::Frame* frame, int index = -1);
-    void setAutolevels(bool, float);
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    QScopedPointer<Ui::ThresholdDialog> m_Ui;
 
 protected Q_SLOTS:
-    void tonemapPreview(TonemappingOptions*);
-
-Q_SIGNALS:
-    void startTonemapping(TonemappingOptions*);
-
-private:
-    int m_original_width_frame;
-    bool m_doAutolevels;
-    float m_autolevelThreshold;
-    QList<PreviewLabel*> m_ListPreviewLabel;
+    void on_thresholdDoubleSpinBox_valueChanged(double value);
+    void on_thresholdHorizontalSlider_valueChanged(int pos);
 };
+
 #endif
