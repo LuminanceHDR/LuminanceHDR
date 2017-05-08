@@ -55,7 +55,7 @@
     </property>
     <widget class="QMenu" name="menuLuminance_HDR_Online">
      <property name="title">
-      <string>Luminance HDR Online</string>
+      <string>Luminance &amp;HDR Online</string>
      </property>
      <addaction name="actionOnline_Documentation"/>
      <addaction name="actionDevelopers_Website"/>
@@ -1191,7 +1191,7 @@
   </action>
   <action name="actionOnline_Documentation">
    <property name="text">
-    <string>Online Documentation</string>
+    <string>&amp;Online Documentation</string>
    </property>
    <property name="toolTip">
     <string>Open Online Documentation Web Site with the System Browser</string>
@@ -1199,7 +1199,7 @@
   </action>
   <action name="actionDevelopers_Website">
    <property name="text">
-    <string>Developers Website</string>
+    <string>&amp;Developers Web Site</string>
    </property>
    <property name="iconText">
     <string>Developers Web Site</string>
@@ -1210,7 +1210,7 @@
   </action>
   <action name="actionLuminance_HDR_Website">
    <property name="text">
-    <string>Luminance HDR Website</string>
+    <string>&amp;Luminance HDR Web Site</string>
    </property>
    <property name="iconText">
     <string>Luminance HDR Web Site</string>
