@@ -1831,11 +1831,17 @@ void MainWindow::syncViewers(GenericViewer *sender)
 
 void MainWindow::showPreviewPanel(bool b)
 {
+    m_Ui->actionRealtimePreviews->setEnabled(b);
     if (b)
     {
         if (tm_status.is_hdr_ready)
         {
             m_PreviewscrollArea->show();
+            if (m_Ui->actionRealtimePreviews->isChecked())
+            {
+                connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), m_tonemapPanel, SLOT(setRealtimePreviews(bool)));
+                m_tonemapPanel->setRealtimePreviews(true);
+            }
 
             // ask panel to refresh itself
             m_PreviewPanel->setAutolevels(m_tonemapPanel->doAutoLevels(), m_tonemapPanel->getAutoLevelsThreshold());
@@ -1851,8 +1857,10 @@ void MainWindow::showPreviewPanel(bool b)
     else
     {
         m_PreviewscrollArea->hide();
+        m_tonemapPanel->setRealtimePreviews(false);
 
         // disconnect signals
+        disconnect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), m_tonemapPanel, SLOT(setRealtimePreviews(bool)));
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
         disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
         disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
