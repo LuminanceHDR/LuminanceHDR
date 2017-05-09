@@ -4,7 +4,7 @@
     <message>
         <location filename="../src/UI/about.ui" line="14"/>
         <source>About Luminance HDR</source>
-        <translation type="unfinished"/>
+        <translation>О Luminance HDR</translation>
     </message>
     <message>
         <location filename="../src/UI/about.ui" line="61"/>
@@ -13,7 +13,11 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; color:#0078dc;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; color:#0078dc;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/UI/about.ui" line="81"/>
@@ -521,7 +525,7 @@ Continue?</source>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="329"/>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="348"/>
         <source>Width of tonemapped image in percent of original image</source>
-        <translation type="unfinished"/>
+        <translation>Ширина отображённого изображения в процентах от оригинала</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="332"/>
@@ -536,7 +540,7 @@ Continue?</source>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="380"/>
         <source>Image format of tonemapped images</source>
-        <translation type="unfinished"/>
+        <translation>Формат отображённых снимков</translation>
     </message>
     <message>
         <location filename="../src/BatchTM/BatchTMDialog.ui" line="387"/>
@@ -819,12 +823,12 @@ Continue?</source>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="163"/>
         <source>Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)</source>
-        <translation>Формат tiff. Допустимые значения [8b|16b|32b|logluv] (По умолчанию 8b)</translation>
+        <translation>Формат tiff. Допустимые значения [8b|16b|32b|logluv] (по умолчанию: 8b)</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="164"/>
         <source>Tiff deflate compression. true|false (Default is true)</source>
-        <translation>Сжатие deflate для tiff. true|false (По умолчанию true)</translation>
+        <translation>Сжатие deflate для tiff. true|false (по умолчанию: true)</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="167"/>
@@ -839,7 +843,7 @@ Continue?</source>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="175"/>
         <source>Specifies the file name, of the web page to be generated. If &lt;page_name&gt; is missing, the file name of the first image with .html extension will be used. (Default is first image name)</source>
-        <translation type="unfinished"/>
+        <translation>Имя файла веб-страницы, которая будет сгенерирована. Если &lt;page_name&gt; отсутствует, будет использовано имя файла первого изображения с расширением .html. (по умолчанию: имя первого изображения)</translation>
     </message>
     <message>
         <location filename="../src/MainCli/commandline.cpp" line="179"/>
@@ -2720,7 +2724,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="133"/>
         <source>F3</source>
-        <translation type="unfinished"/>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="138"/>
@@ -2730,7 +2734,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="141"/>
         <source>Shift+F3</source>
-        <translation type="unfinished"/>
+        <translation>Shift+F3</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/HelpBrowser.ui" line="150"/>
@@ -3642,7 +3646,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="741"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="753"/>
@@ -3671,7 +3675,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="786"/>
         <source>Ctrl+J</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+J</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="798"/>
@@ -3718,7 +3722,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="837"/>
         <source>Ctrl+Z</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="846"/>
@@ -3947,7 +3951,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1172"/>
         <source>Ctrl+M</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1183"/>
@@ -3962,7 +3966,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1189"/>
         <source>Ctrl+K</source>
-        <translation type="unfinished"/>
+        <translation>Ctrl+K</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.ui" line="1194"/>
@@ -4028,7 +4032,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/MainWindow/MainWindow.cpp" line="743"/>
         <location filename="../src/MainWindow/MainWindow.cpp" line="757"/>
         <source>Failed to save %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось сохранить %1</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="1153"/>
