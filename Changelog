@@ -1,8 +1,10 @@
 Changes 2.5.1
-* many fixes in HDR creation
-* optional Lanczos interpolation
-* antialiased display of images
-* navigation of images in fullscreen
+NEW: Selectable threshold for adjusting levels
+NEW: Optional Lanczos interpolation
+NEW: Antialiased display of images
+NEW: Navigation of images in fullscreen
+NEW: Online documentation
+* many fixes in HDR creation for all profiles
 * minor cosmetic fixes to the UI
 
 Changes 2.5.0
