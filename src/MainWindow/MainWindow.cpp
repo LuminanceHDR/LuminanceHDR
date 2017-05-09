@@ -262,15 +262,6 @@ MainWindow::~MainWindow()
 
     clearRecentFileActions();
     delete luminance_options;
-    delete m_IOWorker;
-    delete m_IOThread;
-    delete m_TMWorker;
-    delete m_TMThread;
-    delete m_ProgressBar;
-    delete m_TMProgressBar;
-    delete m_QueueThread;
-    delete m_QueueWorker;
-    delete m_QueueProgressBar;
 }
 
 void MainWindow::init()
@@ -1456,7 +1447,11 @@ void MainWindow::disableCrop()
 void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
+    {
          m_Ui->retranslateUi(this);
+        setWindowTitle(QString("Luminance HDR " LUMINANCEVERSION " [*]"));
+    }
+
     QWidget::changeEvent(event);
 }
 
