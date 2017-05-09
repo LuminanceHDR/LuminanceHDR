@@ -2005,6 +2005,7 @@ void TonemappingPanel::on_toolButtonThreshold_clicked()
     m_thd->move(pos.x() - 40, pos.y() - 20);
     m_thd->show();
 }
+
 void TonemappingPanel::thresholdReady()
 {
     m_autolevelThreshold = m_thd->threshold();
