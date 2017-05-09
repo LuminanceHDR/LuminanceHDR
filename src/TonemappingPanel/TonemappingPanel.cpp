@@ -62,11 +62,12 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     m_previewPanel(panel),
     m_mainWinNumber(mainWinNumber),
     m_autolevelThreshold(0.985f),
-    m_thd(new ThresholdDialog),
+    m_thd(new ThresholdWidget(this)),
     m_Ui(new Ui::TonemappingPanel)
 {
     m_Ui->setupUi(this);
 
+    connect(m_thd.data(), SIGNAL(ready()), this, SLOT(thresholdReady()));
 
     if ( !QIcon::hasThemeIcon("edit-download") )
         m_Ui->saveButton->setIcon(QIcon(":/program-icons/edit-download"));
@@ -2002,8 +2003,12 @@ void TonemappingPanel::on_toolButtonThreshold_clicked()
 {
     QPoint pos = mapToGlobal(m_Ui->toolButtonThreshold->pos());
     m_thd->move(pos.x() - 40, pos.y() - 20);
-    m_thd->exec();
+    m_thd->show();
+}
+void TonemappingPanel::thresholdReady()
+{
     m_autolevelThreshold = m_thd->threshold();
+    m_thd->hide();
     emit autoLevels(doAutoLevels(), m_autolevelThreshold);
 }
 // ------------------------- // END FILE

@@ -22,41 +22,40 @@
  *
  */
 
-#include "ThresholdDialog.h"
-#include "ui_ThresholdDialog.h"
+#include "ThresholdWidget.h"
+#include "ui_ThresholdWidget.h"
 
-ThresholdDialog::ThresholdDialog(QWidget *parent):
-    QDialog(parent),
-    m_Ui(new Ui::ThresholdDialog)
+ThresholdWidget::ThresholdWidget(QWidget *parent, Qt::WindowFlags flags):
+    QFrame(parent, flags),
+    m_Ui(new Ui::ThresholdWidget)
 {
     m_Ui->setupUi(this);
-    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 }
 
-ThresholdDialog::~ThresholdDialog()
+ThresholdWidget::~ThresholdWidget()
 {
 }
 
-float ThresholdDialog::threshold() const
+float ThresholdWidget::threshold() const
 {
     return m_Ui->thresholdDoubleSpinBox->value();
 }
 
-void ThresholdDialog::on_thresholdDoubleSpinBox_valueChanged(double value)
+void ThresholdWidget::on_thresholdDoubleSpinBox_valueChanged(double value)
 {
     int maxv = m_Ui->thresholdHorizontalSlider->maximum();
     m_Ui->thresholdHorizontalSlider->setValue((int)(value*(maxv+1)));
 }
 
-void ThresholdDialog::on_thresholdHorizontalSlider_valueChanged(int pos)
+void ThresholdWidget::on_thresholdHorizontalSlider_valueChanged(int pos)
 {
     int maxv = m_Ui->thresholdHorizontalSlider->maximum();
     m_Ui->thresholdDoubleSpinBox->setValue( (double)pos/(maxv+1) );
 }
 
-void ThresholdDialog::keyPressEvent(QKeyEvent *event)
+void ThresholdWidget::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Return) {
-        emit accept();
+        emit ready();
     }
 }

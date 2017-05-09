@@ -33,7 +33,7 @@
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/frame.h"
 #include "PreviewPanel/PreviewPanel.h"
-#include "ThresholdDialog.h"
+#include "ThresholdWidget.h"
 
 class Gang;
 class QtWaitingSpinner;
@@ -117,7 +117,7 @@ protected:
 
     pfs::Frame *m_currentFrame;
     float m_autolevelThreshold;
-    QScopedPointer<ThresholdDialog> m_thd;
+    QScopedPointer<ThresholdWidget> m_thd;
     QScopedPointer<Ui::TonemappingPanel> m_Ui;
 
 protected Q_SLOTS:
@@ -158,6 +158,8 @@ protected Q_SLOTS:
 
     void on_pattalocal_toggled(bool);
     void on_toolButtonThreshold_clicked();
+    void thresholdReady();
+
 public:
     TonemappingPanel(int mainWinNumber, PreviewPanel *p = 0, QWidget *parent = 0);
     ~TonemappingPanel();

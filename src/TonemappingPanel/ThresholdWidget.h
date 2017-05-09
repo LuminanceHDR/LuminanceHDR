@@ -22,29 +22,32 @@
  *
  */
 
-#ifndef THRESHOLDDIALOG_H
-#define THRESHOLDDIALOG_H
+#ifndef THRESHOLDWIDGET_H
+#define THRESHOLDWIDGET_H
 
-#include <QDialog>
+#include <QFrame>
 #include <QKeyEvent>
 
 namespace Ui
 {
-    class ThresholdDialog;
+    class ThresholdWidget;
 }
 
-class ThresholdDialog : public QDialog
+class ThresholdWidget : public QFrame
 {
     Q_OBJECT
 
 public:
-    ThresholdDialog(QWidget *parent = 0);
-    ~ThresholdDialog();
+    ThresholdWidget(QWidget *parent = 0, Qt::WindowFlags flags=Qt::Popup);
+    ~ThresholdWidget();
     float threshold() const;
 
 protected:
     void keyPressEvent(QKeyEvent *event);
-    QScopedPointer<Ui::ThresholdDialog> m_Ui;
+    QScopedPointer<Ui::ThresholdWidget> m_Ui;
+
+Q_SIGNALS:
+    void ready();
 
 protected Q_SLOTS:
     void on_thresholdDoubleSpinBox_valueChanged(double value);
