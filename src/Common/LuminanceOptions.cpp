@@ -41,8 +41,6 @@
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
 
-#define KEY_EXPORT_FILE_PATH "Queue/FilePath"
-
 #ifdef WIN32
 const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = "LuminanceHDR";
 #else
@@ -705,8 +703,6 @@ private:
 #endif // QT_DEBUG
 }
 
-#define KEY_TEMP_RESULT_PATH "Tonemapping_Options/TemporaryFilesPath"
-
 QString LuminanceOptions::getTempDir()
 {
     QString os_temp_dir_name = QDir::temp().absolutePath();
@@ -751,12 +747,6 @@ QString LuminanceOptions::getTempDir()
 void LuminanceOptions::setTempDir(const QString& path) {
     m_settingHolder->setValue(KEY_TEMP_RESULT_PATH, path);
 }
-
-//--------------------PATHS & co. ----------------
-#define KEY_RECENT_PATH_SAVE_LDR "recent_path_save_ldr"
-#define KEY_RECENT_PATH_LOAD_LDR "recent_path_load_ldr"
-#define KEY_RECENT_PATH_SAVE_HDR "recent_path_save_hdr"
-#define KEY_RECENT_PATH_LOAD_HDR "recent_path_load_hdr"
 
 QString LuminanceOptions::getDefaultPathHdrIn()
 {
@@ -812,8 +802,6 @@ void LuminanceOptions::setShowMissingEVsWarning(const bool b)
 {
     m_settingHolder->setValue(KEY_WIZARD_SHOW_MISSING_EVS_WARNING, b);
 }
-
-#define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "Recent_path_TMO_settings"
 
 QString LuminanceOptions::getDefaultPathTmoSettings()
 {
