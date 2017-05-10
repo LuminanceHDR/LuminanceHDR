@@ -802,6 +802,17 @@ void LuminanceOptions::setDefaultPathLdrOut(const QString& path)
     m_settingHolder->setValue(KEY_RECENT_PATH_SAVE_LDR, path);
 }
 
+bool LuminanceOptions::isShowMissingEVsWarning()
+{
+    return m_settingHolder->value(KEY_WIZARD_SHOW_MISSING_EVS_WARNING,
+                                  true).toBool();
+}
+
+void LuminanceOptions::setShowMissingEVsWarning(const bool b)
+{
+    m_settingHolder->setValue(KEY_WIZARD_SHOW_MISSING_EVS_WARNING, b);
+}
+
 #define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "Recent_path_TMO_settings"
 
 QString LuminanceOptions::getDefaultPathTmoSettings()
@@ -871,7 +882,7 @@ bool LuminanceOptions::isShowFattalWarning()
     return m_settingHolder->value(KEY_TMOWARNING_FATTALSMALL,true).toBool();
 }
 
-void LuminanceOptions::setShowFattalWarning(bool b)
+void LuminanceOptions::setShowFattalWarning(const bool b)
 {
     m_settingHolder->setValue(KEY_TMOWARNING_FATTALSMALL, b);
 }

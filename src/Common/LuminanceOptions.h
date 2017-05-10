@@ -202,7 +202,10 @@ public Q_SLOTS:
     void        setAlignImageStackOptions(const QStringList&, bool verbose=false);
 
     bool    isShowFattalWarning();
-    void    setShowFattalWarning(bool b);
+    void    setShowFattalWarning(const bool b);
+
+    bool    isShowMissingEVsWarning();
+    void    setShowMissingEVsWarning(const bool b);
 
     // MainWindow
     int     getMainWindowToolBarMode();
