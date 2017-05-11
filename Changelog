@@ -43,7 +43,7 @@ Changes 2.3.1
 * Support for TIFF 32 bit floating point (compatible with Adobe Lightroom 4)
 * Improved EXR, TIFF, JPEG and PNG I/O
 * Improved color conversion routines 
-* NEW: Hugin's alignment: Autocrop feature (thanks to David Pol·k)
+* NEW: Hugin's alignment: Autocrop feature (thanks to David Pol√°k)
 * NEW: Support additional demosaicing algorithms, AMaZE as default
 * NEW: Save HDR creation profiles
 * NEW: Copy EXIF tags to tonemapped images automatically
