@@ -22,14 +22,11 @@
 
 //! @author Daniel Kaneider <danielkaneider@users.sourceforge.net>
 
+#include "Common/config.h"
 #include "formathelper.h"
 
 #include "UI/TiffModeDialog.h"
 #include <UI/ImageQualityDialog.h>
-
-#define KEY_EXPORT_FORMAT "FileFormats/Format"
-#define KEY_EXPORT_TIFF_MODE "FileFormats/TiffMode"
-#define KEY_EXPORT_QUALITY "FileFormats/Quality"
 
 namespace pfsadditions
 {

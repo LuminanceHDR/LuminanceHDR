@@ -590,8 +590,12 @@ void HdrWizard::enableNextOrWarning(const QStringList& filesWithoutExif)
 
         warningMessage +=
                 tr("</ul>"\
-                   "<hr>You can still proceed creating an Hdr. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values." \
-                   "<hr>If you want Luminance HDR to do this <b>automatically</b>, you have to load images that have at least the following exif data: " \
+                   "<hr>Luminance HDR has inserted those values for you, two stops apart.<br> " \
+                   "If the guess is correct you can proceed creating the HDR, " \
+                   "otherwise you have to <b>manually</b> correct the EVs (exposure values) or stop difference values. " \
+                   "<hr>To avoid this warning in the future you must load images that have at least the following exif data: " \
+                   "<ul><li>Shutter Speed (seconds)</li></ul>"
+                   "<ul><li>Aperture (F-Number)</li></ul>"
                    "<ul><li>Exposure Bias</li></ul>"
                    "<hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>" \
                    "You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the " \
@@ -601,7 +605,20 @@ void HdrWizard::enableNextOrWarning(const QStringList& filesWithoutExif)
         // "<li>Aperture (f-number)</li></ul>"
 
         QApplication::restoreOverrideCursor();
-        QMessageBox::warning(this, tr("EXIF data not found"), warningMessage);
+        if (luminance_options.isShowMissingEVsWarning() )
+        {
+            QMessageBox msgBox;
+            QCheckBox cb(tr("Do not show this message again"));
+            msgBox.setText(tr("EXIF data not found"));
+            msgBox.setInformativeText(warningMessage);
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setCheckBox(&cb);
+            msgBox.exec();
+            if (msgBox.checkBox()->isChecked())
+                luminance_options.setShowMissingEVsWarning(false);
+        }
+        setEVsValues();
+        //QMessageBox::warning(this, tr("EXIF data not found"), warningMessage);
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     }
     updateLabelMaybeNext(filesWithoutExif.size());
@@ -615,12 +632,18 @@ void HdrWizard::updateLabelMaybeNext(size_t numFilesWithoutExif)
                     tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b>" \
                        "</h3></font></center>"));
     } else {
-        m_Ui->NextFinishButton->setEnabled(false);
+        m_Ui->NextFinishButton->setEnabled(true);
+        m_Ui->confirmloadlabel->setText(
+                    tr("<center><font color=\"#ffaa00\"><h3><b>Please check that " \
+                       "all exposure values are correct before proceedings.</h3></font></center>"));
+
+        /*
         m_Ui->confirmloadlabel->setText(
                     tr("<center><h3><b>To proceed you need to manually " \
                        "set the exposure values.<br><font color=\"#FF0000\">%1</font> " \
                        "values still required.</b></h3></center>")
                     .arg(numFilesWithoutExif));
+        */
     }
 }
 
@@ -1256,3 +1279,20 @@ void HdrWizard::updateThresholdSpinBox(double newThreshold)
     m_Ui->threshold_horizontalSlider->blockSignals(oldState);
 }
 
+void HdrWizard::setEVsValues()
+{
+    int tot_images = m_Ui->tableWidget->rowCount();
+    float minEV = -2.0f * (float)(tot_images/2);
+    float EV = minEV;
+    for (int i = 0; i < tot_images; i++, EV += 2.0f)
+    {
+        QTableWidgetItem *tableitem = m_Ui->tableWidget->item(i, 1);
+        updateTableItem(tableitem, EV);
+        m_hdrCreationManager->getFile(i).setEV(EV + m_hdrCreationManager->getEVOffset());
+    }
+    bool oldState = m_Ui->ImageEVdsb->blockSignals(true);
+    m_Ui->ImageEVdsb->setValue(minEV);
+    m_Ui->EVSlider->setValue((int)100.f*minEV);
+    m_Ui->ImageEVdsb->blockSignals(oldState);
+    updateLabelMaybeNext(1);
+}

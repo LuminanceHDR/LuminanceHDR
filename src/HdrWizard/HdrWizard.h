@@ -82,6 +82,7 @@ protected:
     void keyPressEvent(QKeyEvent *);
     void dragEnterEvent(QDragEnterEvent *);
     void dropEvent(QDropEvent *);
+    void setEVsValues();
 
 private:
     void updateTableGrid();
