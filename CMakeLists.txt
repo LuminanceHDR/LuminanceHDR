@@ -15,6 +15,9 @@ IF(TIMER_PROFILING)
     ADD_DEFINITIONS(-DTIMER_PROFILING)
 ENDIF()
 
+# ======== Enable GNU gsl inline code =======
+ADD_DEFINITIONS(-DHAVE_INLINE )
+
 # ======== Has branch prediction =======
 include( CheckCXXSourceCompiles )
 
