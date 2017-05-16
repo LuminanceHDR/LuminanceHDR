@@ -41,10 +41,12 @@
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
 
-#ifdef WIN32
+#if defined(WIN32)
 const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = "LuminanceHDR";
+#elif defined(__APPLE__)
+const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = ".config/.LuminanceHDR";
 #else
-const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = ".LuminanceHDR";
+const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = ".config/luminance-hdr";
 #endif
 
 const static QString MAC_THEME = "Macintosh";
