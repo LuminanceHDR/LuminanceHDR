@@ -264,7 +264,7 @@ void Gang::setupUndo()
     if (rb2)
         isRb2Checked = rb2->isChecked();
 
-        tmoSettingsList->append( TmoSettings(this, v, isCbx1Checked, isCbx2Checked, isRb1Checked, isRb2Checked) );
+    tmoSettingsList->append( TmoSettings(this, v, isCbx1Checked, isCbx2Checked, isRb1Checked, isRb2Checked) );
     if (tmoSettingsList->index() == 1) {
         emit enableUndo(true);
         undoState = true;
