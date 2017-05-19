@@ -23,7 +23,7 @@
  */
 
 #include "ThresholdWidget.h"
-#include "ui_ThresholdWidget.h"
+#include "TonemappingPanel/ui_ThresholdWidget.h"
 
 ThresholdWidget::ThresholdWidget(QWidget *parent, Qt::WindowFlags flags):
     QFrame(parent, flags),
@@ -58,4 +58,9 @@ void ThresholdWidget::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
         emit ready();
     }
+}
+
+void ThresholdWidget::hideEvent(QHideEvent *event)
+{
+    emit ready();
 }

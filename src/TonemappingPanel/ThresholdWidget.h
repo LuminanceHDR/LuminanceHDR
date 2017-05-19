@@ -27,6 +27,7 @@
 
 #include <QFrame>
 #include <QKeyEvent>
+#include <QHideEvent>
 
 namespace Ui
 {
@@ -44,6 +45,7 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *event);
+    void hideEvent(QHideEvent *event);
     QScopedPointer<Ui::ThresholdWidget> m_Ui;
 
 Q_SIGNALS:

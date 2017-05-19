@@ -52,7 +52,7 @@
 #include "TonemappingPanel/SavingParametersDialog.h"
 #include "TonemappingOperators/pfstmdefaultparams.h"
 #include "UI/Gang.h"
-#include "ui_TonemappingPanel.h"
+#include "TonemappingPanel/ui_TonemappingPanel.h"
 
 #include "contrib/qtwaitingspinner/QtWaitingSpinner.h"
 
