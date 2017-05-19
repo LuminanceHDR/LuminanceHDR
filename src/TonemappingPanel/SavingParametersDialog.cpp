@@ -23,9 +23,17 @@
  */
 
 #include "SavingParametersDialog.h"
+#include "TonemappingPanel/ui_SavingParametersDialog.h"
 
 SavingParameters::SavingParameters(QWidget *parent):
-    QDialog(parent)
+    QDialog(parent),
+    m_Ui(new Ui::SavingParameters)
 {
-    setupUi(this);
+    m_Ui->setupUi(this);
 }
+
+SavingParameters::~SavingParameters()
+{
+}
+
+QString SavingParameters::getComment() { return m_Ui->comment->text(); }
