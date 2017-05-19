@@ -25,9 +25,6 @@
 //! \brief Robertson02 algorithm for automatic self-calibration.
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
-#include <QList>
-#include <QImage>
-
 #include <Libpfs/array2d.h>
 #include <Libpfs/frame.h>
 #include <HdrCreation/fusionoperator.h>
