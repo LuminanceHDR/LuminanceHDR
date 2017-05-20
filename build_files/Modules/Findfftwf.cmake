@@ -13,6 +13,7 @@ ELSE(FFTWF_INCLUDE_DIRS)
       /usr/local/include
       /opt/include
       /usr/apps/include
+      /opt/local
     )
 
     SET(TRIAL_LIBRARY_PATHS
@@ -21,6 +22,7 @@ ELSE(FFTWF_INCLUDE_DIRS)
       /usr/local/lib
       /opt/lib
       /sw/lib
+      /opt/local
       )
 
   FIND_PATH(FFTWF_INCLUDE_DIR fftw3.h ${TRIAL_PATHS})
