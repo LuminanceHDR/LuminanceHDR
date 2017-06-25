@@ -228,8 +228,6 @@ IF(APPLE)
 
     configure_file( ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/Info.plist.in
                     ${CMAKE_BINARY_DIR}/Info.plist )
-    configure_file( ${CMAKE_SOURCE_DIR}/build_files/platforms/macosx/create-dmg.sh.in
-                    ${CMAKE_BINARY_DIR}/create-dmg.sh )
 
     # icon files to copy in the bundle
     SET(OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/program-icons/luminance.icns")
@@ -286,7 +284,7 @@ ELSEIF(UNIX)
 
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/program-icons/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
-    INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.appdata.xml DESTINATION share/appdata) #appstream 
+    INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.appdata.xml DESTINATION share/appdata) #appstream
     INSTALL(FILES
     ${CMAKE_SOURCE_DIR}/AUTHORS
     ${CMAKE_SOURCE_DIR}/README.md
