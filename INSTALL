@@ -164,19 +164,6 @@ $ cd build
 $ cmake .. -DCMAKE_PREFIX_PATH=$(echo $QT/lib/cmake/* | sed -Ee 's$ $;$g')
 $ make
 
-Copy all frameworks, dynamic libraries and cli program into the bundle:
-$ cp luminance-hdr-cli Luminance\ HDR\ 2.5.1.app/Contents/MacOS/
-$ $QT/bin/macdeployqt  Luminance\ HDR\ 2.5.1.app/ -executable=Luminance\ HDR\ 2.5.1.app/Contents/MacOS/luminance-hdr-cli -no-strip -always-overwrite
-
-Caution:  This may produce the following warnings (which you may ignore) such as:
-WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store compliant.
-WARNING: Plugin "libqsqlpsql.dylib" uses private API and is not Mac App store compliant.
-ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
-ERROR: no file at "/usr/local/lib/libpq.5.dylib"
-
-If you wish to make a DMG (optional)
-$ hdiutil create -format UDBZ -megabytes 300 -verbose -srcfolder Luminance\ HDR\ 2.5.1.app Luminance\ HDR\ 2.5.1.dmg
-
 Caution 1:
 If you crash on start up with a message about libz.1.2.8.dylib, modify the executable as follows:
 $ install_name_tool -change @loader_path/libz.1.2.8.dylib @loader_path/libz.1.dylib Luminance\ HDR\ 2.5.1.app/Contents/MacOS/Luminance\ HDR\ 2.5.1
@@ -185,6 +172,25 @@ Caution 2:
 If you built libboost from source, you may encounter errors from macdeployqt about missing libraries.
 Copy the boost libraries to /usr/lib
 $ sudo cp /usr/local/*boost*.dylib /usr/lib
+
+Copy luminance-hdr-cli into bundle
+$ cp luminance-hdr-cli Luminance\ HDR\ 2.5.1.app/Contents/MacOS/
+
+Copy Qt frameworks and dynamic libraries into the bundle:
+$ $QT/bin/macdeployqt  Luminance\ HDR\ 2.5.1.app/ -executable=Luminance\ HDR\ 2.5.1.app/Contents/MacOS/luminance-hdr-cli -no-strip -always-overwrite
+
+Caution:  This may produce the following warnings (which you may ignore) such as:
+WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store compliant.
+WARNING: Plugin "libqsqlpsql.dylib" uses private API and is not Mac App store compliant.
+ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
+ERROR: no file at "/usr/local/lib/libpq.5.dylib"
+
+# Create the application /Applications/Luminance\ HDR\ 2.5.1.app
+$ make install
+
+If you wish to make a DMG (optional)
+$ hdiutil create -format UDBZ -megabytes 300 -verbose -srcfolder /Applications/Luminance\ HDR\ 2.5.1.app Luminance\ HDR\ 2.5.1.dmg
+
 
 If you wish to build with an earlier version of the MacOS-X Platform SDK (eg 10.9), use the following:
 
