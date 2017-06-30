@@ -5,7 +5,7 @@ Copyright (C)  	2006-2010, Giuseppe Rota <grota@users.sourceforge.net>
                            Franco Comida <fcomida@users.sourceforge.net>
                            Daniel Kaneider <danielkaneider@users.sourceforge.net>
 
-Version:       2017-06-25
+Version:       2017-06-30
 
 Webpage:       http://qtpfsgui.sourceforge.net
 GitHub:        http://github.com/LuminanceHDR/LuminanceHDR
@@ -184,6 +184,9 @@ WARNING: Plugin "libqsqlodbc.dylib" uses private API and is not Mac App store co
 WARNING: Plugin "libqsqlpsql.dylib" uses private API and is not Mac App store compliant.
 ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
 ERROR: no file at "/usr/local/lib/libpq.5.dylib"
+
+Copy luminance-hdr-cli from bundle
+$ cp Luminance\ HDR\ 2.5.1.app/Contents/MacOS/luminance-hdr-cli .
 
 # Create the application /Applications/Luminance\ HDR\ 2.5.1.app
 $ make install
