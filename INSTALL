@@ -187,7 +187,7 @@ ERROR: no file at "/opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib"
 ERROR: no file at "/usr/local/lib/libpq.5.dylib"
 
 If you wish to make a DMG (optional)
-$ hdiutil create -format UDBZ -megabytes 300 -verbose -srcfolder Luminance\ HDR\ 2.5.1.app Luminance\ HDR\ 2.5.1.dmg
+$ hdiutil create -ov -srcfolder Luminance\ HDR\ 2.5.1.app Luminance\ HDR\ 2.5.1.dmg
 
 If you wish to build with an earlier version of the MacOS-X Platform SDK (eg 10.9), use the following:
 
