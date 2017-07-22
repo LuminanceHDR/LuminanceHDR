@@ -38,6 +38,8 @@
 #include <vector>
 #include <boost/numeric/conversion/bounds.hpp>
 #include <boost/limits.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
+
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -156,7 +158,7 @@ void DebevecOperator::computeFusion(ResponseCurve& response, WeightFunction& wei
     float Max = std::max(cmax[0], std::max(cmax[1], cmax[2]));
     #pragma omp parallel for
     for(int c = 0; c < channels; c++) {
-        replace_if(resultCh[c]->begin(), resultCh[c]->end(), [](float f){ return !isnormal(f); }, Max);
+        replace_if(resultCh[c]->begin(), resultCh[c]->end(), std::not1(std::ref(boost::math::isnormal<float>)), Max);
     }
 
 #ifdef TIMER_PROFILING
