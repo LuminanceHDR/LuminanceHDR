@@ -1,5 +1,6 @@
 # Luminance HDR
 ===============
+
 Copyright (C) 2010-2017
 
  - Davide Anastasia <davideanastasia@users.sourceforge.net>

@@ -31,8 +31,8 @@
 
 #include "Core/TonemappingOptions.h"
 #include "PreviewPanel/PreviewLabel.h"
-#include "TonemappingSettings.h"
-#include "ui_TonemappingSettings.h"
+#include "TonemappingPanel/TonemappingSettings.h"
+#include "TonemappingPanel/ui_TonemappingSettings.h"
 
 namespace // anoymous namespace
 {

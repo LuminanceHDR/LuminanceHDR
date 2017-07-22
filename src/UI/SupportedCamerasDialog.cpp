@@ -22,8 +22,8 @@
  */
 
 #include <boost/foreach.hpp>
-#include "SupportedCamerasDialog.h"
-#include "ui_SupportedCamerasDialog.h"
+#include "UI/SupportedCamerasDialog.h"
+#include "UI/ui_SupportedCamerasDialog.h"
 #include "Common/GitSHA1.h"
 #include "Common/config.h"
 

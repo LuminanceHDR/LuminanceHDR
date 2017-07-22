@@ -34,7 +34,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "hdrhtml-path.hxx"
+#include "HdrHTML/hdrhtml-path.hxx"
 #include "Libpfs/frame.h"
 #include "Libpfs/exception.h"
 #include "Libpfs/colorspace/colorspace.h"

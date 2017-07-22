@@ -22,8 +22,8 @@
  *
  */
 
-#include "ThresholdWidget.h"
-#include "ui_ThresholdWidget.h"
+#include "TonemappingPanel/ThresholdWidget.h"
+#include "TonemappingPanel/ui_ThresholdWidget.h"
 
 ThresholdWidget::ThresholdWidget(QWidget *parent, Qt::WindowFlags flags):
     QFrame(parent, flags),

@@ -33,7 +33,7 @@
 #include <QFileDialog>
 #include <QDebug>
 
-#include "ui_EditingTools.h"
+#include "HdrWizard/ui_EditingTools.h"
 #include "Common/config.h"
 #include "UI/GammaAndLevels.h"
 #include "Viewers/PanIconWidget.h"

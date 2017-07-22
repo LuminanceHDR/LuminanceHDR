@@ -24,7 +24,7 @@
 
 #include "Common/global.h"
 #include "MainWindow/DnDOption.h"
-#include "ui_DnDOption.h"
+#include "MainWindow/ui_DnDOption.h"
 
 DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files, bool areAllHDRs, bool areAllLDRs):
     QDialog(p),

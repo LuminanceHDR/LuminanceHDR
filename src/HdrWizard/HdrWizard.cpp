@@ -22,7 +22,7 @@
  */
 
 #include "HdrWizard.h"
-#include "ui_HdrWizard.h"
+#include "HdrWizard/ui_HdrWizard.h"
 
 #include <cmath>
 #include <boost/bind.hpp>

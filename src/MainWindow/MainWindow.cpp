@@ -53,7 +53,7 @@
 
 #include <boost/bind.hpp>
 
-#include "ui_MainWindow.h"
+#include "MainWindow/ui_MainWindow.h"
 
 #include "MainWindow/DnDOption.h"
 #include "MainWindow/UpdateChecker.h"

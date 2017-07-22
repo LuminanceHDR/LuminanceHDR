@@ -46,9 +46,9 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 
-#include "helpbrowser.h"
-#include "ui_HelpBrowser.h"
-#include "ui_HelpSideBar.h"
+#include "HelpBrowser/helpbrowser.h"
+#include "HelpBrowser/ui_HelpBrowser.h"
+#include "HelpBrowser/ui_HelpSideBar.h"
 
 #include <QDebug>
 #include <QAction>

@@ -24,7 +24,7 @@
 */
 
 #include "BatchHDR/BatchHDRDialog.h"
-#include "ui_BatchHDRDialog.h"
+#include "BatchHDR/ui_BatchHDRDialog.h"
 
 #include <QDebug>
 #include <QFileDialog>

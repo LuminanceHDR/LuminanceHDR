@@ -42,7 +42,7 @@
 
 
 // UI
-#include "ui_PreferencesDialog.h"
+#include "Preferences/ui_PreferencesDialog.h"
 
 #define KEY_USER_QUAL_TOOLBUTTON "preference_dialog/user_qual_toolButton"
 #define KEY_MED_PASSES_TOOLBUTTON "preference_dialog/med_passes_toolButton"

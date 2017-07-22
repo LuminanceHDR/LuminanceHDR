@@ -42,7 +42,7 @@
 #if defined (WIN32) || defined (__APPLE__)
 #include <QCoreApplication>
 #endif
-#include "hdrhtml-path.hxx"
+#include "HdrHTML/hdrhtml-path.hxx"
 
 #include <QImage>
 #include <QString>

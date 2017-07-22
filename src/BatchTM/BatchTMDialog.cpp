@@ -40,7 +40,7 @@
 #include <QSqlQuery>
 
 #include "BatchTM/BatchTMDialog.h"
-#include "ui_BatchTMDialog.h"
+#include "BatchTM/ui_BatchTMDialog.h"
 
 #include "Common/config.h"
 #include "Common/SavedParametersDialog.h"

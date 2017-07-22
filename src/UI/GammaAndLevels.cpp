@@ -30,7 +30,7 @@
 #include <cassert>
 
 #include "UI/GammaAndLevels.h"
-#include "ui_GammaAndLevels.h"
+#include "UI/ui_GammaAndLevels.h"
 
 namespace
 {

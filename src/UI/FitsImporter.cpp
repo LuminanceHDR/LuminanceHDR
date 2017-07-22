@@ -36,8 +36,8 @@
 
 #include <boost/bind.hpp>
 
-#include "FitsImporter.h"
-#include "ui_FitsImporter.h"
+#include "UI/FitsImporter.h"
+#include "UI/ui_FitsImporter.h"
 
 #include "Common/CommonFunctions.h"
 #include "HdrCreation/mtb_alignment.h"

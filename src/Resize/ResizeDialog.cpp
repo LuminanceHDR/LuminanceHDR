@@ -21,8 +21,8 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include "ResizeDialog.h"
-#include "ui_ResizeDialog.h"
+#include "Resize/ResizeDialog.h"
+#include "Resize/ui_ResizeDialog.h"
 
 #include "Libpfs/frame.h"
 #include "Libpfs/manip/resize.h"

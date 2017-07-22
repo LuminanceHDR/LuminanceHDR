@@ -28,7 +28,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 
-#include "ui_ExportToHtmlDialog.h"
+#include "UI/ui_ExportToHtmlDialog.h"
 #include "HdrHTML/pfsouthdrhtml.h"
 #include "Libpfs/frame.h"
 #include "Libpfs/exception.h"

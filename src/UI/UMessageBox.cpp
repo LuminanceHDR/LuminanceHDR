@@ -31,7 +31,7 @@
 #include "Common/GitSHA1.h"
 #include "Common/config.h"
 #include "Common/archs.h"
-#include "ui_about.h"
+#include "UI/ui_about.h"
 
 namespace
 {
