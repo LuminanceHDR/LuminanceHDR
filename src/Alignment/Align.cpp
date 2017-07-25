@@ -60,9 +60,9 @@ void Align::align_with_ais(bool ais_crop_flag)
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
     m_ais->setEnvironment(env);
 #endif
-    connect(m_ais.data(), SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
-    connect(m_ais.data(), SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
-    connect(m_ais.data(), SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(m_ais.data(), static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &Align::ais_finished);
+    connect(m_ais.data(), &QProcess::errorOccurred, this, &Align::ais_failed_slot);
+    connect(m_ais.data(), &QIODevice::readyRead, this, &Align::readData);
 
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
 
@@ -138,7 +138,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
 
         // parallel load of the data...
         // Start the computation.
-        connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()), Qt::DirectConnection);
+        connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &Align::alignedFilesLoaded, Qt::DirectConnection);
         m_futureWatcher.setFuture( QtConcurrent::map(m_data.begin(), m_data.end(), LoadFile()) );
     }
     else
@@ -151,7 +151,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
 
 void Align::alignedFilesLoaded()
 {
-    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(alignedFilesLoaded()));
+    disconnect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &Align::alignedFilesLoaded);
     for(const auto it :  m_data) {
         if (it.filename().isEmpty())
             continue;

@@ -60,19 +60,19 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p):
 
 
     m_Ui->Log_Widget->setWordWrap(true);
-    connect(m_Ui->moveup_left_button,    SIGNAL(clicked()),this,SLOT(moveup_left()));
-    connect(m_Ui->moveup_right_button,    SIGNAL(clicked()),this,SLOT(moveup_right()));
-    connect(m_Ui->movedown_left_button,    SIGNAL(clicked()),this,SLOT(movedown_left()));
-    connect(m_Ui->movedown_right_button,    SIGNAL(clicked()),this,SLOT(movedown_right()));
-    connect(m_Ui->removeleft,        SIGNAL(clicked()),this,SLOT(remove_left()));
-    connect(m_Ui->removeright,        SIGNAL(clicked()),this,SLOT(remove_right()));
-    connect(m_Ui->addleft,        SIGNAL(clicked()),this,SLOT(append_left()));
-    connect(m_Ui->addright,        SIGNAL(clicked()),this,SLOT(append_right()));
-    connect(m_Ui->TransplantButton,    SIGNAL(clicked()),this,SLOT(transplant_requested()));
+    connect(m_Ui->moveup_left_button,    &QAbstractButton::clicked,this,&TransplantExifDialog::moveup_left);
+    connect(m_Ui->moveup_right_button,    &QAbstractButton::clicked,this,&TransplantExifDialog::moveup_right);
+    connect(m_Ui->movedown_left_button,    &QAbstractButton::clicked,this,&TransplantExifDialog::movedown_left);
+    connect(m_Ui->movedown_right_button,    &QAbstractButton::clicked,this,&TransplantExifDialog::movedown_right);
+    connect(m_Ui->removeleft,        &QAbstractButton::clicked,this,&TransplantExifDialog::remove_left);
+    connect(m_Ui->removeright,        &QAbstractButton::clicked,this,&TransplantExifDialog::remove_right);
+    connect(m_Ui->addleft,        &QAbstractButton::clicked,this,&TransplantExifDialog::append_left);
+    connect(m_Ui->addright,        &QAbstractButton::clicked,this,&TransplantExifDialog::append_right);
+    connect(m_Ui->TransplantButton,    &QAbstractButton::clicked,this,&TransplantExifDialog::transplant_requested);
  /*    connect(HelpButton,        SIGNAL(clicked()),this,SLOT(help_requested())); */
 
     connect(m_Ui->filterComboBox, SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
-    connect(m_Ui->filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
+    connect(m_Ui->filterLineEdit, &QLineEdit::textChanged, this, &TransplantExifDialog::filterChanged);
     full_Log_Model = new QStringListModel();
     log_filter = new QSortFilterProxyModel(this);
     log_filter->setDynamicSortFilter(true);

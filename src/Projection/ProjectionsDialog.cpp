@@ -63,17 +63,17 @@ ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
     transforminfo->srcProjection=projectionList.at(0);
     transforminfo->dstProjection=projectionList.at(0);
 
-    connect(m_Ui->okButton,SIGNAL(clicked()),this,SLOT(okClicked()));
+    connect(m_Ui->okButton,&QAbstractButton::clicked,this,&ProjectionsDialog::okClicked);
     connect(m_Ui->sourceProjection,SIGNAL(activated(int)),this,SLOT(srcProjActivated(int)));
     connect(m_Ui->destProjection,SIGNAL(activated(int)),this,SLOT(dstProjActivated(int)));
-    connect(m_Ui->bilinearCheckBox,SIGNAL(toggled(bool)),this,SLOT(bilinearToggled(bool)));
+    connect(m_Ui->bilinearCheckBox,&QAbstractButton::toggled,this,&ProjectionsDialog::bilinearToggled);
     connect(m_Ui->oversampleSpinBox,SIGNAL(valueChanged(int)),this,SLOT(oversampleChanged(int)));
     connect(m_Ui->XrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(XRotChanged(int)));
     connect(m_Ui->YrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(YRotChanged(int)));
     connect(m_Ui->ZrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(ZRotChanged(int)));
     connect(m_Ui->anglesSpinBox,SIGNAL(valueChanged(int)),this,SLOT(anglesAngularDestinationProj(int)));
 
-    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(projectionFinished()), Qt::DirectConnection);
+    connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &ProjectionsDialog::projectionFinished, Qt::DirectConnection);
 }
 
 ProjectionsDialog::~ProjectionsDialog() {

@@ -24,7 +24,7 @@
 */
 
 #include "BatchHDR/BatchHDRDialog.h"
-#include "ui_BatchHDRDialog.h"
+#include "BatchHDR/ui_BatchHDRDialog.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -70,33 +70,34 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
     m_hdrCreationManager = new HdrCreationManager;
     m_IO_Worker = new IOWorker;
 
-    connect(m_Ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
+    connect(m_Ui->horizontalSlider, &QAbstractSlider::valueChanged, this, &BatchHDRDialog::num_bracketed_changed);
     connect(m_Ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
 
-    connect(m_Ui->MTBRadioButton, SIGNAL(clicked()), this, SLOT(align_selection_clicked()));
-    connect(m_Ui->aisRadioButton, SIGNAL(clicked()), this, SLOT(align_selection_clicked()));
-    connect(m_Ui->threshold_horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
+    connect(m_Ui->MTBRadioButton, &QAbstractButton::clicked, this, &BatchHDRDialog::align_selection_clicked);
+    connect(m_Ui->aisRadioButton, &QAbstractButton::clicked, this, &BatchHDRDialog::align_selection_clicked);
+    connect(m_Ui->threshold_horizontalSlider, &QAbstractSlider::valueChanged, this, &BatchHDRDialog::updateThresholdSlider);
     connect(m_Ui->threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateThresholdSpinBox(double)));
 
     //connect(m_hdrCreationManager, SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(align(QStringList)));
-    connect(m_hdrCreationManager, SIGNAL(finishedLoadingFiles()), this, SLOT(align()));
-    connect(m_hdrCreationManager, SIGNAL(finishedAligning(int)), this, SLOT(create_hdr(int)));
-    connect(m_hdrCreationManager, SIGNAL(errorWhileLoading(QString)), this, SLOT(error_while_loading(QString)));
-    connect(m_hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
-    connect(m_hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
-    connect(m_hdrCreationManager, SIGNAL(processed()), this, SLOT(processed()));
+    connect(m_hdrCreationManager, &HdrCreationManager::finishedLoadingFiles, this, &BatchHDRDialog::align);
+    connect(m_hdrCreationManager, &HdrCreationManager::finishedAligning, this, &BatchHDRDialog::create_hdr);
+    connect(m_hdrCreationManager, &HdrCreationManager::errorWhileLoading, this, &BatchHDRDialog::error_while_loading);
+    //connect(m_hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
+    connect(m_hdrCreationManager, &HdrCreationManager::aisDataReady, this, &BatchHDRDialog::writeAisData);
+    connect(m_hdrCreationManager, &HdrCreationManager::ais_failed, this, &BatchHDRDialog::ais_failed);
+    connect(m_hdrCreationManager, &HdrCreationManager::processed, this, &BatchHDRDialog::processed);
 
-    connect(m_hdrCreationManager, SIGNAL(progressStarted()), m_Ui->progressBar, SLOT(show()));
-    connect(m_hdrCreationManager, SIGNAL(progressStarted()), m_Ui->progressBar_2, SLOT(show()));
-    connect(m_hdrCreationManager, SIGNAL(progressFinished()), m_Ui->progressBar_2, SLOT(reset()));
-    connect(m_hdrCreationManager, SIGNAL(progressFinished()), m_Ui->progressBar_2, SLOT(hide()));
-    connect(m_hdrCreationManager, SIGNAL(progressRangeChanged(int,int)), m_Ui->progressBar_2, SLOT(setRange(int,int)));
-    connect(m_hdrCreationManager, SIGNAL(progressValueChanged(int)), m_Ui->progressBar_2, SLOT(setValue(int)));
-    connect(m_hdrCreationManager, SIGNAL(loadFilesAborted()), this, SLOT(loadFilesAborted()));
+    connect(m_hdrCreationManager, &HdrCreationManager::progressStarted, m_Ui->progressBar, &QWidget::show);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressStarted, m_Ui->progressBar_2, &QWidget::show);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressFinished, m_Ui->progressBar_2, &QProgressBar::reset);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressFinished, m_Ui->progressBar_2, &QWidget::hide);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressRangeChanged, m_Ui->progressBar_2, &QProgressBar::setRange);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressValueChanged, m_Ui->progressBar_2, &QProgressBar::setValue);
+    connect(m_hdrCreationManager, &HdrCreationManager::loadFilesAborted, this, &BatchHDRDialog::loadFilesAborted);
     //connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar_2, SLOT(setRange(int,int)));
-    connect(this, SIGNAL(setValue(int)), m_Ui->progressBar_2, SLOT(setValue(int)));
+    connect(this, &BatchHDRDialog::setValue, m_Ui->progressBar_2, &QProgressBar::setValue);
 
-    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
+    connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &BatchHDRDialog::createHdrFinished, Qt::DirectConnection);
 
     m_formatHelper.initConnection(m_Ui->formatComboBox, m_Ui->formatSettingsButton, true);
 
@@ -432,7 +433,7 @@ void BatchHDRDialog::createHdrFinished()
     batch_hdr();
 }
 
-void BatchHDRDialog::error_while_loading(QString message)
+void BatchHDRDialog::error_while_loading(const QString &message)
 {
     qDebug() << message;
     m_Ui->textEdit->append(tr("Error: ") + message);
@@ -442,7 +443,7 @@ void BatchHDRDialog::error_while_loading(QString message)
     try_to_continue();
 }
 
-void BatchHDRDialog::writeAisData(QByteArray data)
+void BatchHDRDialog::writeAisData(QByteArray &data)
 {
     qDebug() << data;
     if (data.contains("[1A"))

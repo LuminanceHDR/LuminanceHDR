@@ -64,8 +64,8 @@ protected slots:
     void batch_hdr();
     void align();
     void create_hdr(int);
-    void error_while_loading(QString);
-    void writeAisData(QByteArray);
+    void error_while_loading(const QString&);
+    void writeAisData(QByteArray&);
     void check_start_button();
     void on_cancelButton_clicked();
     void align_selection_clicked();

@@ -60,8 +60,8 @@ Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox,
         s->setTracking(false);
 
     if (s) {
-        connect( s, SIGNAL(sliderMoved(int)),  this, SLOT(sliderMoved(int)));
-        connect( s, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
+        connect( s, &QAbstractSlider::sliderMoved,  this, &Gang::sliderMoved);
+        connect( s, &QAbstractSlider::valueChanged, this, &Gang::sliderValueChanged);
     }
 
     if (dsb)
@@ -69,16 +69,16 @@ Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox,
         connect( dsb, SIGNAL(valueChanged(double)), this, SLOT(spinboxValueChanged(double)));
 
     if (cbx1)
-        connect( cbx1, SIGNAL(toggled(bool)), this, SLOT(checkBox1Checked(bool)));
+        connect( cbx1, &QAbstractButton::toggled, this, &Gang::checkBox1Checked);
 
     if (cbx2)
-        connect( cbx2, SIGNAL(toggled(bool)), this, SLOT(checkBox2Checked(bool)));
+        connect( cbx2, &QAbstractButton::toggled, this, &Gang::checkBox2Checked);
 
     if (rb1)
-        connect( rb1, SIGNAL(clicked(bool)), this, SLOT(radioButton1Checked(bool)));
+        connect( rb1, &QAbstractButton::clicked, this, &Gang::radioButton1Checked);
 
     if (rb2)
-        connect( rb2, SIGNAL(clicked(bool)), this, SLOT(radioButton2Checked(bool)));
+        connect( rb2, &QAbstractButton::clicked, this, &Gang::radioButton2Checked);
 
     setDefault();
 }

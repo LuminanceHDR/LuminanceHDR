@@ -86,7 +86,7 @@ QtWaitingSpinner::QtWaitingSpinner(Qt::WindowModality modality, QWidget *parent,
 
 void QtWaitingSpinner::initialise() {
   m_timer = new QTimer(this);
-  connect(m_timer, SIGNAL(timeout()), this, SLOT(rotate()));
+  connect(m_timer, &QTimer::timeout, this, &QtWaitingSpinner::rotate);
   updateSize();
   updateTimer();
   this->hide();

@@ -50,8 +50,8 @@ TMOProgressIndicator::TMOProgressIndicator(QWidget *parent):
     m_hbl->addWidget(m_progressBar);
     m_hbl->addWidget(m_abortButton);
 
-    connect(m_abortButton, SIGNAL(clicked()), this, SIGNAL(terminate()));
-    connect(m_abortButton, SIGNAL(clicked()), this, SLOT(terminated()));
+    connect(m_abortButton, &QAbstractButton::clicked, this, &TMOProgressIndicator::terminate);
+    connect(m_abortButton, &QAbstractButton::clicked, this, &TMOProgressIndicator::terminated);
 
     //Memory management
     //connect(this, SIGNAL(destroyed()), )

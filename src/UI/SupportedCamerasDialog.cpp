@@ -54,7 +54,7 @@ SupportedCamerasDialog::SupportedCamerasDialog(QWidget* parent)
         m_items.append(new QListWidgetItem(*item));
     }
 
-    connect(m_Ui->lineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(search(const QString &)));
+    connect(m_Ui->lineEdit, &QLineEdit::textEdited, this, &SupportedCamerasDialog::search);
 }
 
 SupportedCamerasDialog::~SupportedCamerasDialog()

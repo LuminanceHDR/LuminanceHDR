@@ -90,20 +90,20 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     mView->viewport()->installEventFilter(this);
     mView->viewport()->setMouseTracking(false);
 
-    connect(mView, SIGNAL(zoomIn()), this, SLOT(zoomIn()));
-    connect(mView, SIGNAL(zoomOut()), this, SLOT(zoomOut()));
-    connect(mView, SIGNAL(viewAreaChangedSize()), this, SLOT(updateView()));
+    connect(mView, &IGraphicsView::zoomIn, this, &PreviewWidget::zoomIn);
+    connect(mView, &IGraphicsView::zoomOut, this, &PreviewWidget::zoomOut);
+    connect(mView, &IGraphicsView::viewAreaChangedSize, this, &PreviewWidget::updateView);
     mView->horizontalScrollBar()->setTracking(true);
     mView->verticalScrollBar()->setTracking(true);
-    connect(mView->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
-    connect(mView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
+    connect(mView->horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &PreviewWidget::scrollBarChanged);
+    connect(mView->verticalScrollBar(), &QAbstractSlider::valueChanged, this, &PreviewWidget::scrollBarChanged);
 
     mCornerButton = new QToolButton(this);
     mCornerButton->setIcon(QIcon::fromTheme("move", QIcon(":/program-icons/move")));
 
     mView->setCornerWidget(mCornerButton);
 
-    connect(mCornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+    connect(mCornerButton, &QAbstractButton::pressed, this, &PreviewWidget::slotCornerButtonPressed);
 
     mVBL->addWidget(mView);
     mView->show();
@@ -113,7 +113,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     renderPreviewImage(blendmode, m_rect);
     mPixmap->setPixmap(QPixmap::fromImage(*m_previewImage));
     fitToWindow();
-    connect(mPixmap, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+    connect(mPixmap, &IGraphicsPixmapItem::selectionReady, this, &PreviewWidget::selectionReady);
 
     mAgPixmap = new IGraphicsPixmapItem(mPixmap);
     mAgPixmap->setZValue(1);
@@ -686,8 +686,8 @@ void PreviewWidget::slotCornerButtonPressed()
     QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
     mPanIconWidget->setRegionSelection(r);
     mPanIconWidget->setMouseFocus();
-    connect(mPanIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
-    connect(mPanIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
+    connect(mPanIconWidget, &PanIconWidget::selectionMoved, this, &PreviewWidget::slotPanIconSelectionMoved);
+    connect(mPanIconWidget, &PanIconWidget::finished, this, &PreviewWidget::slotPanIconHidden);
     QPoint g = mView->mapToGlobal(mView->viewport()->pos());
     g.setX(g.x()+ mView->viewport()->size().width());
     g.setY(g.y()+ mView->viewport()->size().height());

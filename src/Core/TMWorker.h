@@ -75,7 +75,7 @@ Q_SIGNALS:
     void tonemapSetMaximum(int);
     void tonemapSetMinimum(int);
     void tonemapSetValue(int);
-    void tonemapRequestTermination();
+    void tonemapRequestTermination(bool);
 
 private:
     ProgressHelper* m_Callback;

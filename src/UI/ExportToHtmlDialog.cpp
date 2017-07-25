@@ -46,11 +46,11 @@ ExportToHtmlDialog::ExportToHtmlDialog(QWidget* parent, pfs::Frame *frame)
 {
     m_Ui->setupUi(this);
 
-    connect(m_Ui->ExportButton, SIGNAL(clicked()), this, SLOT(onExportButtonClicked()));
-    connect(m_Ui->OutputFolderButton, SIGNAL(clicked()), this, SLOT(onOutputFolderButtonClicked()));
-    connect(m_Ui->lineEditPageName, SIGNAL(editingFinished()), this, SLOT(onEditPageNameFinished()));
-    connect(m_Ui->lineEditOutputFolder, SIGNAL(editingFinished()), this, SLOT(onEditOutputFolderFinished()));
-    connect(m_Ui->lineEditImagesFolder, SIGNAL(editingFinished()), this, SLOT(onEditImagesFolderFinished()));
+    connect(m_Ui->ExportButton, &QAbstractButton::clicked, this, &ExportToHtmlDialog::onExportButtonClicked);
+    connect(m_Ui->OutputFolderButton, &QAbstractButton::clicked, this, &ExportToHtmlDialog::onOutputFolderButtonClicked);
+    connect(m_Ui->lineEditPageName, &QLineEdit::editingFinished, this, &ExportToHtmlDialog::onEditPageNameFinished);
+    connect(m_Ui->lineEditOutputFolder, &QLineEdit::editingFinished, this, &ExportToHtmlDialog::onEditOutputFolderFinished);
+    connect(m_Ui->lineEditImagesFolder, &QLineEdit::editingFinished, this, &ExportToHtmlDialog::onEditImagesFolderFinished);
 }
 
 void ExportToHtmlDialog::onOutputFolderButtonClicked()

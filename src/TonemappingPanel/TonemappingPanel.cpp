@@ -67,7 +67,7 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
 {
     m_Ui->setupUi(this);
 
-    connect(m_thd.data(), SIGNAL(ready()), this, SLOT(thresholdReady()));
+    connect(m_thd.data(), &ThresholdWidget::ready, this, &TonemappingPanel::thresholdReady);
 
     if ( !QIcon::hasThemeIcon("edit-download") )
         m_Ui->saveButton->setIcon(QIcon(":/program-icons/edit-download"));
@@ -79,8 +79,8 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     // mantiuk06
     contrastfactorGang = new Gang(m_Ui->contrastFactorSlider,m_Ui->contrastFactordsb,m_Ui->contrastEqualizCheckBox,NULL,NULL, NULL, 0.01f /*0.001f*/, 1.0f, MANTIUK06_CONTRAST_FACTOR);
 
-    connect(contrastfactorGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(contrastfactorGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(contrastfactorGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(contrastfactorGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     saturationfactorGang = new Gang(m_Ui->saturationFactorSlider, m_Ui->saturationFactordsb, NULL, NULL, NULL, NULL, 0.0f, 2.0f, MANTIUK06_SATURATION_FACTOR);
     detailfactorGang = new Gang(m_Ui->detailFactorSlider, m_Ui->detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, MANTIUK06_DETAIL_FACTOR);
@@ -88,8 +88,8 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     // mantiuk08
     colorSaturationGang = new Gang(m_Ui->colorSaturationSlider,m_Ui->colorSaturationDSB, NULL, NULL, NULL, NULL, 0.f, 2.f, MANTIUK08_COLOR_SATURATION);
 
-    connect(colorSaturationGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(colorSaturationGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(colorSaturationGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(colorSaturationGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     contrastEnhancementGang = new Gang(m_Ui->contrastEnhancementSlider, m_Ui->contrastEnhancementDSB, NULL, NULL, NULL, NULL, .01f, 10.f, MANTIUK08_CONTRAST_ENHANCEMENT);
     luminanceLevelGang = new Gang(m_Ui->luminanceLevelSlider, m_Ui->luminanceLevelDSB, m_Ui->luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f, MANTIUK08_LUMINANCE_LEVEL);
@@ -97,8 +97,8 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     // fattal02
     alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL,NULL,NULL,NULL, 0.05, 2.f, FATTAL02_ALPHA, true);
 
-    connect(alphaGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(alphaGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(alphaGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(alphaGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     betaGang = new Gang(m_Ui->betaSlider, m_Ui->betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, FATTAL02_BETA);
     saturation2Gang = new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.5f, FATTAL02_COLOR);
@@ -109,16 +109,16 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     // ferradans11
     rhoGang = new Gang(m_Ui->rhoSlider, m_Ui->rhodsb, NULL,NULL,NULL,NULL, -10.f, 10.f, FERRADANS11_RHO);
 
-    connect(rhoGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(rhoGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(rhoGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(rhoGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     inv_alphaGang = new Gang(m_Ui->inv_alphaSlider, m_Ui->inv_alphadsb, NULL,NULL,NULL,NULL, 0.1f, 10.f, FERRADANS11_INV_ALPHA);
 
     // ashikhmin02
     contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
 
-    connect(contrastGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(contrastGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(contrastGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(contrastGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     simpleGang = new Gang(NULL, NULL, m_Ui->simpleCheckBox);
     eq2Gang = new Gang(NULL, NULL,NULL, NULL, m_Ui->eq2RadioButton, m_Ui->eq4RadioButton);
@@ -126,14 +126,14 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     // drago03
     biasGang = new Gang(m_Ui->biasSlider, m_Ui->biasdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, DRAGO03_BIAS);
 
-    connect(biasGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(biasGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(biasGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(biasGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     // durand02
     spatialGang = new Gang(m_Ui->spatialSlider, m_Ui->spatialdsb, NULL, NULL, NULL, NULL, 0.f, 100.f, DURAND02_SPATIAL);
 
-    connect(spatialGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(spatialGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(spatialGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(spatialGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     rangeGang = new Gang(m_Ui->rangeSlider, m_Ui->rangedsb,NULL,NULL,NULL,NULL, 0.01f, 10.f, DURAND02_RANGE);
     baseGang = new Gang(m_Ui->baseSlider, m_Ui->basedsb,NULL,NULL,NULL,NULL, 0.f, 10.f, DURAND02_BASE);
@@ -141,8 +141,8 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     // pattanaik00
     multiplierGang = new Gang(m_Ui->multiplierSlider, m_Ui->multiplierdsb,NULL,NULL,NULL,NULL, 1e-3,1000.f, PATTANAIK00_MULTIPLIER, true);
 
-    connect(multiplierGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(multiplierGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(multiplierGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(multiplierGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     coneGang = new Gang(m_Ui->coneSlider, m_Ui->conedsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_CONE);
     rodGang = new Gang(m_Ui->rodSlider, m_Ui->roddsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_ROD);
@@ -152,8 +152,8 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     // reinhard02
     keyGang = new Gang(m_Ui->keySlider, m_Ui->keydsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
 
-    connect(keyGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(keyGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(keyGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(keyGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     phiGang = new Gang(m_Ui->phiSlider, m_Ui->phidsb, NULL,NULL,NULL,NULL, 0.f, 100.f, REINHARD02_PHI);
     range2Gang = new Gang(m_Ui->range2Slider, m_Ui->range2dsb,NULL,NULL,NULL,NULL, 1.f, 32.f, REINHARD02_RANGE);
@@ -164,8 +164,8 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     // reinhard05
     brightnessGang = new Gang(m_Ui->brightnessSlider, m_Ui->brightnessdsb,NULL,NULL,NULL,NULL, -20.f, 20.f, REINHARD05_BRIGHTNESS);
 
-    connect(brightnessGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
-    connect(brightnessGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
+    connect(brightnessGang, &Gang::enableUndo, m_Ui->undoButton, &QWidget::setEnabled);
+    connect(brightnessGang, &Gang::enableRedo, m_Ui->redoButton, &QWidget::setEnabled);
 
     chromaticGang = new Gang(m_Ui->chromaticAdaptSlider, m_Ui->chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_CHROMATIC_ADAPTATION);
     lightGang = new Gang(m_Ui->lightAdaptSlider, m_Ui->lightAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
@@ -174,10 +174,10 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
     pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb,NULL,NULL,NULL,NULL, 0, 5, 1);
 
     //--
-    connect(m_Ui->stackedWidget_operators, SIGNAL(currentChanged(int)), this, SLOT(updateCurrentTmoOperator(int)));
+    connect(m_Ui->stackedWidget_operators, &QStackedWidget::currentChanged, this, &TonemappingPanel::updateCurrentTmoOperator);
 
-    connect(m_Ui->loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
-    connect(m_Ui->saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
+    connect(m_Ui->loadButton, &QAbstractButton::clicked, this, &TonemappingPanel::loadParameters);
+    connect(m_Ui->saveButton, &QAbstractButton::clicked, this, &TonemappingPanel::saveParameters);
 
     connect(m_Ui->autoLevelsCheckBox, SIGNAL(toggled(bool)), this, SLOT(autoLevels(bool)));
 
@@ -1868,20 +1868,20 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
         connect(m_Ui->contrastFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->saturationFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->detailFactordsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->contrastEqualizCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        connect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
         //Mantiuk08
         connect(m_Ui->colorSaturationDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->contrastEnhancementDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->luminanceLevelDSB, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->luminanceLevelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        connect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
         //Fattal
         connect(m_Ui->alphadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->betadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->saturation2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->noisedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->fftVersionCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        connect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
         //Ferradans
         connect(m_Ui->rhodsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
@@ -1901,7 +1901,7 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
         connect(m_Ui->range2dsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->lowerdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->upperdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->usescalescheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        connect(m_Ui->usescalescheckbox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
         //Reinhard05
         connect(m_Ui->brightnessdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
@@ -1910,15 +1910,15 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
 
         //Ashikhmin
         connect(m_Ui->contrastdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->simpleCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-        connect(m_Ui->eq2RadioButton, SIGNAL(toggled(bool)), this, SLOT(updatePreviewsRB(bool)));
+        connect(m_Ui->simpleCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        connect(m_Ui->eq2RadioButton, &QAbstractButton::toggled, this, &TonemappingPanel::updatePreviewsRB);
 
         //Pattanaik
         connect(m_Ui->multiplierdsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->conedsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
         connect(m_Ui->roddsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
-        connect(m_Ui->pattalocal, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-        connect(m_Ui->autoYcheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        connect(m_Ui->pattalocal, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        connect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
         //GLOBAL Pregamma
         connect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
@@ -1965,20 +1965,20 @@ void TonemappingPanel::setRealtimePreviews(bool toggled)
 
         disconnect(m_Ui->pregammadsb, SIGNAL(valueChanged(double)), this, SLOT(updatePreviews(double)));
 
-        disconnect(m_Ui->contrastEqualizCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        disconnect(m_Ui->contrastEqualizCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->luminanceLevelCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        disconnect(m_Ui->luminanceLevelCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->fftVersionCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        disconnect(m_Ui->fftVersionCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->usescalescheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        disconnect(m_Ui->usescalescheckbox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->simpleCheckBox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        disconnect(m_Ui->simpleCheckBox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->pattalocal, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
-        disconnect(m_Ui->autoYcheckbox, SIGNAL(stateChanged(int)), this, SLOT(updatePreviewsCB(int)));
+        disconnect(m_Ui->pattalocal, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
+        disconnect(m_Ui->autoYcheckbox, &QCheckBox::stateChanged, this, &TonemappingPanel::updatePreviewsCB);
 
-        disconnect(m_Ui->eq2RadioButton, SIGNAL(toggled(bool)), this, SLOT(updatePreviewsRB(bool)));
+        disconnect(m_Ui->eq2RadioButton, &QAbstractButton::toggled, this, &TonemappingPanel::updatePreviewsRB);
     }
 }
 

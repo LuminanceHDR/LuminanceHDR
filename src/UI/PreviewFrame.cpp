@@ -41,7 +41,7 @@ PreviewFrame::~PreviewFrame()
 
 void PreviewFrame::addLabel(SimplePreviewLabel* label)
 {
-    connect(label, SIGNAL(selected(int)), this, SLOT(selectLabel(int)));
+    connect(label, &SimplePreviewLabel::selected, this, &PreviewFrame::selectLabel);
     label->setFrameStyle(QFrame::Box);
     m_labels.push_back(label);
     m_flowLayout->addWidget(label);

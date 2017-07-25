@@ -40,9 +40,9 @@ UpdateChecker::UpdateChecker(QWidget *parent) //, QNetworkAccessManager* network
     if (options.checkForUpdate())
     {
         connect(this, SIGNAL(updateAvailable()), parent, SLOT(onUpdateAvailable()));
-        connect(m_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
-        connect(m_tray, SIGNAL(messageClicked()), this, SLOT(trayMessageClicked()));
-        connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayMessageClicked()));
+        connect(m_networkManager, &QNetworkAccessManager::finished, this, &UpdateChecker::requestFinished);
+        connect(m_tray, &QSystemTrayIcon::messageClicked, this, &UpdateChecker::trayMessageClicked);
+        connect(m_tray, &QSystemTrayIcon::activated, this, &UpdateChecker::trayMessageClicked);
 
         QNetworkRequest request = QNetworkRequest(QUrl(QString("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM)));
         request.setRawHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");

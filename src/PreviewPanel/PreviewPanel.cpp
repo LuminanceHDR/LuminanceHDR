@@ -162,77 +162,88 @@ PreviewPanel::PreviewPanel(QWidget *parent):
     labelMantiuk06->setToolTip("Mantiuk '06");
     labelMantiuk06->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelMantiuk06);
-    connect(labelMantiuk06, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelMantiuk06, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelMantiuk08 = new PreviewLabel(this, mantiuk08);
     labelMantiuk08->setText("Mantiuk '08");
     labelMantiuk08->setToolTip("Mantiuk '08");
     labelMantiuk08->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelMantiuk08);
-    connect(labelMantiuk08, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelMantiuk08, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelFattal = new PreviewLabel(this, fattal);
     labelFattal->setText("Fattal");
     labelFattal->setToolTip("Fattal");
     labelFattal->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelFattal);
-    connect(labelFattal, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelFattal, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelFerradans = new PreviewLabel(this, ferradans);
     labelFerradans->setText("Ferradans");
     labelFerradans->setToolTip("Ferradans");
     labelFerradans->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelFerradans);
-    connect(labelFerradans, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelFerradans, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelDrago = new PreviewLabel(this, drago);
     labelDrago->setText("Drago");
     labelDrago->setToolTip("Drago");
     labelDrago->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelDrago);
-    connect(labelDrago, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelDrago, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelDurand = new PreviewLabel(this, durand);
     labelDurand->setText("Durand");
     labelDurand->setToolTip("Durand");
     labelDurand->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelDurand);
-    connect(labelDurand, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelDurand, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelReinhard02= new PreviewLabel(this, reinhard02);
     labelReinhard02->setText("Reinhard '02");
     labelReinhard02->setToolTip("Reinhard '02");
     labelReinhard02->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelReinhard02);
-    connect(labelReinhard02, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelReinhard02, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelReinhard05 = new PreviewLabel(this, reinhard05);
     labelReinhard05->setText("Reinhard '05");
     labelReinhard05->setToolTip("Reinhard '05");
     labelReinhard05->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelReinhard05);
-    connect(labelReinhard05, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelReinhard05, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelAshikhmin = new PreviewLabel(this, ashikhmin);
     labelAshikhmin->setText("Ashikhmin");
     labelAshikhmin->setToolTip("Ashikhmin");
     labelAshikhmin->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelAshikhmin);
-    connect(labelAshikhmin, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelAshikhmin, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelPattanaik = new PreviewLabel(this, pattanaik);
     labelPattanaik->setText("Pattanaik");
     labelPattanaik->setToolTip("Pattanaik");
     labelPattanaik->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelPattanaik);
-    connect(labelPattanaik, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelPattanaik, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     PreviewLabel * labelMai = new PreviewLabel(this, mai);
     labelMai->setText("Mai");
     labelMai->setToolTip("Mai");
     labelMai->setFrameStyle(QFrame::Box);
     m_ListPreviewLabel.push_back(labelMai);
-    connect(labelMai, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
+    connect(labelMai, static_cast<void(PreviewLabel::*)(TonemappingOptions*)>(&PreviewLabel::clicked),
+            this, &PreviewPanel::tonemapPreview);
 
     FlowLayout *flowLayout = new FlowLayout;
 

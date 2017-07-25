@@ -53,7 +53,7 @@
 
 #include <boost/bind.hpp>
 
-#include "ui_MainWindow.h"
+#include "MainWindow/ui_MainWindow.h"
 
 #include "MainWindow/DnDOption.h"
 #include "MainWindow/UpdateChecker.h"
@@ -243,9 +243,9 @@ MainWindow::~MainWindow()
         sm_mainWindowMap.take(m_winId);
         int winId = sm_mainWindowMap.firstKey();
         MainWindow *p = sm_mainWindowMap[winId];
-        disconnect(sm_updateChecker.data(), SIGNAL(updateAvailable()), p, SLOT(onUpdateAvailable()));
+        disconnect(sm_updateChecker.data(), &UpdateChecker::updateAvailable, p, &MainWindow::onUpdateAvailable);
         sm_updateChecker->setParent(p);
-        connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), p, SLOT(onUpdateAvailable()));
+        connect(sm_updateChecker.data(), &UpdateChecker::updateAvailable, p, &MainWindow::onUpdateAvailable);
     }
 
     // Let's close all threads
@@ -313,7 +313,7 @@ void MainWindow::init()
         if (OsIntegration::getInstance().isRunningOnSameCpuPlatform())
         {
             sm_updateChecker.reset(new UpdateChecker(this));
-            connect(sm_updateChecker.data(), SIGNAL(updateAvailable()), this, SLOT(onUpdateAvailable()));
+            connect(sm_updateChecker.data(), &UpdateChecker::updateAvailable, this, &MainWindow::onUpdateAvailable);
 
             m_firstWindow = 2;
         }
@@ -352,8 +352,8 @@ void MainWindow::createCentralWidget()
     // create tonemapping panel
     m_tonemapPanel = new TonemappingPanel(sm_NumMainWindows, m_PreviewPanel); //(m_centralwidget_splitter);
 
-    connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), m_tonemapPanel, SLOT(setRealtimePreviews(bool)));
-    connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), luminance_options, SLOT(setRealtimePreviewsActive(bool)));
+    connect(m_Ui->actionRealtimePreviews, &QAction::toggled, m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
+    connect(m_Ui->actionRealtimePreviews, &QAction::toggled, luminance_options, &LuminanceOptions::setRealtimePreviewsActive);
     m_tonemapPanel->setRealtimePreviews(luminance_options->isRealtimePreviewsActive());
 
     m_tabwidget = new QTabWidget; //(m_centralwidget_splitter);
@@ -386,13 +386,13 @@ void MainWindow::createCentralWidget()
         showPreviewsOnTheRight();
     }
 
-    connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
-    connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
-    connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateSoftProofing(int)));
-    connect(m_tonemapPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-    connect(m_tonemapPanel, SIGNAL(startExport(TonemappingOptions*)), this, SLOT(exportImage(TonemappingOptions*)));
-    connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_tonemapPanel, SLOT(updatedHDR(pfs::Frame*)));
-    connect(this, SIGNAL(destroyed()), m_PreviewPanel, SLOT(deleteLater()));
+    connect(m_tabwidget, &QTabWidget::tabCloseRequested, this, &MainWindow::removeTab);
+    connect(m_tabwidget, &QTabWidget::currentChanged, this, &MainWindow::updateActions);
+    connect(m_tabwidget, &QTabWidget::currentChanged, this, &MainWindow::updateSoftProofing);
+    connect(m_tonemapPanel, &TonemappingPanel::startTonemapping, this, &MainWindow::tonemapImage);
+    connect(m_tonemapPanel, &TonemappingPanel::startExport, this, &MainWindow::exportImage);
+    connect(this, &MainWindow::updatedHDR, m_tonemapPanel, &TonemappingPanel::updatedHDR);
+    connect(this, &QObject::destroyed, m_PreviewPanel, &QObject::deleteLater);
 
     m_centralwidget_splitter->restoreState(luminance_options->value("MainWindowSplitterState").toByteArray());
     m_centralwidget_splitter->restoreGeometry(luminance_options->value("MainWindowSplitterGeometry").toByteArray());
@@ -424,17 +424,17 @@ void MainWindow::createToolBar()
     toolBarOptsGroup->addAction(m_Ui->actionText_Only);
     m_Ui->menuToolbars->addAction(m_Ui->toolBar->toggleViewAction());
 
-    connect(m_Ui->actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
-    connect(m_Ui->actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
-    connect(m_Ui->actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
-    connect(m_Ui->actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
+    connect(m_Ui->actionText_Under_Icons,&QAction::triggered,this,&MainWindow::Text_Under_Icons);
+    connect(m_Ui->actionIcons_Only,&QAction::triggered,this,&MainWindow::Icons_Only);
+    connect(m_Ui->actionText_Alongside_Icons,&QAction::triggered,this,&MainWindow::Text_Alongside_Icons);
+    connect(m_Ui->actionText_Only,&QAction::triggered,this,&MainWindow::Text_Only);
 
     // Preview Panel
     QActionGroup *previewPanelOptsGroup = new QActionGroup(this);
     previewPanelOptsGroup->addAction(m_Ui->actionShow_on_the_right);
     previewPanelOptsGroup->addAction(m_Ui->actionShow_on_the_bottom);
-    connect(m_Ui->actionShow_on_the_right, SIGNAL(triggered()), this, SLOT(showPreviewsOnTheRight()));
-    connect(m_Ui->actionShow_on_the_bottom, SIGNAL(triggered()), this, SLOT(showPreviewsOnTheBottom()));
+    connect(m_Ui->actionShow_on_the_right, &QAction::triggered, this, &MainWindow::showPreviewsOnTheRight);
+    connect(m_Ui->actionShow_on_the_bottom, &QAction::triggered, this, &MainWindow::showPreviewsOnTheBottom);
 }
 
 void MainWindow::createMenus()
@@ -465,22 +465,22 @@ void MainWindow::createMenus()
 
     // About(s)
     connect(m_Ui->actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
-    connect(m_Ui->actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
+    connect(m_Ui->actionWhat_s_This,&QAction::triggered,this,&MainWindow::enterWhatsThis);
 
     // I/O
-    connect(m_Ui->fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(m_Ui->fileExitAction, &QAction::triggered, this, &QWidget::close);
 
     // Crop & Rotation
-    connect(m_Ui->cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
+    connect(m_Ui->cropToSelectionAction, &QAction::triggered, this, &MainWindow::cropToSelection);
     m_Ui->cropToSelectionAction->setEnabled(false);
 
-    connect(m_Ui->removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
+    connect(m_Ui->removeSelectionAction, &QAction::triggered, this, &MainWindow::disableCrop);
 
-    connect(m_Ui->menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
-    connect(m_Ui->actionMinimize, SIGNAL(triggered()), this, SLOT(showMinimized()));
-    connect(m_Ui->actionMaximize, SIGNAL(triggered()), this, SLOT(showMaximized()));
-    connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
-    connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), luminance_options, SLOT(setPreviewPanelActive(bool)));
+    connect(m_Ui->menuWindows, &QMenu::aboutToShow, this, &MainWindow::updateWindowMenu);
+    connect(m_Ui->actionMinimize, &QAction::triggered, this, &QWidget::showMinimized);
+    connect(m_Ui->actionMaximize, &QAction::triggered, this, &QWidget::showMaximized);
+    connect(m_Ui->actionShowPreviewPanel, &QAction::toggled, this, &MainWindow::showPreviewPanel);
+    connect(m_Ui->actionShowPreviewPanel, &QAction::toggled, luminance_options, &LuminanceOptions::setPreviewPanelActive);
 
     //recent files
     initRecentFileActions();
@@ -499,8 +499,8 @@ void MainWindow::createStatusBar()
 void MainWindow::createConnections()
 {
     windowMapper = new QSignalMapper(this);
-    connect(windowMapper, SIGNAL(mapped(QWidget*)), this, SLOT(setActiveMainWindow(QWidget*)));
-    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(whiteBalanceDone()));
+    connect(windowMapper, static_cast<void(QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped), this, &MainWindow::setActiveMainWindow);
+    connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &MainWindow::whiteBalanceDone);
 }
 
 void MainWindow::loadOptions()
@@ -1056,7 +1056,7 @@ void MainWindow::on_documentationAction_triggered()
 {
     helpBrowser = new HelpBrowser(this,"Luminance HDR Help");
     helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
-    connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
+    connect(helpBrowser, &HelpBrowser::closed, this, &MainWindow::helpBrowserClosed);
     helpBrowser->show();
 }
 
@@ -1095,28 +1095,25 @@ void MainWindow::setupIO()
     m_IOWorker->moveToThread(m_IOThread);
 
     // Memory Management
-    connect(this, SIGNAL(destroyed()), m_IOWorker, SLOT(deleteLater()));
-    connect(m_IOWorker, SIGNAL(destroyed()), m_IOThread, SLOT(deleteLater()));
+    connect(this, &QObject::destroyed, m_IOWorker, &QObject::deleteLater);
+    connect(m_IOWorker, &QObject::destroyed, m_IOThread, &QObject::deleteLater);
 
     // Open
-    //connect(this, SIGNAL(open_hdr_frame(QString)), m_IOWorker, SLOT(read_hdr_frame(QString)));
-    connect(m_IOWorker, SIGNAL(read_hdr_success(pfs::Frame*, QString)), this, SLOT(load_success(pfs::Frame*, QString)));
-    connect(m_IOWorker, SIGNAL(read_hdr_failed(QString)), this, SLOT(load_failed(QString)));
+    connect(m_IOWorker, SIGNAL(read_hdr_success(pfs::Frame*, const QString&)), this, SLOT(load_success(pfs::Frame*, const QString&)));
+    connect(m_IOWorker, &IOWorker::read_hdr_failed, this, &MainWindow::load_failed);
 
     // Save HDR
-    //connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_hdr_success(GenericViewer*, QString)), this, SLOT(save_hdr_success(GenericViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_hdr_failed(QString)), this, SLOT(save_hdr_failed(QString)));
+    connect(m_IOWorker, SIGNAL(write_hdr_success(GenericViewer*, const QString&)), this, SLOT(save_hdr_success(GenericViewer*, const QString&)));
+    connect(m_IOWorker, &IOWorker::write_hdr_failed, this, &MainWindow::save_hdr_failed);
     // Save LDR
-    //connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
-    connect(m_IOWorker, SIGNAL(write_ldr_success(GenericViewer*, QString)), this, SLOT(save_ldr_success(GenericViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_ldr_failed(QString)), this, SLOT(save_ldr_failed(QString)));
+    connect(m_IOWorker, SIGNAL(write_ldr_success(GenericViewer*, const QString&)), this, SLOT(save_ldr_success(GenericViewer*, const QString&)));
+    connect(m_IOWorker, &IOWorker::write_ldr_failed, this, &MainWindow::save_ldr_failed);
 
     // progress bar handling
-    connect(m_IOWorker, SIGNAL(setValue(int)), m_ProgressBar, SLOT(setValue(int)));
-    connect(m_IOWorker, SIGNAL(setMaximum(int)), m_ProgressBar, SLOT(setMaximum(int)));
-    connect(m_IOWorker, SIGNAL(IO_init()), this, SLOT(ioBegin()));
-    connect(m_IOWorker, SIGNAL(IO_finish()), this, SLOT(ioEnd()));
+    connect(m_IOWorker, &IOWorker::setValue, m_ProgressBar, &QProgressBar::setValue);
+    connect(m_IOWorker, &IOWorker::setMaximum, m_ProgressBar, &QProgressBar::setMaximum);
+    connect(m_IOWorker, &IOWorker::IO_init, this, &MainWindow::ioBegin);
+    connect(m_IOWorker, &IOWorker::IO_finish, this, &MainWindow::ioEnd);
 
     // start thread waiting for signals (I/O requests)
     m_IOThread->start();
@@ -1175,20 +1172,20 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
-        connect(newhdr, SIGNAL(selectionReady(bool)),
-                this, SLOT(enableCrop(bool)));
-        connect(newhdr, SIGNAL(changed(GenericViewer*)),
-                this, SLOT(syncViewers(GenericViewer*)));
-        connect(newhdr, SIGNAL(changed(GenericViewer*)),
-                this, SLOT(updateMagnificationButtons(GenericViewer*)));
-        connect(newhdr, SIGNAL(reparent(GenericViewer*)),
-                this, SLOT(reparentViewer(GenericViewer*)));
-        connect(newhdr, SIGNAL(goNext(GenericViewer*)),
-                this, SLOT(showNextViewer(GenericViewer*)));
-        connect(newhdr, SIGNAL(goPrevious(GenericViewer*)),
-                this, SLOT(showPreviousViewer(GenericViewer*)));
-        connect(newhdr, SIGNAL(syncViewers(GenericViewer*)),
-                this, SLOT(setSyncViewers(GenericViewer*)));
+        connect(newhdr, &GenericViewer::selectionReady,
+                this, &MainWindow::enableCrop);
+        connect(newhdr, &GenericViewer::changed,
+                this, &MainWindow::syncViewers);
+        connect(newhdr, &GenericViewer::changed,
+                this, &MainWindow::updateMagnificationButtons);
+        connect(newhdr, &GenericViewer::reparent,
+                this, &MainWindow::reparentViewer);
+        connect(newhdr, &GenericViewer::goNext,
+                this, &MainWindow::showNextViewer);
+        connect(newhdr, &GenericViewer::goPrevious,
+                this, &MainWindow::showPreviousViewer);
+        connect(newhdr, &GenericViewer::syncViewers,
+                this, &MainWindow::setSyncViewers);
 
         newhdr->setViewerMode( getCurrentViewerMode(*m_tabwidget) );
 
@@ -1355,6 +1352,7 @@ void MainWindow::updateWindowMenu()
 
             action->setCheckable(true);
             action->setChecked(MW == this);
+            //connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
             connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
             windowMapper->setMapping(action, MW);
 
@@ -1536,7 +1534,7 @@ void MainWindow::setupTM()
     m_TMProgressBar->hide();
     statusBar()->addWidget(m_TMProgressBar);
 
-    connect(this, SIGNAL(destroyed()), m_TMProgressBar, SLOT(deleteLater()));
+    connect(this, &QObject::destroyed, m_TMProgressBar, &QObject::deleteLater);
 
     m_TMWorker = new TMWorker;
     m_TMThread = new QThread;
@@ -1544,23 +1542,23 @@ void MainWindow::setupTM()
     m_TMWorker->moveToThread(m_TMThread);
 
     // Memory Management
-    connect(this, SIGNAL(destroyed()), m_TMWorker, SLOT(deleteLater()));
-    connect(m_TMWorker, SIGNAL(destroyed()), m_TMThread, SLOT(deleteLater()));
+    connect(this, &QObject::destroyed, m_TMWorker, &QObject::deleteLater);
+    connect(m_TMWorker, &QObject::destroyed, m_TMThread, &QObject::deleteLater);
 
     // get back result!
-    connect(m_TMWorker, SIGNAL(tonemapSuccess(pfs::Frame*,TonemappingOptions*)),
-            this, SLOT(addLdrFrame(pfs::Frame*, TonemappingOptions*)));
+    connect(m_TMWorker, &TMWorker::tonemapSuccess,
+            this, &MainWindow::addLdrFrame);
     connect(m_TMWorker, SIGNAL(tonemapFailed(QString)),
             this, SLOT(tonemapFailed(QString)));
 
     // progress bar handling
-    connect(m_TMWorker, SIGNAL(tonemapBegin()), this, SLOT(tonemapBegin()));
-    connect(m_TMWorker, SIGNAL(tonemapEnd()), this, SLOT(tonemapEnd()));
+    connect(m_TMWorker, &TMWorker::tonemapBegin, this, &MainWindow::tonemapBegin);
+    connect(m_TMWorker, &TMWorker::tonemapEnd, this, &MainWindow::tonemapEnd);
 
-    connect(m_TMWorker, SIGNAL(tonemapSetValue(int)), m_TMProgressBar, SLOT(setValue(int)));
-    connect(m_TMWorker, SIGNAL(tonemapSetMaximum(int)), m_TMProgressBar, SLOT(setMaximum(int)));
-    connect(m_TMWorker, SIGNAL(tonemapSetMinimum(int)), m_TMProgressBar, SLOT(setMinimum(int)));
-    connect(m_TMProgressBar, SIGNAL(terminate()), m_TMWorker, SIGNAL(tonemapRequestTermination()), Qt::DirectConnection);
+    connect(m_TMWorker, &TMWorker::tonemapSetValue, m_TMProgressBar, &TMOProgressIndicator::setValue);
+    connect(m_TMWorker, &TMWorker::tonemapSetMaximum, m_TMProgressBar, &TMOProgressIndicator::setMaximum);
+    connect(m_TMWorker, &TMWorker::tonemapSetMinimum, m_TMProgressBar, &TMOProgressIndicator::setMinimum);
+    connect(m_TMProgressBar, &TMOProgressIndicator::terminate, m_TMWorker, &TMWorker::tonemapRequestTermination, Qt::DirectConnection);
 
     // start thread waiting for signals (I/O requests)
     m_TMThread->start();
@@ -1572,7 +1570,7 @@ void MainWindow::setupQueue()
     m_QueueProgressBar->hide();
     statusBar()->addWidget(m_QueueProgressBar);
 
-    connect(this, SIGNAL(destroyed()), m_QueueProgressBar, SLOT(deleteLater()));
+    connect(this, &QObject::destroyed, m_QueueProgressBar, &QObject::deleteLater);
 
     m_QueueWorker = new TMWorker;
     m_QueueThread = new QThread;
@@ -1580,8 +1578,8 @@ void MainWindow::setupQueue()
     m_QueueWorker->moveToThread(m_QueueThread);
 
     // Memory Management
-    connect(this, SIGNAL(destroyed()), m_QueueWorker, SLOT(deleteLater()));
-    connect(m_QueueWorker, SIGNAL(destroyed()), m_QueueThread, SLOT(deleteLater()));
+    connect(this, &QObject::destroyed, m_QueueWorker, &QObject::deleteLater);
+    connect(m_QueueWorker, &QObject::destroyed, m_QueueThread, &QObject::deleteLater);
 
     // get back result!
     //connect(m_QueueWorker, SIGNAL(tonemapSuccess(pfs::Frame*, TonemappingOptions*)),
@@ -1590,13 +1588,13 @@ void MainWindow::setupQueue()
         this, SLOT(tonemapFailed(QString)));
 
     // progress bar handling
-    connect(m_QueueWorker, SIGNAL(tonemapBegin()), this, SLOT(exportBegin()));
-    connect(m_QueueWorker, SIGNAL(tonemapEnd()), this, SLOT(exportEnd()));
+    connect(m_QueueWorker, &TMWorker::tonemapBegin, this, &MainWindow::exportBegin);
+    connect(m_QueueWorker, &TMWorker::tonemapEnd, this, &MainWindow::exportEnd);
 
-    connect(m_QueueWorker, SIGNAL(tonemapSetValue(int)), m_QueueProgressBar, SLOT(setValue(int)));
-    connect(m_QueueWorker, SIGNAL(tonemapSetMaximum(int)), m_QueueProgressBar, SLOT(setMaximum(int)));
-    connect(m_QueueWorker, SIGNAL(tonemapSetMinimum(int)), m_QueueProgressBar, SLOT(setMinimum(int)));
-    connect(m_QueueProgressBar, SIGNAL(terminate()), m_QueueWorker, SIGNAL(tonemapRequestTermination()), Qt::DirectConnection);
+    connect(m_QueueWorker, &TMWorker::tonemapSetValue, m_QueueProgressBar, &TMOProgressIndicator::setValue);
+    connect(m_QueueWorker, &TMWorker::tonemapSetMaximum, m_QueueProgressBar, &TMOProgressIndicator::setMaximum);
+    connect(m_QueueWorker, &TMWorker::tonemapSetMinimum, m_QueueProgressBar, &TMOProgressIndicator::setMinimum);
+    connect(m_QueueProgressBar, &TMOProgressIndicator::terminate, m_QueueWorker, &TMWorker::tonemapRequestTermination, Qt::DirectConnection);
 
     // start thread waiting for signals (I/O requests)
     m_QueueThread->start();
@@ -1751,12 +1749,12 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 
         n = new LdrViewer(frame, tm_options, this, true);
 
-        connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
-        connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
-        connect(n, SIGNAL(reparent(GenericViewer*)), this, SLOT(reparentViewer(GenericViewer*)));
-        connect(n, SIGNAL(goNext(GenericViewer*)), this, SLOT(showNextViewer(GenericViewer*)));
-        connect(n, SIGNAL(goPrevious(GenericViewer*)), this, SLOT(showPreviousViewer(GenericViewer*)));
-        connect(n, SIGNAL(syncViewers(GenericViewer*)), this, SLOT(setSyncViewers(GenericViewer*)));
+        connect(n, &GenericViewer::changed, this, &MainWindow::syncViewers);
+        connect(n, &GenericViewer::changed, this, &MainWindow::updateMagnificationButtons);
+        connect(n, &GenericViewer::reparent, this, &MainWindow::reparentViewer);
+        connect(n, &GenericViewer::goNext, this, &MainWindow::showNextViewer);
+        connect(n, &GenericViewer::goPrevious, this, &MainWindow::showPreviousViewer);
+        connect(n, &GenericViewer::syncViewers, this, &MainWindow::setSyncViewers);
 
         if (num_ldr_generated == 1)
             m_tabwidget->addTab(n, tr("Untitled"));
@@ -1834,7 +1832,7 @@ void MainWindow::showPreviewPanel(bool b)
             m_PreviewscrollArea->show();
             if (m_Ui->actionRealtimePreviews->isChecked())
             {
-                connect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), m_tonemapPanel, SLOT(setRealtimePreviews(bool)));
+                connect(m_Ui->actionRealtimePreviews, &QAction::toggled, m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
                 m_tonemapPanel->setRealtimePreviews(true);
             }
 
@@ -1844,8 +1842,8 @@ void MainWindow::showPreviewPanel(bool b)
 
             // connect signals
             connect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
-            connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-            connect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+            connect(m_PreviewPanel, &PreviewPanel::startTonemapping, this, &MainWindow::tonemapImage);
+            connect(m_PreviewPanel, &PreviewPanel::startTonemapping, m_tonemapPanel, &TonemappingPanel::updateTonemappingParams);
             connect(m_tonemapPanel, SIGNAL(autoLevels(bool, float)), this, SLOT(updatePreviews(bool, float)));
         }
     }
@@ -1855,10 +1853,10 @@ void MainWindow::showPreviewPanel(bool b)
         m_tonemapPanel->setRealtimePreviews(false);
 
         // disconnect signals
-        disconnect(m_Ui->actionRealtimePreviews, SIGNAL(toggled(bool)), m_tonemapPanel, SLOT(setRealtimePreviews(bool)));
+        disconnect(m_Ui->actionRealtimePreviews, &QAction::toggled, m_tonemapPanel, &TonemappingPanel::setRealtimePreviews);
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), m_PreviewPanel, SLOT(updatePreviews(pfs::Frame*)));
-        disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-        disconnect(m_PreviewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), m_tonemapPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+        disconnect(m_PreviewPanel, &PreviewPanel::startTonemapping, this, &MainWindow::tonemapImage);
+        disconnect(m_PreviewPanel, &PreviewPanel::startTonemapping, m_tonemapPanel, &TonemappingPanel::updateTonemappingParams);
         disconnect(m_tonemapPanel, SIGNAL(autoLevels(bool, float)), this, SLOT(updatePreviews(bool, float)));
     }
 }
@@ -2050,7 +2048,7 @@ void MainWindow::initRecentFileActions()
         recentFileActs[i] = new QAction(this);
         recentFileActs[i]->setVisible(false);
         m_Ui->menuFile->addAction(recentFileActs[i]);
-        connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+        connect(recentFileActs[i], &QAction::triggered, this, &MainWindow::openRecentFile);
     }
 }
 

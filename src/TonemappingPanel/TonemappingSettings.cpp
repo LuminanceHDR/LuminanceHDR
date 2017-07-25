@@ -93,9 +93,9 @@ TonemappingSettings::TonemappingSettings(QWidget *parent, pfs::Frame *frame) :
 
     sortPreviews(0); // by comment
 
-    connect(m_Ui->listWidget, SIGNAL(currentRowChanged(int)), this, SLOT(listWidgetChanged(int)));
+    connect(m_Ui->listWidget, &QListWidget::currentRowChanged, this, &TonemappingSettings::listWidgetChanged);
     connect(m_Ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(sortPreviews(int)));
-    connect(m_previewSettings, SIGNAL(triggered()), this, SLOT(accept()));
+    connect(m_previewSettings, &PreviewSettings::triggered, this, &QDialog::accept);
 }
 
 TonemappingSettings::~TonemappingSettings()

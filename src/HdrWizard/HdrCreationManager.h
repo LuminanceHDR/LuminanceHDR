@@ -147,7 +147,7 @@ signals:
     void finishedAligning(int);
     void expotimeValueChanged(float,int);
     void ais_failed(QProcess::ProcessError);
-    void aisDataReady(const QByteArray& data);
+    void aisDataReady(QByteArray& data);
     void processed();
     void imagesSaved();
     void loadFilesAborted();

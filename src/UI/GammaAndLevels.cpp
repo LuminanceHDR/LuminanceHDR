@@ -71,10 +71,10 @@ GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
     connect(m_Ui->gamma_spinbox,SIGNAL(valueChanged(double)),gb1,SLOT(changeGamma(double)));
     connect(m_Ui->white_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeWhite(int)));
 
-    connect(gb1,SIGNAL(black_changed(int)),this,SLOT(updateBlackIn(int)));
-    connect(gb1,SIGNAL(gamma_changed(double)),this,SLOT(updateGamma(double)));
-    connect(gb1,SIGNAL(white_changed(int)),this,SLOT(updateWhiteIn(int)));
-    connect(gb1,SIGNAL(default_gamma_black_white()),this,SLOT(defaultGammaBlackWhiteIn()));
+    connect(gb1,&GrayBar::black_changed,this,&GammaAndLevels::updateBlackIn);
+    connect(gb1,&GrayBar::gamma_changed,this,&GammaAndLevels::updateGamma);
+    connect(gb1,&GrayBar::white_changed,this,&GammaAndLevels::updateWhiteIn);
+    connect(gb1,&GrayBar::default_gamma_black_white,this,&GammaAndLevels::defaultGammaBlackWhiteIn);
 
     qvl->addWidget(histogram);
     qvl->addWidget(gb1);
@@ -87,13 +87,13 @@ GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
     connect(m_Ui->black_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeBlack(int)));
     connect(m_Ui->white_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeWhite(int)));
 
-    connect(gb2,SIGNAL(black_changed(int)),this,SLOT(updateBlackOut(int)));
-    connect(gb2,SIGNAL(white_changed(int)),this,SLOT(updateWhiteOut(int)));
-    connect(gb2,SIGNAL(default_black_white()),this,SLOT(defaultBlackWhiteOut()));
+    connect(gb2,&GrayBar::black_changed,this,&GammaAndLevels::updateBlackOut);
+    connect(gb2,&GrayBar::white_changed,this,&GammaAndLevels::updateWhiteOut);
+    connect(gb2,&GrayBar::default_black_white,this,&GammaAndLevels::defaultBlackWhiteOut);
 
-    connect(m_Ui->ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
-    connect(m_Ui->ResetButton,SIGNAL(clicked()),gb2,SLOT(resetvalues()));
-    connect(m_Ui->ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
+    connect(m_Ui->ResetButton,&QAbstractButton::clicked,gb1,&GrayBar::resetvalues);
+    connect(m_Ui->ResetButton,&QAbstractButton::clicked,gb2,&GrayBar::resetvalues);
+    connect(m_Ui->ResetButton,&QAbstractButton::clicked,this,&GammaAndLevels::resetValues);
 
     qvl2->addWidget(gb2);
     m_Ui->out_levels->setLayout(qvl2);

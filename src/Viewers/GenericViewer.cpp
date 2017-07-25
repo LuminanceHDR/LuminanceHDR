@@ -67,28 +67,28 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     mView->setCacheMode(QGraphicsView::CacheBackground);
     mView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    connect(mView, SIGNAL(zoomIn()), this, SLOT(zoomIn()));
-    connect(mView, SIGNAL(zoomOut()), this, SLOT(zoomOut()));
-    connect(mView, SIGNAL(viewAreaChangedSize()), this, SLOT(updateView()));
+    connect(mView, &IGraphicsView::zoomIn, this, &GenericViewer::zoomIn);
+    connect(mView, &IGraphicsView::zoomOut, this, &GenericViewer::zoomOut);
+    connect(mView, &IGraphicsView::viewAreaChangedSize, this, &GenericViewer::updateView);
     mView->horizontalScrollBar()->setTracking(true);
     mView->verticalScrollBar()->setTracking(true);
-    connect(mView->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
-    connect(mView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
+    connect(mView->horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &GenericViewer::scrollBarChanged);
+    connect(mView->verticalScrollBar(), &QAbstractSlider::valueChanged, this, &GenericViewer::scrollBarChanged);
 
     mCornerButton = new QToolButton(this);
     mCornerButton->setIcon(QIcon::fromTheme("move", QIcon(":/program-icons/move")));
 
     mView->setCornerWidget(mCornerButton);
 
-    connect(mCornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+    connect(mCornerButton, &QAbstractButton::pressed, this, &GenericViewer::slotCornerButtonPressed);
 
     mVBL->addWidget(mView);
     mView->show();
 
     mPixmap = new IGraphicsPixmapItem();
     mScene->addItem(mPixmap);
-    connect(mPixmap, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
-    connect(mPixmap, SIGNAL(startDragging()), this, SLOT(startDragging()));
+    connect(mPixmap, &IGraphicsPixmapItem::selectionReady, this, &GenericViewer::selectionReady);
+    connect(mPixmap, &IGraphicsPixmapItem::startDragging, this, &GenericViewer::startDragging);
 }
 
 GenericViewer::~GenericViewer()
@@ -309,8 +309,8 @@ void GenericViewer::slotCornerButtonPressed()
     QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
     mPanIconWidget->setRegionSelection(r);
     mPanIconWidget->setMouseFocus();
-    connect(mPanIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
-    connect(mPanIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
+    connect(mPanIconWidget, &PanIconWidget::selectionMoved, this, &GenericViewer::slotPanIconSelectionMoved);
+    connect(mPanIconWidget, &PanIconWidget::finished, this, &GenericViewer::slotPanIconHidden);
     QPoint g = mView->mapToGlobal(mView->viewport()->pos());
     g.setX(g.x()+ mView->viewport()->size().width());
     g.setY(g.y()+ mView->viewport()->size().height());

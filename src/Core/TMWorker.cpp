@@ -52,12 +52,11 @@ TMWorker::TMWorker(QObject* parent):
     qDebug() << "TMWorker::TMWorker() ctor";
 #endif
 
-    connect(this, SIGNAL(destroyed()), m_Callback, SLOT(deleteLater()));
-
-    connect(this, SIGNAL(tonemapRequestTermination()), m_Callback, SLOT(qtCancel()), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(qtSetValue(int)), this, SIGNAL(tonemapSetValue(int)), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(qtSetMinimum(int)), this, SIGNAL(tonemapSetMinimum(int)), Qt::DirectConnection);
-    connect(m_Callback, SIGNAL(qtSetMaximum(int)), this, SIGNAL(tonemapSetMaximum(int)), Qt::DirectConnection);
+    connect(this, &QObject::destroyed, m_Callback, &QObject::deleteLater);
+    connect(this, &TMWorker::tonemapRequestTermination, m_Callback, &ProgressHelper::qtCancel, Qt::DirectConnection);
+    connect(m_Callback, &ProgressHelper::qtSetValue, this, &TMWorker::tonemapSetValue, Qt::DirectConnection);
+    connect(m_Callback, &ProgressHelper::qtSetMinimum, this, &TMWorker::tonemapSetMinimum, Qt::DirectConnection);
+    connect(m_Callback, &ProgressHelper::qtSetMaximum, this, &TMWorker::tonemapSetMaximum, Qt::DirectConnection);
 }
 
 TMWorker::~TMWorker()

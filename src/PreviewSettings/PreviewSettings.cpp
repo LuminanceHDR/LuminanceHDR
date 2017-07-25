@@ -195,7 +195,7 @@ void PreviewSettings::addPreviewLabel(PreviewLabel *label)
     if (label->actions().isEmpty()) {
         QAction* pAction = new QAction(tr("Load settings"), label);
         label->addAction(pAction);
-        connect(pAction, SIGNAL(triggered()), this, SIGNAL(triggered()));
+        connect(pAction, &QAction::triggered, this, &PreviewSettings::triggered);
     }
 
     label->setToolTip(text);

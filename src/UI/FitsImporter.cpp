@@ -101,11 +101,11 @@ FitsImporter::FitsImporter(QWidget *parent)
         SimplePreviewLabel* label = new SimplePreviewLabel(i);
         m_previewFrame->addLabel(label);
         label->setEnabled(false);
-        connect(label, SIGNAL(selected(int)), this, SLOT(previewLabelSelected(int)));
+        connect(label, &SimplePreviewLabel::selected, this, &FitsImporter::previewLabelSelected);
     }
     m_previewFrame->show();
-    connect(this, SIGNAL(setValue(int)), m_Ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
-    connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
+    connect(this, &FitsImporter::setValue, m_Ui->progressBar, &QProgressBar::setValue, Qt::DirectConnection);
+    connect(this, &FitsImporter::setRange, m_Ui->progressBar, &QProgressBar::setRange, Qt::DirectConnection);
 
     // wizard stuff
 
@@ -457,9 +457,9 @@ void FitsImporter::align_with_ais()
 {
     m_contents.clear();
     m_align.reset(new Align(m_data, false, 2, 0.0f, 65535.0f));
-    connect(m_align.get(), SIGNAL(finishedAligning(int)), this, SLOT(ais_finished(int)));
-    connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
-    connect(m_align.get(), SIGNAL(dataReady(QByteArray)), this, SLOT(readData(QByteArray)));
+    connect(m_align.get(), &Align::finishedAligning, this, &FitsImporter::ais_finished);
+    connect(m_align.get(), &Align::failedAligning, this, &FitsImporter::ais_failed_slot);
+    connect(m_align.get(), &Align::dataReady, this, &FitsImporter::readData);
 
     m_align->align_with_ais(m_Ui->autoCropCheckBox->isChecked());
 }

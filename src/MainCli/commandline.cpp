@@ -490,7 +490,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         return 1;
     }
 
-    QTimer::singleShot(0, this, SLOT(execCommandLineParamsSlot()));
+    QTimer::singleShot(0, this, &CommandLineInterfaceManager::execCommandLineParamsSlot);
     return 0;
 }
 
@@ -528,11 +528,12 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
             printIfVerbose(QObject::tr("Using %n threads.", "", luminance_options.getNumThreads()), verbose);
         }
         hdrCreationManager.reset( new HdrCreationManager(true) );
-        connect(hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(finishedLoadingInputFiles()));
-        connect(hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(createHDR(int)));
-        connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
-        connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
-        connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
+        connect(hdrCreationManager.data(), &HdrCreationManager::finishedLoadingFiles, this, &CommandLineInterfaceManager::finishedLoadingInputFiles);
+        connect(hdrCreationManager.data(), &HdrCreationManager::finishedAligning, this, &CommandLineInterfaceManager::createHDR);
+        connect(hdrCreationManager.data(), &HdrCreationManager::ais_failed, this, &CommandLineInterfaceManager::ais_failed);
+        connect(hdrCreationManager.data(), &HdrCreationManager::errorWhileLoading, this, &CommandLineInterfaceManager::errorWhileLoading);
+        //connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
+        connect(hdrCreationManager.data(), &HdrCreationManager::aisDataReady, this, &CommandLineInterfaceManager::readData);
 
         try
         {
@@ -702,8 +703,8 @@ void  CommandLineInterfaceManager::startTonemap()
 
         // Build TMWorker
         TMWorker tm_worker;
-        connect(&tm_worker, SIGNAL(tonemapSetMaximum(int)), this, SLOT(setProgressBar(int)));
-        connect(&tm_worker, SIGNAL(tonemapSetValue(int)), this, SLOT(updateProgressBar(int)));
+        connect(&tm_worker, &TMWorker::tonemapSetMaximum, this, &CommandLineInterfaceManager::setProgressBar);
+        connect(&tm_worker, &TMWorker::tonemapSetValue, this, &CommandLineInterfaceManager::updateProgressBar);
 
         // Build a new TM frame
         // The scoped pointer will free the memory automatically later on
@@ -753,7 +754,7 @@ void  CommandLineInterfaceManager::startTonemap()
     }
 }
 
-void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
+void CommandLineInterfaceManager::errorWhileLoading(const QString &errormessage) {
     printErrorAndExit( tr("Failed loading images"));
 }
 
@@ -792,7 +793,7 @@ void CommandLineInterfaceManager::updateProgressBar(int value)
     }
 }
 
-void CommandLineInterfaceManager::readData(QByteArray data)
+void CommandLineInterfaceManager::readData(const QByteArray &data)
 {
     if (verbose)
         std::cout << data.constData() << std::endl;

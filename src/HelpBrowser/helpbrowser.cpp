@@ -177,10 +177,10 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 
     //m_Ui->htmlPage->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
     //connect(m_Ui->htmlPage, SIGNAL(linkClicked(const QUrl &)), this, SLOT(handleExternalLink(const QUrl &)));
-    connect(m_Ui->htmlPage, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
-    connect(m_Ui->htmlPage, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+    connect(m_Ui->htmlPage, &QWebEngineView::loadStarted, this, &HelpBrowser::loadStarted);
+    connect(m_Ui->htmlPage, &QWebEngineView::loadFinished, this, &HelpBrowser::loadFinished);
     //connect(m_Ui->htmlPage->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
-    connect(m_Ui->htmlPage->page(), SIGNAL(linkHovered(const QString &)), this, SLOT(linkHovered(const QString &)));
+    connect(m_Ui->htmlPage->page(), &QWebEnginePage::linkHovered, this, &HelpBrowser::linkHovered);
 
     language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
        finalBaseDir = LuminancePaths::HelpDir();
@@ -273,36 +273,36 @@ void HelpBrowser::setupLocalUI()
     helpSideBar->m_Ui->bookmarksView->header()->hide();
 
     //basic ui
-    connect(m_Ui->filePrint, SIGNAL(triggered()), this, SLOT(print()));
-    connect(m_Ui->filePrintPreview, SIGNAL(triggered()), this, SLOT(printPreview()));
-    connect(m_Ui->fileExit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(m_Ui->filePrint, &QAction::triggered, this, &HelpBrowser::print);
+    connect(m_Ui->filePrintPreview, &QAction::triggered, this, &HelpBrowser::printPreview);
+    connect(m_Ui->fileExit, &QAction::triggered, this, &QWidget::close);
     connect(m_Ui->editFind, SIGNAL(triggered()), this, SLOT(find()));
-    connect(m_Ui->editFindNext, SIGNAL(triggered()), this, SLOT(findNext()));
-    connect(m_Ui->editFindPrev, SIGNAL(triggered()), this, SLOT(findPrevious()));
-    connect(m_Ui->viewContents, SIGNAL(triggered()), this, SLOT(viewContents_clicked()));
-    connect(m_Ui->viewSearch, SIGNAL(triggered()), this, SLOT(viewSearch_clicked()));
-    connect(m_Ui->viewBookmarks, SIGNAL(triggered()), this, SLOT(viewBookmarks_clicked()));
-    connect(m_Ui->bookAdd, SIGNAL(triggered()), this, SLOT(bookmarkButton_clicked()));
-    connect(m_Ui->bookDel, SIGNAL(triggered()), this, SLOT(deleteBookmarkButton_clicked()));
-    connect(m_Ui->bookDelAll, SIGNAL(triggered()), this, SLOT(deleteAllBookmarkButton_clicked()));
-    connect(m_Ui->goHome, SIGNAL(triggered()), m_Ui->htmlPage, SLOT(home()));
-    connect(m_Ui->goBack, SIGNAL(triggered()), m_Ui->htmlPage, SLOT(back()));
-    connect(m_Ui->goFwd, SIGNAL(triggered()), m_Ui->htmlPage, SLOT(forward()));
-    connect(m_Ui->zoomIn, SIGNAL(triggered()), this, SLOT(zoomIn_clicked()));
-    connect(m_Ui->zoomOriginal, SIGNAL(triggered()), this, SLOT(zoomOriginal_clicked()));
-    connect(m_Ui->zoomOut, SIGNAL(triggered()), this, SLOT(zoomOut_clicked()));
-    connect(histMenu, SIGNAL(triggered(QAction*)), this, SLOT(histChosen(QAction*)));
+    connect(m_Ui->editFindNext, &QAction::triggered, this, &HelpBrowser::findNext);
+    connect(m_Ui->editFindPrev, &QAction::triggered, this, &HelpBrowser::findPrevious);
+    connect(m_Ui->viewContents, &QAction::triggered, this, &HelpBrowser::viewContents_clicked);
+    connect(m_Ui->viewSearch, &QAction::triggered, this, &HelpBrowser::viewSearch_clicked);
+    connect(m_Ui->viewBookmarks, &QAction::triggered, this, &HelpBrowser::viewBookmarks_clicked);
+    connect(m_Ui->bookAdd, &QAction::triggered, this, &HelpBrowser::bookmarkButton_clicked);
+    connect(m_Ui->bookDel, &QAction::triggered, this, &HelpBrowser::deleteBookmarkButton_clicked);
+    connect(m_Ui->bookDelAll, &QAction::triggered, this, &HelpBrowser::deleteAllBookmarkButton_clicked);
+    connect(m_Ui->goHome, &QAction::triggered, m_Ui->htmlPage, &ScTextBrowser::home);
+    connect(m_Ui->goBack, &QAction::triggered, m_Ui->htmlPage, &QWebEngineView::back);
+    connect(m_Ui->goFwd, &QAction::triggered, m_Ui->htmlPage, &QWebEngineView::forward);
+    connect(m_Ui->zoomIn, &QAction::triggered, this, &HelpBrowser::zoomIn_clicked);
+    connect(m_Ui->zoomOriginal, &QAction::triggered, this, &HelpBrowser::zoomOriginal_clicked);
+    connect(m_Ui->zoomOut, &QAction::triggered, this, &HelpBrowser::zoomOut_clicked);
+    connect(histMenu, &QMenu::triggered, this, &HelpBrowser::histChosen);
     // searching
-    connect(helpSideBar->m_Ui->searchingEdit, SIGNAL(returnPressed()), this, SLOT(searchingButton_clicked()));
-    connect(helpSideBar->m_Ui->searchingButton, SIGNAL(clicked()), this, SLOT(searchingButton_clicked()));
-    connect(helpSideBar->m_Ui->searchingView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemSearchSelected(QTreeWidgetItem *, int)));
+    connect(helpSideBar->m_Ui->searchingEdit, &QLineEdit::returnPressed, this, &HelpBrowser::searchingButton_clicked);
+    connect(helpSideBar->m_Ui->searchingButton, &QAbstractButton::clicked, this, &HelpBrowser::searchingButton_clicked);
+    connect(helpSideBar->m_Ui->searchingView, &QTreeWidget::itemClicked, this, &HelpBrowser::itemSearchSelected);
     // bookmarks
-    connect(helpSideBar->m_Ui->bookmarkButton, SIGNAL(clicked()), this, SLOT(bookmarkButton_clicked()));
-    connect(helpSideBar->m_Ui->deleteBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteBookmarkButton_clicked()));
-    connect(helpSideBar->m_Ui->deleteAllBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteAllBookmarkButton_clicked()));
-    connect(helpSideBar->m_Ui->bookmarksView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemBookmarkSelected(QTreeWidgetItem *, int)));
+    connect(helpSideBar->m_Ui->bookmarkButton, &QAbstractButton::clicked, this, &HelpBrowser::bookmarkButton_clicked);
+    connect(helpSideBar->m_Ui->deleteBookmarkButton, &QAbstractButton::clicked, this, &HelpBrowser::deleteBookmarkButton_clicked);
+    connect(helpSideBar->m_Ui->deleteAllBookmarkButton, &QAbstractButton::clicked, this, &HelpBrowser::deleteAllBookmarkButton_clicked);
+    connect(helpSideBar->m_Ui->bookmarksView, &QTreeWidget::itemClicked, this, &HelpBrowser::itemBookmarkSelected);
     // links hoover
-    connect(m_Ui->htmlPage, SIGNAL(overLink(const QString &)), this, SLOT(showLinkContents(const QString &)));
+    connect(m_Ui->htmlPage, &ScTextBrowser::overLink, this, &HelpBrowser::showLinkContents);
 
     languageChange();
 }
@@ -386,7 +386,7 @@ void HelpBrowser::printPreviewAvailable()
     QPrinter printer;
     printer.setFullPage(true);
     QPrintPreviewDialog dialog(&printer, this);
-    connect(&dialog, SIGNAL(paintRequested(QPrinter *)), this, SLOT(paintRequested(QPrinter *)));
+    connect(&dialog, &QPrintPreviewDialog::paintRequested, this, &HelpBrowser::paintRequested);
     dialog.exec();
 }
 
@@ -611,7 +611,7 @@ void HelpBrowser::loadMenu()
         helpSideBar->m_Ui->listView->setSelectionMode(QAbstractItemView::SingleSelection);
         QItemSelectionModel *selectionModel = new QItemSelectionModel(menuModel);
         helpSideBar->m_Ui->listView->setSelectionModel(selectionModel);
-        connect(helpSideBar->m_Ui->listView->selectionModel(), SIGNAL(selectionChanged( const QItemSelection &, const QItemSelection &)), this, SLOT(itemSelected( const QItemSelection &, const QItemSelection &)));
+        connect(helpSideBar->m_Ui->listView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &HelpBrowser::itemSelected);
 
         helpSideBar->m_Ui->listView->setColumnHidden(1,true);
     }

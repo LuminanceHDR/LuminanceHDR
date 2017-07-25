@@ -46,7 +46,7 @@ public:
     virtual ~BatchTMJob();
 signals:
     void done(int thread_id);
-    void add_log_message(QString);
+    void add_log_message(const QString&);
     //void update_progress_bar();
     void increment_progress_bar(int);
 protected:

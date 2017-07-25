@@ -62,8 +62,8 @@ void FormatHelper::initConnection(QComboBox* comboBox, QAbstractButton* settings
         comboBox->addItem(QObject::tr("PBM"), QVariant(25));
     }
 
-    connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxIndexChanged(int)));
-    connect(settingsButton, SIGNAL(pressed()), this, SLOT(buttonPressed()));
+    connect(comboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &FormatHelper::comboBoxIndexChanged);
+    connect(settingsButton, &QAbstractButton::pressed, this, &FormatHelper::buttonPressed);
 
     const int format = hdr ? 0 : 20;
     setDefaultParams(format);

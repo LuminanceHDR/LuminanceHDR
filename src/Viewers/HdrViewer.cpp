@@ -99,7 +99,7 @@ void HdrViewer::initUi()
     mToolBar->addWidget(m_histLabel);
     mToolBar->addWidget(m_lumRange);
     mToolBar->addSeparator();
-    connect( m_lumRange, SIGNAL( updateRangeWindow() ), this, SLOT( updateRangeWindow() ) );
+    connect( m_lumRange, &LuminanceRangeWidget::updateRangeWindow, this, &HdrViewer::updateRangeWindow );
     mToolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 
     retranslateUi();
@@ -112,7 +112,7 @@ void HdrViewer::retranslateUi()
 
     int oldMappingMethodIndex = m_mappingMethodCB->currentIndex();
 
-    disconnect( m_mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
+    disconnect( m_mappingMethodCB, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &HdrViewer::setLumMappingMethod );
     QStringList methods;
     methods << tr("Linear")
             << tr("Gamma 1.4")
@@ -124,8 +124,8 @@ void HdrViewer::retranslateUi()
     m_mappingMethodCB->clear();
     m_mappingMethodCB->addItems(methods);
     m_mappingMethodCB->setCurrentIndex( oldMappingMethodIndex >= 0 ? oldMappingMethodIndex : 3 );
-    connect(m_mappingMethodCB, SIGNAL(activated( int )), this, SLOT(setLumMappingMethod(int)));
-    connect(m_mappingMethodCB, SIGNAL(currentIndexChanged(int)), m_mappingMethodCB, SLOT(setFocus()));
+    connect(m_mappingMethodCB, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &HdrViewer::setLumMappingMethod);
+    connect(m_mappingMethodCB, SIGNAL(currentIndexChanged(int)), m_mappingMethodCB, SLOT(setFocus())); //TODO convert to new style
 
     GenericViewer::retranslateUi();
 }

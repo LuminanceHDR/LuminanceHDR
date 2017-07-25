@@ -40,7 +40,7 @@
 #include <QSqlQuery>
 
 #include "BatchTM/BatchTMDialog.h"
-#include "ui_BatchTMDialog.h"
+#include "BatchTM/ui_BatchTMDialog.h"
 
 #include "Common/config.h"
 #include "Common/SavedParametersDialog.h"
@@ -67,21 +67,21 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     m_batchTmOutputDir = m_luminance_options.getBatchTmPathLdrOutput();
     m_max_num_threads = m_luminance_options.getBatchTmNumThreads();
 
-    connect(m_Ui->add_dir_HDRs_Button,    SIGNAL(clicked()), this, SLOT(add_dir_HDRs())       );
-    connect(m_Ui->add_HDRs_Button,        SIGNAL(clicked()), this, SLOT(add_HDRs())           );
-    connect(m_Ui->add_dir_TMopts_Button,  SIGNAL(clicked()), this, SLOT(add_dir_TMopts())     );
-    connect(m_Ui->add_TMopts_Button,      SIGNAL(clicked()), this, SLOT(add_TMopts())         );
-    connect(m_Ui->out_folder_Button,      SIGNAL(clicked()), this, SLOT(out_folder_clicked()) );
-    connect(m_Ui->remove_HDRs_Button,     SIGNAL(clicked()), this, SLOT(remove_HDRs())        );
-    connect(m_Ui->remove_TMOpts_Button,   SIGNAL(clicked()), this, SLOT(remove_TMOpts())      );
-    connect(m_Ui->BatchGoButton,          SIGNAL(clicked()), this, SLOT(batch_core()));  //start_called()
-    connect(m_Ui->cancelbutton,           SIGNAL(clicked()), this, SLOT(abort()));
-    connect(m_Ui->from_Database_Button,   SIGNAL(clicked()), this, SLOT(from_database()));
+    connect(m_Ui->add_dir_HDRs_Button,    &QAbstractButton::clicked, this, &BatchTMDialog::add_dir_HDRs       );
+    connect(m_Ui->add_HDRs_Button,        &QAbstractButton::clicked, this, &BatchTMDialog::add_HDRs           );
+    connect(m_Ui->add_dir_TMopts_Button,  &QAbstractButton::clicked, this, &BatchTMDialog::add_dir_TMopts     );
+    connect(m_Ui->add_TMopts_Button,      &QAbstractButton::clicked, this, &BatchTMDialog::add_TMopts         );
+    connect(m_Ui->out_folder_Button,      &QAbstractButton::clicked, this, &BatchTMDialog::out_folder_clicked );
+    connect(m_Ui->remove_HDRs_Button,     &QAbstractButton::clicked, this, &BatchTMDialog::remove_HDRs        );
+    connect(m_Ui->remove_TMOpts_Button,   &QAbstractButton::clicked, this, &BatchTMDialog::remove_TMOpts      );
+    connect(m_Ui->BatchGoButton,          &QAbstractButton::clicked, this, &BatchTMDialog::batch_core);  //start_called()
+    connect(m_Ui->cancelbutton,           &QAbstractButton::clicked, this, &BatchTMDialog::abort);
+    connect(m_Ui->from_Database_Button,   &QAbstractButton::clicked, this, &BatchTMDialog::from_database);
 
-    connect(m_Ui->filterLineEdit,         SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
-    connect(m_Ui->filterComboBox,         SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
+    connect(m_Ui->filterLineEdit,         &QLineEdit::textChanged, this, &BatchTMDialog::filterChanged);
+    connect(m_Ui->filterComboBox,         static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &BatchTMDialog::filterComboBoxActivated);
 
-    connect(m_Ui->spinBox_Width,          SIGNAL(valueChanged(int)), this, SLOT(updateWidth(int)));
+    connect(m_Ui->spinBox_Width,          static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &BatchTMDialog::updateWidth);
 
     full_Log_Model  = new QStringListModel();
     log_filter      = new QSortFilterProxyModel(this);
@@ -427,14 +427,14 @@ void BatchTMDialog::start_batch_thread()
                 fileExtension, m_formatHelper.getParams());
 
             // Thread deletes itself when it has done with its job
-            connect(job_thread, SIGNAL(finished()),
-                    job_thread, SLOT(deleteLater()));
-            connect(job_thread, SIGNAL(done(int)),
-                    this, SLOT(release_thread(int))); //, Qt::DirectConnection);
-            connect(job_thread, SIGNAL(add_log_message(const QString &)),
-                    this, SLOT(add_log_message(const QString &))); //, Qt::DirectConnection);
-            connect(job_thread, SIGNAL(increment_progress_bar(int)),
-                    this, SLOT(increment_progress_bar(int))); //, Qt::DirectConnection);
+            connect(job_thread, &QThread::finished,
+                    job_thread, &QObject::deleteLater);
+            connect(job_thread, &BatchTMJob::done,
+                    this, &BatchTMDialog::release_thread); //, Qt::DirectConnection);
+            connect(job_thread, &BatchTMJob::add_log_message,
+                    this, &BatchTMDialog::add_log_message); //, Qt::DirectConnection);
+            connect(job_thread, &BatchTMJob::increment_progress_bar,
+                    this, &BatchTMDialog::increment_progress_bar); //, Qt::DirectConnection);
 
             job_thread->start();
             m_next_hdr_file++;

@@ -65,8 +65,8 @@ ImageQualityDialog::ImageQualityDialog(const pfs::Frame* frame,
     {
         connect(m_ui->spinBox, SIGNAL(valueChanged(int)),
             this, SLOT(reset(int)));
-        connect(m_ui->horizontalSlider, SIGNAL(valueChanged(int)),
-            this, SLOT(reset(int)));
+        connect(m_ui->horizontalSlider, &QAbstractSlider::valueChanged,
+            this, &ImageQualityDialog::reset);
     }
     else
     {

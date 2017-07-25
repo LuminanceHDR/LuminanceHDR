@@ -47,7 +47,7 @@ public:
 signals:
     void finishedAligning(int);
     void failedAligning(QProcess::ProcessError);
-    void dataReady(QByteArray);
+    void dataReady(QByteArray&);
 
 protected slots:
     void ais_finished(int exitcode, QProcess::ExitStatus exitstatus);

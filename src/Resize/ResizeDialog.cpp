@@ -56,13 +56,13 @@ ResizeDialog::ResizeDialog(QWidget *parent, pfs::Frame *orig):
     from_other_spinbox = false;
     updatelabel();
 
-    connect(m_Ui->scaleButton,SIGNAL(clicked()),this,SLOT(scaledPressed()));
-    connect(m_Ui->widthSpinBox,SIGNAL(editingFinished()),this,SLOT(update_heightSpinBox()));
+    connect(m_Ui->scaleButton,&QAbstractButton::clicked,this,&ResizeDialog::scaledPressed);
+    connect(m_Ui->widthSpinBox,&QAbstractSpinBox::editingFinished,this,&ResizeDialog::update_heightSpinBox);
     connect(m_Ui->widthSpinBox,SIGNAL(valueChanged(double)),this,SLOT(update_heightSpinBox()));
-    connect(m_Ui->heightSpinBox,SIGNAL(editingFinished()),this,SLOT(update_widthSpinBox()));
+    connect(m_Ui->heightSpinBox,&QAbstractSpinBox::editingFinished,this,&ResizeDialog::update_widthSpinBox);
     connect(m_Ui->heightSpinBox,SIGNAL(valueChanged(double)),this,SLOT(update_widthSpinBox()));
     connect(m_Ui->px_or_percentage,SIGNAL(activated(int)),this,SLOT(switch_px_percentage(int)));
-    connect(m_Ui->restoredefault,SIGNAL(clicked()),this,SLOT(defaultpressed()));
+    connect(m_Ui->restoredefault,&QAbstractButton::clicked,this,&ResizeDialog::defaultpressed);
 }
 
 ResizeDialog::~ResizeDialog() {

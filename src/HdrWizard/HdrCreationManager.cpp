@@ -147,7 +147,7 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
     }
 
     // parallel load of the data...
-    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()), Qt::DirectConnection);
+    connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrCreationManager::loadFilesDone, Qt::DirectConnection);
 
     // Start the computation.
     m_futureWatcher.setFuture( QtConcurrent::map(m_tmpdata.begin(), m_tmpdata.end(), LoadFile()) );
@@ -159,7 +159,7 @@ void HdrCreationManager::loadFilesDone()
     if (m_futureWatcher.isCanceled() ) // LoadFile() threw an exception
     {
         emit errorWhileLoading(tr("HdrCreationManager::loadFilesDone(): Error loading a file."));
-        disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
+        disconnect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrCreationManager::loadFilesDone);
         m_tmpdata.clear();
         return;
     }
@@ -177,7 +177,7 @@ void HdrCreationManager::loadFilesDone()
             emit errorWhileLoading(QString(e.what()));
         }
     }
-    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
+    disconnect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrCreationManager::loadFilesDone);
     for(const auto hdrCreationItem : m_tmpdata)
     {
         if (hdrCreationItem.isValid())
@@ -298,11 +298,11 @@ HdrCreationManager::HdrCreationManager(bool fromCommandLine)
         }
     }
 
-    connect(&m_futureWatcher, SIGNAL(started()), this, SIGNAL(progressStarted()), Qt::DirectConnection);
-    connect(&m_futureWatcher, SIGNAL(finished()), this, SIGNAL(progressFinished()), Qt::DirectConnection);
-    connect(this, SIGNAL(progressCancel()), &m_futureWatcher, SLOT(cancel()), Qt::DirectConnection);
-    connect(&m_futureWatcher, SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(progressRangeChanged(int,int)), Qt::DirectConnection);
-    connect(&m_futureWatcher, SIGNAL(progressValueChanged(int)), this, SIGNAL(progressValueChanged(int)), Qt::DirectConnection);
+    connect(&m_futureWatcher, &QFutureWatcherBase::started, this, &HdrCreationManager::progressStarted, Qt::DirectConnection);
+    connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrCreationManager::progressFinished, Qt::DirectConnection);
+    connect(this, &HdrCreationManager::progressCancel, &m_futureWatcher, &QFutureWatcherBase::cancel, Qt::DirectConnection);
+    connect(&m_futureWatcher, &QFutureWatcherBase::progressRangeChanged, this, &HdrCreationManager::progressRangeChanged, Qt::DirectConnection);
+    connect(&m_futureWatcher, &QFutureWatcherBase::progressValueChanged, this, &HdrCreationManager::progressValueChanged, Qt::DirectConnection);
 }
 
 void HdrCreationManager::setConfig(const FusionOperatorConfig &c)
@@ -370,10 +370,10 @@ void HdrCreationManager::set_ais_crop_flag(bool flag)
 void HdrCreationManager::align_with_ais()
 {
     m_align.reset(new Align(m_data, fromCommandLine, 1));
-    connect(m_align.get(), SIGNAL(finishedAligning(int)), this, SIGNAL(finishedAligning(int)));
-    connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
-    connect(m_align.get(), SIGNAL(failedAligning(QProcess::ProcessError)), this, SLOT(ais_failed_slot(QProcess::ProcessError)));
-    connect(m_align.get(), SIGNAL(dataReady(QByteArray)), this, SIGNAL(aisDataReady(QByteArray)));
+    connect(m_align.get(), &Align::finishedAligning, this, &HdrCreationManager::finishedAligning);
+    connect(m_align.get(), &Align::failedAligning, this, &HdrCreationManager::ais_failed);
+    connect(m_align.get(), &Align::failedAligning, this, &HdrCreationManager::ais_failed_slot);
+    connect(m_align.get(), &Align::dataReady, this, &HdrCreationManager::aisDataReady);
 
     m_align->align_with_ais(m_ais_crop_flag);
 }
@@ -556,8 +556,8 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
     const int height = m_data[0].frame()->getHeight();
     const int gridX = width / agGridSize;
     const int gridY = height / agGridSize;
-    connect(ph, SIGNAL(qtSetRange(int, int)), this, SIGNAL(progressRangeChanged(int, int)));
-    connect(ph, SIGNAL(qtSetValue(int)), this, SIGNAL(progressValueChanged(int)));
+    connect(ph, &ProgressHelper::qtSetRange, this, &HdrCreationManager::progressRangeChanged);
+    connect(ph, &ProgressHelper::qtSetValue, this, &HdrCreationManager::progressValueChanged);
     ph->setRange(0,100);
     ph->setValue(0);
     emit progressStarted();
@@ -930,7 +930,7 @@ void HdrCreationManager::reset()
         emit loadFilesAborted();
     }
 
-    disconnect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(loadFilesDone()));
+    disconnect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrCreationManager::loadFilesDone);
     m_data.clear();
     m_tmpdata.clear();
 }

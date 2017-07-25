@@ -40,9 +40,9 @@ DonationDialog::DonationDialog(QWidget* parent)
 {
     m_ui->setupUi(this);
 
-    connect(m_ui->yesButton, SIGNAL(clicked()), this, SLOT(onYesButtonClicked()));
-    connect(m_ui->noButton, SIGNAL(clicked()), this, SLOT(onNoButtonClicked()));
-    connect(m_ui->askMeLaterButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(m_ui->yesButton, &QAbstractButton::clicked, this, &DonationDialog::onYesButtonClicked);
+    connect(m_ui->noButton, &QAbstractButton::clicked, this, &DonationDialog::onNoButtonClicked);
+    connect(m_ui->askMeLaterButton, &QAbstractButton::clicked, this, &QWidget::close);
 }
 
 void DonationDialog::onYesButtonClicked()

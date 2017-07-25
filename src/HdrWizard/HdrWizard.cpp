@@ -21,8 +21,8 @@
  * ----------------------------------------------------------------------
  */
 
-#include "HdrWizard.h"
-#include "ui_HdrWizard.h"
+#include "HdrWizard/HdrWizard.h"
+#include "HdrWizard/ui_HdrWizard.h"
 
 #include <cmath>
 #include <boost/bind.hpp>
@@ -212,55 +212,55 @@ void HdrWizard::setupConnections()
 {
     //connect(&m_ioFutureWatcher, SIGNAL(finished()), this, SLOT(loadInputFilesDone()));
 
-    connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingFiles()), this, SLOT(loadInputFilesDone()));
+    connect(m_hdrCreationManager.data(), &HdrCreationManager::finishedLoadingFiles, this, &HdrWizard::loadInputFilesDone);
     //connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), m_Ui->progressBar, SLOT(show()), Qt::DirectConnection);
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_Ui->progressBar, SLOT(reset()));
     //connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), m_Ui->progressBar, SLOT(hide()), Qt::DirectConnection);
 
-    connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), this, SIGNAL(setRange(int,int)), Qt::DirectConnection);
-    connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), this, SIGNAL(setValue(int)), Qt::DirectConnection);
+    connect(m_hdrCreationManager.data(), &HdrCreationManager::progressRangeChanged, this, &HdrWizard::setRange, Qt::DirectConnection);
+    connect(m_hdrCreationManager.data(), &HdrCreationManager::progressValueChanged, this, &HdrWizard::setValue, Qt::DirectConnection);
 
-    connect(this, SIGNAL(setValue(int)), m_Ui->progressBar, SLOT(setValue(int)), Qt::DirectConnection);
-    connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar, SLOT(setRange(int,int)), Qt::DirectConnection);
+    connect(this, &HdrWizard::setValue, m_Ui->progressBar, &QProgressBar::setValue, Qt::DirectConnection);
+    connect(this, &HdrWizard::setRange, m_Ui->progressBar, &QProgressBar::setRange, Qt::DirectConnection);
 
-    connect(this, SIGNAL(setValue(int)), OsIntegration::getInstancePtr(), SLOT(setProgressValue(int)), Qt::DirectConnection);
-    connect(this, SIGNAL(setRange(int,int)), OsIntegration::getInstancePtr(), SLOT(setProgressRange(int,int)), Qt::DirectConnection);
+    connect(this, &HdrWizard::setValue, OsIntegration::getInstancePtr(), &OsIntegration::setProgressValue, Qt::DirectConnection);
+    connect(this, &HdrWizard::setRange, OsIntegration::getInstancePtr(), &OsIntegration::setProgressRange, Qt::DirectConnection);
 
-    connect(m_Ui->NextFinishButton, SIGNAL(clicked()), this, SLOT(NextFinishButtonClicked()));
+    connect(m_Ui->NextFinishButton, &QAbstractButton::clicked, this, &HdrWizard::NextFinishButtonClicked);
     connect(m_Ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
-    connect(m_Ui->pagestack, SIGNAL(currentChanged(int)), this, SLOT(currentPageChangedInto(int)));
+    connect(m_Ui->pagestack, &QStackedWidget::currentChanged, this, &HdrWizard::currentPageChangedInto);
 
-    connect(m_Ui->loadImagesButton, SIGNAL(clicked()), this, SLOT(loadImagesButtonClicked()));
-    connect(m_Ui->removeImageButton, SIGNAL(clicked()), this, SLOT(removeImageButtonClicked()));
-    connect(m_Ui->clearListButton, SIGNAL(clicked()), this, SLOT(clearListButtonClicked()));
+    connect(m_Ui->loadImagesButton, &QAbstractButton::clicked, this, &HdrWizard::loadImagesButtonClicked);
+    connect(m_Ui->removeImageButton, &QAbstractButton::clicked, this, &HdrWizard::removeImageButtonClicked);
+    connect(m_Ui->clearListButton, &QAbstractButton::clicked, this, &HdrWizard::clearListButtonClicked);
 
-    connect(m_Ui->tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
-    connect(m_Ui->EVSlider, SIGNAL(valueChanged(int)), this, SLOT(updateEVSlider(int)));
+    connect(m_Ui->tableWidget, &QTableWidget::currentCellChanged, this, &HdrWizard::inputHdrFileSelected);
+    connect(m_Ui->EVSlider, &QAbstractSlider::valueChanged, this, &HdrWizard::updateEVSlider);
     connect(m_Ui->ImageEVdsb, SIGNAL(valueChanged(double)), this, SLOT(updateEVSpinBox(double)));
     /*
     connect(m_Ui->ais_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
     connect(m_Ui->mtb_radioButton, SIGNAL(clicked()), this, SLOT(alignSelectionClicked()));
     */
     connect(m_Ui->profileComboBox, SIGNAL(activated(int)), this, SLOT(predefConfigsComboBoxActivated(int)));
-    connect(m_Ui->customConfigCheckBox, SIGNAL(toggled(bool)), this, SLOT(customConfigCheckBoxToggled(bool)));
+    connect(m_Ui->customConfigCheckBox, &QAbstractButton::toggled, this, &HdrWizard::customConfigCheckBoxToggled);
     connect(m_Ui->weightFunctionComboBox, SIGNAL(activated(int)), this, SLOT(weightingFunctionComboBoxActivated(int)));
     connect(m_Ui->responseCurveComboBox, SIGNAL(activated(int)), this, SLOT(responseCurveComboBoxActivated(int)));
-    connect(m_Ui->saveRespCurveFileButton, SIGNAL(clicked()), this, SLOT(saveRespCurveFileButtonClicked()));
+    connect(m_Ui->saveRespCurveFileButton, &QAbstractButton::clicked, this, &HdrWizard::saveRespCurveFileButtonClicked);
     connect(m_Ui->modelComboBox, SIGNAL(activated(int)), this, SLOT(modelComboBoxActivated(int)));
 
     /*
     connect(m_hdrCreationManager.data(), SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
     connect(m_hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
     */
-    connect(m_hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)), this, SLOT(errorWhileLoading(QString)));
+    connect(m_hdrCreationManager.data(), &HdrCreationManager::errorWhileLoading, this, &HdrWizard::errorWhileLoading);
     //connect(m_hdrCreationManager.data(), SIGNAL(expotimeValueChanged(float,int)), this, SLOT(updateGraphicalEVvalue(float,int)));
-    connect(m_hdrCreationManager.data(), SIGNAL(finishedAligning(int)), this, SLOT(finishedAligning(int)));
-    connect(m_hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
-    connect(m_hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
+    connect(m_hdrCreationManager.data(), &HdrCreationManager::finishedAligning, this, &HdrWizard::finishedAligning);
+    connect(m_hdrCreationManager.data(), &HdrCreationManager::ais_failed, this, &HdrWizard::ais_failed);
+    connect(m_hdrCreationManager.data(), &HdrCreationManager::aisDataReady, this, &HdrWizard::writeAisData);
 
     //connect(this, SIGNAL(rejected()), m_hdrCreationManager.data(), SLOT(removeTempFiles()));
     //connect(this, SIGNAL(rejected()), OsIntegration::getInstancePtr(), SLOT(setProgressValue(-1)), Qt::DirectConnection);
-    connect(m_Ui->threshold_horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
+    connect(m_Ui->threshold_horizontalSlider, &QAbstractSlider::valueChanged, this, &HdrWizard::updateThresholdSlider);
     connect(m_Ui->threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateThresholdSpinBox(double)));
 }
 
@@ -803,7 +803,7 @@ void HdrWizard::NextFinishButtonClicked()
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                       m_hdrCreationManager.data(),
                                                       m_patches, h0, false, &m_ph)); // false means auto anti-ghosting
-            connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
+            connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrWizard::autoAntighostingFinished, Qt::DirectConnection);
             m_Ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);
         }
@@ -812,7 +812,7 @@ void HdrWizard::NextFinishButtonClicked()
             m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::doAntiGhosting,
                                                       m_hdrCreationManager.data(),
                                                       m_patches, m_agGoodImageIndex, true, &m_ph)); // true means manual anti-ghosting
-            connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(autoAntighostingFinished()), Qt::DirectConnection);
+            connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrWizard::autoAntighostingFinished, Qt::DirectConnection);
             m_Ui->progressBar->show();
             m_futureWatcher.setFuture(m_future);
         }
@@ -829,7 +829,7 @@ void HdrWizard::createHdr()
     m_future = QtConcurrent::run( boost::bind(&HdrCreationManager::createHdr,
                                                m_hdrCreationManager.data()));
 
-    connect(&m_futureWatcher, SIGNAL(finished()), this, SLOT(createHdrFinished()), Qt::DirectConnection);
+    connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrWizard::createHdrFinished, Qt::DirectConnection);
     m_futureWatcher.setFuture(m_future);
 }
 

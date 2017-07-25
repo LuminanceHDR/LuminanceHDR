@@ -94,12 +94,12 @@ private:
 private slots:
     void finishedLoadingInputFiles();
     void ais_failed(QProcess::ProcessError);
-    void errorWhileLoading(QString);
+    void errorWhileLoading(const QString &);
     void createHDR(int);
     void execCommandLineParamsSlot();
     void setProgressBar(int);
     void updateProgressBar(int);
-    void readData(QByteArray);
+    void readData(const QByteArray &);
 
 signals:
     void finishedParsing();

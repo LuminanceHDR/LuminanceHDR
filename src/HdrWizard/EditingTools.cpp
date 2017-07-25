@@ -172,50 +172,50 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
 } //end of constructor
 
 void EditingTools::setupConnections() {
-    connect(m_Ui->upToolButton,SIGNAL(clicked()),this,SLOT(upClicked()));
-    connect(m_Ui->rightToolButton,SIGNAL(clicked()),this,SLOT(rightClicked()));
-    connect(m_Ui->downToolButton,SIGNAL(clicked()),this,SLOT(downClicked()));
-    connect(m_Ui->leftToolButton,SIGNAL(clicked()),this,SLOT(leftClicked()));
+    connect(m_Ui->upToolButton,&QAbstractButton::clicked,this,&EditingTools::upClicked);
+    connect(m_Ui->rightToolButton,&QAbstractButton::clicked,this,&EditingTools::rightClicked);
+    connect(m_Ui->downToolButton,&QAbstractButton::clicked,this,&EditingTools::downClicked);
+    connect(m_Ui->leftToolButton,&QAbstractButton::clicked,this,&EditingTools::leftClicked);
     connect(m_Ui->horizShiftSB,SIGNAL(valueChanged(int)),this,SLOT(horizShiftChanged(int)));
     connect(m_Ui->vertShiftSB,SIGNAL(valueChanged(int)),this,SLOT(vertShiftChanged(int)));
-    connect(m_Ui->resetButton,SIGNAL(clicked()),this,SLOT(resetCurrent()));
-    connect(m_Ui->resetAllButton,SIGNAL(clicked()),this,SLOT(resetAll()));
+    connect(m_Ui->resetButton,&QAbstractButton::clicked,this,&EditingTools::resetCurrent);
+    connect(m_Ui->resetAllButton,&QAbstractButton::clicked,this,&EditingTools::resetAll);
 
-    connect(m_Ui->movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateMovable(int)));
-    connect(m_Ui->referenceListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updatePivot(int)));
-    connect(m_Ui->prevBothButton,SIGNAL(clicked()),this,SLOT(prevBoth()));
-    connect(m_Ui->nextBothButton,SIGNAL(clicked()),this,SLOT(nextBoth()));
+    connect(m_Ui->movableListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updateMovable);
+    connect(m_Ui->referenceListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updatePivot);
+    connect(m_Ui->prevBothButton,&QAbstractButton::clicked,this,&EditingTools::prevBoth);
+    connect(m_Ui->nextBothButton,&QAbstractButton::clicked,this,&EditingTools::nextBoth);
 
-    connect(m_Ui->whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
-    connect(m_Ui->fitButton,SIGNAL(clicked()),this,SLOT(fitPreview()));
-    connect(m_Ui->origSizeButton,SIGNAL(clicked()),this,SLOT(origSize()));
-    connect(m_Ui->fillButton,SIGNAL(clicked()),this,SLOT(fillPreview()));
-    connect(m_Ui->cropButton,SIGNAL(clicked()),this,SLOT(cropStack()));
-    connect(m_previewWidget,SIGNAL(selectionReady(bool)),m_Ui->cropButton,SLOT(setEnabled(bool)));
-    connect(m_previewWidget,SIGNAL(patchesEdited()),this,SLOT(setPatchesEdited()));
-    connect(m_Ui->saveImagesButton,SIGNAL(clicked()),this,SLOT(saveImagesButtonClicked()));
+    connect(m_Ui->whatsThisButton,&QAbstractButton::clicked,this,&EditingTools::enterWhatsThis);
+    connect(m_Ui->fitButton,&QAbstractButton::clicked,this,&EditingTools::fitPreview);
+    connect(m_Ui->origSizeButton,&QAbstractButton::clicked,this,&EditingTools::origSize);
+    connect(m_Ui->fillButton,&QAbstractButton::clicked,this,&EditingTools::fillPreview);
+    connect(m_Ui->cropButton,&QAbstractButton::clicked,this,&EditingTools::cropStack);
+    connect(m_previewWidget,&PreviewWidget::selectionReady,m_Ui->cropButton,&QWidget::setEnabled);
+    connect(m_previewWidget,&PreviewWidget::patchesEdited,this,&EditingTools::setPatchesEdited);
+    connect(m_Ui->saveImagesButton,&QAbstractButton::clicked,this,&EditingTools::saveImagesButtonClicked);
     connect(m_Ui->blendModeCB,SIGNAL(currentIndexChanged(int)),m_previewWidget,SLOT(requestedBlendMode(int)));
     connect(m_Ui->blendModeCB,SIGNAL(currentIndexChanged(int)),this,SLOT(blendModeCBIndexChanged(int)));
     //connect(antighostToolButton,SIGNAL(toggled(bool)),toolOptionsFrame,SLOT(setVisible(bool)));
     //connect(m_Ui->antighostToolButton,SIGNAL(toggled(bool)),m_Ui->drawingModeFrame,SLOT(setVisible(bool)));
-    connect(m_Ui->antighostToolButton,SIGNAL(toggled(bool)),m_previewWidget,SLOT(switchAntighostingMode(bool)));
-    connect(m_Ui->antighostToolButton,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonToggled(bool)));
-    connect(m_Ui->toolButtonPaint,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonPaintToggled(bool)));
+    connect(m_Ui->antighostToolButton,&QAbstractButton::toggled,m_previewWidget,&PreviewWidget::switchAntighostingMode);
+    connect(m_Ui->antighostToolButton,&QAbstractButton::toggled,this,&EditingTools::antighostToolButtonToggled);
+    connect(m_Ui->toolButtonPaint,&QAbstractButton::toggled,this,&EditingTools::antighostToolButtonPaintToggled);
     connect(m_Ui->agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),m_previewWidget,SLOT(setBrushSize(int)));
     connect(m_Ui->agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),m_previewWidget,SLOT(setBrushStrength(int)));
-    connect(m_Ui->maskColorButton,SIGNAL(clicked()),this,SLOT(maskColorButtonClicked()));
-    connect(m_Ui->lassoColorButton,SIGNAL(clicked()),this,SLOT(lassoColorButtonClicked()));
-    connect(m_Ui->toolButtonSaveMask,SIGNAL(clicked()),m_previewWidget,SLOT(saveAgMask()));
-    connect(m_Ui->toolButtonSaveMask,SIGNAL(clicked()),this,SLOT(saveAgMask()));
-    connect(m_Ui->toolButtonApplyMask,SIGNAL(clicked()),this,SLOT(applySavedAgMask()));
-    connect(m_Ui->threshold_horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(updateThresholdSlider(int)));
+    connect(m_Ui->maskColorButton,&QAbstractButton::clicked,this,&EditingTools::maskColorButtonClicked);
+    connect(m_Ui->lassoColorButton,&QAbstractButton::clicked,this,&EditingTools::lassoColorButtonClicked);
+    connect(m_Ui->toolButtonSaveMask,&QAbstractButton::clicked,m_previewWidget,&PreviewWidget::saveAgMask);
+    connect(m_Ui->toolButtonSaveMask,&QAbstractButton::clicked,this,&EditingTools::saveAgMask);
+    connect(m_Ui->toolButtonApplyMask,&QAbstractButton::clicked,this,&EditingTools::applySavedAgMask);
+    connect(m_Ui->threshold_horizontalSlider, &QAbstractSlider::valueChanged, this, &EditingTools::updateThresholdSlider);
     connect(m_Ui->threshold_doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateThresholdSpinBox(double)));
 
-    connect(m_Ui->Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
+    connect(m_Ui->Next_Finishbutton,&QAbstractButton::clicked,this,&EditingTools::nextClicked);
     //connect(m_previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
-    connect(m_Ui->removeMaskRadioButton,SIGNAL(toggled(bool)),m_previewWidget,SLOT(setBrushMode(bool)));
+    connect(m_Ui->removeMaskRadioButton,&QAbstractButton::toggled,m_previewWidget,&PreviewWidget::setBrushMode);
 
-    connect(m_hcm, SIGNAL(imagesSaved()), this, SLOT(restoreSaveImagesButtonState()));
+    connect(m_hcm, &HdrCreationManager::imagesSaved, this, &EditingTools::restoreSaveImagesButtonState);
 }
 
 EditingTools::~EditingTools()
@@ -495,12 +495,12 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_Ui->prevBothButton->setToolTip(tr("Add good image"));
         m_Ui->nextBothButton->setToolTip(tr("Remove good image"));
         m_Ui->nextBothButton->setDisabled(true);
-        disconnect(m_Ui->prevBothButton,SIGNAL(clicked()),this,SLOT(prevBoth()));
-        disconnect(m_Ui->nextBothButton,SIGNAL(clicked()),this,SLOT(nextBoth()));
-        disconnect(m_Ui->movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateMovable(int)));
-        disconnect(m_Ui->referenceListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updatePivot(int)));
-        connect(m_Ui->prevBothButton,SIGNAL(clicked()),this,SLOT(addGoodImage()));
-        connect(m_Ui->nextBothButton,SIGNAL(clicked()),this,SLOT(removeGoodImage()));
+        disconnect(m_Ui->prevBothButton,&QAbstractButton::clicked,this,&EditingTools::prevBoth);
+        disconnect(m_Ui->nextBothButton,&QAbstractButton::clicked,this,&EditingTools::nextBoth);
+        disconnect(m_Ui->movableListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updateMovable);
+        disconnect(m_Ui->referenceListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updatePivot);
+        connect(m_Ui->prevBothButton,&QAbstractButton::clicked,this,&EditingTools::addGoodImage);
+        connect(m_Ui->nextBothButton,&QAbstractButton::clicked,this,&EditingTools::removeGoodImage);
         m_Ui->referenceListWidget->clear();
         if (m_agGoodImageIndex != -1) {
             m_previewWidget->show();
@@ -515,13 +515,13 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
             updateMovable(idx);
             m_previewWidget->updatePreviewImage();
         }
-        connect(m_Ui->movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
+        connect(m_Ui->movableListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updateAgMask);
     }
     else {
         m_Ui->stackedWidget->setCurrentIndex(0);
         m_antiGhosting = false;
         m_previewWidget->show();
-        disconnect(m_Ui->movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateAgMask(int)));
+        disconnect(m_Ui->movableListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updateAgMask);
         m_Ui->label_editable_list->setText(tr("Ed&itable"));
         m_Ui->label_reference_list->setText(tr("R&eference"));
         m_Ui->prevBothButton->setIcon(QIcon::fromTheme("arrow-up", QIcon(":/program-icons/uparrow")));
@@ -533,12 +533,12 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_Ui->saveImagesButton->setDisabled(false);
         m_Ui->movableListWidget->clear();
         m_Ui->referenceListWidget->clear();
-        disconnect(m_Ui->prevBothButton,SIGNAL(clicked()),this,SLOT(addGoodImage()));
-        disconnect(m_Ui->nextBothButton,SIGNAL(clicked()),this,SLOT(removeGoodImage()));
-        connect(m_Ui->prevBothButton,SIGNAL(clicked()),this,SLOT(prevBoth()));
-        connect(m_Ui->nextBothButton,SIGNAL(clicked()),this,SLOT(nextBoth()));
-        connect(m_Ui->movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateMovable(int)));
-        connect(m_Ui->referenceListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updatePivot(int)));
+        disconnect(m_Ui->prevBothButton,&QAbstractButton::clicked,this,&EditingTools::addGoodImage);
+        disconnect(m_Ui->nextBothButton,&QAbstractButton::clicked,this,&EditingTools::removeGoodImage);
+        connect(m_Ui->prevBothButton,&QAbstractButton::clicked,this,&EditingTools::prevBoth);
+        connect(m_Ui->nextBothButton,&QAbstractButton::clicked,this,&EditingTools::nextBoth);
+        connect(m_Ui->movableListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updateMovable);
+        connect(m_Ui->referenceListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updatePivot);
         foreach(QString s,m_fileList) {
             m_Ui->movableListWidget->addItem(QFileInfo(s).fileName());
             m_Ui->referenceListWidget->addItem(QFileInfo(s).fileName());
