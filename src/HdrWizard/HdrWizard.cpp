@@ -122,7 +122,7 @@ HdrWizard::HdrWizard(QWidget *p,
 {
     m_Ui->setupUi(this);
 
-    if ( !QIcon::hasThemeIcon("edit-clear-list") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("edit-clear-list")) )
         m_Ui->clearListButton->setIcon(QIcon(":/program-icons/edit-clear-list"));
 
     setAcceptDrops(true);
@@ -297,7 +297,7 @@ void HdrWizard::updateTableGrid()
     {
         float normalizedEV = item.getEV() - m_hdrCreationManager->getEVOffset();
 
-        qDebug() << QString("HdrWizard::updateTableGrid(): Fill row %1: %2 %3 EV (%4 EV)")
+        qDebug() << QStringLiteral("HdrWizard::updateTableGrid(): Fill row %1: %2 %3 EV (%4 EV)")
                     .arg(counter)
                     .arg(item.filename())
                     .arg(item.getEV())
@@ -398,7 +398,7 @@ void HdrWizard::updateEVSlider(int newValue)
     m_Ui->ImageEVdsb->setValue(newEV);
     m_Ui->ImageEVdsb->blockSignals(oldState);
 
-    qDebug() << QString("HdrWizard::updateEVSlider(): %1 EV (%2) for %3")
+    qDebug() << QStringLiteral("HdrWizard::updateEVSlider(): %1 EV (%2) for %3")
                 .arg(newEV)
                 .arg(newEV + m_hdrCreationManager->getEVOffset())
                 .arg(currentRow);
@@ -421,7 +421,7 @@ void HdrWizard::updateEVSpinBox(double newEV)
     m_Ui->EVSlider->setValue( (int)(newEV*100) );
     m_Ui->EVSlider->blockSignals(oldState);
 
-    qDebug() << QString("HdrWizard::updateEVSpinBox(): %1 EV (%2) for %3")
+    qDebug() << QStringLiteral("HdrWizard::updateEVSpinBox(): %1 EV (%2) for %3")
                 .arg(newEV)
                 .arg(newEV + m_hdrCreationManager->getEVOffset())
                 .arg(currentRow);
@@ -438,7 +438,7 @@ void HdrWizard::updateEVSpinBox(double newEV)
 
 void HdrWizard::inputHdrFileSelected(int currentRow)
 {
-    qDebug() << QString("HdrWizard::inputHdrFileSelected(%1)").arg(currentRow);
+    qDebug() << QStringLiteral("HdrWizard::inputHdrFileSelected(%1)").arg(currentRow);
 
     if ((currentRow < 0) || (m_Ui->tableWidget->rowCount() < 0))
     {

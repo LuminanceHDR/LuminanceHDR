@@ -31,7 +31,7 @@
 
 namespace
 {
-static const QString DONATION_DIALOG_KEY = "DonationDialogShow";
+static const QString DONATION_DIALOG_KEY = QStringLiteral("DonationDialogShow");
 }
 
 DonationDialog::DonationDialog(QWidget* parent)
@@ -73,5 +73,5 @@ void DonationDialog::showDonationDialog()
 
 void DonationDialog::openDonationPage()
 {
-    QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
+    QDesktopServices::openUrl(QUrl(QStringLiteral("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C"))); //davideanastasia
 }

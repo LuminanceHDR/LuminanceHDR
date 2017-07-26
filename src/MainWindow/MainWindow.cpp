@@ -110,12 +110,12 @@ namespace
 QString getLdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* parent = 0)
 {
     QString filetypes = QObject::tr("All LDR formats");
-    filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
-    filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
-    filetypes += "PNG (*.png *.PNG);;";
-    filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
-    filetypes += "BMP (*.bmp *.BMP);;";
-    filetypes += "TIFF (*.tif *.tiff *.TIF *.TIFF)";
+    filetypes += QLatin1String(" (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;");
+    filetypes += QLatin1String("JPEG (*.jpg *.jpeg *.JPG *.JPEG);;") ;
+    filetypes += QLatin1String("PNG (*.png *.PNG);;");
+    filetypes += QLatin1String("PPM PBM (*.ppm *.pbm *.PPM *.PBM);;");
+    filetypes += QLatin1String("BMP (*.bmp *.BMP);;");
+    filetypes += QLatin1String("TIFF (*.tif *.tiff *.TIF *.TIFF)");
 
     QFileInfo qfi(suggestedFileName);
     QString outputFilename =
@@ -228,12 +228,12 @@ MainWindow::~MainWindow()
     if ( sm_NumMainWindows == 0 )
     {
         // Last MainWindow is dead...
-        luminance_options->setValue("MainWindowState", saveState());
-        luminance_options->setValue("MainWindowGeometry", saveGeometry());
-        luminance_options->setValue("MainWindowSplitterState", m_centralwidget_splitter->saveState());
-        luminance_options->setValue("MainWindowSplitterGeometry", m_centralwidget_splitter->saveGeometry());
-        luminance_options->setValue("MainWindowBottomSplitterState", m_bottom_splitter->saveState());
-        luminance_options->setValue("MainWindowBottomSplitterGeometry", m_bottom_splitter->saveGeometry());
+        luminance_options->setValue(QStringLiteral("MainWindowState"), saveState());
+        luminance_options->setValue(QStringLiteral("MainWindowGeometry"), saveGeometry());
+        luminance_options->setValue(QStringLiteral("MainWindowSplitterState"), m_centralwidget_splitter->saveState());
+        luminance_options->setValue(QStringLiteral("MainWindowSplitterGeometry"), m_centralwidget_splitter->saveGeometry());
+        luminance_options->setValue(QStringLiteral("MainWindowBottomSplitterState"), m_bottom_splitter->saveState());
+        luminance_options->setValue(QStringLiteral("MainWindowBottomSplitterGeometry"), m_bottom_splitter->saveGeometry());
 
 
         sm_updateChecker.reset();
@@ -328,8 +328,8 @@ void MainWindow::createUI()
     m_Ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    restoreState(luminance_options->value("MainWindowState").toByteArray());
-    restoreGeometry(luminance_options->value("MainWindowGeometry").toByteArray());
+    restoreState(luminance_options->value(QStringLiteral("MainWindowState")).toByteArray());
+    restoreGeometry(luminance_options->value(QStringLiteral("MainWindowGeometry")).toByteArray());
 
     if(isFullScreen()) m_Ui->actionShow_Full_Screen->setChecked(true);
 
@@ -394,10 +394,10 @@ void MainWindow::createCentralWidget()
     connect(this, &MainWindow::updatedHDR, m_tonemapPanel, &TonemappingPanel::updatedHDR);
     connect(this, &QObject::destroyed, m_PreviewPanel, &QObject::deleteLater);
 
-    m_centralwidget_splitter->restoreState(luminance_options->value("MainWindowSplitterState").toByteArray());
-    m_centralwidget_splitter->restoreGeometry(luminance_options->value("MainWindowSplitterGeometry").toByteArray());
-    m_bottom_splitter->restoreState(luminance_options->value("MainWindowBottomSplitterState").toByteArray());
-    m_bottom_splitter->restoreGeometry(luminance_options->value("MainWindowBottomSplitterGeometry").toByteArray());
+    m_centralwidget_splitter->restoreState(luminance_options->value(QStringLiteral("MainWindowSplitterState")).toByteArray());
+    m_centralwidget_splitter->restoreGeometry(luminance_options->value(QStringLiteral("MainWindowSplitterGeometry")).toByteArray());
+    m_bottom_splitter->restoreState(luminance_options->value(QStringLiteral("MainWindowBottomSplitterState")).toByteArray());
+    m_bottom_splitter->restoreGeometry(luminance_options->value(QStringLiteral("MainWindowBottomSplitterGeometry")).toByteArray());
 
     QPalette pal = m_tabwidget->palette();
     pal.setColor(QPalette::Dark, Qt::darkGray);
@@ -440,27 +440,27 @@ void MainWindow::createToolBar()
 void MainWindow::createMenus()
 {
     // icons (missing icons in some icon-theme)
-    if ( !QIcon::hasThemeIcon("document-save-all") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("document-save-all")) )
         m_Ui->fileSaveAllAction->setIcon(QIcon(":/program-icons/document-save-all"));
-    if ( !QIcon::hasThemeIcon("zoom") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("zoom")) )
         m_Ui->fitToWindowAct->setIcon(QIcon(":/program-icons/zoom"));
-    if ( !QIcon::hasThemeIcon("whitebalance") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("whitebalance")) )
         m_Ui->actionWhite_Balance->setIcon(QIcon(":/program-icons/whitebalance"));
-    if ( !QIcon::hasThemeIcon("transform-crop") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("transform-crop")) )
         m_Ui->cropToSelectionAction->setIcon(QIcon(":/program-icons/transform-crop"));
-    if ( !QIcon::hasThemeIcon("edit-selection-none") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("edit-selection-none")) )
         m_Ui->removeSelectionAction->setIcon(QIcon(":/program-icons/edit-select-none"));
-    if ( !QIcon::hasThemeIcon("globe") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("globe")) )
         m_Ui->actionExportToHTML->setIcon(QIcon(":/program-icons/globe"));
-    if ( !QIcon::hasThemeIcon("selection-move-to-layer-below") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("selection-move-to-layer-below")) )
         m_Ui->Transplant_Exif_Data_action->setIcon(QIcon(":/program-icons/selection-move-to-layer-below"));
-    if ( !QIcon::hasThemeIcon("tab-close") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("tab-close")) )
         m_Ui->actionRemove_Tab->setIcon(QIcon(":/program-icons/tab-close"));
-    if ( !QIcon::hasThemeIcon("help-donate") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("help-donate")) )
         m_Ui->actionDonate->setIcon(QIcon(":/program-icons/help-donate"));
-    if ( !QIcon::hasThemeIcon("document-save-as-template") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("document-save-as-template")) )
         m_Ui->actionSave_Hdr_Preview->setIcon(QIcon(":/program-icons/document-save-as-template"));
-    if ( !QIcon::hasThemeIcon("help-whatsthis") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("help-whatsthis")) )
         m_Ui->actionWhat_s_This->setIcon(QIcon(":/program-icons/help-whatsthis"));
 
     // About(s)
@@ -557,21 +557,21 @@ void MainWindow::on_fileOpenAction_triggered()
 {
     QString filetypes = tr("All HDR formats ");
     QStringList hdrExtensionsList = getAllHdrFileExtensions();
-    filetypes += "(";
+    filetypes += QLatin1String("(");
     foreach(const QString &s, hdrExtensionsList)
     {
         filetypes += "*" + s + " ";
     }
-    filetypes +=  ");;" ;
-    filetypes += "OpenEXR (*.exr *.EXR);;" ;
-    filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
-    filetypes += "TIFF images (*.TIFF *.TIF *.tiff *.tif);;";
+    filetypes +=  QLatin1String(");;") ;
+    filetypes += QLatin1String("OpenEXR (*.exr *.EXR);;") ;
+    filetypes += QLatin1String("Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;");
+    filetypes += QLatin1String("TIFF images (*.TIFF *.TIF *.tiff *.tif);;");
 #if HAVE_CFITSIO
-    filetypes += "FITS (*.fit *.FIT *.fits *.FITS);;";
+    filetypes += QLatin1String("FITS (*.fit *.FIT *.fits *.FITS);;");
 #endif
-    filetypes += "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw *.srw";
-    filetypes +=             "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;";
-    filetypes += "PFS stream (*.pfs *.PFS)";
+    filetypes += QLatin1String("RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw *.srw");
+    filetypes +=             QLatin1String("*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;");
+    filetypes += QLatin1String("PFS stream (*.pfs *.PFS)");
 
     QStringList files = QFileDialog::getOpenFileNames(this,
                                                       tr("Load one or more HDR images..."),
@@ -648,7 +648,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
         QString format = qfi.suffix();
 
         pfs::Params p;
-        if ( format == "tif" || format == "tiff" )
+        if ( format == QLatin1String("tif") || format == QLatin1String("tiff") )
         {
             TiffModeDialog t(true, -1, this);
             if ( t.exec() == QDialog::Rejected ) return;
@@ -679,12 +679,12 @@ void MainWindow::on_fileSaveAsAction_triggered()
         QString format = QFileInfo(outputFilename).suffix();
 
         if ( format.isEmpty() ) {   // default as JPG
-            format          =   "jpg";
-            outputFilename  +=  ".jpg";
+            format          =   QLatin1String("jpg");
+            outputFilename  +=  QLatin1String(".jpg");
         }
 
         pfs::Params p;
-        if ( format == "png" || format == "jpg" )
+        if ( format == QLatin1String("png") || format == QLatin1String("jpg") )
         {
             ImageQualityDialog savedFileQuality(l_v->getFrame(), format, -1, this);
             savedFileQuality.setWindowTitle( QObject::tr("Save as...") + format.toUpper() );
@@ -693,7 +693,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
             p.set("quality", (size_t)savedFileQuality.getQuality());
         }
 
-        if ( format == "tif" || format == "tiff" )
+        if ( format == QLatin1String("tif") || format == QLatin1String("tiff") )
         {
             TiffModeDialog t(false, -1, this);
             if ( t.exec() == QDialog::Rejected ) return;
@@ -731,7 +731,7 @@ void MainWindow::save_hdr_failed(const QString &fname)
     // TODO give some kind of feedback to the user!
     // TODO pass the name of the file, so the user know which file didn't save correctly
     // DONE!!! Once again, use unified style?
-    QMessageBox::warning(0,"", tr("Failed to save %1").arg(fname), QMessageBox::Ok, QMessageBox::NoButton);
+    QMessageBox::warning(0,QLatin1String(""), tr("Failed to save %1").arg(fname), QMessageBox::Ok, QMessageBox::NoButton);
 }
 
 void MainWindow::save_ldr_success(GenericViewer* saved_ldr, const QString& fname)
@@ -745,7 +745,7 @@ void MainWindow::save_ldr_failed(const QString &fname)
     // TODO give some kind of feedback to the user!
     // TODO pass the name of the file, so the user know which file didn't save correctly
     // DONE!!! Once again, use unified style?
-    QMessageBox::warning(0,"", tr("Failed to save %1").arg(fname), QMessageBox::Ok, QMessageBox::NoButton);
+    QMessageBox::warning(0,QLatin1String(""), tr("Failed to save %1").arg(fname), QMessageBox::Ok, QMessageBox::NoButton);
 }
 
 void MainWindow::on_actionSave_Hdr_Preview_triggered()
@@ -1054,7 +1054,7 @@ void MainWindow::on_normalSizeAct_triggered()
 
 void MainWindow::on_documentationAction_triggered()
 {
-    helpBrowser = new HelpBrowser(this,"Luminance HDR Help");
+    helpBrowser = new HelpBrowser(this,QStringLiteral("Luminance HDR Help"));
     helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
     connect(helpBrowser, &HelpBrowser::closed, this, &MainWindow::helpBrowserClosed);
     helpBrowser->show();
@@ -1473,7 +1473,7 @@ bool MainWindow::event(QEvent* event)
         m_firstWindow = 2;
         if (luminance_options->doShowWindowsOnWindows64Message())
         {
-            QMessageBox::warning(this, "Luminance HDR 32-bit on 64-bit", tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);
+            QMessageBox::warning(this, QStringLiteral("Luminance HDR 32-bit on 64-bit"), tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);
         }
     }
     return result;
@@ -1495,7 +1495,7 @@ bool MainWindow::maybeSave()
         case QMessageBox::Save: {
             // if save == success return true;
             // else return false;
-            QString fname = getHdrFileNameFromSaveDialog(QString("Untitled"), this);
+            QString fname = getHdrFileNameFromSaveDialog(QStringLiteral("Untitled"), this);
 
             if ( !fname.isEmpty() )
             {
@@ -1780,7 +1780,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 
 void MainWindow::tonemapFailed(const QString& error_msg)
 {
-    if (error_msg != "Canceled")
+    if (error_msg != QLatin1String("Canceled"))
     {
         QMessageBox::critical(this, tr("Luminance HDR"),
                               tr("Error: %1").arg(error_msg),
@@ -2028,7 +2028,7 @@ void MainWindow::updateRecentFileActions()
 
     for (int i = 0; i < numRecentFiles; ++i)
     {
-        QString text = QString("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
+        QString text = QStringLiteral("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
         recentFileActs[i]->setText(text);
         recentFileActs[i]->setData(files[i]);
         recentFileActs[i]->setVisible(true);
@@ -2302,15 +2302,15 @@ void MainWindow::on_actionSelect_Interpolation_Method_toggled(bool b)
 
 void MainWindow::on_actionOnline_Documentation_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://luminancehdr.readthedocs.io/en/latest/"));
+    QDesktopServices::openUrl(QUrl(QStringLiteral("http://luminancehdr.readthedocs.io/en/latest/")));
 }
 
 void MainWindow::on_actionDevelopers_Website_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/LuminanceHDR/"));
+    QDesktopServices::openUrl(QUrl(QStringLiteral("https://github.com/LuminanceHDR/")));
 }
 
 void MainWindow::on_actionLuminance_HDR_Website_triggered()
 {
-    QDesktopServices::openUrl(QUrl("http://qtpfsgui.sourceforge.net/"));
+    QDesktopServices::openUrl(QUrl(QStringLiteral("http://qtpfsgui.sourceforge.net/")));
 }

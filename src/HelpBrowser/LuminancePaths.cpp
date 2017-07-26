@@ -45,8 +45,8 @@ const QString dirsep(QDir::separator());
 
 QString LuminancePaths::HelpDir()
 {
-    if (getThis()->LuminancePathsDB.contains("HelpDir")) {
-        QString hf = getThis()->LuminancePathsDB["HelpDir"];
+    if (getThis()->LuminancePathsDB.contains(QStringLiteral("HelpDir"))) {
+        QString hf = getThis()->LuminancePathsDB[QStringLiteral("HelpDir")];
         if ( !hf.isEmpty() && QDir(hf).exists() ) {
             return hf;
         }
@@ -63,14 +63,14 @@ QString LuminancePaths::HelpDir()
     QString hf = LocalizedDirPath(HELPDIR + dirsep);
 #endif
 
-    getThis()->LuminancePathsDB["HelpDir"] = hf;
+    getThis()->LuminancePathsDB[QStringLiteral("HelpDir")] = hf;
 
     return hf;
 }
 
 QString LuminancePaths::LocalizedDirPath(const QString & base, const QString& fallback )
 {
-    QString sep("_");
+    QString sep(QStringLiteral("_"));
     QStringList l_c(QLocale::system().name().split(sep));
     QString langcode( l_c.first() );
     QString countrycode(l_c.last());

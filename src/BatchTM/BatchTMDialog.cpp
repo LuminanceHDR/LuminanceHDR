@@ -59,7 +59,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 #endif
     m_Ui->setupUi(this);
 
-    if ( !QIcon::hasThemeIcon("vcs-added") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("vcs-added")) )
         m_Ui->from_Database_Button->setIcon(QIcon(":/program-icons/vcs-added"));
 
     m_batchTmInputDir = m_luminance_options.getBatchTmPathHdrInput();
@@ -126,8 +126,8 @@ void BatchTMDialog::add_dir_HDRs()
         m_batchTmInputDir = dirname;
         m_luminance_options.setBatchTmPathHdrInput(dirname); // update settings
         QStringList filters;
-        filters << "*.exr" << "*.hdr" << "*.pic" << "*.tiff" << "*.tif" << "*.pfs" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.sr2" << "*.rw2" << "*.srw";
-        filters << "*.EXR" << "*.HDR" << "*.PIC" << "*.TIFF" << "*.TIF" << "*.PFS" << "*.CRW" << "*.CR2" << "*.NEF" << "*.DNG" << "*.MRW" << "*.ORF" << "*.KDC" << "*.DCR" << "*.ARW" << "*.RAF" << "*.PTX" << "*.PEF" << "*.X3F" << "*.RAW" << "*.SR2" << "*.RW2" << "*.SRW";
+        filters << QStringLiteral("*.exr") << QStringLiteral("*.hdr") << QStringLiteral("*.pic") << QStringLiteral("*.tiff") << QStringLiteral("*.tif") << QStringLiteral("*.pfs") << QStringLiteral("*.crw") << QStringLiteral("*.cr2") << QStringLiteral("*.nef") << QStringLiteral("*.dng") << QStringLiteral("*.mrw") << QStringLiteral("*.orf") << QStringLiteral("*.kdc") << QStringLiteral("*.dcr") << QStringLiteral("*.arw") << QStringLiteral("*.raf") << QStringLiteral("*.ptx") << QStringLiteral("*.pef") << QStringLiteral("*.x3f") << QStringLiteral("*.raw") << QStringLiteral("*.sr2") << QStringLiteral("*.rw2") << QStringLiteral("*.srw");
+        filters << QStringLiteral("*.EXR") << QStringLiteral("*.HDR") << QStringLiteral("*.PIC") << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF") << QStringLiteral("*.PFS") << QStringLiteral("*.CRW") << QStringLiteral("*.CR2") << QStringLiteral("*.NEF") << QStringLiteral("*.DNG") << QStringLiteral("*.MRW") << QStringLiteral("*.ORF") << QStringLiteral("*.KDC") << QStringLiteral("*.DCR") << QStringLiteral("*.ARW") << QStringLiteral("*.RAF") << QStringLiteral("*.PTX") << QStringLiteral("*.PEF") << QStringLiteral("*.X3F") << QStringLiteral("*.RAW") << QStringLiteral("*.SR2") << QStringLiteral("*.RW2") << QStringLiteral("*.SRW");
         QDir chosendir(dirname);
         chosendir.setFilter(QDir::Files);
         chosendir.setNameFilters(filters);
@@ -159,7 +159,7 @@ void BatchTMDialog::add_dir_TMopts()
         m_batchTmTmoSettingsDir = dirname;
         m_luminance_options.setBatchTmPathTmoSettings(dirname); // update settings
         QStringList filters;
-        filters << "*.txt";
+        filters << QStringLiteral("*.txt");
         QDir chosendir(dirname);
         chosendir.setFilter(QDir::Files);
         chosendir.setNameFilters(filters);
@@ -372,13 +372,13 @@ void BatchTMDialog::filterComboBoxActivated(int index)
     switch (index)
     {
     case 0:
-        regexp = ".*";
+        regexp = QLatin1String(".*");
         break;
     case 1:
-        regexp = "error";
+        regexp = QLatin1String("error");
         break;
     case 2:
-        regexp = "successful";
+        regexp = QLatin1String("successful");
         break;
     }
     log_filter->setFilterRegExp(QRegExp(regexp, Qt::CaseInsensitive, QRegExp::RegExp));
@@ -592,8 +592,8 @@ void BatchTMDialog::from_database()
         QModelIndexList mil = dialog.getSelectedRows();
         foreach(const QModelIndex &mi, mil) {
             QString comment, tmOperator;
-            comment = model->record(mi.row()).value("comment").toString();
-            tmOperator = model->record(mi.row()).value("operator").toString();
+            comment = model->record(mi.row()).value(QStringLiteral("comment")).toString();
+            tmOperator = model->record(mi.row()).value(QStringLiteral("operator")).toString();
 
             QSqlTableModel *temp_model = new QSqlTableModel;
             temp_model->setTable(tmOperator);
@@ -601,7 +601,7 @@ void BatchTMDialog::from_database()
             QSqlQuery query("SELECT * from " + tmOperator + " WHERE comment = '" + comment + "'");
 
             TonemappingOptions *tm_opt = new TonemappingOptions;
-            if (tmOperator == "ashikhmin") {
+            if (tmOperator == QLatin1String("ashikhmin")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = ashikhmin;
@@ -613,7 +613,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(3).toFloat();
                 }
             }
-            else if (tmOperator == "drago") {
+            else if (tmOperator == QLatin1String("drago")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = drago;
@@ -623,7 +623,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(1).toFloat();
                 }
             }
-            else if (tmOperator == "durand") {
+            else if (tmOperator == QLatin1String("durand")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = durand;
@@ -635,7 +635,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(3).toFloat();
                 }
             }
-            else if (tmOperator == "fattal") {
+            else if (tmOperator == QLatin1String("fattal")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = fattal;
@@ -650,7 +650,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(5).toFloat();
                 }
             }
-            else if (tmOperator == "ferradans") {
+            else if (tmOperator == QLatin1String("ferradans")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = ferradans;
@@ -661,7 +661,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(2).toFloat();
                 }
             }
-            else if (tmOperator == "mantiuk06") {
+            else if (tmOperator == QLatin1String("mantiuk06")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = mantiuk06;
@@ -674,7 +674,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(4).toFloat();
                 }
             }
-            else if (tmOperator == "mantiuk08") {
+            else if (tmOperator == QLatin1String("mantiuk08")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = mantiuk08;
@@ -687,7 +687,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(4).toFloat();
                 }
             }
-            else if (tmOperator == "pattanaik") {
+            else if (tmOperator == QLatin1String("pattanaik")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = pattanaik;
@@ -701,7 +701,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(5).toFloat();
                 }
             }
-            else if (tmOperator == "reinhard02") {
+            else if (tmOperator == QLatin1String("reinhard02")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = reinhard02;
@@ -716,7 +716,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(6).toFloat();
                 }
             }
-            else if (tmOperator == "reinhard05") {
+            else if (tmOperator == QLatin1String("reinhard05")) {
                 m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
                 tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
                 tm_opt->tmoperator = reinhard05;

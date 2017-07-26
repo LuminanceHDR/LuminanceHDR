@@ -54,7 +54,7 @@ void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, 
     QFile file( dataFile );
     if ( !file.open( QIODevice::ReadOnly ) )
         return;
-    QDomDocument doc( "menuentries" );
+    QDomDocument doc( QStringLiteral("menuentries") );
     if ( !doc.setContent( &file ) )
     {
         file.close();
@@ -76,10 +76,10 @@ void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, 
         QDomElement e = n.toElement(); // try to convert the node to an element.
         if( !e.isNull() )
         {
-            if (e.hasAttribute( "text" ) && e.hasAttribute( "file" ))
+            if (e.hasAttribute( QStringLiteral("text") ) && e.hasAttribute( QStringLiteral("file") ))
             {
-                QDomAttr textAttr = e.attributeNode( "text" );
-                QDomAttr fileAttr = e.attributeNode( "file" );
+                QDomAttr textAttr = e.attributeNode( QStringLiteral("text") );
+                QDomAttr fileAttr = e.attributeNode( QStringLiteral("file") );
                 columnData.clear();
                 columnData << textAttr.value() <<  fileAttr.value();
                 if (position > indentations.last())
@@ -117,10 +117,10 @@ void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, 
                     QDomElement ec = child.toElement();
                     if (!ec.isNull())
                     {
-                        if (ec.hasAttribute( "text" ) && ec.hasAttribute( "file" ))
+                        if (ec.hasAttribute( QStringLiteral("text") ) && ec.hasAttribute( QStringLiteral("file") ))
                         {
-                            QDomAttr textAttr = ec.attributeNode( "text" );
-                            QDomAttr fileAttr = ec.attributeNode( "file" );
+                            QDomAttr textAttr = ec.attributeNode( QStringLiteral("text") );
+                            QDomAttr fileAttr = ec.attributeNode( QStringLiteral("file") );
                             columnData.clear();
                             columnData << textAttr.value() <<  fileAttr.value();
                             if (position > indentations.last())
@@ -158,8 +158,8 @@ void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, 
                                 QDomElement ecc = childchild.toElement();
                                 if (!ecc.isNull())
                                 {
-                                    QDomAttr textAttr = ecc.attributeNode( "text" );
-                                    QDomAttr fileAttr = ecc.attributeNode( "file" );
+                                    QDomAttr textAttr = ecc.attributeNode( QStringLiteral("text") );
+                                    QDomAttr fileAttr = ecc.attributeNode( QStringLiteral("file") );
                                     columnData.clear();
                                     columnData << textAttr.value() <<  fileAttr.value();
                                     if (position > indentations.last())

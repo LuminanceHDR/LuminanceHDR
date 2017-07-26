@@ -74,60 +74,60 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
 {
     m_Ui->setupUi(this);
 
-    if ( !QIcon::hasThemeIcon("color-management") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("color-management")) )
         m_Ui->toolButtonCMS->setIcon(QIcon(":/program-icons/color-management"));
-    if ( !QIcon::hasThemeIcon("preferences-system-windows") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("preferences-system-windows")) )
         m_Ui->toolButtonInterface->setIcon(QIcon(":/program-icons/preferences-system-windows"));
 
     connect(m_Ui->themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_themeChanged()));
 
 #ifdef DEMOSAICING_GPL2
     qDebug() << "PreferencesDialog: Found demosaicing pack GPL2";
-    m_Ui->user_qual_comboBox->addItem("DCB");
-    m_Ui->user_qual_comboBox->addItem("AHD v2");
-    m_Ui->user_qual_comboBox->addItem("AFD");
-    m_Ui->user_qual_comboBox->addItem("VCD");
-    m_Ui->user_qual_comboBox->addItem("VCD & AHD");
-    m_Ui->user_qual_comboBox->addItem("LMMSE");
+    m_Ui->user_qual_comboBox->addItem(QStringLiteral("DCB"));
+    m_Ui->user_qual_comboBox->addItem(QStringLiteral("AHD v2"));
+    m_Ui->user_qual_comboBox->addItem(QStringLiteral("AFD"));
+    m_Ui->user_qual_comboBox->addItem(QStringLiteral("VCD"));
+    m_Ui->user_qual_comboBox->addItem(QStringLiteral("VCD & AHD"));
+    m_Ui->user_qual_comboBox->addItem(QStringLiteral("LMMSE"));
 #endif
 #ifdef DEMOSAICING_GPL3
     qDebug() << "PreferencesDialog: Found AMaZE";
-    m_Ui->user_qual_comboBox->addItem("AMaZE");
+    m_Ui->user_qual_comboBox->addItem(QStringLiteral("AMaZE"));
 #endif
 
-    fromIso639ToGuiIndex["cs"]= 0;
-    fromIso639ToGuiIndex["da"]= 1;
-    fromIso639ToGuiIndex["de"]= 2;
-    fromIso639ToGuiIndex["en"]= 3;
-    fromIso639ToGuiIndex["es"]= 4;
-    fromIso639ToGuiIndex["fr"]= 5;
-    fromIso639ToGuiIndex["id"]= 6;
-    fromIso639ToGuiIndex["it"]= 7;
-    fromIso639ToGuiIndex["hu"]= 8;
-    fromIso639ToGuiIndex["pl"]= 9;
-    fromIso639ToGuiIndex["pt_BR"]= 10;
-    fromIso639ToGuiIndex["ru"]=11;
-    fromIso639ToGuiIndex["ro"]=12;
-    fromIso639ToGuiIndex["fi"]=13;
-    fromIso639ToGuiIndex["tr"]=14;
-    fromIso639ToGuiIndex["zh"]=15;
+    fromIso639ToGuiIndex[QStringLiteral("cs")]= 0;
+    fromIso639ToGuiIndex[QStringLiteral("da")]= 1;
+    fromIso639ToGuiIndex[QStringLiteral("de")]= 2;
+    fromIso639ToGuiIndex[QStringLiteral("en")]= 3;
+    fromIso639ToGuiIndex[QStringLiteral("es")]= 4;
+    fromIso639ToGuiIndex[QStringLiteral("fr")]= 5;
+    fromIso639ToGuiIndex[QStringLiteral("id")]= 6;
+    fromIso639ToGuiIndex[QStringLiteral("it")]= 7;
+    fromIso639ToGuiIndex[QStringLiteral("hu")]= 8;
+    fromIso639ToGuiIndex[QStringLiteral("pl")]= 9;
+    fromIso639ToGuiIndex[QStringLiteral("pt_BR")]= 10;
+    fromIso639ToGuiIndex[QStringLiteral("ru")]=11;
+    fromIso639ToGuiIndex[QStringLiteral("ro")]=12;
+    fromIso639ToGuiIndex[QStringLiteral("fi")]=13;
+    fromIso639ToGuiIndex[QStringLiteral("tr")]=14;
+    fromIso639ToGuiIndex[QStringLiteral("zh")]=15;
 
-    fromGuiIndexToIso639[ 0]="cs";
-    fromGuiIndexToIso639[ 1]="da";
-    fromGuiIndexToIso639[ 2]="de";
-    fromGuiIndexToIso639[ 3]="en";
-    fromGuiIndexToIso639[ 4]="es";
-    fromGuiIndexToIso639[ 5]="fr";
-    fromGuiIndexToIso639[ 6]="id";
-    fromGuiIndexToIso639[ 7]="it";
-    fromGuiIndexToIso639[ 8]="hu";
-    fromGuiIndexToIso639[ 9]="pl";
-    fromGuiIndexToIso639[10]="pt_BR";
-    fromGuiIndexToIso639[11]="ru";
-    fromGuiIndexToIso639[12]="ro";
-    fromGuiIndexToIso639[13]="fi";
-    fromGuiIndexToIso639[14]="tr";
-    fromGuiIndexToIso639[15]="zh";
+    fromGuiIndexToIso639[ 0]=QLatin1String("cs");
+    fromGuiIndexToIso639[ 1]=QLatin1String("da");
+    fromGuiIndexToIso639[ 2]=QLatin1String("de");
+    fromGuiIndexToIso639[ 3]=QLatin1String("en");
+    fromGuiIndexToIso639[ 4]=QLatin1String("es");
+    fromGuiIndexToIso639[ 5]=QLatin1String("fr");
+    fromGuiIndexToIso639[ 6]=QLatin1String("id");
+    fromGuiIndexToIso639[ 7]=QLatin1String("it");
+    fromGuiIndexToIso639[ 8]=QLatin1String("hu");
+    fromGuiIndexToIso639[ 9]=QLatin1String("pl");
+    fromGuiIndexToIso639[10]=QLatin1String("pt_BR");
+    fromGuiIndexToIso639[11]=QLatin1String("ru");
+    fromGuiIndexToIso639[12]=QLatin1String("ro");
+    fromGuiIndexToIso639[13]=QLatin1String("fi");
+    fromGuiIndexToIso639[14]=QLatin1String("tr");
+    fromGuiIndexToIso639[15]=QLatin1String("zh");
 
     //for (const QString &style : QStyleFactory::keys())
     foreach (const QString &style, QStyleFactory::keys())
@@ -218,31 +218,31 @@ void PreferencesDialog::on_okButton_clicked()
 
     // --- Other Parameters
 
-    QStringList ais_options = m_Ui->aisParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+    QStringList ais_options = m_Ui->aisParamsLineEdit->text().split(QStringLiteral(" "),QString::SkipEmptyParts);
     luminance_options.setAlignImageStackOptions(ais_options, true);
 
     // --- RAW parameters
     luminance_options.setRawFourColorRGB( m_Ui->four_color_rgb_CB->isChecked() );
     luminance_options.setRawDoNotUseFujiRotate( m_Ui->do_not_use_fuji_rotate_CB->isChecked() );
     QString user_qual = m_Ui->user_qual_comboBox->itemText( m_Ui->user_qual_comboBox->currentIndex() );
-    if (user_qual == "Bilinear" ||
-        user_qual == "VNG" ||
-        user_qual == "PPG" ||
-        user_qual == "AHD")
+    if (user_qual == QLatin1String("Bilinear") ||
+        user_qual == QLatin1String("VNG") ||
+        user_qual == QLatin1String("PPG") ||
+        user_qual == QLatin1String("AHD"))
             luminance_options.setRawUserQuality( m_Ui->user_qual_comboBox->currentIndex() );
-    else if(user_qual == "DCB")
+    else if(user_qual == QLatin1String("DCB"))
             luminance_options.setRawUserQuality( 4 );
-    else if(user_qual == "AHD v2")
+    else if(user_qual == QLatin1String("AHD v2"))
             luminance_options.setRawUserQuality( 5 );
-    else if(user_qual == "AFD")
+    else if(user_qual == QLatin1String("AFD"))
             luminance_options.setRawUserQuality( 6 );
-    else if(user_qual == "VCD")
+    else if(user_qual == QLatin1String("VCD"))
             luminance_options.setRawUserQuality( 7 );
-    else if(user_qual == "VCD & AHD")
+    else if(user_qual == QLatin1String("VCD & AHD"))
             luminance_options.setRawUserQuality( 8 );
-    else if(user_qual == "LMMSE")
+    else if(user_qual == QLatin1String("LMMSE"))
             luminance_options.setRawUserQuality( 9 );
-    else if(user_qual == "AMaZE")
+    else if(user_qual == QLatin1String("AMaZE"))
             luminance_options.setRawUserQuality( 10 );
     luminance_options.setRawMedPasses( m_Ui->med_passes_spinBox->value() );
     luminance_options.setRawWhiteBalanceMethod( m_Ui->wb_method_comboBox->currentIndex() );
@@ -583,7 +583,7 @@ void PreferencesDialog::from_options_to_gui()
     //codes which are key for the fromIso639ToGuiIndex QMap, provide the default "en"
     if (!fromIso639ToGuiIndex.contains(luminance_options.getGuiLang()))
     {
-        luminance_options.setGuiLang("en");
+        luminance_options.setGuiLang(QStringLiteral("en"));
     }
     m_Ui->languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(luminance_options.getGuiLang()));
     m_Ui->themeComboBox->setCurrentText(luminance_options.getGuiTheme());
@@ -595,7 +595,7 @@ void PreferencesDialog::from_options_to_gui()
 
     m_Ui->numThreadspinBox->setValue( luminance_options.getBatchTmNumThreads() );
 
-    m_Ui->aisParamsLineEdit->setText( luminance_options.getAlignImageStackOptions().join(" ") );
+    m_Ui->aisParamsLineEdit->setText( luminance_options.getAlignImageStackOptions().join(QStringLiteral(" ")) );
 
     m_Ui->previewsWidthSpinBox->setValue( luminance_options.getPreviewWidth() );
 
@@ -603,7 +603,7 @@ void PreferencesDialog::from_options_to_gui()
 
     m_Ui->chkPortableMode->setChecked(LuminanceOptions::isCurrentPortableMode);
 
-    QFile file(QDir(QApplication::applicationDirPath()).filePath(".write"));
+    QFile file(QDir(QApplication::applicationDirPath()).filePath(QStringLiteral(".write")));
     bool dirWritable = file.open(QIODevice::ReadWrite);
     if (dirWritable)
         file.remove();
@@ -760,7 +760,7 @@ void PreferencesDialog::on_exportFileButton_clicked()
 
 void PreferencesDialog::on_themeChanged()
 {
-    if (m_Ui->themeComboBox->currentText() == "Macintosh")
+    if (m_Ui->themeComboBox->currentText() == QLatin1String("Macintosh"))
     {
         m_Ui->chkDarkMode->setCheckState(Qt::Unchecked);
         m_Ui->chkDarkMode->setDisabled(true);

@@ -43,6 +43,6 @@ class LuminancePaths
 
     public:
         static QString HelpDir();
-        static QString LocalizedDirPath(const QString& base, const QString& fallback = QString("en"));
+        static QString LocalizedDirPath(const QString& base, const QString& fallback = QStringLiteral("en"));
 };
 #endif

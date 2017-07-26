@@ -56,11 +56,11 @@ QStringList getAllHdrFileExtensions()
 {
     QStringList listAll;
     QStringList list;
-    list << ".exr" << ".hdr" << ".pic" << ".tiff" << ".tif";
+    list << QStringLiteral(".exr") << QStringLiteral(".hdr") << QStringLiteral(".pic") << QStringLiteral(".tiff") << QStringLiteral(".tif");
 #if HAVE_CFITSIO
-    list << ".fit" << ".fits";
+    list << QStringLiteral(".fit") << QStringLiteral(".fits");
 #endif
-    list << ".pfs" << ".crw" << ".cr2" << ".nef" << ".dng" << ".mrw" << ".orf" << ".kdc" << ".dcr" << ".arw" << ".raf" << ".ptx" << ".pef" << ".x3f" << ".raw" << ".rw2" << ".sr2" << ".3fr" << ".mef" << ".mos" << ".erf" << ".nrw" << ".srw";
+    list << QStringLiteral(".pfs") << QStringLiteral(".crw") << QStringLiteral(".cr2") << QStringLiteral(".nef") << QStringLiteral(".dng") << QStringLiteral(".mrw") << QStringLiteral(".orf") << QStringLiteral(".kdc") << QStringLiteral(".dcr") << QStringLiteral(".arw") << QStringLiteral(".raf") << QStringLiteral(".ptx") << QStringLiteral(".pef") << QStringLiteral(".x3f") << QStringLiteral(".raw") << QStringLiteral(".rw2") << QStringLiteral(".sr2") << QStringLiteral(".3fr") << QStringLiteral(".mef") << QStringLiteral(".mos") << QStringLiteral(".erf") << QStringLiteral(".nrw") << QStringLiteral(".srw");
 
     foreach(const QString &s, list)
     {

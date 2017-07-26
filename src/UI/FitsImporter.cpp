@@ -67,11 +67,11 @@ FitsImporter::FitsImporter(QWidget *parent)
 {
     m_Ui->setupUi(this);
 
-    if ( !QIcon::hasThemeIcon("upload-media") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("upload-media")) )
         m_Ui->pushButtonLoad->setIcon(QIcon(":/program-icons/upload-media"));
-    if ( !QIcon::hasThemeIcon("chronometer-reset") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("chronometer-reset")) )
         m_Ui->pushButtonReset->setIcon(QIcon(":/program-icons/chronometer-reset"));
-    if ( !QIcon::hasThemeIcon("document-preview") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("document-preview")) )
         m_Ui->pushButtonPreview->setIcon(QIcon(":/program-icons/document-preview"));
 
 #ifdef WIN32
@@ -110,9 +110,9 @@ FitsImporter::FitsImporter(QWidget *parent)
     // wizard stuff
 
     m_Ui->wizardPageLoadFiles->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
-    m_Ui->wizardPageLoadFiles->registerExtField("lineEditRed*", m_Ui->lineEditRed);
-    m_Ui->wizardPageLoadFiles->registerExtField("lineEditGreen*", m_Ui->lineEditGreen);
-    m_Ui->wizardPageLoadFiles->registerExtField("lineEditBlue*", m_Ui->lineEditBlue);
+    m_Ui->wizardPageLoadFiles->registerExtField(QStringLiteral("lineEditRed*"), m_Ui->lineEditRed);
+    m_Ui->wizardPageLoadFiles->registerExtField(QStringLiteral("lineEditGreen*"), m_Ui->lineEditGreen);
+    m_Ui->wizardPageLoadFiles->registerExtField(QStringLiteral("lineEditBlue*"), m_Ui->lineEditBlue);
 
     m_Ui->wizardPagePreview->setCommitPage(true);
     m_Ui->wizardPageAlignment->setCompleteStatus(ExtWizardPage::CompleteStatus::AlwaysFalse);
@@ -126,7 +126,7 @@ pfs::Frame* FitsImporter::getFrame()
 
 void FitsImporter::selectInputFile(QLineEdit* textField, QString* channel)
 {
-    QString filetypes = "FITS (*.fit *.FIT *.fits *.FITS)";
+    QString filetypes = QStringLiteral("FITS (*.fit *.FIT *.fits *.FITS)");
     *channel = QFileDialog::getOpenFileName(this, tr("Load one FITS image..."),
                                                       m_luminance_options.getDefaultPathHdrIn(),
                                                       filetypes);
@@ -227,7 +227,7 @@ void FitsImporter::loadFilesDone(QString error_string)
     {
         if ( i->isValid() )
         {
-            qDebug() << QString("Insert data for %1").arg(i->filename());
+            qDebug() << QStringLiteral("Insert data for %1").arg(i->filename());
             m_data.push_back(*i);
             m_previewFrame->getLabel(idx)->setPixmap(QPixmap::fromImage(i->qimage()));
             m_previewFrame->getLabel(idx)->setEnabled(true);
@@ -238,7 +238,7 @@ void FitsImporter::loadFilesDone(QString error_string)
         }
         else
         {
-            QMessageBox::warning(0,"", tr("Cannot load FITS image %1. \nERROR: %2")
+            QMessageBox::warning(0,QLatin1String(""), tr("Cannot load FITS image %1. \nERROR: %2")
                     .arg(i->filename(), error_string), QMessageBox::Ok, QMessageBox::NoButton);
             m_data.clear();
             m_tmpdata.clear();
@@ -258,7 +258,7 @@ void FitsImporter::loadFilesDone(QString error_string)
     m_previewFrame->selectLabel(i);
 
     if (!framesHaveSameSize()) {
-        QMessageBox::warning(0,"", tr("FITS images have different size"), QMessageBox::Ok, QMessageBox::NoButton);
+        QMessageBox::warning(0,QLatin1String(""), tr("FITS images have different size"), QMessageBox::Ok, QMessageBox::NoButton);
         m_data.clear();
         m_tmpdata.clear();
         m_contents.clear();
@@ -472,7 +472,7 @@ void FitsImporter::ais_finished(int exitcode)
     {
         QApplication::restoreOverrideCursor();
         qDebug() << "align_image_stack exited with exit code " << exitcode;
-        QMessageBox::warning(0,"", tr("align_image_stack exited with exit code %1").arg(exitcode), QMessageBox::Ok, QMessageBox::NoButton);
+        QMessageBox::warning(0,QLatin1String(""), tr("align_image_stack exited with exit code %1").arg(exitcode), QMessageBox::Ok, QMessageBox::NoButton);
     }
     else {
         QApplication::restoreOverrideCursor();
@@ -487,7 +487,7 @@ void FitsImporter::ais_failed_slot(QProcess::ProcessError error)
     qDebug() << "align_image_stack failed";
     m_align->removeTempFiles();
     QApplication::restoreOverrideCursor();
-    QMessageBox::warning(0,"", tr("align_image_stack failed with error"), QMessageBox::Ok, QMessageBox::NoButton);
+    QMessageBox::warning(0,QLatin1String(""), tr("align_image_stack failed with error"), QMessageBox::Ok, QMessageBox::NoButton);
 }
 
 bool FitsImporter::framesHaveSameSize()

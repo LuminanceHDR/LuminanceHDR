@@ -112,7 +112,7 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     htmlQuality(2),
     pageName(),
     imagesDir(),
-    saveAlignedImagesPrefix("")
+    saveAlignedImagesPrefix(QLatin1String(""))
 {
 
     hdrcreationconfig.weightFunction = WEIGHT_TRIANGULAR;
@@ -334,7 +334,7 @@ directory must exist.  Useful to avoid clutter in the current directory. \
                 printErrorAndExit(tr("Error: Alignment engine not recognized."));
         }
         if (vm.count("ev")) {
-            QStringList evstringlist=QString::fromStdString(vm["ev"].as<std::string>()).split(",");
+            QStringList evstringlist=QString::fromStdString(vm["ev"].as<std::string>()).split(QStringLiteral(","));
             for (int i=0; i<evstringlist.count(); i++)
                 ev.append(toFloatWithErrMsg(evstringlist.at(i)));
         }
@@ -546,7 +546,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         }
         catch(...)
         {
-            printErrorAndExit("Catched unhandled exception");
+            printErrorAndExit(QStringLiteral("Catched unhandled exception"));
         }
     }
     else
@@ -610,7 +610,7 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
 
     printIfVerbose( tr("Creating (in memory) the HDR.") , verbose);
 
-    if (errorcode == 0 && alignMode != NO_ALIGN && saveAlignedImagesPrefix != "") {
+    if (errorcode == 0 && alignMode != NO_ALIGN && saveAlignedImagesPrefix != QLatin1String("")) {
         hdrCreationManager->saveImages(saveAlignedImagesPrefix);
     }
 
@@ -712,7 +712,7 @@ void  CommandLineInterfaceManager::startTonemap()
 
         QString inputfname; // to copy EXIF tags from 1st input image to saved LDR
         if (inputFiles.isEmpty())
-            inputfname = "";
+            inputfname = QLatin1String("");
         else
             inputfname = inputFiles.first();
 

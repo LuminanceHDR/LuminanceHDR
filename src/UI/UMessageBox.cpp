@@ -92,15 +92,15 @@ void UMessageBox::about(QWidget* parent)
     ui.authorsBox->setOpenExternalLinks(true);
     ui.thanksToBox->setOpenExternalLinks(true);
     ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)).append(" [Build ").append(QString(g_GIT_SHA1).leftRef(6)).append("]"));
+    ui.label_version->setText(ui.label_version->text().append(QStringLiteral(LUMINANCEVERSION)).append(" [Build ").append(QString(g_GIT_SHA1).leftRef(6)).append("]"));
 
     bool license_file_not_found=true;
     QString docDir = QCoreApplication::applicationDirPath();
     docDir.append("/../Resources");
-    QStringList paths = QStringList( BASEDIR "/share/doc/luminance-hdr") << BASEDIR "/share/luminance-hdr" << docDir << "/Applications/luminance.app/Contents/Resources" << "./" << QCoreApplication::applicationDirPath();
+    QStringList paths = QStringList( BASEDIR "/share/doc/luminance-hdr") << BASEDIR "/share/luminance-hdr" << docDir << QStringLiteral("/Applications/luminance.app/Contents/Resources") << QStringLiteral("./") << QCoreApplication::applicationDirPath();
     foreach (const QString &path, paths)
     {
-        QString fname(path+QString("/LICENSE"));
+        QString fname(path+QStringLiteral("/LICENSE"));
         if (QFile::exists(fname))
         {
             QFile file(fname);
@@ -119,12 +119,12 @@ void UMessageBox::about(QWidget* parent)
         ui.GPLbox->setOpenExternalLinks(true);
         ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
         ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags")
-                .arg("<html>", "<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">", "</a></html>"));
+                .arg(QStringLiteral("<html>"), QStringLiteral("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">"), QStringLiteral("</a></html>")));
     }
     bool changelog_file_not_found=true;
     foreach (const QString &path, paths)
     {
-        QString fname(path+QString("/Changelog"));
+        QString fname(path+QStringLiteral("/Changelog"));
         if (QFile::exists(fname))
         {
             QFile file(fname);
@@ -143,7 +143,7 @@ void UMessageBox::about(QWidget* parent)
         ui.ChangelogBox->setOpenExternalLinks(true);
         ui.ChangelogBox->setTextInteractionFlags(Qt::TextBrowserInteraction);
         ui.ChangelogBox->setHtml(tr("%1 Changelog document not found, you can find it online: %2here%3","%2 and %3 are html tags")
-                .arg("<html>", "<a href=\"http://qtpfsgui.sourceforge.net/updater/Changelog\">", "</a></html>"));
+                .arg(QStringLiteral("<html>"), QStringLiteral("<a href=\"http://qtpfsgui.sourceforge.net/updater/Changelog\">"), QStringLiteral("</a></html>")));
     }
     about->show();
 }

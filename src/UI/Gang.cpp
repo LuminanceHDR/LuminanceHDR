@@ -233,16 +233,16 @@ void Gang::setDefault()
 
 QString Gang::flag(const QString& f) const
 {
-    if ( !changed() ) return "";
+    if ( !changed() ) return QLatin1String("");
 
-    return QString(" %1 %2").arg(f).arg(value);
+    return QStringLiteral(" %1 %2").arg(f).arg(value);
 }
 
 QString Gang::fname(const QString& f) const
 {
-    if ( !changed() ) return "";
+    if ( !changed() ) return QLatin1String("");
 
-    return QString(".%1%2").arg(f).arg(value);
+    return QStringLiteral(".%1%2").arg(f).arg(value);
 }
 
 void Gang::setupUndo()

@@ -147,90 +147,90 @@ char TonemappingOptions::getRatingForOperator()
 }
 
 const QString TonemappingOptions::getPostfix() {
-    QString postfix=QString("pregamma_%1_").arg(pregamma);
+    QString postfix=QStringLiteral("pregamma_%1_").arg(pregamma);
     switch (tmoperator) {
     case mantiuk06:
         {
-            postfix+="mantiuk06_";
+            postfix+=QLatin1String("mantiuk06_");
             float contrastfactor=operator_options.mantiuk06options.contrastfactor;
             float saturationfactor=operator_options.mantiuk06options.saturationfactor;
             float detailfactor=operator_options.mantiuk06options.detailfactor;
             bool contrast_eq=operator_options.mantiuk06options.contrastequalization;
             if (contrast_eq) {
-                    postfix+=QString("contrast_equalization_%1_").arg(contrastfactor);
+                    postfix+=QStringLiteral("contrast_equalization_%1_").arg(contrastfactor);
             } else {
-                    postfix+=QString("contrast_mapping_%1_").arg(contrastfactor);
+                    postfix+=QStringLiteral("contrast_mapping_%1_").arg(contrastfactor);
             }
-            postfix+=QString("saturation_factor_%1_").arg(saturationfactor);
-            postfix+=QString("detail_factor_%1").arg(detailfactor);
+            postfix+=QStringLiteral("saturation_factor_%1_").arg(saturationfactor);
+            postfix+=QStringLiteral("detail_factor_%1").arg(detailfactor);
         }
         break;
     case mantiuk08:
         {
-            postfix+="mantiuk08_";
+            postfix+=QLatin1String("mantiuk08_");
             float colorsaturation=operator_options.mantiuk08options.colorsaturation;
             float contrastenhancement=operator_options.mantiuk08options.contrastenhancement;
             float luminancelevel=operator_options.mantiuk08options.luminancelevel;
             bool setluminance=operator_options.mantiuk08options.setluminance;
             if (setluminance) {
-                    postfix+=QString("luminancelevel_%1_").arg(luminancelevel);
+                    postfix+=QStringLiteral("luminancelevel_%1_").arg(luminancelevel);
             } else {
-                    postfix+=QString("auto_luminance");
+                    postfix+=QStringLiteral("auto_luminance");
             }
-            postfix+=QString("colorsaturation_%1_").arg(colorsaturation);
-            postfix+=QString("contrastenhancement_%1").arg(contrastenhancement);
+            postfix+=QStringLiteral("colorsaturation_%1_").arg(colorsaturation);
+            postfix+=QStringLiteral("contrastenhancement_%1").arg(contrastenhancement);
         }
         break;
     case fattal:
         {
             if (!operator_options.fattaloptions.newfattal)
-                    postfix+="v1_";
-            postfix+="fattal_";
+                    postfix+=QLatin1String("v1_");
+            postfix+=QLatin1String("fattal_");
             float alpha=operator_options.fattaloptions.alpha;
             float beta=operator_options.fattaloptions.beta;
             float saturation2=operator_options.fattaloptions.color;
             float noiseredux=operator_options.fattaloptions.noiseredux;
             bool  fftsolver=operator_options.fattaloptions.fftsolver;
-            postfix+=QString("alpha_%1_").arg(alpha);
-            postfix+=QString("beta_%1_").arg(beta);
-            postfix+=QString("saturation_%1_").arg(saturation2);
-            postfix+=QString("noiseredux_%1_").arg(noiseredux);
-            postfix+=QString("fftsolver_%1").arg(fftsolver);
+            postfix+=QStringLiteral("alpha_%1_").arg(alpha);
+            postfix+=QStringLiteral("beta_%1_").arg(beta);
+            postfix+=QStringLiteral("saturation_%1_").arg(saturation2);
+            postfix+=QStringLiteral("noiseredux_%1_").arg(noiseredux);
+            postfix+=QStringLiteral("fftsolver_%1").arg(fftsolver);
         }
         break;
     case ferradans:
         {
-            postfix+="ferradans_";
+            postfix+=QLatin1String("ferradans_");
             float rho=operator_options.ferradansoptions.rho;
             float inv_alpha=operator_options.ferradansoptions.inv_alpha;
-            postfix+=QString("rho_%1_").arg(rho);
-            postfix+=QString("inv_alpha_%1_").arg(inv_alpha);
+            postfix+=QStringLiteral("rho_%1_").arg(rho);
+            postfix+=QStringLiteral("inv_alpha_%1_").arg(inv_alpha);
         }
         break;
     case mai:
         {
-            postfix+="mai_";
+            postfix+=QLatin1String("mai_");
         }
         break;
     case ashikhmin:
         {
-            postfix+="ashikhmin_";
+            postfix+=QLatin1String("ashikhmin_");
             if (operator_options.ashikhminoptions.simple) {
-                    postfix+="-simple";
+                    postfix+=QLatin1String("-simple");
             } else {
                     if (operator_options.ashikhminoptions.eq2) {
-                            postfix+="-eq2_";
+                            postfix+=QLatin1String("-eq2_");
                     } else {
-                            postfix+="-eq4_";
+                            postfix+=QLatin1String("-eq4_");
                     }
-                    postfix+=QString("local_%1").arg(operator_options.ashikhminoptions.lct);
+                    postfix+=QStringLiteral("local_%1").arg(operator_options.ashikhminoptions.lct);
             }
         }
         break;
     case drago:
         {
-            postfix+="drago_";
-            postfix+=QString("bias_%1").arg(operator_options.dragooptions.bias);
+            postfix+=QLatin1String("drago_");
+            postfix+=QStringLiteral("bias_%1").arg(operator_options.dragooptions.bias);
         }
         break;
     case durand:
@@ -238,10 +238,10 @@ const QString TonemappingOptions::getPostfix() {
             float spatial=operator_options.durandoptions.spatial;
             float range=operator_options.durandoptions.range;
             float base=operator_options.durandoptions.base;
-            postfix+="durand_";
-            postfix+=QString("spatial_%1_").arg(spatial);
-            postfix+=QString("range_%1_").arg(range);
-            postfix+=QString("base_%1").arg(base);
+            postfix+=QLatin1String("durand_");
+            postfix+=QStringLiteral("spatial_%1_").arg(spatial);
+            postfix+=QStringLiteral("range_%1_").arg(range);
+            postfix+=QStringLiteral("base_%1").arg(base);
         }
         break;
     case pattanaik:
@@ -249,15 +249,15 @@ const QString TonemappingOptions::getPostfix() {
             float multiplier=operator_options.pattanaikoptions.multiplier;
             float cone=operator_options.pattanaikoptions.cone;
             float rod=operator_options.pattanaikoptions.rod;
-            postfix+="pattanaik00_";
-            postfix+=QString("mul_%1_").arg(multiplier);
+            postfix+=QLatin1String("pattanaik00_");
+            postfix+=QStringLiteral("mul_%1_").arg(multiplier);
             if (operator_options.pattanaikoptions.local) {
-                    postfix+="local";
+                    postfix+=QLatin1String("local");
             } else if (operator_options.pattanaikoptions.autolum) {
-                    postfix+="autolum";
+                    postfix+=QLatin1String("autolum");
             } else {
-                    postfix+=QString("cone_%1_").arg(cone);
-                    postfix+=QString("rod_%1_").arg(rod);
+                    postfix+=QStringLiteral("cone_%1_").arg(cone);
+                    postfix+=QStringLiteral("rod_%1_").arg(rod);
             }
         }
         break;
@@ -268,14 +268,14 @@ const QString TonemappingOptions::getPostfix() {
             int range=operator_options.reinhard02options.range;
             int lower=operator_options.reinhard02options.lower;
             int upper=operator_options.reinhard02options.upper;
-            postfix+="reinhard02_";
-            postfix+=QString("key_%1_").arg(key);
-            postfix+=QString("phi_%1").arg(phi);
+            postfix+=QLatin1String("reinhard02_");
+            postfix+=QStringLiteral("key_%1_").arg(key);
+            postfix+=QStringLiteral("phi_%1").arg(phi);
             if (operator_options.reinhard02options.scales) {
-                postfix+=QString("_scales_");
-                postfix+=QString("range_%1_").arg(range);
-                postfix+=QString("lower%1_").arg(lower);
-                postfix+=QString("upper%1").arg(upper);
+                postfix+=QStringLiteral("_scales_");
+                postfix+=QStringLiteral("range_%1_").arg(range);
+                postfix+=QStringLiteral("lower%1_").arg(lower);
+                postfix+=QStringLiteral("upper%1").arg(upper);
             }
         }
         break;
@@ -284,10 +284,10 @@ const QString TonemappingOptions::getPostfix() {
             float brightness=operator_options.reinhard05options.brightness;
             float chromaticAdaptation= operator_options.reinhard05options.chromaticAdaptation;
             float lightAdaptation=operator_options.reinhard05options.lightAdaptation;
-            postfix+="reinhard05_";
-            postfix+=QString("brightness_%1_").arg(brightness);
-            postfix+=QString("chromatic_adaptation_%1_").arg(chromaticAdaptation);
-            postfix+=QString("light_adaptation_%1").arg(lightAdaptation);
+            postfix+=QLatin1String("reinhard05_");
+            postfix+=QStringLiteral("brightness_%1_").arg(brightness);
+            postfix+=QStringLiteral("chromatic_adaptation_%1_").arg(chromaticAdaptation);
+            postfix+=QStringLiteral("light_adaptation_%1").arg(lightAdaptation);
         }
         break;
     }
@@ -299,7 +299,7 @@ const QString TonemappingOptions::getCaption(bool includePregamma, QString separ
     switch (tmoperator) {
     case mantiuk06:
         {
-            caption+="Mantiuk06:";
+            caption+=QLatin1String("Mantiuk06:");
             caption += separator;
             float contrastfactor=operator_options.mantiuk06options.contrastfactor;
             float saturationfactor=operator_options.mantiuk06options.saturationfactor;
@@ -336,7 +336,7 @@ const QString TonemappingOptions::getCaption(bool includePregamma, QString separ
     case fattal:
         {
             if (!operator_options.fattaloptions.newfattal)
-                    caption+="V1_";
+                    caption+=QLatin1String("V1_");
             float alpha=operator_options.fattaloptions.alpha;
             float beta=operator_options.fattaloptions.beta;
             float saturation2=operator_options.fattaloptions.color;
@@ -473,126 +473,126 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
 
                 field=line.section('=',0,0); //get the field
                 value=line.section('=',1,1); //get the value
-                if (field=="TMOSETTINGSVERSION") {
+                if (field==QLatin1String("TMOSETTINGSVERSION")) {
                         if (value != TMOSETTINGSVERSION) {
                                 delete toreturn;
                                 throw (QApplication::tr("ERROR: File too old, cannot parse Tone Mapping Setting file: ")+fname);
 //                 return NULL;
                         }
-                } else if (field=="XSIZE") {
+                } else if (field==QLatin1String("XSIZE")) {
                         toreturn->xsize=value.toInt();
-                } else if (field=="QUALITY") {
+                } else if (field==QLatin1String("QUALITY")) {
                         toreturn->quality=value.toInt();
-                } else if (field=="TMO") {
-                        if (value=="Ashikhmin02") {
+                } else if (field==QLatin1String("TMO")) {
+                        if (value==QLatin1String("Ashikhmin02")) {
                                 toreturn->tmoperator=ashikhmin;
-                                tmo = "Ashikhmin02";
-                        } else if (value == "Drago03") {
+                                tmo = QLatin1String("Ashikhmin02");
+                        } else if (value == QLatin1String("Drago03")) {
                                 toreturn->tmoperator=drago;
-                                tmo = "Drago03";
-                        } else if (value == "Durand02") {
+                                tmo = QLatin1String("Drago03");
+                        } else if (value == QLatin1String("Durand02")) {
                                 toreturn->tmoperator=durand;
-                                tmo = "Durand02";
-                        } else if (value == "Fattal02") {
+                                tmo = QLatin1String("Durand02");
+                        } else if (value == QLatin1String("Fattal02")) {
                                 toreturn->tmoperator=fattal;
-                                tmo = "Fattal02";
-                        } else if (value == "Ferradans11") {
+                                tmo = QLatin1String("Fattal02");
+                        } else if (value == QLatin1String("Ferradans11")) {
                                 toreturn->tmoperator=ferradans;
-                                tmo = "Ferradans11";
-                        } else if (value == "Mai11") {
+                                tmo = QLatin1String("Ferradans11");
+                        } else if (value == QLatin1String("Mai11")) {
                                 toreturn->tmoperator=mai;
-                                tmo = "Mai11";
-                        } else if (value == "Pattanaik00") {
+                                tmo = QLatin1String("Mai11");
+                        } else if (value == QLatin1String("Pattanaik00")) {
                                 toreturn->tmoperator=pattanaik;
-                                tmo = "Pattanaik00";
-                        } else if (value == "Reinhard02") {
+                                tmo = QLatin1String("Pattanaik00");
+                        } else if (value == QLatin1String("Reinhard02")) {
                                 toreturn->tmoperator=reinhard02;
-                                tmo = "Reinhard02";
-                        } else if (value == "Reinhard05") {
+                                tmo = QLatin1String("Reinhard02");
+                        } else if (value == QLatin1String("Reinhard05")) {
                                 toreturn->tmoperator=reinhard05;
-                                tmo = "Reinhard05";
-                        } else if (value == "Mantiuk06") {
+                                tmo = QLatin1String("Reinhard05");
+                        } else if (value == QLatin1String("Mantiuk06")) {
                                 toreturn->tmoperator=mantiuk06;
-                                tmo = "Mantiuk06";
-                        } else if (value == "Mantiuk08") {
+                                tmo = QLatin1String("Mantiuk06");
+                        } else if (value == QLatin1String("Mantiuk08")) {
                                 toreturn->tmoperator=mantiuk08;
-                                tmo = "Mantiuk08";
+                                tmo = QLatin1String("Mantiuk08");
                         }
-                } else if (field=="CONTRASTFACTOR") {
+                } else if (field==QLatin1String("CONTRASTFACTOR")) {
                         toreturn->operator_options.mantiuk06options.contrastfactor=value.toFloat();
-                } else if (field=="SATURATIONFACTOR") {
+                } else if (field==QLatin1String("SATURATIONFACTOR")) {
                         toreturn->operator_options.mantiuk06options.saturationfactor=value.toFloat();
-                } else if (field=="DETAILFACTOR") {
+                } else if (field==QLatin1String("DETAILFACTOR")) {
                         toreturn->operator_options.mantiuk06options.detailfactor=value.toFloat();
-                } else if (field=="CONTRASTEQUALIZATION") {
-                        toreturn->operator_options.mantiuk06options.contrastequalization=(value == "YES");
-                } else if (field=="COLORSATURATION") {
+                } else if (field==QLatin1String("CONTRASTEQUALIZATION")) {
+                        toreturn->operator_options.mantiuk06options.contrastequalization=(value == QLatin1String("YES"));
+                } else if (field==QLatin1String("COLORSATURATION")) {
                         toreturn->operator_options.mantiuk08options.colorsaturation=value.toFloat();
-                } else if (field=="CONTRASTENHANCEMENT") {
+                } else if (field==QLatin1String("CONTRASTENHANCEMENT")) {
                         toreturn->operator_options.mantiuk08options.contrastenhancement=value.toFloat();
-                } else if (field=="LUMINANCELEVEL") {
+                } else if (field==QLatin1String("LUMINANCELEVEL")) {
                         toreturn->operator_options.mantiuk08options.luminancelevel=value.toFloat();
-                } else if (field=="SETLUMINANCE") {
-                        toreturn->operator_options.mantiuk08options.setluminance=(value == "YES");
-                } else if (field=="SIMPLE") {
-                        toreturn->operator_options.ashikhminoptions.simple= (value == "YES") ? true : false;
-                } else if (field=="EQUATION") {
-                        toreturn->operator_options.ashikhminoptions.eq2= (value=="2") ? true : false;
-                } else if (field=="CONTRAST") {
+                } else if (field==QLatin1String("SETLUMINANCE")) {
+                        toreturn->operator_options.mantiuk08options.setluminance=(value == QLatin1String("YES"));
+                } else if (field==QLatin1String("SIMPLE")) {
+                        toreturn->operator_options.ashikhminoptions.simple= (value == QLatin1String("YES")) ? true : false;
+                } else if (field==QLatin1String("EQUATION")) {
+                        toreturn->operator_options.ashikhminoptions.eq2= (value==QLatin1String("2")) ? true : false;
+                } else if (field==QLatin1String("CONTRAST")) {
                         toreturn->operator_options.ashikhminoptions.lct=value.toFloat();
-                } else if (field=="BIAS") {
+                } else if (field==QLatin1String("BIAS")) {
                         toreturn->operator_options.dragooptions.bias=value.toFloat();
-                } else if (field=="SPATIAL") {
+                } else if (field==QLatin1String("SPATIAL")) {
                         toreturn->operator_options.durandoptions.spatial=value.toFloat();
-                } else if (field=="RANGE") {
-                    if (tmo == "Durand02")
+                } else if (field==QLatin1String("RANGE")) {
+                    if (tmo == QLatin1String("Durand02"))
                         toreturn->operator_options.durandoptions.range=value.toFloat();
                     else
                         toreturn->operator_options.reinhard02options.range=value.toInt();
-                } else if (field=="BASE") {
+                } else if (field==QLatin1String("BASE")) {
                         toreturn->operator_options.durandoptions.base=value.toFloat();
-                } else if (field=="ALPHA") {
+                } else if (field==QLatin1String("ALPHA")) {
                         toreturn->operator_options.fattaloptions.alpha=value.toFloat();
-                } else if (field=="BETA") {
+                } else if (field==QLatin1String("BETA")) {
                         toreturn->operator_options.fattaloptions.beta=value.toFloat();
-                } else if (field=="COLOR") {
+                } else if (field==QLatin1String("COLOR")) {
                         toreturn->operator_options.fattaloptions.color=value.toFloat();
-                } else if (field=="NOISE") {
+                } else if (field==QLatin1String("NOISE")) {
                         toreturn->operator_options.fattaloptions.noiseredux=value.toFloat();
-                } else if (field=="OLDFATTAL") {
+                } else if (field==QLatin1String("OLDFATTAL")) {
                         toreturn->operator_options.fattaloptions.newfattal= true; // This is the new version of fattal pre FFT (always yes)
-                        toreturn->operator_options.fattaloptions.fftsolver= (value == "NO");
-                } else if (field=="RHO") {
+                        toreturn->operator_options.fattaloptions.fftsolver= (value == QLatin1String("NO"));
+                } else if (field==QLatin1String("RHO")) {
                         toreturn->operator_options.ferradansoptions.rho=value.toFloat();
-                } else if (field=="INV_ALPHA") {
+                } else if (field==QLatin1String("INV_ALPHA")) {
                         toreturn->operator_options.ferradansoptions.inv_alpha=value.toFloat();
-                } else if (field=="MULTIPLIER") {
+                } else if (field==QLatin1String("MULTIPLIER")) {
                         toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
-                } else if (field=="LOCAL") {
-                        toreturn->operator_options.pattanaikoptions.local= (value=="YES");
-                } else if (field=="AUTOLUMINANCE") {
-                        toreturn->operator_options.pattanaikoptions.autolum= (value=="YES");
-                } else if (field=="CONE") {
+                } else if (field==QLatin1String("LOCAL")) {
+                        toreturn->operator_options.pattanaikoptions.local= (value==QLatin1String("YES"));
+                } else if (field==QLatin1String("AUTOLUMINANCE")) {
+                        toreturn->operator_options.pattanaikoptions.autolum= (value==QLatin1String("YES"));
+                } else if (field==QLatin1String("CONE")) {
                         toreturn->operator_options.pattanaikoptions.cone=value.toFloat();
-                } else if (field=="ROD") {
+                } else if (field==QLatin1String("ROD")) {
                         toreturn->operator_options.pattanaikoptions.rod=value.toFloat();
-                } else if (field=="KEY") {
+                } else if (field==QLatin1String("KEY")) {
                         toreturn->operator_options.reinhard02options.key=value.toFloat();
-                } else if (field=="PHI") {
+                } else if (field==QLatin1String("PHI")) {
                         toreturn->operator_options.reinhard02options.phi=value.toFloat();
-                } else if (field=="SCALES") {
-                        toreturn->operator_options.reinhard02options.scales= (value=="YES") ? true : false;
-                } else if (field=="LOWER") {
+                } else if (field==QLatin1String("SCALES")) {
+                        toreturn->operator_options.reinhard02options.scales= (value==QLatin1String("YES")) ? true : false;
+                } else if (field==QLatin1String("LOWER")) {
                         toreturn->operator_options.reinhard02options.lower=value.toInt();
-                } else if (field=="UPPER") {
+                } else if (field==QLatin1String("UPPER")) {
                         toreturn->operator_options.reinhard02options.upper=value.toInt();
-                } else if (field=="BRIGHTNESS") {
+                } else if (field==QLatin1String("BRIGHTNESS")) {
                         toreturn->operator_options.reinhard05options.brightness=value.toFloat();
-                } else if (field=="CHROMATICADAPTATION") {
+                } else if (field==QLatin1String("CHROMATICADAPTATION")) {
                         toreturn->operator_options.reinhard05options.chromaticAdaptation=value.toFloat();
-                } else if (field=="LIGHTADAPTATION") {
+                } else if (field==QLatin1String("LIGHTADAPTATION")) {
                         toreturn->operator_options.reinhard05options.lightAdaptation=value.toFloat();
-                } else if (field=="PREGAMMA") {
+                } else if (field==QLatin1String("PREGAMMA")) {
                         toreturn->pregamma=value.toFloat();
                 } else {
                         delete toreturn;
@@ -615,21 +615,21 @@ TMOptionsOperations::TMOptionsOperations(const TonemappingOptions* opts) : opts(
 
 QString TMOptionsOperations::getExifComment() {
         QString exif_comment="Luminance HDR " LUMINANCEVERSION " tonemapping parameters:\n";
-        exif_comment+="Operator: ";
+        exif_comment+=QLatin1String("Operator: ");
         switch (opts->tmoperator) {
         case mantiuk06: {
                 float contrastfactor=opts->operator_options.mantiuk06options.contrastfactor;
                 float saturationfactor=opts->operator_options.mantiuk06options.saturationfactor;
                 float detailfactor=opts->operator_options.mantiuk06options.detailfactor;
                 bool contrast_eq=opts->operator_options.mantiuk06options.contrastequalization;
-                exif_comment+="Mantiuk06\nParameters:\n";
+                exif_comment+=QLatin1String("Mantiuk06\nParameters:\n");
                 if (contrast_eq) {
-                        exif_comment+=QString("Contrast Equalization factor: %1\n").arg(contrastfactor);
+                        exif_comment+=QStringLiteral("Contrast Equalization factor: %1\n").arg(contrastfactor);
                 } else {
-                        exif_comment+=QString("Contrast Mapping factor: %1\n").arg(contrastfactor);
+                        exif_comment+=QStringLiteral("Contrast Mapping factor: %1\n").arg(contrastfactor);
                 }
-                exif_comment+=QString("Saturation Factor: %1 \n").arg(saturationfactor);
-                exif_comment+=QString("Detail Factor: %1 \n").arg(detailfactor);
+                exif_comment+=QStringLiteral("Saturation Factor: %1 \n").arg(saturationfactor);
+                exif_comment+=QStringLiteral("Detail Factor: %1 \n").arg(detailfactor);
                 }
                 break;
         case mantiuk08: {
@@ -637,14 +637,14 @@ QString TMOptionsOperations::getExifComment() {
                 float contrastenhancement=opts->operator_options.mantiuk08options.contrastenhancement;
                 float luminancelevel=opts->operator_options.mantiuk08options.luminancelevel;
                 bool setluminance=opts->operator_options.mantiuk08options.setluminance;
-                exif_comment+="Mantiuk08\nParameters:\n";
+                exif_comment+=QLatin1String("Mantiuk08\nParameters:\n");
                 if (setluminance) {
-                        exif_comment+=QString("Luminance Level: %1 \n").arg(luminancelevel);
+                        exif_comment+=QStringLiteral("Luminance Level: %1 \n").arg(luminancelevel);
                 } else {
-                        exif_comment+=QString("Luminance Level: Auto \n");
+                        exif_comment+=QStringLiteral("Luminance Level: Auto \n");
                 }
-                exif_comment+=QString("Color Saturation: %1 \n").arg(colorsaturation);
-                exif_comment+=QString("Contrast Enhancement: %1 \n").arg(contrastenhancement);
+                exif_comment+=QStringLiteral("Color Saturation: %1 \n").arg(colorsaturation);
+                exif_comment+=QStringLiteral("Contrast Enhancement: %1 \n").arg(contrastenhancement);
                 }
                 break;
         case fattal: {
@@ -653,69 +653,69 @@ QString TMOptionsOperations::getExifComment() {
                 float saturation2=opts->operator_options.fattaloptions.color;
                 float noiseredux=opts->operator_options.fattaloptions.noiseredux;
                 if (!opts->operator_options.fattaloptions.newfattal) {
-                        exif_comment+="V1_";
+                        exif_comment+=QLatin1String("V1_");
                 }
-                exif_comment+="Fattal\nParameters:\n";
-                exif_comment+=QString("Alpha: %1\n").arg(alpha);
-                exif_comment+=QString("Beta: %1\n").arg(beta);
-                exif_comment+=QString("Color Saturation: %1 \n").arg(saturation2);
-                exif_comment+=QString("Noise Reduction: %1 \n").arg(noiseredux);
+                exif_comment+=QLatin1String("Fattal\nParameters:\n");
+                exif_comment+=QStringLiteral("Alpha: %1\n").arg(alpha);
+                exif_comment+=QStringLiteral("Beta: %1\n").arg(beta);
+                exif_comment+=QStringLiteral("Color Saturation: %1 \n").arg(saturation2);
+                exif_comment+=QStringLiteral("Noise Reduction: %1 \n").arg(noiseredux);
                 }
                 break;
         case ferradans: {
                 float rho=opts->operator_options.ferradansoptions.rho;
                 float inv_alpha=opts->operator_options.ferradansoptions.inv_alpha;
-                exif_comment+="Ferrands\nParameters:\n";
-                exif_comment+=QString("Rho: %1\n").arg(rho);
-                exif_comment+=QString("InvAlpha: %1\n").arg(inv_alpha);
+                exif_comment+=QLatin1String("Ferrands\nParameters:\n");
+                exif_comment+=QStringLiteral("Rho: %1\n").arg(rho);
+                exif_comment+=QStringLiteral("InvAlpha: %1\n").arg(inv_alpha);
                 }
                 break;
         case mai: {
-                exif_comment+="Ferrands\n";
+                exif_comment+=QLatin1String("Ferrands\n");
                 }
                 break;
         case ashikhmin: {
-                exif_comment+="Ashikhmin\nParameters:\n";
+                exif_comment+=QLatin1String("Ashikhmin\nParameters:\n");
                 if (opts->operator_options.ashikhminoptions.simple) {
-                        exif_comment+="Simple\n";
+                        exif_comment+=QLatin1String("Simple\n");
                 } else {
                         if (opts->operator_options.ashikhminoptions.eq2) {
-                                exif_comment+="Equation 2\n";
+                                exif_comment+=QLatin1String("Equation 2\n");
                         } else {
-                                exif_comment+="Equation 4\n";
+                                exif_comment+=QLatin1String("Equation 4\n");
                         }
-                        exif_comment+=QString("Local Contrast value: %1\n").arg(opts->operator_options.ashikhminoptions.lct);
+                        exif_comment+=QStringLiteral("Local Contrast value: %1\n").arg(opts->operator_options.ashikhminoptions.lct);
                 }
                 }
                 break;
         case drago: {
-                exif_comment+="Drago\nParameters:\n";
-                exif_comment+=QString("Bias: %1\n").arg(opts->operator_options.dragooptions.bias);
+                exif_comment+=QLatin1String("Drago\nParameters:\n");
+                exif_comment+=QStringLiteral("Bias: %1\n").arg(opts->operator_options.dragooptions.bias);
                 }
                 break;
         case durand: {
                 float spatial=opts->operator_options.durandoptions.spatial;
                 float range=opts->operator_options.durandoptions.range;
                 float base=opts->operator_options.durandoptions.base;
-                exif_comment+="Durand\nParameters:\n";
-                exif_comment+=QString("Spatial Kernel Sigma: %1\n").arg(spatial);
-                exif_comment+=QString("Range Kernel Sigma: %1\n").arg(range);
-                exif_comment+=QString("Base Contrast: %1\n").arg(base);
+                exif_comment+=QLatin1String("Durand\nParameters:\n");
+                exif_comment+=QStringLiteral("Spatial Kernel Sigma: %1\n").arg(spatial);
+                exif_comment+=QStringLiteral("Range Kernel Sigma: %1\n").arg(range);
+                exif_comment+=QStringLiteral("Base Contrast: %1\n").arg(base);
                 }
                 break;
         case pattanaik: {
                 float multiplier=opts->operator_options.pattanaikoptions.multiplier;
                 float cone=opts->operator_options.pattanaikoptions.cone;
                 float rod=opts->operator_options.pattanaikoptions.rod;
-                exif_comment+="Pattanaik\nParameters:\n";
-                exif_comment+=QString("Multiplier: %1\n").arg(multiplier);
+                exif_comment+=QLatin1String("Pattanaik\nParameters:\n");
+                exif_comment+=QStringLiteral("Multiplier: %1\n").arg(multiplier);
                 if (opts->operator_options.pattanaikoptions.local) {
-                        exif_comment+="Local Tone Mapping\n";
+                        exif_comment+=QLatin1String("Local Tone Mapping\n");
                 } else if (opts->operator_options.pattanaikoptions.autolum) {
-                        exif_comment+="Con and Rod based on image luminance\n";
+                        exif_comment+=QLatin1String("Con and Rod based on image luminance\n");
                 } else {
-                        exif_comment+=QString("Cone Level: %1\n").arg(cone);
-                        exif_comment+=QString("Rod Level: %1\n").arg(rod);
+                        exif_comment+=QStringLiteral("Cone Level: %1\n").arg(cone);
+                        exif_comment+=QStringLiteral("Rod Level: %1\n").arg(rod);
                 }
                 }
                 break;
@@ -725,14 +725,14 @@ QString TMOptionsOperations::getExifComment() {
                 int range=opts->operator_options.reinhard02options.range;
                 int lower=opts->operator_options.reinhard02options.lower;
                 int upper=opts->operator_options.reinhard02options.upper;
-                exif_comment+="Reinhard02\nParameters:\n";
-                exif_comment+=QString("Key: %1\n").arg(key);
-                exif_comment+=QString("Phi: %1\n").arg(phi);
+                exif_comment+=QLatin1String("Reinhard02\nParameters:\n");
+                exif_comment+=QStringLiteral("Key: %1\n").arg(key);
+                exif_comment+=QStringLiteral("Phi: %1\n").arg(phi);
                 if (opts->operator_options.reinhard02options.scales) {
-                        exif_comment+=QString("Scales\n");
-                        exif_comment+=QString("Range: %1\n").arg(range);
-                        exif_comment+=QString("Lower: %1\n").arg(lower);
-                        exif_comment+=QString("Upper: %1\n").arg(upper);
+                        exif_comment+=QStringLiteral("Scales\n");
+                        exif_comment+=QStringLiteral("Range: %1\n").arg(range);
+                        exif_comment+=QStringLiteral("Lower: %1\n").arg(lower);
+                        exif_comment+=QStringLiteral("Upper: %1\n").arg(upper);
                 }
                 }
                 break;
@@ -740,14 +740,14 @@ QString TMOptionsOperations::getExifComment() {
                 float brightness = opts->operator_options.reinhard05options.brightness;
                 float chromaticAdaptation = opts->operator_options.reinhard05options.chromaticAdaptation;
                 float lightAdaptation = opts->operator_options.reinhard05options.lightAdaptation;
-                exif_comment+="Reinhard05\nParameters:\n";
-                exif_comment+=QString("Brightness: %1\n").arg(brightness);
-                exif_comment+=QString("Chromatic Adaptation: %1\n").arg(chromaticAdaptation);
-                exif_comment+=QString("Light Adaptation: %1\n").arg(lightAdaptation);
+                exif_comment+=QLatin1String("Reinhard05\nParameters:\n");
+                exif_comment+=QStringLiteral("Brightness: %1\n").arg(brightness);
+                exif_comment+=QStringLiteral("Chromatic Adaptation: %1\n").arg(chromaticAdaptation);
+                exif_comment+=QStringLiteral("Light Adaptation: %1\n").arg(lightAdaptation);
                 }
                 break;
         }
-        exif_comment+=QString("------\nPreGamma: %1\n").arg(opts->pregamma);
+        exif_comment+=QStringLiteral("------\nPreGamma: %1\n").arg(opts->pregamma);
         return exif_comment;
 }
 

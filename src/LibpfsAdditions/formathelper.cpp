@@ -101,7 +101,7 @@ QString FormatHelper::getFileExtensionForFormat(int format)
     case 25:
         return ("pbm");
     }
-    return "tiff";
+    return QStringLiteral("tiff");
 }
 
 void FormatHelper::setDefaultParams(int format)

@@ -39,12 +39,12 @@ SupportedCamerasDialog::SupportedCamerasDialog(QWidget* parent)
 {
     m_Ui->setupUi(this);
 
-    m_Ui->labelVersion->setText(QString(LUMINANCEVERSION) + " [Build " + QString(g_GIT_SHA1).left(6) + "]");
+    m_Ui->labelVersion->setText(QStringLiteral(LUMINANCEVERSION) + " [Build " + QString(g_GIT_SHA1).left(6) + "]");
 
     const char *version = LibRaw::version();
     int count = LibRaw::cameraCount();
     m_Ui->labelLibRawVersion->setText(m_Ui->labelLibRawVersion->text() + " " + QString(version));
-    m_Ui->labelCount->setText(QString("%1").arg(count) + " " + m_Ui->labelCount->text());
+    m_Ui->labelCount->setText(QStringLiteral("%1").arg(count) + " " + m_Ui->labelCount->text());
 
     const char **list = LibRaw::cameraList();
     while (*list)

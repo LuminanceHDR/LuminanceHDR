@@ -131,18 +131,18 @@ void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
     for(const auto &filename : filenames)
     {
-        qDebug() << QString("HdrCreationManager::loadFiles(): Checking %1").arg(filename);
+        qDebug() << QStringLiteral("HdrCreationManager::loadFiles(): Checking %1").arg(filename);
         HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
                                                         boost::bind(&checkFileName, _1, filename));
         // has the file been inserted already?
         if (it == m_data.end())
         {
-            qDebug() << QString("HdrCreationManager::loadFiles(): Schedule loading for %1").arg(filename);
+            qDebug() << QStringLiteral("HdrCreationManager::loadFiles(): Schedule loading for %1").arg(filename);
             m_tmpdata.push_back(HdrCreationItem(filename));
         }
         else
         {
-            qDebug() << QString("HdrCreationManager::loadFiles(): %1 has already been loaded").arg(filename);
+            qDebug() << QStringLiteral("HdrCreationManager::loadFiles(): %1 has already been loaded").arg(filename);
         }
     }
 
@@ -182,7 +182,7 @@ void HdrCreationManager::loadFilesDone()
     {
         if (hdrCreationItem.isValid())
         {
-            qDebug() << QString("HdrCreationManager::loadFilesDone(): Insert data for %1").arg(hdrCreationItem.filename());
+            qDebug() << QStringLiteral("HdrCreationManager::loadFilesDone(): Insert data for %1").arg(hdrCreationItem.filename());
             m_data.push_back(hdrCreationItem);
         }
     }
@@ -237,7 +237,7 @@ void HdrCreationManager::refreshEVOffset()
     std::sort(evs.begin(), evs.end());
     m_evOffset = evs[(evs.size() + 1)/2 - 1];
 
-    qDebug() << QString("HdrCreationManager::refreshEVOffset(): offset = %1").arg(m_evOffset);
+    qDebug() << QStringLiteral("HdrCreationManager::refreshEVOffset(): offset = %1").arg(m_evOffset);
 }
 
 float HdrCreationManager::getEVOffset() const
@@ -466,7 +466,7 @@ void HdrCreationManager::saveImages(const QString& prefix)
     for ( HdrCreationItemContainer::const_iterator it = m_data.begin(),
           itEnd = m_data.end(); it != itEnd; ++it) {
 
-        QString filename = prefix + QString("_%1").arg(idx) + ".tiff";
+        QString filename = prefix + QStringLiteral("_%1").arg(idx) + ".tiff";
         pfs::io::TiffWriter writer(QFile::encodeName(filename).constData());
         writer.write( *it->frame(), pfs::Params("tiff_mode", 1) );
 

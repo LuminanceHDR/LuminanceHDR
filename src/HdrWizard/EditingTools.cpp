@@ -56,27 +56,27 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
 {
     m_Ui->setupUi(this);
 
-    if ( !QIcon::hasThemeIcon("edit-select-lasso") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("edit-select-lasso")) )
     {
         m_Ui->lassoColorButton->setIcon(QIcon(":/program-icons/edit-select-lasso"));
         m_Ui->toolButtonPath->setIcon(QIcon(":/program-icons/edit-select-lasso"));
     }
-    if ( !QIcon::hasThemeIcon("draw-brush") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("draw-brush")) )
     {
         m_Ui->maskColorButton->setIcon(QIcon(":/program-icons/draw-brush"));
         m_Ui->toolButtonPaint->setIcon(QIcon(":/program-icons/draw-brush"));
     }
-    if ( !QIcon::hasThemeIcon("zoom") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("zoom")) )
         m_Ui->fillButton->setIcon(QIcon(":/program-icons/zoom"));
-    if ( !QIcon::hasThemeIcon("help-whatsthis") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("help-whatsthis")) )
         m_Ui->whatsThisButton->setIcon(QIcon(":/program-icons/help-whatsthis"));
-    if ( !QIcon::hasThemeIcon("transform-crop-and-resize") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("transform-crop-and-resize")) )
         m_Ui->cropButton->setIcon(QIcon(":/program-icons/transform-crop-and-resize"));
-    if ( !QIcon::hasThemeIcon("dialog-ok-apply") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("dialog-ok-apply")) )
         m_Ui->toolButtonApplyMask->setIcon(QIcon(":/program-icons/dialog-ok-apply"));
-    if ( !QIcon::hasThemeIcon("arrow-up") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("arrow-up")) )
         m_Ui->prevBothButton->setIcon(QIcon(":/program-icons/uparrow"));
-    if ( !QIcon::hasThemeIcon("arrow-down") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("arrow-down")) )
         m_Ui->nextBothButton->setIcon(QIcon(":/program-icons/downarrow"));
 
     for (int i = 0; i < agGridSize; i++)
@@ -113,8 +113,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
     QColor maskcolor = QColor(m_luminanceOptions.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
     QColor lassocolor = QColor(m_luminanceOptions.value(KEY_MANUAL_AG_LASSO_COLOR,0x000000FF).toUInt());
     Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) m_luminanceOptions.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
-    m_Ui->maskColorButton->setStyleSheet("background: rgb("+QString("%1").arg(maskcolor.red())+","+QString("%1").arg(maskcolor.green())+","+QString("%1").arg(maskcolor.blue())+")");
-    m_Ui->lassoColorButton->setStyleSheet("background: rgb("+QString("%1").arg(lassocolor.red())+","+QString("%1").arg(lassocolor.green())+","+QString("%1").arg(lassocolor.blue())+")");
+    m_Ui->maskColorButton->setStyleSheet("background: rgb("+QStringLiteral("%1").arg(maskcolor.red())+","+QStringLiteral("%1").arg(maskcolor.green())+","+QStringLiteral("%1").arg(maskcolor.blue())+")");
+    m_Ui->lassoColorButton->setStyleSheet("background: rgb("+QStringLiteral("%1").arg(lassocolor.red())+","+QStringLiteral("%1").arg(lassocolor.green())+","+QStringLiteral("%1").arg(lassocolor.blue())+")");
     assert(m_originalImagesList.size()==m_fileList.size());
     QVBoxLayout *qvl = new QVBoxLayout;
     qvl->setMargin(0);
@@ -490,8 +490,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         m_Ui->label_editable_list->setText(tr("Maskable"));
         m_Ui->label_reference_list->setText(tr("Good image"));
         m_Ui->saveImagesButton->setDisabled(true);
-        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("go-next", QIcon(":/program-icons/go-next")));
-        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("go-previous", QIcon(":/program-icons/go-previous")));
+        m_Ui->prevBothButton->setIcon(QIcon::fromTheme(QStringLiteral("go-next"), QIcon(":/program-icons/go-next")));
+        m_Ui->nextBothButton->setIcon(QIcon::fromTheme(QStringLiteral("go-previous"), QIcon(":/program-icons/go-previous")));
         m_Ui->prevBothButton->setToolTip(tr("Add good image"));
         m_Ui->nextBothButton->setToolTip(tr("Remove good image"));
         m_Ui->nextBothButton->setDisabled(true);
@@ -524,8 +524,8 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
         disconnect(m_Ui->movableListWidget,&QListWidget::currentRowChanged,this,&EditingTools::updateAgMask);
         m_Ui->label_editable_list->setText(tr("Ed&itable"));
         m_Ui->label_reference_list->setText(tr("R&eference"));
-        m_Ui->prevBothButton->setIcon(QIcon::fromTheme("arrow-up", QIcon(":/program-icons/uparrow")));
-        m_Ui->nextBothButton->setIcon(QIcon::fromTheme("arrow-down", QIcon(":/program-icons/downarrow")));
+        m_Ui->prevBothButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up"), QIcon(":/program-icons/uparrow")));
+        m_Ui->nextBothButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down"), QIcon(":/program-icons/downarrow")));
         m_Ui->prevBothButton->setToolTip(tr("Select the previous image in both lists"));
         m_Ui->nextBothButton->setToolTip(tr("Select the next image in both lists"));
         m_Ui->prevBothButton->setDisabled(false);
@@ -552,7 +552,7 @@ void EditingTools::maskColorButtonClicked() {
     QColor returned = QColorDialog::getColor();
     if (returned.isValid()) {
         m_previewWidget->setBrushColor(returned);
-        m_Ui->maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
+        m_Ui->maskColorButton->setStyleSheet(QStringLiteral("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
         m_luminanceOptions.setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
     }
 }
@@ -561,7 +561,7 @@ void EditingTools::lassoColorButtonClicked() {
     QColor returned = QColorDialog::getColor();
     if (returned.isValid()) {
         m_previewWidget->setLassoColor(returned);
-        m_Ui->lassoColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
+        m_Ui->lassoColorButton->setStyleSheet(QStringLiteral("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
         m_luminanceOptions.setValue(KEY_MANUAL_AG_LASSO_COLOR,returned.rgb());
     }
 }

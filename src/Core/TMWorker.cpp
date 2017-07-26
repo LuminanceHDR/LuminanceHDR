@@ -78,14 +78,14 @@ pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, Tonemappi
         tonemapFrame(working_frame, tm_options);
     }
     catch(...) {
-        emit tonemapFailed("Tonemap failed!");
+        emit tonemapFailed(QStringLiteral("Tonemap failed!"));
         delete working_frame;
         return NULL;
     }
 
     if ( m_Callback->canceled() )
     {
-        emit tonemapFailed("Canceled");
+        emit tonemapFailed(QStringLiteral("Canceled"));
         m_Callback->cancel(false);      // double check this
         delete working_frame;
         return NULL;
@@ -105,7 +105,7 @@ void TMWorker::computeTonemapAndExport(/* const */ pfs::Frame* in_frame, Tonemap
         tonemapFrame(working_frame, tm_options);
     }
     catch(...) {
-        emit tonemapFailed("Tonemap failed!");
+        emit tonemapFailed(QStringLiteral("Tonemap failed!"));
         delete working_frame;
         return;
     }
@@ -125,7 +125,7 @@ void TMWorker::computeTonemapAndExport(/* const */ pfs::Frame* in_frame, Tonemap
     const QString firstPart = hdrName + "_" + tm_options->getPostfix();
     QString extension;
     if (!params.get("fileextension", extension))
-        extension = "tiff";
+        extension = QLatin1String("tiff");
     extension = "." + extension;
 
     QString outputFilename;

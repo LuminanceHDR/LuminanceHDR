@@ -47,12 +47,12 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p):
 
     m_Ui->progressBar->hide();
 
-    if ( !QIcon::hasThemeIcon("arrow-up") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("arrow-up")) )
     {
         m_Ui->moveup_right_button->setIcon(QIcon(":/program-icons/arrow-up"));
         m_Ui->moveup_left_button->setIcon(QIcon(":/program-icons/arrow-up"));
     }
-    if ( !QIcon::hasThemeIcon("arrow-down") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("arrow-down")) )
     {
         m_Ui->movedown_right_button->setIcon(QIcon(":/program-icons/arrow-down"));
         m_Ui->movedown_left_button->setIcon(QIcon(":/program-icons/arrow-down"));
@@ -339,10 +339,10 @@ void TransplantExifDialog::filterComboBoxActivated(int index) {
     QString regexp;
     switch (index) {
     case 0:
-        regexp=".*";
+        regexp=QLatin1String(".*");
         break;
     case 1:
-        regexp="error";
+        regexp=QLatin1String("error");
         break;
     }
     log_filter->setFilterRegExp(QRegExp(regexp, Qt::CaseInsensitive, QRegExp::RegExp));

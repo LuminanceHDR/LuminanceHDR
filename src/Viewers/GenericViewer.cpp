@@ -54,7 +54,7 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     mVBL->setSpacing(0);
     mVBL->setMargin(0);
 
-    mToolBar = new QToolBar("",this);
+    mToolBar = new QToolBar(QLatin1String(""),this);
     mToolBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     mToolBar->setFixedHeight(40);
     mToolBar->setAutoFillBackground( true );
@@ -76,7 +76,7 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     connect(mView->verticalScrollBar(), &QAbstractSlider::valueChanged, this, &GenericViewer::scrollBarChanged);
 
     mCornerButton = new QToolButton(this);
-    mCornerButton->setIcon(QIcon::fromTheme("move", QIcon(":/program-icons/move")));
+    mCornerButton->setIcon(QIcon::fromTheme(QStringLiteral("move"), QIcon(":/program-icons/move")));
 
     mView->setCornerWidget(mCornerButton);
 

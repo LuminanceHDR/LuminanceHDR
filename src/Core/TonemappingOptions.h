@@ -139,7 +139,7 @@ public:
     const QString getPostfix();
 
     /** returns the translated description of the TMO operator**/
-    const QString getCaption(bool pregamma = true, QString separator = QString(" ~ "));
+    const QString getCaption(bool pregamma = true, QString separator = QStringLiteral(" ~ "));
     void setDefaultTonemapParameters();
     void setDefaultParameters();
 

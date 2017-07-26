@@ -91,7 +91,7 @@ class HelpBrowser : public QMainWindow
 
 public:
     explicit HelpBrowser(QWidget* parent);
-    HelpBrowser(QWidget* parent, const QString& caption, const QString& guiLangage="en", const QString& jumpToSection="", const QString& jumpToFile="");
+    HelpBrowser(QWidget* parent, const QString& caption, const QString& guiLangage=QStringLiteral("en"), const QString& jumpToSection=QLatin1String(""), const QString& jumpToFile=QLatin1String(""));
     ~HelpBrowser();
 
 
@@ -139,7 +139,7 @@ protected:
 protected slots:
     virtual void languageChange();
     void histChosen(QAction* i);
-    void jumpToHelpSection(const QString& jumpToSection, const QString& jumpToFile="");
+    void jumpToHelpSection(const QString& jumpToSection, const QString& jumpToFile=QLatin1String(""));
     void loadHelp(const QString& filename);
     void loadMenu();
     void showLinkContents(const QString &link);

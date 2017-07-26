@@ -99,7 +99,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, QImage *m, const QImage *p) :
     connect(mView->verticalScrollBar(), &QAbstractSlider::valueChanged, this, &PreviewWidget::scrollBarChanged);
 
     mCornerButton = new QToolButton(this);
-    mCornerButton->setIcon(QIcon::fromTheme("move", QIcon(":/program-icons/move")));
+    mCornerButton->setIcon(QIcon::fromTheme(QStringLiteral("move"), QIcon(":/program-icons/move")));
 
     mView->setCornerWidget(mCornerButton);
 

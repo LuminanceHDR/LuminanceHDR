@@ -31,7 +31,7 @@ TranslatorManager::ScopedQTranslator TranslatorManager::sm_qtTranslator;
 
 void TranslatorManager::setLanguage(const QString& lang, bool installQtTranslation)
 {
-    if ( lang == "en" ) {
+    if ( lang == QLatin1String("en") ) {
         cleanAppTranslator();
         cleanQtTranslator();
 
@@ -65,8 +65,8 @@ void TranslatorManager::setAppTranslator(const QString& lang)
 
     ScopedQTranslator appTranslator( new QTranslator() );
 
-    if ( appTranslator->load(QString("lang_") + lang, QString("i18n")) ||
-         appTranslator->load(QString("lang_") + lang, I18NDIR) )
+    if ( appTranslator->load(QStringLiteral("lang_") + lang, QStringLiteral("i18n")) ||
+         appTranslator->load(QStringLiteral("lang_") + lang, I18NDIR) )
     {
         QCoreApplication::installTranslator(appTranslator.data());
         sm_appTranslator.swap( appTranslator );
@@ -81,9 +81,9 @@ void TranslatorManager::setQtTranslator(const QString& lang)
 
     ScopedQTranslator qtTranslator( new QTranslator() );
 
-    if ( qtTranslator->load(QString("qt_") + lang, QString("i18n")) ||
+    if ( qtTranslator->load(QStringLiteral("qt_") + lang, QStringLiteral("i18n")) ||
          // qtTranslator->load(QString("qt_") + lang, I18NDIR) )
-         qtTranslator->load(QString("qt_") + lang, QLibraryInfo::location(
+         qtTranslator->load(QStringLiteral("qt_") + lang, QLibraryInfo::location(
                                 QLibraryInfo::TranslationsPath)) )
     {
         QCoreApplication::installTranslator(qtTranslator.data());

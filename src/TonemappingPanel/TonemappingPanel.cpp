@@ -69,9 +69,9 @@ TonemappingPanel::TonemappingPanel(int mainWinNumber, PreviewPanel *panel, QWidg
 
     connect(m_thd.data(), &ThresholdWidget::ready, this, &TonemappingPanel::thresholdReady);
 
-    if ( !QIcon::hasThemeIcon("edit-download") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("edit-download")) )
         m_Ui->saveButton->setIcon(QIcon(":/program-icons/edit-download"));
-    if ( !QIcon::hasThemeIcon("cloud-upload") )
+    if ( !QIcon::hasThemeIcon(QStringLiteral("cloud-upload")) )
         m_Ui->loadButton->setIcon(QIcon(":/program-icons/cloud-upload"));
 
     currentTmoOperator = mantiuk06; // from Qt Designer
@@ -266,9 +266,9 @@ void TonemappingPanel::createDatabase()
 {
     LuminanceOptions options;
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
     db.setDatabaseName(options.getDatabaseFileName());
-    db.setHostName("localhost");
+    db.setHostName(QStringLiteral("localhost"));
     bool ok = db.open();
     if (!ok)
     {
@@ -280,47 +280,47 @@ void TonemappingPanel::createDatabase()
     }
     QSqlQuery query;
     // Mantiuk 06
-    bool res = query.exec(" CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean NOT NULL, contrastFactor real, saturationFactor real, detailFactor real, pregamma real, comment varchar(150));");
+    bool res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean NOT NULL, contrastFactor real, saturationFactor real, detailFactor real, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Mantiuk 08
-    res = query.exec(" CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, contrastEnhancement real, luminanceLevel real, manualLuminanceLevel boolean NOT NULL, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, contrastEnhancement real, luminanceLevel real, manualLuminanceLevel boolean NOT NULL, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Ashikhmin
-    res = query.exec(" CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 boolean NOT NULL, lct real, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS ashikhmin (simple boolean NOT NULL, eq2 boolean NOT NULL, lct real, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Drago
-    res = query.exec(" CREATE TABLE IF NOT EXISTS drago (bias real, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS drago (bias real, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Durand
-    res = query.exec(" CREATE TABLE IF NOT EXISTS durand (spatial real, range real, base real, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS durand (spatial real, range real, base real, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Fattal
-    res = query.exec(" CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, colorSaturation real, noiseReduction real, oldFattal boolean NOT NULL, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS fattal (alpha real, beta real, colorSaturation real, noiseReduction real, oldFattal boolean NOT NULL, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Fattal
-    res = query.exec(" CREATE TABLE IF NOT EXISTS ferradans (rho real, inv_alpha real, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS ferradans (rho real, inv_alpha real, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Pattanaik
-    res = query.exec(" CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean NOT NULL, local boolean NOT NULL, cone real, rod real, multiplier real, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS pattanaik (autolum boolean NOT NULL, local boolean NOT NULL, cone real, rod real, multiplier real, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Reinhard02
-    res = query.exec(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean NOT NULL, key real, phi real, range int, lower int, upper int, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard02 (scales boolean NOT NULL, key real, phi real, range int, lower int, upper int, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Reinhard05
-    res = query.exec(" CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, chromaticAdaptation real, lightAdaptation real, pregamma real, comment varchar(150));");
+    res = query.exec(QStringLiteral(" CREATE TABLE IF NOT EXISTS reinhard05 (brightness real, chromaticAdaptation real, lightAdaptation real, pregamma real, comment varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
     // Hdr creation custom config parameters
-    res = query.exec("CREATE TABLE IF NOT EXISTS parameters (weight integer, response integer, model integer, filename varchar(150));");
+    res = query.exec(QStringLiteral("CREATE TABLE IF NOT EXISTS parameters (weight integer, response integer, model integer, filename varchar(150));"));
     if (res == false)
         qDebug() << query.lastError();
 }
@@ -753,9 +753,9 @@ void TonemappingPanel::on_savesettingsbutton_clicked()
     if( ! fname.isEmpty() )
     {
         QFileInfo qfi(fname);
-        if (qfi.suffix().toUpper() != "TXT")
+        if (qfi.suffix().toUpper() != QLatin1String("TXT"))
         {
-            fname+=".txt";
+            fname+=QLatin1String(".txt");
         }
 
         lum_options.setDefaultPathTmoSettings( qfi.path() );
@@ -889,7 +889,7 @@ void TonemappingPanel::fromTxt2Gui()
 
         field=line.section('=',0,0); //get the field
         value=line.section('=',1,1); //get the value
-        if (field == "TMOSETTINGSVERSION")
+        if (field == QLatin1String("TMOSETTINGSVERSION"))
         {
             if (value != TMOSETTINGSVERSION)
             {
@@ -898,7 +898,7 @@ void TonemappingPanel::fromTxt2Gui()
                 return;
             }
         }
-        else if (field == "XSIZE")
+        else if (field == QLatin1String("XSIZE"))
         {
             int idx;
             for (idx = 0; idx < m_Ui->sizeComboBox->count(); idx++)
@@ -920,115 +920,115 @@ void TonemappingPanel::fromTxt2Gui()
         //    m_Ui->qualityHS->setValue(value.toInt());
         //    m_Ui->qualitySB->setValue(value.toInt());
         //}
-        else if (field == "TMO")
+        else if (field == QLatin1String("TMO"))
         {
-            if (value == "Ashikhmin02") {
+            if (value == QLatin1String("Ashikhmin02")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ashikhmin);
-                tmo = "Ashikhmin02";
-            } else if (value == "Mantiuk06") {
+                tmo = QLatin1String("Ashikhmin02");
+            } else if (value == QLatin1String("Mantiuk06")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mantiuk06);
-                tmo = "Mantiuk06";
-            } else if (value == "Mantiuk08") {
+                tmo = QLatin1String("Mantiuk06");
+            } else if (value == QLatin1String("Mantiuk08")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mantiuk08);
-                tmo = "Mantiuk08";
-            } else if (value == "Drago03") {
+                tmo = QLatin1String("Mantiuk08");
+            } else if (value == QLatin1String("Drago03")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_drago);
-                tmo = "Drago03";
-            } else if (value == "Durand02") {
+                tmo = QLatin1String("Drago03");
+            } else if (value == QLatin1String("Durand02")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_durand);
-                tmo = "Durand02";
-            } else if (value == "Fattal02") {
+                tmo = QLatin1String("Durand02");
+            } else if (value == QLatin1String("Fattal02")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_fattal);
-                tmo = "Fattal02";
-            } else if (value == "Ferradans11") {
+                tmo = QLatin1String("Fattal02");
+            } else if (value == QLatin1String("Ferradans11")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ferradans);
-                tmo = "Ferradans11";
-            } else if (value == "Mai11") {
+                tmo = QLatin1String("Ferradans11");
+            } else if (value == QLatin1String("Mai11")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mai);
-                tmo = "Mai11";
-            } else if (value == "Pattanaik00") {
+                tmo = QLatin1String("Mai11");
+            } else if (value == QLatin1String("Pattanaik00")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_pattanaik);
-                tmo = "Pattanaik00";
-            } else if (value == "Reinhard02") {
+                tmo = QLatin1String("Pattanaik00");
+            } else if (value == QLatin1String("Reinhard02")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_reinhard02);
-                tmo = "Reinhard02";
-            } else if (value == "Reinhard05") {
+                tmo = QLatin1String("Reinhard02");
+            } else if (value == QLatin1String("Reinhard05")) {
                 m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_reinhard05);
-                tmo = "Reinhard05";
+                tmo = QLatin1String("Reinhard05");
             }
-        } else if (field == "CONTRASTFACTOR") {
+        } else if (field == QLatin1String("CONTRASTFACTOR")) {
             m_Ui->contrastFactorSlider->setValue(contrastfactorGang->v2p(value.toFloat()));
-        } else if (field == "SATURATIONFACTOR") {
+        } else if (field == QLatin1String("SATURATIONFACTOR")) {
             m_Ui->saturationFactorSlider->setValue(saturationfactorGang->v2p(value.toFloat()));
-        } else if (field == "DETAILFACTOR") {
+        } else if (field == QLatin1String("DETAILFACTOR")) {
             m_Ui->detailFactorSlider->setValue(detailfactorGang->v2p(value.toFloat()));
-        } else if (field == "CONTRASTEQUALIZATION") {
-            m_Ui->contrastEqualizCheckBox->setChecked((value == "YES"));
-        } else if (field == "COLORSATURATION") {
+        } else if (field == QLatin1String("CONTRASTEQUALIZATION")) {
+            m_Ui->contrastEqualizCheckBox->setChecked((value == QLatin1String("YES")));
+        } else if (field == QLatin1String("COLORSATURATION")) {
             m_Ui->contrastFactorSlider->setValue(colorSaturationGang->v2p(value.toFloat()));
-        } else if (field == "CONTRASTENHANCEMENT") {
+        } else if (field == QLatin1String("CONTRASTENHANCEMENT")) {
             m_Ui->saturationFactorSlider->setValue(contrastEnhancementGang->v2p(value.toFloat()));
-        } else if (field == "LUMINANCELEVEL") {
+        } else if (field == QLatin1String("LUMINANCELEVEL")) {
             m_Ui->detailFactorSlider->setValue(luminanceLevelGang->v2p(value.toFloat()));
-        } else if (field == "SIMPLE") {
-            m_Ui->simpleCheckBox->setChecked((value == "YES"));
-        } else if (field == "EQUATION") {
-            m_Ui->eq2RadioButton->setChecked((value=="2"));
-            m_Ui->eq4RadioButton->setChecked((value=="4"));
-        } else if (field == "CONTRAST") {
+        } else if (field == QLatin1String("SIMPLE")) {
+            m_Ui->simpleCheckBox->setChecked((value == QLatin1String("YES")));
+        } else if (field == QLatin1String("EQUATION")) {
+            m_Ui->eq2RadioButton->setChecked((value==QLatin1String("2")));
+            m_Ui->eq4RadioButton->setChecked((value==QLatin1String("4")));
+        } else if (field == QLatin1String("CONTRAST")) {
             m_Ui->contrastSlider->setValue(contrastGang->v2p(value.toFloat()));
-        } else if (field == "BIAS") {
+        } else if (field == QLatin1String("BIAS")) {
             m_Ui->biasSlider->setValue(biasGang->v2p(value.toFloat()));
-        } else if (field == "SPATIAL") {
+        } else if (field == QLatin1String("SPATIAL")) {
             m_Ui->spatialSlider->setValue(spatialGang->v2p(value.toFloat()));
-        } else if (field == "RANGE") {
-            if (tmo == "Durand02")
+        } else if (field == QLatin1String("RANGE")) {
+            if (tmo == QLatin1String("Durand02"))
                 m_Ui->rangeSlider->setValue(rangeGang->v2p(value.toFloat()));
             else
                 m_Ui->range2Slider->setValue(range2Gang->v2p(value.toFloat()));
-        } else if (field == "BASE") {
+        } else if (field == QLatin1String("BASE")) {
             m_Ui->baseSlider->setValue(baseGang->v2p(value.toFloat()));
-        } else if (field == "ALPHA") {
+        } else if (field == QLatin1String("ALPHA")) {
             m_Ui->alphaSlider->setValue(alphaGang->v2p(value.toFloat()));
-        } else if (field == "BETA") {
+        } else if (field == QLatin1String("BETA")) {
             m_Ui->betaSlider->setValue(betaGang->v2p(value.toFloat()));
-        } else if (field == "COLOR") {
+        } else if (field == QLatin1String("COLOR")) {
             m_Ui->saturation2Slider->setValue(saturation2Gang->v2p(value.toFloat()));
-        } else if (field == "NOISE") {
+        } else if (field == QLatin1String("NOISE")) {
             m_Ui->noiseSlider->setValue(noiseGang->v2p(value.toFloat()));
-        } else if (field == "OLDFATTAL") {
-            m_Ui->fftVersionCheckBox->setChecked(value != "YES");
-        } else if (field == "RHO") {
+        } else if (field == QLatin1String("OLDFATTAL")) {
+            m_Ui->fftVersionCheckBox->setChecked(value != QLatin1String("YES"));
+        } else if (field == QLatin1String("RHO")) {
             m_Ui->rhoSlider->setValue(rhoGang->v2p(value.toFloat()));
-        } else if (field == "INV_ALPHA") {
+        } else if (field == QLatin1String("INV_ALPHA")) {
             m_Ui->inv_alphaSlider->setValue(inv_alphaGang->v2p(value.toFloat()));
-        } else if (field == "MULTIPLIER") {
+        } else if (field == QLatin1String("MULTIPLIER")) {
             m_Ui->multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
-        } else if (field == "LOCAL") {
-            (value == "YES") ? m_Ui->pattalocal->setChecked(value == "YES") : m_Ui->pattalocal->setChecked(value=="NO");
-        } else if (field == "AUTOLUMINANCE") {
-            (value == "YES") ? m_Ui->autoYcheckbox->setChecked(value == "YES") : m_Ui->autoYcheckbox->setChecked(value=="NO");
-        } else if (field == "CONE") {
+        } else if (field == QLatin1String("LOCAL")) {
+            (value == QLatin1String("YES")) ? m_Ui->pattalocal->setChecked(value == QLatin1String("YES")) : m_Ui->pattalocal->setChecked(value==QLatin1String("NO"));
+        } else if (field == QLatin1String("AUTOLUMINANCE")) {
+            (value == QLatin1String("YES")) ? m_Ui->autoYcheckbox->setChecked(value == QLatin1String("YES")) : m_Ui->autoYcheckbox->setChecked(value==QLatin1String("NO"));
+        } else if (field == QLatin1String("CONE")) {
             m_Ui->coneSlider->setValue(coneGang->v2p(value.toFloat()));
-        } else if (field == "ROD") {
+        } else if (field == QLatin1String("ROD")) {
             m_Ui->rodSlider->setValue(rodGang->v2p(value.toFloat()));
-        } else if (field == "KEY") {
+        } else if (field == QLatin1String("KEY")) {
             m_Ui->keySlider->setValue(keyGang->v2p(value.toFloat()));
-        } else if (field == "PHI") {
+        } else if (field == QLatin1String("PHI")) {
             m_Ui->phiSlider->setValue(phiGang->v2p(value.toFloat()));
-        } else if (field == "SCALES") {
-            (value == "YES") ? m_Ui->usescalescheckbox->setChecked(value == "YES") : m_Ui->usescalescheckbox->setChecked(value=="NO");
-        } else if (field == "LOWER") {
+        } else if (field == QLatin1String("SCALES")) {
+            (value == QLatin1String("YES")) ? m_Ui->usescalescheckbox->setChecked(value == QLatin1String("YES")) : m_Ui->usescalescheckbox->setChecked(value==QLatin1String("NO"));
+        } else if (field == QLatin1String("LOWER")) {
             m_Ui->lowerSlider->setValue(lowerGang->v2p(value.toFloat()));
-        } else if (field == "UPPER") {
+        } else if (field == QLatin1String("UPPER")) {
             m_Ui->upperSlider->setValue(upperGang->v2p(value.toFloat()));
-        } else if (field == "BRIGHTNESS") {
+        } else if (field == QLatin1String("BRIGHTNESS")) {
             m_Ui->brightnessSlider->setValue(brightnessGang->v2p(value.toFloat()));
-        } else if (field == "CHROMATICADAPTATION") {
+        } else if (field == QLatin1String("CHROMATICADAPTATION")) {
             m_Ui->chromaticAdaptSlider->setValue(chromaticGang->v2p(value.toFloat()));
-        } else if (field == "LIGHTADAPTATION") {
+        } else if (field == QLatin1String("LIGHTADAPTATION")) {
             m_Ui->lightAdaptSlider->setValue(lightGang->v2p(value.toFloat()));
-        } else if (field == "PREGAMMA") {
+        } else if (field == QLatin1String("PREGAMMA")) {
             m_Ui->pregammaSlider->setValue(pregammaGang->v2p(value.toFloat()));
         }
     }
@@ -1053,7 +1053,7 @@ void TonemappingPanel::fillCustomSizeComboBox()
     m_Ui->sizeComboBox->clear();
     for (int i = 0; i < sizes.size(); i++)
     {
-        m_Ui->sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(heightToWidthRatio*sizes[i]) ));
+        m_Ui->sizeComboBox->addItem( QStringLiteral("%1x%2").arg(sizes[i]).arg( (int)(heightToWidthRatio*sizes[i]) ));
     }
 }
 
@@ -1514,12 +1514,12 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization, float contr
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, saturationFactor, detailFactor, pregamma, comment) "
                 "VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, :detailFactor, :pregamma, :comment)");
-    query.bindValue(":contrastEqualization", contrastEqualization);
-    query.bindValue(":contrastFactor", contrastFactor);
-    query.bindValue(":saturationFactor", saturationFactor);
-    query.bindValue(":detailFactor", detailFactor);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":contrastEqualization"), contrastEqualization);
+    query.bindValue(QStringLiteral(":contrastFactor"), contrastFactor);
+    query.bindValue(QStringLiteral(":saturationFactor"), saturationFactor);
+    query.bindValue(QStringLiteral(":detailFactor"), detailFactor);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1534,12 +1534,12 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation, float contrastE
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, luminanceLevel, manualLuminanceLevel, pregamma, comment) "
                 "VALUES (:colorSaturation, :contrastEnhancement, :luminanceLevel, :manualLuminanceLevel, :pregamma, :comment)");
-    query.bindValue(":colorSaturation", colorSaturation);
-    query.bindValue(":contrastEnhancement", contrastEnhancement);
-    query.bindValue(":luminanceLevel", luminanceLevel);
-    query.bindValue(":manualLuminanceLevel", manualLuminanceLevel);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
+    query.bindValue(QStringLiteral(":contrastEnhancement"), contrastEnhancement);
+    query.bindValue(QStringLiteral(":luminanceLevel"), luminanceLevel);
+    query.bindValue(QStringLiteral(":manualLuminanceLevel"), manualLuminanceLevel);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1553,11 +1553,11 @@ void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct, QStr
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO ashikhmin (simple, eq2, lct, pregamma, comment) "
                 "VALUES (:simple, :eq2, :lct, :pregamma, :comment)");
-    query.bindValue(":simple", simple);
-    query.bindValue(":eq2", eq2);
-    query.bindValue(":lct", lct);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":simple"), simple);
+    query.bindValue(QStringLiteral(":eq2"), eq2);
+    query.bindValue(QStringLiteral(":lct"), lct);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1571,9 +1571,9 @@ void TonemappingPanel::execDragoQuery(float bias, QString comment)
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO drago (bias, pregamma, comment) "
                 "VALUES (:bias, :pregamma, :comment)");
-    query.bindValue(":bias", bias);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":bias"), bias);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1587,11 +1587,11 @@ void TonemappingPanel::execDurandQuery(float spatial, float range, float base, Q
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO durand (spatial, range, base, pregamma, comment) "
                 "VALUES (:spatial, :range, :base, :pregamma, :comment)");
-    query.bindValue(":spatial", spatial);
-    query.bindValue(":base", base);
-    query.bindValue(":range", range);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":spatial"), spatial);
+    query.bindValue(QStringLiteral(":base"), base);
+    query.bindValue(QStringLiteral(":range"), range);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1605,13 +1605,13 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta, float colorSatur
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, oldFattal, pregamma, comment) "
                 "VALUES (:alpha, :beta, :colorSaturation, :noiseReduction, :oldFattal, :pregamma, :comment)");
-    query.bindValue(":alpha", alpha);
-    query.bindValue(":beta", beta);
-    query.bindValue(":colorSaturation", colorSaturation);
-    query.bindValue(":noiseReduction", noiseReduction);
-    query.bindValue(":oldFattal", oldFattal);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":alpha"), alpha);
+    query.bindValue(QStringLiteral(":beta"), beta);
+    query.bindValue(QStringLiteral(":colorSaturation"), colorSaturation);
+    query.bindValue(QStringLiteral(":noiseReduction"), noiseReduction);
+    query.bindValue(QStringLiteral(":oldFattal"), oldFattal);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1625,10 +1625,10 @@ void TonemappingPanel::execFerradansQuery(float rho, float inv_alpha, QString co
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO ferradans (rho, inv_alpha, pregamma, comment) "
                 "VALUES (:rho, :inv_alpha, :pregamma, :comment)");
-    query.bindValue(":rho", rho);
-    query.bindValue(":inv_alpha", inv_alpha);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":rho"), rho);
+    query.bindValue(QStringLiteral(":inv_alpha"), inv_alpha);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1641,13 +1641,13 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone, 
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, pregamma, comment) "
                 "VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, :comment)");
-    query.bindValue(":autolum", autolum);
-    query.bindValue(":local", local);
-    query.bindValue(":cone", cone);
-    query.bindValue(":rod", rod);
-    query.bindValue(":multiplier", multiplier);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":autolum"), autolum);
+    query.bindValue(QStringLiteral(":local"), local);
+    query.bindValue(QStringLiteral(":cone"), cone);
+    query.bindValue(QStringLiteral(":rod"), rod);
+    query.bindValue(QStringLiteral(":multiplier"), multiplier);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1661,14 +1661,14 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi, in
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, pregamma, comment) "
                 "VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, :comment)");
-    query.bindValue(":scales", scales);
-    query.bindValue(":key", key);
-    query.bindValue(":phi", phi);
-    query.bindValue(":range", range);
-    query.bindValue(":lower", lower);
-    query.bindValue(":upper", upper);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":scales"), scales);
+    query.bindValue(QStringLiteral(":key"), key);
+    query.bindValue(QStringLiteral(":phi"), phi);
+    query.bindValue(QStringLiteral(":range"), range);
+    query.bindValue(QStringLiteral(":lower"), lower);
+    query.bindValue(QStringLiteral(":upper"), upper);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();
@@ -1682,11 +1682,11 @@ void TonemappingPanel::execReinhard05Query(float brightness, float chromaticAdap
     float pregamma = m_Ui->pregammadsb->value();
     query.prepare("INSERT INTO reinhard05 (brightness, chromaticAdaptation, lightAdaptation, pregamma, comment) "
                 "VALUES (:brightness, :chromaticAdaptation, :lightAdaptation, :pregamma, :comment)");
-    query.bindValue(":brightness", brightness);
-    query.bindValue(":chromaticAdaptation", chromaticAdaptation);
-    query.bindValue(":lightAdaptation", lightAdaptation);
-    query.bindValue(":pregamma", pregamma);
-    query.bindValue(":comment", comment);
+    query.bindValue(QStringLiteral(":brightness"), brightness);
+    query.bindValue(QStringLiteral(":chromaticAdaptation"), chromaticAdaptation);
+    query.bindValue(QStringLiteral(":lightAdaptation"), lightAdaptation);
+    query.bindValue(QStringLiteral(":pregamma"), pregamma);
+    query.bindValue(QStringLiteral(":comment"), comment);
     bool res = query.exec();
     if (res == false)
         qDebug() << query.lastError();

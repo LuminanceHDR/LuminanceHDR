@@ -46,10 +46,10 @@ const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = "LuminanceHDR";
 #elif defined(__APPLE__)
 const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = ".config/.LuminanceHDR";
 #else
-const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = ".config/luminance-hdr";
+const QString LuminanceOptions::LUMINANCE_HDR_HOME_FOLDER = QStringLiteral(".config/luminance-hdr");
 #endif
 
-const static QString MAC_THEME = "Macintosh";
+const static QString MAC_THEME = QStringLiteral("Macintosh");
 
 bool LuminanceOptions::isCurrentPortableMode = false;
 
@@ -126,7 +126,7 @@ void LuminanceOptions::setPortableMode(bool isPortable)
         }
         delete oldSettings;
 
-        QString filePath = QDir(QApplication::applicationDirPath()).relativeFilePath("PortableMode.txt");
+        QString filePath = QDir(QApplication::applicationDirPath()).relativeFilePath(QStringLiteral("PortableMode.txt"));
         QFile file(filePath);
         if (isPortable && !file.exists())
         {
@@ -155,7 +155,7 @@ void LuminanceOptions::setUpdateChecked()
 void LuminanceOptions::initSettings()
 {
     if (LuminanceOptions::isCurrentPortableMode)
-        m_settingHolder = new QSettings("settings.ini", QSettings::IniFormat);
+        m_settingHolder = new QSettings(QStringLiteral("settings.ini"), QSettings::IniFormat);
     else
         m_settingHolder = new QSettings();
 }
@@ -183,7 +183,7 @@ QString LuminanceOptions::getDatabaseFileName()
     {
         filename = QDir(QDir::homePath()).absolutePath() + "/" + LUMINANCE_HDR_HOME_FOLDER;
     }
-    filename += "/saved_parameters.db";
+    filename += QLatin1String("/saved_parameters.db");
 
     return filename;
 }
@@ -220,7 +220,7 @@ void LuminanceOptions::setGuiDarkMode(bool b)
 void LuminanceOptions::applyTheme(bool /*init*/)
 {
     QString theme = LuminanceOptions().getGuiTheme();
-    if (theme.compare("Macintosh") != 0 && isGuiDarkMode())
+    if (theme.compare(QLatin1String("Macintosh")) != 0 && isGuiDarkMode())
     {
         //QPalette darkPalette;
         QPalette darkPalette = QApplication::palette();
@@ -732,7 +732,7 @@ QString LuminanceOptions::getTempDir()
 
     // directory exists...
     // let's check whether I can create a file or not!
-    QFile file(temp_dir.filePath("test_write.txt"));
+    QFile file(temp_dir.filePath(QStringLiteral("test_write.txt")));
     if ( !file.open(QIODevice::ReadWrite) )
     {
         // directory is not writtable
@@ -829,7 +829,7 @@ QStringList LuminanceOptions::getAlignImageStackOptions()
     //return m_settingHolder->value(KEY_EXTERNAL_AIS_OPTIONS,
     //                              QStringList() << "-v" << "aligned_").toStringList();
     return m_settingHolder->value(KEY_EXTERNAL_AIS_OPTIONS,
-                                  QStringList() << "-v").toStringList();
+                                  QStringList() << QStringLiteral("-v")).toStringList();
 }
 
 QStringList LuminanceOptions::sanitizeAISparams(QStringList temp_ais_options, bool verbose)
@@ -837,10 +837,10 @@ QStringList LuminanceOptions::sanitizeAISparams(QStringList temp_ais_options, bo
     bool align_opt_was_ok=true;
 
     //check that we don't have '-a "aligned_"'
-    int idx_a = temp_ais_options.indexOf("-a");
+    int idx_a = temp_ais_options.indexOf(QStringLiteral("-a"));
 
     if (idx_a != -1) {
-        if (idx_a != temp_ais_options.size()-1 && !temp_ais_options.at(idx_a+1).startsWith("-")) {
+        if (idx_a != temp_ais_options.size()-1 && !temp_ais_options.at(idx_a+1).startsWith(QLatin1String("-"))) {
             temp_ais_options.removeAt(idx_a + 1);
         }
         temp_ais_options.removeAt(idx_a);
@@ -849,8 +849,8 @@ QStringList LuminanceOptions::sanitizeAISparams(QStringList temp_ais_options, bo
     }
 
     //check if we have '-v'
-    if (temp_ais_options.indexOf("-v") < 0) {
-        temp_ais_options.insert(0, "-v");
+    if (temp_ais_options.indexOf(QStringLiteral("-v")) < 0) {
+        temp_ais_options.insert(0, QStringLiteral("-v"));
         align_opt_was_ok = false;
     }
 

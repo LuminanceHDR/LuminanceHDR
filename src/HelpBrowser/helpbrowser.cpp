@@ -102,7 +102,7 @@ class HistoryParser2 : public QXmlDefaultHandler
 
         bool startElement(const QString&, const QString&, const QString& qName, const QXmlAttributes& attrs)
         {
-            if (qName == "item")
+            if (qName == QLatin1String("item"))
             {
                 struct histd2 his;
                 his.title = attrs.value(0);
@@ -138,7 +138,7 @@ class BookmarkParser2 : public QXmlDefaultHandler
 
         bool startElement(const QString&, const QString&, const QString& qName, const QXmlAttributes& attrs)
         {
-            if (qName == "item")
+            if (qName == QLatin1String("item"))
             {
                 //TODO : This will dump items if bookmarks get loaded into a different GUI language
                 if (quickHelpIndex->contains(attrs.value(1)))
@@ -172,7 +172,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 {
     m_Ui->setupUi(this);
 
-    restoreGeometry(LuminanceOptions().value("HelpBrowserGeometry").toByteArray());
+    restoreGeometry(LuminanceOptions().value(QStringLiteral("HelpBrowserGeometry")).toByteArray());
     setupLocalUI();
 
     //m_Ui->htmlPage->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
@@ -182,7 +182,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
     //connect(m_Ui->htmlPage->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
     connect(m_Ui->htmlPage->page(), &QWebEnginePage::linkHovered, this, &HelpBrowser::linkHovered);
 
-    language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
+    language = guiLanguage.isEmpty() ? QStringLiteral("en") : guiLanguage.left(2);
        finalBaseDir = LuminancePaths::HelpDir();
 
     qDebug() << finalBaseDir;
@@ -206,7 +206,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 
 HelpBrowser::~HelpBrowser()
 {
-    LuminanceOptions().setValue("HelpBrowserGeometry", saveGeometry());
+    LuminanceOptions().setValue(QStringLiteral("HelpBrowserGeometry"), saveGeometry());
 }
 
 void HelpBrowser::closeEvent(QCloseEvent *)
@@ -407,7 +407,7 @@ void HelpBrowser::searchingInDirectory(const QString& aDir)
 {
     QDir dir(QDir::toNativeSeparators(aDir + "/"));
     QStringList in;
-    in.append("*.html");
+    in.append(QStringLiteral("*.html"));
     QStringList lst = dir.entryList(in);
     for (QStringList::Iterator it = lst.begin(); it != lst.end(); ++it)
     {
@@ -435,10 +435,10 @@ void HelpBrowser::searchingInDirectory(const QString& aDir)
     }
     // get dirs - ugly recursion
     in.clear();
-    in.append("*");
+    in.append(QStringLiteral("*"));
     QStringList dst = dir.entryList(in, QDir::Dirs);
     for (QStringList::Iterator it = dst.begin(); it != dst.end(); ++it)
-        if ((*it)!="." && (*it)!="..")
+        if ((*it)!=QLatin1String(".") && (*it)!=QLatin1String(".."))
             searchingInDirectory(QDir::toNativeSeparators(aDir + QString((*it)) + "/"));
 }
 
@@ -563,7 +563,7 @@ void HelpBrowser::loadHelp(const QString& filename)
         else
         {
                toLoad = LuminancePaths::HelpDir() + "index.html";
-             language="en";
+             language=QLatin1String("en");
             //qDebug("Help index: %c", toLoad);
             fi = QFileInfo(toLoad);
             if (!fi.exists())
@@ -605,7 +605,7 @@ void HelpBrowser::loadMenu()
     {
         if (menuModel!=NULL)
             delete menuModel;
-        menuModel=new ScHelpTreeModel(toLoad, "Topic", "Location", &quickHelpIndex);
+        menuModel=new ScHelpTreeModel(toLoad, QStringLiteral("Topic"), QStringLiteral("Location"), &quickHelpIndex);
 
         helpSideBar->m_Ui->listView->setModel(menuModel);
         helpSideBar->m_Ui->listView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -756,7 +756,7 @@ void HelpBrowser::zoomOut_clicked() {
 
 void HelpBrowser::handleExternalLink(const QUrl &url) {
 //TODO: Check whether handling these protocol internally has now been fixed in Windows
-    if ((url.scheme() == "http") || url.scheme() == "https") {
+    if ((url.scheme() == QLatin1String("http")) || url.scheme() == QLatin1String("https")) {
 /*
 #ifdef WIN32
         QDesktopServices::openUrl(url);
@@ -785,7 +785,7 @@ void HelpBrowser::loadStarted() {
 
 void HelpBrowser::loadFinished(bool) {
     QApplication::restoreOverrideCursor();
-    statusBar()->showMessage("");
+    statusBar()->showMessage(QLatin1String(""));
 }
 
 void HelpBrowser::linkHovered (const QString &url) {

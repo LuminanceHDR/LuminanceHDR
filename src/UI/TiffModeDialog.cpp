@@ -25,10 +25,10 @@
 
 namespace
 {
-const static QString TIFF_MODE_HDR_KEY = "tiffmodedialog/mode/hdr";
+const static QString TIFF_MODE_HDR_KEY = QStringLiteral("tiffmodedialog/mode/hdr");
 const static int TIFF_MODE_HDR_VALUE = 0;
 
-const static QString TIFF_MODE_LDR_KEY = "tiffmodedialog/mode/ldr";
+const static QString TIFF_MODE_LDR_KEY = QStringLiteral("tiffmodedialog/mode/ldr");
 const static int TIFF_MODE_LDR_VALUE = 0;
 }
 
@@ -42,8 +42,8 @@ TiffModeDialog::TiffModeDialog(bool hdrMode, int defaultValue, QWidget *parent)
 
     if (m_hdrMode)
     {
-        m_ui->comboBox->insertItem(0, "TIFF 32 bit/channel floating point");
-        m_ui->comboBox->insertItem(1, "TIFF LogLuv");
+        m_ui->comboBox->insertItem(0, QStringLiteral("TIFF 32 bit/channel floating point"));
+        m_ui->comboBox->insertItem(1, QStringLiteral("TIFF LogLuv"));
 
         if (defaultValue >= 0)
         {
@@ -54,9 +54,9 @@ TiffModeDialog::TiffModeDialog(bool hdrMode, int defaultValue, QWidget *parent)
     }
     else
     {
-        m_ui->comboBox->insertItem(0, "TIFF 8 bit/channel");
-        m_ui->comboBox->insertItem(1, "TIFF 16 bit/channel");
-        m_ui->comboBox->insertItem(2, "TIFF 32 bit/channel floating point");
+        m_ui->comboBox->insertItem(0, QStringLiteral("TIFF 8 bit/channel"));
+        m_ui->comboBox->insertItem(1, QStringLiteral("TIFF 16 bit/channel"));
+        m_ui->comboBox->insertItem(2, QStringLiteral("TIFF 32 bit/channel floating point"));
 
         if (defaultValue >= 0)
         {

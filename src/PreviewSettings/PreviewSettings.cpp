@@ -190,7 +190,7 @@ QSize PreviewSettings::getLabelSize()
 void PreviewSettings::addPreviewLabel(PreviewLabel *label)
 {
     TonemappingOptions *opts = label->getTonemappingOptions();
-    QString text = opts->getCaption(false, QString("\n"));
+    QString text = opts->getCaption(false, QStringLiteral("\n"));
 
     if (label->actions().isEmpty()) {
         QAction* pAction = new QAction(tr("Load settings"), label);

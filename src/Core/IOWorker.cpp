@@ -209,9 +209,9 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
             QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
             QString comment = operations->getExifComment();
             if ( !expoTimes.empty() ) {
-                comment += "\nBracketed images exposure times:\n";
+                comment += QLatin1String("\nBracketed images exposure times:\n");
                 foreach (float e, expoTimes) {
-                    comment += QString("%1").arg(e) + "\n";
+                    comment += QStringLiteral("%1").arg(e) + "\n";
                 }
             }
 

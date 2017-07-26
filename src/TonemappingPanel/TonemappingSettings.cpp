@@ -109,7 +109,7 @@ void TonemappingSettings::fillPreviews()
     QString sqlQuery;
     int origxsize = m_frame->getWidth();
 
-    sqlQuery = "SELECT *, 'ashikhmin' AS operator FROM ashikhmin";
+    sqlQuery = QLatin1String("SELECT *, 'ashikhmin' AS operator FROM ashikhmin");
     m_modelPreviews->setQuery(sqlQuery);
 
     bool simple;
@@ -118,9 +118,9 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoAshikhmin = new TonemappingOptions;
-        simple = m_modelPreviews->record(selectedRow).value("simple").toBool();
-        eq2 = m_modelPreviews->record(selectedRow).value("eq2").toBool();
-        lct = m_modelPreviews->record(selectedRow).value("lct").toFloat();
+        simple = m_modelPreviews->record(selectedRow).value(QStringLiteral("simple")).toBool();
+        eq2 = m_modelPreviews->record(selectedRow).value(QStringLiteral("eq2")).toBool();
+        lct = m_modelPreviews->record(selectedRow).value(QStringLiteral("lct")).toFloat();
 
         fillCommonValues(tmoAshikhmin, origxsize, PREVIEW_WIDTH, ashikhmin, m_modelPreviews->record(selectedRow));
 
@@ -131,14 +131,14 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoAshikhmin, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'drago' AS operator FROM drago";
+    sqlQuery = QLatin1String("SELECT *, 'drago' AS operator FROM drago");
     m_modelPreviews->setQuery(sqlQuery);
 
     float bias;
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoDrago = new TonemappingOptions;
-        bias = m_modelPreviews->record(selectedRow).value("bias").toFloat();
+        bias = m_modelPreviews->record(selectedRow).value(QStringLiteral("bias")).toFloat();
 
         fillCommonValues(tmoDrago, origxsize, PREVIEW_WIDTH, drago, m_modelPreviews->record(selectedRow));
 
@@ -147,7 +147,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoDrago, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'durand' AS operator FROM durand";
+    sqlQuery = QLatin1String("SELECT *, 'durand' AS operator FROM durand");
     m_modelPreviews->setQuery(sqlQuery);
 
     float spatial,
@@ -156,9 +156,9 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoDurand = new TonemappingOptions;
-        spatial  = m_modelPreviews->record(selectedRow).value("spatial").toFloat();
-        range    = m_modelPreviews->record(selectedRow).value("range").toFloat();
-        base     = m_modelPreviews->record(selectedRow).value("base").toFloat();
+        spatial  = m_modelPreviews->record(selectedRow).value(QStringLiteral("spatial")).toFloat();
+        range    = m_modelPreviews->record(selectedRow).value(QStringLiteral("range")).toFloat();
+        base     = m_modelPreviews->record(selectedRow).value(QStringLiteral("base")).toFloat();
 
         fillCommonValues(tmoDurand, origxsize, PREVIEW_WIDTH, durand, m_modelPreviews->record(selectedRow));
 
@@ -169,7 +169,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoDurand, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'fattal' AS operator FROM fattal";
+    sqlQuery = QLatin1String("SELECT *, 'fattal' AS operator FROM fattal");
     m_modelPreviews->setQuery(sqlQuery);
 
     float alpha,
@@ -180,11 +180,11 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoFattal = new TonemappingOptions;
-        alpha          = m_modelPreviews->record(selectedRow).value("alpha").toFloat();
-        beta           = m_modelPreviews->record(selectedRow).value("beta").toFloat();
-        colorSat       = m_modelPreviews->record(selectedRow).value("colorSaturation").toFloat();
-        noiseReduction = m_modelPreviews->record(selectedRow).value("noiseReduction").toFloat();
-        fftsolver      = !m_modelPreviews->record(selectedRow).value("oldFattal").toBool();
+        alpha          = m_modelPreviews->record(selectedRow).value(QStringLiteral("alpha")).toFloat();
+        beta           = m_modelPreviews->record(selectedRow).value(QStringLiteral("beta")).toFloat();
+        colorSat       = m_modelPreviews->record(selectedRow).value(QStringLiteral("colorSaturation")).toFloat();
+        noiseReduction = m_modelPreviews->record(selectedRow).value(QStringLiteral("noiseReduction")).toFloat();
+        fftsolver      = !m_modelPreviews->record(selectedRow).value(QStringLiteral("oldFattal")).toBool();
 
         fillCommonValues(tmoFattal, origxsize, PREVIEW_WIDTH, fattal, m_modelPreviews->record(selectedRow));
 
@@ -197,7 +197,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoFattal, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'ferradans' AS operator FROM ferradans";
+    sqlQuery = QLatin1String("SELECT *, 'ferradans' AS operator FROM ferradans");
     m_modelPreviews->setQuery(sqlQuery);
 
     float rho,
@@ -205,8 +205,8 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoFerradans = new TonemappingOptions;
-        rho          = m_modelPreviews->record(selectedRow).value("rho").toFloat();
-        inv_alpha    = m_modelPreviews->record(selectedRow).value("inv_alpha").toFloat();
+        rho          = m_modelPreviews->record(selectedRow).value(QStringLiteral("rho")).toFloat();
+        inv_alpha    = m_modelPreviews->record(selectedRow).value(QStringLiteral("inv_alpha")).toFloat();
 
         fillCommonValues(tmoFerradans, origxsize, PREVIEW_WIDTH, ferradans, m_modelPreviews->record(selectedRow));
 
@@ -216,7 +216,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoFerradans, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'mantiuk06' AS operator FROM mantiuk06";
+    sqlQuery = QLatin1String("SELECT *, 'mantiuk06' AS operator FROM mantiuk06");
     m_modelPreviews->setQuery(sqlQuery);
 
     bool contrastEqualization;
@@ -226,10 +226,10 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoMantiuk06 = new TonemappingOptions;
-        contrastEqualization = m_modelPreviews->record(selectedRow).value("contrastEqualization").toBool();
-        contrastFactor       = m_modelPreviews->record(selectedRow).value("contrastFactor").toFloat();
-        saturationFactor     = m_modelPreviews->record(selectedRow).value("saturationFactor").toFloat();
-        detailFactor         = m_modelPreviews->record(selectedRow).value("detailFactor").toFloat();
+        contrastEqualization = m_modelPreviews->record(selectedRow).value(QStringLiteral("contrastEqualization")).toBool();
+        contrastFactor       = m_modelPreviews->record(selectedRow).value(QStringLiteral("contrastFactor")).toFloat();
+        saturationFactor     = m_modelPreviews->record(selectedRow).value(QStringLiteral("saturationFactor")).toFloat();
+        detailFactor         = m_modelPreviews->record(selectedRow).value(QStringLiteral("detailFactor")).toFloat();
 
         fillCommonValues(tmoMantiuk06, origxsize, PREVIEW_WIDTH, mantiuk06, m_modelPreviews->record(selectedRow));
 
@@ -241,7 +241,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoMantiuk06, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'mantiuk08' AS operator FROM mantiuk08";
+    sqlQuery = QLatin1String("SELECT *, 'mantiuk08' AS operator FROM mantiuk08");
     m_modelPreviews->setQuery(sqlQuery);
 
     float colorSaturation,
@@ -251,10 +251,10 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoMantiuk08 = new TonemappingOptions;
-        colorSaturation      = m_modelPreviews->record(selectedRow).value("colorSaturation").toFloat();
-        contrastEnhancement  = m_modelPreviews->record(selectedRow).value("contrastEnhancement").toFloat();
-        luminanceLevel       = m_modelPreviews->record(selectedRow).value("luminanceLevel").toFloat();
-        manualLuminanceLevel = m_modelPreviews->record(selectedRow).value("manualLuminanceLevel").toBool();
+        colorSaturation      = m_modelPreviews->record(selectedRow).value(QStringLiteral("colorSaturation")).toFloat();
+        contrastEnhancement  = m_modelPreviews->record(selectedRow).value(QStringLiteral("contrastEnhancement")).toFloat();
+        luminanceLevel       = m_modelPreviews->record(selectedRow).value(QStringLiteral("luminanceLevel")).toFloat();
+        manualLuminanceLevel = m_modelPreviews->record(selectedRow).value(QStringLiteral("manualLuminanceLevel")).toBool();
 
         fillCommonValues(tmoMantiuk08, origxsize, PREVIEW_WIDTH, mantiuk08, m_modelPreviews->record(selectedRow));
 
@@ -266,7 +266,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoMantiuk08, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'pattanaik' AS operator FROM pattanaik";
+    sqlQuery = QLatin1String("SELECT *, 'pattanaik' AS operator FROM pattanaik");
     m_modelPreviews->setQuery(sqlQuery);
 
     float multiplier,
@@ -277,11 +277,11 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoPattanaik = new TonemappingOptions;
-        multiplier = m_modelPreviews->record(selectedRow).value("multiplier").toFloat();
-        rod        = m_modelPreviews->record(selectedRow).value("rod").toFloat();
-        cone       = m_modelPreviews->record(selectedRow).value("cone").toFloat();
-        autolum    = m_modelPreviews->record(selectedRow).value("autolum").toBool();
-        local      = m_modelPreviews->record(selectedRow).value("local").toBool();
+        multiplier = m_modelPreviews->record(selectedRow).value(QStringLiteral("multiplier")).toFloat();
+        rod        = m_modelPreviews->record(selectedRow).value(QStringLiteral("rod")).toFloat();
+        cone       = m_modelPreviews->record(selectedRow).value(QStringLiteral("cone")).toFloat();
+        autolum    = m_modelPreviews->record(selectedRow).value(QStringLiteral("autolum")).toBool();
+        local      = m_modelPreviews->record(selectedRow).value(QStringLiteral("local")).toBool();
 
         fillCommonValues(tmoPattanaik, origxsize, PREVIEW_WIDTH, pattanaik, m_modelPreviews->record(selectedRow));
 
@@ -294,7 +294,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoPattanaik, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'reinhard02' AS operator FROM reinhard02";
+    sqlQuery = QLatin1String("SELECT *, 'reinhard02' AS operator FROM reinhard02");
     m_modelPreviews->setQuery(sqlQuery);
 
     bool scales;
@@ -306,12 +306,12 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoReinhard02 = new TonemappingOptions;
-        scales   = m_modelPreviews->record(selectedRow).value("scales").toBool();
-        key      = m_modelPreviews->record(selectedRow).value("key").toFloat();
-        phi      = m_modelPreviews->record(selectedRow).value("phi").toFloat();
-        irange   = m_modelPreviews->record(selectedRow).value("range").toInt();
-        lower    = m_modelPreviews->record(selectedRow).value("lower").toInt();
-        upper    = m_modelPreviews->record(selectedRow).value("upper").toInt();
+        scales   = m_modelPreviews->record(selectedRow).value(QStringLiteral("scales")).toBool();
+        key      = m_modelPreviews->record(selectedRow).value(QStringLiteral("key")).toFloat();
+        phi      = m_modelPreviews->record(selectedRow).value(QStringLiteral("phi")).toFloat();
+        irange   = m_modelPreviews->record(selectedRow).value(QStringLiteral("range")).toInt();
+        lower    = m_modelPreviews->record(selectedRow).value(QStringLiteral("lower")).toInt();
+        upper    = m_modelPreviews->record(selectedRow).value(QStringLiteral("upper")).toInt();
 
         fillCommonValues(tmoReinhard02, origxsize, PREVIEW_WIDTH, reinhard02, m_modelPreviews->record(selectedRow));
 
@@ -325,7 +325,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoReinhard02, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = "SELECT *, 'reinhard05' AS operator FROM reinhard05";
+    sqlQuery = QLatin1String("SELECT *, 'reinhard05' AS operator FROM reinhard05");
     m_modelPreviews->setQuery(sqlQuery);
 
     float brightness,
@@ -334,9 +334,9 @@ void TonemappingSettings::fillPreviews()
 
     for (int selectedRow = 0; selectedRow < m_modelPreviews->rowCount(); selectedRow++) {
         TonemappingOptions *tmoReinhard05 = new TonemappingOptions;
-        brightness          = m_modelPreviews->record(selectedRow).value("brightness").toFloat();
-        chromaticAdaptation = m_modelPreviews->record(selectedRow).value("chromaticAdaptation").toFloat();
-        lightAdaptation     = m_modelPreviews->record(selectedRow).value("lightAdaptation").toFloat();
+        brightness          = m_modelPreviews->record(selectedRow).value(QStringLiteral("brightness")).toFloat();
+        chromaticAdaptation = m_modelPreviews->record(selectedRow).value(QStringLiteral("chromaticAdaptation")).toFloat();
+        lightAdaptation     = m_modelPreviews->record(selectedRow).value(QStringLiteral("lightAdaptation")).toFloat();
 
         fillCommonValues(tmoReinhard05, origxsize, PREVIEW_WIDTH, reinhard05, m_modelPreviews->record(selectedRow));
 
@@ -351,7 +351,7 @@ void TonemappingSettings::fillPreviews()
 
 void TonemappingSettings::addPreview(PreviewLabel* previewLabel, const QSqlRecord& record)
 {
-    QString comment = record.value("comment").toString();
+    QString comment = record.value(QStringLiteral("comment")).toString();
 
     m_previewLabelList.append(previewLabel);
 
@@ -365,7 +365,7 @@ void TonemappingSettings::addPreview(PreviewLabel* previewLabel, const QSqlRecor
 
 void TonemappingSettings::fillCommonValues(TonemappingOptions * tmOptions, int origxsize, int previewWidth, TMOperator tOperator, const QSqlRecord& record)
 {
-    float pregamma = record.value("pregamma").toFloat();
+    float pregamma = record.value(QStringLiteral("pregamma")).toFloat();
 
     tmOptions->origxsize = origxsize;
     tmOptions->xsize = previewWidth;

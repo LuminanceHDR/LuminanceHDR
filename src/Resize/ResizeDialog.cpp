@@ -40,12 +40,12 @@ ResizeDialog::ResizeDialog(QWidget *parent, pfs::Frame *orig):
     resized_width = orig_width;
     resized_height = orig_height;
 
-    m_Ui->widthSpinBox->setSuffix("");
+    m_Ui->widthSpinBox->setSuffix(QLatin1String(""));
     m_Ui->widthSpinBox->setDecimals(0);
     m_Ui->widthSpinBox->setMaximum(2*orig_width);
     m_Ui->widthSpinBox->setMinimum(1);
 
-    m_Ui->heightSpinBox->setSuffix("");
+    m_Ui->heightSpinBox->setSuffix(QLatin1String(""));
     m_Ui->heightSpinBox->setDecimals(0);
     m_Ui->heightSpinBox->setMaximum(2*orig_height);
     m_Ui->heightSpinBox->setMinimum(1);
@@ -92,10 +92,10 @@ void ResizeDialog::switch_px_percentage(int px_per) {
         m_Ui->widthSpinBox->setValue((int)(m_Ui->widthSpinBox->value()*(float)orig_width/100.0)); //from perc to px
         from_other_spinbox = true;
         m_Ui->heightSpinBox->setValue((int)(m_Ui->heightSpinBox->value()*(float)orig_height/100.0)); //from perc to px
-        m_Ui->widthSpinBox->setSuffix("");
+        m_Ui->widthSpinBox->setSuffix(QLatin1String(""));
         m_Ui->widthSpinBox->setDecimals(0);
         m_Ui->widthSpinBox->setMinimum(1);
-        m_Ui->heightSpinBox->setSuffix("");
+        m_Ui->heightSpinBox->setSuffix(QLatin1String(""));
         m_Ui->heightSpinBox->setDecimals(0);
         m_Ui->heightSpinBox->setMinimum(1);
         break;
@@ -106,10 +106,10 @@ void ResizeDialog::switch_px_percentage(int px_per) {
         m_Ui->widthSpinBox->setValue(100*m_Ui->widthSpinBox->value()/(float)orig_width); //from px to perc
         from_other_spinbox = true;
         m_Ui->heightSpinBox->setValue(100*m_Ui->heightSpinBox->value()/(float)orig_height); //from px to perc
-        m_Ui->widthSpinBox->setSuffix("%");
+        m_Ui->widthSpinBox->setSuffix(QStringLiteral("%"));
         m_Ui->widthSpinBox->setMaximum(200);
         m_Ui->widthSpinBox->setMinimum(1);
-        m_Ui->heightSpinBox->setSuffix("%");
+        m_Ui->heightSpinBox->setSuffix(QStringLiteral("%"));
         m_Ui->heightSpinBox->setMaximum(200);
         m_Ui->heightSpinBox->setMinimum(1);
         break;
@@ -170,7 +170,7 @@ void ResizeDialog::update_widthSpinBox() {
     updatelabel();
 }
 void ResizeDialog::updatelabel() {
-    m_Ui->sizepreview->setText(QString("%1x%2").arg(resized_width).arg(resized_height));
+    m_Ui->sizepreview->setText(QStringLiteral("%1x%2").arg(resized_width).arg(resized_height));
 }
 
 void ResizeDialog::defaultpressed() {

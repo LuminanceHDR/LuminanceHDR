@@ -44,7 +44,7 @@ TreeModel::TreeModel ( const QString &data, QObject *parent )
     QList<QVariant> rootData;
     rootData << "Title" << "Summary";
     rootItem = new TreeItem ( rootData );
-    setupModelData ( data.split ( QString ( "\n" ) ), rootItem );
+    setupModelData ( data.split ( QStringLiteral ( "\n" ) ), rootItem );
 }
 
 TreeModel::~TreeModel()
@@ -147,7 +147,7 @@ void TreeModel::setupModelData ( const QStringList &lines, TreeItem *parent )
         int position = 0;
         while ( position < lines[number].length() )
         {
-            if ( lines[number].mid ( position, 1 ) != " " )
+            if ( lines[number].mid ( position, 1 ) != QLatin1String(" ") )
                 break;
             position++;
         }
@@ -157,7 +157,7 @@ void TreeModel::setupModelData ( const QStringList &lines, TreeItem *parent )
         if ( !lineData.isEmpty() )
         {
             // Read the column data from the rest of the line.
-            QStringList columnStrings = lineData.split ( "\t", QString::SkipEmptyParts );
+            QStringList columnStrings = lineData.split ( QStringLiteral("\t"), QString::SkipEmptyParts );
             QList<QVariant> columnData;
             for ( int column = 0; column < columnStrings.count(); ++column )
                 columnData << columnStrings[column];

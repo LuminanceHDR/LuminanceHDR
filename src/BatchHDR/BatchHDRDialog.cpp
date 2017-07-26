@@ -102,21 +102,21 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
     m_formatHelper.initConnection(m_Ui->formatComboBox, m_Ui->formatSettingsButton, true);
 
     m_tempDir = m_luminance_options.getTempDir();
-    m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput("");
-    m_batchHdrOutputDir = m_luminance_options.getBatchHdrPathOutput("");
+    m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput(QLatin1String(""));
+    m_batchHdrOutputDir = m_luminance_options.getBatchHdrPathOutput(QLatin1String(""));
 
     m_Ui->inputLineEdit->setText(m_batchHdrInputDir);
     m_Ui->outputLineEdit->setText(m_batchHdrOutputDir);
 
     QSqlQueryModel model;
-    model.setQuery("SELECT * FROM parameters");
+    model.setQuery(QStringLiteral("SELECT * FROM parameters"));
     for (int i = 0; i < model.rowCount(); i++)
     {
         m_Ui->profileComboBox->addItem(tr("Custom config %1").arg(i+1));
-        int weight_ = model.record(i).value("weight").toInt();
-        int response_ = model.record(i).value("response").toInt();
-        int model_ = model.record(i).value("model").toInt();
-        QString filename_ = model.record(i).value("filename").toString();
+        int weight_ = model.record(i).value(QStringLiteral("weight")).toInt();
+        int response_ = model.record(i).value(QStringLiteral("response")).toInt();
+        int model_ = model.record(i).value(QStringLiteral("model")).toInt();
+        QString filename_ = model.record(i).value(QStringLiteral("filename")).toString();
         FusionOperatorConfig ct;
 
         ct.weightFunction = static_cast<WeightFunctionType>(weight_);
@@ -228,7 +228,7 @@ void BatchHDRDialog::on_startButton_clicked()
     bool doStart = true;
     if (!files.empty()) {
         foreach(const QString &file, files) {
-            if (file.startsWith("hdr_"))
+            if (file.startsWith(QLatin1String("hdr_")))
                 foundHDR = true;
         }
         if (foundHDR)
@@ -237,8 +237,8 @@ void BatchHDRDialog::on_startButton_clicked()
 
     // process input images
     QStringList filters;
-    filters << "*.jpg" << "*.jpeg" << "*.tiff" << "*.tif" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.rw2" << "*.sr2" << "*.3fr" << "*.mef" << "*.mos" << "*.erf" << "*.nrw" << "*.srw";
-    filters << "*.JPG" << "*.JPEG" << "*.TIFF" << "*.TIF" << "*.CRW" << "*.CR2" << "*.NEF" << "*.DNG" << "*.MRW" << "*.ORF" << "*.KDC" << "*.DCR" << "*.ARW" << "*.RAF" << "*.PTX" << "*.PEF" << "*.X3F" << "*.RAW" << "*.RW2" << "*.SR2" << "*.3FR" << "*.MEF" << "*.MOS" << "*.ERF" << "*.NRW" << "*.SRW";
+    filters << QStringLiteral("*.jpg") << QStringLiteral("*.jpeg") << QStringLiteral("*.tiff") << QStringLiteral("*.tif") << QStringLiteral("*.crw") << QStringLiteral("*.cr2") << QStringLiteral("*.nef") << QStringLiteral("*.dng") << QStringLiteral("*.mrw") << QStringLiteral("*.orf") << QStringLiteral("*.kdc") << QStringLiteral("*.dcr") << QStringLiteral("*.arw") << QStringLiteral("*.raf") << QStringLiteral("*.ptx") << QStringLiteral("*.pef") << QStringLiteral("*.x3f") << QStringLiteral("*.raw") << QStringLiteral("*.rw2") << QStringLiteral("*.sr2") << QStringLiteral("*.3fr") << QStringLiteral("*.mef") << QStringLiteral("*.mos") << QStringLiteral("*.erf") << QStringLiteral("*.nrw") << QStringLiteral("*.srw");
+    filters << QStringLiteral("*.JPG") << QStringLiteral("*.JPEG") << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF") << QStringLiteral("*.CRW") << QStringLiteral("*.CR2") << QStringLiteral("*.NEF") << QStringLiteral("*.DNG") << QStringLiteral("*.MRW") << QStringLiteral("*.ORF") << QStringLiteral("*.KDC") << QStringLiteral("*.DCR") << QStringLiteral("*.ARW") << QStringLiteral("*.RAF") << QStringLiteral("*.PTX") << QStringLiteral("*.PEF") << QStringLiteral("*.X3F") << QStringLiteral("*.RAW") << QStringLiteral("*.RW2") << QStringLiteral("*.SR2") << QStringLiteral("*.3FR") << QStringLiteral("*.MEF") << QStringLiteral("*.MOS") << QStringLiteral("*.ERF") << QStringLiteral("*.NRW") << QStringLiteral("*.SRW");
 
     QDir chosenInputDir(m_batchHdrInputDir);
     chosenInputDir.setFilter(QDir::Files);
@@ -420,7 +420,7 @@ void BatchHDRDialog::createHdrFinished()
     }
     QString suffix = m_Ui->formatComboBox->currentText();
     int paddingLength = ceil(log10(m_total + 1.0f));
-    QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
+    QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QStringLiteral("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
     m_IO_Worker->write_hdr_frame(resultHDR.get(), outName, m_formatHelper.getParams());
     resultHDR.reset();
 
@@ -462,7 +462,7 @@ void BatchHDRDialog::writeAisData(QByteArray &data)
 
 void BatchHDRDialog::check_start_button()
 {
-    if (m_Ui->inputLineEdit->text() != "" && m_Ui->outputLineEdit->text() != "")
+    if (m_Ui->inputLineEdit->text() != QLatin1String("") && m_Ui->outputLineEdit->text() != QLatin1String(""))
         m_Ui->startButton->setEnabled(true);
 }
 

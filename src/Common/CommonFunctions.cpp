@@ -242,7 +242,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
     {
         QByteArray filePath = QFile::encodeName(qfi.filePath());
 
-        qDebug() << QString("LoadFile: Loading data for %1").arg(filePath.constData());
+        qDebug() << QStringLiteral("LoadFile: Loading data for %1").arg(filePath.constData());
 
         FrameReaderPtr reader = FrameReaderFactory::open(filePath.constData());
         reader->read( *currentItem.frame(), getRawSettings() );
@@ -254,7 +254,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
         // read Exposure Time
         currentItem.setExposureTime(ExifOperations::getExposureTime(filePath.constData()));
 
-        qDebug() << QString("LoadFile: Average Luminance for %1 is %2")
+        qDebug() << QStringLiteral("LoadFile: Average Luminance for %1 is %2")
                     .arg(currentItem.filename())
                     .arg(currentItem.getAverageLuminance());
 
@@ -317,7 +317,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
     }
     catch (std::runtime_error& err)
     {
-        qDebug() << QString("LoadFile: Cannot load %1: %2")
+        qDebug() << QStringLiteral("LoadFile: Cannot load %1: %2")
                     .arg(currentItem.filename(), QString::fromStdString(err.what()));
         throw;
     }
@@ -341,7 +341,7 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
     QString outputFilename = tempdir + "/" + uuid.toString() + ".tif";
     currentItem.setConvertedFilename(outputFilename);
 
-    qDebug() << QString("SaveFile: Saving data for %1 to %2 on %3").arg(inputFilename, outputFilename, tempdir);
+    qDebug() << QStringLiteral("SaveFile: Saving data for %1 to %2 on %3").arg(inputFilename, outputFilename, tempdir);
 
     // save pfs::Frame as tiff 16bits or 32bits
     try
@@ -359,14 +359,14 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
     }
     catch (std::runtime_error& err)
     {
-        qDebug() << QString("SaveFile: Cannot save %1: %2")
+        qDebug() << QStringLiteral("SaveFile: Cannot save %1: %2")
                     .arg(currentItem.filename(), QString::fromStdString(err.what()));
     }
 }
 
 void RefreshPreview::operator()(HdrCreationItem& currentItem)
 {
-    qDebug() << QString("RefreshPreview: Refresh preview for %1").arg(currentItem.filename());
+    qDebug() << QStringLiteral("RefreshPreview: Refresh preview for %1").arg(currentItem.filename());
 
     try
     {
@@ -404,7 +404,7 @@ void RefreshPreview::operator()(HdrCreationItem& currentItem)
     }
     catch (std::runtime_error& err)
     {
-        qDebug() << QString("RefreshPreview: Cannot load %1: %2")
+        qDebug() << QStringLiteral("RefreshPreview: Cannot load %1: %2")
                     .arg(currentItem.filename(), QString::fromStdString(err.what()));
     }
 }

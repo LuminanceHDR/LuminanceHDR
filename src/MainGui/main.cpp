@@ -111,7 +111,7 @@ int main( int argc, char ** argv )
 #endif
 
     LuminanceOptions::isCurrentPortableMode =
-            QDir(QGuiApplication::applicationDirPath()).exists("PortableMode.txt");
+            QDir(QGuiApplication::applicationDirPath()).exists(QStringLiteral("PortableMode.txt"));
     LuminanceOptions::checkHomeFolder();
 
     if (LuminanceOptions::isCurrentPortableMode)

@@ -125,10 +125,10 @@ void LuminanceRangeWidget::paintEvent( QPaintEvent */*pe */)
   }
 
   // Paint scale
-  QFont labelFont( "SansSerif", 8 );
+  QFont labelFont( QStringLiteral("SansSerif"), 8 );
   p.setFont( labelFont );
   p.setPen( Qt::black );
-  QRect textBounding = p.boundingRect( fRect, Qt::AlignHCenter|Qt::AlignBottom, "-8" );
+  QRect textBounding = p.boundingRect( fRect, Qt::AlignHCenter|Qt::AlignBottom, QStringLiteral("-8") );
   for( float x = ceil( minValue ); x <= floor( maxValue ); x++ ) {
     int rx = getWindowX(x);
     p.drawLine( rx, fRect.top(), rx, textBounding.top() );

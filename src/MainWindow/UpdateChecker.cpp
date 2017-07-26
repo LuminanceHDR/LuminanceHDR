@@ -44,7 +44,7 @@ UpdateChecker::UpdateChecker(QWidget *parent) //, QNetworkAccessManager* network
         connect(m_tray, &QSystemTrayIcon::messageClicked, this, &UpdateChecker::trayMessageClicked);
         connect(m_tray, &QSystemTrayIcon::activated, this, &UpdateChecker::trayMessageClicked);
 
-        QNetworkRequest request = QNetworkRequest(QUrl(QString("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM)));
+        QNetworkRequest request = QNetworkRequest(QUrl(QStringLiteral("http://qtpfsgui.sourceforge.net/updater/get.php?c=%1").arg(LUMINANCEVERSION_NUM)));
         request.setRawHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
         m_networkManager->get(request);
     }
@@ -81,8 +81,8 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
         QDomNode nodeRoot = document.documentElement();
         if (!nodeRoot.isNull())
         {
-            QDomNode nodeVersion = nodeRoot.firstChildElement("version");
-            QDomNode nodeUrl = nodeRoot.firstChildElement("url");
+            QDomNode nodeVersion = nodeRoot.firstChildElement(QStringLiteral("version"));
+            QDomNode nodeUrl = nodeRoot.firstChildElement(QStringLiteral("url"));
             if (!nodeVersion.isNull() && !nodeUrl.isNull())
             {
                 m_version = nodeVersion.toElement().text();
@@ -92,7 +92,7 @@ void UpdateChecker::requestFinished(QNetworkReply* reply)
 
                 qDebug() << m_version;
 
-                QString msgTitle = QString("Luminance HDR %1").arg(m_version);
+                QString msgTitle = QStringLiteral("Luminance HDR %1").arg(m_version);
                 QString msgContent = tr("A new release is ready for download!");
                 QWidget* widgetP = (QWidget*)parent();
 

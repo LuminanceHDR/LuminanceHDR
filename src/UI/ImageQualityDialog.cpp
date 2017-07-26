@@ -35,7 +35,7 @@
 
 namespace
 {
-const static QString IMAGE_QUALITY_KEY = "imagequalitydialog/quality";
+const static QString IMAGE_QUALITY_KEY = QStringLiteral("imagequalitydialog/quality");
 const static int IMAGE_QUALITY_DEFAULT = 98;
 }
 
@@ -97,13 +97,13 @@ void ImageQualityDialog::on_getSizeButton_clicked()
 
     setCursor(QCursor(Qt::WaitCursor));
     int size = 0;
-    if (m_format.startsWith("jp"))
+    if (m_format.startsWith(QLatin1String("jp")))
     {
         pfs::io::JpegWriter writer;
         writer.write(*m_frame, params);
         size = writer.getFileSize();
     }
-    else if (m_format.startsWith("png"))
+    else if (m_format.startsWith(QLatin1String("png")))
     {
         pfs::io::PngWriter writer;
         writer.write(*m_frame, params);

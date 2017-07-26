@@ -194,12 +194,12 @@ HdrViewer::~HdrViewer()
 
 QString HdrViewer::getFileNamePostFix()
 {
-    return QString("_hdr_preview");
+    return QStringLiteral("_hdr_preview");
 }
 
 QString HdrViewer::getExifComment()
 {
-    return QString("HDR Created with Luminance HDR");
+    return QStringLiteral("HDR Created with Luminance HDR");
 }
 
 //! \brief returns max value of the handled frame

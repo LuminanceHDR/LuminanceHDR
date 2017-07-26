@@ -41,16 +41,16 @@ SavedParametersDialog::SavedParametersDialog(QWidget *parent):
     m_Ui->setupUi(this);
 
     QString sqlQuery;
-    sqlQuery += "SELECT comment, 'ashikhmin' AS operator FROM ashikhmin UNION ";
-    sqlQuery += "SELECT comment, 'drago' AS operator FROM drago UNION ";
-    sqlQuery += "SELECT comment, 'durand' AS operator FROM durand UNION ";
-    sqlQuery += "SELECT comment, 'fattal' AS operator FROM fattal UNION ";
-    sqlQuery += "SELECT comment, 'ferradans' AS operator FROM ferradans UNION ";
-    sqlQuery += "SELECT comment, 'mantiuk06' AS operator FROM mantiuk06 UNION ";
-    sqlQuery += "SELECT comment, 'mantiuk08' AS operator FROM mantiuk08 UNION ";
-    sqlQuery += "SELECT comment, 'pattanaik' AS operator FROM pattanaik UNION ";
-    sqlQuery += "SELECT comment, 'reinhard02' AS operator FROM reinhard02 UNION ";
-    sqlQuery += "SELECT comment, 'reinhard05' AS operator FROM reinhard05";
+    sqlQuery += QLatin1String("SELECT comment, 'ashikhmin' AS operator FROM ashikhmin UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'drago' AS operator FROM drago UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'durand' AS operator FROM durand UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'fattal' AS operator FROM fattal UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'ferradans' AS operator FROM ferradans UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'mantiuk06' AS operator FROM mantiuk06 UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'mantiuk08' AS operator FROM mantiuk08 UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'pattanaik' AS operator FROM pattanaik UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'reinhard02' AS operator FROM reinhard02 UNION ");
+    sqlQuery += QLatin1String("SELECT comment, 'reinhard05' AS operator FROM reinhard05");
     model->setQuery(sqlQuery);
 
     model->setHeaderData(0, Qt::Horizontal, tr("Comment"));
@@ -75,26 +75,26 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
     switch (op)
     {
     case ashikhmin:
-        tableModel->setTable("ashikhmin");
+        tableModel->setTable(QStringLiteral("ashikhmin"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Simple"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Equation 2"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Local Contrast Threshold"));
         break;
     case drago:
-        tableModel->setTable("drago");
+        tableModel->setTable(QStringLiteral("drago"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Bias"));
         break;
     case durand:
-        tableModel->setTable("durand");
+        tableModel->setTable(QStringLiteral("durand"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Spatial Kernel Sigma"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Range Kernel Sigma"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Base Contrast"));
         break;
     case fattal:
-        tableModel->setTable("fattal");
+        tableModel->setTable(QStringLiteral("fattal"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Alpha"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Beta"));
@@ -103,13 +103,13 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
         model->setHeaderData(col++, Qt::Horizontal, tr("Old Fattal"));
         break;
     case ferradans:
-        tableModel->setTable("ferradans");
+        tableModel->setTable(QStringLiteral("ferradans"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Rho"));
         model->setHeaderData(col++, Qt::Horizontal, tr("InvAlpha"));
         break;
     case mantiuk06:
-        tableModel->setTable("mantiuk06");
+        tableModel->setTable(QStringLiteral("mantiuk06"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Contrast Equalization"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Contrast Factor"));
@@ -117,7 +117,7 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
         model->setHeaderData(col++, Qt::Horizontal, tr("Detail Factor"));
         break;
     case mantiuk08:
-        tableModel->setTable("mantiuk08");
+        tableModel->setTable(QStringLiteral("mantiuk08"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Color Saturation"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Contrast Enhancement"));
@@ -125,7 +125,7 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
         model->setHeaderData(col++, Qt::Horizontal, tr("Manual Luminance Level"));
         break;
     case pattanaik:
-        tableModel->setTable("pattanaik");
+        tableModel->setTable(QStringLiteral("pattanaik"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Cone and Rod based on Luminance"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Local Tonemapping"));
@@ -134,7 +134,7 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
         model->setHeaderData(col++, Qt::Horizontal, tr("Multiplier"));
         break;
     case reinhard02:
-        tableModel->setTable("reinhard02");
+        tableModel->setTable(QStringLiteral("reinhard02"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Use Scales"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Key Value"));
@@ -144,7 +144,7 @@ SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
         model->setHeaderData(col++, Qt::Horizontal, tr("Upper Scale"));
         break;
     case reinhard05:
-        tableModel->setTable("reinhard05");
+        tableModel->setTable(QStringLiteral("reinhard05"));
         tableModel->select();
         model->setHeaderData(col++, Qt::Horizontal, tr("Brightness"));
         model->setHeaderData(col++, Qt::Horizontal, tr("Chromatic Adaptation"));

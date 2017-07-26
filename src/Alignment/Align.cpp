@@ -56,7 +56,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     }
 #ifndef WIN32
     QStringList env = QProcess::systemEnvironment();
-    QString separator(":");
+    QString separator(QStringLiteral(":"));
     env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
     m_ais->setEnvironment(env);
 #endif
@@ -66,7 +66,7 @@ void Align::align_with_ais(bool ais_crop_flag)
 
     QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
 
-    if (ais_crop_flag) { ais_parameters << "-C"; }
+    if (ais_crop_flag) { ais_parameters << QStringLiteral("-C"); }
 
     QFutureWatcher<void> futureWatcher;
 
@@ -86,7 +86,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     QString tempDir(m_luminance_options.getTempDir());
     m_ais->setWorkingDirectory(tempDir);
     //ais_parameters << "-a" << tempDir + "/" + uuidStr;
-    ais_parameters << "-a" << uuidStr;
+    ais_parameters << QStringLiteral("-a") << uuidStr;
     int i = 0;
     for(auto &it : m_data) {
         if (it.convertedFilename().isEmpty())
@@ -100,7 +100,7 @@ void Align::align_with_ais(bool ais_crop_flag)
         //ais_parameters << completeFilename;
         ais_parameters << filename;
 
-        QString alignedFilename = tempDir + "/" + uuidStr + QString("%1").arg(i++,4,10,QChar('0'))+".tif";
+        QString alignedFilename = tempDir + "/" + uuidStr + QStringLiteral("%1").arg(i++,4,10,QChar('0'))+".tif";
         it.setAlignedFilename(alignedFilename);
     }
     qDebug() << "ais_parameters " << ais_parameters;
@@ -111,7 +111,7 @@ void Align::align_with_ais(bool ais_crop_flag)
     QFileInfo huginPath("hugin/align_image_stack.exe");
     m_ais->start(huginPath.canonicalFilePath(), ais_parameters );
 #else
-    m_ais->start("align_image_stack", ais_parameters );
+    m_ais->start(QStringLiteral("align_image_stack"), ais_parameters );
 #endif
     qDebug() << "ais started";
 }
