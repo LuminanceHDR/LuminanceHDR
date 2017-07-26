@@ -372,13 +372,13 @@ void BatchTMDialog::filterComboBoxActivated(int index)
     switch (index)
     {
     case 0:
-        regexp = QLatin1String(".*");
+        regexp = QStringLiteral(".*");
         break;
     case 1:
-        regexp = QLatin1String("error");
+        regexp = QStringLiteral("error");
         break;
     case 2:
-        regexp = QLatin1String("successful");
+        regexp = QStringLiteral("successful");
         break;
     }
     log_filter->setFilterRegExp(QRegExp(regexp, Qt::CaseInsensitive, QRegExp::RegExp));

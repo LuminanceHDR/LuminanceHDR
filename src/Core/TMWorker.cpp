@@ -125,7 +125,7 @@ void TMWorker::computeTonemapAndExport(/* const */ pfs::Frame* in_frame, Tonemap
     const QString firstPart = hdrName + "_" + tm_options->getPostfix();
     QString extension;
     if (!params.get("fileextension", extension))
-        extension = QLatin1String("tiff");
+        extension = QStringLiteral("tiff");
     extension = "." + extension;
 
     QString outputFilename;

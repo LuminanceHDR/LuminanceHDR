@@ -407,7 +407,7 @@ void MainWindow::createCentralWidget()
     m_tabwidget->setAutoFillBackground( true );
 
     // replace with ->tabBar() one day, or subclass
-    QTabBar* tabBar = m_tabwidget->findChild<QTabBar *>(QLatin1String("qt_tabwidget_tabbar"));
+    QTabBar* tabBar = m_tabwidget->findChild<QTabBar *>(QStringLiteral("qt_tabwidget_tabbar"));
     tabBar->setAutoFillBackground( true );
     tabBar->setBackgroundRole(QPalette::Window);
 
@@ -679,7 +679,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
         QString format = QFileInfo(outputFilename).suffix();
 
         if ( format.isEmpty() ) {   // default as JPG
-            format          =   QLatin1String("jpg");
+            format          =   QStringLiteral("jpg");
             outputFilename  +=  QLatin1String(".jpg");
         }
 

@@ -486,37 +486,37 @@ TonemappingOptions* TMOptionsOperations::parseFile(const QString& fname)
                 } else if (field==QLatin1String("TMO")) {
                         if (value==QLatin1String("Ashikhmin02")) {
                                 toreturn->tmoperator=ashikhmin;
-                                tmo = QLatin1String("Ashikhmin02");
+                                tmo = QStringLiteral("Ashikhmin02");
                         } else if (value == QLatin1String("Drago03")) {
                                 toreturn->tmoperator=drago;
-                                tmo = QLatin1String("Drago03");
+                                tmo = QStringLiteral("Drago03");
                         } else if (value == QLatin1String("Durand02")) {
                                 toreturn->tmoperator=durand;
-                                tmo = QLatin1String("Durand02");
+                                tmo = QStringLiteral("Durand02");
                         } else if (value == QLatin1String("Fattal02")) {
                                 toreturn->tmoperator=fattal;
-                                tmo = QLatin1String("Fattal02");
+                                tmo = QStringLiteral("Fattal02");
                         } else if (value == QLatin1String("Ferradans11")) {
                                 toreturn->tmoperator=ferradans;
-                                tmo = QLatin1String("Ferradans11");
+                                tmo = QStringLiteral("Ferradans11");
                         } else if (value == QLatin1String("Mai11")) {
                                 toreturn->tmoperator=mai;
-                                tmo = QLatin1String("Mai11");
+                                tmo = QStringLiteral("Mai11");
                         } else if (value == QLatin1String("Pattanaik00")) {
                                 toreturn->tmoperator=pattanaik;
-                                tmo = QLatin1String("Pattanaik00");
+                                tmo = QStringLiteral("Pattanaik00");
                         } else if (value == QLatin1String("Reinhard02")) {
                                 toreturn->tmoperator=reinhard02;
-                                tmo = QLatin1String("Reinhard02");
+                                tmo = QStringLiteral("Reinhard02");
                         } else if (value == QLatin1String("Reinhard05")) {
                                 toreturn->tmoperator=reinhard05;
-                                tmo = QLatin1String("Reinhard05");
+                                tmo = QStringLiteral("Reinhard05");
                         } else if (value == QLatin1String("Mantiuk06")) {
                                 toreturn->tmoperator=mantiuk06;
-                                tmo = QLatin1String("Mantiuk06");
+                                tmo = QStringLiteral("Mantiuk06");
                         } else if (value == QLatin1String("Mantiuk08")) {
                                 toreturn->tmoperator=mantiuk08;
-                                tmo = QLatin1String("Mantiuk08");
+                                tmo = QStringLiteral("Mantiuk08");
                         }
                 } else if (field==QLatin1String("CONTRASTFACTOR")) {
                         toreturn->operator_options.mantiuk06options.contrastfactor=value.toFloat();

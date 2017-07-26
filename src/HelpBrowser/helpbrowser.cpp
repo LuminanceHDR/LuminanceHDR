@@ -563,7 +563,7 @@ void HelpBrowser::loadHelp(const QString& filename)
         else
         {
                toLoad = LuminancePaths::HelpDir() + "index.html";
-             language=QLatin1String("en");
+             language=QStringLiteral("en");
             //qDebug("Help index: %c", toLoad);
             fi = QFileInfo(toLoad);
             if (!fi.exists())

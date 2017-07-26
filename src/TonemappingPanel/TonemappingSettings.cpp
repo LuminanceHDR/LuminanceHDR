@@ -109,7 +109,7 @@ void TonemappingSettings::fillPreviews()
     QString sqlQuery;
     int origxsize = m_frame->getWidth();
 
-    sqlQuery = QLatin1String("SELECT *, 'ashikhmin' AS operator FROM ashikhmin");
+    sqlQuery = QStringLiteral("SELECT *, 'ashikhmin' AS operator FROM ashikhmin");
     m_modelPreviews->setQuery(sqlQuery);
 
     bool simple;
@@ -131,7 +131,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoAshikhmin, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'drago' AS operator FROM drago");
+    sqlQuery = QStringLiteral("SELECT *, 'drago' AS operator FROM drago");
     m_modelPreviews->setQuery(sqlQuery);
 
     float bias;
@@ -147,7 +147,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoDrago, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'durand' AS operator FROM durand");
+    sqlQuery = QStringLiteral("SELECT *, 'durand' AS operator FROM durand");
     m_modelPreviews->setQuery(sqlQuery);
 
     float spatial,
@@ -169,7 +169,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoDurand, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'fattal' AS operator FROM fattal");
+    sqlQuery = QStringLiteral("SELECT *, 'fattal' AS operator FROM fattal");
     m_modelPreviews->setQuery(sqlQuery);
 
     float alpha,
@@ -197,7 +197,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoFattal, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'ferradans' AS operator FROM ferradans");
+    sqlQuery = QStringLiteral("SELECT *, 'ferradans' AS operator FROM ferradans");
     m_modelPreviews->setQuery(sqlQuery);
 
     float rho,
@@ -216,7 +216,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoFerradans, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'mantiuk06' AS operator FROM mantiuk06");
+    sqlQuery = QStringLiteral("SELECT *, 'mantiuk06' AS operator FROM mantiuk06");
     m_modelPreviews->setQuery(sqlQuery);
 
     bool contrastEqualization;
@@ -241,7 +241,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoMantiuk06, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'mantiuk08' AS operator FROM mantiuk08");
+    sqlQuery = QStringLiteral("SELECT *, 'mantiuk08' AS operator FROM mantiuk08");
     m_modelPreviews->setQuery(sqlQuery);
 
     float colorSaturation,
@@ -266,7 +266,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoMantiuk08, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'pattanaik' AS operator FROM pattanaik");
+    sqlQuery = QStringLiteral("SELECT *, 'pattanaik' AS operator FROM pattanaik");
     m_modelPreviews->setQuery(sqlQuery);
 
     float multiplier,
@@ -294,7 +294,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoPattanaik, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'reinhard02' AS operator FROM reinhard02");
+    sqlQuery = QStringLiteral("SELECT *, 'reinhard02' AS operator FROM reinhard02");
     m_modelPreviews->setQuery(sqlQuery);
 
     bool scales;
@@ -325,7 +325,7 @@ void TonemappingSettings::fillPreviews()
         addPreview(new PreviewLabel(0, tmoReinhard02, index++), m_modelPreviews->record(selectedRow));
     }
 
-    sqlQuery = QLatin1String("SELECT *, 'reinhard05' AS operator FROM reinhard05");
+    sqlQuery = QStringLiteral("SELECT *, 'reinhard05' AS operator FROM reinhard05");
     m_modelPreviews->setQuery(sqlQuery);
 
     float brightness,

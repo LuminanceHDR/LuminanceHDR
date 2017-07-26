@@ -112,22 +112,22 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
     fromIso639ToGuiIndex[QStringLiteral("tr")]=14;
     fromIso639ToGuiIndex[QStringLiteral("zh")]=15;
 
-    fromGuiIndexToIso639[ 0]=QLatin1String("cs");
-    fromGuiIndexToIso639[ 1]=QLatin1String("da");
-    fromGuiIndexToIso639[ 2]=QLatin1String("de");
-    fromGuiIndexToIso639[ 3]=QLatin1String("en");
-    fromGuiIndexToIso639[ 4]=QLatin1String("es");
-    fromGuiIndexToIso639[ 5]=QLatin1String("fr");
-    fromGuiIndexToIso639[ 6]=QLatin1String("id");
-    fromGuiIndexToIso639[ 7]=QLatin1String("it");
-    fromGuiIndexToIso639[ 8]=QLatin1String("hu");
-    fromGuiIndexToIso639[ 9]=QLatin1String("pl");
-    fromGuiIndexToIso639[10]=QLatin1String("pt_BR");
-    fromGuiIndexToIso639[11]=QLatin1String("ru");
-    fromGuiIndexToIso639[12]=QLatin1String("ro");
-    fromGuiIndexToIso639[13]=QLatin1String("fi");
-    fromGuiIndexToIso639[14]=QLatin1String("tr");
-    fromGuiIndexToIso639[15]=QLatin1String("zh");
+    fromGuiIndexToIso639[ 0]=QStringLiteral("cs");
+    fromGuiIndexToIso639[ 1]=QStringLiteral("da");
+    fromGuiIndexToIso639[ 2]=QStringLiteral("de");
+    fromGuiIndexToIso639[ 3]=QStringLiteral("en");
+    fromGuiIndexToIso639[ 4]=QStringLiteral("es");
+    fromGuiIndexToIso639[ 5]=QStringLiteral("fr");
+    fromGuiIndexToIso639[ 6]=QStringLiteral("id");
+    fromGuiIndexToIso639[ 7]=QStringLiteral("it");
+    fromGuiIndexToIso639[ 8]=QStringLiteral("hu");
+    fromGuiIndexToIso639[ 9]=QStringLiteral("pl");
+    fromGuiIndexToIso639[10]=QStringLiteral("pt_BR");
+    fromGuiIndexToIso639[11]=QStringLiteral("ru");
+    fromGuiIndexToIso639[12]=QStringLiteral("ro");
+    fromGuiIndexToIso639[13]=QStringLiteral("fi");
+    fromGuiIndexToIso639[14]=QStringLiteral("tr");
+    fromGuiIndexToIso639[15]=QStringLiteral("zh");
 
     //for (const QString &style : QStyleFactory::keys())
     foreach (const QString &style, QStyleFactory::keys())

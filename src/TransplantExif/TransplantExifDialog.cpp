@@ -339,10 +339,10 @@ void TransplantExifDialog::filterComboBoxActivated(int index) {
     QString regexp;
     switch (index) {
     case 0:
-        regexp=QLatin1String(".*");
+        regexp=QStringLiteral(".*");
         break;
     case 1:
-        regexp=QLatin1String("error");
+        regexp=QStringLiteral("error");
         break;
     }
     log_filter->setFilterRegExp(QRegExp(regexp, Qt::CaseInsensitive, QRegExp::RegExp));
