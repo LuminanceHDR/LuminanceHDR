@@ -227,7 +227,7 @@ void BatchHDRDialog::on_startButton_clicked()
 
     bool doStart = true;
     if (!files.empty()) {
-        foreach(QString file, files) {
+        foreach(const QString &file, files) {
             if (file.startsWith("hdr_"))
                 foundHDR = true;
         }
@@ -336,7 +336,7 @@ void BatchHDRDialog::align()
     {
         qDebug() << "BatchHDRDialog::align Error: missing EXIF data";
         m_Ui->textEdit->append(tr("Error: missing EXIF data"));
-        foreach (QString fname, filesLackingExif)
+        foreach (const QString &fname, filesLackingExif)
             m_Ui->textEdit->append(fname);
         m_errors = true;
         // DAVIDE _ HDR WIZARD

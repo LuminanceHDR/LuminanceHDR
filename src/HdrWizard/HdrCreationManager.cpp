@@ -129,7 +129,7 @@ bool checkFileName(const HdrCreationItem& item, const QString& str) {
 
 void HdrCreationManager::loadFiles(const QStringList &filenames)
 {
-    for(const auto filename : filenames)
+    for(const auto &filename : filenames)
     {
         qDebug() << QString("HdrCreationManager::loadFiles(): Checking %1").arg(filename);
         HdrCreationItemContainer::iterator it = find_if(m_data.begin(), m_data.end(),
@@ -178,7 +178,7 @@ void HdrCreationManager::loadFilesDone()
         }
     }
     disconnect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &HdrCreationManager::loadFilesDone);
-    for(const auto hdrCreationItem : m_tmpdata)
+    for(const auto &hdrCreationItem : m_tmpdata)
     {
         if (hdrCreationItem.isValid())
         {
@@ -211,7 +211,7 @@ void HdrCreationManager::refreshEVOffset()
     }
 
     std::vector<float> evs;
-    for(const auto hdrCreationItem : m_data)
+    for(const auto &hdrCreationItem : m_data)
     {
         if (hdrCreationItem.hasEV())
         {

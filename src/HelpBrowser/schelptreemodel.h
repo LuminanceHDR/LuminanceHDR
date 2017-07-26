@@ -39,7 +39,7 @@
 
 class ScHelpTreeModel : public TreeModel
 {
-//     Q_OBJECT
+    //Q_OBJECT
 
 public:
     ScHelpTreeModel(const QString &dataFile, const QString &col1name, const QString &col2name, QMap<QString, QString>* indexToBuild, QObject *parent = 0);

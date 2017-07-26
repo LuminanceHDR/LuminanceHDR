@@ -129,7 +129,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
     {
         // TODO: try-catch
         // DAVIDE _ HDR CREATION
-        for(const auto it : m_data) {
+        for(const auto &it : m_data) {
             QString inputFilename = it.alignedFilename();
             if (!inputFilename.isEmpty()) {
                 ExifOperations::copyExifData(it.filename().toStdString(), inputFilename.toStdString(), true, "", false, false);
@@ -152,7 +152,7 @@ void Align::ais_finished(int exitcode, QProcess::ExitStatus exitstatus)
 void Align::alignedFilesLoaded()
 {
     disconnect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &Align::alignedFilesLoaded);
-    for(const auto it :  m_data) {
+    for(const auto &it :  m_data) {
         if (it.filename().isEmpty())
             continue;
         QFile::remove(QFile::encodeName(it.convertedFilename()).constData());
@@ -187,7 +187,7 @@ void Align::reset()
 
 void Align::removeTempFiles()
 {
-    for(const auto it : m_data) {
+    for(const auto &it : m_data) {
         if (!it.alignedFilename().isEmpty()) {
             QFile::remove(QFile::encodeName(it.convertedFilename()).constData());
             QFile::remove(QFile::encodeName(it.alignedFilename()).constData());

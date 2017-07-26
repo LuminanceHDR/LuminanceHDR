@@ -558,7 +558,7 @@ void MainWindow::on_fileOpenAction_triggered()
     QString filetypes = tr("All HDR formats ");
     QStringList hdrExtensionsList = getAllHdrFileExtensions();
     filetypes += "(";
-    foreach(QString s, hdrExtensionsList)
+    foreach(const QString &s, hdrExtensionsList)
     {
         filetypes += "*" + s + " ";
     }

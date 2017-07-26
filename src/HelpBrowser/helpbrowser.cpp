@@ -46,9 +46,9 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 
-#include "helpbrowser.h"
-#include "ui_HelpBrowser.h"
-#include "ui_HelpSideBar.h"
+#include "HelpBrowser/helpbrowser.h"
+#include "HelpBrowser/ui_HelpBrowser.h"
+#include "HelpBrowser/ui_HelpSideBar.h"
 
 #include <QDebug>
 #include <QAction>
@@ -420,7 +420,7 @@ void HelpBrowser::searchingInDirectory(const QString& aDir)
             int cnt = str.count(helpSideBar->m_Ui->searchingEdit->text(), Qt::CaseInsensitive);
             if (cnt > 0)
             {
-                QString fullname = fname;
+                //QString fullname = fname;
                 QString toFind(fname.remove(finalBaseDir + "/"));
                 QMapIterator<QString, QString> i(quickHelpIndex);
                 while (i.hasNext())
@@ -588,7 +588,7 @@ void HelpBrowser::loadHelp(const QString& filename)
     }
     if (mHistory.count() > 15)
     {
-        QAction* first=histMenu->actions().first();
+        QAction* first=histMenu->actions().constFirst();
         mHistory.remove(first);
         histMenu->removeAction(first);
     }
@@ -646,10 +646,9 @@ void HelpBrowser::itemSelected(const QItemSelection & selected, const QItemSelec
 {
     Q_UNUSED(deselected);
 
-    QModelIndex index;
     QModelIndexList items = selected.indexes();
     int i=0;
-    foreach (index, items)
+    foreach (const QModelIndex &index, items)
     {
         if (i==1) // skip 0, as this is always the rootitem, even if we are selecting the rootitem. hmm
         {

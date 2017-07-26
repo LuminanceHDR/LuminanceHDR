@@ -42,7 +42,7 @@
 
 
 // UI
-#include "ui_PreferencesDialog.h"
+#include "Preferences/ui_PreferencesDialog.h"
 
 #ifdef WIN32
     #define ICC_PATH "C:\\WINDOWS\\system32\\spool\\drivers\\color"
@@ -129,7 +129,8 @@ PreferencesDialog::PreferencesDialog(QWidget *p, int tab):
     fromGuiIndexToIso639[14]="tr";
     fromGuiIndexToIso639[15]="zh";
 
-    for (QString style : QStyleFactory::keys())
+    //for (const QString &style : QStyleFactory::keys())
+    foreach (const QString &style, QStyleFactory::keys())
     {
 #ifdef Q_OS_MAC
         if (style == "Windows") {

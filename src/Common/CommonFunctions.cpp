@@ -318,8 +318,7 @@ void LoadFile::operator()(HdrCreationItem& currentItem)
     catch (std::runtime_error& err)
     {
         qDebug() << QString("LoadFile: Cannot load %1: %2")
-                    .arg(currentItem.filename())
-                    .arg(QString::fromStdString(err.what()));
+                    .arg(currentItem.filename(), QString::fromStdString(err.what()));
         throw;
     }
 }
@@ -342,7 +341,7 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
     QString outputFilename = tempdir + "/" + uuid.toString() + ".tif";
     currentItem.setConvertedFilename(outputFilename);
 
-    qDebug() << QString("SaveFile: Saving data for %1 to %2 on %3").arg(inputFilename).arg(outputFilename).arg(tempdir);
+    qDebug() << QString("SaveFile: Saving data for %1 to %2 on %3").arg(inputFilename, outputFilename, tempdir);
 
     // save pfs::Frame as tiff 16bits or 32bits
     try
@@ -361,8 +360,7 @@ void SaveFile::operator()(HdrCreationItem& currentItem)
     catch (std::runtime_error& err)
     {
         qDebug() << QString("SaveFile: Cannot save %1: %2")
-                    .arg(currentItem.filename())
-                    .arg(QString::fromStdString(err.what()));
+                    .arg(currentItem.filename(), QString::fromStdString(err.what()));
     }
 }
 
@@ -407,8 +405,7 @@ void RefreshPreview::operator()(HdrCreationItem& currentItem)
     catch (std::runtime_error& err)
     {
         qDebug() << QString("RefreshPreview: Cannot load %1: %2")
-                    .arg(currentItem.filename())
-                    .arg(QString::fromStdString(err.what()));
+                    .arg(currentItem.filename(), QString::fromStdString(err.what()));
     }
 }
 

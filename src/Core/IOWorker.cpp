@@ -262,16 +262,14 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
     catch (pfs::io::UnsupportedFormat& exUnsupported)
     {
         emit read_hdr_failed(tr("IOWorker: file %1 has unsupported extension: %2")
-                             .arg(filename)
-                             .arg(exUnsupported.what()));
+                             .arg(filename, exUnsupported.what()));
 
         hdrpfsframe.reset();
     }
     catch (std::runtime_error& err)
     {
         emit read_hdr_failed(tr("IOWorker: caught exception reading %1: %2")
-                             .arg(filename)
-                             .arg(err.what()));
+                             .arg(filename, err.what()));
 
         hdrpfsframe.reset();
     }

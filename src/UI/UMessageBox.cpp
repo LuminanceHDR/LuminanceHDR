@@ -31,7 +31,7 @@
 #include "Common/GitSHA1.h"
 #include "Common/config.h"
 #include "Common/archs.h"
-#include "ui_about.h"
+#include "UI/ui_about.h"
 
 namespace
 {
@@ -92,13 +92,13 @@ void UMessageBox::about(QWidget* parent)
     ui.authorsBox->setOpenExternalLinks(true);
     ui.thanksToBox->setOpenExternalLinks(true);
     ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)).append(" [Build ").append(QString(g_GIT_SHA1).left(6)).append("]"));
+    ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)).append(" [Build ").append(QString(g_GIT_SHA1).leftRef(6)).append("]"));
 
     bool license_file_not_found=true;
     QString docDir = QCoreApplication::applicationDirPath();
     docDir.append("/../Resources");
     QStringList paths = QStringList( BASEDIR "/share/doc/luminance-hdr") << BASEDIR "/share/luminance-hdr" << docDir << "/Applications/luminance.app/Contents/Resources" << "./" << QCoreApplication::applicationDirPath();
-    foreach (QString path,paths)
+    foreach (const QString &path, paths)
     {
         QString fname(path+QString("/LICENSE"));
         if (QFile::exists(fname))
@@ -118,10 +118,11 @@ void UMessageBox::about(QWidget* parent)
     {
         ui.GPLbox->setOpenExternalLinks(true);
         ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
-        ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
+        ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags")
+                .arg("<html>", "<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">", "</a></html>"));
     }
     bool changelog_file_not_found=true;
-    foreach (QString path,paths)
+    foreach (const QString &path, paths)
     {
         QString fname(path+QString("/Changelog"));
         if (QFile::exists(fname))
@@ -141,7 +142,8 @@ void UMessageBox::about(QWidget* parent)
     {
         ui.ChangelogBox->setOpenExternalLinks(true);
         ui.ChangelogBox->setTextInteractionFlags(Qt::TextBrowserInteraction);
-        ui.ChangelogBox->setHtml(tr("%1 Changelog document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://qtpfsgui.sourceforge.net/updater/Changelog\">").arg("</a></html>"));
+        ui.ChangelogBox->setHtml(tr("%1 Changelog document not found, you can find it online: %2here%3","%2 and %3 are html tags")
+                .arg("<html>", "<a href=\"http://qtpfsgui.sourceforge.net/updater/Changelog\">", "</a></html>"));
     }
     about->show();
 }

@@ -25,8 +25,8 @@
  *
  */
 
-#include "LuminancePaths.h"
-#include "help-path.hxx"
+#include "HelpBrowser/LuminancePaths.h"
+#include "HelpBrowser/help-path.hxx"
 
 #include <QApplication>
 #include <iostream>
@@ -84,7 +84,7 @@ QString LuminancePaths::LocalizedDirPath(const QString & base, const QString& fa
     names << base + fallback  ;
     names << base  ;
 
-    foreach(QString t, names)
+    foreach(const QString &t, names)
     {
         QDir d(t);
         if( d.exists() )

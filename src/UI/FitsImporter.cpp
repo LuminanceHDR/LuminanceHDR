@@ -36,8 +36,8 @@
 
 #include <boost/bind.hpp>
 
-#include "FitsImporter.h"
-#include "ui_FitsImporter.h"
+#include "UI/FitsImporter.h"
+#include "UI/ui_FitsImporter.h"
 
 #include "Common/CommonFunctions.h"
 #include "HdrCreation/mtb_alignment.h"
@@ -238,7 +238,8 @@ void FitsImporter::loadFilesDone(QString error_string)
         }
         else
         {
-            QMessageBox::warning(0,"", tr("Cannot load FITS image %1. \nERROR: %2").arg(i->filename()).arg(error_string), QMessageBox::Ok, QMessageBox::NoButton);
+            QMessageBox::warning(0,"", tr("Cannot load FITS image %1. \nERROR: %2")
+                    .arg(i->filename(), error_string), QMessageBox::Ok, QMessageBox::NoButton);
             m_data.clear();
             m_tmpdata.clear();
             m_contents.clear();

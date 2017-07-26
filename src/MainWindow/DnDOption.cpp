@@ -24,7 +24,7 @@
 
 #include "Common/global.h"
 #include "MainWindow/DnDOption.h"
-#include "ui_DnDOption.h"
+#include "MainWindow/ui_DnDOption.h"
 
 DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files, bool areAllHDRs, bool areAllLDRs):
     QDialog(p),
@@ -60,7 +60,7 @@ void DnDOptionDialog::on_btnOpenHDR_clicked() {
 int DnDOptionDialog::showDndDialog(QWidget *parent, QStringList files) {
     bool areAllHDRs = true;
     bool areAllLDRs = true;
-    foreach (QString file, files) {
+    foreach (const QString &file, files) {
         areAllHDRs = areAllHDRs && matchesHdrFilename(file);
         areAllLDRs = areAllLDRs && matchesLdrFilename(file);
     }

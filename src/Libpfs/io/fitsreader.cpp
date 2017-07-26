@@ -29,6 +29,7 @@
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/normalizer.h>
 
+#include <qglobal.h>
 // include windows.h to avoid TBYTE define clashes with fitsio.h
 #ifdef Q_OS_WIN
 #define _WINSOCKAPI_    // stops windows.h including winsock.h

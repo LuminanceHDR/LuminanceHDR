@@ -617,7 +617,7 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
     if (threshold > 0) {
         QList<QPair<int, int> > dummyOffset;
         QStringList::ConstIterator it = inputFiles.begin();
-        while( it != inputFiles.end() ) {
+        while( it != inputFiles.constEnd() ) {
             dummyOffset.append(qMakePair(0,0));
             ++it;
         }

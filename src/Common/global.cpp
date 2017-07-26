@@ -62,7 +62,7 @@ QStringList getAllHdrFileExtensions()
 #endif
     list << ".pfs" << ".crw" << ".cr2" << ".nef" << ".dng" << ".mrw" << ".orf" << ".kdc" << ".dcr" << ".arw" << ".raf" << ".ptx" << ".pef" << ".x3f" << ".raw" << ".rw2" << ".sr2" << ".3fr" << ".mef" << ".mos" << ".erf" << ".nrw" << ".srw";
 
-    foreach(QString s, list)
+    foreach(const QString &s, list)
     {
         listAll << s;
         listAll << s.toUpper();

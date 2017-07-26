@@ -33,7 +33,7 @@
 #include <QFileDialog>
 #include <QDebug>
 
-#include "ui_EditingTools.h"
+#include "HdrWizard/ui_EditingTools.h"
 #include "Common/config.h"
 #include "UI/GammaAndLevels.h"
 #include "Viewers/PanIconWidget.h"
@@ -154,7 +154,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, bool autoAg, QWidget *parent
     //m_Ui->drawingModeFrame->hide();
 
     QStringList::ConstIterator it = m_fileList.begin();
-    while( it != m_fileList.end() ) {
+    while( it != m_fileList.constEnd() ) {
         m_HV_offsets.append(qMakePair(0,0));
         ++it;
     }
@@ -334,7 +334,7 @@ void EditingTools::nextClicked()
         m_hcm->applyShiftsToItems(m_HV_offsets);
     if (m_doAutoAntighosting) {
         QStringList::ConstIterator it = m_fileList.begin();
-        while( it != m_fileList.end() ) {
+        while( it != m_fileList.constEnd() ) {
             m_HV_offsets.append(qMakePair(0,0));
             ++it;
         }
