@@ -850,6 +850,9 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
   if( image_list.empty() )
     return;
 
+  string user_locale = locale("").name();
+  locale::global(locale::classic());
+
   ostringstream out_file_name;
   if (out_dir != NULL)
       out_file_name << out_dir << "/";
@@ -915,6 +918,7 @@ void HDRHTMLSet::generate_webpage( const char *page_template, const char *image_
     }
   }
 
+  locale::global(locale(user_locale.c_str()));
 }
 
 void print_image_objects( ostream &out, void *user_data, const char *parameter )
