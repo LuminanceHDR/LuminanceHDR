@@ -2,6 +2,18 @@ PROJECT("Luminance HDR") # luminance-hdr)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
 CMAKE_POLICY(SET CMP0043 OLD)
 
+# make docs
+find_program(sphinx-build)
+if(SPHINX-BUILD_FOUND)
+  execute_process(COMMAND sphinx-build -a -E -b html docs/source help/en)
+ELSE()
+  message(WARNING "sphinx-build was not found, attepting to download documentation")
+  file(REMOVE_RECURSE help)
+  file(DOWNLOAD https://readthedocs.org/projects/luminancehdr/downloads/htmlzip/latest/ help/temp.zip)
+  execute_process(COMMAND cmake -E tar help/en help/temp.zip)
+  file(REMOVE help/temp.zip)
+  file(RENAME luminancehdr-latest en)
+
 # set include path for FindXXX.cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/build_files/Modules")
 

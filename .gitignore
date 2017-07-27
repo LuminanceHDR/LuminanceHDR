@@ -10,3 +10,5 @@ CMakeLists.txt.user.2.6pre1
 *.kdev4
 tags
 Build
+docs/build
+help
