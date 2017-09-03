@@ -132,7 +132,7 @@ void LuminanceRangeWidget::paintEvent( QPaintEvent */*pe */)
   for( float x = ceil( minValue ); x <= floor( maxValue ); x++ ) {
     int rx = getWindowX(x);
     p.drawLine( rx, fRect.top(), rx, textBounding.top() );
-    char str[10];
+    char str[15];
     sprintf( str, "%g", x );
     p.drawText( rx-20, textBounding.top(), 40, textBounding.height(),
       Qt::AlignHCenter|Qt::AlignBottom, str );
