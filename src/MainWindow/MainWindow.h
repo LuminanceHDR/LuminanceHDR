@@ -253,8 +253,6 @@ protected:
     // Open MainWindows Handling
     QList<QAction*> openMainWindows;
 
-    HelpBrowser* helpBrowser;
-
     //! \brief contains the file names of the images loaded by the wizard,
     //! they are used to copy EXIF tags to saved LDR images
     QStringList m_inputFilesName;
@@ -311,6 +309,7 @@ private:
     // UI declaration
     QScopedPointer<Ui::MainWindow> m_Ui;
 
+
     // Tone Mapping Panel
     TonemappingPanel *m_tonemapPanel;
 
@@ -344,6 +343,7 @@ private:
     static int sm_counter; // Always increases
     static QScopedPointer<UpdateChecker> sm_updateChecker;
     static QMap<int, MainWindow *> sm_mainWindowMap; //maps m_winId with MainWindow "this" ponter
+    static HelpBrowser* sm_helpBrowser;
 };
 
 #endif // MAINWINDOW_H

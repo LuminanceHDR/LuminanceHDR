@@ -163,7 +163,7 @@ QString getHdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* 
 
 void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
 {
-    assert( gv != NULL );
+    assert( gv != nullptr );
 
     QRect cropRect = gv->getSelectionRect().normalized();
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
@@ -190,6 +190,7 @@ int MainWindow::sm_NumMainWindows = 0;
 int MainWindow::sm_counter = 0;
 QMap<int, MainWindow *> MainWindow::sm_mainWindowMap = QMap<int, MainWindow *>();
 QScopedPointer<UpdateChecker> MainWindow::sm_updateChecker;
+HelpBrowser* MainWindow::sm_helpBrowser = nullptr;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -274,7 +275,6 @@ void MainWindow::init()
     sm_mainWindowMap.insert(m_winId, this);
     m_firstWindow = 0;
 
-    helpBrowser = NULL;
     num_ldr_generated = 0;
     curr_num_ldr_open = 0;
     splash = 0;
@@ -626,7 +626,7 @@ void MainWindow::on_fileSaveAllAction_triggered()
                                           Q_ARG(QString, outfname),
                                           Q_ARG(QString, QString()),
                                           Q_ARG(QVector<float>, QVector<float>()),
-                                          Q_ARG(TonemappingOptions*, NULL),
+                                          Q_ARG(TonemappingOptions*, nullptr),
                                           Q_ARG(pfs::Params, pfs::Params("quality", 100u)));
             }
         }
@@ -668,7 +668,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         LdrViewer* l_v = dynamic_cast<LdrViewer*>(g_v);
 
-        if ( l_v == NULL ) return;
+        if ( l_v == nullptr ) return;
 
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
@@ -768,7 +768,7 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
                                   Q_ARG(QString, outfname),
                                   Q_ARG(QString, QString()),
                                   Q_ARG(QVector<float>, QVector<float>()),
-                                  Q_ARG(TonemappingOptions*, NULL),
+                                  Q_ARG(TonemappingOptions*, nullptr),
                                   Q_ARG(pfs::Params, pfs::Params("quality", 100u)) );
     }
     catch (...)
@@ -945,7 +945,7 @@ void MainWindow::on_Decrease_exposure_triggered()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
     HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
-    if ( curr_hdr_v != NULL )
+    if ( curr_hdr_v != nullptr )
         curr_hdr_v->lumRange()->decreaseExposure();
 }
 
@@ -955,7 +955,7 @@ void MainWindow::on_Extend_dynamic_range_triggered()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
     HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
-    if ( curr_hdr_v != NULL )
+    if ( curr_hdr_v != nullptr )
         curr_hdr_v->lumRange()->extendRange();
 }
 
@@ -965,7 +965,7 @@ void MainWindow::on_Fit_to_dynamic_range_triggered()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
     HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
-    if ( curr_hdr_v != NULL )
+    if ( curr_hdr_v != nullptr )
         curr_hdr_v->lumRange()->fitToDynamicRange();
 }
 
@@ -975,7 +975,7 @@ void MainWindow::on_Increase_exposure_triggered()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
     HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
-    if ( curr_hdr_v != NULL )
+    if ( curr_hdr_v != nullptr )
         curr_hdr_v->lumRange()->increaseExposure();
 }
 
@@ -985,7 +985,7 @@ void MainWindow::on_Shrink_dynamic_range_triggered()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
     HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
-    if ( curr_hdr_v != NULL )
+    if ( curr_hdr_v != nullptr )
         curr_hdr_v->lumRange()->shrinkRange();
 }
 
@@ -995,7 +995,7 @@ void MainWindow::on_Low_dynamic_range_triggered()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
     HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
-    if ( curr_hdr_v != NULL )
+    if ( curr_hdr_v != nullptr )
         curr_hdr_v->lumRange()->lowDynamicRange();
 }
 
@@ -1054,15 +1054,25 @@ void MainWindow::on_normalSizeAct_triggered()
 
 void MainWindow::on_documentationAction_triggered()
 {
-    helpBrowser = new HelpBrowser(this,QStringLiteral("Luminance HDR Help"));
-    helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
-    connect(helpBrowser, &HelpBrowser::closed, this, &MainWindow::helpBrowserClosed);
-    helpBrowser->show();
+    if (sm_helpBrowser == nullptr)
+    {
+        sm_helpBrowser = new HelpBrowser(0, QStringLiteral("Luminance HDR Help"));
+        //sm_helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
+        connect(sm_helpBrowser, &HelpBrowser::closed, this, &MainWindow::helpBrowserClosed);
+        sm_helpBrowser->show();
+    }
+    else
+    {
+        sm_helpBrowser->show();
+        sm_helpBrowser->activateWindow();
+        sm_helpBrowser->raise();
+    }
 }
 
 void MainWindow::helpBrowserClosed()
 {
-    helpBrowser = NULL;
+    delete sm_helpBrowser;
+    sm_helpBrowser = nullptr;
 }
 
 void MainWindow::enterWhatsThis()
@@ -1346,7 +1356,7 @@ void MainWindow::updateWindowMenu()
     foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
         MainWindow *MW = qobject_cast<MainWindow *>(widget);
-        if (MW != NULL)
+        if (MW != nullptr)
         {
             QAction *action  = m_Ui->menuWindows->addAction( MW->getCurrentHDRName() );
 
@@ -1369,7 +1379,7 @@ void MainWindow::setActiveMainWindow(QWidget* w)
 {
     MainWindow *MW = qobject_cast<MainWindow *>(w);
 
-    if ( MW == NULL ) return;
+    if ( MW == nullptr ) return;
 
     MW->raise();
     MW->activateWindow();
@@ -1381,7 +1391,7 @@ void MainWindow::on_actionBring_All_to_Front_triggered()
     foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
         MainWindow *MW = qobject_cast<MainWindow *>(widget);
-        if (MW != NULL)
+        if (MW != nullptr)
         {
             MW->raise();
         }
@@ -1455,6 +1465,14 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::closeEvent( QCloseEvent *event )
 {
+    if (sm_NumMainWindows == 1)
+    {
+        if (sm_helpBrowser)
+        {
+            sm_helpBrowser->close();
+        }
+    }
+
     if ( maybeSave() )
     {
         event->accept();
@@ -1467,7 +1485,6 @@ void MainWindow::closeEvent( QCloseEvent *event )
 
 bool MainWindow::event(QEvent* event)
 {
-    bool result = QMainWindow::event(event);
     if (event->type() == QEvent::WindowActivate && m_firstWindow == 1)
     {
         m_firstWindow = 2;
@@ -1475,8 +1492,9 @@ bool MainWindow::event(QEvent* event)
         {
             QMessageBox::warning(this, QStringLiteral("Luminance HDR 32-bit on 64-bit"), tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);
         }
+        return true;
     }
-    return result;
+    return QMainWindow::event(event);
 }
 
 bool MainWindow::maybeSave()
@@ -1525,8 +1543,8 @@ void MainWindow::setupTM()
 {
     // TODO: Building TM Thread
     tm_status.is_hdr_ready = false;
-    tm_status.curr_tm_frame = NULL;
-    tm_status.curr_tm_options = NULL;
+    tm_status.curr_tm_frame = nullptr;
+    tm_status.curr_tm_options = nullptr;
 
     m_tonemapPanel->setEnabled(false);
 
@@ -1738,7 +1756,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
     }
 
     GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
-    if (m_tonemapPanel->replaceLdr() && n != NULL && !n->isHDR())
+    if (m_tonemapPanel->replaceLdr() && n != nullptr && !n->isHDR())
     {
         n->setFrame(frame, tm_options);
     }
@@ -1804,13 +1822,13 @@ void MainWindow::on_actionLock_toggled(bool /*toggled*/)
 
 void MainWindow::syncViewers(GenericViewer *sender)
 {
-    if (sender == NULL) return;
+    if (sender == nullptr) return;
     if (!m_Ui->actionLock->isChecked()) return;
 
     for (int idx = 0; idx < m_tabwidget->count(); idx++)
     {
         GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
-        if (viewer == NULL) return; //this happens when a tab is removed and sync viewers is active, fixes a crash
+        if (viewer == nullptr) return; //this happens when a tab is removed and sync viewers is active, fixes a crash
         if (sender != viewer)
         {
             viewer->blockSignals(true);
@@ -1876,7 +1894,7 @@ void MainWindow::updatePreviews(bool b, float th)
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 {
-    bool hasImage = c_v != NULL;
+    bool hasImage = c_v != nullptr;
     bool isNormalSize = c_v && c_v->isNormalSize();
     bool isFilledToWindow = c_v && c_v->isFilledToWindow();
     bool isFittedToWindow = c_v && c_v->isFittedToWindow();
@@ -1938,8 +1956,8 @@ void MainWindow::removeTab(int t)
             setWindowModified(false);
 
             tm_status.is_hdr_ready = false;
-            tm_status.curr_tm_frame = NULL;
-            tm_status.curr_tm_options = NULL;
+            tm_status.curr_tm_frame = nullptr;
+            tm_status.curr_tm_options = nullptr;
 
             m_tonemapPanel->setEnabled(false);
 
@@ -2065,7 +2083,7 @@ void MainWindow::on_actionFix_Histogram_toggled(bool checked)
     if (checked)
     {
         GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
-        if ( current==NULL ) return;
+        if ( current==nullptr ) return;
         if ( current->isHDR() ) return;
 
         QScopedPointer<GammaAndLevels> g_n_l( new GammaAndLevels(this, current->getQImage()) );
@@ -2136,7 +2154,7 @@ void MainWindow::whiteBalanceDone()
 void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 {
     GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
-    if ( current == NULL ) return;
+    if ( current == nullptr ) return;
     if ( current->isHDR() ) return;
     LdrViewer *viewer = (LdrViewer *) current;
     if (doProof) {
@@ -2158,7 +2176,7 @@ void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 {
     GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
-    if ( current == NULL ) return;
+    if ( current == nullptr ) return;
     if ( current->isHDR() ) return;
     LdrViewer *viewer = (LdrViewer *) current;
     if (doGamut) {
@@ -2182,7 +2200,7 @@ void MainWindow::updateSoftProofing(int i)
     QWidget *wgt = m_tabwidget->widget(i);
     GenericViewer *g_v = (GenericViewer *)wgt;
 
-    if (g_v == NULL) return;
+    if (g_v == nullptr) return;
     if ( !g_v->isHDR() )
     {
         LdrViewer *l_v = static_cast<LdrViewer*>(g_v);
