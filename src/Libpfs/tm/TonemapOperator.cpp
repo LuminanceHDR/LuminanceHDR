@@ -76,7 +76,7 @@ public:
         }
         catch (...)
         {
-            throw std::runtime_error("Tonemap Failed");
+            throw std::runtime_error("Mantiuk06: Tonemap Failed");
         }
     }
 
@@ -95,12 +95,20 @@ struct TonemapOperatorMantiuk08
         pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
                                  pfs::CS_XYZ, X, Y, Z);
 
-        pfstmo_mantiuk08(workingframe,
-                         opts->operator_options.mantiuk08options.colorsaturation,
-                         opts->operator_options.mantiuk08options.contrastenhancement,
-                         opts->operator_options.mantiuk08options.luminancelevel,
-                         opts->operator_options.mantiuk08options.setluminance,
-                         ph);
+        try
+        {
+            pfstmo_mantiuk08(workingframe,
+                             opts->operator_options.mantiuk08options.colorsaturation,
+                             opts->operator_options.mantiuk08options.contrastenhancement,
+                             opts->operator_options.mantiuk08options.luminancelevel,
+                             opts->operator_options.mantiuk08options.setluminance,
+                             ph);
+        }
+        catch (...)
+        {
+            throw std::runtime_error("Mantiuk08: Tonemap Failed");
+        }
+
 
         pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
                                  pfs::CS_RGB, X, Y, Z);
@@ -129,15 +137,23 @@ struct TonemapOperatorFattal02
         else
             detail_level = 3;
 
-        pfstmo_fattal02(workingframe,
-                        opts->operator_options.fattaloptions.alpha,
-                        opts->operator_options.fattaloptions.beta,
-                        opts->operator_options.fattaloptions.color,
-                        opts->operator_options.fattaloptions.noiseredux,
-                        opts->operator_options.fattaloptions.newfattal,
-                        opts->operator_options.fattaloptions.fftsolver,
-                        detail_level,
-                        ph);
+        try
+        {
+            pfstmo_fattal02(workingframe,
+                            opts->operator_options.fattaloptions.alpha,
+                            opts->operator_options.fattaloptions.beta,
+                            opts->operator_options.fattaloptions.color,
+                            opts->operator_options.fattaloptions.noiseredux,
+                            opts->operator_options.fattaloptions.newfattal,
+                            opts->operator_options.fattaloptions.fftsolver,
+                            detail_level,
+                            ph);
+        }
+        catch (...)
+        {
+            throw std::runtime_error("Fattal: Tonemap Failed");
+        }
+
     }
 };
 
@@ -148,10 +164,18 @@ struct TonemapOperatorFerradans11
     {
         ph.setMaximum(100);
 
-        pfstmo_ferradans11(workingframe,
-                        opts->operator_options.ferradansoptions.rho,
-                        opts->operator_options.ferradansoptions.inv_alpha,
-                        ph);
+        try
+        {
+            pfstmo_ferradans11(workingframe,
+                               opts->operator_options.ferradansoptions.rho,
+                               opts->operator_options.ferradansoptions.inv_alpha,
+                               ph);
+        }
+        catch (...)
+        {
+            throw std::runtime_error("Ferradans: Tonemap Failed");
+        }
+
     }
 };
 
@@ -162,7 +186,15 @@ struct TonemapOperatorMai11
     {
         ph.setMaximum(100);
 
-        pfstmo_mai11(workingframe, ph);
+        try
+        {
+            pfstmo_mai11(workingframe, ph);
+        }
+        catch (...)
+        {
+            throw std::runtime_error("Mai: Tonemap Failed");
+        }
+
     }
 };
 
@@ -173,9 +205,17 @@ struct TonemapOperatorDrago03
     {
         ph.setMaximum(100);         // this guy should not be here!
 
-        pfstmo_drago03(workingframe,
-                       opts->operator_options.dragooptions.bias,
-                       ph);
+        try
+        {
+            pfstmo_drago03(workingframe,
+                           opts->operator_options.dragooptions.bias,
+                           ph);
+        }
+        catch (...)
+        {
+            throw std::runtime_error("Drago: Tonemap Failed");
+        }
+
     }
 };
 
@@ -196,7 +236,7 @@ class TonemapOperatorDurand02
         }
         catch (...)
         {
-            throw std::runtime_error("Tonemap Failed");
+            throw std::runtime_error("Durand: Tonemap Failed");
         }
     }
 };
@@ -214,7 +254,6 @@ struct TonemapOperatorReinhard02
         pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
                                  pfs::CS_XYZ, X, Y, Z);
 
-        m_mutex.lock();
         try {
             pfstmo_reinhard02(workingframe,
                               opts->operator_options.reinhard02options.key,
@@ -225,21 +264,15 @@ struct TonemapOperatorReinhard02
                               opts->operator_options.reinhard02options.scales,
                               ph);
         }
-        catch (...) {
-            m_mutex.unlock();
-            throw std::runtime_error("Tonemap Failed");
+        catch (...)
+        {
+            throw std::runtime_error("Reinhard02: Tonemap Failed");
         }
-        m_mutex.unlock();
 
         pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
                                  pfs::CS_SRGB, X, Y, Z);
     }
-
-private:
-    static boost::mutex m_mutex;
 };
-
-boost::mutex TonemapOperatorReinhard02::m_mutex;
 
 struct TonemapOperatorReinhard05
         : public TonemapOperatorRegister<reinhard05, TonemapOperatorReinhard05>
@@ -248,11 +281,19 @@ struct TonemapOperatorReinhard05
     {
         ph.setMaximum(100);
 
-        pfstmo_reinhard05(workingframe,
-                          opts->operator_options.reinhard05options.brightness,
-                          opts->operator_options.reinhard05options.chromaticAdaptation,
-                          opts->operator_options.reinhard05options.lightAdaptation,
-                          ph);
+        try
+        {
+            pfstmo_reinhard05(workingframe,
+                              opts->operator_options.reinhard05options.brightness,
+                              opts->operator_options.reinhard05options.chromaticAdaptation,
+                              opts->operator_options.reinhard05options.lightAdaptation,
+                              ph);
+        }
+        catch (...)
+        {
+            throw std::runtime_error("Reinhard05: Tonemap Failed");
+        }
+
     }
 };
 
@@ -263,11 +304,19 @@ struct TonemapOperatorAshikhmin02
     {
         ph.setMaximum(100);
 
-        pfstmo_ashikhmin02(workingframe,
-                           opts->operator_options.ashikhminoptions.simple,
-                           opts->operator_options.ashikhminoptions.lct,
-                           (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
-                           ph);
+        try
+        {
+            pfstmo_ashikhmin02(workingframe,
+                              opts->operator_options.ashikhminoptions.simple,
+                              opts->operator_options.ashikhminoptions.lct,
+                              (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
+                              ph);
+        }
+        catch (...)
+        {
+            throw std::runtime_error("Ashikhmin: Tonemap Failed");
+        }
+
     }
 };
 
@@ -284,13 +333,21 @@ struct TonemapOperatorPattanaik00
         pfs::transformColorSpace(pfs::CS_RGB, X, Y, Z,
                                  pfs::CS_XYZ, X, Y, Z);
 
-        pfstmo_pattanaik00(workingframe,
-                           opts->operator_options.pattanaikoptions.local,
-                           opts->operator_options.pattanaikoptions.multiplier,
-                           opts->operator_options.pattanaikoptions.cone*1000,
-                           opts->operator_options.pattanaikoptions.rod*1000,
-                           opts->operator_options.pattanaikoptions.autolum,
-                           ph);
+        try
+        {
+            pfstmo_pattanaik00(workingframe,
+                               opts->operator_options.pattanaikoptions.local,
+                               opts->operator_options.pattanaikoptions.multiplier,
+                               opts->operator_options.pattanaikoptions.cone*1000,
+                               opts->operator_options.pattanaikoptions.rod*1000,
+                               opts->operator_options.pattanaikoptions.autolum,
+                               ph);
+        }
+        catch (...)
+        {
+            throw std::runtime_error("Pattanaik: Tonemap Failed");
+        }
+
 
 
         pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z,
