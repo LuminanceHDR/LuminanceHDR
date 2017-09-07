@@ -65,7 +65,6 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
 
     m_Ui->closeButton->hide();
     m_Ui->progressBar->hide();
-    m_Ui->progressBar_2->hide();
 
     m_hdrCreationManager = new HdrCreationManager;
     m_IO_Worker = new IOWorker;
@@ -88,14 +87,12 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
     connect(m_hdrCreationManager, &HdrCreationManager::processed, this, &BatchHDRDialog::processed);
 
     connect(m_hdrCreationManager, &HdrCreationManager::progressStarted, m_Ui->progressBar, &QWidget::show);
-    connect(m_hdrCreationManager, &HdrCreationManager::progressStarted, m_Ui->progressBar_2, &QWidget::show);
-    connect(m_hdrCreationManager, &HdrCreationManager::progressFinished, m_Ui->progressBar_2, &QProgressBar::reset);
-    connect(m_hdrCreationManager, &HdrCreationManager::progressFinished, m_Ui->progressBar_2, &QWidget::hide);
-    connect(m_hdrCreationManager, &HdrCreationManager::progressRangeChanged, m_Ui->progressBar_2, &QProgressBar::setRange);
-    connect(m_hdrCreationManager, &HdrCreationManager::progressValueChanged, m_Ui->progressBar_2, &QProgressBar::setValue);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressFinished, m_Ui->progressBar, &QProgressBar::reset);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressFinished, m_Ui->progressBar, &QWidget::hide);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressRangeChanged, m_Ui->progressBar, &QProgressBar::setRange);
+    connect(m_hdrCreationManager, &HdrCreationManager::progressValueChanged, m_Ui->progressBar, &QProgressBar::setValue);
     connect(m_hdrCreationManager, &HdrCreationManager::loadFilesAborted, this, &BatchHDRDialog::loadFilesAborted);
-    //connect(this, SIGNAL(setRange(int,int)), m_Ui->progressBar_2, SLOT(setRange(int,int)));
-    connect(this, &BatchHDRDialog::setValue, m_Ui->progressBar_2, &QProgressBar::setValue);
+    connect(this, &BatchHDRDialog::setValue, m_Ui->progressBar, &QProgressBar::setValue);
 
     connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &BatchHDRDialog::createHdrFinished, Qt::DirectConnection);
 
@@ -346,12 +343,10 @@ void BatchHDRDialog::align()
     }
     if (m_Ui->autoAlignCheckBox->isChecked())
     {
+        m_Ui->progressBar->hide();
         m_Ui->textEdit->append(tr("Aligning..."));
         if (m_Ui->aisRadioButton->isChecked())
         {
-            m_Ui->progressBar_2->show();
-            m_Ui->progressBar_2->setRange(0,100);
-            m_Ui->progressBar_2->setValue(0);
             m_hdrCreationManager->set_ais_crop_flag(m_Ui->autoCropCheckBox->isChecked());
             m_hdrCreationManager->align_with_ais();
         }
@@ -366,7 +361,7 @@ void BatchHDRDialog::create_hdr(int)
 {
     qDebug() << "BatchHDRDialog::create_hdr()";
 
-    m_Ui->progressBar_2->hide();
+    m_Ui->progressBar->hide();
     m_Ui->textEdit->append(tr("Creating HDR..."));
     int idx = m_Ui->profileComboBox->currentIndex();
 
@@ -420,7 +415,8 @@ void BatchHDRDialog::createHdrFinished()
     }
     QString suffix = m_Ui->formatComboBox->currentText();
     int paddingLength = ceil(log10(m_total + 1.0f));
-    QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QStringLiteral("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
+    QString outName = m_Ui->outputLineEdit->text() + "/" + m_Ui->prefixLineEdit->text() + \
+       QStringLiteral("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
     m_IO_Worker->write_hdr_frame(resultHDR.get(), outName, m_formatHelper.getParams());
     resultHDR.reset();
 
