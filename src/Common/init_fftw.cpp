@@ -30,12 +30,14 @@
 
 using namespace std;
 
+boost::mutex FFTW_MUTEX::fftw_mutex;
+
 
 void init_fftw()
 {
     static bool is_init_threads = false;
     // activate parallel execution of fft routines
-    fftw_mutex.lock();
+    FFTW_MUTEX::fftw_mutex.lock();
     if (!is_init_threads)
     {
         fftwf_init_threads();
@@ -46,6 +48,6 @@ void init_fftw()
 #endif
         is_init_threads = true;
     }
-    fftw_mutex.unlock();
+    FFTW_MUTEX::fftw_mutex.unlock();
 }
 

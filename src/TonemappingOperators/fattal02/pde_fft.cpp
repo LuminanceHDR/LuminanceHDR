@@ -127,16 +127,16 @@ void transform_ev2normal(pfs::Array2Df *A, pfs::Array2Df *T)
 
   // executes 2d discrete cosine transform
   fftwf_plan p;
-  fftw_mutex.lock();
+  FFTW_MUTEX::fftw_mutex.lock();
   p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
-  fftw_mutex.unlock();
+  FFTW_MUTEX::fftw_mutex.unlock();
 
   fftwf_execute(p);
 
-  fftw_mutex.lock();
+  FFTW_MUTEX::fftw_mutex.lock();
   fftwf_destroy_plan(p);
-  fftw_mutex.unlock();
+  FFTW_MUTEX::fftw_mutex.unlock();
 }
 
 
@@ -149,16 +149,16 @@ void transform_normal2ev(pfs::Array2Df *A, pfs::Array2Df *T)
 
   // executes 2d discrete cosine transform
   fftwf_plan p;
-  fftw_mutex.lock();
+  FFTW_MUTEX::fftw_mutex.lock();
   p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
-  fftw_mutex.unlock();
+  FFTW_MUTEX::fftw_mutex.unlock();
 
   fftwf_execute(p);
 
-  fftw_mutex.lock();
+  FFTW_MUTEX::fftw_mutex.lock();
   fftwf_destroy_plan(p);
-  fftw_mutex.unlock();
+  FFTW_MUTEX::fftw_mutex.unlock();
 
   // need to scale the output matrix to get the right transform
   for(int y=0 ; y<height ; y++ )

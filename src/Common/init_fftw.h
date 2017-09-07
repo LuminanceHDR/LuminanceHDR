@@ -24,7 +24,11 @@
 
 #include <boost/thread/mutex.hpp>
 
-static boost::mutex fftw_mutex;
+class FFTW_MUTEX
+{
+public:
+    static boost::mutex fftw_mutex;
+};
 
 void init_fftw();
 

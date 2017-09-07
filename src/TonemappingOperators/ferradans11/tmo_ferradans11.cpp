@@ -410,7 +410,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         med[color]=medval(RGB[color], length);
     }
 
-    fftw_mutex.lock();
+    FFTW_MUTEX::fftw_mutex.lock();
     float *RGB0 = fftwf_alloc_real(length);
     float *u0 = fftwf_alloc_real(length);
     float *u2 = fftwf_alloc_real(length);
@@ -419,7 +419,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     float *u5 = fftwf_alloc_real(length);
     float *u6 = fftwf_alloc_real(length);
     float *u7 = fftwf_alloc_real(length);
-    fftw_mutex.unlock();
+    FFTW_MUTEX::fftw_mutex.unlock();
 
     copy(RGB[0], RGB[0]+length, RGB0);
     copy(RGB[0], RGB[0]+length, u0);
@@ -430,7 +430,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     copy(RGB[0], RGB[0]+length, u6);
     copy(RGB[0], RGB[0]+length, u7);
 
-    fftw_mutex.lock();
+    FFTW_MUTEX::fftw_mutex.lock();
     fftwf_complex* U = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pU = fftwf_plan_dft_r2c_2d(fil, col, u0, U,FFTW_ESTIMATE);
     fftwf_complex* U2 = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
@@ -478,7 +478,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
 
     float alpha=min(col,fil)/invalpha;
     float *g = fftwf_alloc_real(length);
-    fftw_mutex.unlock();
+    FFTW_MUTEX::fftw_mutex.unlock();
     nucleo_gaussiano(g, fil, col, alpha);
     escala(g, length, 1.f, 0.f);
 
@@ -490,16 +490,16 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     float w = (1.0f/suma);
     vsmul(g, w, g, length);
 
-    fftw_mutex.lock();
+    FFTW_MUTEX::fftw_mutex.lock();
     fftwf_complex* G = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * length);
     fftwf_plan pG = fftwf_plan_dft_r2c_2d(fil, col, g, G, FFTW_ESTIMATE);
-    fftw_mutex.unlock();
+    FFTW_MUTEX::fftw_mutex.unlock();
     fftwf_execute(pG);
-    fftw_mutex.lock();
+    FFTW_MUTEX::fftw_mutex.lock();
     fftwf_destroy_plan(pG);
 
     fftwf_free(g);
-    fftw_mutex.unlock();
+    FFTW_MUTEX::fftw_mutex.unlock();
 
     ph.setValue(30);
     if (ph.canceled()){
@@ -509,7 +509,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         delete[] RGB[0];
         delete[] RGB[1];
         delete[] RGB[2];
-        fftw_mutex.lock();
+        FFTW_MUTEX::fftw_mutex.lock();
         fftwf_destroy_plan(pU);
         fftwf_destroy_plan(pU2);
         fftwf_destroy_plan(pU3);
@@ -558,7 +558,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         fftwf_free(U5G);
         fftwf_free(U6G);
         fftwf_free(U7G);
-        fftw_mutex.unlock();
+        FFTW_MUTEX::fftw_mutex.unlock();
         return;
     }
     float delta = 0.f, oldDifference = 0.f;
@@ -667,7 +667,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
         if (iteration > 1)
             ph.setValue(30+69/(steps+1));
     }
-    fftw_mutex.lock();
+    FFTW_MUTEX::fftw_mutex.lock();
     fftwf_destroy_plan(pU);
     fftwf_destroy_plan(pU2);
     fftwf_destroy_plan(pU3);
@@ -716,7 +716,7 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     fftwf_free(U5G);
     fftwf_free(U6G);
     fftwf_free(U7G);
-    fftw_mutex.unlock();
+    FFTW_MUTEX::fftw_mutex.unlock();
 
     ph.setValue(90);
     #pragma omp parallel for
@@ -734,9 +734,9 @@ void tmo_ferradans11(pfs::Array2Df& imR, pfs::Array2Df& imG, pfs::Array2Df& imB,
     delete[] RGB[0];
     delete[] RGB[1];
     delete[] RGB[2];
-    fftw_mutex.lock();
+    FFTW_MUTEX::fftw_mutex.lock();
     fftwf_free(G);
-    fftw_mutex.unlock();
+    FFTW_MUTEX::fftw_mutex.unlock();
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     cout << endl;
