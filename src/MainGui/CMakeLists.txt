@@ -6,7 +6,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 #QT5_WRAP_CPP(FILES_MOC ${FILES_H})
 
 ADD_LIBRARY(main_gui ${FILES_CPP}) # ${FILES_H}  ${FILES_MOC}
-qt5_use_modules(main_gui Core Gui Widgets)
+qt5_use_modules(main_gui Core Gui Widgets Sql)
 
 SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP}  PARENT_SCOPE) # ${FILES_H}
 SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} main_gui PARENT_SCOPE)

@@ -29,12 +29,16 @@
 #include <QFile>
 #include <QString>
 #include <QStringList>
+#include <QSqlDatabase>
+#include <QSqlError>
 
 #include "Common/global.h"
 #include "Common/config.h"
 #include "Common/TranslatorManager.h"
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DonationDialog.h"
+#include "BatchTM/BatchTMDialog.h"
+#include "BatchHDR/BatchHDRDialog.h"
 
 namespace
 {
@@ -55,6 +59,24 @@ QStringList getCliFiles(const QStringList& arguments)
 
     return fileList;
 }
+
+bool check_db()
+{
+        LuminanceOptions options;
+
+        QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
+        db.setDatabaseName(options.getDatabaseFileName());
+        db.setHostName(QStringLiteral("localhost"));
+        bool ok = db.open();
+        if (!ok)
+        {
+            QTextStream out(stdout);
+            out << QObject::tr("The database used for saving TM parameters cannot be opened.\n"
+                                         "Error: %1").arg(db.lastError().databaseText());
+        }
+        return ok;
+}
+
 }
 
 #if defined(WIN32) || defined(__APPLE__)
@@ -126,15 +148,53 @@ int main( int argc, char ** argv )
 
     LuminanceOptions().applyTheme(true);
 
-    DonationDialog::showDonationDialog();
+    QStringList arguments = application.arguments();
 
-    // TODO: create update checker...
-    // TODO: pass update checker to MainWindow
-    MainWindow* mainWindow = new MainWindow;
+    QString appname = arguments.at(0);
 
-    mainWindow->show();
-    mainWindow->openFiles( getCliFiles( application.arguments() ) );
+    bool isBatchHDR = false;
+    bool isBatchTM = false;
 
-    return application.exec();
+    foreach( QString arg , arguments)
+    {
+        if (arg.startsWith("--batchhdr"))
+            isBatchHDR = true;
+        if (arg.startsWith("--batchtm"))
+            isBatchTM = true;
+    }
+
+    if (appname.contains("luminance-hdr") && (!isBatchHDR) && (!isBatchTM))
+    {
+        DonationDialog::showDonationDialog();
+
+        // TODO: create update checker...
+        // TODO: pass update checker to MainWindow
+        MainWindow* mainWindow = new MainWindow;
+
+        mainWindow->show();
+        mainWindow->openFiles( getCliFiles( application.arguments() ) );
+
+        return application.exec();
+    }
+    else if (appname.contains("batch-tonemapping") || isBatchTM)
+    {
+        if (!check_db())
+            return EXIT_FAILURE;
+
+        BatchTMDialog *tmdialog = new BatchTMDialog;
+
+        tmdialog->exec();
+    }
+    else if (appname.contains("batch-hdr") || isBatchHDR)
+    {
+        if (!check_db())
+            return EXIT_FAILURE;
+
+        BatchHDRDialog *hdrdialog = new BatchHDRDialog;
+
+        hdrdialog->exec();
+    }
+
+    return EXIT_SUCCESS;
 }
 
