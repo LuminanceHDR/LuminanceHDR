@@ -78,8 +78,9 @@
 #include <vector>
 #include <fftw3.h>
 
-#include "Libpfs/progress.h"
-#include "Libpfs/array2d.h"
+#include <Common/init_fftw.h>
+#include <Libpfs/progress.h>
+#include <Libpfs/array2d.h>
 #include "pde.h"
 
 using namespace std;
@@ -126,10 +127,16 @@ void transform_ev2normal(pfs::Array2Df *A, pfs::Array2Df *T)
 
   // executes 2d discrete cosine transform
   fftwf_plan p;
+  fftw_mutex.lock();
   p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
+  fftw_mutex.unlock();
+
   fftwf_execute(p);
+
+  fftw_mutex.lock();
   fftwf_destroy_plan(p);
+  fftw_mutex.unlock();
 }
 
 
@@ -142,10 +149,16 @@ void transform_normal2ev(pfs::Array2Df *A, pfs::Array2Df *T)
 
   // executes 2d discrete cosine transform
   fftwf_plan p;
+  fftw_mutex.lock();
   p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
+  fftw_mutex.unlock();
+
   fftwf_execute(p);
+
+  fftw_mutex.lock();
   fftwf_destroy_plan(p);
+  fftw_mutex.unlock();
 
   // need to scale the output matrix to get the right transform
   for(int y=0 ; y<height ; y++ )
@@ -231,12 +244,7 @@ void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
   assert((int)U->getCols()==width && (int)U->getRows()==height);
 
   // activate parallel execution of fft routines
-  fftwf_init_threads();
-#ifdef _OPENMP
-  fftwf_plan_with_nthreads( omp_get_max_threads() );
-#else
-  fftwf_plan_with_nthreads( 2 );
-#endif
+  init_fftw();
 
   // in general there might not be a solution to the Poisson pde
   // with Neumann boundary conditions unless the boundary satisfies
@@ -305,7 +313,7 @@ void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
 
 
   // fft parallel threads cleanup, better handled outside this function?
-  fftwf_cleanup_threads();
+  //fftwf_cleanup_threads();
 
   ph.setValue(90);
   //DEBUG_STR << "solve_pde_fft: done" << std::endl;

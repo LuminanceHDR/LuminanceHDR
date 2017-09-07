@@ -148,19 +148,12 @@ struct TonemapOperatorFerradans11
     {
         ph.setMaximum(100);
 
-        m_mutex.lock();
         pfstmo_ferradans11(workingframe,
                         opts->operator_options.ferradansoptions.rho,
                         opts->operator_options.ferradansoptions.inv_alpha,
                         ph);
-        m_mutex.unlock();
     }
-
-private:
-    static boost::mutex m_mutex;
 };
-
-boost::mutex TonemapOperatorFerradans11::m_mutex;
 
 struct TonemapOperatorMai11
         : public TonemapOperatorRegister<mai, TonemapOperatorMai11>
@@ -193,8 +186,6 @@ class TonemapOperatorDurand02
     {
         ph.setMaximum(100);
 
-        // pfstmo_durand02 not reentrant
-        m_mutex.lock();
         try
         {
             pfstmo_durand02(workingframe,
@@ -205,18 +196,10 @@ class TonemapOperatorDurand02
         }
         catch (...)
         {
-            m_mutex.unlock();
             throw std::runtime_error("Tonemap Failed");
         }
-        m_mutex.unlock();
     }
-
-private:
-    static boost::mutex m_mutex;
 };
-
-boost::mutex TonemapOperatorDurand02::m_mutex;
-
 
 struct TonemapOperatorReinhard02
         : public TonemapOperatorRegister<reinhard02, TonemapOperatorReinhard02>
