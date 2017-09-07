@@ -23,8 +23,7 @@
  *
  */
 
-#include <QDebug>
-
+#include <fftw3.h>
 #include <boost/bind.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <cmath>
@@ -33,14 +32,13 @@
 #include <omp.h>
 #endif
 
-#include "Common/CommonFunctions.h"
+#include <Common/CommonFunctions.h>
+#include <Common/init_fftw.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/manip/copy.h>
 #include <Libpfs/utils/minmax.h>
-#include "Libpfs/utils/msec_timer.h"
-
-#include <fftw3.h>
+#include <Libpfs/utils/msec_timer.h>
 
 #include "AutoAntighosting.h"
 // --- LEGACY CODE ---
@@ -64,12 +62,7 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
     stop_watch.start();
 #endif
   // activate parallel execution of fft routines
-  fftwf_init_threads();
-#ifdef _OPENMP
-  fftwf_plan_with_nthreads( omp_get_max_threads() );
-#else
-  fftwf_plan_with_nthreads( 2 );
-#endif
+    init_fftw();
 
     const int width = U.getCols();
     const int height = U.getRows();
@@ -121,7 +114,9 @@ void solve_pde_dct(Array2Df &F, Array2Df &U)
         }
     }
 
+    fftw_mutex.lock();
     fftwf_destroy_plan(p);
+    fftw_mutex.unlock();
 #ifdef TIMER_PROFILING
     stop_watch.stop_and_update();
     std::cout << "solve_pde_dct = " << stop_watch.get_time() << " msec" << std::endl;
@@ -188,8 +183,6 @@ void hueSquaredMean(const HdrCreationItemContainer& data,
 
     for (size_t w = 0; w < numItems; w++) {
         HE[w] = HS[w] / (width*height);
-
-        qDebug() << "HE[" << w << "]: " << HE[w];
     }
 }
 
@@ -215,8 +208,6 @@ void sdv(const HdrCreationItem& item1,
     vector<float> logRed(W*H);
     vector<float> logGreen(W*H);
     vector<float> logBlue(W*H);
-
-    qDebug() << "deltaEV " << deltaEV;
 
     float logDeltaEV = log(std::abs(deltaEV));
 
@@ -291,10 +282,6 @@ void sdv(const HdrCreationItem& item1,
     mG /= count;
     mB /= count;
 
-    qDebug() << "mR" << mR;
-    qDebug() << "mG" << mG;
-    qDebug() << "mB" << mB;
-
     sR = 0.0f;
     sG = 0.0f;
     sB = 0.0f;
@@ -310,10 +297,6 @@ void sdv(const HdrCreationItem& item1,
     sR = mR + std::sqrt(sR);
     sG = mG + std::sqrt(sG);
     sB = mB + std::sqrt(sB);
-
-    qDebug() << "sR" << sR;
-    qDebug() << "sG" << sG;
-    qDebug() << "sB" << sB;
 }
 
 bool comparePatches(const HdrCreationItem& item1,
