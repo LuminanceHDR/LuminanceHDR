@@ -624,7 +624,7 @@ void MainWindow::on_fileSaveAllAction_triggered()
                 QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                           Q_ARG(GenericViewer*, l_v),
                                           Q_ARG(QString, outfname),
-                                          Q_ARG(QString, m_outputFileNamePrefix),
+                                          Q_ARG(QString, m_inputFilesName.first()),
                                           Q_ARG(QVector<float>, QVector<float>()),
                                           Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()),
                                           Q_ARG(pfs::Params, pfs::Params("quality", 100u)));
@@ -706,7 +706,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         QString inputfname;
         //if ( ! m_inputFilesName.isEmpty() ) inputfname = m_inputFilesName.first();
-        if ( ! m_inputFilesName.isEmpty() ) inputfname = m_outputFileNamePrefix;
+        if ( ! m_inputFilesName.isEmpty() ) inputfname = m_inputFilesName.first();
 
         QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                   Q_ARG(GenericViewer*, l_v),
