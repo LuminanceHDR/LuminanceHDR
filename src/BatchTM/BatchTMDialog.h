@@ -68,6 +68,8 @@ private slots:
     void check_enable_start();
     void remove_HDRs();
     void remove_TMOpts();
+    void remove_all_HDRs();
+    void remove_all_TMOpts();
     void filterChanged(const QString&);
     void filterComboBoxActivated(int);
     void abort();
@@ -95,18 +97,6 @@ private:
     //required for the cache path
     LuminanceOptions m_luminance_options;
 
-    //Application-wide settings, loaded via QSettings
-    QString m_batchTmInputDir;
-    QString m_batchTmTmoSettingsDir;
-    QString m_batchTmOutputDir;
-
-    //selection start/stop left/right
-    //TODO: remove this rubbish, thanks!
-    int start_left;
-    int stop_left;
-    int start_right;
-    int stop_right;
-
     //data structure (model) for left-side list: HDRs
     QStringList HDRs_list;
 
@@ -127,8 +117,8 @@ private:
     QMutex          m_thread_control_mutex;
     QMutex          m_class_data_mutex;
     bool            m_is_batch_running;
-    bool        *   m_available_threads;
-    bool              m_abort;
+    bool*           m_available_threads;
+    bool            m_abort;
     int             m_next_hdr_file;
 
     pfsadditions::FormatHelper m_formatHelper;
@@ -136,8 +126,6 @@ private:
     int   get_available_thread_id();
 
     void  init_batch_tm_ui();
-    //when removing we cycle through the list to grab the selected interval
-    void update_selection_interval(bool left);
     //updates graphica widget (view) and data structure (model) for HDR list
     void add_view_model_HDRs(QStringList);
     //updates graphica widget (view) and data structure (model) for TM_opts list

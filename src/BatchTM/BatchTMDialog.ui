@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>682</width>
-    <height>613</height>
+    <height>652</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,8 +49,11 @@
           <property name="toolTip">
            <string>List of HDRs that will be tone mapped</string>
           </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::ContiguousSelection</enum>
+           <enum>QAbstractItemView::MultiSelection</enum>
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
@@ -100,6 +103,25 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="label_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>34</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="remove_HDRs_Button">
             <property name="toolTip">
              <string>Remove Files (Alt+R)</string>
@@ -116,6 +138,29 @@
             </property>
             <property name="shortcut">
              <string>Alt+R</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="remove_all_HDRs_Button">
+            <property name="toolTip">
+             <string>Remove All Files (Alt+X)</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset theme="edit-clear">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+X</string>
             </property>
            </widget>
           </item>
@@ -241,6 +286,29 @@
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="remove_all_TMOpts_Button">
+            <property name="toolTip">
+             <string>Remove All Settings (Alt+W)</string>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset theme="edit-clear">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+W</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="verticalSpacer_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -260,8 +328,11 @@
           <property name="toolTip">
            <string>List of Tone Mapping Setting files that will be used to tone map each HDR</string>
           </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::ContiguousSelection</enum>
+           <enum>QAbstractItemView::MultiSelection</enum>
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
@@ -274,7 +345,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_4">
+    <widget class="QGroupBox" name="groupBoxOutput">
      <property name="toolTip">
       <string/>
      </property>
@@ -445,7 +516,7 @@
         <item>
          <widget class="QLabel" name="filterLabel1">
           <property name="text">
-           <string>Show onl&amp;y:</string>
+           <string>Show o&amp;nly:</string>
           </property>
           <property name="buddy">
            <cstring>filterComboBox</cstring>
@@ -580,15 +651,19 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>cancelbutton</tabstop>
+  <tabstop>BatchGoButton</tabstop>
   <tabstop>listWidget_HDRs</tabstop>
   <tabstop>listWidget_TMopts</tabstop>
   <tabstop>add_dir_HDRs_Button</tabstop>
   <tabstop>add_HDRs_Button</tabstop>
   <tabstop>remove_HDRs_Button</tabstop>
+  <tabstop>remove_all_HDRs_Button</tabstop>
   <tabstop>add_dir_TMopts_Button</tabstop>
   <tabstop>add_TMopts_Button</tabstop>
   <tabstop>from_Database_Button</tabstop>
   <tabstop>remove_TMOpts_Button</tabstop>
+  <tabstop>remove_all_TMOpts_Button</tabstop>
   <tabstop>comboBoxFormat</tabstop>
   <tabstop>formatSettingsButton</tabstop>
   <tabstop>horizontalSlider_Width</tabstop>
@@ -599,8 +674,6 @@
   <tabstop>filterComboBox</tabstop>
   <tabstop>filterLineEdit</tabstop>
   <tabstop>clearTextToolButton</tabstop>
-  <tabstop>cancelbutton</tabstop>
-  <tabstop>BatchGoButton</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>

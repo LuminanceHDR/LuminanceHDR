@@ -30,58 +30,50 @@
 #include <climits>
 #include <cassert>
 
-#ifdef QT_DEBUG
-#include <QDebug>
-#endif
-
 #include <QFileDialog>
 #include <QTextStream>
 #include <QSqlRecord>
 #include <QSqlQuery>
+#include <QMessageBox>
 
-#include "BatchTM/BatchTMDialog.h"
-#include "BatchTM/ui_BatchTMDialog.h"
+#include <BatchTM/BatchTMDialog.h>
+#include <BatchTM/ui_BatchTMDialog.h>
 
-#include "Common/config.h"
-#include "Common/SavedParametersDialog.h"
-#include "Exif/ExifOperations.h"
-#include "Core/TonemappingOptions.h"
-#include "BatchTM/BatchTMJob.h"
-#include "OsIntegration/osintegration.h"
+#include <Common/config.h>
+#include <Common/SavedParametersDialog.h>
+#include <Exif/ExifOperations.h>
+#include <Core/TonemappingOptions.h>
+#include <BatchTM/BatchTMJob.h>
+#include <OsIntegration/osintegration.h>
 
 BatchTMDialog::BatchTMDialog(QWidget *p):
     QDialog(p), m_Ui(new Ui::BatchTMDialog),
-    start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), m_abort(false)
+    m_abort(false)
 {
-    //qRegisterMetaType<QImage>("QImage");    // What's its meaning?!
-#ifdef QT_DEBUG
-    qDebug() << "BatchTMDialog::BatchTMDialog()";
-#endif
     m_Ui->setupUi(this);
 
     if ( !QIcon::hasThemeIcon(QStringLiteral("vcs-added")) )
         m_Ui->from_Database_Button->setIcon(QIcon(":/program-icons/vcs-added"));
 
-    m_batchTmInputDir = m_luminance_options.getBatchTmPathHdrInput();
-    m_batchTmTmoSettingsDir = m_luminance_options.getBatchTmPathTmoSettings();
-    m_batchTmOutputDir = m_luminance_options.getBatchTmPathLdrOutput();
     m_max_num_threads = m_luminance_options.getBatchTmNumThreads();
 
-    connect(m_Ui->add_dir_HDRs_Button,    &QAbstractButton::clicked, this, &BatchTMDialog::add_dir_HDRs       );
-    connect(m_Ui->add_HDRs_Button,        &QAbstractButton::clicked, this, &BatchTMDialog::add_HDRs           );
-    connect(m_Ui->add_dir_TMopts_Button,  &QAbstractButton::clicked, this, &BatchTMDialog::add_dir_TMopts     );
-    connect(m_Ui->add_TMopts_Button,      &QAbstractButton::clicked, this, &BatchTMDialog::add_TMopts         );
-    connect(m_Ui->out_folder_Button,      &QAbstractButton::clicked, this, &BatchTMDialog::out_folder_clicked );
-    connect(m_Ui->remove_HDRs_Button,     &QAbstractButton::clicked, this, &BatchTMDialog::remove_HDRs        );
-    connect(m_Ui->remove_TMOpts_Button,   &QAbstractButton::clicked, this, &BatchTMDialog::remove_TMOpts      );
-    connect(m_Ui->BatchGoButton,          &QAbstractButton::clicked, this, &BatchTMDialog::batch_core);  //start_called()
-    connect(m_Ui->cancelbutton,           &QAbstractButton::clicked, this, &BatchTMDialog::abort);
-    connect(m_Ui->from_Database_Button,   &QAbstractButton::clicked, this, &BatchTMDialog::from_database);
-
-    connect(m_Ui->filterLineEdit,         &QLineEdit::textChanged, this, &BatchTMDialog::filterChanged);
-    connect(m_Ui->filterComboBox,         static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &BatchTMDialog::filterComboBoxActivated);
-
-    connect(m_Ui->spinBox_Width,          static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &BatchTMDialog::updateWidth);
+    connect(m_Ui->add_dir_HDRs_Button,      &QAbstractButton::clicked, this, &BatchTMDialog::add_dir_HDRs       );
+    connect(m_Ui->add_HDRs_Button,          &QAbstractButton::clicked, this, &BatchTMDialog::add_HDRs           );
+    connect(m_Ui->add_dir_TMopts_Button,    &QAbstractButton::clicked, this, &BatchTMDialog::add_dir_TMopts     );
+    connect(m_Ui->add_TMopts_Button,        &QAbstractButton::clicked, this, &BatchTMDialog::add_TMopts         );
+    connect(m_Ui->out_folder_Button,        &QAbstractButton::clicked, this, &BatchTMDialog::out_folder_clicked );
+    connect(m_Ui->remove_HDRs_Button,       &QAbstractButton::clicked, this, &BatchTMDialog::remove_HDRs        );
+    connect(m_Ui->remove_TMOpts_Button,     &QAbstractButton::clicked, this, &BatchTMDialog::remove_TMOpts      );
+    connect(m_Ui->remove_all_HDRs_Button,   &QAbstractButton::clicked, this, &BatchTMDialog::remove_all_HDRs    );
+    connect(m_Ui->remove_all_TMOpts_Button, &QAbstractButton::clicked, this, &BatchTMDialog::remove_all_TMOpts  );
+    connect(m_Ui->BatchGoButton,            &QAbstractButton::clicked, this, &BatchTMDialog::batch_core         );  //start_called()
+    connect(m_Ui->cancelbutton,             &QAbstractButton::clicked, this, &BatchTMDialog::abort              );
+    connect(m_Ui->from_Database_Button,     &QAbstractButton::clicked, this, &BatchTMDialog::from_database      );
+    connect(m_Ui->filterLineEdit,           &QLineEdit::textChanged,   this, &BatchTMDialog::filterChanged      );
+    connect(m_Ui->filterComboBox,           static_cast<void(QComboBox::*)(int)>(&QComboBox::activated),
+            this, &BatchTMDialog::filterComboBoxActivated);
+    connect(m_Ui->spinBox_Width,            static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+            this, &BatchTMDialog::updateWidth);
 
     full_Log_Model  = new QStringListModel();
     log_filter      = new QSortFilterProxyModel(this);
@@ -106,7 +98,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 
 BatchTMDialog::~BatchTMDialog()
 {
-    //printf("BatchTMDialog::~BatchTMDialog()\n");
     this->hide();
 
     delete log_filter;
@@ -118,12 +109,9 @@ BatchTMDialog::~BatchTMDialog()
 
 void BatchTMDialog::add_dir_HDRs()
 {
-    //printf("BatchTMDialog::add_dir_HDRs()\n");
-
-    QString dirname=QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchTmInputDir );
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_luminance_options.getBatchTmPathHdrInput() );
     if ( !dirname.isEmpty() )
     {
-        m_batchTmInputDir = dirname;
         m_luminance_options.setBatchTmPathHdrInput(dirname); // update settings
         QStringList filters;
         filters << QStringLiteral("*.exr") << QStringLiteral("*.hdr") << QStringLiteral("*.pic") << QStringLiteral("*.tiff") << QStringLiteral("*.tif") << QStringLiteral("*.pfs") << QStringLiteral("*.crw") << QStringLiteral("*.cr2") << QStringLiteral("*.nef") << QStringLiteral("*.dng") << QStringLiteral("*.mrw") << QStringLiteral("*.orf") << QStringLiteral("*.kdc") << QStringLiteral("*.dcr") << QStringLiteral("*.arw") << QStringLiteral("*.raf") << QStringLiteral("*.ptx") << QStringLiteral("*.pef") << QStringLiteral("*.x3f") << QStringLiteral("*.raw") << QStringLiteral("*.sr2") << QStringLiteral("*.rw2") << QStringLiteral("*.srw");
@@ -140,23 +128,23 @@ void BatchTMDialog::add_dir_HDRs()
 
 void BatchTMDialog::add_HDRs()
 {
-    //printf("BatchTMDialog::add_HDRs()\n");
-
     QString filetypes = tr("All HDR images ");
     filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.srw "
                  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.SRW)";
-    QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"), m_batchTmInputDir, filetypes);
-    add_view_model_HDRs(onlyhdrs);
+    QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"), m_luminance_options.getBatchTmPathHdrInput(), filetypes);
+    if (!onlyhdrs.isEmpty())
+    {
+        QFileInfo fi(onlyhdrs.first());
+        m_luminance_options.setBatchTmPathHdrInput(fi.absoluteFilePath());
+        add_view_model_HDRs(onlyhdrs);
+    }
 }
 
 void BatchTMDialog::add_dir_TMopts()
 {
-    //printf("BatchTMDialog::add_dir_TMopts()\n");
-
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchTmTmoSettingsDir);
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_luminance_options.getBatchTmPathTmoSettings());
     if ( !dirname.isEmpty() )
     {
-        m_batchTmTmoSettingsDir = dirname;
         m_luminance_options.setBatchTmPathTmoSettings(dirname); // update settings
         QStringList filters;
         filters << QStringLiteral("*.txt");
@@ -172,19 +160,20 @@ void BatchTMDialog::add_dir_TMopts()
 
 void BatchTMDialog::add_TMopts()
 {
-    //printf("BatchTMDialog::add_TMopts()\n");
-
     QStringList onlytxts = QFileDialog::getOpenFileNames(this,
                                                          tr("Load tone mapping settings text files..."),
-                                                         m_batchTmTmoSettingsDir,
+                                                         m_luminance_options.getBatchTmPathTmoSettings(),
                                                          tr("Luminance HDR tone mapping settings text file (*.txt)"));
-    add_view_model_TM_OPTs(onlytxts);
+    if (!onlytxts.isEmpty())
+    {
+        QFileInfo fi(onlytxts.first());
+        m_luminance_options.setBatchTmPathTmoSettings(fi.absolutePath());
+        add_view_model_TM_OPTs(onlytxts);
+    }
 }
 
 TonemappingOptions* BatchTMDialog::parse_tm_opt_file(QString fname)
 {
-    //printf("BatchTMDialog::parse_tm_opt_file()\n");
-
     try
     {
         return TMOptionsOperations::parseFile(fname);
@@ -198,8 +187,6 @@ TonemappingOptions* BatchTMDialog::parse_tm_opt_file(QString fname)
 
 void BatchTMDialog::check_enable_start()
 {
-    //printf("BatchTMDialog::check_enable_start()\n");
-
     //at least 1 hdr AND at least 1 tm_opt AND output_dir not empty
     m_Ui->BatchGoButton->setEnabled(
             (!m_Ui->out_folder_widgets->text().isEmpty()) &&
@@ -210,15 +197,12 @@ void BatchTMDialog::check_enable_start()
 
 void BatchTMDialog::out_folder_clicked()
 {
-    //printf("BatchTMDialog::out_folder_clicked()\n");
-
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchTmOutputDir);
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_luminance_options.getBatchTmPathLdrOutput());
 
     QFileInfo test(dirname);
     if (test.isWritable() && test.exists() && test.isDir() && !dirname.isEmpty())
     {
-        m_batchTmOutputDir = dirname;
-        m_luminance_options.setBatchTmPathLdrOutput(m_batchTmOutputDir);
+        m_luminance_options.setBatchTmPathLdrOutput(dirname);
 
         m_Ui->out_folder_widgets->setText(dirname);
         check_enable_start();
@@ -227,19 +211,21 @@ void BatchTMDialog::out_folder_clicked()
 
 void BatchTMDialog::add_view_model_HDRs(QStringList list)
 {
-    //printf("BatchTMDialog::add_view_model_HDRs()\n");
     for (int idx = 0; idx < list.size(); ++idx)
     {
         //fill graphical list
-        m_Ui->listWidget_HDRs->addItem(QFileInfo(list.at(idx)).fileName());
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setData(Qt::DisplayRole, QFileInfo(list.at(idx)).fileName());
+        item->setData(Qt::UserRole + 1, QFileInfo(list.at(idx)).absoluteFilePath());
+        m_Ui->listWidget_HDRs->addItem(item);
     }
-    HDRs_list += list;
+    //HDRs_list += list;
     check_enable_start();
 }
 
 void BatchTMDialog::add_view_model_TM_OPTs(QStringList list)
 {
-    //printf("BatchTMDialog::add_view_model_TM_OPTs()\n");
+    bool errors = false;
 
     for (int idx = 0; idx < list.size(); ++idx)
     {
@@ -257,78 +243,48 @@ void BatchTMDialog::add_view_model_TM_OPTs(QStringList list)
             //add to UI
             m_Ui->listWidget_TMopts->addItem(QFileInfo(curr_tmo_options_file).fileName());
         }
+        else
+        {
+            errors = true;
+        }
+    }
+    if (errors)
+    {
+        QMessageBox::warning(0,tr("Warning"), tr("An error occurred reading one or more tonemapping options files."), QMessageBox::Ok, QMessageBox::NoButton);
     }
     check_enable_start();
 }
 
-//TODO: questa merda deve essere sistemata... stasera!
-void BatchTMDialog::update_selection_interval(bool left)
-{
-    //printf("BatchTMDialog::update_selection_interval()\n");
-
-    if (left)
-    {
-        start_left = m_Ui->listWidget_HDRs->count();
-        stop_left = -1;
-        for ( int i = 0; i < m_Ui->listWidget_HDRs->count(); ++i )
-        {
-            if ( m_Ui->listWidget_HDRs->isItemSelected(m_Ui->listWidget_HDRs->item(i)) )
-            {
-                start_left= (start_left>i) ? i : start_left;
-                stop_left= (stop_left<i) ? i : stop_left;
-            }
-        }
-    }
-    else
-    {
-        start_right = m_Ui->listWidget_TMopts->count();
-        stop_right = -1;
-        for ( int i = 0; i < m_Ui->listWidget_TMopts->count(); ++i )
-        {
-            if ( m_Ui->listWidget_TMopts->isItemSelected(m_Ui->listWidget_TMopts->item(i)) )
-            {
-                start_right= (start_right>i) ? i : start_right;
-                stop_right= (stop_right<i) ? i : stop_right;
-            }
-        }
-    }
-}
-
 void BatchTMDialog::remove_HDRs()
 {
-    //printf("BatchTMDialog::remove_HDRs()\n");
+    qDeleteAll(m_Ui->listWidget_HDRs->selectedItems());
+    check_enable_start();
+}
 
-    update_selection_interval(true);
-    if ( m_Ui->listWidget_HDRs->count()==0 || start_left==-1 || stop_left==-1 )
-    {
-        return;
-    }
-
-    for ( int i = (stop_left - start_left + 1); i > 0; i--)
-    {
-        m_Ui->listWidget_HDRs->takeItem(start_left);
-        HDRs_list.removeAt(start_left);
-    }
-    start_left = stop_left = -1;
+void BatchTMDialog::remove_all_HDRs()
+{
+    m_Ui->listWidget_HDRs->clear();
     check_enable_start();
 }
 
 void BatchTMDialog::remove_TMOpts()
 {
-    //printf("BatchTMDialog::remove_TMOpts()\n");
-
-    update_selection_interval(false);
-    if ( (m_Ui->listWidget_TMopts->count() == 0) || (start_right == -1) || (stop_right == -1) )
+    //qDeleteAll(m_Ui->listWidget_TMopts->selectedItems());
+    QList<QListWidgetItem*> items = m_Ui->listWidget_TMopts->selectedItems();
+    for( auto &item : items)
     {
-        return;
+        int row = m_Ui->listWidget_TMopts->row(item);
+        delete m_Ui->listWidget_TMopts->takeItem(row);
+        delete m_tm_options_list.takeAt(row);
     }
+    check_enable_start();
+}
 
-    for (int i = (stop_right - start_right + 1); i > 0; i--)
-    {
-        m_Ui->listWidget_TMopts->takeItem(start_right);
-        m_tm_options_list.removeAt(start_right);
-    }
-    start_right = stop_right = -1;
+void BatchTMDialog::remove_all_TMOpts()
+{
+    m_Ui->listWidget_TMopts->clear();
+    qDeleteAll(m_tm_options_list);
+    m_tm_options_list.clear();
     check_enable_start();
 }
 
@@ -337,7 +293,6 @@ void BatchTMDialog::add_log_message(const QString& message)
     // Mutex lock!
     m_add_log_message_mutex.lock();
 
-    //qDebug() << qPrintable(message);
     full_Log_Model->insertRows(full_Log_Model->rowCount(), 1);
     full_Log_Model->setData(full_Log_Model->index(full_Log_Model->rowCount()-1), message, Qt::DisplayRole);
     m_Ui->Log_Widget->scrollToBottom();
@@ -348,8 +303,6 @@ void BatchTMDialog::add_log_message(const QString& message)
 
 void BatchTMDialog::filterChanged(const QString& newtext)
 {
-    //printf("BatchTMDialog::filterChanged()\n");
-
     bool no_text = newtext.isEmpty();
     m_Ui->filterComboBox->setEnabled(no_text);
     m_Ui->filterLabel1->setEnabled(no_text);
@@ -366,8 +319,6 @@ void BatchTMDialog::filterChanged(const QString& newtext)
 
 void BatchTMDialog::filterComboBoxActivated(int index)
 {
-    //printf("BatchTMDialog::filterComboBoxActivated()\n");
-
     QString regexp;
     switch (index)
     {
@@ -390,9 +341,11 @@ void BatchTMDialog::filterComboBoxActivated(int index)
 
 void BatchTMDialog::batch_core()
 {
-    //printf("BatchTMDialog::batch_core()\n");
     init_batch_tm_ui();
-
+    for (int row = 0; row < m_Ui->listWidget_HDRs->count(); row++)
+    {
+        HDRs_list << m_Ui->listWidget_HDRs->item(row)->data(Qt::UserRole + 1).toString();
+    }
     start_batch_thread(); // kick off the conversion!
 }
 
@@ -471,7 +424,6 @@ int BatchTMDialog::get_available_thread_id()
         }
         m_thread_control_mutex.unlock();
 
-        //printf("BatchTMDialog::get_available_thread_id(): t_id = %d, max_num_threads = %d\n", t_id, m_max_num_threads);
         assert ( t_id != m_max_num_threads );
         return (t_id);
     }
@@ -480,8 +432,6 @@ int BatchTMDialog::get_available_thread_id()
 
 void BatchTMDialog::release_thread(int t_id)
 {
-    //printf("BatchTMDialog::release_thread()\n");
-
     m_thread_control_mutex.lock();
     m_available_threads[t_id] = true;
     m_thread_control_mutex.unlock();
@@ -493,8 +443,6 @@ void BatchTMDialog::release_thread(int t_id)
 
 void BatchTMDialog::init_batch_tm_ui()
 {
-    //printf("BatchTMDialog::init_batch_tm_ui()\n");
-
     m_is_batch_running = true;
 
     // progress bar activated
@@ -503,9 +451,7 @@ void BatchTMDialog::init_batch_tm_ui()
     m_Ui->overallProgressBar->setValue(0);
 
     // disable all buttons!
-    //m_Ui->cancelbutton->setDisabled(true);
     m_Ui->BatchGoButton->setDisabled(true);
-    m_Ui->out_folder_Button->setDisabled(true);
     m_Ui->add_dir_HDRs_Button->setDisabled(true);
     m_Ui->add_HDRs_Button->setDisabled(true);
     m_Ui->remove_HDRs_Button->setDisabled(true);
@@ -513,10 +459,9 @@ void BatchTMDialog::init_batch_tm_ui()
     m_Ui->add_TMopts_Button->setDisabled(true);
     m_Ui->remove_TMOpts_Button->setDisabled(true);
     m_Ui->from_Database_Button->setDisabled(true);
-    m_Ui->horizontalSlider_Width->setDisabled(true);
-    m_Ui->spinBox_Width->setDisabled(true);
-    m_Ui->comboBoxFormat->setDisabled(true);
-    m_Ui->formatSettingsButton->setDisabled(true);
+    m_Ui->remove_all_HDRs_Button->setDisabled(true);
+    m_Ui->remove_all_TMOpts_Button->setDisabled(true);
+    m_Ui->groupBoxOutput->setDisabled(true);
 
     // mouse pointer to busy
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -536,7 +481,12 @@ void BatchTMDialog::stop_batch_tm_ui()
         m_Ui->cancelbutton->setText(tr("Close"));
 
         m_Ui->BatchGoButton->setText(tr("&Done"));
-        add_log_message(tr("All tasks completed."));
+
+        if (m_abort)
+            add_log_message(tr("Conversion aborted by user request."));
+        else
+            add_log_message(tr("All tasks completed."));
+
         QApplication::restoreOverrideCursor();
 
         m_is_batch_running = false;
@@ -547,9 +497,6 @@ void BatchTMDialog::stop_batch_tm_ui()
 
 void BatchTMDialog::closeEvent( QCloseEvent* ce )
 {
-#ifdef QT_DEBUG
-    qDebug() << "BatchTMDialog::closeEvent()";
-#endif
     OsIntegration::getInstance().setProgress(-1);
 
     if ( m_is_batch_running )
@@ -728,7 +675,7 @@ void BatchTMDialog::from_database()
                     tm_opt->pregamma = query.value(3).toFloat();
                 }
             }
-               m_tm_options_list.append(tm_opt);
+            m_tm_options_list.append(tm_opt);
             delete temp_model;
         }
     }
