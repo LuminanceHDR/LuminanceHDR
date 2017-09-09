@@ -1182,13 +1182,6 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
         qDebug() << "Filename: " << new_fname;
 #endif
 
-        m_inputFilesName = inputFileNames;
-        QFileInfo fi1(m_inputFilesName.first());
-        QFileInfo fi2(m_inputFilesName.last());
-
-
-        m_outputFileNamePrefix = fi1.completeBaseName() + "-" + fi2.completeBaseName();
-
         HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving);
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
@@ -1216,6 +1209,12 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
             // it doesn't exist on the file system, so I have just got back a
             // file from some creational operation (new hdr, crop...)
 
+            m_inputFilesName = inputFileNames;
+            QFileInfo fi1(m_inputFilesName.first());
+            QFileInfo fi2(m_inputFilesName.last());
+
+            m_outputFileNamePrefix = fi1.completeBaseName() + "-" + fi2.completeBaseName();
+
             //newhdr->setFileName(QString(tr("Untitled")));
             newhdr->setFileName(m_outputFileNamePrefix);
             m_tabwidget->addTab(newhdr, QString(new_fname).prepend("(*) "));
@@ -1225,6 +1224,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
         }
         else
         {
+            m_outputFileNamePrefix = new_fname;
             // the new file exists on the file system, so I can use this value
             // to set captions and so on
             newhdr->setFileName(new_fname);
