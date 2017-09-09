@@ -256,6 +256,13 @@ protected:
     //! \brief contains the file names of the images loaded by the wizard,
     //! they are used to copy EXIF tags to saved LDR images
     QStringList m_inputFilesName;
+
+    //! \brief contain output file name prefix in the form 1st bracketed file name "-" last bracketed file name
+    QString m_outputFileNamePrefix;
+
+    //! \brief contain Hdr creation model to use as suffix in HDR output file name
+    QString m_HdrCaption;
+
     //! \brief this contains the exposure times of the images to write to LDR
     //! as EXIF comment
     QVector<float> m_inputExpoTimes;

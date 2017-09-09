@@ -149,7 +149,7 @@ QString getHdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* 
     QString outputFilename =
             QFileDialog::getSaveFileName(parent,
                                          QObject::tr("Save the HDR image as..."),
-                                         LuminanceOptions().getDefaultPathHdrOut() + QDir::separator() + qfi.completeBaseName(),
+                                         LuminanceOptions().getDefaultPathLdrIn()/*LuminanceOptions().getDefaultPathHdrOut()*/ + QDir::separator() + qfi.completeBaseName(),
                                          filetypes);
 
     if ( !outputFilename.isEmpty() )
@@ -624,9 +624,9 @@ void MainWindow::on_fileSaveAllAction_triggered()
                 QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                           Q_ARG(GenericViewer*, l_v),
                                           Q_ARG(QString, outfname),
-                                          Q_ARG(QString, QString()),
+                                          Q_ARG(QString, m_outputFileNamePrefix),
                                           Q_ARG(QVector<float>, QVector<float>()),
-                                          Q_ARG(TonemappingOptions*, nullptr),
+                                          Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()),
                                           Q_ARG(pfs::Params, pfs::Params("quality", 100u)));
             }
         }
@@ -640,7 +640,7 @@ void MainWindow::on_fileSaveAsAction_triggered()
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
     if ( g_v->isHDR() ) {
         // In this case I'm saving an HDR
-        QString fname = getHdrFileNameFromSaveDialog(g_v->getFileName(), this);
+        QString fname = getHdrFileNameFromSaveDialog(g_v->getFileName() + "-" + m_HdrCaption, this);
 
         if ( fname.isEmpty() ) return;
 
@@ -672,7 +672,10 @@ void MainWindow::on_fileSaveAsAction_triggered()
 
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
-        QString outputFilename = getLdrFileNameFromSaveDialog(ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg", this);
+        QString proposedFileName = ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg.jpg";
+
+        //QString outputFilename = getLdrFileNameFromSaveDialog(ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg", this);
+        QString outputFilename = getLdrFileNameFromSaveDialog(proposedFileName, this);
 
         if ( outputFilename.isEmpty() ) return;
 
@@ -702,7 +705,8 @@ void MainWindow::on_fileSaveAsAction_triggered()
         }
 
         QString inputfname;
-        if ( ! m_inputFilesName.isEmpty() ) inputfname = m_inputFilesName.first();
+        //if ( ! m_inputFilesName.isEmpty() ) inputfname = m_inputFilesName.first();
+        if ( ! m_inputFilesName.isEmpty() ) inputfname = m_outputFileNamePrefix;
 
         QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
                                   Q_ARG(GenericViewer*, l_v),
@@ -1178,6 +1182,13 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
         qDebug() << "Filename: " << new_fname;
 #endif
 
+        m_inputFilesName = inputFileNames;
+        QFileInfo fi1(m_inputFilesName.first());
+        QFileInfo fi2(m_inputFilesName.last());
+
+
+        m_outputFileNamePrefix = fi1.completeBaseName() + "-" + fi2.completeBaseName();
+
         HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving);
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
@@ -1205,8 +1216,10 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
             // it doesn't exist on the file system, so I have just got back a
             // file from some creational operation (new hdr, crop...)
 
-            newhdr->setFileName(QString(tr("Untitled")));
+            //newhdr->setFileName(QString(tr("Untitled")));
+            newhdr->setFileName(m_outputFileNamePrefix);
             m_tabwidget->addTab(newhdr, QString(new_fname).prepend("(*) "));
+            m_HdrCaption = new_fname;
 
             setWindowModified(true);
         }
@@ -1220,8 +1233,6 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame,
             setCurrentFile(new_fname);
             setWindowModified(needSaving);
         }
-
-        m_inputFilesName = inputFileNames;
 
         tm_status.is_hdr_ready = true;
         tm_status.curr_tm_frame = newhdr;
@@ -1513,7 +1524,8 @@ bool MainWindow::maybeSave()
         case QMessageBox::Save: {
             // if save == success return true;
             // else return false;
-            QString fname = getHdrFileNameFromSaveDialog(QStringLiteral("Untitled"), this);
+            //QString fname = getHdrFileNameFromSaveDialog(QStringLiteral("Untitled"), this);
+            QString fname = getHdrFileNameFromSaveDialog(m_outputFileNamePrefix + "-" + m_HdrCaption, this);
 
             if ( !fname.isEmpty() )
             {
@@ -1725,7 +1737,7 @@ void MainWindow::exportImage(TonemappingOptions *opts)
 
         QString inputfname;
         if ( ! m_inputFilesName.isEmpty() )
-            inputfname = m_inputFilesName.first();
+            inputfname = m_outputFileNamePrefix;
 
         QString exportDir = luminance_options->getExportDir();
 

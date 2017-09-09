@@ -513,28 +513,11 @@ void HdrWizard::loadInputFiles(const QStringList& files)
 
         m_Ui->loadImagesButton->setEnabled(false);
         m_Ui->confirmloadlabel->setText("<center><h3><b>" + tr("Loading...") + "</b></h3></center>");
-/*
-        QProgressDialog progressDialog(this);
-        progressDialog.setWindowModality(Qt::WindowModal);
-        progressDialog.setLabelText(QString("Loading %1 file(s) using %2 thread(s)...")
-                                    .arg(files.size())
-                                    .arg(QThread::idealThreadCount())
-                                    );
 
-        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(exec()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressStarted()), &progressDialog, SLOT(show()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(reset()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressFinished()), &progressDialog, SLOT(hide()));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressRangeChanged(int,int)), &progressDialog, SLOT(setRange(int,int)));
-        connect(m_hdrCreationManager.data(), SIGNAL(progressValueChanged(int)), &progressDialog, SLOT(setValue(int)));
-        connect(&progressDialog, SIGNAL(canceled()), m_hdrCreationManager.data(), SIGNAL(progressCancel()));
-*/
         QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
         m_Ui->progressBar->show();
 
-        // m_hdrCreationManager->loadFiles(files);
-        //connect(&m_futureWatcher, SIGNAL(started()), m_Ui->progressBar, SLOT(show()));
-        //connect(&m_futureWatcher, SIGNAL(finished()), m_Ui->progressBar, SLOT(hide()));
+        m_inputFilesName = files;
 
         m_futureWatcher.setFuture(
                     QtConcurrent::run(
@@ -543,10 +526,6 @@ void HdrWizard::loadInputFiles(const QStringList& files)
                                     files)
                         )
                     );
-
-
-        // Query the progress dialog to check if was canceled.
-        // qDebug() << "Canceled?" << progressDialog.wasCanceled();
     }
 }
 
@@ -1140,8 +1119,8 @@ QString HdrWizard::getCaptionTEXT()
 
 QStringList HdrWizard::getInputFilesNames()
 {
-    return QStringList();
-    // return m_inputFilesName;
+    //return QStringList();
+    return m_inputFilesName;
 }
 
 // triggered by user interaction

@@ -51,6 +51,8 @@ private:
 
     LuminanceOptions luminance_options;
 
+    QStringList m_inputFilesName;
+
     // the new hdr, returned by the HdrCreationManager class
     pfs::Frame* m_pfsFrameHDR;
 
