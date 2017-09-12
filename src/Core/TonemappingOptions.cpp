@@ -614,7 +614,7 @@ TMOptionsOperations::TMOptionsOperations(const TonemappingOptions* opts) : opts(
 }
 
 QString TMOptionsOperations::getExifComment() {
-        QString exif_comment="Luminance HDR " LUMINANCEVERSION " tonemapping parameters:\n";
+        QString exif_comment="Luminance HDR " LUMINANCEVERSION "\n\nTonemapping parameters:\n";
         exif_comment+=QLatin1String("Operator: ");
         switch (opts->tmoperator) {
         case mantiuk06: {
@@ -671,7 +671,7 @@ QString TMOptionsOperations::getExifComment() {
                 }
                 break;
         case mai: {
-                exif_comment+=QLatin1String("Ferrands\n");
+                exif_comment+=QLatin1String("Mai\nParameters:\nThis operator has no parameters\n");
                 }
                 break;
         case ashikhmin: {
