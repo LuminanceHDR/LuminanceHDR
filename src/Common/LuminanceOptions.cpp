@@ -959,7 +959,7 @@ void LuminanceOptions::setPreviewPanelMode(int mode)
     m_settingHolder->setValue(KEY_PREVIEW_PANEL_MODE, mode);
 }
 
-void LuminanceOptions::setExportDir(QString dir)
+void LuminanceOptions::setExportDir(const QString& dir)
 {
     m_settingHolder->setValue(KEY_EXPORT_FILE_PATH, dir);
 }

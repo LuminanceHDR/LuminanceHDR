@@ -237,7 +237,7 @@ public Q_SLOTS:
 
     // Queue
     QString getExportDir();
-    void setExportDir(QString dir);
+    void setExportDir(const QString& dir);
 
 
 private:
