@@ -283,7 +283,7 @@ void PreferencesDialog::on_okButton_clicked()
     luminance_options.setValue(KEY_GREEN_TOOLBUTTON, m_Ui->green_toolButton->isEnabled());
 
     luminance_options.setExportDir(m_Ui->exportDirectoryEdit->text());
-    m_formatHelper.writeSettings(luminance_options, KEY_FILEFORMAT_QUEUE);
+    m_formatHelper.writeSettings(KEY_FILEFORMAT_QUEUE);
 
     if (restartNeeded)
     {
@@ -699,7 +699,7 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->printer_lineEdit->setText( luminance_options.getPrinterProfileFileName() );
 
     m_Ui->exportDirectoryEdit->setText( luminance_options.getExportDir() );
-    m_formatHelper.loadFromSettings(luminance_options, KEY_FILEFORMAT_QUEUE);
+    m_formatHelper.loadFromSettings(KEY_FILEFORMAT_QUEUE);
 }
 
 void PreferencesDialog::on_chooseCachePathButton_clicked()

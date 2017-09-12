@@ -214,40 +214,40 @@ pfs::Params FormatHelper::getParams()
     return m_params;
 }
 
-void FormatHelper::loadFromSettings(const LuminanceOptions& options, QString prefix)
+void FormatHelper::loadFromSettings(const QString prefix)
 {
 
-    int format = options.value(prefix + "/" + KEY_EXPORT_FORMAT, m_hdr ? 0 : 20).toInt();
+    int format = LuminanceOptions().value(prefix + "/" + KEY_EXPORT_FORMAT, m_hdr ? 0 : 20).toInt();
     m_comboBox->setCurrentIndex(m_comboBox->findData(format));
-    m_params = FormatHelper::getParamsFromSettings(options, prefix, m_hdr);
+    m_params = FormatHelper::getParamsFromSettings(prefix, m_hdr);
 }
 
-void FormatHelper::writeSettings(LuminanceOptions& options, QString prefix)
+void FormatHelper::writeSettings(const QString prefix)
 {
-    options.setValue(prefix + "/" + KEY_EXPORT_FORMAT, m_comboBox->currentData().toInt());
+    LuminanceOptions().setValue(prefix + "/" + KEY_EXPORT_FORMAT, m_comboBox->currentData().toInt());
     int tiffMode;
     if (m_params.get("tiff_mode", tiffMode))
     {
-        options.setValue(prefix + "/" + KEY_EXPORT_TIFF_MODE, tiffMode);
+        LuminanceOptions().setValue(prefix + "/" + KEY_EXPORT_TIFF_MODE, tiffMode);
     }
     size_t quality;
     if (m_params.get("quality", quality))
     {
         int qual = quality;
-        options.setValue(prefix + "/" + KEY_EXPORT_QUALITY, qual);
+        LuminanceOptions().setValue(prefix + "/" + KEY_EXPORT_QUALITY, qual);
     }
 
 }
 
-pfs::Params FormatHelper::getParamsFromSettings(const LuminanceOptions& options, QString prefix, bool hdr)
+pfs::Params FormatHelper::getParamsFromSettings(const QString prefix, bool hdr)
 {
-    int format = options.value(prefix + "/" + KEY_EXPORT_FORMAT, hdr ? 0 : 20).toInt();
+    int format = LuminanceOptions().value(prefix + "/" + KEY_EXPORT_FORMAT, hdr ? 0 : 20).toInt();
     pfs::Params params = FormatHelper::getParamsForFormat(format);
 
-    int tiffMode = options.value(prefix + "/" + KEY_EXPORT_TIFF_MODE, -1).toInt();
+    int tiffMode = LuminanceOptions().value(prefix + "/" + KEY_EXPORT_TIFF_MODE, -1).toInt();
     if (tiffMode >= 0)
         params.set("tiff_mode", tiffMode);
-    int quality = options.value(prefix + "/" + KEY_EXPORT_QUALITY, -1).toInt();
+    int quality = LuminanceOptions().value(prefix + "/" + KEY_EXPORT_QUALITY, -1).toInt();
     if (quality >= 0)
     {
         size_t qual = quality;

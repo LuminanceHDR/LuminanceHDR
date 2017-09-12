@@ -51,10 +51,10 @@ namespace pfsadditions
         pfs::Params getParams();
         QString getFileExtension();
 
-        void loadFromSettings(const LuminanceOptions& options, QString prefix);
-        void writeSettings(LuminanceOptions& options, QString prefix);
+        void loadFromSettings(const QString prefix);
+        void writeSettings(const QString prefix);
 
-        static pfs::Params getParamsFromSettings(const LuminanceOptions& options, QString prefix, bool hdr);
+        static pfs::Params getParamsFromSettings(const QString prefix, bool hdr);
 
     protected:
         void setDefaultParams(int format);
