@@ -62,7 +62,7 @@ void BatchTMJob::run()
     pfs::Progress prog_helper;
     IOWorker io_worker;
 
-    emit add_log_message(tr("[T%1] Start processing %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
+    emit add_log_message(tr("[T%1] Start processing %2").arg(m_thread_id).arg(QFileInfo(m_file_name).fileName()));
 
     // reference frame
     QScopedPointer<pfs::Frame> reference_frame( io_worker.read_hdr_frame(m_file_name) );
@@ -70,7 +70,7 @@ void BatchTMJob::run()
     if ( !reference_frame.isNull() )
     {
         // update message box
-        emit add_log_message(tr("[T%1] Successfully load %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
+        emit add_log_message(tr("[T%1] Successfully load %2").arg(m_thread_id).arg(QFileInfo(m_file_name).fileName()));
 
         // update progress bar!
         emit increment_progress_bar(1);
@@ -106,13 +106,13 @@ void BatchTMJob::run()
             QString output_file_name = m_output_file_name_base+"_"+opts->getPostfix()+"."+m_ldr_output_format;
 
             if ( io_worker.write_ldr_frame(temporary_frame.data(),
-                                           output_file_name, QString(),
+                                           output_file_name, "FromHdrFile", // inform we tonemapped an existing HDR with no exif data
                                            QVector<float>(), opts,
                                            m_params) )
             {
-                emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+                emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).fileName()) );
             } else {
-                emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+                emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).fileName()) );
             }
 
             emit increment_progress_bar(1);
@@ -122,7 +122,7 @@ void BatchTMJob::run()
     {
         // update message box
         //emit add_log_message(error_message);
-        emit add_log_message(tr("[T%1] ERROR: Loading of %2 failed").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
+        emit add_log_message(tr("[T%1] ERROR: Loading of %2 failed").arg(m_thread_id).arg(QFileInfo(m_file_name).fileName()));
 
         // update progress bar!
         emit increment_progress_bar(m_tm_options->size() + 1);
