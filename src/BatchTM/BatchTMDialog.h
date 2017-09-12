@@ -75,7 +75,7 @@ private slots:
     void abort();
 
     //fuction that adds a log message to the model
-    void add_log_message(const QString &);
+    void add_log_message(const QString&);
 
     void batch_core();
     void release_thread(int t_id);
@@ -92,10 +92,7 @@ protected:
 
 private:
     //Parses a TM_opts file (return NULL on error)
-    TonemappingOptions* parse_tm_opt_file(QString filename);
-
-    //required for the cache path
-    LuminanceOptions m_luminance_options;
+    TonemappingOptions* parse_tm_opt_file(const QString& filename);
 
     //data structure (model) for left-side list: HDRs
     QStringList HDRs_list;
@@ -127,8 +124,8 @@ private:
 
     void  init_batch_tm_ui();
     //updates graphica widget (view) and data structure (model) for HDR list
-    void add_view_model_HDRs(QStringList);
+    void add_view_model_HDRs(const QStringList&);
     //updates graphica widget (view) and data structure (model) for TM_opts list
-    void add_view_model_TM_OPTs(QStringList);
+    void add_view_model_TM_OPTs(const QStringList&);
 };
 #endif

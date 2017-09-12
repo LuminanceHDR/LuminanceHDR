@@ -55,7 +55,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     if ( !QIcon::hasThemeIcon(QStringLiteral("vcs-added")) )
         m_Ui->from_Database_Button->setIcon(QIcon(":/program-icons/vcs-added"));
 
-    m_max_num_threads = m_luminance_options.getBatchTmNumThreads();
+    m_max_num_threads = LuminanceOptions().getBatchTmNumThreads();
 
     connect(m_Ui->add_dir_HDRs_Button,      &QAbstractButton::clicked, this, &BatchTMDialog::add_dir_HDRs       );
     connect(m_Ui->add_HDRs_Button,          &QAbstractButton::clicked, this, &BatchTMDialog::add_HDRs           );
@@ -109,10 +109,10 @@ BatchTMDialog::~BatchTMDialog()
 
 void BatchTMDialog::add_dir_HDRs()
 {
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_luminance_options.getBatchTmPathHdrInput() );
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), LuminanceOptions().getBatchTmPathHdrInput() );
     if ( !dirname.isEmpty() )
     {
-        m_luminance_options.setBatchTmPathHdrInput(dirname); // update settings
+        LuminanceOptions().setBatchTmPathHdrInput(dirname); // update settings
         QStringList filters;
         filters << QStringLiteral("*.exr") << QStringLiteral("*.hdr") << QStringLiteral("*.pic") << QStringLiteral("*.tiff") << QStringLiteral("*.tif") << QStringLiteral("*.pfs") << QStringLiteral("*.crw") << QStringLiteral("*.cr2") << QStringLiteral("*.nef") << QStringLiteral("*.dng") << QStringLiteral("*.mrw") << QStringLiteral("*.orf") << QStringLiteral("*.kdc") << QStringLiteral("*.dcr") << QStringLiteral("*.arw") << QStringLiteral("*.raf") << QStringLiteral("*.ptx") << QStringLiteral("*.pef") << QStringLiteral("*.x3f") << QStringLiteral("*.raw") << QStringLiteral("*.sr2") << QStringLiteral("*.rw2") << QStringLiteral("*.srw");
         filters << QStringLiteral("*.EXR") << QStringLiteral("*.HDR") << QStringLiteral("*.PIC") << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF") << QStringLiteral("*.PFS") << QStringLiteral("*.CRW") << QStringLiteral("*.CR2") << QStringLiteral("*.NEF") << QStringLiteral("*.DNG") << QStringLiteral("*.MRW") << QStringLiteral("*.ORF") << QStringLiteral("*.KDC") << QStringLiteral("*.DCR") << QStringLiteral("*.ARW") << QStringLiteral("*.RAF") << QStringLiteral("*.PTX") << QStringLiteral("*.PEF") << QStringLiteral("*.X3F") << QStringLiteral("*.RAW") << QStringLiteral("*.SR2") << QStringLiteral("*.RW2") << QStringLiteral("*.SRW");
@@ -131,21 +131,21 @@ void BatchTMDialog::add_HDRs()
     QString filetypes = tr("All HDR images ");
     filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.srw "
                  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.SRW)";
-    QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"), m_luminance_options.getBatchTmPathHdrInput(), filetypes);
+    QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"), LuminanceOptions().getBatchTmPathHdrInput(), filetypes);
     if (!onlyhdrs.isEmpty())
     {
         QFileInfo fi(onlyhdrs.first());
-        m_luminance_options.setBatchTmPathHdrInput(fi.absoluteFilePath());
+        LuminanceOptions().setBatchTmPathHdrInput(fi.absolutePath());
         add_view_model_HDRs(onlyhdrs);
     }
 }
 
 void BatchTMDialog::add_dir_TMopts()
 {
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_luminance_options.getBatchTmPathTmoSettings());
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), LuminanceOptions().getBatchTmPathTmoSettings());
     if ( !dirname.isEmpty() )
     {
-        m_luminance_options.setBatchTmPathTmoSettings(dirname); // update settings
+        LuminanceOptions().setBatchTmPathTmoSettings(dirname); // update settings
         QStringList filters;
         filters << QStringLiteral("*.txt");
         QDir chosendir(dirname);
@@ -162,17 +162,17 @@ void BatchTMDialog::add_TMopts()
 {
     QStringList onlytxts = QFileDialog::getOpenFileNames(this,
                                                          tr("Load tone mapping settings text files..."),
-                                                         m_luminance_options.getBatchTmPathTmoSettings(),
+                                                         LuminanceOptions().getBatchTmPathTmoSettings(),
                                                          tr("Luminance HDR tone mapping settings text file (*.txt)"));
     if (!onlytxts.isEmpty())
     {
         QFileInfo fi(onlytxts.first());
-        m_luminance_options.setBatchTmPathTmoSettings(fi.absolutePath());
+        LuminanceOptions().setBatchTmPathTmoSettings(fi.absolutePath());
         add_view_model_TM_OPTs(onlytxts);
     }
 }
 
-TonemappingOptions* BatchTMDialog::parse_tm_opt_file(QString fname)
+TonemappingOptions* BatchTMDialog::parse_tm_opt_file(const QString& fname)
 {
     try
     {
@@ -197,19 +197,21 @@ void BatchTMDialog::check_enable_start()
 
 void BatchTMDialog::out_folder_clicked()
 {
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_luminance_options.getBatchTmPathLdrOutput());
+    QString proposedDirname = LuminanceOptions().getBatchTmPathLdrOutput();
+
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), proposedDirname);
 
     QFileInfo test(dirname);
     if (test.isWritable() && test.exists() && test.isDir() && !dirname.isEmpty())
     {
-        m_luminance_options.setBatchTmPathLdrOutput(dirname);
+        LuminanceOptions().setBatchTmPathLdrOutput(dirname);
 
         m_Ui->out_folder_widgets->setText(dirname);
         check_enable_start();
     }
 }
 
-void BatchTMDialog::add_view_model_HDRs(QStringList list)
+void BatchTMDialog::add_view_model_HDRs(const QStringList& list)
 {
     for (int idx = 0; idx < list.size(); ++idx)
     {
@@ -223,7 +225,7 @@ void BatchTMDialog::add_view_model_HDRs(QStringList list)
     check_enable_start();
 }
 
-void BatchTMDialog::add_view_model_TM_OPTs(QStringList list)
+void BatchTMDialog::add_view_model_TM_OPTs(const QStringList& list)
 {
     bool errors = false;
 
