@@ -140,19 +140,27 @@ void copyExifData(const std::string& from, const std::string& to,
 
     try
     {
-        // get source and destination exif data
-        Exiv2::Image::AutoPtr sourceImage = Exiv2::ImageFactory::open(from);
-        Exiv2::Image::AutoPtr destinationImage = Exiv2::ImageFactory::open(to);
+        Exiv2::Image::AutoPtr sourceImage;
+        Exiv2::ExifData srcExifData;
 
-        sourceImage->readMetadata();
-        Exiv2::ExifData &srcExifData = sourceImage->exifData();
+        if (!from.empty())
+        {
+            // get source exif data
+            sourceImage = Exiv2::ImageFactory::open(from);
 
-        if ( srcExifData.empty() ) {
+            sourceImage->readMetadata();
+            srcExifData = sourceImage->exifData();
+
+            if ( srcExifData.empty() ) {
 #ifndef NDEBUG
-            std::clog << "No exif data found in the image: " << from << "\n";
+                std::clog << "No exif data found in the image: " << from << std::endl;
 #endif
-            return;
+                return;
+            }
         }
+
+        // get destination exif data
+        Exiv2::Image::AutoPtr destinationImage = Exiv2::ImageFactory::open(to);
 
         if (dontOverwrite)
         {
@@ -161,24 +169,27 @@ void copyExifData(const std::string& from, const std::string& to,
             // doesn't throw anything if it is empty
             Exiv2::ExifData &destExifData = destinationImage->exifData();
 
-            //for all the tags in the source exif data
-            for (Exiv2::ExifData::const_iterator it = srcExifData.begin(), itEnd = srcExifData.end();
-                 it != itEnd; ++it)
+            if (!from.empty())
             {
-                if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->key()) ) {
-                    Exiv2::ExifData::iterator outIt = destExifData.findKey( Exiv2::ExifKey(it->key()) );
-                    if ( outIt == destExifData.end() ) {
-                        // we create a new tag in the destination file, the tag has the key of the source
-                        Exiv2::Exifdatum& destTag = destExifData[it->key()];
-                        // now the tag has also the value of the source
-                        destTag.setValue(&(it->value()));
+                //for all the tags in the source exif data
+                for (Exiv2::ExifData::const_iterator it = srcExifData.begin(), itEnd = srcExifData.end();
+                     it != itEnd; ++it)
+                {
+                    if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->key()) ) {
+                        Exiv2::ExifData::iterator outIt = destExifData.findKey( Exiv2::ExifKey(it->key()) );
+                        if ( outIt == destExifData.end() ) {
+                            // we create a new tag in the destination file, the tag has the key of the source
+                            Exiv2::Exifdatum& destTag = destExifData[it->key()];
+                            // now the tag has also the value of the source
+                            destTag.setValue(&(it->value()));
+                        }
                     }
-                }
 #ifndef NDEBUG
-                else {
-                    std::clog << "Found invalid key: " << it->key() << "\n";
-                }
+                    else {
+                        std::clog << "Found invalid key: " << it->key() << "\n";
+                    }
 #endif
+                }
             }
 
             // rotation support
@@ -190,19 +201,22 @@ void copyExifData(const std::string& from, const std::string& to,
         {
             // copy all valid tag
             Exiv2::ExifData destExifData;
-            for (Exiv2::ExifData::const_iterator it = srcExifData.begin(), itEnd = srcExifData.end();
-                 it != itEnd; ++it)
+            if (!from.empty())
             {
-                // Note: the algorithm is similar to the C++11 std::copy_if( )
-                if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->key()) ) {
-                    // overwrite tag if found!
-                    destExifData[it->key()] = it->value();
-                }
+                for (Exiv2::ExifData::const_iterator it = srcExifData.begin(), itEnd = srcExifData.end();
+                     it != itEnd; ++it)
+                {
+                    // Note: the algorithm is similar to the C++11 std::copy_if( )
+                    if ( ValidExifDictionary()(it->groupName(), it->tagName(), it->key()) ) {
+                        // overwrite tag if found!
+                        destExifData[it->key()] = it->value();
+                    }
 #ifndef NDEBUG
-                else {
-                    std::clog << "Found invalid key: " << it->key() << "\n";
-                }
+                    else {
+                        std::clog << "Found invalid key: " << it->key() << "\n";
+                    }
 #endif
+                }
             }
 
             // if comment is not empty, overwrite/set comment values
