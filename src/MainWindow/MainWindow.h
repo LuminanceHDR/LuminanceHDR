@@ -243,7 +243,6 @@ protected:
     int m_viewerIndex;
 
     QSignalMapper *windowMapper;
-    LuminanceOptions *luminance_options;
     QDialog *splash;
 
     // Recent Files Management
@@ -306,6 +305,9 @@ protected:
     QString getCurrentHDRName();
 
     bool maybeSave();
+
+    void setRealtimePreviewsActive(bool);
+    void setPreviewPanelActive(bool b);
 
     // Preview Panel
     QScrollArea *m_PreviewscrollArea;
