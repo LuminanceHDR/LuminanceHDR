@@ -959,7 +959,6 @@ static QString getQString(libhdr::fusion::ResponseCurveType rf)
 }
 
 static QString getQString(libhdr::fusion::FusionOperator fo)
-
 {
     switch (fo)
     {
