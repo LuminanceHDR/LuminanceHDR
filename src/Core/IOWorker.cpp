@@ -201,13 +201,45 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input,
 
     if ( status )
     {
+        // this come from an existing HDR file, we do not have exif data
+        // let's write our own tags only
+        if ( inputFileName == "FromHdrFile" )
+        {
+            QString comment;
+
+            if (operations != NULL)
+            {
+                comment = operations->getExifComment();
+            }
+            else
+            {
+                comment = QObject::tr("HDR Preview");
+            }
+
+            ExifOperations::copyExifData("",
+                                         encodedName.constData(),
+                                         false,
+                                         comment.toStdString(),
+                                         true, false);
+
+        }
         // copy EXIF tags from the 1st bracketed image
-        if ( !inputFileName.isEmpty() )
+        if ( !inputFileName.isEmpty() && inputFileName != "FromHdrFile")
         {
             QFileInfo fileinfo(inputFileName);
             QString absoluteInputFileName = fileinfo.absoluteFilePath();
             QByteArray encodedInputFileName = QFile::encodeName(absoluteInputFileName);
-            QString comment = operations->getExifComment();
+            QString comment;
+
+            if (operations != NULL)
+            {
+                comment = operations->getExifComment();
+            }
+            else
+            {
+                comment = QObject::tr("HDR Preview");
+            }
+
             if ( !expoTimes.empty() ) {
                 comment += QLatin1String("\nBracketed images exposure times:\n");
                 foreach (float e, expoTimes) {
