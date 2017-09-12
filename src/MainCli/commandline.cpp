@@ -58,6 +58,58 @@ using namespace libhdr::fusion;
 
 namespace
 {
+static QString getQString(libhdr::fusion::FusionOperator fo)
+{
+    switch (fo)
+    {
+    case DEBEVEC:
+        return QObject::tr("Debevec");
+    case ROBERTSON:
+        return QObject::tr("Robertson");
+    case ROBERTSON_AUTO:
+        return QObject::tr("Robertson Response Calculation");
+    }
+
+    return QString();
+}
+
+static QString getQString(libhdr::fusion::WeightFunctionType wf)
+{
+    switch (wf)
+    {
+    case WEIGHT_TRIANGULAR:
+        return QObject::tr("Triangular");
+    case WEIGHT_PLATEAU:
+        return QObject::tr("Plateau");
+    case WEIGHT_GAUSSIAN:
+        return QObject::tr("Gaussian");
+    case WEIGHT_FLAT:
+        return QObject::tr("Flat");
+    }
+
+    return QString();
+}
+
+static QString getQString(libhdr::fusion::ResponseCurveType rf)
+{
+    switch (rf)
+    {
+    case RESPONSE_LINEAR:
+        return QObject::tr("Linear");
+    case RESPONSE_GAMMA:
+        return QObject::tr("Gamma");
+    case RESPONSE_LOG10:
+        return QObject::tr("Logarithmic");
+    case RESPONSE_SRGB:
+        return QObject::tr("sRGB");
+    case RESPONSE_CUSTOM:
+        return QObject::tr("From Calibration/Input File");
+    //case FROM_FILE:
+    //    return tr("From File: ") + m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename;
+    }
+
+    return QString();
+}
 
 void printIfVerbose(const QString& str, bool verbose)
 {
@@ -110,6 +162,8 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     isHtml(false),
     isHtmlDone(false),
     htmlQuality(2),
+    isProposedLdrName(false),
+    isProposedHdrName(false),
     pageName(),
     imagesDir(),
     saveAlignedImagesPrefix(QLatin1String(""))
@@ -120,6 +174,8 @@ CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **
     hdrcreationconfig.fusionOperator = DEBEVEC;
 
     tmofileparams->set("quality", (size_t)100);
+    validLdrExtensions << "jpg" << "jpeg" << "png" << "tif" << "tiff" << "pnm" << "bmp" << "pgm" << "xpm" << "xbm";
+    validHdrExtensions << "exr" << "hdr" << "tif" << "tiff" << "pfs";
 }
 
 int CommandLineInterfaceManager::execCommandLineParams()
@@ -147,6 +203,8 @@ int CommandLineInterfaceManager::execCommandLineParams()
         ("autoag,t", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
         ("autolevels,b", tr("Apply autolevels correction after tonemapping.").toUtf8().constData())
         ("createwebpage,w", tr("Enable generation of a webpage with embedded HDR viewer.").toUtf8().constData())
+        ("proposedldrname,p", po::value<std::string>(&ldrExtension),   tr("FILE_EXTENSION   Save LDR file with a name of the form first-last_tmparameters.extension.").toUtf8().constData())
+        ("proposedhdrname,z", po::value<std::string>(&hdrExtension),   tr("FILE_EXTENSION   Save HDR file with a name of the form first-last_HdrCreationModel.extension.").toUtf8().constData())
     ;
 
     po::options_description hdr_desc(tr("HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").toUtf8().constData());
@@ -313,6 +371,16 @@ directory must exist.  Useful to avoid clutter in the current directory. \
         if (vm.count("createwebpage")) {
             isHtml = true;
         }
+        if (vm.count("proposedldrname")) {
+            isProposedLdrName = true;
+            if (!validLdrExtensions.contains(QString::fromStdString(ldrExtension), Qt::CaseInsensitive))
+                printErrorAndExit(tr("Error: Unsupported LDR file type."));
+        }
+        if (vm.count("proposedhdrname")) {
+            isProposedHdrName = true;
+            if (!validHdrExtensions.contains(QString::fromStdString(hdrExtension), Qt::CaseInsensitive))
+                printErrorAndExit(tr("Error: Unsupported HDR file type."));
+        }
         if (vm.count("htmlQuality")) {
             htmlQuality = vm["htmlQuality"].as<int>();
             if (htmlQuality < 1 || htmlQuality > 4)
@@ -452,10 +520,22 @@ directory must exist.  Useful to avoid clutter in the current directory. \
 
         if (vm.count("load"))
             loadHdrFilename = QString::fromStdString(vm["load"].as<std::string>());
-        if (vm.count("save"))
+        if (vm.count("save")) {
             saveHdrFilename = QString::fromStdString(vm["save"].as<std::string>());
-        if (vm.count("output"))
+            // let's determine file extension
+            int counter = saveHdrFilename.count(".");
+            QString fileExtension = saveHdrFilename.section(".", counter);
+            if (!validHdrExtensions.contains(fileExtension, Qt::CaseInsensitive))
+                printErrorAndExit(tr("Error: Unsupported HDR file type."));
+        }
+        if (vm.count("output")) {
             saveLdrFilename = QString::fromStdString(vm["output"].as<std::string>());
+            // let's determine file extension
+            int counter = saveLdrFilename.count(".");
+            QString fileExtension = saveLdrFilename.section(".", counter);
+            if (!validLdrExtensions.contains(fileExtension, Qt::CaseInsensitive))
+                printErrorAndExit(tr("Error: Unsupported LDR file type."));
+        }
         if (vm.count("savealigned"))
             saveAlignedImagesPrefix = QString::fromStdString(vm["savealigned"].as<std::string>());
         if (threshold < 0.0f || threshold > 1.0f)
@@ -635,8 +715,38 @@ void CommandLineInterfaceManager::createHDR(int errorcode)
 
 void CommandLineInterfaceManager::saveHDR()
 {
-    if (!saveHdrFilename.isEmpty())
+    if (!saveHdrFilename.isEmpty() || isProposedHdrName)
     {
+        QString fileExtension;
+        QString caption;
+
+        if (inputFiles.isEmpty())
+        {
+            if (isProposedHdrName)
+            {
+                QFileInfo fi(loadHdrFilename);
+                saveHdrFilename = fi.completeBaseName();
+                saveHdrFilename.append("." + QString::fromStdString(hdrExtension));
+            }
+        }
+        else
+        {
+            if (isProposedHdrName)
+            {
+                caption = QString(tr("Weights: ") + getQString(hdrCreationManager->getWeightFunction().getType()) +
+                   tr(" - Response curve: ") + getQString(hdrCreationManager->getResponseCurve().getType()) +
+                   tr(" - Model: ") + getQString(hdrCreationManager->getFusionOperator()));
+
+                QFileInfo fi1(inputFiles.first());
+                QFileInfo fi2(inputFiles.last());
+
+                saveHdrFilename = fi1.completeBaseName() + "-" + fi2.completeBaseName();
+                saveHdrFilename.append("_" + caption);
+                saveHdrFilename.append("." + QString::fromStdString(hdrExtension));
+            }
+        }
+
+
         printIfVerbose( tr("Saving to file %1.").arg(saveHdrFilename) , verbose);
 
         // write_hdr_frame by default saves to EXR, if it doesn't find a supported file type
@@ -683,8 +793,34 @@ void  CommandLineInterfaceManager::generateHTML()
 
 void  CommandLineInterfaceManager::startTonemap()
 {
-    if (!saveLdrFilename.isEmpty())
+    if (!saveLdrFilename.isEmpty() || isProposedLdrName)
     {
+        QString inputfname; // to copy EXIF tags from 1st input image to saved LDR
+        if (inputFiles.isEmpty())
+        {
+            inputfname = QLatin1String("FromHdrFile");
+            if (isProposedLdrName)
+            {
+                QFileInfo fi(loadHdrFilename);
+                saveLdrFilename = fi.completeBaseName();
+                saveLdrFilename.append("_" + tmopts->getPostfix());
+                saveLdrFilename.append("." + QString::fromStdString(ldrExtension));
+            }
+        }
+        else
+        {
+            inputfname = inputFiles.first();
+            if (isProposedLdrName)
+            {
+                QFileInfo fi1(inputFiles.first());
+                QFileInfo fi2(inputFiles.last());
+
+                saveLdrFilename = fi1.completeBaseName() + "-" + fi2.completeBaseName();
+                saveLdrFilename.append("_" + tmopts->getPostfix());
+                saveLdrFilename.append("." + QString::fromStdString(ldrExtension));
+            }
+        }
+
         printIfVerbose( tr("Tonemapping requested, saving to file %1.").arg(saveLdrFilename) , verbose);
 
         //now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
@@ -709,12 +845,6 @@ void  CommandLineInterfaceManager::startTonemap()
         // Build a new TM frame
         // The scoped pointer will free the memory automatically later on
         QScopedPointer<pfs::Frame> tm_frame( tm_worker.computeTonemap(HDR.data(), tmopts.data(), BilinearInterp) );
-
-        QString inputfname; // to copy EXIF tags from 1st input image to saved LDR
-        if (inputFiles.isEmpty())
-            inputfname = QLatin1String("");
-        else
-            inputfname = inputFiles.first();
 
         //Autolevels
         if (isAutolevels)

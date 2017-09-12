@@ -29,6 +29,7 @@
 #define COMMANDLINE_H
 
 #include <QString>
+#include <QStringList>
 #include <QProcess>
 #include <QDir>
 #include <QScopedPointer>
@@ -84,9 +85,15 @@ private:
     bool isHtml;
     bool isHtmlDone;
     int htmlQuality;
+    bool isProposedLdrName;
+    bool isProposedHdrName;
     std::string pageName;
     std::string imagesDir;
+    std::string ldrExtension;
+    std::string hdrExtension;
     QString saveAlignedImagesPrefix;
+    QStringList validLdrExtensions;
+    QStringList validHdrExtensions;
 
     void generateHTML();
     void startTonemap();
