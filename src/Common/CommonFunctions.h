@@ -24,7 +24,10 @@
 #ifndef COMMONFUNCTIONS_H
 #define COMMONFUNCTIONS_H
 
+#include <QString>
 #include <QImage>
+
+#include <HdrCreation/fusionoperator.h>
 #include <HdrWizard/HdrCreationItem.h>
 #include <Libpfs/utils/minmax.h>
 
@@ -156,4 +159,7 @@ struct RefreshPreview {
     void operator()(HdrCreationItem& currentItem);
 };
 
+QString getQString(libhdr::fusion::FusionOperator fo);
+QString getQString(libhdr::fusion::WeightFunctionType wf);
+QString getQString(libhdr::fusion::ResponseCurveType rf);
 #endif

@@ -32,7 +32,8 @@
 
 #include "CommonFunctions.h"
 #include "LuminanceOptions.h"
-#include "Exif/ExifOperations.h"
+#include <Core/IOWorker.h>
+#include <Exif/ExifOperations.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/params.h>
 #include <Libpfs/utils/msec_timer.h>
@@ -54,12 +55,10 @@
 
 #include <boost/algorithm/minmax_element.hpp>
 
-#include "Core/IOWorker.h"
-
-
 using namespace std;
 using namespace pfs;
 using namespace pfs::io;
+using namespace libhdr::fusion;
 
 static void build_histogram(valarray<float> &hist, const valarray<int> &src)
 {
@@ -409,4 +408,56 @@ void RefreshPreview::operator()(HdrCreationItem& currentItem)
     }
 }
 
+QString getQString(libhdr::fusion::FusionOperator fo)
+{
+    switch (fo)
+    {
+    case DEBEVEC:
+        return QObject::tr("Debevec");
+    case ROBERTSON:
+        return QObject::tr("Robertson");
+    case ROBERTSON_AUTO:
+        return QObject::tr("Robertson Response Calculation");
+    }
+
+    return QString();
+}
+
+QString getQString(libhdr::fusion::WeightFunctionType wf)
+{
+    switch (wf)
+    {
+    case WEIGHT_TRIANGULAR:
+        return QObject::tr("Triangular");
+    case WEIGHT_PLATEAU:
+        return QObject::tr("Plateau");
+    case WEIGHT_GAUSSIAN:
+        return QObject::tr("Gaussian");
+    case WEIGHT_FLAT:
+        return QObject::tr("Flat");
+    }
+
+    return QString();
+}
+
+QString getQString(libhdr::fusion::ResponseCurveType rf)
+{
+    switch (rf)
+    {
+    case RESPONSE_LINEAR:
+        return QObject::tr("Linear");
+    case RESPONSE_GAMMA:
+        return QObject::tr("Gamma");
+    case RESPONSE_LOG10:
+        return QObject::tr("Logarithmic");
+    case RESPONSE_SRGB:
+        return QObject::tr("sRGB");
+    case RESPONSE_CUSTOM:
+        return QObject::tr("From Calibration/Input File");
+    //case FROM_FILE:
+    //    return tr("From File: ") + m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename;
+    }
+
+    return QString();
+}
 
