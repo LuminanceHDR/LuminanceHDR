@@ -109,13 +109,24 @@ BatchTMDialog::~BatchTMDialog()
 
 void BatchTMDialog::add_dir_HDRs()
 {
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), LuminanceOptions().getBatchTmPathHdrInput() );
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"),
+            LuminanceOptions().getBatchTmPathHdrInput() );
     if ( !dirname.isEmpty() )
     {
         LuminanceOptions().setBatchTmPathHdrInput(dirname); // update settings
         QStringList filters;
-        filters << QStringLiteral("*.exr") << QStringLiteral("*.hdr") << QStringLiteral("*.pic") << QStringLiteral("*.tiff") << QStringLiteral("*.tif") << QStringLiteral("*.pfs") << QStringLiteral("*.crw") << QStringLiteral("*.cr2") << QStringLiteral("*.nef") << QStringLiteral("*.dng") << QStringLiteral("*.mrw") << QStringLiteral("*.orf") << QStringLiteral("*.kdc") << QStringLiteral("*.dcr") << QStringLiteral("*.arw") << QStringLiteral("*.raf") << QStringLiteral("*.ptx") << QStringLiteral("*.pef") << QStringLiteral("*.x3f") << QStringLiteral("*.raw") << QStringLiteral("*.sr2") << QStringLiteral("*.rw2") << QStringLiteral("*.srw");
-        filters << QStringLiteral("*.EXR") << QStringLiteral("*.HDR") << QStringLiteral("*.PIC") << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF") << QStringLiteral("*.PFS") << QStringLiteral("*.CRW") << QStringLiteral("*.CR2") << QStringLiteral("*.NEF") << QStringLiteral("*.DNG") << QStringLiteral("*.MRW") << QStringLiteral("*.ORF") << QStringLiteral("*.KDC") << QStringLiteral("*.DCR") << QStringLiteral("*.ARW") << QStringLiteral("*.RAF") << QStringLiteral("*.PTX") << QStringLiteral("*.PEF") << QStringLiteral("*.X3F") << QStringLiteral("*.RAW") << QStringLiteral("*.SR2") << QStringLiteral("*.RW2") << QStringLiteral("*.SRW");
+        filters << QStringLiteral("*.exr") << QStringLiteral("*.hdr") << QStringLiteral("*.pic") << QStringLiteral("*.tiff") <<
+            QStringLiteral("*.tif") << QStringLiteral("*.pfs") << QStringLiteral("*.crw") << QStringLiteral("*.cr2") <<
+            QStringLiteral("*.nef") << QStringLiteral("*.dng") << QStringLiteral("*.mrw") << QStringLiteral("*.orf") <<
+            QStringLiteral("*.kdc") << QStringLiteral("*.dcr") << QStringLiteral("*.arw") << QStringLiteral("*.raf") <<
+            QStringLiteral("*.ptx") << QStringLiteral("*.pef") << QStringLiteral("*.x3f") << QStringLiteral("*.raw") <<
+            QStringLiteral("*.sr2") << QStringLiteral("*.rw2") << QStringLiteral("*.srw");
+        filters << QStringLiteral("*.EXR") << QStringLiteral("*.HDR") << QStringLiteral("*.PIC") << QStringLiteral("*.TIFF") <<
+            QStringLiteral("*.TIF") << QStringLiteral("*.PFS") << QStringLiteral("*.CRW") << QStringLiteral("*.CR2") <<
+            QStringLiteral("*.NEF") << QStringLiteral("*.DNG") << QStringLiteral("*.MRW") << QStringLiteral("*.ORF") <<
+            QStringLiteral("*.KDC") << QStringLiteral("*.DCR") << QStringLiteral("*.ARW") << QStringLiteral("*.RAF") <<
+            QStringLiteral("*.PTX") << QStringLiteral("*.PEF") << QStringLiteral("*.X3F") << QStringLiteral("*.RAW") <<
+            QStringLiteral("*.SR2") << QStringLiteral("*.RW2") << QStringLiteral("*.SRW");
         QDir chosendir(dirname);
         chosendir.setFilter(QDir::Files);
         chosendir.setNameFilters(filters);
@@ -129,9 +140,12 @@ void BatchTMDialog::add_dir_HDRs()
 void BatchTMDialog::add_HDRs()
 {
     QString filetypes = tr("All HDR images ");
-    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.srw "
-                 "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.SRW)";
-    QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"), LuminanceOptions().getBatchTmPathHdrInput(), filetypes);
+    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef "
+        "*.x3f *.raw *.sr2 *.rw2 *.srw "
+        "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW "
+        "*.SR2 *.RW2 *.SRW)";
+    QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"),
+            LuminanceOptions().getBatchTmPathHdrInput(), filetypes);
     if (!onlyhdrs.isEmpty())
     {
         QFileInfo fi(onlyhdrs.first());
@@ -142,7 +156,8 @@ void BatchTMDialog::add_HDRs()
 
 void BatchTMDialog::add_dir_TMopts()
 {
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), LuminanceOptions().getBatchTmPathTmoSettings());
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"),
+            LuminanceOptions().getBatchTmPathTmoSettings());
     if ( !dirname.isEmpty() )
     {
         LuminanceOptions().setBatchTmPathTmoSettings(dirname); // update settings
@@ -252,7 +267,8 @@ void BatchTMDialog::add_view_model_TM_OPTs(const QStringList& list)
     }
     if (errors)
     {
-        QMessageBox::warning(0,tr("Warning"), tr("An error occurred reading one or more tonemapping options files."), QMessageBox::Ok, QMessageBox::NoButton);
+        QMessageBox::warning(0,tr("Warning"), tr("An error occurred reading one or more tonemapping options files."),
+                QMessageBox::Ok, QMessageBox::NoButton);
     }
     check_enable_start();
 }
@@ -378,8 +394,8 @@ void BatchTMDialog::start_batch_thread()
             // I create the thread with NEW, but I let it die on its own, so don't need to store its pointer somewhere
             QString fileExtension = m_formatHelper.getFileExtension();
 
-            BatchTMJob * job_thread = new BatchTMJob(t_id, HDRs_list.at(m_next_hdr_file), &m_tm_options_list, m_Ui->out_folder_widgets->text(),
-                fileExtension, m_formatHelper.getParams());
+            BatchTMJob * job_thread = new BatchTMJob(t_id, HDRs_list.at(m_next_hdr_file), &m_tm_options_list,
+                    m_Ui->out_folder_widgets->text(), fileExtension, m_formatHelper.getParams());
 
             // Thread deletes itself when it has done with its job
             connect(job_thread, &QThread::finished,
@@ -511,7 +527,8 @@ void BatchTMDialog::increment_progress_bar(int inc)
 {
     int progressValue = m_Ui->overallProgressBar->value()+inc;
     m_Ui->overallProgressBar->setValue(progressValue);
-    OsIntegration::getInstance().setProgress(progressValue - m_Ui->overallProgressBar->minimum(), m_Ui->overallProgressBar->maximum());
+    OsIntegration::getInstance().setProgress(progressValue - m_Ui->overallProgressBar->minimum(),
+            m_Ui->overallProgressBar->maximum());
 }
 
 void BatchTMDialog::abort()
