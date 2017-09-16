@@ -78,14 +78,13 @@ protected slots:
     void loadFilesAborted();
 
 protected:
-    LuminanceOptions m_luminance_options;
-
     //Application-wide settings, loaded via QSettings
     QString m_batchHdrInputDir;
     QString m_batchHdrOutputDir;
     QString m_tempDir;
 
     QStringList m_bracketed;
+    QString m_output_file_name_base;
     IOWorker *m_IO_Worker;
     HdrCreationManager *m_hdrCreationManager;
     int m_numProcessed;

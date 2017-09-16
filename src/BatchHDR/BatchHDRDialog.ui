@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>571</width>
-    <height>697</height>
+    <width>579</width>
+    <height>712</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -102,10 +102,56 @@
        <layout class="QGridLayout" name="gridLayout_7">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_5" columnstretch="0,0,0">
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="prefixLineEdit">
+          <item row="0" column="1">
+           <widget class="QComboBox" name="formatComboBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Choose an HDR output file format</string>
+            </property>
+            <property name="currentIndex">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
-             <string>hdr_</string>
+             <string>Filename prefix:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Predefined profile:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="2">
+           <widget class="QToolButton" name="formatSettingsButton">
+            <property name="text">
+             <string notr="true">...</string>
             </property>
            </widget>
           </item>
@@ -113,6 +159,16 @@
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Output format:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="prefixLineEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>hdr_</string>
             </property>
            </widget>
           </item>
@@ -157,53 +213,16 @@ See documentation for more information.</string>
             </item>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="formatComboBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>1</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="proposedFilenameCheckBox">
             <property name="toolTip">
-             <string>Choose an HDR output file format</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With leaving this checked, filenames for created HDRs will be of the form &lt;span style=&quot; font-style:italic;&quot;&gt;first-last_HdrCreationModel.ext &lt;/span&gt;where first is the file name of 1st braketed image in the set, last is the file name of the last bracketed image in the set and extension is the selected HDR file format extension.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
-            <property name="currentIndex">
-             <number>-1</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Predefined profile:</string>
+             <string>Use Proposed Filename Scheme</string>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QToolButton" name="formatSettingsButton">
-            <property name="text">
-             <string notr="true">...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Filename prefix:</string>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -388,8 +407,7 @@ See documentation for more information.</string>
           </property>
           <property name="icon">
            <iconset theme="document-open">
-            <normaloff/>
-           </iconset>
+            <normaloff>.</normaloff>.</iconset>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
@@ -406,8 +424,7 @@ See documentation for more information.</string>
           </property>
           <property name="icon">
            <iconset theme="document-open">
-            <normaloff/>
-           </iconset>
+            <normaloff>.</normaloff>.</iconset>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
@@ -558,6 +575,7 @@ See documentation for more information.</string>
   <tabstop>formatComboBox</tabstop>
   <tabstop>formatSettingsButton</tabstop>
   <tabstop>profileComboBox</tabstop>
+  <tabstop>proposedFilenameCheckBox</tabstop>
   <tabstop>prefixLineEdit</tabstop>
   <tabstop>autoAlignCheckBox</tabstop>
   <tabstop>aisRadioButton</tabstop>
@@ -590,8 +608,8 @@ See documentation for more information.</string>
      <y>32</y>
     </hint>
     <hint type="destinationlabel">
-     <x>492</x>
-     <y>33</y>
+     <x>508</x>
+     <y>32</y>
     </hint>
    </hints>
   </connection>
@@ -602,8 +620,8 @@ See documentation for more information.</string>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>492</x>
-     <y>33</y>
+     <x>508</x>
+     <y>32</y>
     </hint>
     <hint type="destinationlabel">
      <x>560</x>
@@ -618,8 +636,8 @@ See documentation for more information.</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>560</x>
-     <y>691</y>
+     <x>563</x>
+     <y>689</y>
     </hint>
     <hint type="destinationlabel">
      <x>285</x>
@@ -634,12 +652,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>549</x>
-     <y>252</y>
+     <x>555</x>
+     <y>309</y>
     </hint>
     <hint type="destinationlabel">
-     <x>402</x>
-     <y>302</y>
+     <x>477</x>
+     <y>363</y>
     </hint>
    </hints>
   </connection>
@@ -650,12 +668,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>549</x>
-     <y>252</y>
+     <x>555</x>
+     <y>309</y>
     </hint>
     <hint type="destinationlabel">
-     <x>550</x>
-     <y>305</y>
+     <x>556</x>
+     <y>368</y>
     </hint>
    </hints>
   </connection>
@@ -666,12 +684,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>549</x>
-     <y>252</y>
+     <x>555</x>
+     <y>309</y>
     </hint>
     <hint type="destinationlabel">
-     <x>89</x>
-     <y>305</y>
+     <x>68</x>
+     <y>368</y>
     </hint>
    </hints>
   </connection>
@@ -682,12 +700,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>360</x>
-     <y>91</y>
+     <x>509</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>383</x>
-     <y>117</y>
+     <x>553</x>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
@@ -698,12 +716,12 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>336</x>
-     <y>93</y>
+     <x>509</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>335</x>
-     <y>141</y>
+     <x>553</x>
+     <y>198</y>
     </hint>
    </hints>
   </connection>
@@ -714,12 +732,44 @@ See documentation for more information.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>317</x>
-     <y>85</y>
+     <x>509</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>317</x>
-     <y>167</y>
+     <x>554</x>
+     <y>241</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>proposedFilenameCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_4</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>156</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>66</x>
+     <y>195</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>proposedFilenameCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>prefixLineEdit</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>247</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>244</x>
+     <y>188</y>
     </hint>
    </hints>
   </connection>

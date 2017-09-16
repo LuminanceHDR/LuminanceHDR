@@ -23,8 +23,9 @@
 *
 */
 
-#include "BatchHDR/BatchHDRDialog.h"
-#include "BatchHDR/ui_BatchHDRDialog.h"
+#include <BatchHDR/BatchHDRDialog.h>
+#include <BatchHDR/ui_BatchHDRDialog.h>
+#include <Common/CommonFunctions.h>
 
 #include <QDebug>
 #include <QFileDialog>
@@ -43,10 +44,10 @@
 
 #include <Libpfs/frame.h>
 
-#include "arch/math.h"
-#include "Libpfs/pfs.h"
-#include "Core/IOWorker.h"
-#include "OsIntegration/osintegration.h"
+#include <arch/math.h>
+#include <Libpfs/pfs.h>
+#include <Core/IOWorker.h>
+#include <OsIntegration/osintegration.h>
 
 using namespace libhdr::fusion;
 
@@ -98,9 +99,9 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
 
     m_formatHelper.initConnection(m_Ui->formatComboBox, m_Ui->formatSettingsButton, true);
 
-    m_tempDir = m_luminance_options.getTempDir();
-    m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput(QLatin1String(""));
-    m_batchHdrOutputDir = m_luminance_options.getBatchHdrPathOutput(QLatin1String(""));
+    m_tempDir = LuminanceOptions().getTempDir();
+    m_batchHdrInputDir = LuminanceOptions().getBatchHdrPathInput(QLatin1String(""));
+    m_batchHdrOutputDir = LuminanceOptions().getBatchHdrPathOutput(QLatin1String(""));
 
     m_Ui->inputLineEdit->setText(m_batchHdrInputDir);
     m_Ui->outputLineEdit->setText(m_batchHdrOutputDir);
@@ -178,7 +179,7 @@ void BatchHDRDialog::on_selectInputFolder_clicked()
             if (m_batchHdrInputDir != m_Ui->inputLineEdit->text())
             {
                 m_batchHdrInputDir = m_Ui->inputLineEdit->text();
-                m_luminance_options.setBatchHdrPathInput(m_batchHdrInputDir);
+                LuminanceOptions().setBatchHdrPathInput(m_batchHdrInputDir);
             }
 
             // defaulting the same output folder as the input folder
@@ -196,7 +197,8 @@ void BatchHDRDialog::on_selectOutputFolder_clicked()
 
 void BatchHDRDialog::add_output_directory(QString dir)
 {
-    QString outputDir = !dir.isEmpty() ? dir : QFileDialog::getExistingDirectory(this, tr("Choose a output directory"), m_batchHdrOutputDir);
+    QString outputDir = !dir.isEmpty() ? dir : QFileDialog::getExistingDirectory(this, tr("Choose a output directory"),
+            m_batchHdrOutputDir);
     if (!outputDir.isEmpty())
     {
         m_Ui->outputLineEdit->setText(outputDir);
@@ -205,7 +207,7 @@ void BatchHDRDialog::add_output_directory(QString dir)
         if (m_batchHdrOutputDir != m_Ui->outputLineEdit->text() && dir.isEmpty())
         {
             m_batchHdrOutputDir = m_Ui->outputLineEdit->text();
-            m_luminance_options.setBatchHdrPathOutput(m_batchHdrOutputDir);
+            LuminanceOptions().setBatchHdrPathOutput(m_batchHdrOutputDir);
         }
         check_start_button();
     }
@@ -229,13 +231,27 @@ void BatchHDRDialog::on_startButton_clicked()
                 foundHDR = true;
         }
         if (foundHDR)
-            doStart = QMessageBox::Yes == QMessageBox::warning(0,tr("Warning"), tr("The chosen output directory contains HDR files. Those files might be overwritten. \n\nContinue?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            doStart = QMessageBox::Yes == QMessageBox::warning(0,tr("Warning"),
+                    tr("The chosen output directory contains HDR files. Those files might be overwritten. \n\nContinue?"),
+                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     }
 
     // process input images
     QStringList filters;
-    filters << QStringLiteral("*.jpg") << QStringLiteral("*.jpeg") << QStringLiteral("*.tiff") << QStringLiteral("*.tif") << QStringLiteral("*.crw") << QStringLiteral("*.cr2") << QStringLiteral("*.nef") << QStringLiteral("*.dng") << QStringLiteral("*.mrw") << QStringLiteral("*.orf") << QStringLiteral("*.kdc") << QStringLiteral("*.dcr") << QStringLiteral("*.arw") << QStringLiteral("*.raf") << QStringLiteral("*.ptx") << QStringLiteral("*.pef") << QStringLiteral("*.x3f") << QStringLiteral("*.raw") << QStringLiteral("*.rw2") << QStringLiteral("*.sr2") << QStringLiteral("*.3fr") << QStringLiteral("*.mef") << QStringLiteral("*.mos") << QStringLiteral("*.erf") << QStringLiteral("*.nrw") << QStringLiteral("*.srw");
-    filters << QStringLiteral("*.JPG") << QStringLiteral("*.JPEG") << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF") << QStringLiteral("*.CRW") << QStringLiteral("*.CR2") << QStringLiteral("*.NEF") << QStringLiteral("*.DNG") << QStringLiteral("*.MRW") << QStringLiteral("*.ORF") << QStringLiteral("*.KDC") << QStringLiteral("*.DCR") << QStringLiteral("*.ARW") << QStringLiteral("*.RAF") << QStringLiteral("*.PTX") << QStringLiteral("*.PEF") << QStringLiteral("*.X3F") << QStringLiteral("*.RAW") << QStringLiteral("*.RW2") << QStringLiteral("*.SR2") << QStringLiteral("*.3FR") << QStringLiteral("*.MEF") << QStringLiteral("*.MOS") << QStringLiteral("*.ERF") << QStringLiteral("*.NRW") << QStringLiteral("*.SRW");
+    filters << QStringLiteral("*.jpg") << QStringLiteral("*.jpeg") << QStringLiteral("*.tiff") << QStringLiteral("*.tif") <<
+        QStringLiteral("*.crw") << QStringLiteral("*.cr2") << QStringLiteral("*.nef") << QStringLiteral("*.dng") <<
+        QStringLiteral("*.mrw") << QStringLiteral("*.orf") << QStringLiteral("*.kdc") << QStringLiteral("*.dcr") <<
+        QStringLiteral("*.arw") << QStringLiteral("*.raf") << QStringLiteral("*.ptx") << QStringLiteral("*.pef") <<
+        QStringLiteral("*.x3f") << QStringLiteral("*.raw") << QStringLiteral("*.rw2") << QStringLiteral("*.sr2") <<
+        QStringLiteral("*.3fr") << QStringLiteral("*.mef") << QStringLiteral("*.mos") << QStringLiteral("*.erf") <<
+        QStringLiteral("*.nrw") << QStringLiteral("*.srw");
+    filters << QStringLiteral("*.JPG") << QStringLiteral("*.JPEG") << QStringLiteral("*.TIFF") << QStringLiteral("*.TIF") <<
+        QStringLiteral("*.CRW") << QStringLiteral("*.CR2") << QStringLiteral("*.NEF") << QStringLiteral("*.DNG") <<
+        QStringLiteral("*.MRW") << QStringLiteral("*.ORF") << QStringLiteral("*.KDC") << QStringLiteral("*.DCR") <<
+        QStringLiteral("*.ARW") << QStringLiteral("*.RAF") << QStringLiteral("*.PTX") << QStringLiteral("*.PEF") <<
+        QStringLiteral("*.X3F") << QStringLiteral("*.RAW") << QStringLiteral("*.RW2") << QStringLiteral("*.SR2") <<
+        QStringLiteral("*.3FR") << QStringLiteral("*.MEF") << QStringLiteral("*.MOS") << QStringLiteral("*.ERF") <<
+        QStringLiteral("*.NRW") << QStringLiteral("*.SRW");
 
     QDir chosenInputDir(m_batchHdrInputDir);
     chosenInputDir.setFilter(QDir::Files);
@@ -248,27 +264,21 @@ void BatchHDRDialog::on_startButton_clicked()
 
     if (m_bracketed.count() < m_Ui->spinBox->value()) {
         qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
-        QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
+        QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."),
+                QMessageBox::Ok, QMessageBox::NoButton);
         return;
     }
 
     if (m_bracketed.count() % m_Ui->spinBox->value() != 0) {
         qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
-        QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
+        QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."),
+                QMessageBox::Ok, QMessageBox::NoButton);
         return;
     }
 
     if (doStart) {
         m_Ui->horizontalSlider->setEnabled(false);
         m_Ui->spinBox->setEnabled(false);
-/*
-        m_Ui->profileComboBox->setEnabled(false);
-        m_Ui->formatComboBox->setEnabled(false);
-        m_Ui->selectInputFolder->setEnabled(false);
-        m_Ui->inputLineEdit->setEnabled(false);
-        m_Ui->selectOutputFolder->setEnabled(false);
-        m_Ui->outputLineEdit->setEnabled(false);
-*/
         m_Ui->groupBoxOutput->setEnabled(false);
         m_Ui->groupBoxAlignment->setEnabled(false);
         m_Ui->groupBoxAg->setEnabled(false);
@@ -296,6 +306,9 @@ void BatchHDRDialog::batch_hdr()
     }
     if (!m_bracketed.isEmpty())
     {
+        QFileInfo fi1(m_bracketed.at(0));
+        QFileInfo fi2(m_bracketed.at(m_Ui->spinBox->value() - 1));
+        m_output_file_name_base = fi1.completeBaseName() + "-" + fi2.completeBaseName();
         m_Ui->textEdit->append(tr("Loading files..."));
         m_numProcessed++;
         QStringList toProcess;
@@ -413,10 +426,22 @@ void BatchHDRDialog::createHdrFinished()
         this->reject();
         return;
     }
+    QString outName;
     QString suffix = m_Ui->formatComboBox->currentText();
-    int paddingLength = ceil(log10(m_total + 1.0f));
-    QString outName = m_Ui->outputLineEdit->text() + "/" + m_Ui->prefixLineEdit->text() + \
-       QStringLiteral("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
+    QString caption = QString(tr("Weights: ") + getQString(m_hdrCreationManager->getWeightFunction().getType()) +
+                        tr(" - Response curve: ") + getQString(m_hdrCreationManager->getResponseCurve().getType()) +
+                        tr(" - Model: ") + getQString(m_hdrCreationManager->getFusionOperator()));
+
+    if (m_Ui->proposedFilenameCheckBox->isChecked())
+    {
+        outName = m_Ui->outputLineEdit->text() + "/" + m_output_file_name_base + "_" + caption + "." + suffix;
+    }
+    else
+    {
+        int paddingLength = ceil(log10(m_total + 1.0f));
+        outName = m_Ui->outputLineEdit->text() + "/" + m_Ui->prefixLineEdit->text() + "_" + caption + "_" + \
+            QStringLiteral("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
+    }
     m_IO_Worker->write_hdr_frame(resultHDR.get(), outName, m_formatHelper.getParams());
     resultHDR.reset();
 
