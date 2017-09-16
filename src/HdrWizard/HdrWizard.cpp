@@ -57,6 +57,7 @@
 #include "arch/freebsd/math.h"
 #include "Common/config.h"
 #include "Common/global.h"
+#include "Common/CommonFunctions.h"
 #include "OsIntegration/osintegration.h"
 #include "HdrWizard/EditingTools.h"
 #include "HdrWizard/HdrCreationManager.h"
@@ -920,60 +921,6 @@ void HdrWizard::saveRespCurveFileButtonClicked()
 
 namespace
 {
-static QString getQString(libhdr::fusion::WeightFunctionType wf)
-{
-    switch (wf)
-    {
-    case WEIGHT_TRIANGULAR:
-        return QObject::tr("Triangular");
-    case WEIGHT_PLATEAU:
-        return QObject::tr("Plateau");
-    case WEIGHT_GAUSSIAN:
-        return QObject::tr("Gaussian");
-    case WEIGHT_FLAT:
-        return QObject::tr("Flat");
-    }
-
-    return QString();
-}
-
-static QString getQString(libhdr::fusion::ResponseCurveType rf)
-{
-    switch (rf)
-    {
-    case RESPONSE_LINEAR:
-        return QObject::tr("Linear");
-    case RESPONSE_GAMMA:
-        return QObject::tr("Gamma");
-    case RESPONSE_LOG10:
-        return QObject::tr("Logarithmic");
-    case RESPONSE_SRGB:
-        return QObject::tr("sRGB");
-    case RESPONSE_CUSTOM:
-        return QObject::tr("From Calibration/Input File");
-    //case FROM_FILE:
-    //    return tr("From File: ") + m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename;
-    }
-
-    return QString();
-}
-
-static QString getQString(libhdr::fusion::FusionOperator fo)
-{
-    switch (fo)
-    {
-    case DEBEVEC:
-        return QObject::tr("Debevec");
-    case ROBERTSON:
-        return QObject::tr("Robertson");
-    case ROBERTSON_AUTO:
-        return QObject::tr("Robertson Response Calculation");
-    }
-
-    return QString();
-}
-
-
 void updateHdrCreationManagerModel(HdrCreationManager& manager, FusionOperator fusionOperator)
 {
     qDebug() << "Change model to " << (int)fusionOperator;
