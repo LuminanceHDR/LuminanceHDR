@@ -149,7 +149,7 @@ QString getHdrFileNameFromSaveDialog(const QString& suggestedFileName, QWidget* 
     QString outputFilename =
             QFileDialog::getSaveFileName(parent,
                                          QObject::tr("Save the HDR image as..."),
-                                         LuminanceOptions().getDefaultPathLdrIn()/*LuminanceOptions().getDefaultPathHdrOut()*/ + QDir::separator() + qfi.completeBaseName(),
+                                         LuminanceOptions().getDefaultPathLdrIn() + QDir::separator() + qfi.completeBaseName(),
                                          filetypes);
 
     if ( !outputFilename.isEmpty() )
@@ -496,7 +496,8 @@ void MainWindow::createStatusBar()
 void MainWindow::createConnections()
 {
     windowMapper = new QSignalMapper(this);
-    connect(windowMapper, static_cast<void(QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped), this, &MainWindow::setActiveMainWindow);
+    connect(windowMapper, static_cast<void(QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped),
+            this, &MainWindow::setActiveMainWindow);
     connect(&m_futureWatcher, &QFutureWatcherBase::finished, this, &MainWindow::whiteBalanceDone);
 }
 
@@ -559,15 +560,17 @@ void MainWindow::on_fileOpenAction_triggered()
     {
         filetypes += "*" + s + " ";
     }
-    filetypes +=  QLatin1String(");;") ;
+    filetypes += QLatin1String(");;") ;
     filetypes += QLatin1String("OpenEXR (*.exr *.EXR);;") ;
     filetypes += QLatin1String("Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;");
     filetypes += QLatin1String("TIFF images (*.TIFF *.TIF *.tiff *.tif);;");
 #if HAVE_CFITSIO
     filetypes += QLatin1String("FITS (*.fit *.FIT *.fits *.FITS);;");
 #endif
-    filetypes += QLatin1String("RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw *.srw");
-    filetypes +=             QLatin1String("*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;");
+    filetypes += QLatin1String("RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw "
+            "*.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.mef *.mos *.erf *.nrw *.srw");
+    filetypes += QLatin1String("*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.RW2 *.SR2 "
+            "*.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;");
     filetypes += QLatin1String("PFS stream (*.pfs *.PFS)");
 
     QStringList files = QFileDialog::getOpenFileNames(this,
@@ -1136,14 +1139,17 @@ void MainWindow::setupIO()
     connect(m_IOWorker, &QObject::destroyed, m_IOThread, &QObject::deleteLater);
 
     // Open
-    connect(m_IOWorker, SIGNAL(read_hdr_success(pfs::Frame*, const QString&)), this, SLOT(load_success(pfs::Frame*, const QString&)));
+    connect(m_IOWorker, SIGNAL(read_hdr_success(pfs::Frame*, const QString&)),
+            this, SLOT(load_success(pfs::Frame*, const QString&)));
     connect(m_IOWorker, &IOWorker::read_hdr_failed, this, &MainWindow::load_failed);
 
     // Save HDR
-    connect(m_IOWorker, SIGNAL(write_hdr_success(GenericViewer*, const QString&)), this, SLOT(save_hdr_success(GenericViewer*, const QString&)));
+    connect(m_IOWorker, SIGNAL(write_hdr_success(GenericViewer*, const QString&)),
+            this, SLOT(save_hdr_success(GenericViewer*, const QString&)));
     connect(m_IOWorker, &IOWorker::write_hdr_failed, this, &MainWindow::save_hdr_failed);
     // Save LDR
-    connect(m_IOWorker, SIGNAL(write_ldr_success(GenericViewer*, const QString&)), this, SLOT(save_ldr_success(GenericViewer*, const QString&)));
+    connect(m_IOWorker, SIGNAL(write_ldr_success(GenericViewer*, const QString&)),
+            this, SLOT(save_ldr_success(GenericViewer*, const QString&)));
     connect(m_IOWorker, &IOWorker::write_ldr_failed, this, &MainWindow::save_ldr_failed);
 
     // progress bar handling
@@ -1525,7 +1531,12 @@ bool MainWindow::event(QEvent* event)
         m_firstWindow = 2;
         if (LuminanceOptions().doShowWindowsOnWindows64Message())
         {
-            QMessageBox::warning(this, QStringLiteral("Luminance HDR 32-bit on 64-bit"), tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>Please download the <strong>64-bit</strong> version from <a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> to get the best Luminance HDR experience!"), QMessageBox::Ok, QMessageBox::NoButton);
+            QMessageBox::warning(this, QStringLiteral("Luminance HDR 32-bit on 64-bit"),
+                    tr("It appears that you are running the 32-bit version <strong>Luminance HDR</strong> on a 64-bit system. <br>"
+                        "Please download the <strong>64-bit</strong> version from "
+                        "<a href=\"http://qtpfsgui.sourceforge.net\">http://qtpfsgui.sourceforge.net</a> "
+                        "to get the best Luminance HDR experience!"),
+                    QMessageBox::Ok, QMessageBox::NoButton);
         }
     }
     return result;
@@ -1611,7 +1622,8 @@ void MainWindow::setupTM()
     connect(m_TMWorker, &TMWorker::tonemapSetValue, m_TMProgressBar, &TMOProgressIndicator::setValue);
     connect(m_TMWorker, &TMWorker::tonemapSetMaximum, m_TMProgressBar, &TMOProgressIndicator::setMaximum);
     connect(m_TMWorker, &TMWorker::tonemapSetMinimum, m_TMProgressBar, &TMOProgressIndicator::setMinimum);
-    connect(m_TMProgressBar, &TMOProgressIndicator::terminate, m_TMWorker, &TMWorker::tonemapRequestTermination, Qt::DirectConnection);
+    connect(m_TMProgressBar, &TMOProgressIndicator::terminate,
+            m_TMWorker, &TMWorker::tonemapRequestTermination, Qt::DirectConnection);
 
     // start thread waiting for signals (I/O requests)
     m_TMThread->start();
@@ -1647,7 +1659,8 @@ void MainWindow::setupQueue()
     connect(m_QueueWorker, &TMWorker::tonemapSetValue, m_QueueProgressBar, &TMOProgressIndicator::setValue);
     connect(m_QueueWorker, &TMWorker::tonemapSetMaximum, m_QueueProgressBar, &TMOProgressIndicator::setMaximum);
     connect(m_QueueWorker, &TMWorker::tonemapSetMinimum, m_QueueProgressBar, &TMOProgressIndicator::setMinimum);
-    connect(m_QueueProgressBar, &TMOProgressIndicator::terminate, m_QueueWorker, &TMWorker::tonemapRequestTermination, Qt::DirectConnection);
+    connect(m_QueueProgressBar, &TMOProgressIndicator::terminate,
+            m_QueueWorker, &TMWorker::tonemapRequestTermination, Qt::DirectConnection);
 
     // start thread waiting for signals (I/O requests)
     m_QueueThread->start();
