@@ -28,89 +28,31 @@
 #include <QTimer>
 #include <QDebug>
 #include <iostream>
-
-#include "commandline.h"
-
-#include "Common/GitSHA1.h"
-#include "Common/config.h"
-#include "Common/LuminanceOptions.h"
-#include "Common/CommonFunctions.h"
-#include "Fileformat/pfsoutldrimage.h"
-
-#include "Exif/ExifOperations.h"
-
-#include "Core/IOWorker.h"
-#include "Core/TMWorker.h"
-
-#include "Libpfs/tm/TonemapOperator.h"
-#include "Libpfs/manip/gamma_levels.h"
-
 #include <boost/program_options.hpp>
+
+#include <Common/GitSHA1.h>
+#include <Common/config.h>
+#include <Common/LuminanceOptions.h>
+#include <Common/CommonFunctions.h>
+#include <Fileformat/pfsoutldrimage.h>
+#include <Exif/ExifOperations.h>
+#include <Core/IOWorker.h>
+#include <Core/TMWorker.h>
+#include <Libpfs/tm/TonemapOperator.h>
+#include <Libpfs/manip/gamma_levels.h>
+#include <HdrHTML/pfsouthdrhtml.h>
+#include "commandline.h"
 
 #if defined(_MSC_VER)
 #include <fcntl.h>
 #include <io.h>
 #endif
 
-#include "HdrHTML/pfsouthdrhtml.h"
 
 using namespace libhdr::fusion;
 
 namespace
 {
-static QString getQString(libhdr::fusion::FusionOperator fo)
-{
-    switch (fo)
-    {
-    case DEBEVEC:
-        return QObject::tr("Debevec");
-    case ROBERTSON:
-        return QObject::tr("Robertson");
-    case ROBERTSON_AUTO:
-        return QObject::tr("Robertson Response Calculation");
-    }
-
-    return QString();
-}
-
-static QString getQString(libhdr::fusion::WeightFunctionType wf)
-{
-    switch (wf)
-    {
-    case WEIGHT_TRIANGULAR:
-        return QObject::tr("Triangular");
-    case WEIGHT_PLATEAU:
-        return QObject::tr("Plateau");
-    case WEIGHT_GAUSSIAN:
-        return QObject::tr("Gaussian");
-    case WEIGHT_FLAT:
-        return QObject::tr("Flat");
-    }
-
-    return QString();
-}
-
-static QString getQString(libhdr::fusion::ResponseCurveType rf)
-{
-    switch (rf)
-    {
-    case RESPONSE_LINEAR:
-        return QObject::tr("Linear");
-    case RESPONSE_GAMMA:
-        return QObject::tr("Gamma");
-    case RESPONSE_LOG10:
-        return QObject::tr("Logarithmic");
-    case RESPONSE_SRGB:
-        return QObject::tr("sRGB");
-    case RESPONSE_CUSTOM:
-        return QObject::tr("From Calibration/Input File");
-    //case FROM_FILE:
-    //    return tr("From File: ") + m_hdrCreationManager->fusionOperatorConfig.inputResponseCurveFilename;
-    }
-
-    return QString();
-}
-
 void printIfVerbose(const QString& str, bool verbose)
 {
     if ( verbose )
@@ -190,35 +132,51 @@ int CommandLineInterfaceManager::execCommandLineParams()
         ("version,V", tr("Display program version.").toUtf8().constData())
         ("verbose,v", tr("Print more messages during execution.").toUtf8().constData())
         ("cameras,c", tr("Print a list of all supported cameras.").toUtf8().constData())
-        ("align,a", po::value<std::string>(),    tr("[AIS|MTB]   Align Engine to use during HDR creation (default: no alignment).").toUtf8().constData())
-        ("ev,e", po::value<std::string>(),       tr("EV1,EV2,... Specify numerical EV values (as many as INPUTFILES).").toUtf8().constData())
-        ("savealigned,d", po::value<std::string>(),       tr("prefix Save aligned images to files which names start with prefix").toUtf8().constData())
+        ("align,a", po::value<std::string>(),
+            tr("[AIS|MTB]   Align Engine to use during HDR creation (default: no alignment).").toUtf8().constData())
+        ("ev,e", po::value<std::string>(),
+            tr("EV1,EV2,... Specify numerical EV values (as many as INPUTFILES).").toUtf8().constData())
+        ("savealigned,d", po::value<std::string>(),
+            tr("prefix Save aligned images to files which names start with prefix").toUtf8().constData())
         //
-        ("load,l", po::value<std::string>(),       tr("HDR_FILE Load an HDR instead of creating a new one.").toUtf8().constData())
-        ("save,s", po::value<std::string>(),       tr("HDR_FILE Save to a HDR file format. (default: don't save)").toUtf8().constData())
-        ("gamma,g", po::value<float>(&tmopts->pregamma),       tr("VALUE        Gamma value to use during tone mapping. (default: 1) ").toUtf8().constData())
-        ("resize,r", po::value<int>(&tmopts->xsize),       tr("VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping)").toUtf8().constData())
+        ("load,l", po::value<std::string>(),
+            tr("HDR_FILE Load an HDR instead of creating a new one.").toUtf8().constData())
+        ("save,s", po::value<std::string>(),
+            tr("HDR_FILE Save to a HDR file format. (default: don't save)").toUtf8().constData())
+        ("gamma,g", po::value<float>(&tmopts->pregamma),
+            tr("VALUE        Gamma value to use during tone mapping. (default: 1) ").toUtf8().constData())
+        ("resize,r", po::value<int>(&tmopts->xsize),
+            tr("VALUE       Width you want to resize your HDR to (resized before gamma and tone mapping)").toUtf8().constData())
 
-        ("output,o", po::value<std::string>(),       tr("LDR_FILE    File name you want to save your tone mapped LDR to.").toUtf8().constData())
-        ("autoag,t", po::value<float>(&threshold),       tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
+        ("output,o", po::value<std::string>(),
+            tr("LDR_FILE    File name you want to save your tone mapped LDR to.").toUtf8().constData())
+        ("autoag,t", po::value<float>(&threshold),
+            tr("THRESHOLD   Enable auto anti-ghosting with given threshold. (0.0-1.0)").toUtf8().constData())
         ("autolevels,b", tr("Apply autolevels correction after tonemapping.").toUtf8().constData())
         ("createwebpage,w", tr("Enable generation of a webpage with embedded HDR viewer.").toUtf8().constData())
-        ("proposedldrname,p", po::value<std::string>(&ldrExtension),   tr("FILE_EXTENSION   Save LDR file with a name of the form first-last_tmparameters.extension.").toUtf8().constData())
-        ("proposedhdrname,z", po::value<std::string>(&hdrExtension),   tr("FILE_EXTENSION   Save HDR file with a name of the form first-last_HdrCreationModel.extension.").toUtf8().constData())
+        ("proposedldrname,p", po::value<std::string>(&ldrExtension),
+            tr("FILE_EXTENSION   Save LDR file with a name of the form first-last_tmparameters.extension.").toUtf8().constData())
+        ("proposedhdrname,z", po::value<std::string>(&hdrExtension),
+            tr("FILE_EXTENSION   Save HDR file with a name of the form first-last_HdrCreationModel.extension.").toUtf8().constData())
     ;
 
-    po::options_description hdr_desc(tr("HDR creation parameters  - you must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR").toUtf8().constData());
+    po::options_description hdr_desc(tr("HDR creation parameters  - you must either load an existing HDR file (via the -l option) "
+                "or specify INPUTFILES to create a new HDR").toUtf8().constData());
     hdr_desc.add_options()
-        ("hdrWeight", po::value<std::string>(),       tr("weight = triangular|gaussian|plateau|flat (Default is triangular)").toUtf8().constData())
-        ("hdrResponseCurve", po::value<std::string>(),       tr("response curve = from_file|linear|gamma|log|srgb (Default is linear)").toUtf8().constData())
-        ("hdrModel", po::value<std::string>(),       tr("model: robertson|robertsonauto|debevec (Default is debevec)").toUtf8().constData())
+        ("hdrWeight", po::value<std::string>(),
+            tr("weight = triangular|gaussian|plateau|flat (Default is triangular)").toUtf8().constData())
+        ("hdrResponseCurve", po::value<std::string>(),
+            tr("response curve = from_file|linear|gamma|log|srgb (Default is linear)").toUtf8().constData())
+        ("hdrModel", po::value<std::string>(),
+            tr("model: robertson|robertsonauto|debevec (Default is debevec)").toUtf8().constData())
         ("hdrCurveFilename", po::value<std::string>(),       tr("curve filename = your_file_here.m").toUtf8().constData())
     ;
 
     po::options_description ldr_desc(tr("LDR output parameters").toUtf8().constData());
     ldr_desc.add_options()
         ("ldrQuality,q", po::value<int>(), tr("VALUE      Quality of the saved tone mapped file (1-100).").toUtf8().constData())
-        ("ldrTiff", po::value<std::string>(), tr("Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)").toUtf8().constData())
+        ("ldrTiff", po::value<std::string>(),
+            tr("Tiff format. Legal values are [8b|16b|32b|logluv] (Default is 8b)").toUtf8().constData())
         ("ldrTiffDeflate", po::value<bool>(), tr("Tiff deflate compression. true|false (Default is true)").toUtf8().constData())
         ;
 
@@ -240,10 +198,14 @@ directory must exist.  Useful to avoid clutter in the current directory. \
 (Default is current working directory)").toUtf8().constData())
         ;
 
-    po::options_description tmo_desc(tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
+    po::options_description tmo_desc(
+            tr("Tone mapping parameters  - no tonemapping is performed unless -o is specified").toUtf8().constData());
     tmo_desc.add_options()
-        ("tmo", po::value<std::string>(),       tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|mai|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
-        ("tmofile", po::value<std::string>(),   tr("SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings").toUtf8().constData())
+        ("tmo", po::value<std::string>(),
+            tr("Tone mapping operator. Legal values are: [ashikhmin|drago|durand|fattal|ferradans|pattanaik|reinhard02|reinhard05|\
+                mai|mantiuk06|mantiuk08] (Default is mantiuk06)").toUtf8().constData())
+        ("tmofile", po::value<std::string>(),
+            tr("SETTING_FILE Load an existing setting file containing pre-gamma and all TMO settings").toUtf8().constData())
     ;
 
     po::options_description tmo_fattal(tr(" Fattal").toUtf8().constData());
@@ -257,27 +219,39 @@ directory must exist.  Useful to avoid clutter in the current directory. \
     po::options_description tmo_ferradans(tr(" Ferradans").toUtf8().constData());
     tmo_ferradans.add_options()
         ("tmoFerRho", po::value<float>(&tmopts->operator_options.ferradansoptions.rho),  tr("rho FLOAT").toUtf8().constData())
-        ("tmoFerInvAlpha", po::value<float>(&tmopts->operator_options.ferradansoptions.inv_alpha),  tr("inv_alpha FLOAT").toUtf8().constData())
+        ("tmoFerInvAlpha", po::value<float>(&tmopts->operator_options.ferradansoptions.inv_alpha),
+            tr("inv_alpha FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_mantiuk06(tr(" Mantiuk 06").toUtf8().constData());
     tmo_mantiuk06.add_options()
-        ("tmoM06Contrast", po::value<float>(&tmopts->operator_options.mantiuk06options.contrastfactor),  tr("contrast FLOAT").toUtf8().constData())
-        ("tmoM06Saturation", po::value<float>(&tmopts->operator_options.mantiuk06options.saturationfactor),  tr("saturation FLOAT").toUtf8().constData())
-        ("tmoM06Detail", po::value<float>(&tmopts->operator_options.mantiuk06options.detailfactor),  tr("detail FLOAT").toUtf8().constData())
-        ("tmoM06ContrastEqual", po::value<bool>(&tmopts->operator_options.mantiuk06options.contrastequalization), tr("equalization true|false").toUtf8().constData())
+        ("tmoM06Contrast", po::value<float>(&tmopts->operator_options.mantiuk06options.contrastfactor),
+            tr("contrast FLOAT").toUtf8().constData())
+        ("tmoM06Saturation", po::value<float>(&tmopts->operator_options.mantiuk06options.saturationfactor),
+            tr("saturation FLOAT").toUtf8().constData())
+        ("tmoM06Detail", po::value<float>(&tmopts->operator_options.mantiuk06options.detailfactor),
+            tr("detail FLOAT").toUtf8().constData())
+        ("tmoM06ContrastEqual", po::value<bool>(&tmopts->operator_options.mantiuk06options.contrastequalization),
+            tr("equalization true|false").toUtf8().constData())
     ;
     po::options_description tmo_mantiuk08(tr(" Mantiuk 08").toUtf8().constData());
     tmo_mantiuk08.add_options()
-        ("tmoM08ColorSaturation", po::value<float>(&tmopts->operator_options.mantiuk08options.colorsaturation),  tr("color saturation FLOAT").toUtf8().constData())
-        ("tmoM08ConstrastEnh", po::value<float>(&tmopts->operator_options.mantiuk08options.contrastenhancement),  tr("contrast enhancement FLOAT").toUtf8().constData())
-        ("tmoM08LuminanceLvl", po::value<float>(&tmopts->operator_options.mantiuk08options.luminancelevel),  tr("luminance level FLOAT").toUtf8().constData())
-        ("tmoM08SetLuminance", po::value<bool>(&tmopts->operator_options.mantiuk08options.setluminance), tr("enable luminance level true|false").toUtf8().constData())
+        ("tmoM08ColorSaturation", po::value<float>(&tmopts->operator_options.mantiuk08options.colorsaturation),
+            tr("color saturation FLOAT").toUtf8().constData())
+        ("tmoM08ConstrastEnh", po::value<float>(&tmopts->operator_options.mantiuk08options.contrastenhancement),
+            tr("contrast enhancement FLOAT").toUtf8().constData())
+        ("tmoM08LuminanceLvl", po::value<float>(&tmopts->operator_options.mantiuk08options.luminancelevel),
+            tr("luminance level FLOAT").toUtf8().constData())
+        ("tmoM08SetLuminance", po::value<bool>(&tmopts->operator_options.mantiuk08options.setluminance),
+            tr("enable luminance level true|false").toUtf8().constData())
     ;
     po::options_description tmo_durand(tr(" Durand").toUtf8().constData());
     tmo_durand.add_options()
-        ("tmoDurSigmaS", po::value<float>(&tmopts->operator_options.durandoptions.spatial),  tr("spatial kernel sigma FLOAT").toUtf8().constData())
-        ("tmoDurSigmaR", po::value<float>(&tmopts->operator_options.durandoptions.range),  tr("range kernel sigma FLOAT").toUtf8().constData())
-        ("tmoDurBase", po::value<float>(&tmopts->operator_options.durandoptions.base),  tr("base contrast FLOAT").toUtf8().constData())
+        ("tmoDurSigmaS", po::value<float>(&tmopts->operator_options.durandoptions.spatial),
+            tr("spatial kernel sigma FLOAT").toUtf8().constData())
+        ("tmoDurSigmaR", po::value<float>(&tmopts->operator_options.durandoptions.range),
+            tr("range kernel sigma FLOAT").toUtf8().constData())
+        ("tmoDurBase", po::value<float>(&tmopts->operator_options.durandoptions.base),
+            tr("base contrast FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_drago(tr(" Drago").toUtf8().constData());
     tmo_drago.add_options()
@@ -285,32 +259,49 @@ directory must exist.  Useful to avoid clutter in the current directory. \
     ;
     po::options_description tmo_reinhard02(tr(" Reinhard 02").toUtf8().constData());
     tmo_reinhard02.add_options()
-        ("tmoR02Key", po::value<float>(&tmopts->operator_options.reinhard02options.key),  tr("key value FLOAT").toUtf8().constData())
-        ("tmoR02Phi", po::value<float>(&tmopts->operator_options.reinhard02options.phi),  tr("phi FLOAT").toUtf8().constData())
-        ("tmoR02Scales", po::value<bool>(&tmopts->operator_options.reinhard02options.scales), tr("use scales true|false").toUtf8().constData())
-        ("tmoR02Num", po::value<int>(&tmopts->operator_options.reinhard02options.range),  tr("range FLOAT").toUtf8().constData())
-        ("tmoR02Low", po::value<int>(&tmopts->operator_options.reinhard02options.lower),  tr("lower scale FLOAT").toUtf8().constData())
-        ("tmoR02High", po::value<int>(&tmopts->operator_options.reinhard02options.upper),  tr("upper scale FLOAT").toUtf8().constData())
+        ("tmoR02Key", po::value<float>(&tmopts->operator_options.reinhard02options.key),
+            tr("key value FLOAT").toUtf8().constData())
+        ("tmoR02Phi", po::value<float>(&tmopts->operator_options.reinhard02options.phi),
+            tr("phi FLOAT").toUtf8().constData())
+        ("tmoR02Scales", po::value<bool>(&tmopts->operator_options.reinhard02options.scales),
+            tr("use scales true|false").toUtf8().constData())
+        ("tmoR02Num", po::value<int>(&tmopts->operator_options.reinhard02options.range),
+            tr("range FLOAT").toUtf8().constData())
+        ("tmoR02Low", po::value<int>(&tmopts->operator_options.reinhard02options.lower),
+            tr("lower scale FLOAT").toUtf8().constData())
+        ("tmoR02High", po::value<int>(&tmopts->operator_options.reinhard02options.upper),
+            tr("upper scale FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_reinhard05(tr(" Reinhard 05").toUtf8().constData());
     tmo_reinhard05.add_options()
-        ("tmoR05Brightness", po::value<float>(&tmopts->operator_options.reinhard05options.brightness),  tr("Brightness FLOAT").toUtf8().constData())
-        ("tmoR05Chroma", po::value<float>(&tmopts->operator_options.reinhard05options.chromaticAdaptation),  tr("Chroma adaption FLOAT").toUtf8().constData())
-        ("tmoR05Lightness", po::value<float>(&tmopts->operator_options.reinhard05options.lightAdaptation),  tr("Light adaption FLOAT").toUtf8().constData())
+        ("tmoR05Brightness", po::value<float>(&tmopts->operator_options.reinhard05options.brightness),
+            tr("Brightness FLOAT").toUtf8().constData())
+        ("tmoR05Chroma", po::value<float>(&tmopts->operator_options.reinhard05options.chromaticAdaptation),
+            tr("Chroma adaption FLOAT").toUtf8().constData())
+        ("tmoR05Lightness", po::value<float>(&tmopts->operator_options.reinhard05options.lightAdaptation),
+            tr("Light adaption FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_ash(tr(" Ashikmin").toUtf8().constData());
     tmo_ash.add_options()
-        ("tmoAshEq2", po::value<bool>(&tmopts->operator_options.ashikhminoptions.eq2), tr("Equation number 2 true|false").toUtf8().constData())
-        ("tmoAshSimple", po::value<bool>(&tmopts->operator_options.ashikhminoptions.simple), tr("Simple true|false").toUtf8().constData())
-        ("tmoAshLocal", po::value<float>(&tmopts->operator_options.ashikhminoptions.lct),  tr("Local threshold FLOAT").toUtf8().constData())
+        ("tmoAshEq2", po::value<bool>(&tmopts->operator_options.ashikhminoptions.eq2),
+            tr("Equation number 2 true|false").toUtf8().constData())
+        ("tmoAshSimple", po::value<bool>(&tmopts->operator_options.ashikhminoptions.simple),
+            tr("Simple true|false").toUtf8().constData())
+        ("tmoAshLocal", po::value<float>(&tmopts->operator_options.ashikhminoptions.lct),
+            tr("Local threshold FLOAT").toUtf8().constData())
     ;
     po::options_description tmo_patt(tr(" Pattanaik").toUtf8().constData());
     tmo_patt.add_options()
-        ("tmoPatMultiplier", po::value<float>(&tmopts->operator_options.pattanaikoptions.multiplier),  tr("multiplier FLOAT").toUtf8().constData())
-        ("tmoPatLocal", po::value<bool>(&tmopts->operator_options.pattanaikoptions.local), tr("Local tone mapping true|false").toUtf8().constData())
-        ("tmoPatAutoLum", po::value<bool>(&tmopts->operator_options.pattanaikoptions.autolum), tr("Auto luminance true|false").toUtf8().constData())
-        ("tmoPatCone", po::value<float>(&tmopts->operator_options.pattanaikoptions.cone),  tr("cone level FLOAT").toUtf8().constData())
-        ("tmoPatRod", po::value<float>(&tmopts->operator_options.pattanaikoptions.rod),  tr("rod level FLOAT").toUtf8().constData())
+        ("tmoPatMultiplier", po::value<float>(&tmopts->operator_options.pattanaikoptions.multiplier),
+            tr("multiplier FLOAT").toUtf8().constData())
+        ("tmoPatLocal", po::value<bool>(&tmopts->operator_options.pattanaikoptions.local),
+            tr("Local tone mapping true|false").toUtf8().constData())
+        ("tmoPatAutoLum", po::value<bool>(&tmopts->operator_options.pattanaikoptions.autolum),
+            tr("Auto luminance true|false").toUtf8().constData())
+        ("tmoPatCone", po::value<float>(&tmopts->operator_options.pattanaikoptions.cone),
+            tr("cone level FLOAT").toUtf8().constData())
+        ("tmoPatRod", po::value<float>(&tmopts->operator_options.pattanaikoptions.rod),
+            tr("rod level FLOAT").toUtf8().constData())
     ;
 
     tmo_desc.add(tmo_fattal);
@@ -608,12 +599,16 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
             printIfVerbose(QObject::tr("Using %n threads.", "", luminance_options.getNumThreads()), verbose);
         }
         hdrCreationManager.reset( new HdrCreationManager(true) );
-        connect(hdrCreationManager.data(), &HdrCreationManager::finishedLoadingFiles, this, &CommandLineInterfaceManager::finishedLoadingInputFiles);
-        connect(hdrCreationManager.data(), &HdrCreationManager::finishedAligning, this, &CommandLineInterfaceManager::createHDR);
-        connect(hdrCreationManager.data(), &HdrCreationManager::ais_failed, this, &CommandLineInterfaceManager::ais_failed);
-        connect(hdrCreationManager.data(), &HdrCreationManager::errorWhileLoading, this, &CommandLineInterfaceManager::errorWhileLoading);
-        //connect(hdrCreationManager.data(), SIGNAL(aisDataReady(QByteArray)),this, SLOT(readData(QByteArray)));
-        connect(hdrCreationManager.data(), &HdrCreationManager::aisDataReady, this, &CommandLineInterfaceManager::readData);
+        connect(hdrCreationManager.data(), &HdrCreationManager::finishedLoadingFiles,
+                this, &CommandLineInterfaceManager::finishedLoadingInputFiles);
+        connect(hdrCreationManager.data(), &HdrCreationManager::finishedAligning,
+                this, &CommandLineInterfaceManager::createHDR);
+        connect(hdrCreationManager.data(), &HdrCreationManager::ais_failed,
+                this, &CommandLineInterfaceManager::ais_failed);
+        connect(hdrCreationManager.data(), &HdrCreationManager::errorWhileLoading,
+                this, &CommandLineInterfaceManager::errorWhileLoading);
+        connect(hdrCreationManager.data(), &HdrCreationManager::aisDataReady,
+                this, &CommandLineInterfaceManager::readData);
 
         try
         {
@@ -823,7 +818,8 @@ void  CommandLineInterfaceManager::startTonemap()
 
         printIfVerbose( tr("Tonemapping requested, saving to file %1.").arg(saveLdrFilename) , verbose);
 
-        //now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
+        //now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor,
+        //see options.cpp).
         //TODO
         tmopts->origxsize = HDR->getWidth();
 #ifdef QT_DEBUG

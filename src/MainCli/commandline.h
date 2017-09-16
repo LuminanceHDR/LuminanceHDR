@@ -34,10 +34,10 @@
 #include <QDir>
 #include <QScopedPointer>
 
-#include "Core/TonemappingOptions.h"
-#include "HdrWizard/HdrCreationManager.h"
-#include "Libpfs/frame.h"
-#include "Libpfs/params.h"
+#include <Core/TonemappingOptions.h>
+#include <HdrWizard/HdrCreationManager.h>
+#include <Libpfs/frame.h>
+#include <Libpfs/params.h>
 #include "ezETAProgressBar.hpp"
 
 class CommandLineInterfaceManager : public QObject
