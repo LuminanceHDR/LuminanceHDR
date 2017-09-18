@@ -305,6 +305,13 @@ pfs::Frame* IOWorker::read_hdr_frame(const QString& filename)
 
         hdrpfsframe.reset();
     }
+    catch (std::bad_alloc& err)
+    {
+        emit read_hdr_failed(tr("IOWorker: failed to allocate memory %1: %2")
+                             .arg(filename, err.what()));
+
+        hdrpfsframe.reset();
+    }
     catch (...)
     {
         emit read_hdr_failed(tr("IOWorker: failed loading file: %1")
