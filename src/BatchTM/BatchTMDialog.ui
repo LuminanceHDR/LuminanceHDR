@@ -61,8 +61,8 @@
          </widget>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="_3">
-          <item>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
            <widget class="QToolButton" name="add_dir_HDRs_Button">
             <property name="toolTip">
              <string>Add Directory (Alt+D)</string>
@@ -82,7 +82,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="1" column="0">
            <widget class="QToolButton" name="add_HDRs_Button">
             <property name="toolTip">
              <string>Add Files (Alt+F)</string>
@@ -102,7 +102,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="2" column="0">
            <widget class="QLabel" name="label_2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -121,7 +121,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="3" column="0">
            <widget class="QToolButton" name="remove_HDRs_Button">
             <property name="toolTip">
              <string>Remove Files (Alt+R)</string>
@@ -141,7 +141,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="4" column="0">
            <widget class="QToolButton" name="remove_all_HDRs_Button">
             <property name="toolTip">
              <string>Remove All Files (Alt+X)</string>
@@ -164,7 +164,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="5" column="0">
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -204,8 +204,8 @@
          <number>2</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="_4">
-          <item>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
            <widget class="QToolButton" name="add_dir_TMopts_Button">
             <property name="toolTip">
              <string>Add Directory (Alt+I)</string>
@@ -225,7 +225,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="1" column="0">
            <widget class="QToolButton" name="add_TMopts_Button">
             <property name="toolTip">
              <string>Add Files (Alt+L)</string>
@@ -245,7 +245,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="2" column="0">
            <widget class="QToolButton" name="from_Database_Button">
             <property name="toolTip">
              <string>Add from Database (Alt+B)</string>
@@ -265,7 +265,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="3" column="0">
            <widget class="QToolButton" name="remove_TMOpts_Button">
             <property name="toolTip">
              <string>Remove Settings (Alt+M)</string>
@@ -285,7 +285,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="4" column="0">
            <widget class="QToolButton" name="remove_all_TMOpts_Button">
             <property name="toolTip">
              <string>Remove All Settings (Alt+W)</string>
@@ -308,7 +308,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item row="5" column="0">
            <spacer name="verticalSpacer_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -651,14 +651,12 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>cancelbutton</tabstop>
-  <tabstop>BatchGoButton</tabstop>
   <tabstop>listWidget_HDRs</tabstop>
-  <tabstop>listWidget_TMopts</tabstop>
   <tabstop>add_dir_HDRs_Button</tabstop>
   <tabstop>add_HDRs_Button</tabstop>
   <tabstop>remove_HDRs_Button</tabstop>
   <tabstop>remove_all_HDRs_Button</tabstop>
+  <tabstop>listWidget_TMopts</tabstop>
   <tabstop>add_dir_TMopts_Button</tabstop>
   <tabstop>add_TMopts_Button</tabstop>
   <tabstop>from_Database_Button</tabstop>
@@ -674,6 +672,8 @@
   <tabstop>filterComboBox</tabstop>
   <tabstop>filterLineEdit</tabstop>
   <tabstop>clearTextToolButton</tabstop>
+  <tabstop>cancelbutton</tabstop>
+  <tabstop>BatchGoButton</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
