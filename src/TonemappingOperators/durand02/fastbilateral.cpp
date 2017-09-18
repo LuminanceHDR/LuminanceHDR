@@ -67,8 +67,12 @@ public:
     FFTW_MUTEX::fftw_mutex.lock();
     source =  (float*)fftwf_malloc(sizeof(float) * nx * 2 * (ny/2+1) );
     freq = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * osize);
-//    if( source == NULL || freq == NULL )
-    //TODO: throw exception
+    if( source == NULL || freq == NULL )
+    {
+        std::bad_alloc excep;
+        FFTW_MUTEX::fftw_mutex.unlock();
+        throw excep;
+    }
     fplan_fw = fftwf_plan_dft_r2c_2d(nx, ny, source, freq, FFTW_ESTIMATE);
     fplan_in = fftwf_plan_dft_c2r_2d(nx, ny, freq, source, FFTW_ESTIMATE);
     FFTW_MUTEX::fftw_mutex.unlock();
@@ -265,10 +269,10 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
   const pfs::Array2Df* Iz = &I;
 //  sigma_s /= downsample;
 
-  pfs::Array2Df* jJ = new pfs::Array2Df(w,h);
-  pfs::Array2Df* jG = new pfs::Array2Df(w,h);
-  pfs::Array2Df* jK = new pfs::Array2Df(w,h);
-  pfs::Array2Df* jH = new pfs::Array2Df(w,h);
+  pfs::Array2Df jJ(w,h);
+  pfs::Array2Df jG(w,h);
+  pfs::Array2Df jK(w,h);
+  pfs::Array2Df jH(w,h);
 
   const int NB_SEGMENTS = (int)ceil((maxI-minI)/sigma_r);
   float stepI = (maxI-minI)/NB_SEGMENTS;
@@ -287,24 +291,24 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
     for (int i=0 ; i<sizeZ ; i++)
     {
       float dI = (*Iz)(i)-jI;
-      (*jG)(i) = exp( -(dI*dI) / (sigma_r*sigma_r) );
-      (*jH)(i) = (*jG)(i) * I(i);
+      jG(i) = exp( -(dI*dI) / (sigma_r*sigma_r) );
+      jH(i) = jG(i) * I(i);
     }
 
-    gaussian_blur.blur( *jG, *jK );
-    gaussian_blur.blur( *jH, *jH );
+    gaussian_blur.blur( jG, jK );
+    gaussian_blur.blur( jH, jH );
 
 //    convolveArray(jG, sigma_s, jK);
 //    convolveArray(jH, sigma_s, jH);
 
     for (int i=0 ; i<sizeZ ; i++ )
-      if( likely((*jK)(i)!=0.0f) )
-        (*jJ)(i) = (*jH)(i) / (*jK)(i);
+      if( likely(jK(i)!=0.0f) )
+        jJ(i) = jH(i) / jK(i);
       else
-        (*jJ)(i) = 0.0f;
+        jJ(i) = 0.0f;
 
     //  if( downsample == 1 )
-      JJ = jJ;                  // No upsampling is necessary
+      JJ = &jJ;                  // No upsampling is necessary
 //    else
 //      upsampleArray(jJ,JJ);
 
@@ -345,8 +349,4 @@ void fastBilateralFilter(const pfs::Array2Df& I, pfs::Array2Df& J,
 //  delete Iz;
 //  if( downsample != 1 )
 //    delete JJ;
-  delete jJ;
-  delete jG;
-  delete jK;
-  delete jH;
 }
