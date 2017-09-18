@@ -137,41 +137,39 @@ void gaussianBlur(const pfs::Array2Df& I, pfs::Array2Df& L)
     }
 }
 
-void createGaussianPyramids( pfs::Array2Df* H, pfs::Array2Df** pyramids, int nlevels)
+void createGaussianPyramids( pfs::Array2Df& H, pfs::Array2Df** pyramids, int nlevels)
 {
-  int width = H->getCols();
-  int height = H->getRows();
+  int width = H.getCols();
+  int height = H.getRows();
   const int size = width*height;
 
   pyramids[0] = new pfs::Array2Df(width,height);
 //#pragma omp parallel for shared(pyramids, H)
   for( int i=0 ; i<size ; i++ )
-    (*pyramids[0])(i) = (*H)(i);
+    (*pyramids[0])(i) = H(i);
 
-  pfs::Array2Df* L = new pfs::Array2Df(width,height);
-  gaussianBlur( *pyramids[0], *L );
+  pfs::Array2Df L(width,height);
+  gaussianBlur( *pyramids[0], L );
 
   for ( int k=1 ; k<nlevels ; k++ )
   {
     width /= 2;
     height /= 2;
     pyramids[k] = new pfs::Array2Df(width,height);
-    downSample(*L, *pyramids[k]);
+    downSample(L, *pyramids[k]);
 
-    delete L;
-    L = new pfs::Array2Df(width,height);
-    gaussianBlur( *pyramids[k], *L );
+    L.fill(0.f);
+    gaussianBlur( *pyramids[k], L );
   }
 
-  delete L;
 }
 
 //--------------------------------------------------------------------
 
-float calculateGradients(pfs::Array2Df* H, pfs::Array2Df* G, int k)
+float calculateGradients(pfs::Array2Df& H, pfs::Array2Df& G, int k)
 {
-  const int width = H->getCols();
-  const int height = H->getRows();
+  const int width = H.getCols();
+  const int height = H.getRows();
   const float divider = pow( 2.0f, k+1 );
   float avgGrad = 0.0f;
 
@@ -187,16 +185,16 @@ float calculateGradients(pfs::Array2Df* H, pfs::Array2Df* G, int k)
       s = (y+1 == height ? y : y+1);
       e = (x+1 == width ? x : x+1);
 
-      gx = ((*H)(w,y)-(*H)(e,y)) / divider;
+      gx = (H(w,y)-H(e,y)) / divider;
 
-      gy = ((*H)(x,s)-(*H)(x,n)) / divider;
+      gy = (H(x,s)-H(x,n)) / divider;
       // note this implicitely assumes that H(-1)=H(0)
       // for the fft-pde slover this would need adjustment as H(-1)=H(1)
       // is assumed, which means gx=0.0, gy=0.0 at the boundaries
       // however, the impact is not visible so we ignore this here
 
-      (*G)(x,y) = sqrt(gx*gx+gy*gy);
-      avgGrad += (*G)(x,y);
+      G(x,y) = sqrt(gx*gx+gy*gy);
+      avgGrad += G(x,y);
     }
   }
 
@@ -241,7 +239,7 @@ void upSample(const pfs::Array2Df& A, pfs::Array2Df& B)
 }
 
 
-void calculateFiMatrix(pfs::Array2Df* FI, pfs::Array2Df* gradients[],
+void calculateFiMatrix(pfs::Array2Df& FI, pfs::Array2Df* gradients[],
                        float avgGrad[], int nlevels, int detail_level,
                        float alfa, float beta, float noise, bool newfattal)
 {
@@ -297,7 +295,7 @@ void calculateFiMatrix(pfs::Array2Df* FI, pfs::Array2Df* gradients[],
             fi[k-1] = new pfs::Array2Df(width,height);
         }
         else
-            fi[0] = FI;                         // highest level -> result
+            fi[0] = &FI;                         // highest level -> result
 
         if ( k>0  && newfattal )
         {
@@ -379,11 +377,11 @@ void tmo_fattal02(size_t width,
       minLum = ( Y(i) < minLum ) ? Y(i) : minLum;
       maxLum = ( Y(i) > maxLum ) ? Y(i) : maxLum;
   }
-  pfs::Array2Df* H = new pfs::Array2Df(width, height);
+  pfs::Array2Df H(width, height);
   //#pragma omp parallel for private(i) shared(H, Y, maxLum)
   for ( int i=0 ; i<size ; i++ )
   {
-      (*H)(i) = logf( 100.0f* Y(i)/maxLum + 1e-4 );
+      H(i) = logf( 100.0f* Y(i)/maxLum + 1e-4 );
   }
   ph.setValue(4);
 
@@ -409,12 +407,12 @@ void tmo_fattal02(size_t width,
   for ( int k=0 ; k<nlevels ; k++ )
   {
     gradients[k] = new pfs::Array2Df(pyramids[k]->getCols(), pyramids[k]->getRows());
-    avgGrad[k] = calculateGradients(pyramids[k],gradients[k], k);
+    avgGrad[k] = calculateGradients(*pyramids[k], *gradients[k], k);
   }
   ph.setValue(12);
 
   // calculate fi matrix
-  pfs::Array2Df* FI = new pfs::Array2Df(width, height);
+  pfs::Array2Df FI(width, height);
   calculateFiMatrix(FI, gradients, avgGrad, nlevels, detail_level, alfa, beta, noise, newfattal);
 //  dumpPFS( "FI.pfs", FI, "Y" );
   for ( int i=0 ; i<nlevels ; i++ )
@@ -427,15 +425,13 @@ void tmo_fattal02(size_t width,
   delete[] avgGrad;
   ph.setValue(16);
   if (ph.canceled()){
-    delete FI;
-    delete H;
     return;
   }
 
 
   // attenuate gradients
-  pfs::Array2Df* Gx = new pfs::Array2Df(width, height);
-  pfs::Array2Df* Gy = new pfs::Array2Df(width, height);
+  pfs::Array2Df Gx(width, height);
+  pfs::Array2Df Gy(width, height);
 
   // the fft solver solves the Poisson pde but with slightly different
   // boundary conditions, so we need to adjust the assembly of the right hand
@@ -449,8 +445,8 @@ void tmo_fattal02(size_t width,
         unsigned int yp1 = (y+1 >= height ? height-2 : y+1);
         unsigned int xp1 = (x+1 >= width ?  width-2  : x+1);
         // forward differences in H, so need to use between-points approx of FI
-        (*Gx)(x,y) = ((*H)(xp1,y)-(*H)(x,y)) * 0.5*((*FI)(xp1,y)+(*FI)(x,y));
-        (*Gy)(x,y) = ((*H)(x,yp1)-(*H)(x,y)) * 0.5*((*FI)(x,yp1)+(*FI)(x,y));
+        Gx(x,y) = (H(xp1,y)-H(x,y)) * 0.5*(FI(xp1,y)+FI(x,y));
+        Gy(x,y) = (H(x,yp1)-H(x,y)) * 0.5*(FI(x,yp1)+FI(x,y));
       }
   else
     for ( size_t y=0 ; y<height ; y++ )
@@ -460,11 +456,9 @@ void tmo_fattal02(size_t width,
         s = (y+1 == height ? y : y+1);
         e = (x+1 == width ? x : x+1);
 
-        (*Gx)(x,y) = ((*H)(e,y)-(*H)(x,y)) * (*FI)(x,y);
-        (*Gy)(x,y) = ((*H)(x,s)-(*H)(x,y)) * (*FI)(x,y);
+        Gx(x,y) = (H(e,y)-H(x,y)) * FI(x,y);
+        Gy(x,y) = (H(x,s)-H(x,y)) * FI(x,y);
       }
-  delete H;
-  delete FI;
   ph.setValue(18);
 
 
@@ -477,20 +471,18 @@ void tmo_fattal02(size_t width,
   {
       for ( size_t x = 0; x < width; ++x )
       {
-          DivG(x,y) = (*Gx)(x,y) + (*Gy)(x,y);
-          if ( x > 0 ) DivG(x,y) -= (*Gx)(x-1,y);
-          if ( y > 0 ) DivG(x,y) -= (*Gy)(x,y-1);
+          DivG(x,y) = Gx(x,y) + Gy(x,y);
+          if ( x > 0 ) DivG(x,y) -= Gx(x-1,y);
+          if ( y > 0 ) DivG(x,y) -= Gy(x,y-1);
 
           if (fftsolver)
           {
-              if (x==0) DivG(x,y) += (*Gx)(x,y);
-              if (y==0) DivG(x,y) += (*Gy)(x,y);
+              if (x==0) DivG(x,y) += Gx(x,y);
+              if (y==0) DivG(x,y) += Gy(x,y);
           }
 
       }
   }
-  delete Gx;
-  delete Gy;
   ph.setValue(20);
   if (ph.canceled())
   {
@@ -504,14 +496,14 @@ void tmo_fattal02(size_t width,
   pfs::Array2Df U(width, height);
   if (fftsolver)
   {
-      solve_pde_fft(&DivG, &U, ph);
+      solve_pde_fft(DivG, U, ph);
   }
   else
   {
       solve_pde_multigrid(&DivG, &U, ph);
   }
 #ifndef NDEBUG
-  printf("\npde residual error: %f\n", residual_pde(&U, &DivG));
+  printf("\npde residual error: %f\n", residual_pde(U, DivG));
 #endif
   ph.setValue(90);
   if ( ph.canceled() )

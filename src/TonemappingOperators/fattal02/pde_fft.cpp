@@ -93,27 +93,27 @@ using namespace std;
 
 // returns T = EVy A EVx^tr
 // note, modifies input data
-void transform_ev2normal(pfs::Array2Df *A, pfs::Array2Df *T)
+void transform_ev2normal(pfs::Array2Df& A, pfs::Array2Df& T)
 {
-  int width = A->getCols();
-  int height = A->getRows();
-  assert((int)T->getCols()==width && (int)T->getRows()==height);
+  int width = A.getCols();
+  int height = A.getRows();
+  assert((int)T.getCols()==width && (int)T.getRows()==height);
 
   // the discrete cosine transform is not exactly the transform needed
   // need to scale input values to get the right transformation
   for(int y=1 ; y<height-1 ; y++ )
     for(int x=1 ; x<width-1 ; x++ )
-      (*A)(x,y)*=0.25f;
+      A(x,y)*=0.25f;
 
   for(int x=1 ; x<width-1 ; x++ )
   {
-    (*A)(x,0)*=0.5f;
-    (*A)(x,height-1)*=0.5f;
+    A(x,0)*=0.5f;
+    A(x,height-1)*=0.5f;
   }
   for(int y=1 ; y<height-1 ; y++ )
   {
-    (*A)(0,y)*=0.5;
-    (*A)(width-1,y)*=0.5f;
+    A(0,y)*=0.5;
+    A(width-1,y)*=0.5f;
   }
 
   // note, fftw provides its own memory allocation routines which
@@ -128,7 +128,7 @@ void transform_ev2normal(pfs::Array2Df *A, pfs::Array2Df *T)
   // executes 2d discrete cosine transform
   fftwf_plan p;
   FFTW_MUTEX::fftw_mutex.lock();
-  p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
+  p=fftwf_plan_r2r_2d(height, width, A.data(), T.data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
   FFTW_MUTEX::fftw_mutex.unlock();
 
@@ -141,16 +141,16 @@ void transform_ev2normal(pfs::Array2Df *A, pfs::Array2Df *T)
 
 
 // returns T = EVy^-1 * A * (EVx^-1)^tr
-void transform_normal2ev(pfs::Array2Df *A, pfs::Array2Df *T)
+void transform_normal2ev(pfs::Array2Df& A, pfs::Array2Df& T)
 {
-  int width = A->getCols();
-  int height = A->getRows();
-  assert((int)T->getCols()==width && (int)T->getRows()==height);
+  int width = A.getCols();
+  int height = A.getRows();
+  assert((int)T.getCols()==width && (int)T.getRows()==height);
 
   // executes 2d discrete cosine transform
   fftwf_plan p;
   FFTW_MUTEX::fftw_mutex.lock();
-  p=fftwf_plan_r2r_2d(height, width, A->data(), T->data(),
+  p=fftwf_plan_r2r_2d(height, width, A.data(), T.data(),
                         FFTW_REDFT00, FFTW_REDFT00, FFTW_ESTIMATE);
   FFTW_MUTEX::fftw_mutex.unlock();
 
@@ -163,17 +163,17 @@ void transform_normal2ev(pfs::Array2Df *A, pfs::Array2Df *T)
   // need to scale the output matrix to get the right transform
   for(int y=0 ; y<height ; y++ )
     for(int x=0 ; x<width ; x++ )
-      (*T)(x,y)*=(1.0f/((height-1)*(width-1)));
+      T(x,y)*=(1.0f/((height-1)*(width-1)));
 
   for(int x=0 ; x<width ; x++ )
   {
-    (*T)(x,0)*=0.5f;
-    (*T)(x,height-1)*=0.5f;
+    T(x,0)*=0.5f;
+    T(x,height-1)*=0.5f;
   }
   for(int y=0 ; y<height ; y++ )
   {
-    (*T)(0,y)*=0.5f;
-    (*T)(width-1,y)*=0.5f;
+    T(0,y)*=0.5f;
+    T(width-1,y)*=0.5f;
   }
 }
 
@@ -190,24 +190,24 @@ std::vector<double> get_lambda(int n)
   return v;
 }
 
+void make_compatible_boundary(pfs::Array2Df& F)
 // makes boundary conditions compatible so that a solution exists
-void make_compatible_boundary(pfs::Array2Df *F)
 {
-  int width = F->getCols();
-  int height = F->getRows();
+  int width = F.getCols();
+  int height = F.getRows();
 
   double sum=0.0;
   for(int y=1 ; y<height-1 ; y++ )
     for(int x=1 ; x<width-1 ; x++ )
-      sum+=(*F)(x,y);
+      sum+=F(x,y);
 
   for(int x=1 ; x<width-1 ; x++ )
-    sum+=0.5*((*F)(x,0)+(*F)(x,height-1));
+    sum+=0.5*(F(x,0)+F(x,height-1));
 
   for(int y=1 ; y<height-1 ; y++ )
-    sum+=0.5*((*F)(0,y)+(*F)(width-1,y));
+    sum+=0.5*(F(0,y)+F(width-1,y));
 
-  sum+=0.25*((*F)(0,0)+(*F)(0,height-1)+(*F)(width-1,0)+(*F)(width-1,height-1));
+  sum+=0.25*(F(0,0)+F(0,height-1)+F(width-1,0)+F(width-1,height-1));
 
   //DEBUG_STR << "compatible_boundary: int F = " << sum ;
   //DEBUG_STR << " (should be 0 to be solvable)" << std::endl;
@@ -216,13 +216,13 @@ void make_compatible_boundary(pfs::Array2Df *F)
   //DEBUG_STR << "compatible_boundary: adjusting boundary by " << add << std::endl;
   for(int x=0 ; x<width ; x++ )
   {
-    (*F)(x,0)+=add;
-    (*F)(x,height-1)+=add;
+    F(x,0)+=add;
+    F(x,height-1)+=add;
   }
   for(int y=1 ; y<height-1 ; y++ )
   {
-    (*F)(0,y)+=add;
-    (*F)(width-1,y)+=add;
+    F(0,y)+=add;
+    F(width-1,y)+=add;
   }
 }
 
@@ -234,14 +234,14 @@ void make_compatible_boundary(pfs::Array2Df *F)
 // not modified and the equation might not have a solution but an
 // approximate solution with a minimum error is then calculated
 // double precision version
-void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
+void solve_pde_fft(pfs::Array2Df& F, pfs::Array2Df& U, pfs::Progress &ph,
                    bool adjust_bound)
 {
    ph.setValue(20);
   //DEBUG_STR << "solve_pde_fft: solving Laplace U = F ..." << std::endl;
-  int width = F->getCols();
-  int height = F->getRows();
-  assert((int)U->getCols()==width && (int)U->getRows()==height);
+  int width = F.getCols();
+  int height = F.getRows();
+  assert((int)U.getCols()==width && (int)U.getRows()==height);
 
   // activate parallel execution of fft routines
   init_fftw();
@@ -258,23 +258,22 @@ void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
 
   // transforms F into eigenvector space: Ftr =
   //DEBUG_STR << "solve_pde_fft: transform F to ev space (fft)" << std::endl;
-  pfs::Array2Df* F_tr = new pfs::Array2Df(width,height);
+  pfs::Array2Df F_tr(width,height);
   transform_normal2ev(F, F_tr);
   // TODO: F no longer needed so could release memory, but as it is an
   // input parameter we won't do that
   ph.setValue(50);
   if (ph.canceled())
   {
-    delete F_tr;
     return;
   }
 
-  //DEBUG_STR << "solve_pde_fft: F_tr(0,0) = " << (*F_tr)(0,0);
+  //DEBUG_STR << "solve_pde_fft: F_tr(0,0) = " << F_tr(0,0);
   //DEBUG_STR << " (must be 0 for solution to exist)" << std::endl;
 
   // in the eigenvector space the solution is very simple
   //DEBUG_STR << "solve_pde_fft: solve in eigenvector space" << std::endl;
-  pfs::Array2Df* U_tr = new pfs::Array2Df(width,height);
+  pfs::Array2Df U_tr(width,height);
   std::vector<double> l1=get_lambda(height);
   std::vector<double> l2=get_lambda(width);
   for(int y=0 ; y<height ; y++ )
@@ -282,19 +281,17 @@ void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
     for(int x=0 ; x<width ; x++ )
     {
       if(x==0 && y==0)
-        (*U_tr)(x,y)=0.0; // any value ok, only adds a const to the solution
+        U_tr(x,y)=0.0; // any value ok, only adds a const to the solution
       else
-        (*U_tr)(x,y)=(*F_tr)(x,y)/(l1[y]+l2[x]);
+        U_tr(x,y)=F_tr(x,y)/(l1[y]+l2[x]);
     }
   }
-  delete F_tr;    // no longer needed so release memory
   ph.setValue(55);
 
 
   // transforms U_tr back to the normal space
   //DEBUG_STR << "solve_pde_fft: transform U_tr to normal space (fft)" << std::endl;
   transform_ev2normal(U_tr, U);
-  delete U_tr;    // no longer needed so release memory
   ph.setValue(85);
 
   // the solution U as calculated will satisfy something like int U = 0
@@ -305,11 +302,11 @@ void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
   //DEBUG_STR << "solve_pde_fft: removing constant from solution" << std::endl;
   double max=0.0;
   for(int i=0; i<width*height; i++)
-    if(max<(*U)(i))
-      max=(*U)(i);
+    if(max<U(i))
+      max=U(i);
 
   for(int i=0; i<width*height; i++)
-    (*U)(i)-=max;
+    U(i)-=max;
 
 
   // fft parallel threads cleanup, better handled outside this function?
@@ -327,19 +324,19 @@ void solve_pde_fft(pfs::Array2Df *F, pfs::Array2Df *U, pfs::Progress &ph,
 
 // returns the norm of (Laplace U - F) of all interior points
 // useful to compare solvers
-float residual_pde(pfs::Array2Df* U, pfs::Array2Df* F)
+float residual_pde(pfs::Array2Df& U, pfs::Array2Df& F)
 {
-  int width = U->getCols();
-  int height = U->getRows();
-  assert((int)F->getCols()==width && (int)F->getRows()==height);
+  int width = U.getCols();
+  int height = U.getRows();
+  assert((int)F.getCols()==width && (int)F.getRows()==height);
 
   double res=0.0;
   for(int y=1;y<height-1;y++)
     for(int x=1;x<width-1;x++)
     {
-      double laplace=-4.0*(*U)(x,y)+(*U)(x-1,y)+(*U)(x+1,y)
-                     +(*U)(x,y-1)+(*U)(x,y+1);
-      res += SQR( laplace-(*F)(x,y) );
+      double laplace=-4.0*U(x,y)+U(x-1,y)+U(x+1,y)
+                     +U(x,y-1)+U(x,y+1);
+      res += SQR( laplace-F(x,y) );
     }
   return static_cast<float>( sqrt(res) );
 }
