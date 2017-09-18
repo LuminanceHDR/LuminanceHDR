@@ -107,6 +107,7 @@ private slots:
     void setProgressBar(int);
     void updateProgressBar(int);
     void readData(const QByteArray &);
+    void tonemapFailed(const QString &);
 
 signals:
     void finishedParsing();

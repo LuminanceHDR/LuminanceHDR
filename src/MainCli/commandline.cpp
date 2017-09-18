@@ -628,7 +628,15 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
     {
         printIfVerbose(QObject::tr("Loading file %1").arg(loadHdrFilename), verbose);
 
-        HDR.reset( IOWorker().read_hdr_frame(loadHdrFilename) );
+        try
+        {
+            HDR.reset( IOWorker().read_hdr_frame(loadHdrFilename) );
+        }
+        catch(...)
+        {
+            printErrorAndExit(QStringLiteral("Catched unhandled exception"));
+        }
+
 
         if ( HDR != NULL )
         {
@@ -837,6 +845,7 @@ void  CommandLineInterfaceManager::startTonemap()
         TMWorker tm_worker;
         connect(&tm_worker, &TMWorker::tonemapSetMaximum, this, &CommandLineInterfaceManager::setProgressBar);
         connect(&tm_worker, &TMWorker::tonemapSetValue, this, &CommandLineInterfaceManager::updateProgressBar);
+        connect(&tm_worker, &TMWorker::tonemapFailed, this, &CommandLineInterfaceManager::tonemapFailed);
 
         // Build a new TM frame
         // The scoped pointer will free the memory automatically later on
@@ -881,7 +890,7 @@ void  CommandLineInterfaceManager::startTonemap()
 }
 
 void CommandLineInterfaceManager::errorWhileLoading(const QString &errormessage) {
-    printErrorAndExit( tr("Failed loading images"));
+    printErrorAndExit( tr("Failed loading images: %1").arg(errormessage));
 }
 
 void CommandLineInterfaceManager::setProgressBar(int max)
@@ -925,3 +934,7 @@ void CommandLineInterfaceManager::readData(const QByteArray &data)
         std::cout << data.constData() << std::endl;
 }
 
+void CommandLineInterfaceManager::tonemapFailed(const QString& e)
+{
+    printErrorAndExit(e);
+}
