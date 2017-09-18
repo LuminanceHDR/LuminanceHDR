@@ -40,12 +40,12 @@
 #include <HdrCreation/fusionoperator.h>
 #include <HdrCreation/createhdr.h>
 
-#include "Alignment/Align.h"
-#include "Common/LuminanceOptions.h"
-#include "Common/ProgressHelper.h"
-#include "arch/math.h"
-#include "HdrCreationItem.h"
-#include "AutoAntighosting.h"
+#include <Alignment/Align.h>
+#include <Common/LuminanceOptions.h>
+#include <Common/ProgressHelper.h>
+#include <arch/math.h>
+#include <HdrWizard/HdrCreationItem.h>
+#include <HdrWizard/AutoAntighosting.h>
 
 // Some other file expect this to be available
 extern const FusionOperatorConfig predef_confs[6];

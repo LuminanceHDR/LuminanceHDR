@@ -45,7 +45,7 @@
 #include <boost/numeric/conversion/bounds.hpp>
 #include <boost/limits.hpp>
 
-#include "Common/CommonFunctions.h"
+#include <Common/CommonFunctions.h>
 #include <Libpfs/frame.h>
 #include <Libpfs/utils/msec_timer.h>
 #include <Libpfs/io/tiffwriter.h>
@@ -62,11 +62,11 @@
 #include <Libpfs/colorspace/colorspace.h>
 #include <Libpfs/colorspace/normalizer.h>
 
-#include "arch/math.h"
-#include "TonemappingOperators/fattal02/pde.h"
-#include "Exif/ExifOperations.h"
-#include "HdrCreation/mtb_alignment.h"
-#include "WhiteBalance.h"
+#include <arch/math.h>
+#include <TonemappingOperators/fattal02/pde.h>
+#include <Exif/ExifOperations.h>
+#include <HdrCreation/mtb_alignment.h>
+#include <HdrWizard/WhiteBalance.h>
 
 using namespace std;
 using namespace pfs;
@@ -822,7 +822,6 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
 
     qDebug() << "solve_pde";
     solve_pde_dct(*divergence_R, *logIrradiance_R);
-    qDebug() << "residual: " << residual_pde(logIrradiance_R, divergence_R);
     delete divergence_R;
     ph->setValue(60);
     if (ph->canceled()) {
@@ -832,7 +831,6 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
 
     qDebug() << "solve_pde";
     solve_pde_dct(*divergence_G, *logIrradiance_G);
-    qDebug() << "residual: " << residual_pde(logIrradiance_G, divergence_G);
     delete divergence_G;
     ph->setValue(76);
     if (ph->canceled()) {
@@ -842,7 +840,6 @@ pfs::Frame *HdrCreationManager::doAntiGhosting(bool patches[][agGridSize], int h
 
     qDebug() << "solve_pde";
     solve_pde_dct(*divergence_B, *logIrradiance_B);
-    qDebug() << "residual: " << residual_pde(logIrradiance_B, divergence_B);
     delete divergence_B;
     ph->setValue(93);
     if (ph->canceled()) {
