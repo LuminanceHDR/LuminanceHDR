@@ -23,25 +23,27 @@
  *
  */
 
-#include "BatchTM/BatchTMJob.h"
-#include "Exif/ExifOperations.h"
-#include "Libpfs/progress.h"
-#include "Libpfs/frame.h"
-#include "Libpfs/manip/copy.h"
-#include "Libpfs/manip/resize.h"
-#include "Libpfs/manip/gamma.h"
-#include "Libpfs/tm/TonemapOperator.h"
-
-#include "Core/IOWorker.h"
-#include "Common/LuminanceOptions.h"
-
 #include <QFileInfo>
 #include <QByteArray>
 #include <QDebug>
 #include <QImage>
 #include <QScopedPointer>
 
-BatchTMJob::BatchTMJob(int thread_id, const QString &filename, const QList<TonemappingOptions*>* tm_options, const QString &output_folder, const QString &format, pfs::Params params):
+#include <BatchTM/BatchTMJob.h>
+#include <Exif/ExifOperations.h>
+#include <Libpfs/progress.h>
+#include <Libpfs/frame.h>
+#include <Libpfs/manip/copy.h>
+#include <Libpfs/manip/resize.h>
+#include <Libpfs/manip/gamma.h>
+#include <Libpfs/tm/TonemapOperator.h>
+
+#include <Core/IOWorker.h>
+#include <Common/LuminanceOptions.h>
+
+BatchTMJob::BatchTMJob(int thread_id, const QString &filename, const QList<TonemappingOptions*>* tm_options,
+        const QString &output_folder, const QString &format, pfs::Params params
+        ):
         m_thread_id(thread_id),
         m_file_name(filename),
         m_tm_options(tm_options),
@@ -101,7 +103,18 @@ void BatchTMJob::run()
 
             QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(opts->tmoperator) );
 
-            tm_operator->tonemapFrame(*temporary_frame, opts, prog_helper);
+            try
+            {
+                tm_operator->tonemapFrame(*temporary_frame, opts, prog_helper);
+            }
+            catch(...)
+            {
+                emit add_log_message( tr("[T%1] ERROR: Failed to tonemap file: %2").arg(m_thread_id).arg(
+                            QFileInfo(m_file_name).fileName()) );
+                emit increment_progress_bar(m_tm_options->size() + 1);
+                emit done(m_thread_id);
+                return;
+            }
 
             QString output_file_name = m_output_file_name_base+"_"+opts->getPostfix()+"."+m_ldr_output_format;
 
@@ -111,7 +124,9 @@ void BatchTMJob::run()
                                            m_params) )
             {
                 emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).fileName()) );
-            } else {
+            }
+            else
+            {
                 emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).fileName()) );
             }
 
