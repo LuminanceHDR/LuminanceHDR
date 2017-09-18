@@ -61,8 +61,15 @@ void pfstmo_mai11(pfs::Frame& frame, pfs::Progress &ph)
     int cols = frame.getWidth();
     int rows = frame.getHeight();
 
-    tmo.tonemap( inX->data(), inY->data(), inZ->data(), cols, rows,
-        inX->data(), inY->data(), inZ->data(), inY->data(), ph);
+    try
+    {
+        tmo.tonemap( inX->data(), inY->data(), inZ->data(), cols, rows,
+            inX->data(), inY->data(), inZ->data(), inY->data(), ph);
+    }
+    catch(...)
+    {
+        throw pfs::Exception( "Tonemapping Failed!" );
+    }
 
     frame.getTags().setTag("LUMINANCE", "DISPLAY");
     if ( !ph.canceled() )

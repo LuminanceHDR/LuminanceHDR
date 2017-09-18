@@ -117,7 +117,14 @@ void pfstmo_pattanaik00(pfs::Frame& frame,
     pfs::Array2Df B(w,h);
 
     pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, &R, &G, &B );
-    tmo_pattanaik00( R, G, B, *Y, am.get(), local, ph );
+    try
+    {
+        tmo_pattanaik00( R, G, B, *Y, am.get(), local, ph );
+    }
+    catch(...)
+    {
+        throw pfs::Exception( "Tonemapping Failed!" );
+    }
     pfs::transformColorSpace( pfs::CS_RGB, &R, &G, &B, pfs::CS_XYZ, X, Y, Z );
 
     if (!ph.canceled())

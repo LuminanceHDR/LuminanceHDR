@@ -75,7 +75,14 @@ void pfstmo_reinhard02(pfs::Frame& frame, float key, float phi, int num, int low
 
   Reinhard02 tmoperator( Y, &L, use_scales, key, phi, num, low, high, temporal_coherent, ph );
 
-  tmoperator.tmo_reinhard02();
+  try
+  {
+    tmoperator.tmo_reinhard02();
+  }
+  catch(...)
+  {
+    throw pfs::Exception( "Tonemapping Failed!" );
+  }
 
   // TODO: this section can be rewritten using SSE Function
   for (size_t x = 0; x < w; x++)

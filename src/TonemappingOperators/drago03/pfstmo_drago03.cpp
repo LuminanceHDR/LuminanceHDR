@@ -73,7 +73,14 @@ void pfstmo_drago03(pfs::Frame& frame, float opt_biasValue, pfs::Progress &ph)
     calculateLuminance(w, h, Yr.data(), avLum, maxLum);
 
     pfs::Array2Df L(w, h);
-    tmo_drago03(Yr, L, maxLum, avLum, opt_biasValue, ph);
+    try
+    {
+        tmo_drago03(Yr, L, maxLum, avLum, opt_biasValue, ph);
+    }
+    catch(...)
+    {
+        throw pfs::Exception( "Tonemapping Failed!" );
+    }
 
     for (int x=0 ; x<w ; x++)
     {

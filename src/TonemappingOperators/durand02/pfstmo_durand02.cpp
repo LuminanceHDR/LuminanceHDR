@@ -87,9 +87,16 @@ void pfstmo_durand02(pfs::Frame& frame,
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
 
-  tmo_durand02(*X, *Y, *Z,
-               sigma_s, sigma_r, baseContrast, downsample, !original_algorithm,
-               ph);
+  try
+  {
+    tmo_durand02(*X, *Y, *Z,
+                 sigma_s, sigma_r, baseContrast, downsample, !original_algorithm,
+                 ph);
+  }
+  catch(...)
+  {
+    throw pfs::Exception( "Tonemapping Failed!" );
+  }
 
   if ( !ph.canceled() )
       ph.setValue(100);

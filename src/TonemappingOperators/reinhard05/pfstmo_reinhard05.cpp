@@ -78,8 +78,15 @@ void pfstmo_reinhard05(pfs::Frame &frame, float brightness, float chromaticadapt
     // I am pretty sure there is!
     pfs::Array2Df Y(width,height);
     pfs::transformRGB2Y(R, G, B, &Y);
-    tmo_reinhard05(width, height, R->data(), G->data(), B->data(), Y.data(),
-                   Reinhard05Params(brightness, chromaticadaptation, lightadaptation), ph);
+    try
+    {
+        tmo_reinhard05(width, height, R->data(), G->data(), B->data(), Y.data(),
+                       Reinhard05Params(brightness, chromaticadaptation, lightadaptation), ph);
+    }
+    catch(...)
+    {
+        throw pfs::Exception( "Tonemapping Failed!" );
+    }
 
     if (!ph.canceled())
     {

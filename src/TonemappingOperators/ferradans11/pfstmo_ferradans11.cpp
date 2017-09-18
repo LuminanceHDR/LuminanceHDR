@@ -64,7 +64,14 @@ void pfstmo_ferradans11(pfs::Frame& frame, float opt_rho, float opt_inv_alpha, p
     //pfs::applyGamma(&frame, 0.25f);
 
     // tone mapping
-    tmo_ferradans11(*inR, *inG, *inB, opt_rho, opt_inv_alpha, ph);
+    try
+    {
+        tmo_ferradans11(*inR, *inG, *inB, opt_rho, opt_inv_alpha, ph);
+    }
+    catch(...)
+    {
+        throw pfs::Exception( "Tonemapping Failed!" );
+    }
 
     if ( !ph.canceled() )
         ph.setValue(100);

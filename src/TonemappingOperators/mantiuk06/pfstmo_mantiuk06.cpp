@@ -103,9 +103,16 @@ void pfstmo_mantiuk06(pfs::Frame& frame, float scaleFactor,
     pfs::Array2Df inY( cols, rows );
     pfs::transformRGB2Y(inRed, inGreen, inBlue, &inY);
 
-    tmo_mantiuk06_contmap(*inRed, *inGreen, *inBlue, inY,
-                          scaleFactor, saturationFactor, detailFactor, itmax, tol,
-                          ph);
+    try
+    {
+        tmo_mantiuk06_contmap(*inRed, *inGreen, *inBlue, inY,
+                              scaleFactor, saturationFactor, detailFactor, itmax, tol,
+                              ph);
+    }
+    catch(...)
+    {
+        throw pfs::Exception( "Tonemapping Failed!" );
+    }
 
     frame.getTags().setTag("LUMINANCE", "RELATIVE");
     if ( !ph.canceled() )

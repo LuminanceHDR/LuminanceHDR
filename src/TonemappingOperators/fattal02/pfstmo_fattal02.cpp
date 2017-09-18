@@ -58,67 +58,74 @@ void pfstmo_fattal02(pfs::Frame& frame,
                      int detail_level,
                      pfs::Progress &ph)
 {
-  if (fftsolver)
-  {
-      // opt_alpha = 1.f;
-      newfattal = true; // let's make sure, prudence is never enough!
-  }
+    if (fftsolver)
+    {
+        // opt_alpha = 1.f;
+        newfattal = true; // let's make sure, prudence is never enough!
+    }
 
-  if ( opt_noise <= 0.0f )
-  {
-      opt_noise = opt_alpha * 0.01f;
-  }
+    if ( opt_noise <= 0.0f )
+    {
+        opt_noise = opt_alpha * 0.01f;
+    }
 #ifndef NDEBUG
-  std::stringstream ss;
-  ss << "pfstmo_fattal02 (";
-  ss << "alpha: " << opt_alpha;
-  ss << ", beta: " << opt_beta;
-  ss << ". saturation: " <<  opt_saturation;
-  ss << ", noise: " <<  opt_noise;
-  ss << ", fftsolver: " << fftsolver << ")";
-  std::cout << ss.str() << std::endl;
+    std::stringstream ss;
+    ss << "pfstmo_fattal02 (";
+    ss << "alpha: " << opt_alpha;
+    ss << ", beta: " << opt_beta;
+    ss << ". saturation: " <<  opt_saturation;
+    ss << ", noise: " <<  opt_noise;
+    ss << ", fftsolver: " << fftsolver << ")";
+    std::cout << ss.str() << std::endl;
 #endif
 
-  //Store RGB data temporarily in XYZ channels
-  pfs::Channel *R, *G, *B;
-  frame.getXYZChannels( R, G, B );
-  //---
+    //Store RGB data temporarily in XYZ channels
+    pfs::Channel *R, *G, *B;
+    frame.getXYZChannels( R, G, B );
+    //---
 
-  if ( !R || !G || !B )
-  {
-      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-  }
+    if ( !R || !G || !B )
+    {
+        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    }
 
-  frame.getTags().setTag("LUMINANCE", "RELATIVE");
-  // tone mapping
-  const int w = frame.getWidth();
-  const int h = frame.getHeight();
+    frame.getTags().setTag("LUMINANCE", "RELATIVE");
+    // tone mapping
+    const int w = frame.getWidth();
+    const int h = frame.getHeight();
 
-  pfs::Array2Df Yr(w,h);
-  pfs::Array2Df L(w,h);
+    pfs::Array2Df Yr(w,h);
+    pfs::Array2Df L(w,h);
 
-  pfs::transformRGB2Y(R, G, B, &Yr);
+    pfs::transformRGB2Y(R, G, B, &Yr);
 
-  tmo_fattal02(w, h, Yr, L,
-               opt_alpha, opt_beta, opt_noise, newfattal,
-               fftsolver, detail_level,
-               ph);
+    try
+    {
+        tmo_fattal02(w, h, Yr, L,
+                     opt_alpha, opt_beta, opt_noise, newfattal,
+                     fftsolver, detail_level,
+                     ph);
+    }
+    catch(...)
+    {
+        throw pfs::Exception( "Tonemapping Failed!" );
+    }
 
-  if ( !ph.canceled() )
-  {
-      pfs::Array2Df& arrayRed = *R;
-      pfs::Array2Df& arrayGreen = *G;
-      pfs::Array2Df& arrayBlue = *B;
+    if ( !ph.canceled() )
+    {
+        pfs::Array2Df& arrayRed = *R;
+        pfs::Array2Df& arrayGreen = *G;
+        pfs::Array2Df& arrayBlue = *B;
 
-      for (int i=0; i < w*h; i++)
-      {
-          float y = std::max( Yr(i), epsilon );
-          float l = std::max( L(i), epsilon );
-          arrayRed(i) = std::pow( std::max(arrayRed(i)/y, 0.f), opt_saturation ) * l;
-          arrayGreen(i) = std::pow( std::max(arrayGreen(i)/y, 0.f), opt_saturation ) * l;
-          arrayBlue(i) = std::pow( std::max(arrayBlue(i)/y, 0.f), opt_saturation ) * l;
-      }
+        for (int i=0; i < w*h; i++)
+        {
+            float y = std::max( Yr(i), epsilon );
+            float l = std::max( L(i), epsilon );
+            arrayRed(i) = std::pow( std::max(arrayRed(i)/y, 0.f), opt_saturation ) * l;
+            arrayGreen(i) = std::pow( std::max(arrayGreen(i)/y, 0.f), opt_saturation ) * l;
+            arrayBlue(i) = std::pow( std::max(arrayBlue(i)/y, 0.f), opt_saturation ) * l;
+        }
 
-      ph.setValue( 100 );
-  }
+        ph.setValue( 100 );
+    }
 }

@@ -87,7 +87,14 @@ void pfstmo_ashikhmin02(pfs::Frame& frame, bool simple_flag, float lc_value, int
     int h = Yr->getRows();
 
     pfs::Array2Df L(w,h);
-    tmo_ashikhmin02(Yr, &L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
+    try
+    {
+        tmo_ashikhmin02(Yr, &L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
+    }
+    catch(...)
+    {
+        throw pfs::Exception( "Tonemapping Failed!" );
+    }
 
     // TODO: this section can be rewritten using SSE Function
     for ( int x=0 ; x<w ; x++ )
