@@ -193,27 +193,27 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
   GaussianPyramid *myPyramid = new GaussianPyramid(Y, nrows, ncols);
 
   // LAL calculation
-  pfs::Array2Df* la = new pfs::Array2Df(ncols, nrows);
+  pfs::Array2Df la(ncols, nrows);
   for(unsigned int y=0; y<nrows; y++) {
       ph.setValue(100*y/nrows);
       if (ph.canceled())
         break;
     for(unsigned int x=0; x<ncols; x++) {
-      (*la)(x,y) = LAL(myPyramid, x, y, lc_value);
-      if((*la)(x,y) == 0.0)
-    (*la)(x,y) = EPSILON;
+      la(x,y) = LAL(myPyramid, x, y, lc_value);
+      if(la(x,y) == 0.0)
+       la(x,y) = EPSILON;
     }
   }
   delete(myPyramid);
 
   // TM function
-  pfs::Array2Df* tm = new pfs::Array2Df(ncols, nrows);
+  pfs::Array2Df tm(ncols, nrows);
   for(unsigned int y=0; y<nrows; y++) {
     ph.setValue(100*y/nrows);
     if (ph.canceled())
         break;
     for(unsigned int x=0; x<ncols; x++)
-      (*tm)(x,y) = TM((*la)(x,y), maxLum, minLum);
+      tm(x,y) = TM(la(x,y), maxLum, minLum);
   }
   // final computation for each pixel
   for(unsigned int y=0; y<nrows; y++) {
@@ -225,16 +225,13 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
       switch (eq)
       {
         case 2:
-            (*L)(x,y) = (*Y)(x,y) * (*tm)(x,y) / (*la)(x,y);
+            (*L)(x,y) = (*Y)(x,y) * tm(x,y) / la(x,y);
             break;
         case 4:
-            (*L)(x,y) =  (*tm)(x,y) + C((*tm)(x,y))/C((*la)(x,y)) * ((*Y)(x,y)-(*la)(x,y));
+            (*L)(x,y) =  tm(x,y) + C(tm(x,y))/C(la(x,y)) * ((*Y)(x,y)-la(x,y));
             break;
         default:
         {
-            // cleaning
-            delete(la);
-            delete(tm);
             return 0;
         }
       }
@@ -245,10 +242,6 @@ int tmo_ashikhmin02(pfs::Array2Df* Y, pfs::Array2Df* L, float maxLum, float minL
     }
   }
   Normalize(L, nrows, ncols);
-
-  // cleaning
-  delete(la);
-  delete(tm);
 
   return 0;
 }
