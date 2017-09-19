@@ -32,8 +32,6 @@
  *
  */
 
-#include "MainWindow/MainWindow.h"
-
 #ifdef QT_DEBUG
 #include <QDebug>
 #endif
@@ -55,55 +53,58 @@
 
 #include "MainWindow/ui_MainWindow.h"
 
-#include "MainWindow/DnDOption.h"
-#include "MainWindow/UpdateChecker.h"
-#include "MainWindow/DonationDialog.h"
+#include <MainWindow/MainWindow.h>
+#include <MainWindow/DnDOption.h>
+#include <MainWindow/UpdateChecker.h>
+#include <MainWindow/DonationDialog.h>
 
-#include "Libpfs/frame.h"
-#include "Libpfs/params.h"
-#include "Libpfs/manip/cut.h"
-#include "Libpfs/manip/copy.h"
-#include "Libpfs/manip/rotate.h"
-#include "Libpfs/manip/gamma_levels.h"
-#include "Fileformat/pfsoutldrimage.h"
+#include <Libpfs/frame.h>
+#include <Libpfs/params.h>
+#include <Libpfs/manip/cut.h>
+#include <Libpfs/manip/copy.h>
+#include <Libpfs/manip/rotate.h>
+#include <Libpfs/manip/gamma_levels.h>
+#include <Fileformat/pfsoutldrimage.h>
 
-#include "Common/archs.h"
-#include "Common/config.h"
-#include "Common/global.h"
-#include "Common/CommonFunctions.h"
-#include "OsIntegration/osintegration.h"
-#include "BatchHDR/BatchHDRDialog.h"
-#include "BatchTM/BatchTMDialog.h"
+#include <Common/archs.h>
+#include <Common/config.h>
+#include <Common/global.h>
+#include <Common/CommonFunctions.h>
 
-#include "TransplantExif/TransplantExifDialog.h"
-#include "Viewers/HdrViewer.h"
-#include "Viewers/LuminanceRangeWidget.h"
-#include "Viewers/LdrViewer.h"
-#include "UI/ImageQualityDialog.h"
-#include "UI/TiffModeDialog.h"
-#include "UI/UMessageBox.h"
-#include "UI/GammaAndLevels.h"
-#include "UI/ExportToHtmlDialog.h"
-#include "UI/SupportedCamerasDialog.h"
+#include <OsIntegration/osintegration.h>
+
+#include <BatchHDR/BatchHDRDialog.h>
+#include <BatchTM/BatchTMDialog.h>
+
+#include <TransplantExif/TransplantExifDialog.h>
+#include <Viewers/HdrViewer.h>
+#include <Viewers/LuminanceRangeWidget.h>
+#include <Viewers/LdrViewer.h>
+
+#include <UI/ImageQualityDialog.h>
+#include <UI/TiffModeDialog.h>
+#include <UI/UMessageBox.h>
+#include <UI/GammaAndLevels.h>
+#include <UI/ExportToHtmlDialog.h>
+#include <UI/SupportedCamerasDialog.h>
 
 #ifdef HAVE_CFITSIO
-#include "UI/FitsImporter.h"
+#include <UI/FitsImporter.h>
 #endif
 
-#include "PreviewPanel/PreviewPanel.h"
-#include "HelpBrowser/helpbrowser.h"
-#include "TonemappingPanel/TMOProgressIndicator.h"
-#include "TonemappingPanel/TonemappingPanel.h"
-#include "HdrWizard/HdrWizard.h"
-#include "Resize/ResizeDialog.h"
-#include "Projection/ProjectionsDialog.h"
-#include "Preferences/PreferencesDialog.h"
-#include "Core/IOWorker.h"
-#include "Core/TMWorker.h"
-#include "TonemappingPanel/TMOProgressIndicator.h"
-#include "HdrWizard/AutoAntighosting.h"
-#include "HdrWizard/WhiteBalance.h"
-#include "LibpfsAdditions/formathelper.h"
+#include <PreviewPanel/PreviewPanel.h>
+#include <HelpBrowser/helpbrowser.h>
+#include <TonemappingPanel/TMOProgressIndicator.h>
+#include <TonemappingPanel/TonemappingPanel.h>
+#include <HdrWizard/HdrWizard.h>
+#include <HdrWizard/AutoAntighosting.h>
+#include <HdrWizard/WhiteBalance.h>
+#include <Resize/ResizeDialog.h>
+#include <Projection/ProjectionsDialog.h>
+#include <Preferences/PreferencesDialog.h>
+#include <Core/IOWorker.h>
+#include <Core/TMWorker.h>
+#include <LibpfsAdditions/formathelper.h>
 
 namespace
 {
